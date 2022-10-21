@@ -28,7 +28,7 @@ async function deleteAllMedia() {
     const items = [];
     document.querySelectorAll('p.filename').forEach((el) => {
       const currentFileName = el.textContent.replace('File name:', '').trim();
-      if (currentFileName.startsWith('e2e-')) {
+      if (currentFileName.includes('e2e-')) {
         items.push(el.closest('tr').id);
       }
     });

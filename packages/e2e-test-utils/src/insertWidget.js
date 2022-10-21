@@ -14,8 +14,27 @@
  * limitations under the License.
  */
 async function insertWidget(name) {
-  await expect(page).toMatch(name);
-  await expect(page).toClick('button', { text: 'Add widget: ' + name });
-  await expect(page).toClick('button', { text: 'Add Widget' });
+  await expect(page).toMatchElement('#widgets-left .widget-title', {
+    text: name,
+  });
+  await expect(page).toClick('#widgets-left button', {
+    text: `Add widget: ${name}`,
+  });
+  await expect(page).toClick('.widgets-chooser-add', { text: 'Add Widget' });
+
+  await page.waitForResponse(
+    (response) =>
+      response.url().includes('/wp-admin/admin-ajax.php') &&
+      response.status() === 200
+  );
+
+  // Transition animation.
+  await page.waitForTimeout(300);
+
+  await expect(page).toMatchElement('#widgets-right .widget .widget-title', {
+    text: name,
+  });
+
+  await expect(page).toMatch('Widget Title');
 }
 export default insertWidget;

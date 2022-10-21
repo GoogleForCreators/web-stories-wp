@@ -29,7 +29,7 @@ import { preloadImage } from '@googleforcreators/media';
  */
 async function extractColorFromImage(img) {
   const { default: ColorThief } = await import(
-    /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
+    /* webpackChunkName: "chunk-colorthief" */ 'colorthief'
   );
 
   return new Promise((resolve, reject) => {

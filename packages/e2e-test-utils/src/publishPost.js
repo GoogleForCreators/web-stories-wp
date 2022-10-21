@@ -39,8 +39,6 @@ import {
  * @return {Promise<string>} The post's permalink.
  */
 async function publishPost() {
-  // Increase timeout to stop publishing post failing this test.
-  await page.setDefaultTimeout(10000);
   const prePublishChecksEnabled = await arePrePublishChecksEnabled();
 
   if (prePublishChecksEnabled) {
@@ -57,11 +55,31 @@ async function publishPost() {
   await page.waitForFunction(
     () =>
       wp.data.select('core/editor').getEditedPostAttribute('status') ===
-      'publish'
+        'publish' &&
+      document.querySelector(
+        '.editor-post-publish-button[aria-disabled="true"]'
+      ).textContent === 'Update'
   );
-  await page.setDefaultTimeout(3000);
 
-  await expect(page).toMatchElement('a', { text: 'View Post' });
+  // The first time around the selector might return undefined.
+  await page.waitForFunction(() =>
+    wp.data
+      .select('core')
+      .getPostType(wp.data.select('core/editor').getCurrentPostType())
+  );
+
+  // "View Post" or "View Page", depending on post type,
+  // but always "View Post" on older WordPress versions.
+  const linkText = await page.evaluate(
+    () =>
+      wp.data
+        .select('core')
+        .getPostType(wp.data.select('core/editor').getCurrentPostType()).labels
+        .view_item
+  );
+  const linkTextRegex = new RegExp(`^(${linkText}|View Post)$`);
+
+  await expect(page).toMatchElement('a', { text: linkTextRegex });
 
   return page.evaluate(() => wp.data.select('core/editor').getPermalink());
 }

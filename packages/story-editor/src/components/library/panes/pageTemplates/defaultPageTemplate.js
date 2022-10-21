@@ -27,7 +27,6 @@ import {
   THEME_CONSTANTS,
   Text,
   themeHelpers,
-  ThemeGlobals,
 } from '@googleforcreators/design-system';
 
 /**
@@ -46,14 +45,11 @@ const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
 
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR},
-    &[data-focus-visible-added]
-    [role='presentation'] {
+  &:focus-visible {
     box-shadow: none;
   }
 
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
-  &[data-focus-visible-added] [role='presentation'] {
+  &:focus-visible [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,
