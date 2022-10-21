@@ -75,7 +75,7 @@ const calculateImageSelectOptions = (attachment, controller) => {
   };
 
   if (flexHeight === false && flexWidth === false) {
-    imgSelectOptions.aspectRatio = xInit + ':' + yInit;
+    imgSelectOptions.aspectRatio = `${xInit}:${yInit}`;
   }
 
   if (true === flexHeight) {

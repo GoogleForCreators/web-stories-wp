@@ -24,6 +24,50 @@ import {
 } from '@googleforcreators/media';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
+interface ResourceSize {
+  /** The MIME type of the resource. E.g. "image/png". */
+  mime_type: string;
+  /** The source URL of the resource. */
+  source_url: string;
+  /** The natural width of the resource in physical pixels. */
+  width: number;
+  /** The natural height of the resource in physical pixels. */
+  height: number;
+}
+
+interface MediaDetail {
+  width: number;
+  height: number;
+  length?: number;
+  length_formatted: string;
+  sizes?: { [key: string]: ResourceSize } | never[];
+}
+
+interface FeatureMediaSrc {
+  generated: boolean;
+  height: number;
+  src: string;
+  width: number;
+}
+
+interface MediaPickerAttachment {
+  id: number;
+  alt: string;
+  mime: string;
+  date: string;
+  src: string;
+  url: string;
+  featured_media?: number;
+  featured_media_src?: FeatureMediaSrc;
+  media_details: MediaDetail;
+  trim_data: {
+    original: number;
+  };
+  web_stories_base_color: string;
+  web_stories_blurhash: string;
+  web_stories_is_muted: boolean;
+  web_stories_media_source: string;
+}
 
 /**
  * Generates a resource object from a WordPress media picker object.
@@ -31,9 +75,7 @@ import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
  * @param mediaPickerEl WP Media Picker object.
  * @return Resource object.
  */
-const getResourceFromMediaPicker = (mediaPickerEl) => {
-
-  console.log(mediaPickerEl);
+const getResourceFromMediaPicker = (mediaPickerEl: MediaPickerAttachment) => {
   const {
     src,
     url,
@@ -47,14 +89,14 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       width: posterWidth,
       height: posterHeight,
       generated: posterGenerated,
-    } = '',
+    } = '' as FeatureMediaSrc,
     media_details: {
       width,
       height,
       length,
       length_formatted: lengthFormatted,
       sizes: _sizes = {},
-    } = {},
+    } = {} as MediaDetail,
     web_stories_media_source: mediaSource,
     web_stories_is_muted: isMuted,
     web_stories_base_color: baseColor,
@@ -62,13 +104,12 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     trim_data: trimData,
   } = mediaPickerEl;
 
-  const sizes = Object.entries(_sizes).reduce(
-    (sizes, [key, value]) => {
-      sizes[key] = snakeToCamelCaseObjectKeys(value);
-      return sizes;
-    },
-    {}
-  );
+  const sizes = Object.entries(
+    _sizes as { [key: string]: ResourceSize }
+  ).reduce((rawSizes, [key, value]) => {
+    rawSizes[key] = snakeToCamelCaseObjectKeys(value);
+    return rawSizes;
+  }, {});
 
   return createResource({
     baseColor,
