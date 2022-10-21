@@ -17,39 +17,42 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
-
 /**
  * Class Database_Upgrader
  *
  * @coversDefaultClass \Google\Web_Stories\Database_Upgrader
  */
-class Database_Upgrader extends TestCase {
+class Database_Upgrader extends DependencyInjectedTestCase {
+	/**
+	 * @var \Google\Web_Stories\Database_Upgrader
+	 */
+	private $instance;
+
 	public function set_up(): void {
 		parent::set_up();
 
-		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );
-		delete_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
+		$this->instance = $this->injector->make( \Google\Web_Stories\Database_Upgrader::class );
+
+		delete_option( $this->instance::OPTION );
+		delete_option( $this->instance::PREVIOUS_OPTION );
 	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register(): void {
-		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
-		$object->register();
+		$this->instance->register();
 
-		$this->assertSame( 5, has_action( 'admin_init', [ $object, 'run_upgrades' ] ) );
+		$this->assertSame( 5, has_action( 'admin_init', [ $this->instance, 'run_upgrades' ] ) );
 	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register_does_not_set_missing_options_on_frontend(): void {
-		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
-		$object->register();
-		$this->assertFalse( get_option( $object::OPTION ) );
-		$this->assertFalse( get_option( $object::PREVIOUS_OPTION ) );
+		$this->instance->register();
+		$this->assertFalse( get_option( $this->instance::OPTION ) );
+		$this->assertFalse( get_option( $this->instance::PREVIOUS_OPTION ) );
 	}
 
 	/**
@@ -58,13 +61,25 @@ class Database_Upgrader extends TestCase {
 	public function test_register_does_not_override_previous_version_if_there_was_no_update(): void {
 		$GLOBALS['current_screen'] = convert_to_screen( 'post' );
 
-		add_option( \Google\Web_Stories\Database_Upgrader::OPTION, WEBSTORIES_DB_VERSION );
-		add_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.2.3' );
+		add_option( $this->instance::OPTION, WEBSTORIES_DB_VERSION );
+		add_option( $this->instance::PREVIOUS_OPTION, '1.2.3' );
 
-		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
-		$object->register();
-		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
-		$this->assertSame( '1.2.3', get_option( $object::PREVIOUS_OPTION ) );
+		$this->instance->register();
+		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $this->instance::OPTION ) );
+		$this->assertSame( '1.2.3', get_option( $this->instance::PREVIOUS_OPTION ) );
+	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+
+		add_option( $this->instance::OPTION, WEBSTORIES_DB_VERSION );
+		add_option( $this->instance::PREVIOUS_OPTION, '1.2.3' );
+
+		$this->instance->on_plugin_uninstall();
+		$this->assertFalse( get_option( $this->instance::OPTION ) );
+		$this->assertFalse( get_option( $this->instance::PREVIOUS_OPTION ) );
 	}
 
 	/**
@@ -76,8 +91,8 @@ class Database_Upgrader extends TestCase {
 
 		switch_to_blog( $blog_id );
 
-		$db_version   = get_option( \Google\Web_Stories\Database_Upgrader::OPTION );
-		$prev_version = get_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
+		$db_version   = get_option( $this->instance::OPTION );
+		$prev_version = get_option( $this->instance::PREVIOUS_OPTION );
 
 		restore_current_blog();
 
