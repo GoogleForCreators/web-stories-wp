@@ -27,7 +27,7 @@ export interface Config {
   };
   storyId: number;
   nonce: string;
-  encodeMarkup: string;
+  encodeMarkup: boolean;
   metaBoxes: object;
   postLock: {
     interval: number;

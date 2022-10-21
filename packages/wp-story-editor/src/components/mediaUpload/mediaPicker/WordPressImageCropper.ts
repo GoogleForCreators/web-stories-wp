@@ -14,6 +14,23 @@
  * limitations under the License.
  */
 
+interface CropDetails {
+  height: number;
+  width: number;
+  dst_width: number;
+  dst_height: number;
+}
+
+interface Control {
+  params: {
+    flex_height: number;
+    flex_width: number;
+  };
+}
+
+interface Attachment {
+  get: (param: string) => void;
+}
 /**
  * A state for cropping an image
  *
@@ -33,10 +50,12 @@ const WordPressImageCropper = window.wp?.media?.controller?.Cropper?.extend?.({
    * @param attachment The attachment to crop.
    * @return A jQuery promise that represents the crop image request.
    */
-  doCrop: function (attachment) {
-    const cropDetails = attachment.get('cropDetails'),
-      control = this.get('control'),
-      ratio = cropDetails.width / cropDetails.height;
+  doCrop: function (attachment: Attachment) {
+    const cropDetails: CropDetails = attachment.get(
+      'cropDetails'
+    ) as CropDetails;
+    const control: Control = this.get('control');
+    const ratio = cropDetails.width / cropDetails.height;
 
     // Use crop measurements when flexible in both directions.
     if (control.params.flex_width && control.params.flex_height) {
@@ -55,7 +74,7 @@ const WordPressImageCropper = window.wp?.media?.controller?.Cropper?.extend?.({
 
     return window.wp.ajax.post('crop-image', {
       nonce: attachment.get('nonces').edit,
-      id: attachment.get('id'),
+      id: attachment.get('id') as number,
       context: control.id,
       cropDetails: cropDetails,
     });

@@ -45,9 +45,15 @@ function getIncludeQueryArgs(include = '') {
     .join('&');
 }
 
+interface FontsProps {
+  include: string;
+  search: string;
+  service: string;
+}
+
 export function getFonts(
   config: Config,
-  { include: _include, search, service }
+  { include: _include, search, service }: FontsProps
 ) {
   let path = addQueryArgs(`${config.api.fonts}`, {
     search,

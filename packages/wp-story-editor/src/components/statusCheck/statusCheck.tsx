@@ -35,15 +35,17 @@ function StatusCheck() {
   const {
     api: { statusCheck },
     encodeMarkup,
-  } = useConfig() as Config;
+  }: Config = useConfig();
 
   useEffect((): void => {
     // If it succeeds, do nothing.
     // Only in case of failure do we want to alert the user and track the error.
-    getStatusCheck(getContent(), statusCheck, encodeMarkup).catch((err) => {
-      setShowDialog(true);
-      void trackError('status_check', err.message);
-    });
+    getStatusCheck(getContent(), statusCheck, encodeMarkup).catch(
+      (err: Error) => {
+        setShowDialog(true);
+        void trackError('status_check', err.message);
+      }
+    );
   }, [encodeMarkup, statusCheck]);
 
   return <StatusCheckFailed isOpen={showDialog} onClose={closeDialog} />;

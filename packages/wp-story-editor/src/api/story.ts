@@ -19,6 +19,7 @@
 import { addQueryArgs } from '@googleforcreators/url';
 import { DATA_VERSION } from '@googleforcreators/migration';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * WordPress dependencies
@@ -56,7 +57,7 @@ const getStorySaveData = (
     author,
     products,
     ...rest
-  },
+  }: Story,
   encodeMarkup
 ) => {
   return {
@@ -96,7 +97,7 @@ const getStorySaveData = (
  * @param story Story object.
  * @return Return apiFetch promise.
  */
-export function saveStoryById(config: Config, story) {
+export function saveStoryById(config: Config, story: Story) {
   const { storyId } = story;
   const storySaveData = getStorySaveData(story, config.encodeMarkup);
 
@@ -157,7 +158,7 @@ export function saveStoryById(config: Config, story) {
  * @param story Story object.
  * @return Return apiFetch promise.
  */
-export function autoSaveById(config: Config, story) {
+export function autoSaveById(config: Config, story: Story) {
   const { storyId } = story;
   const storySaveData = getStorySaveData(story, config.encodeMarkup);
 

@@ -17,8 +17,13 @@
 /**
  * External dependencies
  */
-import { createResource, getResourceSize } from '@googleforcreators/media';
+import {
+  createResource,
+  getResourceSize,
+  ResourceInput,
+} from '@googleforcreators/media';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
+
 
 /**
  * Generates a resource object from a WordPress media picker object.
@@ -27,6 +32,8 @@ import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
  * @return Resource object.
  */
 const getResourceFromMediaPicker = (mediaPickerEl) => {
+
+  console.log(mediaPickerEl);
   const {
     src,
     url,
@@ -55,10 +62,13 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     trim_data: trimData,
   } = mediaPickerEl;
 
-  const sizes = Object.entries(_sizes).reduce((sizes, [key, value]) => {
-    sizes[key] = snakeToCamelCaseObjectKeys(value);
-    return sizes;
-  }, {});
+  const sizes = Object.entries(_sizes).reduce(
+    (sizes, [key, value]) => {
+      sizes[key] = snakeToCamelCaseObjectKeys(value);
+      return sizes;
+    },
+    {}
+  );
 
   return createResource({
     baseColor,
@@ -85,7 +95,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     isOptimized: ['video-optimization', 'recording'].includes(mediaSource),
     isMuted,
     trimData,
-  });
+  } as ResourceInput);
 };
 
 export default getResourceFromMediaPicker;

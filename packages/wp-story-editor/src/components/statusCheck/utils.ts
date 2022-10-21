@@ -59,5 +59,5 @@ export function getContent() {
     publisher: 'Web Stories',
   };
 
-  return getStoryMarkup(story, pages, metadata);
+  return getStoryMarkup(story, pages, metadata) as string;
 }

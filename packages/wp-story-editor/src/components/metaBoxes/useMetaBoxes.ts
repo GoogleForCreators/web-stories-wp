@@ -23,7 +23,23 @@ import { identity, useContextSelector } from '@googleforcreators/react';
  */
 import Context from './context';
 
-function useMetaBoxes(selector) {
+interface State {
+  state: {
+    isSavingMetaBoxes: boolean;
+    metaBoxesVisible: boolean;
+    metaBoxes: [];
+    locations: string[];
+    hasMetaBoxes: boolean;
+  };
+  actions: {
+    toggleMetaBoxesVisible: () => void;
+    setIsSavingMetaBoxes: () => void;
+  };
+}
+
+function useMetaBoxes(): State;
+function useMetaBoxes<T>(selector: (state: State) => T): T;
+function useMetaBoxes<T>(selector: (state: State) => T | State = identity) {
   return useContextSelector(Context, selector ?? identity);
 }
 

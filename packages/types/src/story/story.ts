@@ -18,15 +18,33 @@
  * Internal dependencies
  */
 import type { Page } from './page';
+import type { AudioResource } from "../resource";
 
 export interface Story {
+  storyId: number;
+  author: {
+    id: number;
+    name: string;
+  };
+  content: string;
   version: number;
   pages: Page[];
+  autoAdvance: boolean;
+  defaultPageDuration: number;
+  featuredMedia?: {
+    isExternal?: boolean;
+    needsProxy?: boolean;
+    url: string;
+    width: number;
+    height: number;
+  };
+  publisherLogo?: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+  };
   backgroundAudio?: {
-    resource: {
-      src: string;
-      id: number;
-      mimeType: string;
-    };
+    resource: AudioResource;
   };
 }

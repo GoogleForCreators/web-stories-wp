@@ -31,10 +31,7 @@ import { flattenFormData, getResourceFromAttachment } from './utils';
 import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
-export function getMedia(
-  config: Config,
-  { mediaType, searchTerm, pagingNum }
-) {
+export function getMedia(config: Config, { mediaType, searchTerm, pagingNum }) {
   let path = addQueryArgs(config.api.media, {
     context: 'view',
     per_page: 50,

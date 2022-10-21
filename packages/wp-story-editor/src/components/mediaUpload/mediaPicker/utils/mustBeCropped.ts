@@ -25,7 +25,14 @@
  * @param  imgH Image height.
  * @return Whether or not an image must be cropped or not.
  */
-const mustBeCropped = (flexW, flexH, dstW, dstH, imgW, imgH) => {
+const mustBeCropped = (
+  flexW: boolean,
+  flexH: boolean,
+  dstW: number,
+  dstH: number,
+  imgW: number,
+  imgH: number
+) => {
   if (true === flexW && true === flexH) {
     return false;
   }
