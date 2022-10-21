@@ -38,6 +38,7 @@ import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
+import type { LocaleData } from '@googleforcreators/i18n';
 
 /**
  * WordPress dependencies
@@ -61,6 +62,20 @@ import * as apiCallbacks from './api';
 import { transformStoryResponse } from './api/utils';
 import { TIPS, TOOLBAR_HEIGHT, MENU_FOLDED_WIDTH } from './constants';
 import { GlobalStyle } from './theme';
+
+interface EditorSettings {
+  publicPath?: string;
+  id?: string;
+  localeData?: LocaleData[];
+  flags?: Record<string, boolean>;
+}
+
+declare global {
+  let __webpack_public_path__: string;
+  interface Window {
+    webStories: EditorSettings;
+  }
+}
 
 window.webStories = window.webStories || {};
 

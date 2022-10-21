@@ -20,5 +20,5 @@
 import { setLocaleData } from '@googleforcreators/i18n';
 
 for (const localeData of window?.webStories?.localeData || []) {
-  setLocaleData(localeData);
+  setLocaleData(localeData); // eslint-disable-line @typescript-eslint/no-unsafe-argument -- Todo work this out.
 }

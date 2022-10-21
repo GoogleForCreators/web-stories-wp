@@ -14,17 +14,4 @@
  * limitations under the License.
  */
 
-interface EditorSettings {
-  publicPath: string;
-  id: string;
-  flags: Record<string, boolean>;
-}
-
-declare global {
-  let __webpack_public_path__: string;
-  interface Window {
-    webStories: EditorSettings;
-  }
-}
-
-__webpack_public_path__ = window.webStories.publicPath;
+__webpack_public_path__ = window?.webStories?.publicPath || '';

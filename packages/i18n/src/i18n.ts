@@ -20,7 +20,7 @@
 import Tannin from 'tannin';
 import type { TanninLocaleDomain } from 'tannin';
 
-interface LocaleData {
+export interface LocaleData {
   locale_data: {
     [key: string]: TanninLocaleDomain;
   };
