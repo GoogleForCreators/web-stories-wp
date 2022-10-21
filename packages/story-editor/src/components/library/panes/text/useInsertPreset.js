@@ -32,7 +32,7 @@ import { calculateTextHeight } from '@googleforcreators/element-library';
  */
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
 import useLibrary from '../../useLibrary';
-import { useHistory } from '../../../../app';
+import { useHistory, useFont } from '../../../../app';
 import { useCalculateAccessibleTextColors } from '../../../../app/pageCanvas';
 import { applyHiddenPadding } from '../../../panels/design/textStyle/utils';
 
@@ -46,6 +46,10 @@ function useInsertPreset({ shouldUseSmartColor }) {
   const {
     state: { versionNumber },
   } = useHistory();
+
+  const {
+    actions: { getFontByName },
+  } = useFont();
 
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
@@ -117,8 +121,11 @@ function useInsertPreset({ shouldUseSmartColor }) {
         content: color ? setColor(content, { color }) : content,
         ...highlightProps,
       };
+
+      const elementFontData = getFontByName(elementProps.font?.family);
       const addedElement = insertElement(TYPE, {
         ...elementProps,
+        elementFontData,
         height: calculateTextHeight(elementProps, elementProps.width),
       });
       lastPreset.current = {
@@ -128,7 +135,7 @@ function useInsertPreset({ shouldUseSmartColor }) {
       setAutoColor(null);
       setPresetAtts(null);
     }
-  }, [autoColor, presetAtts, insertElement, setColor]);
+  }, [autoColor, presetAtts, insertElement, setColor, getFontByName]);
 
   const insertPreset = useCallback(
     async (element, presetProps = {}) => {
@@ -149,8 +156,10 @@ function useInsertPreset({ shouldUseSmartColor }) {
           await calculateAccessibleTextColors({ ...element, ...atts })
         );
       } else {
+        const elementFontData = getFontByName(element.font?.family);
         const addedElement = insertElement(TYPE, {
           ...element,
+          elementFontData,
           ...atts,
         });
         lastPreset.current = {
@@ -164,6 +173,7 @@ function useInsertPreset({ shouldUseSmartColor }) {
       calculateAccessibleTextColors,
       shouldUseSmartColor,
       insertElement,
+      getFontByName,
     ]
   );
   return {
