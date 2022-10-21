@@ -25,7 +25,7 @@ import apiFetch from '@wordpress/api-fetch';
  * @param apiPath API path.
  * @return Response.
  */
-export function getPublisherLogos(apiPath) {
+export function getPublisherLogos(apiPath: string) {
   return apiFetch({
     path: apiPath,
   });
@@ -38,7 +38,7 @@ export function getPublisherLogos(apiPath) {
  * @param id Logo media id.
  * @return Response.
  */
-export function addPublisherLogo(apiPath, id) {
+export function addPublisherLogo(apiPath: string, id: string) {
   return apiFetch({
     path: apiPath,
     data: { id },

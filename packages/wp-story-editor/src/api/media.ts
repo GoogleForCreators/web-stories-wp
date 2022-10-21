@@ -33,7 +33,7 @@ import { MEDIA_FIELDS } from './constants';
 // Important: Keep in sync with REST API preloading definition.
 export function getMedia(
   config: Config,
-  { mediaType, searchTerm: string, pagingNum: number }
+  { mediaType, searchTerm, pagingNum }
 ) {
   let path = addQueryArgs(config.api.media, {
     context: 'view',
