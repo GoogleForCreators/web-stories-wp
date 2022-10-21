@@ -47,7 +47,7 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
 
   const {
     api: { metaBoxes: apiUrl },
-  } = useConfig() as Config;
+  } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
 
   const wasSaving = usePrevious(isSavingStory);
   const wasAutoSaving = usePrevious(isAutoSavingStory);

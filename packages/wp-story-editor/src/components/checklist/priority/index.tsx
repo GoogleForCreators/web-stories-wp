@@ -40,7 +40,7 @@ import StoryMissingPublisherName from './storyMissingPublisherName';
 function Priority() {
   const {
     capabilities: { hasUploadMediaAction, canManageSettings },
-  } = useConfig() as Config;
+  } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
 
   return (
     <>

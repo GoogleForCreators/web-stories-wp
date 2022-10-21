@@ -56,7 +56,7 @@ function MetaBoxes() {
   }));
   const [showMenuButton, updateMenuButtonState] = useState(false);
   const menuButtonContainer = useRef(null);
-  const { postType, metaBoxes = {} } = useConfig() as Config;
+  const { postType, metaBoxes = {} } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
   const { pages, isSavingStory, isAutoSavingStory, story } = useStory(
     ({
       state: {

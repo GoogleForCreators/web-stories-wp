@@ -31,7 +31,7 @@ import type { Config } from '../../types';
 import { FontCheckDialog } from './fontCheckDialog';
 
 export const FontCheck = () => {
-  const { dashboardLink } = useConfig() as Config;
+  const { dashboardLink } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
   const { isStoryLoaded, storyPages, updateElementsByFontFamily } = useStory(
     ({ state: { pages }, actions }) => ({
       storyPages: pages,
