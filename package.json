@@ -153,7 +153,7 @@
     "postcss-jsx": "^0.36.4",
     "postcss-syntax": "^0.36.2",
     "prettier": "^2.7.1",
-    "puppeteer": "^17.0.0",
+    "puppeteer": "^19.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-refresh": "^0.14.0",
@@ -184,6 +184,11 @@
     "webpackbar": "^5.0.2",
     "worker-loader": "^3.0.8",
     "workspaces-run": "^1.0.1"
+  },
+  "overrides": {
+    "@axe-core/puppeteer": {
+      "puppeteer": "^19.0.0"
+    }
   },
   "scripts": {
     "build": "npm-run-all build:*",
@@ -246,6 +251,7 @@
     "test:php:integration:single": "vendor/bin/phpunit -c phpunit-integration.xml.dist",
     "test:php:integration:multisite": "vendor/bin/phpunit -c phpunit-integration-multisite.xml.dist",
     "test:php:unit:help": "npm run test:php -- --help",
+    "pretest:e2e": "if [ -z $AMP_VALIDATOR_FILE ]; then curl --output-dir $TMPDIR -O -f https://cdn.ampproject.org/v0/validator_wasm.js; fi",
     "test:e2e": "cross-env JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
     "test:e2e:help": "npm run test:e2e -- --help",
     "test:e2e:percy": "percy exec --quiet --parallel --config=percy.config.yml -- npm run test:e2e",

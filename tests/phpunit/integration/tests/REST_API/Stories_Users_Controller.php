@@ -75,7 +75,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::filter_user_query
 	 */
 	public function test_filter_user_query_pre_wp_59(): void {
-		if ( is_wp_version_compatible( '5.9-beta' ) ) {
+		if ( is_wp_version_compatible( '5.9.0' ) ) {
 			$this->markTestSkipped( 'This test requires WordPress < 5.9.' );
 		}
 
@@ -93,7 +93,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::filter_user_query
 	 */
 	public function test_filter_user_query_wp_59(): void {
-		if ( ! is_wp_version_compatible( '5.9-beta' ) ) {
+		if ( ! is_wp_version_compatible( '5.9.0' ) ) {
 			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
 		}
 
@@ -141,7 +141,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::filter_user_query
 	 */
 	public function test_filter_user_query_wp_59_existing_query(): void {
-		if ( version_compare( get_bloginfo( 'version' ), '5.9.0-beta', '<' ) ) {
+		if ( version_compare( get_bloginfo( 'version' ), '5.9.0', '<' ) ) {
 			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
 		}
 

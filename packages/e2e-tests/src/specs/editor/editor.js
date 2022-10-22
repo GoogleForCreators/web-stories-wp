@@ -21,9 +21,10 @@ import {
   takeSnapshot,
   createNewStory,
   toggleVideoOptimization,
-  previewStory,
   withRTL,
 } from '@web-stories-wp/e2e-test-utils';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Story Editor', () => {
   it('should be able to create a blank story', async () => {
@@ -64,25 +65,5 @@ describe('Story Editor', () => {
     );
     expect(crossOriginIsolated).toBeFalse();
     await toggleVideoOptimization();
-  });
-
-  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#12023): Fix flakey test.
-  it.skip('should preview story with development mode', async () => {
-    await createNewStory();
-
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
-
-    await previewPage.waitForSelector('.i-amphtml-story-dev-tools-header');
-
-    await expect(previewPage).toMatch(/Preview/i);
-    await expect(previewPage).toMatch(/Debug/i);
-    await expect(previewPage).toMatch(/Add device/i);
-
-    await previewPage.waitForSelector('amp-story-player');
-    await expect(previewPage).toMatchElement('amp-story-player');
-
-    await editorPage.bringToFront();
-    await previewPage.close();
   });
 });

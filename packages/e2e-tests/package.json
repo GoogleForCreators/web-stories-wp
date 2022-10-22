@@ -38,6 +38,9 @@
     "jest-json-schema": "^6.1.0",
     "jest-puppeteer": "^6.1.1"
   },
+  "devDependencies": {
+    "@types/expect-puppeteer": "^5.0.1"
+  },
   "peerDependencies": {
     "puppeteer": "*"
   }

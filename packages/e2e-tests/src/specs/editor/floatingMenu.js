@@ -17,7 +17,9 @@
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { addTextElement, createNewStory } from '@web-stories-wp/e2e-test-utils';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Floating Menu', () => {
   const floatingMenu = 'section[aria-label="Design menu"]';
@@ -27,32 +29,17 @@ describe('Floating Menu', () => {
   });
 
   it('should display text floating menu', async () => {
-    // Open a text tab
-    await expect(page).toClick('#library-tab-text');
+    await addTextElement('Paragraph');
 
-    // Add a paragraph
-    await expect(page).toClick('#library-pane-text button span', {
-      text: /^Paragraph/,
-    });
-
-    // Floating menu should show up
     await page.waitForSelector(floatingMenu);
     await expect(page).toMatchElement(floatingMenu);
   });
 
   it('should display media floating menu', async () => {
-    // Open a media tab
-    await expect(page).toClick('#library-tab-media');
-
-    // Add a media item
-    await expect(page).toClick(
-      'div[data-testid="mediaElement-image"]:first-child button'
-    );
-
-    const insertButton = await page.waitForSelector(
-      `xpath/.//li//span[contains(text(), 'Insert image')]`
-    );
-    await insertButton.click();
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
+    });
 
     // Floating menu should show up
     await page.waitForSelector(floatingMenu);
