@@ -16,6 +16,7 @@
 
 export * from './constants';
 export * from './dimensions';
+export * from './types';
 
 export { default as UnitsProvider } from './unitsProvider';
 export { default as useUnits } from './useUnits';

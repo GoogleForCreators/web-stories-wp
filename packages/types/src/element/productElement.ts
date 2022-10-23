@@ -19,7 +19,24 @@
  */
 import type { Element, ElementType } from './element';
 
-export interface ProductElement extends Element {
+interface ProductImage {
+  alt: string;
+  url: string;
+}
+
+export interface Product {
   productId: string;
+  productBrand: string;
+  productDetails: string;
+  productImages: ProductImage[];
+  productPrice: number;
+  productPriceCurrency: string;
+  productTitle: string;
+  productUrl: string;
   type: ElementType.Product;
+}
+
+export interface ProductElement extends Element {
+  type: ElementType.Product;
+  product: Product;
 }
