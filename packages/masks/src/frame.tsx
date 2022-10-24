@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   useRef,
@@ -25,7 +24,9 @@ import {
   useState,
   forwardRef,
 } from '@googleforcreators/react';
-import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
+import { getTransformFlip } from '@googleforcreators/elements';
+import type { Flip, MediaElement, Resource } from '@googleforcreators/types';
+import type { CSSProperties, SVGAttributes, ForwardedRef } from 'react';
 
 /**
  * Internal dependencies
@@ -33,7 +34,7 @@ import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 import { MaskTypes } from './constants';
 import { getElementMask, generateMaskId } from './masks';
 
-const FILL_STYLE = {
+const FILL_STYLE: CSSProperties = {
   position: 'absolute',
   top: 0,
   left: 0,
@@ -50,7 +51,11 @@ const svgCss = css`
   pointer-events: none;
 `;
 
-const DropTargetSVG = styled.svg`
+interface DropTargetSVGProps {
+  active: boolean;
+}
+
+const DropTargetSVG = styled.svg<DropTargetSVGProps>`
   ${svgCss}
   z-index: ${({ active }) => (active ? 1 : -1)};
 `;
@@ -59,18 +64,30 @@ const Filler = styled.svg`
   ${svgCss}
 `;
 
-const FillerPath = styled.path`
+interface FillerPathProps {
+  isClickable: boolean;
+}
+
+const FillerPath = styled.path<FillerPathProps>`
   pointer-events: ${({ isClickable }) => (isClickable ? 'all' : 'none')};
 `;
 
-const DropTargetPath = styled.path`
+interface DropTargetPathProps {
+  active?: boolean;
+}
+
+const DropTargetPath = styled.path<DropTargetPathProps>`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
   opacity: ${({ active }) => (active ? 0.3 : 0)};
   stroke: ${({ theme }) => theme.colors.border.selection};
 `;
 
-const Wrapper = styled.div`
+interface WrapperProps {
+  hasBackgroundOutline: boolean;
+}
+
+const Wrapper = styled.div<WrapperProps>`
   width: 100%;
   height: 100%;
 
@@ -89,6 +106,17 @@ const Wrapper = styled.div`
   }
 `;
 
+interface WithDropTargetProps {
+  element: MediaElement;
+  children: JSX.Element;
+  hover: boolean;
+  draggingResource: Resource;
+  activeDropTargetId: string;
+  isDropSource: (type: string) => boolean;
+  registerDropTarget: (id: string, pathRef: SVGPathElement | null) => void;
+  unregisterDropTarget: (id: string) => void;
+}
+
 function WithDropTarget({
   element,
   children,
@@ -98,8 +126,8 @@ function WithDropTarget({
   isDropSource,
   registerDropTarget,
   unregisterDropTarget,
-}) {
-  const pathRef = useRef(null);
+}: WithDropTargetProps): JSX.Element {
+  const pathRef = useRef<SVGPathElement>(null);
 
   const { id, resource, isBackground, isLocked } = element;
   const mask = getElementMask(element);
@@ -129,9 +157,9 @@ function WithDropTarget({
   const hasOutline = !isLocked && canHasOutline;
 
   const hasThinOutline = hasOutline && !isBackground;
-  const hasBackgroundOutline = hasOutline && isBackground;
+  const hasBackgroundOutline = Boolean(hasOutline && isBackground);
 
-  const pathProps = {
+  const pathProps: SVGAttributes<SVGPathElement> = {
     vectorEffect: 'non-scaling-stroke',
     fill: 'none',
     strokeLinecap: 'round',
@@ -143,7 +171,7 @@ function WithDropTarget({
     <Wrapper hasBackgroundOutline={hasBackgroundOutline}>
       {children}
       <DropTargetSVG
-        viewBox={`0 0 1 ${1 / mask.ratio}`}
+        viewBox={`0 0 1 ${1 / (mask.ratio || 1)}`}
         width="100%"
         height="100%"
         preserveAspectRatio="none"
@@ -164,16 +192,19 @@ function WithDropTarget({
   );
 }
 
-WithDropTarget.propTypes = {
-  element: StoryPropTypes.element,
-  children: PropTypes.node.isRequired,
-  hover: PropTypes.bool,
-  draggingResource: PropTypes.object,
-  activeDropTargetId: PropTypes.string,
-  isDropSource: PropTypes.func.isRequired,
-  registerDropTarget: PropTypes.func,
-  unregisterDropTarget: PropTypes.func,
-};
+interface WithMaskProps {
+  element: MediaElement;
+  style: CSSProperties;
+  fill: boolean;
+  flip: Flip;
+  children: JSX.Element;
+  draggingResource: Resource;
+  activeDropTargetId: string;
+  isDropSource: (type: string) => boolean;
+  isSelected?: boolean;
+  registerDropTarget: () => void;
+  unregisterDropTarget: () => void;
+}
 
 const WithMask = forwardRef(
   (
@@ -190,8 +221,8 @@ const WithMask = forwardRef(
       registerDropTarget,
       unregisterDropTarget,
       ...rest
-    },
-    ref
+    }: WithMaskProps,
+    ref: ForwardedRef<HTMLDivElement>
   ) => {
     const [hover, setHover] = useState(false);
     const { isBackground, isLocked } = element;
@@ -209,7 +240,9 @@ const WithMask = forwardRef(
     };
 
     const mask = getElementMask(element);
-    const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
+    const flipStyle: CSSProperties = flip
+      ? { transform: getTransformFlip(flip) || undefined }
+      : {};
     if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
       return (
         <div
@@ -246,7 +279,7 @@ const WithMask = forwardRef(
           <defs>
             <clipPath
               id={maskId}
-              transform={`scale(1 ${mask.ratio})`}
+              transform={`scale(1 ${mask.ratio || 1})`}
               clipPathUnits="objectBoundingBox"
             >
               <path d={mask.path} />
@@ -254,7 +287,7 @@ const WithMask = forwardRef(
           </defs>
         </svg>
         <Filler
-          viewBox={`0 0 1 ${1 / mask.ratio}`}
+          viewBox={`0 0 1 ${1 / (mask.ratio || 1)}`}
           width="100%"
           height="100%"
           preserveAspectRatio="none"
@@ -277,22 +310,5 @@ const WithMask = forwardRef(
     );
   }
 );
-
-WithMask.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  style: PropTypes.object,
-  fill: PropTypes.bool,
-  flip: PropTypes.shape({
-    vertical: PropTypes.bool,
-    horizontal: PropTypes.bool,
-  }),
-  children: PropTypes.node.isRequired,
-  draggingResource: PropTypes.object,
-  activeDropTargetId: PropTypes.string,
-  isDropSource: PropTypes.func.isRequired,
-  isSelected: PropTypes.bool,
-  registerDropTarget: PropTypes.func,
-  unregisterDropTarget: PropTypes.func,
-};
 
 export default WithMask;
