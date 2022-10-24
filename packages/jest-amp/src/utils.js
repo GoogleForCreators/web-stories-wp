@@ -83,6 +83,14 @@ AmpStory.propTypes = {
   children: PropTypes.node,
 };
 
+// Ignore some false positives when validating URLs in Puppeteer.
+// Perhaps the validator is outdated or something.
+const ERRORS_TO_IGNORE = [
+  /The attribute 'nomodule' may not appear in tag 'amphtml module engine script'/,
+  /The attribute 'type' in tag '.* nomodule extension script' is set to the invalid value 'module'/,
+  /The tag 'amphtml nomodule engine script' is missing or incorrect, but required by 'amphtml module engine script'/,
+];
+
 /**
  * Tests a given string for its AMP compatibility.
  *
@@ -94,7 +102,11 @@ AmpStory.propTypes = {
  * @return {Promise<[]>} List of AMP validation errors.
  */
 async function getAMPValidationErrors(string, optimize = true) {
-  let completeString = '<!DOCTYPE html>' + string;
+  let completeString = string;
+
+  if (!completeString.startsWith('<!DOCTYPE html>')) {
+    completeString = `<!DOCTYPE html>${string}`;
+  }
 
   if (optimize) {
     // We only want the bare minimum here - adding missing tags & extensions.
@@ -122,6 +134,10 @@ async function getAMPValidationErrors(string, optimize = true) {
 
   for (const err of errors) {
     const { message, specUrl } = err;
+
+    if (ERRORS_TO_IGNORE.some((ignoredMsg) => message.match(ignoredMsg))) {
+      continue;
+    }
 
     const msg = specUrl ? `${message} (see ${specUrl})` : message;
 

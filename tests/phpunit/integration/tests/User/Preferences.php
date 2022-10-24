@@ -201,6 +201,23 @@ class Preferences extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		$this->instance->register();
+
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, true );
+
+		$this->instance->on_plugin_uninstall();
+
+		$this->assertFalse( get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true ) );
+		$this->assertTrue( get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true ) );
+		$this->assertFalse( get_user_meta( \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, true ) );
+	}
+
+	/**
 	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */

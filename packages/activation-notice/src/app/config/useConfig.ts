@@ -22,10 +22,10 @@ import { useContext } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import Context from './context';
+import Context, { ContextState } from './context';
 
-function useConfig() {
-  return useContext(Context);
+function useConfig(): ContextState {
+  return useContext(Context) as ContextState;
 }
 
 export default useConfig;

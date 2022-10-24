@@ -20,3 +20,4 @@ packages/fonts/src/fonts.json linguist-generated=true
 includes/data/fonts/fonts.json linguist-generated=true
 tests/phpunit/integration/data/schema.json linguist-generated=true
 packages/e2e-tests/src/specs/editor/shopping/schema.json linguist-generated=true
+tsconfig.json linguist-language=jsonc

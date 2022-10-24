@@ -19,7 +19,11 @@
  */
 import styled from 'styled-components';
 
-const Paragraph = styled.p`
+interface ParagraphProps {
+  $secondary?: boolean;
+}
+
+const Paragraph = styled.p<ParagraphProps>`
   font-family: ${({ theme }) => theme.fonts.body.family};
   font-size: ${({ theme }) => theme.fonts.body.size};
   line-height: ${({ theme }) => theme.fonts.body.lineHeight};

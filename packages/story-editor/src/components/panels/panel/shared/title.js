@@ -26,7 +26,6 @@ import {
   THEME_CONSTANTS,
   Headline,
   themeHelpers,
-  ThemeGlobals,
   NotificationBubble,
   BUBBLE_VARIANTS,
 } from '@googleforcreators/design-system';
@@ -111,7 +110,7 @@ const Collapse = styled.button`
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
   &:hover,
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
+  &:focus-visible {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
 

@@ -132,6 +132,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     needs: [build, nonce]
     strategy:
+      fail-fast: false
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
@@ -149,16 +150,12 @@ jobs:
             snapshots: true
             shard: '2/2'
           - browser: 'chrome'
-            wp: 'latest'
-            snapshots: true
-            shard: '1/2'
-          - browser: 'chrome'
-            wp: '6.1-RC1'
+            wp: '6.1-RC2'
             experimental: true
             snapshots: false
             shard: '1/2'
           - browser: 'chrome'
-            wp: '6.1-RC1'
+            wp: '6.1-RC2'
             experimental: true
             snapshots: false
             shard: '2/2'
@@ -202,6 +199,13 @@ jobs:
           echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
+      - name: Download AMP validator JS
+        id: amp_validator
+        run: |
+          cd $RUNNER_TEMP && curl -O -f -s -S https://cdn.ampproject.org/v0/validator_wasm.js
+          AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
+          echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
+
       - name: Run E2E tests with percy
         run: npm run test:e2e:percy -- -- --shard=$SHARD
         env:
@@ -210,6 +214,7 @@ jobs:
           PERCY_BROWSER_EXECUTABLE: ${{ env.chromium_path }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
@@ -217,6 +222,7 @@ jobs:
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
         if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
