@@ -39,10 +39,11 @@ import {
   PAGE_WIDTH,
 } from '@googleforcreators/units';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
+import type { MediaElement } from '@googleforcreators/types';
 
 const PRECISION = 1;
 
-export function getElementOffsets(element) {
+export function getElementOffsets(element: MediaElement) {
   // Get elements box based on a given page size with proper ratio.
   const box = getBox(element, PAGE_WIDTH, PAGE_HEIGHT);
   // Calculate media offsets based off given box, focal point
@@ -67,12 +68,6 @@ export function getElementOffsets(element) {
   };
 }
 
-function mapValues(obj, op) {
-  return Object.fromEntries(
-    Object.entries(obj).map(([key, val]) => [key, op(val)])
-  );
-}
-
 export const DEFAULT_HAS_OFFSETS = {
   top: false,
   bottom: false,
@@ -80,7 +75,12 @@ export const DEFAULT_HAS_OFFSETS = {
   right: false,
 };
 
-export function getHasElementOffsets(element) {
+export function getHasElementOffsets(element: MediaElement) {
   const offsets = getElementOffsets(element);
-  return mapValues(offsets, (offset) => Math.abs(offset) > PRECISION);
+  return Object.fromEntries(
+    Object.entries(offsets).map(([key, offset]) => [
+      key,
+      Math.abs(offset) > PRECISION,
+    ])
+  );
 }

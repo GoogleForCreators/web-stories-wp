@@ -23,10 +23,12 @@ import { identity, useContextSelector } from '@googleforcreators/react';
  * Internal dependencies
  */
 import Context from './context';
+import type { State } from './types';
 
-// TODO: Fix selector type.
-function useUnits(selector: () => unknown) {
-  return useContextSelector(Context, selector ?? identity);
+function useUnits(): State;
+function useUnits<T>(selector: (state: State) => T): T;
+function useUnits<T>(selector: (state: State) => T | State = identity) {
+  return useContextSelector(Context, selector);
 }
 
 export default useUnits;
