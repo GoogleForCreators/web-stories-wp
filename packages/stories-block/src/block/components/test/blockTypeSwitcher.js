@@ -57,6 +57,6 @@ describe('Tests BlockTypeSwitcher', () => {
     fireEvent.click(menuItem);
 
     // Confirm that the menuItem was clicked.
-    expect(setAttributes).toHaveBeenCalledTimes(1);
+    expect(setAttributes).toHaveBeenCalledOnce();
   });
 });

@@ -61,6 +61,6 @@ describe('<ViewStyleBar />', () => {
     const gridIcon = screen.getByTestId('grid-icon');
 
     fireEvent.click(gridIcon);
-    expect(mockPress).toHaveBeenCalledTimes(1);
+    expect(mockPress).toHaveBeenCalledOnce();
   });
 });

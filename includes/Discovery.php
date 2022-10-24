@@ -30,13 +30,11 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Shopping\Product_Meta;
+use Google\Web_Stories\Shopping\Product;
 use WP_Post;
 
 /**
  * Discovery class.
- *
- * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
 class Discovery extends Service_Base implements HasRequirements {
 
@@ -48,21 +46,12 @@ class Discovery extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
-	 * Product_Meta instance.
-	 *
-	 * @var Product_Meta Product_Meta instance.
-	 */
-	private $product_meta;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
-	 * @param Product_Meta    $product_meta Product_Meta instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type, Product_Meta $product_meta ) {
+	public function __construct( Story_Post_Type $story_post_type ) {
 		$this->story_post_type = $story_post_type;
-		$this->product_meta    = $product_meta;
 	}
 
 	/**
@@ -112,23 +101,26 @@ class Discovery extends Service_Base implements HasRequirements {
 	/**
 	 * Prints document title for stories.
 	 *
-	 * Works both for classic themes and block themes without any conditionals.
+	 * Works both for classic themes and block themes.
 	 *
 	 * @since 1.25.0
 	 *
 	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12139
+	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12487
 	 * @see _wp_render_title_tag()
 	 * @see _block_template_render_title_tag()
 	 */
 	public function print_document_title(): void {
+		$enable_metadata = function_exists( 'wp_is_block_theme' ) && wp_is_block_theme();
+
 		/**
 		 * Filters whether to print the document title.
 		 *
 		 * @since 1.25.0
 		 *
-		 * @param bool $enable_open_graph Whether to print the document title. Default to true.
+		 * @param bool $enable_open_graph Whether to print the document title. Defaults to true for block themes, false otherwise.
 		 */
-		$enable_metadata = apply_filters( 'web_stories_enable_document_title', true );
+		$enable_metadata = apply_filters( 'web_stories_enable_document_title', $enable_metadata );
 		if ( ! $enable_metadata ) {
 			return;
 		}
@@ -263,9 +255,9 @@ class Discovery extends Service_Base implements HasRequirements {
 			/**
 			 * List of products.
 			 *
-			 * @phpstan-var ProductData[] $products
+			 * @phpstan-var Product[] $products
 			 */
-			$products         = $this->product_meta->get_products( $post->ID );
+			$products         = $story->get_products();
 			$product_metadata = $this->get_product_data( $products );
 			if ( $product_metadata ) {
 				$metadata = array_merge( $product_metadata, $metadata );
@@ -288,10 +280,10 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param array<int, array<string, mixed>> $products Array of products.
+	 * @param Product[] $products Array of products.
 	 * @return array<string, array<string, array<int, array<string, mixed>>|string>>
 	 *
-	 * @phpstan-param ProductData[] $products
+	 * @phpstan-param Product[] $products
 	 */
 	protected function get_product_data( array $products ): array {
 		if ( ! $products ) {
@@ -301,28 +293,30 @@ class Discovery extends Service_Base implements HasRequirements {
 		foreach ( $products as $product ) {
 			$data = [
 				'@type'       => 'Product',
-				'brand'       => $product['productBrand'] ?? '',
-				'productID'   => $product['productId'] ?? '',
-				'url'         => $product['productUrl'] ?? '',
-				'name'        => $product['productTitle'] ?? '',
-				'description' => $product['productDetails'] ?? '',
+				'brand'       => $product->get_brand(),
+				'productID'   => $product->get_id(),
+				'url'         => $product->get_url(),
+				'name'        => $product->get_title(),
+				'description' => $product->get_details(),
 				'offers'      => [
 					[
 						'@type'         => 'Offer',
-						'price'         => $product['productPrice'] ?? 0,
-						'priceCurrency' => $product['productPriceCurrency'] ?? '',
+						'price'         => $product->get_price(),
+						'priceCurrency' => $product->get_price_currency(),
 					],
 				],
 			];
-			if ( isset( $product['productImages'] ) && $product['productImages'] ) {
-				$data['image'] = $product['productImages'][0]['url'];
+			if ( $product->get_images() ) {
+				$data['image'] = $product->get_images()[0]['url'];
 			}
-			if ( ! empty( $product['aggregateRating']['reviewCount'] ) ) {
+
+			$aggregate_rating = $product->get_aggregate_rating();
+			if ( ! empty( $aggregate_rating['review_count'] ) ) {
 				$data['aggregateRating'] = [
 					'@type'       => 'AggregateRating',
-					'ratingValue' => $product['aggregateRating']['ratingValue'] ?? 0,
-					'reviewCount' => $product['aggregateRating']['reviewCount'],
-					'url'         => $product['aggregateRating']['reviewUrl'] ?? '',
+					'ratingValue' => $aggregate_rating['rating_value'],
+					'reviewCount' => $aggregate_rating['review_count'],
+					'url'         => $aggregate_rating['review_url'],
 				];
 			}
 			$product_data[] = $data;

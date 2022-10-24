@@ -70,15 +70,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -120,10 +120,10 @@ jobs:
     name: Percy Nonce
     runs-on: ubuntu-latest
     outputs:
-      result: ${{ steps.nonce.outputs.result }}
+      result: ${{ env.result }}
     steps:
       - id: nonce
-        run: echo "::set-output name=result::${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)"
+        run: echo "result=${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)" >> $GITHUB_ENV
 
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})'
@@ -132,6 +132,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     needs: [build, nonce]
     strategy:
+      fail-fast: false
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
@@ -148,15 +149,25 @@ jobs:
             wp: 'latest'
             snapshots: true
             shard: '2/2'
+          - browser: 'chrome'
+            wp: '6.1-RC2'
+            experimental: true
+            snapshots: false
+            shard: '1/2'
+          - browser: 'chrome'
+            wp: '6.1-RC2'
+            experimental: true
+            snapshots: false
+            shard: '2/2'
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Download bundle
         uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
@@ -185,17 +196,25 @@ jobs:
         id: chromium_path
         run: |
           CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
-          echo "::set-output name=chromium_path::${CHROMIUM}"
+          echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
+
+      - name: Download AMP validator JS
+        id: amp_validator
+        run: |
+          cd $RUNNER_TEMP && curl -O -f -s -S https://cdn.ampproject.org/v0/validator_wasm.js
+          AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
+          echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
       - name: Run E2E tests with percy
         run: npm run test:e2e:percy -- -- --shard=$SHARD
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           WP_VERSION: ${{ matrix.wp }}
-          PERCY_BROWSER_EXECUTABLE: ${{ steps.chromium_path.outputs.chromium_path }}
+          PERCY_BROWSER_EXECUTABLE: ${{ env.chromium_path }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
@@ -203,6 +222,7 @@ jobs:
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
         if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
@@ -231,15 +251,15 @@ jobs:
     needs: [e2e, nonce]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm

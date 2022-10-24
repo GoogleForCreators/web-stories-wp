@@ -19,7 +19,6 @@
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { render } from '@testing-library/react';
-import { useFeature } from 'flagged';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 import { MaskTypes } from '@googleforcreators/masks';
 import { registerElementType } from '@googleforcreators/elements';
@@ -122,14 +121,6 @@ const PRODUCT_FLOWERS = {
 
 describe('Page output', () => {
   beforeAll(() => {
-    useFeature.mockImplementation((feature) => {
-      const config = {
-        enableAnimation: true,
-      };
-
-      return config[feature];
-    });
-
     elementTypes.forEach(registerElementType);
   });
 
@@ -170,7 +161,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -199,7 +190,7 @@ describe('Page output', () => {
           id: '123',
           elements: [backgroundElement],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -233,7 +224,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -315,7 +306,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 
@@ -327,7 +318,7 @@ describe('Page output', () => {
     });
   });
 
-  describe('autoAdvance', () => {
+  describe('page advancement', () => {
     it('should use default value for auto-advance-after', async () => {
       const props = {
         id: '123',
@@ -336,7 +327,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -354,12 +345,48 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 7,
       };
 
       const { container } = render(<PageOutput {...props} />);
       await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
+    });
+
+    it('should use custom value for auto-advance-after', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          advancement: { autoAdvance: false },
+          elements: [],
+        },
+        defaultAutoAdvance: true,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      await expect(
+        queryByAutoAdvanceAfter(container, '7s')
+      ).not.toBeInTheDocument();
+    });
+
+    it('should use custom duration for auto-advance-after', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          advancement: { autoAdvance: true, pageDuration: 9 },
+          elements: [],
+        },
+        defaultAutoAdvance: true,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      await expect(getByAutoAdvanceAfter(container, '9s')).toBeInTheDocument();
     });
 
     it('should use default duration for images', async () => {
@@ -393,7 +420,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 7,
       };
 
@@ -433,6 +460,65 @@ describe('Page output', () => {
             },
           ],
         },
+        defaultAutoAdvance: true,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const video = queryById(container, 'el-baz-media');
+      await expect(video).toBeInTheDocument();
+      expect(video).toMatchInlineSnapshot(`
+        <amp-video
+          artwork="https://example.com/poster.png"
+          autoplay="autoplay"
+          id="el-baz-media"
+          layout="fill"
+          poster="https://example.com/poster.png"
+        >
+          <source
+            src="https://example.com/video.mp4"
+            type="video/mp4"
+          />
+        </amp-video>
+      `);
+      await expect(
+        getByAutoAdvanceAfter(container, 'el-baz-media')
+      ).toBeInTheDocument();
+    });
+
+    it('should use video with volume', async () => {
+      const props = {
+        id: 'foo',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'bar',
+          elements: [
+            {
+              id: 'baz',
+              type: 'video',
+              mimeType: 'video/mp4',
+              scale: 1,
+              origRatio: 9 / 16,
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              loop: false,
+              volume: 0.5,
+              resource: {
+                type: 'video',
+                mimeType: 'video/mp4',
+                id: 123,
+                src: 'https://example.com/video.mp4',
+                poster: 'https://example.com/poster.png',
+                height: 1920,
+                width: 1080,
+                length: 99,
+              },
+            },
+          ],
+        },
         autoAdvance: true,
         defaultPageDuration: 7,
       };
@@ -447,6 +533,7 @@ describe('Page output', () => {
           id="el-baz-media"
           layout="fill"
           poster="https://example.com/poster.png"
+          volume="0.5"
         >
           <source
             src="https://example.com/video.mp4"
@@ -491,7 +578,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 7,
       };
 
@@ -549,7 +636,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 7,
       };
 
@@ -624,7 +711,7 @@ describe('Page output', () => {
             icon: 'https://example.test/example.jpg',
           },
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -655,7 +742,7 @@ describe('Page output', () => {
             ctaText: 'Click me!',
           },
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -678,7 +765,7 @@ describe('Page output', () => {
             icon: '',
           },
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -704,7 +791,7 @@ describe('Page output', () => {
             rel: ['nofollow'],
           },
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -739,7 +826,7 @@ describe('Page output', () => {
             ctaText: 'Click me!',
           },
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -770,7 +857,7 @@ describe('Page output', () => {
             ctaText: 'Click me!',
           },
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -796,7 +883,7 @@ describe('Page output', () => {
           ],
           pageAttachment: null,
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -853,7 +940,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 
@@ -897,7 +984,7 @@ describe('Page output', () => {
           id: '123',
           elements: [BACKGROUND_ELEMENT],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -924,7 +1011,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1003,7 +1090,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1030,7 +1117,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1091,7 +1178,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1124,7 +1211,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1187,7 +1274,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1214,7 +1301,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1268,7 +1355,7 @@ describe('Page output', () => {
           id: '123',
           elements: [BACKGROUND_ELEMENT, MEDIA_ELEMENT],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1294,7 +1381,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1323,7 +1410,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1361,7 +1448,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1392,7 +1479,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1420,7 +1507,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1464,7 +1551,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
@@ -1525,7 +1612,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 7,
       };
 
@@ -1672,6 +1759,8 @@ describe('Page output', () => {
   });
 
   describe('AMP validation', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
     it('should produce valid AMP output', async () => {
       const props = {
         id: '123',
@@ -1680,7 +1769,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 
@@ -1695,7 +1784,38 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: false,
+        defaultAutoAdvance: false,
+      };
+
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    it('should produce valid AMP output with custom page duration', async () => {
+      const props = {
+        id: 's1',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'p1',
+          advancement: { autoAdvance: true, pageDuration: 10 },
+          elements: [],
+        },
+        defaultAutoAdvance: true,
+        defaultPageDuration: 7,
+      };
+
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    it('should produce valid AMP output with custom manual page advancement', async () => {
+      const props = {
+        id: 's1',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'p1',
+          advancement: { autoAdvance: false },
+          elements: [],
+        },
+        defaultAutoAdvance: true,
       };
 
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
@@ -1709,7 +1829,7 @@ describe('Page output', () => {
           id: '123',
           elements: [],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         pageAttachment: {
           url: 'http://example.com',
           ctaText: 'Click me!',
@@ -1750,7 +1870,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 
@@ -1788,7 +1908,7 @@ describe('Page output', () => {
             },
           ],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 
@@ -1812,7 +1932,7 @@ describe('Page output', () => {
           animations: [],
           elements: [],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 
@@ -1846,7 +1966,7 @@ describe('Page output', () => {
           animations: [],
           elements: [],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 
@@ -1873,7 +1993,7 @@ describe('Page output', () => {
           animations: [],
           elements: [],
         },
-        autoAdvance: true,
+        defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 

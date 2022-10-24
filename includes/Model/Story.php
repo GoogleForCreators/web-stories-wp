@@ -27,11 +27,15 @@
 namespace Google\Web_Stories\Model;
 
 use Google\Web_Stories\Media\Image_Sizes;
+use Google\Web_Stories\Shopping\Product;
+use Google\Web_Stories\Shopping\Product_Meta;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 
 /**
  * Class Story
+ *
+ * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
 class Story {
 	/**
@@ -114,6 +118,13 @@ class Story {
 	protected $poster_portrait_size = [];
 
 	/**
+	 * Array of product data.
+	 *
+	 * @var Product[]
+	 */
+	protected $products = [];
+
+	/**
 	 * Poster url - portrait.
 	 *
 	 * @var string
@@ -182,16 +193,16 @@ class Story {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
 
 			if ( $poster_src ) {
 				[ $poster_url, $width, $height ] = $poster_src;
 				$this->poster_portrait           = $poster_url;
 				$this->poster_portrait_size      = [ (int) $width, (int) $height ];
 
-				$size_array = [ (int) $width, (int) $height ];
 				$image_meta = wp_get_attachment_metadata( $thumbnail_id );
 				if ( $image_meta ) {
+					$size_array          = [ $image_meta['width'], $image_meta['height'] ];
 					$this->poster_sizes  = (string) wp_calculate_image_sizes( $size_array, $poster_url, $image_meta, $thumbnail_id );
 					$this->poster_srcset = (string) wp_calculate_image_srcset( $size_array, $poster_url, $image_meta, $thumbnail_id );
 				}
@@ -217,13 +228,28 @@ class Story {
 		$publisher_logo_id = get_post_meta( $this->id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
 
 		if ( ! empty( $publisher_logo_id ) ) {
-			$img_src = wp_get_attachment_image_src( (int) $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
+			$img_src = wp_get_attachment_image_src( (int) $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_DIMENSIONS );
 
 			if ( $img_src ) {
 				[ $src, $width, $height ]  = $img_src;
 				$this->publisher_logo_size = [ $width, $height ];
 				$this->publisher_logo      = $src;
 			}
+		}
+
+		/**
+		 * Product data.
+		 *
+		 * @var ProductData[]|false $products
+		 */
+		$products = get_post_meta( $this->id, Product_Meta::PRODUCTS_POST_META_KEY, true );
+
+		if ( \is_array( $products ) ) {
+			$product_objects = [];
+			foreach ( $products as $product ) {
+				$product_objects[] = Product::load_from_array( $product );
+			}
+			$this->products = $product_objects;
 		}
 
 		return true;
@@ -429,5 +455,16 @@ class Story {
 	 */
 	public function get_poster_portrait_size(): array {
 		return $this->poster_portrait_size;
+	}
+
+	/**
+	 * Get product data.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @return Product[]
+	 */
+	public function get_products(): array {
+		return $this->products;
 	}
 }

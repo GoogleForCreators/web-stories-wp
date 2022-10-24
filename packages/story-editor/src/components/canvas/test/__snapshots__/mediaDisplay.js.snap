@@ -2,18 +2,18 @@
 
 exports[`MediaDisplay should apply and reset transformations: empty style after 1`] = `
 CSSStyleDeclaration {
-  "_importants": Object {},
+  "_importants": {},
   "_length": 0,
   "_onChange": [Function],
-  "_values": Object {},
+  "_values": {},
 }
 `;
 
 exports[`MediaDisplay should apply and reset transformations: empty style before 1`] = `
 CSSStyleDeclaration {
-  "_importants": Object {},
+  "_importants": {},
   "_length": 0,
   "_onChange": [Function],
-  "_values": Object {},
+  "_values": {},
 }
 `;

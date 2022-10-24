@@ -59,15 +59,15 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -93,6 +93,8 @@ jobs:
 
       - name: JS Lint
         run: npm run lint:js
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         if: >
           github.event.pull_request.head.repo.fork == true ||
           github.event.pull_request.user.login == 'dependabot[bot]'
@@ -100,6 +102,8 @@ jobs:
       - name: JS Lint Report
         run: npm run lint:js:report
         continue-on-error: true
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         # Prevent generating the ESLint report if PR is from a fork or authored by Dependabot.
         if: >
           github.event.pull_request.head.repo.fork == false &&

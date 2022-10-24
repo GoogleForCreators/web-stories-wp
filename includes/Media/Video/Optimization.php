@@ -27,12 +27,13 @@
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 
 /**
  * Class Optimization
  */
-class Optimization extends Service_Base implements HasMeta {
+class Optimization extends Service_Base implements HasMeta, PluginUninstallAware {
 
 	/**
 	 * The optimized video id post meta key.
@@ -46,6 +47,7 @@ class Optimization extends Service_Base implements HasMeta {
 	 */
 	public function register(): void {
 		$this->register_meta();
+		add_action( 'delete_attachment', [ $this, 'delete_video' ] );
 	}
 
 	/**
@@ -67,5 +69,25 @@ class Optimization extends Service_Base implements HasMeta {
 				'object_subtype'    => 'attachment',
 			]
 		);
+	}
+
+	/**
+	 * Deletes associated meta data when a video is deleted.
+	 *
+	 * @since 1.26.0
+	 *
+	 * @param int $attachment_id ID of the attachment to be deleted.
+	 */
+	public function delete_video( int $attachment_id ): void {
+		delete_metadata( 'post', 0, self::OPTIMIZED_ID_POST_META_KEY, $attachment_id, true );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::OPTIMIZED_ID_POST_META_KEY );
 	}
 }

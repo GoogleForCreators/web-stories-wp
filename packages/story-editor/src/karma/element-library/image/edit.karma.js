@@ -203,9 +203,9 @@ describe('Image Editor', () => {
 
         // Scale image up by scrolling three steps
         await fixture.events.mouse.moveRel(image, 10, 10);
-        await fixture.events.mouse.wheel({ deltaY: 1 });
-        await fixture.events.mouse.wheel({ deltaY: 1 });
-        await fixture.events.mouse.wheel({ deltaY: 1 });
+        await fixture.events.mouse.wheel({ deltaY: 5 });
+        await fixture.events.mouse.wheel({ deltaY: 5 });
+        await fixture.events.mouse.wheel({ deltaY: 5 });
 
         // Expect image to be scaled up
         const scaledUpRect = image.getBoundingClientRect();

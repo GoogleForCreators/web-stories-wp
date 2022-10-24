@@ -103,11 +103,11 @@ describe('DeleteDialog', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /delete/i }));
 
-    await waitFor(() => expect(deleteMedia).toHaveBeenCalledTimes(1));
-    expect(deleteMediaElement).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(deleteMedia).toHaveBeenCalledOnce());
+    expect(deleteMediaElement).toHaveBeenCalledOnce();
 
-    expect(serverDeleted).toBe(true);
-    expect(stateDeleted).toBe(true);
+    expect(serverDeleted).toBeTrue();
+    expect(stateDeleted).toBeTrue();
   });
 
   it('should show snackbar if error on delete from server', async () => {
@@ -121,9 +121,9 @@ describe('DeleteDialog', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /delete/i }));
 
-    await waitFor(() => expect(deleteMedia).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(deleteMedia).toHaveBeenCalledOnce());
     expect(deleteMediaElement).toHaveBeenCalledTimes(0);
-    expect(showSnackbar).toHaveBeenCalledTimes(1);
+    expect(showSnackbar).toHaveBeenCalledOnce();
   });
 
   it('should show snackbar if error on delete from state', async () => {
@@ -137,8 +137,8 @@ describe('DeleteDialog', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /delete/i }));
 
-    await waitFor(() => expect(deleteMedia).toHaveBeenCalledTimes(1));
-    expect(deleteMediaElement).toHaveBeenCalledTimes(1);
-    expect(showSnackbar).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(deleteMedia).toHaveBeenCalledOnce());
+    expect(deleteMediaElement).toHaveBeenCalledOnce();
+    expect(showSnackbar).toHaveBeenCalledOnce();
   });
 });

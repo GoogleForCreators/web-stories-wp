@@ -58,8 +58,8 @@ describe('useLayerActions', () => {
     });
     const { result } = renderHook(() => useLayerActions());
 
-    expect(result.current.canElementMoveForwards).toBe(false);
-    expect(result.current.canElementMoveBackwards).toBe(false);
+    expect(result.current.canElementMoveForwards).toBeFalse();
+    expect(result.current.canElementMoveBackwards).toBeFalse();
 
     result.current.handleSendBackward();
     result.current.handleSendToBack();
@@ -79,8 +79,8 @@ describe('useLayerActions', () => {
 
     result.current.handleSendBackward();
 
-    expect(result.current.canElementMoveBackwards).toBe(false);
-    expect(result.current.canElementMoveForwards).toBe(false);
+    expect(result.current.canElementMoveBackwards).toBeFalse();
+    expect(result.current.canElementMoveForwards).toBeFalse();
   });
 
   describe('moving backwards', () => {
@@ -123,7 +123,7 @@ describe('useLayerActions', () => {
 
       result.current.handleSendBackward();
 
-      expect(result.current.canElementMoveBackwards).toBe(false);
+      expect(result.current.canElementMoveBackwards).toBeFalse();
     });
   });
 
@@ -167,7 +167,7 @@ describe('useLayerActions', () => {
 
       result.current.handleSendBackward();
 
-      expect(result.current.canElementMoveForwards).toBe(false);
+      expect(result.current.canElementMoveForwards).toBeFalse();
     });
   });
 });

@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import { Icons } from '@googleforcreators/design-system';
 import { memo, useCallback } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -69,7 +68,6 @@ const ChevronRight = styled(Icons.ChevronDown)`
 `;
 
 function GroupLayer({ groupId }) {
-  const isLayerLockingEnabled = useFeature('layerLocking');
   const { groups, updateGroupById } = useStory(({ actions, state }) => ({
     groups: state.currentPage.groups,
     updateGroupById: actions.updateGroupById,
@@ -115,7 +113,7 @@ function GroupLayer({ groupId }) {
       handleClick={handleClick}
       isSelected={isSelected}
       LayerIcon={GroupLayerIcon}
-      hasLayerLockIcon={isLocked && isLayerLockingEnabled}
+      hasLayerLockIcon={isLocked}
       LayerLockIcon={Icons.LockClosed}
       actions={<GroupLayerActions groupId={groupId} />}
     />

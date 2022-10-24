@@ -15,10 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Resource, ResourceSize } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import aspectRatiosApproximatelyMatch from './aspectRatiosApproximatelyMatch';
-import type { Resource, ResourceSize } from './types';
 
 /**
  * Encodes a text string as a valid Uniform Resource Identifier (URI)

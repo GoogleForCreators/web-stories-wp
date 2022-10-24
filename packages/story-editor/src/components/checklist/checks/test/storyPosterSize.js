@@ -32,8 +32,8 @@ describe('storyPosterSize', () => {
       width: 720,
     });
     const test = storyPosterSize(testFeaturedMedia);
-    expect(testHappy).toBe(false);
-    expect(test).toBe(true);
+    expect(testHappy).toBeFalse();
+    expect(test).toBeTrue();
   });
   it('should return false for a story with the correct poster image size.', () => {
     const testFeaturedMedia = {
@@ -43,7 +43,7 @@ describe('storyPosterSize', () => {
     };
 
     const test = storyPosterSize(testFeaturedMedia);
-    expect(test).toBe(false);
+    expect(test).toBeFalse();
   });
   it("should return true if the story's poster image is too small", () => {
     const testHeightFeaturedMedia = {
@@ -69,9 +69,9 @@ describe('storyPosterSize', () => {
     const testHeight = storyPosterSize(testHeightFeaturedMedia);
     const testWidth = storyPosterSize(testWidthFeaturedMedia);
     const test = storyPosterSize(testFeaturedMedia);
-    expect(testHappy).toBe(false);
-    expect(testHeight).toBe(true);
-    expect(testWidth).toBe(true);
-    expect(test).toBe(true);
+    expect(testHappy).toBeFalse();
+    expect(testHeight).toBeTrue();
+    expect(testWidth).toBeTrue();
+    expect(test).toBeTrue();
   });
 });

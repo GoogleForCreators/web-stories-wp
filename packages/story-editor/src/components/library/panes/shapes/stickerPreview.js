@@ -23,7 +23,6 @@ import STICKERS from '@googleforcreators/stickers';
 import {
   Button,
   BUTTON_SIZES,
-  ThemeGlobals,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { useUnits } from '@googleforcreators/units';
@@ -45,14 +44,11 @@ const StickerButton = styled(Button).attrs({
   height: 60px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
 
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR},
-    &[data-focus-visible-added]
-    [role='presentation'] {
+  &:focus-visible {
     box-shadow: none;
   }
 
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
-  &[data-focus-visible-added] [role='presentation'] {
+  &:focus-visible [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,

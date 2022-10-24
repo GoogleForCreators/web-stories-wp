@@ -26,8 +26,8 @@ describe('isTrackingEnabled', () => {
   });
 
   it('should return a boolean', async () => {
-    await expect(isTrackingEnabled()).resolves.toBe(false);
+    await expect(isTrackingEnabled()).resolves.toBeFalse();
     config.trackingEnabled = true;
-    await expect(isTrackingEnabled()).resolves.toBe(true);
+    await expect(isTrackingEnabled()).resolves.toBeTrue();
   });
 });

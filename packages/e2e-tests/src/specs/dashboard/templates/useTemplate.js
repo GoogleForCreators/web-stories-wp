@@ -23,22 +23,22 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Template', () => {
-  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#12024): Fix flakey test.
-  it.skip('should be able to use existing template for new story', async () => {
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('Explore Templates', () => {
+  it('should be able to use existing template for new story', async () => {
     await visitDashboard();
 
-    const dashboardNavigation = await expect(page).toMatchElement(
+    await expect(page).toMatchElement(
       '[aria-label="Main dashboard navigation"]'
     );
 
-    await expect(dashboardNavigation).toClick('a', {
+    await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
       text: 'Explore Templates',
     });
     await page.waitForTimeout(100);
 
-    await expect(page).toMatch('Viewing all');
-    await expect(page).toMatch('templates');
+    await expect(page).toMatch(/Viewing all (\d+) templates/);
 
     await expect(page).toClick('[data-testid="template-grid-item-1"] button', {
       text: 'See details',
@@ -56,11 +56,12 @@ describe('Template', () => {
       return colors;
     });
 
-    await expect(page).toClick(
-      'button[aria-label="Use Fresh & Bright template to create new story"]'
-    );
-
-    await page.waitForNavigation();
+    await Promise.all([
+      expect(page).toClick(
+        'button[aria-label="Use Fresh & Bright template to create new story"]'
+      ),
+      page.waitForNavigation(),
+    ]);
 
     // Wait for title input to load before continuing.
     await page.waitForSelector('input[placeholder="Add title"]');
@@ -74,32 +75,17 @@ describe('Template', () => {
       { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
     );
 
-    // Expand layers popup
-    await expect(page).toClick('button[aria-label^="Layers "]');
-
-    // Select a text layer so 'Saved Colors' panel is present
-    await expect(page).toClick('div[data-testid="layer-option"] button', {
-      text: /^Fresh/,
-    });
-
-    // Open style pane
-    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
-
-    // Collapse layers popup to avoid aXe error about duplicative alt tags
-    await expect(page).toClick('button[aria-label^="Layers "]');
-
-    // close floating menu
-    await expect(page).toClick('button', { text: 'Dismiss menu' });
-
-    // make sure popup is closed otherwise aXe will error
-    await page.waitForTimeout(300);
-
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await expect(page).toMatchElement('[data-element-id]');
+    // Click on text element so the 'Saved Colors' panel is present.
+    // Pressing Option/Alt key because it's part of a layer group.
+    await page.keyboard.down('Alt');
+    await expect(page).toClick(
+      '[data-testid="frameElement"][aria-label^="Element: Fresh"]'
+    );
+    await page.keyboard.up('Alt');
 
     await takeSnapshot(page, 'Story From Template');
 
-    // Open the color picker
+    // Open the color picker from the floating menu
     await expect(page).toClick('button[aria-label="Text color"]');
 
     // Get all saved story colors and subtract 1 button for adding other colors
@@ -121,7 +107,7 @@ describe('Template', () => {
   describe('Disabled', () => {
     withPlugin('e2e-tests-disable-default-templates');
 
-    it('should not render explore templates', async () => {
+    it('should not display Explore Templates screen', async () => {
       await visitDashboard();
 
       await expect(page).toMatchElement('h2', { text: 'Dashboard' });

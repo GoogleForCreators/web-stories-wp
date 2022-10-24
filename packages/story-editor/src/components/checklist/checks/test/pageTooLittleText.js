@@ -32,7 +32,7 @@ describe('pageTooLittleText', () => {
       ],
     };
     const test = pageTooLittleText(page);
-    expect(test).toBe(true);
+    expect(test).toBeTrue();
   });
 
   it('should return false if there is enough text', () => {
@@ -53,6 +53,6 @@ describe('pageTooLittleText', () => {
         },
       ],
     };
-    expect(pageTooLittleText(page)).toBe(false);
+    expect(pageTooLittleText(page)).toBeFalse();
   });
 });

@@ -117,6 +117,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $this->instance, 'change_default_title' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_insert_post_empty_content', [ $this->instance, 'filter_empty_content' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
@@ -188,6 +189,26 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		);
 
 		$this->assertSame( '', $post->post_title );
+	}
+
+	/**
+	 * @covers ::filter_empty_content
+	 */
+	public function test_filter_empty_content(): void {
+		$postarr = [
+			'post_type'             => $this->instance->get_slug(),
+			'post_content_filtered' => 'Not empty',
+		];
+
+		$empty_postarr = [
+			'post_type'             => $this->instance->get_slug(),
+			'post_content_filtered' => '',
+		];
+
+		$this->assertFalse( $this->instance->filter_empty_content( false, $postarr ) );
+		$this->assertFalse( $this->instance->filter_empty_content( false, $empty_postarr ) );
+		$this->assertFalse( $this->instance->filter_empty_content( true, $postarr ) );
+		$this->assertTrue( $this->instance->filter_empty_content( true, $empty_postarr ) );
 	}
 
 	/**
@@ -293,5 +314,67 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		);
 
 		$this->assertTrue( $actual );
+	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		$presets = [
+			'fillColors' => [
+				[
+					'type'     => 'conic',
+					'stops'    =>
+						[
+							[
+								'color'    => [],
+								'position' => 0,
+							],
+							[
+								'color'    => [],
+								'position' => 0.7,
+							],
+						],
+					'rotation' => 0.5,
+				],
+			],
+			'textColors' => [
+				[
+					'color' => [],
+				],
+			],
+			'textStyles' => [
+				[
+					'color'              => [],
+					'backgroundColor'    =>
+						[
+							'type'     => 'conic',
+							'stops'    => [],
+							'rotation' => 0.5,
+						],
+					'backgroundTextMode' => 'FILL',
+					'font'               => [],
+				],
+			],
+		];
+		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
+
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_title'   => 'test title',
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		add_post_meta( $post->ID, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, [] );
+		add_post_meta( $post->ID, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, 123 );
+
+		$this->instance->on_plugin_uninstall();
+
+		$this->assertSame( '', get_post_meta( $post->ID, $this->instance::POSTER_META_KEY, true ) );
+
+		$this->assertSame( '', get_post_meta( $post->ID, $this->instance::PUBLISHER_LOGO_META_KEY, true ) );
+		$this->assertFalse( get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION ) );
 	}
 }

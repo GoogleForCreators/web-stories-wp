@@ -56,6 +56,58 @@ class Story extends TestCase {
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
 	}
 
+	/**
+	 * @covers ::load_from_post
+	 */
+	public function test_load_from_post_with_product(): void {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_title'   => 'test title',
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		add_post_meta(
+			$post->ID,
+			\Google\Web_Stories\Shopping\Product_Meta::PRODUCTS_POST_META_KEY,
+			[
+				[
+					'aggregateRating'      => [
+						'ratingValue' => 5,
+						'reviewCount' => 1,
+						'reviewUrl'   => 'http://www.example.com/product/t-shirt-with-logo',
+					],
+					'ratingValue'          => 0,
+					'reviewCount'          => 0,
+					'reviewUrl'            => 'http://www.example.com/product/t-shirt-with-logo',
+					'productBrand'         => 'Google',
+					'productDetails'       => 'This is a simple product.',
+					'productId'            => 'wc-36',
+					'productImages'        => [
+						[
+							'url' => 'http://www.example.com/wp-content/uploads/2019/01/t-shirt-with-logo-1-4.jpg',
+							'alt' => '',
+						],
+					],
+					'productPrice'         => 18,
+					'productPriceCurrency' => 'USD',
+					'productTitle'         => 'T-Shirt with Logo',
+					'productUrl'           => 'http://www.example.com/product/t-shirt-with-logo',
+				],
+
+			]
+		);
+
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+
+		$this->assertEquals( $story->get_title(), 'test title' );
+		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
+		$this->assertIsArray( $story->get_products() );
+		$this->assertInstanceOf( \Google\Web_Stories\Shopping\Product::class, $story->get_products()[0] );
+	}
+
 
 	/**
 	 * @covers ::load_from_post
@@ -71,7 +123,7 @@ class Story extends TestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'file'           => WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -83,9 +135,11 @@ class Story extends TestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
+		wp_delete_attachment( $poster_attachment_id, true );
+
 		$this->assertEquals( $story->get_title(), 'test title' );
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
-		$this->assertStringContainsString( 'canola.jpg', $story->get_poster_portrait() );
+		$this->assertStringContainsString( 'paint-640x853.jpeg', $story->get_poster_portrait() );
 		$this->assertNotEmpty( $story->get_poster_sizes() );
 		$this->assertIsString( $story->get_poster_sizes() );
 		$this->assertNotEmpty( $story->get_poster_srcset() );
@@ -139,7 +193,7 @@ class Story extends TestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'file'           => WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -162,9 +216,11 @@ class Story extends TestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
+		wp_delete_attachment( $poster_attachment_id, true );
+
 		$this->assertEquals( $story->get_title(), 'test title' );
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
-		$this->assertStringContainsString( 'canola.jpg', $story->get_poster_portrait() );
+		$this->assertStringContainsString( 'paint-640x853.jpeg', $story->get_poster_portrait() );
 		$this->assertNotEmpty( $story->get_poster_sizes() );
 		$this->assertIsString( $story->get_poster_sizes() );
 		$this->assertNotEmpty( $story->get_poster_srcset() );

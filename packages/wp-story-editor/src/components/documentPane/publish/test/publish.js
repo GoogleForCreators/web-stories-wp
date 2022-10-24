@@ -177,7 +177,7 @@ describe('PublishPanel', () => {
     await waitFor(() => expect(firstOfJanuary).toBeDefined());
 
     fireEvent.click(firstOfJanuary);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(updateStory).toHaveBeenCalledOnce();
     const calledArg = updateStory.mock.calls[0][0];
     const date = new Date(calledArg.properties.date);
     expect(date.getMonth()).toBe(0);
@@ -209,7 +209,7 @@ describe('PublishPanel', () => {
     fireEvent.click(element);
     const hours = screen.getByLabelText('Hours');
     const minutes = screen.getByLabelText('Minutes');
-    const am = screen.getByRole('button', { name: 'AM' });
+    const am = screen.getByRole('radio', { name: 'AM' });
 
     await waitFor(() => expect(minutes).toBeDefined());
     expect(hours).toBeInTheDocument();

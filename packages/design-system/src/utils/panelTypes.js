@@ -20,6 +20,7 @@ const CAPTIONS = 'captions';
 const FILTER = 'filter';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LINK = 'link';
+const PAGE_ADVANCEMENT = 'pageAdvancement';
 const PAGE_ATTACHMENT = 'pageAttachment';
 const PAGE_BACKGROUND = 'pageBackground';
 const PAGE_BACKGROUND_AUDIO = 'pageBackgroundAudio';
@@ -28,6 +29,7 @@ const SHAPE_STYLE = 'shapeStyle';
 const TEXT_ACCESSIBILITY = 'textAccessibility';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
+const VIDEO_SEGMENT = 'videoSegment';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
 const PRODUCT = 'product';
@@ -35,6 +37,7 @@ const PRODUCT = 'product';
 const PanelTypes = {
   ELEMENT_ALIGNMENT,
   PAGE_BACKGROUND,
+  PAGE_ADVANCEMENT,
   PAGE_ATTACHMENT,
   PAGE_BACKGROUND_AUDIO,
   SIZE_POSITION,
@@ -45,6 +48,7 @@ const PanelTypes = {
   BORDER,
   ANIMATION,
   VIDEO_OPTIONS,
+  VIDEO_SEGMENT,
   CAPTIONS,
   LINK,
   IMAGE_ACCESSIBILITY,

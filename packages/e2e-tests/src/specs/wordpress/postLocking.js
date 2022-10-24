@@ -26,11 +26,14 @@ import {
   activatePlugin,
   deactivatePlugin,
   takeSnapshot,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
 const storyTitle = 'Test post lock';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Post Locking', () => {
   beforeAll(async () => {
@@ -47,6 +50,7 @@ describe('Post Locking', () => {
 
   afterAll(async () => {
     await deactivatePlugin('e2e-tests-post-lock-mock');
+    await trashAllPosts('web-story');
   });
 
   it('should be able to open the dashboard with locked story', async () => {
@@ -63,7 +67,7 @@ describe('Post Locking', () => {
 
     await page.waitForSelector('.ReactModal__Content');
 
-    await expect(page).toMatch('Story is locked');
+    await expect(page).toMatch('This story is already being edited');
 
     await takeSnapshot(page, 'Stories editor with lock dialog');
   });

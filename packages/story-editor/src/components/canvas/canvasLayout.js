@@ -21,7 +21,6 @@ import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCombinedRefs } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -90,8 +89,6 @@ function CanvasLayout({ header, footer }) {
     ({ state: { isInRecordingMode } }) => ({ isInRecordingMode })
   );
 
-  const isFloatingMenuEnabled = useFeature('floatingMenu');
-
   // If we don't have proper canvas dimensions yet, don't bother rendering element layers.
   const hasDimensions = pageWidth !== 0 && pageHeight !== 0;
 
@@ -115,7 +112,7 @@ function CanvasLayout({ header, footer }) {
                 <>
                   <EyedropperLayer />
                   <EmptyStateLayer />
-                  {isFloatingMenuEnabled && <FloatingMenuLayer />}
+                  <FloatingMenuLayer />
                 </>
               )}
               {isInRecordingMode && <MediaRecordingLayer />}

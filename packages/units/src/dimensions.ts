@@ -13,18 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type {
+  Element,
+  ElementBox,
+  MediaElement,
+  ShapeElement,
+} from '@googleforcreators/types';
+
 /**
  * Internal dependencies
  */
-import {
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
-  DANGER_ZONE_HEIGHT,
-  FULLBLEED_HEIGHT,
-  DEFAULT_EM,
-} from './constants';
 import calcRotatedResizeOffset from './calcRotatedResizeOffset';
-import type { ElementBox, Element } from './types';
+import {
+  DANGER_ZONE_HEIGHT,
+  DEFAULT_EM,
+  FULLBLEED_HEIGHT,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from './constants';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -126,8 +136,15 @@ export function editorToDataY(
   return dataPixels(v);
 }
 
+type ElementWithBackground = MediaElement | ShapeElement;
+function elementAsBackground(
+  element: Element
+): element is ElementWithBackground {
+  return 'isBackground' in element;
+}
+
 /**
- * Converts the element's position, width, and rotation) to the "box" in the
+ * Converts the element's position, width, and rotation to the "box" in the
  * "editor" coordinate space.
  *
  * @param element The element's position, width, and rotation. See `StoryPropTypes.element`.
@@ -136,10 +153,13 @@ export function editorToDataY(
  * @return The "box" in the editor space.
  */
 export function getBox(
-  { x, y, width, height, rotationAngle, isBackground }: Element,
+  element: Element,
   pageWidth: number,
   pageHeight: number
 ): ElementBox {
+  const isBackground = elementAsBackground(element) && element.isBackground;
+
+  const { x, y, width, height, rotationAngle } = element;
   return {
     x: dataToEditorX(isBackground ? 0 : x, pageWidth),
     y: dataToEditorY(isBackground ? -DANGER_ZONE_HEIGHT : y, pageHeight),

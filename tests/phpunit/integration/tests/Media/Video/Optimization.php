@@ -43,5 +43,62 @@ class Optimization extends TestCase {
 		$this->instance->register();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::OPTIMIZED_ID_POST_META_KEY, 'attachment' ) );
+		$this->assertSame( 10, has_action( 'delete_attachment', [ $this->instance, 'delete_video' ] ) );
 	}
+
+	/**
+	 * @covers ::delete_video
+	 */
+	public function test_delete_video_meta_attachment_is_deleted(): void {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$optimized_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		add_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, $optimized_attachment_id );
+		$this->assertSame( $optimized_attachment_id, (int) get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true ) );
+		wp_delete_attachment( $optimized_attachment_id );
+		$this->assertEmpty( get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true ) );
+	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$optimized_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		add_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, $optimized_attachment_id );
+		$this->instance->on_plugin_uninstall();
+		$this->assertSame( '', get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true ) );
+	}
+
 }

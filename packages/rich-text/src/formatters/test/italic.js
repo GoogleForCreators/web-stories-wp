@@ -106,19 +106,19 @@ describe('Italic formatter', () => {
     it('should return false if both italic and non-italic', () => {
       const styles = [NONE, ITALIC];
       const result = setupFormatter(styles);
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     it('should return false if no style matches', () => {
       const styles = [NONE];
       const result = setupFormatter(styles);
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     it('should return true if only italic', () => {
       const styles = [ITALIC];
       const result = setupFormatter(styles);
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -145,7 +145,7 @@ describe('Italic formatter', () => {
 
       // Third argument is tester
       const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
-      expect(shouldSetStyle()).toBe(false);
+      expect(shouldSetStyle()).toBeFalse();
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting italic to true', () => {
@@ -159,7 +159,7 @@ describe('Italic formatter', () => {
 
       // Third argument is tester
       const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
-      expect(shouldSetStyle()).toBe(true);
+      expect(shouldSetStyle()).toBeTrue();
     });
   });
 });

@@ -656,7 +656,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
 			if ( $poster_src ) {
 				[$url, $width, $height] = $poster_src;
 

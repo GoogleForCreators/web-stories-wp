@@ -27,19 +27,18 @@
 namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Product_Meta.
- *
- * @phpstan-import-type ProductData from \Google\Web_Stories\Shopping\Product
  */
-class Product_Meta extends Service_Base implements HasMeta {
+class Product_Meta extends Service_Base implements HasMeta, PluginUninstallAware {
 	/**
 	 * The products meta key.
 	 */
-	private const PRODUCTS_POST_META_KEY = 'web_stories_products';
+	public const PRODUCTS_POST_META_KEY = 'web_stories_products';
 
 
 	/**
@@ -107,28 +106,11 @@ class Product_Meta extends Service_Base implements HasMeta {
 	}
 
 	/**
-	 * Get array of products from story ID.
+	 * Act on plugin uninstall.
 	 *
-	 * @since 1.22.0
-	 *
-	 * @param int $story_id ID of story.
-	 * @return array<string, mixed>
-	 *
-	 * @phpstan-return ProductData[] $products
+	 * @since 1.26.0
 	 */
-	public function get_products( int $story_id ): array {
-		/**
-		 * Product data.
-		 *
-		 * @var ProductData[]|false $products
-		 */
-		$products = get_post_meta( $story_id, self::PRODUCTS_POST_META_KEY, true );
-
-		if ( ! \is_array( $products ) ) {
-			return [];
-		}
-
-		return $products;
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::PRODUCTS_POST_META_KEY );
 	}
-
 }

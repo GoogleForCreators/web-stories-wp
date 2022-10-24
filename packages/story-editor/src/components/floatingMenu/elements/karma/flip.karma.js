@@ -25,10 +25,10 @@ describe('Design Menu: Flip toggles', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
 
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
 
     // Add an image to stage
     await fixture.events.mouse.clickOn(

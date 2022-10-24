@@ -28,6 +28,9 @@
 
 namespace Google\Web_Stories;
 
+use DateTime;
+use DateTimeZone;
+
 /**
  * Locale class.
  */
@@ -69,18 +72,39 @@ class Locale {
 		}
 
 		/**
+		 * Time zone string.
+		 *
+		 * @var string $timezone_string
+		 */
+		$timezone_string = get_option( 'timezone_string', 'UTC' );
+		$timezone_abbr   = '';
+
+		if ( ! empty( $timezone_string ) ) {
+			$timezone_date = new DateTime( 'now', new DateTimeZone( $timezone_string ) );
+			$timezone_abbr = $timezone_date->format( 'T' );
+		}
+
+		/**
 		 * Start of week value.
 		 *
 		 * @var int|string $start_of_week
 		 */
 		$start_of_week = get_option( 'start_of_week', 0 );
 
+		/**
+		 * GMT Offset.
+		 *
+		 * @var int $gmt_offset
+		 */
+		$gmt_offset = get_option( 'gmt_offset', 0 );
+
 		return [
 			'locale'           => str_replace( '_', '-', get_user_locale() ),
 			'dateFormat'       => $date_format,
 			'timeFormat'       => $time_format,
-			'gmtOffset'        => get_option( 'gmt_offset' ),
-			'timezone'         => get_option( 'timezone_string' ),
+			'gmtOffset'        => (float) $gmt_offset,
+			'timezone'         => $timezone_string,
+			'timezoneAbbr'     => $timezone_abbr,
 			'months'           => array_values( $wp_locale->month ),
 			'monthsShort'      => array_values( $wp_locale->month_abbrev ),
 			'weekdays'         => array_values( $wp_locale->weekday ),

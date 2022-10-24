@@ -36,7 +36,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/animation": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/dom": "*",
     "@googleforcreators/elements": "*",
@@ -50,11 +49,11 @@
     "@googleforcreators/stickers": "*",
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
-    "classnames": "^2.3.1",
+    "classnames": "^2.3.2",
     "polished": "^4.2.2",
     "prop-types": "^15.7.2",
     "react-transition-group": "^4.4.5",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {}
 }

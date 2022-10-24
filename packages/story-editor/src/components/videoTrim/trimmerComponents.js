@@ -78,7 +78,7 @@ export const Handle = styled(Slider)`
     border-color: ${({ theme }) => theme.colors.border.focus};
   }
 
-  &.focus-visible {
+  &:focus-visible {
     outline: none !important;
   }
 `;

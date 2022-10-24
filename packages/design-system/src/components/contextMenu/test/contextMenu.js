@@ -95,7 +95,7 @@ describe('ContextMenu', () => {
 
     fireEvent.mouseDown(elementOutsideContextMenu);
 
-    expect(onDismiss).toHaveBeenCalledTimes(1);
+    expect(onDismiss).toHaveBeenCalledOnce();
   });
 
   it('right clicking outside the context menu should call onDismiss', () => {
@@ -121,7 +121,7 @@ describe('ContextMenu', () => {
 
     fireEvent.mouseDown(elementOutsideContextMenu, { button: 'right' });
 
-    expect(onDismiss).toHaveBeenCalledTimes(1);
+    expect(onDismiss).toHaveBeenCalledOnce();
   });
 
   it('should focus the first focusable element when the menu is opened', () => {

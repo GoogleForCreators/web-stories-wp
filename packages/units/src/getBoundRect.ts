@@ -15,10 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { ElementBox } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import { dataPixels } from './dimensions';
-import type { ElementBox } from './types';
 
 /**
  * Get the outer frame values for all objects in `list`,

@@ -22,6 +22,7 @@ import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { createGlobalStyle, ThemeContext } from 'styled-components';
 
+export const BODY_CLASS = 'WebStories_ReactModal__Body--open';
 export const CONTENT_CLASS = 'WebStories_ReactModal__Content';
 export const OVERLAY_CLASS = 'WebStories_ReactModal__Overlay';
 
@@ -83,6 +84,7 @@ export function Modal({
       isOpen={isOpen}
       onRequestClose={onClose}
       overlayClassName={OVERLAY_CLASS}
+      bodyOpenClassName={BODY_CLASS}
       style={{
         maxHeight: '100vh',
         ...modalStyles,

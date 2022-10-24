@@ -25,7 +25,6 @@ describe('Design Menu: Video loop toggle', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
     try {
       await fixture.render();
     } catch {
@@ -33,6 +32,7 @@ describe('Design Menu: Video loop toggle', () => {
     }
 
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
 
     // Add a video to stage
     await fixture.events.mouse.clickOn(

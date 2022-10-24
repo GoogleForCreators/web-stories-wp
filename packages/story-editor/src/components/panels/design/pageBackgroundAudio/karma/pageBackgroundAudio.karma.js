@@ -15,12 +15,13 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { screen, waitFor } from '@testing-library/react';
+
+/**
+ * Internal dependencies
+ */
 import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 

@@ -1,14 +1,20 @@
 {
   "references": [
+    { "path": "packages/activation-notice" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
     { "path": "packages/media" },
+    { "path": "packages/migration" },
     { "path": "packages/moveable" },
+    { "path": "packages/patterns" },
     { "path": "packages/react" },
     { "path": "packages/rich-text" },
     { "path": "packages/stickers" },
+    { "path": "packages/templates" },
+    { "path": "packages/text-sets" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
+    { "path": "packages/types" },
     { "path": "packages/units" },
     { "path": "packages/url" },
     { "path": "packages/wp-utils" }

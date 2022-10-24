@@ -26,21 +26,24 @@ async function deleteWidgets() {
 
   // Remove all widgets
   await visitAdminPage('widgets.php');
-  await page.evaluate(() => {
-    const widgets = document.querySelectorAll(
-      '#widgets-right .widget .widget-action'
-    );
-    for (const widget of widgets) {
-      widget.click();
-    }
 
-    const widgetsDelete = document.querySelectorAll(
-      '#widgets-right .widget .widget-control-remove'
+  const widgets = await page.$$('#widgets-right .widget');
+
+  /* eslint-disable no-await-in-loop */
+  for (const item of widgets) {
+    await item.$eval('.widget-action', (toggleButton) => toggleButton.click());
+
+    // Transition animation.
+    await page.waitForTimeout(300);
+
+    await item.$eval('.widget-control-remove', (deleteLink) =>
+      deleteLink.click()
     );
-    for (const widgetDelete of widgetsDelete) {
-      widgetDelete.click();
-    }
-  });
+
+    // Transition animation.
+    await page.waitForTimeout(300);
+  }
+  /* eslint-enable no-await-in-loop */
 
   await deactivatePlugin('classic-widgets');
 }

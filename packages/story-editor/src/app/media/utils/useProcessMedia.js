@@ -30,6 +30,7 @@ import { trackError } from '@googleforcreators/tracking';
  */
 import useAPI from '../../api/useAPI';
 import useStory from '../../story/useStory';
+import useFFmpeg from './useFFmpeg';
 import useMediaInfo from './useMediaInfo';
 
 function useProcessMedia({
@@ -41,6 +42,9 @@ function useProcessMedia({
   const {
     actions: { getOptimizedMediaById, getMutedMediaById },
   } = useAPI();
+
+  const { segmentVideo: ffSegmentVideo } = useFFmpeg();
+
   const { updateElementsByResourceId, updateElementById } = useStory(
     (state) => ({
       updateElementsByResourceId: state.actions.updateElementsByResourceId,
@@ -306,6 +310,7 @@ function useProcessMedia({
           additionalData: {
             originalId: resourceId,
             isMuted,
+            trimData,
             mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
           elementId,
@@ -541,6 +546,7 @@ function useProcessMedia({
             cropVideo: true,
             additionalData: {
               original_id: resourceId,
+              cropOriginId: resourceId,
               cropParams,
               mediaSource: isOptimized ? 'video-optimization' : 'editor',
             },
@@ -567,12 +573,43 @@ function useProcessMedia({
     ]
   );
 
+  /**
+   * Segment video using FFmpeg.
+   *
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param {Function} onUploadSuccess Callback for when upload finishes.
+   * @return {string|null} Batch ID of the uploaded files on success, null otherwise.
+   */
+  const segmentVideo = useCallback(
+    async ({ resource, segmentTime }, onUploadSuccess) => {
+      try {
+        const { src: url, mimeType } = resource;
+        const segmentedFiles = await ffSegmentVideo(
+          await fetchRemoteFile(url, mimeType),
+          segmentTime,
+          resource.length
+        );
+
+        return await uploadMedia(segmentedFiles, {
+          onUploadSuccess: onUploadSuccess,
+        });
+      } catch (err) {
+        // eslint-disable-next-line no-console -- surface this error
+        console.log(err.message);
+        trackError('segment_video', err.message);
+        return null;
+      }
+    },
+    [uploadMedia, ffSegmentVideo]
+  );
+
   return {
     optimizeVideo,
     optimizeGif,
     muteExistingVideo,
     trimExistingVideo,
     cropExistingVideo,
+    segmentVideo,
   };
 }
 

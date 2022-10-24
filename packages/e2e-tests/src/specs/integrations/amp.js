@@ -24,10 +24,17 @@ import {
   insertStoryTitle,
   setAnalyticsCode,
   withPlugin,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('AMP plugin integration', () => {
   withPlugin('amp');
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
 
   it('should be able to directly preview a story without amp-analytics being stripped', async () => {
     await setAnalyticsCode('UA-10876-1');
@@ -39,9 +46,7 @@ describe('AMP plugin integration', () => {
     await addTextElement();
 
     const editorPage = page;
-    const previewPage = await previewStory(editorPage);
-
-    await previewPage.screenshot({ path: 'build/amp.png' });
+    const previewPage = await previewStory();
 
     await expect(previewPage).toMatchElement('amp-analytics');
 

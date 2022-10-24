@@ -42,13 +42,14 @@ const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({
   page,
-  autoAdvance = DEFAULT_AUTO_ADVANCE,
+  defaultAutoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
   flags,
 }) {
   const {
     id,
     animations,
+    advancement,
     elements,
     backgroundColor,
     backgroundAudio,
@@ -64,11 +65,16 @@ function OutputPage({
     ? { backgroundColor: baseColor }
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
+  const {
+    autoAdvance = defaultAutoAdvance,
+    pageDuration = defaultPageDuration,
+  } = advancement || {};
+
   const autoAdvanceAfter = autoAdvance
     ? getAutoAdvanceAfter({
         animations,
         elements,
-        defaultPageDuration,
+        defaultPageDuration: pageDuration,
         backgroundAudio,
         id,
       })
@@ -162,6 +168,10 @@ function OutputPage({
           </amp-story-grid-layer>
         )}
 
+        {backgroundAudioSrc && needsEnhancedBackgroundAudio && (
+          <BackgroundAudio backgroundAudio={backgroundAudio} id={id} />
+        )}
+
         <amp-story-grid-layer
           template="vertical"
           aspect-ratio={ASPECT_RATIO}
@@ -180,10 +190,6 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-
-      {backgroundAudioSrc && needsEnhancedBackgroundAudio && (
-        <BackgroundAudio backgroundAudio={backgroundAudio} id={id} />
-      )}
 
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer
@@ -215,7 +221,7 @@ function OutputPage({
 
 OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
-  autoAdvance: PropTypes.bool,
+  defaultAutoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
   flags: PropTypes.object,
 };

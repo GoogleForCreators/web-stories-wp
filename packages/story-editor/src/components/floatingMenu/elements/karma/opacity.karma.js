@@ -24,10 +24,10 @@ describe('Design Menu: Opacity Input', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ floatingMenu: true });
 
     await fixture.render();
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
 
     // add image to canvas
     await fixture.events.mouse.clickOn(

@@ -21,7 +21,6 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef, useEffect } from '@googleforcreators/react';
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
 /**
  * Internal dependencies
@@ -34,15 +33,6 @@ import { VideoWrapper, Video, Photo, Canvas } from './components';
 import Audio from './audio';
 import { BACKGROUND_BLUR_PX, VIDEO_EFFECTS } from './constants';
 import blur from './blur';
-
-const selfieSegmentation = new SelfieSegmentation({
-  locateFile: (file) =>
-    `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
-});
-selfieSegmentation.setOptions({
-  modelSelection: 1,
-});
-selfieSegmentation.initialize();
 
 function PlaybackMedia() {
   const {
@@ -105,6 +95,8 @@ function PlaybackMedia() {
     [setVideoNode]
   );
 
+  const selfieSegmentation = useRef();
+
   const onSelfieSegmentationResults = (results) => {
     const canvas = canvasRef.current;
     if (!canvas || !results.image || results.image.width === 0) {
@@ -154,25 +146,47 @@ function PlaybackMedia() {
   };
 
   useEffect(() => {
-    async function run() {
-      await selfieSegmentation.initialize();
+    if (!hasVideoEffect || selfieSegmentation.current) {
+      return;
+    }
 
+    (async () => {
+      const { SelfieSegmentation } = await import(
+        /* webpackChunkName: "chunk-selfie-segmentation" */ '@mediapipe/selfie_segmentation'
+      );
+
+      selfieSegmentation.current = new SelfieSegmentation({
+        // TODO: Consider fetching from wp.stories.google instead.
+        locateFile: (file) =>
+          `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
+      });
+
+      selfieSegmentation.current.setOptions({
+        modelSelection: 1,
+      });
+
+      await selfieSegmentation.current.initialize();
+    })();
+  }, [hasVideoEffect]);
+
+  useEffect(() => {
+    async function run() {
       if (hasVideoEffect && canvasRef.current) {
         canvasRef.current.getContext('2d');
         setCanvasNode(canvasRef.current);
-        setCanvasStream(canvasRef.current.captureStream());
+        const canvasStreamRaw = canvasRef.current.captureStream();
+        const liveStreamAudio = liveStream.getAudioTracks();
+        if (liveStreamAudio.length > 0) {
+          canvasStreamRaw.addTrack(liveStreamAudio[0]);
+        }
+        setCanvasStream(canvasStreamRaw);
       }
-      if (videoEffect === VIDEO_EFFECTS.BLUR) {
-        selfieSegmentation.onResults(onSelfieSegmentationResults);
+      if (videoEffect === VIDEO_EFFECTS.BLUR && selfieSegmentation.current) {
+        selfieSegmentation.current.onResults(onSelfieSegmentationResults);
         const sendFrame = async () => {
-          if (
-            streamNode &&
-            streamNode.videoWidth &&
-            selfieSegmentation &&
-            canvasRef.current
-          ) {
+          if (streamNode && streamNode.videoWidth && canvasRef.current) {
             try {
-              await selfieSegmentation.send({ image: streamNode });
+              await selfieSegmentation.current.send({ image: streamNode });
             } catch (e) {
               // We can't do much about the WASM memory issue.
             }
@@ -186,7 +200,10 @@ function PlaybackMedia() {
         }
       }
     }
+
     run();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- including liveStream will cause freeze
   }, [videoEffect, hasVideoEffect, streamNode, setCanvasStream, setCanvasNode]);
 
   // Only previewing a gif means that the play button is hidden,
