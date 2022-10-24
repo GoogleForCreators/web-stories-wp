@@ -1,5 +1,5 @@
 {
-  "version": 43,
+  "version": 44,
   "pages": [
     {
       "elements": [
@@ -101,7 +101,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Beauty Quiz for Your Best Skin Ever</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -174,7 +173,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Ann Kv Atowich</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -314,7 +312,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Trying to figure out the right set of products and building a beauty regimen can be confusing. Take our quiz for an easy serving of what steps to incorporate into your daily routine.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -502,7 +499,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Let's start with the basics. What is your age range?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -573,7 +569,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #1e0404; text-transform: uppercase\">QUESTION</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -714,7 +709,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">18-24</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -781,7 +775,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">25-35</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -848,7 +841,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">36-45</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1034,7 +1026,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Do you have any skin concerns?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1105,7 +1096,6 @@
           "id": "f6857a9d-ffd3-46c4-beb4-a9c3a4bbd33f",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"color: #1e0404; text-transform: uppercase\">QUESTION</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1246,7 +1236,6 @@
           "id": "0d872af9-68a4-4bf2-a625-ad57c3b5b12b",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Pregnant</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1313,7 +1302,6 @@
           "id": "964763e8-7cff-41f3-b2df-9b76625af59a",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Eczema</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1380,7 +1368,6 @@
           "id": "f586254a-907d-445a-a64f-99308d0b6e9f",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Seasonal allergies</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1553,7 +1540,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">Great! Lets move onto your skin concerns</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1716,7 +1702,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">What's your ideal skin look like?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1787,7 +1772,6 @@
           "id": "a6e03012-b9f7-4f20-a56c-badc016a12be",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"color: #1e0404; text-transform: uppercase\">QUESTION</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1928,7 +1912,6 @@
           "id": "605e3181-c2e2-4af1-baae-e1f40e799f7a",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Bright</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1995,7 +1978,6 @@
           "id": "896b41cf-0e4a-446f-abe5-88f9650ec21b",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Glowy, dewy</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2062,7 +2044,6 @@
           "id": "a48bd3a4-92fc-4a82-913d-9515874b9da3",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Even, calm</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2237,7 +2218,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">Almost Done!</span>\n<span style=\"font-weight: 300; color: #fff\">Only one final question.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2400,7 +2380,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">How much time do you have each morning for skincare?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2471,7 +2450,6 @@
           "id": "8c582e3a-6fd4-4f9f-9f9b-73c178b0e0b3",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"color: #1e0404; text-transform: uppercase\">QUESTION</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2612,7 +2590,6 @@
           "id": "f3272c5d-c503-4dcf-8817-e22f6ed18c95",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">5 mins or less</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2679,7 +2656,6 @@
           "id": "d609d546-692e-4ba7-8cdd-a5f5dc35adca",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">30 mins</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2746,7 +2722,6 @@
           "id": "38933f56-29e5-4b64-a329-2373c73c456a",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">1 hour</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2836,7 +2811,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">You need a brightening and clarifying regimen.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2910,7 +2884,6 @@
           "id": "4ed6b780-7e96-4d6a-9532-a3f4dc985609",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Evenness</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2980,7 +2953,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Brightening dullness</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3050,7 +3022,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Dewy</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3117,7 +3088,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">10%</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3184,7 +3154,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">38%</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3251,7 +3220,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">40%</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3424,7 +3392,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">Kjaer Weis Beautiful Oil</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3498,7 +3465,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">It may sound counterintuitive to use an oil, but this one evens out skin tone and natural levels of hydration for an all over even skin tone.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3664,7 +3630,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">La Mer's The Tonic</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3738,7 +3703,6 @@
           "id": "4d89d11f-ca6e-40ac-b2ae-2ccc3eb9f2fc",
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "content": "<span style=\"font-weight: 300; color: #fff\">A refreshing toner that balances and refreshes the complexion.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3833,7 +3797,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">More beauty tips for your skin type</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3907,7 +3870,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">5 steps to a brighter complexion</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3977,7 +3939,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">When to exfoliate and how to do it</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4047,7 +4008,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Serums and oils for your nighttime routine</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
