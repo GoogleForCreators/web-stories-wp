@@ -39,10 +39,22 @@ function StatusCheck() {
   useEffect(() => {
     // If it succeeds, do nothing.
     // Only in case of failure do we want to alert the user and track the error.
-    getStatusCheck(getContent(), statusCheck, encodeMarkup).catch((err) => {
-      setShowDialog(true);
-      trackError('status_check', err.message);
-    });
+    getStatusCheck(getContent(), statusCheck, encodeMarkup)
+      .then((result) => {
+        if (result && result?.success === true) {
+          return;
+        }
+
+        try {
+          JSON.parse(result);
+        } catch {
+          throw new Error('Invalid JSON');
+        }
+      })
+      .catch((err) => {
+        setShowDialog(true);
+        trackError('status_check', err.message);
+      });
   }, [encodeMarkup, statusCheck]);
 
   return <StatusCheckFailed isOpen={showDialog} onClose={closeDialog} />;

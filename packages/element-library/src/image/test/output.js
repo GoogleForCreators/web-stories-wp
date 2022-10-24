@@ -25,6 +25,8 @@ import { renderToStaticMarkup } from '@googleforcreators/react';
 import ImageOutput from '../output';
 
 describe('Image output', () => {
+  jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
   const baseProps = {
     element: {
       id: '123',

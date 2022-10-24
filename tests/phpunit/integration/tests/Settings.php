@@ -21,26 +21,72 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\Settings
  */
 class Settings extends DependencyInjectedTestCase {
+
+	/**
+	 * @var \Google\Web_Stories\Settings
+	 */
+	private $instance;
+
+	public function set_up(): void {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Settings::class );
+	}
+
 	/**
 	 * @covers ::register
 	 */
 	public function test_register(): void {
-		$settings = $this->injector->make( \Google\Web_Stories\Settings::class );
-		$settings->register();
+		$this->instance->register();
 
 		$options = get_registered_settings();
-		$this->assertArrayHasKey( $settings::SETTING_NAME_EXPERIMENTS, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_TRACKING_ID, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_USING_LEGACY_ANALYTICS, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_NETWORK, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_MANAGER_SLOT_ID, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_SLOT_ID, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_EXPERIMENTS, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_PUBLISHER_LOGOS, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_VIDEO_CACHE, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_DATA_REMOVAL, $options );
-		$this->assertArrayHasKey( $settings::SETTING_NAME_ARCHIVE, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_EXPERIMENTS, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_TRACKING_ID, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_USING_LEGACY_ANALYTICS, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_AD_NETWORK, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_AD_MANAGER_SLOT_ID, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_ADSENSE_PUBLISHER_ID, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_ADSENSE_SLOT_ID, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_EXPERIMENTS, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_PUBLISHER_LOGOS, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_VIDEO_CACHE, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_DATA_REMOVAL, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_ARCHIVE, $options );
+	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		add_option( $this->instance::SETTING_NAME_EXPERIMENTS, [ 'foo' => 'bar' ] );
+		add_option( $this->instance::SETTING_NAME_TRACKING_ID, 'bar' );
+		add_option( $this->instance::SETTING_NAME_USING_LEGACY_ANALYTICS, true );
+		add_option( $this->instance::SETTING_NAME_AD_NETWORK, 'bar' );
+		add_option( $this->instance::SETTING_NAME_AD_MANAGER_SLOT_ID, 'baz' );
+		add_option( $this->instance::SETTING_NAME_ADSENSE_PUBLISHER_ID, 'baz' );
+		add_option( $this->instance::SETTING_NAME_ADSENSE_SLOT_ID, 'baz' );
+		add_option( $this->instance::SETTING_NAME_EXPERIMENTS, [ 'foo' => 'bar' ] );
+		add_option( $this->instance::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 123 );
+		add_option( $this->instance::SETTING_NAME_PUBLISHER_LOGOS, [ 123, 567 ] );
+		add_option( $this->instance::SETTING_NAME_VIDEO_CACHE, true );
+		add_option( $this->instance::SETTING_NAME_DATA_REMOVAL, true );
+		add_option( $this->instance::SETTING_NAME_ARCHIVE, 'none' );
+
+		$this->instance->on_plugin_uninstall();
+
+		$this->assertSame( [], get_option( $this->instance::SETTING_NAME_EXPERIMENTS ) );
+		$this->assertSame( '', get_option( $this->instance::SETTING_NAME_TRACKING_ID ) );
+		$this->assertFalse( get_option( $this->instance::SETTING_NAME_USING_LEGACY_ANALYTICS ) );
+		$this->assertSame( 'none', get_option( $this->instance::SETTING_NAME_AD_NETWORK ) );
+		$this->assertSame( '', get_option( $this->instance::SETTING_NAME_AD_MANAGER_SLOT_ID ) );
+		$this->assertSame( '', get_option( $this->instance::SETTING_NAME_ADSENSE_PUBLISHER_ID ) );
+		$this->assertSame( '', get_option( $this->instance::SETTING_NAME_ADSENSE_SLOT_ID ) );
+		$this->assertSame( [], get_option( $this->instance::SETTING_NAME_EXPERIMENTS ) );
+		$this->assertSame( 0, get_option( $this->instance::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
+		$this->assertSame( [], get_option( $this->instance::SETTING_NAME_PUBLISHER_LOGOS ) );
+		$this->assertFalse( get_option( $this->instance::SETTING_NAME_VIDEO_CACHE ) );
+		$this->assertFalse( get_option( $this->instance::SETTING_NAME_DATA_REMOVAL ) );
+		$this->assertSame( 'default', get_option( $this->instance::SETTING_NAME_ARCHIVE ) );
 	}
 }

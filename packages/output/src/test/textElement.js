@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-jest.mock('flagged');
-import { useFeature } from 'flagged';
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { StoryAnimation } from '@googleforcreators/animation';
@@ -104,14 +102,6 @@ const TEXT_WITH_ROTATION = {
 
 describe('Text Element output', () => {
   beforeAll(() => {
-    useFeature.mockImplementation((feature) => {
-      const config = {
-        enableAnimation: false,
-      };
-
-      return config[feature];
-    });
-
     elementTypes.forEach(registerElementType);
   });
 
@@ -260,6 +250,8 @@ describe('Text Element output', () => {
   });
 
   describe('AMP validation', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
     it('should produce valid AMP output when setting text color', async () => {
       await expect(
         <WrapAnimation>

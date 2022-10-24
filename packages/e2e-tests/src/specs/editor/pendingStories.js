@@ -24,8 +24,9 @@ import {
   editStoryWithTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11993): Fix flakey test.
-describe.skip('Pending Stories', () => {
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('Pending Stories', () => {
   let currentUser;
 
   beforeAll(() => {

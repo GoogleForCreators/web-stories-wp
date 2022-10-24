@@ -77,9 +77,19 @@ export const addCustomFont = async (fontUrl) => {
     text: 'Insert Font URL',
   });
 
+  await page.waitForFunction(
+    () => document.activeElement.tagName.toLowerCase() === 'input'
+  );
+
   await page.keyboard.type(fontUrl);
-  await expect(page).toClick('button', { text: 'Add Font' });
-  await expect(page).toMatch(fontUrl);
+  await Promise.all([
+    expect(page).toClick('button', { text: 'Add Font' }),
+    page.waitForResponse((response) => response.url() === fontUrl),
+    page.waitForResponse((response) =>
+      response.url().includes('web-stories/v1/font')
+    ),
+  ]);
+  await expect(page).toMatchElement('[role="option"]', { text: fontUrl });
 };
 
 /**
@@ -89,9 +99,15 @@ export const addCustomFont = async (fontUrl) => {
  * @return {Promise<void>}
  */
 export const removeCustomFont = async (fontName) => {
+  await expect(page).toMatch('Custom Fonts');
+
   const numberOfFonts = await page.evaluate(() => {
     return document.querySelector('div[role=listbox]')?.children?.length || 0;
   });
+
+  if (0 === numberOfFonts) {
+    return;
+  }
 
   const selector = `[aria-label="Delete ${fontName}"]`;
   await page.waitForSelector(selector);

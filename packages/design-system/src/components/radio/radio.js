@@ -25,7 +25,6 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
-import { FOCUS_VISIBLE_SELECTOR } from '../../theme/global';
 import { Text } from '../typography';
 
 const BORDER_WIDTH = 1;
@@ -101,7 +100,7 @@ const HiddenInput = styled.input.attrs({ type: 'radio' })`
     outline: none;
   }
 
-  :focus ~ ${RadioBorder}, &.${FOCUS_VISIBLE_SELECTOR} ~ ${RadioBorder} {
+  :focus ~ ${RadioBorder}, &:focus-visible ~ ${RadioBorder} {
     ${({ theme }) => themeHelpers.focusCSS(theme.colors.border.focus)};
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
   }

@@ -81,6 +81,7 @@ namespace PHPSTORM_META {
 			'taxonomy.category'            => \Google\Web_Stories\Taxonomy\Category_Taxonomy::class,
 			'taxonomy.tag'                 => \Google\Web_Stories\Taxonomy\Tag_Taxonomy::class,
 			'user_preferences'             => \Google\Web_Stories\User\Preferences::class,
+			'remove_transients'            => \Google\Web_Stories\Remove_Transients::class,
 			'web_stories_block'            => \Google\Web_Stories\Block\Web_Stories_Block::class,
 			'injector'                     => \Google\Web_Stories\Infrastructure\Injector::class,
 		] )

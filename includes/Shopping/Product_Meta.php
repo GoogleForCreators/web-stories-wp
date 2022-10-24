@@ -27,13 +27,14 @@
 namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Product_Meta.
  */
-class Product_Meta extends Service_Base implements HasMeta {
+class Product_Meta extends Service_Base implements HasMeta, PluginUninstallAware {
 	/**
 	 * The products meta key.
 	 */
@@ -102,5 +103,14 @@ class Product_Meta extends Service_Base implements HasMeta {
 				'object_subtype' => $this->story_post_type::POST_TYPE_SLUG,
 			]
 		);
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::PRODUCTS_POST_META_KEY );
 	}
 }
