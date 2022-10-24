@@ -24,7 +24,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
-import { exclusion, updateFonts, pickElementFontProperties } from './utils';
+import { exclusion, pickElementFontProperties } from './utils';
 
 const isProduct = ({ type }) => type === ELEMENT_TYPES.PRODUCT;
 const isNotProduct = ({ type }) => type !== ELEMENT_TYPES.PRODUCT;
@@ -76,13 +76,8 @@ export const addElements = (
     addedIds.push(...nonProducts.map(({ id }) => id));
   }
 
-  // store font props at the story level
-  draft.story.fonts = updateFonts(draft.story?.fonts, page.elements);
-
-  // pull font props off the individual elements
-  page.elements = page.elements.map((element) =>
-    pickElementFontProperties(element)
-  );
+  // cleanup font props for individual elements as needed
+  page.elements = page.elements.map(pickElementFontProperties);
 
   // For products, first filter out products that already exist on the page
   const newProducts = newElements.filter(isProduct);

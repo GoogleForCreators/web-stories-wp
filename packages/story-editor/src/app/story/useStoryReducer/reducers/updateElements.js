@@ -93,7 +93,7 @@ export const updateElements = (
   }
 
   if (isFontUpdate) {
-    // cleanup font props off the individual elements as needed
+    // cleanup font props for individual elements as needed
     page.elements = page.elements.map(pickElementFontProperties);
   }
 };

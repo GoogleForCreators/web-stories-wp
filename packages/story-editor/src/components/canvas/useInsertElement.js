@@ -26,6 +26,7 @@ import { createNewElement } from '@googleforcreators/elements';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
 import { ZOOM_SETTING } from '../../constants';
+import { useFont } from '../../app/font';
 import useFocusCanvas from './useFocusCanvas';
 import getElementProperties from './utils/getElementProperties';
 
@@ -39,13 +40,17 @@ function createElementForCanvas(type, props) {
 }
 
 function useInsertElement() {
-  const { addElement, combineElements, backgroundElementId } = useStory(
-    ({ state, actions }) => ({
+  const { addElement, combineElements, backgroundElementId, updateStoryFonts } =
+    useStory(({ state, actions }) => ({
       addElement: actions.addElement,
+      updateStoryFonts: actions.updateStoryFonts,
       combineElements: actions.combineElements,
       backgroundElementId: state.currentPage?.elements?.[0]?.id,
-    })
-  );
+    }));
+
+  const {
+    actions: { getFontByName },
+  } = useFont();
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
@@ -64,6 +69,12 @@ function useInsertElement() {
       const element = createElementForCanvas(type, props);
       const { id, resource, pageId } = element;
       addElement({ element, pageId });
+
+      if (type === 'text') {
+        // todo need to ensure font is available here
+        const font = getFontByName(element.font?.family);
+        updateStoryFonts({ properties: { font: font } });
+      }
 
       if (insertAsBackground) {
         combineElements({
@@ -94,6 +105,8 @@ function useInsertElement() {
       combineElements,
       focusCanvas,
       setZoomSetting,
+      getFontByName,
+      updateStoryFonts,
     ]
   );
 

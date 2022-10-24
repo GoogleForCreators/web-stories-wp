@@ -112,20 +112,9 @@ export function removeAnimationsWithElementIds(animations = [], ids = []) {
   }, []);
 }
 
-export function updateFonts(draftFonts = {}, elements) {
-  elements.forEach((element) => {
-    if (element?.font) {
-      draftFonts[element?.font.family] = element?.font;
-    }
-  });
-  return draftFonts;
-}
-
 export function pickElementFontProperties(element) {
   if (element?.font) {
-    element.font = {
-      family: element.font.family,
-    };
+    return { ...element, font: { family: element.font.family } };
   }
   return element;
 }
