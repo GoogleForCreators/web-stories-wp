@@ -32,6 +32,9 @@ export const defaultAttributes = {
 };
 
 export const hasEditMode = false;
+export const hasEditModeIfLocked = false;
+export const hasEditModeMoveable = false;
+export const editModeGrayout = false;
 
 export const hasDesignMenu = true;
 
@@ -42,6 +45,8 @@ export const canFlip = true;
 export const hasDuplicateMenu = true;
 
 export const isMaskable = true;
+
+export const isAspectAlwaysLocked = false;
 
 export const resizeRules = {
   vertical: true,

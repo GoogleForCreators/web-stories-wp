@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,25 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { elementTypes } from '../elementType';
+import type { Flip } from '@googleforcreators/types';
 
-const getDefinitionForType = (type) => elementTypes[type];
+/**
+ * Returns transform scale value based on the flip setting.
+ *
+ * @param flip Flip value.
+ * @return CSS transform scale value.
+ */
+function getTransformFlip(flip: Flip) {
+  // If no flip
+  if (!flip || (!flip.horizontal && !flip.vertical)) {
+    return null;
+  }
 
-export default getDefinitionForType;
+  const xSign = flip.horizontal ? '-' : '';
+  const ySign = flip.vertical ? '-' : '';
+  return `scale3d(${xSign}1, ${ySign}1, 1)`;
+}
+
+export default getTransformFlip;

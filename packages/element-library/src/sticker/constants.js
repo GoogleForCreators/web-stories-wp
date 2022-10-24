@@ -24,6 +24,9 @@ import { PanelTypes } from '@googleforcreators/design-system';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 
 export const hasEditMode = false;
+export const hasEditModeIfLocked = false;
+export const hasEditModeMoveable = false;
+export const editModeGrayout = false;
 
 export const hasDesignMenu = true;
 export const hasDuplicateMenu = true;

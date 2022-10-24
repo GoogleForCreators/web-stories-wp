@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../i18n" },
+    { "path": "../media" },
+    { "path": "../patterns" },
+    { "path": "../units" }
+  ],
+  "include": ["src/**/*"],
+  "exclude": ["src/**/test/**/*"]
+}
