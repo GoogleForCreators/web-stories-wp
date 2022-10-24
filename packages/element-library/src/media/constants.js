@@ -34,6 +34,9 @@ export const MEDIA_MASK_OPACITY = 0.4;
 
 export const hasEditMode = true;
 export const hasEditModeIfLocked = true;
+export const hasEditModeMoveable = false;
+export const editModeGrayout = true;
+
 export const hasDuplicateMenu = true;
 
 export const hasDesignMenu = true;
@@ -44,7 +47,7 @@ export const canFlip = true;
 
 export const isMaskable = true;
 
-export const editModeGrayout = true;
+export const isAspectAlwaysLocked = false;
 
 export const resizeRules = {
   vertical: true,

@@ -18,13 +18,29 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
+import type {
+  Page,
+  Element,
+  ShapeElement,
+  MediaElement,
+  TextElement,
+} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import getDefinitionForType from './getDefinitionForType';
 
-const createNewElement = (type, attributes = {}) => {
+function isBackgroundShape(
+  attributes: Partial<Element>
+): attributes is Partial<ShapeElement> {
+  return 'isDefaultBackground' in attributes;
+}
+
+function createNewElement(
+  type: string,
+  attributes: Partial<Element | MediaElement | ShapeElement | TextElement> = {}
+): Page | Element {
   const element = getDefinitionForType(type);
   if (!element) {
     throw new Error(`Unknown element type: ${type}`);
@@ -37,12 +53,18 @@ const createNewElement = (type, attributes = {}) => {
     id: uuidv4(),
   };
 
-  // There's an exception for the background shape that should not get all the default attributes.
-  if (attributes.isDefaultBackground) {
-    const { backgroundColor: _, ...newElementWithoutBgColor } = newElement;
-    return newElementWithoutBgColor;
+  if (type === 'page') {
+    return newElement as Page;
   }
-  return newElement;
-};
+
+  // There's an exception for the background shape that should not get all the default attributes.
+  if (isBackgroundShape(attributes) && attributes.isDefaultBackground) {
+    if ('backgroundColor' in newElement) {
+      delete newElement.backgroundColor;
+    }
+  }
+
+  return newElement as Element;
+}
 
 export default createNewElement;

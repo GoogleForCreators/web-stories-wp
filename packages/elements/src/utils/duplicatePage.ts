@@ -15,29 +15,39 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Page } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import createNewElement from './createNewElement';
 import duplicateElement from './duplicateElement';
 
-const duplicatePage = (oldPage) => {
+interface AccValue {
+  elements: Element[];
+  animations: Animation[];
+}
+
+function duplicatePage(oldPage: Page): Page {
   const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
 
   const { elements, animations } = oldElements.reduce(
-    ({ elements, animations }, oldElement) => {
+    (acc: AccValue, oldElement) => {
       const { element, elementAnimations } = duplicateElement({
         element: oldElement,
         animations: oldAnimations,
       });
       return {
-        elements: [...elements, element],
-        animations: [...animations, ...elementAnimations],
-      };
+        elements: [...acc.elements, element],
+        animations: [...acc.animations, ...elementAnimations],
+      } as AccValue;
     },
     {
       elements: [],
       animations: [],
-    }
+    } as AccValue
   );
 
   const newAttributes = {
@@ -46,7 +56,7 @@ const duplicatePage = (oldPage) => {
     ...rest,
   };
 
-  return createNewElement('page', newAttributes);
-};
+  return createNewElement('page', newAttributes) as Page;
+}
 
 export default duplicatePage;

@@ -1,5 +1,5 @@
 {
-  "version": 43,
+  "version": 44,
   "pages": [
     {
       "elements": [
@@ -86,7 +86,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff\">By John Doe</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -158,7 +157,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #fff\">Behind the scenes:</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -214,7 +212,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Rock in</span>\n<span style=\"color: #fff; text-transform: uppercase\">Rotterdam</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -371,7 +368,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">One of the most popular rock festivals of all time, Rock in Rotterdam has won the hearts of so many rock fans from all over the world.</span>\n\n<span style=\"color: #fff\">But how is the festival created each year?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -548,7 +544,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">One of the first things that gets nailed down is the roster of performing artists. The headliner last year were The Bools.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -721,7 +716,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Curation of stages and set times take months to plan and develop. There is a lot of back and forth between artists and agents about preferences and availabilities.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -777,7 +771,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Setting the Stage</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -849,7 +842,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #f8754c; letter-spacing: 0.03em; text-transform: uppercase\">Time to Prep</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -988,7 +980,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">There are usually 6 stages, 2 main, and 4 smaller. Once artists are locked in, stage and set design can start planning the equipment, sound, and lighting appropriate for each artist.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1153,7 +1144,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Most main stage acts take 6 months or more to plan, depending on the level of theatrics and sophistication.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1294,7 +1284,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Professional grade equipment and power systems are flown in from all over Europe to prepare for the festival.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1470,7 +1459,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">Each of the 3 stages acts as its own little city in terms of a power system, equipment and the sound engineers that keep the stage operating at its best.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1643,7 +1631,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">With all the prep work on sound, we can’t forget about food and beverage for the festival.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1698,7 +1685,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">The Experience</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1864,7 +1850,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">A team of 20 festival planners coordinate with food and drink vendors to keep variety high and \ncosts low.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1999,7 +1984,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">The festival grounds are architected to account for the food stalls, rest areas, VIP areas, and of course restrooms.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2134,7 +2118,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff\">After a full year of planning, rock fans get to enjoy a 3-day festival of a lifetime.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2286,7 +2269,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #141414; text-transform: uppercase\">Next Story</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2346,7 +2328,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #141414; text-transform: uppercase\">Rob la Miro</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2411,7 +2392,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #141414\">An Actor With A Thousand Faces</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

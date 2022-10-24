@@ -24,7 +24,8 @@ import type { Element } from '@googleforcreators/types';
 /**
  * Internal dependencies
  */
-import Context, { ContextState } from './context';
+import Context from './context';
+import type { State } from './types';
 import {
   dataToEditorX,
   dataToEditorY,
@@ -46,7 +47,7 @@ interface UnitsProviderProps {
 
 function UnitsProvider({ pageSize, children }: UnitsProviderProps) {
   const { width: pageWidth, height: pageHeight } = pageSize;
-  const state: ContextState = useMemo(
+  const state: State = useMemo(
     () => ({
       state: {
         pageSize: { width: pageWidth, height: pageHeight },
