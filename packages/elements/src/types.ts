@@ -31,6 +31,23 @@ import { MULTIPLE_VALUE, BACKGROUND_TEXT_MODE, OverlayType } from './constants';
 type PropType = Record<string, Requireable<unknown>>;
 const StoryPropTypes: Record<string, Requireable<unknown> | PropType> = {};
 
+StoryPropTypes.flip = PropTypes.shape({
+  vertical: PropTypes.bool,
+  horizontal: PropTypes.bool,
+});
+
+StoryPropTypes.mask = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+});
+
+StoryPropTypes.link = PropTypes.shape({
+  url: PropTypes.string.isRequired,
+  desc: PropTypes.string,
+  needsProxy: PropTypes.bool,
+  icon: PropTypes.string,
+  rel: PropTypes.arrayOf(PropTypes.string),
+});
+
 const StoryElementPropTypes: ValidationMap<unknown> = {
   id: PropTypes.string.isRequired,
   groupId: PropTypes.string,
@@ -70,18 +87,6 @@ export const BackgroundAudioPropType = PropTypes.shape(
   BackgroundAudioPropTypeShape
 );
 
-StoryPropTypes.mask = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-});
-
-StoryPropTypes.link = PropTypes.shape({
-  url: PropTypes.string.isRequired,
-  desc: PropTypes.string,
-  needsProxy: PropTypes.bool,
-  icon: PropTypes.string,
-  rel: PropTypes.arrayOf(PropTypes.string),
-});
-
 StoryPropTypes.box = PropTypes.exact({
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
@@ -110,11 +115,6 @@ const StoryLayerPropTypes: ValidationMap<unknown> = {
 };
 
 StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
-
-StoryPropTypes.flip = PropTypes.shape({
-  vertical: PropTypes.bool,
-  horizontal: PropTypes.bool,
-});
 
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropTypes,
