@@ -24,8 +24,9 @@ import {
   withPlugin,
   createNewPost,
   setPostContent,
-  skipSuiteOnFirefox,
   takeSnapshot,
+  trashAllPosts,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -38,11 +39,15 @@ const EMBED_BLOCK_CONTENT = `
 <div class="wp-block-web-stories-embed alignnone"><amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a href="https://wp.stories.google/stories/intro-to-web-stories-storytime" style="--story-player-poster:url('https://amp.dev/static/samples/img/story_dog2_portrait.jpg')">Stories in AMP - Hello World</a></amp-story-player></div>
 <!-- /wp:web-stories/embed -->
 `;
-//eslint-disable-next-line jest/no-disabled-tests -- TODO(#11975): Fix flakey test.
-describe.skip('Web Stories Block', () => {
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('Web Stories Block', () => {
   // Firefox has issues playing media (MP4 videos) in the story being embedded here.
   // Consider using a different story for testing.
   skipSuiteOnFirefox();
+
+  withPlugin('e2e-tests-embed');
 
   let removeErrorMessage;
 
@@ -52,8 +57,10 @@ describe.skip('Web Stories Block', () => {
     );
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     removeErrorMessage();
+
+    await trashAllPosts();
   });
 
   it('should insert a new web stories block', async () => {
@@ -73,7 +80,7 @@ describe.skip('Web Stories Block', () => {
 
     await page.type(
       'input[aria-label="Story URL"]',
-      'https://wp.stories.google/stories/intro-to-web-stories-storytime'
+      'https://wp.stories.google/stories/intro-to-web-stories-storytime/'
     );
     await expect(page).toClick('button[aria-label="Embed"]');
 
@@ -81,10 +88,7 @@ describe.skip('Web Stories Block', () => {
       'Sorry, this content could not be embedded.'
     );
 
-    await page.waitForResponse((response) =>
-      response.url().includes('web-stories/v1/embed')
-    );
-
+    // Wait a little longer for embed REST API request to come back.
     await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
@@ -114,11 +118,25 @@ describe.skip('Web Stories Block', () => {
     await takeSnapshot(page, 'Story select modal');
   });
 
-  // Disable for https://github.com/googleforcreators/web-stories-wp/issues/6237
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('AMP validation', () => {
+  describe('AMP validation', () => {
     withDisabledToolbarOnFrontend();
     withPlugin('amp');
+
+    let removeMessage1;
+    let removeMessage2;
+
+    beforeAll(() => {
+      // Some CORS errors when trying to load scripts from AMP CDN.
+      removeMessage1 = addAllowedErrorMessage(
+        'has been blocked by CORS policy'
+      );
+      removeMessage2 = addAllowedErrorMessage('Failed to load resource');
+    });
+
+    afterAll(() => {
+      removeMessage1();
+      removeMessage2();
+    });
 
     it('should produce valid AMP when using the AMP plugin', async () => {
       await createNewPost({
@@ -137,14 +155,7 @@ describe.skip('Web Stories Block', () => {
         ? `${postPermalink}&amp`
         : `${postPermalink}?amp`;
 
-      await page.goto(ampPostPermaLink, {
-        waitUntil: 'networkidle0',
-      });
-
-      await page.waitForSelector('amp-story-player');
-      await expect(page).toMatchElement('amp-story-player');
-
-      await expect(page).toBeValidAMP();
+      await expect(ampPostPermaLink).toBeValidAMP();
     });
   });
 });

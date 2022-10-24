@@ -25,23 +25,29 @@ import {
   visitBlockWidgetScreen,
   insertWidget,
   minWPVersionRequired,
-  skipSuiteOnFirefox,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../config/bootstrap';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Web Stories Widget Block', () => {
   let removeErrorMessage;
+
+  minWPVersionRequired('5.8');
 
   beforeAll(() => {
     // Known issue in WP 6.0 RC1, see https://github.com/GoogleForCreators/web-stories-wp/pull/11435
     removeErrorMessage = addAllowedErrorMessage(
       "Warning: Can't perform a React state update on an unmounted component."
     );
+  });
+
+  beforeEach(async () => {
+    await deleteWidgets();
   });
 
   afterEach(async () => {
@@ -52,165 +58,131 @@ describe('Web Stories Widget Block', () => {
     removeErrorMessage();
   });
 
-  describe('Regular Block', () => {
-    minWPVersionRequired('5.8');
+  it('should insert a new Web Stories block', async () => {
+    await visitBlockWidgetScreen();
+    await expect(page).toClick('button[aria-label="Add block"]');
+    await page.type('input[placeholder="Search"]', 'Web Stories');
+    await expect(page).toClick('button span', { text: 'Web Stories' });
 
-    it('should insert a new Web Stories block', async () => {
-      await visitBlockWidgetScreen();
-      await expect(page).toClick(
-        '.edit-widgets-header-toolbar button[aria-label="Toggle block inserter"]'
-      );
-      await page.waitForSelector(
-        '.edit-widgets-layout__inserter-panel-content'
-      );
-      await page.type('input[placeholder="Search"]', 'Web Stories');
-      await expect(page).toClick('button span', { text: 'Web Stories' });
+    await page.waitForSelector('.web-stories-block-configuration-panel');
+    await expect(page).toClick('.web-stories-block-configuration-panel');
 
-      await page.waitForSelector('.web-stories-block-configuration-panel');
-      await expect(page).toClick('.web-stories-block-configuration-panel');
+    await expect(page).toClick('button[aria-label="Embed a single story."]');
 
-      await expect(page).toClick('button[aria-label="Embed a single story."]');
+    await expect(page).toMatch(
+      'Select an existing story from your site, or add one with a URL.'
+    );
+    await expect(page).toClick('button', { text: 'Insert from URL' });
 
-      await expect(page).toMatch(
-        'Select an existing story from your site, or add one with a URL.'
-      );
-      await expect(page).toClick('button', { text: 'Insert from URL' });
+    await page.type(
+      'input[aria-label="Story URL"]',
+      'https://wp.stories.google/stories/intro-to-web-stories-storytime'
+    );
+    await expect(page).toClick('button[aria-label="Embed"]');
 
-      await expect(page).toMatchElement('input[aria-label="Story URL"]');
+    await page.waitForFunction(
+      () => !document.querySelector('.wp-block-web-stories-embed.is-loading')
+    );
 
-      await page.type(
-        'input[aria-label="Story URL"]',
-        'https://wp.stories.google/stories/intro-to-web-stories-storytime'
-      );
-      await expect(page).toClick('button[aria-label="Embed"]');
+    await expect(page).not.toMatch(
+      'Sorry, this content could not be embedded.'
+    );
 
-      await expect(page).not.toMatch(
-        'Sorry, this content could not be embedded.'
-      );
-
-      // Wait a little longer for embed REST API request to come back.
-      await page.waitForSelector('amp-story-player');
-      await expect(page).toMatchElement('amp-story-player');
-      await expect(page).toMatch('Embed Settings');
-
-      await takeSnapshot(page, 'Block Widgets - Regular Block');
-    });
+    // Wait a little longer for embed REST API request to come back.
+    await page.waitForSelector('amp-story-player');
+    await expect(page).toMatchElement('amp-story-player');
+    await expect(page).toMatch('Embed Settings');
   });
 
-  describe('Legacy Widget', () => {
-    // The block toolbar is not reliably appearing on Firefox,
-    // so conversion from legacy widget block to Web Stories block isn't working.
-    skipSuiteOnFirefox();
+  it('should insert and transform a legacy Web Stories widget', async () => {
+    await activatePlugin('classic-widgets');
 
-    minWPVersionRequired('5.8');
+    await visitAdminPage('widgets.php');
 
-    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#11931): Fix flakey test.
-    it.skip('should insert a legacy Web Stories widget', async () => {
-      await activatePlugin('classic-widgets');
+    await insertWidget('Web Stories');
+    await expect(page).toMatchElement(
+      '.widget-liquid-right .web-stories-field-wrapper'
+    );
 
-      await visitAdminPage('widgets.php');
-
-      await insertWidget('Web Stories');
-      await expect(page).toMatchElement(
-        '.widget-liquid-right .web-stories-field-wrapper'
+    await page.evaluate(() => {
+      const input = document.querySelector(
+        '.widget-liquid-right .web-stories-field-wrapper input'
       );
-      await expect(page).toMatchElement('label', { text: /Widget Title/ });
-
-      await page.evaluate(() => {
-        const input = document.querySelector(
-          '.widget-liquid-right .web-stories-field-wrapper input'
-        );
-        input.value = '';
-      });
-
-      await page.type(
-        '.widget-liquid-right .web-stories-field-wrapper input',
-        'Test Widget'
-      );
-
-      await expect(page).toMatchElement(
-        '.widget-liquid-right .widget-control-save'
-      );
-      await expect(page).toClick('.widget-liquid-right .widget-control-save');
-      await expect(page).toMatchElement(
-        '.widget-liquid-right .widget-control-save:disabled'
-      );
-
-      await takeSnapshot(page, 'Classic Widget');
-
-      await deactivatePlugin('classic-widgets');
-      await visitBlockWidgetScreen();
-
-      // Wait for any widget blocks to render.
-      await page.waitForFunction(
-        () => !document.querySelector('.components-spinner')
-      );
-
-      await expect(page).toClick('.wp-block-legacy-widget');
-
-      await expect(page).toMatchElement('label', { text: /Widget Title/ });
-
-      await page.evaluate(() => {
-        const input = document.querySelector(
-          '.web-stories-field-wrapper input'
-        );
-        input.value = '';
-      });
-
-      await page.type('.web-stories-field-wrapper input', 'Test Block Widget');
-
-      await page.keyboard.press('Tab');
-
-      await page.waitForResponse((res) =>
-        res
-          .url()
-          .includes('wp-json/wp/v2/widget-types/web_stories_widget/encode')
-      );
-
-      await page.waitForResponse((res) =>
-        res.url().includes('widgets.php?legacy-widget-preview')
-      );
-
-      await expect(page).toMatchElement('label', { text: /Widget Title/ });
-      await expect(page).toMatchElement(
-        '.block-editor-block-toolbar .block-editor-block-switcher'
-      );
-
-      await takeSnapshot(page, 'Block Widgets - Legacy Widget Block');
-
-      // TODO: Fix block transform.
-      // Block transformation via the block toolbar is unstable, since
-      // WordPress often is rendering the widget form twice instead of actually
-      // showing the block transform options.
-      // See https://imgur.com/a/Xe4zn8Z
-      // For this reason, we transform the block programmatically.
-
-      //await expect(page).toClick(
-      //  '.block-editor-block-toolbar .block-editor-block-switcher button[aria-label="Legacy Widget"]'
-      //);
-      //await expect(page).toMatch(/Transform to/i);
-      //await expect(page).toClick('button', { text: 'Web Stories' });
-
-      await page.evaluate(() => {
-        wp.data
-          .dispatch('core/block-editor')
-          .replaceBlock(
-            [wp.data.select('core/block-editor').getSelectedBlockClientId()],
-            wp.blocks.switchToBlockType(
-              wp.data.select('core/block-editor').getSelectedBlock(),
-              'web-stories/embed'
-            )
-          );
-      });
-
-      // Wait for transformed block to render.
-      await page.waitForFunction(
-        () => !document.querySelector('.components-spinner')
-      );
-
-      await expect(page).toMatch('Test Block Widget');
-
-      await takeSnapshot(page, 'Block Widgets - Transformed Block');
+      input.value = '';
     });
+
+    await page.type(
+      '.widget-liquid-right .web-stories-field-wrapper input',
+      'Test widget'
+    );
+
+    await Promise.all([
+      expect(page).toClick(
+        '.widget-liquid-right .widget-control-save:not(:disabled)'
+      ),
+      page.waitForResponse(
+        (response) =>
+          // eslint-disable-next-line jest/no-conditional-in-test
+          response.url().includes('/wp-admin/admin-ajax.php') &&
+          response.status() === 200
+      ),
+    ]);
+
+    await expect(page).toMatchElement(
+      '.widget-liquid-right .widget-control-save:disabled'
+    );
+
+    await deactivatePlugin('classic-widgets');
+
+    await visitBlockWidgetScreen();
+
+    // Wait for widget to render.
+    await page.waitForSelector('.wp-block-legacy-widget__edit-preview');
+
+    await expect(page).toClick('.wp-block-legacy-widget');
+    await expect(page).toMatchElement('.web-stories-field-wrapper', {
+      visible: true,
+    });
+
+    await page.evaluate(() => {
+      const input = document.querySelector('.web-stories-field-wrapper input');
+      input.value = '';
+    });
+
+    await Promise.all([
+      page.type('.web-stories-field-wrapper input', 'Test Block Widget'),
+
+      page.waitForResponse(
+        (response) =>
+          // eslint-disable-next-line jest/no-conditional-in-test
+          response.url().includes('wp/v2/widget-types/web_stories_widget') &&
+          response.status() === 200
+      ),
+    ]);
+
+    await expect(page).toClick('.components-button.is-primary', {
+      text: 'Update',
+    });
+
+    await expect(page).toClick('.wp-block-legacy-widget');
+
+    // More reliable here than toClick(), page.click(), or transformBlockTo()
+    await page.evaluate(() =>
+      document.querySelector('button[aria-label="Legacy Widget"]').click()
+    );
+
+    await expect(page).toClick('button[role="menuitem"]', {
+      text: 'Web Stories',
+    });
+
+    // The core/legacy-widget block should have been replaced by core/heading + web-stories/embed.
+    const widgetBlocks = await page.evaluate(() =>
+      wp.data
+        .select('core/block-editor')
+        .getBlocks(wp.data.select('core/block-editor').getBlockOrder()[0])
+        .map(({ name }) => name)
+        .join(',')
+    );
+    await expect(widgetBlocks).toBe('core/heading,web-stories/embed');
   });
 });

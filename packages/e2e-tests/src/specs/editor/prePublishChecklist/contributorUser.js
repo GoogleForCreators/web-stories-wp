@@ -23,6 +23,8 @@ import {
   skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Pre-Publish Checklist : Contributor User', () => {
   // Thew window size for Firefox is actually smaller than the viewport,
   // causing the checklist button to be off-screen, thus failing the test.

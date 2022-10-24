@@ -23,7 +23,6 @@ import {
   Checkbox,
   Text,
   THEME_CONSTANTS,
-  ThemeGlobals,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -31,7 +30,7 @@ import { useInitializedValue } from '@googleforcreators/react';
 
 const StyledCheckbox = styled(Checkbox)`
   ${({ theme }) => `
-    input[type='checkbox']&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} ~ div, input[type='checkbox']:focus ~ div {
+    input[type='checkbox']:focus-visible ~ div, input[type='checkbox']:focus ~ div {
       box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;
     }
   `}

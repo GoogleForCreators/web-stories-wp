@@ -73,4 +73,23 @@ class Cropping extends TestCase {
 		wp_delete_attachment( $cropped_attachment_id );
 		$this->assertEmpty( get_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, true ) );
 	}
+
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		add_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, 999 );
+		$this->instance->on_plugin_uninstall();
+		$this->assertSame( '', get_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, true ) );
+	}
 }

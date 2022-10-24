@@ -24,10 +24,11 @@ import { createNewStory, withPlugin } from '@web-stories-wp/e2e-test-utils';
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 // TODO: Use request interception instead of WP plugins once supported in Firefox.
 // See https://bugzilla.mozilla.org/show_bug.cgi?id=1587857
-// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11991): Fix flakey test.
-describe.skip('Status Check', () => {
+describe('Status Check', () => {
   let removeErrorMessage;
 
   beforeAll(() => {
@@ -53,6 +54,7 @@ describe.skip('Status Check', () => {
 
     it('should display error dialog', async () => {
       await createNewStory();
+
       await expect(page).toMatch('Unable to save your story');
     });
   });
@@ -62,6 +64,7 @@ describe.skip('Status Check', () => {
 
     it('should display error dialog', async () => {
       await createNewStory();
+
       await expect(page).toMatch('Unable to save your story');
     });
   });
@@ -71,6 +74,7 @@ describe.skip('Status Check', () => {
 
     it('should display error dialog', async () => {
       await createNewStory();
+
       await expect(page).toMatch('Unable to save your story');
     });
   });

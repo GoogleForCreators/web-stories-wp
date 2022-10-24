@@ -380,4 +380,17 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 
 		return $has_archive;
 	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::POSTER_META_KEY );
+		delete_post_meta_by_key( self::PUBLISHER_LOGO_META_KEY );
+
+		delete_option( self::STYLE_PRESETS_OPTION );
+		parent::on_plugin_uninstall();
+	}
 }

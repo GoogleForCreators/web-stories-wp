@@ -21,7 +21,7 @@ import { createGlobalStyle } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { overrideFocusOutlineStyles } from './overrideFocusOutline';
+import { scrollbarCSS } from '../helpers/scrollbar';
 
 /**
  * All components in the design system are created using the following global styling.
@@ -34,5 +34,5 @@ export const Styles = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  ${overrideFocusOutlineStyles};
+  ${scrollbarCSS};
 `;

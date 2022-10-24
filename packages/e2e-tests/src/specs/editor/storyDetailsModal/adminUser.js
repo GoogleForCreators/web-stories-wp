@@ -19,9 +19,9 @@
  */
 import {
   createNewStory,
-  uploadMedia,
   deleteMedia,
   takeSnapshot,
+  uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -34,8 +34,11 @@ const openStoryDetailsModal = async () => {
   await expect(page).toMatchElement('div[aria-label="Story details"]');
 };
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Story Details Modal - Admin User', () => {
   let removeErrorMessage;
+  let uploadedFiles;
 
   beforeAll(() => {
     // TODO: Address 404 caused by AMP validation being called for protected post.
@@ -45,8 +48,17 @@ describe('Story Details Modal - Admin User', () => {
   });
 
   beforeEach(async () => {
+    uploadedFiles = [];
+
     await createNewStory();
     await openStoryDetailsModal();
+  });
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
   });
 
   afterAll(() => {
@@ -72,19 +84,9 @@ describe('Story Details Modal - Admin User', () => {
     });
 
     it('should have 3 visibility options', async () => {
-      const visibilityDropDownButton = await expect(page).toMatchElement(
-        'button',
-        { text: 'Public' }
-      );
-      await expect(visibilityDropDownButton).toMatch('Public');
+      await expect(page).toClick('button', { text: 'Public' });
 
-      await visibilityDropDownButton.click();
-
-      const visibilityDropDownOptions = await expect(page).toMatchElement(
-        '[aria-label=" Option List Selector"]'
-      );
-
-      await expect(visibilityDropDownOptions).toClick('li', {
+      await expect(page).toClick('[aria-label=" Option List Selector"] li', {
         text: 'Password Protected',
       });
 
@@ -178,12 +180,10 @@ describe('Story Details Modal - Admin User', () => {
     it('should allow publish date to change', async () => {
       await openPublishingPanel();
 
-      const publishDateDropDownButton = await expect(page).toMatchElement(
-        'div[aria-label="Story details"] button[aria-label="Story publish time"]'
+      await expect(page).toClick(
+        'div[aria-label="Story details"] button[aria-label="Story publish time"]',
+        { text: 'Immediately' }
       );
-      await expect(publishDateDropDownButton).toMatch('Immediately');
-
-      await publishDateDropDownButton.click();
 
       // date picker is in a new popup so use keyboard to avoid more targets.
       // We want to tab from hour, am/pm, month back, to currently selected "immediate" date
@@ -204,26 +204,48 @@ describe('Story Details Modal - Admin User', () => {
       );
     });
 
-    // TODO https://github.com/googleforcreators/web-stories-wp/issues/7107
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should update featured media (poster)', async () => {
+    it('should update featured media (poster)', async () => {
       await openPublishingPanel();
 
-      const featuredMediaButton = await expect(page).toMatchElement(
+      await expect(page).toClick(
         'div[aria-label="Story details"] button[aria-label="Poster image"]'
       );
 
-      await featuredMediaButton.click();
+      await expect(page).toClick('[role="menuitem"]', {
+        text: 'Upload a file',
+      });
 
-      const filename = await uploadMedia('example-1.jpg', false);
+      await page.waitForSelector('.media-modal', {
+        visible: true,
+      });
 
-      await expect(page).toClick('button', { text: 'Select as poster image' });
+      await expect(page).toClick('.media-modal #menu-item-upload', {
+        text: 'Upload files',
+        visible: true,
+      });
+
+      const fileName = await uploadFile('example-1.jpg', false);
+      uploadedFiles.push(fileName);
+
+      await expect(page).toClick('button', {
+        text: 'Select as poster image',
+        visible: true,
+      });
+
+      await expect(page).toClick('button', {
+        text: 'Crop image',
+        visible: true,
+      });
+
+      await page.keyboard.press('Escape');
+
+      await page.waitForSelector('.media-modal', {
+        visible: false,
+      });
 
       await expect(page).toMatchElement(
         '[data-testid="story_preview_featured_media"]'
       );
-
-      await deleteMedia(filename);
     });
   });
 

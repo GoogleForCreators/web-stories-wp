@@ -27,8 +27,8 @@
   },
   "type": "module",
   "dependencies": {
-    "commander": "^9.4.0",
-    "semver": "^7.3.7"
+    "commander": "^9.4.1",
+    "semver": "^7.3.8"
   },
   "bin": {
     "commander": "./src/index.js"

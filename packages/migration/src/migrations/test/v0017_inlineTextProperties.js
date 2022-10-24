@@ -40,7 +40,6 @@ describe('inlineTextProperties', () => {
                 },
                 {
                   type: 'image',
-                  content: 'Horse',
                   color: 'red',
                 },
               ],
@@ -57,7 +56,6 @@ describe('inlineTextProperties', () => {
               },
               {
                 type: 'image',
-                content: 'Horse',
                 color: 'red',
               },
             ],

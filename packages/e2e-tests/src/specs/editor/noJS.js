@@ -23,6 +23,8 @@ import {
   skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Story Editor with disabled JavaScript', () => {
   // Disabling JS like this is not yet supported in Firefox.
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1549437.

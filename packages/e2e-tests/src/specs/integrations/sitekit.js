@@ -24,7 +24,10 @@ import {
   insertStoryTitle,
   withPlugin,
   visitSettings,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Site Kit plugin integration', () => {
   describe('Google Analytics', () => {
@@ -41,9 +44,11 @@ describe('Site Kit plugin integration', () => {
     });
 
     describe('Editor', () => {
-      // TODO(#9985): Fix flakey test.
-      // eslint-disable-next-line jest/no-disabled-tests
-      it.skip('should print an analytics tag', async () => {
+      afterAll(async () => {
+        await trashAllPosts('web-story');
+      });
+
+      it('should print an analytics tag', async () => {
         await createNewStory();
 
         await insertStoryTitle('Previewing Analytics');
@@ -51,7 +56,7 @@ describe('Site Kit plugin integration', () => {
         await addTextElement();
 
         const editorPage = page;
-        const previewPage = await previewStory(editorPage);
+        const previewPage = await previewStory();
         await expect(previewPage).toMatch('XXX-YYY');
 
         await editorPage.bringToFront();

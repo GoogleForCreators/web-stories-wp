@@ -20,39 +20,43 @@
 import {
   createNewStory,
   takeSnapshot,
+  trashAllPosts,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../config/bootstrap';
 
-// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11981): Fix flakey test.
-describe.skip('CORS check', () => {
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('CORS check', () => {
   withPlugin('e2e-tests-cors-error');
 
-  let removeChromeCORSErrorMessage;
-  let removeFirefoxCORSErrorMessage;
+  let removeCORSErrorMessage;
   let removeResourceErrorMessage;
+  let removeFirefoxCORSErrorMessage;
 
   beforeAll(() => {
     // Ignore CORS error, this is present in the test by design.
-    removeChromeCORSErrorMessage = addAllowedErrorMessage(
+    removeCORSErrorMessage = addAllowedErrorMessage(
       'has been blocked by CORS policy'
-    );
-    removeFirefoxCORSErrorMessage = addAllowedErrorMessage(
-      'Cross-Origin Request Blocked'
     );
     // Ignore resource failing to load. This is only present because of the CORS error.
     removeResourceErrorMessage = addAllowedErrorMessage(
       'Failed to load resource'
     );
+    removeFirefoxCORSErrorMessage = addAllowedErrorMessage(
+      'Cross-Origin Request Blocked'
+    );
   });
 
-  afterAll(() => {
-    removeChromeCORSErrorMessage();
-    removeFirefoxCORSErrorMessage();
+  afterAll(async () => {
+    removeCORSErrorMessage();
     removeResourceErrorMessage();
+    removeFirefoxCORSErrorMessage();
+
+    await trashAllPosts('web-story');
   });
 
   it('should see media dialog', async () => {

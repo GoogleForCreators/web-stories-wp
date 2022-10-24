@@ -27,12 +27,13 @@
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 
 /**
  * Class Is_Gif
  */
-class Is_Gif extends Service_Base implements HasMeta {
+class Is_Gif extends Service_Base implements HasMeta, PluginUninstallAware {
 	/**
 	 * The post meta key.
 	 */
@@ -91,5 +92,14 @@ class Is_Gif extends Service_Base implements HasMeta {
 		$response[ self::IS_GIF_POST_META_KEY ] = get_post_meta( $post_id, self::IS_GIF_POST_META_KEY, true );
 
 		return $response;
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::IS_GIF_POST_META_KEY );
 	}
 }

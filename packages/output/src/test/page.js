@@ -19,7 +19,6 @@
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { render } from '@testing-library/react';
-import { useFeature } from 'flagged';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 import { MaskTypes } from '@googleforcreators/masks';
 import { registerElementType } from '@googleforcreators/elements';
@@ -122,14 +121,6 @@ const PRODUCT_FLOWERS = {
 
 describe('Page output', () => {
   beforeAll(() => {
-    useFeature.mockImplementation((feature) => {
-      const config = {
-        enableAnimation: true,
-      };
-
-      return config[feature];
-    });
-
     elementTypes.forEach(registerElementType);
   });
 
@@ -1768,6 +1759,8 @@ describe('Page output', () => {
   });
 
   describe('AMP validation', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
     it('should produce valid AMP output', async () => {
       const props = {
         id: '123',

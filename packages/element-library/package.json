@@ -53,7 +53,7 @@
     "polished": "^4.2.2",
     "prop-types": "^15.7.2",
     "react-transition-group": "^4.4.5",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {}
 }

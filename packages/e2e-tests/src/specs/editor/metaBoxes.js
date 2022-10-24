@@ -25,6 +25,8 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Custom Meta Boxes', () => {
   // The browser window size for Firefox is different from the Chrome one during tests,
   // causing the Meta Boxes button to be off-screen, so Firefox can't "see" it,

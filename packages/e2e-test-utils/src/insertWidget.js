@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Insert a widget with the given name.
- *
- * @param {string} name Widget name.
- * @return {Promise<void>}
- */
 async function insertWidget(name) {
-  await expect(page).toMatch(name);
-  await expect(page).toClick('button', { text: 'Add widget: ' + name });
-  await expect(page).toClick('button', { text: 'Add Widget' });
-  // When you click on the button to add a widget, a "chooser" dropdown is displayed which has these classes.
-  // Once you add the widget, the chooser disappears again, which is what this call here checks for.
-  await page.waitForFunction(
-    () => !document.querySelector('.widget.widget-in-question')
-  );
-}
+  await expect(page).toMatchElement('#widgets-left .widget-title', {
+    text: name,
+  });
+  await expect(page).toClick('#widgets-left button', {
+    text: `Add widget: ${name}`,
+  });
+  await expect(page).toClick('.widgets-chooser-add', { text: 'Add Widget' });
 
+  await page.waitForResponse(
+    (response) =>
+      response.url().includes('/wp-admin/admin-ajax.php') &&
+      response.status() === 200
+  );
+
+  // Transition animation.
+  await page.waitForTimeout(300);
+
+  await expect(page).toMatchElement('#widgets-right .widget .widget-title', {
+    text: name,
+  });
+
+  await expect(page).toMatch('Widget Title');
+}
 export default insertWidget;

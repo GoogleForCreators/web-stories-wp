@@ -19,13 +19,15 @@
  */
 import {
   createNewStory,
-  deleteMedia,
-  skipSuiteOnFirefox,
-  toggleVideoOptimization,
   uploadFile,
+  deleteMedia,
+  toggleVideoOptimization,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Handling .mov files', () => {
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('Inserting MOV video', () => {
   // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
   skipSuiteOnFirefox();
 
@@ -49,9 +51,7 @@ describe('Handling .mov files', () => {
       await toggleVideoOptimization(false);
     });
 
-    // Flakey test, see https://github.com/googleforcreators/web-stories-wp/issues/8232.
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should insert .mov video from media dialog', async () => {
+    it('should insert video via media modal', async () => {
       await createNewStory();
 
       await expect(page).toClick('button[aria-label="Upload"]');
@@ -80,6 +80,7 @@ describe('Handling .mov files', () => {
   });
 
   describe('Disabled', () => {
+    // Uses the existence of the element's frame element as an indicator for successful insertion.
     it('should not list the .mov video in the media dialog', async () => {
       await createNewStory();
       await expect(page).toClick('button[aria-label="Upload"]');

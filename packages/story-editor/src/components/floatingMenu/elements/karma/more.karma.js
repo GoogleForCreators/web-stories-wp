@@ -33,6 +33,7 @@ describe('More button', () => {
 
     await fixture.render();
     await fixture.collapseHelpCenter();
+    await fixture.showFloatingMenu();
   });
 
   afterEach(() => {

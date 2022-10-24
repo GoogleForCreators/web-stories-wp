@@ -53,6 +53,7 @@ export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';
 export { default as createNewPost } from './createNewPost';
+export { default as createNewTerm } from './createNewTerm.js';
 export { default as visitBlockWidgetScreen } from './visitBlockWidgetScreen';
 export { default as insertWidget } from './insertWidget';
 export * from './conditions';
@@ -60,7 +61,6 @@ export { default as disableCheckbox } from './disableCheckbox';
 export { default as enableCheckbox } from './enableCheckbox';
 export { default as takeSnapshot } from './takeSnapshot';
 export { default as loadPostEditor } from './loadPostEditor.js';
-export { default as uploadPublisherLogoEditor } from './uploadPublisherLogoEditor';
 export { default as editStoryWithTitle } from './editStoryWithTitle';
 export {
   getEditedPostContent,

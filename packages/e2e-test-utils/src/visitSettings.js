@@ -17,26 +17,19 @@
 /**
  * Internal dependencies
  */
-import visitDashboard from './visitDashboard';
+import visitAdminPage from './visitAdminPage.js';
 
 /**
  * Creates a new story.
  */
 async function visitSettings() {
-  await visitDashboard();
-
-  await page.waitForSelector('[aria-label="Main dashboard navigation"]');
-
-  await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
-    text: 'Settings',
-  });
-
-  // Not using page.url() as it is buggy on Firefox.
-  // See https://github.com/puppeteer/puppeteer/issues/6787.
-  await page.waitForFunction(() => location.href.includes('#/editor-settings'));
+  await visitAdminPage(
+    'edit.php',
+    'post_type=web-story&page=stories-dashboard',
+    '/editor-settings'
+  );
 
   await expect(page).toMatchElement('h2', { text: 'Settings' });
-  await expect(page).toMatch('Data Sharing Opt-in');
 }
 
 export default visitSettings;

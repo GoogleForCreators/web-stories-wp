@@ -27,22 +27,26 @@
   "type": "module",
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/types": "*",
     "polished": "^4.2.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^14.1.0",
-    "rollup": "^2.79.0"
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^8.5.0",
+    "rollup": "^2.79.1"
   },
   "scripts": {
     "migration": "node ./scripts/cli.js"

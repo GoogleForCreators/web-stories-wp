@@ -28,7 +28,7 @@ import {
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../../../config/bootstrap';
 
 const FONT_BASE_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets`;
 const OPEN_SANS_CONDENSED_LIGHT = 'Open Sans Condensed Light';
@@ -38,6 +38,8 @@ const OPEN_SANS_CONDENSED_BOLD_URL = `${FONT_BASE_URL}/OpenSansCondensed-Bold.tt
 const OPEN_SANS_CONDENSED_LIGHT_ITALIC_URL = `${FONT_BASE_URL}/OpenSansCondensed-LightItalic.ttf`;
 
 const findByUrl = (arr, val) => arr.find((o) => o.url === val);
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Custom Fonts', () => {
   let removeResourceErrorMessage;

@@ -24,20 +24,49 @@ import {
   publishStory,
   getEditedPostContent,
   loadPostEditor,
-  deleteMedia,
   publishPost,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../config/bootstrap';
 
-//eslint-disable-next-line jest/no-disabled-tests -- TODO(#11970): Fix flakey test.
-describe.skip('Publishing Flow', () => {
-  let uploadedFiles;
+async function addPosterImage() {
+  await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+
+  await expect(page).toClick('button[aria-label="Poster image"]');
+  await expect(page).toClick('[role="menuitem"]', { text: 'Upload a file' });
+
+  await page.waitForSelector('.media-modal', {
+    visible: true,
+  });
+
+  await expect(page).toMatchElement('.media-toolbar-primary button', {
+    text: 'Select as poster image',
+  });
+
+  await expect(page).toClick('button', { text: 'Media Library' });
+
+  await expect(page).toClick(
+    '.attachments-browser .attachments .attachment[aria-label="example-3"]'
+  );
+
+  await expect(page).toClick('.media-toolbar-primary button', {
+    text: 'Select as poster image',
+  });
+
+  await page.waitForSelector('[alt="Preview image"]');
+  await expect(page).toMatchElement('[alt="Preview image"]');
+}
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('Publishing Flow', () => {
   let removeCORSErrorMessage;
   let removeResourceErrorMessage;
+  let removeAMPPreloadErrorMessage;
 
   beforeAll(() => {
     // Ignore CORS errors related to the AMP validator JS.
@@ -47,50 +76,20 @@ describe.skip('Publishing Flow', () => {
     removeResourceErrorMessage = addAllowedErrorMessage(
       'Failed to load resource'
     );
+    // From the story embedded in amp-story-player
+    removeAMPPreloadErrorMessage = addAllowedErrorMessage(
+      'The resource https://cdn.ampproject.org/v0/amp-story-1.0.js was preloaded using link preload'
+    );
   });
 
-  beforeEach(() => (uploadedFiles = []));
-
-  afterEach(async () => {
-    for (const file of uploadedFiles) {
-      // eslint-disable-next-line no-await-in-loop
-      await deleteMedia(file);
-    }
-  });
-
-  afterAll(() => {
+  afterAll(async () => {
     removeCORSErrorMessage();
     removeResourceErrorMessage();
+    removeAMPPreloadErrorMessage();
+
+    await trashAllPosts();
+    await trashAllPosts('web-story');
   });
-
-  async function addPosterImage() {
-    await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-
-    await expect(page).toMatchElement('button[aria-label="Poster image"]');
-
-    await expect(page).toClick('button[aria-label="Poster image"]');
-
-    await page.waitForSelector('.media-modal', {
-      visible: true,
-    });
-
-    await expect(page).toMatchElement('.media-toolbar-primary button', {
-      text: 'Select as poster image',
-    });
-
-    await expect(page).toClick('button', { text: 'Media Library' });
-
-    await expect(page).toClick(
-      '.attachments-browser .attachments .attachment[aria-label="example-3"]'
-    );
-
-    await expect(page).toClick('.media-toolbar-primary button', {
-      text: 'Select as poster image',
-    });
-
-    await page.waitForSelector('[alt="Preview image"]');
-    await expect(page).toMatchElement('[alt="Preview image"]');
-  }
 
   it('should guide me towards creating a new post to embed my story with poster', async () => {
     await createNewStory();
@@ -112,6 +111,10 @@ describe.skip('Publishing Flow', () => {
     );
     await expect(page).not.toMatch(
       'This block contains unexpected or invalid content.'
+    );
+
+    await page.waitForFunction(
+      () => !document.querySelector('.wp-block-web-stories-embed.is-loading')
     );
 
     await page.waitForSelector('amp-story-player');

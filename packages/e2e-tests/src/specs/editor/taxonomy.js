@@ -23,12 +23,13 @@ import {
   publishStory,
   insertStoryTitle,
   withPlugin,
+  createNewTerm,
+  trashAllPosts,
   skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-
   await expect(page).toMatch('Taxonomies');
 
   const taxonomyPanel = await page.$('button[aria-label="Taxonomies"]');
@@ -46,22 +47,36 @@ async function goToAndExpandTaxonomyPanel() {
   await taxonomyPanel.focus();
 }
 
+/**
+ * Add a new category.
+ *
+ * @param {string} name Category name.
+ * @param {string} [parent] Parent category name.
+ * @return {Promise<void>}
+ */
 async function addCategory(name, parent) {
   await expect(page).toClick('button', { text: 'Add New Category' });
 
   if (parent) {
     await expect(page).toClick('button[aria-label="Parent Category"]');
     await page.waitForSelector('li[role="option"]');
+
     await expect(page).toMatchElement('li[role="option"]', { text: parent });
 
     await expect(page).toClick('li[role="option"]', { text: parent });
+
     await expect(page).toMatchElement('button[aria-label="Parent Category"]', {
       text: parent,
     });
   }
 
   await expect(page).toFill('input[name="New Category Name"]', name);
+
+  await expect(page).toClick('input[name="New Category Name"]');
+
+  await page.focus('input[name="New Category Name"]');
   await page.keyboard.press('Enter');
+
   await expect(page).toMatchElement('label', {
     text: name,
   });
@@ -97,246 +112,237 @@ async function addTag(name) {
   await expect(tokenNames).toContainValue(name);
 }
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Taxonomies', () => {
   // TODO: Figure out how to scroll to the Taxonomies panel in Firefox so that the tests work.
   skipSuiteOnFirefox();
 
-  describe('Interaction', () => {
-    // Create some categories and tags before running all tests so that they are available there.
-    beforeAll(async () => {
+  // Create some categories and tags before running all tests so that they are available there.
+  beforeAll(async () => {
+    await createNewTerm('web_story_category', 'music genres');
+    await createNewTerm('web_story_category', 'rock', 'music genres');
+
+    await createNewTerm('web_story_tag', 'adventure');
+    await createNewTerm('web_story_tag', 'sci-fi');
+    await createNewTerm('web_story_tag', 'comedy');
+  });
+
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
+
+  describe('Administrator', () => {
+    it('should be able to add new categories', async () => {
       await createNewStory();
+      await insertStoryTitle('Taxonomies - Categories - Admin');
+
       await goToAndExpandTaxonomyPanel();
 
-      await Promise.all([
-        await addCategory('music genres'),
-        await addCategory('rock', 'music genres'),
+      // Add some new categories.
+      await addCategory('jazz', 'music genres');
+      await addCategory('industrial', 'music genres');
+      await addCategory('electro-pop', 'music genres');
+      await addCategory('funk', 'music genres');
 
-        await addTag('adventure'),
-        await addTag('sci-fi'),
-        await addTag('comedy'),
-      ]);
+      await publishStory();
 
-      // No need to save/publish the story, as the new categories will have been
-      // created in the background via the REST API already.
+      // Refresh page to verify that the assignments persisted.
+      await page.reload({ waitUntil: 'networkidle2' });
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+      await goToAndExpandTaxonomyPanel();
+
+      // See that category made in another story is available here.
+      await expect(page).toMatchElement('input[name="hierarchical_term_rock"]');
+
+      // categories added are checked automatically.
+      await expect(page).toMatchElement(
+        'input[name="hierarchical_term_funk"][checked]'
+      );
+      await expect(page).toMatchElement(
+        'input[name="hierarchical_term_jazz"][checked]'
+      );
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#12026): Fix flakey test.
-    describe.skip('Administrator', () => {
-      it('should be able to add new categories', async () => {
-        await createNewStory();
-        await insertStoryTitle('Taxonomies - Categories - Admin');
+    it('should be able to add new tags and existing tags', async () => {
+      await createNewStory();
+      await insertStoryTitle('Taxonomies - Tags - Admin');
 
-        await goToAndExpandTaxonomyPanel();
+      await goToAndExpandTaxonomyPanel();
 
-        // Add some new categories.
-        await addCategory('jazz', 'music genres');
-        await addCategory('industrial', 'music genres');
-        await addCategory('electro-pop', 'music genres');
-        await addCategory('funk', 'music genres');
+      // Add some new tags.
+      await addTag('noir');
+      await addTag('action');
 
-        await publishStory();
+      // Find an existing tag and select it.
+      await page.focus('input#web_story_tag-input');
+      await page.type('input#web_story_tag-input', 'adven');
+      await page.waitForSelector('ul[data-testid="suggested_terms_list"]');
+      await expect(page).toMatchElement(
+        'ul[data-testid="suggested_terms_list"]'
+      );
+      await expect(page).toMatchElement('li[role="option"]', {
+        text: 'adventure',
+      });
+      await expect(page).toClick('li[role="option"]', { text: 'adventure' });
+      await page.focus('input#web_story_tag-input');
 
-        // Refresh page to verify that the assignments persisted.
-        await page.reload({ waitUntil: 'networkidle2' });
-        await expect(page).toMatchElement('input[placeholder="Add title"]');
+      const tokens = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-testid="flat-term-token"]'),
+          (element) => element.innerText
+        )
+      );
 
-        await goToAndExpandTaxonomyPanel();
+      await expect(tokens).toStrictEqual(
+        expect.arrayContaining(['noir', 'action', 'adventure'])
+      );
 
-        // See that category made in another story is available here.
-        await expect(page).toMatchElement(
-          'input[name="hierarchical_term_rock"]'
-        );
+      await publishStory();
 
-        // categories added are checked automatically.
-        await expect(page).toMatchElement(
-          'input[name="hierarchical_term_funk"][checked]'
-        );
-        await expect(page).toMatchElement(
-          'input[name="hierarchical_term_jazz"][checked]'
-        );
+      // Refresh page to verify that the assignments persisted.
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+      await goToAndExpandTaxonomyPanel();
+
+      // See that added tags persist.
+      const tokens2 = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-testid="flat-term-token"]'),
+          (element) => element.innerText
+        )
+      );
+
+      await expect(tokens2).toStrictEqual(
+        expect.arrayContaining(['noir', 'action', 'adventure'])
+      );
+    });
+  });
+
+  describe('Contributor', () => {
+    withUser('contributor', 'password');
+
+    it('should be able to manage categories but not add new ones', async () => {
+      await createNewStory();
+      await insertStoryTitle('Taxonomies - Categories - Contributor');
+
+      await goToAndExpandTaxonomyPanel();
+
+      await expect(page).not.toMatchElement('button', {
+        text: 'Add New Category',
       });
 
-      it('should be able to add new tags and existing tags', async () => {
+      await expect(page).toMatchElement('input[name="hierarchical_term_rock"]');
+
+      await expect(page).toClick('label', { text: 'rock' });
+
+      await expect(page).toClick('button[aria-label="Save draft"]');
+      await page.waitForSelector(
+        'button[aria-label="Preview"]:not([disabled])'
+      );
+
+      // Refresh page to verify that the assignments persisted.
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).toMatchElement('a.ab-item', { text: 'View Story' });
+
+      await goToAndExpandTaxonomyPanel();
+
+      await expect(page).toMatchElement(
+        'input[name="hierarchical_term_rock"][checked]'
+      );
+    });
+
+    it('should be able to add new tags and existing tags', async () => {
+      await createNewStory();
+      await insertStoryTitle('Taxonomies - Tags - Contributor');
+
+      await goToAndExpandTaxonomyPanel();
+
+      // Add some new tags that won't stick on refresh
+      await addTag('rom-com');
+      await addTag('creature feature');
+
+      // Find an existing tag and select it.
+      await page.focus('input#web_story_tag-input');
+      await page.type('input#web_story_tag-input', 'adven');
+      await page.waitForSelector('ul[data-testid="suggested_terms_list"]');
+      await expect(page).toMatchElement(
+        'ul[data-testid="suggested_terms_list"]'
+      );
+      await expect(page).toMatchElement('li[role="option"]', {
+        text: 'adventure',
+      });
+      await expect(page).toClick('li[role="option"]', { text: 'adventure' });
+      await page.focus('input#web_story_tag-input');
+
+      const tokens = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-testid="flat-term-token"]'),
+          (element) => element.innerText
+        )
+      );
+
+      await expect(tokens).toStrictEqual(
+        expect.arrayContaining(['rom-com', 'creature feature', 'adventure'])
+      );
+
+      await expect(page).toClick('button[aria-label="Save draft"]');
+      await page.waitForSelector(
+        'button[aria-label="Preview"]:not([disabled])'
+      );
+
+      // Refresh page to verify that the assignments persisted.
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+      await goToAndExpandTaxonomyPanel();
+
+      // See that added tags persist.
+      const tokens2 = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-testid="flat-term-token"]'),
+          (element) => element.innerText
+        )
+      );
+
+      await expect(tokens2).toStrictEqual(
+        expect.arrayContaining(['rom-com', 'creature feature', 'adventure'])
+      );
+    });
+  });
+
+  describe('Custom Taxonomy', () => {
+    withPlugin('web-stories-test-plugin-taxonomies');
+
+    describe('Administrator', () => {
+      it('should see custom taxonomies', async () => {
         await createNewStory();
-        await insertStoryTitle('Taxonomies - Tags - Admin');
-
         await goToAndExpandTaxonomyPanel();
 
-        // Add some new tags.
-        await addTag('noir');
-        await addTag('action');
+        await expect(page).toMatch('Add New Color');
+        await expect(page).toMatch('Search Verticals');
 
-        // Find an existing tag and select it.
-        await page.focus('input#web_story_tag-input');
-        await page.type('input#web_story_tag-input', 'adven');
-        await page.waitForSelector('ul[data-testid="suggested_terms_list"]');
-        await expect(page).toMatchElement(
-          'ul[data-testid="suggested_terms_list"]'
-        );
-        await expect(page).toMatchElement('li[role="option"]', {
-          text: 'adventure',
+        await expect(page).toMatchElement('button', {
+          text: 'Add New Vertical',
         });
-        await expect(page).toClick('li[role="option"]', { text: 'adventure' });
-        await page.focus('input#web_story_tag-input');
-
-        const tokens = await page.evaluate(() =>
-          Array.from(
-            document.querySelectorAll('[data-testid="flat-term-token"]'),
-            (element) => element.innerText
-          )
-        );
-
-        await expect(tokens).toStrictEqual(
-          expect.arrayContaining(['noir', 'action', 'adventure'])
-        );
-
-        await publishStory();
-
-        // Refresh page to verify that the assignments persisted.
-        await page.reload();
-        await expect(page).toMatchElement('input[placeholder="Add title"]');
-
-        await goToAndExpandTaxonomyPanel();
-
-        // See that added tags persist.
-        const tokens2 = await page.evaluate(() =>
-          Array.from(
-            document.querySelectorAll('[data-testid="flat-term-token"]'),
-            (element) => element.innerText
-          )
-        );
-
-        await expect(tokens2).toStrictEqual(
-          expect.arrayContaining(['noir', 'action', 'adventure'])
-        );
       });
     });
 
     describe('Contributor', () => {
       withUser('contributor', 'password');
 
-      it('should be able to manage categories but not add new ones', async () => {
+      it('should see custom taxonomies', async () => {
         await createNewStory();
-        await insertStoryTitle('Taxonomies - Categories - Contributor');
-
         await goToAndExpandTaxonomyPanel();
+
+        await expect(page).toMatch('Add New Color');
+        await expect(page).toMatch('Search Verticals');
 
         await expect(page).not.toMatchElement('button', {
-          text: 'Add New Category',
-        });
-
-        await expect(page).toMatchElement(
-          'input[name="hierarchical_term_rock"]'
-        );
-
-        await expect(page).toClick('label', { text: 'rock' });
-
-        await expect(page).toClick('button[aria-label="Save draft"]');
-        await page.waitForSelector(
-          'button[aria-label="Preview"]:not([disabled])'
-        );
-
-        // Refresh page to verify that the assignments persisted.
-        await page.reload();
-        await expect(page).toMatchElement('input[placeholder="Add title"]');
-        await expect(page).toMatchElement('a.ab-item', { text: 'View Story' });
-
-        await goToAndExpandTaxonomyPanel();
-
-        await expect(page).toMatchElement(
-          'input[name="hierarchical_term_rock"][checked]'
-        );
-      });
-
-      it('should be able to add new tags and existing tags', async () => {
-        await createNewStory();
-        await insertStoryTitle('Taxonomies - Tags - Contributor');
-
-        await goToAndExpandTaxonomyPanel();
-
-        // Add some new tags that won't stick on refresh
-        await addTag('rom-com');
-        await addTag('creature feature');
-
-        // Find an existing tag and select it.
-        await page.focus('input#web_story_tag-input');
-        await page.type('input#web_story_tag-input', 'adven');
-        await page.waitForSelector('ul[data-testid="suggested_terms_list"]');
-        await expect(page).toMatchElement(
-          'ul[data-testid="suggested_terms_list"]'
-        );
-        await expect(page).toMatchElement('li[role="option"]', {
-          text: 'adventure',
-        });
-        await expect(page).toClick('li[role="option"]', { text: 'adventure' });
-        await page.focus('input#web_story_tag-input');
-
-        const tokens = await page.evaluate(() =>
-          Array.from(
-            document.querySelectorAll('[data-testid="flat-term-token"]'),
-            (element) => element.innerText
-          )
-        );
-
-        await expect(tokens).toStrictEqual(
-          expect.arrayContaining(['rom-com', 'creature feature', 'adventure'])
-        );
-
-        await expect(page).toClick('button[aria-label="Save draft"]');
-        await page.waitForSelector(
-          'button[aria-label="Preview"]:not([disabled])'
-        );
-
-        // Refresh page to verify that the assignments persisted.
-        await page.reload();
-        await expect(page).toMatchElement('input[placeholder="Add title"]');
-
-        await goToAndExpandTaxonomyPanel();
-
-        // See that added tags persist.
-        const tokens2 = await page.evaluate(() =>
-          Array.from(
-            document.querySelectorAll('[data-testid="flat-term-token"]'),
-            (element) => element.innerText
-          )
-        );
-
-        await expect(tokens2).toStrictEqual(
-          expect.arrayContaining(['rom-com', 'creature feature', 'adventure'])
-        );
-      });
-    });
-
-    describe('Custom Taxonomy', () => {
-      withPlugin('web-stories-test-plugin-taxonomies');
-
-      describe('Administrator', () => {
-        it('should see custom taxonomies', async () => {
-          await createNewStory();
-          await goToAndExpandTaxonomyPanel();
-
-          await expect(page).toMatch('Add New Color');
-          await expect(page).toMatch('Search Verticals');
-
-          await expect(page).toMatchElement('button', {
-            text: 'Add New Vertical',
-          });
-        });
-      });
-
-      describe('Contributor', () => {
-        withUser('contributor', 'password');
-
-        it('should see custom taxonomies', async () => {
-          await createNewStory();
-          await goToAndExpandTaxonomyPanel();
-
-          await expect(page).toMatch('Add New Color');
-          await expect(page).toMatch('Search Verticals');
-
-          await expect(page).not.toMatchElement('button', {
-            text: 'Add New Vertical',
-          });
+          text: 'Add New Vertical',
         });
       });
     });

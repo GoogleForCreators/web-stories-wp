@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [{ "path": "../react" }, { "path": "../types" }],
+  /* Excludes the raw JSON files */
+  "include": ["src/*"]
+}

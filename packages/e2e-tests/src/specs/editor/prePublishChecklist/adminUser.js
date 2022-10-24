@@ -20,12 +20,53 @@
 import {
   createNewStory,
   publishStory,
-  uploadPublisherLogoEditor,
   takeSnapshot,
-  skipSuiteOnFirefox,
   addTextElement,
   insertStoryTitle,
+  uploadFile,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+async function uploadPosterImage(file) {
+  await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+
+  await expect(page).toClick('button[aria-label="Poster image"]');
+  await expect(page).toClick('[role="menuitem"]', { text: 'Upload a file' });
+
+  await page.waitForSelector('.media-modal', {
+    visible: true,
+  });
+
+  await expect(page).toClick('.media-modal #menu-item-upload', {
+    text: 'Upload files',
+    visible: true,
+  });
+
+  const fileName = await uploadFile(file, false);
+
+  await expect(page).toClick('button', {
+    text: 'Select as poster image',
+    visible: true,
+  });
+
+  await expect(page).toClick('button', {
+    text: 'Crop image',
+    visible: true,
+  });
+
+  await page.keyboard.press('Escape');
+
+  await page.waitForSelector('.media-modal', {
+    visible: false,
+  });
+
+  await page.waitForSelector('[alt="Preview image"]');
+  await expect(page).toMatchElement('[alt="Preview image"]');
+
+  return fileName;
+}
 
 const addNewPage = async () => {
   await expect(page).toClick('button[aria-label="Add New Page"]');
@@ -68,7 +109,9 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await insertButton.click();
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await insertStoryTitle('Prepublish Checklist - admin - no poster warning');
+    await insertStoryTitle(
+      'Prepublish Checklist - admin - missing poster warning'
+    );
 
     await publishStory();
 
@@ -77,18 +120,17 @@ describe('Pre-Publish Checklist : Admin User', () => {
 
     await expect(page).toClick('button[aria-label^="Checklist: "]');
     await expect(page).toMatchElement(
-      '[aria-label="Potential Story issues by category"][data-isexpanded="true"]'
+      '#pre-publish-checklist[data-isexpanded="true"]'
     );
     await expect(page).toMatch('Add poster image');
-    await takeSnapshot(page, 'Prepublish checklist');
+    await takeSnapshot(page, 'Pre-publish Checklist');
   });
 
   describe('Poster Image', () => {
     // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
     skipSuiteOnFirefox();
 
-    //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11977): Fix flakey test.
-    it.skip('should show cards related to poster image issues', async () => {
+    it('should show cards related to poster image issues', async () => {
       await addTextElement();
       await addPages(3);
 
@@ -111,37 +153,40 @@ describe('Pre-Publish Checklist : Admin User', () => {
       );
 
       //open publish panel if not open
+
       //eslint-disable-next-line jest/no-conditional-in-test
       if (!isPublishPanelExpanded) {
         await publishPanelButton.click();
       }
-      await uploadPublisherLogoEditor('example-1.jpg', false);
+
+      await uploadPosterImage('example-1.jpg');
 
       await expect(page).not.toMatch('Add poster image');
     });
-  });
 
-  it('should focus on media button when poster image issue card is clicked', async () => {
-    await addTextElement();
-    await addPages(3);
+    it('should focus on media button when poster image issue card is clicked', async () => {
+      await addTextElement();
+      await addPages(3);
 
-    await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toClick(
-      'div[aria-label="Story details"] button[aria-label^="Checklist"]'
-    );
-    const title = await expect(page).toMatchElement('h2', {
-      text: 'Add poster image',
+      await expect(page).toClick('button', { text: 'Publish' });
+      await expect(page).toClick(
+        'div[aria-label="Story details"] button[aria-label^="Checklist"]'
+      );
+      const title = await expect(page).toMatchElement('h2', {
+        text: 'Add poster image',
+      });
+      const button = await title.evaluateHandle((node) => node.parentNode);
+
+      expect(button).toBeDefined();
+
+      await button.click();
+
+      const isMediaPickerInFocus = await page.evaluate(
+        () =>
+          document.activeElement.getAttribute('aria-label') === 'Poster image'
+      );
+
+      expect(isMediaPickerInFocus).toBeTrue();
     });
-    const button = await title.evaluateHandle((node) => node.parentNode);
-
-    expect(button).toBeDefined();
-
-    await button.click();
-
-    const isMediaPickerInFocus = await page.evaluate(
-      () => document.activeElement.getAttribute('aria-label') === 'Poster image'
-    );
-
-    expect(isMediaPickerInFocus).toBeTrue();
   });
 });

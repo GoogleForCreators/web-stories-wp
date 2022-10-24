@@ -30,6 +30,8 @@ import {
  */
 import * as schema from './schema.json';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Shopping', () => {
   minWPVersionRequired('5.8'); // WooCommerce requires WP 5.7+
 
@@ -41,13 +43,12 @@ describe('Shopping', () => {
     });
 
     describe('Schema Validation', () => {
-      //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11976): Fix flakey test
-      it.skip('should match a valid schema', async () => {
+      it('should match a valid schema', async () => {
         await createNewStory();
         await insertProduct('Hoodie with Zipper', true);
         await insertProduct('Album', false);
         await insertProduct('Sunglasses', false);
-        const previewPage = await previewStory(page);
+        const previewPage = await previewStory();
 
         await previewPage.waitForSelector(
           'amp-story-shopping-attachment script'
@@ -83,69 +84,69 @@ describe('Shopping', () => {
 
         // eslint-disable-next-line jest/no-large-snapshots
         expect(normalizedItems).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "aggregateRating": Object {
-              "ratingValue": 0,
-              "reviewCount": 0,
-              "reviewUrl": "http://localhost:8899/product/hoodie-with-zipper",
-            },
-            "productBrand": "",
-            "productDetails": "This is a simple product.",
-            "productId": "product-id",
-            "productImages": Array [
-              Object {
-                "alt": "",
-                "url": "product-image-url",
+          [
+            {
+              "aggregateRating": {
+                "ratingValue": 0,
+                "reviewCount": 0,
+                "reviewUrl": "http://localhost:8899/product/hoodie-with-zipper",
               },
-            ],
-            "productPrice": 45,
-            "productPriceCurrency": "USD",
-            "productTitle": "Hoodie with Zipper",
-            "productUrl": "http://localhost:8899/product/hoodie-with-zipper",
-          },
-          Object {
-            "aggregateRating": Object {
-              "ratingValue": 0,
-              "reviewCount": 0,
-              "reviewUrl": "http://localhost:8899/product/album",
+              "productBrand": "",
+              "productDetails": "This is a simple product.",
+              "productId": "product-id",
+              "productImages": [
+                {
+                  "alt": "",
+                  "url": "product-image-url",
+                },
+              ],
+              "productPrice": 45,
+              "productPriceCurrency": "USD",
+              "productTitle": "Hoodie with Zipper",
+              "productUrl": "http://localhost:8899/product/hoodie-with-zipper",
             },
-            "productBrand": "",
-            "productDetails": "This is a simple, virtual product.",
-            "productId": "product-id",
-            "productImages": Array [
-              Object {
-                "alt": "",
-                "url": "product-image-url",
+            {
+              "aggregateRating": {
+                "ratingValue": 0,
+                "reviewCount": 0,
+                "reviewUrl": "http://localhost:8899/product/album",
               },
-            ],
-            "productPrice": 15,
-            "productPriceCurrency": "USD",
-            "productTitle": "Album",
-            "productUrl": "http://localhost:8899/product/album",
-          },
-          Object {
-            "aggregateRating": Object {
-              "ratingValue": 0,
-              "reviewCount": 0,
-              "reviewUrl": "http://localhost:8899/product/sunglasses",
+              "productBrand": "",
+              "productDetails": "This is a simple, virtual product.",
+              "productId": "product-id",
+              "productImages": [
+                {
+                  "alt": "",
+                  "url": "product-image-url",
+                },
+              ],
+              "productPrice": 15,
+              "productPriceCurrency": "USD",
+              "productTitle": "Album",
+              "productUrl": "http://localhost:8899/product/album",
             },
-            "productBrand": "",
-            "productDetails": "This is a simple product.",
-            "productId": "product-id",
-            "productImages": Array [
-              Object {
-                "alt": "",
-                "url": "product-image-url",
+            {
+              "aggregateRating": {
+                "ratingValue": 0,
+                "reviewCount": 0,
+                "reviewUrl": "http://localhost:8899/product/sunglasses",
               },
-            ],
-            "productPrice": 90,
-            "productPriceCurrency": "USD",
-            "productTitle": "Sunglasses",
-            "productUrl": "http://localhost:8899/product/sunglasses",
-          },
-        ]
-      `);
+              "productBrand": "",
+              "productDetails": "This is a simple product.",
+              "productId": "product-id",
+              "productImages": [
+                {
+                  "alt": "",
+                  "url": "product-image-url",
+                },
+              ],
+              "productPrice": 90,
+              "productPriceCurrency": "USD",
+              "productTitle": "Sunglasses",
+              "productUrl": "http://localhost:8899/product/sunglasses",
+            },
+          ]
+        `);
       });
     });
   });

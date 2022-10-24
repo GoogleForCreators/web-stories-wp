@@ -27,7 +27,7 @@ jobs:
     if: github.event.pull_request.merged == true
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -43,7 +43,7 @@ jobs:
 
           echo "Determined release with ID $NEXT_RELEASE to be the next one"
 
-          echo "::set-output name=release_id::$NEXT_RELEASE"
+          echo "release_id=$NEXT_RELEASE" >> $GITHUB_OUTPUT
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
 
@@ -58,7 +58,7 @@ jobs:
           RELEASE_ID: ${{ steps.release.outputs.release_id }}
 
       - name: Retrieve linked issues
-        uses: actions/github-script@c713e510dbd7d213d92d41b7a7805a986f4c5c66
+        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: linked-issues
         with:
           script: |
@@ -98,5 +98,5 @@ jobs:
           done <<< "$ISSUE_NUMBERS"
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
-          RELEASE_ID: ${{ steps.release.outputs.release_id }}
-          LINKED_ISSUES: ${{ steps.linked-issues.outputs.result }}
+          RELEASE_ID: ${{ env.release_id }}
+          LINKED_ISSUES: ${{ env.result }}

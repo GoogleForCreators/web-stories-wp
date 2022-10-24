@@ -315,4 +315,66 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 		$this->assertTrue( $actual );
 	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		$presets = [
+			'fillColors' => [
+				[
+					'type'     => 'conic',
+					'stops'    =>
+						[
+							[
+								'color'    => [],
+								'position' => 0,
+							],
+							[
+								'color'    => [],
+								'position' => 0.7,
+							],
+						],
+					'rotation' => 0.5,
+				],
+			],
+			'textColors' => [
+				[
+					'color' => [],
+				],
+			],
+			'textStyles' => [
+				[
+					'color'              => [],
+					'backgroundColor'    =>
+						[
+							'type'     => 'conic',
+							'stops'    => [],
+							'rotation' => 0.5,
+						],
+					'backgroundTextMode' => 'FILL',
+					'font'               => [],
+				],
+			],
+		];
+		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
+
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_title'   => 'test title',
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		add_post_meta( $post->ID, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, [] );
+		add_post_meta( $post->ID, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, 123 );
+
+		$this->instance->on_plugin_uninstall();
+
+		$this->assertSame( '', get_post_meta( $post->ID, $this->instance::POSTER_META_KEY, true ) );
+
+		$this->assertSame( '', get_post_meta( $post->ID, $this->instance::PUBLISHER_LOGO_META_KEY, true ) );
+		$this->assertFalse( get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION ) );
+	}
 }
