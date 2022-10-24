@@ -32,14 +32,16 @@ export default {
     format: 'es',
   },
   plugins: [
-    resolve(),
+    resolve({
+      preferBuiltins: true,
+    }),
     typescript(),
     babel({
       babelrc: false,
       extensions: ['.ts'],
       babelHelpers: 'inline',
       exclude: 'node_modules/**',
-      presets: ['@babel/preset-typescript'],
+      presets: ['@babel/preset-env', '@babel/preset-typescript'],
     }),
   ],
   external: ['crypto'],
