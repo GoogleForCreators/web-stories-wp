@@ -49,7 +49,7 @@ function useInsertElement() {
     }));
 
   const {
-    actions: { getFontByName },
+    actions: { getFontByName, getFontsBySearch },
   } = useFont();
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
@@ -64,14 +64,15 @@ function useInsertElement() {
    * @param {boolean} insertAsBackground Whether to insert the element as a background element.
    */
   const insertElement = useCallback(
-    (type, props, insertAsBackground = false) => {
+    async (type, props, insertAsBackground = false) => {
       setZoomSetting(ZOOM_SETTING.FIT);
       const element = createElementForCanvas(type, props);
       const { id, resource, pageId } = element;
       addElement({ element, pageId });
 
       if (type === 'text') {
-        // todo need to ensure font is available here
+        // need to ensure font is available here
+        await getFontsBySearch(element.font);
         const font = getFontByName(element.font?.family);
         updateStoryFonts({ properties: { font: font } });
       }
@@ -106,6 +107,7 @@ function useInsertElement() {
       focusCanvas,
       setZoomSetting,
       getFontByName,
+      getFontsBySearch,
       updateStoryFonts,
     ]
   );
