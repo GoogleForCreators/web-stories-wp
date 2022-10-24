@@ -185,6 +185,7 @@ function OutputPage({
                 if (element?.font && fonts) {
                   elementFontData = { font: fonts[element?.font.family] };
                 }
+
                 return (
                   <OutputElement
                     key={element.id}

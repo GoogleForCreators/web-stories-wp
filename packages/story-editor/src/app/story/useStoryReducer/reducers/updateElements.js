@@ -26,7 +26,6 @@ import { produce } from 'immer';
 import {
   updateElementWithUpdater,
   updateAnimations,
-  updateFonts,
   pickElementFontProperties,
 } from './utils';
 
@@ -94,13 +93,8 @@ export const updateElements = (
   }
 
   if (isFontUpdate) {
-    // store font props at the story level
-    draft.story.fonts = updateFonts(draft.story?.fonts, page.elements);
-
-    // pull font props off the individual elements
-    page.elements = page.elements.map((element) =>
-      pickElementFontProperties(element)
-    );
+    // cleanup font props off the individual elements as needed
+    page.elements = page.elements.map(pickElementFontProperties);
   }
 };
 
