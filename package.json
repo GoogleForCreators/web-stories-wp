@@ -94,7 +94,7 @@
     "@wordpress/eslint-plugin": "^13.0.0",
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^2.1.1",
-    "babel-jest": "^29.1.2",
+    "babel-jest": "^29.2.2",
     "babel-loader": "^8.2.5",
     "babel-plugin-styled-components": "^2.0.7",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
