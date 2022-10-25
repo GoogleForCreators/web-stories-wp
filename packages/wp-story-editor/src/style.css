@@ -27,7 +27,7 @@
 }
 
 body.js.edit-story #wpcontent {
-  position: relative;
+  position: fixed;
   width: calc(100% - 160px);
 }
 
@@ -38,6 +38,11 @@ body.js.edit-story.folded #adminmenuback {
 body.js.edit-story #wpcontent,
 body.js.edit-story #wpbody-content {
   padding: 0;
+}
+
+/* issue #12545 */
+body.js.edit-story.WebStories_ReactModal__Body--open #wpcontent {
+  position: relative;
 }
 
 body.edit-story .web-stories-wp {
