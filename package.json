@@ -165,7 +165,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-web-worker-loader": "^1.6.1",
     "rtlcss-webpack-plugin": "^4.0.7",
-    "source-map-loader": "^4.0.0",
+    "source-map-loader": "^4.0.1",
     "styled-components": "^5.3.6",
     "stylelint": "^14.14.0",
     "stylelint-config-prettier": "^9.0.3",
