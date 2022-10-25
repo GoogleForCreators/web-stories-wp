@@ -33,6 +33,10 @@ function AutoSaveHandler() {
   const { autoSave } = useStory(({ actions }) => ({
     autoSave: actions.autoSave,
   }));
+  const { story, pages } = useStory(({ state }) => ({
+    story: state.story,
+    pages: state.pages,
+  }));
   const isUploading = useIsUploadingToStory();
 
   // Cache it to make it stable in terms of the below timeout
@@ -54,7 +58,7 @@ function AutoSaveHandler() {
     );
 
     return () => clearTimeout(timeout);
-  }, [autoSaveInterval, hasNewChanges, isUploading]);
+  }, [autoSaveInterval, hasNewChanges, isUploading, story, pages]);
 
   return null;
 }
