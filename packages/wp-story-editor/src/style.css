@@ -27,7 +27,7 @@
 }
 
 body.js.edit-story #wpcontent {
-  position: fixed;
+  position: relative;
   width: calc(100% - 160px);
 }
 
