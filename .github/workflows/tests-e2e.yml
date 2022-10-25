@@ -111,7 +111,7 @@ jobs:
         run: npm run workflow:build-plugin
 
       - name: Upload bundle
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         with:
           name: web-stories
           path: build/web-stories
@@ -232,7 +232,7 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         if: always()
         with:
           name: failures-artifacts
