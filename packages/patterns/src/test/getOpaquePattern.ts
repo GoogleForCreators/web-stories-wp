@@ -15,11 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { PatternType, Linear } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import getOpaquePattern from '../getOpaquePattern';
-import type { Linear } from '../types';
-import { PatternType } from '../types';
 
 describe('getOpaquePattern', () => {
   it('should get the opaque color correctly from a solid', () => {
@@ -40,7 +43,7 @@ describe('getOpaquePattern', () => {
 
   it('should get the opaque color correctly from a gradient', () => {
     const input: Linear = {
-      type: PatternType.LINEAR,
+      type: PatternType.Linear,
       stops: [
         { color: { r: 1, g: 1, b: 1 }, position: 0 },
         { color: { r: 1, g: 1, b: 1, a: 0.5 }, position: 1 },
@@ -48,7 +51,7 @@ describe('getOpaquePattern', () => {
       alpha: 0.5,
     };
     const expected: Linear = {
-      type: PatternType.LINEAR,
+      type: PatternType.Linear,
       stops: [
         { color: { r: 1, g: 1, b: 1 }, position: 0 },
         { color: { r: 1, g: 1, b: 1, a: 0.5 }, position: 1 },

@@ -15,12 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { PatternType, Linear, Radial, Solid } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import getPreviewText from '../getPreviewText';
 import createSolid from '../createSolid';
-import type { Linear, Radial, Solid } from '../types';
-import { PatternType } from '../types';
 
 describe('getPreviewText', () => {
   it('should return null for no pattern', () => {
@@ -40,7 +43,7 @@ describe('getPreviewText', () => {
   it('should return hex ignoring alpha for explicit non-transparent solid', () => {
     const input: Solid = {
       ...createSolid(255, 0, 255, 0.3),
-      type: PatternType.SOLID,
+      type: PatternType.Solid,
     };
     const result = getPreviewText(input);
     const expected = 'FF00FF';

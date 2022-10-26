@@ -15,11 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { PatternType, Linear } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import hasOpacity from '../hasOpacity';
-import type { Linear } from '../types';
-import { PatternType } from '../types';
 
 describe('hasOpacity', () => {
   it('should return false for opaque solid', () => {
@@ -32,7 +35,7 @@ describe('hasOpacity', () => {
 
   it('should return true for gradient with semitransparent stops', () => {
     const pattern: Linear = {
-      type: PatternType.LINEAR,
+      type: PatternType.Linear,
       stops: [
         { color: { r: 1, g: 1, b: 1 }, position: 0 },
         { color: { r: 1, g: 1, b: 1, a: 0.5 }, position: 1 },
@@ -43,7 +46,7 @@ describe('hasOpacity', () => {
 
   it('should return true for gradient with opaque stops but overall opacity', () => {
     const pattern: Linear = {
-      type: PatternType.LINEAR,
+      type: PatternType.Linear,
       stops: [
         { color: { r: 1, g: 1, b: 1 }, position: 0 },
         { color: { r: 1, g: 1, b: 1 }, position: 1 },
