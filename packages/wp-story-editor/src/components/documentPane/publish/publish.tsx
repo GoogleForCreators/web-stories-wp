@@ -58,7 +58,6 @@ import { addQueryArgs } from '@googleforcreators/url';
  * Internal dependencies
  */
 import * as apiCallbacks from '../../../api/publisherLogos';
-import type { Config } from '../../../types';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -150,7 +149,7 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
   } = useSidebar();
   const {
     api: { publisherLogos: publisherLogosPath },
-  } = useConfig() as Config;
+  } = useConfig();
 
   const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
@@ -160,7 +159,7 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
     revisionLink,
-  } = useConfig() as Config;
+  } = useConfig();
 
   const allowedImageFileTypes = useMemo(
     () =>

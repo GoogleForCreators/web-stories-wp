@@ -25,7 +25,6 @@ import { useConfig } from '@googleforcreators/story-editor';
  * Internal dependencies
  */
 import { getStatusCheck } from '../../api/statusCheck';
-import type { Config } from '../../types';
 import { getContent } from './utils';
 import StatusCheckFailed from './statusCheckFailed';
 
@@ -35,7 +34,7 @@ function StatusCheck() {
   const {
     api: { statusCheck },
     encodeMarkup,
-  }: Config = useConfig();
+  } = useConfig();
 
   useEffect((): void => {
     // If it succeeds, do nothing.

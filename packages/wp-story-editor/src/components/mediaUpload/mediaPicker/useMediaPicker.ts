@@ -28,7 +28,6 @@ import { useConfig, useAPI } from '@googleforcreators/story-editor';
  */
 import { MouseEvent } from 'react';
 import { useMediaPickerProps } from '../types';
-import type { Config } from '../../../types';
 import {
   calculateImageSelectOptions,
   mustBeCropped,
@@ -74,7 +73,7 @@ function useMediaPicker({
   } = useAPI();
   const {
     capabilities: { hasUploadMediaAction },
-  } = useConfig() as Config;
+  } = useConfig();
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {

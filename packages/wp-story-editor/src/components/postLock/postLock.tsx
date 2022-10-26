@@ -41,7 +41,6 @@ import {
   setStoryLockById,
   deleteStoryLockById,
 } from '../../api/storyLock';
-import type { Config } from '../../types';
 import PostLockDialog from './postLockDialog';
 import PostTakeOverDialog from './postTakeOverDialog';
 
@@ -55,7 +54,7 @@ function PostLock() {
     nonce: firstNonce,
     postLock: { interval: postLockInterval, showLockedDialog },
     api: { stories, storyLocking },
-  } = useConfig() as Config;
+  } = useConfig();
 
   const {
     state: { hasNewChanges },

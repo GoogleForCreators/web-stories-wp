@@ -28,7 +28,6 @@ import { useConfig, useStory } from '@googleforcreators/story-editor';
 /**
  * Internal dependencies
  */
-import type { Config } from '../../types';
 import MenuItem from './menuItem';
 import MetaBoxesArea from './metaBoxesArea';
 import useMetaBoxes from './useMetaBoxes';
@@ -56,7 +55,7 @@ function MetaBoxes() {
   }));
   const [showMenuButton, updateMenuButtonState] = useState(false);
   const menuButtonContainer = useRef(null);
-  const { postType, metaBoxes = {} } = useConfig() as Config;
+  const { postType, metaBoxes = {} } = useConfig();
   const { pages, isSavingStory, isAutoSavingStory, story } = useStory(
     ({
       state: {

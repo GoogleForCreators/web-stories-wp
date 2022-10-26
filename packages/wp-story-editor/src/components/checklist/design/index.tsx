@@ -27,15 +27,11 @@ import {
   StoryPagesCount,
   FirstPageAnimation,
 } from '@googleforcreators/story-editor';
-/**
- * Internal dependencies
- */
-import { Config } from '../../../types';
 
 function Design() {
   const {
     capabilities: { hasUploadMediaAction },
-  } = useConfig() as Config;
+  } = useConfig();
   return (
     <>
       <StoryPagesCount />

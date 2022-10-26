@@ -24,7 +24,6 @@ import { useConfig } from '@googleforcreators/story-editor';
  * Internal dependencies
  */
 import { saveMetaBoxes } from '../../api/metaboxes';
-import type { Config } from '../../types';
 import useMetaBoxes from './useMetaBoxes';
 
 /**
@@ -47,7 +46,7 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
 
   const {
     api: { metaBoxes: apiUrl },
-  } = useConfig() as Config;
+  } = useConfig();
 
   const wasSaving = usePrevious(isSavingStory);
   const wasAutoSaving = usePrevious(isAutoSavingStory);
