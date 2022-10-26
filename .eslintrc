@@ -328,7 +328,6 @@
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": [
-          "./tsconfig.json",
           "./packages/*/tsconfig.json"
         ]
       },
@@ -512,6 +511,15 @@
       ],
       "env": {
         "node": true
+      }
+    },
+    {
+      "files": [
+        "packages/jest-puppeteer-amp/src/**/*.js"
+      ],
+      "globals": {
+        "browser": "readonly",
+        "page": "readonly"
       }
     },
     {

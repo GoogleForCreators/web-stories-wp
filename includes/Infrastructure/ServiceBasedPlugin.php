@@ -204,6 +204,21 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
+	 * Act on site is uninstalled.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_site_uninstall(): void {
+		$this->register_services();
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof PluginUninstallAware ) {
+				$service->on_plugin_uninstall();
+			}
+		}
+	}
+
+	/**
 	 * Register the plugin with the WordPress system.
 	 *
 	 * @since 1.6.0

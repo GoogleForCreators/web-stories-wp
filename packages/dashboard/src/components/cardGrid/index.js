@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { forwardRef } from '@googleforcreators/react';
-import { ThemeGlobals, themeHelpers } from '@googleforcreators/design-system';
+import { themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -40,7 +40,7 @@ const DashboardGrid = styled.div`
   scroll-margin-top: 30vh;
 
   ${({ theme }) => css`
-    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+    &:focus-visible {
       ${themeHelpers.focusCSS(theme.colors.border.focus)};
     }
   `};

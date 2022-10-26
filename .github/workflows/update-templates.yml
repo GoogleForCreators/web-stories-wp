@@ -32,7 +32,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -46,7 +46,7 @@ jobs:
         run: npm run workflow:migrate
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@671dc9c9e0c2d73f07fa45a3eb0220e1622f0c5f
+        uses: peter-evans/create-pull-request@b4d51739f96fca8047ad065eccef63442d8e99f7
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
           commit-message: Migrate templates and text sets to latest version

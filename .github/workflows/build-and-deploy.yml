@@ -91,7 +91,7 @@ jobs:
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -124,7 +124,7 @@ jobs:
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -166,7 +166,7 @@ jobs:
       # Upload ZIP file to GCS for use in QA environment.
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@877d4953d2c70a0ba7ef3290ae968eb24af233bb
+        uses: google-github-actions/setup-gcloud@ee9693ff89cdf73862b8a13988f6a71070e8fc58
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -180,7 +180,7 @@ jobs:
 
       - name: Check if a comment was already made
         id: find-comment
-        uses: peter-evans/find-comment@1769778a0c5bd330272d749d12c036d65e70d39d
+        uses: peter-evans/find-comment@b657a70ff16d17651703a84bee1cb9ad9d2be2ea
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: googleforcreators-bot
@@ -197,48 +197,35 @@ jobs:
         id: get-comment-body
         # Setting a multi-line output requires escaping line-feeds. See <https://github.community/t/set-output-truncates-multiline-strings/16852/3>.
         run: |
-          body="Plugin builds for ${{ github.event.pull_request.head.sha }} are ready :bellhop_bell:!
-          - Download [development build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip?${{ github.sha }})
-          - Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})"
-          body="${body//$'\n'/'%0A'}"
-          echo "::set-output name=body::$body"
+          echo 'COMMENT_BODY<<EOF' >> $GITHUB_ENV
+          echo 'Plugin builds for ${{ github.event.pull_request.head.sha }} are ready :bellhop_bell:!' >> $GITHUB_ENV
+          echo '- Download [development build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip?${{ github.sha }})' >> $GITHUB_ENV
+          echo '- Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})' >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
         if: >
           github.head_ref &&
           github.event.pull_request.draft == false &&
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]'
 
-      - name: Create comment on PR with links to plugin builds
-        uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
+      - name: Create or update comment on PR with links to plugin builds
+        uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body: ${{ steps.get-comment-body.outputs.body }}
-          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-        if: >
-          github.head_ref &&
-          github.event.pull_request.draft == false &&
-          github.event.pull_request.head.repo.fork == false &&
-          github.event.pull_request.user.login != 'dependabot[bot]' &&
-          steps.find-comment.outputs.comment-id == ''
-
-      - name: Update comment on PR with links to plugin builds
-        uses: peter-evans/create-or-update-comment@c9fcb64660bc90ec1cc535646af190c992007c32
-        with:
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           edit-mode: replace
-          body: ${{ steps.get-comment-body.outputs.body }}
+          body: ${{ env.COMMENT_BODY }}
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
         if: >
           github.head_ref &&
           github.event.pull_request.draft == false &&
           github.event.pull_request.head.repo.fork == false &&
-          github.event.pull_request.user.login != 'dependabot[bot]' &&
-          steps.find-comment.outputs.comment-id != ''
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       # Deploy to staging site if on main branch.
 
       - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@fc49353b67b2b7c1e0e6a600572d01a69f2672dd
+        uses: webfactory/ssh-agent@836c84ec59a0e7bc0eabc79988384eb567561ee2
         with:
           ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'

@@ -24,6 +24,8 @@ import {
   publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Get Started Story', () => {
   describe('Admin User', () => {
     it('should pre-fill post title and post content', async () => {

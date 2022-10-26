@@ -23,7 +23,6 @@ import {
   Button,
   BUTTON_VARIANTS,
   Headline,
-  ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
@@ -61,7 +60,7 @@ export const TabButtonWrapper = styled.div`
   &,
   :hover,
   :focus-within,
-  .${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+  :focus-visible {
     background-color: ${({ theme }) => theme.colors.bg.secondary};
   }
 `;
@@ -80,7 +79,7 @@ export const TabButton = styled(Button).attrs({
   &,
   :hover,
   :focus,
-  .${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+  :focus-visible {
     background-color: ${({ theme }) => theme.colors.bg.secondary};
   }
 

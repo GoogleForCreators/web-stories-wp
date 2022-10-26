@@ -19,11 +19,6 @@
 import { css } from 'styled-components';
 
 /**
- * Internal dependencies
- */
-import { FOCUS_VISIBLE_SELECTOR } from '../global';
-
-/**
  * A css snippet that can be used for the focus styling.
  *
  * @param {string} accent the color of the focused border
@@ -45,7 +40,7 @@ export const focusableOutlineCSS = (colorOrProps, background) => {
       ? colorOrProps
       : colorOrProps?.theme?.colors?.border?.focus;
   return css`
-    &.${FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
+    &:focus-visible {
       ${focusCSS(accent, background)};
     }
   `;

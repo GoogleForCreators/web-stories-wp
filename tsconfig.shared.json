@@ -27,13 +27,16 @@
     "noEmitOnError": true,
     "pretty": true,
     "sourceMap": true,
-    "typeRoots": ["typings", "node_modules/@types"]
+    "typeRoots": ["./typings", "./node_modules/@types"],
+    "types": []
   },
   "exclude": [
     "packages/*/dist-*/**",
     "packages/*/dist/**",
-    "**/test/**/*.js",
-    "**/testUtils/**/*.js",
-    "**/karma/**"
+    "packages/*/node_modules/**",
+    "**/karma/**",
+    "**/stories/**",
+    "**/test/**",
+    "**/testUtils/**"
   ]
 }

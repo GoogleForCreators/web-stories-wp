@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-jest.mock('flagged');
-import { useFeature } from 'flagged';
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
@@ -30,14 +28,6 @@ import StoryOutput from '../story';
 
 describe('Story output', () => {
   beforeAll(() => {
-    useFeature.mockImplementation((feature) => {
-      const config = {
-        enableAnimation: true,
-      };
-
-      return config[feature];
-    });
-
     elementTypes.forEach(registerElementType);
   });
 
@@ -210,6 +200,8 @@ describe('Story output', () => {
   });
 
   describe('AMP validation', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
     it('requires at least one page', async () => {
       const props = {
         id: '123',

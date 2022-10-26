@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
-import { themeHelpers, OVERLAY_CLASS } from '@googleforcreators/design-system';
+import {
+  themeHelpers,
+  OVERLAY_CLASS,
+  BODY_CLASS,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -37,5 +41,15 @@ export const GlobalStyle = createGlobalStyle`
 
   body.folded .${OVERLAY_CLASS} {
     left: ${MENU_FOLDED_WIDTH}px !important;
+  }
+
+  /*
+    Increase submenu z-index from 3 to 15 so it's above the modal overlay (z-index 10).
+    See https://github.com/GoogleForCreators/web-stories-wp/pull/12443
+  */
+  body.${BODY_CLASS} {
+    #adminmenuwrap, #adminmenuback {
+      z-index: 15;
+    }
   }
 `;

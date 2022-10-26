@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use WP_Post;
@@ -34,7 +35,7 @@ use WP_Post;
 /**
  * Class Poster
  */
-class Poster extends Service_Base implements HasMeta {
+class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	/**
 	 * The poster post meta key.
 	 */
@@ -258,5 +259,15 @@ class Poster extends Service_Base implements HasMeta {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::POSTER_ID_POST_META_KEY );
+		delete_post_meta_by_key( self::POSTER_POST_META_KEY );
 	}
 }

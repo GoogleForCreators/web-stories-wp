@@ -212,6 +212,7 @@ function SavedPageTemplate(
           <TemplateImage
             alt={page.image?.alt || __('Saved Page Template', 'web-stories')}
             src={imageUrl}
+            crossOrigin="anonymous"
             height={page.image?.height}
             width={page.image?.height}
             draggable={false}

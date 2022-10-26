@@ -18,6 +18,8 @@
  */
 import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Sidebar', () => {
   describe('Document', () => {
     it('should display publisher logo upload', async () => {

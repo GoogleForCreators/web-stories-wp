@@ -67,7 +67,7 @@ jobs:
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Setup Node
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -93,6 +93,8 @@ jobs:
 
       - name: JS Lint
         run: npm run lint:js
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         if: >
           github.event.pull_request.head.repo.fork == true ||
           github.event.pull_request.user.login == 'dependabot[bot]'
@@ -100,6 +102,8 @@ jobs:
       - name: JS Lint Report
         run: npm run lint:js:report
         continue-on-error: true
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         # Prevent generating the ESLint report if PR is from a fork or authored by Dependabot.
         if: >
           github.event.pull_request.head.repo.fork == false &&
