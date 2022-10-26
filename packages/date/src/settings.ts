@@ -14,30 +14,18 @@
  * limitations under the License.
  */
 
-type WeekdayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
+/**
+ * Internal dependencies
+ */
+import type { WeekdayIndex, Settings } from './types';
 
-export const DEFAULT_DATE_SETTINGS = {
+export const DEFAULT_DATE_SETTINGS: Settings = {
   dateFormat: 'F j, Y',
   timeFormat: 'g:i a',
   gmtOffset: 0,
   timezone: '',
   timezoneAbbr: '',
   weekStartsOn: 0 as WeekdayIndex,
-};
-
-type Settings = {
-  dateFormat: string;
-  timeFormat: string;
-  gmtOffset: number;
-  timezone: string;
-  timezoneAbbr: string;
-  weekStartsOn: WeekdayIndex;
-  locale?: string;
-  months?: string[];
-  monthsShort?: string[];
-  weekdays?: string[];
-  weekdaysShort?: string[];
-  weekdaysInitials?: string[];
 };
 
 let settings: Settings = {

@@ -27,7 +27,7 @@
  */
 export default function addQueryArgs(
   url: string,
-  args: Record<string, string>
+  args: Record<string, string | number | string[] | boolean>
 ): string {
   let isRelativeUrl = false;
   let parsedURL;
@@ -47,7 +47,7 @@ export default function addQueryArgs(
     const value = args[key];
 
     if (typeof value !== 'undefined' && value !== null) {
-      parsedURL.searchParams.set(key, value);
+      parsedURL.searchParams.set(key, value.toString());
     }
   }
 

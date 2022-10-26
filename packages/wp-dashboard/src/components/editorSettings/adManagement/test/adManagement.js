@@ -23,7 +23,7 @@ import { screen } from '@testing-library/react';
  * Internal dependencies
  */
 import AdManagement, { TEXT } from '..';
-import { AD_NETWORK_TYPE } from '../../../../constants';
+import { AdNetworkType } from '../../../../types';
 import { renderWithProviders } from '../../../../testUtils';
 
 describe('Editor Settings: Ad Management group settings <AdManagement />', () => {
@@ -36,12 +36,12 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
   };
 
   beforeEach(() => {
-    adNetwork = AD_NETWORK_TYPE.NONE;
+    adNetwork = AdNetworkType.NONE;
     mockUpdate = jest.fn();
   });
 
   afterEach(() => {
-    adNetwork = AD_NETWORK_TYPE.NONE;
+    adNetwork = AdNetworkType.NONE;
   });
 
   it('should render ad management settings area with ad network dropdown button and helper text by default', () => {
@@ -74,7 +74,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
   it('should render ad network settings and link adsense', () => {
     renderWithProviders(
       <AdManagement
-        adNetwork={AD_NETWORK_TYPE.ADSENSE}
+        adNetwork={AdNetworkType.ADSENSE}
         updateSettings={mockUpdate}
         publisherId=""
         adSenseSlotId=""
@@ -98,7 +98,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
   it('should render ad network settings and link Ad Manager', () => {
     renderWithProviders(
       <AdManagement
-        adNetwork={AD_NETWORK_TYPE.ADMANAGER}
+        adNetwork={AdNetworkType.ADMANAGER}
         updateSettings={mockUpdate}
         publisherId=""
         adSenseSlotId=""
@@ -123,7 +123,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
   it('should render adsense message when site kit is installed', () => {
     renderWithProviders(
       <AdManagement
-        adNetwork={AD_NETWORK_TYPE.ADMANAGER}
+        adNetwork={AdNetworkType.ADMANAGER}
         updateSettings={mockUpdate}
         publisherId=""
         adSenseSlotId=""

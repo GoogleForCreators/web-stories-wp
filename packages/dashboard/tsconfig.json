@@ -1,0 +1,31 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../date" },
+    { "path": "../i18n" },
+    { "path": "../media" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../templates" },
+    { "path": "../tracking" },
+    { "path": "../units" },
+    { "path": "../wp-utils" }
+  ],
+  "include": [
+    "src/constants/**/*",
+    "src/icons/**/*",
+    "src/index.d.ts",
+    "src/types.ts"
+  ],
+  "exclude": [
+    "**/karma/**/*",
+    "**/stories/**/*",
+    "**/storybookUtils/**/*",
+    "**/testUtils/**/*",
+    "**/test/**/*"
+  ]
+}

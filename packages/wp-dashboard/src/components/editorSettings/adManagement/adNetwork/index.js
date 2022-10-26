@@ -32,7 +32,7 @@ import { THEME_CONSTANTS, DropDown } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { InlineLink, TextInputHelperText } from '../../components';
-import { AD_NETWORK_TYPE } from '../../../../constants';
+import { AdNetworkType } from '../../../../types';
 
 export const TEXT = {
   SLOT_ID_LABEL: __('Monetization type', 'web-stories'),
@@ -62,15 +62,15 @@ export const TEXT = {
 const OPTIONS = [
   {
     label: _x('None', 'ad network', 'web-stories'),
-    value: AD_NETWORK_TYPE.NONE,
+    value: AdNetworkType.NONE,
   },
   {
     label: __('Google AdSense', 'web-stories'),
-    value: AD_NETWORK_TYPE.ADSENSE,
+    value: AdNetworkType.ADSENSE,
   },
   {
     label: __('Google Ad Manager', 'web-stories'),
-    value: AD_NETWORK_TYPE.ADMANAGER,
+    value: AdNetworkType.ADMANAGER,
   },
 ];
 
@@ -80,11 +80,11 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   useEffect(() => setAdNetwork(adNetworkRaw), [adNetworkRaw]);
 
   const message = useMemo(() => {
-    if (AD_NETWORK_TYPE.ADMANAGER === adNetwork) {
+    if (AdNetworkType.ADMANAGER === adNetwork) {
       return TEXT.HELPER_MESSAGE_ADMANAGER;
     }
 
-    if (AD_NETWORK_TYPE.ADSENSE === adNetwork) {
+    if (AdNetworkType.ADSENSE === adNetwork) {
       return TEXT.HELPER_MESSAGE_ADSENSE;
     }
 
@@ -92,11 +92,11 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   }, [adNetwork]);
 
   const link = useMemo(() => {
-    if (AD_NETWORK_TYPE.ADMANAGER === adNetwork) {
+    if (AdNetworkType.ADMANAGER === adNetwork) {
       return TEXT.HELPER_LINK_ADMANAGER;
     }
 
-    if (AD_NETWORK_TYPE.ADSENSE === adNetwork) {
+    if (AdNetworkType.ADSENSE === adNetwork) {
       return TEXT.HELPER_LINK_ADSENSE;
     }
 
@@ -152,7 +152,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
 }
 AdNetworkSettings.propTypes = {
   handleUpdate: PropTypes.func,
-  adNetwork: PropTypes.oneOf(Object.values(AD_NETWORK_TYPE)),
+  adNetwork: PropTypes.oneOf(Object.values(AdNetworkType)),
 };
 
 export default AdNetworkSettings;

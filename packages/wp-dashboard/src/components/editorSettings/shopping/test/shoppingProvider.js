@@ -22,8 +22,8 @@ import { screen } from '@testing-library/react';
  * Internal dependencies
  */
 import ShoppingProviderDropDown from '../shoppingProviderDropDown';
-import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
-import { renderWithProviders } from '../../../../testUtils';
+import { ShoppingProviderType } from '../../../../constants';
+import { renderWithProviders } from '../../../../types';
 
 const vendors = {
   none: 'None',
@@ -36,14 +36,14 @@ describe('Editor Settings: Shopping provider settings <ShoppingProviderDropDown 
   let mockUpdate;
 
   beforeEach(() => {
-    provider = SHOPPING_PROVIDER_TYPE.NONE;
+    provider = ShoppingProviderType.None;
     mockUpdate = jest.fn((id) => {
       provider = id;
     });
   });
 
   afterEach(() => {
-    provider = SHOPPING_PROVIDER_TYPE.NONE;
+    provider = ShoppingProviderType.None;
   });
 
   it('should render shopping provider settings dropdown button', () => {

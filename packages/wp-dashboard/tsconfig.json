@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../date" },
+    { "path": "../fonts" },
+    { "path": "../i18n" },
+    { "path": "../media" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../tracking" },
+    { "path": "../url" },
+    { "path": "../wp-utils" }
+  ],
+  "include": ["src/**/*"],
+}

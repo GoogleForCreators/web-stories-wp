@@ -14,7 +14,44 @@
  * limitations under the License.
  */
 
+export type FontStyle = 'normal' | 'italic' | 'regular';
+export enum FontVariantStyle {
+  Normal = 0,
+  Italic = 1,
+}
+
+export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+
+export type FontVariant = [FontVariantStyle, FontWeight];
+
+export type FontService = 'custom' | 'fonts.google.com' | 'system';
+
+export type FontFamily = string;
+
+export interface FontMetrics {
+  upm: number;
+  asc: number;
+  des: number;
+  tAsc: number;
+  tDes: number;
+  tLGap: number;
+  wAsc: number;
+  wDes: number;
+  xH: number;
+  capH: number;
+  yMin: number;
+  yMax: number;
+  hAsc: number;
+  hDes: number;
+  lGap: number;
+}
+
 export interface Font {
-  family: string;
-  variants: Array<[number, number]>;
+  family: FontFamily | 'serif' | 'sans-serif';
+  service?: FontService;
+  weights?: FontWeight[];
+  styles?: FontStyle[];
+  variants?: FontVariant[];
+  fallbacks?: string[];
+  metrics: FontMetrics;
 }

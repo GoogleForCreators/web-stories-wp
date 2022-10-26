@@ -29,7 +29,7 @@ import { TEXT as AD_NETWORK_TEXT } from '../adManagement';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
 import MockEditorProvider from '../../../testUtils/mockEditorProvider';
-import { AD_NETWORK_TYPE } from '../../../constants';
+import { AdNetworkType } from '../../../types';
 import { renderWithProviders } from '../../../testUtils';
 
 const mockedPromise = Promise.resolve({});
@@ -102,7 +102,7 @@ function createProviderValues({
   adSensePublisherId = '',
   adSenseSlotId = '',
   adManagerSlotId = '',
-  adNetwork = AD_NETWORK_TYPE.NONE,
+  adNetwork = AdNetworkType.NONE,
   publisherLogos,
 }) {
   return {
@@ -306,7 +306,7 @@ describe('Editor Settings: <Editor Settings />', () => {
       adSensePublisherId: '123',
       adSenseSlotId: '456',
       adManagerSlotId: '',
-      adNetwork: AD_NETWORK_TYPE.ADSENSE,
+      adNetwork: AdNetworkType.ADSENSE,
       publisherLogos: [],
     });
 

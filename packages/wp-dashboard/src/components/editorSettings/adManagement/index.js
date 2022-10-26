@@ -32,7 +32,7 @@ import {
   SettingSubheading,
   TextInputHelperText,
 } from '../components';
-import { AD_NETWORK_TYPE } from '../../../constants';
+import { AdNetworkType } from '../../../types';
 import AdNetworkSettings from './adNetwork';
 import GoogleAdManagerSettings from './googleAdManager';
 import GoogleAdSenseSettings from './googleAdSense';
@@ -176,7 +176,7 @@ function AdManagement({
             handleUpdate={handleUpdateAdNetwork}
             adNetwork={adNetwork}
           />
-          {AD_NETWORK_TYPE.ADSENSE === adNetwork && (
+          {AdNetworkType.ADSENSE === adNetwork && (
             <GoogleAdSenseSettings
               handleUpdatePublisherId={handleUpdateAdSensePublisherId}
               handleUpdateSlotId={handleUpdateAdSenseSlotId}
@@ -185,7 +185,7 @@ function AdManagement({
               siteKitStatus={siteKitStatus}
             />
           )}
-          {AD_NETWORK_TYPE.ADMANAGER === adNetwork && (
+          {AdNetworkType.ADMANAGER === adNetwork && (
             <GoogleAdManagerSettings
               handleUpdate={handleUpdateAdManagerSlotId}
               slotId={adManagerSlotId}

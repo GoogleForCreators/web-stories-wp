@@ -27,7 +27,7 @@ import { ConfigProvider } from '@googleforcreators/dashboard';
 import ShoppingSettings, { TEXT } from '..';
 import { TEXT as SETTINGS_TEXT } from '../shopify';
 import { renderWithProviders } from '../../../../testUtils';
-import { SHOPPING_PROVIDER_TYPE } from '../../../../constants';
+import { ShoppingProviderType } from '../../../../types';
 
 const updateSettings = jest.fn();
 
@@ -61,7 +61,7 @@ describe('Editor Settings: Shopping <Shopping />', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
-          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shoppingProvider={ShoppingProviderType.Shopify}
           shopifyHost="yourstore.myshopify.com"
           shopifyAccessToken=""
           updateSettings={updateSettings}
@@ -83,7 +83,7 @@ describe('Editor Settings: Shopping <Shopping />', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
-          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shoppingProvider={ShoppingProviderType.Woocommerce}
           shopifyHost=""
           shopifyAccessToken=""
           updateSettings={updateSettings}
@@ -104,7 +104,7 @@ describe('Editor Settings: Shopping <Shopping />', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
-          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shoppingProvider={ShoppingProviderType.Woocommerce}
           shopifyHost=""
           shopifyAccessToken=""
           updateSettings={updateSettings}
@@ -129,7 +129,7 @@ describe('Editor Settings: Shopping <Shopping />', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
-          shoppingProvider={SHOPPING_PROVIDER_TYPE.WOOCOMMERCE}
+          shoppingProvider={ShoppingProviderType.Woocommerce}
           shopifyHost=""
           shopifyAccessToken=""
           updateSettings={updateSettings}
@@ -155,7 +155,7 @@ describe('Editor Settings: Shopping <Shopping />', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
-          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shoppingProvider={ShoppingProviderType.Shopify}
           shopifyHost="yourstore.myshopify.com"
           shopifyAccessToken=""
           updateSettings={updateSettings}
@@ -179,7 +179,7 @@ describe('Editor Settings: Shopping <Shopping />', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
-          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shoppingProvider={ShoppingProviderType.Shopify}
           shopifyHost="yourstore.myshopify.com"
           shopifyAccessToken=""
           updateSettings={updateSettings}
@@ -210,7 +210,7 @@ describe('Editor Settings: Shopping <Shopping />', () => {
     renderWithProviders(
       <ConfigProvider config={config}>
         <ShoppingSettings
-          shoppingProvider={SHOPPING_PROVIDER_TYPE.SHOPIFY}
+          shoppingProvider={ShoppingProviderType.Shopify}
           shopifyHost="yourstore.myshopify.com"
           shopifyAccessToken="123"
           updateSettings={updateSettings}

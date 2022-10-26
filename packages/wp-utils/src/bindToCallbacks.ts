@@ -15,9 +15,9 @@
  */
 
 function bindToCallbacks<T>(
-  callbacks: Record<string, (config: T) => unknown>,
+  callbacks: Record<string, (config: T, ...args: unknown[]) => unknown>,
   config: T
-): Record<string, unknown> {
+) {
   return Object.fromEntries(
     Object.entries(callbacks).map(([name, callback]) => [
       name,

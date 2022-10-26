@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import AdManagement from '..';
-import { AD_NETWORK_TYPE } from '../../../../constants';
+import { AdNetworkType } from '../../../../types';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement',
@@ -35,7 +35,7 @@ export default {
   argTypes: {
     updateSettings: { action: 'trigger ad update' },
     adNetwork: {
-      options: Object.values(AD_NETWORK_TYPE),
+      options: Object.values(AdNetworkType),
       control: 'radio',
     },
   },

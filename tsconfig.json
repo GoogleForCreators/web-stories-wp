@@ -1,6 +1,7 @@
 {
   "references": [
     { "path": "packages/activation-notice" },
+    { "path": "packages/dashboard" },
     { "path": "packages/elements" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
@@ -19,6 +20,7 @@
     { "path": "packages/types" },
     { "path": "packages/units" },
     { "path": "packages/url" },
+    { "path": "packages/wp-dashboard" },
     { "path": "packages/wp-utils" }
   ],
   "include": []

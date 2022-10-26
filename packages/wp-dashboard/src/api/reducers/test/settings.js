@@ -19,7 +19,7 @@
  */
 import { ERRORS } from '../../../constants';
 import settingsReducer, {
-  ACTION_TYPES,
+  ActionType,
   defaultSettingsState as initialState,
 } from '../settings';
 

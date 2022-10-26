@@ -18,17 +18,17 @@
  * Internal dependencies
  */
 import AdNetwork from '..';
-import { AD_NETWORK_TYPE } from '../../../../../constants';
+import { AdNetworkType } from '../../../../../types';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement/AdNetwork',
   component: AdNetwork,
   args: {
-    adNetwork: AD_NETWORK_TYPE.NONE,
+    adNetwork: AdNetworkType.NONE,
   },
   argTypes: {
     adNetwork: {
-      options: Object.values(AD_NETWORK_TYPE),
+      options: Object.values(AdNetworkType),
       control: 'select',
     },
     handleUpdate: { action: 'update ad network' },

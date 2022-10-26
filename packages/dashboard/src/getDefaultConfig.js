@@ -71,8 +71,6 @@ const getDefaultConfig = () => ({
   version: '',
   encodeMarkup: true,
   api: {},
-  maxUpload: 314572800,
-  maxUploadFormatted: '300 MB',
   capabilities: {
     canManageSettings: false,
     canUploadFiles: false,

@@ -47,6 +47,7 @@ export interface EventParameters {
   unread_count?: number;
   event_label?: string;
   event_category?: string;
+  status?: 'off' | 'on';
 }
 
 interface Gtag {

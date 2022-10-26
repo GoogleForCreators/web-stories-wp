@@ -23,7 +23,7 @@ import { screen } from '@testing-library/react';
  * Internal dependencies
  */
 import AdNetworkSettings from '..';
-import { AD_NETWORK_TYPE } from '../../../../../constants';
+import { AdNetworkType } from '../../../../../types';
 import { renderWithProviders } from '../../../../../testUtils';
 
 describe('Editor Settings: Ad network settings <AdNetworkSettings />', () => {
@@ -31,14 +31,14 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', () => {
   let mockUpdate;
 
   beforeEach(() => {
-    adNetwork = AD_NETWORK_TYPE.NONE;
+    adNetwork = AdNetworkType.NONE;
     mockUpdate = jest.fn((id) => {
       adNetwork = id;
     });
   });
 
   afterEach(() => {
-    adNetwork = AD_NETWORK_TYPE.NONE;
+    adNetwork = AdNetworkType.NONE;
   });
 
   it('should render ad network settings dropdown button', () => {

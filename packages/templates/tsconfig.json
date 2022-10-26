@@ -6,7 +6,6 @@
   },
   "references": [
     { "path": "../i18n" },
-    { "path": "../migration" },
     { "path": "../tracking" },
     { "path": "../types" }
   ],

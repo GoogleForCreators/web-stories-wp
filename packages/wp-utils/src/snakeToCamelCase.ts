@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Takes a string that is in snake case and returns the same
  * term in camel case.
@@ -34,9 +35,9 @@ export function snakeToCamelCase(string = ''): string {
     );
 }
 
-type ObjectOrPrimitive = SnakeOrCamelCaseObject | unknown;
+export type ObjectOrPrimitive = SnakeOrCamelCaseObject;
 
-interface SnakeOrCamelCaseObject {
+export interface SnakeOrCamelCaseObject {
   [key: string]: ObjectOrPrimitive;
 }
 
@@ -60,15 +61,13 @@ export function snakeToCamelCaseObjectKeys(
   }
 
   return Object.fromEntries(
-    Object.entries(obj as SnakeOrCamelCaseObject).map(
-      ([key, value]: [string, ObjectOrPrimitive]) => {
-        return [
-          snakeToCamelCase(key),
-          isObject(value) && !ignore.includes(key)
-            ? snakeToCamelCaseObjectKeys(value)
-            : value,
-        ] as [string, SnakeOrCamelCaseObject];
-      }
-    )
+    Object.entries(obj).map(([key, value]: [string, ObjectOrPrimitive]) => {
+      return [
+        snakeToCamelCase(key),
+        isObject(value) && !ignore.includes(key)
+          ? snakeToCamelCaseObjectKeys(value)
+          : value,
+      ] as [string, SnakeOrCamelCaseObject];
+    })
   );
 }

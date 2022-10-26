@@ -333,7 +333,12 @@
       },
       "rules": {
         "@typescript-eslint/no-duplicate-imports": "error",
-        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/no-shadow": [
+          "error",
+          {
+            "ignoreOnInitialization": true
+          }
+        ],
         "@typescript-eslint/unbound-method": [
           "error",
           {
