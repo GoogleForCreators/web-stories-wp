@@ -279,7 +279,7 @@ describe('PostLock', () => {
     });
   });
 
-  it('should not display dialog', async () => {
+  it('should not display dialog', () => {
     getStoryLockById.mockReturnValue(
       Promise.resolve({
         locked: true,
@@ -291,12 +291,10 @@ describe('PostLock', () => {
 
     setup({});
 
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('should register beforeunload listener', async () => {
+  it('should register beforeunload listener', () => {
     jest.spyOn(window, 'addEventListener');
 
     getStoryLockById.mockReturnValue(
@@ -309,11 +307,9 @@ describe('PostLock', () => {
     );
     setup({});
 
-    await waitFor(() => {
-      expect(window.addEventListener).toHaveBeenCalledWith(
-        'beforeunload',
-        expect.any(Function)
-      );
-    });
+    expect(window.addEventListener).toHaveBeenCalledWith(
+      'beforeunload',
+      expect.any(Function)
+    );
   });
 });
