@@ -66,6 +66,7 @@ function calculateSrcSet(resource: Resource): string | null {
             : [...unique, s],
         []
       )
+      .filter((s) => s && s.sourceUrl && s.width)
       .map(
         (s) =>
           `${maybeEncodeURI(s.sourceUrl).replaceAll(',', '%2C')} ${s.width}w`
