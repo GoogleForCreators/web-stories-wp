@@ -38,7 +38,9 @@ import {
  * Internal dependencies
  */
 import theme, { GlobalStyle } from './theme';
-import ErrorBoundary from './components/errorBoundary';
+import ErrorBoundary, {
+  ErrorBoundaryWithStoryData,
+} from './components/errorBoundary';
 import { ConfigProvider } from './app/config';
 import { APIProvider } from './app/api';
 import { Media3pApiProvider } from './app/media/media3p/api';
@@ -81,41 +83,43 @@ function StoryEditor({ config, initialEdits, children }) {
                         storyId={storyId}
                         initialEdits={initialEdits}
                       >
-                        <TaxonomyProvider>
-                          <CurrentUserProvider>
-                            <FontProvider>
-                              <MediaProvider>
-                                <LocalAutoSaveHandler />
-                                <AutoSaveHandler />
-                                <TransformProvider>
-                                  <DropTargetsProvider>
-                                    <HelpCenterProvider>
-                                      <PageCanvasProvider>
-                                        <PageDataUrlProvider>
-                                          <PopupProvider
-                                            value={{
-                                              isRTL,
-                                              leftOffset,
-                                              topOffset,
-                                            }}
-                                          >
-                                            <GlobalStyle />
-                                            <DevTools />
-                                            <DefaultMoveableGlobalStyle />
-                                            <CropMoveableGlobalStyle />
-                                            <ModalGlobalStyle />
-                                            <KeyboardOnlyOutlines />
-                                            {children}
-                                          </PopupProvider>
-                                        </PageDataUrlProvider>
-                                      </PageCanvasProvider>
-                                    </HelpCenterProvider>
-                                  </DropTargetsProvider>
-                                </TransformProvider>
-                              </MediaProvider>
-                            </FontProvider>
-                          </CurrentUserProvider>
-                        </TaxonomyProvider>
+                        <ErrorBoundaryWithStoryData>
+                          <TaxonomyProvider>
+                            <CurrentUserProvider>
+                              <FontProvider>
+                                <MediaProvider>
+                                  <LocalAutoSaveHandler />
+                                  <AutoSaveHandler />
+                                  <TransformProvider>
+                                    <DropTargetsProvider>
+                                      <HelpCenterProvider>
+                                        <PageCanvasProvider>
+                                          <PageDataUrlProvider>
+                                            <PopupProvider
+                                              value={{
+                                                isRTL,
+                                                leftOffset,
+                                                topOffset,
+                                              }}
+                                            >
+                                              <GlobalStyle />
+                                              <DevTools />
+                                              <DefaultMoveableGlobalStyle />
+                                              <CropMoveableGlobalStyle />
+                                              <ModalGlobalStyle />
+                                              <KeyboardOnlyOutlines />
+                                              {children}
+                                            </PopupProvider>
+                                          </PageDataUrlProvider>
+                                        </PageCanvasProvider>
+                                      </HelpCenterProvider>
+                                    </DropTargetsProvider>
+                                  </TransformProvider>
+                                </MediaProvider>
+                              </FontProvider>
+                            </CurrentUserProvider>
+                          </TaxonomyProvider>
+                        </ErrorBoundaryWithStoryData>
                       </StoryProvider>
                     </SnackbarProvider>
                   </HistoryProvider>

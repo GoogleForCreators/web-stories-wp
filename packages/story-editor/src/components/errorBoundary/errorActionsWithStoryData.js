@@ -26,6 +26,12 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
+import { useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useStory } from '../../app/story';
 
 const Message = styled.div`
   color: #fff;
@@ -51,7 +57,13 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-function ErrorActions({ error, errorInfo }) {
+function ErrorActionsWithStoryData({ error, errorInfo }) {
+  const { reducerState } = useStory(({ internal }) => ({
+    reducerState: internal.reducerState,
+  }));
+
+  const { pages, current, selection, story } = reducerState;
+
   const textAreaContent = `${error}\n${errorInfo.componentStack}`;
   const reportUrl =
     'https://wordpress.org/support/plugin/web-stories/#new-topic-0';
@@ -59,6 +71,16 @@ function ErrorActions({ error, errorInfo }) {
   const reload = () => {
     window.location.reload(true);
   };
+
+  const copyToClipboard = useCallback(async () => {
+    const jsonStr = JSON.stringify(
+      { pages, current, selection, story },
+      null,
+      2
+    );
+    await navigator.clipboard.writeText(jsonStr);
+    alert(__('Copied to clipboard', 'web-stories'));
+  }, [pages, current, selection, story]);
 
   return (
     <Message>
@@ -87,6 +109,14 @@ function ErrorActions({ error, errorInfo }) {
           {__('Reload', 'web-stories')}
         </Button>
         <Button
+          onClick={copyToClipboard}
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+        >
+          {__('Copy story data', 'web-stories')}
+        </Button>
+        <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
           type={BUTTON_TYPES.PRIMARY}
           size={BUTTON_SIZES.SMALL}
@@ -101,9 +131,9 @@ function ErrorActions({ error, errorInfo }) {
   );
 }
 
-ErrorActions.propTypes = {
+ErrorActionsWithStoryData.propTypes = {
   error: PropTypes.instanceOf(Error),
   errorInfo: PropTypes.object,
 };
 
-export default ErrorActions;
+export default ErrorActionsWithStoryData;

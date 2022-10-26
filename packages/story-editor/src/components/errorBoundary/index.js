@@ -24,6 +24,7 @@ import { trackError } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import ErrorActions from './errorActions';
+import ErrorActionsWithStoryData from './errorActionsWithStoryData';
 
 class ErrorBoundary extends Component {
   static propTypes = {
@@ -47,6 +48,33 @@ class ErrorBoundary extends Component {
     const { error, errorInfo } = this.state;
     if (error) {
       return <ErrorActions error={error} errorInfo={errorInfo} />;
+    }
+    return this.props.children;
+  }
+}
+
+export class ErrorBoundaryWithStoryData extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
+  state = {
+    error: null,
+    errorInfo: null,
+  };
+
+  componentDidCatch(error, errorInfo) {
+    this.setState({ error, errorInfo });
+    const msg = errorInfo
+      ? `${error.message}\n\n${errorInfo.componentName}\n${errorInfo.componentStack}`
+      : error.message;
+    trackError('editor_error_boundary', msg, true);
+  }
+
+  render() {
+    const { error, errorInfo } = this.state;
+    if (error) {
+      return <ErrorActionsWithStoryData error={error} errorInfo={errorInfo} />;
     }
     return this.props.children;
   }
