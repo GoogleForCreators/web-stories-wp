@@ -21,11 +21,7 @@ import { useMemo, useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import {
-  NumericInput,
-  DropDown,
-  ThemeGlobals,
-} from '@googleforcreators/design-system';
+import { NumericInput, DropDown } from '@googleforcreators/design-system';
 import {
   FIELD_TYPES,
   DIRECTION,
@@ -65,7 +61,7 @@ const StyledDropDown = styled(DropDown)`
     &:hover {
       ${outerGridBordersCss}
     }
-    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
+    &:focus-visible {
       border-radius: ${({ theme }) => theme.borders.radius.small};
     }
   }

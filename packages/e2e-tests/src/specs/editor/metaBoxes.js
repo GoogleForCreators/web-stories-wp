@@ -24,6 +24,8 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Custom Meta Boxes', () => {
   describe('Unavailable', () => {
     it('should not display button to toggle meta boxes', async () => {

@@ -26,8 +26,9 @@ import {
   uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/no-disabled-tests -- TODO(#11959): Fix flakey test
-describe.skip('Inserting WebM Video', () => {
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('Inserting WebM Video', () => {
   let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
@@ -40,7 +41,6 @@ describe.skip('Inserting WebM Video', () => {
   });
 
   async function openPanel(name) {
-    // open style pane
     await expect(page).toClick('li', { text: /^Style$/ });
 
     // Open the panel.
@@ -49,8 +49,9 @@ describe.skip('Inserting WebM Video', () => {
       (button) => button.getAttribute('aria-expanded') === 'false',
       panel
     );
+
     if (isCollapsed) {
-      panel.click();
+      await panel.click();
     }
   }
 
@@ -71,6 +72,7 @@ describe.skip('Inserting WebM Video', () => {
 
     // Wait for poster image (inside Accessibility panel) to appear.
     await openA11yPanel();
+
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
@@ -154,7 +156,7 @@ describe.skip('Inserting WebM Video', () => {
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 
     const editorPage = page;
-    const previewPage = await previewStory(editorPage);
+    const previewPage = await previewStory();
     await expect(previewPage).toMatchElement('amp-video');
 
     const poster = await previewPage.evaluate((selector) => {

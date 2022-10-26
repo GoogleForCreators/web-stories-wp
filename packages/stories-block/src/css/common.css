@@ -20,11 +20,6 @@
   cursor: pointer;
 }
 
-.web-stories-list.is-view-type-grid .web-stories-list__story,
-.web-stories-list.is-view-type-carousel .web-stories-list__story {
-  min-width: var(--ws-story-min-width);
-}
-
 /* Curved corners by default.*/
 .web-stories-list.is-style-default.is-view-type-grid .web-stories-list__story,
 .web-stories-list.is-style-default.is-view-type-carousel

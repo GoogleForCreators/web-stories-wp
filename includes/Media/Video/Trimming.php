@@ -27,12 +27,13 @@
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 
 /**
  * Class Trimming
  */
-class Trimming extends Service_Base implements HasMeta {
+class Trimming extends Service_Base implements HasMeta, PluginUninstallAware {
 
 	/**
 	 * The trim video post meta key.
@@ -118,5 +119,14 @@ class Trimming extends Service_Base implements HasMeta {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::TRIM_POST_META_KEY );
 	}
 }

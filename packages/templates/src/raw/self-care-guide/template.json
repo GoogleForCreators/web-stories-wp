@@ -1,5 +1,5 @@
 {
-  "version": 43,
+  "version": 44,
   "pages": [
     {
       "elements": [
@@ -297,7 +297,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #272727\">Taking Care</span>\n<span style=\"font-weight: 300; color: #272727\">Of Yourself</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -371,7 +370,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #272727\">With Monique Robbins</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -576,7 +574,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">We’re probably working longer hours from home now, which means we’re tied to our kitchen tables and home offices. Here are some tips to keeping that pep in your step.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": false,
             "topLeft": 40,
@@ -846,7 +843,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727\">Excercise</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -921,7 +917,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #272727\">Even a light yoga session will counteract a lot of sitting during your work day.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1000,7 +995,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 1</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1271,7 +1265,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Splurge</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1351,7 +1344,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Equinox</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1469,7 +1461,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Save</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1545,7 +1536,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Jumprope at your local park or try a Youtube series</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1617,7 +1607,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Best</span>\n<span style=\"font-weight: 300; color: #fff\">Exercise</span>\n<span style=\"font-weight: 300; color: #fff\">Options</span>\n<span style=\"font-weight: 300; color: #fff\">In NYC</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1869,7 +1858,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #272727\">Sleep More</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1944,7 +1932,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 300; color: #272727\">Are you getting at least 8 hours (or more) of sleep a night? Tracking sleep can definitely help you figure out.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2023,7 +2010,6 @@
           "id": "faa16b91-1010-403e-a964-a1ea9cfc8070",
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 2</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2294,7 +2280,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Sleep Control</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2374,7 +2359,6 @@
           "id": "a26f74d2-d0ce-4415-831f-cb89121a17d8",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Track your sleep and monitor your movement.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2491,7 +2475,6 @@
           "id": "100f8d9c-97e4-4e40-ab0a-a44675606f11",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Auto Ring</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2567,7 +2550,6 @@
           "id": "0a96264e-c16d-46ad-8d31-32078648a8d1",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Track your sleep and your waking productivity.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2639,7 +2621,6 @@
           "id": "eca5be61-27ff-42fa-a2aa-5c65d11491aa",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #f5f4ee\">Best</span>\n<span style=\"font-weight: 300; color: #f5f4ee\">Mindfulness</span>\n<span style=\"font-weight: 300; color: #f5f4ee\">Apps</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2892,7 +2873,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #272727\">Get Your Daily&nbsp;</span>\n<span style=\"color: #272727\">Dose Of Vitamins</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2967,7 +2947,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 300; color: #272727\">B12 and iron are your best friends for energy.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3046,7 +3025,6 @@
           "id": "4cac393e-db45-4d98-8d69-148218f4d990",
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 3</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3317,7 +3295,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Kale and Broccoli</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3397,7 +3374,6 @@
           "id": "e6cfd7b3-a0b2-4e1a-adaf-8dc35d608181",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">These are your #1 powerhouse greens.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3514,7 +3490,6 @@
           "id": "8858ce0a-1566-44ef-a136-8230812ed6ad",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Tomatoes</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3590,7 +3565,6 @@
           "id": "911a0d6f-a200-462c-a692-fa61fce57f21",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Eat them raw or cooked. They’re great for energy.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3662,7 +3636,6 @@
           "id": "b14d1d3b-ffef-4f72-bc91-97f78984d651",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Best</span>\n<span style=\"font-weight: 300; color: #fff\">Vitamin-Loaded</span>\n<span style=\"font-weight: 300; color: #fff\">Food</span>\n<span style=\"font-weight: 300; color: #fff\">Options</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3915,7 +3888,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 400; color: #272727\">Skip the coffee</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3990,7 +3962,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 300; color: #272727\">Coffee is a really short term solution for more energy. Try playing the long game instead.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4069,7 +4040,6 @@
           "id": "6d000e40-1624-4ebe-82bc-ee5772773d11",
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 4</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4340,7 +4310,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Tea and Sympathy</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4420,7 +4389,6 @@
           "id": "533013ae-d961-4d45-b416-4bc74a688835",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">A classic NY tea shop that never goes out of style.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4537,7 +4505,6 @@
           "id": "be43cfd2-77d6-402a-b727-eaa974cbfcef",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Cha An</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4613,7 +4580,6 @@
           "id": "036397e6-36ce-41a6-b381-c9c47c3eb0fb",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Take a trip to Japan in NY and explore unique teas.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4685,7 +4651,6 @@
           "id": "3beb3cc9-a05c-44db-aab6-72e1ea9e9c4d",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Best</span>\n<span style=\"font-weight: 300; color: #fff\">exercise</span>\n<span style=\"font-weight: 300; color: #fff\">options</span>\n<span style=\"font-weight: 300; color: #fff\">in NYC</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4921,7 +4886,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #272727\">Let’s</span>\n<span style=\"font-weight: 300; color: #272727\">Recap</span>\n<span style=\"font-weight: 300; color: #272727\">What We</span>\n<span style=\"font-weight: 300; color: #272727\">Learned</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -5080,7 +5044,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727; letter-spacing: 0.1em; text-transform: uppercase\">Exercise</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5160,7 +5123,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727; letter-spacing: 0.1em; text-transform: uppercase\">Sleep More</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5236,7 +5198,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727; letter-spacing: 0.1em; text-transform: uppercase\">Get your vitamins</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5353,7 +5314,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727; letter-spacing: 0.1em; text-transform: uppercase\">Skip the coffee</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

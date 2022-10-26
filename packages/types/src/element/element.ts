@@ -74,6 +74,8 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
+  layerName?: string;
+  isLocked: boolean;
 
   // TODO(#12262): Remove this.
   basedOn?: ElementId;
