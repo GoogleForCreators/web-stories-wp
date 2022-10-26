@@ -22,9 +22,10 @@ import type { Element } from './element';
 import type { Pattern } from './pattern';
 
 export interface MediaElement extends Element {
+  isBackground?: boolean;
   resource: Resource;
   scale: number;
   focalX?: number;
   focalY?: number;
-  overlay?: Pattern;
+  overlay?: Pattern | null;
 }

@@ -23,12 +23,12 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import type { Page } from '../types';
+import { ElementType, Page } from '../types';
 import createNewElement from './createNewElement';
 
 export const DEFAULT_PAGE_BACKGROUND_COLOR = createSolid(255, 255, 255);
 
-const createPage = (pageProps: Partial<Page> = {}): Page => {
+const createPage = (pageProps: Partial<Page> | null = null): Page => {
   const backgroundElementProps = {
     // The values of x, y, width, height are irrelevant here, however, need to be set.
     x: 1,
@@ -42,7 +42,10 @@ const createPage = (pageProps: Partial<Page> = {}): Page => {
     isBackground: true,
     isDefaultBackground: true,
   };
-  const backgroundElement = createNewElement('shape', backgroundElementProps);
+  const backgroundElement = createNewElement(
+    ElementType.Shape,
+    backgroundElementProps
+  );
 
   const page: Page = {
     id: uuidv4(),

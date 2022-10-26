@@ -22,8 +22,12 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import type { Element } from '../types';
+import type { BackgroundableElement, Element } from '../types';
 import getDefinitionForType from './getDefinitionForType';
+
+function isBackgroundableElement(e: Element): e is BackgroundableElement {
+  return 'isBackground' in e;
+}
 
 /**
  * Returns the layer name based on the element properties.
@@ -36,11 +40,11 @@ function getLayerName(element: Element) {
     return element.layerName;
   }
 
-  if (element.isBackground) {
+  if (isBackgroundableElement(element) && element.isBackground) {
     return __('Background', 'web-stories');
   }
 
-  return getDefinitionForType(element.type).getLayerText(element);
+  return getDefinitionForType(element.type)?.getLayerText(element);
 }
 
 export default getLayerName;

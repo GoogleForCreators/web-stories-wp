@@ -75,28 +75,15 @@ if ( false === $erase ) {
 	return;
 }
 
-require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
-
-if ( is_multisite() ) {
-	\Google\Web_Stories\delete_site_options();
-	$site_ids = get_sites(
-		[
-			'fields'                 => 'ids',
-			'number'                 => '',
-			'update_site_cache'      => false,
-			'update_site_meta_cache' => false,
-		]
-	);
-
-	foreach ( $site_ids as $site_id ) {
-		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
-		switch_to_blog( $site_id );
-
-		\Google\Web_Stories\delete_site();
-	}
-
-	restore_current_blog();
-} else {
-	\Google\Web_Stories\delete_site();
+/**
+ * Defer running uninstall until every service is registered.
+ *
+ * @since 1.26.0
+ */
+function web_stories_uninstall(): void {
+	$ws_plugin = \Google\Web_Stories\PluginFactory::create();
+	$ws_plugin->register();
+	$ws_plugin->on_site_uninstall();
 }
-\Google\Web_Stories\delete_stories_user_meta();
+add_action( 'shutdown', 'web_stories_uninstall' );
+

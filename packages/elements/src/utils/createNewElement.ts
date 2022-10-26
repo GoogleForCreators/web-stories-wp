@@ -19,11 +19,10 @@
  */
 import type { ElementBox } from '@googleforcreators/units';
 import { v4 as uuidv4 } from 'uuid';
-
 /**
  * Internal dependencies
  */
-import type { DefaultBackgroundElement, Element } from '../types';
+import type { DefaultBackgroundElement, Element, ElementType } from '../types';
 
 /**
  * Internal dependencies
@@ -35,8 +34,8 @@ function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement {
 }
 
 function createNewElement(
-  type: string,
-  attributes: ElementBox & Partial<Element> = {
+  type: ElementType,
+  attributes: ElementBox = {
     x: 0,
     y: 0,
     width: 1,

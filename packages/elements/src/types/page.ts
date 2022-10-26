@@ -22,7 +22,7 @@ import type { Pattern } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
-import type { DefaultBackgroundElement, Element } from './element';
+import type { DefaultBackgroundElement, Element, ElementId } from './element';
 import type { Animation } from './animation';
 
 export interface Group {
@@ -44,7 +44,7 @@ export type Track = {
 export type Groups = Record<string, Group>;
 
 export interface Page {
-  id: string;
+  id: ElementId;
   elements: Element[];
   defaultBackgroundElement?: DefaultBackgroundElement;
   animations?: Animation[];

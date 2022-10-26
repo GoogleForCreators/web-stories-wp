@@ -22,32 +22,11 @@ import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { DimensionableElement, ElementBox } from './types';
+import type { State } from './types';
 
 export const INITIAL_STATE = {
   state: {},
   actions: {},
 };
 
-interface State {
-  pageSize?: {
-    width?: number;
-    height?: number;
-  };
-}
-
-interface Actions {
-  dataToEditorX?: (x: number) => number;
-  dataToEditorY?: (y: number) => number;
-  editorToDataX?: (x: number, withRounding: boolean) => number;
-  editorToDataY?: (y: number, withRounding: boolean) => number;
-  getBox?: (element: DimensionableElement) => ElementBox;
-  getBoxWithBorder?: (element: DimensionableElement) => ElementBox;
-}
-
-export interface ContextState {
-  state: State;
-  actions: Actions;
-}
-
-export default createContext<ContextState>(INITIAL_STATE);
+export default createContext<State>(INITIAL_STATE as State);

@@ -24,6 +24,7 @@ import type { ElementBox } from '@googleforcreators/units';
  */
 import type React from 'react';
 import type { Element } from './element';
+import type { ElementType } from './elementType';
 
 export interface EditProps<E extends Element> {
   element: E;
@@ -61,8 +62,8 @@ export interface DisplayProps<E extends Element> {
   element: E;
 }
 
-export interface ElementDefinition<E extends Element> {
-  type: string;
+export interface ElementDefinition<E extends Element = Element> {
+  type: ElementType;
   isMedia?: boolean;
   getLayerText: (element: E) => string;
   defaultAttributes: Partial<E>;
@@ -72,6 +73,23 @@ export interface ElementDefinition<E extends Element> {
   LayerIcon: React.FC<LayerIconProps<E>>;
   TextContent: React.FC<TextContentProps<E>>;
   Display: React.FC<DisplayProps<E>>;
+  canFlip: boolean;
+  isMaskable: boolean;
+  isAspectAlwaysLocked: boolean;
+  hasDesignMenu: boolean;
+  hasDuplicateMenu: boolean;
+  hasEditMode: boolean;
+  hasEditModeIfLocked: boolean;
+  hasEditModeMoveable: boolean;
+  editModeGrayout: boolean;
+  resizeRules: {
+    vertical: boolean;
+    horizontal: boolean;
+    diagonal: boolean;
+    minWidth: number;
+    minHeight: number;
+  };
+  panels: string[];
 }
 
-export type ElementTypes = Record<string, ElementDefinition<Element>>;
+export type ElementTypes = Record<ElementType, ElementDefinition<Element>>;

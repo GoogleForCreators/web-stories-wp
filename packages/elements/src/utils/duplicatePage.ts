@@ -22,7 +22,7 @@ import createPage from './createPage';
 import duplicateElement from './duplicateElement';
 
 // Required<> is a reverse Partial<> - removing the optional
-// part from the animations property below
+// part from the animations property
 type ElementsAndAnimationsOnly = Required<
   Pick<Page, 'elements' | 'animations'>
 >;
@@ -34,22 +34,23 @@ const duplicatePage = (oldPage: Page) => {
     ...rest
   } = oldPage;
 
-  const elementAndAnimations: ElementsAndAnimationsOnly = oldElements.reduce(
-    ({ elements, animations }, oldElement) => {
-      const { element, elementAnimations } = duplicateElement({
-        element: oldElement,
-        animations: oldAnimations,
-      });
-      return {
-        elements: [...elements, element],
-        animations: [...animations, ...elementAnimations],
-      };
-    },
-    {
-      elements: [],
-      animations: [],
-    } as ElementsAndAnimationsOnly
-  );
+  const elementAndAnimations: ElementsAndAnimationsOnly =
+    oldElements.reduce<ElementsAndAnimationsOnly>(
+      ({ elements, animations }, oldElement) => {
+        const { element, elementAnimations } = duplicateElement({
+          element: oldElement,
+          animations: oldAnimations,
+        });
+        return {
+          elements: [...elements, element],
+          animations: [...animations, ...elementAnimations],
+        };
+      },
+      {
+        elements: [],
+        animations: [],
+      }
+    );
 
   const newAttributes: Partial<Page> = {
     ...elementAndAnimations,

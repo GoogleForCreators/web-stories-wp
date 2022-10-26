@@ -24,7 +24,6 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Text,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
@@ -32,59 +31,90 @@ import { Dialog } from '@googleforcreators/story-editor';
 /**
  * Internal dependencies
  */
-import { Img } from './shared';
+import {
+  DialogWrapper,
+  DialogText,
+  DialogImageWrapper,
+  DialogContent,
+  Avatar,
+} from './shared';
 
 /**
  * @param {Object} props Component props.
  * @param {boolean} props.isOpen If open or not.
  * @param {Object} props.user Lock owner's user data as a object.
  * @param {string} props.dashboardLink Link to dashboard.
+ * @param {string} props.previewLink Preview link.
  * @param {Function} props.onClose Function when dialog is closed.
  * @return {*} Render.
  */
-function PostTakeOverDialog({ isOpen, user, dashboardLink, onClose }) {
-  const dialogTile = __(
-    'Someone else has taken over this story.',
-    'web-stories'
-  );
-  const dialogContent = sprintf(
-    /* translators: %s: user's name */
-    __('%s now has editing control of this story.', 'web-stories'),
-    user?.name
-  );
-
+function PostTakeOverDialog({
+  isOpen,
+  user,
+  dashboardLink,
+  previewLink,
+  onClose,
+}) {
   return (
     <Dialog
       isOpen={isOpen}
-      title={dialogTile}
-      contentLabel={dialogTile}
+      title={__('Someone else has taken over this story', 'web-stories')}
       onClose={onClose}
       shouldCloseOnEsc={false}
       shouldCloseOnOverlayClick={false}
       actions={
-        <Button
-          type={BUTTON_TYPES.QUATERNARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          href={dashboardLink}
-        >
-          {__('Dashboard', 'web-stories')}
-        </Button>
+        <>
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            href={previewLink}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {__('Preview', 'web-stories')}
+          </Button>
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            href={dashboardLink}
+          >
+            {__('Back to dashboard', 'web-stories')}
+          </Button>
+        </>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {user.avatar && (
-          <Img
-            src={user.avatar}
-            alt={user.name}
-            height={48}
-            width={48}
-            crossOrigin="anonymous"
-            decoding="async"
-          />
+      <DialogWrapper>
+        {user?.avatar && (
+          <DialogImageWrapper>
+            <Avatar
+              src={user.avatar}
+              alt={user.name}
+              height={48}
+              width={48}
+              crossOrigin="anonymous"
+              decoding="async"
+            />
+          </DialogImageWrapper>
         )}
-        {dialogContent}
-      </Text>
+
+        <DialogContent>
+          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {sprintf(
+              /* translators: %s: user's name */
+              __('%s now has editing control of this story.', 'web-stories'),
+              user?.name
+            )}
+          </DialogText>
+
+          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__(
+              "Don't worry, your changes up to this moment have been saved",
+              'web-stories'
+            )}
+          </DialogText>
+        </DialogContent>
+      </DialogWrapper>
     </Dialog>
   );
 }
@@ -93,6 +123,7 @@ PostTakeOverDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
+  previewLink: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

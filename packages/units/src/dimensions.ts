@@ -128,7 +128,7 @@ export function editorToDataY(
 }
 
 /**
- * Converts the element's position, width, and rotation) to the "box" in the
+ * Converts the element's position, width, and rotation to the "box" in the
  * "editor" coordinate space.
  *
  * @param element The element's position, width, and rotation. See `StoryPropTypes.element`.

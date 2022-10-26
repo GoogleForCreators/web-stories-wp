@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import type { Element, ElementDefinition, ElementTypes } from './types';
+import type { ElementDefinition, ElementTypes } from './types';
 
 // @todo Create a custom hook to manage state.
-const elementTypes: ElementTypes = {};
+const elementTypes: Partial<ElementTypes> = {};
 
-function registerElementType(elementType: ElementDefinition<Element>) {
+function registerElementType(elementType: ElementDefinition) {
   elementTypes[elementType.type] = elementType;
 }
 

@@ -33,26 +33,6 @@ describe('WithMask', () => {
     elementTypes.forEach(registerElementType);
   });
 
-  it('should produce valid AMP output when no mask is set', async () => {
-    const props = {
-      element: {
-        id: '123',
-        type: 'text',
-        x: 50,
-        y: 100,
-        height: 1920,
-        width: 1080,
-        rotationAngle: 0,
-      },
-    };
-
-    await expect(
-      <WithMask {...props}>
-        <p>{'Hello World'}</p>
-      </WithMask>
-    ).toBeValidAMPStoryElement();
-  });
-
   it('should not add mask for background element', async () => {
     const props = {
       element: {
@@ -202,6 +182,8 @@ describe('WithMask', () => {
   });
 
   describe('AMP validation', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
     it('should produce valid AMP output', async () => {
       const props = {
         element: {
@@ -233,6 +215,26 @@ describe('WithMask', () => {
       await expect(
         <WithMask {...props}>
           <amp-img src="https://example.com/image.png" layout="fill" />
+        </WithMask>
+      ).toBeValidAMPStoryElement();
+    });
+
+    it('should produce valid AMP output when no mask is set', async () => {
+      const props = {
+        element: {
+          id: '123',
+          type: 'text',
+          x: 50,
+          y: 100,
+          height: 1920,
+          width: 1080,
+          rotationAngle: 0,
+        },
+      };
+
+      await expect(
+        <WithMask {...props}>
+          <p>{'Hello World'}</p>
         </WithMask>
       ).toBeValidAMPStoryElement();
     });

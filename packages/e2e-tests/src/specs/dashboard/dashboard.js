@@ -24,11 +24,18 @@ import {
   createNewStory,
   insertStoryTitle,
   publishStory,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Stories Dashboard', () => {
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
+
   it('should be able to open the dashboard', async () => {
     await visitDashboard();
 
@@ -45,11 +52,10 @@ describe('Stories Dashboard', () => {
     await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests -- TODO(#11930): Fix flakey test.
-  it.skip('should be able to skip to main content of Dashboard for keyboard navigation', async () => {
+  it('should be able to skip to main content of Dashboard for keyboard navigation', async () => {
     await visitDashboard();
 
-    // If there are no existing stories, the app goes to the templates page instead.
+    // If there are no existing stories, the app goes to the Templates page instead.
     // Either is fine since we're testing keyboard navigation.
     await expect(page).toMatchElement('h2', {
       text: /(Dashboard|Explore Templates)/,
@@ -57,17 +63,21 @@ describe('Stories Dashboard', () => {
 
     // When navigating to Dashboard, immediately use keyboard to
     // tab to WordPress shortcut of "Main Content"
-    page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+
     // Verify that Main Content skip link is present
     await expect(page).toMatchElement('a', { text: 'Skip to main content' });
+
     // Use the keyboard to select skip link while it is present (since it's now focused)
-    page.keyboard.press('Enter');
+    await page.keyboard.press('Enter');
+
     // Make sure we see the dashboard
     await expect(page).toMatchElement('h2', {
-      text: /^Dashboard/,
+      text: /(Dashboard|Explore Templates)/,
     });
+
     // Now let's make sure that the next focusable element is the link to create a new story
-    page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
 
     const activeElement = await page.evaluate(() => {
       return {
@@ -75,6 +85,7 @@ describe('Stories Dashboard', () => {
         element: document.activeElement.tagName.toLowerCase(),
       };
     });
+
     await expect(activeElement).toMatchObject({
       text: 'Create New Story',
       element: 'a',

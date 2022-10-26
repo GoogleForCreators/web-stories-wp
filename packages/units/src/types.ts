@@ -33,3 +33,36 @@ export interface DimensionableElement extends ElementBox {
   isBackground?: boolean;
   border?: Border;
 }
+
+export interface State {
+  state: {
+    pageSize: {
+      width: number;
+      height: number;
+    };
+  };
+  actions: {
+    dataToEditorX: (x: number) => number;
+    dataToEditorY: (y: number) => number;
+    editorToDataX: (x: number, withRounding?: boolean) => number;
+    editorToDataY: (y: number, withRounding?: boolean) => number;
+    getBox: (element: DimensionableElement) => ElementBox;
+    getBoxWithBorder: (element: DimensionableElement) => ElementBox;
+  };
+}
+
+export interface Coordinates {
+  x: number;
+  y: number;
+}
+
+export enum Corner {
+  TopLeft = 'topLeftPoint',
+  TopRight = 'topRightPoint',
+  BottomRight = 'bottomRightPoint',
+  BottomLeft = 'bottomLeftPoint',
+}
+
+export type Corners = {
+  [key in Corner]: Coordinates;
+};

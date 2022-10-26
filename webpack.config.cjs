@@ -435,7 +435,7 @@ const activationNotice = {
   ...sharedConfig,
   entry: {
     'web-stories-activation-notice':
-      './packages/activation-notice/src/index.js',
+      './packages/activation-notice/src/index.tsx',
   },
   plugins: [
     ...sharedConfig.plugins,

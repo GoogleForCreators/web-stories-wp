@@ -83,4 +83,25 @@ class Base_Color extends TestCase {
 		$this->assertArrayHasKey( $this->instance::BASE_COLOR_POST_META_KEY, $image );
 		$this->assertSame( $color, $image[ $this->instance::BASE_COLOR_POST_META_KEY ] );
 	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		$attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		$color = '#000000';
+
+		update_post_meta( $attachment_id, $this->instance::BASE_COLOR_POST_META_KEY, $color );
+
+		$this->instance->on_plugin_uninstall();
+		$this->assertSame( '', get_post_meta( $attachment_id, $this->instance::BASE_COLOR_POST_META_KEY, true ) );
+	}
 }

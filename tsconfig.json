@@ -1,7 +1,7 @@
 {
   "references": [
+    { "path": "packages/activation-notice" },
     { "path": "packages/elements" },
-    { "path": "packages/element-library" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
     { "path": "packages/media" },
@@ -11,6 +11,8 @@
     { "path": "packages/react" },
     { "path": "packages/rich-text" },
     { "path": "packages/stickers" },
+    { "path": "packages/templates" },
+    { "path": "packages/text-sets" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
     { "path": "packages/units" },

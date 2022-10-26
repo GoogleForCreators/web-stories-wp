@@ -24,7 +24,9 @@ import {
   toggleVideoOptimization,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Handling .mov files', () => {
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+describe('Inserting MOV video', () => {
   let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
@@ -36,9 +38,7 @@ describe('Handling .mov files', () => {
     }
   });
 
-  // Flakey test, see https://github.com/googleforcreators/web-stories-wp/issues/8232.
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert .mov', async () => {
+  it('should insert video via media modal', async () => {
     await createNewStory();
 
     await expect(page).toClick('button[aria-label="Upload"]');

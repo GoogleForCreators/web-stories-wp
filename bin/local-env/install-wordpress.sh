@@ -30,8 +30,8 @@ echo ''
 # Wait until the database container is ready.
 echo -en $(status_message "Waiting for database connection...")
 until $(container bash -c "echo -n > /dev/tcp/mysql/3306" >/dev/null 2>&1); do
-    echo -n '.'
-    sleep 5
+	echo -n '.'
+	sleep 5
 done
 echo ''
 
@@ -133,20 +133,20 @@ wp plugin activate web-stories --quiet
 
 # Install & activate testing plugins.
 
-# Only install gutenberg on latest version of WordPress.
+# Only install Gutenberg on latest version of WordPress.
 if [ "$WP_VERSION" == "latest" ]; then
-  echo -e $(status_message "Installing Gutenberg plugin...")
-  wp plugin install gutenberg --force --quiet
+	echo -e $(status_message "Installing Gutenberg plugin...")
+	wp plugin install gutenberg --force --quiet
 fi
 
 echo -e $(status_message "Installing and activating RTL Tester plugin...")
 wp plugin install rtl-tester --activate --force --quiet
 
-echo -e $(status_message "Installing WordPress importer...")
-wp plugin install wordpress-importer --activate --force --quiet
+# Only install WooCommerce on latest version of WordPress.
+if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC2" ]; then
+	echo -e $(status_message "Installing WordPress importer...")
+	wp plugin install wordpress-importer --activate --force --quiet
 
-# Only install woocommerce on latest version of WordPress.
-if [ "$WP_VERSION" == "latest" ]; then
 	echo -e $(status_message "Installing WooCommerce plugin...")
 	wp plugin install woocommerce --activate --force --quiet
 fi
@@ -233,9 +233,13 @@ wp post list --post_type=attachment --format=yaml
 wp plugin list --format=yaml
 
 # Only install woocommerce on latest version of WordPress.
-if [ "$WP_VERSION" == "latest" ]; then
-	echo -e $(status_message "Import sample woocommerce products...")
+if [ "$WP_VERSION" == "latest" ] || [ "$WP_VERSION" == "6.1-RC2" ]; then
+	echo -e $(status_message "Import sample WooCommerce products...")
 	wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=skip --quiet
-	# deactivate test etc... can activate as needed
+
+  echo -e $(status_message "Deactivating WooCommerce again...")
 	wp plugin deactivate woocommerce
+
+  echo -e $(status_message "Deactivating WordPress importer again...")
+  wp plugin deactivate wordpress-importer --quiet
 fi

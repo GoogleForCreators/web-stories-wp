@@ -18,7 +18,8 @@
  * Internal dependencies
  */
 import { dataPixels } from './dimensions';
-import type { ElementBox } from './types';
+import type { ElementBox, Coordinates, Corners } from './types';
+import { Corner } from './types';
 
 /**
  * Get the outer frame values for all objects in `list`,
@@ -119,7 +120,7 @@ export function getCorners(
   y: number,
   width: number,
   height: number
-) {
+): Corners {
   /// variables
   const centerX = x + width * 0.5;
   const centerY = y + height * 0.5;
@@ -136,10 +137,10 @@ export function getCorners(
   );
   const bottomLeftPoint = getCorner(centerX, centerY, x, y + height, radian);
   return {
-    topLeftPoint,
-    topRightPoint,
-    bottomRightPoint,
-    bottomLeftPoint,
+    [Corner.TopLeft]: topLeftPoint,
+    [Corner.TopRight]: topRightPoint,
+    [Corner.BottomRight]: bottomRightPoint,
+    [Corner.BottomLeft]: bottomLeftPoint,
   };
 }
 
@@ -149,7 +150,7 @@ function getCorner(
   cornerX: number,
   cornerY: number,
   angle: number
-) {
+): Coordinates {
   /// get distance from center to point
   const diffX = cornerX - pivotX;
   const diffY = cornerY - pivotY;

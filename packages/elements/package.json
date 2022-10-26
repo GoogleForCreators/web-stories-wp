@@ -40,6 +40,7 @@
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/patterns": "*",
+    "@googleforcreators/types": "*",
     "@googleforcreators/units": "*",
     "prop-types": "^15.7.2",
     "uuid": "^9.0.0"

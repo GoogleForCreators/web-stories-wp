@@ -66,12 +66,13 @@ import andadaFontToAndadaPro from './migrations/v0040_andadaFontToAndadaPro';
 import removeFontProperties from './migrations/v0041_removeFontProperties';
 import removeTrackName from './migrations/v0042_removeTrackName';
 import removeTagNames from './migrations/v0043_removeTagNames';
+import unusedProperties from './migrations/v0044_unusedProperties';
 
 type MigrationFn<T, S> = (storyData: T) => S;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- See below.
 // @ts-ignore Reason: Temporary (hopefully). Don't have a good solution for this yet as it accepts all story types.
-const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = {
+const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = { // eslint-disable-line @typescript-eslint/no-explicit-any,prettier/prettier -- See above.
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],
@@ -115,6 +116,7 @@ const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = {
   41: [removeFontProperties],
   42: [removeTrackName],
   43: [removeTagNames],
+  44: [unusedProperties],
 };
 
 export const DATA_VERSION = Math.max.apply(

@@ -80,12 +80,6 @@ export function getElementOffsets(element: Element) {
   };
 }
 
-function mapValues<K, T>(obj: Record<string, K>, op: (n: K) => T) {
-  return Object.fromEntries(
-    Object.entries(obj).map(([key, val]) => [key, op(val)])
-  );
-}
-
 export const DEFAULT_HAS_OFFSETS = {
   top: false,
   bottom: false,
@@ -95,5 +89,10 @@ export const DEFAULT_HAS_OFFSETS = {
 
 export function getHasElementOffsets(element: Element) {
   const offsets = getElementOffsets(element);
-  return mapValues(offsets, (offset) => Math.abs(offset) > PRECISION);
+  return Object.fromEntries(
+    Object.entries(offsets).map(([key, offset]) => [
+      key,
+      Math.abs(offset) > PRECISION,
+    ])
+  );
 }

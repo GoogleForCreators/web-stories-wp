@@ -25,8 +25,6 @@ import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import type { Element, Animation } from '../types';
 import createNewElement from './createNewElement';
 
-/** @typedef {import('../types').Element} Element */
-
 /**
  * Gets x, y values for cloned element, ensuring it's not added out of the page.
  *
@@ -43,6 +41,12 @@ export function getOffsetCoordinates(originX: number, originY: number) {
     x: PAGE_WIDTH - x > allowedBorderDistance ? x : placementDiff,
     y: PAGE_HEIGHT - y > allowedBorderDistance ? y : placementDiff,
   };
+}
+
+interface DuplicateElementArgs {
+  element: Element;
+  animations?: Animation[];
+  existingElements?: Element[];
 }
 
 /**

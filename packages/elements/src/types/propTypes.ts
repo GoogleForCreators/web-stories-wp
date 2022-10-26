@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports -- Still used elsewhere
-import PropTypes from 'prop-types';
+/* eslint-disable no-restricted-imports -- Still used by other packages. */
+import PropTypes, { ValidationMap } from 'prop-types';
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
 import { PatternPropType } from '@googleforcreators/patterns';
 import { ResourcePropTypes } from '@googleforcreators/media';
 
@@ -30,18 +31,6 @@ import {
   BACKGROUND_TEXT_MODE,
   OverlayType,
 } from '../constants';
-
-export const BackgroundAudioPropTypeShape = {
-  id: PropTypes.number,
-  src: PropTypes.string,
-  length: PropTypes.number,
-  lengthFormatted: PropTypes.string,
-  mimeType: PropTypes.string,
-  needsProxy: PropTypes.bool,
-};
-export const BackgroundAudioPropType = PropTypes.shape(
-  BackgroundAudioPropTypeShape
-);
 
 const mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
@@ -68,7 +57,7 @@ const flip = PropTypes.shape({
   horizontal: PropTypes.bool,
 });
 
-const StoryElementPropTypes = {
+const StoryElementPropTypes: ValidationMap<unknown> = {
   id: PropTypes.string.isRequired,
   groupId: PropTypes.string,
   type: PropTypes.string.isRequired,

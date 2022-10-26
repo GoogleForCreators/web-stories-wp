@@ -21,11 +21,16 @@ import type { Solid } from '@googleforcreators/patterns';
 import type { Resource } from '@googleforcreators/media';
 import type { ElementBox } from '@googleforcreators/units';
 
+/**
+ * Internal dependencies
+ */
+import type { ElementType } from './elementType';
+
 export interface Link {
   url: string;
   desc?: string;
   needsProxy?: boolean;
-  icon?: string;
+  icon?: string | null;
   rel?: string[];
 }
 
@@ -36,6 +41,12 @@ export interface Flip {
 
 export interface Mask {
   type: string;
+  // TODO(#12259): Remove these from the type & from templates.
+  showInLibrary?: boolean;
+  name?: string;
+  path?: string;
+  ratio?: number;
+  supportsBorder?: boolean;
 }
 
 export interface Border {
@@ -43,7 +54,9 @@ export interface Border {
   right: number;
   bottom: number;
   left: number;
-  locked: boolean;
+  locked?: boolean;
+  lockedWidth?: boolean;
+  color?: Solid;
 }
 
 export interface BorderRadius {
@@ -54,12 +67,11 @@ export interface BorderRadius {
   locked: boolean;
 }
 
-export interface Element extends ElementBox {
-  id: string;
-  type: string;
-  isBackground?: boolean;
+export type ElementId = string;
 
-  layerName?: string;
+export interface Element extends ElementBox {
+  id: ElementId;
+  type: ElementType;
   mask?: Mask;
   link?: Link;
   opacity?: number;
@@ -69,6 +81,7 @@ export interface Element extends ElementBox {
   border?: Border;
   borderRadius?: BorderRadius;
   basedOn?: string;
+  layerName?: string;
 }
 
 export interface DefaultBackgroundElement extends Element {
@@ -81,4 +94,8 @@ export interface MediaElement extends Element {
   scale?: number;
   focalX?: number;
   focalY?: number;
+}
+
+export interface BackgroundableElement extends Element {
+  isBackground?: boolean;
 }

@@ -24,7 +24,6 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { Checkmark } from '../../icons';
-import { FOCUS_VISIBLE_SELECTOR } from '../../theme/global';
 import { focusCSS } from '../../theme/helpers';
 
 const CONTAINER_WIDTH = 24;
@@ -78,7 +77,7 @@ const CheckboxContainer = styled.div(
         }
       }
 
-      &.${FOCUS_VISIBLE_SELECTOR}:not(:active) ~ ${Border} {
+      &:focus-visible:not(:active) ~ ${Border} {
         ${focusCSS(theme.colors.border.focus)};
       }
 

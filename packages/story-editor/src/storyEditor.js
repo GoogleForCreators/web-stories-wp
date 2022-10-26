@@ -55,7 +55,6 @@ import { HelpCenterProvider } from './app/helpCenter';
 import { PageDataUrlProvider } from './app/pageDataUrls';
 import { PageCanvasProvider } from './app/pageCanvas';
 import DevTools from './components/devTools';
-import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import getDefaultConfig from './getDefaultConfig';
 
@@ -105,7 +104,6 @@ function StoryEditor({ config, initialEdits, children }) {
                                             <DefaultMoveableGlobalStyle />
                                             <CropMoveableGlobalStyle />
                                             <ModalGlobalStyle />
-                                            <CalendarStyle />
                                             <KeyboardOnlyOutlines />
                                             {children}
                                           </PopupProvider>

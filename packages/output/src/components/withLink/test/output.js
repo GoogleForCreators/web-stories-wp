@@ -91,6 +91,8 @@ describe('WithLink', () => {
   });
 
   describe('AMP validation', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
     it('should produce valid AMP output', async () => {
       await expect(withLink()).toBeValidAMPStoryElement();
     });
