@@ -212,7 +212,8 @@ describe('Color formatter', () => {
       expect(shouldSetStyle()).toBeTrue();
 
       // Fourth argument is actual style to set
-      const styleToSet = jest.mocked(togglePrefixStyle).mock.calls[0][3] as StyleGetter;
+      const styleToSet = jest.mocked(togglePrefixStyle).mock
+        .calls[0][3] as StyleGetter;
       expect(styleToSet()).toBe(`${WEIGHT}-900`);
     });
 

@@ -63,8 +63,6 @@ function createResource({
     width,
     height,
     sizes,
-    attribution,
-    output,
     isPlaceholder,
     isExternal,
     needsProxy,

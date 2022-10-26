@@ -31,7 +31,7 @@ import getOptions from '../getOptions';
 /**
  * Returns the current date in the site's timezone.
  *
- * @return {Date} Date object.
+ * @return Date object.
  */
 function getCurrentDate() {
   return toDate(new Date(), getOptions());

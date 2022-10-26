@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
 import translateToInclusiveList from '../translateToInclusiveList';
 
 describe('translateToInclusiveList', () => {
-  it.each`
-    options                                        | result
-    ${[]}                                          | ${''}
-    ${['one']}                                     | ${'one'}
-    ${['doctor', 'barnacle']}                      | ${'doctor and barnacle'}
-    ${['apple', 'banana', 'mango', 'dragonfruit']} | ${'apple, banana, mango, and dragonfruit'}
-  `('should translate as expected', ({ options, result }) => {
+  it.each([
+    [[], ''],
+    [['one'], 'one'],
+    [['doctor', 'barnacle'], 'doctor and barnacle'],
+    [
+      ['apple', 'banana', 'mango', 'dragonfruit'],
+      'apple, banana, mango, and dragonfruit',
+    ],
+  ])('should translate as expected', (options, result) => {
     expect(translateToInclusiveList(options)).toBe(result);
   });
 });

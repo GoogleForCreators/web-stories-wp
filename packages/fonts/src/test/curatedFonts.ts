@@ -32,7 +32,7 @@ describe('Curated fonts', () => {
       resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
       'utf8'
     )
-  );
+  ) as Font[];
   const fontNames = fonts.map(({ family }) => family);
 
   // @see https://github.com/googleforcreators/web-stories-wp/issues/3880

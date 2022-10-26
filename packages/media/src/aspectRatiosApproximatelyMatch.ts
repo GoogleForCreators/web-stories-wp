@@ -20,8 +20,8 @@
 import type { Dimensions } from '@googleforcreators/types';
 
 function aspectRatiosApproximatelyMatch(
-  obj1: Dimensions | ResourceSize,
-  obj2: Dimensions | ResourceSize
+  obj1: Dimensions,
+  obj2: Dimensions
 ): boolean {
   return Math.abs(obj1.width / obj1.height - obj2.width / obj2.height) < 0.01;
 }

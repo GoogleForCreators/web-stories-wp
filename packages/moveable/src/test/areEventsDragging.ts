@@ -31,7 +31,9 @@ describe('areEventsDragging', () => {
       clientY: 1,
       timeStamp: window.performance.now() + 10,
     };
-    expect(areEventsDragging(firstEvent as MouseEvent, secondEvent as MouseEvent)).toBeFalse();
+    expect(
+      areEventsDragging(firstEvent as MouseEvent, secondEvent as MouseEvent)
+    ).toBeFalse();
   });
 
   it('should consider a long delay between events dragging even if only moving a small distance', () => {
@@ -45,7 +47,9 @@ describe('areEventsDragging', () => {
       clientY: 1,
       timeStamp: window.performance.now() + 1000,
     };
-    expect(areEventsDragging(firstEvent as MouseEvent, secondEvent as MouseEvent)).toBeTrue();
+    expect(
+      areEventsDragging(firstEvent as MouseEvent, secondEvent as MouseEvent)
+    ).toBeTrue();
   });
 
   it('should consider a long distance between events dragging even if fired in quick succession', () => {
@@ -59,6 +63,8 @@ describe('areEventsDragging', () => {
       clientY: 10,
       timeStamp: window.performance.now() + 10,
     };
-    expect(areEventsDragging(firstEvent as MouseEvent, secondEvent as MouseEvent)).toBeTrue();
+    expect(
+      areEventsDragging(firstEvent as MouseEvent, secondEvent as MouseEvent)
+    ).toBeTrue();
   });
 });

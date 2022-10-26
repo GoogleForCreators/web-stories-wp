@@ -22,31 +22,32 @@ import {
 } from '../snakeToCamelCase';
 
 describe('snakeToCamelCase', () => {
-  it.each`
-    key                 | result
-    ${''}               | ${''}
-    ${undefined}        | ${''}
-    ${'test'}           | ${'test'}
-    ${'rest_base'}      | ${'restBase'}
-    ${'rest-base'}      | ${'restBase'}
-    ${'rest-base_test'} | ${'restBaseTest'}
-    ${'_links'}         | ${'_links'}
-    ${'links_'}         | ${'links_'}
-    ${'a_l'}            | ${'aL'}
-  `('should return the expected string for $key', ({ key, result }) => {
+  it.each([
+    ['', ''],
+    [undefined, ''],
+    ['test', 'test'],
+    ['rest_base', 'restBase'],
+    ['rest-base', 'restBase'],
+    ['rest-base_test', 'restBaseTest'],
+    ['_links', '_links'],
+    ['links_', 'links_'],
+    ['a_l', 'aL'],
+  ])('should return the expected string for $key', (key, result) => {
     expect(snakeToCamelCase(key)).toStrictEqual(result);
   });
 });
 
 describe('snakeToCamelCaseObjectKeys', () => {
-  it.each`
-    key                    | result
-    ${{}}                  | ${{}}
-    ${[1, 2]}              | ${[1, 2]}
-    ${undefined}           | ${undefined}
-    ${''}                  | ${''}
-    ${{ item_one: 'two' }} | ${{ itemOne: 'two' }}
-  `('should return the expected value for $key', ({ key, result }) => {
+  it.each([
+    [{}, {}],
+    [
+      [1, 2],
+      [1, 2],
+    ],
+    [undefined, undefined],
+    ['', ''],
+    [{ item_one: 'two' }, { itemOne: 'two' }],
+  ])('should return the expected value for $key', (key, result) => {
     expect(snakeToCamelCaseObjectKeys(key)).toStrictEqual(result);
   });
 

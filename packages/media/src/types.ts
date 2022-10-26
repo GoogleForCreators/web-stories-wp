@@ -243,7 +243,7 @@ export interface ResourceInput {
   creationDate?: string;
   /** Resource sizes */
   sizes: { [key: string]: ResourceSize };
-  /** Resource author a ttribution */
+  /** Resource author attribution */
   attribution?: Attribution;
   /** The resource's poster. */
   poster?: string;

@@ -155,7 +155,8 @@ describe('Underline formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2] as SetStyleCallback;
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBeFalse();
     });
 
@@ -169,7 +170,8 @@ describe('Underline formatter', () => {
       );
 
       // Third argument is tester
-      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock.calls[0][2] as SetStyleCallback;
+      const shouldSetStyle = jest.mocked(togglePrefixStyle).mock
+        .calls[0][2] as SetStyleCallback;
       expect(shouldSetStyle()).toBeTrue();
     });
   });

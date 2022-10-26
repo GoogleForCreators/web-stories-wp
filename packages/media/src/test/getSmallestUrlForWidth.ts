@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ResourceType } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import getSmallestUrlForWidth from '../getSmallestUrlForWidth';
 import createResource from '../createResource';
-import { ResourceType } from '../types';
 
 describe('getSmallestUrlForWidth', () => {
   beforeEach(() => {
@@ -33,7 +37,7 @@ describe('getSmallestUrlForWidth', () => {
   it('should return the smallest available image URL greater than minWidth', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',
@@ -67,7 +71,7 @@ describe('getSmallestUrlForWidth', () => {
     window.devicePixelRatio = 2;
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',
@@ -100,7 +104,7 @@ describe('getSmallestUrlForWidth', () => {
   it('should return an image with the same aspect ratio', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',
@@ -139,7 +143,7 @@ describe('getSmallestUrlForWidth', () => {
   it('should return the resource.src if there is no valid thumb', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',
@@ -172,7 +176,7 @@ describe('getSmallestUrlForWidth', () => {
   it('should return the default src URL if no alternatives', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',

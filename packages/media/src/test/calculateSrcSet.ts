@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ResourceType } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
 import calculateSrcSet from '../calculateSrcSet';
 import createResource from '../createResource';
-import { ResourceType } from '../types';
 
 describe('calculateSrcSet', () => {
   it('should generate srcset properly', () => {
@@ -27,7 +31,7 @@ describe('calculateSrcSet', () => {
       id: 123,
       width: 400,
       height: 800,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       src: 'URL',
       alt: '',
@@ -56,7 +60,7 @@ describe('calculateSrcSet', () => {
       id: 123,
       width: 400,
       height: 800,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       src: 'URL',
       alt: '',
@@ -91,7 +95,7 @@ describe('calculateSrcSet', () => {
       id: 123,
       width: 800,
       height: 1600,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       src: 'URL',
       alt: '',
@@ -130,7 +134,7 @@ describe('calculateSrcSet', () => {
   it('should encode URLs with spaces', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',
@@ -165,7 +169,7 @@ describe('calculateSrcSet', () => {
   it('should not encode already encoded URLs', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',
@@ -203,7 +207,7 @@ describe('calculateSrcSet', () => {
   it('should encode URLs with multiple spaces', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',
@@ -240,7 +244,7 @@ describe('calculateSrcSet', () => {
   it('should ignore sizes with empty URLs', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'default-url',
@@ -275,7 +279,7 @@ describe('calculateSrcSet', () => {
   it('should not break image URLs with commas in them', () => {
     const resource = createResource({
       id: 123,
-      type: ResourceType.IMAGE,
+      type: ResourceType.Image,
       mimeType: 'image/jpeg',
       alt: '',
       src: 'image.jpg',

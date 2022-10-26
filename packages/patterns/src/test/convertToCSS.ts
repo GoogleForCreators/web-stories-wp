@@ -15,23 +15,24 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { CSSProperties } from 'react';
+
+/**
  * Internal dependencies
  */
 import convertToCSS from '../convertToCSS';
 
 describe('convertToCSS', () => {
   it('should convert object correctly', () => {
-    const input = {
-      fill: 0,
+    const input: CSSProperties = {
+      fill: 'none',
       backgroundColor: 'red',
-      borderLeftImage: 'radial-gradient(red, blue)',
+      borderImage: 'radial-gradient(red, blue)',
     };
-    const output = [
-      'fill:0',
-      'background-color:red',
-      'border-left-image:radial-gradient(red, blue)',
-    ];
-    const expected = output.map((v) => `${v};`).join('');
-    expect(convertToCSS(input)).toStrictEqual(expected);
+    expect(convertToCSS(input)).toMatchInlineSnapshot(
+      `"fill:none;background-color:red;border-image:radial-gradient(red, blue);"`
+    );
   });
 });
