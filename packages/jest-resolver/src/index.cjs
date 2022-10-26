@@ -75,6 +75,20 @@ module.exports = (request, options) => {
     });
   }
 
+  if ('blurhash' === request) {
+    return options.defaultResolver(request, {
+      ...options,
+      packageFilter: (pkg) => {
+        if ('blurhash' === pkg.name) {
+          delete pkg.exports;
+          delete pkg.module;
+        }
+
+        return pkg;
+      },
+    });
+  }
+
   if (!isLocalRepo(request)) {
     return options.defaultResolver(request, options);
   }
