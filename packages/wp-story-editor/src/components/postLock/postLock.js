@@ -159,8 +159,10 @@ function PostLock() {
     };
   }, [storyId, showLockedDialog, currentOwner, nonce, storyLocking]);
 
-  // Register repeating callback to check lock every 150 seconds.
+  // Register repeating callback to check lock every x seconds (default: 60 seconds).
   useEffect(() => {
+    cachedDoGetStoryLock.current();
+
     const timeout = setInterval(() => {
       if (!postLockInterval) {
         return;

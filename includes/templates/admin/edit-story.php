@@ -88,6 +88,11 @@ $preload_paths = [
 			'type'    => $post_type_object->name,
 		]
 	),
+	"/web-stories/v1/$stories_rest_base/{$post->ID}/lock/?" . build_query(
+		[
+			'_embed' => 'author',
+		]
+	),
 ];
 
 $story_initial_path = "/web-stories/v1/$stories_rest_base/{$post->ID}/?";
