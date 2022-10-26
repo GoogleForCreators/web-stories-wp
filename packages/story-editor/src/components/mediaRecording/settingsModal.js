@@ -23,6 +23,7 @@ import {
   DropDown,
   localStore,
   LOCAL_STORAGE_PREFIX,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
@@ -37,6 +38,10 @@ import { SETTINGS_POPUP_ZINDEX, VIDEO_EFFECTS } from './constants';
 
 const Row = styled.div`
   margin-bottom: 16px;
+`;
+
+const Label = styled(Text)`
+  margin-bottom: 8px;
 `;
 
 function SettingsModal() {
@@ -174,6 +179,9 @@ function SettingsModal() {
 
       {videoInputs.length > 0 && (
         <Row>
+          <Label size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Video Input', 'web-stories')}
+          </Label>
           <DropDown
             ariaLabel={__('Video Input', 'web-stories')}
             placeholder={__('Select Video Input', 'web-stories')}
@@ -186,6 +194,9 @@ function SettingsModal() {
       )}
       {audioInputs.length > 0 && (
         <Row>
+          <Label size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Audio Input', 'web-stories')}
+          </Label>
           <DropDown
             ariaLabel={__('Audio Input', 'web-stories')}
             placeholder={__('Select Audio Input', 'web-stories')}
@@ -199,6 +210,9 @@ function SettingsModal() {
       )}
       {videoInputs.length > 0 && (
         <Row>
+          <Label size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Video Effect', 'web-stories')}
+          </Label>
           <DropDown
             ariaLabel={__('Video Effect', 'web-stories')}
             placeholder={__('Select Video Effect', 'web-stories')}
