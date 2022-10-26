@@ -26,6 +26,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
+import { useCallback } from 'react';
 
 const Message = styled.div`
   color: #fff;
@@ -60,6 +61,13 @@ function ErrorActions({ error, errorInfo }) {
     window.location.reload(true);
   };
 
+  const copyToClipboard = useCallback(() => {
+    //textareaRef.current.select();
+    //document.execCommand('copy');
+    //textareaRef.current.setSelectionRange(0, 0);
+    alert('copied');
+  }, []);
+
   return (
     <Message>
       <P>{__('Something went wrong!', 'web-stories')}</P>
@@ -85,6 +93,14 @@ function ErrorActions({ error, errorInfo }) {
           onClick={reload}
         >
           {__('Reload', 'web-stories')}
+        </Button>
+        <Button
+          onClick={copyToClipboard}
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+        >
+          {__('Copy story data', 'web-stories')}
         </Button>
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
