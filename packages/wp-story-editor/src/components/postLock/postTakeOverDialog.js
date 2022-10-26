@@ -42,7 +42,7 @@ import {
 /**
  * @param {Object} props Component props.
  * @param {boolean} props.isOpen If open or not.
- * @param {Object} props.user Lock owner's user data as a object.
+ * @param {Object} props.owner Lock owner's user data as a object.
  * @param {string} props.dashboardLink Link to dashboard.
  * @param {string} props.previewLink Preview link.
  * @param {Function} props.onClose Function when dialog is closed.
@@ -50,7 +50,7 @@ import {
  */
 function PostTakeOverDialog({
   isOpen,
-  user,
+  owner,
   dashboardLink,
   previewLink,
   onClose,
@@ -85,11 +85,11 @@ function PostTakeOverDialog({
       }
     >
       <DialogWrapper>
-        {user?.avatar && (
+        {owner?.avatar && (
           <DialogImageWrapper>
             <Avatar
-              src={user.avatar}
-              alt={user.name}
+              src={owner.avatar}
+              alt={owner.name}
               height={48}
               width={48}
               crossOrigin="anonymous"
@@ -101,9 +101,9 @@ function PostTakeOverDialog({
         <DialogContent>
           <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(
-              /* translators: %s: user's name */
+              /* translators: %s: owner's name */
               __('%s now has editing control of this story.', 'web-stories'),
-              user?.name
+              owner?.name
             )}
           </DialogText>
 
@@ -121,7 +121,7 @@ function PostTakeOverDialog({
 
 PostTakeOverDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  user: PropTypes.object,
+  owner: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
   previewLink: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
