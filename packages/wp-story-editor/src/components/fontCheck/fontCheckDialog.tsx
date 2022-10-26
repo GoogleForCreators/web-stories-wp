@@ -90,7 +90,7 @@ export const FontCheckDialog = ({
   missingFont,
   closeDialog,
 }: FontCheckDialogProps) => {
-  const { dashboardLink, dashboardSettingsLink, isRTL } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
+  const { dashboardLink, dashboardSettingsLink, isRTL } = useConfig() as Config;
   const [suggestedFont, setSuggestedFont] = useState(TEXT_ELEMENT_DEFAULT_FONT);
   const { updateElementsByFontFamily } = useStory(({ actions }) => ({
     updateElementsByFontFamily: actions.updateElementsByFontFamily,

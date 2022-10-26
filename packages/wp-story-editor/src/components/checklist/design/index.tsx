@@ -35,7 +35,7 @@ import { Config } from '../../../types';
 function Design() {
   const {
     capabilities: { hasUploadMediaAction },
-  } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
+  } = useConfig() as Config;
   return (
     <>
       <StoryPagesCount />

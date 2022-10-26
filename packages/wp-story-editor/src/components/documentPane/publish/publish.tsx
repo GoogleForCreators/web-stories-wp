@@ -150,7 +150,7 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
   } = useSidebar();
   const {
     api: { publisherLogos: publisherLogosPath },
-  } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
+  } = useConfig() as Config;
 
   const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
@@ -160,7 +160,7 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
     revisionLink,
-  } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
+  } = useConfig() as Config;
 
   const allowedImageFileTypes = useMemo(
     () =>

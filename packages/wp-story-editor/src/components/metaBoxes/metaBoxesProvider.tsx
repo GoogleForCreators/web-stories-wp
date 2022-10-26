@@ -32,7 +32,7 @@ interface MetaBoxesProviderProp {
 }
 
 function MetaBoxesProvider({ children }: MetaBoxesProviderProp) {
-  const { metaBoxes = {} } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
+  const { metaBoxes = {} } = useConfig() as Config;
 
   const [metaBoxesVisible, setMetaBoxesVisible] = useState(false);
   const [isSavingMetaBoxes, setIsSavingMetaBoxes] = useState(false);

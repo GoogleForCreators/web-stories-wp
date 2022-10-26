@@ -58,6 +58,6 @@ export function getContent() {
   const metadata = {
     publisher: 'Web Stories',
   };
-  // eslint-disable-next-line  @typescript-eslint/no-unsafe-call -- Fix when output is fixed.
+
   return getStoryMarkup(story, pages, metadata) as string;
 }

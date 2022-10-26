@@ -52,12 +52,10 @@ function StatusCheck() {
           throw new Error('Invalid JSON');
         }
       })
-      .catch(
-        (err: Error) => {
-          setShowDialog(true);
-          void trackError('status_check', err.message);
-        }
-      );
+      .catch((err: Error) => {
+        setShowDialog(true);
+        void trackError('status_check', err.message);
+      });
   }, [encodeMarkup, statusCheck]);
 
   return <StatusCheckFailed isOpen={showDialog} onClose={closeDialog} />;

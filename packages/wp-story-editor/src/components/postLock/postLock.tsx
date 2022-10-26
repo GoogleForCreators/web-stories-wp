@@ -55,7 +55,7 @@ function PostLock() {
     nonce: firstNonce,
     postLock: { interval: postLockInterval, showLockedDialog },
     api: { stories, storyLocking },
-  } = useConfig() as Config; // eslint-disable-line @typescript-eslint/no-unsafe-call -- Todo workout this issue.
+  } = useConfig() as Config;
 
   const {
     state: { hasNewChanges },

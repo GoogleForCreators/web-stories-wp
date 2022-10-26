@@ -24,7 +24,7 @@ import {
   useFocusOut,
 } from '@googleforcreators/react';
 import { format, formatTime, is12Hour } from '@googleforcreators/date';
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   DropDownSelect,
   useKeyDownEffect,
@@ -99,9 +99,11 @@ function PublishTime() {
     (date === modified || date === null);
   const displayDate = Date.now();
   const displayLabel = !floatingDate
-    ? format(date || displayDate, shortDateFormat) +
-      ' ' +
-      formatTime(date || displayDate)
+    ? sprintf(
+        '%s %s',
+        format(date || displayDate, shortDateFormat),
+        formatTime(date || displayDate)
+      )
     : __('Immediately', 'web-stories');
   return (
     <>
