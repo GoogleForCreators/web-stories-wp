@@ -59,6 +59,11 @@ export const FontCheck = () => {
         }
 
         const inUseFonts = getInUseFontsForPages(storyPages);
+
+        if (!inUseFonts.length) {
+          return;
+        }
+
         const allFonts = await getFonts({ include: inUseFonts.join(',') });
         for (const fontFamily of inUseFonts) {
           const matchedFont = allFonts.find(
