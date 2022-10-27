@@ -288,7 +288,7 @@
     "workflow:normalize-path": "commander normalize-path"
   },
   "lint-staged": {
-    "*.js": [
+    "*.(js|ts|tsx)": [
       "eslint --fix",
       "stylelint --fix --allow-empty-input"
     ],

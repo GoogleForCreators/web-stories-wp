@@ -30,9 +30,10 @@ import type {
 import type { ElementDefinition } from '../elementType';
 import getDefinitionForType from './getDefinitionForType';
 
-function canBeBackground(
+type ElementWithBackground = MediaElement | ShapeElement;
+function elementAsBackground(
   element: Element
-): element is MediaElement | ShapeElement {
+): element is ElementWithBackground {
   return 'isBackground' in element;
 }
 
@@ -47,7 +48,7 @@ function getLayerName(element: Element) {
     return element.layerName;
   }
 
-  if (canBeBackground(element) && element.isBackground) {
+  if (elementAsBackground(element) && element.isBackground) {
     return __('Background', 'web-stories');
   }
 
