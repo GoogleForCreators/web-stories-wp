@@ -33,6 +33,10 @@ import type { CSSProperties, SVGAttributes, ForwardedRef } from 'react';
  */
 import { MaskTypes } from './constants';
 import { getElementMask, generateMaskId } from './masks';
+import type {
+  RegisterDropTargetCallback,
+  UnregisterDropTargetCallback,
+} from './types';
 
 const FILL_STYLE: CSSProperties = {
   position: 'absolute',
@@ -113,8 +117,8 @@ interface WithDropTargetProps {
   draggingResource: Resource;
   activeDropTargetId: string;
   isDropSource: (type: string) => boolean;
-  registerDropTarget: (id: string, pathRef: SVGPathElement | null) => void;
-  unregisterDropTarget: (id: string) => void;
+  registerDropTarget: RegisterDropTargetCallback;
+  unregisterDropTarget: UnregisterDropTargetCallback;
 }
 
 function WithDropTarget({
@@ -202,8 +206,8 @@ interface WithMaskProps {
   activeDropTargetId: string;
   isDropSource: (type: string) => boolean;
   isSelected?: boolean;
-  registerDropTarget: () => void;
-  unregisterDropTarget: () => void;
+  registerDropTarget: RegisterDropTargetCallback;
+  unregisterDropTarget: UnregisterDropTargetCallback;
 }
 
 const WithMask = forwardRef(
