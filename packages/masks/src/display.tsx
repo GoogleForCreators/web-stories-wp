@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useUnits } from '@googleforcreators/units';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { Border, MediaElement } from '@googleforcreators/types';
+import type { CSSProperties } from 'react';
 
 /**
  * Internal dependencies
@@ -27,20 +27,28 @@ import { StoryPropTypes } from '@googleforcreators/elements';
 import { shouldDisplayBorder } from './utils/elementBorder';
 import BorderedMaskedElement from './borderedMaskedElement';
 
+interface WithMaskProps {
+  element: MediaElement;
+  fill: boolean;
+  previewMode?: boolean;
+  responsiveBorder: Border;
+  style: CSSProperties;
+}
+
 export default function WithMask({
   element,
   fill,
   previewMode = false,
   responsiveBorder,
   ...rest
-}) {
-  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
-    dataToEditorX: state.actions.dataToEditorX,
-    dataToEditorY: state.actions.dataToEditorY,
+}: WithMaskProps) {
+  const { dataToEditorX, dataToEditorY } = useUnits(({ actions }) => ({
+    dataToEditorX: actions.dataToEditorX,
+    dataToEditorY: actions.dataToEditorY,
   }));
 
   const getBorderWidth = () =>
-    !previewMode ? element.border?.left : responsiveBorder?.left;
+    (!previewMode ? element.border?.left : responsiveBorder?.left) || 0;
   const postfix = previewMode ? '-preview' : '';
   const elementWidth = dataToEditorX(element.width);
   const elementHeight = dataToEditorY(element.height);
@@ -59,13 +67,3 @@ export default function WithMask({
     />
   );
 }
-
-WithMask.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  style: PropTypes.object,
-  applyFlip: PropTypes.bool,
-  fill: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  previewMode: PropTypes.bool,
-  responsiveBorder: PropTypes.object,
-};

@@ -4,6 +4,7 @@
     { "path": "packages/elements" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
+    { "path": "packages/masks" },
     { "path": "packages/media" },
     { "path": "packages/migration" },
     { "path": "packages/moveable" },
