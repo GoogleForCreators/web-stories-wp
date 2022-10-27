@@ -40,7 +40,11 @@ const Row = styled.div`
   margin-bottom: 16px;
 `;
 
-const Label = styled(Text)`
+const Label = styled(Text).attrs({
+  as: 'label',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  display: inline-block;
   margin-bottom: 8px;
 `;
 
@@ -179,10 +183,9 @@ function SettingsModal() {
 
       {videoInputs.length > 0 && (
         <Row>
-          <Label size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('Camera', 'web-stories')}
-          </Label>
+          <Label htmlFor="camera">{__('Camera', 'web-stories')}</Label>
           <DropDown
+            id="camera"
             ariaLabel={__('Video Input', 'web-stories')}
             placeholder={__('Select Video Input', 'web-stories')}
             options={videoInputs}
@@ -194,10 +197,9 @@ function SettingsModal() {
       )}
       {audioInputs.length > 0 && (
         <Row>
-          <Label size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('Microphone', 'web-stories')}
-          </Label>
+          <Label htmlFor="microphone">{__('Microphone', 'web-stories')}</Label>
           <DropDown
+            id="microphone"
             ariaLabel={__('Audio Input', 'web-stories')}
             placeholder={__('Select Audio Input', 'web-stories')}
             options={audioInputs}
@@ -210,10 +212,11 @@ function SettingsModal() {
       )}
       {videoInputs.length > 0 && (
         <Row>
-          <Label size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Label htmlFor="video-effect">
             {__('Video Effect', 'web-stories')}
           </Label>
           <DropDown
+            id="video-effect"
             ariaLabel={__('Video Effect', 'web-stories')}
             placeholder={__('Select Video Effect', 'web-stories')}
             options={videoEffects}
