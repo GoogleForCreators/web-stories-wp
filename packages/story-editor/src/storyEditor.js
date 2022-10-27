@@ -81,43 +81,41 @@ function StoryEditor({ config, initialEdits, children }) {
                         storyId={storyId}
                         initialEdits={initialEdits}
                       >
-                        <ErrorBoundary withStoryData>
-                          <TaxonomyProvider>
-                            <CurrentUserProvider>
-                              <FontProvider>
-                                <MediaProvider>
-                                  <LocalAutoSaveHandler />
-                                  <AutoSaveHandler />
-                                  <TransformProvider>
-                                    <DropTargetsProvider>
-                                      <HelpCenterProvider>
-                                        <PageCanvasProvider>
-                                          <PageDataUrlProvider>
-                                            <PopupProvider
-                                              value={{
-                                                isRTL,
-                                                leftOffset,
-                                                topOffset,
-                                              }}
-                                            >
-                                              <GlobalStyle />
-                                              <DevTools />
-                                              <DefaultMoveableGlobalStyle />
-                                              <CropMoveableGlobalStyle />
-                                              <ModalGlobalStyle />
-                                              <KeyboardOnlyOutlines />
-                                              {children}
-                                            </PopupProvider>
-                                          </PageDataUrlProvider>
-                                        </PageCanvasProvider>
-                                      </HelpCenterProvider>
-                                    </DropTargetsProvider>
-                                  </TransformProvider>
-                                </MediaProvider>
-                              </FontProvider>
-                            </CurrentUserProvider>
-                          </TaxonomyProvider>
-                        </ErrorBoundary>
+                        <TaxonomyProvider>
+                          <CurrentUserProvider>
+                            <FontProvider>
+                              <MediaProvider>
+                                <LocalAutoSaveHandler />
+                                <AutoSaveHandler />
+                                <TransformProvider>
+                                  <DropTargetsProvider>
+                                    <HelpCenterProvider>
+                                      <PageCanvasProvider>
+                                        <PageDataUrlProvider>
+                                          <PopupProvider
+                                            value={{
+                                              isRTL,
+                                              leftOffset,
+                                              topOffset,
+                                            }}
+                                          >
+                                            <GlobalStyle />
+                                            <DevTools />
+                                            <DefaultMoveableGlobalStyle />
+                                            <CropMoveableGlobalStyle />
+                                            <ModalGlobalStyle />
+                                            <KeyboardOnlyOutlines />
+                                            {children}
+                                          </PopupProvider>
+                                        </PageDataUrlProvider>
+                                      </PageCanvasProvider>
+                                    </HelpCenterProvider>
+                                  </DropTargetsProvider>
+                                </TransformProvider>
+                              </MediaProvider>
+                            </FontProvider>
+                          </CurrentUserProvider>
+                        </TaxonomyProvider>
                       </StoryProvider>
                     </SnackbarProvider>
                   </HistoryProvider>

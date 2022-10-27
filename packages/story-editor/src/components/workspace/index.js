@@ -39,12 +39,12 @@ function Workspace({ header, footer }) {
     <VideoTrimProvider>
       <RichTextProvider editingState={editingElementState}>
         <SidebarArea>
-          <ErrorBoundary>
+          <ErrorBoundary withStoryData>
             <Sidebar />
           </ErrorBoundary>
         </SidebarArea>
         <CanvasArea>
-          <ErrorBoundary>
+          <ErrorBoundary withStoryData>
             <Canvas header={header} footer={footer} />
           </ErrorBoundary>
         </CanvasArea>

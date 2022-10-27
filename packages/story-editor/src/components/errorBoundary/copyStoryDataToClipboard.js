@@ -32,11 +32,12 @@ import { useCallback } from 'react';
 import { useStory } from '../../app/story';
 
 function CopyStoryDataToClipboard() {
-  const { reducerState } = useStory(({ state }) => ({
-    reducerState: state.reducerState,
+  const { reducerState } = useStory(({ internal }) => ({
+    reducerState: internal.reducerState,
   }));
 
   const { pages, current, selection, story } = reducerState;
+
   const copyToClipboard = useCallback(async () => {
     const jsonStr = JSON.stringify(
       { pages, current, selection, story },
