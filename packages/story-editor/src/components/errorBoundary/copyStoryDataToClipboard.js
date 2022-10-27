@@ -44,8 +44,12 @@ function CopyStoryDataToClipboard() {
       null,
       2
     );
-    await navigator.clipboard.writeText(jsonStr);
-    alert(__('Copied to clipboard', 'web-stories'));
+    try {
+      await navigator.clipboard.writeText(jsonStr);
+      alert(__('Copied to clipboard', 'web-stories'));
+    } catch (err) {
+      alert(__('Failed to copy story data', 'web-stories'));
+    }
   }, [pages, current, selection, story]);
 
   return (
