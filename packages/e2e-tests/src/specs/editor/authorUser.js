@@ -20,71 +20,77 @@
 import {
   createNewStory,
   previewStory,
-  addTextElement,
   insertStoryTitle,
   withUser,
   publishStory,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Author User', () => {
   withUser('author', 'password');
 
-  it('should be able to directly preview a story without markup being stripped', async () => {
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
+
+  it('should directly preview a story without markup being stripped', async () => {
     await createNewStory();
 
     await insertStoryTitle('Previewing without Publishing');
 
-    await addTextElement();
-
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
-    await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text',
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
     });
 
-    await editorPage.bringToFront();
+    const previewPage = await previewStory();
+    await expect(previewPage).toMatchElement('amp-img');
+
+    await page.bringToFront();
     await previewPage.close();
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should be able to publish a story without markup being stripped', async () => {
+  it('should publish a story without markup being stripped', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing and Previewing');
 
     // Make some changes _before_ publishing the story.
-    await addTextElement();
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
+    });
 
     await publishStory();
 
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
-    await expect(previewPage).toMatchElement('p', {
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    });
+    const previewPage = await previewStory();
+    await expect(previewPage).toMatchElement('amp-img');
 
-    await editorPage.bringToFront();
     await previewPage.close();
+    await page.bringToFront();
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should be able to publish and preview a story without markup being stripped', async () => {
+  it('should publish and preview a story without markup being stripped', async () => {
     await createNewStory();
 
     await insertStoryTitle('Autosaving and Previewing');
 
     await publishStory();
 
-    // Make some changes _after_ publishing so previewing will cause an autosave.
-    await addTextElement();
+    await page.screenshot({ path: 'build/after-publish.png' });
 
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
-    await expect(previewPage).toMatchElement('p', {
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    // Make some changes _after_ publishing so previewing will cause an autosave.
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('[role="menu"] [role="menuitem"]', {
+      text: 'Insert image',
     });
 
-    await editorPage.bringToFront();
+    const previewPage = await previewStory();
+    await expect(previewPage).toMatchElement('amp-img');
+
+    await page.bringToFront();
     await previewPage.close();
   });
 });

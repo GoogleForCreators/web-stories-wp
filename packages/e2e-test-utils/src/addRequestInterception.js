@@ -27,7 +27,7 @@
 function addRequestInterception(callback) {
   const requestHandler = (request) => {
     // Prevent errors for requests that happen after interception is disabled.
-    if (!request._allowInterception) {
+    if (request.isInterceptResolutionHandled()) {
       return;
     }
 

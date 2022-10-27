@@ -25,31 +25,29 @@ import {
 /**
  * Internal dependencies
  */
-import { addAllowedErrorMessage } from '../../../config/bootstrap.js';
+import { addAllowedErrorMessage } from '../../../config/bootstrap';
 
 const IMAGE_URL_LOCAL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/example-3.png`;
 const IMAGE_URL_CORS_PROXY = 'https://wp.stories.google/e2e-tests/example.jpg';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Media Hotlinking', () => {
   withPlugin('e2e-tests-hotlink');
 
-  let removeCORSErrorMessage;
-  let removeResourceErrorMessage;
+  let removeMessage1;
+  let removeMessage2;
 
   beforeAll(() => {
     // Ignore CORS error, this is present in the test by design.
-    removeCORSErrorMessage = addAllowedErrorMessage(
-      'has been blocked by CORS policy'
-    );
+    removeMessage1 = addAllowedErrorMessage('has been blocked by CORS policy');
     // Ignore resource failing to load. This is only present because of the CORS error.
-    removeResourceErrorMessage = addAllowedErrorMessage(
-      'Failed to load resource'
-    );
+    removeMessage2 = addAllowedErrorMessage('Failed to load resource');
   });
 
   afterAll(() => {
-    removeCORSErrorMessage();
-    removeResourceErrorMessage();
+    removeMessage1();
+    removeMessage2();
   });
 
   // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -70,13 +68,20 @@ describe('Media Hotlinking', () => {
       }
     );
 
-    await expect(page).toClick('[role="dialog"] button', {
-      text: 'Insert',
-    });
+    await Promise.all([
+      expect(page).toClick('[role="dialog"] button', {
+        text: 'Insert',
+      }),
+      await page.waitForResponse(
+        (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test -- False positive.
+          response.url().includes('web-stories/v1/hotlink/validate') &&
+          response.status() === 200
+      ),
+    ]);
 
-    await page.waitForSelector(
-      '[aria-label="Design options for selected element"]'
-    );
+    // Dialog should disappear by now.
+    await expect(page).not.toMatch('Insert external image or video');
 
     await expect(page).toMatchElement(`img[src="${IMAGE_URL_LOCAL}"]`);
   });
@@ -98,13 +103,20 @@ describe('Media Hotlinking', () => {
       }
     );
 
-    await expect(page).toClick('[role="dialog"] button', {
-      text: 'Insert',
-    });
+    await Promise.all([
+      expect(page).toClick('[role="dialog"] button', {
+        text: 'Insert',
+      }),
+      await page.waitForResponse(
+        (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test -- False positive.
+          response.url().includes('web-stories/v1/hotlink/validate') &&
+          response.status() === 200
+      ),
+    ]);
 
-    await page.waitForSelector('.ReactModal__Content', {
-      visible: false,
-    });
+    // Dialog should disappear by now.
+    await expect(page).not.toMatch('Insert external image or video');
 
     await page.waitForSelector(
       '[aria-label="Design options for selected element"]'

@@ -24,6 +24,8 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Telemetry Banner', () => {
   beforeAll(async () => {
     await visitSettings();
@@ -62,28 +64,5 @@ describe('Telemetry Banner', () => {
     await expect(page).toClick('[aria-label="Dismiss telemetry banner"]');
     await page.reload();
     await expect(page).not.toMatch('Help improve the editor!');
-  });
-
-  // Skipped for https://github.com/googleforcreators/web-stories-wp/issues/9619
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should keep focus on the checkbox when checking/unchecking via keyboard', async () => {
-    await page.waitForTimeout(300); // Because dashboard takes some time before banner appears.
-
-    const checkbox = await page.$('#telemetry-banner-opt-in');
-    await checkbox?.focus();
-
-    await page.keyboard.press('Space');
-    const optedIn = await page.evaluate(() => {
-      const ele = document.getElementById('telemetry-banner-opt-in');
-      return document.activeElement === ele;
-    });
-    expect(optedIn).toBeFalse();
-    await page.keyboard.press('Space');
-
-    const updatedOptedIn = await page.evaluate(() => {
-      const ele = document.getElementById('telemetry-banner-opt-in');
-      return document.activeElement === ele;
-    });
-    expect(updatedOptedIn).toBeTrue();
   });
 });

@@ -34,6 +34,9 @@ async function publishStory(dismiss = true) {
 
   if (dismiss) {
     await expect(page).toClick('button', { text: /^Dismiss$/ });
+    await expect(page).not.toMatchElement(
+      '[role="dialog"][aria-label="Story published."]'
+    );
   }
 }
 

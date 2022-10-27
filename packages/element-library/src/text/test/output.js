@@ -289,6 +289,8 @@ describe('TextOutput', () => {
   });
 
   describe('AMP validation', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
     it('should produce valid AMP output', async () => {
       const props = {
         element: {
