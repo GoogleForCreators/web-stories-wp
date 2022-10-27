@@ -180,7 +180,7 @@ function SettingsModal() {
       {videoInputs.length > 0 && (
         <Row>
           <Label size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('Video Input', 'web-stories')}
+            {__('Camera', 'web-stories')}
           </Label>
           <DropDown
             ariaLabel={__('Video Input', 'web-stories')}
