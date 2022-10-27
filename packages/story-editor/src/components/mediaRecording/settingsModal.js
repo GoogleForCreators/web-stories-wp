@@ -195,7 +195,7 @@ function SettingsModal() {
       {audioInputs.length > 0 && (
         <Row>
           <Label size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('Audio Input', 'web-stories')}
+            {__('Microphone', 'web-stories')}
           </Label>
           <DropDown
             ariaLabel={__('Audio Input', 'web-stories')}
