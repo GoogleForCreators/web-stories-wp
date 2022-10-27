@@ -38,9 +38,7 @@ import {
  * Internal dependencies
  */
 import theme, { GlobalStyle } from './theme';
-import ErrorBoundary, {
-  ErrorBoundaryWithStoryData,
-} from './components/errorBoundary';
+import ErrorBoundary from './components/errorBoundary';
 import { ConfigProvider } from './app/config';
 import { APIProvider } from './app/api';
 import { Media3pApiProvider } from './app/media/media3p/api';
@@ -83,7 +81,7 @@ function StoryEditor({ config, initialEdits, children }) {
                         storyId={storyId}
                         initialEdits={initialEdits}
                       >
-                        <ErrorBoundaryWithStoryData>
+                        <ErrorBoundary withStoryData>
                           <TaxonomyProvider>
                             <CurrentUserProvider>
                               <FontProvider>
@@ -119,7 +117,7 @@ function StoryEditor({ config, initialEdits, children }) {
                               </FontProvider>
                             </CurrentUserProvider>
                           </TaxonomyProvider>
-                        </ErrorBoundaryWithStoryData>
+                        </ErrorBoundary>
                       </StoryProvider>
                     </SnackbarProvider>
                   </HistoryProvider>

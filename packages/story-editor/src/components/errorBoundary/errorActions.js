@@ -27,6 +27,11 @@ import {
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
 
+/**
+ * Internal dependencies
+ */
+import CopyStoryDataToClipboard from './copyStoryDataToClipboard';
+
 const Message = styled.div`
   color: #fff;
   font-size: 16px;
@@ -51,7 +56,7 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-function ErrorActions({ error, errorInfo }) {
+function ErrorActions({ error, errorInfo, withStoryData }) {
   const textAreaContent = `${error}\n${errorInfo.componentStack}`;
   const reportUrl =
     'https://wordpress.org/support/plugin/web-stories/#new-topic-0';
@@ -86,6 +91,7 @@ function ErrorActions({ error, errorInfo }) {
         >
           {__('Reload', 'web-stories')}
         </Button>
+        {withStoryData && <CopyStoryDataToClipboard />}
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
           type={BUTTON_TYPES.PRIMARY}
@@ -104,6 +110,7 @@ function ErrorActions({ error, errorInfo }) {
 ErrorActions.propTypes = {
   error: PropTypes.instanceOf(Error),
   errorInfo: PropTypes.object,
+  withStoryData: PropTypes.bool,
 };
 
 export default ErrorActions;
