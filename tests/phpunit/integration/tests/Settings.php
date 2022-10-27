@@ -92,7 +92,7 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertFalse( get_option( $this->instance::SETTING_NAME_VIDEO_CACHE ) );
 		$this->assertFalse( get_option( $this->instance::SETTING_NAME_DATA_REMOVAL ) );
 		$this->assertSame( 'default', get_option( $this->instance::SETTING_NAME_ARCHIVE ) );
-		$this->assertFalse( get_option( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
+		$this->assertTrue( get_option( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
 		$this->assertSame( 0, get_option( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION ) );
 	}
 }
