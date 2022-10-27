@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-export * from './masks';
-export * from './constants';
-export * from './utils/elementBorder';
-export { default as DisplayWithMask } from './display';
-export { default as FrameWithMask } from './frame';
-export { default as OutputWithMask } from './output';
+export interface RegisterDropTargetCallback {
+  (id: string, pathRef: SVGPathElement | null): void;
+}
+
+export interface UnregisterDropTargetCallback {
+  (id: string): void;
+}

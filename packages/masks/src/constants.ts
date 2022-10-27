@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
+import type { Mask } from '@googleforcreators/types';
 
 export const MaskTypes = {
   HEART: 'heart',
@@ -497,4 +498,4 @@ export const MASKS = [
 
 export const DEFAULT_MASK = MASKS.find(
   (mask) => mask.type === MaskTypes.RECTANGLE
-);
+) as Mask;
