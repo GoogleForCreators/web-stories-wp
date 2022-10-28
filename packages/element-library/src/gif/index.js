@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,5 +14,15 @@
  * limitations under the License.
  */
 
-export * from './resource';
-export * from './element';
+/**
+ * Internal dependencies
+ */
+export { default as Edit } from './edit';
+export { default as Frame } from './frame';
+export { default as getLayerText } from './layer';
+export { default as Output } from './output';
+export { default as LayerIcon } from './icon';
+export { default as TextContent } from '../media/textContent';
+export { default as Display } from './display';
+
+export * from './constants';

@@ -17,13 +17,17 @@
 /**
  * Internal dependencies
  */
-import type { MediaElement } from './mediaElement';
-import type { ElementType } from './element';
-import type { Pattern } from './pattern';
+import type { Element, ElementType } from '..';
 
-export type ImageElement = MediaElement & {
-  type: ElementType.Image;
+export interface Sticker {
+  type: string;
+}
 
-  // TODO(#12437): Figure out why some images have this property.
-  backgroundColor?: Pattern;
-};
+export interface StickerElement extends Element {
+  type: ElementType.Sticker;
+  sticker: Sticker;
+  // TODO(#12437): Figure out why sticker elements end up having these properties & fix it.
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
+}

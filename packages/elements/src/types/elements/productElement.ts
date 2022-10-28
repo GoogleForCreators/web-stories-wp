@@ -17,16 +17,26 @@
 /**
  * Internal dependencies
  */
-import type { Element, ElementType } from './element';
-import type { Pattern } from './pattern';
+import type { Element, ElementType } from '..';
 
-export interface ShapeElement extends Element {
-  backgroundColor?: Pattern;
-  isBackground?: boolean;
-  isDefaultBackground?: boolean;
-  type: ElementType.Shape;
-  // TODO(#12437): Figure out why shape elements end up having these properties & fix it.
-  scale?: number;
-  focalX?: number;
-  focalY?: number;
+interface ProductImage {
+  alt: string;
+  url: string;
+}
+
+export interface Product {
+  productId: string;
+  productBrand: string;
+  productDetails: string;
+  productImages: ProductImage[];
+  productPrice: number;
+  productPriceCurrency: string;
+  productTitle: string;
+  productUrl: string;
+  type: ElementType.Product;
+}
+
+export interface ProductElement extends Element {
+  type: ElementType.Product;
+  product: Product;
 }

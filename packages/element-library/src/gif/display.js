@@ -17,23 +17,23 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useRef } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
-import type { DisplayProps } from '@googleforcreators/elements';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import MediaDisplay from '../media/display';
 import { getBackgroundStyle, Video, VideoImage } from '../media/util';
-import type { GifElement } from './types';
 
 function VideoDisplay({
   previewMode,
   box: { width, height },
   element,
   renderResourcePlaceholder,
-}: DisplayProps<GifElement>) {
+}) {
   const { id, poster, resource, isBackground, scale, focalX, focalY } = element;
   const ref = useRef();
   let style = {};
@@ -94,5 +94,12 @@ function VideoDisplay({
     </MediaDisplay>
   );
 }
+
+VideoDisplay.propTypes = {
+  previewMode: PropTypes.bool,
+  element: StoryPropTypes.elements.video.isRequired,
+  box: StoryPropTypes.box.isRequired,
+  renderResourcePlaceholder: PropTypes.func,
+};
 
 export default VideoDisplay;

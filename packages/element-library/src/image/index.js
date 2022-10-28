@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,26 +17,12 @@
 /**
  * Internal dependencies
  */
-import type { Element, ElementType } from './element';
+export { default as Edit } from './edit';
+export { default as Frame } from './frame';
+export { default as Output } from './output';
+export { default as LayerIcon } from './icon';
+export { default as getLayerText } from './layer';
+export { default as Display } from '../media/imageDisplay';
+export { default as TextContent } from '../media/textContent';
 
-interface ProductImage {
-  alt: string;
-  url: string;
-}
-
-export interface Product {
-  productId: string;
-  productBrand: string;
-  productDetails: string;
-  productImages: ProductImage[];
-  productPrice: number;
-  productPriceCurrency: string;
-  productTitle: string;
-  productUrl: string;
-  type: ElementType.Product;
-}
-
-export interface ProductElement extends Element {
-  type: ElementType.Product;
-  product: Product;
-}
+export * from './constants';

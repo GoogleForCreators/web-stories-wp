@@ -13,14 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import MediaFrame from '../media/frame';
+import VisibleImage from '../shared/visibleImage';
 
-function GifFrame() {
-  return <MediaFrame />;
+function GifLayerIcon({
+  element: {
+    resource: { poster, alt },
+  },
+}) {
+  return <VisibleImage src={poster} alt={alt} height={21} width={21} />;
 }
 
-export default GifFrame;
+GifLayerIcon.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
+
+export default GifLayerIcon;

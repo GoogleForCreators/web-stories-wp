@@ -64,6 +64,7 @@ export interface DisplayProps<E extends Element> {
 
 export interface ElementDefinition<E extends Element = Element> {
   type: ElementType;
+  name: string;
   isMedia?: boolean;
   getLayerText: (element: E) => string;
   defaultAttributes: Partial<E>;

@@ -13,14 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import MediaFrame from '../media/frame';
+import MediaEdit from '../media/edit';
 
-function ImageFrame() {
-  return <MediaFrame />;
+function GifEdit({ element, box, ...rest }) {
+  return <MediaEdit element={element} box={box} {...rest} />;
 }
 
-export default ImageFrame;
+GifEdit.propTypes = {
+  element: StoryPropTypes.elements.gif.isRequired,
+  box: StoryPropTypes.box.isRequired,
+};
+
+export default GifEdit;

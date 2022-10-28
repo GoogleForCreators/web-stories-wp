@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,14 @@
 /**
  * External dependencies
  */
-import type { Element } from '@googleforcreators/elements';
 import type { GifResource } from '@googleforcreators/media';
 
-export interface GifElement extends Element {
+/**
+ * Internal dependencies
+ */
+import type { MediaElement, ElementType } from '..';
+
+export interface GifElement extends MediaElement {
   resource: GifResource;
+  type: ElementType.Gif;
 }

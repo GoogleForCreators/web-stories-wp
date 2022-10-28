@@ -22,7 +22,19 @@ import * as PropTypes from 'prop-types';
 import type { Requireable } from 'prop-types';
 /* eslint-enable no-restricted-imports -- Still used by other packages. */
 
-const ResourcePropTypes: Record<string, Requireable<unknown>> = {};
+export const BackgroundAudioPropTypeShape = {
+  id: PropTypes.number,
+  src: PropTypes.string,
+  length: PropTypes.number,
+  lengthFormatted: PropTypes.string,
+  mimeType: PropTypes.string,
+  needsProxy: PropTypes.bool,
+};
+export const BackgroundAudioPropType = PropTypes.shape(
+  BackgroundAudioPropTypeShape
+);
+
+export const ResourcePropTypes: Record<string, Requireable<unknown>> = {};
 
 ResourcePropTypes.resourceSize = PropTypes.shape({
   file: PropTypes.string,
@@ -104,8 +116,6 @@ ResourcePropTypes.resource = PropTypes.oneOfType([
   ResourcePropTypes.trackResource,
   ResourcePropTypes.gifResource,
 ]);
-
-export { ResourcePropTypes };
 
 /**
  * Author object

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Resource } from '@googleforcreators/media';
+import type { Pattern } from '@googleforcreators/patterns';
+
+/**
  * Internal dependencies
  */
-import type { SequenceResource } from './sequenceResource';
-import type { ResourceType } from './resourceType';
+import type { MediaElement, ElementType } from '..';
 
-export interface Output {
-  /** The MIME type of the resource. E.g. "image/png". */
-  mimeType: string;
-  /** The source URL of the resource. */
-  src: string;
-}
+export type ImageElement = MediaElement & {
+  type: ElementType.Image;
+  resource: Resource;
 
-export interface GifResource extends SequenceResource {
-  type: ResourceType.Gif;
-  output: Output;
-}
+  // TODO(#12437): Figure out why some images have this property.
+  backgroundColor?: Pattern;
+};

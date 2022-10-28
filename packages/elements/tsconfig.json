@@ -7,8 +7,7 @@
   "references": [
     { "path": "../i18n" },
     { "path": "../media" },
-    { "path": "../patterns" },
-    { "path": "../units" }
+    { "path": "../patterns" }
   ],
   "include": ["src/**/*"],
   "exclude": ["src/**/test/**/*"]

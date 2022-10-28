@@ -27,7 +27,7 @@ import type {
   TextElement,
   VideoElement,
   StickerElement,
-} from '@googleforcreators/types';
+} from '@googleforcreators/elements';
 
 export interface Color {
   label: string;

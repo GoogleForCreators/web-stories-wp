@@ -14,11 +14,30 @@
  * limitations under the License.
  */
 
-export * from './gifElement';
-export * from './imageElement';
-export * from './mediaElement';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
+/**
+ * External dependencies
+ */
+import type { VideoResource } from '@googleforcreators/media';
+
+/**
+ * Internal dependencies
+ */
+import type { MediaElement, ElementType } from '..';
+
+export interface VideoTrack {
+  id: string;
+  track: string;
+  trackId?: number;
+  kind?: string;
+  srclang?: string;
+  label?: string;
+  needsProxy?: boolean;
+}
+
+export interface VideoElement extends MediaElement {
+  resource: VideoResource;
+  poster?: string;
+  tracks?: VideoTrack[];
+  loop?: boolean;
+  type: ElementType.Video;
+}

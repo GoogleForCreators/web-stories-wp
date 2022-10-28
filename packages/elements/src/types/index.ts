@@ -15,6 +15,7 @@
  */
 export * from './animation';
 export * from './element';
+export * from './elements';
 export * from './elementType';
 export * from './elementDefinition';
 export * from './propTypes';

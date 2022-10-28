@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { GifResource } from '../resource';
-import type { MediaElement } from './mediaElement';
-import type { ElementType } from './element';
-
-export interface GifElement extends MediaElement {
-  resource: GifResource;
-  type: ElementType.Gif;
+function TextContent({ src }) {
+  return `image: ${src}`;
 }
+
+export default TextContent;

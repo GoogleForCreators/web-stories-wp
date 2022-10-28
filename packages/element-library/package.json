@@ -55,7 +55,5 @@
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.6"
   },
-  "devDependencies": {
-    "@types/react-transition-group": "^4.4.5"
-  }
+  "devDependencies": {}
 }

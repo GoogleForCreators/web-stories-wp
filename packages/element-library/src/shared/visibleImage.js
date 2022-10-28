@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Image = styled.img`
   display: block;
@@ -27,17 +28,17 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-interface VisibleImageProps {
-  src: string;
-  alt?: string;
-  width: number;
-  height: number;
-}
-
-function VisibleImage(attrs: VisibleImageProps) {
+function VisibleImage({ ...attrs }) {
   // The image is purely decorative by default, because the alt text is already used
   // for the layer description. Hence using alt="" to avoid repetition.
   return <Image alt="" {...attrs} decoding="async" crossOrigin="anonymous" />;
 }
+
+VisibleImage.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+};
 
 export default VisibleImage;

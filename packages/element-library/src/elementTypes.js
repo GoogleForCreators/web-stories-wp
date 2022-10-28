@@ -18,27 +18,35 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import type { Element, ElementDefinition } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import textElement from './text';
-import imageElement from './image';
-import shapeElement from './shape';
-import videoElement from './video';
-import gifElement from './gif';
-import stickerElement from './sticker';
-import productElement from './product';
+import * as textElement from './text';
+import * as imageElement from './image';
+import * as shapeElement from './shape';
+import * as videoElement from './video';
+import * as gifElement from './gif';
+import * as stickerElement from './sticker';
+import * as productElement from './product';
 
-const elementTypes: ElementDefinition<Element>[] = [
+const elementTypes = [
+  {
+    type: 'page',
+    defaultAttributes: {},
+    name: __('Page', 'web-stories'),
+  },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },
   { type: 'image', name: __('Image', 'web-stories'), ...imageElement },
   { type: 'shape', name: __('Shape', 'web-stories'), ...shapeElement },
   { type: 'video', name: __('Video', 'web-stories'), ...videoElement },
   { type: 'gif', name: __('GIF', 'web-stories'), ...gifElement },
   { type: 'sticker', name: __('Sticker', 'web-stories'), ...stickerElement },
-  { type: 'product', name: __('Product', 'web-stories'), ...productElement },
+  {
+    type: 'product',
+    name: __('Product', 'web-stories'),
+    ...productElement,
+  },
 ];
 
 export default elementTypes;

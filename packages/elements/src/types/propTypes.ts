@@ -21,7 +21,10 @@
 import PropTypes, { ValidationMap } from 'prop-types';
 /* eslint-enable no-restricted-imports -- Still used by other packages. */
 import { PatternPropType } from '@googleforcreators/patterns';
-import { ResourcePropTypes } from '@googleforcreators/media';
+import {
+  BackgroundAudioPropType,
+  ResourcePropTypes,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies

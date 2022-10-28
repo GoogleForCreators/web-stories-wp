@@ -15,26 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Pattern } from '@googleforcreators/patterns';
+
+/**
  * Internal dependencies
  */
-import type { VideoResource } from '../resource';
-import type { MediaElement } from './mediaElement';
-import type { ElementType } from './element';
+import type { Element, ElementType } from '..';
 
-export interface VideoTrack {
-  id: string;
-  track: string;
-  trackId?: number;
-  kind?: string;
-  srclang?: string;
-  label?: string;
-  needsProxy?: boolean;
-}
-
-export interface VideoElement extends MediaElement {
-  resource: VideoResource;
-  poster?: string;
-  tracks?: VideoTrack[];
-  loop?: boolean;
-  type: ElementType.Video;
+export interface ShapeElement extends Element {
+  backgroundColor?: Pattern;
+  isBackground?: boolean;
+  isDefaultBackground?: boolean;
+  type: ElementType.Shape;
+  // TODO(#12437): Figure out why shape elements end up having these properties & fix it.
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
 }
