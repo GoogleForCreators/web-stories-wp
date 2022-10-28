@@ -68,7 +68,6 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
 
   const options = [
     hasUploadMediaAction && 'upload',
-    hasUploadMediaAction && 'edit',
     'hotlink',
     icon && 'remove',
   ].filter(Boolean);
