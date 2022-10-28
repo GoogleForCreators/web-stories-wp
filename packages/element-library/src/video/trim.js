@@ -63,7 +63,7 @@ function VideoTrim({
   renderResourcePlaceholder,
 }) {
   const { width, height } = box;
-  const { poster, tracks, isBackground, scale, flip, focalX, focalY, volume } =
+  const { poster, tracks = [], isBackground, scale, flip, focalX, focalY, volume } =
     element;
   const wrapperRef = useRef();
   const videoRef = useRef();
