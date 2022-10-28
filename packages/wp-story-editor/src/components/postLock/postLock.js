@@ -96,13 +96,17 @@ function PostLock() {
 
   // When async call only if dialog is true, current user is loaded and post locking is enabled.
   const doGetStoryLock = useCallback(() => {
-    if (showLockedDialog && currentUserLoaded) {
-      getStoryLockById(storyId, stories)
-        .then(({ locked, nonce: newNonce, _embedded }) => {
+    (async () => {
+      if (showLockedDialog && currentUserLoaded) {
+        try {
+          const {
+            locked,
+            nonce: newNonce,
+            user,
+          } = await getStoryLockById(storyId, stories);
           const lockAuthor = {
-            id: _embedded?.author?.[0]?.id || 0,
-            name: _embedded?.author?.[0]?.name || '',
-            avatar: _embedded?.author?.[0]?.avatar_urls?.['96'] || '',
+            ...user,
+            avatar: user?.avatar?.['96'] || '',
           };
           if (locked && initialOwner === null) {
             setInitialOwner(lockAuthor);
@@ -114,11 +118,11 @@ function PostLock() {
           }
           // Refresh nonce on every request.
           setNonce(newNonce);
-        })
-        .catch((err) => {
+        } catch (err) {
           trackError('post_lock', err.message);
-        });
-    }
+        }
+      }
+    })();
   }, [
     setCurrentOwner,
     storyId,
