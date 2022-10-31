@@ -24,7 +24,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
-import { useCallback } from 'react';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import { useCallback } from 'react';
 import { useStory } from '../../app/story';
 
 function CopyStoryDataToClipboard() {
-  const { pages, current, selection, story  } = useStory(({ internal }) => ({
+  const { pages, current, selection, story } = useStory(({ internal }) => ({
     pages: internal.reducerState.pages,
     current: internal.reducerState.current,
     selection: internal.reducerState.selection,
