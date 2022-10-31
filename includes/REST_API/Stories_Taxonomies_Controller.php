@@ -63,10 +63,20 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $taxonomy, $request ): WP_REST_Response {
-		$old_response   = parent::prepare_item_for_response( $taxonomy, $request );
+		$old_response = parent::prepare_item_for_response( $taxonomy, $request );
 
-		// Wrap the data in a response object.
-		$response = rest_ensure_response( $old_response->get_data() );
+		/**
+		 * Response data.
+		 *
+		 * @var array<string,mixed> $data
+		 */
+		$data = $old_response->get_data();
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
+		$response = rest_ensure_response( $data );
 		$response->add_links( $this->prepare_links( $taxonomy ) );
 
 		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-taxonomies-controller.php */
