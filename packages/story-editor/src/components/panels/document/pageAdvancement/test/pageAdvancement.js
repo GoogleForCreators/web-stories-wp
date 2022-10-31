@@ -62,6 +62,15 @@ describe('PageAdvancementPanel', () => {
   afterAll(() => {
     localStorage.clear();
   });
+
+  it('should render Page Advancement Panel with default settings if undefined in story', () => {
+    arrange({ autoAdvance: undefined, defaultPageDuration: undefined });
+    const durationInput = screen.getByLabelText(
+      'Default page duration in seconds'
+    );
+    expect(durationInput).toHaveValue('7 seconds');
+  });
+
   it('should render Page Advancement Panel', () => {
     const { updateStory } = arrange();
     const element = screen.getByRole('button', { name: 'Page Advancement' });
