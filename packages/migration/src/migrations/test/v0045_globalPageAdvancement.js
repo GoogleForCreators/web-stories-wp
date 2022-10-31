@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import globalPageAdvancement from '../v0044_globalPageAdvancement';
+import globalPageAdvancement from '../v0045_globalPageAdvancement';
 
 describe('globalPageAdvancement', () => {
   it('should not remove non-default page advancement properties', () => {
