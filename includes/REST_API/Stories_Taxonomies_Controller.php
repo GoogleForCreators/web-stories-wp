@@ -64,12 +64,6 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 */
 	public function prepare_item_for_response( $taxonomy, $request ): WP_REST_Response {
 		$response   = parent::prepare_item_for_response( $taxonomy, $request );
-		$controller = $taxonomy->get_rest_controller();
-
-		if ( ! $controller ) {
-			return $response;
-		}
-
 		$response->add_links( $this->prepare_links( $taxonomy ) );
 
 		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-taxonomies-controller.php */
@@ -86,7 +80,7 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 *
 	 * @phpstan-return Links
 	 */
-	protected function prepare_links( WP_Taxonomy $taxonomy ): array {
+	protected function prepare_links( $taxonomy ): array {
 		$controller = $taxonomy->get_rest_controller();
 		// TODO: Remove get_namespace when WP 5.9, min requirements.
 		$namespace = $controller && method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
