@@ -452,6 +452,10 @@ class Dashboard extends Service_Base {
 		$allowed_image_mime_types = $mime_types['image'];
 		$vendors                  = wp_list_pluck( $this->shopping_vendors->get_vendors(), 'label' );
 
+		$settings      = $this->story_post_type->get_settings();
+		$auto_advance  = $settings->get_setting( $settings::SETTING_NAME_AUTO_ADVANCE );
+		$page_duration = $settings->get_setting( $settings::SETTING_NAME_DEFAULT_PAGE_DURATION );
+
 		$settings = [
 			'isRTL'                   => is_rtl(),
 			'userId'                  => get_current_user_id(),
@@ -491,6 +495,8 @@ class Dashboard extends Service_Base {
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )
 			),
+			'globalAutoAdvance'       => (bool) $auto_advance,
+			'globalPageDuration'      => (float) $page_duration,
 		];
 
 		/**
