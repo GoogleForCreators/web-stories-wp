@@ -46,6 +46,8 @@ export const defaultSettingsState = {
   shoppingProvider: SHOPPING_PROVIDER_TYPE.NONE,
   shopifyHost: '',
   shopifyAccessToken: '',
+  autoAdvance: true,
+  defaultPageDuration: 7,
 };
 
 function settingsReducer(state, action) {
@@ -83,6 +85,8 @@ function settingsReducer(state, action) {
         shoppingProvider: action.payload.shoppingProvider,
         shopifyHost: action.payload.shopifyHost,
         shopifyAccessToken: action.payload.shopifyAccessToken,
+        autoAdvance: action.payload.autoAdvance,
+        defaultPageDuration: action.payload.defaultPageDuration,
       };
     }
 
