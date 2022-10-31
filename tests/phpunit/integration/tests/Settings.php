@@ -93,6 +93,6 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertFalse( get_option( $this->instance::SETTING_NAME_DATA_REMOVAL ) );
 		$this->assertSame( 'default', get_option( $this->instance::SETTING_NAME_ARCHIVE ) );
 		$this->assertTrue( get_option( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
-		$this->assertSame( 0, get_option( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION ) );
+		$this->assertSame( 7, get_option( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION ) );
 	}
 }
