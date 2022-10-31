@@ -442,5 +442,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 		delete_option( self::SETTING_NAME_SHOPPING_PROVIDER );
 		delete_option( self::SETTING_NAME_SHOPIFY_HOST );
 		delete_option( self::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+		delete_option( self::SETTING_NAME_DEFAULT_PAGE_DURATION );
+		delete_option( self::SETTING_NAME_AUTO_ADVANCE );
 	}
 }
