@@ -23,7 +23,6 @@
  * @param offsets Media element offsets
  * @return object containing horizontal and vertical transform origin percentages
  */
-
 function getElementOrigin(
   offsets = {
     top: 0,

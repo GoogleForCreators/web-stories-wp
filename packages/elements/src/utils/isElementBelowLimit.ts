@@ -22,6 +22,7 @@ import {
   FULLBLEED_HEIGHT,
   getCorners,
 } from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */
@@ -35,6 +36,6 @@ function isElementBelowLimit(element: Element, verifyLink = true) {
   const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
   const { x, y, width, height, rotationAngle } = element;
   const points = getCorners(rotationAngle, x, y, width, height);
-  return Boolean(Object.values(points).find((coord) => coord.y > limit));
+  return Object.values(points).some((coord) => coord.y > limit);
 }
 export default isElementBelowLimit;
