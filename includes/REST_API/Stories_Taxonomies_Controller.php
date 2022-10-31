@@ -37,6 +37,8 @@ use WP_Taxonomy;
 
 /**
  * Stories_Taxonomies_Controller class.
+ *
+ * @phpstan-import-type Links from \Google\Web_Stories\REST_API\Stories_Base_Controller
  */
 class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implements Service, Delayed, Registerable {
 	/**
@@ -81,21 +83,23 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 *
 	 * @param WP_Taxonomy $taxonomy The taxonomy.
 	 * @return array Links for the given taxonomy.
+	 *
+	 * @phpstan-return Links
 	 */
-	protected function prepare_links( $taxonomy ) {
+	protected function prepare_links( WP_Taxonomy $taxonomy ): array {
 		$controller = $taxonomy->get_rest_controller();
 		// TODO: Remove get_namespace when WP 5.9, min requirements.
-		$namespace  = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
-		$base       = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
+		$namespace = $controller && method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
+		$base      = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 
-		return array(
-			'collection'              => array(
+		return [
+			'collection'              => [
 				'href' => rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ),
-			),
-			'https://api.w.org/items' => array(
+			],
+			'https://api.w.org/items' => [
 				'href' => rest_url( sprintf( '%s/%s', $namespace, $base ) ),
-			),
-		);
+			],
+		];
 	}
 
 	/**
