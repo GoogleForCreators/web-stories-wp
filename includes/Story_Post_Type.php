@@ -114,15 +114,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	}
 
 	/**
-	 * Get settings.
-	 *
-	 * @return Settings Settings instance.
-	 */
-	public function get_settings(): Settings {
-		return $this->settings;
-	}
-
-	/**
 	 * Get post type slug.
 	 *
 	 * @since 1.14.0
