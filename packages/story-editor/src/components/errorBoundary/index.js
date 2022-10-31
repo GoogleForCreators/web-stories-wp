@@ -28,7 +28,6 @@ import ErrorActions from './errorActions';
 class ErrorBoundary extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    withStoryData: PropTypes.bool,
   };
 
   state = {
@@ -47,13 +46,7 @@ class ErrorBoundary extends Component {
   render() {
     const { error, errorInfo } = this.state;
     if (error) {
-      return (
-        <ErrorActions
-          withStoryData={this.props.withStoryData}
-          error={error}
-          errorInfo={errorInfo}
-        />
-      );
+      return <ErrorActions error={error} errorInfo={errorInfo} />;
     }
     return this.props.children;
   }

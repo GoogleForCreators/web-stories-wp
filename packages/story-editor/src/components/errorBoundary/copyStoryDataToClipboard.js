@@ -53,6 +53,10 @@ function CopyStoryDataToClipboard() {
     }
   }, [pages, current, selection, story]);
 
+  if (!pages || !current || !selection || !story) {
+    return null;
+  }
+
   return (
     <Button
       onClick={copyToClipboard}

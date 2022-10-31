@@ -56,7 +56,7 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-function ErrorActions({ error, errorInfo, withStoryData }) {
+function ErrorActions({ error, errorInfo }) {
   const textAreaContent = `${error}\n${errorInfo.componentStack}`;
   const reportUrl =
     'https://wordpress.org/support/plugin/web-stories/#new-topic-0';
@@ -91,7 +91,7 @@ function ErrorActions({ error, errorInfo, withStoryData }) {
         >
           {__('Reload', 'web-stories')}
         </Button>
-        {withStoryData && <CopyStoryDataToClipboard />}
+        <CopyStoryDataToClipboard />
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
           type={BUTTON_TYPES.PRIMARY}
@@ -110,7 +110,6 @@ function ErrorActions({ error, errorInfo, withStoryData }) {
 ErrorActions.propTypes = {
   error: PropTypes.instanceOf(Error),
   errorInfo: PropTypes.object,
-  withStoryData: PropTypes.bool,
 };
 
 export default ErrorActions;
