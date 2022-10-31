@@ -15,21 +15,22 @@
  */
 
 /**
- * External dependencies
- */
-import type { AudioResource } from '@googleforcreators/media';
-
-/**
  * Internal dependencies
  */
-import type { Page } from './page';
+import PageAdvancementSettings from '..';
 
-export interface Story {
-  version: number;
-  pages: Page[];
-  backgroundAudio?: {
-    resource: AudioResource;
-  };
-  autoAdvance?: boolean;
-  defaultPageDuration?: number;
-}
+export default {
+  title: 'Dashboard/Views/EditorSettings/PageAdvancementSettings',
+  component: PageAdvancementSettings,
+  args: {
+    autoAdvance: true,
+    defaultPageDuration: 15,
+  },
+  argTypes: {
+    updateSettings: { action: 'updateSettings fired' },
+  },
+};
+
+export const _default = (args) => {
+  return <PageAdvancementSettings {...args} />;
+};
