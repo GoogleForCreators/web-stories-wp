@@ -16,14 +16,19 @@
 /**
  * External dependencies
  */
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  ElementDefinition,
+  getDefinitionForType,
+} from '@googleforcreators/elements';
+import type { Element, Mask } from '@googleforcreators/elements';
+import type { CSSProperties } from 'react';
 
 /**
  * Internal dependencies
  */
 import { DEFAULT_MASK, MASKS } from './constants';
 
-export function getElementMask({ type, mask }) {
+export function getElementMask({ type, mask }: Element) {
   if (mask?.type) {
     return MASKS.find((m) => m.type === mask.type);
   }
@@ -31,30 +36,30 @@ export function getElementMask({ type, mask }) {
 }
 
 // Only no-mask and masks with supportsBorder support border.
-export function canMaskHaveBorder(element) {
+export function canMaskHaveBorder(element: Element) {
   const mask = getElementMask(element);
-  return !mask || mask.supportsBorder;
+  return Boolean(!mask || mask.supportsBorder);
 }
 
-export function canSupportMultiBorder(element) {
+export function canSupportMultiBorder(element: Element) {
   const { mask } = element;
   return !mask || DEFAULT_MASK.type === mask?.type;
 }
 
-export function getMaskByType(type) {
+export function getMaskByType(type: string) {
   return MASKS.find((mask) => mask.type === type) || DEFAULT_MASK;
 }
 
-export function generateMaskId(element, postfix) {
-  const maskDef = getMaskByType(element?.mask?.type);
+export function generateMaskId(element: Element, postfix: string) {
+  const maskDef = getMaskByType(element?.mask?.type as string);
   return `mask-${maskDef.type}-${element.id}-${postfix}`;
 }
 
-function getDefaultElementMask(type) {
+function getDefaultElementMask(type: string) {
   if (!type) {
     return null;
   }
-  const { isMaskable } = getDefinitionForType(type);
+  const { isMaskable } = getDefinitionForType(type) as ElementDefinition;
   return isMaskable ? DEFAULT_MASK : null;
 }
 
@@ -66,20 +71,20 @@ function getDefaultElementMask(type) {
  */
 const BORDER_MULTIPLIER = 3;
 export function getBorderedMaskProperties(
-  mask,
-  borderWidth,
-  elementWidth,
-  elementHeight
+  mask: Mask,
+  borderWidth: number,
+  elementWidth: number,
+  elementHeight: number
 ) {
   const fullPadding = BORDER_MULTIPLIER * borderWidth;
   const relativeWidth = (elementWidth + fullPadding) / elementWidth;
   const relativeHeight = (elementHeight + fullPadding) / elementHeight;
   const offsetX = (relativeWidth - 1) / 2;
   const offsetY = (relativeHeight - 1) / 2;
-  const scaledHeight = relativeHeight / mask.ratio;
+  const scaledHeight = relativeHeight / (mask.ratio ?? 1);
   const viewBox = `0 0 ${relativeWidth} ${scaledHeight}`;
   const groupTransform = `translate(${offsetX},${offsetY})`;
-  const borderWrapperStyle = {
+  const borderWrapperStyle: CSSProperties = {
     width: `${relativeWidth * 100}%`,
     height: `${relativeHeight * 100}%`,
     position: 'absolute',

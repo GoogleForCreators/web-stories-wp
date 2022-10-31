@@ -22,8 +22,8 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Internal dependencies
@@ -31,13 +31,21 @@ import { StoryPropTypes } from '@googleforcreators/elements';
 import BorderedMaskedElement from './borderedMaskedElement';
 import { DEFAULT_MASK } from './constants';
 
+interface WithMaskProps {
+  element: Element;
+  style: CSSProperties;
+  fill: boolean;
+  children: ReactNode;
+  skipDefaultMask: boolean;
+}
+
 export default function WithMask({
   element,
   fill,
   skipDefaultMask = false,
   ...rest
-}) {
-  const getBorderWidth = () => element.border?.left;
+}: WithMaskProps) {
+  const getBorderWidth = () => element.border?.left || 0;
   const elementWidth = element.width;
   const elementHeight = element.height;
   const forceRectangularMask =
@@ -55,11 +63,3 @@ export default function WithMask({
     />
   );
 }
-
-WithMask.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  style: PropTypes.object,
-  fill: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  skipDefaultMask: PropTypes.bool,
-};

@@ -82,6 +82,7 @@ export interface Element extends ElementBox {
   borderRadius?: BorderRadius;
   basedOn?: string;
   layerName?: string;
+  isLocked?: boolean;
 }
 
 export interface DefaultBackgroundElement extends Element {
@@ -89,13 +90,13 @@ export interface DefaultBackgroundElement extends Element {
   backgroundColor: Solid;
 }
 
-export interface MediaElement extends Element {
+export interface BackgroundableElement extends Element {
+  isBackground?: boolean;
+}
+
+export interface MediaElement extends BackgroundableElement {
   resource: Resource;
   scale?: number;
   focalX?: number;
   focalY?: number;
-}
-
-export interface BackgroundableElement extends Element {
-  isBackground?: boolean;
 }

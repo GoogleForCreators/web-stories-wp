@@ -18,9 +18,15 @@
  * External dependencies
  */
 import { useMemo } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
+import { getTransformFlip } from '@googleforcreators/elements';
+import type {
+  Element,
+  Mask,
+  MediaElement,
+  ShapeElement,
+} from '@googleforcreators/elements';
+import type { ReactNode, CSSProperties } from 'react';
 
 /**
  * Internal dependencies
@@ -33,7 +39,7 @@ import {
 } from './masks';
 import { getBorderColor } from './utils/elementBorder';
 
-const FILL_STYLE = {
+const FILL_STYLE: CSSProperties = {
   position: 'absolute',
   top: 0,
   left: 0,
@@ -41,7 +47,7 @@ const FILL_STYLE = {
   bottom: 0,
 };
 
-const SVG_STYLE = {
+const SVG_STYLE: CSSProperties = {
   position: 'absolute',
   top: 0,
   left: 0,
@@ -50,6 +56,66 @@ const SVG_STYLE = {
   height: '100%',
   width: '100%',
 };
+
+interface MaskedElementProps {
+  style: CSSProperties;
+  id: string;
+  mask: Mask;
+  children: ReactNode;
+}
+
+function MaskedElement({
+  style,
+  id,
+  mask: { ratio, path },
+  children,
+  ...rest
+}: MaskedElementProps) {
+  return (
+    <div
+      style={{
+        ...style,
+        clipPath: `url(#${id})`,
+        // stylelint-disable-next-line
+        WebkitClipPath: `url(#${id})`,
+      }}
+      {...rest}
+    >
+      <svg width={0} height={0}>
+        <defs>
+          <clipPath
+            id={id}
+            transform={`scale(1 ${ratio || 1})`}
+            clipPathUnits="objectBoundingBox"
+          >
+            <path d={path} />
+          </clipPath>
+        </defs>
+      </svg>
+      {children}
+    </div>
+  );
+}
+
+interface BorderedMaskedElementProps {
+  element: Element;
+  style: CSSProperties;
+  children?: ReactNode;
+  applyFlip?: boolean;
+  hasFill: boolean;
+  getBorderWidth: () => number;
+  postfix?: string;
+  elementWidth: number;
+  elementHeight: number;
+  forceRectangularMask: boolean;
+}
+
+type ElementWithBackground = MediaElement | ShapeElement;
+function elementAsBackground(
+  element: Element
+): element is ElementWithBackground {
+  return 'isBackground' in element;
+}
 
 function BorderedMaskedElement({
   hasFill = false,
@@ -63,21 +129,21 @@ function BorderedMaskedElement({
   elementHeight,
   forceRectangularMask = false,
   ...rest
-}) {
+}: BorderedMaskedElementProps) {
   // This component is used twice - random id appended to make sure
   // id is unique for the Mask.
   const randomId = useMemo(uuidv4, []);
   const mask = getElementMask(element);
-  const { id, flip, isBackground, border } = element;
+  const { id, flip, border } = element;
 
-  const flipTransform = (applyFlip && getTransformFlip(flip)) || '';
+  const flipTransform = (applyFlip && flip && getTransformFlip(flip)) || '';
 
   const actualTransform = `${style?.transform || ''} ${flipTransform}`.trim();
 
-  const fullStyle = {
+  const fullStyle: CSSProperties = {
     ...(hasFill ? FILL_STYLE : {}),
     ...style,
-    transform: actualTransform || null,
+    transform: actualTransform || undefined,
   };
 
   const borderWidth = getBorderWidth();
@@ -88,7 +154,9 @@ function BorderedMaskedElement({
   // If this is rectangular bordered element, just display a CSS border with the element inside
   if (
     !mask?.type ||
-    (isBackground && mask.type !== MaskTypes.RECTANGLE) ||
+    (elementAsBackground(element) &&
+      element.isBackground &&
+      mask.type !== MaskTypes.RECTANGLE) ||
     forceRectangularMask
   ) {
     return (
@@ -111,7 +179,7 @@ function BorderedMaskedElement({
     const { viewBox, groupTransform, borderWrapperStyle } =
       getBorderedMaskProperties(mask, borderWidth, elementWidth, elementHeight);
 
-    const borderStyle = {
+    const borderStyle: CSSProperties = {
       ...style,
       ...borderWrapperStyle,
       transform: actualTransform,
@@ -157,58 +225,5 @@ function BorderedMaskedElement({
     </MaskedElement>
   );
 }
-
-BorderedMaskedElement.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  style: PropTypes.object,
-  applyFlip: PropTypes.bool,
-  hasFill: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  getBorderWidth: PropTypes.func.isRequired,
-  postfix: PropTypes.string,
-  elementWidth: PropTypes.number.isRequired,
-  elementHeight: PropTypes.number.isRequired,
-  forceRectangularMask: PropTypes.bool,
-};
-
-function MaskedElement({
-  style,
-  id,
-  mask: { ratio, path },
-  children,
-  ...rest
-}) {
-  return (
-    <div
-      style={{
-        ...style,
-        clipPath: `url(#${id})`,
-        // stylelint-disable-next-line
-        WebkitClipPath: `url(#${id})`,
-      }}
-      {...rest}
-    >
-      <svg width={0} height={0}>
-        <defs>
-          <clipPath
-            id={id}
-            transform={`scale(1 ${ratio})`}
-            clipPathUnits="objectBoundingBox"
-          >
-            <path d={path} />
-          </clipPath>
-        </defs>
-      </svg>
-      {children}
-    </div>
-  );
-}
-
-MaskedElement.propTypes = {
-  style: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
-  mask: PropTypes.object.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 export default BorderedMaskedElement;

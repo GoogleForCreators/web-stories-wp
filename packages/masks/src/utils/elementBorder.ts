@@ -13,12 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type {
+  Border,
+  BorderRadius,
+  Element,
+} from '@googleforcreators/elements';
+import type { CSSProperties } from 'react';
+
 /**
  * Internal dependencies
  */
 import { canMaskHaveBorder, canSupportMultiBorder } from '../masks';
 
-function hasBorder({ border }) {
+function hasBorder({ border }: Element) {
   if (!border) {
     return false;
   }
@@ -28,19 +39,16 @@ function hasBorder({ border }) {
     return false;
   }
   // If we have no border set either, let's short-circuit.
-  if (!left && !top && !right && !bottom) {
-    return false;
-  }
-  return true;
+  return !(!left && !top && !right && !bottom);
 }
 
 /**
  * Check if rectangular border should be displayed for an element.
  *
- * @param {Object} element Element object.
- * @return {boolean} If should be displayed.
+ * @param element Element object.
+ * @return If should be displayed.
  */
-export function shouldDisplayBorder(element) {
+export function shouldDisplayBorder(element: Element) {
   return (
     hasBorder(element) &&
     canMaskHaveBorder(element) &&
@@ -48,19 +56,28 @@ export function shouldDisplayBorder(element) {
   );
 }
 
+interface SizeAndPosition {
+  width: string;
+  height: string;
+  posTop: string;
+  posLeft: string;
+}
+
+type BorderPositionProps = Border & SizeAndPosition;
+
 /**
  * Gets the CSS values for an element with border.
  *
- * @param {Object} obj An object with params relevant to border.
- * @param {number} obj.left Left border width.
- * @param {number} obj.top Top border width.
- * @param {number} obj.right Right border width.
- * @param {number} obj.bottom Bottom border width.
- * @param {string} obj.width Original element width.
- * @param {string} obj.height Original element height.
- * @param {string} obj.posTop Element top position, needed for output mainly.
- * @param {string} obj.posLeft Element left position, needed for output mainly.
- * @return {Object} Positioning CSS.
+ * @param obj An object with params relevant to border.
+ * @param obj.left Left border width.
+ * @param obj.top Top border width.
+ * @param obj.right Right border width.
+ * @param obj.bottom Bottom border width.
+ * @param obj.width Original element width.
+ * @param obj.height Original element height.
+ * @param obj.posTop Element top position, needed for output mainly.
+ * @param obj.posLeft Element left position, needed for output mainly.
+ * @return Positioning CSS.
  */
 export function getBorderPositionCSS({
   left,
@@ -71,7 +88,7 @@ export function getBorderPositionCSS({
   height = '100%',
   posTop = '0px',
   posLeft = '0px',
-}) {
+}: BorderPositionProps) {
   return {
     left: `calc(${posLeft} - ${left}px)`,
     top: `calc(${posTop} - ${top}px)`,
@@ -83,17 +100,16 @@ export function getBorderPositionCSS({
 /**
  * Gets style for the element with border.
  *
- * @param {Object} element Element.
- * @return {Object} Border style.
+ * @param element Element.
+ * @return Border style.
  */
-export function getBorderStyle(element) {
+export function getBorderStyle(element: Element): CSSProperties {
   // If there's no rectangular border, return the radius only.
   if (!hasBorder(element) || !canSupportMultiBorder(element)) {
     return getBorderRadius(element);
   }
   const { border } = element;
-  const { color: rawColor, left, top, right, bottom } = border;
-  const color = getBorderColor({ color: rawColor });
+  const { left, top, right, bottom } = border as Border;
 
   // We're making the border-width responsive just for the preview,
   // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up
@@ -104,7 +120,10 @@ export function getBorderStyle(element) {
   )}px ${Math.ceil(left)}px`;
   const borderStyle = {
     borderWidth,
-    borderColor: color,
+    borderColor:
+      border && border.color
+        ? getBorderColor({ color: border.color })
+        : undefined,
     borderStyle: 'solid',
     ...getBorderRadius(element),
   };
@@ -120,14 +139,24 @@ export function getBorderStyle(element) {
   };
 }
 
-function getPercentage(value, fullValue) {
+function getPercentage(value: number, fullValue: number) {
   if (!value || !fullValue) {
     return 0;
   }
   return (value / fullValue) * 100;
 }
 
-function getCornerPercentages(borderRadius, measure) {
+interface CornerPercentages {
+  topLeft: number;
+  topRight: number;
+  bottomRight: number;
+  bottomLeft: number;
+}
+
+function getCornerPercentages(
+  borderRadius: BorderRadius,
+  measure: number
+): CornerPercentages | string {
   if (!borderRadius) {
     return '0%';
   }
@@ -143,10 +172,10 @@ function getCornerPercentages(borderRadius, measure) {
 /**
  * Gets border radius from pixel units.
  *
- * @param {Object} element Element.
- * @return {{}|{borderRadius: string}} Border radius value for CSS.
+ * @param element Element.
+ * @return Border radius value for CSS.
  */
-export function getBorderRadius(element) {
+export function getBorderRadius(element: Element) {
   const { borderRadius, width, height } = element;
   if (!borderRadius || !canSupportMultiBorder(element)) {
     return {};
@@ -154,8 +183,14 @@ export function getBorderRadius(element) {
   /* We're using the format
     `border-radius: topLeft topRight bottomRight bottomLeft / topLeft topRight bottomRight bottomLeft`
     here so that we could convert one px value for border into % value which requires two values per each corner. */
-  const wValues = getCornerPercentages(borderRadius, width);
-  const hValues = getCornerPercentages(borderRadius, height);
+  const wValues = getCornerPercentages(
+    borderRadius,
+    width
+  ) as CornerPercentages;
+  const hValues = getCornerPercentages(
+    borderRadius,
+    height
+  ) as CornerPercentages;
   return {
     borderRadius: `${wValues.topLeft}% ${wValues.topRight}% ${wValues.bottomRight}% ${wValues.bottomLeft}% / ${hValues.topLeft}% ${hValues.topRight}% ${hValues.bottomRight}% ${hValues.bottomLeft}%`,
   };
@@ -164,11 +199,11 @@ export function getBorderRadius(element) {
 /**
  * Gets the border color from rgba object.
  *
- * @param {Object} color Solid color object.
- * @param {Object} color.color Color object consisting rgba values.
- * @return {string} rgba value for CSS.
+ * @param color Solid color object.
+ * @param color.color Color object consisting rgba values.
+ * @return rgba value for CSS.
  */
-export function getBorderColor({ color }) {
+export function getBorderColor({ color }: Required<Pick<Border, 'color'>>) {
   // Border color can be only solid.
   const {
     color: { r, g, b, a },
@@ -176,15 +211,23 @@ export function getBorderColor({ color }) {
   return `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
 }
 
+interface Converter {
+  (border: number): number;
+}
+
 /**
  * Returns border values based on if it's preview or not.
  *
- * @param {Object} border Original border.
- * @param {boolean} previewMode If it's preview mode.
- * @param {Function} converter Function to convert the border values.
- * @return {Object} New border values.
+ * @param border Original border.
+ * @param previewMode If it's preview mode.
+ * @param converter Function to convert the border values.
+ * @return New border values.
  */
-export function getResponsiveBorder(border, previewMode, converter) {
+export function getResponsiveBorder(
+  border: Border,
+  previewMode: boolean,
+  converter: Converter
+) {
   if (!previewMode || !border) {
     return border;
   }
