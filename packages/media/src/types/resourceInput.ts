@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import type { ResourceType } from './resourceType';
-import type { ResourceSize, Attribution } from './resource';
+import type { ResourceSize, Attribution, ResourceId } from './resource';
 import type { TrimData } from './videoResource';
 import type { Output } from './gifResource';
 
@@ -27,7 +27,7 @@ export interface ResourceInput {
    * The resource ID.
    * TODO: currently this value is local to the editor's media system.
    */
-  id: string;
+  id: ResourceId;
   /** The type of the resource. */
   type: ResourceType;
   /** The MIME type of the resource. E.g. "image/png". */
