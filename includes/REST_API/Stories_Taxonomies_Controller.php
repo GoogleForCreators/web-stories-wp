@@ -62,26 +62,40 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 */
 	public function prepare_item_for_response( $taxonomy, $request ): WP_REST_Response {
 		$response   = parent::prepare_item_for_response( $taxonomy, $request );
-		$base       = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 		$controller = $taxonomy->get_rest_controller();
 
 		if ( ! $controller ) {
 			return $response;
 		}
 
-		$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
-
-		$response->remove_link( 'https://api.w.org/items' );
-		$response->add_links(
-			[
-				'https://api.w.org/items' => [
-					'href' => rest_url( sprintf( '%s/%s', $namespace, $base ) ),
-				],
-			]
-		);
+		$response->add_links( $this->prepare_links( $taxonomy ) );
 
 		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-taxonomies-controller.php */
 		return apply_filters( 'rest_prepare_taxonomy', $response, $taxonomy, $request );
+	}
+
+	/**
+	 * Prepares links for the request.
+	 *
+	 * @since 1.27.0
+	 *
+	 * @param WP_Taxonomy $taxonomy The taxonomy.
+	 * @return array Links for the given taxonomy.
+	 */
+	protected function prepare_links( $taxonomy ) {
+		$controller = $taxonomy->get_rest_controller();
+		// TODO: Remove get_namespace when WP 5.9, min requirements.
+		$namespace  = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
+		$base       = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
+
+		return array(
+			'collection'              => array(
+				'href' => rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ),
+			),
+			'https://api.w.org/items' => array(
+				'href' => rest_url( sprintf( '%s/%s', $namespace, $base ) ),
+			),
+		);
 	}
 
 	/**
