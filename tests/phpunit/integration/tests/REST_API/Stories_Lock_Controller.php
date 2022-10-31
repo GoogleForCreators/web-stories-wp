@@ -69,7 +69,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/web-story/(?P<id>[\d]+)/lock', $routes );
-		$this->assertCount( 6, $routes['/web-stories/v1/web-story/(?P<id>[\d]+)/lock'] );
+		$this->assertCount( 3, $routes['/web-stories/v1/web-story/(?P<id>[\d]+)/lock'] );
 	}
 
 	/**
