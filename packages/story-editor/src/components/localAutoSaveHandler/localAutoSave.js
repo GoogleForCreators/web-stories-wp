@@ -68,7 +68,12 @@ function LocalAutoSave() {
 
   // Save the local autosave.
   useEffect(() => {
-    if (!hasNewChanges || !localAutoSaveInterval || isUploading) {
+    if (
+      !hasNewChanges ||
+      !localAutoSaveInterval ||
+      isUploading ||
+      isAutoSavingStory
+    ) {
       return undefined;
     }
 
@@ -93,6 +98,7 @@ function LocalAutoSave() {
     story,
     storyId,
     isNew,
+    isAutoSavingStory,
   ]);
 
   const onClose = () => {
