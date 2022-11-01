@@ -21,9 +21,10 @@ import { createURL } from '@wordpress/e2e-test-utils';
 
 async function logoutUser() {
   await page.goto(createURL('wp-login.php', 'action=logout'));
-  await expect(page).toClick('a', { text: 'log out' });
-  await page.waitForNavigation();
-
+  await Promise.all([
+    expect(page).toClick('a', { text: 'log out' }),
+    page.waitForNavigation(),
+  ]);
   await expect(page).toMatch(/You are now logged out/i);
 }
 
