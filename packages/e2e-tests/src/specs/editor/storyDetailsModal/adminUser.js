@@ -20,6 +20,7 @@
 import {
   createNewStory,
   deleteMedia,
+  skipSuiteOnFirefox,
   takeSnapshot,
   uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
@@ -204,48 +205,53 @@ describe('Story Details Modal - Admin User', () => {
       );
     });
 
-    it('should update featured media (poster)', async () => {
-      await openPublishingPanel();
+    describe('Poster Image', () => {
+      // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
+      skipSuiteOnFirefox();
 
-      await expect(page).toClick(
-        'div[aria-label="Story details"] button[aria-label="Poster image"]'
-      );
+      it('should update featured media (poster)', async () => {
+        await openPublishingPanel();
 
-      await expect(page).toClick('[role="menuitem"]', {
-        text: 'Upload a file',
+        await expect(page).toClick(
+          'div[aria-label="Story details"] button[aria-label="Poster image"]'
+        );
+
+        await expect(page).toClick('[role="menuitem"]', {
+          text: 'Upload a file',
+        });
+
+        await page.waitForSelector('.media-modal', {
+          visible: true,
+        });
+
+        await expect(page).toClick('.media-modal #menu-item-upload', {
+          text: 'Upload files',
+          visible: true,
+        });
+
+        const fileName = await uploadFile('example-1.jpg', false);
+        uploadedFiles.push(fileName);
+
+        await expect(page).toClick('button', {
+          text: 'Select as poster image',
+          visible: true,
+        });
+
+        await expect(page).toClick('button', {
+          text: 'Crop image',
+          visible: true,
+        });
+
+        await page.keyboard.press('Escape');
+
+        await page.waitForSelector('.media-modal', {
+          visible: false,
+        });
+
+        await expect(page).toMatchElement(
+          '[data-testid="story_preview_featured_media"]'
+        );
       });
-
-      await page.waitForSelector('.media-modal', {
-        visible: true,
-      });
-
-      await expect(page).toClick('.media-modal #menu-item-upload', {
-        text: 'Upload files',
-        visible: true,
-      });
-
-      const fileName = await uploadFile('example-1.jpg', false);
-      uploadedFiles.push(fileName);
-
-      await expect(page).toClick('button', {
-        text: 'Select as poster image',
-        visible: true,
-      });
-
-      await expect(page).toClick('button', {
-        text: 'Crop image',
-        visible: true,
-      });
-
-      await page.keyboard.press('Escape');
-
-      await page.waitForSelector('.media-modal', {
-        visible: false,
-      });
-
-      await expect(page).toMatchElement(
-        '[data-testid="story_preview_featured_media"]'
-      );
     });
   });
 
@@ -267,7 +273,8 @@ describe('Story Details Modal - Admin User', () => {
     }
 
     it('should create a permalink based on story title', async () => {
-      openPermalinkPanel();
+      await openPermalinkPanel();
+
       await expect(page).toMatchElement('textarea[placeholder="Add title"]');
 
       await page.type(
