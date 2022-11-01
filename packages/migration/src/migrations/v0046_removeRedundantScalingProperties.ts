@@ -68,7 +68,10 @@ export interface PageV46 extends Omit<PageV45, 'elements'> {
   elements: UnionElementV46[];
 }
 
-function removeRedundantScalingProperties({ pages, ...rest }: StoryV45): StoryV46 {
+function removeRedundantScalingProperties({
+  pages,
+  ...rest
+}: StoryV45): StoryV46 {
   return {
     pages: pages.map(reducePage),
     ...rest,
