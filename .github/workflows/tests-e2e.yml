@@ -84,7 +84,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
+        uses: shivammathur/setup-php@1a18b2267f80291a81ca1d33e7c851fe09e7dfc4
         with:
           php-version: '8.0'
           coverage: none
@@ -111,7 +111,7 @@ jobs:
         run: npm run workflow:build-plugin
 
       - name: Upload bundle
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         with:
           name: web-stories
           path: build/web-stories
@@ -184,7 +184,7 @@ jobs:
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Download bundle
-        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
+        uses: actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7
         with:
           name: web-stories
 
@@ -248,7 +248,7 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         if: always()
         with:
           name: failures-artifacts

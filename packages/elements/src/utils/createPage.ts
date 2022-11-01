@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
+import type { Page } from '@googleforcreators/types';
+
 /**
  * Internal dependencies
  */
@@ -25,7 +27,7 @@ import createNewElement from './createNewElement';
 
 export const DEFAULT_PAGE_BACKGROUND_COLOR = createSolid(255, 255, 255);
 
-const createPage = (pageProps = null) => {
+const createPage = (pageProps: Partial<Page> | null = null) => {
   const backgroundElementProps = {
     // The values of x, y, width, height are irrelevant here, however, need to be set.
     x: 1,

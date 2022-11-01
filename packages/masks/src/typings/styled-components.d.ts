@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { elementTypes } from '../elementType';
+import 'styled-components';
 
-const getDefinitionForType = (type) => elementTypes[type];
-
-export default getDefinitionForType;
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    colors: {
+      [key: string]: {
+        [key: string]: string;
+      };
+    };
+  }
+}

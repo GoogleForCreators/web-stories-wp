@@ -14,11 +14,23 @@
  * limitations under the License.
  */
 
-// @todo Create a custom hook to manage state.
-const elementTypes = {};
+/**
+ * Internal dependencies
+ */
+import PageAdvancementSettings from '..';
 
-function registerElementType(elementType) {
-  elementTypes[elementType.type] = elementType;
-}
+export default {
+  title: 'Dashboard/Views/EditorSettings/PageAdvancementSettings',
+  component: PageAdvancementSettings,
+  args: {
+    autoAdvance: true,
+    defaultPageDuration: 15,
+  },
+  argTypes: {
+    updateSettings: { action: 'updateSettings fired' },
+  },
+};
 
-export { registerElementType, elementTypes };
+export const _default = (args) => {
+  return <PageAdvancementSettings {...args} />;
+};
