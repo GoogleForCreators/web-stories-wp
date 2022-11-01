@@ -83,9 +83,4 @@ export interface TextElement extends Element {
   marginOffset?: number;
   // TODO(#12258): Remove this.
   fontWeight?: number;
-
-  // TODO(#12437): Figure out why text elements end up having these properties & fix it.
-  scale?: number;
-  focalX?: number;
-  focalY?: number;
 }
