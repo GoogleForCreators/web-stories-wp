@@ -26,7 +26,7 @@ import {
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Pre-Publish Checklist : Contributor User', () => {
-  // Thew window size for Firefox is actually smaller than the viewport,
+  // The  window size for Firefox is actually smaller than the viewport,
   // causing the checklist button to be off-screen, thus failing the test.
   skipSuiteOnFirefox();
 

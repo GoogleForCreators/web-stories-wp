@@ -155,6 +155,9 @@ const ALLOWED_ERROR_MESSAGES_FIREFOX = [
 
   // See https://github.com/puppeteer/puppeteer/pull/8631
   'DOM.scrollIntoViewIfNeeded',
+
+  // When using the customizer.
+  'Content Security Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.',
 ];
 
 /**
