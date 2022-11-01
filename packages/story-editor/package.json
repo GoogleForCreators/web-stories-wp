@@ -64,7 +64,7 @@
     "@googleforcreators/url": "*",
     "@mediapipe/selfie_segmentation": "^0.1.1632777926",
     "@wmik/use-media-recorder": "^1.6.5-beta.0",
-    "blurhash": "^2.0.3",
+    "blurhash": "^2.0.4",
     "classnames": "^2.3.2",
     "colorthief": "^2.3.2",
     "draft-js": "^0.11.7",
