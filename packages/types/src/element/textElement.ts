@@ -81,6 +81,4 @@ export interface TextElement extends Element {
   tagName?: 'h1' | 'h2' | 'h3' | 'p';
   padding?: Padding;
   marginOffset?: number;
-  // TODO(#12258): Remove this.
-  fontWeight?: number;
 }
