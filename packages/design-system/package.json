@@ -48,7 +48,7 @@
     "mousetrap": "^1.6.5",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
-    "react-modal": "^3.15.1",
+    "react-modal": "^3.16.1",
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.6",
     "uuid": "^9.0.0"
