@@ -15,18 +15,23 @@
  */
 
 /**
- * In the style of the `sanitize_title()` and `remove_accents()` PHP functions in
- * WordPress, this performs some basic cleanup of a string for use as a URL slug.
+ * External dependencies
+ */
+import removeAccents from 'remove-accents';
+
+/**
+ * Performs some basic cleanup of a string for use as a post slug.
  *
- * It is not an exact replication, but more of an approximation.
+ * This replicates some of what `sanitize_title()` does in WordPress core, but
+ * is only designed to approximate what the slug will be.
  *
- * Converts whitespace, periods, forward slashes and underscores to hyphens.
  * Converts Latin-1 Supplement and Latin Extended-A letters to basic Latin
- * letters. Removes combining diacritical marks. Converts remaining string
- * to lowercase. It does not touch octets, HTML entities, or other encoded
- * characters.
+ * letters. Removes combining diacritical marks. Converts whitespace, periods,
+ * and forward slashes to hyphens. Removes any remaining non-word characters
+ * except hyphens. Converts remaining string to lowercase. It does not account
+ * for octets, HTML entities, or other encoded characters.
  *
- * @see https://github.com/WordPress/gutenberg/blob/164d5830a9acd895dfd661b5fde1ca8b80b270ac/packages/url/src/clean-for-slug.js
+ * @see https://github.com/WordPress/gutenberg/blob/5ff5acd2815d5260db15ab155fcaf4b3b80d7c1b/packages/url/src/clean-for-slug.js
  * @param {string} string Title or slug to be processed.
  * @param {boolean} isEditing Flag the user is currently editing the input
  allowing extra hyphens (default false)
@@ -37,13 +42,17 @@ export default function cleanForSlug(string, isEditing = false) {
     return '';
   }
 
-  return [string]
-    .map((s) => s.replace(/[\s./_]/g, '-'))
-    .map((s) => (isEditing ? s : s.replace(/^-+|-+$/g, '')))
-    .map((s) => (isEditing ? s : s.replace(/--+/g, '-')))
-    .map((s) => s.normalize('NFD'))
-    .map((s) => s.replace(/[\u0300-\u036f]/g, ''))
-    .map((s) => (isEditing ? s : s.replace(/[^a-zA-Z0-9-_]/g, '')))
-    .map((s) => s.toLowerCase())
-    .pop();
+  return (
+    [removeAccents(string)]
+      // Convert each group of whitespace, periods, and forward slashes to a hyphen.
+      .map((s) => s.replace(/[\s./_]/g, '-'))
+      // If not editing, remove hyphens from the beginning and ending.
+      .map((s) => (isEditing ? s : s.replace(/^-+|-+$/g, '')))
+      .map((s) => (isEditing ? s : s.replace(/--+/g, '-')))
+      .map((s) => s.normalize('NFC'))
+      // Remove anything that's not a letter, number, underscore or hyphen.
+      .map((s) => (isEditing ? s : s.replace(/[^\p{L}\p{N}_-]+/gu, '')))
+      .map((s) => s.toLowerCase())
+      .pop()
+  );
 }
