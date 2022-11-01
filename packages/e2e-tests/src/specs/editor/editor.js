@@ -74,16 +74,13 @@ describe('Story Editor', () => {
 
     describe('Disabled', () => {
       // It's disabled by default in e2e tests.
-
       it('should have cross-origin isolation disabled', async () => {
-        await toggleVideoOptimization();
         await createNewStory();
 
         const crossOriginIsolated = await page.evaluate(
           () => window.crossOriginIsolated
         );
         expect(crossOriginIsolated).toBeFalse();
-        await toggleVideoOptimization();
       });
     });
   });
