@@ -15,19 +15,28 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { Element, ElementType } from '..';
+import type { Element, ElementType } from '@googleforcreators/elements';
 
-export interface Sticker {
-  type: string;
+interface ProductImage {
+  alt: string;
+  url: string;
 }
 
-export interface StickerElement extends Element {
-  type: ElementType.Sticker;
-  sticker: Sticker;
-  // TODO(#12437): Figure out why sticker elements end up having these properties & fix it.
-  scale?: number;
-  focalX?: number;
-  focalY?: number;
+export interface Product {
+  productId: string;
+  productBrand: string;
+  productDetails: string;
+  productImages: ProductImage[];
+  productPrice: number;
+  productPriceCurrency: string;
+  productTitle: string;
+  productUrl: string;
+  type: ElementType.Product;
+}
+
+export interface ProductElement extends Element {
+  type: ElementType.Product;
+  product: Product;
 }

@@ -175,7 +175,7 @@ const CLIP_PATHS = {
   [MaskTypes.WELLBEING_ARROW]: `M 0.975046 , 0.060525 l -0.004159 -0.003425 l 0.020746 -0.025149 H 0.000000 v -0.005382 h 0.989970 l -0.019033 -0.023143 l 0.004159 -0.003425 l 0.024905 , 0.030238 L 0.975046 , 0.060525 z`,
 };
 
-export const MASKS = [
+export const MASKS: Mask[] = [
   {
     type: MaskTypes.RECTANGLE,
     showInLibrary: true,

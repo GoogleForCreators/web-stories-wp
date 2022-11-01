@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { Solid } from '@googleforcreators/patterns';
-import type { Resource } from '@googleforcreators/media';
+import type { Resource, SequenceResource } from '@googleforcreators/media';
 import type { ElementBox } from '@googleforcreators/units';
 
 /**
@@ -46,6 +46,8 @@ export interface Mask {
   name?: string;
   path?: string;
   ratio?: number;
+  iconPath?: string;
+  iconRatio?: number;
   supportsBorder?: boolean;
 }
 
@@ -99,4 +101,8 @@ export interface MediaElement extends BackgroundableElement {
   scale?: number;
   focalX?: number;
   focalY?: number;
+}
+
+export interface SequenceMediaElement extends MediaElement {
+  resource: SequenceResource;
 }

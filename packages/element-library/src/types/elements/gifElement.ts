@@ -15,28 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { Element, ElementType } from '..';
+import type { GifResource } from '@googleforcreators/media';
+import type {
+  SequenceMediaElement,
+  ElementType,
+} from '@googleforcreators/elements';
 
-interface ProductImage {
-  alt: string;
-  url: string;
-}
-
-export interface Product {
-  productId: string;
-  productBrand: string;
-  productDetails: string;
-  productImages: ProductImage[];
-  productPrice: number;
-  productPriceCurrency: string;
-  productTitle: string;
-  productUrl: string;
-  type: ElementType.Product;
-}
-
-export interface ProductElement extends Element {
-  type: ElementType.Product;
-  product: Product;
+export interface GifElement extends SequenceMediaElement {
+  resource: GifResource;
+  type: ElementType.Gif;
 }

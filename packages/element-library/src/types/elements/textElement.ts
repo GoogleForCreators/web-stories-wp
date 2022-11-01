@@ -18,11 +18,7 @@
  * External dependencies
  */
 import type { Pattern } from '@googleforcreators/patterns';
-
-/**
- * Internal dependencies
- */
-import type { Element, ElementType } from '..';
+import type { Element, ElementType } from '@googleforcreators/elements';
 
 export type FontStyle = 'normal' | 'italic' | 'regular';
 export enum FontVariantStyle {

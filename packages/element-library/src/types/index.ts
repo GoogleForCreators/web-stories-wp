@@ -14,23 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import type { Pattern } from '@googleforcreators/patterns';
-
-/**
- * Internal dependencies
- */
-import type { Element, ElementType } from '..';
-
-export interface ShapeElement extends Element {
-  backgroundColor?: Pattern;
-  isBackground?: boolean;
-  isDefaultBackground?: boolean;
-  type: ElementType.Shape;
-  // TODO(#12437): Figure out why shape elements end up having these properties & fix it.
-  scale?: number;
-  focalX?: number;
-  focalY?: number;
-}
+export * from './elements';

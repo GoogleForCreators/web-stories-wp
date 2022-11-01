@@ -17,14 +17,16 @@
 /**
  * External dependencies
  */
-import type { GifResource } from '@googleforcreators/media';
+import type { Pattern } from '@googleforcreators/patterns';
+import type { Element, ElementType } from '@googleforcreators/elements';
 
-/**
- * Internal dependencies
- */
-import type { MediaElement, ElementType } from '..';
-
-export interface GifElement extends MediaElement {
-  resource: GifResource;
-  type: ElementType.Gif;
+export interface ShapeElement extends Element {
+  backgroundColor?: Pattern;
+  isBackground?: boolean;
+  isDefaultBackground?: boolean;
+  type: ElementType.Shape;
+  // TODO(#12437): Figure out why shape elements end up having these properties & fix it.
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
 }

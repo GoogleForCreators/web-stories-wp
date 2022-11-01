@@ -17,27 +17,17 @@
 /**
  * External dependencies
  */
-import type { VideoResource } from '@googleforcreators/media';
+import type { Element, ElementType } from '@googleforcreators/elements';
 
-/**
- * Internal dependencies
- */
-import type { MediaElement, ElementType } from '..';
-
-export interface VideoTrack {
-  id: string;
-  track: string;
-  trackId?: number;
-  kind?: string;
-  srclang?: string;
-  label?: string;
-  needsProxy?: boolean;
+export interface Sticker {
+  type: string;
 }
 
-export interface VideoElement extends MediaElement {
-  resource: VideoResource;
-  poster?: string;
-  tracks?: VideoTrack[];
-  loop?: boolean;
-  type: ElementType.Video;
+export interface StickerElement extends Element {
+  type: ElementType.Sticker;
+  sticker: Sticker;
+  // TODO(#12437): Figure out why sticker elements end up having these properties & fix it.
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
 }
