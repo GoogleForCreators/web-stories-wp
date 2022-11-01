@@ -39,7 +39,7 @@ module.exports = (request, options) => {
     'react-colorful',
     'use-debounce',
     'blurhash',
-  ]
+  ];
 
   for (const affectedPackage of affectedPackages) {
     if (affectedPackage === request) {
