@@ -48,10 +48,10 @@ export default function cleanForSlug(string, isEditing = false) {
       .map((s) => s.replace(/[\s./_]/g, '-'))
       // If not editing, remove hyphens from the beginning and ending.
       .map((s) => (isEditing ? s : s.replace(/^-+|-+$/g, '')))
-      .map((s) => (isEditing ? s : s.replace(/--+/g, '-')))
       .map((s) => s.normalize('NFC'))
       // Remove anything that's not a letter, number, underscore or hyphen.
       .map((s) => (isEditing ? s : s.replace(/[^\p{L}\p{N}_-]+/gu, '')))
+      .map((s) => (isEditing ? s : s.replace(/--+/g, '-')))
       .map((s) => s.toLowerCase())
       .pop()
   );

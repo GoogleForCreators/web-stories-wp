@@ -43,7 +43,7 @@ describe('cleanForSlug', () => {
   });
 
   it('should collapse multiple whitespace and dashes', () => {
-    const result = cleanForSlug('Hello   cruel- world');
+    const result = cleanForSlug('Hello   cruel-- world');
     expect(result).toBe('hello-cruel-world');
   });
 
@@ -58,7 +58,7 @@ describe('cleanForSlug', () => {
   });
 
   it('should remove all illegal characters', () => {
-    const result = cleanForSlug('Hello-?,:;!"World');
+    const result = cleanForSlug('Hello-?-,:;!"World');
     expect(result).toBe('hello-world');
   });
 
