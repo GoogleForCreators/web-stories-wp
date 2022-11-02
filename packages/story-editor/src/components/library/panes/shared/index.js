@@ -62,6 +62,7 @@ const ActionButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   width: ${ACTION_BUTTON_SIZE}px;
   height: ${ACTION_BUTTON_SIZE}px;
   opacity: ${({ $display }) => ($display ? '1' : '0')};
+  z-index: 99;
 `;
 
 const PageTemplateTitleContainer = styled.div`
