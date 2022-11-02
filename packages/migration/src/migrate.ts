@@ -67,7 +67,8 @@ import removeFontProperties from './migrations/v0041_removeFontProperties';
 import removeTrackName from './migrations/v0042_removeTrackName';
 import removeTagNames from './migrations/v0043_removeTagNames';
 import unusedProperties from './migrations/v0044_unusedProperties';
-import removeElementFontProperties from './migrations/v0045_removeElementFontProperties';
+import globalPageAdvancement from './migrations/v0045_globalPageAdvancement';
+import removeElementFontProperties from './migrations/v0046_removeElementFontProperties';
 
 type MigrationFn<T, S> = (storyData: T) => S;
 
@@ -118,7 +119,8 @@ const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = { // eslint-disable-
   42: [removeTrackName],
   43: [removeTagNames],
   44: [unusedProperties],
-  45: [removeElementFontProperties],
+  45: [globalPageAdvancement],
+  46: [removeElementFontProperties],
 };
 
 export const DATA_VERSION = Math.max.apply(
@@ -127,6 +129,7 @@ export const DATA_VERSION = Math.max.apply(
 );
 
 export function migrate(storyData: Story, version: number): Story {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Remove when MigrationFn is typed correctly.
   let result = storyData;
   for (let v = version; v < DATA_VERSION; v++) {
     const migrations = MIGRATIONS[v + 1];

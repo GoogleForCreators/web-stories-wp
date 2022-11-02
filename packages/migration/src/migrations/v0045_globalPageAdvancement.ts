@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,6 @@
  * Internal dependencies
  */
 import type {
-  GifResourceV44,
-  ImageResourceV44,
-  VideoResourceV44,
   GifElementV44,
   ImageElementV44,
   PageV44,
@@ -29,23 +26,14 @@ import type {
   StoryV44,
   TextElementV44,
   VideoElementV44,
-  UnionElementV44,
 } from './v0044_unusedProperties';
 
-export interface TextElementV45 extends Omit<TextElementV44, 'font'> {
-  font: {
-    family: string;
-  };
-}
+export type TextElementV45 = TextElementV44;
 export type ProductElementV45 = ProductElementV44;
 export type ShapeElementV45 = ShapeElementV44;
 export type ImageElementV45 = ImageElementV44;
 export type VideoElementV45 = VideoElementV44;
 export type GifElementV45 = GifElementV44;
-
-export type ImageResourceV45 = ImageResourceV44;
-export type VideoResourceV45 = VideoResourceV44;
-export type GifResourceV45 = GifResourceV44;
 
 export type UnionElementV45 =
   | ShapeElementV45
@@ -55,38 +43,22 @@ export type UnionElementV45 =
   | TextElementV45
   | ProductElementV45;
 
-export interface StoryV45 extends Omit<StoryV44, 'pages'> {
+export interface StoryV45
+  extends Omit<StoryV44, 'pages' | 'autoAdvance' | 'defaultPageDuration'> {
   pages: PageV45[];
+  autoAdvance?: boolean;
+  defaultPageDuration?: number;
 }
 export interface PageV45 extends Omit<PageV44, 'elements'> {
   elements: UnionElementV45[];
 }
 
-function removeElementFontProperties({ pages, ...rest }: StoryV44): StoryV45 {
-  return {
-    pages: pages.map(reducePage),
-    ...rest,
-  };
-}
-
-function reducePage({ elements, ...rest }: PageV44): PageV45 {
-  return {
-    elements: elements.map(updateElement),
-    ...rest,
-  };
-}
-
-function updateElement(element: UnionElementV44): UnionElementV45 {
-  if ('font' in element) {
-    const { font, ...rest } = element;
-    return {
-      font: {
-        family: font.family,
-      },
-      ...rest,
-    };
+function pageAdvancement(story: StoryV44): StoryV45 {
+  const { autoAdvance, defaultPageDuration, ...rest } = story;
+  if (autoAdvance && defaultPageDuration === 7) {
+    return rest;
   }
-  return element;
+  return story;
 }
 
-export default removeElementFontProperties;
+export default pageAdvancement;

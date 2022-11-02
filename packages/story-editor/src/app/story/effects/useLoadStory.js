@@ -27,8 +27,9 @@ import { createPage } from '@googleforcreators/elements';
 import { useAPI } from '../../api';
 import { useHistory } from '../../history';
 import getUniquePresets from '../../../utils/getUniquePresets';
+import { useConfig } from '../../config';
 
-function loadStory(storyId, post, restore, clearHistory) {
+function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   const {
     title: { raw: title = '' } = {},
     status,
@@ -121,8 +122,12 @@ function loadStory(storyId, post, restore, clearHistory) {
         : [],
     },
     globalStoryStyles: newGlobalStoryStyles,
-    autoAdvance: storyData?.autoAdvance,
-    defaultPageDuration: storyData?.defaultPageDuration,
+    autoAdvance: storyData?.autoAdvance
+      ? storyData.autoAdvance
+      : globalConfig.globalAutoAdvance,
+    defaultPageDuration: storyData?.defaultPageDuration
+      ? storyData?.defaultPageDuration
+      : globalConfig.globalPageDuration,
     backgroundAudio: storyData?.backgroundAudio,
     taxonomies,
     terms,
@@ -146,18 +151,29 @@ function useLoadStory({ storyId, story, shouldLoad, restore }) {
   const {
     actions: { clearHistory },
   } = useHistory();
+  const { globalAutoAdvance, globalPageDuration } = useConfig();
 
   useEffect(() => {
+    const globalConfig = { globalAutoAdvance, globalPageDuration };
     if (storyId && shouldLoad) {
       if (story) {
-        loadStory(storyId, story, restore, clearHistory);
+        loadStory(storyId, story, restore, clearHistory, globalConfig);
       } else {
         getStoryById(storyId).then((post) => {
-          loadStory(storyId, post, restore, clearHistory);
+          loadStory(storyId, post, restore, clearHistory, globalConfig);
         });
       }
     }
-  }, [storyId, story, shouldLoad, restore, getStoryById, clearHistory]);
+  }, [
+    storyId,
+    story,
+    shouldLoad,
+    restore,
+    getStoryById,
+    clearHistory,
+    globalAutoAdvance,
+    globalPageDuration,
+  ]);
 }
 
 export default useLoadStory;
