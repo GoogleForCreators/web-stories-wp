@@ -22,7 +22,6 @@ import type { ElementBox } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
-import type React from 'react';
 import type { Element } from './element';
 import type { ElementType } from './elementType';
 
@@ -68,12 +67,12 @@ export interface ElementDefinition<E extends Element = Element> {
   isMedia?: boolean;
   getLayerText: (element: E) => string;
   defaultAttributes: Partial<E>;
-  Edit: React.FC<EditProps<E>>;
-  Frame: React.FC<FrameProps<E>>;
-  Output: React.FC<OutputProps<E>>;
-  LayerIcon: React.FC<LayerIconProps<E>>;
-  TextContent: React.FC<TextContentProps<E>>;
-  Display: React.FC<DisplayProps<E>>;
+  Edit: React.VoidFunctionComponent<EditProps<E>>;
+  Frame: React.VoidFunctionComponent<FrameProps<E>>;
+  Output: React.VoidFunctionComponent<OutputProps<E>>;
+  LayerIcon: React.VoidFunctionComponent<LayerIconProps<E>>;
+  TextContent: React.VoidFunctionComponent<TextContentProps<E>>;
+  Display: React.VoidFunctionComponent<DisplayProps<E>>;
   canFlip: boolean;
   isMaskable: boolean;
   isAspectAlwaysLocked: boolean;
