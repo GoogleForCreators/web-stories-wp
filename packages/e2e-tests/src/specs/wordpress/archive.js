@@ -139,7 +139,7 @@ describe('Stories Archive', () => {
     });
 
     describe('Widget Block', () => {
-      minWPVersionRequired('5.8');
+      minWPVersionRequired('5.9');
 
       let removeErrorMessage;
 
