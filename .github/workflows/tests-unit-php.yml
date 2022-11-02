@@ -65,7 +65,7 @@ jobs:
             coverage: true
             experimental: false
 
-          - php: '7.2'
+          - php: '7.4'
             wp: '5.7'
             experimental: false
 
@@ -126,15 +126,15 @@ jobs:
       #
       # | WP  / PHP | PHPUnit |
       # |-----------|---------|
-      # | 5.7 / 7.2 | 7       |
-      # | 5.9 / 7.2 | 8       |
+      # | 5.7 / 7.4 | 7       |
+      # | 5.9 / 7.4 | 8       |
       # | 5.9 / 7.4 | 9       |
       # | *   / 8   | 9       |
       #
       # See https://make.wordpress.org/core/handbook/references/phpunit-compatibility-and-wordpress-versions/
       - name: Update PHPUnit
         run: |
-          if [[ $WP_VERSION == "5.7" && $PHP_VERSION == "7.2" ]]; then
+          if [[ $WP_VERSION == "5.7" && $PHP_VERSION == "7.4" ]]; then
             echo "Installing PHPUnit 7.5.x"
             composer require --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
           elif [[ $WP_VERSION == "latest" || $WP_VERSION == "trunk" || $PHP_VERSION == "7.4" ]]; then
