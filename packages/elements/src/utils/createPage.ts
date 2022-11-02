@@ -49,7 +49,6 @@ const createPage = (pageProps: Partial<Page> | null = null): Page => {
 
   const page: Page = {
     id: uuidv4(),
-    type: 'page',
     elements: [backgroundElement],
     backgroundColor: DEFAULT_PAGE_BACKGROUND_COLOR,
     ...pageProps,

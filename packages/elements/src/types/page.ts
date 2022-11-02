@@ -49,7 +49,6 @@ export interface Page {
   defaultBackgroundElement?: DefaultBackgroundElement;
   animations?: Animation[];
   backgroundColor: Pattern;
-  type: 'page';
   groups?: Groups;
   backgroundAudio?: {
     resource: {
