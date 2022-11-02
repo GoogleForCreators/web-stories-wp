@@ -36,6 +36,9 @@ function isDefaultBackgroundElement(
 }
 type Attributes = Partial<Element> & ElementBox;
 
+// If we're copying an existing default background element into a new one,
+// we should ignore the default background color from the element (which will
+// be a shape)
 function getDefaultAttributes(
   defaultAttributes: Partial<Element>,
   attributes: Attributes
