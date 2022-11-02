@@ -63,8 +63,21 @@ describe('cleanForSlug', () => {
   });
 
   it('should allow using unicode characters', () => {
+    // Telugu
     const result = cleanForSlug('హల-వరలడ');
     expect(result).toBe('హల-వరలడ');
+
+    // Chinese (traditional)
+    const result2 = cleanForSlug('你好世界');
+    expect(result2).toBe('你好世界');
+
+    // Greek
+    const result3 = cleanForSlug('Γειά σου Κόσμε');
+    expect(result3).toBe('γειά-σου-κόσμε');
+
+    // Farsi
+    const result4 = cleanForSlug('سلام دنیا');
+    expect(result4).toBe('سلام-دنیا');
   });
 
   // eslint-disable-next-line jest/no-disabled-tests -- not implemented yet.
