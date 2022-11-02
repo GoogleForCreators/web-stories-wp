@@ -48,10 +48,11 @@ const createPage = (pageProps: Partial<Page> | null = null): Page => {
   );
 
   const page: Page = {
-    id: uuidv4(),
     elements: [backgroundElement],
     backgroundColor: DEFAULT_PAGE_BACKGROUND_COLOR,
     ...pageProps,
+    // id must be overridden even if present in partial
+    id: uuidv4(),
   };
 
   return page;

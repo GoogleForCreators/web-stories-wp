@@ -35,7 +35,7 @@ function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement {
 
 function createNewElement(
   type: ElementType,
-  attributes: ElementBox = {
+  attributes: Partial<Element> & ElementBox = {
     x: 0,
     y: 0,
     width: 1,
