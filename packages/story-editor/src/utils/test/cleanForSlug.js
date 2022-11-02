@@ -62,23 +62,17 @@ describe('cleanForSlug', () => {
     expect(result).toBe('hello-world');
   });
 
-  it('should allow using unicode characters', () => {
-    // Telugu
-    const result = cleanForSlug('హల-వరలడ');
-    expect(result).toBe('హల-వరలడ');
-
-    // Chinese (traditional)
-    const result2 = cleanForSlug('你好世界');
-    expect(result2).toBe('你好世界');
-
-    // Greek
-    const result3 = cleanForSlug('Γειά σου Κόσμε');
-    expect(result3).toBe('γειά-σου-κόσμε');
-
-    // Farsi
-    const result4 = cleanForSlug('سلام دنیا');
-    expect(result4).toBe('سلام-دنیا');
-  });
+  it.each([
+    ['హల-వరలడ', 'హల-వరలడ'],
+    ['你好世界', '你好世界'],
+    ['Γειά σου Κόσμε', 'γειά-σου-κόσμε'],
+    ['سلام دنیا', 'سلام-دنیا'],
+  ])(
+    'should properly generate slug from %s and return %s',
+    (original, expected) => {
+      expect(cleanForSlug(original)).toBe(expected);
+    }
+  );
 
   // eslint-disable-next-line jest/no-disabled-tests -- not implemented yet.
   it.skip('should replace umlauts if locale is de-*', () => {

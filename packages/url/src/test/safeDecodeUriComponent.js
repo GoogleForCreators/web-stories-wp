@@ -20,18 +20,14 @@
 import safeDecodeURIComponent from '../safeDecodeUriComponent';
 
 describe('safeDecodeURIComponent', () => {
-  it('should decode the URI correctly', () => {
-    let url = 'kanji-漢字';
-    expect(safeDecodeURIComponent('kanji-%e6%bc%a2%e5%ad%97')).toBe(url);
-
-    url = 'Χαίρετε';
-    expect(
-      safeDecodeURIComponent('%CE%A7%CE%B1%CE%AF%CF%81%CE%B5%CF%84%CE%B5')
-    ).toBe(url);
-
-    url = '你好世界';
-    expect(safeDecodeURIComponent('%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C')).toBe(
-      url
-    );
-  });
+  it.each([
+    ['kanji-%e6%bc%a2%e5%ad%97', 'kanji-漢字'],
+    ['%CE%A7%CE%B1%CE%AF%CF%81%CE%B5%CF%84%CE%B5', 'Χαίρετε'],
+    ['%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C', '你好世界'],
+  ])(
+    'should decode the URI %s correctly and return %s',
+    (original, expected) => {
+      expect(safeDecodeURIComponent(original)).toBe(expected);
+    }
+  );
 });
