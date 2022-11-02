@@ -142,13 +142,14 @@ fi
 echo -e $(status_message "Installing and activating RTL Tester plugin...")
 wp plugin install rtl-tester --activate --force --quiet
 
+echo -e $(status_message "Installing WordPress importer...")
+wp plugin install wordpress-importer --activate --force --quiet
 
 echo -e $(status_message "Installing WordPress importer...")
 wp plugin install wordpress-importer --activate --force --quiet
 
 echo -e $(status_message "Installing WooCommerce plugin...")
 wp plugin install woocommerce --activate --force --quiet
-
 
 echo -e $(status_message "Installing AMP plugin...")
 wp plugin install amp --force --quiet

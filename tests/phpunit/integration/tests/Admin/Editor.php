@@ -247,6 +247,17 @@ class Editor extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12601
+	 *
+	 * @covers ::get_editor_settings
+	 */
+	public function test_get_editor_settings_uses_correct_default_value(): void {
+		$results = $this->instance->get_editor_settings();
+
+		$this->assertTrue( $results['globalAutoAdvance'] );
+	}
+
+	/**
 	 * @covers ::setup_lock
 	 */
 	public function test_setup_lock_admin(): void {
