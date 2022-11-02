@@ -18,7 +18,6 @@
  */
 import {
   createNewStory,
-  minWPVersionRequired,
   withPlugin,
   insertProduct,
   setShoppingProvider,
@@ -27,8 +26,6 @@ import {
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Shopping product', () => {
-  minWPVersionRequired('5.9');
-
   describe('Product menu', () => {
     withPlugin('woocommerce');
 

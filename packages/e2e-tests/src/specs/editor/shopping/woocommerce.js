@@ -18,7 +18,6 @@
  */
 import {
   createNewStory,
-  minWPVersionRequired,
   previewStory,
   withPlugin,
   insertProduct,
@@ -33,8 +32,6 @@ import * as schema from './schema.json';
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Shopping', () => {
-  minWPVersionRequired('5.9'); // WooCommerce requires WP 5.7+
-
   describe('WooCommerce', () => {
     withPlugin('woocommerce');
 
