@@ -29,13 +29,32 @@ import type { DefaultBackgroundElement, Element, ElementType } from '../types';
  */
 import getDefinitionForType from './getDefinitionForType';
 
-function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement {
+function isDefaultBackgroundElement(
+  e: Partial<Element>
+): e is DefaultBackgroundElement {
   return 'isDefaultBackground' in e;
+}
+type Attributes = Partial<Element> & ElementBox;
+
+function getDefaultAttributes(
+  defaultAttributes: Partial<Element>,
+  attributes: Attributes
+): Partial<Element> {
+  if (
+    isDefaultBackgroundElement(attributes) &&
+    isDefaultBackgroundElement(defaultAttributes) &&
+    attributes.isDefaultBackground
+  ) {
+    const { backgroundColor, ...defaultAttributesWithoutColor } =
+      defaultAttributes;
+    return defaultAttributesWithoutColor;
+  }
+  return defaultAttributes;
 }
 
 function createNewElement(
   type: ElementType,
-  attributes: Partial<Element> & ElementBox = {
+  attributes: Attributes = {
     x: 0,
     y: 0,
     width: 1,
@@ -47,7 +66,10 @@ function createNewElement(
   if (!element) {
     throw new Error(`Unknown element type: ${type}`);
   }
-  const { defaultAttributes } = element;
+  const defaultAttributes = getDefaultAttributes(
+    element.defaultAttributes,
+    attributes
+  );
   const newElement: Element = {
     ...defaultAttributes,
     ...attributes,
@@ -55,14 +77,6 @@ function createNewElement(
     id: uuidv4(),
   };
 
-  // There's an exception for the background elements that should not get all the default attributes.
-  if (
-    isDefaultBackgroundElement(newElement) &&
-    newElement.isDefaultBackground
-  ) {
-    const { backgroundColor: _, ...newElementWithoutBgColor } = newElement;
-    return newElementWithoutBgColor;
-  }
   return newElement;
 }
 
