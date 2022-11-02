@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { Page } from './page';
-
-export interface Story {
-  version: number;
-  pages: Page[];
-  backgroundAudio?: {
-    resource: {
-      src: string;
-      id: number;
-      mimeType: string;
-    };
-  };
-  autoAdvance?: boolean;
-  defaultPageDuration?: number;
-}
+export * from './types';
+export * from './masks';
+export * from './constants';
+export * from './utils/elementBorder';
+export { default as DisplayWithMask } from './display';
+export { default as FrameWithMask } from './frame';
+export { default as OutputWithMask } from './output';
