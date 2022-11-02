@@ -73,4 +73,4 @@ jobs:
         run: composer phpmd
 
       - name: Normalize composer.json
-        run: composer composer-normalize --no-interaction -- --dry-run
+        run: composer normalize --no-interaction --dry-run
