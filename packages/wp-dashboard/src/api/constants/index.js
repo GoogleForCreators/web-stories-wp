@@ -35,7 +35,7 @@ export const STORY_FIELDS = [
 export const SEARCH_PAGES_FIELDS = ['id', 'title'];
 export const GET_PAGE_FIELDS = ['title', 'link'];
 
-export const STORY_EMBED = 'wp:lock,wp:lockuser,author';
+export const STORY_EMBED = 'wp:lock,author';
 
 export const REST_LINKS = {
   EDIT: 'wp:action-edit',
