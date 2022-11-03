@@ -60,13 +60,6 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	protected $parent_base;
 
 	/**
-	 * The base namespace.
-	 *
-	 * @var string
-	 */
-	protected $rest_namespace;
-
-	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
