@@ -95,4 +95,27 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertTrue( get_option( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
 		$this->assertSame( 7, get_option( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION ) );
 	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_saved_option(): void {
+		add_option( $this->instance::SETTING_NAME_AUTO_ADVANCE, false );
+		$this->assertFalse( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, true ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_registered_default(): void {
+		$this->assertTrue( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_explicit_default(): void {
+		$this->assertFalse( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, false ) );
+		$this->assertSame( 'foo', $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, 'foo' ) );
+	}
 }
