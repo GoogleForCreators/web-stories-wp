@@ -158,7 +158,7 @@ echo -e $(status_message "Installing Classic Widgets plugin...")
 wp plugin install classic-widgets --force --quiet
 
 echo -e $(status_message "Activating Twenty Twenty theme...")
-wp theme activate twentytwenty --quiet
+wp theme install twentytwenty --activate --force --quiet
 
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")
