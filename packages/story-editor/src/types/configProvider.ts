@@ -175,6 +175,21 @@ type UploadMediaProps = {
   resource: Resource;
 };
 
+export type Taxonomy = {
+  name: string;
+  slug: string;
+  capabilities: Record<string, string>;
+  description?: string;
+  labels: Record<string, string>;
+  types: string[];
+  showCloud?: boolean;
+  hierarchical: boolean;
+  restBase: string;
+  restNamespace: string;
+  visibility: Record<string, boolean>;
+  restPath: string;
+};
+
 export interface APICallbacks {
   addPageTemplate?: (data: TemplateData) => Promise<PageTemplate>;
   autoSaveById?: (story: Story) => Promise<Story>;
@@ -216,8 +231,7 @@ export interface APICallbacks {
   getProducts?: () => Promise<Product[]>;
   getProxyUrl?: (src: string) => string;
   getStoryById?: (id: number) => Promise<Story>;
-  // @todo Type properly.
-  getTaxonomies?: () => Promise<unknown>;
+  getTaxonomies?: () => Promise<Taxonomy[]>;
   getTaxonomyTerm?: (props: {
     search?: string;
     per_page?: number;
