@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests\Integration;
 use Google\Web_Stories\Story_Post_Type;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Admin\Admin
+ * @coversDefaultClass \Google\Web_Stories\Story_Revisions
  */
 class Story_Revisions extends DependencyInjectedTestCase {
 
@@ -105,10 +105,16 @@ class Story_Revisions extends DependencyInjectedTestCase {
 		];
 	}
 
+	/**
+	 * @covers ::filter_revision_fields
+	 */
 	public function test_filter_revision_fields_not_an_array(): void {
 		$this->assertSame( 'foo', $this->instance->filter_revision_fields( 'foo', [] ) );
 	}
 
+	/**
+	 * @covers ::filter_revision_fields
+	 */
 	public function test_filter_revision_fields_wrong_post_type(): void {
 		$fields = [
 			'post_title' => 'Post title',
@@ -126,6 +132,9 @@ class Story_Revisions extends DependencyInjectedTestCase {
 		);
 	}
 
+	/**
+	 * @covers ::filter_revision_fields
+	 */
 	public function test_filter_revision_fields_story_post_type(): void {
 		$fields = [
 			'post_title' => 'Post title',
@@ -142,6 +151,9 @@ class Story_Revisions extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'post_content_filtered', $actual );
 	}
 
+	/**
+	 * @covers ::filter_revision_fields
+	 */
 	public function test_filter_revision_fields_story_post_type_revision(): void {
 		$fields = [
 			'post_title' => 'Post title',
