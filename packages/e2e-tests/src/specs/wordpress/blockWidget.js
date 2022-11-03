@@ -24,7 +24,6 @@ import {
   deactivatePlugin,
   visitBlockWidgetScreen,
   insertWidget,
-  minWPVersionRequired,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -36,8 +35,6 @@ jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Web Stories Widget Block', () => {
   let removeErrorMessage;
-
-  minWPVersionRequired('5.8');
 
   beforeAll(() => {
     // Known issue in WP 6.0 RC1, see https://github.com/GoogleForCreators/web-stories-wp/pull/11435
