@@ -31,7 +31,9 @@ export const updateStoryFonts = (draft, { font }) => {
     return;
   }
 
-  draft.story.fonts[font.family] = font;
+  const fonts = [...draft.story.fonts];
+  fonts[font.family] = font;
+  draft.story.fonts = fonts;
 };
 
 export default produce(updateStoryFonts);
