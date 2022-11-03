@@ -32,16 +32,16 @@ export default function reshapeStoryObject(originalStoryData) {
     preview_link: previewLink,
     edit_link: editStoryLink,
     story_poster: storyPoster,
-    _embedded: {
-      author = [{ name: '', id: 0 }],
-      'wp:lock': lock = [{ locked: false }],
-      'wp:lockuser': lockUser = [{ id: 0, name: '' }],
-    } = {},
+    _embedded: { author, 'wp:lock': lock } = {},
     _links: links = {},
   } = originalStoryData;
   if (!id) {
     return null;
   }
+
+  const { locked = false, user: lockUser = { id: 0, name: '' } } =
+    lock?.[0] || {};
+  const storyAuthor = author?.[0] || { id: 0, name: '' };
   const capabilities = {
     hasEditAction: Object.prototype.hasOwnProperty.call(links, REST_LINKS.EDIT),
     hasDeleteAction: Object.prototype.hasOwnProperty.call(
@@ -59,14 +59,13 @@ export default function reshapeStoryObject(originalStoryData) {
     modified,
     modifiedGmt: `${modified_gmt}Z`,
     author: {
-      name: author[0].name,
-      id: author[0].id,
+      id: storyAuthor.id,
+      name: storyAuthor.name,
     },
-    locked: lock[0]?.locked,
+    locked,
     lockUser: {
-      id: lockUser[0].id,
-      name: lockUser[0].name,
-      avatar: lockUser[0]?.avatar_urls?.['96'] || null,
+      ...lockUser,
+      avatar: lockUser?.avatar?.['96'] || null,
     },
     bottomTargetAction: editStoryLink,
     featuredMediaUrl: storyPoster?.url,
