@@ -34,6 +34,8 @@ use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Error;
 use WP_Post_Type;
+use WP_REST_Controller;
+use WP_REST_Posts_Controller;
 use WP_Rewrite;
 use WP_Site;
 
@@ -176,7 +178,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @since 1.14.0
 	 */
-	protected function get_object(): ?WP_Post_Type {
+	public function get_object(): ?WP_Post_Type {
 		return get_post_type_object( $this->get_slug() );
 	}
 
@@ -252,6 +254,28 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		return $name;
+	}
+
+	/**
+	 * Get rest controller on the post type slug.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return WP_REST_Posts_Controller|WP_REST_Controller
+	 */
+	public function get_parent_controller(): WP_REST_Controller {
+		$post_type_obj     = $this->get_object();
+		$parent_controller = null;
+
+		if ( $post_type_obj instanceof WP_Post_Type ) {
+			$parent_controller = $post_type_obj->get_rest_controller();
+		}
+
+		if ( ! $parent_controller ) {
+			$parent_controller = new WP_REST_Posts_Controller( $this->get_slug() );
+		}
+
+		return $parent_controller;
 	}
 
 	/**
