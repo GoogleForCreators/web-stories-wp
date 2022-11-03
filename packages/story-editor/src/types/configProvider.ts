@@ -216,10 +216,9 @@ export interface APICallbacks {
     mediaType: string;
     searchTerm: string;
     pagingNum: number;
-    // @todo Type properly.
   }) => Promise<{
-    data: Record<string, unknown>;
-    headers: Record<string, unknown>;
+    data: Resource[];
+    headers: Record<string, string>;
   }>;
   getMediaById?: (id: number) => Promise<Resource>;
   // @todo Not certain if correct.
