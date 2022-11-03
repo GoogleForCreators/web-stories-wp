@@ -136,15 +136,17 @@ function SelectStories({
 
   const { authors } = useSelect(
     (select) => {
+      const { getUsers, getPostType } = select(coreStore);
+
+      const capabilities = getPostType('web-story')?.capabilities['edit_posts'];
+
       const query = {
         search: authorKeyword,
-        who: 'authors',
+        capabilities,
       };
-
-      const { getUsers } = select(coreStore);
-
       return {
-        authors: getUsers(query),
+        // Only load users when capability has been fetched already.
+        authors: capabilities ? getUsers(query) : [],
       };
     },
     [authorKeyword]
