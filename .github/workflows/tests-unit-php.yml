@@ -54,13 +54,12 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        php: ['8.0','8.1','8.2']
+        php: ['7.4', '8.1', '8.2']
         wp: ['latest']
         coverage: [false]
         experimental: [false]
         include:
-          # Using PHP 7.4 for code coverage run as 8.0 throws errors.
-          - php: '7.4'
+          - php: '8.0'
             wp: 'latest'
             coverage: true
             experimental: false
@@ -114,15 +113,6 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
-      # Installs a different PHPUnit version depending on the WP/PHP version combo we're testing against.
-      #
-      # | WP  / PHP | PHPUnit |
-      # |-----------|---------|
-      # | 5.9 / 7.4 | 8       |
-      # | 5.9 / 7.4 | 9       |
-      # | *   / 8   | 9       |
-      #
-      # See https://make.wordpress.org/core/handbook/references/phpunit-compatibility-and-wordpress-versions/
       - name: Update PHPUnit
         run: |
           echo "Installing latest version of PHPUnit"
