@@ -127,9 +127,6 @@ jobs:
         run: |
           echo "Installing latest version of PHPUnit"
           composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
-        env:
-          WP_VERSION: ${{ matrix.wp }}
-          PHP_VERSION: ${{ matrix.php }}
 
       - name: Composer dump autoload
         run: composer dump-autoload --no-interaction
