@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import type { Font, Page, Story } from '@googleforcreators/types';
+
 export interface Capabilities {
   /** If the user has permissions to upload files. */
   hasUploadMediaAction?: boolean;
@@ -80,19 +85,91 @@ export interface Tip {
   href: string;
 }
 
+interface PageTemplate extends Page {
+  version: string;
+}
+interface TemplateData {
+  story_data: PageTemplate;
+  featured_media: number;
+  title?: string;
+}
+
+type Term = {
+  id: number;
+  name: string;
+  slug: string;
+  taxonomy: string;
+};
+
+type Author = {
+  id: number;
+  name: string;
+  url?: string;
+  description?: string;
+  slug: string;
+  link: string;
+  avatarUrls?: Record<number, string>;
+};
+
+type User = {
+  id: number;
+  mediaOptimization: boolean;
+  onboarding: Record<string, boolean>;
+  trackingOptin: boolean;
+};
+
+type GetFontProps = {
+  service?: string;
+  include?: string;
+  search?: string;
+};
+
+type HotlinkInfo = {
+  ext?: string;
+  fileName?: string;
+  fileSize?: number;
+  mimeType?: string;
+  type?: string;
+  width?: number;
+  height?: number;
+};
+
+type LinkMetaData = {
+  title: string;
+  image: string;
+};
+
 export interface APICallbacks {
-  addPageTemplate?: unknown;
-  autoSaveById?: unknown;
-  createTaxonomyTerm?: unknown;
-  deleteMedia?: unknown;
-  deletePageTemplate?: unknown;
-  getAuthors?: unknown;
-  getCurrentUser?: unknown;
-  getCustomPageTemplates?: unknown;
-  getFonts?: unknown;
-  getHotlinkInfo?: unknown;
-  getLinkMetadata?: unknown;
-  getMedia?: unknown;
+  addPageTemplate?: (data: TemplateData) => Promise<PageTemplate>;
+  autoSaveById?: (story: Story) => Promise<Story>;
+  createTaxonomyTerm?: (
+    endpoint: string,
+    term: {
+      name: string;
+      parent?: number;
+      slug?: string;
+    }
+  ) => Promise<Term>;
+  deleteMedia?: (id: number) => Promise<boolean>;
+  deletePageTemplate?: (id: number) => Promise<boolean>;
+  getAuthors?: () => Promise<Author[]>;
+  getCurrentUser?: () => Promise<User>;
+  getCustomPageTemplates?: (page: number | boolean) => Promise<{
+    hasMore: boolean;
+    templates: PageTemplate[];
+  }>;
+  getFonts?: (props: GetFontProps) => Promise<Font[]>;
+  getHotlinkInfo?: (link: string) => Promise<HotlinkInfo>;
+  getLinkMetadata?: (link: string) => Promise<LinkMetaData>;
+  getMedia?: (props: {
+    mediaType: string;
+    searchTerm: string;
+    pagingNum: number;
+    // @todo Type properly.
+  }) => Promise<{
+    data: Record<string, unknown>;
+    headers: Record<string, unknown>;
+  }>;
   getMediaById?: unknown;
   getMediaForCorsCheck?: unknown;
   getMutedMediaById?: unknown;
