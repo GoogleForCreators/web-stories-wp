@@ -184,6 +184,7 @@ function TextDisplay({
     ...element,
     font: elementFontData,
   });
+
   const props = {
     font: elementFontData,
     element,
@@ -196,7 +197,7 @@ function TextDisplay({
       (x) => `${dataToEditorX(x)}px`,
       (y) => `${dataToEditorY(y)}px`,
       dataToEditorY,
-      element
+      { ...element, font: elementFontData }
     ),
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
