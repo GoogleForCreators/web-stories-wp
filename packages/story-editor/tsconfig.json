@@ -4,5 +4,5 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "include": ["src/app/config/*"]
+  "include": ["src/app/config/*", "src/types"]
 }

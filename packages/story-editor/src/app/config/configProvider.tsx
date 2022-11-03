@@ -22,11 +22,12 @@ import type { ReactNode } from 'react';
 /**
  * Internal dependencies
  */
+import type { ConfigState } from '../../types/app';
 import Context from './context';
 
 export interface ConfigProviderProps {
   children: ReactNode;
-  config: Record<string, unknown>;
+  config: ConfigState;
 }
 function ConfigProvider({ config, children }: ConfigProviderProps) {
   return <Context.Provider value={config}>{children}</Context.Provider>;
