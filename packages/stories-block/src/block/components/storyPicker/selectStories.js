@@ -138,13 +138,13 @@ function SelectStories({
     (select) => {
       const query = {
         search: authorKeyword,
+        who: 'authors'
       };
 
-      const { getAuthors } = select(coreStore);
+      const { getUsers } = select(coreStore);
 
       return {
-        // Not using `getUsers()` because it requires `list_users` capability.
-        authors: getAuthors(query),
+        authors: getUsers(query),
       };
     },
     [authorKeyword]
@@ -206,7 +206,7 @@ function SelectStories({
   );
 
   const authorSearchOptions = useMemo(() => {
-    return authors
+    return ( authors ?? [] )
       .filter(({ name }) => Boolean(name?.trim().length))
       .map(({ id, name }) => ({
         label: name,
