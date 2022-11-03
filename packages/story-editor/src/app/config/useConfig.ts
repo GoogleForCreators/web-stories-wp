@@ -22,7 +22,7 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { ConfigState } from '../../types/app';
+import type { ConfigState } from '../../types/configProvider';
 import Context from './context';
 
 function useConfig(): ConfigState;

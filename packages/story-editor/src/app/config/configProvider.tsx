@@ -22,7 +22,7 @@ import type { ReactNode } from 'react';
 /**
  * Internal dependencies
  */
-import type { ConfigState } from '../../types/app';
+import type { ConfigState } from '../../types/configProvider';
 import Context from './context';
 
 export interface ConfigProviderProps {

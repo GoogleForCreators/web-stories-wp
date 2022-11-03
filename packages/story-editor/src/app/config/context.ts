@@ -22,6 +22,31 @@ import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { ConfigState } from '../../types/app';
+import type { ConfigState } from '../../types/configProvider';
 
-export default createContext<ConfigState>({});
+export default createContext<ConfigState>({
+  autoSaveInterval: null,
+  localAutoSaveInterval: 15,
+  autoSaveLink: '',
+  isRTL: false,
+  allowedMimeTypes: {},
+  storyId: null,
+  dashboardLink: '',
+  dashboardSettingsLink: '',
+  generalSettingsLink: '',
+  cdnURL: '',
+  maxUpload: 0,
+  capabilities: {},
+  metaData: {},
+  canViewDefaultTemplates: false,
+  showMedia3p: false,
+  encodeMarkup: false,
+  ffmpegCoreUrl: '',
+  apiCallbacks: {},
+  styleConstants: { topOffset: 0, leftOffset: 0 },
+  version: '',
+  shoppingProvider: '',
+  mediainfoUrl: '',
+  flags: {},
+  additionalTips: {},
+});
