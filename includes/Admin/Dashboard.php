@@ -333,7 +333,7 @@ class Dashboard extends Service_Base {
 					'_embed'                => rawurlencode(
 						implode(
 							',',
-							[ 'wp:lock', 'wp:lockuser', 'author' ]
+							[ 'wp:lock', 'author' ]
 						)
 					),
 					'context'               => 'edit',

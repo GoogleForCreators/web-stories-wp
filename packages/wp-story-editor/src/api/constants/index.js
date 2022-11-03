@@ -35,7 +35,7 @@ export const STORY_FIELDS = [
   '_links',
 ].join(',');
 
-export const STORY_EMBED = 'wp:lockuser,author,wp:publisherlogo,wp:term';
+export const STORY_EMBED = 'wp:lock,author,wp:publisherlogo,wp:term';
 
 export const MEDIA_FIELDS = [
   'id',
