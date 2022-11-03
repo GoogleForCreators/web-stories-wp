@@ -17,7 +17,17 @@
 /**
  * External dependencies
  */
-import type { Font, Page, Story } from '@googleforcreators/types';
+import type {
+  Font,
+  MediaElement,
+  Page,
+  Product,
+  Resource,
+  ResourceId,
+  Story,
+  TrimData,
+  VideoResource,
+} from '@googleforcreators/types';
 
 export interface Capabilities {
   /** If the user has permissions to upload files. */
@@ -139,6 +149,32 @@ type LinkMetaData = {
   image: string;
 };
 
+type UploadMediaProps = {
+  onUploadSuccess?: (media: MediaElement) => void;
+  onUploadProgress?: (media: MediaElement) => void;
+  onUploadError?: (media: MediaElement) => void;
+  cropVideo?: boolean;
+  additionalData: {
+    originalId?: number;
+    mediaId?: number;
+    storyId?: number;
+    templateId?: number;
+    optimizedId?: number;
+    cropOriginId?: number;
+    mutedId?: number;
+    posterId?: number;
+    isMuted?: boolean;
+    mediaSource?: string;
+    trimData?: TrimData;
+    baseColor?: string;
+    blurHash?: string;
+    isGif?: boolean;
+    altText?: string;
+  };
+  originalResourceId: ResourceId;
+  resource: Resource;
+};
+
 export interface APICallbacks {
   addPageTemplate?: (data: TemplateData) => Promise<PageTemplate>;
   autoSaveById?: (story: Story) => Promise<Story>;
@@ -170,22 +206,34 @@ export interface APICallbacks {
     data: Record<string, unknown>;
     headers: Record<string, unknown>;
   }>;
-  getMediaById?: unknown;
-  getMediaForCorsCheck?: unknown;
-  getMutedMediaById?: unknown;
-  getOptimizedMediaById?: unknown;
-  getPageTemplates?: unknown;
-  getPosterMediaById?: unknown;
-  getProducts?: unknown;
-  getProxyUrl?: unknown;
-  getStoryById?: unknown;
-  getTaxonomies?: unknown;
-  getTaxonomyTerm?: unknown;
-  saveStoryById?: unknown;
-  updateCurrentUser?: unknown;
-  updateMedia?: unknown;
-  updatePageTemplate?: unknown;
-  uploadMedia?: unknown;
+  getMediaById?: (id: number) => Promise<Resource>;
+  // @todo Not certain if correct.
+  getMediaForCorsCheck?: () => Promise<Resource[]>;
+  getMutedMediaById?: (id: number) => Promise<VideoResource>;
+  getOptimizedMediaById?: (id: number) => Promise<Resource>;
+  getPageTemplates?: () => Promise<PageTemplate[]>;
+  getPosterMediaById?: (id: number) => Promise<Resource>;
+  getProducts?: () => Promise<Product[]>;
+  getProxyUrl?: (src: string) => string;
+  getStoryById?: (id: number) => Promise<Story>;
+  // @todo Type properly.
+  getTaxonomies?: () => Promise<unknown>;
+  getTaxonomyTerm?: (props: {
+    search?: string;
+    per_page?: number;
+  }) => Promise<Term>;
+  saveStoryById?: (data: Story) => Promise<Story>;
+  updateCurrentUser?: (data: {
+    mediaOptimization?: boolean;
+    onboarding?: Record<string, boolean>;
+    trackingOptin?: boolean;
+  }) => Promise<User>;
+  updateMedia?: (id: number, data: Partial<Resource>) => Promise<Resource>;
+  updatePageTemplate?: (
+    id: number,
+    data: Partial<PageTemplate>
+  ) => Promise<PageTemplate>;
+  uploadMedia?: (files: string[], props: UploadMediaProps) => Promise<Resource>;
 }
 
 export interface PostLock {
