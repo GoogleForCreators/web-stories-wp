@@ -64,9 +64,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$this->story_post_type = $story_post_type;
 
 		$this->parent_controller = $story_post_type->get_parent_controller();
-		$post_type_object        = $story_post_type->get_object();
-		$this->rest_base         = ! empty( $post_type_object->rest_base ) && \is_string( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-		$this->namespace         = ! empty( $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ? $post_type_object->rest_namespace : 'wp/v2';
+		$this->rest_base         = $story_post_type->get_rest_base();
+		$this->namespace         = $story_post_type->get_rest_namespace();
 	}
 
 	/**

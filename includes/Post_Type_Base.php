@@ -178,8 +178,43 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @since 1.14.0
 	 */
-	public function get_object(): ?WP_Post_Type {
+	protected function get_object(): ?WP_Post_Type {
 		return get_post_type_object( $this->get_slug() );
+	}
+
+	/**
+	 * Get REST base name based on the post type.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string REST base.
+	 */
+	public function get_rest_base(): string {
+		$post_type_object = $this->get_object();
+		$rest_base        = $this->get_slug();
+		if ( $post_type_object instanceof WP_Post_Type ) {
+			$rest_base = ! empty( $post_type_object->rest_base ) && \is_string( $post_type_object->rest_base ) ?
+				$post_type_object->rest_base :
+				$post_type_object->name;
+		}
+
+		return (string) $rest_base;
+	}
+
+	/**
+	 * Get REST namespace on the post type.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string REST base.
+	 */
+	public function get_rest_namespace(): string {
+		$post_type_object = $this->get_object();
+		$rest_namespace   = isset( $post_type_object, $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ?
+			$post_type_object->rest_namespace :
+			self::REST_NAMESPACE;
+
+		return (string) $rest_namespace;
 	}
 
 	/**
@@ -190,7 +225,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_url(): string {
-		return rest_get_route_for_post_type_items( $this->get_slug() );
+		return rest_get_route_for_post_type_items( $this->get_rest_base() );
 	}
 
 	/**

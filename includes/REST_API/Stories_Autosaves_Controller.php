@@ -77,9 +77,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 		parent::__construct( $story_post_type->get_slug() );
 
 		$this->parent_controller = $story_post_type->get_parent_controller();
-		$post_type_object        = $story_post_type->get_object();
-		$this->parent_base       = ! empty( $post_type_object->rest_base ) && \is_string( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-		$this->namespace         = ! empty( $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ? $post_type_object->rest_namespace : 'wp/v2';
+		$this->parent_base       = $story_post_type->get_rest_base();
+		$this->namespace         = $story_post_type->get_rest_namespace();
 	}
 
 	/**
