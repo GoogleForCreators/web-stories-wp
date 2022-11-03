@@ -237,3 +237,4 @@ wp plugin deactivate woocommerce
 
 echo -e $(status_message "Deactivating WordPress importer again...")
 wp plugin deactivate wordpress-importer --quiet
+
