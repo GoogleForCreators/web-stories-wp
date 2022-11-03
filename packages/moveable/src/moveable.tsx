@@ -18,7 +18,17 @@
  * External dependencies
  */
 import { forwardRef } from '@googleforcreators/react';
-import OriginalMoveable from 'react-moveable';
+import {
+  DraggableProps,
+  makeMoveable,
+  ResizableProps,
+  RotatableProps,
+  SnappableProps,
+  Rotatable,
+  Draggable,
+  Resizable,
+  Snappable,
+} from 'react-moveable';
 import type { MoveableProps, MoveableDefaultOptions } from 'react-moveable';
 import type { ForwardedRef, MouseEventHandler } from 'react';
 
@@ -32,6 +42,10 @@ const DEFAULT_Z_INDEX = 10;
 interface MoveableWithRefProps extends MoveableProps {
   onContextMenu: MouseEventHandler<HTMLElement>;
 }
+
+const OriginalMoveable = makeMoveable<
+  DraggableProps & ResizableProps & RotatableProps & SnappableProps
+>([Snappable, Draggable, Resizable, Rotatable]);
 
 function MoveableWithRef(
   { onContextMenu, ...moveableProps }: MoveableWithRefProps,
