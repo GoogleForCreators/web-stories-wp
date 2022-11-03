@@ -54,62 +54,6 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	}
 
 	/**
-	 * Override the existing prepare_item_for_response to ensure that all links have the correct namespace.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param WP_Taxonomy     $taxonomy Taxonomy data.
-	 * @param WP_REST_Request $request  Full details about the request.
-	 * @return WP_REST_Response Response object.
-	 */
-	public function prepare_item_for_response( $taxonomy, $request ): WP_REST_Response {
-		$old_response = parent::prepare_item_for_response( $taxonomy, $request );
-
-		/**
-		 * Response data.
-		 *
-		 * @var array<string,mixed> $data
-		 */
-		$data = $old_response->get_data();
-		/**
-		 * Response object.
-		 *
-		 * @var WP_REST_Response $response
-		 */
-		$response = rest_ensure_response( $data );
-		$response->add_links( $this->prepare_links( $taxonomy ) );
-
-		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-taxonomies-controller.php */
-		return apply_filters( 'rest_prepare_taxonomy', $response, $taxonomy, $request );
-	}
-
-	/**
-	 * Prepares links for the request.
-	 *
-	 * @since 1.27.0
-	 *
-	 * @param WP_Taxonomy $taxonomy The taxonomy.
-	 * @return array Links for the given taxonomy.
-	 *
-	 * @phpstan-return Links
-	 */
-	protected function prepare_links( $taxonomy ): array {
-		$controller = $taxonomy->get_rest_controller();
-		// TODO: Remove get_namespace when WP 5.9, min requirements.
-		$namespace = $controller && method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
-		$base      = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
-
-		return [
-			'collection'              => [
-				'href' => rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ),
-			],
-			'https://api.w.org/items' => [
-				'href' => rest_url( sprintf( '%s/%s', $namespace, $base ) ),
-			],
-		];
-	}
-
-	/**
 	 * Retrieves all public taxonomies.
 	 *
 	 * Adds support for filtering by the hierarchical attribute.

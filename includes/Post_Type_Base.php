@@ -34,8 +34,6 @@ use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Error;
 use WP_Post_Type;
-use WP_REST_Controller;
-use WP_REST_Posts_Controller;
 use WP_Rewrite;
 use WP_Site;
 
@@ -183,41 +181,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	}
 
 	/**
-	 * Get REST base name based on the post type.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @return string REST base.
-	 */
-	public function get_rest_base(): string {
-		$post_type_object = $this->get_object();
-		$rest_base        = $this->get_slug();
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) && \is_string( $post_type_object->rest_base ) ?
-				$post_type_object->rest_base :
-				$post_type_object->name;
-		}
-
-		return (string) $rest_base;
-	}
-
-	/**
-	 * Get REST namespace on the post type.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @return string REST base.
-	 */
-	public function get_rest_namespace(): string {
-		$post_type_object = $this->get_object();
-		$rest_namespace   = isset( $post_type_object, $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ?
-			$post_type_object->rest_namespace :
-			self::REST_NAMESPACE;
-
-		return (string) $rest_namespace;
-	}
-
-	/**
 	 * Get REST url for post type.
 	 *
 	 * @since 1.14.0
@@ -225,7 +188,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_url(): string {
-		return sprintf( '/%s/%s', $this->get_rest_namespace(), $this->get_rest_base() );
+		return rest_get_route_for_post_type_items( $this->get_slug() );
 	}
 
 	/**
@@ -289,28 +252,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		return $name;
-	}
-
-	/**
-	 * Get rest controller on the post type slug.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @return WP_REST_Posts_Controller|WP_REST_Controller
-	 */
-	public function get_parent_controller(): WP_REST_Controller {
-		$post_type_obj     = $this->get_object();
-		$parent_controller = null;
-
-		if ( $post_type_obj instanceof WP_Post_Type ) {
-			$parent_controller = $post_type_obj->get_rest_controller();
-		}
-
-		if ( ! $parent_controller ) {
-			$parent_controller = new WP_REST_Posts_Controller( $this->get_slug() );
-		}
-
-		return $parent_controller;
 	}
 
 	/**

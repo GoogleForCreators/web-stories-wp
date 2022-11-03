@@ -34,6 +34,7 @@ use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
+use WP_REST_Posts_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -75,12 +76,19 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 */
 	public function __construct( Story_Post_Type $story_post_type ) {
 		parent::__construct( $story_post_type->get_slug() );
+		$post_type_object = get_post_type_object( $story_post_type->get_slug() );
+		if ( ! $post_type_object ) {
+			return;
+		}
+		$parent_controller = $post_type_object->get_rest_controller();
 
-		$parent_controller = $story_post_type->get_parent_controller();
+		if ( ! $parent_controller ) {
+			$parent_controller = new WP_REST_Posts_Controller( $story_post_type->get_slug() );
+		}
 
-		$this->parent_base       = $story_post_type->get_slug();
 		$this->parent_controller = $parent_controller;
-		$this->rest_namespace    = $story_post_type->get_rest_namespace();
+		$this->namespace         = ! empty( $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ? $post_type_object->rest_namespace : 'wp/v2';
+		$this->parent_base       = ! empty( $post_type_object->rest_base ) && \is_string( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 	}
 
 	/**
@@ -140,8 +148,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 		parent::register_routes();
 
 		register_rest_route(
-			$this->rest_namespace,
-			'/' . $this->parent_base . '/(?P<id>[\d]+)/autosaves',
+			$this->namespace,
+			'/' . $this->parent_base . '/(?P<id>[\d]+)/' . $this->rest_base,
 			[
 				'args'   => [
 					'parent' => [
