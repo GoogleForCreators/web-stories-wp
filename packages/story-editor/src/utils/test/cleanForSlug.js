@@ -58,9 +58,21 @@ describe('cleanForSlug', () => {
   });
 
   it('should remove all illegal characters', () => {
-    const result = cleanForSlug('Hello-?,:;!"World');
+    const result = cleanForSlug('Hello-?-,:;!"World');
     expect(result).toBe('hello-world');
   });
+
+  it.each([
+    ['హల-వరలడ', 'హల-వరలడ'],
+    ['你好世界', '你好世界'],
+    ['Γειά σου Κόσμε', 'γειά-σου-κόσμε'],
+    ['سلام دنیا', 'سلام-دنیا'],
+  ])(
+    'should properly generate slug from %s and return %s',
+    (original, expected) => {
+      expect(cleanForSlug(original)).toBe(expected);
+    }
+  );
 
   // eslint-disable-next-line jest/no-disabled-tests -- not implemented yet.
   it.skip('should replace umlauts if locale is de-*', () => {
