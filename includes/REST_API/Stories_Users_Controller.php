@@ -32,7 +32,6 @@ use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_REST_Request;
-use WP_REST_Response;
 use WP_REST_Users_Controller;
 
 /**
@@ -130,7 +129,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 			);
 		}
 
-		if ( ! $this->user_posts_count_public( $user->ID, Story_Post_Type::POST_TYPE_SLUG ) && ! current_user_can( 'edit_user', $user->ID ) && ! current_user_can( 'list_users' ) ) {
+		if ( ! $this->user_posts_count_public( $user->ID, $this->story_post_type->get_slug() ) && ! current_user_can( 'edit_user', $user->ID ) && ! current_user_can( 'list_users' ) ) {
 			return new \WP_Error(
 				'rest_user_cannot_view',
 				__( 'Sorry, you are not allowed to list users.', 'web-stories' ),
