@@ -92,50 +92,6 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	public static function get_registration_action_priority(): int {
 		return 100;
 	}
-	/**
-	 * Retrieves a collection of user
-	 *
-	 * @since 1.16.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function get_items( $request ) {
-		add_filter( 'rest_user_query', [ $this, 'filter_user_query' ], 10 );
-		$response = parent::get_items( $request );
-		remove_filter( 'rest_user_query', [ $this, 'filter_user_query' ], 10 );
-
-		return $response;
-	}
-
-	/**
-	 * Filter the WP_User_Query args.
-	 *
-	 * Removes the 'who' param in favor of the 'capabilities' param.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @param array{who?: string, capabilities?: string[]} $prepared_args Array of arguments for WP_User_Query.
-	 * @return array<string,mixed> Filtered args.
-	 */
-	public function filter_user_query( $prepared_args ): array {
-		$registered = $this->get_collection_params();
-
-		// Capability queries were added in 5.9, and the 'who' param was deprecated.
-		if ( isset( $prepared_args['who'], $registered['capabilities'] ) && 'authors' === $prepared_args['who'] ) {
-			$capabilities   = $prepared_args['capabilities'] ?? [];
-			$capabilities[] = $this->story_post_type->get_cap_name( 'edit_posts' );
-
-			$prepared_args['capabilities'] = $capabilities;
-
-			unset( $prepared_args['who'] );
-		}
-
-		// Fix core issue, where user meta is not primed in WP_User_Query. See https://core.trac.wordpress.org/ticket/55594.
-		$prepared_args['fields'] = 'all_with_meta';
-
-		return $prepared_args;
-	}
 
 	/**
 	 * Checks if a given request has access to read a user.
