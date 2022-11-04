@@ -21,7 +21,6 @@ import {
   createNewPost,
   insertBlock,
   insertWidget,
-  minWPVersionRequired,
   publishPost,
   visitAdminPage,
   visitBlockWidgetScreen,
@@ -139,8 +138,6 @@ describe('Stories Archive', () => {
     });
 
     describe('Widget Block', () => {
-      minWPVersionRequired('5.8');
-
       let removeErrorMessage;
 
       beforeAll(() => {
