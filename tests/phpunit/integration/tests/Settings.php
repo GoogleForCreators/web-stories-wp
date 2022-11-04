@@ -53,6 +53,8 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( $this->instance::SETTING_NAME_VIDEO_CACHE, $options );
 		$this->assertArrayHasKey( $this->instance::SETTING_NAME_DATA_REMOVAL, $options );
 		$this->assertArrayHasKey( $this->instance::SETTING_NAME_ARCHIVE, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_AUTO_ADVANCE, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION, $options );
 	}
 
 	/**
@@ -72,6 +74,8 @@ class Settings extends DependencyInjectedTestCase {
 		add_option( $this->instance::SETTING_NAME_VIDEO_CACHE, true );
 		add_option( $this->instance::SETTING_NAME_DATA_REMOVAL, true );
 		add_option( $this->instance::SETTING_NAME_ARCHIVE, 'none' );
+		add_option( $this->instance::SETTING_NAME_AUTO_ADVANCE, true );
+		add_option( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION, 7 );
 
 		$this->instance->on_plugin_uninstall();
 
@@ -88,5 +92,30 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertFalse( get_option( $this->instance::SETTING_NAME_VIDEO_CACHE ) );
 		$this->assertFalse( get_option( $this->instance::SETTING_NAME_DATA_REMOVAL ) );
 		$this->assertSame( 'default', get_option( $this->instance::SETTING_NAME_ARCHIVE ) );
+		$this->assertTrue( get_option( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
+		$this->assertSame( 7, get_option( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_saved_option(): void {
+		add_option( $this->instance::SETTING_NAME_AUTO_ADVANCE, false );
+		$this->assertFalse( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, true ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_registered_default(): void {
+		$this->assertTrue( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_explicit_default(): void {
+		$this->assertFalse( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, false ) );
+		$this->assertSame( 'foo', $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, 'foo' ) );
 	}
 }

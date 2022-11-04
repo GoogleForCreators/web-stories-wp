@@ -128,6 +128,16 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	public const SETTING_NAME_SHOPIFY_ACCESS_TOKEN = 'web_stories_shopify_access_token';
 
 	/**
+	 * Auto-advance setting, `true` means advancing automatically.
+	 */
+	public const SETTING_NAME_AUTO_ADVANCE = 'web_stories_auto_advance';
+
+	/**
+	 * Default Page Duration in seconds.
+	 */
+	public const SETTING_NAME_DEFAULT_PAGE_DURATION = 'web_stories_default_page_duration';
+
+	/**
 	 * Shopping_Vendors instance.
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
@@ -352,6 +362,28 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 				'show_in_rest' => true,
 			]
 		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_AUTO_ADVANCE,
+			[
+				'description'  => __( 'Auto-advance', 'web-stories' ),
+				'type'         => 'boolean',
+				'default'      => true,
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_DEFAULT_PAGE_DURATION,
+			[
+				'description'  => __( 'Default Page Duration', 'web-stories' ),
+				'type'         => 'number',
+				'default'      => 7,
+				'show_in_rest' => true,
+			]
+		);
 	}
 
 	/**
@@ -366,12 +398,24 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * @return string|array<int|string,mixed>|bool Setting value.
 	 */
 	public function get_setting( string $key, $default = false ) {
+		// Distinguish between `false` as a default, and not passing one, just like WordPress.
+		$passed_default = \func_num_args() > 1;
+
+		if ( $passed_default ) {
+			/**
+			 * Setting value.
+			 *
+			 * @var string|array<int|string,mixed>|bool
+			 */
+			return get_option( $key, $default );
+		}
+
 		/**
 		 * Setting value.
 		 *
 		 * @var string|array<int|string,mixed>|bool
 		 */
-		return get_option( $key, $default );
+		return get_option( $key );
 	}
 
 	/**
@@ -410,5 +454,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 		delete_option( self::SETTING_NAME_SHOPPING_PROVIDER );
 		delete_option( self::SETTING_NAME_SHOPIFY_HOST );
 		delete_option( self::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+		delete_option( self::SETTING_NAME_DEFAULT_PAGE_DURATION );
+		delete_option( self::SETTING_NAME_AUTO_ADVANCE );
 	}
 }

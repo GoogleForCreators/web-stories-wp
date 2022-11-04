@@ -16,3 +16,4 @@
 
 export * from './url';
 export { default as addQueryArgs } from './addQueryArgs';
+export { default as safeDecodeURIComponent } from './safeDecodeUriComponent';

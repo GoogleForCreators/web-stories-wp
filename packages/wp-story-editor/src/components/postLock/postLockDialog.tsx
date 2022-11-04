@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __, sprintf } from '@googleforcreators/i18n';
+import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
@@ -29,7 +30,6 @@ import { Dialog } from '@googleforcreators/story-editor';
 /**
  * Internal dependencies
  */
-import type { User } from '../../types';
 import {
   DialogWrapper,
   DialogText,
@@ -38,33 +38,24 @@ import {
   Avatar,
 } from './shared';
 
-interface PostLockDialogProp {
-  isOpen: boolean;
-  showTakeOver?: boolean;
-  user?: User;
-  dashboardLink: string;
-  previewLink?: string;
-  onClose: () => void;
-}
-
 /**
- * @param props Component props.
- * @param props.isOpen If open or not.
- * @param props.user Lock owner's user data as a object.
- * @param props.dashboardLink Link to dashboard.
- * @param props.previewLink Preview link.
- * @param props.onClose Function when dialog is closed.
- * @param props.showTakeOver Weather or not to show take over button.
- * @return Render.
+ * @param {Object} props Component props.
+ * @param {boolean} props.isOpen If open or not.
+ * @param {Object} props.owner Lock owner's user data as a object.
+ * @param {string} props.dashboardLink Link to dashboard.
+ * @param {string} props.previewLink Preview link.
+ * @param {Function} props.onClose Function when dialog is closed.
+ * @param {boolean} props.showTakeOver Weather or not to show take over button.
+ * @return {*} Render.
  */
 function PostLockDialog({
   isOpen,
   onClose,
-  user,
+  owner,
   dashboardLink,
   previewLink,
   showTakeOver = false,
-}: PostLockDialogProp) {
+}) {
   return (
     <Dialog
       isOpen={isOpen}
@@ -103,11 +94,11 @@ function PostLockDialog({
       }
     >
       <DialogWrapper>
-        {user?.avatar && (
+        {owner?.avatar && (
           <DialogImageWrapper>
             <Avatar
-              src={user.avatar}
-              alt={user.name}
+              src={owner.avatar}
+              alt={owner.name}
               height={48}
               width={48}
               crossOrigin="anonymous"
@@ -121,33 +112,33 @@ function PostLockDialog({
             {showTakeOver ? (
               <>
                 {sprintf(
-                  /* translators: %s: user's name */
+                  /* translators: %s: owner's name */
                   __(
                     '%s is currently working on this story, which means you cannot make changes, unless you take over.',
                     'web-stories'
                   ),
-                  user?.name
+                  owner?.name
                 )}
               </>
             ) : (
               sprintf(
-                /* translators: %s: user's name */
+                /* translators: %s: owner's name */
                 __(
                   '%s is currently working on this story, which means you cannot make changes.',
                   'web-stories'
                 ),
-                user?.name
+                owner?.name
               )
             )}
           </DialogText>
           {showTakeOver && (
             <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
               {sprintf(
-                /* translators: %s: user's name */ __(
+                /* translators: %s: owner's name */ __(
                   'If you take over, %s will lose editing control to the story, but their changes will be saved.',
                   'web-stories'
                 ),
-                user?.name
+                owner?.name
               )}
             </DialogText>
           )}
@@ -156,5 +147,14 @@ function PostLockDialog({
     </Dialog>
   );
 }
+
+PostLockDialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  showTakeOver: PropTypes.bool,
+  owner: PropTypes.object,
+  dashboardLink: PropTypes.string.isRequired,
+  previewLink: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default PostLockDialog;

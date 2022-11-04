@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __, sprintf } from '@googleforcreators/i18n';
+import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
@@ -30,7 +31,6 @@ import { Dialog } from '@googleforcreators/story-editor';
 /**
  * Internal dependencies
  */
-import type { User } from '../../types';
 import {
   DialogWrapper,
   DialogText,
@@ -39,30 +39,22 @@ import {
   Avatar,
 } from './shared';
 
-interface PostTakeOverDialogProps {
-  isOpen: bool;
-  user?: User;
-  dashboardLink: string;
-  previewLink: string;
-  onClose: () => void;
-}
-
 /**
- * @param props Component props.
- * @param props.isOpen If open or not.
- * @param props.user Lock owner's user data as a object.
- * @param props.dashboardLink Link to dashboard.
- * @param props.previewLink Preview link.
- * @param props.onClose Function when dialog is closed.
- * @return Render.
+ * @param {Object} props Component props.
+ * @param {boolean} props.isOpen If open or not.
+ * @param {Object} props.owner Lock owner's user data as a object.
+ * @param {string} props.dashboardLink Link to dashboard.
+ * @param {string} props.previewLink Preview link.
+ * @param {Function} props.onClose Function when dialog is closed.
+ * @return {*} Render.
  */
 function PostTakeOverDialog({
   isOpen,
-  user,
+  owner,
   dashboardLink,
   previewLink,
   onClose,
-}: PostTakeOverDialogProps) {
+}) {
   return (
     <Dialog
       isOpen={isOpen}
@@ -93,11 +85,11 @@ function PostTakeOverDialog({
       }
     >
       <DialogWrapper>
-        {user && user?.avatar && (
+        {owner?.avatar && (
           <DialogImageWrapper>
             <Avatar
-              src={user.avatar}
-              alt={user.name}
+              src={owner.avatar}
+              alt={owner.name}
               height={48}
               width={48}
               crossOrigin="anonymous"
@@ -109,9 +101,9 @@ function PostTakeOverDialog({
         <DialogContent>
           <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(
-              /* translators: %s: user's name */
+              /* translators: %s: owner's name */
               __('%s now has editing control of this story.', 'web-stories'),
-              user?.name
+              owner?.name
             )}
           </DialogText>
 
@@ -126,5 +118,13 @@ function PostTakeOverDialog({
     </Dialog>
   );
 }
+
+PostTakeOverDialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  owner: PropTypes.object,
+  dashboardLink: PropTypes.string.isRequired,
+  previewLink: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default PostTakeOverDialog;

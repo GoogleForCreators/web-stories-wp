@@ -47,4 +47,6 @@ export interface Story {
   backgroundAudio?: {
     resource: AudioResource;
   };
+  autoAdvance?: boolean;
+  defaultPageDuration?: number;
 }
