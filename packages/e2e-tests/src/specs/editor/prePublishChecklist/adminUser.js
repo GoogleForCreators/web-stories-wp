@@ -120,7 +120,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
 
     await expect(page).toClick('button[aria-label^="Checklist: "]');
     await expect(page).toMatchElement(
-      '#pre-publish-checklist[data-isexpanded="true"]'
+      '[aria-label="Potential Story issues by category"][data-isexpanded="true"]'
     );
     await expect(page).toMatch('Add poster image');
     await takeSnapshot(page, 'Pre-publish Checklist');
