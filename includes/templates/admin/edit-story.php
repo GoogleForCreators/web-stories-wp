@@ -138,7 +138,7 @@ if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.N
 	$story_query_params['web_stories_demo'] = 'true';
 
 	$story_path             = $story_initial_path . build_query( $story_query_params );
-	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
+	$story_data             = rest_preload_api_request( [], $story_path );
 	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
 }
 
@@ -154,7 +154,7 @@ $preload_paths = apply_filters( 'web_stories_editor_preload_paths', $preload_pat
 
 $preload_data = array_reduce(
 	$preload_paths,
-	'\Google\Web_Stories\rest_preload_api_request',
+	'rest_preload_api_request',
 	[]
 );
 

@@ -388,7 +388,7 @@ class Dashboard extends Service_Base {
 
 		$preload_data = array_reduce(
 			$preload_paths,
-			'\Google\Web_Stories\rest_preload_api_request',
+			'rest_preload_api_request',
 			[]
 		);
 
