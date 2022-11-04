@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use WP_Block_Editor_Context;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
@@ -386,17 +387,8 @@ class Dashboard extends Service_Base {
 		 */
 		$preload_paths = apply_filters( 'web_stories_dashboard_preload_paths', $preload_paths );
 
-		$preload_data = array_reduce(
-			$preload_paths,
-			'\Google\Web_Stories\rest_preload_api_request',
-			[]
-		);
-
-		wp_add_inline_script(
-			'wp-api-fetch',
-			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
-			'after'
-		);
+		$block_editor_context = new WP_Block_Editor_Context( array( 'name' => 'web-stories/dashboard' ) );
+		block_editor_rest_api_preload( $preload_paths, $block_editor_context );
 	}
 
 	/**

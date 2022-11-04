@@ -31,6 +31,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post_type, $post_type_object, $post;
 
+$block_editor_context = new WP_Block_Editor_Context( array( 'post' => $post ) );
+
 $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 $initial_edits     = [ 'story' => null ];
 
@@ -125,20 +127,13 @@ $story_query_params = [
 	),
 ];
 
-/*
- * Ensure the global $post remains the same after API data is preloaded.
- * Because API preloading can call the_content and other filters, plugins
- * can unexpectedly modify $post.
- */
-$backup_global_post = $post;
-
 if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$preload_paths[] = $story_initial_path . build_query( $story_query_params );
 } else {
 	$story_query_params['web_stories_demo'] = 'true';
 
 	$story_path             = $story_initial_path . build_query( $story_query_params );
-	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
+	$story_data             = rest_preload_api_request( [], $story_path );
 	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
 }
 
@@ -152,26 +147,13 @@ if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.N
  */
 $preload_paths = apply_filters( 'web_stories_editor_preload_paths', $preload_paths, $post );
 
-$preload_data = array_reduce(
-	$preload_paths,
-	'\Google\Web_Stories\rest_preload_api_request',
-	[]
-);
-
-// Restore the global $post as it was before API preloading.
-$post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+block_editor_rest_api_preload( $preload_paths, $block_editor_context );
 
 // In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
 require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
 register_and_do_post_meta_boxes( $post );
 
 $editor_settings = \Google\Web_Stories\Services::get( 'editor' )->get_editor_settings();
-
-wp_add_inline_script(
-	'wp-api-fetch',
-	sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
-	'after'
-);
 
 $init_script = <<<JS
 	wp.domReady( function() {
