@@ -21,9 +21,13 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { DashboardConfig } from '../../types/configProvider';
 import Context from './context';
 
-function useConfig(selector = identity) {
+function useConfig(): DashboardConfig;
+function useConfig<T>(
+  selector: (state: DashboardConfig) => T | DashboardConfig = identity
+) {
   return useContextSelector(Context, selector);
 }
 
