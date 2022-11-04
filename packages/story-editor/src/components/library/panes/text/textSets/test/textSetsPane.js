@@ -28,7 +28,6 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
 import LibraryContext from '../../../../context';
 import FontContext from '../../../../../../app/font/context';
 import APIContext from '../../../../../../app/api/context';
-import ConfigContext from '../../../../../../app/config/context';
 import StoryContext from '../../../../../../app/story/context';
 import TextSetsPane from '../textSetsPane';
 
