@@ -28,6 +28,7 @@ import { useAPI } from '../../api';
 import { useHistory } from '../../history';
 import getUniquePresets from '../../../utils/getUniquePresets';
 import { useConfig } from '../../config';
+import { populateElementFontData } from '../../../utils/populateElementFontData ';
 
 function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   const {
@@ -83,6 +84,7 @@ function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   const storyData =
     storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
   const pages = storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
+  populateElementFontData(pages, storyData?.fonts);
 
   // Initialize color/style presets, if missing.
   // Otherwise ensure the saved presets are unique.
@@ -99,6 +101,7 @@ function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   const story = {
     storyId: storyId,
     title,
+    fonts: storyData?.fonts || {},
     status,
     author,
     date,

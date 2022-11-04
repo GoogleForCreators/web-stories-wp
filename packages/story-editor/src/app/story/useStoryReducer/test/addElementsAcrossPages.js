@@ -36,6 +36,7 @@ describe('addElementsAcrossPages', () => {
       ],
       current: '111',
       selection: ['000'],
+      story: { fonts: {} },
     });
 
     const result = addElementsAcrossPages({
@@ -98,7 +99,7 @@ describe('addElementsAcrossPages', () => {
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
       copiedElementState: {},
-      story: {},
+      story: { fonts: {} },
     });
   });
 });

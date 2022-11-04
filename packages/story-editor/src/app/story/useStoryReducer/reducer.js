@@ -107,6 +107,10 @@ function reducer(state, { type, payload }) {
       return reducers.updateStory(state, payload);
     }
 
+    case types.UPDATE_STORY_FONTS: {
+      return reducers.updateStoryFonts(state, payload);
+    }
+
     case types.UPDATE_ANIMATION_STATE: {
       return reducers.updateAnimationState(state, payload);
     }
