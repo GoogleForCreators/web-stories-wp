@@ -165,7 +165,6 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_open_graph_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_twitter_metadata' ] ) );
 		$this->assertSame( 4, has_action( 'web_stories_story_head', [ $this->instance, 'print_feed_link' ] ) );
-
 	}
 
 	/**
@@ -180,6 +179,32 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::print_metadata
 	 */
 	public function test_print_document_title(): void {
+		$output = get_echo( [ $this->instance, 'print_document_title' ] );
+		$this->assertStringNotContainsString( '<title>', $output );
+	}
+
+	/**
+	 * @covers ::print_metadata
+	 */
+	public function test_print_document_title_block_theme(): void {
+		if ( ! is_wp_version_compatible( '5.9.0' ) ) {
+			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
+		}
+
+		$block_theme = 'twentytwentytwo';
+
+		// Skip if the block theme is not available.
+		if ( ! wp_get_theme( $block_theme )->exists() ) {
+			$this->markTestSkipped( "$block_theme must be available." );
+		}
+
+		switch_theme( $block_theme );
+
+		// Skip if we could not switch to the block theme.
+		if ( wp_get_theme()->stylesheet !== $block_theme ) {
+			$this->markTestSkipped( "Could not switch to $block_theme." );
+		}
+
 		$output = get_echo( [ $this->instance, 'print_document_title' ] );
 		$this->assertStringContainsString( '<title>', $output );
 	}

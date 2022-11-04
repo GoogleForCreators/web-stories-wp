@@ -22,4 +22,13 @@ import type { Page } from './page';
 export interface Story {
   version: number;
   pages: Page[];
+  backgroundAudio?: {
+    resource: {
+      src: string;
+      id: number;
+      mimeType: string;
+    };
+  };
+  autoAdvance?: boolean;
+  defaultPageDuration?: number;
 }

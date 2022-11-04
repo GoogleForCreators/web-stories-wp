@@ -26,6 +26,7 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@googleforcreators/dashboard';
+import { preloadImage } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -44,6 +45,7 @@ import { Wrapper, Main } from './components';
 import useEditorSettings from './useEditorSettings';
 import CustomFontsSettings from './customFonts';
 import Shopping from './shopping';
+import PageAdvancement from './pageAdvancement';
 
 function EditorSettings() {
   const {
@@ -76,6 +78,8 @@ function EditorSettings() {
     shoppingProvider,
     shopifyHost,
     shopifyAccessToken,
+    autoAdvance,
+    defaultPageDuration,
   } = useEditorSettings(
     ({
       actions: {
@@ -105,6 +109,8 @@ function EditorSettings() {
           shoppingProvider,
           shopifyHost,
           shopifyAccessToken,
+          autoAdvance,
+          defaultPageDuration,
         },
         media: { isLoading: isMediaLoading, newlyCreatedMediaIds },
         publisherLogos: { publisherLogos },
@@ -140,6 +146,8 @@ function EditorSettings() {
       shoppingProvider,
       shopifyHost,
       shopifyAccessToken,
+      autoAdvance,
+      defaultPageDuration,
     })
   );
 
@@ -212,16 +220,7 @@ function EditorSettings() {
           return;
         }
 
-        imagePromises.push(
-          new Promise((resolve, reject) => {
-            const img = new Image();
-
-            img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error(file.name));
-
-            img.src = URL.createObjectURL(file);
-          })
-        );
+        imagePromises.push(preloadImage({ src: URL.createObjectURL(file) }));
       });
 
       if (!allFileSizesWithinMaxUpload) {
@@ -400,6 +399,11 @@ function EditorSettings() {
                   shopifyAccessToken={shopifyAccessToken}
                   vendors={vendors}
                   woocommerce={woocommerce}
+                />
+                <PageAdvancement
+                  updateSettings={updateSettings}
+                  autoAdvance={autoAdvance}
+                  defaultPageDuration={defaultPageDuration}
                 />
               </>
             )}

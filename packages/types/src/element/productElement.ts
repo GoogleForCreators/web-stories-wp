@@ -17,8 +17,26 @@
 /**
  * Internal dependencies
  */
-import type { Element } from './element';
+import type { Element, ElementType } from './element';
+
+interface ProductImage {
+  alt: string;
+  url: string;
+}
+
+export interface Product {
+  productId: string;
+  productBrand: string;
+  productDetails: string;
+  productImages: ProductImage[];
+  productPrice: number;
+  productPriceCurrency: string;
+  productTitle: string;
+  productUrl: string;
+  type: ElementType.Product;
+}
 
 export interface ProductElement extends Element {
-  productId: string;
+  type: ElementType.Product;
+  product: Product;
 }

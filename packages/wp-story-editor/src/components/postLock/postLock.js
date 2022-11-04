@@ -30,6 +30,7 @@ import {
   useStory,
   useConfig,
   useCurrentUser,
+  useHistory,
 } from '@googleforcreators/story-editor';
 
 /**
@@ -55,20 +56,28 @@ function PostLock() {
     api: { stories, storyLocking },
   } = useConfig();
 
-  const { previewLink, lockUser } = useStory(
+  const {
+    state: { hasNewChanges },
+  } = useHistory();
+
+  const { previewLink, lockUser, autoSave } = useStory(
     ({
       state: {
         story: { previewLink, extras: { lockUser = {} } = {} },
       },
+      actions: { autoSave },
     }) => ({
       previewLink,
       lockUser,
+      autoSave,
     })
   );
 
   const { enablePostLockingTakeOver } = useFeatures();
-  const [isFirstTime, setIsFirstTime] = useState(true);
-  const [user, setUser] = useState({});
+  const [currentOwner, setCurrentOwner] = useState(null);
+  const [initialOwner, setInitialOwner] = useState(null);
+  const [autoSaveDoneWhenTakenOver, setAutoSaveDoneWhenTakenOver] =
+    useState(false);
   const [nonce, setNonce] = useState(firstNonce);
 
   // When dialog is closed, then set current user to lock owner.
@@ -76,7 +85,7 @@ function PostLock() {
     if (!enablePostLockingTakeOver) {
       return;
     }
-    setUser({});
+    setCurrentOwner(null);
     setStoryLockById(storyId, stories);
   }, [enablePostLockingTakeOver, storyId, stories]);
 
@@ -87,31 +96,40 @@ function PostLock() {
 
   // When async call only if dialog is true, current user is loaded and post locking is enabled.
   const doGetStoryLock = useCallback(() => {
-    if (showLockedDialog && currentUserLoaded) {
-      getStoryLockById(storyId, stories)
-        .then(({ locked, nonce: newNonce, _embedded }) => {
+    (async () => {
+      if (showLockedDialog && currentUserLoaded) {
+        try {
+          const {
+            locked,
+            nonce: newNonce,
+            user,
+          } = await getStoryLockById(storyId, stories);
           const lockAuthor = {
-            id: _embedded?.author?.[0]?.id || 0,
-            name: _embedded?.author?.[0]?.name || '',
-            avatar: _embedded?.author?.[0]?.avatar_urls?.['96'] || '',
+            ...user,
+            avatar: user?.avatar?.['96'] || '',
           };
+          if (locked && initialOwner === null) {
+            setInitialOwner(lockAuthor);
+          }
           if (locked && lockAuthor?.id && lockAuthor?.id !== currentUser.id) {
-            setUser(lockAuthor);
+            setCurrentOwner(lockAuthor);
           } else {
             setStoryLockById(storyId, stories);
           }
           // Refresh nonce on every request.
           setNonce(newNonce);
-        })
-        .catch((err) => {
+        } catch (err) {
           trackError('post_lock', err.message);
-        });
-    }
+        }
+      }
+    })();
   }, [
-    setUser,
+    setCurrentOwner,
     storyId,
     stories,
     currentUser,
+    initialOwner,
+    setInitialOwner,
     showLockedDialog,
     currentUserLoaded,
   ]);
@@ -125,7 +143,7 @@ function PostLock() {
   useEffect(() => {
     if (showLockedDialog && currentUserLoaded) {
       if (lockUser?.id && lockUser?.id !== currentUser.id) {
-        setUser(lockUser);
+        setCurrentOwner(lockUser);
       }
     }
   }, [lockUser, currentUser, currentUserLoaded, showLockedDialog]);
@@ -133,7 +151,7 @@ function PostLock() {
   // Register an event on user navigating away from current tab to release / delete lock.
   useEffect(() => {
     function releasePostLock() {
-      if (showLockedDialog && user?.id && nonce) {
+      if (showLockedDialog && currentOwner?.id && nonce) {
         deleteStoryLockById(storyId, nonce, storyLocking);
       }
     }
@@ -143,7 +161,7 @@ function PostLock() {
     return () => {
       window.removeEventListener('beforeunload', releasePostLock);
     };
-  }, [storyId, showLockedDialog, user, nonce, storyLocking]);
+  }, [storyId, showLockedDialog, currentOwner, nonce, storyLocking]);
 
   // Register repeating callback to check lock every 150 seconds.
   useEffect(() => {
@@ -153,23 +171,47 @@ function PostLock() {
       }
       if (currentUserLoaded) {
         cachedDoGetStoryLock.current();
-        setIsFirstTime(false);
       }
     }, postLockInterval * 1000);
 
     return () => clearInterval(timeout);
   }, [postLockInterval, currentUserLoaded]);
 
-  if (!showLockedDialog || !user) {
+  useEffect(() => {
+    if (
+      enablePostLockingTakeOver &&
+      showLockedDialog &&
+      hasNewChanges &&
+      currentUser?.id === initialOwner?.id &&
+      currentOwner &&
+      currentOwner?.id !== currentUser?.id &&
+      !autoSaveDoneWhenTakenOver
+    ) {
+      autoSave();
+      setAutoSaveDoneWhenTakenOver(true);
+    }
+  }, [
+    enablePostLockingTakeOver,
+    hasNewChanges,
+    showLockedDialog,
+    currentOwner,
+    initialOwner,
+    currentUser,
+    autoSave,
+    autoSaveDoneWhenTakenOver,
+    setAutoSaveDoneWhenTakenOver,
+  ]);
+
+  if (!showLockedDialog || !currentOwner) {
     return null;
   }
 
   // On first load, display dialog with option to take over.
-  if (isFirstTime) {
+  if (initialOwner?.id !== currentUser?.id) {
     return (
       <PostLockDialog
-        isOpen={Boolean(user?.id)}
-        user={user}
+        isOpen={Boolean(currentOwner?.id)}
+        owner={currentOwner}
         onClose={closeDialog}
         previewLink={previewLink}
         dashboardLink={dashboardLink}
@@ -179,12 +221,17 @@ function PostLock() {
   }
 
   // Second time around, show message that story was taken over.
-  if (enablePostLockingTakeOver) {
+  if (
+    enablePostLockingTakeOver &&
+    currentUser?.id === initialOwner?.id &&
+    currentOwner?.id !== currentUser?.id
+  ) {
     return (
       <PostTakeOverDialog
-        isOpen={Boolean(user?.id)}
-        user={user}
+        isOpen={Boolean(currentOwner?.id)}
+        owner={currentOwner}
         dashboardLink={dashboardLink}
+        previewLink={previewLink}
         onClose={closeDialog}
       />
     );

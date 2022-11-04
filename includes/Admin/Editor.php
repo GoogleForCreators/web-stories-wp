@@ -352,9 +352,7 @@ class Editor extends Service_Base implements HasRequirements {
 			admin_url( 'edit.php' )
 		);
 
-		/** This filter is documented in wp-admin/includes/ajax-actions.php */
-		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
-		$user        = wp_get_current_user();
+		$user = wp_get_current_user();
 
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
@@ -370,10 +368,13 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$shopping_provider = $this->settings->get_setting( $this->settings::SETTING_NAME_SHOPPING_PROVIDER );
 
-		$auto_save_link     = '';
-		$improved_autosaves = $this->experiments->is_experiment_enabled( 'improvedAutosaves' );
+		$auto_advance = $this->settings->get_setting( $this->settings::SETTING_NAME_AUTO_ADVANCE );
 
-		if ( $improved_autosaves && isset( $story_id ) ) {
+		$page_duration = $this->settings->get_setting( $this->settings::SETTING_NAME_DEFAULT_PAGE_DURATION );
+
+		$auto_save_link = '';
+
+		if ( isset( $story_id ) ) {
 
 			$auto_save = wp_get_post_autosave( $story_id );
 
@@ -427,13 +428,15 @@ class Editor extends Service_Base implements HasRequirements {
 				'publisher' => $publisher_name,
 			],
 			'postLock'                => [
-				'interval'         => $time_window,
+				'interval'         => 60,
 				'showLockedDialog' => $show_locked_dialog,
 			],
 			'canViewDefaultTemplates' => true,
 			'version'                 => WEBSTORIES_VERSION,
 			'nonce'                   => $nonce,
 			'showMedia3p'             => true,
+			'globalAutoAdvance'       => (bool) $auto_advance,
+			'globalPageDuration'      => (float) $page_duration,
 			'shoppingProvider'        => $shopping_provider,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),

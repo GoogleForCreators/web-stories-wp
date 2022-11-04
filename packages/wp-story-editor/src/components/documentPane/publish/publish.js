@@ -54,7 +54,6 @@ import {
   useHighlights,
   useSidebar,
 } from '@googleforcreators/story-editor';
-import { useFeature } from 'flagged';
 import { addQueryArgs } from '@googleforcreators/url';
 /**
  * Internal dependencies
@@ -158,8 +157,6 @@ function PublishPanel({ nameOverride }) {
     MediaUpload,
     revisionLink,
   } = useConfig();
-
-  const improvedAutosaves = useFeature('improvedAutosaves');
 
   const allowedImageFileTypes = useMemo(
     () =>
@@ -448,7 +445,7 @@ function PublishPanel({ nameOverride }) {
             </LabelWrapper>
           </DropdownWrapper>
         </HighlightRow>
-        {improvedAutosaves && revisionCount > 1 ? (
+        {revisionCount > 1 ? (
           <RevisionsWrapper>
             <Label>
               <LabelIconWrapper>

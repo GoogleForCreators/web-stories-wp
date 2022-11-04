@@ -1,9 +1,42 @@
+diff --git a/node_modules/expect-puppeteer/lib/index.js b/node_modules/expect-puppeteer/lib/index.js
+index 082ab2e..d51db70 100644
+--- a/node_modules/expect-puppeteer/lib/index.js
++++ b/node_modules/expect-puppeteer/lib/index.js
+@@ -95,7 +95,9 @@ function expectPuppeteer(actual) {
+ 
+   switch (type) {
+     case 'Page':
++    case 'CDPPage':
+     case 'Frame':
++    case 'CDPFrame':
+       return internalExpect(actual, pageMatchers);
+ 
+     case 'ElementHandle':
 diff --git a/node_modules/expect-puppeteer/lib/utils.js b/node_modules/expect-puppeteer/lib/utils.js
-index 7065265..e40f2c6 100644
+index 7065265..1a85cf8 100644
 --- a/node_modules/expect-puppeteer/lib/utils.js
 +++ b/node_modules/expect-puppeteer/lib/utils.js
-@@ -26,9 +26,8 @@ const getContext = async (instance, pageFunction) => {
-
+@@ -4,7 +4,7 @@ exports.__esModule = true;
+ exports.getPuppeteerType = exports.getContext = exports.expandSearchExpr = exports.enhanceError = void 0;
+ 
+ const getPuppeteerType = instance => {
+-  if (instance && instance.constructor && instance.constructor.name && ['Page', 'Frame', 'ElementHandle'].includes(instance.constructor.name) && instance.$) {
++  if (instance && instance.constructor && instance.constructor.name && ['Page', 'CDPPage', 'Frame', 'CDPFrame', 'ElementHandle'].includes(instance.constructor.name) && instance.$) {
+     return instance.constructor.name;
+   }
+ 
+@@ -18,7 +18,9 @@ const getContext = async (instance, pageFunction) => {
+ 
+   switch (type) {
+     case 'Page':
++    case 'CDPPage':
+     case 'Frame':
++    case 'CDPFrame':
+       return {
+         page: instance,
+         handle: await instance.evaluateHandle(pageFunction)
+@@ -26,9 +28,8 @@ const getContext = async (instance, pageFunction) => {
+ 
      case 'ElementHandle':
        {
 -        const executionContext = await instance.executionContext();

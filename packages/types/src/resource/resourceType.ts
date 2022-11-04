@@ -18,4 +18,5 @@ export enum ResourceType {
   Image = 'image',
   Video = 'video',
   Gif = 'gif',
+  Audio = 'audio',
 }

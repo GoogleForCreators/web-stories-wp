@@ -282,6 +282,7 @@ const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
 
   const chunkName = htmlWebpackPlugin.options.chunks[0];
   const omitPrimaryChunk = (f) => f !== chunkName;
+  const omitRightToLeftChunk = (f) => !f.endsWith('-rtl');
 
   const js = htmlWebpackPlugin.files.js
     .map((pathname) => {
@@ -295,7 +296,8 @@ const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
       const f = filenameOf(pathname);
       return f.split('.css')[0];
     })
-    .filter(omitPrimaryChunk);
+    .filter(omitPrimaryChunk)
+    .filter(omitRightToLeftChunk);
 
   // We're only interested in chunks from dynamic imports;
   // ones that are not already in `js` and not primaries.
@@ -435,7 +437,7 @@ const activationNotice = {
   ...sharedConfig,
   entry: {
     'web-stories-activation-notice':
-      './packages/activation-notice/src/index.js',
+      './packages/activation-notice/src/index.tsx',
   },
   plugins: [
     ...sharedConfig.plugins,

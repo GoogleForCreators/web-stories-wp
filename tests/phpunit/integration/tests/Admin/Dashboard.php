@@ -175,6 +175,7 @@ class Dashboard extends DependencyInjectedTestCase {
 		$types            = $this->injector->make( \Google\Web_Stories\Media\Types::class );
 		$shopping_vendors = $this->injector->make( \Google\Web_Stories\Shopping\Shopping_Vendors::class );
 		$woocommerce      = $this->injector->make( \Google\Web_Stories\Integrations\WooCommerce::class );
+		$settings         = $this->injector->make( \Google\Web_Stories\Settings::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,
@@ -188,7 +189,8 @@ class Dashboard extends DependencyInjectedTestCase {
 			$context,
 			$types,
 			$shopping_vendors,
-			$woocommerce
+			$woocommerce,
+			$settings
 		);
 
 		$this->instance->add_menu_page();

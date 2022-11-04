@@ -36,9 +36,9 @@ function transformStoryResponse(post) {
     capabilities: {},
     extras: {
       lockUser: {
-        id: embedded?.['wp:lockuser']?.[0].id || 0,
-        name: embedded?.['wp:lockuser']?.[0].name || '',
-        avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
+        id: embedded?.['wp:lock']?.[0].user.id || 0,
+        name: embedded?.['wp:lock']?.[0].user.name || '',
+        avatar: embedded?.['wp:lock']?.[0].user.avatar?.['96'] || '',
       },
     },
     featuredMedia: storyPoster

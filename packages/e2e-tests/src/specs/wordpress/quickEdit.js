@@ -22,16 +22,19 @@ import {
   publishStory,
   withUser,
   visitAdminPage,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
+
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Quick Edit', () => {
   withUser('author', 'password');
 
-  // There is currently a known "i.isSingleDoc is not a function" bug in AMP
-  // for which the fix has not landed in production yet.
-  // It causes the navigation at the end of the test to fail.
-  // eslint-disable-next-line jest/no-disabled-tests -- Temporarily disabled.
-  it.skip('should save story without breaking markup', async () => {
+  afterAll(async () => {
+    await trashAllPosts('web-story');
+  });
+
+  it('should save story without breaking markup', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');

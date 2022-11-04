@@ -19,6 +19,8 @@
  */
 import { takeSnapshot, createNewStory } from '@web-stories-wp/e2e-test-utils';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('Story Editor with disabled JavaScript', () => {
   it('should display error message', async () => {
     // Disable javascript for test.

@@ -23,9 +23,11 @@ describe('removeTrackName', () => {
     expect(
       removeTrackName({
         backgroundAudio: {
-          src: 'https://example.com/audio.mp3',
-          id: 123,
-          mimeType: 'audio/mpeg',
+          resource: {
+            src: 'https://example.com/audio.mp3',
+            id: 123,
+            mimeType: 'audio/mpeg',
+          },
         },
         pages: [
           {
