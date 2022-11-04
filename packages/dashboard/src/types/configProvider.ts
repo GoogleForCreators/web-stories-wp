@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import type { Template } from '@googleforcreators/templates';
+import type { Product } from '@googleforcreators/types';
+
 export interface Locale {
   locale?: string;
   dateFormat?: string;
@@ -46,16 +52,86 @@ export interface StyleConstants {
   leftOffset: number;
 }
 
+export interface QueryParams {
+  page: number;
+  perPage: number;
+  filters: Record<string, string>;
+  sort: Record<string, string>;
+}
+
+export interface Author {
+  id: number;
+  name: string;
+}
+
+export type Taxonomy = {
+  name: string;
+  slug: string;
+  capabilities: Record<string, string>;
+  description?: string;
+  labels: Record<string, string>;
+  types: string[];
+  showCloud?: boolean;
+  hierarchical: boolean;
+  restBase: string;
+  restNamespace: string;
+  visibility: Record<string, boolean>;
+  restPath: string;
+};
+
+interface TaxonomiesArgs {
+  hierarchical?: boolean;
+  show_ui?: boolean;
+}
+
+interface TermArgs {
+  search?: string;
+  per_page?: number;
+}
+
+interface Term {
+  id: number;
+  name: string;
+  slug: string;
+  taxonomy: string;
+}
+
 export interface ApiCallbacks {
-  createStoryFromTemplate?: void;
-  duplicateStory?: void;
-  fetchStories?: void;
-  getAuthors?: void;
-  getProducts?: void;
-  getTaxonomies?: void;
-  getTaxonomyTerms?: void;
-  trashStory?: void;
-  updateStory?: void;
+  createStoryFromTemplate?: (template: Template) => Promise<DashboardStory>;
+  duplicateStory?: (story: DashboardStory) => Promise<DashboardStory>;
+  fetchStories?: () => Promise<DashboardStory[]>;
+  getAuthors?: (search: string) => Promise<Author[]>;
+  getProducts?: (search: string) => Promise<Product[]>;
+  getTaxonomies?: (args: TaxonomiesArgs) => Promise<Taxonomy[]>;
+  getTaxonomyTerms?: (endpoint: string, args: TermArgs) => Promise<Term>;
+  trashStory?: (id: number) => Promise<DashboardStory>;
+  updateStory?: (
+    story: Pick<DashboardStory, 'id' | 'author' | 'title'>
+  ) => Promise<DashboardStory>;
+}
+
+interface LockUser {
+  name?: string;
+  id?: number;
+  avatar?: string | null;
+}
+
+export interface DashboardStory {
+  id: number;
+  status: string;
+  title: string;
+  created: string;
+  createdGmt: string;
+  modified: string;
+  modifiedGmt: string;
+  author: Author;
+  locked: boolean;
+  lockUser: LockUser;
+  bottomTargetAction: string;
+  editStoryLink: string;
+  previewLink: string;
+  link: string;
+  capabilities: Record<string, boolean>;
 }
 
 export interface DashboardConfig {
