@@ -195,6 +195,47 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$data     = $response->get_data();
 		$links    = $response->get_links();
 		$this->assertArrayHasKey( 'locked', $data );
+		$this->assertArrayHasKey( 'user', $data );
+		$this->assertArrayHasKey( 'id', $data['user'] );
+		$this->assertArrayHasKey( 'name', $data['user'] );
+		$this->assertArrayHasKey( 'avatar', $data['user'] );
+		$this->assertSame( self::$author_id, $data['user']['id'] );
+		$this->assertTrue( $data['locked'] );
+
+		$this->assertArrayHasKey( 'self', $links );
+		$this->assertArrayHasKey( 'author', $links );
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 * @covers ::prepare_links
+	 * @covers ::get_item_permissions_check
+	 */
+	public function test_get_item_with_lock_disabled_avatar(): void {
+		update_option( 'show_avatars', false );
+		$this->controller->register();
+
+		wp_set_current_user( self::$author_id );
+		$story    = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'draft',
+				'post_author' => self::$author_id,
+			]
+		);
+		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
+		update_post_meta( $story, '_edit_lock', $new_lock );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+		$links    = $response->get_links();
+		$this->assertArrayHasKey( 'locked', $data );
+		$this->assertArrayHasKey( 'user', $data );
+		$this->assertArrayHasKey( 'id', $data['user'] );
+		$this->assertArrayHasKey( 'name', $data['user'] );
+		$this->assertArrayNotHasKey( 'avatar', $data['user'] );
+		$this->assertSame( self::$author_id, $data['user']['id'] );
 		$this->assertTrue( $data['locked'] );
 
 		$this->assertArrayHasKey( 'self', $links );

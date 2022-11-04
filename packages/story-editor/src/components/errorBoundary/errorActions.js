@@ -27,6 +27,11 @@ import {
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
 
+/**
+ * Internal dependencies
+ */
+import CopyStoryDataToClipboard from './copyStoryDataToClipboard';
+
 const Message = styled.div`
   color: #fff;
   font-size: 16px;
@@ -86,6 +91,7 @@ function ErrorActions({ error, errorInfo }) {
         >
           {__('Reload', 'web-stories')}
         </Button>
+        <CopyStoryDataToClipboard />
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
           type={BUTTON_TYPES.PRIMARY}

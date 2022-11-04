@@ -109,7 +109,9 @@ describe('Panels/VideoAccessibility', () => {
     const { pushUpdate } = arrange([defaultElement]);
     const menuToggle = screen.getByRole('button', { name: 'Video poster' });
     fireEvent.click(menuToggle);
-    const editMenuItem = screen.getByRole('menuitem', { name: 'Edit' });
+    const editMenuItem = screen.getByRole('menuitem', {
+      name: 'Upload a file',
+    });
     fireEvent.click(editMenuItem);
     expect(pushUpdate).toHaveBeenCalledOnce();
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);

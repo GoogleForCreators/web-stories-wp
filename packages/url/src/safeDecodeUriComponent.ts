@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
-export * from './url';
-export { default as addQueryArgs } from './addQueryArgs';
-export { default as safeDecodeURIComponent } from './safeDecodeUriComponent';
+/**
+ * Safely decodes a URI component with `decodeURIComponent`. Returns the URI component unmodified if
+ * `decodeURIComponent` throws an error.
+ *
+ * @param uriComponent URI component to decode.
+ * @return Decoded URI component if possible.
+ */
+export default function safeDecodeURIComponent(uriComponent: string) {
+  try {
+    return decodeURIComponent(uriComponent);
+  } catch (uriComponentError) {
+    return uriComponent;
+  }
+}
