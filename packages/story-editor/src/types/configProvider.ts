@@ -197,7 +197,6 @@ export interface APICallbacks {
     headers: Record<string, string>;
   }>;
   getMediaById?: (id: number) => Promise<Resource>;
-  // @todo Not certain if correct.
   getMediaForCorsCheck?: () => Promise<Resource[]>;
   getMutedMediaById?: (id: number) => Promise<VideoResource>;
   getOptimizedMediaById?: (id: number) => Promise<Resource>;
