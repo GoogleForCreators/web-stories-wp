@@ -63,24 +63,6 @@ export interface MetaData {
   publisher?: string;
 }
 
-export interface API {
-  users: string;
-  currentUser: string;
-  stories: string;
-  pageTemplates: string;
-  media: string;
-  hotlink: string;
-  publisherLogos: string;
-  products: string;
-  proxy: string;
-  link: string;
-  statusCheck: string;
-  taxonomies: string;
-  fonts: string;
-  metaBoxes: string;
-  storyLocking: string;
-}
-
 export interface Tip {
   title: string;
   figureSrcImg: string;
@@ -271,7 +253,6 @@ export interface ConfigState {
     topOffset: number;
     leftOffset: number;
   };
-  api?: API;
   /** Plugin version */
   version: string;
   /** If true, the story advances automatically */

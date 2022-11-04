@@ -46,7 +46,6 @@ function setup() {
       registerTransformHandler: jest.fn(),
     },
   };
-  const configValue = { api: { stories: [] } };
   const fontsValue = {
     actions: {
       maybeEnqueueFontStyle: jest.fn(),
@@ -71,19 +70,17 @@ function setup() {
 
   return renderWithTheme(
     <TransformContext.Provider value={transformValue}>
-      <ConfigContext.Provider value={configValue}>
-        <APIContext.Provider value={apiValue}>
-          <StoryContext.Provider value={storyValue}>
-            <FontContext.Provider value={fontsValue}>
-              <LibraryContext.Provider value={libraryValue}>
-                <MockPane>
-                  {(paneRef) => <TextSetsPane paneRef={paneRef} />}
-                </MockPane>
-              </LibraryContext.Provider>
-            </FontContext.Provider>
-          </StoryContext.Provider>
-        </APIContext.Provider>
-      </ConfigContext.Provider>
+      <APIContext.Provider value={apiValue}>
+        <StoryContext.Provider value={storyValue}>
+          <FontContext.Provider value={fontsValue}>
+            <LibraryContext.Provider value={libraryValue}>
+              <MockPane>
+                {(paneRef) => <TextSetsPane paneRef={paneRef} />}
+              </MockPane>
+            </LibraryContext.Provider>
+          </FontContext.Provider>
+        </StoryContext.Provider>
+      </APIContext.Provider>
     </TransformContext.Provider>
   );
 }

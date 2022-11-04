@@ -190,7 +190,6 @@ function setup(elements, id) {
       registerTransformHandler: () => {},
     },
   };
-  const configValue = { api: { stories: [] } };
   const fontsValue = {
     actions: {
       maybeEnqueueFontStyle: () => {},
@@ -226,34 +225,32 @@ function setup(elements, id) {
 
   return renderWithTheme(
     <TransformContext.Provider value={transformValue}>
-      <ConfigContext.Provider value={configValue}>
-        <APIContext.Provider value={apiValue}>
-          <StoryContext.Provider value={storyValue}>
-            <CanvasContext.Provider value={canvasValue}>
-              <FontContext.Provider value={fontsValue}>
-                <LayoutProvider>
-                  <LibraryContext.Provider value={libraryValue}>
-                    <UnitsProvider
-                      pageSize={{
-                        width: TEXT_SET_SIZE,
-                        height: TEXT_SET_SIZE / PAGE_RATIO,
-                      }}
-                      getBox={getBox}
-                    >
-                      <TextSet
-                        ref={{ current: null }}
-                        id={id}
-                        elements={elements}
-                        index={0}
-                      />
-                    </UnitsProvider>
-                  </LibraryContext.Provider>
-                </LayoutProvider>
-              </FontContext.Provider>
-            </CanvasContext.Provider>
-          </StoryContext.Provider>
-        </APIContext.Provider>
-      </ConfigContext.Provider>
+      <APIContext.Provider value={apiValue}>
+        <StoryContext.Provider value={storyValue}>
+          <CanvasContext.Provider value={canvasValue}>
+            <FontContext.Provider value={fontsValue}>
+              <LayoutProvider>
+                <LibraryContext.Provider value={libraryValue}>
+                  <UnitsProvider
+                    pageSize={{
+                      width: TEXT_SET_SIZE,
+                      height: TEXT_SET_SIZE / PAGE_RATIO,
+                    }}
+                    getBox={getBox}
+                  >
+                    <TextSet
+                      ref={{ current: null }}
+                      id={id}
+                      elements={elements}
+                      index={0}
+                    />
+                  </UnitsProvider>
+                </LibraryContext.Provider>
+              </LayoutProvider>
+            </FontContext.Provider>
+          </CanvasContext.Provider>
+        </StoryContext.Provider>
+      </APIContext.Provider>
     </TransformContext.Provider>
   );
 }
