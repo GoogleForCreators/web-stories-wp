@@ -81,12 +81,6 @@ export interface API {
   storyLocking: string;
 }
 
-export interface MetaBoxes {
-  normal: string[];
-  advanced: string[];
-  side: string[];
-}
-
 export interface Tip {
   title: string;
   figureSrcImg: string;
@@ -249,11 +243,6 @@ export interface APICallbacks {
   uploadMedia?: (files: string[], props: UploadMediaProps) => Promise<Resource>;
 }
 
-export interface PostLock {
-  interval: number;
-  showLockedDialog: boolean;
-}
-
 export interface ConfigState {
   /** Interval in seconds. */
   autoSaveInterval: number | null;
@@ -282,23 +271,14 @@ export interface ConfigState {
     topOffset: number;
     leftOffset: number;
   };
-  /** Data for when a user tries to edit a story that's already being edited */
-  postLock?: PostLock;
-  postType?: string;
-  revisionLink?: string;
-  // @todo Is this used at all?
-  isDemo?: boolean;
   api?: API;
   /** Plugin version */
   version: string;
-  nonce?: string;
   /** If true, the story advances automatically */
   globalAutoAdvance?: boolean;
   /** Page duration in seconds in case of auto-advancing */
   globalPageDuration?: number;
   shoppingProvider: string;
-  /** Enabled meta-boxes that are displayed in the editor */
-  metaBoxes?: MetaBoxes;
   mediainfoUrl: string;
   /** Feature flags */
   flags: Record<string, boolean>;
