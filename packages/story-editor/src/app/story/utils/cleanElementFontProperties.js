@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function cleanElementFontProperties(pages) {
-  return pages.map(({ elements = [] }) => {
-    return elements.map((element) => {
+
+function reduceElementFontProperties({ elements, ...rest }) {
+  return {
+    elements: elements.map((element) => {
       if (element.type === 'text' && Boolean(element.font?.family)) {
         return { ...element, font: { family: element.font.family } };
       }
       return element;
-    });
-  });
+    }),
+    ...rest,
+  };
+}
+
+export function cleanElementFontProperties(data) {
+  return data.map((page) => reduceElementFontProperties(page));
 }

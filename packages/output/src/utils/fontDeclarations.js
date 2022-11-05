@@ -123,7 +123,7 @@ function FontDeclarations({ pages, fonts }) {
 
 FontDeclarations.propTypes = {
   pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
-  fonts: PropTypes.arrayOf(StoryPropTypes.fonts).isRequired,
+  fonts: PropTypes.arrayOf(StoryPropTypes.fonts),
 };
 
 export default FontDeclarations;

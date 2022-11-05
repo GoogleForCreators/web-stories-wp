@@ -24,7 +24,7 @@ import { getStoryMarkup } from '@googleforcreators/output';
 import objectPick from '../../../utils/objectPick';
 import { getInUseFontsForPages } from '../../../utils/getInUseFonts';
 import getAllProducts from './getAllProducts';
-// import { cleanElementFontProperties } from "./cleanElementFontProperties";
+import { cleanElementFontProperties } from './cleanElementFontProperties';
 
 function getStoryPropsToSave({ story, pages, metadata, flags }) {
   const { terms, fonts, ...propsFromStory } = objectPick(story, [
@@ -50,15 +50,14 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
   // cleanup font state -- only save fonts that are "in-use"
   const inUseFontFamilies = getInUseFontsForPages(pages);
   const inUseFonts = objectPick(fonts, inUseFontFamilies);
-  // cleanup text elements to only keep font family prop
-  // const cleanedPages = cleanElementFontProperties(pages);
-
-  const products = getAllProducts(pages);
-  const content = getStoryMarkup(story, pages, metadata, flags);
+  // cleanup page text elements to only keep font family prop
+  const cleanedPages = cleanElementFontProperties(pages);
+  const products = getAllProducts(cleanedPages);
+  const content = getStoryMarkup(story, cleanedPages, metadata, flags);
 
   return {
     content,
-    pages,
+    pages: cleanedPages,
     ...propsFromStory,
     fonts: inUseFonts,
     ...terms,
