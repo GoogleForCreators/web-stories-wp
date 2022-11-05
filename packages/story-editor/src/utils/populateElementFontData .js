@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function populateElementFontData(pages, fonts) {
-  return pages.map(({ elements = [] }) => {
-    elements.forEach((element) => {
+
+function populateElementFontProperties({ elements, ...rest }, fonts) {
+  return {
+    elements: elements.map((element) => {
       if (element.type === 'text' && Boolean(element.font?.family)) {
-        element.font = fonts[element.font?.family];
+        return { ...element, font: fonts[element.font?.family] };
       }
-    });
-    return elements;
-  });
+      return element;
+    }),
+    ...rest,
+  };
+}
+
+export function populateElementFontData(data, fonts) {
+  return data.map((page) => populateElementFontProperties(page, fonts));
 }
