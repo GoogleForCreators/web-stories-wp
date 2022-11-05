@@ -30,10 +30,7 @@ export const updateStoryFonts = (draft, { font }) => {
   if (!font || !font.family) {
     return;
   }
-
-  const fonts = [...draft.story.fonts];
-  fonts[font.family] = font;
-  draft.story.fonts = fonts;
+  draft.story.fonts[font.family] = font;
 };
 
 export default produce(updateStoryFonts);
