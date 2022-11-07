@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { Template } from '@googleforcreators/templates';
-import type { Product } from '@googleforcreators/types';
+import type { Product } from '@googleforcreators/element-library';
 
 export interface Locale {
   locale?: string;

@@ -17,17 +17,14 @@
 /**
  * External dependencies
  */
+import type { MediaElement, Page, Story } from '@googleforcreators/elements';
 import type {
-  Font,
-  MediaElement,
-  Page,
-  Product,
   Resource,
   ResourceId,
-  Story,
   TrimData,
   VideoResource,
-} from '@googleforcreators/types';
+} from '@googleforcreators/media';
+import type { Font, Product } from '@googleforcreators/element-library';
 
 export interface Capabilities {
   /** If the user has permissions to upload files. */
