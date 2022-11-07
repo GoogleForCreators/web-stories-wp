@@ -17,6 +17,19 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import { identity, useContextSelector } from '@googleforcreators/react';
 
-export default createContext({});
+/**
+ * Internal dependencies
+ */
+import type { ConfigState } from '../../types/configProvider';
+import Context from './context';
+
+function useConfig(): ConfigState;
+function useConfig<T>(
+  selector: (state: ConfigState) => T | ConfigState = identity
+) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useConfig;

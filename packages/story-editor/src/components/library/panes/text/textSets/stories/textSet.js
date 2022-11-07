@@ -214,7 +214,6 @@ export const _default = () => {
     },
   };
   const configValue = {
-    api: { stories: [] },
     cdnURL: 'https://wp.stories.google/static/main/',
   };
   const fontsValue = {

@@ -17,20 +17,20 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { ReactNode } from 'react';
 
 /**
  * Internal dependencies
  */
+import type { ConfigState } from '../../types/configProvider';
 import Context from './context';
 
-function ConfigProvider({ config, children }) {
+export interface ConfigProviderProps {
+  children: ReactNode;
+  config: ConfigState;
+}
+function ConfigProvider({ config, children }: ConfigProviderProps) {
   return <Context.Provider value={config}>{children}</Context.Provider>;
 }
-
-ConfigProvider.propTypes = {
-  children: PropTypes.node,
-  config: PropTypes.object.isRequired,
-};
 
 export default ConfigProvider;
