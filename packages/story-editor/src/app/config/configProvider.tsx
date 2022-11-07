@@ -17,14 +17,20 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@googleforcreators/react';
+import type { ReactNode } from 'react';
+
 /**
  * Internal dependencies
  */
+import type { ConfigState } from '../../types/configProvider';
 import Context from './context';
 
-function useConfig(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export interface ConfigProviderProps {
+  children: ReactNode;
+  config: ConfigState;
+}
+function ConfigProvider({ config, children }: ConfigProviderProps) {
+  return <Context.Provider value={config}>{children}</Context.Provider>;
 }
 
-export default useConfig;
+export default ConfigProvider;

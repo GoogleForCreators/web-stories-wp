@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../date" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../templates" },
+    { "path": "../tracking" },
+    { "path": "../units" },
+    { "path": "../i18n" },
+  ],
+  "include": ["src/app/config/*", "src/types"]
+}
