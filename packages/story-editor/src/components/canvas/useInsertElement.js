@@ -26,7 +26,7 @@ import { createNewElement } from '@googleforcreators/elements';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
 import { ZOOM_SETTING } from '../../constants';
-import { useFont } from '../../app/font';
+// import { useFont } from '../../app/font';
 import useFocusCanvas from './useFocusCanvas';
 import getElementProperties from './utils/getElementProperties';
 
@@ -40,17 +40,22 @@ function createElementForCanvas(type, props) {
 }
 
 function useInsertElement() {
-  const { addElement, combineElements, backgroundElementId, updateStoryFonts } =
-    useStory(({ state, actions }) => ({
-      addElement: actions.addElement,
-      updateStoryFonts: actions.updateStoryFonts,
-      combineElements: actions.combineElements,
-      backgroundElementId: state.currentPage?.elements?.[0]?.id,
-    }));
+  const {
+    addElement,
+    combineElements,
+    backgroundElementId /* updateStoryFonts */,
+  } = useStory(({ state, actions }) => ({
+    addElement: actions.addElement,
+    // updateStoryFonts: actions.updateStoryFonts,
+    combineElements: actions.combineElements,
+    backgroundElementId: state.currentPage?.elements?.[0]?.id,
+  }));
 
+  /*
   const {
     actions: { getFontByName, getFontsBySearch },
   } = useFont();
+  */
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
@@ -64,7 +69,7 @@ function useInsertElement() {
    * @param {boolean} insertAsBackground Whether to insert the element as a background element.
    */
   const insertElement = useCallback(
-    async (type, props, insertAsBackground = false) => {
+    (type, props, insertAsBackground = false) => {
       setZoomSetting(ZOOM_SETTING.FIT);
       const element = createElementForCanvas(type, props);
       const { id, resource, pageId } = element;
@@ -72,9 +77,9 @@ function useInsertElement() {
 
       if (type === 'text') {
         // need to ensure font is available here
-        await getFontsBySearch(element.font);
-        const font = getFontByName(element.font?.family);
-        updateStoryFonts({ properties: { font: font } });
+        // await getFontsBySearch(element.font);
+        // const font = getFontByName(element.font?.family);
+        // updateStoryFonts({ properties: { font: font } });
       }
 
       if (insertAsBackground) {
@@ -106,9 +111,9 @@ function useInsertElement() {
       combineElements,
       focusCanvas,
       setZoomSetting,
-      getFontByName,
-      getFontsBySearch,
-      updateStoryFonts,
+      // getFontByName,
+      // getFontsBySearch,
+      // updateStoryFonts,
     ]
   );
 

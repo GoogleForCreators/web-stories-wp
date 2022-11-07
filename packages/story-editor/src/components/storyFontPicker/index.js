@@ -34,10 +34,10 @@ import FontPicker from '../fontPicker';
 import updateProperties from '../style/updateProperties';
 
 const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
-  const { updateSelectedElements, selectedElements, updateStoryFonts } =
+  const { updateSelectedElements, selectedElements /* updateStoryFonts*/ } =
     useStory(({ state, actions }) => ({
       updateSelectedElements: actions.updateSelectedElements,
-      updateStoryFonts: actions.updateStoryFonts,
+      // updateStoryFonts: actions.updateStoryFonts,
       selectedElements: state.selectedElements,
     }));
 
@@ -80,7 +80,7 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
   const onChange = useCallback(
     async (newFont) => {
       const { id, name, value, ...newFontFormatted } = newFont;
-      updateStoryFonts({ properties: { font: newFont } });
+      // updateStoryFonts({ properties: { font: newFont } });
       trackEvent('font_family_changed', { name });
 
       await maybeEnqueueFontStyle(
@@ -107,7 +107,7 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
       pushUpdate,
       selectedElements,
       handleResetFontWeight,
-      updateStoryFonts,
+      // updateStoryFonts,
     ]
   );
 
