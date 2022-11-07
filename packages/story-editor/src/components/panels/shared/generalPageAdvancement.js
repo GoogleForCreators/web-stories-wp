@@ -26,7 +26,7 @@ import {
   useMemo,
   useDebouncedCallback,
 } from '@googleforcreators/react';
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
@@ -164,20 +164,29 @@ function GeneralPageAdvancementPanel({
         />
       </SwitchRow>
       {autoAdvance && (
-        <Row>
-          <NumericInput
-            unit={` ${__('seconds', 'web-stories')}`}
-            suffix={__('Duration', 'web-stories')}
-            value={duration}
-            onChange={onDurationChange}
-            aria-label={__('Default page duration in seconds', 'web-stories')}
-            min={MIN_MAX.PAGE_DURATION.MIN}
-            max={MIN_MAX.PAGE_DURATION.MAX}
-            isFloat
-            disabled={customAdvancementDisabled}
-            containerStyleOverride={inputContainerStyleOverride}
-          />
-        </Row>
+        <>
+          <Row>
+            <NumericInput
+              unit={` ${__('seconds', 'web-stories')}`}
+              suffix={__('Duration', 'web-stories')}
+              value={duration}
+              onChange={onDurationChange}
+              aria-label={__('Default page duration in seconds', 'web-stories')}
+              min={MIN_MAX.PAGE_DURATION.MIN}
+              max={MIN_MAX.PAGE_DURATION.MAX}
+              disabled={customAdvancementDisabled}
+              containerStyleOverride={inputContainerStyleOverride}
+            />
+          </Row>
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {sprintf(
+              /* translators: 1: minimum duration. 2: maximum duration. */
+              __('Duration between %1$d and %2$d seconds.', 'web-stories'),
+              MIN_MAX.PAGE_DURATION.MIN,
+              MIN_MAX.PAGE_DURATION.MAX
+            )}
+          </Text>
+        </>
       )}
     </SimplePanel>
   );
