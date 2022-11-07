@@ -40,6 +40,12 @@ use WP_Post;
  *   name: string,
  *   diff: string
  * }
+ * @phpstan-type PostData array{
+ *   post_parent: int,
+ *   post_type: string,
+ *   post_content?: string,
+ *   post_content_filtered?: string
+ * }
  */
 class Story_Revisions extends Service_Base {
 
@@ -103,13 +109,22 @@ class Story_Revisions extends Service_Base {
 	 * @param array|mixed         $fields Array of allowed revision fields.
 	 * @param array<string,mixed> $story  Story post array.
 	 * @return array|mixed Array of allowed fields.
+	 *
+	 * @phpstan-param PostData $story
 	 */
 	public function filter_revision_fields( $fields, array $story ) {
 		if ( ! \is_array( $fields ) ) {
 			return $fields;
 		}
 
-		if ( $this->story_post_type->get_slug() === $story['post_type'] ) {
+		if (
+			$this->story_post_type->get_slug() === $story['post_type'] ||
+			(
+				'revision' === $story['post_type'] &&
+				! empty( $story['post_parent'] ) &&
+				get_post_type( $story['post_parent'] ) === $this->story_post_type->get_slug()
+			)
+		) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
 

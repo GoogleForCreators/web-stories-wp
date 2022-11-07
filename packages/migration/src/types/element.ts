@@ -86,6 +86,10 @@ export interface ElementV0 extends ElementBoxV0 {
   groupId?: string;
   border?: BorderV0;
   borderRadius?: BorderRadiusV0;
+
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
 }
 
 export interface MediaElementV0 extends ElementV0 {
