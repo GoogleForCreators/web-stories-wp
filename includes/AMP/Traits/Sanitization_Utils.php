@@ -191,7 +191,8 @@ trait Sanitization_Utils {
 			// This is basically reversing the dataToFontSizeY() logic. Example:
 			// 0.582524em roughly equals 36 editor pixels: 0.582524 * 618 / 10 = 35.9999px.
 			$font_size_in_em = $matches[1];
-			$font_size_in_px = round( $font_size_in_em * $page_height / 10, 0 );
+			$font_size_in_em = (float) $font_size_in_em * $page_height / 10;
+			$font_size_in_px = round( $font_size_in_em, 0 );
 
 			if ( $font_size_in_px >= 36 && ! $has_h1 ) {
 				$this->change_tag_name( $text_el, 'h1' );

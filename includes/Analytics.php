@@ -73,8 +73,8 @@ class Analytics extends Service_Base {
 		 *
 		 * @var string $tracking_id
 		 */
-		$tracking_id = (string) $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID );
-		return $tracking_id;
+		$tracking_id = $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID );
+		return (string) $tracking_id;
 	}
 
 	/**
