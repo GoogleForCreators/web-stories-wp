@@ -136,7 +136,12 @@ function TranslateWithMarkup({
 
   const node = new DOMParser().parseFromString(children, 'text/html').body
     .firstChild as Element;
-  return node ? (
+
+  if (!node) {
+    return null;
+  }
+
+  return (
     <Fragment>
       {transform(node, mapping).map((element, index) => (
         <Fragment
@@ -147,7 +152,7 @@ function TranslateWithMarkup({
         </Fragment>
       ))}
     </Fragment>
-  ) : null;
+  );
 }
 
 export default TranslateWithMarkup;

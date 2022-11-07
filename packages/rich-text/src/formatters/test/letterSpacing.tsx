@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { EditorState } from 'draft-js';
-import type { OrderedSet } from 'immutable';
+import { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
@@ -81,33 +81,27 @@ describe('Color formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without a letter spacing style', () => {
-      const css = stylesToCSS({
-        toArray: () => ['NOT-LETTERSPACING', 'ALSO-NOT-LETTERSPACING'],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(
+        OrderedSet.of('NOT-LETTERSPACING', 'ALSO-NOT-LETTERSPACING')
+      );
 
       expect(css).toBeNull();
     });
 
     it('should ignore invalid letter spacing style', () => {
-      const css = stylesToCSS({
-        toArray: () => [`${LETTERSPACING}-invalid`],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(`${LETTERSPACING}-invalid`));
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS for a positive style', () => {
-      const css = stylesToCSS({
-        toArray: () => [`${LETTERSPACING}-150`],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(`${LETTERSPACING}-150`));
 
       expect(css).toStrictEqual({ letterSpacing: '1.5em' });
     });
 
     it('should return correct CSS for a negative style', () => {
-      const css = stylesToCSS({
-        toArray: () => [`${LETTERSPACING}-N250`],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(`${LETTERSPACING}-N250`));
 
       expect(css).toStrictEqual({ letterSpacing: '-2.5em' });
     });

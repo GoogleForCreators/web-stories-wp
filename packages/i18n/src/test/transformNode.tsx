@@ -58,11 +58,7 @@ describe('transformNode', () => {
     node.setAttribute('class', 'bar');
     node.textContent = 'Hello World';
 
-    const AwesomeComponent = ({
-      children,
-    }: {
-      children?: ReactNode | undefined;
-    }) => {
+    const AwesomeComponent = ({ children }: { children?: ReactNode }) => {
       return (
         <div id="bar" className="baz">
           {children}
