@@ -1,0 +1,19 @@
+
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../dom" },
+    { "path": "../elements" },
+    { "path": "../i18n" },
+    { "path": "../masks" },
+    { "path": "../migration" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../tracking" }
+  ],
+  "include": ["src/app/story/**/*", "src/types/*"],
+}
