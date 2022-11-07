@@ -15,15 +15,16 @@
  */
 
 /**
- * Internal dependencies
+ * Safely decodes a URI component with `decodeURIComponent`. Returns the URI component unmodified if
+ * `decodeURIComponent` throws an error.
+ *
+ * @param uriComponent URI component to decode.
+ * @return Decoded URI component if possible.
  */
-import type { Element, ElementType } from './element';
-
-export interface Sticker {
-  type: string;
-}
-
-export interface StickerElement extends Element {
-  type: ElementType.Sticker;
-  sticker: Sticker;
+export default function safeDecodeURIComponent(uriComponent: string) {
+  try {
+    return decodeURIComponent(uriComponent);
+  } catch (uriComponentError) {
+    return uriComponent;
+  }
 }

@@ -25,8 +25,4 @@ export interface ShapeElement extends Element {
   isBackground?: boolean;
   isDefaultBackground?: boolean;
   type: ElementType.Shape;
-  // TODO(#12437): Figure out why shape elements end up having these properties & fix it.
-  scale?: number;
-  focalX?: number;
-  focalY?: number;
 }
