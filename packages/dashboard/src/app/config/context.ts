@@ -19,4 +19,26 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-export default createContext({ api: {} });
+/**
+ * Internal dependencies
+ */
+import type { Navigation } from '../../types/configProvider';
+
+export default createContext({
+  isRTL: false,
+  userId: 0,
+  locale: {},
+  newStoryURL: '',
+  cdnURL: '',
+  version: '',
+  capabilities: {},
+  canViewDefaultTemplates: false,
+  flags: {},
+  apiCallbacks: {},
+  leftRailSecondaryNavigation: [] as Navigation[],
+  styleConstants: {
+    topOffset: 0,
+    leftOffset: 0,
+  },
+  containerId: '',
+});
