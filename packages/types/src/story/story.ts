@@ -29,8 +29,6 @@ export interface Story {
   content: string;
   version: number;
   pages: Page[];
-  autoAdvance: boolean;
-  defaultPageDuration: number;
   featuredMedia?: {
     isExternal?: boolean;
     needsProxy?: boolean;
