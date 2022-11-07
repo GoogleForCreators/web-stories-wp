@@ -64,29 +64,13 @@ const getDefaultConfig = () => ({
     weekStartsOn: 1,
   },
   newStoryURL: '',
-  // @todo Should we remove WP-specific props from here?
-  archiveURL: '',
-  // @todo Remove?
-  defaultArchiveURL: '',
   cdnURL: 'https://wp.stories.google/static/main/',
-  // @todo Remove?
-  allowedImageMimeTypes: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
   version: '',
-  // @todo Remove?
-  encodeMarkup: true,
-  // @todo Remove?
-  api: {},
-  // @todo Remove?
-  maxUpload: 314572800,
-  // @todo Remove?
-  maxUploadFormatted: '300 MB',
   capabilities: {
     canManageSettings: false,
     canUploadFiles: false,
   },
   canViewDefaultTemplates: false,
-  // @todo Remove?
-  localeData: [],
   flags: {},
   apiCallbacks: {},
   leftRailSecondaryNavigation: [],
