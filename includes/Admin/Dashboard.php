@@ -38,6 +38,7 @@ use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Shopping\Shopping_Vendors;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
@@ -144,6 +145,13 @@ class Dashboard extends Service_Base {
 	private $woocommerce;
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -162,6 +170,7 @@ class Dashboard extends Service_Base {
 	 * @param Types            $types            Types instance.
 	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
 	 * @param WooCommerce      $woocommerce      WooCommerce instance.
+	 * @param Settings         $settings         Settings instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -175,7 +184,8 @@ class Dashboard extends Service_Base {
 		Context $context,
 		Types $types,
 		Shopping_Vendors $shopping_vendors,
-		WooCommerce $woocommerce
+		WooCommerce $woocommerce,
+		Settings $settings
 	) {
 		$this->experiments      = $experiments;
 		$this->decoder          = $decoder;
@@ -189,6 +199,7 @@ class Dashboard extends Service_Base {
 		$this->types            = $types;
 		$this->shopping_vendors = $shopping_vendors;
 		$this->woocommerce      = $woocommerce;
+		$this->settings         = $settings;
 	}
 
 	/**
@@ -322,7 +333,7 @@ class Dashboard extends Service_Base {
 					'_embed'                => rawurlencode(
 						implode(
 							',',
-							[ 'wp:lock', 'wp:lockuser', 'author' ]
+							[ 'wp:lock', 'author' ]
 						)
 					),
 					'context'               => 'edit',
@@ -452,6 +463,9 @@ class Dashboard extends Service_Base {
 		$allowed_image_mime_types = $mime_types['image'];
 		$vendors                  = wp_list_pluck( $this->shopping_vendors->get_vendors(), 'label' );
 
+		$auto_advance  = $this->settings->get_setting( $this->settings::SETTING_NAME_AUTO_ADVANCE );
+		$page_duration = $this->settings->get_setting( $this->settings::SETTING_NAME_DEFAULT_PAGE_DURATION );
+
 		$settings = [
 			'isRTL'                   => is_rtl(),
 			'userId'                  => get_current_user_id(),
@@ -491,6 +505,8 @@ class Dashboard extends Service_Base {
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )
 			),
+			'globalAutoAdvance'       => (bool) $auto_advance,
+			'globalPageDuration'      => (float) $page_duration,
 		];
 
 		/**

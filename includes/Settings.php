@@ -398,12 +398,24 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * @return string|array<int|string,mixed>|bool Setting value.
 	 */
 	public function get_setting( string $key, $default = false ) {
+		// Distinguish between `false` as a default, and not passing one, just like WordPress.
+		$passed_default = \func_num_args() > 1;
+
+		if ( $passed_default ) {
+			/**
+			 * Setting value.
+			 *
+			 * @var string|array<int|string,mixed>|bool
+			 */
+			return get_option( $key, $default );
+		}
+
 		/**
 		 * Setting value.
 		 *
 		 * @var string|array<int|string,mixed>|bool
 		 */
-		return get_option( $key, $default );
+		return get_option( $key );
 	}
 
 	/**

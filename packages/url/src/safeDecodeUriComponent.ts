@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  */
 
 /**
- * External dependencies
+ * Safely decodes a URI component with `decodeURIComponent`. Returns the URI component unmodified if
+ * `decodeURIComponent` throws an error.
+ *
+ * @param uriComponent URI component to decode.
+ * @return Decoded URI component if possible.
  */
-import { identity, useContextSelector } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useConfig(selector = identity) {
-  return useContextSelector(Context, selector);
+export default function safeDecodeURIComponent(uriComponent: string) {
+  try {
+    return decodeURIComponent(uriComponent);
+  } catch (uriComponentError) {
+    return uriComponent;
+  }
 }
-
-export default useConfig;
