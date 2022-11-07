@@ -83,8 +83,8 @@ function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   // If there are no pages, create empty page.
   const storyData =
     storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
-  const pages = storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
-  populateElementFontData(pages, storyData?.fonts);
+  let pages = storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
+  pages = populateElementFontData(pages, storyData?.fonts);
 
   // Initialize color/style presets, if missing.
   // Otherwise ensure the saved presets are unique.
