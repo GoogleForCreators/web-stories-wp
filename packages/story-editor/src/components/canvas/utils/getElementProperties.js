@@ -60,7 +60,7 @@ function getElementProperties(
     ...rest
   }
 ) {
-  const { isMaskable } = getDefinitionForType(type);
+  const { isMaskable, isMedia } = getDefinitionForType(type);
 
   const attrs = { type, ...rest };
 
@@ -93,6 +93,12 @@ function getElementProperties(
   x = dataPixels(x);
   y = dataPixels(y);
 
+  const mediaProps = {
+    focalX,
+    focalY,
+    scale,
+  };
+
   return {
     ...attrs,
     resource,
@@ -101,9 +107,7 @@ function getElementProperties(
     width,
     height,
     rotationAngle,
-    scale,
-    focalX,
-    focalY,
+    ...(isMedia ? { ...mediaProps } : {}),
     ...(isMaskable
       ? {
           mask: mask || DEFAULT_MASK,
