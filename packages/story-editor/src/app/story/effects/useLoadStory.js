@@ -28,7 +28,7 @@ import { useAPI } from '../../api';
 import { useHistory } from '../../history';
 import getUniquePresets from '../../../utils/getUniquePresets';
 import { useConfig } from '../../config';
-import { populateElementFontData } from '../../../utils/populateElementFontData ';
+import { populateElementFontData } from '../../../utils/populateElementFontData';
 
 function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   const {
