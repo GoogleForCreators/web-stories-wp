@@ -42,6 +42,9 @@ function LocalAutoSave() {
     state: { hasNewChanges },
   } = useHistory();
   const isUploading = useIsUploadingToStory();
+  const { isAutoSavingStory } = useStory(({ state }) => ({
+    isAutoSavingStory: state.meta.isAutoSavingStory,
+  }));
 
   const { story, pages, restoreLocalAutoSave } = useStory(
     ({ state, actions }) => ({
@@ -65,7 +68,12 @@ function LocalAutoSave() {
 
   // Save the local autosave.
   useEffect(() => {
-    if (!hasNewChanges || !localAutoSaveInterval || isUploading) {
+    if (
+      !hasNewChanges ||
+      !localAutoSaveInterval ||
+      isUploading ||
+      isAutoSavingStory
+    ) {
       return undefined;
     }
 
@@ -90,12 +98,25 @@ function LocalAutoSave() {
     story,
     storyId,
     isNew,
+    isAutoSavingStory,
   ]);
 
   const onClose = () => {
     sessionStore.deleteItemByKey(getSessionStorageKey(storyId, isNew));
     setBackup(null);
   };
+
+  const didAutoSaveTracker = useRef(isAutoSavingStory);
+  useEffect(() => {
+    if (isAutoSavingStory) {
+      didAutoSaveTracker.current = true;
+      // If we auto-saved to DB before but are not auto-saving anymore, let's delete the local backup.
+      // No need for both local and DB backup together.
+    } else if (didAutoSaveTracker.current && !backup) {
+      sessionStore.deleteItemByKey(getSessionStorageKey(storyId, false));
+      didAutoSaveTracker.current = false;
+    }
+  }, [isAutoSavingStory, backup, storyId]);
 
   const hadNewChangesTracker = useRef(false);
   const wasNewTracker = useRef(isNew);
@@ -131,7 +152,6 @@ function LocalAutoSave() {
       JSON.stringify(existingAutoSave.story) !==
         JSON.stringify(storyRef.current);
 
-    // @todo Should we also check for DB autosave once it's implemented in #1402?
     // If we have an autosave and it differs from the current state.
     if (autoSaveHasChanges) {
       setBackup(existingAutoSave);
