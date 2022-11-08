@@ -210,6 +210,7 @@
 
 .web-stories-story-picker-filter .components-select-control {
   gap: 0;
+  margin-top: 1px;
 }
 
 .web-stories-story-picker-filter__search-inner {
