@@ -139,7 +139,6 @@ describe('ApiProvider', () => {
       wrapper: (props) => (
         <ConfigProvider
           config={{
-            api: { stories: 'stories' },
             apiCallbacks: { fetchStories },
           }}
         >
@@ -190,7 +189,6 @@ describe('ApiProvider', () => {
       wrapper: (props) => (
         <ConfigProvider
           config={{
-            api: { stories: 'stories' },
             apiCallbacks: { fetchStories, updateStory },
           }}
         >
@@ -252,7 +250,6 @@ describe('ApiProvider', () => {
       wrapper: (props) => (
         <ConfigProvider
           config={{
-            api: { stories: 'stories' },
             apiCallbacks: { fetchStories, duplicateStory },
           }}
         >
@@ -338,7 +335,6 @@ describe('ApiProvider', () => {
       wrapper: (props) => (
         <ConfigProvider
           config={{
-            api: { stories: 'stories' },
             apiCallbacks: { fetchStories, trashStory },
           }}
         >
@@ -366,7 +362,6 @@ describe('ApiProvider', () => {
       wrapper: (props) => (
         <ConfigProvider
           config={{
-            api: { stories: 'stories' },
             apiCallbacks: { fetchStories },
           }}
         >

@@ -17,20 +17,19 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import { identity, useContextSelector } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
+import type { ConfigState } from '../../types/configProvider';
 import Context from './context';
 
-function ConfigProvider({ config, children }) {
-  return <Context.Provider value={config}>{children}</Context.Provider>;
+function useConfig(): ConfigState;
+function useConfig<T>(
+  selector: (state: ConfigState) => T | ConfigState = identity
+) {
+  return useContextSelector(Context, selector ?? identity);
 }
 
-ConfigProvider.propTypes = {
-  children: PropTypes.node,
-  config: PropTypes.object.isRequired,
-};
-
-export default ConfigProvider;
+export default useConfig;

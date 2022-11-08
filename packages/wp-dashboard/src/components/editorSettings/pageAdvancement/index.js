@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
-import { __ } from '@googleforcreators/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import {
   THEME_CONSTANTS,
   NumericInput,
@@ -37,6 +37,7 @@ import {
   MultilineForm,
   SettingHeading,
   SettingSubheading,
+  TextInputHelperText,
 } from '../components';
 
 const MIN_MAX = {
@@ -57,6 +58,17 @@ export const TEXT = {
   SWITCH_LABEL: __('Page Advancement', 'web-stories'),
   INPUT_LABEL: __('Default page duration in seconds', 'web-stories'),
   INPUT_SUFFIX: __('Duration', 'web-stories'),
+  INPUT_HELPER: sprintf(
+    /* translators: 1: minimum duration. 2: maximum duration. */
+    _n(
+      'Duration between %1$d and %2$d second.',
+      'Duration between %1$d and %2$d seconds.',
+      MIN_MAX.PAGE_DURATION.MAX,
+      'web-stories'
+    ),
+    MIN_MAX.PAGE_DURATION.MIN,
+    MIN_MAX.PAGE_DURATION.MAX
+  ),
 };
 
 const InputsWrapper = styled.div`
@@ -118,18 +130,24 @@ function PageAdvancementSettings({
           />
         </InlineForm>
         {_autoAdvance && (
-          <InlineForm>
-            <NumericInput
-              unit={` ${__('seconds', 'web-stories')}`}
-              suffix={TEXT.INPUT_SUFFIX}
-              value={defaultPageDuration}
-              onChange={onDurationChange}
-              aria-label={TEXT.INPUT_SUFFIX}
-              min={MIN_MAX.PAGE_DURATION.MIN}
-              max={MIN_MAX.PAGE_DURATION.MAX}
-              isFloat
-            />
-          </InlineForm>
+          <>
+            <InlineForm>
+              <NumericInput
+                unit={` ${__('seconds', 'web-stories')}`}
+                suffix={TEXT.INPUT_SUFFIX}
+                value={defaultPageDuration}
+                onChange={onDurationChange}
+                aria-label={TEXT.INPUT_SUFFIX}
+                min={MIN_MAX.PAGE_DURATION.MIN}
+                max={MIN_MAX.PAGE_DURATION.MAX}
+              />
+            </InlineForm>
+            <TextInputHelperText
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {TEXT.INPUT_HELPER}
+            </TextInputHelperText>
+          </>
         )}
       </InputsWrapper>
     </MultilineForm>

@@ -60,16 +60,7 @@ export const FIXTURE_DEFAULT_CONFIG = {
     canManageSettings: true,
     canUploadFiles: true,
   },
-  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
   canViewDefaultTemplates: true,
-  siteKitStatus: {
-    installed: false,
-    active: false,
-    analyticActive: false,
-    link: 'https://example.com/wp-admin/plugins.php',
-  },
-  maxUpload: 104857600,
-  maxUploadFormatted: '100 MB',
   isRTL: false,
   userId: 123,
   locale: {
@@ -83,11 +74,6 @@ export const FIXTURE_DEFAULT_CONFIG = {
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
   cdnURL: 'https://cdn.example.com/',
   version: '1.0.0-alpha.9',
-  archiveURL: 'https://example.com/archive',
-  defaultArchiveURL: 'https://example.com/web-stories',
-  api: {
-    stories: '/web-stories/v1/web-story',
-  },
   flags: {},
   apiCallbacks: {
     trashStory: noop,
@@ -97,7 +83,6 @@ export const FIXTURE_DEFAULT_CONFIG = {
     fetchStories: noop,
     createStoryFromTemplate: noop,
   },
-  vendors: { none: 'None', shopify: 'Shopify', woocommerce: 'WooCommerce' },
 };
 
 export default class Fixture {

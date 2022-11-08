@@ -17,6 +17,20 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import type { ReactNode } from 'react';
 
-export default createContext({ api: {} });
+/**
+ * Internal dependencies
+ */
+import type { DashboardConfig } from '../../types/configProvider';
+import Context from './context';
+
+export interface ConfigProviderProps {
+  children: ReactNode;
+  config: DashboardConfig;
+}
+function ConfigProvider({ config, children }: ConfigProviderProps) {
+  return <Context.Provider value={config}>{children}</Context.Provider>;
+}
+
+export default ConfigProvider;
