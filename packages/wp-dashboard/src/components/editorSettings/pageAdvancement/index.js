@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import {
   THEME_CONSTANTS,
   NumericInput,
@@ -60,7 +60,12 @@ export const TEXT = {
   INPUT_SUFFIX: __('Duration', 'web-stories'),
   INPUT_HELPER: sprintf(
     /* translators: 1: minimum duration. 2: maximum duration. */
-    __('Duration between %1$d and %2$d seconds.', 'web-stories'),
+    _n(
+      'Duration between %1$d and %2$d second.',
+      'Duration between %1$d and %2$d seconds.',
+      MIN_MAX.PAGE_DURATION.MAX,
+      'web-stories'
+    ),
     MIN_MAX.PAGE_DURATION.MIN,
     MIN_MAX.PAGE_DURATION.MAX
   ),

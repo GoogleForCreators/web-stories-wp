@@ -26,7 +26,7 @@ import {
   useMemo,
   useDebouncedCallback,
 } from '@googleforcreators/react';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
@@ -181,7 +181,12 @@ function GeneralPageAdvancementPanel({
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(
               /* translators: 1: minimum duration. 2: maximum duration. */
-              __('Duration between %1$d and %2$d seconds.', 'web-stories'),
+              _n(
+                'Duration between %1$d and %2$d second.',
+                'Duration between %1$d and %2$d seconds.',
+                MIN_MAX.PAGE_DURATION.MAX,
+                'web-stories'
+              ),
               MIN_MAX.PAGE_DURATION.MIN,
               MIN_MAX.PAGE_DURATION.MAX
             )}
