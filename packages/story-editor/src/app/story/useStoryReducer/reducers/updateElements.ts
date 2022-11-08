@@ -19,10 +19,12 @@
  */
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 import { produce } from 'immer';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
+import type { UpdateElementsProps } from '../../../../types/storyProvider';
 import { updateElementWithUpdater, updateAnimations } from './utils';
 
 /**
@@ -38,16 +40,10 @@ import { updateElementWithUpdater, updateAnimations } from './utils';
  * If given set of properties is empty, state is unchanged.
  *
  * Current selection and page is unchanged.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {Array.<string>} payload.elementIds List of elements to update
- * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
- * a function to calculate new values based on the current properties.
  */
 export const updateElements = (
-  draft,
-  { elementIds, properties: propertiesOrUpdater }
+  draft: Story,
+  { elementIds, properties: propertiesOrUpdater }: UpdateElementsProps
 ) => {
   if (
     [

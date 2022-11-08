@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
+import type { ArrangePageProps } from '../../../../types/storyProvider';
 import { isInsideRange, moveArrayElement } from './utils';
 
 /**
@@ -35,13 +37,11 @@ import { isInsideRange, moveArrayElement } from './utils';
  * Current selection is unchanged.
  *
  * TODO: Handle multi-page re-order when UX and priority is finalized.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {number} payload.pageId Id of page to move to a new position.
- * @param {number} payload.position Index of where page should be moved to.
  */
-export const arrangePage = (draft, { pageId, position }) => {
+export const arrangePage = (
+  draft: Story,
+  { pageId, position }: ArrangePageProps
+) => {
   // Abort if there's less than two elements (nothing to rearrange)
   if (draft.pages.length < 2) {
     return;

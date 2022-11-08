@@ -25,9 +25,13 @@ import { produce } from 'immer';
  */
 import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import { exclusion } from './utils';
+import type {Story} from "@googleforcreators/types";
+import type {AddElementsProps} from "../../../../types/storyProvider";
 
-const isProduct = ({ type }) => type === ELEMENT_TYPES.PRODUCT;
-const isNotProduct = ({ type }) => type !== ELEMENT_TYPES.PRODUCT;
+const isProduct = ({ type }: { type: string }) =>
+  type === ELEMENT_TYPES.PRODUCT;
+const isNotProduct = ({ type }: { type: string }) =>
+  type !== ELEMENT_TYPES.PRODUCT;
 
 /**
  * Add elements to current page.
@@ -41,16 +45,10 @@ const isNotProduct = ({ type }) => type !== ELEMENT_TYPES.PRODUCT;
  * Elements will be added to the front (end) of the list of elements on the current page.
  *
  * Selection is set to be exactly the new elements by default.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {Array.<Object>} payload.elements Elements to insert on the given page.
- * @param {string} payload.pageId optional pageId for page to insert elements into.
- * @param {boolean} [payload.updateSelection=true] Whether to select the new element.
  */
 export const addElements = (
-  draft,
-  { elements, pageId, updateSelection = true }
+  draft: Story,
+  { elements, pageId, updateSelection = true }: AddElementsProps
 ) => {
   if (!Array.isArray(elements)) {
     return;

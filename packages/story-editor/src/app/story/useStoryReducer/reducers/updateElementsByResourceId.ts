@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
+import type { UpdateElementsByResourceIdProps } from '../../../../types/storyProvider';
 import { updateElementWithUpdater } from './utils';
 
 /**
@@ -36,16 +38,10 @@ import { updateElementWithUpdater } from './utils';
  * If given set of properties is empty, state is unchanged.
  *
  * Current selection and page is unchanged.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string|null} payload.id id Update all elements with this resource id
- * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
- * a function to calculate new values based on the current properties.
  */
 export const updateElementsByResourceId = (
-  draft,
-  { id, properties: propertiesOrUpdater }
+  draft: Story,
+  { id, properties: propertiesOrUpdater }: UpdateElementsByResourceIdProps
 ) => {
   if (!id) {
     return;

@@ -18,6 +18,12 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Story } from '@googleforcreators/types';
+
+/**
+ * Internal dependencies
+ */
+import type { SetCurrentPageProps } from '../../../../types/storyProvider';
 
 /**
  * Set current page to the given id.
@@ -25,12 +31,11 @@ import { produce } from 'immer';
  * If id doesn't match an existing page, nothing happens.
  *
  * If page is changed, selection is cleared
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {number} payload.pageId Page id to set as current page
  */
-export const setCurrentPage = (draft, { pageId }) => {
+export const setCurrentPage = (
+  draft: Story,
+  { pageId }: SetCurrentPageProps
+) => {
   const pageExists = draft.pages.some(({ id }) => id === pageId);
   const pageIsAlreadyCurrent = draft.current === pageId;
   if (!pageExists || pageIsAlreadyCurrent) {

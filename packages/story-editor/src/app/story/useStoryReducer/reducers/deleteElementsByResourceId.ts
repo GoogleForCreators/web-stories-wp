@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type {Story} from "@googleforcreators/types";
+import type {DeleteElementsByResourceIdProps} from "../../../../types/storyProvider";
 
 /**
  * Delete elements by the given resource id.
@@ -27,12 +29,11 @@ import { produce } from 'immer';
  * If an empty id or a no matches with id, state is unchanged.
  *
  * If no element with the given resource id is found, state is changed.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string|null} payload.id id Delete all elements with this resource id
  */
-export const deleteElementsByResourceId = (draft, { id }) => {
+export const deleteElementsByResourceId = (
+  draft: Story,
+  { id }: DeleteElementsByResourceIdProps
+) => {
   if (id === null) {
     return;
   }

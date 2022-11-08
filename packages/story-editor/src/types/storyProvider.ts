@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Page } from '@googleforcreators/types';
+import type {Page, Element, ResourceId} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -51,49 +51,74 @@ export type UpdatePageAction = {
   payload: UpdatePageProps;
 };
 
-export type ArrangePageProps = {};
+export type ArrangePageProps = {
+  pageId: string;
+  position: number;
+};
 export type ArrangePageAction = {
   type: typeof actionTypes.ARRANGE_PAGE;
   payload: ArrangePageProps;
 };
 
-export type SetCurrentPageProps = {};
+export type SetCurrentPageProps = {
+  pageId: string;
+};
 export type SetCurrentPagePageAction = {
   type: typeof actionTypes.SET_CURRENT_PAGE;
   payload: SetCurrentPageProps;
 };
 
-export type AddElementsProps = {};
+export type AddElementsProps = {
+  elements: Element[];
+  pageId: string;
+  updateSelection: boolean;
+};
+
 export type AddElementsAction = {
   type: typeof actionTypes.ADD_ELEMENTS;
   payload: AddElementsProps;
 };
 
-export type DeleteElementsProps = {};
+export type DeleteElementsProps = {
+  elementIds: string[];
+};
 export type DeleteElementsAction = {
   type: typeof actionTypes.DELETE_ELEMENTS;
   payload: DeleteElementsProps;
 };
 
-export type UpdateElementsProps = {};
+type ElementUpdater = (prevProps: Element) => Element;
+export type UpdateElementsProps = {
+  elementIds: string[];
+  properties: Partial<Element> | ElementUpdater;
+};
 export type UpdateElementsAction = {
   type: typeof actionTypes.UPDATE_ELEMENTS;
   payload: UpdateElementsProps;
 };
 
-export type UpdateElementsByResourceIdProps = {};
+export type UpdateElementsByResourceIdProps = {
+  id: ResourceId;
+  properties: Partial<Element> | ElementUpdater;
+};
 export type UpdateElementsByResourceIdAction = {
   type: typeof actionTypes.UPDATE_ELEMENTS_BY_RESOURCE_ID;
   payload: UpdateElementsByResourceIdProps;
 };
 
-export type DeleteElementsByResourceIdProps = {};
+export type DeleteElementsByResourceIdProps = {
+  id: ResourceId;
+};
 export type DeleteElementsByResourceIdAction = {
   type: typeof actionTypes.DELETE_ELEMENTS_BY_RESOURCE_ID;
   payload: DeleteElementsByResourceIdProps;
 };
 
-export type CombineElementsProps = {};
+export type CombineElementsProps = {
+  firstElement: Element;
+  secondId: string;
+  shouldRetainAnimations: boolean;
+};
 export type CombineElementsAction = {
   type: typeof actionTypes.COMBINE_ELEMENTS;
   payload: CombineElementsProps;

@@ -23,6 +23,8 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { intersect } from './utils';
+import type {DeleteElementsProps} from "../../../../types/storyProvider";
+import type {Story} from "@googleforcreators/types";
 
 /**
  * Delete elements by the given list of ids.
@@ -46,7 +48,10 @@ import { intersect } from './utils';
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds List of ids of elements to delete.
  */
-export const deleteElements = (draft, { elementIds }) => {
+export const deleteElements = (
+  draft: Story,
+  { elementIds }: DeleteElementsProps
+) => {
   const idsToDelete = elementIds === null ? draft.selection : elementIds;
 
   if (idsToDelete.length === 0) {

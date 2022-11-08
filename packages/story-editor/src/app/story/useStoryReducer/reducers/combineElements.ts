@@ -28,6 +28,8 @@ import { produce } from 'immer';
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
 import { removeAnimationsWithElementIds } from './utils';
+import type {CombineElementsProps} from "../../../../types/storyProvider";
+import type {Story} from "@googleforcreators/types";
 
 /**
  * Combine elements by taking properties from a first item and
@@ -46,16 +48,14 @@ import { removeAnimationsWithElementIds } from './utils';
  * save a copy of the old element as appropriate and remove flag.
  *
  * Updates selection to only include the second item after merge.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.firstElement Element with properties to merge
- * @param {string} payload.secondId Element to add properties to
- * @param {boolean} payload.shouldRetainAnimations Is called from copy and paste
  */
 export const combineElements = (
-  draft,
-  { firstElement, secondId, shouldRetainAnimations = true }
+  draft: Story,
+  {
+    firstElement,
+    secondId,
+    shouldRetainAnimations = true,
+  }: CombineElementsProps
 ) => {
   if (!firstElement || !secondId) {
     return;
