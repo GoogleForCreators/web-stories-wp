@@ -112,8 +112,8 @@ describe('date/formatDate', () => {
     expect(formattedDate).toBe('Sat 05 02 2020');
   });
 
-  it('should return an empty string with a null date', () => {
-    const formattedDate = formatDate(null);
+  it('should return an empty string when being passed an empty string', () => {
+    const formattedDate = formatDate('');
 
     expect(formattedDate).toBe('');
   });
