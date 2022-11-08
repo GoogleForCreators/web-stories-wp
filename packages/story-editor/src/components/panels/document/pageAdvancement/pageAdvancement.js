@@ -25,16 +25,22 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
+import { useConfig } from '../../../../app/config';
 import GeneralPageAdvancementPanel from '../../shared/generalPageAdvancement';
 
 function PageAdvancementPanel({ nameOverride }) {
+  const { globalPageDuration } = useConfig();
   const { autoAdvance, defaultPageDuration, updateStory } = useStory(
     ({
       state: {
         story: { autoAdvance, defaultPageDuration },
       },
       actions: { updateStory },
-    }) => ({ autoAdvance, defaultPageDuration, updateStory })
+    }) => ({
+      autoAdvance,
+      defaultPageDuration: defaultPageDuration || globalPageDuration,
+      updateStory,
+    })
   );
 
   const onUpdate = useCallback(

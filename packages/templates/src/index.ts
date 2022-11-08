@@ -45,3 +45,5 @@ export async function getAllTemplates({
 }
 
 export { getTemplateMetaData } from './getMetaData';
+
+export * from './types';

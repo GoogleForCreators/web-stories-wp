@@ -82,7 +82,7 @@ class Analytics extends Service_Base {
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
-	 * @see https://github.com/ampproject/amphtml/blob/master/spec/amp-var-substitutions.md
+	 * @see https://github.com/ampproject/amphtml/blob/main/docs/spec/amp-var-substitutions.md
 	 *
 	 * @param string $tracking_id Tracking ID.
 	 * @return array<string, array<string, mixed>> <amp-analytics> configuration.

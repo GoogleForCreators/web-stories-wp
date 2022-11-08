@@ -50,7 +50,6 @@ describe('APIProvider', () => {
     const cdnURL = 'https://test.url';
     const { result } = renderApiProvider({
       configValue: {
-        api: {},
         apiCallbacks: {},
         cdnURL,
       },
@@ -71,7 +70,6 @@ describe('APIProvider', () => {
     const cdnURL = 'https://test.url';
     const { result } = renderApiProvider({
       configValue: {
-        api: {},
         apiCallbacks: {},
         cdnURL,
       },
