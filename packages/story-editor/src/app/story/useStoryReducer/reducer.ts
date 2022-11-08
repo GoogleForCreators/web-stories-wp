@@ -41,7 +41,7 @@ function reducer(state: Story, { type, payload }: ReducerActionProps): Story {
       return reducers.updatePage(state, payload);
     }
 
-    /*case types.ARRANGE_PAGE: {
+    case types.ARRANGE_PAGE: {
       return reducers.arrangePage(state, payload);
     }
 
@@ -155,7 +155,7 @@ function reducer(state: Story, { type, payload }: ReducerActionProps): Story {
 
     case types.ADD_ELEMENTS_ACROSS_PAGES: {
       return reducers.addElementsAcrossPages(state, payload);
-    }*/
+    }
 
     default:
       return state;
