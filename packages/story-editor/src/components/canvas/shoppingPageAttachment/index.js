@@ -119,7 +119,7 @@ function PageAttachment({ ctaText, theme }) {
   }));
 
   return (
-    <Wrapper role="presentation">
+    <Wrapper role="presentation" tabIndex={-1}>
       <InnerWrap>
         <Inner $hasGradient={theme !== OUTLINK_THEME.DARK}>
           <ArrowWrap bgColor={fgColor} $factor={dataToEditorY}>
