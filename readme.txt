@@ -109,6 +109,12 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.27.0 =
+
+* New feature: support for changing page advancement defaults on the settings page.
+* Fixes issues with the carousel and grid layouts in the Web Stories block.
+* Bug fixes and performance improvements.
+
 = 1.26.0 =
 
 * New feature: support for changing page advancement settings per individual page.
@@ -121,14 +127,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Fixes template insertion from the dashboard
 * Fixes a couple of edge case issues around media uploads & trimming.
 
-= 1.25.0 =
-
-* New feature: background blurring support for webcam recording.
-* Enhancement: change and lock placement of floating menu bar.
-* Enhancements: improved saving and revisions mechanism to prevent content loss.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.27.0 =
+
+This release adds support for changing page advancement defaults and fixes various bugs.
 
 = 1.26.0 =
 
@@ -137,7 +140,3 @@ This release includes support for page-level page advancement settings and impro
 = 1.25.1 =
 
 This release addresses a few regressions regarding the checklist, templates, and media uploads.
-
-= 1.25.0 =
-
-This release adds improvements to webcam recording, saving, and the floating menu bar.
