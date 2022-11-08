@@ -205,7 +205,11 @@
   .web-stories-story-picker-filter__search-container
   .components-base-control
   .components-select-control__input {
-  height: 34px;
+  height: 30px;
+}
+
+.web-stories-story-picker-filter .components-select-control {
+  gap: 0;
 }
 
 .web-stories-story-picker-filter__search-inner {
@@ -225,6 +229,7 @@
   top: 28px;
   border: 1px solid #757575;
   background: #fff;
+  z-index: 3;
 }
 
 .web-stories-story-picker-filter__combobox
