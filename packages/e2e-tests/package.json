@@ -39,7 +39,7 @@
     "jest-puppeteer": "^6.1.1"
   },
   "devDependencies": {
-    "@types/expect-puppeteer": "^5.0.1"
+    "@types/expect-puppeteer": "^5.0.2"
   },
   "peerDependencies": {
     "puppeteer": "*"
