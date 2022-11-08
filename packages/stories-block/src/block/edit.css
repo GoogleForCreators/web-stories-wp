@@ -117,8 +117,8 @@
 
 .web-stories-story-picker-modal__content {
   position: relative;
-  height: calc(100% - 110px);
-  margin: 0;
+  height: 100%;
+  margin: 0 0 20px 0;
   padding: 20px 0;
   overflow-y: scroll;
   overflow-x: hidden;
