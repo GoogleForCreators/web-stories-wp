@@ -19,6 +19,7 @@
  */
 import { useReducer, useMemo } from '@googleforcreators/react';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -55,18 +56,17 @@ const INITIAL_STATE = {
  * - Selection isn't guaranteed to refer to objects on the current page.
  * - New pages aren't validated for type of elements property when added.
  * - No validation of keys or values in the story object.
- *
- * @param {Object} partial A state partial to initialize with.
- * @return {Object} An object with keys `state`, `internal` and `api`.
  */
-function useStoryReducer(partial) {
+function useStoryReducer(partial: Partial<Story>) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     ...partial,
-  });
+  } as Story);
 
   const { internal, api } = useMemo(() => {
-    const wrapWithDispatch = (actions) =>
+    const wrapWithDispatch = (
+      actions: typeof internalActions | typeof exposedActions
+    ) =>
       Object.keys(actions).reduce(
         (collection, action) => ({
           ...collection,

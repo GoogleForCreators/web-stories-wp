@@ -15,21 +15,33 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Dispatch } from 'react';
+
+/**
  * Internal dependencies
  */
+import type {
+  AddPageProps,
+  DeletePageProps,
+  ReducerActionProps,
+  UpdatePageProps,
+} from '../../../types/storyProvider';
 import * as types from './types';
 
+type DispatchType = Dispatch<ReducerActionProps>;
 // Exposed actions
 const addPage =
-  (dispatch) =>
-  ({ page, position, updateSelection }) =>
+  (dispatch: DispatchType) =>
+  ({ page, position, updateSelection }: AddPageProps) =>
     dispatch({
       type: types.ADD_PAGE,
       payload: { page, position, updateSelection },
     });
 
 const addPageAt =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ page, position, updateSelection }) =>
     dispatch({
       type: types.ADD_PAGE,
@@ -37,20 +49,20 @@ const addPageAt =
     });
 
 const deletePage =
-  (dispatch) =>
-  ({ pageId }) =>
+  (dispatch: DispatchType) =>
+  ({ pageId }: DeletePageProps) =>
     dispatch({ type: types.DELETE_PAGE, payload: { pageId } });
 
-const deleteCurrentPage = (dispatch) => () =>
+const deleteCurrentPage = (dispatch: DispatchType) => () =>
   dispatch({ type: types.DELETE_PAGE, payload: { pageId: null } });
 
 const updatePageProperties =
-  (dispatch) =>
-  ({ pageId, properties }) =>
+  (dispatch: DispatchType) =>
+  ({ pageId, properties }: UpdatePageProps) =>
     dispatch({ type: types.UPDATE_PAGE, payload: { pageId, properties } });
 
 const updateCurrentPageProperties =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ properties }) =>
     dispatch({
       type: types.UPDATE_PAGE,
@@ -58,17 +70,17 @@ const updateCurrentPageProperties =
     });
 
 const arrangePage =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ pageId, position }) =>
     dispatch({ type: types.ARRANGE_PAGE, payload: { pageId, position } });
 
 const setCurrentPage =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ pageId }) =>
     dispatch({ type: types.SET_CURRENT_PAGE, payload: { pageId } });
 
 const addElements =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elements, pageId, updateSelection }) =>
     dispatch({
       type: types.ADD_ELEMENTS,
@@ -76,7 +88,7 @@ const addElements =
     });
 
 const addElement =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ element, pageId, updateSelection }) =>
     dispatch({
       type: types.ADD_ELEMENTS,
@@ -84,15 +96,15 @@ const addElement =
     });
 
 const deleteElementsById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementIds }) =>
     dispatch({ type: types.DELETE_ELEMENTS, payload: { elementIds } });
 
-const deleteSelectedElements = (dispatch) => () =>
+const deleteSelectedElements = (dispatch: DispatchType) => () =>
   dispatch({ type: types.DELETE_ELEMENTS, payload: { elementIds: null } });
 
 const deleteElementById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementId }) =>
     dispatch({
       type: types.DELETE_ELEMENTS,
@@ -100,7 +112,7 @@ const deleteElementById =
     });
 
 const updateElementsById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementIds, properties }) =>
     dispatch({
       type: types.UPDATE_ELEMENTS,
@@ -108,7 +120,7 @@ const updateElementsById =
     });
 
 const updateElementsByResourceId =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ id, properties }) =>
     dispatch({
       type: types.UPDATE_ELEMENTS_BY_RESOURCE_ID,
@@ -116,7 +128,7 @@ const updateElementsByResourceId =
     });
 
 const deleteElementsByResourceId =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ id }) =>
     dispatch({
       type: types.DELETE_ELEMENTS_BY_RESOURCE_ID,
@@ -124,7 +136,7 @@ const deleteElementsByResourceId =
     });
 
 const updateElementById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementId, properties }) =>
     dispatch({
       type: types.UPDATE_ELEMENTS,
@@ -132,7 +144,7 @@ const updateElementById =
     });
 
 const duplicateElementsById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementIds }) =>
     dispatch({
       type: types.DUPLICATE_ELEMENTS_BY_ID,
@@ -140,7 +152,7 @@ const duplicateElementsById =
     });
 
 const updateSelectedElements =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ properties }) =>
     dispatch({
       type: types.UPDATE_ELEMENTS,
@@ -148,7 +160,7 @@ const updateSelectedElements =
     });
 
 const combineElements =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ firstElement, secondId, shouldRetainAnimations }) =>
     dispatch({
       type: types.COMBINE_ELEMENTS,
@@ -156,18 +168,18 @@ const combineElements =
     });
 
 const setBackgroundElement =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementId }) =>
     dispatch({ type: types.SET_BACKGROUND_ELEMENT, payload: { elementId } });
 
-const clearBackgroundElement = (dispatch) => () =>
+const clearBackgroundElement = (dispatch: DispatchType) => () =>
   dispatch({
     type: types.SET_BACKGROUND_ELEMENT,
     payload: { elementId: null },
   });
 
 const arrangeElement =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementId, position, groupId }) =>
     dispatch({
       type: types.ARRANGE_ELEMENT,
@@ -175,12 +187,12 @@ const arrangeElement =
     });
 
 const arrangeGroup =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ groupId, position }) =>
     dispatch({ type: types.ARRANGE_GROUP, payload: { groupId, position } });
 
 const arrangeSelection =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ position, groupId }) =>
     dispatch({
       type: types.ARRANGE_ELEMENT,
@@ -188,28 +200,28 @@ const arrangeSelection =
     });
 
 const setSelectedElementsById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementIds, withLinked }) =>
     dispatch({
       type: types.SET_SELECTED_ELEMENTS,
       payload: { elementIds, withLinked },
     });
 
-const clearSelection = (dispatch) => () =>
+const clearSelection = (dispatch: DispatchType) => () =>
   dispatch({ type: types.SET_SELECTED_ELEMENTS, payload: { elementIds: [] } });
 
 const addElementToSelection =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementId }) =>
     dispatch({ type: types.SELECT_ELEMENT, payload: { elementId } });
 
 const removeElementFromSelection =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementId }) =>
     dispatch({ type: types.UNSELECT_ELEMENT, payload: { elementId } });
 
 const toggleElementInSelection =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementId, withLinked }) =>
     dispatch({
       type: types.TOGGLE_ELEMENT_IN_SELECTION,
@@ -217,12 +229,12 @@ const toggleElementInSelection =
     });
 
 const updateStory =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ properties }) =>
     dispatch({ type: types.UPDATE_STORY, payload: { properties } });
 
 const updateAnimationState =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ animationState }) =>
     dispatch({
       type: types.UPDATE_ANIMATION_STATE,
@@ -230,25 +242,25 @@ const updateAnimationState =
     });
 
 const addAnimations =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ animations }) =>
     dispatch({ type: types.ADD_ANIMATIONS, payload: { animations } });
 
 const toggleLayer =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ metaKey, shiftKey, elementId, withLinked }) =>
     dispatch({
       type: types.TOGGLE_LAYER,
       payload: { metaKey, shiftKey, elementId, withLinked },
     });
 
-const copySelectedElement = (dispatch) => () =>
+const copySelectedElement = (dispatch: DispatchType) => () =>
   dispatch({
     type: types.COPY_SELECTED_ELEMENT,
   });
 
 const updateElementsByFontFamily =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ family, properties }) =>
     dispatch({
       type: types.UPDATE_ELEMENTS_BY_FONT_FAMILY,
@@ -256,12 +268,12 @@ const updateElementsByFontFamily =
     });
 
 const addGroup =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ groupId, name, isLocked }) =>
     dispatch({ type: types.ADD_GROUP, payload: { groupId, name, isLocked } });
 
 const updateGroupById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ groupId, properties }) =>
     dispatch({
       type: types.UPDATE_GROUP,
@@ -269,7 +281,7 @@ const updateGroupById =
     });
 
 const deleteGroupById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ groupId }) =>
     dispatch({
       type: types.DELETE_GROUP,
@@ -277,7 +289,7 @@ const deleteGroupById =
     });
 
 const deleteGroupAndElementsById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ groupId }) =>
     dispatch({
       type: types.DELETE_GROUP,
@@ -285,7 +297,7 @@ const deleteGroupAndElementsById =
     });
 
 const duplicateGroupById =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ groupId, name, oldGroupId, isLocked }) =>
     dispatch({
       type: types.DUPLICATE_GROUP,
@@ -293,7 +305,7 @@ const duplicateGroupById =
     });
 
 const removeElementFromGroup =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elementId, groupId }) =>
     dispatch({
       type: types.REMOVE_ELEMENT_FROM_GROUP,
@@ -301,7 +313,7 @@ const removeElementFromGroup =
     });
 
 const addElementsAcrossPages =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ elements, page, position }) =>
     dispatch({
       type: types.ADD_ELEMENTS_ACROSS_PAGES,
@@ -356,7 +368,7 @@ export const exposedActions = {
 
 // Internal actions
 const restore =
-  (dispatch) =>
+  (dispatch: DispatchType) =>
   ({ pages, selection, current, story, capabilities }) =>
     dispatch({
       type: types.RESTORE,

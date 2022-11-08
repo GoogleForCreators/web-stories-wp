@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { ReactNode } from 'react';
+import type {ReactNode, Reducer} from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
 import type { Story } from '@googleforcreators/types';
 
@@ -36,6 +36,7 @@ import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 import { StoryTriggersProvider } from './storyTriggers';
 import useLocalAutoSave from './actions/useLocalAutoSave';
+import type {AddPageAction} from "../../types/storyProvider";
 
 interface ProviderProps {
   storyId: number;

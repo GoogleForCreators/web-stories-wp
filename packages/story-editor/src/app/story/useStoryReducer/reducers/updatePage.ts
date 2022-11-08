@@ -18,11 +18,13 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import { PAGE_RESERVED_PROPERTIES } from '../types';
+import type { UpdatePageProps } from '../../../../types/storyProvider';
 import { objectWithout } from './utils';
 
 /**
@@ -31,14 +33,14 @@ import { objectWithout } from './utils';
  * If id doesn't exist, nothing happens.
  *
  * Current page and selection is unchanged.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {number} payload.pageId Page index to update. If null, update current page.
- * @param {number} payload.properties Object with properties to set for given page.
  */
-export const updatePage = (draft, { pageId, properties }) => {
-  const idToUpdate = pageId === null ? draft.current : pageId;
+export const updatePage = (
+  draft: Story,
+  { pageId, properties }: UpdatePageProps
+) => {
+  const idToUpdate = (pageId === null ? draft.current : pageId) as
+    | string
+    | undefined;
   const page = draft.pages.find(({ id }) => id === idToUpdate);
   if (!page) {
     return;

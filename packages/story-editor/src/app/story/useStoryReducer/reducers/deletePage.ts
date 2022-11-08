@@ -18,6 +18,12 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Story } from '@googleforcreators/types';
+
+/**
+ * Internal dependencies
+ */
+import type { DeletePageProps } from '../../../../types/storyProvider';
 
 /**
  * Delete page by id or delete current page if no id given.
@@ -30,17 +36,16 @@ import { produce } from 'immer';
  * If state only has one or zero pages, nothing happens.
  *
  * If a page is deleted, selection is cleared.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {number} payload.pageId Page id to delete. If null, delete current page
  */
-export const deletePage = (draft, { pageId }) => {
+export const deletePage = (draft: Story, { pageId }: DeletePageProps) => {
   if (draft.pages.length <= 1) {
     return;
   }
 
-  const idToDelete = pageId === null ? draft.current : pageId;
+  // @todo Why do we need to cast here?
+  const idToDelete = (pageId === null ? draft.current : pageId) as
+    | string
+    | undefined;
 
   const pageIndex = draft.pages.findIndex(({ id }) => id === idToDelete);
   if (pageIndex === -1) {

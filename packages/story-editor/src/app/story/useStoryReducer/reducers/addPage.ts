@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
+import type { AddPageProps } from '../../../../types/storyProvider';
 import { isInsideRange } from './utils';
 
 /**
@@ -34,14 +36,11 @@ import { isInsideRange } from './utils';
  * New page must have at least one element, the default background element.
  *
  * Selection is cleared by default.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {Object} payload.page Object with properties of new page
- * @param {Object} payload.position Position at which to insert the new page. If null, insert after current
- * @param {boolean} [payload.updateSelection=true] Whether to update page and element selection.
  */
-export const addPage = (draft, { page, position, updateSelection = true }) => {
+export const addPage = (
+  draft: Story,
+  { page, position, updateSelection = true }: AddPageProps
+) => {
   // Ensure new page has at least one element
   if (!page.elements?.length) {
     return;

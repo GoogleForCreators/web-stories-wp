@@ -20,7 +20,7 @@
 import type { Page } from './page';
 
 export interface Story {
-  version: number;
+  version?: number;
   pages: Page[];
   backgroundAudio?: {
     resource: {
@@ -31,4 +31,7 @@ export interface Story {
   };
   autoAdvance?: boolean;
   defaultPageDuration?: number;
+  // @todo Should we separate the story that gets saved into DB vs not?
+  current?: string | null;
+  selection?: string[];
 }

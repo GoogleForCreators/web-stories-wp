@@ -15,13 +15,19 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Story } from '@googleforcreators/types';
+
+/**
  * Internal dependencies
  */
+import type { ReducerActionProps } from '../../../types/storyProvider';
 import * as types from './types';
 import * as reducers from './reducers';
 
 // eslint-disable-next-line complexity -- reducer function, negligible.
-function reducer(state, { type, payload }) {
+function reducer(state: Story, { type, payload }: ReducerActionProps): Story {
   switch (type) {
     case types.ADD_PAGE: {
       return reducers.addPage(state, payload);
@@ -35,7 +41,7 @@ function reducer(state, { type, payload }) {
       return reducers.updatePage(state, payload);
     }
 
-    case types.ARRANGE_PAGE: {
+    /*case types.ARRANGE_PAGE: {
       return reducers.arrangePage(state, payload);
     }
 
@@ -149,7 +155,7 @@ function reducer(state, { type, payload }) {
 
     case types.ADD_ELEMENTS_ACROSS_PAGES: {
       return reducers.addElementsAcrossPages(state, payload);
-    }
+    }*/
 
     default:
       return state;
