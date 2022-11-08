@@ -32,32 +32,36 @@
  * External dependencies
  */
 import { useEffect, useState } from '@googleforcreators/react';
+import type { Dispatch, SetStateAction } from 'react';
 
-export function hashToParams(hash) {
+export function hashToParams(hash: string) {
   return new URLSearchParams(hash.startsWith('#') ? hash.substr(1) : hash);
 }
 
 /**
  * Functions like a normal `useState()` but reads initial value of of url
  * hash key and uses `fallback` if no value found. Also updates hash key on
- * every state update so is persistant between mounts.
+ * every state update so is persistent between mounts.
  *
  * Values held in here must be serializable.
  *
  * Can be used as many times as needed, but may exceed url char limit
  * if over used.
- *
- * @param {string} key  identifier for storing hash persisted value.
- * @param {*} fallback  value state intialized with if none found under key.
- * @return {[*, Function]} value & setter tuple like `useState()`
  */
-function useHashState(key, fallback) {
-  const [value, setValue] = useState(() => {
+function useHashState(
+  key: string,
+  fallback: string | null
+): [string | null, Dispatch<SetStateAction<string | null>>] {
+  const [value, setValue] = useState<string | null>(() => {
     const params = hashToParams(window.location.hash);
     let _value = fallback;
     try {
       if (params.has(key)) {
-        _value = JSON.parse(decodeURI(params.get(key)));
+        const paramValue = params.get(key);
+        if (null === paramValue) {
+          return paramValue;
+        }
+        _value = JSON.parse(decodeURI(paramValue)) as string;
       }
     } catch (e) {
       // @TODO Add some error handling

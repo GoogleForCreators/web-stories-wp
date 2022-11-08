@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { ReactNode } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
+import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -36,7 +37,15 @@ import useAutoSave from './actions/useAutoSave';
 import { StoryTriggersProvider } from './storyTriggers';
 import useLocalAutoSave from './actions/useLocalAutoSave';
 
-function StoryProvider({ storyId, initialEdits, children }) {
+interface ProviderProps {
+  storyId: number;
+  initialEdits?: {
+    [index: string]: unknown;
+    story?: Story;
+  };
+  children: ReactNode;
+}
+function StoryProvider({ storyId, initialEdits, children }: ProviderProps) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
   const {
     state: reducerState,
@@ -200,11 +209,5 @@ function StoryProvider({ storyId, initialEdits, children }) {
     </Context.Provider>
   );
 }
-
-StoryProvider.propTypes = {
-  children: PropTypes.node,
-  storyId: PropTypes.number,
-  initialEdits: PropTypes.object,
-};
 
 export default StoryProvider;
