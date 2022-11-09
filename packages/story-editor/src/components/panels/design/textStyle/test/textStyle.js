@@ -123,6 +123,7 @@ function Wrapper({ selectedElements, children }) {
     },
     actions: {
       updateStory: jest.fn(),
+      updateStoryFonts: jest.fn(),
       updateElementsById: jest.fn(),
       updateSelectedElements: getAndSetMockUpdateSelectedElements(),
     },
