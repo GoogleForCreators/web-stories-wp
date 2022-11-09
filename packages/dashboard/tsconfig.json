@@ -11,7 +11,7 @@
     { "path": "../templates" },
     { "path": "../tracking" },
     { "path": "../units" },
-    { "path": "../i18n" },
+    { "path": "../i18n" }
   ],
   "include": ["src/app/config/*", "src/types"]
 }
