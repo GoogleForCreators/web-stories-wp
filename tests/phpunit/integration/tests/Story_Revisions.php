@@ -17,8 +17,10 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Story_Post_Type;
+
 /**
- * @coversDefaultClass \Google\Web_Stories\Admin\Admin
+ * @coversDefaultClass \Google\Web_Stories\Story_Revisions
  */
 class Story_Revisions extends DependencyInjectedTestCase {
 
@@ -101,5 +103,76 @@ class Story_Revisions extends DependencyInjectedTestCase {
 				'expected' => 0,
 			],
 		];
+	}
+
+	/**
+	 * @covers ::filter_revision_fields
+	 */
+	public function test_filter_revision_fields_not_an_array(): void {
+		$this->assertSame( 'foo', $this->instance->filter_revision_fields( 'foo', [] ) );
+	}
+
+	/**
+	 * @covers ::filter_revision_fields
+	 */
+	public function test_filter_revision_fields_wrong_post_type(): void {
+		$fields = [
+			'post_title' => 'Post title',
+		];
+
+		$this->assertSame(
+			$fields,
+			$this->instance->filter_revision_fields(
+				$fields,
+				[
+					'post_type'   => 'post',
+					'post_parent' => 0,
+				]
+			)
+		);
+	}
+
+	/**
+	 * @covers ::filter_revision_fields
+	 */
+	public function test_filter_revision_fields_story_post_type(): void {
+		$fields = [
+			'post_title' => 'Post title',
+		];
+
+		$actual = $this->instance->filter_revision_fields(
+			$fields,
+			[
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
+				'post_parent' => 0,
+			]
+		);
+
+		$this->assertArrayHasKey( 'post_content_filtered', $actual );
+	}
+
+	/**
+	 * @covers ::filter_revision_fields
+	 */
+	public function test_filter_revision_fields_story_post_type_revision(): void {
+		$fields = [
+			'post_title' => 'Post title',
+		];
+
+		$story = self::factory()->post->create(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+			]
+		);
+
+		$actual = $this->instance->filter_revision_fields(
+			$fields,
+			[
+				'post_type'   => 'revision',
+				'post_parent' => $story,
+			]
+		);
+
+		$this->assertArrayHasKey( 'post_content_filtered', $actual );
 	}
 }

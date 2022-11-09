@@ -18,12 +18,17 @@
  * External dependencies
  */
 import { identity, useContextSelector } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
+import type { ConfigState } from '../../types/configProvider';
 import Context from './context';
 
-function useConfig(selector) {
+function useConfig(): ConfigState;
+function useConfig<T>(
+  selector: (state: ConfigState) => T | ConfigState = identity
+) {
   return useContextSelector(Context, selector ?? identity);
 }
 

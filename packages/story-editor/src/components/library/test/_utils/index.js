@@ -31,7 +31,6 @@ import APIContext from '../../../../app/api/context';
 
 export async function arrange({ mediaResponse = [] }) {
   const config = {
-    api: {},
     allowedMimeTypes: {
       audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
       image: [

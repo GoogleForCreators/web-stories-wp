@@ -17,20 +17,18 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-
+import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { DashboardConfig } from '../../types/configProvider';
 import Context from './context';
 
-function ConfigProvider({ config, children }) {
-  return <Context.Provider value={config}>{children}</Context.Provider>;
+function useConfig(): DashboardConfig;
+function useConfig<T>(
+  selector: (state: DashboardConfig) => T | DashboardConfig = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
-ConfigProvider.propTypes = {
-  children: PropTypes.node,
-  config: PropTypes.object.isRequired,
-};
-
-export default ConfigProvider;
+export default useConfig;
