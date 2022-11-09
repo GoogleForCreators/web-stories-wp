@@ -93,12 +93,12 @@ function toggleBold(editorState: EditorState, flag?: undefined | boolean) {
 
   // if any character has weight less than SMALLEST_BOLD,
   // everything should be bolded
-  const shouldSetBold = (styles: string[]) =>
+  const shouldSetBold = (styles: string[] = []) =>
     getWeights(styles).some((w) => w < SMALLEST_BOLD);
 
   // if setting a bold, it should be the boldest current weight,
   // though at least DEFAULT_BOLD
-  const getBoldToSet = (styles: string[]) =>
+  const getBoldToSet = (styles: string[] = []) =>
     weightToStyle(Math.max(...[DEFAULT_BOLD].concat(getWeights(styles))));
 
   return togglePrefixStyle(editorState, WEIGHT, shouldSetBold, getBoldToSet);

@@ -30,7 +30,7 @@ interface ConfigParams {
   custom_map?: Record<string, string | number>;
 }
 
-interface ControlParams {
+export interface ControlParams {
   groups?: string | string[] | undefined;
   send_to?: string | string[] | undefined;
   event_callback?: (() => void) | undefined;

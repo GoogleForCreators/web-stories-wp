@@ -29,7 +29,6 @@ import {
  * Internal dependencies
  */
 import getTypeFromMime from './getTypeFromMime';
-import normalizeResourceSizes from './normalizeResourceSizes';
 import type { ResourceInput } from './types';
 
 /**
@@ -63,7 +62,7 @@ function createResource({
     mimeType,
     width,
     height,
-    sizes: normalizeResourceSizes(sizes),
+    sizes,
     isPlaceholder,
     isExternal,
     needsProxy,

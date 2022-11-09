@@ -28,8 +28,8 @@ export type StyleSetter = (
   arg: AllowedSetterArgs
 ) => EditorState;
 
-export type SetStyleCallback = (styles: string[]) => unknown;
-export type StyleGetter = (styles: string[]) => string;
+export type SetStyleCallback = (styles?: string[]) => unknown;
+export type StyleGetter = (styles?: string[]) => string;
 
 export interface SelectionInfo {
   isBold: boolean;

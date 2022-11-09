@@ -102,7 +102,6 @@ let lastVisibleDelayedTooltip = null;
  * @param {number} props.popupZIndexOverride If present, passes an override for z-index to popup
  * @return {import('react').Component} BaseTooltip element
  */
-
 function BaseTooltip({
   title,
   shortcut,

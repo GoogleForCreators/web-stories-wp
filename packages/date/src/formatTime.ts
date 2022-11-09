@@ -26,7 +26,7 @@ import { getSettings } from './settings';
  * @param date Date to format.
  * @return Displayable relative date string
  */
-function formatTime(date: Date) {
+function formatTime(date: Date | string) {
   const settings = getSettings();
   const { timeFormat } = settings;
   return format(date, timeFormat);
