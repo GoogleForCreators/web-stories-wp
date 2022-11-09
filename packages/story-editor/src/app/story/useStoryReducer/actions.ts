@@ -71,7 +71,7 @@ const addPage =
 
 const addPageAt =
   (dispatch: DispatchType) =>
-  ({ page, position, updateSelection }): AddPageProps =>
+  ({ page, position, updateSelection }: AddPageProps) =>
     dispatch({
       type: types.ADD_PAGE,
       payload: { page, position, updateSelection },
