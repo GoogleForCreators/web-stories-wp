@@ -50,11 +50,14 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
   // cleanup font state -- only save fonts that are "in-use"
   const inUseFontFamilies = getInUseFontsForPages(pages);
   const inUseFonts = objectPick(fonts, inUseFontFamilies);
-  // cleanup page text elements to only keep font family prop
-  // temporarily disabled to debug tests
   const cleanedPages = cleanElementFontProperties(pages);
   const products = getAllProducts(cleanedPages);
-  const content = getStoryMarkup(story, cleanedPages, metadata, flags);
+  const content = getStoryMarkup(
+    { ...story, fonts: inUseFonts },
+    cleanedPages,
+    metadata,
+    flags
+  );
 
   return {
     content,

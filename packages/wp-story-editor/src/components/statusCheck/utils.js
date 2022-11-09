@@ -27,6 +27,7 @@ export function getContent() {
       id: 1,
       name: 'John Doe',
     },
+    fonts: {},
     slug: 'story',
     publisherLogo: {
       id: 1,
