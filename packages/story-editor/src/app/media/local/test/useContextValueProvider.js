@@ -213,7 +213,6 @@ describe('useContextValueProvider', () => {
       },
     };
     const configState = {
-      api: {},
       allowedMimeTypes: {
         image: [],
         vector: [],

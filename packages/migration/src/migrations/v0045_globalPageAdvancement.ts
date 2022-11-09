@@ -26,6 +26,9 @@ import type {
   StoryV44,
   TextElementV44,
   VideoElementV44,
+  GifResourceV44,
+  ImageResourceV44,
+  VideoResourceV44,
 } from './v0044_unusedProperties';
 
 export type TextElementV45 = TextElementV44;
@@ -34,6 +37,10 @@ export type ShapeElementV45 = ShapeElementV44;
 export type ImageElementV45 = ImageElementV44;
 export type VideoElementV45 = VideoElementV44;
 export type GifElementV45 = GifElementV44;
+
+export type ImageResourceV45 = ImageResourceV44;
+export type VideoResourceV45 = VideoResourceV44;
+export type GifResourceV45 = GifResourceV44;
 
 export type UnionElementV45 =
   | ShapeElementV45
