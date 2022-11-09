@@ -34,7 +34,6 @@ jest.mock('@googleforcreators/design-system', () => ({
 
 function setup(args) {
   const configValue = {
-    api: {},
     allowedMimeTypes: {
       audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
       image: [

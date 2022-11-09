@@ -26,6 +26,7 @@ import type {
   Output,
   ResourceSize,
   ResourceType,
+  ResourceId,
   TrimData,
 } from '@googleforcreators/types';
 
@@ -215,7 +216,7 @@ export interface ResourceInput {
    * The resource ID.
    * TODO: currently this value is local to the editor's media system.
    */
-  id: string;
+  id: ResourceId;
   /** The type of the resource. */
   type: ResourceType;
   /** The MIME type of the resource. E.g. "image/png". */
@@ -237,12 +238,12 @@ export interface ResourceInput {
   /** Whether the resource is a placeholder. */
   isPlaceholder?: boolean;
   /** Whether the resource needs a CORS proxy. */
-  needsProxy: boolean;
+  needsProxy?: boolean;
   /** Resource creation date. */
   creationDate?: string;
   /** Resource sizes */
   sizes: { [key: string]: ResourceSize };
-  /** Resource author a ttribution */
+  /** Resource author attribution */
   attribution?: Attribution;
   /** The resource's poster. */
   poster?: string;
