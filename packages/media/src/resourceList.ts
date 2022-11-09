@@ -19,9 +19,14 @@
  */
 import type { ResourceId } from '@googleforcreators/types';
 
-interface ResourceCacheEntry {
+export enum ResourceCacheEntryType {
+  Cached = 'cached',
+  Fullsize = 'fullsize',
+}
+
+export interface ResourceCacheEntry {
   url: string;
-  type: 'cached' | 'fullsize';
+  type: ResourceCacheEntryType;
 }
 
 interface ResourceCache {
@@ -45,7 +50,7 @@ const resourceList: ResourceCache = {
     return this.list[id];
   },
   set: function (id: ResourceId, value: ResourceCacheEntry): void {
-    if (value?.type === 'cached' && this.list[id]) {
+    if (value?.type === ResourceCacheEntryType.Cached && this.list[id]) {
       // We already have better (or equal) resource than cached, prevent flickering
       return;
     }
