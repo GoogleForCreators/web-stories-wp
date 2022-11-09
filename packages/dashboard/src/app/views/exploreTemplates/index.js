@@ -44,6 +44,7 @@ import useTemplateFilters from './filters/useTemplateFilters';
 import Content from './content';
 import Header from './header';
 import TemplateDetailsModal from './modal';
+import TemplateFiltersProvider from './filters/TemplateFiltersProvider';
 
 function ExploreTemplates() {
   const speak = useLiveRegion();
@@ -258,34 +259,36 @@ function ExploreTemplates() {
   }, [orderedTemplates, replace, updateTemplateView]);
 
   return (
-    <Layout.Provider>
-      <Header
-        isLoading={isLoading && !totalTemplates}
-        totalTemplates={totalVisibleTemplates}
-        searchOptions={searchOptions}
-        view={view}
-      />
-      <Content
-        isLoading={isLoading}
-        allPagesFetched={allPagesFetched}
-        page={page}
-        templates={orderedTemplates}
-        totalTemplates={totalVisibleTemplates}
-        search={searchFilterValue}
-        view={view}
-        templateActions={templateActions}
-      />
-      <Layout.Fixed>
-        <ScrollToTop />
-      </Layout.Fixed>
-      <TemplateDetailsModal
-        activeTemplate={activeTemplate}
-        activeTemplateIndex={activeTemplateIndex}
-        isDetailsViewOpen={isDetailsViewOpen}
-        templateActions={templateActions}
-        filteredTemplatesLength={orderedTemplates.length}
-      />
-    </Layout.Provider>
+    <TemplateFiltersProvider>
+      <Layout.Provider>
+        <Header
+          isLoading={isLoading && !totalTemplates}
+          totalTemplates={totalVisibleTemplates}
+          searchOptions={searchOptions}
+          view={view}
+        />
+        <Content
+          isLoading={isLoading}
+          allPagesFetched={allPagesFetched}
+          page={page}
+          templates={orderedTemplates}
+          totalTemplates={totalVisibleTemplates}
+          search={searchFilterValue}
+          view={view}
+          templateActions={templateActions}
+        />
+        <Layout.Fixed>
+          <ScrollToTop />
+        </Layout.Fixed>
+        <TemplateDetailsModal
+          activeTemplate={activeTemplate}
+          activeTemplateIndex={activeTemplateIndex}
+          isDetailsViewOpen={isDetailsViewOpen}
+          templateActions={templateActions}
+          filteredTemplatesLength={orderedTemplates.length}
+        />
+      </Layout.Provider>
+    </TemplateFiltersProvider>
   );
 }
 

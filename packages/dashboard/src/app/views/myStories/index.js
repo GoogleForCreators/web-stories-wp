@@ -29,6 +29,7 @@ import useApi from '../../api/useApi';
 import useStoryFilters from './filters/useStoryFilters';
 import Content from './content';
 import Header from './header';
+import StoryFiltersProvider from './filters/StoryFiltersProvider';
 
 function MyStories() {
   const {
@@ -111,36 +112,38 @@ function MyStories() {
   }, [stories, storiesOrderById]);
 
   return (
-    <Layout.Provider>
-      <Header
-        initialPageReady={initialPageReady}
-        stories={orderedStories}
-        totalStoriesByStatus={totalStoriesByStatus}
-        view={view}
-      />
+    <StoryFiltersProvider>
+      <Layout.Provider>
+        <Header
+          initialPageReady={initialPageReady}
+          stories={orderedStories}
+          totalStoriesByStatus={totalStoriesByStatus}
+          view={view}
+        />
 
-      <Content
-        allPagesFetched={allPagesFetched}
-        canViewDefaultTemplates={canViewDefaultTemplates}
-        filtersObject={filtersObject}
-        loading={{
-          isLoading: isLoading,
-          showStoriesWhileLoading,
-        }}
-        page={page}
-        stories={orderedStories}
-        storyActions={{
-          duplicateStory,
-          trashStory,
-          updateStory,
-        }}
-        view={view}
-      />
+        <Content
+          allPagesFetched={allPagesFetched}
+          canViewDefaultTemplates={canViewDefaultTemplates}
+          filtersObject={filtersObject}
+          loading={{
+            isLoading: isLoading,
+            showStoriesWhileLoading,
+          }}
+          page={page}
+          stories={orderedStories}
+          storyActions={{
+            duplicateStory,
+            trashStory,
+            updateStory,
+          }}
+          view={view}
+        />
 
-      <Layout.Fixed>
-        <ScrollToTop />
-      </Layout.Fixed>
-    </Layout.Provider>
+        <Layout.Fixed>
+          <ScrollToTop />
+        </Layout.Fixed>
+      </Layout.Provider>
+    </StoryFiltersProvider>
   );
 }
 
