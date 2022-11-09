@@ -56,7 +56,7 @@ export function resetSettings() {
  *
  * @param newSettings Date settings.
  */
-export function updateSettings(newSettings: Settings) {
+export function updateSettings(newSettings: Partial<Settings>) {
   settings = {
     ...settings,
     ...newSettings,

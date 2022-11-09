@@ -45,9 +45,8 @@ import {
 /**
  * Allows keyboard arrow navigation through grids
  *
- * @param  {UseGridViewKeysProps} props
+ * @param  {UseGridViewKeysProps} props Grid view keys props.
  */
-
 function useGridViewKeys(props) {
   const {
     currentItemId,
