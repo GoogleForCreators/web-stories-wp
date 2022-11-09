@@ -15,19 +15,14 @@
  */
 
 /**
- * External dependencies
- */
-import type { Story } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
-import type { ReducerActionProps } from '../../../types/storyProvider';
+import type { ReducerActionProps, State } from '../../../types/storyProvider';
 import * as types from './types';
 import * as reducers from './reducers';
 
 // eslint-disable-next-line complexity -- reducer function, negligible.
-function reducer(state: Story, { type, payload }: ReducerActionProps): Story {
+function reducer(state: State, { type, payload }: ReducerActionProps): State {
   switch (type) {
     case types.ADD_PAGE: {
       return reducers.addPage(state, payload);
