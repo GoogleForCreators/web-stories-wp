@@ -121,12 +121,14 @@ function loadStory(storyId, post, restore, clearHistory, globalConfig) {
         : [],
     },
     globalStoryStyles: newGlobalStoryStyles,
-    autoAdvance: storyData?.autoAdvance
-      ? storyData.autoAdvance
-      : globalConfig.globalAutoAdvance,
-    defaultPageDuration: storyData?.defaultPageDuration
-      ? storyData?.defaultPageDuration
-      : globalConfig.globalPageDuration,
+    autoAdvance:
+      storyData?.autoAdvance === undefined
+        ? globalConfig.globalAutoAdvance
+        : storyData?.autoAdvance,
+    defaultPageDuration:
+      storyData?.defaultPageDuration === undefined
+        ? globalConfig.globalPageDuration
+        : storyData?.defaultPageDuration,
     backgroundAudio: storyData?.backgroundAudio,
     taxonomies,
     terms,

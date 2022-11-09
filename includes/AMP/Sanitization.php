@@ -438,7 +438,7 @@ class Sanitization {
 			];
 
 			$sanitizers[ Story_Sanitizer::class ] = [
-				'publisher_logo' => $story->get_publisher_logo_url(),
+				'publisher_logo' => (string) $story->get_publisher_logo_url(),
 				'publisher'      => $story->get_publisher_name(),
 				'poster_images'  => array_filter( $poster_images ),
 				'video_cache'    => $video_cache_enabled,

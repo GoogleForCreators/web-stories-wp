@@ -65,11 +65,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	public function __construct( Story_Post_Type $story_post_type ) {
 		$this->story_post_type = $story_post_type;
 
-		$rest_base         = $story_post_type->get_rest_base();
-		$parent_controller = $story_post_type->get_parent_controller();
-
-		$this->parent_controller = $parent_controller;
-		$this->rest_base         = $rest_base;
+		$this->parent_controller = $story_post_type->get_parent_controller();
+		$this->rest_base         = $story_post_type->get_rest_base();
 		$this->namespace         = $story_post_type->get_rest_namespace();
 	}
 

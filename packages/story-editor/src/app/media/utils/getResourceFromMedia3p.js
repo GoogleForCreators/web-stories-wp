@@ -116,7 +116,6 @@ function getImageUrls(m) {
  * @param {Media3pMedia} m The Media3P Media object
  * @return {Object} The array of "sizes"-type objects.
  */
-
 function getGifUrls(m) {
   // The rest of the application expects 3 named "sizes": "full", "large" and
   // "web_stories_thumbnail". We use the biggest as "full", the next biggest
