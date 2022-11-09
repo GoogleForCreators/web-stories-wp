@@ -22,6 +22,10 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
+import type {
+  RemoveElementFromGroupProps,
+  State,
+} from '../../../../types/storyProvider';
 import { arrangeElement } from './arrangeElement';
 import { getLastIndexOfGroup } from './utils';
 
@@ -33,7 +37,10 @@ import { getLastIndexOfGroup } from './utils';
  * @param {number} payload.elementId Selected element id
  * @param {number} payload.groupId Selected element group id
  */
-export const removeElementFromGroup = (draft, { elementId, groupId }) => {
+export const removeElementFromGroup = (
+  draft: State,
+  { elementId, groupId }: RemoveElementFromGroupProps
+) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
   const { elements } = page;
   const element = elements.find(({ id }) => id === elementId);

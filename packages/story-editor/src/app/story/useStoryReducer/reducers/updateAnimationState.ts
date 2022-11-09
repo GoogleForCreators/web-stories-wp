@@ -20,14 +20,21 @@
 import { produce } from 'immer';
 
 /**
+ * Internal dependencies
+ */
+import type {
+  State,
+  UpdateAnimationStateProps,
+} from '../../../../types/storyProvider';
+
+/**
  * Update the story animation state to play, pause, scrub or reset
  * active pages animations.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.animationState STORY_ANIMATION_STATE state to update to.
  */
-export const updateAnimationState = (draft, { animationState }) => {
+export const updateAnimationState = (
+  draft: State,
+  { animationState }: UpdateAnimationStateProps
+) => {
   draft.animationState = animationState;
 };
 

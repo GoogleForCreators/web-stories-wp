@@ -18,17 +18,22 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { State } from '@googleforcreators/types';
+
+/**
+ * Internal dependencies
+ */
+import type { UnselectElementProps } from '../../../../types/storyProvider';
 
 /**
  * Remove the given id from the current selection.
  *
  * If no id is given or id is not in the current selection, nothing happens.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.elementId Element id to remove from the current selection.
  */
-export const unselectElement = (draft, { elementId }) => {
+export const unselectElement = (
+  draft: State,
+  { elementId }: UnselectElementProps
+) => {
   const index = draft.selection.indexOf(elementId);
   if (index === -1) {
     return;

@@ -24,10 +24,12 @@ import { produce } from 'immer';
  */
 import { toggleElement } from './toggleElement';
 import { setSelectedElements } from './setSelectedElements';
+import type {State} from "@googleforcreators/types";
+import type {ToggleLayerProps} from "../../../../types/storyProvider";
 
 export const toggleLayer = (
-  draft,
-  { elementId, metaKey, shiftKey, withLinked = false }
+  draft: State,
+  { elementId, metaKey, shiftKey, withLinked = false }: ToggleLayerProps
 ) => {
   // Meta pressed. Toggle this layer in the selection.
   if (metaKey) {

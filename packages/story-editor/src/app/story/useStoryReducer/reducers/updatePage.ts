@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Story } from '@googleforcreators/types';
+import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -35,7 +35,7 @@ import { objectWithout } from './utils';
  * Current page and selection is unchanged.
  */
 export const updatePage = (
-  draft: Story,
+  draft: State,
   { pageId, properties }: UpdatePageProps
 ) => {
   const idToUpdate = (pageId === null ? draft.current : pageId) as

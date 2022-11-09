@@ -20,6 +20,11 @@
 import { produce } from 'immer';
 
 /**
+ * Internal dependencies
+ */
+import type { State } from '../../../../types/storyProvider';
+
+/**
  * Restore internal state completely from given state.
  *
  * Some validation is performed:
@@ -28,25 +33,16 @@ import { produce } from 'immer';
  * - `current` must point to a legal page, if at least one page exists.
  * - `selection` is an array.
  * - `story` is an object.
- *
- * @param {Object} draft Current state.
- * @param {Object} payload New state to set.
- * @param {Array<Object>} payload.pages List of pages.
- * @param {string} payload.current Current page ID.
- * @param {Array} payload.selection Selection.
- * @param {Object} payload.story Story object.
- * @param {Object} payload.capabilities Capabilities object.
- * @return {Object} Restored state.
  */
 export const restore = (
-  draft,
-  { pages, current, selection, story, capabilities }
+  draft: State,
+  { pages, current, selection, story, capabilities }: Partial<State>
 ) => {
   if (!Array.isArray(pages) || pages.length === 0) {
     return undefined;
   }
 
-  const newStory = typeof story === 'object' ? story : {};
+  const newState = typeof story === 'object' ? story : {};
   const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
   const oldCurrent = current ?? draft.current;
   const newCurrent = pages.some(({ id }) => id === oldCurrent)
@@ -58,7 +54,7 @@ export const restore = (
     pages,
     current: newCurrent,
     selection: newSelection,
-    story: newStory,
+    story: newState,
     animationState: draft.animationState,
     capabilities: newCapabilities,
     copiedElementState: {},

@@ -24,6 +24,8 @@ import { produce, current } from 'immer';
  * Internal dependencies
  */
 import { intersect } from './utils';
+import type {State} from "@googleforcreators/types";
+import type {SetSelectedElementsProps} from "../../../../types/storyProvider";
 
 /**
  * Set selected elements to the given list of ids.
@@ -38,15 +40,10 @@ import { intersect } from './utils';
  * Locked elements can never be part of a multi-selection, so remove those if so.
  *
  * Current page and pages are unchanged.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {Array.<string>} payload.elementIds Object with properties of new page
- * @param {boolean} payload.withLinked Include elements from the group?
  */
 export const setSelectedElements = (
-  draft,
-  { elementIds, withLinked = false }
+  draft: State,
+  { elementIds, withLinked = false }: SetSelectedElementsProps
 ) => {
   const newElementIds =
     typeof elementIds === 'function'

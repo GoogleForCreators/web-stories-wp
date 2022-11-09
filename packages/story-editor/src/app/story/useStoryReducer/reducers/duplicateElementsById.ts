@@ -19,18 +19,23 @@
  */
 import { duplicateElement, ELEMENT_TYPES } from '@googleforcreators/elements';
 import { produce } from 'immer';
+import type { State } from '@googleforcreators/types';
+
+/**
+ * Internal dependencies
+ */
+import type { DuplicateElementsByIdProps } from '../../../../types/storyProvider';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.
  * Set selected elements to be the newly created elements.
  *
  * If given `elementIds` are not a list, do nothing.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {Array.<string>} payload.elementIds Array of ids of elements to duplicate.
  */
-export const duplicateElementsById = (draft, { elementIds }) => {
+export const duplicateElementsById = (
+  draft: State,
+  { elementIds }: DuplicateElementsByIdProps
+) => {
   if (!Array.isArray(elementIds)) {
     return;
   }

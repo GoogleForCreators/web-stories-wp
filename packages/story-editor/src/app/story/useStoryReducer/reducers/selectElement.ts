@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type {SelectElementProps} from "../../../../types/storyProvider";
+import type {State} from "@googleforcreators/types";
 
 /**
  * Add the given id to the current selection.
@@ -28,7 +30,10 @@ import { produce } from 'immer';
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Element id to add to the current selection.
  */
-export const selectElement = (draft, { elementId }) => {
+export const selectElement = (
+  draft: State,
+  { elementId }: SelectElementProps
+) => {
   if (!elementId || draft.selection.includes(elementId)) {
     return;
   }

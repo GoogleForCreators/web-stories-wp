@@ -23,6 +23,10 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
+import type {
+  AddElementsAcrossPagesProps,
+  State,
+} from '../../../../types/storyProvider';
 import { addPage } from './addPage';
 import { addElements } from './addElements';
 
@@ -32,14 +36,11 @@ import { addElements } from './addElements';
  * Adds N elements to N pages in the given order.
  *
  * Selection is unchanged afterwards.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {Object} payload.page Object with properties of each new page
- * @param {Array.<Object>} payload.elements Elements to insert across pages.
- * @param {number} payload.position Position at which to insert the new page. If null, insert after current
  */
-const addElementsAcrossPages = (draft, { page, position, elements }) => {
+const addElementsAcrossPages = (
+  draft: State,
+  { page, position, elements }: AddElementsAcrossPagesProps
+) => {
   elements.forEach((element, index) => {
     // Ensure every newly added page has a unique ID.
     const pageId = uuidv4();

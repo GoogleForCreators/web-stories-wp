@@ -31,7 +31,4 @@ export interface Story {
   };
   autoAdvance?: boolean;
   defaultPageDuration?: number;
-  // @todo Should we separate the story that gets saved into DB vs not?
-  current?: string | null;
-  selection?: string[];
 }

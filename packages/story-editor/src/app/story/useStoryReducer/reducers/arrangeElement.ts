@@ -23,6 +23,8 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { getAbsolutePosition, moveArrayElement } from './utils';
+import type {State} from "@googleforcreators/types";
+import type {ArrangeElementProps} from "../../../../types/storyProvider";
 
 /**
  * Move element in element order on the current page (optionally handle group id when moved in the Layers Panel).
@@ -53,16 +55,10 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * Selection and current page is unchanged.
  *
  * TODO: Handle multi-element re-order when UX and priority is finalized.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.elementId Id of element to move
- * @param {number|string} payload.position New position of element to move
- * @param {string|boolean} payload.groupId New group id (when moving in the Layers Panel), false to skip updating.
  */
 export const arrangeElement = (
-  draft,
-  { elementId, position, groupId = false }
+  draft: State,
+  { elementId, position, groupId = false }: ArrangeElementProps
 ) => {
   if (elementId === null && draft.selection.length !== 1) {
     return;

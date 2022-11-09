@@ -22,18 +22,14 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
+import type { DeleteGroupProps, State } from '../../../../types/storyProvider';
 import { deleteElements } from './deleteElements';
 
 /**
  * Delete group by id.
- *
- * @param {Object} state Current state
- * @param {Object} payload Action payload
- * @param {number} payload.groupId Group id
- * @param {boolean} payload.includeElements If also delete all elements in the group
- * @return {Object} New state
  */
-const deleteGroup = produce((draft, { groupId, includeElements = false }) => {
+const deleteGroup = produce(
+  (draft: State, { groupId, includeElements = false }: DeleteGroupProps) => {
   const { elements, groups } = draft.pages.find(
     ({ id }) => id === draft.current
   );

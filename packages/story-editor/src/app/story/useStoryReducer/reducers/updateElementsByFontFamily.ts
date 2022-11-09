@@ -22,6 +22,10 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
+import type {
+  State,
+  UpdateElementsByFontFamilyProps,
+} from '../../../../types/storyProvider';
 import { updateElementWithUpdater } from './utils';
 
 /**
@@ -36,16 +40,10 @@ import { updateElementWithUpdater } from './utils';
  * If given set of properties is empty, state is unchanged.
  *
  * Current selection and page is unchanged.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string|null} payload.family Update all elements with this font family
- * @param {Object|function(Object):Object} payload.properties font / properties to set on all the given elements or
- * a function to update based on the current properties.
  */
 export const updateElementsByFontFamily = (
-  draft,
-  { family, properties: propertiesOrUpdater }
+  draft: State,
+  { family, properties: propertiesOrUpdater }: UpdateElementsByFontFamilyProps
 ) => {
   if (!family) {
     return;

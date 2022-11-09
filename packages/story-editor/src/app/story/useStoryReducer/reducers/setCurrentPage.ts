@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Story } from '@googleforcreators/types';
+import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ import type { SetCurrentPageProps } from '../../../../types/storyProvider';
  * If page is changed, selection is cleared
  */
 export const setCurrentPage = (
-  draft: Story,
+  draft: State,
   { pageId }: SetCurrentPageProps
 ) => {
   const pageExists = draft.pages.some(({ id }) => id === pageId);

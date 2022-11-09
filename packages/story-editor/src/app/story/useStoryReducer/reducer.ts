@@ -122,7 +122,7 @@ function reducer(state: Story, { type, payload }: ReducerActionProps): Story {
     }
 
     case types.COPY_SELECTED_ELEMENT: {
-      return reducers.copySelectedElement(state, payload);
+      return reducers.copySelectedElement(state);
     }
 
     case types.RESTORE: {

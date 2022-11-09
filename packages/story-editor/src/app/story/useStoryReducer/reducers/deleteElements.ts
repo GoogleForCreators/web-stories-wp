@@ -24,7 +24,7 @@ import { produce } from 'immer';
  */
 import { intersect } from './utils';
 import type {DeleteElementsProps} from "../../../../types/storyProvider";
-import type {Story} from "@googleforcreators/types";
+import type {State} from "@googleforcreators/types";
 
 /**
  * Delete elements by the given list of ids.
@@ -49,7 +49,7 @@ import type {Story} from "@googleforcreators/types";
  * @param {Array.<string>} payload.elementIds List of ids of elements to delete.
  */
 export const deleteElements = (
-  draft: Story,
+  draft: State,
   { elementIds }: DeleteElementsProps
 ) => {
   const idsToDelete = elementIds === null ? draft.selection : elementIds;

@@ -17,7 +17,14 @@
 /**
  * External dependencies
  */
-import type {Page, Element, ResourceId} from '@googleforcreators/types';
+import type {
+  Page,
+  Element,
+  ResourceId,
+  Story,
+  Animation,
+  Group,
+} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -124,127 +131,180 @@ export type CombineElementsAction = {
   payload: CombineElementsProps;
 };
 
-export type SetBackgroundElementProps = {};
+export type SetBackgroundElementProps = {
+  elementId: string | null;
+};
 export type SetBackgroundElementAction = {
   type: typeof actionTypes.SET_BACKGROUND_ELEMENT;
   payload: SetBackgroundElementProps;
 };
 
-export type ArrangeElementProps = {};
+export type ArrangeElementProps = {
+  elementId: string;
+  position: number | string;
+  groupId?: string | boolean;
+};
 export type ArrangeElementAction = {
   type: typeof actionTypes.ARRANGE_ELEMENT;
   payload: ArrangeElementProps;
 };
 
-export type ArrangeGroupProps = {};
+export type ArrangeGroupProps = {
+  groupId: string;
+  position: number | string;
+};
 export type ArrangeGroupAction = {
   type: typeof actionTypes.ARRANGE_GROUP;
   payload: ArrangeGroupProps;
 };
 
-export type SetSelectedElementsProps = {};
+export type SetSelectedElementsProps = {
+  elementIds: string[];
+  withLinked?: boolean;
+};
 export type SetSelectedElementsAction = {
   type: typeof actionTypes.SET_SELECTED_ELEMENTS;
   payload: SetSelectedElementsProps;
 };
 
-export type SelectElementProps = {};
+export type SelectElementProps = {
+  elementId: string;
+};
 export type SelectElementAction = {
   type: typeof actionTypes.SELECT_ELEMENT;
   payload: SelectElementProps;
 };
 
-export type UnselectElementProps = {};
+export type UnselectElementProps = {
+  elementId: string;
+};
 export type UnselectElementAction = {
   type: typeof actionTypes.UNSELECT_ELEMENT;
   payload: UnselectElementProps;
 };
 
-export type ToggleElementInSelectionProps = {};
+export type ToggleElementInSelectionProps = {
+  elementId: string;
+  withLinked?: boolean;
+};
 export type ToggleElementInSelectionAction = {
   type: typeof actionTypes.TOGGLE_ELEMENT_IN_SELECTION;
   payload: ToggleElementInSelectionProps;
 };
 
-export type ToggleLayerProps = {};
+export type ToggleLayerProps = {
+  elementId: string;
+  metaKey: boolean;
+  shiftKey: boolean;
+  withLinked?: boolean;
+};
 export type ToggleLayerAction = {
   type: typeof actionTypes.TOGGLE_LAYER;
   payload: ToggleLayerProps;
 };
 
-export type DuplicateElementsByIdProps = {};
+export type DuplicateElementsByIdProps = {
+  elementIds: string[];
+};
 export type DuplicateElementsByIdAction = {
   type: typeof actionTypes.DUPLICATE_ELEMENTS_BY_ID;
   payload: DuplicateElementsByIdProps;
 };
 
-export type UpdateStoryProps = {};
+type StoryUpdater = (story: Story) => Story;
+export type UpdateStoryProps = {
+  properties: Partial<Story> | StoryUpdater;
+};
 export type UpdateStoryAction = {
   type: typeof actionTypes.UPDATE_STORY;
   payload: UpdateStoryProps;
 };
 
-export type UpdateAnimationStateProps = {};
+export type UpdateAnimationStateProps = {
+  animationState: string;
+};
 export type UpdateAnimationStateAction = {
   type: typeof actionTypes.UPDATE_ANIMATION_STATE;
   payload: ArrangePageProps;
 };
 
-export type AddAnimationsProps = {};
+export type AddAnimationsProps = {
+  animations: Animation[];
+};
 export type AddAnimationsAction = {
   type: typeof actionTypes.ADD_ANIMATIONS;
   payload: AddAnimationsProps;
 };
 
-export type CopySelectedElementProps = {};
 export type CopySelectedElementAction = {
   type: typeof actionTypes.COPY_SELECTED_ELEMENT;
-  payload: CopySelectedElementProps;
+  payload: null;
 };
 
-export type RestoreProps = {};
 export type RestoreAction = {
   type: typeof actionTypes.RESTORE;
-  payload: RestoreProps;
+  payload: Partial<State>;
 };
 
-export type UpdateElementsByFontFamilyProps = {};
+export type UpdateElementsByFontFamilyProps = {
+  family: string;
+  properties: Partial<Element> | ElementUpdater;
+};
 export type UpdateElementsByFontFamilyAction = {
   type: typeof actionTypes.UPDATE_ELEMENTS_BY_FONT_FAMILY;
   payload: UpdateElementsByFontFamilyProps;
 };
 
-export type AddGroupProps = {};
+export type AddGroupProps = {
+  groupId: string;
+  name: string;
+  isLocked?: boolean;
+};
 export type AddGroupAction = {
   type: typeof actionTypes.ADD_GROUP;
   payload: AddGroupProps;
 };
 
-export type UpdateGroupProps = {};
+export type UpdateGroupProps = {
+  groupId: string;
+  properties: Partial<Group>;
+};
 export type UpdateGroupAction = {
   type: typeof actionTypes.UPDATE_GROUP;
   payload: UpdateGroupProps;
 };
 
-export type DeleteGroupProps = {};
+export type DeleteGroupProps = { groupId: string; includeElements?: boolean };
 export type DeleteGroupAction = {
   type: typeof actionTypes.DELETE_GROUP;
   payload: DeleteGroupProps;
 };
 
-export type DuplicateGroupProps = {};
+export type DuplicateGroupProps = {
+  oldGroupId: string;
+  groupId: string;
+  name: string;
+  isLocked: boolean;
+};
 export type DuplicateGroupAction = {
   type: typeof actionTypes.DUPLICATE_GROUP;
   payload: DuplicateGroupProps;
 };
 
-export type RemoveElementFromGroupProps = {};
+export type RemoveElementFromGroupProps = {
+  elementId: string;
+  groupId: string;
+};
 export type RemoveElementFromGroupAction = {
   type: typeof actionTypes.REMOVE_ELEMENT_FROM_GROUP;
   payload: RemoveElementFromGroupProps;
 };
 
-export type AddElementsAcrossPagesProps = {};
+export type AddElementsAcrossPagesProps = {
+  page: Page;
+  position: number;
+  elements: Element[];
+};
 export type AddElementsAcrossPagesAction = {
   type: typeof actionTypes.ADD_ELEMENTS_ACROSS_PAGES;
   payload: AddElementsAcrossPagesProps;
@@ -283,3 +343,13 @@ export type ReducerActionProps =
   | DuplicateGroupAction
   | RemoveElementFromGroupAction
   | AddElementsAcrossPagesAction;
+
+export interface State {
+  story: Story;
+  selection: string[];
+  current: string;
+  pages: Page[];
+  animationState: string;
+  capabilities: Record<string, boolean>;
+  copiedElementState?: Element;
+}

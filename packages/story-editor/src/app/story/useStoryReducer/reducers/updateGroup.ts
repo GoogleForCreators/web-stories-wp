@@ -20,14 +20,17 @@
 import { produce } from 'immer';
 
 /**
- * Update group by id.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.groupId Group id
- * @param {number} payload.properties Object with properties to set for given group.
+ * Internal dependencies
  */
-export const updateGroup = (draft, { groupId, properties }) => {
+import type { State, UpdateGroupProps } from '../../../../types/storyProvider';
+
+/**
+ * Update group by id.
+ */
+export const updateGroup = (
+  draft: State,
+  { groupId, properties }: UpdateGroupProps
+) => {
   if (!groupId) {
     return;
   }

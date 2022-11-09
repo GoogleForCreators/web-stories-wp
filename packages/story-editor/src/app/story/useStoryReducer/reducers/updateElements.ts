@@ -19,7 +19,7 @@
  */
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 import { produce } from 'immer';
-import type { Story } from '@googleforcreators/types';
+import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -42,7 +42,7 @@ import { updateElementWithUpdater, updateAnimations } from './utils';
  * Current selection and page is unchanged.
  */
 export const updateElements = (
-  draft: Story,
+  draft: State,
   { elementIds, properties: propertiesOrUpdater }: UpdateElementsProps
 ) => {
   if (

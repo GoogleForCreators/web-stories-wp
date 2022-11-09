@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Story } from '@googleforcreators/types';
+import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -38,7 +38,7 @@ import { isInsideRange } from './utils';
  * Selection is cleared by default.
  */
 export const addPage = (
-  draft: Story,
+  draft: State,
   { page, position, updateSelection = true }: AddPageProps
 ) => {
   // Ensure new page has at least one element

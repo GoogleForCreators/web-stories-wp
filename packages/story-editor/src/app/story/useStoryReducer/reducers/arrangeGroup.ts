@@ -23,16 +23,16 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { getAbsolutePosition } from './utils';
+import type {State} from "@googleforcreators/types";
+import type {ArrangeGroupProps} from "../../../../types/storyProvider";
 
 /**
  * Move group to a new position
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.groupId Id of group to move
- * @param {number|string} payload.position New position
  */
-export const arrangeGroup = (draft, { groupId, position }) => {
+export const arrangeGroup = (
+  draft: State,
+  { groupId, position }: ArrangeGroupProps
+) => {
   if (!groupId) {
     return;
   }

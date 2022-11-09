@@ -23,6 +23,8 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
+import type {State} from "@googleforcreators/types";
+import type {SetBackgroundElementProps} from "../../../../types/storyProvider";
 
 /**
  * Set background element on the current page to element matching the given id.
@@ -35,12 +37,11 @@ import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
  *
  * Default background element can never be "set to nothing" - only replaced by another
  * element.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {number} payload.elementId Element id to set as background on the current page.
  */
-export const setBackgroundElement = (draft, { elementId }) => {
+export const setBackgroundElement = (
+  draft: State,
+  { elementId }: SetBackgroundElementProps
+) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
   const currentBackgroundElement = page.elements[0];
 

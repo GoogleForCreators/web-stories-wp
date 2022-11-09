@@ -25,7 +25,7 @@ import { produce } from 'immer';
  */
 import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
 import { exclusion } from './utils';
-import type {Story} from "@googleforcreators/types";
+import type {State} from "@googleforcreators/types";
 import type {AddElementsProps} from "../../../../types/storyProvider";
 
 const isProduct = ({ type }: { type: string }) =>
@@ -47,9 +47,10 @@ const isNotProduct = ({ type }: { type: string }) =>
  * Selection is set to be exactly the new elements by default.
  */
 export const addElements = (
-  draft: Story,
+  draft: State,
   { elements, pageId, updateSelection = true }: AddElementsProps
 ) => {
+  console.log(draft);
   if (!Array.isArray(elements)) {
     return;
   }

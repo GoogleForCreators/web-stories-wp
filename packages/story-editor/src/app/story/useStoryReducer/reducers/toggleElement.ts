@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type {State} from "@googleforcreators/types";
+import type {ToggleElementInSelectionProps} from "../../../../types/storyProvider";
 
 /**
  * Toggle element id in selection.
@@ -36,7 +38,10 @@ import { produce } from 'immer';
  * @param {string} payload.elementId Id to either add or remove from selection.
  * @param {boolean} payload.withLinked Include elements from the group?
  */
-export const toggleElement = (draft, { elementId, withLinked = false }) => {
+export const toggleElement = (
+  draft: State,
+  { elementId, withLinked = false }: ToggleElementInSelectionProps
+) => {
   if (!elementId) {
     return;
   }

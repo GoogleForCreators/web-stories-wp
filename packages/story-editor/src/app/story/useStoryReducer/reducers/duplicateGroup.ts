@@ -24,21 +24,15 @@ import { duplicateElement } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { addGroup } from './addGroup';
+import type {DuplicateGroupProps, State} from "../../../../types/storyProvider";
 
 /**
  * Duplicate group with all elements on the current page.
  * Set selected elements to be the newly created group.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.oldGroupId Id of a group to duplicate.
- * @param {string} payload.groupId New group id.
- * @param {string} payload.name New group name.
- * @param {string} payload.isLocked Is group locked.
  */
 export const duplicateGroup = (
-  draft,
-  { oldGroupId, groupId, name, isLocked }
+  draft: State,
+  { oldGroupId, groupId, name, isLocked }: DuplicateGroupProps
 ) => {
   if (!oldGroupId || !groupId || !name) {
     return;

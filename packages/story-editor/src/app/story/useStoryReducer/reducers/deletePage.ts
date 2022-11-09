@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Story } from '@googleforcreators/types';
+import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -37,7 +37,7 @@ import type { DeletePageProps } from '../../../../types/storyProvider';
  *
  * If a page is deleted, selection is cleared.
  */
-export const deletePage = (draft: Story, { pageId }: DeletePageProps) => {
+export const deletePage = (draft: State, { pageId }: DeletePageProps) => {
   if (draft.pages.length <= 1) {
     return;
   }

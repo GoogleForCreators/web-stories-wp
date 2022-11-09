@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Story } from '@googleforcreators/types';
+import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -40,7 +40,7 @@ import { updateElementWithUpdater } from './utils';
  * Current selection and page is unchanged.
  */
 export const updateElementsByResourceId = (
-  draft: Story,
+  draft: State,
   { id, properties: propertiesOrUpdater }: UpdateElementsByResourceIdProps
 ) => {
   if (!id) {

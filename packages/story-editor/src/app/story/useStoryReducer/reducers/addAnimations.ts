@@ -23,6 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { exclusion } from './utils';
+import type {AddAnimationsProps, State} from "../../../../types/storyProvider";
 
 /**
  * Add animations to current page.
@@ -34,12 +35,11 @@ import { exclusion } from './utils';
  * If animations aren't a list or an empty list (after duplicates have been filtered), nothing happens.
  *
  * Animations will be added to the end of the list of animations on the current page.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {Array.<Object>} payload.animations Elements to insert on the given page.
  */
-export const addAnimations = (draft, { animations }) => {
+export const addAnimations = (
+  draft: State,
+  { animations }: AddAnimationsProps
+) => {
   if (!Array.isArray(animations)) {
     return;
   }

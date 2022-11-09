@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Story } from '@googleforcreators/types';
+import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -39,7 +39,7 @@ import { isInsideRange, moveArrayElement } from './utils';
  * TODO: Handle multi-page re-order when UX and priority is finalized.
  */
 export const arrangePage = (
-  draft: Story,
+  draft: State,
   { pageId, position }: ArrangePageProps
 ) => {
   // Abort if there's less than two elements (nothing to rearrange)

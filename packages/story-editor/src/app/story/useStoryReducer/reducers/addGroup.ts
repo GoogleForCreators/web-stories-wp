@@ -20,15 +20,17 @@
 import { produce } from 'immer';
 
 /**
- * Add a group to the current page groups list (id, name).
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.groupId Group id
- * @param {string} payload.name Group name
- * @param {boolean} payload.isLocked Is group locked
+ * Internal dependencies
  */
-export const addGroup = (draft, { groupId, name, isLocked = false }) => {
+import type { AddGroupProps, State } from '../../../../types/storyProvider';
+
+/**
+ * Add a group to the current page groups list (id, name).
+ */
+export const addGroup = (
+  draft: State,
+  { groupId, name, isLocked = false }: AddGroupProps
+) => {
   if (!groupId || !name) {
     return;
   }
