@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { State } from '../../../../types/storyProvider';
+import type {RestoreProps, State} from '../../../../types/storyProvider';
 
 /**
  * Restore internal state completely from given state.
@@ -36,7 +36,7 @@ import type { State } from '../../../../types/storyProvider';
  */
 export const restore = (
   draft: State,
-  { pages, current, selection, story, capabilities }: Partial<State>
+  { pages, current, selection, story, capabilities }: RestoreProps
 ) => {
   if (!Array.isArray(pages) || pages.length === 0) {
     return undefined;

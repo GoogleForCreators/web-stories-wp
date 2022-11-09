@@ -18,15 +18,44 @@
  * External dependencies
  */
 import type { Dispatch } from 'react';
+import type { Element } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import type {
+  AddAnimationsProps,
+  AddElementsAcrossPagesProps,
+  AddElementsProps,
+  AddGroupProps,
   AddPageProps,
+  ArrangeElementProps,
+  ArrangeGroupProps,
+  ArrangePageProps,
+  CombineElementsProps,
+  DeleteElementsByResourceIdProps,
+  DeleteElementsProps,
+  DeleteGroupProps,
   DeletePageProps,
+  DuplicateElementsByIdProps,
+  DuplicateGroupProps,
   ReducerActionProps,
+  RemoveElementFromGroupProps,
+  RestoreProps,
+  SelectElementProps,
+  SetBackgroundElementProps,
+  SetCurrentPageProps,
+  SetSelectedElementsProps,
+  ToggleElementInSelectionProps,
+  ToggleLayerProps,
+  UnselectElementProps,
+  UpdateAnimationStateProps,
+  UpdateElementsByFontFamilyProps,
+  UpdateElementsByResourceIdProps,
+  UpdateElementsProps,
+  UpdateGroupProps,
   UpdatePageProps,
+  UpdateStoryProps,
 } from '../../../types/storyProvider';
 import * as types from './types';
 
@@ -42,7 +71,7 @@ const addPage =
 
 const addPageAt =
   (dispatch: DispatchType) =>
-  ({ page, position, updateSelection }) =>
+  ({ page, position, updateSelection }): AddPageProps =>
     dispatch({
       type: types.ADD_PAGE,
       payload: { page, position, updateSelection },
@@ -63,7 +92,7 @@ const updatePageProperties =
 
 const updateCurrentPageProperties =
   (dispatch: DispatchType) =>
-  ({ properties }) =>
+  ({ properties }: UpdatePageProps) =>
     dispatch({
       type: types.UPDATE_PAGE,
       payload: { pageId: null, properties },
@@ -71,25 +100,28 @@ const updateCurrentPageProperties =
 
 const arrangePage =
   (dispatch: DispatchType) =>
-  ({ pageId, position }) =>
+  ({ pageId, position }: ArrangePageProps) =>
     dispatch({ type: types.ARRANGE_PAGE, payload: { pageId, position } });
 
 const setCurrentPage =
   (dispatch: DispatchType) =>
-  ({ pageId }) =>
+  ({ pageId }: SetCurrentPageProps) =>
     dispatch({ type: types.SET_CURRENT_PAGE, payload: { pageId } });
 
 const addElements =
   (dispatch: DispatchType) =>
-  ({ elements, pageId, updateSelection }) =>
+  ({ elements, pageId, updateSelection }: AddElementsProps) =>
     dispatch({
       type: types.ADD_ELEMENTS,
       payload: { elements, pageId, updateSelection },
     });
 
+interface AddElementProps extends Omit<AddElementsProps, 'elements'> {
+  element: Element;
+}
 const addElement =
   (dispatch: DispatchType) =>
-  ({ element, pageId, updateSelection }) =>
+  ({ element, pageId, updateSelection }: AddElementProps) =>
     dispatch({
       type: types.ADD_ELEMENTS,
       payload: { elements: [element], pageId, updateSelection },
@@ -97,15 +129,18 @@ const addElement =
 
 const deleteElementsById =
   (dispatch: DispatchType) =>
-  ({ elementIds }) =>
+  ({ elementIds }: DeleteElementsProps) =>
     dispatch({ type: types.DELETE_ELEMENTS, payload: { elementIds } });
 
 const deleteSelectedElements = (dispatch: DispatchType) => () =>
   dispatch({ type: types.DELETE_ELEMENTS, payload: { elementIds: null } });
 
+interface DeleteElementProps extends Omit<DeleteElementsProps, 'elementIds'> {
+  elementId: string;
+}
 const deleteElementById =
   (dispatch: DispatchType) =>
-  ({ elementId }) =>
+  ({ elementId }: DeleteElementProps) =>
     dispatch({
       type: types.DELETE_ELEMENTS,
       payload: { elementIds: [elementId] },
@@ -113,7 +148,7 @@ const deleteElementById =
 
 const updateElementsById =
   (dispatch: DispatchType) =>
-  ({ elementIds, properties }) =>
+  ({ elementIds, properties }: UpdateElementsProps) =>
     dispatch({
       type: types.UPDATE_ELEMENTS,
       payload: { elementIds, properties },
@@ -121,7 +156,7 @@ const updateElementsById =
 
 const updateElementsByResourceId =
   (dispatch: DispatchType) =>
-  ({ id, properties }) =>
+  ({ id, properties }: UpdateElementsByResourceIdProps) =>
     dispatch({
       type: types.UPDATE_ELEMENTS_BY_RESOURCE_ID,
       payload: { id, properties },
@@ -129,15 +164,19 @@ const updateElementsByResourceId =
 
 const deleteElementsByResourceId =
   (dispatch: DispatchType) =>
-  ({ id }) =>
+  ({ id }: DeleteElementsByResourceIdProps) =>
     dispatch({
       type: types.DELETE_ELEMENTS_BY_RESOURCE_ID,
       payload: { id },
     });
 
+interface UpdateElementByIdProps
+  extends Omit<UpdateElementsProps, 'elementIds'> {
+  elementId: string;
+}
 const updateElementById =
   (dispatch: DispatchType) =>
-  ({ elementId, properties }) =>
+  ({ elementId, properties }: UpdateElementByIdProps) =>
     dispatch({
       type: types.UPDATE_ELEMENTS,
       payload: { elementIds: [elementId], properties },
@@ -145,7 +184,7 @@ const updateElementById =
 
 const duplicateElementsById =
   (dispatch: DispatchType) =>
-  ({ elementIds }) =>
+  ({ elementIds }: DuplicateElementsByIdProps) =>
     dispatch({
       type: types.DUPLICATE_ELEMENTS_BY_ID,
       payload: { elementIds },
@@ -153,7 +192,7 @@ const duplicateElementsById =
 
 const updateSelectedElements =
   (dispatch: DispatchType) =>
-  ({ properties }) =>
+  ({ properties }: UpdateElementsProps) =>
     dispatch({
       type: types.UPDATE_ELEMENTS,
       payload: { elementIds: null, properties },
@@ -161,7 +200,7 @@ const updateSelectedElements =
 
 const combineElements =
   (dispatch: DispatchType) =>
-  ({ firstElement, secondId, shouldRetainAnimations }) =>
+  ({ firstElement, secondId, shouldRetainAnimations }: CombineElementsProps) =>
     dispatch({
       type: types.COMBINE_ELEMENTS,
       payload: { firstElement, secondId, shouldRetainAnimations },
@@ -169,7 +208,7 @@ const combineElements =
 
 const setBackgroundElement =
   (dispatch: DispatchType) =>
-  ({ elementId }) =>
+  ({ elementId }: SetBackgroundElementProps) =>
     dispatch({ type: types.SET_BACKGROUND_ELEMENT, payload: { elementId } });
 
 const clearBackgroundElement = (dispatch: DispatchType) => () =>
@@ -180,7 +219,7 @@ const clearBackgroundElement = (dispatch: DispatchType) => () =>
 
 const arrangeElement =
   (dispatch: DispatchType) =>
-  ({ elementId, position, groupId }) =>
+  ({ elementId, position, groupId }: ArrangeElementProps) =>
     dispatch({
       type: types.ARRANGE_ELEMENT,
       payload: { elementId, position, groupId },
@@ -188,12 +227,12 @@ const arrangeElement =
 
 const arrangeGroup =
   (dispatch: DispatchType) =>
-  ({ groupId, position }) =>
+  ({ groupId, position }: ArrangeGroupProps) =>
     dispatch({ type: types.ARRANGE_GROUP, payload: { groupId, position } });
 
 const arrangeSelection =
   (dispatch: DispatchType) =>
-  ({ position, groupId }) =>
+  ({ position, groupId }: ArrangeElementProps) =>
     dispatch({
       type: types.ARRANGE_ELEMENT,
       payload: { elementId: null, position, groupId },
@@ -201,7 +240,7 @@ const arrangeSelection =
 
 const setSelectedElementsById =
   (dispatch: DispatchType) =>
-  ({ elementIds, withLinked }) =>
+  ({ elementIds, withLinked }: SetSelectedElementsProps) =>
     dispatch({
       type: types.SET_SELECTED_ELEMENTS,
       payload: { elementIds, withLinked },
@@ -212,17 +251,17 @@ const clearSelection = (dispatch: DispatchType) => () =>
 
 const addElementToSelection =
   (dispatch: DispatchType) =>
-  ({ elementId }) =>
+  ({ elementId }: SelectElementProps) =>
     dispatch({ type: types.SELECT_ELEMENT, payload: { elementId } });
 
 const removeElementFromSelection =
   (dispatch: DispatchType) =>
-  ({ elementId }) =>
+  ({ elementId }: UnselectElementProps) =>
     dispatch({ type: types.UNSELECT_ELEMENT, payload: { elementId } });
 
 const toggleElementInSelection =
   (dispatch: DispatchType) =>
-  ({ elementId, withLinked }) =>
+  ({ elementId, withLinked }: ToggleElementInSelectionProps) =>
     dispatch({
       type: types.TOGGLE_ELEMENT_IN_SELECTION,
       payload: { elementId, withLinked },
@@ -230,12 +269,12 @@ const toggleElementInSelection =
 
 const updateStory =
   (dispatch: DispatchType) =>
-  ({ properties }) =>
+  ({ properties }: UpdateStoryProps) =>
     dispatch({ type: types.UPDATE_STORY, payload: { properties } });
 
 const updateAnimationState =
   (dispatch: DispatchType) =>
-  ({ animationState }) =>
+  ({ animationState }: UpdateAnimationStateProps) =>
     dispatch({
       type: types.UPDATE_ANIMATION_STATE,
       payload: { animationState },
@@ -243,12 +282,12 @@ const updateAnimationState =
 
 const addAnimations =
   (dispatch: DispatchType) =>
-  ({ animations }) =>
+  ({ animations }: AddAnimationsProps) =>
     dispatch({ type: types.ADD_ANIMATIONS, payload: { animations } });
 
 const toggleLayer =
   (dispatch: DispatchType) =>
-  ({ metaKey, shiftKey, elementId, withLinked }) =>
+  ({ metaKey, shiftKey, elementId, withLinked }: ToggleLayerProps) =>
     dispatch({
       type: types.TOGGLE_LAYER,
       payload: { metaKey, shiftKey, elementId, withLinked },
@@ -257,11 +296,12 @@ const toggleLayer =
 const copySelectedElement = (dispatch: DispatchType) => () =>
   dispatch({
     type: types.COPY_SELECTED_ELEMENT,
+    payload: null,
   });
 
 const updateElementsByFontFamily =
   (dispatch: DispatchType) =>
-  ({ family, properties }) =>
+  ({ family, properties }: UpdateElementsByFontFamilyProps) =>
     dispatch({
       type: types.UPDATE_ELEMENTS_BY_FONT_FAMILY,
       payload: { family, properties },
@@ -269,12 +309,12 @@ const updateElementsByFontFamily =
 
 const addGroup =
   (dispatch: DispatchType) =>
-  ({ groupId, name, isLocked }) =>
+  ({ groupId, name, isLocked }: AddGroupProps) =>
     dispatch({ type: types.ADD_GROUP, payload: { groupId, name, isLocked } });
 
 const updateGroupById =
   (dispatch: DispatchType) =>
-  ({ groupId, properties }) =>
+  ({ groupId, properties }: UpdateGroupProps) =>
     dispatch({
       type: types.UPDATE_GROUP,
       payload: { groupId, properties },
@@ -282,7 +322,7 @@ const updateGroupById =
 
 const deleteGroupById =
   (dispatch: DispatchType) =>
-  ({ groupId }) =>
+  ({ groupId }: DeleteGroupProps) =>
     dispatch({
       type: types.DELETE_GROUP,
       payload: { groupId },
@@ -290,7 +330,7 @@ const deleteGroupById =
 
 const deleteGroupAndElementsById =
   (dispatch: DispatchType) =>
-  ({ groupId }) =>
+  ({ groupId }: DeleteGroupProps) =>
     dispatch({
       type: types.DELETE_GROUP,
       payload: { groupId, includeElements: true },
@@ -298,7 +338,7 @@ const deleteGroupAndElementsById =
 
 const duplicateGroupById =
   (dispatch: DispatchType) =>
-  ({ groupId, name, oldGroupId, isLocked }) =>
+  ({ groupId, name, oldGroupId, isLocked }: DuplicateGroupProps) =>
     dispatch({
       type: types.DUPLICATE_GROUP,
       payload: { groupId, name, oldGroupId, isLocked },
@@ -306,7 +346,7 @@ const duplicateGroupById =
 
 const removeElementFromGroup =
   (dispatch: DispatchType) =>
-  ({ elementId, groupId }) =>
+  ({ elementId, groupId }: RemoveElementFromGroupProps) =>
     dispatch({
       type: types.REMOVE_ELEMENT_FROM_GROUP,
       payload: { elementId, groupId },
@@ -314,7 +354,7 @@ const removeElementFromGroup =
 
 const addElementsAcrossPages =
   (dispatch: DispatchType) =>
-  ({ elements, page, position }) =>
+  ({ elements, page, position }: AddElementsAcrossPagesProps) =>
     dispatch({
       type: types.ADD_ELEMENTS_ACROSS_PAGES,
       payload: { elements, page, position },
@@ -369,7 +409,7 @@ export const exposedActions = {
 // Internal actions
 const restore =
   (dispatch: DispatchType) =>
-  ({ pages, selection, current, story, capabilities }) =>
+  ({ pages, selection, current, story, capabilities }: RestoreProps) =>
     dispatch({
       type: types.RESTORE,
       payload: { pages, selection, current, story, capabilities },

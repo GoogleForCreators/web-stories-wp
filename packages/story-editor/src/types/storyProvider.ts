@@ -87,7 +87,7 @@ export type AddElementsAction = {
 };
 
 export type DeleteElementsProps = {
-  elementIds: string[];
+  elementIds: string[] | null;
 };
 export type DeleteElementsAction = {
   type: typeof actionTypes.DELETE_ELEMENTS;
@@ -96,7 +96,7 @@ export type DeleteElementsAction = {
 
 type ElementUpdater = (prevProps: Element) => Element;
 export type UpdateElementsProps = {
-  elementIds: string[];
+  elementIds: string[] | null;
   properties: Partial<Element> | ElementUpdater;
 };
 export type UpdateElementsAction = {
@@ -140,7 +140,7 @@ export type SetBackgroundElementAction = {
 };
 
 export type ArrangeElementProps = {
-  elementId: string;
+  elementId: string | null;
   position: number | string;
   groupId?: string | boolean;
 };
@@ -225,7 +225,7 @@ export type UpdateAnimationStateProps = {
 };
 export type UpdateAnimationStateAction = {
   type: typeof actionTypes.UPDATE_ANIMATION_STATE;
-  payload: ArrangePageProps;
+  payload: UpdateAnimationStateProps;
 };
 
 export type AddAnimationsProps = {
@@ -241,9 +241,10 @@ export type CopySelectedElementAction = {
   payload: null;
 };
 
+export type RestoreProps = Partial<State>;
 export type RestoreAction = {
   type: typeof actionTypes.RESTORE;
-  payload: Partial<State>;
+  payload: RestoreProps;
 };
 
 export type UpdateElementsByFontFamilyProps = {
