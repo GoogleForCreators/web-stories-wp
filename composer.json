@@ -73,7 +73,8 @@
       "mcaskill/composer-exclude-files": true,
       "phpstan/extension-installer": true,
       "composer/installers": true,
-      "ergebnis/composer-normalize": true
+      "ergebnis/composer-normalize": true,
+      "civicrm/composer-downloads-plugin": true
     },
     "discard-changes": true,
     "platform": {
