@@ -79,8 +79,8 @@
 
   <rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis" />
 
-  <!-- Check for cross-version support for PHP 7.2 and higher. -->
-  <config name="testVersion" value="7.2-" />
+  <!-- Check for cross-version support for PHP 7.4 and higher. -->
+  <config name="testVersion" value="7.4-" />
   <rule ref="PHPCompatibilityWP" />
 
   <!-- The main plugin file should be parsable by PHP 5.6. -->

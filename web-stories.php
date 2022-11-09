@@ -11,7 +11,7 @@
  * Author URI: https://opensource.google.com/
  * Version: 1.27.0-alpha.0
  * Requires at least: 5.9
- * Requires PHP: 7.2
+ * Requires PHP: 7.4
  * Text Domain: web-stories
  * License: Apache License 2.0
  * License URI: https://www.apache.org/licenses/LICENSE-2.0
@@ -46,7 +46,7 @@ define( 'WEBSTORIES_AMP_VERSION', '2.3.0' ); // Version of the AMP library inclu
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
-define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '7.2.24' );
+define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '7.4' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.9' );
 define( 'WEBSTORIES_CDN_URL', 'https://wp.stories.google/static/main' );
 

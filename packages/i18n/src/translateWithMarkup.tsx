@@ -51,8 +51,11 @@ const VOID_ELEMENTS = [
  * @param mapping Map of tag names to React components.
  * @return Transformed node.
  */
-export function transformNode(node: Element, mapping: Mapping = {}) {
-  const { childNodes, localName, nodeType, textContent } = node;
+export function transformNode(
+  node: Element | Text,
+  mapping: Mapping = {}
+): ReactElement | string | null {
+  const { childNodes, nodeType, textContent } = node;
   if (Node.TEXT_NODE === nodeType) {
     return textContent;
   }
@@ -62,6 +65,8 @@ export function transformNode(node: Element, mapping: Mapping = {}) {
         transform(child as Element, mapping)
       )
     : null;
+
+  const { localName } = node as Element;
 
   if (localName in mapping) {
     return cloneElement(mapping[localName], {}, children);
@@ -90,7 +95,7 @@ function transform(node: Element, mapping: Mapping = {}): ReactNode[] {
 }
 
 interface TranslateWithMarkupProps {
-  mapping: Mapping;
+  mapping?: Mapping;
   children: string;
 }
 
@@ -111,7 +116,7 @@ interface TranslateWithMarkupProps {
 function TranslateWithMarkup({
   mapping = {},
   children,
-}: TranslateWithMarkupProps) {
+}: TranslateWithMarkupProps): ReactElement | null {
   //Ensure all Object keys are lowercase as the DOMParser converts tag names to lowercase.
   mapping = Object.fromEntries(
     Object.entries(mapping).map(([k, v]) => [k.toLowerCase(), v])
@@ -131,13 +136,23 @@ function TranslateWithMarkup({
 
   const node = new DOMParser().parseFromString(children, 'text/html').body
     .firstChild as Element;
-  return node
-    ? transform(
-        node,
-        mapping
-        //eslint-disable-next-line react/no-array-index-key -- Order should never change.
-      ).map((element, index) => <Fragment key={index}>{element}</Fragment>)
-    : [];
+
+  if (!node) {
+    return null;
+  }
+
+  return (
+    <Fragment>
+      {transform(node, mapping).map((element, index) => (
+        <Fragment
+          // eslint-disable-next-line react/no-array-index-key -- Order should never change.
+          key={index}
+        >
+          {element}
+        </Fragment>
+      ))}
+    </Fragment>
+  );
 }
 
 export default TranslateWithMarkup;
