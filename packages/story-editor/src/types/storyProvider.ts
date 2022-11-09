@@ -348,7 +348,7 @@ export type ReducerActionProps =
 export interface State {
   story: Story;
   selection: string[];
-  current: string;
+  current: string | null;
   pages: Page[];
   animationState: string;
   capabilities: Record<string, boolean>;

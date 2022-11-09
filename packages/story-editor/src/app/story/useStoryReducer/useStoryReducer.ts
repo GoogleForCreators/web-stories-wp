@@ -19,11 +19,11 @@
  */
 import { useReducer, useMemo } from '@googleforcreators/react';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
-import type { Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
+import type { State } from '../../../types/storyProvider';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
@@ -57,11 +57,11 @@ const INITIAL_STATE = {
  * - New pages aren't validated for type of elements property when added.
  * - No validation of keys or values in the story object.
  */
-function useStoryReducer(partial: Partial<Story>) {
+function useStoryReducer(partial: Partial<State>) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     ...partial,
-  } as Story);
+  } as State);
 
   const { internal, api } = useMemo(() => {
     const wrapWithDispatch = (

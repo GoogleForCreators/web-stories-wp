@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import type {ReactNode, Reducer} from 'react';
+import type { ReactNode } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
-import type { Story } from '@googleforcreators/types';
+import type {Page, Story} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -36,7 +36,6 @@ import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 import { StoryTriggersProvider } from './storyTriggers';
 import useLocalAutoSave from './actions/useLocalAutoSave';
-import type {AddPageAction} from "../../types/storyProvider";
 
 interface ProviderProps {
   storyId: number;
@@ -68,10 +67,10 @@ function StoryProvider({ storyId, initialEdits, children }: ProviderProps) {
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
   // Generate current page info.
-  let currentPageId = null;
-  let currentPageIndex = null;
-  let currentPageNumber = null;
-  let currentPage = null;
+  let currentPageId: string | null = null;
+  let currentPageIndex: number | null = null;
+  let currentPageNumber: number | null = null;
+  let currentPage: Page | null = null;
   if (current) {
     currentPageId = current;
     currentPageIndex = pages.findIndex(({ id }) => id === current);
