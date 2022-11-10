@@ -10,6 +10,5 @@
     { "path": "../patterns" },
     { "path": "../units" }
   ],
-  "include": ["src/**/*"],
-  "exclude": ["src/**/test/**/*"]
+  "include": ["src/**/*"]
 }
