@@ -122,7 +122,7 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertSame( $expected, $this->instance->get_setting( $name ) );
 	}
 
-	public function data_test_types() {
+	public function data_test_types(): array {
 		return [
 			'array from string' => [
 				'name'     => 'array_type',
