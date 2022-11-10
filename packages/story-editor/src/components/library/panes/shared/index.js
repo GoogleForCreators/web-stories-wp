@@ -20,6 +20,11 @@
 import styled, { css } from 'styled-components';
 import { Button, BUTTON_VARIANTS } from '@googleforcreators/design-system';
 
+/**
+ * Internal dependencies
+ */
+import { Z_INDEX_LIBRARY_ACTION_BUTTON } from '../../../../constants/zIndex';
+
 export const PANE_PADDING = '1em';
 
 const Pane = styled.section.attrs(({ isActive }) => ({
@@ -62,6 +67,7 @@ const ActionButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   width: ${ACTION_BUTTON_SIZE}px;
   height: ${ACTION_BUTTON_SIZE}px;
   opacity: ${({ $display }) => ($display ? '1' : '0')};
+  z-index: ${Z_INDEX_LIBRARY_ACTION_BUTTON};
 `;
 
 const PageTemplateTitleContainer = styled.div`
