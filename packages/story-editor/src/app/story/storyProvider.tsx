@@ -19,7 +19,7 @@
  */
 import type { ReactNode } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
-import type {Page, Story} from '@googleforcreators/types';
+import type { Page, Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
