@@ -354,16 +354,14 @@ class Renderer extends TestCase {
 	}
 
 	public function test_render_link_attributes(): void {
-		$filter = static function( $attrs, $story, $position ) {
-			return [
-				'class'                              => '123',
-				'foo'                                => 'bar',
-				'"><script>console.log(1)</script>>' => 'bar',
-				'data-tgev'                          => 'event1234',
-				'data-tgev-metric'                   => 'ev',
-				'data-tgev-order'                    => $position,
-			];
-		};
+		$filter = static fn( $attrs, $story, $position ) => [
+			'class'                              => '123',
+			'foo'                                => 'bar',
+			'"><script>console.log(1)</script>>' => 'bar',
+			'data-tgev'                          => 'event1234',
+			'data-tgev-metric'                   => 'ev',
+			'data-tgev-order'                    => $position,
+		];
 
 		add_filter( 'web_stories_renderer_link_attributes', $filter, 10, 3 );
 

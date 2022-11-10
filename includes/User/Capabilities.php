@@ -148,9 +148,7 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 		$all_capabilities     = array_values( $all_capabilities_raw );
 		$all_capabilities     = array_filter(
 			$all_capabilities,
-			static function ( $value ) {
-				return 'read' !== $value;
-			}
+			static fn( $value ) => 'read' !== $value
 		);
 		$all_roles            = wp_roles();
 		$roles                = array_values( (array) $all_roles->role_objects );

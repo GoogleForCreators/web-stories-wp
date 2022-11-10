@@ -176,8 +176,7 @@ final class SimpleInjectorTest extends TestCase {
 		$injector->bind_argument(
 			Fixture\DummyClassWithNamedArguments::class,
 			'argument_a',
-			static function ( $class, $parameter, $arguments ) {
-				return $arguments['number']; }
+			static fn( $class, $parameter, $arguments ) => $arguments['number']
 		);
 
 		$object = $injector->make( Fixture\DummyClassWithNamedArguments::class, [ 'number' => 123 ] );

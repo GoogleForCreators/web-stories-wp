@@ -252,19 +252,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					$fonts = array_values(
 						array_filter(
 							$fonts,
-							static function( $font ) use ( $request ) {
-								/**
-								 * Font data.
-								 *
-								 * @var array{family: string} $font
-								 */
-								/**
-								 * Request data.
-								 *
-								 * @var array{search: string} $request
-								 */
-								return false !== stripos( $font['family'], $request['search'] );
-							}
+							static fn( $font ) => false !== stripos( $font['family'], $request['search'] )
 						)
 					);
 				}
@@ -287,14 +275,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$fonts = array_values(
 					array_filter(
 						$fonts,
-						static function( $font ) use ( $include_list ) {
-							/**
-							 * Font data.
-							 *
-							 * @var array{family: string} $font
-							 */
-							return \in_array( strtolower( $font['family'] ), $include_list, true );
-						}
+						static fn( $font ) => \in_array( strtolower( $font['family'] ), $include_list, true )
 					)
 				);
 			}
@@ -304,15 +285,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				// we only need to sort when including both.
 				usort(
 					$fonts,
-					static function( $a, $b ) {
-						/**
-						 * Font A and Font B.
-						 *
-						 * @phpstan-var Font $a
-						 * @phpstan-var Font $b
-						 */
-						return strnatcasecmp( $a['family'], $b['family'] );
-					}
+					static fn( $a, $b ) => strnatcasecmp( $a['family'], $b['family'] )
 				);
 			}
 		}

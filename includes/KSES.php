@@ -853,9 +853,7 @@ class KSES extends Service_Base implements HasRequirements {
 	public function filter_content_save_pre_before_kses( $post_content ): string {
 		return (string) preg_replace_callback(
 			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
-			static function ( $matches ) {
-				return $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'];
-			},
+			static fn( $matches ) => $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'],
 			$post_content
 		);
 	}

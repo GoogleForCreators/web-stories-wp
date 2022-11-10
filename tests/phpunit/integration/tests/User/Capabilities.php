@@ -67,9 +67,7 @@ class Capabilities extends TestCase {
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 		$all_capabilities = array_filter(
 			$all_capabilities,
-			static function ( $value ) {
-				return 'read' !== $value;
-			}
+			static fn( $value ) => 'read' !== $value
 		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );

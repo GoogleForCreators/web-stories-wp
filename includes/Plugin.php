@@ -206,9 +206,7 @@ class Plugin extends ServiceBasedPlugin {
 	 */
 	protected function get_delegations(): array {
 		return [
-			Injector::class => static function () {
-				return Services::get( 'injector' );
-			},
+			Injector::class => static fn() => Services::get( 'injector' ),
 		];
 	}
 }

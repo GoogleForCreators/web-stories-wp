@@ -399,9 +399,7 @@ class Assets {
 
 		return array_values(
 			array_map(
-				static function( $translations ) {
-					return json_decode( $translations, true );
-				},
+				static fn( $translations ) => json_decode( $translations, true ),
 				array_filter( $translations )
 			)
 		);

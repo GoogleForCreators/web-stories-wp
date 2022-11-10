@@ -42,9 +42,7 @@ class WooCommerce_Query extends TestCase {
 				'_prime_post_caches',
 				'get_post_meta',
 				'wp_strip_all_tags',
-				'get_woocommerce_currency' => static function () {
-					return 'USD';
-				},
+				'get_woocommerce_currency' => static fn() => 'USD',
 			]
 		);
 
@@ -166,12 +164,8 @@ class WooCommerce_Query extends TestCase {
 	public function test_get_product_image(): void {
 		Monkey\Functions\stubs(
 			[
-				'wp_get_attachment_image_url' => static function ( $id ) {
-					return sprintf( 'http://example.com/%s', $id );
-				},
-				'get_post_meta'               => static function () {
-					return 'image alt';
-				},
+				'wp_get_attachment_image_url' => static fn( $id ) => sprintf( 'http://example.com/%s', $id ),
+				'get_post_meta'               => static fn() => 'image alt',
 
 			]
 		);

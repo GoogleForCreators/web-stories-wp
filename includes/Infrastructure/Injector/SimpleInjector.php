@@ -301,14 +301,12 @@ final class SimpleInjector implements Injector {
 		}
 
 		return array_map(
-			function ( ReflectionParameter $parameter ) use ( $injection_chain, $class, $arguments ) {
-				return $this->resolve_argument(
-					$injection_chain,
-					$class,
-					$parameter,
-					$arguments
-				);
-			},
+			fn( ReflectionParameter $parameter ) => $this->resolve_argument(
+				$injection_chain,
+				$class,
+				$parameter,
+				$arguments
+			),
 			$constructor->getParameters()
 		);
 	}
