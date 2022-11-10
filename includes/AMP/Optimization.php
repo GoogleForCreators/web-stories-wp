@@ -67,7 +67,7 @@ class Optimization {
 		$errors = new ErrorCollection();
 		$this->get_optimizer()->optimizeDom( $document, $errors );
 
-		if ( \count( $errors ) > 0 ) {
+		if ( ( is_countable( $errors ) ? \count( $errors ) : 0 ) > 0 ) {
 			/**
 			 * Error list.
 			 *
