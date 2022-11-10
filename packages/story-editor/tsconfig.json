@@ -14,5 +14,11 @@
     { "path": "../react" },
     { "path": "../tracking" }
   ],
-  "include": ["src/app/config/*", "src/app/story/**/*", "src/types/*"]
+  "include": [
+    "src/app/config/*",
+    "src/app/story/*",
+    "src/app/story/**/*",
+    "src/types/*",
+    "src/constants/*"
+  ]
 }

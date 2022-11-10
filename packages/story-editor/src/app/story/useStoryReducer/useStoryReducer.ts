@@ -23,7 +23,7 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
-import type { State } from '../../../types/storyProvider';
+import type {ExternalActions, InternalActions, ReducerState, State} from '../../../types/storyProvider';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
@@ -57,7 +57,7 @@ const INITIAL_STATE = {
  * - New pages aren't validated for type of elements property when added.
  * - No validation of keys or values in the story object.
  */
-function useStoryReducer(partial: Partial<State>) {
+function useStoryReducer(partial: Partial<State>): ReducerState {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     ...partial,
@@ -68,7 +68,7 @@ function useStoryReducer(partial: Partial<State>) {
       actions: typeof internalActions | typeof exposedActions
     ) =>
       Object.keys(actions).reduce(
-        (collection, action) => ({
+        (collection: InternalActions | ExternalActions, action) => ({
           ...collection,
           [action]: actions[action](dispatch),
         }),
@@ -76,8 +76,8 @@ function useStoryReducer(partial: Partial<State>) {
       );
 
     return {
-      internal: wrapWithDispatch(internalActions),
-      api: wrapWithDispatch(exposedActions),
+      internal: wrapWithDispatch(internalActions) as InternalActions,
+      api: wrapWithDispatch(exposedActions) as ExternalActions,
     };
   }, [dispatch]);
 

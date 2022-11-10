@@ -354,3 +354,15 @@ export interface State {
   capabilities: Record<string, boolean>;
   copiedElementState?: Element;
 }
+
+export type InternalActions = {
+  restore: (props: RestoreProps) => State;
+};
+export type ExternalActions = {
+  [index: string]: unknown;
+};
+export interface ReducerState {
+  state: State;
+  internal: InternalActions;
+  api: ExternalActions;
+}

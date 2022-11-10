@@ -19,7 +19,7 @@
  */
 import type { ReactNode } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
-import type { Page, Story } from '@googleforcreators/types';
+import type { Animation, Page, Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -90,8 +90,8 @@ function StoryProvider({ storyId, initialEdits, children }: ProviderProps) {
     if (isCurrentPageEmpty) {
       return STABLE_ARRAY;
     }
-    const els = currentPageElements.filter(({ id }) => selection.includes(id));
-    return els.length > 0 ? els : STABLE_ARRAY;
+    const els = currentPageElements?.filter(({ id }) => selection.includes(id));
+    return els && els.length > 0 ? els : STABLE_ARRAY;
   }, [isCurrentPageEmpty, currentPageElements, selection]);
 
   const currentPageAnimations = currentPage?.animations;
@@ -100,7 +100,7 @@ function StoryProvider({ storyId, initialEdits, children }: ProviderProps) {
       return STABLE_ARRAY;
     }
     const animations = (currentPageAnimations || []).reduce(
-      (acc, { targets, ...properties }) => {
+      (acc: Animation[], { targets, ...properties }) => {
         if (targets.some((id) => selection.includes(id))) {
           return [...acc, { targets, ...properties }];
         }

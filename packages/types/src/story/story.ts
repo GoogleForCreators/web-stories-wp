@@ -22,6 +22,7 @@ import type { Page } from './page';
 export interface Story {
   version?: number;
   pages: Page[];
+  status: string;
   backgroundAudio?: {
     resource: {
       src: string;
