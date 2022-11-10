@@ -101,12 +101,12 @@ class Assets {
 		$chunks = is_readable( $chunks_file ) ? require $chunks_file : [];
 
 		// A hash calculated based on the file content of the entry point bundle at <$handle>.js.
-		$asset['version'] = $asset['version'] ?? WEBSTORIES_VERSION;
+		$asset['version'] ??= WEBSTORIES_VERSION;
 
-		$asset['dependencies'] = $asset['dependencies'] ?? [];
-		$asset['js']           = $chunks['js'] ?? [];
-		$asset['css']          = $chunks['css'] ?? [];
-		$asset['chunks']       = $chunks['chunks'] ?? [];
+		$asset['dependencies'] ??= [];
+		$asset['js']             = $chunks['js'] ?? [];
+		$asset['css']            = $chunks['css'] ?? [];
+		$asset['chunks']         = $chunks['chunks'] ?? [];
 
 		return $asset;
 	}

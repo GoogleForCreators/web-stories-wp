@@ -148,8 +148,8 @@ class Site_Kit extends Service_Base {
 		$default_config             = $this->analytics->get_default_configuration( $gtag_opt['vars']['gtag_id'] );
 		$default_config['triggers'] = $default_config['triggers'] ?? [];
 
-		$gtag_opt['triggers'] = $gtag_opt['triggers'] ?? [];
-		$gtag_opt['triggers'] = [ ...$default_config['triggers'], ...$gtag_opt['triggers'] ];
+		$gtag_opt['triggers'] ??= [];
+		$gtag_opt['triggers']   = [ ...$default_config['triggers'], ...$gtag_opt['triggers'] ];
 
 		return $gtag_opt;
 	}
