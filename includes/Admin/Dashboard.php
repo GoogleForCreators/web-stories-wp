@@ -504,10 +504,10 @@ class Dashboard extends Service_Base {
 				'siteKit'     => $this->site_kit->get_plugin_status(),
 				'woocommerce' => $this->woocommerce->get_plugin_status(),
 			],
-			'flags'                   => array_merge(
-				$this->experiments->get_experiment_statuses( 'general' ),
-				$this->experiments->get_experiment_statuses( 'dashboard' )
-			),
+			'flags'                   => [
+				...$this->experiments->get_experiment_statuses( 'general' ),
+				...$this->experiments->get_experiment_statuses( 'dashboard' ),
+			],
 			'globalAutoAdvance'       => (bool) $auto_advance,
 			'globalPageDuration'      => (float) $page_duration,
 		];

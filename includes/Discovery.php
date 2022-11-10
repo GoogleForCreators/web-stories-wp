@@ -263,7 +263,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			$products         = $story->get_products();
 			$product_metadata = $this->get_product_data( $products );
 			if ( $product_metadata ) {
-				$metadata = array_merge( $product_metadata, $metadata );
+				$metadata = [ ...$product_metadata, ...$metadata ];
 			}
 		}
 

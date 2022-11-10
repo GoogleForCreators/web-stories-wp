@@ -327,7 +327,7 @@ class Web_Stories_Block extends Embed_Base {
 			 *
 			 * @phpstan-var StoryAttributes $story_attributes
 			 */
-			$story_attributes = array_merge( $story_attributes, $this->get_mapped_field_states() );
+			$story_attributes = [ ...$story_attributes, ...$this->get_mapped_field_states() ];
 
 			return ( new Story_Query( $story_attributes, $this->get_query_args() ) )->render();
 		}

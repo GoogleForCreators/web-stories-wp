@@ -130,7 +130,7 @@ abstract class Embed_Base extends Service_Base {
 			'amp-story-player' => [],
 		];
 
-		$allowed_tags = array_merge( $allowed_tags, $story_player_components );
+		$allowed_tags = [ ...$allowed_tags, ...$story_player_components ];
 
 		return $allowed_tags;
 	}
