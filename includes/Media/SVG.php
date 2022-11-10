@@ -297,7 +297,7 @@ class SVG extends Service_Base {
 			}
 			$pieces = explode( ' ', $view_box );
 			if ( 4 === \count( $pieces ) ) {
-				list (, , $width, $height ) = $pieces;
+				[, , $width, $height] = $pieces;
 			}
 		}
 
