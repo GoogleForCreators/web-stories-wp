@@ -136,15 +136,17 @@ function SelectStories({
 
   const { authors } = useSelect(
     (select) => {
+      const { getUsers, getPostType } = select(coreStore);
+
+      const capabilities = getPostType('web-story')?.capabilities['edit_posts'];
+
       const query = {
         search: authorKeyword,
+        capabilities,
       };
-
-      const { getAuthors } = select(coreStore);
-
       return {
-        // Not using `getUsers()` because it requires `list_users` capability.
-        authors: getAuthors(query),
+        // Only load users when capability has been fetched already.
+        authors: capabilities ? getUsers(query) : [],
       };
     },
     [authorKeyword]
@@ -206,7 +208,7 @@ function SelectStories({
   );
 
   const authorSearchOptions = useMemo(() => {
-    return authors
+    return (authors ?? [])
       .filter(({ name }) => Boolean(name?.trim().length))
       .map(({ id, name }) => ({
         label: name,
