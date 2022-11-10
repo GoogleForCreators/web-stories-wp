@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from '@googleforcreators/react';
+import type { Page, Story } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
@@ -26,16 +27,15 @@ import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 
+interface AutoSaveProps {
+  storyId: number;
+  pages: Page[];
+  story: Story;
+}
 /**
  * Custom hook to auto-save a story.
- *
- * @param {Object}    properties Properties to update.
- * @param {number}    properties.storyId Story post id.
- * @param {Array}     properties.pages Array of all pages.
- * @param {Object}    properties.story Story-global properties
- * @return {Function} Function that can be called to save a story.
  */
-function useAutoSave({ storyId, pages, story }) {
+function useAutoSave({ storyId, pages, story }: AutoSaveProps) {
   const {
     actions: { autoSaveById },
   } = useAPI();

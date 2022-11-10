@@ -241,7 +241,7 @@ export interface ConfigState {
   /** Max allowed upload in bytes */
   maxUpload: number;
   capabilities: Capabilities;
-  metaData: MetaData;
+  metadata: MetaData;
   canViewDefaultTemplates: boolean;
   /** If to show the 3rd party media in the library */
   showMedia3p: boolean;
