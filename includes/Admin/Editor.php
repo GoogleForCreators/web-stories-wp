@@ -401,6 +401,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'generalSettingsLink'     => $general_settings_url,
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
 			'maxUpload'               => $max_upload_size,
+			'capabilityName'          => $this->story_post_type->get_cap_name( 'edit_posts'),
 			'capabilities'            => [
 				'hasUploadMediaAction' => current_user_can( 'upload_files' ),
 				'canManageSettings'    => current_user_can( 'manage_options' ),
