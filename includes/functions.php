@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Miscellaneous functions.
  * These are mostly utility or wrapper functions.

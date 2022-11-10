@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Class Set_Legacy_Analytics_Usage_Flag
  *

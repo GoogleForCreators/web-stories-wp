@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Class Remove_Unneeded_Attachment_Meta
  *

@@ -196,6 +196,14 @@
     </properties>
   </rule>
 
+  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <exclude-pattern>scoper.inc.php</exclude-pattern>
+        <exclude-pattern>web-stories.php</exclude-pattern>
+        <exclude-pattern>includes/compat/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+        <exclude-pattern>includes/templates/*</exclude-pattern>
+    </rule>
+
   <!-- Class names should be referenced via ::class constant when possible. -->
   <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
     <properties>
