@@ -17,8 +17,6 @@
 /**
  * Internal dependencies
  */
-import getTypeFromMime from './getTypeFromMime';
-import normalizeResourceSizes from './normalizeResourceSizes';
 import {
   ResourceInput,
   GifResource,
@@ -27,6 +25,7 @@ import {
   VideoResource,
   AudioResource,
 } from './types';
+import getTypeFromMime from './getTypeFromMime';
 
 /**
  * Creates a resource object.
@@ -59,7 +58,7 @@ function createResource({
     mimeType,
     width,
     height,
-    sizes: normalizeResourceSizes(sizes),
+    sizes,
     isPlaceholder,
     isExternal,
     needsProxy,

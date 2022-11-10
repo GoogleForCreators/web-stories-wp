@@ -60,13 +60,6 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	protected $parent_base;
 
 	/**
-	 * The base namespace.
-	 *
-	 * @var string
-	 */
-	protected $rest_namespace;
-
-	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
@@ -76,11 +69,9 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	public function __construct( Story_Post_Type $story_post_type ) {
 		parent::__construct( $story_post_type->get_slug() );
 
-		$parent_controller = $story_post_type->get_parent_controller();
-
-		$this->parent_base       = $story_post_type->get_slug();
-		$this->parent_controller = $parent_controller;
-		$this->rest_namespace    = $story_post_type->get_rest_namespace();
+		$this->parent_controller = $story_post_type->get_parent_controller();
+		$this->parent_base       = $story_post_type->get_rest_base();
+		$this->namespace         = $story_post_type->get_rest_namespace();
 	}
 
 	/**
@@ -140,8 +131,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 		parent::register_routes();
 
 		register_rest_route(
-			$this->rest_namespace,
-			'/' . $this->parent_base . '/(?P<id>[\d]+)/autosaves',
+			$this->namespace,
+			'/' . $this->parent_base . '/(?P<id>[\d]+)/' . $this->rest_base,
 			[
 				'args'   => [
 					'parent' => [

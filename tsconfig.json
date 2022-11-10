@@ -23,5 +23,5 @@
     { "path": "packages/url" },
     { "path": "packages/wp-utils" }
   ],
-  "include": []
+  "files": []
 }

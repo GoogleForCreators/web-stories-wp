@@ -68,13 +68,13 @@ function getBoundRect(list: ElementBox[]) {
 }
 
 export function calcRotatedObjectPositionAndSize(
-  angle: number,
+  angle = 0,
   x: number,
   y: number,
   width: number,
   height: number
 ) {
-  if (!angle || angle === 0) {
+  if (!angle) {
     return { x, y, width, height };
   }
 

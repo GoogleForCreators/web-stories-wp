@@ -46,7 +46,7 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 */
-	private function transform_html_start_tag( &$document ): void {
+	private function transform_html_start_tag( $document ): void {
 		$document->html->setAttribute( 'amp', '' );
 
 		// See get_language_attributes().
@@ -73,7 +73,7 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 */
-	private function transform_a_tags( &$document ): void {
+	private function transform_a_tags( $document ): void {
 		$links = $document->getElementsByTagName( 'a' );
 
 		/**
@@ -126,7 +126,7 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document   Document instance.
 	 */
-	private function use_semantic_heading_tags( &$document ): void {
+	private function use_semantic_heading_tags( $document ): void {
 		$pages = $document->getElementsByTagName( 'amp-story-page' );
 
 		/**
@@ -188,8 +188,8 @@ trait Sanitization_Utils {
 			// Contains the font-size in em.
 			// This is basically reversing the dataToFontSizeY() logic. Example:
 			// 0.582524em roughly equals 36 editor pixels: 0.582524 * 618 / 10 = 35.9999px.
-			$font_size_in_em = $matches[1];
-			$font_size_in_px = round( $font_size_in_em * $page_height / 10, 0 );
+			$font_size_in_em = (float) $matches[1];
+			$font_size_in_px = round( $font_size_in_em * $page_height / 10 );
 
 			if ( $font_size_in_px >= 36 && ! $has_h1 ) {
 				$this->change_tag_name( $text_el, 'h1' );
@@ -265,7 +265,7 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 */
-	private function sanitize_amp_story_page_outlink( &$document ): void {
+	private function sanitize_amp_story_page_outlink( $document ): void {
 		$outlink_elements = $document->getElementsByTagName( 'amp-story-page-outlink' );
 
 		/**
@@ -295,7 +295,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document       Document instance.
 	 * @param string                $publisher_logo Publisher logo.
 	 */
-	private function add_publisher_logo( &$document, $publisher_logo ): void {
+	private function add_publisher_logo( $document, string $publisher_logo ): void {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -327,10 +327,10 @@ trait Sanitization_Utils {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param Document|AMP_Document $document       Document instance.
+	 * @param Document|AMP_Document $document  Document instance.
 	 * @param string                $publisher Publisher logo.
 	 */
-	private function add_publisher( &$document, $publisher ): void {
+	private function add_publisher( $document, string $publisher ): void {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -355,7 +355,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document      Document instance.
 	 * @param string[]              $poster_images List of poster images, keyed by type.
 	 */
-	private function add_poster_images( &$document, $poster_images ): void {
+	private function add_poster_images( $document, array $poster_images ): void {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -451,7 +451,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 * @param bool                  $video_cache_enabled Whether video cache is enabled.
 	 */
-	private function add_video_cache( &$document, $video_cache_enabled ): void {
+	private function add_video_cache( $document, bool $video_cache_enabled ): void {
 		if ( ! $video_cache_enabled ) {
 			return;
 		}
@@ -487,7 +487,7 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 */
-	private function remove_blob_urls( &$document ): void {
+	private function remove_blob_urls( $document ): void {
 		/**
 		 * List of <amp-video> elements.
 		 *
@@ -539,7 +539,7 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 */
-	private function sanitize_srcset( &$document ): void {
+	private function sanitize_srcset( $document ): void {
 		/**
 		 * List of <amp-img> elements.
 		 *
@@ -590,7 +590,7 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 */
-	private function remove_page_template_placeholder_images( &$document ): void {
+	private function remove_page_template_placeholder_images( $document ): void {
 		// Catches "assets/images/editor/grid-placeholder.png" as well as
 		// "web-stories/assets/images/adde98ae406d6b5c95d111a934487252.png" (v1.14.0)
 		// and potentially other variants.

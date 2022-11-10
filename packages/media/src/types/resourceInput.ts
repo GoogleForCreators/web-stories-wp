@@ -49,12 +49,12 @@ export interface ResourceInput {
   /** Whether the resource is a placeholder. */
   isPlaceholder?: boolean;
   /** Whether the resource needs a CORS proxy. */
-  needsProxy: boolean;
+  needsProxy?: boolean;
   /** Resource creation date. */
   creationDate?: string;
   /** Resource sizes */
   sizes: { [key: string]: ResourceSize };
-  /** Resource author a ttribution */
+  /** Resource author attribution */
   attribution?: Attribution;
   /** The resource's poster. */
   poster?: string;
