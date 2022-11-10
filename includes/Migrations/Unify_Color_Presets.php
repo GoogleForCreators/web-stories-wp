@@ -55,7 +55,7 @@ class Unify_Color_Presets extends Migrate_Base {
 			return;
 		}
 
-		$colors = [ ... $style_presets['fillColors'], ...$style_presets['textColors'] ];
+		$colors = array_merge( $style_presets['fillColors'], $style_presets['textColors'] );
 
 		// Use only one array of colors for now.
 		$updated_style_presets = [

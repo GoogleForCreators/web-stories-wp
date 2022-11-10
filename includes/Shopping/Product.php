@@ -99,7 +99,7 @@ class Product implements JsonSerializable {
 	 *
 	 * @var array{rating_value: float, review_count: int, review_url: string}
 	 */
-	protected array $aggregate_rating;
+	protected array $aggregate_rating = [];
 
 	/**
 	 * Product constructor.

@@ -60,12 +60,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**
 	 * Taxonomy key.
 	 */
-	protected string $taxonomy_slug = 'web_story_media_source';
+	protected $taxonomy_slug = 'web_story_media_source';
 
 	/**
 	 * Post type.
 	 */
-	protected string $taxonomy_post_type = 'attachment';
+	protected $taxonomy_post_type = 'attachment';
 
 	/**
 	 * Media Source key.

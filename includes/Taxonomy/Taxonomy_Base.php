@@ -95,7 +95,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
 	 */
-	protected string $taxonomy_slug;
+	protected $taxonomy_slug;
 
 	/**
 	 * Object type or array of object types with which the taxonomy should be associated.

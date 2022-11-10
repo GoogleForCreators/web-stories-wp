@@ -180,7 +180,7 @@ class Sanitization {
 		$extension_specs            = AMP_Allowed_Tags_Generated::get_extension_specs();
 		$superfluous_script_handles = array_diff(
 			array_keys( $amp_scripts ),
-			[ ...array_keys( $scripts ), Amp::RUNTIME ]
+			array_merge( array_keys( $scripts ), [Amp::RUNTIME] )
 		);
 
 		foreach ( $superfluous_script_handles as $superfluous_script_handle ) {
@@ -302,7 +302,7 @@ class Sanitization {
 		 * and therefore should not be preloaded as they might take away important bandwidth for the initial render."
 		 */
 		ksort( $amp_scripts );
-		$ordered_scripts = [ ...$ordered_scripts, ...$amp_scripts ];
+		$ordered_scripts = array_merge( $ordered_scripts, $amp_scripts );
 
 		/**
 		 * Script element.

@@ -80,6 +80,6 @@ class PluginRowMeta extends Service_Base {
 			'<a href="https://wordpress.org/support/plugin/web-stories/reviews/#new-post" target="_blank" rel="noreferrer noopener">' . esc_html__( 'Leave review', 'web-stories' ) . '</a>',
 		];
 
-		return [ ...$meta, ...$additional_meta ];
+		return array_merge( $meta, $additional_meta);
 	}
 }

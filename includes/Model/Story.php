@@ -74,7 +74,7 @@ class Story {
 	/**
 	 * Publisher logo.
 	 */
-	protected string $publisher_logo;
+	protected string $publisher_logo  = '';
 
 	/**
 	 * Poster source set sizes.

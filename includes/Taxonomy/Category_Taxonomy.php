@@ -41,7 +41,7 @@ class Category_Taxonomy extends Taxonomy_Base {
 	/**
 	 * Taxonomy key.
 	 */
-	protected string $taxonomy_slug = 'web_story_category';
+	protected $taxonomy_slug = 'web_story_category';
 
 	/**
 	 * Constructor.

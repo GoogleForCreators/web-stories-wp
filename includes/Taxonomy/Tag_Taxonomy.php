@@ -42,7 +42,7 @@ class Tag_Taxonomy extends Taxonomy_Base implements HasRequirements {
 	/**
 	 * Taxonomy key.
 	 */
-	protected string $taxonomy_slug = 'web_story_tag';
+	protected $taxonomy_slug = 'web_story_tag';
 
 	/**
 	 * Constructor.
