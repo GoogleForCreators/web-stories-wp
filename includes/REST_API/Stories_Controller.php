@@ -59,7 +59,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @var array<string,mixed>
 	 * @phpstan-var QueryArgs
 	 */
-	private $args = [];
+	private array $args = [];
 
 	/**
 	 * Default style presets to pass if not set.

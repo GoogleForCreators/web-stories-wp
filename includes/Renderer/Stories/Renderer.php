@@ -56,14 +56,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	protected $assets;
+	protected Assets $assets;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	protected $context;
+	protected Context $context;
 
 	/**
 	 * Web Stories stylesheet handle.
@@ -77,10 +77,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Number of instances invoked. Kept it static to keep track.
-	 *
-	 * @var int
 	 */
-	protected static $instances = 0;
+	protected static int $instances = 0;
 
 	/**
 	 * Object ID for the Renderer class.
@@ -89,17 +87,15 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * This variable is used to add appropriate class to the Web Stories
 	 * wrapper.
-	 *
-	 * @var int
 	 */
-	protected $instance_id = 0;
+	protected int $instance_id = 0;
 
 	/**
 	 * Story_Query instance.
 	 *
 	 * @var Story_Query Story_Query instance.
 	 */
-	protected $query;
+	protected Story_Query $query;
 
 	/**
 	 * Story attributes
@@ -107,49 +103,41 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @var array<string, string|int|bool> An array of story attributes.
 	 * @phpstan-var StoryAttributes
 	 */
-	protected $attributes = [];
+	protected array $attributes = [];
 
 	/**
 	 * Story posts.
 	 *
 	 * @var Story[] An array of story posts.
 	 */
-	protected $stories = [];
+	protected array $stories = [];
 
 	/**
 	 * Holds required html for the lightbox.
 	 *
 	 * @var string A string of lightbox markup.
 	 */
-	protected $lightbox_html = '';
+	protected string $lightbox_html = '';
 
 	/**
 	 * Pointer to iterate over stories.
-	 *
-	 * @var int
 	 */
-	private $position = 0;
+	private int $position = 0;
 
 	/**
 	 * Height for displaying story.
-	 *
-	 * @var int
 	 */
-	protected $height = 308;
+	protected int $height = 308;
 
 	/**
 	 * Width for displaying story.
-	 *
-	 * @var int
 	 */
-	protected $width = 185;
+	protected int $width = 185;
 
 	/**
 	 * Whether content overlay is enabled for story.
-	 *
-	 * @var bool
 	 */
-	protected $content_overlay;
+	protected bool $content_overlay;
 
 	/**
 	 * Constructor

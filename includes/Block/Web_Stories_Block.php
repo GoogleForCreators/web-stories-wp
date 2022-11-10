@@ -96,7 +96,7 @@ class Web_Stories_Block extends Embed_Base {
 	 * @var array Block Attributes.
 	 * @phpstan-var BlockAttributes
 	 */
-	protected $block_attributes;
+	protected array $block_attributes;
 
 	/**
 	 * Maximum number of stories users can select
@@ -108,14 +108,14 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	protected $story_post_type;
+	protected Story_Post_Type $story_post_type;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Embed Base constructor.

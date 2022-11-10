@@ -45,14 +45,14 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Preferences instance.
 	 *
 	 * @var Preferences Preferences instance.
 	 */
-	private $preferences;
+	private Preferences $preferences;
 
 	/**
 	 * Constructor.

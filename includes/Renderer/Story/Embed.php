@@ -44,21 +44,21 @@ class Embed {
 	 *
 	 * @var Story Post object.
 	 */
-	protected $story;
+	protected Story $story;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Embed constructor.

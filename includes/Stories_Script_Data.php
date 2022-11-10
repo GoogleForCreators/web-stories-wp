@@ -44,7 +44,7 @@ class Stories_Script_Data {
 	 *
 	 * @var Injector Injector instance.
 	 */
-	private $injector;
+	private Injector $injector;
 
 	/**
 	 * Factory constructor.

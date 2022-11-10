@@ -43,66 +43,48 @@ use WP_Post;
 class Story {
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	protected $id = 0;
+	protected int $id = 0;
 
 	/**
 	 * Title.
-	 *
-	 * @var string
 	 */
-	protected $title = '';
+	protected string $title = '';
 
 	/**
 	 * Excerpt.
-	 *
-	 * @var string
 	 */
-	protected $excerpt = '';
+	protected string $excerpt = '';
 
 	/**
 	 * URL.
-	 *
-	 * @var string
 	 */
-	protected $url = '';
+	protected string $url = '';
 
 	/**
 	 * Markup.
-	 *
-	 * @var string
 	 */
-	protected $markup = '';
+	protected string $markup = '';
 
 	/**
 	 * Publisher name.
-	 *
-	 * @var string
 	 */
-	protected $publisher_name = '';
+	protected string $publisher_name = '';
 
 	/**
 	 * Publisher logo.
-	 *
-	 * @var string
 	 */
-	protected $publisher_logo;
+	protected string $publisher_logo;
 
 	/**
 	 * Poster source set sizes.
-	 *
-	 * @var string
 	 */
-	protected $poster_sizes = '';
+	protected string $poster_sizes = '';
 
 	/**
 	 * Poster source set.
-	 *
-	 * @var string
 	 */
-	protected $poster_srcset = '';
+	protected string $poster_srcset = '';
 
 	/**
 	 * Publisher logo size.
@@ -110,7 +92,7 @@ class Story {
 	 * @var int[]
 	 * @phpstan-var array{0?: int, 1?: int}
 	 */
-	protected $publisher_logo_size = [];
+	protected array $publisher_logo_size = [];
 
 	/**
 	 * Poster portrait logo size.
@@ -118,35 +100,29 @@ class Story {
 	 * @var int[]
 	 * @phpstan-var array{0?: int, 1?: int}
 	 */
-	protected $poster_portrait_size = [];
+	protected array $poster_portrait_size = [];
 
 	/**
 	 * Array of product data.
 	 *
 	 * @var Product[]
 	 */
-	protected $products = [];
+	protected array $products = [];
 
 	/**
 	 * Poster url - portrait.
-	 *
-	 * @var string
 	 */
-	protected $poster_portrait = '';
+	protected string $poster_portrait = '';
 
 	/**
 	 * Date for the story.
-	 *
-	 * @var string
 	 */
-	protected $date = '';
+	protected string $date = '';
 
 	/**
 	 * Author of story.
-	 *
-	 * @var string
 	 */
-	protected $author = '';
+	protected string $author = '';
 
 	/**
 	 * Story constructor.

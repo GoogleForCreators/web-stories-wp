@@ -40,7 +40,7 @@ class Image {
 	 *
 	 * @var Story Post object.
 	 */
-	protected $story;
+	protected Story $story;
 
 
 	/**

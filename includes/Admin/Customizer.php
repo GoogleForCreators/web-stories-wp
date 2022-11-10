@@ -105,28 +105,28 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @var WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 */
-	private $wp_customize;
+	private WP_Customize_Manager $wp_customize;
 
 	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Analytics constructor.

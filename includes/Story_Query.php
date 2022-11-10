@@ -81,7 +81,7 @@ class Story_Query {
 	 *
 	 * @var array<string, mixed> An array of story attributes.
 	 */
-	protected $story_attributes = [];
+	protected array $story_attributes = [];
 
 	/**
 	 * Story query arguments.
@@ -90,16 +90,14 @@ class Story_Query {
 	 *
 	 * @var array<string, mixed> An array of query arguments.
 	 */
-	protected $query_args = [];
+	protected array $query_args = [];
 
 	/**
 	 * Renderer object.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @var Renderer
 	 */
-	public $renderer;
+	public Renderer $renderer;
 
 	/**
 	 * Class constructor

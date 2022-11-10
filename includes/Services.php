@@ -22,17 +22,15 @@ final class Services {
 
 	/**
 	 * Plugin object instance.
-	 *
-	 * @var Plugin
 	 */
-	private static $plugin;
+	private static Plugin $plugin;
 
 	/**
 	 * Service container object instance.
 	 *
 	 * @var ServiceContainer<Service>
 	 */
-	private static $container;
+	private static ServiceContainer $container;
 
 	/**
 	 * Dependency injector object instance.

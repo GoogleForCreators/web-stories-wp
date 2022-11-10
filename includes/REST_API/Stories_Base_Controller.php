@@ -79,7 +79,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @var Decoder Decoder instance.
 	 */
-	private $decoder;
+	private Decoder $decoder;
 
 	/**
 	 * Constructor.

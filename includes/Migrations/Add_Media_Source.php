@@ -40,7 +40,7 @@ abstract class Add_Media_Source extends Migrate_Base {
 	 *
 	 * @var Media_Source_Taxonomy Experiments instance.
 	 */
-	protected $media_source_taxonomy;
+	protected Media_Source_Taxonomy $media_source_taxonomy;
 
 	/**
 	 * Add_Media_Source constructor.

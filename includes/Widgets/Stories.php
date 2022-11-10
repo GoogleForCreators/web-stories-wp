@@ -56,7 +56,7 @@ class Stories extends WP_Widget {
 	 *
 	 * @var array<string,string>
 	 */
-	public $args = [
+	public array $args = [
 		'before_title'  => '<h4 class="widgettitle web-stories-widget-title">',
 		'after_title'   => '</h4>',
 		'before_widget' => '<div class="widget-wrap web-stories-widget-wrapper">',
@@ -68,21 +68,21 @@ class Stories extends WP_Widget {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	protected $assets;
+	protected Assets $assets;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Stories constructor.

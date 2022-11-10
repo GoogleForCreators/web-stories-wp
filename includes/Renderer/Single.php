@@ -41,7 +41,7 @@ class Single extends Service_Base {
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Single constructor.

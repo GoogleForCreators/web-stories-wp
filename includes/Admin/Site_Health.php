@@ -44,7 +44,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * Site_Health constructor.

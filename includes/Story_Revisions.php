@@ -55,14 +55,14 @@ class Story_Revisions extends Service_Base {
 	 *
 	 * @var Story_Post_Type Story post type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Single constructor.

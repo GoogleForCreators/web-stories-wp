@@ -49,7 +49,7 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Font_Post_Type constructor.

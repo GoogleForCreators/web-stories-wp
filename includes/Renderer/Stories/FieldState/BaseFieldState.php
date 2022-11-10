@@ -36,10 +36,8 @@ class BaseFieldState implements FieldState {
 
 	/**
 	 * Post type has archive.
-	 *
-	 * @var bool
 	 */
-	protected $has_archive = false;
+	protected bool $has_archive = false;
 
 	/**
 	 * Constructor.

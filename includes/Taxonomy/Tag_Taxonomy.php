@@ -41,10 +41,8 @@ use Google\Web_Stories\Story_Post_Type;
 class Tag_Taxonomy extends Taxonomy_Base implements HasRequirements {
 	/**
 	 * Taxonomy key.
-	 *
-	 * @var string
 	 */
-	protected $taxonomy_slug = 'web_story_tag';
+	protected string $taxonomy_slug = 'web_story_tag';
 
 	/**
 	 * Constructor.

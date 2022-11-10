@@ -40,10 +40,8 @@ use Google\Web_Stories\Story_Post_Type;
 class Category_Taxonomy extends Taxonomy_Base {
 	/**
 	 * Taxonomy key.
-	 *
-	 * @var string
 	 */
-	protected $taxonomy_slug = 'web_story_category';
+	protected string $taxonomy_slug = 'web_story_category';
 
 	/**
 	 * Constructor.

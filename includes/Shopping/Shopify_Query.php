@@ -88,7 +88,7 @@ class Shopify_Query implements Product_Query {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Constructor.

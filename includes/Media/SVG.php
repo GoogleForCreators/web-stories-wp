@@ -64,7 +64,7 @@ class SVG extends Service_Base {
 	 *
 	 * @var string[]
 	 */
-	protected $svgs = [];
+	protected array $svgs = [];
 
 	/**
 	 * Experiments instance.
@@ -73,7 +73,7 @@ class SVG extends Service_Base {
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * SVG constructor.

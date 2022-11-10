@@ -49,7 +49,7 @@ class Product_Meta extends Service_Base implements HasMeta, PluginUninstallAware
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Constructor.

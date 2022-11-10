@@ -62,24 +62,20 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 	/**
 	 * Enable filters.
-	 *
-	 * @var bool
 	 */
-	protected $enable_filters;
+	protected bool $enable_filters;
 
 	/**
 	 * Injector.
-	 *
-	 * @var Injector
 	 */
-	protected $injector;
+	protected Injector $injector;
 
 	/**
 	 * ServiceContainer.
 	 *
 	 * @var ServiceContainer<Service>
 	 */
-	protected $service_container;
+	protected ServiceContainer $service_container;
 
 	/**
 	 * Instantiate a Theme object.

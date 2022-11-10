@@ -40,7 +40,7 @@ class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Migration constructor.

@@ -46,14 +46,14 @@ class Assets {
 	 *
 	 * @var array<string, bool>
 	 */
-	protected $register_styles = [];
+	protected array $register_styles = [];
 
 	/**
 	 * An array of registered scripts.
 	 *
 	 * @var array<string, bool>
 	 */
-	protected $register_scripts = [];
+	protected array $register_scripts = [];
 
 	/**
 	 * Get path to file and directory.

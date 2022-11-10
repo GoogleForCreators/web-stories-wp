@@ -44,7 +44,7 @@ class Shopping_Vendors {
 	 *
 	 * @var Injector Injector instance.
 	 */
-	private $injector;
+	private Injector $injector;
 
 	/**
 	 * Shopping_Vendors constructor.

@@ -46,17 +46,15 @@ use Google\Web_Stories\Service_Base;
 class Site_Kit extends Service_Base {
 	/**
 	 * Analytics instance.
-	 *
-	 * @var Analytics
 	 */
-	protected $analytics;
+	protected Analytics $analytics;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Constructor.
