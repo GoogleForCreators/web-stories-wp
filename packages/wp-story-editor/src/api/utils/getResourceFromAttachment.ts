@@ -25,6 +25,11 @@ import {
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 /**
+ * Internal dependencies
+ */
+import normalizeResourceSizes from './normalizeResourceSizes';
+
+/**
  * @typedef {import('@googleforcreators/media').Resource} Resource
  */
 
@@ -78,7 +83,7 @@ function getImageResourceFromAttachment(attachment) {
     height,
     id,
     alt,
-    sizes,
+    sizes: normalizeResourceSizes(sizes),
     local: false,
     isExternal: false,
   });
