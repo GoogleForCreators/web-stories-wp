@@ -17,6 +17,18 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import { identity, useContextSelector } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import type { HistoryState } from '../../types/historyProvider';
+import Context from './context';
 
-export default createContext({ state: {}, actions: {} });
+function useHistory(): HistoryState;
+function useHistory<T>(
+  selector: (state: HistoryState) => T | HistoryState = identity
+) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useHistory;
