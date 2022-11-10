@@ -4,5 +4,10 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "include": ["src/app/config/*", "src/app/history", "src/types"]
+  "include": [
+    "src/app/config/*",
+    "src/app/history",
+    "src/types",
+    "src/utils/usePreventWindowUnload"
+  ]
 }
