@@ -77,7 +77,7 @@ $preload_paths = [
 	'/web-stories/v1/users/?' . build_query(
 		[
 			'per_page' => 100,
-			'who'      => 'authors',
+			'capabilities'      => 'edit_web-stories',
 		]
 	),
 	'/web-stories/v1/users/me/',
