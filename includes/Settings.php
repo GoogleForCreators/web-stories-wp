@@ -409,15 +409,34 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 			 *
 			 * @var string|array<int|string,mixed>|bool
 			 */
-			return get_option( $key, $default );
+			$option = get_option( $key, $default );
+			if ( $option === $default ) {
+				return $option;
+			}
+		} else {
+			/**
+			 * Setting value.
+			 *
+			 * @var string|array<int|string,mixed>|bool
+			 */
+			$option = get_option( $key );
 		}
 
-		/**
-		 * Setting value.
-		 *
-		 * @var string|array<int|string,mixed>|bool
-		 */
-		return get_option( $key );
+		$settings = get_registered_settings();
+		if ( isset( $settings[ $key ] ) ) {
+			$value = rest_sanitize_value_from_schema( $option, $settings[ $key ] );
+			if ( is_wp_error( $value ) ) {
+				return $option;
+			}
+			/**
+			 * Setting value.
+			 *
+			 * @var string|array<int|string,mixed>|bool
+			 */
+			$option = $value;
+		}
+
+		return $option;
 	}
 
 	/**
