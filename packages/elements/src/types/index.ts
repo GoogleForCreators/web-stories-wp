@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export * from './animation';
+export * from './data';
 export * from './element';
 export * from './elementType';
 export * from './elementDefinition';

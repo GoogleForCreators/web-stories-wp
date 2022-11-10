@@ -18,27 +18,11 @@
  * External dependencies
  */
 import type { Pattern } from '@googleforcreators/patterns';
-import type { Element, ElementType } from '@googleforcreators/elements';
-
-export type FontStyle = 'normal' | 'italic' | 'regular';
-export enum FontVariantStyle {
-  Normal = 0,
-  Italic = 1,
-}
-
-export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-
-export type FontVariant = [FontVariantStyle, FontWeight];
-
-export interface Font {
-  family: string;
-  service?: string;
-  weights?: FontWeight[];
-  styles?: FontStyle[];
-  variants?: FontVariant[];
-  fallbacks?: string[];
-  metrics?: FontMetrics;
-}
+import type {
+  Element,
+  ElementType,
+  FontData,
+} from '@googleforcreators/elements';
 
 export interface Padding {
   horizontal?: number;
@@ -50,28 +34,10 @@ export interface Padding {
 export type TextAlign = 'left' | 'center' | 'right' | 'justify' | 'initial';
 export type BackgroundTextMode = 'NONE' | 'FILL' | 'HIGHLIGHT';
 
-export interface FontMetrics {
-  upm: number;
-  asc: number;
-  des: number;
-  tAsc: number;
-  tDes: number;
-  tLGap: number;
-  wAsc: number;
-  wDes: number;
-  xH: number;
-  capH: number;
-  yMin: number;
-  yMax: number;
-  hAsc: number;
-  hDes: number;
-  lGap: number;
-}
-
 export interface TextElement extends Element {
   type: ElementType.Text;
   content: string;
-  font: Font;
+  font: FontData;
 
   backgroundTextMode?: BackgroundTextMode;
   backgroundColor?: Pattern;
