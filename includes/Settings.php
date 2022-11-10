@@ -320,7 +320,8 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 				'default'         => [],
 				'show_in_rest'    => [
 					'schema' => [
-						'properties' => [],
+						'properties'           => [],
+						'additionalProperties' => true,
 					],
 				],
 				// WPGraphQL errors when encountering array or object types.
@@ -422,7 +423,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 			$option = get_option( $key );
 		}
 
-		$settings = get_registered_settings();
+		$settings = $this->get_registered_options();
 		if ( isset( $settings[ $key ] ) ) {
 			$value = rest_sanitize_value_from_schema( $option, $settings[ $key ] );
 			if ( is_wp_error( $value ) ) {
@@ -437,6 +438,45 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 		}
 
 		return $option;
+	}
+
+	/**
+	 * Retrieves all of the registered options for the Settings API.
+	 *
+	 * @since 1.27.0
+	 *
+	 * @return array<string, array<string,string>> Array of registered options.
+	 */
+	protected function get_registered_options(): array {
+		$rest_options = [];
+
+		foreach ( get_registered_settings() as $name => $args ) {
+			$rest_args = [];
+
+			if ( ! empty( $args['show_in_rest'] ) && \is_array( $args['show_in_rest'] ) ) {
+				$rest_args = $args['show_in_rest'];
+			}
+
+			$defaults = [
+				'name'   => ! empty( $rest_args['name'] ) ? $rest_args['name'] : $name,
+				'schema' => [],
+			];
+
+			$rest_args = array_merge( $defaults, $rest_args );
+
+			$default_schema = [
+				'type'        => empty( $args['type'] ) ? null : $args['type'],
+				'description' => empty( $args['description'] ) ? '' : $args['description'],
+				'default'     => $args['default'] ?? null,
+			];
+
+			$schema = array_merge( $default_schema, $rest_args['schema'] );
+			$schema = rest_default_additional_properties_to_false( $schema );
+
+			$rest_options[ $name ] = $schema;
+		}
+
+		return $rest_options;
 	}
 
 	/**
