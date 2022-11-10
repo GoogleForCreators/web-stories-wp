@@ -48,4 +48,5 @@ export default createContext<HistoryState>({
     resetNewChanges: () => null,
     undo: () => false,
     redo: () => false,
-  } });
+  },
+});
