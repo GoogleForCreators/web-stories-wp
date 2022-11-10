@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useRef } from '@googleforcreators/react';
-import { getAllTemplates } from '@googleforcreators/templates';
+import type { ReactNode } from 'react';
+import { getAllTemplates, Template } from '@googleforcreators/templates';
 
 /**
  * Internal dependencies
@@ -27,9 +27,12 @@ import { getAllTemplates } from '@googleforcreators/templates';
 import { useConfig } from '../config';
 import Context from './context';
 
-function APIProvider({ children }) {
+interface APIProviderProps {
+  children: ReactNode;
+}
+function APIProvider({ children }: APIProviderProps) {
   const { apiCallbacks: actions, cdnURL } = useConfig();
-  const pageTemplates = useRef({
+  const pageTemplates = useRef<{ base: Template[] }>({
     base: [],
   });
 
@@ -43,9 +46,5 @@ function APIProvider({ children }) {
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
 }
-
-APIProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default APIProvider;
