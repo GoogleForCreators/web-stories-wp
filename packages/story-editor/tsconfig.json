@@ -4,7 +4,10 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "references": [{ "path": "../elements" }],
+  "references": [
+    { "path": "../elements" },
+    { "path": "../react" }
+  ],
   "include": [
     "src/app/config/*",
     "src/app/history",
