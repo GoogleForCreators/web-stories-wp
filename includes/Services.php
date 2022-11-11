@@ -31,7 +31,7 @@ final class Services {
 	 *
 	 * @var ServiceContainer<Service>
 	 */
-	private static ServiceContainer $container;
+	private static $container;
 
 	/**
 	 * Dependency injector object instance.

@@ -325,7 +325,7 @@ class SVG extends Service_Base {
 		}
 
 		$errors = $sanitizer->getXmlIssues();
-		if ( ( is_countable( $errors ) ? \count( $errors ) : 0 ) > 1 ) {
+		if ( \count( $errors ) > 1 ) {
 			return new \WP_Error( 'insecure_svg_file', __( "Sorry, this file couldn't be sanitized so for security reasons wasn't uploaded.", 'web-stories' ) );
 		}
 

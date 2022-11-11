@@ -250,11 +250,23 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				array_push( $fonts, ...$this->get_builtin_fonts() );
 
 				// For custom fonts the searching will be done in WP_Query already.
-				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) ) {
+				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) && \is_string( $request['search'] ) ) {
 					$fonts = array_values(
 						array_filter(
 							$fonts,
-							static fn( $font ) => false !== stripos( $font['family'], $request['search'] )
+							static function( $font ) use ( $request ) { // phpcs:ignore SlevomatCodingStandard.Functions.RequireArrowFunction.RequiredArrowFunction
+								/**
+								 * Font data.
+								 *
+								 * @var array{family: string} $font
+								 */
+								/**
+								 * Request data.
+								 *
+								 * @var array{search: string} $request
+								 */
+								return false !== stripos( $font['family'], $request['search'] );
+							}
 						)
 					);
 				}
@@ -274,10 +286,18 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$include_list = $request['include'];
 				$include_list = array_map( 'strtolower', $include_list );
 
+
 				$fonts = array_values(
 					array_filter(
 						$fonts,
-						static fn( $font ) => \in_array( strtolower( $font['family'] ), $include_list, true )
+						static function( $font ) use ( $include_list ) { // phpcs:ignore SlevomatCodingStandard.Functions.RequireArrowFunction.RequiredArrowFunction
+							/**
+							 * Font data.
+							 *
+							 * @var array{family: string} $font
+							 */
+							return \in_array( strtolower( $font['family'] ), $include_list, true );
+						}
 					)
 				);
 			}
@@ -287,7 +307,15 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				// we only need to sort when including both.
 				usort(
 					$fonts,
-					static fn( $a, $b ) => strnatcasecmp( $a['family'], $b['family'] )
+					static function( $a, $b ) { // phpcs:ignore SlevomatCodingStandard.Functions.RequireArrowFunction.RequiredArrowFunction
+						/**
+						 * Font A and Font B.
+						 *
+						 * @phpstan-var Font $a
+						 * @phpstan-var Font $b
+						 */
+						return strnatcasecmp( $a['family'], $b['family'] );
+					}
 				);
 			}
 		}

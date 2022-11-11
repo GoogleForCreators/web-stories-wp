@@ -36,6 +36,10 @@
     <exclude-pattern>tests/*</exclude-pattern>
   </rule>
 
+  <rule ref="WordPress.WP.AlternativeFunctions">
+     <exclude-pattern>tests/*</exclude-pattern>
+  </rule>
+
   <rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
     <exclude-pattern>tests/*</exclude-pattern>
   </rule>
@@ -227,6 +231,11 @@
       <exclude-pattern>includes/templates/*</exclude-pattern>
       <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation" />
   </rule>
+
+  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint">
+    <exclude-pattern>includes/Services.php</exclude-pattern>
+  </rule>
+
   <!-- Reports forbidden annotations. -->
   <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
     <properties>

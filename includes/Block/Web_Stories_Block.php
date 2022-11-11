@@ -92,7 +92,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Current block's block attributes.
 	 *
-	 * @var array Block Attributes.
+	 * @var array<string, mixed> Block Attributes.
 	 * @phpstan-var BlockAttributes
 	 */
 	protected array $block_attributes;

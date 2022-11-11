@@ -38,17 +38,13 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Category_Taxonomy extends Taxonomy_Base {
 	/**
-	 * Taxonomy key.
-	 */
-	protected $taxonomy_slug = 'web_story_category';
-
-	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
 	public function __construct( Story_Post_Type $story_post_type ) {
 		$this->taxonomy_post_type = $story_post_type->get_slug();
+		$this->taxonomy_slug      = 'web_story_category';
 	}
 
 	/**

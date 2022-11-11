@@ -57,7 +57,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	/**
 	 * The base of the parent controller's
 	 *
-	 * @var string.
+	 * @var string
 	 */
 	protected string $parent_base;
 
