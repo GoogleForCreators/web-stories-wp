@@ -95,6 +95,8 @@ class Story_Query {
 	 * Renderer object.
 	 *
 	 * @since 1.5.0
+	 *
+	 * @var Renderer
 	 */
 	public Renderer $renderer;
 

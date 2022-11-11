@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin uninstall handler.
  *

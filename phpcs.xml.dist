@@ -224,6 +224,8 @@
       <exclude-pattern>includes/compat/*</exclude-pattern>
       <exclude-pattern>tests/*</exclude-pattern>
       <exclude-pattern>includes/templates/*</exclude-pattern>
+      <exclude-pattern>includes/templates/*</exclude-pattern>
+      <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation" />
   </rule>
   <!-- Reports forbidden annotations. -->
   <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">

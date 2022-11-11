@@ -45,6 +45,8 @@ use Google\Web_Stories\Service_Base;
 class Site_Kit extends Service_Base {
 	/**
 	 * Analytics instance.
+	 *
+	 * @var Analytics Analytics instance.
 	 */
 	protected Analytics $analytics;
 

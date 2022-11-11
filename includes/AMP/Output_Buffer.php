@@ -47,6 +47,8 @@ class Output_Buffer extends Service_Base implements Conditional {
 
 	/**
 	 * Whether output buffering has started.
+	 *
+	 * @var bool
 	 */
 	protected bool $is_output_buffering = false;
 

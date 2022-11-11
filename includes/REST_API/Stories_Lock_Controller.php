@@ -50,6 +50,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 
 	/**
 	 * Parent post controller.
+	 *
+	 * @var WP_REST_Controller WP_REST_Controller instance.
 	 */
 	private WP_REST_Controller $parent_controller;
 

@@ -35,6 +35,8 @@ class BaseFieldState implements FieldState {
 
 	/**
 	 * Post type has archive.
+	 *
+	 * @var bool
 	 */
 	protected bool $has_archive = false;
 

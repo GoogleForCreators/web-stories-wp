@@ -56,22 +56,32 @@ use JsonSerializable;
 class Product implements JsonSerializable {
 	/**
 	 * Product id.
+	 *
+	 * @var string
 	 */
 	protected string $id = '';
 	/**
 	 * Product title.
+	 *
+	 * @var string
 	 */
 	protected string $title = '';
 	/**
 	 * Product brand.
+	 *
+	 * @var string
 	 */
 	protected string $brand = '';
 	/**
 	 * Product Price.
+	 *
+	 * @var int
 	 */
 	protected float $price = 0.0;
 	/**
 	 * Product's price currency.
+	 *
+	 * @var string
 	 */
 	protected string $price_currency = '';
 
@@ -85,11 +95,15 @@ class Product implements JsonSerializable {
 
 	/**
 	 * Product Details.
+	 *
+	 * @var string
 	 */
 	protected string $details = '';
 
 	/**
 	 * Product url.
+	 *
+	 * @var string
 	 */
 	protected string $url = '';
 

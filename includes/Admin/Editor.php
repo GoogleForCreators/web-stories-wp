@@ -75,6 +75,8 @@ class Editor extends Service_Base implements HasRequirements {
 
 	/**
 	 * Meta boxes instance.
+	 *
+	 * @var Meta_Boxes Meta_Boxes instance.
 	 */
 	private Meta_Boxes $meta_boxes;
 

@@ -21,6 +21,8 @@ final class Services {
 
 	/**
 	 * Plugin object instance.
+	 *
+	 * @var Plugin
 	 */
 	private static $plugin;
 
