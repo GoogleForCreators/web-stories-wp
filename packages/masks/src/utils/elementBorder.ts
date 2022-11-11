@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import type { Border, BorderRadius, Element } from '@googleforcreators/types';
+import type {
+  Border,
+  BorderRadius,
+  Element,
+} from '@googleforcreators/elements';
 import type { CSSProperties } from 'react';
 
 /**

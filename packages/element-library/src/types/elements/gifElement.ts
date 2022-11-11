@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-export interface ElementBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotationAngle: number;
+/**
+ * External dependencies
+ */
+import type { GifResource } from '@googleforcreators/media';
+import type {
+  SequenceMediaElement,
+  ElementType,
+} from '@googleforcreators/elements';
+
+export interface GifElement extends SequenceMediaElement {
+  resource: GifResource;
+  type: ElementType.Gif;
 }

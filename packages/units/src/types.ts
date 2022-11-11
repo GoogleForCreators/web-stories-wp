@@ -14,10 +14,25 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import type { Element, ElementBox } from '@googleforcreators/types';
+export interface ElementBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotationAngle: number;
+}
+
+interface Border {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+export interface DimensionableElement extends ElementBox {
+  isBackground?: boolean;
+  border?: Border;
+}
 
 export interface State {
   state: {
@@ -29,10 +44,10 @@ export interface State {
   actions: {
     dataToEditorX: (x: number) => number;
     dataToEditorY: (y: number) => number;
-    editorToDataX: (x: number, withRounding: boolean) => number;
-    editorToDataY: (y: number, withRounding: boolean) => number;
-    getBox: (element: Element) => ElementBox;
-    getBoxWithBorder: (element: Element) => ElementBox;
+    editorToDataX: (x: number, withRounding?: boolean) => number;
+    editorToDataY: (y: number, withRounding?: boolean) => number;
+    getBox: (element: DimensionableElement) => ElementBox;
+    getBoxWithBorder: (element: DimensionableElement) => ElementBox;
   };
 }
 

@@ -15,14 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { PatternType, Linear } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import hasOpacity from '../hasOpacity';
+import { PatternType, Linear } from '../types';
 
 describe('hasOpacity', () => {
   it('should return false for opaque solid', () => {

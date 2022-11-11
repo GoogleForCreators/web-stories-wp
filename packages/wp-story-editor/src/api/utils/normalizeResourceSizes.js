@@ -15,7 +15,7 @@
  */
 
 /**
- * @typedef {import('@googleforcreators/types').ResourceSize} ResourceSize
+ * @typedef {import('@googleforcreators/media').ResourceSize} ResourceSize
  */
 
 /**

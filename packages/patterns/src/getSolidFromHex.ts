@@ -15,15 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-import type { Pattern } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import createSolid from './createSolid';
 import createSolidFromString from './createSolidFromString';
+import type { Pattern } from './types';
 
 function getSolidFromHex(hex: string): Pattern {
   // We already have a nice parser for most of this, but we need to
