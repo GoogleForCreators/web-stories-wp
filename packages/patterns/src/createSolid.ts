@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type { Solid } from '@googleforcreators/types';
+import type { Solid } from './types';
 
 function createSolid(r: number, g: number, b: number, a = 1): Solid {
   if (a !== 1) {

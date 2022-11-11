@@ -15,15 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import type { ElementBox } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import { dataPixels } from './dimensions';
-import type { Coordinates, Corners } from './types';
+import type { ElementBox, Coordinates, Corners } from './types';
 import { Corner } from './types';
 
 /**

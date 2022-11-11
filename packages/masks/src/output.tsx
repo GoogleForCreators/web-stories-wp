@@ -22,7 +22,7 @@
 /**
  * External dependencies
  */
-import type { Element } from '@googleforcreators/types';
+import type { Element } from '@googleforcreators/elements';
 import type { CSSProperties, ReactNode } from 'react';
 
 /**

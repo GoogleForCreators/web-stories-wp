@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { EditorState } from 'draft-js';
-import type { Pattern } from '@googleforcreators/types';
+import type { Pattern } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
