@@ -4,6 +4,6 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "references": [{ "path": "../react" }, { "path": "../types" }],
+  "references": [{ "path": "../react" }],
   "include": ["src/**/*"]
 }

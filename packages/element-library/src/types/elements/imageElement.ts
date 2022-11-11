@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-export * from './gifResource';
-export * from './resource';
-export * from './resourceType';
-export * from './videoResource';
-export * from './audioResource';
+/**
+ * External dependencies
+ */
+import type { Resource } from '@googleforcreators/media';
+import type { Pattern } from '@googleforcreators/patterns';
+import type { MediaElement, ElementType } from '@googleforcreators/elements';
+
+export type ImageElement = MediaElement & {
+  type: ElementType.Image;
+  resource: Resource;
+
+  // TODO(#12437): Figure out why some images have this property.
+  backgroundColor?: Pattern;
+};

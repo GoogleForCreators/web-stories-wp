@@ -15,9 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Pattern } from '@googleforcreators/patterns';
+
+/**
  * Internal dependencies
  */
-import type { Element, ElementId, Pattern, ShapeElement } from '../element';
+import type { DefaultBackgroundElement, Element, ElementId } from './element';
 import type { Animation } from './animation';
 
 export interface Group {
@@ -41,10 +46,9 @@ export type Groups = Record<string, Group>;
 export interface Page {
   id: ElementId;
   elements: Element[];
-  defaultBackgroundElement?: ShapeElement;
+  defaultBackgroundElement?: DefaultBackgroundElement;
   animations?: Animation[];
   backgroundColor: Pattern;
-  type: 'page';
   groups?: Groups;
   backgroundAudio?: {
     resource: {
