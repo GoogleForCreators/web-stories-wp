@@ -123,7 +123,7 @@ class Product implements JsonSerializable {
 	 */
 	public function __construct( array $product = [] ) {
 		foreach ( $product as $key => $value ) {
-			if ( property_exists( $this, $key ) && ! is_null( $value ) ) {
+			if ( property_exists( $this, $key ) && ! \is_null( $value ) ) {
 				$this->$key = $value;
 			}
 		}
