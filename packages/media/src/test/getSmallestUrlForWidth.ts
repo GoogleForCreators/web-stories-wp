@@ -15,15 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-import { ResourceType } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import getSmallestUrlForWidth from '../getSmallestUrlForWidth';
 import createResource from '../createResource';
+import { ResourceType } from '../types';
 
 describe('getSmallestUrlForWidth', () => {
   beforeEach(() => {

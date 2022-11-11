@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+export * from './animation';
+export * from './data';
 export * from './element';
-export * from './elementBox';
-export * from './gifElement';
-export * from './imageElement';
-export * from './mediaElement';
-export * from './pattern';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
+export * from './elementType';
+export * from './elementDefinition';
+export * from './propTypes';
+export * from './page';
+export * from './story';

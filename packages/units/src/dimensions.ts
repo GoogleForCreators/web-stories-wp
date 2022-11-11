@@ -15,16 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import type {
-  Element,
-  ElementBox,
-  MediaElement,
-  ShapeElement,
-} from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import calcRotatedResizeOffset from './calcRotatedResizeOffset';
@@ -35,6 +25,7 @@ import {
   PAGE_HEIGHT,
   PAGE_WIDTH,
 } from './constants';
+import type { DimensionableElement, ElementBox } from './types';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -136,13 +127,6 @@ export function editorToDataY(
   return dataPixels(v);
 }
 
-type ElementWithBackground = MediaElement | ShapeElement;
-function elementAsBackground(
-  element: Element
-): element is ElementWithBackground {
-  return 'isBackground' in element;
-}
-
 /**
  * Converts the element's position, width, and rotation to the "box" in the
  * "editor" coordinate space.
@@ -153,13 +137,10 @@ function elementAsBackground(
  * @return The "box" in the editor space.
  */
 export function getBox(
-  element: Element,
+  { x, y, width, height, rotationAngle, isBackground }: DimensionableElement,
   pageWidth: number,
   pageHeight: number
 ): ElementBox {
-  const isBackground = elementAsBackground(element) && element.isBackground;
-
-  const { x, y, width, height, rotationAngle } = element;
   return {
     x: dataToEditorX(isBackground ? 0 : x, pageWidth),
     y: dataToEditorY(isBackground ? -DANGER_ZONE_HEIGHT : y, pageHeight),
@@ -179,7 +160,7 @@ export function getBox(
  * @return The "box" in the editor space.
  */
 export function getBoxWithBorder(
-  element: Element,
+  element: DimensionableElement,
   pageWidth: number,
   pageHeight: number
 ): ElementBox {
