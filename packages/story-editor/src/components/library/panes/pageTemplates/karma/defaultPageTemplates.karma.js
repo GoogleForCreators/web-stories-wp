@@ -25,15 +25,23 @@ import { waitFor, within } from '@testing-library/react';
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
 import formattedTemplatesArray from '../../../../../dataUtils/formattedTemplatesArray';
-import objectWithout from '../../../../../utils/objectWithout';
+
+function getComparableElement(fullElement) {
+  const { id, basedOn, ...partialElement } = fullElement;
+  if (partialElement.isDefaultBackground) {
+    const { backgroundColor, ...defaultBackgroundElement } = partialElement;
+    return defaultBackgroundElement;
+  }
+  return partialElement;
+}
 
 const expectPageTemplateEqual = (currentPage, template) => {
   expect(currentPage.id).not.toEqual(template.id);
   expect(currentPage.elements.length).toEqual(template.elements.length);
   template.elements.forEach((element, index) => {
-    expect(
-      objectWithout(currentPage.elements[index], ['id', 'basedOn'])
-    ).toEqual(objectWithout(element, ['id', 'basedOn']));
+    expect(getComparableElement(currentPage.elements[index])).toEqual(
+      getComparableElement(element)
+    );
   });
 };
 

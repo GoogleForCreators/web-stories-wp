@@ -23,9 +23,8 @@ import { getTransformFlip } from '@googleforcreators/elements';
 import type {
   Element,
   Mask,
-  MediaElement,
-  ShapeElement,
-} from '@googleforcreators/types';
+  BackgroundableElement,
+} from '@googleforcreators/elements';
 import type { ReactNode, CSSProperties } from 'react';
 
 /**
@@ -110,10 +109,9 @@ interface BorderedMaskedElementProps {
   forceRectangularMask: boolean;
 }
 
-type ElementWithBackground = MediaElement | ShapeElement;
 function elementAsBackground(
   element: Element
-): element is ElementWithBackground {
+): element is BackgroundableElement {
   return 'isBackground' in element;
 }
 

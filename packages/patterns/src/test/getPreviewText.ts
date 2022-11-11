@@ -15,15 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-import { PatternType, Linear, Radial, Solid } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import getPreviewText from '../getPreviewText';
 import createSolid from '../createSolid';
+import { PatternType, Linear, Radial, Solid } from '../types';
 
 describe('getPreviewText', () => {
   it('should return null for no pattern', () => {
