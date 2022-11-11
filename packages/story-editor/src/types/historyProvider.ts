@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Page, Story } from '@googleforcreators/types';
+import type { Page, Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
