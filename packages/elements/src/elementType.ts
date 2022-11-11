@@ -15,60 +15,14 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type { ElementType, Element } from '@googleforcreators/types';
-import type { FunctionComponent } from 'react';
-
-interface BaseDefinition {
-  type: string;
-  name: string;
-  defaultAttributes: Record<string, unknown>;
-}
-
-export interface PageElementDefinition extends BaseDefinition {
-  type: 'page';
-  defaultAttributes: Record<string, never>;
-}
-
-export interface ElementDefinition extends BaseDefinition {
-  type: ElementType;
-  name: string;
-  defaultAttributes: Record<string, unknown>;
-  Display: FunctionComponent;
-  Edit: FunctionComponent;
-  Frame: FunctionComponent;
-  Output: FunctionComponent;
-  TextContent: FunctionComponent;
-  canFlip: boolean;
-  isMedia: boolean;
-  isMaskable: boolean;
-  isAspectAlwaysLocked: boolean;
-  hasDesignMenu: boolean;
-  hasDuplicateMenu: boolean;
-  hasEditMode: boolean;
-  hasEditModeIfLocked: boolean;
-  hasEditModeMoveable: boolean;
-  editModeGrayout: boolean;
-  resizeRules: {
-    vertical: boolean;
-    horizontal: boolean;
-    diagonal: boolean;
-    minWidth: number;
-    minHeight: number;
-  };
-  panels: string[];
-  getLayerText: (element: Element) => string;
-  onDropHandler?: (dropTargetId: string) => void;
-}
-
-export type ElementTypeDefinition = PageElementDefinition | ElementDefinition;
+import type { ElementDefinition, ElementTypes } from './types';
 
 // @todo Create a custom hook to manage state.
+const elementTypes: Partial<ElementTypes> = {};
 
-const elementTypes: Record<string, ElementTypeDefinition> = {};
-
-function registerElementType(elementType: ElementTypeDefinition) {
+function registerElementType(elementType: ElementDefinition) {
   elementTypes[elementType.type] = elementType;
 }
 

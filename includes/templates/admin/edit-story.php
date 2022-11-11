@@ -34,6 +34,7 @@ global $post_type, $post_type_object, $post;
 $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 $initial_edits     = [ 'story' => null ];
 
+
 // Preload common data.
 // Important: keep in sync with usage & definition in React app.
 $preload_paths = [
@@ -72,12 +73,6 @@ $preload_paths = [
 			'context'  => 'view',
 			'per_page' => 10,
 			'_fields'  => 'source_url',
-		]
-	),
-	'/web-stories/v1/users/?' . build_query(
-		[
-			'per_page' => 100,
-			'who'      => 'authors',
 		]
 	),
 	'/web-stories/v1/users/me/',

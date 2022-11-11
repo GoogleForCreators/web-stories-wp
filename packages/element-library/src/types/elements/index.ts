@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { Resource } from '../resource';
-import type { Element } from './element';
-import type { Pattern } from './pattern';
-
-export interface MediaElement extends Element {
-  isBackground?: boolean;
-  resource: Resource;
-  scale: number;
-  focalX?: number;
-  focalY?: number;
-  overlay?: Pattern | null;
-}
+export * from './gifElement';
+export * from './imageElement';
+export * from './productElement';
+export * from './shapeElement';
+export * from './stickerElement';
+export * from './textElement';
+export * from './videoElement';

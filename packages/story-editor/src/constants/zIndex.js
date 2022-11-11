@@ -49,3 +49,6 @@ export const Z_INDEX_GRID_VIEW_SLIDER = 11;
 // In PublishTime, the time picker's tooltip's z-index needs to be higher than
 // the z-index of the date picker popup itself.
 export const Z_INDEX_TIME_PICKER_TOOLTIP = 11;
+
+// In the library, the action button has to be on top of the other layers.
+export const Z_INDEX_LIBRARY_ACTION_BUTTON = 20;
