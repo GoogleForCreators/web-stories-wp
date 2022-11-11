@@ -27,6 +27,8 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Infrastructure\HasMeta;

@@ -107,6 +107,108 @@ class Settings extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_setting
 	 */
+	public function test_get_setting_uses_saved_option_type(): void {
+		add_option( $this->instance::SETTING_NAME_AUTO_ADVANCE, 'no-boolean' );
+		$this->assertTrue( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 * @dataProvider data_test_types
+	 */
+	public function test_get_setting_uses_type( $name, $args, $value, $expected ): void {
+		register_setting( 'test_group', $name, $args );
+		add_option( $name, $value );
+		$this->assertSame( $expected, $this->instance->get_setting( $name ) );
+	}
+
+	public function data_test_types(): array {
+		return [
+			'array from string' => [
+				'name'     => 'array_type',
+				'args'     => [
+					'type' => 'array',
+				],
+				'value'    => 'string',
+				'expected' => [ 'string' ],
+			],
+			'array key value'   => [
+				'name'     => 'array_key',
+				'args'     => [
+					'type' => 'array',
+				],
+				'value'    => [ 'key' => 'value' ],
+				'expected' => [ 'value' ],
+			],
+			'array of ints'     => [
+				'name'     => 'array_ints',
+				'args'     => [
+					'type'         => 'array',
+					'default'      => [],
+					'show_in_rest' => [
+						'schema' => [
+							'items' => [
+								'type' => 'integer',
+							],
+						],
+					],
+				],
+				'value'    => [ '1', '2', '3' ],
+				'expected' => [ 1, 2, 3 ],
+			],
+
+			'array from object' => [
+				'name'     => 'array_type',
+				'args'     => [
+					'type'         => 'object',
+					'show_in_rest' => [
+						'schema' => [
+							'properties'           => [],
+							'additionalProperties' => true,
+						],
+					],
+				],
+				'value'    => [ 'key' => 'value' ],
+				'expected' => [ 'key' => 'value' ],
+			],
+			'string to int'     => [
+				'name'     => 'array_int',
+				'args'     => [
+					'type' => 'integer',
+				],
+				'value'    => '3',
+				'expected' => 3,
+			],
+			'int to string'     => [
+				'name'     => 'array_int',
+				'args'     => [
+					'type' => 'string',
+				],
+				'value'    => 3,
+				'expected' => '3',
+			],
+			'int to boolean'    => [
+				'name'     => 'array_boolean',
+				'args'     => [
+					'type' => 'boolean',
+				],
+				'value'    => 1,
+				'expected' => true,
+			],
+			'string to boolean' => [
+				'name'     => 'array_boolean',
+				'args'     => [
+					'type' => 'boolean',
+				],
+				'value'    => 'string',
+				'expected' => true,
+			],
+		];
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
 	public function test_get_setting_uses_registered_default(): void {
 		$this->assertTrue( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
 	}
