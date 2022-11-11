@@ -17,30 +17,26 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+/* eslint-disable no-restricted-imports -- Still used by other packages. */
+import * as PropTypes from 'prop-types';
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
 import { __, _x } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
+import { FIELD_TYPES } from '../../constants';
+import { AnimationInputPropTypes } from '../propTypes';
 
-export const WhooshInEffectInputPropTypes = {
-  whooshInDir: PropTypes.shape(AnimationInputPropTypes),
+export const DropEffectInputPropTypes = {
+  duration: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
-  whooshInDir: {
-    label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DIRECTION_PICKER,
-    values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
-    defaultValue: DIRECTION.LEFT_TO_RIGHT,
-  },
   duration: {
     label: __('Duration', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     unit: _x('ms', 'Time in milliseconds', 'web-stories'),
-    defaultValue: 600,
+    defaultValue: 1600,
   },
 };

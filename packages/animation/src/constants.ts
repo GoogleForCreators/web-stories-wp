@@ -104,7 +104,10 @@ export const BACKGROUND_ANIMATION_EFFECTS = {
     value: 'effect-background-zoom',
     name: _x('Zoom', 'animation effect', 'web-stories'),
   },
-  PAN: { value: 'effect-background-pan', name: ANIMATION_EFFECTS.PAN.name },
+  PAN: {
+    value: 'effect-background-pan',
+    name: ANIMATION_EFFECTS.PAN.name,
+  },
   PAN_AND_ZOOM: {
     value: 'effect-background-pan-and-zoom',
     name: _x('Pan and Zoom', 'animation effect', 'web-stories'),

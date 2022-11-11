@@ -17,31 +17,34 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { __, _x } from '@googleforcreators/i18n';
+/* eslint-disable no-restricted-imports -- Still used by other packages. */
+import * as PropTypes from 'prop-types';
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
+import { __, sprintf, _x } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
+import { FIELD_TYPES, SCALE_DIRECTION } from '../../constants';
+import { AnimationInputPropTypes } from '../propTypes';
 
-export const PanEffectInputPropTypes = {
-  panDir: PropTypes.shape(AnimationInputPropTypes),
+export const ZoomEffectInputPropTypes = {
+  zoomFrom: PropTypes.shape(AnimationInputPropTypes),
   duration: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
-  panDir: {
+  zoomDirection: {
     label: __('Direction', 'web-stories'),
+    tooltip: sprintf(
+      /* translators: 1: scaleIn. 2: scaleOut */
+      __('Valid values are %1$s or %2$s', 'web-stories'),
+      'zoomIn',
+      'zoomOut'
+    ),
     type: FIELD_TYPES.DIRECTION_PICKER,
-    values: [
-      DIRECTION.TOP_TO_BOTTOM,
-      DIRECTION.BOTTOM_TO_TOP,
-      DIRECTION.LEFT_TO_RIGHT,
-      DIRECTION.RIGHT_TO_LEFT,
-    ],
-    defaultValue: DIRECTION.BOTTOM_TO_TOP,
+    values: [SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT],
+    defaultValue: SCALE_DIRECTION.SCALE_OUT,
   },
   duration: {
     label: __('Duration', 'web-stories'),

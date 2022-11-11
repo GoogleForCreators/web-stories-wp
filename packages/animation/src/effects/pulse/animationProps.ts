@@ -17,24 +17,42 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+/* eslint-disable no-restricted-imports -- Still used by other packages. */
+import * as PropTypes from 'prop-types';
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
 import { __, _x } from '@googleforcreators/i18n';
+
+/**
+ * External dependencies
+ */
 
 /**
  * Internal dependencies
  */
 import { FIELD_TYPES } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
+import { AnimationInputPropTypes } from '../propTypes';
 
-export const DropEffectInputPropTypes = {
-  duration: PropTypes.shape(AnimationInputPropTypes),
+export const PulseEffectInputPropTypes = {
+  scale: PropTypes.shape(AnimationInputPropTypes),
+  iterations: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
+  scale: {
+    label: __('Scale', 'web-stories'),
+    tooltip: 'Valid values are greater than or equal to 0',
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 0.5,
+  },
+  iterations: {
+    label: _x('Pulses', 'number of pulses', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    defaultValue: 1,
+  },
   duration: {
     label: __('Duration', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     unit: _x('ms', 'Time in milliseconds', 'web-stories'),
-    defaultValue: 1600,
+    defaultValue: 1450,
   },
 };

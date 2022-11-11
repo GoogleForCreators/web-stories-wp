@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../elements" },
+    { "path": "../i18n" },
+    { "path": "../react" },
+    { "path": "../types" },
+    { "path": "../units" }
+  ],
+  "include": ["src/**/*"]
+}

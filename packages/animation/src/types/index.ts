@@ -14,25 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import { FIELD_TYPES } from '../constants';
-
-export const AnimationInputPropTypes = {
-  type: PropTypes.oneOf([...Object.values(FIELD_TYPES)]).isRequired,
-  label: PropTypes.string,
-  tooltip: PropTypes.string,
-  unit: PropTypes.string,
-  values: PropTypes.array,
-  defaultValue: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ]),
-};
+export * from './propTypes';

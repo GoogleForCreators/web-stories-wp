@@ -29,7 +29,7 @@ import {
   FIELD_TYPES,
   BEZIER,
 } from '../constants';
-import { AnimationInputPropTypes } from '../effects/types';
+import { AnimationInputPropTypes } from '../effects/propTypes';
 
 export const BasicAnimationInputPropTypes = {
   duration: PropTypes.shape(AnimationInputPropTypes),

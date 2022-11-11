@@ -17,36 +17,32 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { __, sprintf, _x } from '@googleforcreators/i18n';
+/* eslint-disable no-restricted-imports -- Still used by other packages. */
+import * as PropTypes from 'prop-types';
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
+import { __, _x } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, SCALE_DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
+import { FIELD_TYPES, DIRECTION } from '../../constants';
+import { AnimationInputPropTypes } from '../propTypes';
 
-export const ZoomEffectInputPropTypes = {
-  scaleDirection: PropTypes.shape(AnimationInputPropTypes),
+export const WhooshInEffectInputPropTypes = {
+  whooshInDir: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
-  scaleDirection: {
+  whooshInDir: {
     label: __('Direction', 'web-stories'),
-    tooltip: sprintf(
-      /* translators: 1: scaleIn. 2: scaleOut */
-      __('Valid values are %1$s or %2$s', 'web-stories'),
-      'scaleIn',
-      'scaleOut'
-    ),
     type: FIELD_TYPES.DIRECTION_PICKER,
-    values: [SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT],
-    defaultValue: SCALE_DIRECTION.SCALE_IN,
+    values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
+    defaultValue: DIRECTION.LEFT_TO_RIGHT,
   },
   duration: {
     label: __('Duration', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     unit: _x('ms', 'Time in milliseconds', 'web-stories'),
-    defaultValue: 2000,
+    defaultValue: 600,
   },
 };

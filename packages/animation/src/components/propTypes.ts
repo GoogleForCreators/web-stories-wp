@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { __ } from '@googleforcreators/i18n';
+/* eslint-disable no-restricted-imports -- Still used by other packages. */
+import * as PropTypes from 'prop-types';
+/* eslint-enable no-restricted-imports -- Still used by other packages. */
 
-/**
- * Internal dependencies
- */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
-
-export const RotateInEffectInputPropTypes = {
-  rotateInDir: PropTypes.shape(AnimationInputPropTypes),
-};
-
-export default {
-  rotateInDir: {
-    label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DIRECTION_PICKER,
-    values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
-    defaultValue: DIRECTION.LEFT_TO_RIGHT,
-  },
+export const WAAPIAnimationProps = {
+  children: PropTypes.node.isRequired,
+  hoistAnimation: PropTypes.func,
+  keyframes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  timings: PropTypes.object,
+  targetLeafElement: PropTypes.bool,
 };

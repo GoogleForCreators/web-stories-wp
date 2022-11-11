@@ -28,12 +28,13 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -41,6 +42,7 @@
     "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/react": "*",
+    "@googleforcreators/types": "*",
     "@googleforcreators/units": "*",
     "flagged": "^2.0.6",
     "prop-types": "^15.8.1",
@@ -50,6 +52,8 @@
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1"
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/styled-components": "^5.1.26",
+    "@types/web-animations-js": "^2.2.12"
   }
 }
