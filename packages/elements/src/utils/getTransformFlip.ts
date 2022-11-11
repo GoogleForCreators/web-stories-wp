@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type { Flip } from '@googleforcreators/types';
+import type { Flip } from '../types';
 
 /**
  * Returns transform scale value based on the flip setting.

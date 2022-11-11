@@ -19,6 +19,11 @@
  */
 import { getTimeTracker } from '@googleforcreators/tracking';
 import { DATA_VERSION, migrate } from '@googleforcreators/migration';
+import type {
+  MediaElement,
+  Element,
+  SequenceMediaElement,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -38,12 +43,20 @@ async function loadTemplate(
     /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}/index.ts`
   )) as Data;
 
+  function isMediaElement(e: Element): e is MediaElement {
+    return 'resource' in e;
+  }
+
+  function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement {
+    return 'poster' in e.resource;
+  }
+
   const template = {
     ...data.default,
     pages: (data.default.pages || []).map((page) => ({
       ...page,
       elements: page.elements?.map((elem) => {
-        if ('resource' in elem && elem.resource) {
+        if (isMediaElement(elem) && elem.resource) {
           if ('sizes' in elem.resource && elem.resource.sizes) {
             elem.resource.sizes = {};
           }
@@ -56,7 +69,7 @@ async function loadTemplate(
             );
           }
 
-          if ('poster' in elem.resource && elem.resource.poster) {
+          if (isSequenceMediaElement(elem) && elem.resource.poster) {
             // imageBaseUrl (cdnURL) will always have a trailing slash,
             // so make sure to avoid double slashes when replacing.
             elem.resource.poster = elem.resource.poster.replace(

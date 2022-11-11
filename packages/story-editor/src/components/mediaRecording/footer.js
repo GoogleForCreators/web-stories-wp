@@ -41,9 +41,9 @@ import {
   createBlob,
   getImageFromVideo,
   getCanvasBlob,
+  BackgroundAudioPropTypeShape,
 } from '@googleforcreators/media';
 import { format } from '@googleforcreators/date';
-import { BackgroundAudioPropTypeShape } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

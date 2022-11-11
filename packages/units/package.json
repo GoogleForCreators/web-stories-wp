@@ -39,7 +39,6 @@
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/react": "*",
-    "@googleforcreators/types": "*",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {}

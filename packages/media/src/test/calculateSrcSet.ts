@@ -15,15 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-import { ResourceType } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import calculateSrcSet from '../calculateSrcSet';
 import createResource from '../createResource';
+import { ResourceType } from '../types';
 
 describe('calculateSrcSet', () => {
   it('should generate srcset properly', () => {

@@ -18,16 +18,18 @@
  * External dependencies
  */
 import type {
-  Font,
   MediaElement,
   Page,
-  Product,
+  Story,
+  FontData,
+  ProductData,
+} from '@googleforcreators/elements';
+import type {
   Resource,
   ResourceId,
-  Story,
   TrimData,
   VideoResource,
-} from '@googleforcreators/types';
+} from '@googleforcreators/media';
 import type { Template } from '@googleforcreators/templates';
 
 export interface Capabilities {
@@ -186,7 +188,7 @@ export interface APICallbacks {
     hasMore: boolean;
     templates: PageTemplate[];
   }>;
-  getFonts?: (props: GetFontProps) => Promise<Font[]>;
+  getFonts?: (props: GetFontProps) => Promise<FontData[]>;
   getHotlinkInfo?: (link: string) => Promise<HotlinkInfo>;
   getLinkMetadata?: (link: string) => Promise<LinkMetaData>;
   getMedia?: (props: {
@@ -203,7 +205,7 @@ export interface APICallbacks {
   getOptimizedMediaById?: (id: number) => Promise<Resource>;
   getPageTemplates?: () => Promise<Template[]>;
   getPosterMediaById?: (id: number) => Promise<Resource>;
-  getProducts?: () => Promise<Product[]>;
+  getProducts?: () => Promise<ProductData[]>;
   getProxyUrl?: (src: string) => string;
   getStoryById?: (id: number) => Promise<Story>;
   getTaxonomies?: () => Promise<Taxonomy[]>;

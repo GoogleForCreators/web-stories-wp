@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { Gradient, Pattern, PatternType } from '@googleforcreators/types';
+import { Gradient, Pattern, PatternType } from './types';
 
 function getOpaquePattern(pattern: Pattern): Pattern {
   if (!pattern.type || pattern.type === PatternType.Solid) {

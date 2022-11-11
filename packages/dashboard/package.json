@@ -40,6 +40,7 @@
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/element-library": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",

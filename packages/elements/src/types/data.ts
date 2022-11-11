@@ -14,17 +14,50 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { Element, ElementType } from './element';
+export type FontStyle = 'normal' | 'italic' | 'regular';
+export enum FontVariantStyle {
+  Normal = 0,
+  Italic = 1,
+}
 
-interface ProductImage {
+export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+
+export type FontVariant = [FontVariantStyle, FontWeight];
+
+export interface FontMetrics {
+  upm: number;
+  asc: number;
+  des: number;
+  tAsc: number;
+  tDes: number;
+  tLGap: number;
+  wAsc: number;
+  wDes: number;
+  xH: number;
+  capH: number;
+  yMin: number;
+  yMax: number;
+  hAsc: number;
+  hDes: number;
+  lGap: number;
+}
+
+export interface FontData {
+  family: string;
+  service?: string;
+  weights?: FontWeight[];
+  styles?: FontStyle[];
+  variants?: FontVariant[];
+  fallbacks?: string[];
+  metrics?: FontMetrics;
+}
+
+export interface ProductImage {
   alt: string;
   url: string;
 }
 
-export interface Product {
+export interface ProductData {
   productId: string;
   productBrand: string;
   productDetails: string;
@@ -33,10 +66,4 @@ export interface Product {
   productPriceCurrency: string;
   productTitle: string;
   productUrl: string;
-  type: ElementType.Product;
-}
-
-export interface ProductElement extends Element {
-  type: ElementType.Product;
-  product: Product;
 }
