@@ -33,7 +33,6 @@ global $post_type, $post_type_object, $post;
 
 $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 $initial_edits     = [ 'story' => null ];
-$capability_name   = $post_type_object->cap->edit_posts;
 
 
 // Preload common data.
@@ -74,12 +73,6 @@ $preload_paths = [
 			'context'  => 'view',
 			'per_page' => 10,
 			'_fields'  => 'source_url',
-		]
-	),
-	'/web-stories/v1/users/?' . build_query(
-		[
-			'per_page'     => 100,
-			'capabilities' => $capability_name,
 		]
 	),
 	'/web-stories/v1/users/me/',

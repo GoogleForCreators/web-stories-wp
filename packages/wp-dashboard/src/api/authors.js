@@ -27,7 +27,7 @@ export function getAuthors(config, search) {
   return apiFetch({
     path: addQueryArgs(config.api.users, {
       per_page: '100',
-      capabilities: config.capabilityName,
+      capabilities: config.editPostsCapabilityName,
       search,
     }),
   });
