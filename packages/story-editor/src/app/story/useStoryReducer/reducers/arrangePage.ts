@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { ArrangePageProps } from '../../../../types/storyProvider';
+import type { ArrangePageProps, State } from '../../../../types/storyProvider';
 import { isInsideRange, moveArrayElement } from './utils';
 
 /**

@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { UnselectElementProps } from '../../../../types/storyProvider';
+import type { UnselectElementProps, State } from '../../../../types/storyProvider';
 
 /**
  * Remove the given id from the current selection.

@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
 import { PAGE_RESERVED_PROPERTIES } from '../types';
-import type { UpdatePageProps } from '../../../../types/storyProvider';
+import type { UpdatePageProps, State } from '../../../../types/storyProvider';
 import { objectWithout } from './utils';
 
 /**

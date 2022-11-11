@@ -18,12 +18,14 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { UpdateElementsByResourceIdProps } from '../../../../types/storyProvider';
+import type {
+  UpdateElementsByResourceIdProps,
+  State,
+} from '../../../../types/storyProvider';
 import { updateElementWithUpdater } from './utils';
 
 /**

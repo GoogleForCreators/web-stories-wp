@@ -19,12 +19,11 @@
  */
 import { duplicateElement, ELEMENT_TYPES } from '@googleforcreators/elements';
 import { produce } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { DuplicateElementsByIdProps } from '../../../../types/storyProvider';
+import type { DuplicateElementsByIdProps, State } from '../../../../types/storyProvider';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.

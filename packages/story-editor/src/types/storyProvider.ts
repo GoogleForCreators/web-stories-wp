@@ -20,11 +20,11 @@
 import type {
   Page,
   Element,
-  ResourceId,
   Story,
   Animation,
   Group,
-} from '@googleforcreators/types';
+} from '@googleforcreators/elements';
+import type { ResourceId } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

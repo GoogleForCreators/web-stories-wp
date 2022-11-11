@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { SetCurrentPageProps } from '../../../../types/storyProvider';
+import type { SetCurrentPageProps, State } from '../../../../types/storyProvider';
 
 /**
  * Set current page to the given id.

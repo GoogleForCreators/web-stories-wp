@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { DeletePageProps } from '../../../../types/storyProvider';
+import type { DeletePageProps, State } from '../../../../types/storyProvider';
 
 /**
  * Delete page by id or delete current page if no id given.

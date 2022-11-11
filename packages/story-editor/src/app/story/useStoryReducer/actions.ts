@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { Dispatch } from 'react';
-import type { Element } from '@googleforcreators/types';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

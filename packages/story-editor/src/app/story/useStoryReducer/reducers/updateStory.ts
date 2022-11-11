@@ -18,19 +18,18 @@
  * External dependencies
  */
 import { produce, current } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { UpdateStateProps } from '../../../../types/storyProvider';
+import type { UpdatePageProps, State } from '../../../../types/storyProvider';
 
 /**
  * Update story properties.
  *
  * No validation is performed and existing values are overwritten.
  */
-export const updateStory = (draft: State, { properties }: UpdateStateProps) => {
+export const updateStory = (draft: State, { properties }: UpdatePageProps) => {
   // If properties is a callback, replace story with callback response
   if (typeof properties === 'function') {
     draft.story = properties(current(draft.story));

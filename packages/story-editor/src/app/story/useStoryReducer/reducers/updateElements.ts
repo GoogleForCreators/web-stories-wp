@@ -19,12 +19,11 @@
  */
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 import { produce } from 'immer';
-import type { State } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { UpdateElementsProps } from '../../../../types/storyProvider';
+import type { UpdateElementsProps, State } from '../../../../types/storyProvider';
 import { updateElementWithUpdater, updateAnimations } from './utils';
 
 /**
