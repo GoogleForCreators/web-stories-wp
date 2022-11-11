@@ -15,10 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Solid } from '@googleforcreators/patterns';
+import type { Resource, SequenceResource } from '@googleforcreators/media';
+import type { ElementBox } from '@googleforcreators/units';
+
+/**
  * Internal dependencies
  */
-import type { ElementBox } from './elementBox';
-import type { Solid } from './pattern';
+import type { ElementType } from './elementType';
 
 export interface Link {
   url: string;
@@ -40,6 +46,8 @@ export interface Mask {
   name?: string;
   path?: string;
   ratio?: number;
+  iconPath?: string;
+  iconRatio?: number;
   supportsBorder?: boolean;
 }
 
@@ -65,7 +73,7 @@ export type ElementId = string;
 
 export interface Element extends ElementBox {
   id: ElementId;
-  type: string;
+  type: ElementType;
   mask?: Mask;
   link?: Link;
   opacity?: number;
@@ -74,19 +82,27 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
+  basedOn?: string;
   layerName?: string;
-  isLocked: boolean;
-
-  // TODO(#12262): Remove this.
-  basedOn?: ElementId;
+  isLocked?: boolean;
 }
 
-export enum ElementType {
-  Text = 'text',
-  Image = 'image',
-  Video = 'video',
-  Gif = 'gif',
-  Sticker = 'sticker',
-  Shape = 'shape',
-  Product = 'product',
+export interface DefaultBackgroundElement extends Element {
+  isDefaultBackground: boolean;
+  backgroundColor: Solid;
+}
+
+export interface BackgroundableElement extends Element {
+  isBackground?: boolean;
+}
+
+export interface MediaElement extends BackgroundableElement {
+  resource: Resource;
+  scale?: number;
+  focalX?: number;
+  focalY?: number;
+}
+
+export interface SequenceMediaElement extends MediaElement {
+  resource: SequenceResource;
 }

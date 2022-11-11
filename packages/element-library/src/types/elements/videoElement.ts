@@ -14,6 +14,29 @@
  * limitations under the License.
  */
 
-export * from './animation';
-export * from './page';
-export * from './story';
+/**
+ * External dependencies
+ */
+import type { VideoResource } from '@googleforcreators/media';
+import type {
+  SequenceMediaElement,
+  ElementType,
+} from '@googleforcreators/elements';
+
+export interface VideoTrack {
+  id: string;
+  track: string;
+  trackId?: number;
+  kind?: string;
+  srclang?: string;
+  label?: string;
+  needsProxy?: boolean;
+}
+
+export interface VideoElement extends SequenceMediaElement {
+  resource: VideoResource;
+  poster?: string;
+  tracks?: VideoTrack[];
+  loop?: boolean;
+  type: ElementType.Video;
+}

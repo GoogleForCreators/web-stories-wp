@@ -38,8 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/migration": "*",
-    "@googleforcreators/types": "*"
+    "@googleforcreators/migration": "*"
   },
   "devDependencies": {
     "puppeteer": "*"

@@ -18,34 +18,46 @@
  * External dependencies
  */
 /* eslint-disable no-restricted-imports -- Still used by other packages. */
-import PropTypes, { Requireable, ValidationMap } from 'prop-types';
+import PropTypes, { ValidationMap } from 'prop-types';
 /* eslint-enable no-restricted-imports -- Still used by other packages. */
 import { PatternPropType } from '@googleforcreators/patterns';
-import { ResourcePropTypes } from '@googleforcreators/media';
+import {
+  BackgroundAudioPropType,
+  ResourcePropTypes,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE, BACKGROUND_TEXT_MODE, OverlayType } from './constants';
+import {
+  MULTIPLE_VALUE,
+  BACKGROUND_TEXT_MODE,
+  OverlayType,
+} from '../constants';
 
-type PropType = Record<string, Requireable<unknown>>;
-const StoryPropTypes: Record<string, Requireable<unknown> | PropType> = {};
-
-StoryPropTypes.flip = PropTypes.shape({
-  vertical: PropTypes.bool,
-  horizontal: PropTypes.bool,
-});
-
-StoryPropTypes.mask = PropTypes.shape({
+const mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });
 
-StoryPropTypes.link = PropTypes.shape({
+const link = PropTypes.shape({
   url: PropTypes.string.isRequired,
   desc: PropTypes.string,
   needsProxy: PropTypes.bool,
   icon: PropTypes.string,
   rel: PropTypes.arrayOf(PropTypes.string),
+});
+
+const box = PropTypes.exact({
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  rotationAngle: PropTypes.number.isRequired,
+});
+
+const flip = PropTypes.shape({
+  vertical: PropTypes.bool,
+  horizontal: PropTypes.bool,
 });
 
 const StoryElementPropTypes: ValidationMap<unknown> = {
@@ -56,51 +68,23 @@ const StoryElementPropTypes: ValidationMap<unknown> = {
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  flip: StoryPropTypes.flip,
+  flip,
   rotationAngle: PropTypes.number.isRequired,
-  mask: StoryPropTypes.mask,
-  link: StoryPropTypes.link,
+  mask,
+  link,
   opacity: PropTypes.number,
   lockAspectRatio: PropTypes.bool,
   isBackground: PropTypes.bool,
 };
 
-const StoryMediaPropTypes = {
-  scale: PropTypes.number.isRequired,
-  focalX: PropTypes.number,
-  focalY: PropTypes.number,
-};
+const element = PropTypes.shape(StoryElementPropTypes);
 
-StoryPropTypes.element = PropTypes.shape(StoryElementPropTypes);
-
-StoryPropTypes.elements = {} as PropType;
-
-export const BackgroundAudioPropTypeShape = {
-  id: PropTypes.number,
-  src: PropTypes.string,
-  length: PropTypes.number,
-  lengthFormatted: PropTypes.string,
-  mimeType: PropTypes.string,
-  needsProxy: PropTypes.bool,
-};
-export const BackgroundAudioPropType = PropTypes.shape(
-  BackgroundAudioPropTypeShape
-);
-
-StoryPropTypes.box = PropTypes.exact({
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  rotationAngle: PropTypes.number.isRequired,
-});
-
-StoryPropTypes.page = PropTypes.shape({
+const page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   // Temporary solution for animations. Better would be to move this
   // prop type to the types package, but really?
   animations: PropTypes.arrayOf(PropTypes.object),
-  elements: PropTypes.arrayOf(PropTypes.shape(StoryElementPropTypes)),
+  elements: PropTypes.arrayOf(element),
   overlay: PropTypes.oneOf(Object.values(OverlayType)),
   backgroundAudio: PropTypes.shape({
     resource: BackgroundAudioPropType,
@@ -109,20 +93,26 @@ StoryPropTypes.page = PropTypes.shape({
   }),
 });
 
-const StoryLayerPropTypes: ValidationMap<unknown> = {
+const StoryLayerPropTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };
 
-StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
+const StoryMediaPropTypes = {
+  scale: PropTypes.number.isRequired,
+  focalX: PropTypes.number,
+  focalY: PropTypes.number,
+};
 
-StoryPropTypes.elements.image = PropTypes.shape({
+const layer = PropTypes.shape(StoryLayerPropTypes);
+
+const image = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
   resource: ResourcePropTypes.imageResource,
 });
 
-StoryPropTypes.elements.video = PropTypes.shape({
+const video = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
   resource: ResourcePropTypes.videoResource,
@@ -132,17 +122,13 @@ StoryPropTypes.elements.video = PropTypes.shape({
   volume: PropTypes.number,
 });
 
-StoryPropTypes.elements.gif = PropTypes.shape({
+const gif = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
   resource: ResourcePropTypes.gifResource,
 });
 
-StoryPropTypes.elements.media = PropTypes.oneOfType([
-  StoryPropTypes.elements.image,
-  StoryPropTypes.elements.video,
-  StoryPropTypes.elements.gif,
-]);
+const media = PropTypes.oneOfType([image, video, gif]);
 
 export const FontPropType = PropTypes.shape({
   family: PropTypes.string,
@@ -181,30 +167,42 @@ const StoryTextElementPropTypes = {
   tagName: PropTypes.oneOf(['h1', 'h2', 'h3', 'p', 'auto']),
 };
 
-StoryPropTypes.textContent = PropTypes.shape({
+const textContent = PropTypes.shape({
   ...StoryTextElementPropTypes,
 });
 
-StoryPropTypes.elements.text = PropTypes.shape({
+const text = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryTextElementPropTypes,
 });
 
-StoryPropTypes.elements.shape = PropTypes.shape({
+const shape = PropTypes.shape({
   ...StoryElementPropTypes,
   backgroundColor: PatternPropType,
 });
 
-StoryPropTypes.elements.sticker = PropTypes.shape({
+const sticker = PropTypes.shape({
   ...StoryElementPropTypes,
   sticker: PropTypes.shape({
     type: PropTypes.string.isRequired,
   }),
 });
 
-StoryPropTypes.elements.background = PropTypes.shape({
+const background = PropTypes.shape({
   ...StoryLayerPropTypes,
-  inner: StoryPropTypes.element,
+  inner: element,
 });
+
+const StoryPropTypes = {
+  mask,
+  link,
+  box,
+  page,
+  flip,
+  element,
+  layer,
+  textContent,
+  elements: { image, video, gif, media, text, shape, sticker, background },
+};
 
 export { StoryPropTypes };
