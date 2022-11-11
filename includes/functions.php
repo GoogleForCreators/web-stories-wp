@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Miscellaneous functions.
  * These are mostly utility or wrapper functions.
@@ -23,7 +20,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 

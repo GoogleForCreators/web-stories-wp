@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Field State Factory Interface
  *
@@ -13,7 +10,7 @@ declare(strict_types = 1);
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Interfaces;
 

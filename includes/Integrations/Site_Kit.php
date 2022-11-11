@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Site_Kit
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
@@ -149,7 +146,7 @@ class Site_Kit extends Service_Base {
 		$default_config['triggers'] = $default_config['triggers'] ?? [];
 
 		$gtag_opt['triggers'] ??= [];
-		$gtag_opt['triggers']   = array_merge( $default_config['triggers'], $gtag_opt['triggers']);
+		$gtag_opt['triggers']   = array_merge( $default_config['triggers'], $gtag_opt['triggers'] );
 
 		return $gtag_opt;
 	}

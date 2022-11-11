@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Story
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Model;
 
@@ -76,7 +73,7 @@ class Story {
 	/**
 	 * Publisher logo.
 	 */
-	protected string $publisher_logo  = '';
+	protected string $publisher_logo = '';
 
 	/**
 	 * Poster source set sizes.

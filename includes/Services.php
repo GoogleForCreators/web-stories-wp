@@ -1,12 +1,9 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Services.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -32,7 +29,7 @@ final class Services {
 	 *
 	 * @var ServiceContainer<Service>
 	 */
-	private static $container;
+	private static ServiceContainer $container;
 
 	/**
 	 * Dependency injector object instance.

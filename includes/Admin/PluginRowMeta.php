@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * PluginRowMeta class.
  *
@@ -29,7 +26,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -82,6 +79,6 @@ class PluginRowMeta extends Service_Base {
 			'<a href="https://wordpress.org/support/plugin/web-stories/reviews/#new-post" target="_blank" rel="noreferrer noopener">' . esc_html__( 'Leave review', 'web-stories' ) . '</a>',
 		];
 
-		return array_merge( $meta, $additional_meta);
+		return array_merge( $meta, $additional_meta );
 	}
 }

@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Assets
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -148,7 +145,7 @@ class Assets {
 		}
 
 		// Dynamically imported chunks MUST NOT be added as dependencies here.
-		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js']);
+		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
 
 		$this->register_script(
 			$script_handle,
@@ -224,7 +221,7 @@ class Assets {
 				$chunk_version
 			);
 		}
-		$style_dependencies = array_merge( $style_dependencies, $asset['css']);
+		$style_dependencies = array_merge( $style_dependencies, $asset['css'] );
 
 		$entry_version = $asset['version'];
 		$this->register_style(

@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Stories_Media_Controller
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -276,7 +273,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
 		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
 
-		return array_unique( array_merge( $thumb_ids, $parent_ids) );
+		return array_unique( array_merge( $thumb_ids, $parent_ids ) );
 	}
 
 	/**

@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Discovery.
  *
@@ -29,7 +26,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -265,7 +262,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			$products         = $story->get_products();
 			$product_metadata = $this->get_product_data( $products );
 			if ( $product_metadata ) {
-				$metadata = array_merge( $product_metadata, $metadata);
+				$metadata = array_merge( $product_metadata, $metadata );
 			}
 		}
 

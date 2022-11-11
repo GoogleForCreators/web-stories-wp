@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class KSES.
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -844,7 +841,7 @@ class KSES extends Service_Base implements HasRequirements {
 			'layout'              => true,
 		];
 
-		return array_merge( $value, $global_attributes);
+		return array_merge( $value, $global_attributes );
 	}
 
 	/**

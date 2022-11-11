@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Stories_Controller
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -363,7 +360,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$thumb_ids     = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
 		$publisher_ids = array_filter( array_map( [ $this, 'get_publisher_logo_id' ], $posts ) );
 
-		return array_unique( array_merge( $thumb_ids, $publisher_ids));
+		return array_unique( array_merge( $thumb_ids, $publisher_ids ) );
 	}
 
 	/**

@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Stories_Terms_Controller
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -51,7 +48,7 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 		$links['about'] = [
 			'href' => rest_url( sprintf( '%s/taxonomies/%s', $this->namespace, $this->taxonomy ) ),
 		];
-		
+
 		return $links;
 	}
 }

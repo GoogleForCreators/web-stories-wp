@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class Oembed
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Renderer;
 
@@ -134,7 +131,7 @@ class Oembed extends Service_Base {
 		}
 		$new_data = $this->get_embed_height_width( $width );
 
-		return array_merge( $data, $new_data);
+		return array_merge( $data, $new_data );
 	}
 
 	/**

@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
 /**
  * Class WooCommerce_Query
  *
@@ -27,7 +24,7 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Shopping;
 
@@ -91,7 +88,7 @@ class WooCommerce_Query implements Product_Query {
 		if ( 'price' === $orderby ) {
 			$wc_query = new WC_Query();
 			$wc_args  = $wc_query->get_catalog_ordering_args( $orderby, strtoupper( $order ) );
-			$args     = array_merge( $args, $wc_args);
+			$args     = array_merge( $args, $wc_args );
 		}
 
 		/**
