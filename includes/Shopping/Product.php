@@ -110,9 +110,9 @@ class Product implements JsonSerializable {
 	/**
 	 * Product rating.
 	 *
-	 * @var array{rating_value: float, review_count: int, review_url: string}
+	 * @var array{rating_value?: float, review_count?: int, review_url?: string}
 	 */
-	protected array $aggregate_rating;
+	protected array $aggregate_rating = [];
 
 	/**
 	 * Product constructor.
@@ -123,7 +123,7 @@ class Product implements JsonSerializable {
 	 */
 	public function __construct( array $product = [] ) {
 		foreach ( $product as $key => $value ) {
-			if ( property_exists( $this, $key ) ) {
+			if ( property_exists( $this, $key ) && ! is_null( $value ) ) {
 				$this->$key = $value;
 			}
 		}
@@ -342,7 +342,7 @@ class Product implements JsonSerializable {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @return array{rating_value: float, review_count: int, review_url: string}
+	 * @return array{rating_value?: float, review_count?: int, review_url?: string}
 	 */
 	public function get_aggregate_rating(): ?array {
 		return $this->aggregate_rating;

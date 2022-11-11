@@ -9,15 +9,10 @@ use Google\Web_Stories\Taxonomy\Taxonomy_Base;
  * Dummy taxonomy.
  */
 class DummyTaxonomy extends Taxonomy_Base {
-	/**
-	 * @var string
-	 */
-	protected $taxonomy_slug = 'web-story-test-tax';
-
-	/**
-	 * @var string
-	 */
-	protected $taxonomy_post_type = 'post';
+	public function __construct() {
+		$this->taxonomy_slug      = 'web-story-test-tax';
+		$this->taxonomy_post_type = 'post';
+	}
 
 	/**
 	 * @return array

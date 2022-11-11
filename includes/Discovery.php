@@ -316,9 +316,9 @@ class Discovery extends Service_Base implements HasRequirements {
 			if ( ! empty( $aggregate_rating['review_count'] ) ) {
 				$data['aggregateRating'] = [
 					'@type'       => 'AggregateRating',
-					'ratingValue' => $aggregate_rating['rating_value'],
+					'ratingValue' => $aggregate_rating['rating_value'] ??= 0,
 					'reviewCount' => $aggregate_rating['review_count'],
-					'url'         => $aggregate_rating['review_url'],
+					'url'         => $aggregate_rating['review_url']   ??= '',
 				];
 			}
 			$product_data[] = $data;
