@@ -101,9 +101,9 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	/**
 	 * Object type or array of object types with which the taxonomy should be associated.
 	 *
-	 * @var string[]|string
+	 * @var string
 	 */
-	protected $taxonomy_post_type;
+	protected string $taxonomy_post_type;
 
 	/**
 	 * Register taxonomy on register service.

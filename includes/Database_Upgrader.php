@@ -82,9 +82,9 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	/**
 	 * Injector instance.
 	 *
-	 * @var Injector|Service Locale instance.
+	 * @var Injector Locale instance.
 	 */
-	private $injector;
+	private Injector $injector;
 
 	/**
 	 * Database_Upgrader constructor.
