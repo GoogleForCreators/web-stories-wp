@@ -19,10 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { AnimationProps } from '@googleforcreators/animation';
-import {
-  StoryPropTypes,
-  BackgroundAudioPropType,
-} from '@googleforcreators/elements';
+import { BackgroundAudioPropType } from '@googleforcreators/media';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 export const PageSizePropType = PropTypes.shape({
   width: PropTypes.number,

@@ -6,6 +6,7 @@
   },
   "references": [
     { "path": "../date" },
+    { "path": "../element-library" },
     { "path": "../patterns" },
     { "path": "../react" },
     { "path": "../templates" },
