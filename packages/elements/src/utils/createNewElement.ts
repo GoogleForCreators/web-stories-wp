@@ -17,54 +17,70 @@
 /**
  * External dependencies
  */
+import type { ElementBox } from '@googleforcreators/units';
 import { v4 as uuidv4 } from 'uuid';
-import type {
-  Page,
-  Element,
-  ShapeElement,
-  MediaElement,
-  TextElement,
-} from '@googleforcreators/types';
+/**
+ * Internal dependencies
+ */
+import type { DefaultBackgroundElement, Element, ElementType } from '../types';
 
 /**
  * Internal dependencies
  */
 import getDefinitionForType from './getDefinitionForType';
 
-function isBackgroundShape(
-  attributes: Partial<Element>
-): attributes is Partial<ShapeElement> {
-  return 'isDefaultBackground' in attributes;
+function isDefaultBackgroundElement(
+  e: Partial<Element>
+): e is DefaultBackgroundElement {
+  return 'isDefaultBackground' in e;
+}
+type Attributes = Partial<Element> & ElementBox;
+
+// If we're copying an existing default background element into a new one,
+// we should ignore the default background color from the element (which will
+// be a shape)
+function getDefaultAttributes(
+  defaultAttributes: Partial<Element>,
+  attributes: Attributes
+): Partial<Element> {
+  if (
+    isDefaultBackgroundElement(attributes) &&
+    isDefaultBackgroundElement(defaultAttributes) &&
+    attributes.isDefaultBackground
+  ) {
+    const { backgroundColor, ...defaultAttributesWithoutColor } =
+      defaultAttributes;
+    return defaultAttributesWithoutColor;
+  }
+  return defaultAttributes;
 }
 
 function createNewElement(
-  type: string,
-  attributes: Partial<Element | MediaElement | ShapeElement | TextElement> = {}
-): Page | Element {
+  type: ElementType,
+  attributes: Attributes = {
+    x: 0,
+    y: 0,
+    width: 1,
+    height: 1,
+    rotationAngle: 0,
+  }
+): Element {
   const element = getDefinitionForType(type);
   if (!element) {
     throw new Error(`Unknown element type: ${type}`);
   }
-  const { defaultAttributes } = element;
-  const newElement = {
+  const defaultAttributes = getDefaultAttributes(
+    element.defaultAttributes,
+    attributes
+  );
+  const newElement: Element = {
     ...defaultAttributes,
     ...attributes,
     type,
     id: uuidv4(),
   };
 
-  if (type === 'page') {
-    return newElement as Page;
-  }
-
-  // There's an exception for the background shape that should not get all the default attributes.
-  if (isBackgroundShape(attributes) && attributes.isDefaultBackground) {
-    if ('backgroundColor' in newElement) {
-      delete newElement.backgroundColor;
-    }
-  }
-
-  return newElement as Element;
+  return newElement;
 }
 
 export default createNewElement;

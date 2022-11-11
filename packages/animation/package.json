@@ -42,7 +42,6 @@
     "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/react": "*",
-    "@googleforcreators/types": "*",
     "@googleforcreators/units": "*",
     "flagged": "^2.0.6",
     "prop-types": "^15.8.1",

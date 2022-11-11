@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Element } from '@googleforcreators/types';
+import type { Element } from '@googleforcreators/elements';
 
 type stringable = string | number | boolean | null | undefined;
 

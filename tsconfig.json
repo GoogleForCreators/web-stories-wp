@@ -2,6 +2,7 @@
   "references": [
     { "path": "packages/activation-notice" },
     { "path": "packages/animation" },
+    { "path": "packages/element-library" },
     { "path": "packages/dashboard" },
     { "path": "packages/elements" },
     { "path": "packages/fonts" },
@@ -19,7 +20,6 @@
     { "path": "packages/text-sets" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
-    { "path": "packages/types" },
     { "path": "packages/units" },
     { "path": "packages/url" },
     { "path": "packages/wp-utils" }

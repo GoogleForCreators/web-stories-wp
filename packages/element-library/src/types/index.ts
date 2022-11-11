@@ -14,27 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { VideoResource } from '../resource';
-import type { MediaElement } from './mediaElement';
-import type { ElementType } from './element';
-
-export interface VideoTrack {
-  id: string;
-  track: string;
-  trackId?: number;
-  kind?: string;
-  srclang?: string;
-  label?: string;
-  needsProxy?: boolean;
-}
-
-export interface VideoElement extends MediaElement {
-  resource: VideoResource;
-  poster?: string;
-  tracks?: VideoTrack[];
-  loop?: boolean;
-  type: ElementType.Video;
-}
+export * from './elements';

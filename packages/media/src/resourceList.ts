@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type { ResourceId } from '@googleforcreators/types';
+import type { ResourceId } from './types';
 
 export enum ResourceCacheEntryType {
   Cached = 'cached',

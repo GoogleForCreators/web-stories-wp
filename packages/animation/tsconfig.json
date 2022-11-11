@@ -8,7 +8,6 @@
     { "path": "../elements" },
     { "path": "../i18n" },
     { "path": "../react" },
-    { "path": "../types" },
     { "path": "../units" }
   ],
   "include": ["src/**/*"]
