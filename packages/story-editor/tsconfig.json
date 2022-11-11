@@ -4,6 +4,7 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
+  "references": [{ "path": "../elements" }],
   "include": [
     "src/app/config/*",
     "src/app/history",
