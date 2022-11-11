@@ -15,14 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { Element, ElementType } from './element';
-import type { Pattern } from './pattern';
+import type {
+  Element,
+  ElementType,
+  ProductData,
+} from '@googleforcreators/elements';
 
-export interface ShapeElement extends Element {
-  backgroundColor?: Pattern;
-  isBackground?: boolean;
-  isDefaultBackground?: boolean;
-  type: ElementType.Shape;
+export interface ProductElement extends Element {
+  type: ElementType.Product;
+  product: ProductData;
 }

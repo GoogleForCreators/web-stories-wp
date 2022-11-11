@@ -15,14 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { PatternType, Linear } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import getOpaquePattern from '../getOpaquePattern';
+import { PatternType, Linear } from '../types';
 
 describe('getOpaquePattern', () => {
   it('should get the opaque color correctly from a solid', () => {

@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../dom" },
+    { "path": "../elements" },
+    { "path": "../i18n" },
+    { "path": "../masks" },
+    { "path": "../media" },
+    { "path": "../moveable" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../rich-text" },
+    { "path": "../stickers" },
+    { "path": "../transform" },
+    { "path": "../units" }
+  ],
+  "include": ["src/types/**/*"]
+}

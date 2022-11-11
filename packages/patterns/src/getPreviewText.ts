@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { Pattern, PatternType } from '@googleforcreators/types';
+
+/**
+ * Internal dependencies
+ */
+import { Pattern, PatternType } from './types';
 
 function printRGB(r: number, g: number, b: number) {
   const hex = (v: number) => v.toString(16).padStart(2, '0');

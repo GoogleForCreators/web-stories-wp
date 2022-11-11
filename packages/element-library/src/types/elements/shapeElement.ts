@@ -15,13 +15,14 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { GifResource } from '../resource';
-import type { MediaElement } from './mediaElement';
-import type { ElementType } from './element';
+import type { Pattern } from '@googleforcreators/patterns';
+import type { Element, ElementType } from '@googleforcreators/elements';
 
-export interface GifElement extends MediaElement {
-  resource: GifResource;
-  type: ElementType.Gif;
+export interface ShapeElement extends Element {
+  backgroundColor?: Pattern;
+  isBackground?: boolean;
+  isDefaultBackground?: boolean;
+  type: ElementType.Shape;
 }

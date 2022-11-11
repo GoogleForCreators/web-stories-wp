@@ -25,7 +25,8 @@ import {
   forwardRef,
 } from '@googleforcreators/react';
 import { getTransformFlip } from '@googleforcreators/elements';
-import type { Flip, MediaElement, Resource } from '@googleforcreators/types';
+import type { Flip, MediaElement } from '@googleforcreators/elements';
+import type { Resource } from '@googleforcreators/media';
 import type { CSSProperties, SVGAttributes, ForwardedRef } from 'react';
 
 /**

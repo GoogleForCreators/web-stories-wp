@@ -15,14 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import type { Linear, Radial } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
 import generatePatternStyles from '../generatePatternStyles';
+import type { Linear, Radial } from '../types';
 
 describe('generatePatternStyles', () => {
   describe('given null', () => {

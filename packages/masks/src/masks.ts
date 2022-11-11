@@ -16,11 +16,8 @@
 /**
  * External dependencies
  */
-import {
-  ElementDefinition,
-  getDefinitionForType,
-} from '@googleforcreators/elements';
-import type { Element, Mask } from '@googleforcreators/types';
+import { ElementType, getDefinitionForType } from '@googleforcreators/elements';
+import type { Element, Mask } from '@googleforcreators/elements';
 import type { CSSProperties } from 'react';
 
 /**
@@ -59,8 +56,8 @@ function getDefaultElementMask(type: string) {
   if (!type) {
     return null;
   }
-  const { isMaskable } = getDefinitionForType(type) as ElementDefinition;
-  return isMaskable ? DEFAULT_MASK : null;
+  const definition = getDefinitionForType(type as ElementType);
+  return definition?.isMaskable ? DEFAULT_MASK : null;
 }
 
 /*

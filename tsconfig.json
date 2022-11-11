@@ -1,6 +1,7 @@
 {
   "references": [
     { "path": "packages/activation-notice" },
+    { "path": "packages/element-library" },
     { "path": "packages/dashboard" },
     { "path": "packages/dom" },
     { "path": "packages/elements" },
@@ -19,7 +20,6 @@
     { "path": "packages/text-sets" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
-    { "path": "packages/types" },
     { "path": "packages/units" },
     { "path": "packages/url" },
     { "path": "packages/wp-utils" }

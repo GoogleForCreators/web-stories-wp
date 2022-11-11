@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { Template } from '@googleforcreators/templates';
-import type { Product } from '@googleforcreators/types';
+import type { ProductData } from '@googleforcreators/elements';
 
 export interface Locale {
   locale?: string;
@@ -101,7 +101,7 @@ export interface ApiCallbacks {
   duplicateStory?: (story: DashboardStory) => Promise<DashboardStory>;
   fetchStories?: () => Promise<DashboardStory[]>;
   getAuthors?: (search: string) => Promise<Author[]>;
-  getProducts?: (search: string) => Promise<Product[]>;
+  getProducts?: (search: string) => Promise<ProductData[]>;
   getTaxonomies?: (args: TaxonomiesArgs) => Promise<Taxonomy[]>;
   getTaxonomyTerms?: (endpoint: string, args: TermArgs) => Promise<Term>;
   trashStory?: (id: number) => Promise<DashboardStory>;

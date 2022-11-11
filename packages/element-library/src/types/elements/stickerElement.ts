@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import type { Page } from './page';
+import type { Element, ElementType } from '@googleforcreators/elements';
 
-export interface Story {
-  version?: number;
-  pages: Page[];
-  status: string;
-  backgroundAudio?: {
-    resource: {
-      src: string;
-      id: number;
-      mimeType: string;
-    };
-  };
-  autoAdvance?: boolean;
-  defaultPageDuration?: number;
+export interface Sticker {
+  type: string;
+}
+
+export interface StickerElement extends Element {
+  type: ElementType.Sticker;
+  sticker: Sticker;
 }
