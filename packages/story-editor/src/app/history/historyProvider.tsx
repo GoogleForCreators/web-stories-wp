@@ -23,8 +23,6 @@ import {
   useState,
   useRef,
 } from '@googleforcreators/react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- @todo Let's fix as part of #12656.
-// @ts-ignore
 import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 import type { ReactNode } from 'react';
 
@@ -90,9 +88,7 @@ function HistoryProvider({ children, size = 50 }: HistoryProviderProps) {
     },
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- @todo Let's fix as part of #12656
   useGlobalKeyDownEffect({ key: 'undo', dialog: true }, () => undo(), [undo]);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- @todo Let's fix as part of #12656
   useGlobalKeyDownEffect({ key: 'redo', dialog: true }, () => redo(), [redo]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

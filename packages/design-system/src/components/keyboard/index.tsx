@@ -18,7 +18,6 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-import PropTypes from 'prop-types';
 import {
   useEffect,
   createRef,
@@ -27,10 +26,17 @@ import {
   useBatchingCallback,
   useCallback,
 } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
 import { __ } from '@googleforcreators/i18n';
+import type {
+  KeyEffectCallback,
+  KeyNameOrSpec,
+  Keys,
+  RefOrNode,
+} from '../../types/keyboard';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';
@@ -55,7 +61,7 @@ const CLICKABLE_INPUT_TYPES = [
   'reset',
 ];
 
-const globalRef = createRef();
+const globalRef = createRef<HTMLElement>();
 
 function setGlobalRef() {
   if (!globalRef.current) {
@@ -64,24 +70,13 @@ function setGlobalRef() {
 }
 
 /**
- * @callback KeyEffectCallback
- * @param {KeyboardEvent} event Event.
- */
-
-/**
  * See https://craig.is/killing/mice#keys for the supported key codes.
- *
- * @param {Node|{current: Node}} refOrNode Node or reference to one.
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {string|undefined} type Event type, either 'keydown', 'keyup', or undefined to automatically determine it.
- * @param {KeyEffectCallback} callback Callback.
- * @param {Array|undefined} deps The effect's dependencies.
  */
 function useKeyEffectInternal(
-  refOrNode,
-  keyNameOrSpec,
-  type,
-  callback,
+  refOrNode: RefOrNode,
+  keyNameOrSpec: KeyNameOrSpec,
+  type: string | undefined,
+  callback: KeyEffectCallback,
   deps = undefined
 ) {
   const { keys } = useContext(Context);
@@ -90,6 +85,8 @@ function useKeyEffectInternal(
   useEffect(
     () => {
       const node =
+        refOrNode &&
+        'current' in refOrNode &&
         typeof refOrNode?.current !== 'undefined'
           ? refOrNode.current
           : refOrNode;
@@ -126,61 +123,42 @@ function useKeyEffectInternal(
  * Mousetrap.bind.
  *
  * See https://craig.is/killing/mice#api.bind.
- *
- * @param {Node|{current: Node}} refOrNode Node or reference to one.
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {KeyEffectCallback} callback Callback.
- * @param {Array} [deps] The effect's dependencies.
  */
 export function useKeyEffect(
-  refOrNode,
-  keyNameOrSpec,
-  callback,
+  refOrNode: RefOrNode,
+  keyNameOrSpec: KeyNameOrSpec,
+  callback: KeyEffectCallback,
   deps = undefined
 ) {
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   useKeyEffectInternal(refOrNode, keyNameOrSpec, undefined, callback, deps);
 }
 
-/**
- * @param {Node|{current: Node}} refOrNode Node or reference to one.
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {KeyEffectCallback} callback Callback.
- * @param {Array} [deps] The effect's dependencies.
- */
 export function useKeyDownEffect(
-  refOrNode,
-  keyNameOrSpec,
-  callback,
+  refOrNode: RefOrNode,
+  keyNameOrSpec: KeyNameOrSpec,
+  callback: KeyEffectCallback,
   deps = undefined
 ) {
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
 }
 
-/**
- * @param {Node|{current: Node}} refOrNode Node or reference to one.
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {KeyEffectCallback} callback Callback.
- * @param {Array} [deps] The effect's dependencies.
- */
 export function useKeyUpEffect(
-  refOrNode,
-  keyNameOrSpec,
-  callback,
+  refOrNode: RefOrNode,
+  keyNameOrSpec: KeyNameOrSpec,
+  callback: KeyEffectCallback,
   deps = undefined
 ) {
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
 }
 
-/**
- * @param {{current: Node}} refOrNode Node or reference to one.
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {Array} [deps] The effect's dependencies.
- * @return {boolean} Stateful boolean that tracks whether key is pressed.
- */
-export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
+export function useIsKeyPressed(
+  refOrNode: RefOrNode,
+  keyNameOrSpec: KeyNameOrSpec,
+  deps = undefined
+) {
   const [isKeyPressed, setIsKeyPressed] = useState(false);
 
   const handleBlur = useCallback(() => {
@@ -200,29 +178,18 @@ export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
   return isKeyPressed;
 }
 
-/**
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {KeyEffectCallback} callback Callback.
- * @param {Array} [deps] The effect's dependencies.
- */
 export function useGlobalKeyDownEffect(
-  keyNameOrSpec,
-  callback,
+  keyNameOrSpec: KeyNameOrSpec,
+  callback: KeyEffectCallback,
   deps = undefined
 ) {
   setGlobalRef();
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
 }
-
-/**
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {KeyEffectCallback} callback Callback.
- * @param {Array} [deps] The effect's dependencies.
- */
 export function useGlobalKeyUpEffect(
-  keyNameOrSpec,
-  callback,
+  keyNameOrSpec: KeyNameOrSpec,
+  callback: KeyEffectCallback,
   deps = undefined
 ) {
   setGlobalRef();
@@ -230,21 +197,15 @@ export function useGlobalKeyUpEffect(
   useKeyUpEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
-/**
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {Array} [deps] The effect's dependencies.
- * @return {boolean} Stateful boolean that tracks whether key is pressed.
- */
-export function useGlobalIsKeyPressed(keyNameOrSpec, deps = undefined) {
+export function useGlobalIsKeyPressed(
+  keyNameOrSpec: KeyNameOrSpec,
+  deps = undefined
+) {
   setGlobalRef();
   return useIsKeyPressed(globalRef, keyNameOrSpec, deps);
 }
 
-/**
- * @param {Node|{current: Node}} refOrNode Node or reference to one
- * @param {Array} [deps] The effect's dependencies.
- */
-export function useEscapeToBlurEffect(refOrNode, deps = undefined) {
+export function useEscapeToBlurEffect(refOrNode: RefOrNode, deps = undefined) {
   useKeyDownEffect(
     refOrNode,
     { key: 'esc', editable: true },
@@ -268,16 +229,11 @@ export function useEscapeToBlurEffect(refOrNode, deps = undefined) {
  * @return {Mousetrap} The Mousetrap object that will be used to intercept
  * the keyboard events on the specified node.
  */
-function getOrCreateMousetrap(node) {
+function getOrCreateMousetrap(node: Element) {
   return node[PROP] || (node[PROP] = new Mousetrap(node));
 }
 
-/**
- * @param {Object} keyDict Key dictionary.
- * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @return {Object} Key object.
- */
-function resolveKeySpec(keyDict, keyNameOrSpec) {
+function resolveKeySpec(keyDict: Keys, keyNameOrSpec: KeyNameOrSpec) {
   const keySpec =
     typeof keyNameOrSpec === 'string' || Array.isArray(keyNameOrSpec)
       ? { key: keyNameOrSpec }
@@ -291,9 +247,9 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     dialog = false,
     allowDefault = false,
   } = keySpec;
-  const mappedKeys = []
+  const mappedKeys = ([] as string[])
     .concat(keyOrArray)
-    .map((key) => keyDict[key] || key)
+    .map((key) => keyDict[key as keyof Keys] || key)
     .flat();
   const allKeys = addMods(mappedKeys, shift);
   return {
@@ -307,36 +263,46 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
   };
 }
 
-function addMods(keys, shift) {
+function addMods(keys: string[], shift: boolean) {
   if (!shift) {
     return keys;
   }
   return keys.concat(keys.map((key) => `shift+${key}`));
 }
 
+interface KeyHandlerProps {
+  repeat: boolean;
+  editable: boolean;
+  clickable: boolean;
+  dialog: boolean;
+  allowDefault?: boolean;
+}
 function createKeyHandler(
-  keyTarget,
+  keyTarget: HTMLElement,
   {
     repeat: repeatAllowed,
     editable: editableAllowed,
     clickable: clickableAllowed,
     dialog: dialogAllowed,
     allowDefault = false,
-  },
-  callback
+  }: KeyHandlerProps,
+  callback: KeyEffectCallback
 ) {
-  return (evt) => {
+  return (evt: KeyboardEvent) => {
     const { repeat, target } = evt;
     if (!repeatAllowed && repeat) {
       return undefined;
     }
-    if (!editableAllowed && isEditableTarget(target)) {
+    if (!editableAllowed && isEditableTarget(target as HTMLInputElement)) {
       return undefined;
     }
-    if (!clickableAllowed && isClickableTarget(target)) {
+    if (!clickableAllowed && isClickableTarget(target as HTMLInputElement)) {
       return undefined;
     }
-    if (!dialogAllowed && crossesDialogBoundary(target, keyTarget)) {
+    if (
+      !dialogAllowed &&
+      crossesDialogBoundary(target as HTMLElement, keyTarget)
+    ) {
       return undefined;
     }
     callback(evt);
@@ -346,7 +312,7 @@ function createKeyHandler(
   };
 }
 
-function isClickableTarget({ tagName, type }) {
+function isClickableTarget({ tagName, type }: HTMLInputElement) {
   if (['BUTTON', 'A'].includes(tagName)) {
     return true;
   }
@@ -356,7 +322,12 @@ function isClickableTarget({ tagName, type }) {
   return false;
 }
 
-function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
+function isEditableTarget({
+  tagName,
+  isContentEditable,
+  type,
+  readOnly,
+}: HTMLInputElement) {
   if (readOnly === true) {
     return false;
   }
@@ -369,7 +340,7 @@ function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
   return false;
 }
 
-function crossesDialogBoundary(target, keyTarget) {
+function crossesDialogBoundary(target: Element, keyTarget: Element) {
   if (target.nodeType !== 1) {
     // Not an element. Most likely a document node. The dialog search
     // does not apply.
@@ -383,8 +354,6 @@ function crossesDialogBoundary(target, keyTarget) {
 
 /**
  * Determines if the current platform is a Mac or not.
- *
- * @return {boolean} True if platform is a Mac.
  */
 export function isPlatformMacOS() {
   const { platform } = window.navigator;
@@ -393,11 +362,8 @@ export function isPlatformMacOS() {
 
 /**
  * Get the key specific to operating system.
- *
- * @param {string} key The key to replace. Options: [alt, ctrl, mod, cmd, shift].
- * @return {string} the mapped key. Returns the argument if key is not in options.
  */
-export function getKeyForOS(key) {
+export function getKeyForOS(key: string): string {
   const isMacOS = isPlatformMacOS();
 
   const replacementKeyMap = {
@@ -408,16 +374,13 @@ export function getKeyForOS(key) {
     shift: isMacOS ? '⇧' : 'Shift',
   };
 
-  return replacementKeyMap[key] || key;
+  return replacementKeyMap[key as keyof replacementKeyMap] || key;
 }
 
 /**
  * Prettifies keyboard shortcuts in a platform-agnostic way.
- *
- * @param {string} shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
- * @return {string} Prettified keyboard shortcut.
  */
-export function prettifyShortcut(shortcut) {
+export function prettifyShortcut(shortcut: string) {
   const isMacOS = isPlatformMacOS();
 
   const delimiter = isMacOS ? '' : '+';
@@ -448,10 +411,8 @@ export function prettifyShortcut(shortcut) {
  *
  * @example
  * createShortcutAriaLabel('mod alt del'); -> "Command Alt Del"
- * @param {string} shortcut The keyboard shortcut.
- * @return {string} The aria label.
  */
-export function createShortcutAriaLabel(shortcut) {
+export function createShortcutAriaLabel(shortcut: string) {
   const isMacOS = isPlatformMacOS();
 
   /* translators: Command key on the keyboard */
@@ -472,6 +433,7 @@ export function createShortcutAriaLabel(shortcut) {
     shift: __('Shift', 'web-stories'),
     /* translators: delete key on the keyboard */
     delete: __('Delete', 'web-stories'),
+    cmd: command,
     /* translators: comma character ',' */
     ',': __('Comma', 'web-stories'),
     /* translators: period character '.' */
@@ -520,8 +482,3 @@ export function Shortcut({ component: Component = Kbd, shortcut = '' }) {
     </Component>
   );
 }
-
-Shortcut.propTypes = {
-  component: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-  shortcut: PropTypes.string,
-};
