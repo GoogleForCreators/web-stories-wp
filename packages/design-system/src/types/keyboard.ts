@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Ref} from "react";
+
+/**
+ * External dependencies
+ */
+import type { Ref } from 'react';
 
 export interface KeySpec {
   key: string | string[];
