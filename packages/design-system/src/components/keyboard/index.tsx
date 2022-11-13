@@ -18,6 +18,7 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
+import type { MousetrapInstance } from 'mousetrap';
 import {
   useEffect,
   createRef,
@@ -26,6 +27,7 @@ import {
   useBatchingCallback,
   useCallback,
 } from '@googleforcreators/react';
+import type { DependencyList, ReactNode } from 'react';
 
 /**
  * Internal dependencies
@@ -77,25 +79,25 @@ function useKeyEffectInternal(
   keyNameOrSpec: KeyNameOrSpec,
   type: string | undefined,
   callback: KeyEffectCallback,
-  deps = undefined
+  deps: DependencyList
 ) {
   const { keys } = useContext(Context);
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   const batchingCallback = useBatchingCallback(callback, deps || []);
   useEffect(
     () => {
-      const node =
-        refOrNode &&
-        'current' in refOrNode &&
-        typeof refOrNode?.current !== 'undefined'
-          ? refOrNode.current
-          : refOrNode;
-      if (!node) {
+      let nodeEl;
+      if (refOrNode && 'current' in refOrNode) {
+        nodeEl = refOrNode.current;
+      } else {
+        nodeEl = refOrNode;
+      }
+      if (!nodeEl) {
         return undefined;
       }
       if (
-        node.nodeType !== /* ELEMENT */ 1 &&
-        node.nodeType !== /* DOCUMENT */ 9
+        nodeEl.nodeType !== /* ELEMENT */ 1 &&
+        nodeEl.nodeType !== /* DOCUMENT */ 9
       ) {
         throw new Error('only an element or a document node can be used');
       }
@@ -105,8 +107,14 @@ function useKeyEffectInternal(
         return undefined;
       }
 
-      const mousetrap = getOrCreateMousetrap(node);
-      const handler = createKeyHandler(node, keySpec, batchingCallback);
+      const mousetrap = getOrCreateMousetrap(
+        nodeEl as HTMLElementWithMouseTrap
+      );
+      const handler = createKeyHandler(
+        nodeEl as HTMLElement,
+        keySpec,
+        batchingCallback
+      );
       mousetrap.bind(keySpec.key, handler, type);
       return () => {
         mousetrap.unbind(keySpec.key, type);
@@ -128,7 +136,7 @@ export function useKeyEffect(
   refOrNode: RefOrNode,
   keyNameOrSpec: KeyNameOrSpec,
   callback: KeyEffectCallback,
-  deps = undefined
+  deps: DependencyList
 ) {
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   useKeyEffectInternal(refOrNode, keyNameOrSpec, undefined, callback, deps);
@@ -138,7 +146,7 @@ export function useKeyDownEffect(
   refOrNode: RefOrNode,
   keyNameOrSpec: KeyNameOrSpec,
   callback: KeyEffectCallback,
-  deps = undefined
+  deps: DependencyList
 ) {
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
@@ -148,7 +156,7 @@ export function useKeyUpEffect(
   refOrNode: RefOrNode,
   keyNameOrSpec: KeyNameOrSpec,
   callback: KeyEffectCallback,
-  deps = undefined
+  deps: DependencyList
 ) {
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
@@ -157,7 +165,7 @@ export function useKeyUpEffect(
 export function useIsKeyPressed(
   refOrNode: RefOrNode,
   keyNameOrSpec: KeyNameOrSpec,
-  deps = undefined
+  deps: DependencyList
 ) {
   const [isKeyPressed, setIsKeyPressed] = useState(false);
 
@@ -181,7 +189,7 @@ export function useIsKeyPressed(
 export function useGlobalKeyDownEffect(
   keyNameOrSpec: KeyNameOrSpec,
   callback: KeyEffectCallback,
-  deps = undefined
+  deps: DependencyList
 ) {
   setGlobalRef();
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
@@ -190,7 +198,7 @@ export function useGlobalKeyDownEffect(
 export function useGlobalKeyUpEffect(
   keyNameOrSpec: KeyNameOrSpec,
   callback: KeyEffectCallback,
-  deps = undefined
+  deps: DependencyList
 ) {
   setGlobalRef();
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
@@ -199,24 +207,29 @@ export function useGlobalKeyUpEffect(
 
 export function useGlobalIsKeyPressed(
   keyNameOrSpec: KeyNameOrSpec,
-  deps = undefined
+  deps: DependencyList
 ) {
   setGlobalRef();
   return useIsKeyPressed(globalRef, keyNameOrSpec, deps);
 }
 
-export function useEscapeToBlurEffect(refOrNode: RefOrNode, deps = undefined) {
+export function useEscapeToBlurEffect(
+  refOrNode: RefOrNode,
+  deps: DependencyList
+) {
   useKeyDownEffect(
     refOrNode,
     { key: 'esc', editable: true },
     () => {
-      const node =
-        typeof refOrNode?.current !== 'undefined'
-          ? refOrNode.current
-          : refOrNode;
+      let nodeEl;
+      if (refOrNode && 'current' in refOrNode) {
+        nodeEl = refOrNode.current;
+      } else {
+        nodeEl = refOrNode;
+      }
       const { activeElement } = document;
-      if (node.contains(activeElement)) {
-        activeElement.blur();
+      if (nodeEl && activeElement && nodeEl.contains(activeElement)) {
+        (activeElement as HTMLInputElement).blur();
       }
     },
     //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
@@ -224,12 +237,15 @@ export function useEscapeToBlurEffect(refOrNode: RefOrNode, deps = undefined) {
   );
 }
 
+interface HTMLElementWithMouseTrap extends HTMLElement {
+  [PROP]: undefined | MousetrapInstance;
+}
 /**
- * @param {Node} node The DOM node.
- * @return {Mousetrap} The Mousetrap object that will be used to intercept
+ * @param node The DOM node.
+ * @return The Mousetrap object that will be used to intercept
  * the keyboard events on the specified node.
  */
-function getOrCreateMousetrap(node: Element) {
+function getOrCreateMousetrap(node: HTMLElementWithMouseTrap) {
   return node[PROP] || (node[PROP] = new Mousetrap(node));
 }
 
@@ -278,7 +294,7 @@ interface KeyHandlerProps {
   allowDefault?: boolean;
 }
 function createKeyHandler(
-  keyTarget: HTMLElement,
+  keyTarget: Element,
   {
     repeat: repeatAllowed,
     editable: editableAllowed,
@@ -366,7 +382,7 @@ export function isPlatformMacOS() {
 export function getKeyForOS(key: string): string {
   const isMacOS = isPlatformMacOS();
 
-  const replacementKeyMap = {
+  const replacementKeyMap: Record<string, string> = {
     alt: isMacOS ? '⌥' : 'Alt',
     ctrl: isMacOS ? '^' : 'Ctrl',
     mod: isMacOS ? '⌘' : 'Ctrl',
@@ -374,7 +390,7 @@ export function getKeyForOS(key: string): string {
     shift: isMacOS ? '⇧' : 'Shift',
   };
 
-  return replacementKeyMap[key as keyof replacementKeyMap] || key;
+  return replacementKeyMap[key] || key;
 }
 
 /**
@@ -460,17 +476,15 @@ export function createShortcutAriaLabel(shortcut: string) {
     .join(delimiter);
 }
 
-const Kbd = () => <kbd />;
+const Kbd = ({ children }: { children: ReactNode }) => <kbd>{children}</kbd>;
 
 /**
  * Returns a prettified shortcut wrapped with a <kbd> element.
- *
- * @param {Object} props props
- * @param {import('react').Component} props.component Component used to render the shortcuts. Defaults to `<kbd/>`
- * @param {string} props.shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
- * @return {Node} Prettified keyboard shortcut.
  */
-export function Shortcut({ component: Component = Kbd, shortcut = '' }) {
+export function Shortcut({
+  component: Component = Kbd,
+  shortcut = '',
+}): ReactNode {
   const chars = shortcut.split(' ');
 
   return (

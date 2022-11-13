@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Ref } from 'react';
+import type { RefObject } from 'react';
 
 export interface KeySpec {
   key: string | string[];
@@ -37,4 +37,4 @@ export interface Keys {
 export type KeyEffectCallback = (event: KeyboardEvent) => void;
 export type KeyNameOrSpec = KeySpec | string | string[];
 
-export type RefOrNode = HTMLElement | Ref<HTMLElement>;
+export type RefOrNode = Element | RefObject<Element>;
