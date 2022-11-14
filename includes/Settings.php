@@ -444,11 +444,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * Retrieves all of the registered options for the Settings API.
 	 * Inspired by get_registered_options method found in WordPress. But also get settings that are registered without `show_in_rest` property.
 	 *
-<<<<<<< HEAD
-	 * @since 1.27.0
-=======
 	 * @since 1.28.0
->>>>>>> main
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/trunk/src/wp-includes/rest-api/endpoints/class-wp-rest-settings-controller.php#L211-L267
 	 *
