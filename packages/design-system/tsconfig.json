@@ -5,5 +5,5 @@
     "declarationDir": "dist-types"
   },
   "references": [{ "path": "../react" }],
-  "include": ["src/**/*"]
+  "include": ["src/components/keyboard/*", "src/types/*"]
 }
