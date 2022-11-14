@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { Pattern, PatternType } from '@googleforcreators/types';
+import { Pattern, PatternType } from './types';
 
 function hasGradient(pattern: Pattern) {
   return Boolean(pattern?.type) && PatternType.Solid !== pattern.type;

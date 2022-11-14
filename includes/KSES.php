@@ -181,7 +181,7 @@ class KSES extends Service_Base implements HasRequirements {
 
 		if ( isset( $unsanitized_postarr['post_content'] ) ) {
 			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 
 			$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
 

@@ -15,21 +15,17 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
 import {
+  ResourceInput,
   GifResource,
   Resource,
   ResourceType,
   VideoResource,
   AudioResource,
-} from '@googleforcreators/types';
-
-/**
- * Internal dependencies
- */
+} from './types';
 import getTypeFromMime from './getTypeFromMime';
-import type { ResourceInput } from './types';
 
 /**
  * Creates a resource object.
