@@ -20,6 +20,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories;
 
 use WP_Post;
