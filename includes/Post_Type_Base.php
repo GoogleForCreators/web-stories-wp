@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
@@ -225,7 +227,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_url(): string {
-		return rest_get_route_for_post_type_items( $this->get_rest_base() );
+		return rest_get_route_for_post_type_items( $this->get_slug() );
 	}
 
 	/**
