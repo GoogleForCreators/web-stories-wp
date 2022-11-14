@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from '@googleforcreators/react';
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Icons,
   PLACEMENT,
@@ -27,11 +26,8 @@ import {
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
+import type { EventParameters } from '@googleforcreators/tracking';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
-import {
-  getExtensionsFromMimeType,
-  resourceList,
-} from '@googleforcreators/media';
 import styled from 'styled-components';
 
 /**
@@ -42,10 +38,8 @@ import useHighlights from '../useHighlights';
 import updateProperties from '../../../components/style/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../../media';
 import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
-import useFFmpeg from '../../media/utils/useFFmpeg';
 import useInsertElement from '../../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../../components/mediaRecording';
@@ -93,179 +87,13 @@ const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
   quickActionIconAttrs
 )``;
 
-export const MediaPicker = ({ render, ...props }) => {
-  const {
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      vector: allowedVectorMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
-    MediaUpload,
-  } = useConfig();
-
-  const { selectedElements, updateElementsById } = useStory(
-    ({ state: { selectedElements }, actions: { updateElementsById } }) => ({
-      selectedElements,
-      updateElementsById,
-    })
-  );
-  const {
-    resetWithFetch,
-    postProcessingResource,
-    optimizeVideo,
-    optimizeGif,
-    canTranscodeResource,
-  } = useLocalMedia(
-    ({
-      state: { canTranscodeResource },
-      actions: {
-        resetWithFetch,
-        postProcessingResource,
-        optimizeVideo,
-        optimizeGif,
-      },
-    }) => ({
-      canTranscodeResource,
-      resetWithFetch,
-      postProcessingResource,
-      optimizeVideo,
-      optimizeGif,
-    })
-  );
-
-  const { isTranscodingEnabled } = useFFmpeg();
-  const { showSnackbar } = useSnackbar();
-
-  // Media Upload Props
-  let allowedMimeTypes = useMemo(
-    () => [
-      ...allowedImageMimeTypes,
-      ...allowedVectorMimeTypes,
-      ...allowedVideoMimeTypes,
-    ],
-    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
-  );
-  const allowedFileTypes = useMemo(
-    () =>
-      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
-    [allowedMimeTypes]
-  );
-  if (isTranscodingEnabled) {
-    allowedMimeTypes = allowedMimeTypes.concat(TRANSCODABLE_MIME_TYPES);
-  }
-
-  const transcodableMimeTypes = TRANSCODABLE_MIME_TYPES.filter(
-    (x) => !allowedVideoMimeTypes.includes(x)
-  );
-
-  let onSelectErrorMessage = __(
-    'No file types are currently supported.',
-    'web-stories'
-  );
-  if (allowedFileTypes.length) {
-    onSelectErrorMessage = sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s to insert into page.', 'web-stories'),
-      translateToExclusiveList(allowedFileTypes)
-    );
-  }
-
-  /**
-   * Insert element such image, video and audio into the editor.
-   *
-   * @param {Object} resource Resource object
-   * @param {string} thumbnailURL The thumbnail's url
-   * @return {null|*} Return onInsert or null.
-   */
-  const insertMediaElement = useCallback(
-    (resource, thumbnailURL) => {
-      resourceList.set(resource.id, {
-        url: thumbnailURL,
-        type: 'cached',
-      });
-      updateElementsById({
-        elementIds: [selectedElements?.[0]?.id],
-        properties: { type: resource.type, resource },
-      });
-    },
-    [selectedElements, updateElementsById]
-  );
-
-  const handleMediaSelect = useCallback(
-    (resource) => {
-      try {
-        if (isTranscodingEnabled && canTranscodeResource(resource)) {
-          if (transcodableMimeTypes.includes(resource.mimeType)) {
-            optimizeVideo({ resource });
-          }
-
-          if (resource.mimeType === 'image/gif') {
-            optimizeGif({ resource });
-          }
-        }
-        // WordPress media picker event, sizes.medium.sourceUrl is the smallest image
-        insertMediaElement(
-          resource,
-          resource.sizes?.medium?.sourceUrl || resource.src
-        );
-
-        postProcessingResource(resource);
-      } catch (e) {
-        showSnackbar({
-          message: e.message,
-          dismissable: true,
-        });
-      }
-    },
-    [
-      isTranscodingEnabled,
-      canTranscodeResource,
-      insertMediaElement,
-      postProcessingResource,
-      transcodableMimeTypes,
-      optimizeVideo,
-      optimizeGif,
-      showSnackbar,
-    ]
-  );
-  return (
-    <MediaUpload
-      title={__('Replace media', 'web-stories')}
-      buttonInsertText={__('Replace media', 'web-stories')}
-      onSelect={handleMediaSelect}
-      onClose={resetWithFetch}
-      type={allowedMimeTypes}
-      onSelectErrorMessage={onSelectErrorMessage}
-      // Only way to access the open function is to dive
-      // into the MediaUpload component in the render prop.
-      render={(open) => render({ onClick: open })}
-      {...props}
-    />
-  );
-};
-MediaPicker.propTypes = {
-  buttonInsertText: PropTypes.string,
-  cropParams: PropTypes.bool,
-  multiple: PropTypes.bool,
-  onClose: PropTypes.func,
-  onPermissionError: PropTypes.func,
-  onSelect: PropTypes.func,
-  onSelectErrorMessage: PropTypes.string,
-  render: PropTypes.func.isRequired,
-  title: PropTypes.string,
-  type: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-};
-
 /**
  * Determines the quick actions to display in the quick
  * actions menu from the selected element.
  *
  * Quick actions should follow the `quickActionPropType` definition.
  *
- * @return {Array.<{ Icon: Node, label: string, onClick: Function, separator: string, tooltipPlacement: string, wrapWithMediaPicker: boolean }>} an array of quick action objects
+ * @return an array of quick action objects
  */
 const useQuickActions = () => {
   const {
@@ -440,7 +268,7 @@ const useQuickActions = () => {
             name: `undo_${ACTIONS.RESET_ELEMENT.trackingEventName}`,
             element: elementType,
             isBackground: true,
-          });
+          } as EventParameters);
         },
         actionHelpText: UNDO_HELP_TEXT,
       });
@@ -519,7 +347,7 @@ const useQuickActions = () => {
           trackEvent('quick_action', {
             name: ACTIONS.CHANGE_BACKGROUND_COLOR.trackingEventName,
             element: 'none',
-          });
+          } as EventParameters);
         },
         ...actionMenuProps,
       },
@@ -532,7 +360,7 @@ const useQuickActions = () => {
           trackEvent('quick_action', {
             name: ACTIONS.INSERT_BACKGROUND_MEDIA.trackingEventName,
             element: 'none',
-          });
+          } as EventParameters);
         },
         separator: 'top',
         ...actionMenuProps,
@@ -546,7 +374,7 @@ const useQuickActions = () => {
           trackEvent('quick_action', {
             name: ACTIONS.INSERT_TEXT.trackingEventName,
             element: 'none',
-          });
+          } as EventParameters);
         },
         ...actionMenuProps,
       },
@@ -582,7 +410,7 @@ const useQuickActions = () => {
           trackEvent('quick_action', {
             name: ACTIONS.ADD_ANIMATION.trackingEventName,
             element: selectedElement?.type,
-          });
+          } as EventParameters);
         },
         ...actionMenuProps,
       });
@@ -598,7 +426,7 @@ const useQuickActions = () => {
         trackEvent('quick_action', {
           name: ACTIONS.ADD_LINK.trackingEventName,
           element: selectedElement?.type,
-        });
+        } as EventParameters);
       },
       ...actionMenuProps,
     });
@@ -619,7 +447,7 @@ const useQuickActions = () => {
           trackEvent('quick_action', {
             name: ACTIONS.RESET_ELEMENT.trackingEventName,
             element: selectedElement?.type,
-          });
+          } as EventParameters);
         },
         separator: 'top',
         ...actionMenuProps,
@@ -652,7 +480,7 @@ const useQuickActions = () => {
           trackEvent('quick_action', {
             name: ACTIONS.REPLACE_MEDIA.trackingEventName,
             element: selectedElement?.type,
-          });
+          } as EventParameters);
         },
         wrapWithMediaPicker: true,
         ...actionMenuProps,
@@ -688,7 +516,7 @@ const useQuickActions = () => {
           trackEvent('quick_action', {
             name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
             element: selectedElement?.type,
-          });
+          } as EventParameters);
         },
         ...actionMenuProps,
       },
@@ -721,7 +549,7 @@ const useQuickActions = () => {
           trackEvent('quick_action', {
             name: ACTIONS.ADD_CAPTIONS.trackingEventName,
             element: selectedElement?.type,
-          });
+          } as EventParameters);
         },
         ...actionMenuProps,
       },
@@ -747,7 +575,7 @@ const useQuickActions = () => {
             name: ACTIONS.ADD_ANIMATION.trackingEventName,
             element: selectedElement?.type,
             isBackground: true,
-          });
+          } as EventParameters);
         },
         ...actionMenuProps,
       },
@@ -764,7 +592,7 @@ const useQuickActions = () => {
             name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
             element: selectedElement?.type,
             isBackground: true,
-          });
+          } as EventParameters);
         },
         wrapWithMediaPicker: true,
         ...actionMenuProps,
@@ -785,7 +613,7 @@ const useQuickActions = () => {
           name: ACTIONS.RESET_ELEMENT.trackingEventName,
           element: selectedElement?.type,
           isBackground: true,
-        });
+        } as EventParameters);
       },
       separator: 'top',
       ...actionMenuProps,
@@ -811,7 +639,7 @@ const useQuickActions = () => {
         onClick: () => {
           trackEvent('media_recording_mode_toggled', {
             status: 'closed',
-          });
+          } as EventParameters);
           toggleRecordingMode();
         },
         ...actionMenuProps,
@@ -835,7 +663,7 @@ const useQuickActions = () => {
         onClick: () => {
           trackEvent('media_recording_audio_toggled', {
             status: hasAudio ? 'muted' : 'unmuted',
-          });
+          } as EventParameters);
           toggleAudio();
         },
         disabled: !isReady || !hasVideo,
@@ -849,7 +677,7 @@ const useQuickActions = () => {
         onClick: () => {
           trackEvent('media_recording_video_toggled', {
             status: hasVideo ? 'off' : 'on',
-          });
+          } as EventParameters);
           toggleVideo();
         },
         disabled: !isReady || !hasAudio,

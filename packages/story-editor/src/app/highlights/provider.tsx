@@ -17,16 +17,27 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
+import type { Element, ElementId } from '@googleforcreators/elements';
+import type { ReactNode } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../story';
+import type { setHighlightProps } from '../../types/highlightsProvider';
 import Context from './context';
 import { STATES } from './states';
 
-function HighlightsProvider({ children }) {
+interface HighlightsProviderProps {
+  children: ReactNode;
+}
+interface selectElementProp {
+  elements?: Element[];
+  elementId?: ElementId;
+  pageId?: string;
+}
+
+function HighlightsProvider({ children }: HighlightsProviderProps) {
   const [highlighted, setHighlighted] = useState({});
   const { setSelectedElementsById, setCurrentPage } = useStory(
     ({ actions }) => ({
@@ -36,7 +47,7 @@ function HighlightsProvider({ children }) {
   );
 
   const selectElement = useCallback(
-    ({ elementId, elements, pageId }) => {
+    ({ elementId, elements, pageId }: selectElementProp) => {
       if (pageId) {
         setCurrentPage({ pageId });
       }
@@ -52,7 +63,7 @@ function HighlightsProvider({ children }) {
   );
 
   const setHighlights = useCallback(
-    ({ elements, elementId, pageId, highlight }) => {
+    ({ elements, elementId, pageId, highlight }: setHighlightProps) => {
       if (elements || elementId || pageId) {
         selectElement({ elements, elementId, pageId });
       }
@@ -72,7 +83,7 @@ function HighlightsProvider({ children }) {
   const onFocusOut = useCallback(() => setHighlighted({}), [setHighlighted]);
 
   const cancelEffect = useCallback(
-    (stateKey) =>
+    (stateKey: string) =>
       setHighlighted((state) => ({
         [stateKey]: { ...state[stateKey], showEffect: false },
       })),
@@ -91,9 +102,5 @@ function HighlightsProvider({ children }) {
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
-
-HighlightsProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default HighlightsProvider;

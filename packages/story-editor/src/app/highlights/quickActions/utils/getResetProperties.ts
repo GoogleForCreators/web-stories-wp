@@ -41,9 +41,9 @@ function isBorderRadiusDefault(element) {
  * Determines which properties on an element are to be reset when
  * the "clear" action is selected from a quick action menu
  *
- * @param {Object} selectedElement element currently selected
- * @param {Array.<Object>} selectedElementAnimations array of animations currently applied to the selected element
- * @return {Array.<string>} array of properties to reset on element
+ * @param selectedElement element currently selected
+ * @param selectedElementAnimations array of animations currently applied to the selected element
+ * @return array of properties to reset on element
  */
 const getResetProperties = (
   selectedElement,

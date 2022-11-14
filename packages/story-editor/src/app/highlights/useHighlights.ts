@@ -20,9 +20,12 @@ import { useContextSelector, identity } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { HighlightsState } from '../../types/highlightsProvider';
 import Context from './context';
 
-function useHighlights(selector) {
+function useHighlights(): HighlightsState;
+function useHighlights<T>(selector: (state: HighlightsState) => T): T;
+function useHighlights<T>(selector: (state: HighlightsState) => T | HighlightsState = identity) {
   return useContextSelector(Context, selector ?? identity);
 }
 export default useHighlights;

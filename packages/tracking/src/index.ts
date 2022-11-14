@@ -27,8 +27,10 @@ import trackEvent from './trackEvent';
 import trackTiming from './trackTiming';
 import trackScreenView from './trackScreenView';
 import getTimeTracker from './getTimeTracker';
+import type { EventParameters } from './shared';
 
 export {
+  EventParameters,
   initializeTracking,
   enableTracking,
   disableTracking,
