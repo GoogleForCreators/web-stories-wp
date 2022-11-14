@@ -21,7 +21,6 @@ import Mousetrap from 'mousetrap';
 import type { MousetrapInstance } from 'mousetrap';
 import {
   useEffect,
-  createRef,
   useState,
   useContext,
   useBatchingCallback,
@@ -63,7 +62,7 @@ const CLICKABLE_INPUT_TYPES = [
   'reset',
 ];
 
-const globalRef = createRef<HTMLElement>();
+const globalRef: { current: null | HTMLElement } = { current: null };
 
 function setGlobalRef() {
   if (!globalRef.current) {
