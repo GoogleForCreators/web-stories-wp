@@ -23,7 +23,8 @@ import { compareDesc } from '@googleforcreators/date';
 /**
  * Internal dependencies
  */
-import templateReducer, {
+import {
+  templateReducer,
   defaultTemplatesState,
   ACTION_TYPES as TEMPLATE_ACTION_TYPES,
 } from '../reducer/templates';

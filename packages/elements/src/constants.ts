@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { createSolid } from '@googleforcreators/patterns';
+
 export const ELEMENT_TYPES = {
   IMAGE: 'image',
   SHAPE: 'shape',
@@ -85,3 +90,5 @@ export const OverlayType = {
   LINEAR: 'linear',
   RADIAL: 'radial',
 };
+
+export const DEFAULT_PAGE_BACKGROUND_COLOR = createSolid(255, 255, 255);

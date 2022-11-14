@@ -23,7 +23,7 @@ import type { ReactNode } from 'react';
 /**
  * Internal dependencies
  */
-import { transformNode } from '../translateWithMarkup';
+import { transformNode } from '../transformNode';
 
 describe('transformNode', () => {
   it('returns text content for text node', () => {

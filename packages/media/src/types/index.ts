@@ -22,3 +22,4 @@ export * from './audioResource';
 export * from './sequenceResource';
 export * from './resourceInput';
 export * from './propTypes';
+export * from './resourceCache';
