@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import type { Pattern } from '@googleforcreators/patterns';
+
+/**
+ * Internal dependencies
+ */
+import type { Page } from './page';
+
 export type FontStyle = 'normal' | 'italic' | 'regular';
 export enum FontVariantStyle {
   Normal = 0,
@@ -66,4 +76,65 @@ export interface ProductData {
   productPriceCurrency: string;
   productTitle: string;
   productUrl: string;
+}
+
+export interface StoryData {
+  id: number;
+  date: string;
+  modified: string;
+  password: string;
+  slug: string;
+  status: string;
+  link: string;
+  title: {
+    raw?: string;
+    rendered?: string;
+  };
+  excerpt: {
+    raw?: string;
+    rendered?: string;
+    protected?: boolean;
+  };
+  permalinkTemplate: string;
+  storyData: {
+    version: number;
+    pages: Page[];
+    autoAdvance: boolean;
+    defaultPageDuration: number;
+    currentStoryStyles: {
+      colors: Pattern[];
+    };
+  };
+  stylePresets: {
+    colors?: Pattern[];
+    textStyles?: Partial<Text>[];
+  };
+  previewLink: string;
+  editLink: string;
+  embedPostLink: string;
+  author: {
+    id: number;
+    name: string;
+  };
+  capabilities: Record<string, boolean>;
+  extras: Record<string, unknown>;
+  featuredMedia: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+    needsProxy: boolean;
+    isExternal: boolean;
+  };
+  publisherLogo: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+  };
+  taxonomies: string[];
+  revisions: {
+    count: number;
+  };
+  terms: string[];
 }

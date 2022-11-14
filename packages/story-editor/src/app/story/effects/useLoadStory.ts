@@ -19,7 +19,7 @@
  */
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
-import { createPage } from '@googleforcreators/elements';
+import { createPage, Story, StoryData } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -28,8 +28,18 @@ import { useAPI } from '../../api';
 import { useHistory } from '../../history';
 import getUniquePresets from '../../../utils/getUniquePresets';
 import { useConfig } from '../../config';
+import type { RestoreProps, State } from '../../../types/storyProvider';
 
-function loadStory(storyId, post, restore, clearHistory, globalConfig) {
+function loadStory(
+  storyId: number,
+  post: StoryData,
+  restore: (props: RestoreProps) => State,
+  clearHistory: () => void,
+  globalConfig: {
+    globalAutoAdvance?: boolean;
+    globalPageDuration?: number;
+  }
+) {
   const {
     title: { raw: title = '' } = {},
     status,
@@ -82,7 +92,10 @@ function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   // If there are no pages, create empty page.
   const storyData =
     storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
-  const pages = storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
+  const pages =
+    storyData?.pages && storyData.pages.length > 0
+      ? storyData.pages
+      : [createPage()];
 
   // Initialize color/style presets, if missing.
   // Otherwise ensure the saved presets are unique.
@@ -144,8 +157,14 @@ function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   });
 }
 
+interface LoadStoryProps {
+  storyId: number;
+  story: Story;
+  shouldLoad: boolean;
+  restore: (props: RestoreProps) => State;
+}
 // When ID is set, load story from API.
-function useLoadStory({ storyId, story, shouldLoad, restore }) {
+function useLoadStory({ storyId, story, shouldLoad, restore }: LoadStoryProps) {
   const {
     actions: { getStoryById },
   } = useAPI();

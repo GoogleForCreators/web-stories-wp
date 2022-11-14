@@ -22,10 +22,57 @@ import type { AudioResource } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
+import type { Pattern } from '@googleforcreators/patterns';
 import type { Page } from './page';
 
 export interface Story {
+  storyId: number;
   version?: number;
+  title: string;
+  author: {
+    id: number;
+    name: string;
+  };
+  date: null | string;
+  modified: string;
+  excerpt: string;
+  slug: string;
+  link: string;
+  extras: Record<string, unknown>;
+  featuredMedia: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+    needsProxy: boolean;
+    isExternal: boolean;
+  };
+  permalinkConfig: null | {
+    prefix: string;
+    suffix: string;
+  };
+  publisherLogo: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+  };
+  previewLink: string;
+  editLink: string;
+  password: string;
+  embedPostLink: string;
+  revisions: {
+    count: number;
+  };
+  currentStoryStyles: {
+    colors: Pattern[];
+  };
+  globalStoryStyles: {
+    colors: Pattern[];
+    textStyles: Partial<Text>;
+  };
+  taxonomies: string[];
+  terms: string[];
   pages: Page[];
   status: string;
   backgroundAudio?: {
