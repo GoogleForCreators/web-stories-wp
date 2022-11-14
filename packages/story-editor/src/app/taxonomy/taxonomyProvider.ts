@@ -39,6 +39,8 @@ import {
   cacheFromEmbeddedTerms,
 } from './utils';
 
+import type { Term } from '../../types/taxonomyProvider';
+
 function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
   const [termCache, setTermCache] = useState({});

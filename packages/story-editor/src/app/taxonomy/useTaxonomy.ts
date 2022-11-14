@@ -22,8 +22,11 @@ import { identity, useContextSelector } from '@googleforcreators/react';
  * Internal dependencies
  */
 import Context from './context';
+import type { TaxonomyState } from '../../types/taxonomyProvider';
 
-function useTaxonomy(selector) {
+function useTaxonomy<T>(
+  selector: (state: TaxonomyState) => T | TaxonomyState = identity
+) {
   return useContextSelector(Context, selector ?? identity);
 }
 
