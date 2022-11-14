@@ -38,8 +38,7 @@ function useEyeDropperApi({ onChange = noop, handleClose = noop }) {
     }
 
     try {
-      const all = await eyeDropper.current.open();
-      const { sRGBHex } = all;
+      const { sRGBHex } = await eyeDropper.current.open();
       let hexColor = '';
       if (typeof sRGBHex === 'string' && sRGBHex[0] === '#') {
         hexColor = sRGBHex;
