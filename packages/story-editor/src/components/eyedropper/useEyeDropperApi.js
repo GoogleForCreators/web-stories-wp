@@ -39,12 +39,10 @@ function useEyeDropperApi({ onChange = noop, handleClose = noop }) {
 
     try {
       const { sRGBHex } = await eyeDropper.current.open();
-      let hexColor = '';
-      if (typeof sRGBHex === 'string' && sRGBHex[0] === '#') {
-        hexColor = sRGBHex;
-      } else {
-        hexColor = rgbToColorString(parseToRgb(sRGBHex));
-      }
+      const hexColor =
+        typeof sRGBHex === 'string' && sRGBHex[0] === '#'
+          ? sRGBHex
+          : rgbToColorString(parseToRgb(sRGBHex));
       onChange(getSolidFromHex(hexColor.substring(1)).color);
       handleClose();
     } catch (e) {
