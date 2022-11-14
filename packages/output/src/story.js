@@ -63,7 +63,7 @@ function OutputStory({
         {ampExtensions.map(({ name, src }) => (
           <script key={src} async="async" src={src} custom-element={name} />
         ))}
-        <FontDeclarations fonts={fonts} pages={pages} />
+        <FontDeclarations pages={pages} />
         {preloadResources.map(({ url, type }) => (
           <link key={url} href={url} rel="preload" as={type} />
         ))}

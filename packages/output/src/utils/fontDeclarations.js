@@ -38,7 +38,7 @@ const getNearestTuple = (tuples, tuple) => {
   });
 };
 
-function FontDeclarations({ pages, fonts = {} }) {
+function FontDeclarations({ pages }) {
   const map = new Map();
 
   for (const { elements } of pages) {
@@ -46,11 +46,6 @@ function FontDeclarations({ pages, fonts = {} }) {
     // Prepare font objects for later use.
     for (const { font, content } of textElements) {
       const { service, family, variants = [], url } = font;
-
-      // TODO: update to this after updating tests
-      if (fonts && fonts[font.family]) {
-        // const { service, family, variants = [], url } = fonts[font.family];
-      }
 
       if (!service || service === 'system') {
         continue;
@@ -129,7 +124,6 @@ function FontDeclarations({ pages, fonts = {} }) {
 
 FontDeclarations.propTypes = {
   pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
-  fonts: PropTypes.objectOf(StoryPropTypes.fonts),
 };
 
 export default FontDeclarations;
