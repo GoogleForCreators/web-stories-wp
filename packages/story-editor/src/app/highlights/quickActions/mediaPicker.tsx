@@ -41,7 +41,7 @@ interface MediaPickerProps {
   onPermissionError?: () => void;
   onSelect: (resource: Resource) => void;
   onSelectErrorMessage?: string;
-  render: (props:RenderProps) => void;
+  render: (props: RenderProps) => void;
   title?: string;
   type: string | string[];
 }

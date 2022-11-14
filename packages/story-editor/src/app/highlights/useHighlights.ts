@@ -25,7 +25,9 @@ import Context from './context';
 
 function useHighlights(): HighlightsState;
 function useHighlights<T>(selector: (state: HighlightsState) => T): T;
-function useHighlights<T>(selector: (state: HighlightsState) => T | HighlightsState = identity) {
+function useHighlights<T>(
+  selector: (state: HighlightsState) => T | HighlightsState = identity
+) {
   return useContextSelector(Context, selector ?? identity);
 }
 export default useHighlights;

@@ -4,6 +4,12 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
+  "references": [
+    { "path": "../elements" },
+    { "path": "../media" },
+    { "path": "../react" },
+    { "path": "../tracking" }
+  ],
   "include": [
     "src/app/config/*",
     "src/types",
