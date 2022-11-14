@@ -5,7 +5,6 @@
     "declarationDir": "dist-types"
   },
   "references": [
-    { "path": "../design-system" },
     { "path": "../elements" },
     { "path": "../react" }
   ],
