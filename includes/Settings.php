@@ -447,6 +447,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * @since 1.28.0
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/trunk/src/wp-includes/rest-api/endpoints/class-wp-rest-settings-controller.php#L211-L267
+	 *
 	 * @return array<string, array<string,string>> Array of registered options.
 	 */
 	protected function get_registered_options(): array {
