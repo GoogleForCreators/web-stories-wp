@@ -19,6 +19,7 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { getSolidFromHex } from '@googleforcreators/patterns';
 import { noop } from '@googleforcreators/design-system';
+import { rgbToColorString, parseToRgb } from 'polished';
 
 function useEyeDropperApi({ onChange = noop, handleClose = noop }) {
   const isEyeDropperApiSupported =
@@ -37,8 +38,15 @@ function useEyeDropperApi({ onChange = noop, handleClose = noop }) {
     }
 
     try {
-      const { sRGBHex } = await eyeDropper.current.open();
-      onChange(getSolidFromHex(sRGBHex.substring(1)).color);
+      const all = await eyeDropper.current.open();
+      const { sRGBHex } = all;
+      let hexColor = '';
+      if (typeof sRGBHex === 'string' && sRGBHex[0] === '#') {
+        hexColor = sRGBHex;
+      } else {
+        hexColor = rgbToColorString(parseToRgb(sRGBHex));
+      }
+      onChange(getSolidFromHex(hexColor.substring(1)).color);
       handleClose();
     } catch (e) {
       //eslint-disable-next-line no-console -- Surface error for debugging.
