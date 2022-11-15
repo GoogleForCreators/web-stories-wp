@@ -17,23 +17,12 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
-
-/**
- * External dependencies
- */
 
 /**
  * Internal dependencies
  */
 import { FIELD_TYPES } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
-
-export const PulseEffectInputPropTypes = {
-  scale: PropTypes.shape(AnimationInputPropTypes),
-  iterations: PropTypes.shape(AnimationInputPropTypes),
-};
 
 export default {
   scale: {

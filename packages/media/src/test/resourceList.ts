@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import resourceList, { ResourceCacheEntryType } from '../resourceList';
+import resourceList from '../resourceList';
+import { ResourceCacheEntryType } from '../types';
 
 describe('resourceList', () => {
   beforeEach(() => {

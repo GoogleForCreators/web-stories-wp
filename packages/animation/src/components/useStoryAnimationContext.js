@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { identity, useContextSelector } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
-import { StoryAnimationContext } from './provider';
+import StoryAnimationContext from './context';
 
 function useStoryAnimationContext(selector) {
   return useContextSelector(StoryAnimationContext, selector ?? identity);

@@ -147,5 +147,3 @@ export function migrate(
   }
   return result;
 }
-
-export default migrate;

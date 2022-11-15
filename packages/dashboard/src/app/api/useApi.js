@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { identity, useContextSelector } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
-import { ApiContext } from './apiProvider';
+import ApiContext from './context';
 
 export default function useApi(selector = identity) {
   return useContextSelector(ApiContext, selector);

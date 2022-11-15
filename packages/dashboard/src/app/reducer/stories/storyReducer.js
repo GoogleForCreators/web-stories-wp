@@ -17,31 +17,8 @@
 /**
  * Internal dependencies
  */
-import { STORY_STATUS } from '../../constants';
-
-export const ACTION_TYPES = {
-  CREATING_STORY_FROM_TEMPLATE: 'creating_story_from_template',
-  CREATE_STORY_FROM_TEMPLATE_SUCCESS: 'create_story_from_template_success',
-  CREATE_STORY_FROM_TEMPLATE_FAILURE: 'create_story_from_template_failure',
-  LOADING_STORIES: 'loading_stories',
-  FETCH_STORIES_SUCCESS: 'fetch_stories_success',
-  FETCH_STORIES_FAILURE: 'fetch_stories_failure',
-  UPDATE_STORY: 'update_story',
-  UPDATE_STORY_FAILURE: 'update_story_failure',
-  TRASH_STORY: 'trash_story',
-  TRASH_STORY_FAILURE: 'trash_story_failure',
-  DUPLICATE_STORY: 'duplicate_story',
-  DUPLICATE_STORY_FAILURE: 'duplicate_story_failure',
-};
-
-export const defaultStoriesState = {
-  error: {},
-  isLoading: false,
-  stories: {},
-  storiesOrderById: [],
-  totalStoriesByStatus: {},
-  totalPages: null,
-};
+import { STORY_STATUS } from '../../../constants';
+import { ACTION_TYPES } from './constants';
 
 function storyReducer(state, action) {
   switch (action.type) {

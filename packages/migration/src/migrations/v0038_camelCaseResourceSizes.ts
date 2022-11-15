@@ -102,7 +102,7 @@ function reducePage({ elements, ...rest }: PageV37): PageV38 {
   };
 }
 
-export function snakeToCamelCase(string = ''): string {
+function snakeToCamelCase(string = ''): string {
   if (!string.includes('_') && !string.includes('-')) {
     return string;
   }

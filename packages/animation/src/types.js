@@ -22,17 +22,19 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { FlyInEffectInputPropTypes } from './effects/flyIn/animationProps';
-import { PanEffectInputPropTypes } from './effects/pan/animationProps';
-import { PulseEffectInputPropTypes } from './effects/pulse/animationProps';
-import { RotateInEffectInputPropTypes } from './effects/rotateIn/animationProps';
-import { WhooshInEffectInputPropTypes } from './effects/whooshIn/animationProps';
-import { ZoomEffectInputPropTypes } from './effects/zoom/animationProps';
-import { BasicAnimationInputPropTypes } from './parts/defaultAnimationProps';
+import { FlyInEffectInputPropTypes } from './effects/flyIn/types';
+import { PanEffectInputPropTypes } from './effects/pan/types';
+import { PanAndZoomEffectInputPropTypes } from './effects/backgroundPanAndZoom/types';
+import { PulseEffectInputPropTypes } from './effects/pulse/types';
+import { RotateInEffectInputPropTypes } from './effects/rotateIn/types';
+import { WhooshInEffectInputPropTypes } from './effects/whooshIn/types';
+import { ZoomEffectInputPropTypes } from './effects/zoom/types';
+import { BasicAnimationInputPropTypes } from './parts';
 
 export const AnimationFormPropTypes = PropTypes.shape({
   ...FlyInEffectInputPropTypes,
   ...PanEffectInputPropTypes,
+  ...PanAndZoomEffectInputPropTypes,
   ...PulseEffectInputPropTypes,
   ...RotateInEffectInputPropTypes,
   ...WhooshInEffectInputPropTypes,
