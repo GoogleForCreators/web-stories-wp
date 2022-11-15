@@ -24,21 +24,7 @@ import { useMemo } from '@googleforcreators/react';
  */
 import { KeyframesOutput } from '../outputs';
 import useStoryAnimationContext from './useStoryAnimationContext';
-
-export function generateKeyframesMap(targets, getAnimationParts) {
-  return targets.reduce((acc, target) => {
-    return {
-      ...acc,
-      ...getAnimationParts(target).reduce((a, part) => {
-        const { generatedKeyframes } = part;
-        return {
-          ...a,
-          ...generatedKeyframes,
-        };
-      }, acc),
-    };
-  }, {});
-}
+import generateKeyframesMap from './generateKeyframesMap';
 
 function AMPKeyframes() {
   const {

@@ -19,20 +19,16 @@
  */
 import { getDaysInMonth, isLeapYear, format } from 'date-fns';
 import { format as formatWithTZ, zonedTimeToUtc, toDate } from 'date-fns-tz';
+
 /**
  * Internal dependencies
  */
 import getOptions from './getOptions';
+import { FORMAT_TOKEN_SEPARATOR } from './constants';
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_MINUTES = 60;
 const HOUR_IN_SECONDS = HOUR_IN_MINUTES * MINUTE_IN_SECONDS;
-
-const FORMAT_TOKEN_SEPARATOR = '\u2006';
-export const FORMAT_TOKEN_SEPARATOR_REGEX = new RegExp(
-  FORMAT_TOKEN_SEPARATOR,
-  'gi'
-);
 
 /**
  * Map of PHP formats to date-fns formats.

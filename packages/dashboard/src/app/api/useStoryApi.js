@@ -33,7 +33,8 @@ import {
 /**
  * Internal dependencies
  */
-import storyReducer, {
+import {
+  storyReducer,
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
