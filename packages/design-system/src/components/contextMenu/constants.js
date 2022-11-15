@@ -26,3 +26,5 @@
  * Currently, this is used from within story-editor floatingMenu (see FocusTrapButton).
  */
 export const CONTEXT_MENU_SKIP_ELEMENT = 'context-menu-skip-element';
+
+export const CONTEXT_MENU_MIN_WIDTH = 200;

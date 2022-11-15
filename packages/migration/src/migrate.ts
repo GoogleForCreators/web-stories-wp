@@ -144,5 +144,3 @@ export function migrate(storyData: Story, version: number): Story {
   }
   return result;
 }
-
-export default migrate;

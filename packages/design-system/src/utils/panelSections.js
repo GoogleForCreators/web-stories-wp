@@ -27,10 +27,8 @@ export const STYLE_PANE_IDS = {
 
 const { LINK, ANIMATION, ...panelsExcludingLinkAndAnimation } = PanelTypes;
 
-const PanelSections = {
+export const PanelSections = {
   [STYLE_PANE_IDS.SELECTION]: Object.values(panelsExcludingLinkAndAnimation),
   [STYLE_PANE_IDS.LINK]: [LINK],
   [STYLE_PANE_IDS.ANIMATION]: [ANIMATION],
 };
-
-export default PanelSections;
