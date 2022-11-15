@@ -41,7 +41,7 @@ import {
 
 import type { Term } from '../../types/taxonomyProvider';
 
-function TaxonomyProvider(props) {
+function TaxonomyProvider(props: { children: React.ReactNode }) {
   const [taxonomies, setTaxonomies] = useState([]);
   const [termCache, setTermCache] = useState({});
   // Should grab categories on mount
