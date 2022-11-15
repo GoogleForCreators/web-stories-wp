@@ -25,7 +25,6 @@ import {
   useReducer,
   useRef,
   useState,
-  createContext,
 } from '@googleforcreators/react';
 import { clamp } from '@googleforcreators/units';
 import { v4 as uuidv4 } from 'uuid';
@@ -42,8 +41,7 @@ if (!('KeyframeEffect' in window)) {
 import { StoryElementPropType } from '../types';
 import { AnimationPart } from '../parts';
 import { AnimationProps } from '../parts/types';
-
-const Context = createContext(null);
+import Context from './context';
 
 const WAAPIAnimationMachine = {
   idle: {
@@ -317,4 +315,3 @@ Provider.propTypes = {
 };
 
 export default Provider;
-export { Context as StoryAnimationContext };

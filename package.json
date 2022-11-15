@@ -194,7 +194,8 @@
   "overrides": {
     "@axe-core/puppeteer": {
       "puppeteer": "^19.0.0"
-    }
+    },
+    "date-fns": "^2.29.3"
   },
   "scripts": {
     "build": "npm-run-all build:*",

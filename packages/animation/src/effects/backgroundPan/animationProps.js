@@ -17,19 +17,12 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
 import { FIELD_TYPES, DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
-
-export const PanEffectInputPropTypes = {
-  panDir: PropTypes.shape(AnimationInputPropTypes),
-  duration: PropTypes.shape(AnimationInputPropTypes),
-};
 
 export default {
   panDir: {
