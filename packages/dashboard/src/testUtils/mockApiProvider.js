@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ApiContext } from '../app/api/apiProvider';
+import ApiContext from '../app/api/context';
 
 export default function MockApiProvider({ children, value }) {
   const mergedValue = {

@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Migrations;
 
 use Google\Web_Stories\Interfaces\Migration;

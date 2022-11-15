@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Model\Story;
@@ -82,7 +84,7 @@ abstract class Embed_Base extends Service_Base {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
 
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 	}
 
 	/**

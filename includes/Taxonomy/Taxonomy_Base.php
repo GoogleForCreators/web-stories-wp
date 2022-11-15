@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Taxonomy;
 
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
