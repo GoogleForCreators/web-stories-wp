@@ -39,6 +39,7 @@ function useEyeDropperApi({ onChange = noop, handleClose = noop }) {
 
     try {
       const { sRGBHex } = await eyeDropper.current.open();
+      // Per documentation, `sRGBHex` should always be a hex color but is not.
       const hexColor =
         typeof sRGBHex === 'string' && sRGBHex[0] === '#'
           ? sRGBHex
