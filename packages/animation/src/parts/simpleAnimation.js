@@ -25,13 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AnimationOutput, WithAnimation } from '../outputs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 import { AMPAnimationProps } from './types';
-
-export const sanitizeTimings = ({ easing, duration, delay, ...other }) => ({
-  ...other,
-  easing: easing || 'linear',
-  duration: !isNaN(Number(duration)) ? Math.max(duration, 0) : 0,
-  delay: !isNaN(Number(delay)) ? Math.max(delay, 0) : 0,
-});
+import { sanitizeTimings } from './utils';
 
 function SimpleAnimation(
   animationName,

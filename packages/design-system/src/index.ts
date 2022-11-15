@@ -22,8 +22,8 @@ import Modal from 'react-modal';
 /**
  * Internal dependencies
  */
-import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
-import sessionStore, { SESSION_STORAGE_PREFIX } from './utils/sessionStore';
+import { localStore, LOCAL_STORAGE_PREFIX } from './utils/localStore';
+import { sessionStore, SESSION_STORAGE_PREFIX } from './utils/sessionStore';
 import * as Icons from './icons';
 
 const { setAppElement } = Modal;
