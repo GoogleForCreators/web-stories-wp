@@ -21,7 +21,7 @@ import { useEffect, memo, forwardRef } from '@googleforcreators/react';
 import styled, { StyleSheetManager } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import {
-  StoryAnimation,
+  AnimationProvider,
   useStoryAnimationContext,
   STORY_ANIMATION_STATE,
 } from '@googleforcreators/animation';
@@ -122,14 +122,14 @@ const PreviewPage = forwardRef(function PreviewPage(
   // elements from shifting when in RTL mode since these aren't relevant for story previews
   return (
     <StyleSheetManager stylisPlugins={[]}>
-      <StoryAnimation.Provider
+      <AnimationProvider
         animations={page.animations}
         elements={page.elements}
         onWAAPIFinish={onAnimationComplete}
       >
         <PreviewPageDisplay ref={ref} page={page} pageSize={pageSize} />
         <PreviewPageAnimationController animationState={animationState} />
-      </StoryAnimation.Provider>
+      </AnimationProvider>
     </StyleSheetManager>
   );
 });

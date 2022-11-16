@@ -17,31 +17,24 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import { sanitizeTimings } from '../simpleAnimation';
-import { AnimationPart, throughput } from '..';
+import { sanitizeTimings } from '../createAnimation';
+import { createAnimationPart, throughput } from '..';
 
-describe('AnimationPart', () => {
+describe('createAnimationPart', () => {
   /**
    * These aren't defined in jsdom so
    * can't mock. So instead just adding
    * them to the window and restoring
    * incase they ever get support.
    */
-  let KeyframeEffectTmp;
-  let AnimationTmp;
   beforeEach(() => {
-    KeyframeEffectTmp = window.KeyframeEffect;
-    window.KeyframeEffect = function () {
-      return {};
-    };
-    AnimationTmp = window.Animation;
-    window.Animation = function () {
-      return {};
-    };
+    // @ts-ignore
+    jest.spyOn(window, 'KeyframeEffect').mockImplementation(() => ({}));
+    // @ts-ignore
+    jest.spyOn(window, 'Animation').mockImplementation(() => ({}));
   });
   afterEach(() => {
-    window.KeyframeEffect = KeyframeEffectTmp;
-    window.Animation = AnimationTmp;
+    jest.restoreAllMocks();
   });
 
   /**
@@ -53,7 +46,7 @@ describe('AnimationPart', () => {
     'type: %s returns a valid object with keyframes and timings for a WAAPIAnimation',
     (type) => {
       const args = {};
-      const { WAAPIAnimation } = AnimationPart(type, args);
+      const { WAAPIAnimation } = createAnimationPart(type, args);
       expect(typeof WAAPIAnimation).toBe('object');
       expect(WAAPIAnimation.keyframes).toBeDefined();
       expect(WAAPIAnimation.timings).toBeDefined();
@@ -66,7 +59,7 @@ describe('AnimationPart', () => {
 
     Object.values(ANIMATION_TYPES).forEach((type) => {
       const properties = Array.from(
-        Object.keys(AnimationPart(type, {}))
+        Object.keys(createAnimationPart(type, {}))
       ).sort();
 
       // 'type' is being added to the assertion so we'll
@@ -91,18 +84,6 @@ describe('AnimationPart', () => {
       });
       expect(duration).toBe(value);
       expect(delay).toBe(value);
-    });
-  });
-
-  it('should return 0 for non-numeric values of `duration` and `delay` animation properties', () => {
-    // test will fail if value is an array with a single numeric element [1]
-    ['x', [], {}, NaN, null, '1.2.3.4', '1+2'].forEach((value) => {
-      const { duration, delay } = sanitizeTimings({
-        duration: value,
-        delay: value,
-      });
-      expect(duration).toBe(0);
-      expect(delay).toBe(0);
     });
   });
 });

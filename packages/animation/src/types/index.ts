@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
+export * from './animation';
+export * from './effects';
+export * from './element';
+export * from './keyframes';
 export * from './propTypes';

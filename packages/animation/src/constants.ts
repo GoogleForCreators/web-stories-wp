@@ -19,6 +19,11 @@
  */
 import { _x } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { AnimationType, ScaleDirection } from './types';
+
 export const BEZIER = {
   linear: 'linear',
   in: 'ease-in',
@@ -48,169 +53,105 @@ export const BEZIER = {
   default: 'cubic-bezier(0.4, 0.4, 0.0, 1)',
 };
 
-export const ANIMATION_TYPES = {
-  BLINK_ON: 'blinkOn',
-  BOUNCE: 'bounce',
-  FADE: 'fade',
-  FLIP: 'flip',
-  FLOAT_ON: 'floatOn',
-  MOVE: 'move',
-  PULSE: 'pulse',
-  SPIN: 'spin',
-  ZOOM: 'zoom',
-};
+export type BezierType = keyof typeof BEZIER;
 
 export const ANIMATION_EFFECTS = {
   DROP: {
-    value: 'effect-drop',
+    value: AnimationType.EffectDrop,
     name: _x('Drop', 'animation effect', 'web-stories'),
   },
   FADE_IN: {
-    value: 'effect-fade-in',
+    value: AnimationType.EffectFadeIn,
     name: _x('Fade In', 'animation effect', 'web-stories'),
   },
   FLY_IN: {
-    value: 'effect-fly-in',
+    value: AnimationType.EffectFlyIn,
     name: _x('Fly In', 'animation effect', 'web-stories'),
   },
   PAN: {
-    value: 'effect-pan',
+    value: AnimationType.EffectPan,
     name: _x('Pan', 'animation effect', 'web-stories'),
   },
   PULSE: {
-    value: 'effect-pulse',
+    value: AnimationType.EffectPulse,
     name: _x('Pulse', 'animation effect', 'web-stories'),
   },
   TWIRL_IN: {
-    value: 'effect-twirl-in',
+    value: AnimationType.EffectTwirlIn,
     name: _x('Twirl In', 'animation effect', 'web-stories'),
   },
   WHOOSH_IN: {
-    value: 'effect-whoosh-in',
+    value: AnimationType.EffectWhooshIn,
     name: _x('Whoosh In', 'animation effect', 'web-stories'),
   },
   ZOOM: {
-    value: 'effect-zoom',
+    value: AnimationType.EffectZoom,
     name: _x('Scale', 'animation effect', 'web-stories'),
   },
   ROTATE_IN: {
-    value: 'effect-rotate-in',
+    value: AnimationType.EffectRotateIn,
     name: _x('Rotate In', 'animation effect', 'web-stories'),
   },
 };
 
 export const BACKGROUND_ANIMATION_EFFECTS = {
   ZOOM: {
-    value: 'effect-background-zoom',
+    value: AnimationType.EffectBackgroundZoom,
     name: _x('Zoom', 'animation effect', 'web-stories'),
   },
   PAN: {
-    value: 'effect-background-pan',
+    value: AnimationType.EffectBackgroundPan,
     name: ANIMATION_EFFECTS.PAN.name,
   },
   PAN_AND_ZOOM: {
-    value: 'effect-background-pan-and-zoom',
+    value: AnimationType.EffectBackgroundZoomAndPan,
     name: _x('Pan and Zoom', 'animation effect', 'web-stories'),
   },
 };
 
 export const ANIMATION_PARTS = {
   BLINK_ON: {
-    value: ANIMATION_TYPES.BLINK_ON,
+    value: AnimationType.BlinkOn,
     name: _x('Blink On', 'animation effect', 'web-stories'),
   },
   BOUNCE: {
-    value: ANIMATION_TYPES.BOUNCE,
+    value: AnimationType.Bounce,
     name: _x('Bounce', 'animation effect', 'web-stories'),
   },
   FADE: {
-    value: ANIMATION_TYPES.FADE,
+    value: AnimationType.Fade,
     name: _x('Fade', 'animation effect', 'web-stories'),
   },
   FLIP: {
-    value: ANIMATION_TYPES.FLIP,
+    value: AnimationType.Flip,
     name: _x('Flip', 'animation effect', 'web-stories'),
   },
   FLOAT_ON: {
-    value: ANIMATION_TYPES.FLOAT_ON,
+    value: AnimationType.FloatOn,
     name: _x('Float On', 'animation effect', 'web-stories'),
   },
   MOVE: {
-    value: ANIMATION_TYPES.MOVE,
+    value: AnimationType.Move,
     name: _x('Move', 'animation effect', 'web-stories'),
   },
   PULSE: {
-    value: ANIMATION_TYPES.PULSE,
+    value: AnimationType.Pulse,
     name: _x('Pulse', 'animation effect', 'web-stories'),
   },
   SPIN: {
-    value: ANIMATION_TYPES.SPIN,
+    value: AnimationType.Spin,
     name: _x('Spin', 'animation effect', 'web-stories'),
   },
   ZOOM: {
-    value: ANIMATION_TYPES.ZOOM,
+    value: AnimationType.Zoom,
     name: _x('Zoom', 'animation effect', 'web-stories'),
   },
 };
 
-export const DIRECTION = {
-  TOP_TO_BOTTOM: 'topToBottom',
-  RIGHT_TO_LEFT: 'rightToLeft',
-  BOTTOM_TO_TOP: 'bottomToTop',
-  LEFT_TO_RIGHT: 'leftToRight',
-};
-
-export const SCALE_DIRECTION = {
-  DYNAMIC_PROPERTY_VALUE: 'dynamicPropertyValue',
-  SCALE_IN: 'scaleIn',
-  SCALE_OUT: 'scaleOut',
-  SCALE_OUT_TOP_RIGHT: 'scaleOutTopRight',
-  SCALE_OUT_BOTTOM_LEFT: 'scaleOutBottomLeft',
-  SCALE_IN_TOP_LEFT: 'scaleInTopLeft',
-  SCALE_IN_BOTTOM_RIGHT: 'scaleInBottomRight',
-};
-
-export const SCALE_DIRECTION_MAP = {
-  SCALE_IN: [
-    SCALE_DIRECTION.SCALE_IN_TOP_LEFT,
-    SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT,
-  ],
-  SCALE_OUT: [
-    SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT,
-    SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT,
-  ],
-};
-
-export const ROTATION = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
-
-export const AXIS = {
-  X: 'x',
-  Y: 'y',
-};
-
-export const FIELD_TYPES = {
-  DROPDOWN: 'dropdown',
-  HIDDEN: 'hidden',
-  ROTATION_PICKER: 'rotation_picker',
-  DIRECTION_PICKER: 'direction_picker',
-  NUMBER: 'number',
-  FLOAT: 'float',
-  TEXT: 'text',
-  CHECKBOX: 'checkbox',
-  RANGE: 'RANGE',
-};
-
-export const STORY_ANIMATION_STATE = {
-  RESET: 'reset',
-  PAUSED: 'paused',
-  SCRUBBING: 'scrubbing',
-  PLAYING: 'playing',
-  PLAYING_SELECTED: 'playing-selected',
-};
+export const SCALE_DIRECTIONS = {
+  IN: [ScaleDirection.ScaleInTopLeft, ScaleDirection.ScaleInBottomRight],
+  OUT: [ScaleDirection.ScaleOutTopRight, ScaleDirection.ScaleInBottomRight],
+} as const;
 
 export const BG_MIN_SCALE = 100;
 export const BG_MAX_SCALE = 400;

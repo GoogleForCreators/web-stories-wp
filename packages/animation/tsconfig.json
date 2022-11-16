@@ -5,10 +5,11 @@
     "declarationDir": "dist-types"
   },
   "references": [
-    { "path": "../elements" },
     { "path": "../i18n" },
+    { "path": "../media" },
     { "path": "../react" },
     { "path": "../units" }
   ],
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["**/test/**/*"]
 }

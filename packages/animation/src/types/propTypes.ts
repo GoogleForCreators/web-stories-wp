@@ -24,45 +24,35 @@ import * as PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { FlyInEffectInputPropTypes } from '../effects/flyIn/animationProps';
-import { PanEffectInputPropTypes } from '../effects/pan/animationProps';
-import { PulseEffectInputPropTypes } from '../effects/pulse/animationProps';
-import { RotateInEffectInputPropTypes } from '../effects/rotateIn/animationProps';
-import { WhooshInEffectInputPropTypes } from '../effects/whooshIn/animationProps';
-import { ZoomEffectInputPropTypes } from '../effects/zoom/animationProps';
-import { BasicAnimationInputPropTypes } from '../parts/defaultAnimationProps';
+import { AnimationType } from './animation';
 
-export const AnimationFormPropTypes = PropTypes.shape({
-  ...FlyInEffectInputPropTypes,
-  ...PanEffectInputPropTypes,
-  ...PulseEffectInputPropTypes,
-  ...RotateInEffectInputPropTypes,
-  ...WhooshInEffectInputPropTypes,
-  ...ZoomEffectInputPropTypes,
-  ...BasicAnimationInputPropTypes,
-});
+// This one did once include all the specs for the different possible fields
+// in the animation panel, but we don't want to create those anymore.
+export const AnimationFormPropTypes = PropTypes.object;
 
-// TODO, load this from original source, once made into a package.
-export const StoryElementPropType = PropTypes.shape({
+export const GeneralAnimationPropTypes = {
+  delay: PropTypes.number,
+  direction: PropTypes.oneOf([
+    'normal',
+    'reverse',
+    'alternate',
+    'alternate-reverse',
+  ]),
+  duration: PropTypes.number,
+  easing: PropTypes.string,
+  easingPreset: PropTypes.string,
+  endDelay: PropTypes.number,
+  fill: PropTypes.oneOf(['backwards', 'forwards', 'both', 'none']),
+  iterationStart: PropTypes.number,
+  iterations: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf(['infinity', '']),
+  ]),
+};
+
+export const AnimationProps = {
   id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  flip: PropTypes.shape({
-    vertical: PropTypes.bool,
-    horizontal: PropTypes.bool,
-  }),
-  rotationAngle: PropTypes.number.isRequired,
-  mask: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-  }),
-  link: PropTypes.shape({
-    url: PropTypes.string.isRequired,
-    desc: PropTypes.string,
-    icon: PropTypes.string,
-  }),
-  opacity: PropTypes.number,
-  lockAspectRatio: PropTypes.bool,
-});
+  type: PropTypes.oneOf([...Object.values(AnimationType)]),
+  targets: PropTypes.arrayOf(PropTypes.string),
+  ...GeneralAnimationPropTypes,
+};

@@ -17,9 +17,10 @@
 /**
  * External dependencies
  */
-import type { Element } from '@googleforcreators/elements';
+import type { DimensionableElement } from '@googleforcreators/units';
 
 type stringable = string | number | boolean | null | undefined;
+type ElementWithRotation = Partial<Pick<DimensionableElement, 'rotationAngle'>>;
 
 /**
  * Just the functional equivalent of your baseline template literal.
@@ -33,18 +34,14 @@ type stringable = string | number | boolean | null | undefined;
  * @param args arguments in template tag
  * @return string result
  */
-export function literal(strings: string[], ...args: stringable[]): string {
+export function literal(
+  strings: TemplateStringsArray,
+  ...args: stringable[]
+): string {
   return strings
     .reduce<stringable[]>((accum, str, i) => accum.concat([str, args[i]]), [])
     .join('');
 }
-
-/**
- * @typedef TemplateTag
- * @param {Array<string>} strings strings in template tag
- * @param {Array<any>} args arguments in template tag
- * @return {string} string result
- */
 
 /**
  * Given an element, this function returns a template tag
@@ -63,11 +60,13 @@ export function literal(strings: string[], ...args: stringable[]): string {
  * @param element story element to derive counter transforms off of.
  * @return template string tag that resets transform space.
  */
-export function getGlobalSpace(element: Element = {}) {
-  function global(...template: stringable[]) {
-    return `rotate(${-1 * element?.rotationAngle}deg) ${literal(
-      ...template
-    )} rotate(${element?.rotationAngle}deg)`;
+export function getGlobalSpace(element: ElementWithRotation = {}) {
+  const angle = element?.rotationAngle || 0;
+  function global(strings: TemplateStringsArray, ...args: stringable[]) {
+    return `rotate(${-1 * angle}deg) ${literal(
+      strings,
+      ...args
+    )} rotate(${angle}deg)`;
   }
-  return element?.rotationAngle ? global : literal;
+  return angle !== 0 ? global : literal;
 }

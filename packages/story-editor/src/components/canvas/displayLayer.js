@@ -28,7 +28,7 @@ import {
 import PropTypes from 'prop-types';
 import { _x, __ } from '@googleforcreators/i18n';
 import {
-  StoryAnimation,
+  AnimationProvider,
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
 } from '@googleforcreators/animation';
@@ -152,7 +152,7 @@ function StoryAnimations({ children }) {
   );
 
   return (
-    <StoryAnimation.Provider
+    <AnimationProvider
       animations={currentPageAnimations}
       elements={currentPageElements}
       onWAAPIFinish={resetAnimationState}
@@ -162,7 +162,7 @@ function StoryAnimations({ children }) {
         resetAnimationState={resetAnimationState}
       />
       {children}
-    </StoryAnimation.Provider>
+    </AnimationProvider>
   );
 }
 

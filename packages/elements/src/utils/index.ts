@@ -27,5 +27,3 @@ export {
   default as duplicateElement,
   getOffsetCoordinates,
 } from './duplicateElement';
-export * from './getElementOffsets';
-export { default as getElementOrigin } from './getElementOrigin';
