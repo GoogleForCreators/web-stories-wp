@@ -273,7 +273,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
 		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
 
-		return array_unique( array_merge( $thumb_ids, $parent_ids ) );
+		return array_unique( [ ...$thumb_ids, ...$parent_ids ] );
 	}
 
 	/**

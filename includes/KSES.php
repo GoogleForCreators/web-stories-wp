@@ -841,7 +841,7 @@ class KSES extends Service_Base implements HasRequirements {
 			'layout'              => true,
 		];
 
-		return array_merge( $value, $global_attributes );
+		return [ ...$value, ...$global_attributes ];
 	}
 
 	/**

@@ -175,7 +175,7 @@ class AMP extends Service_Base implements HasRequirements {
 		$post_types = array_diff( $post_types, [ $story_post_type ] );
 
 		if ( $this->get_request_post_type() === $story_post_type ) {
-			$post_types = array_merge( $post_types, [ $story_post_type ] );
+			$post_types = [ ...$post_types, $story_post_type ];
 		}
 
 		return array_unique( array_values( $post_types ) );
