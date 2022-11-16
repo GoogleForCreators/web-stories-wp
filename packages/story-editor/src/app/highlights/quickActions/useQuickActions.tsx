@@ -29,7 +29,7 @@ import { trackEvent } from '@googleforcreators/tracking';
 import type { EventParameters } from '@googleforcreators/tracking';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import styled from 'styled-components';
-
+import type { MouseEvent } from 'react';
 /**
  * Internal dependencies
  */
@@ -86,6 +86,12 @@ const BackgroundBlur = styled(Icons.BackgroundBlur).attrs(
 const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
   quickActionIconAttrs
 )``;
+
+interface handleElementResetProp {
+  elementId: string;
+  resetProperties: string[];
+  elementType: string;
+}
 
 /**
  * Determines the quick actions to display in the quick
@@ -173,7 +179,7 @@ const useQuickActions = () => {
   /**
    * Prevent quick actions menu from removing focus from the canvas.
    */
-  const handleMouseDown = useCallback((ev) => {
+  const handleMouseDown = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
     ev.stopPropagation();
   }, []);
 
@@ -186,7 +192,7 @@ const useQuickActions = () => {
    * @return {void}
    */
   const handleResetProperties = useCallback(
-    (elementType, elementId, properties) => {
+    (elementType: string, elementId: string, properties: string[]) => {
       const newProperties = {};
       // Choose properties to clear
       if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
@@ -243,7 +249,7 @@ const useQuickActions = () => {
    * @return {void}
    */
   const handleElementReset = useCallback(
-    ({ elementId, resetProperties, elementType }) => {
+    ({ elementId, resetProperties, elementType }: handleElementResetProp) => {
       handleResetProperties(elementType, elementId, resetProperties);
 
       showSnackbar({
@@ -280,7 +286,7 @@ const useQuickActions = () => {
    * @param {Event} ev The triggering event.
    */
   const handleFocusPanel = useCallback(
-    (highlight) => (elementId) => (ev) => {
+    (highlight: string ) => (elementId: string) => (ev: MouseEvent<HTMLAnchorElement>) => {
       ev.preventDefault();
       setHighlights({
         elementId: elementId || selectedElement?.id,
@@ -331,7 +337,7 @@ const useQuickActions = () => {
       {
         Icon: Bucket,
         label: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent<HTMLAnchorElement>) => {
           handleFocusPageBackground(backgroundElement?.id)(evt);
 
           void trackEvent('quick_action', {
@@ -344,7 +350,7 @@ const useQuickActions = () => {
       {
         Icon: Media,
         label: ACTIONS.INSERT_BACKGROUND_MEDIA.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent<HTMLAnchorElement>) => {
           handleFocusMediaPanel()(evt);
 
           void trackEvent('quick_action', {
@@ -358,7 +364,7 @@ const useQuickActions = () => {
       {
         Icon: LetterTPlus,
         label: ACTIONS.INSERT_TEXT.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent<HTMLAnchorElement>) => {
           handleFocusTextSetsPanel()(evt);
           insertElement('text', DEFAULT_PRESET);
           void trackEvent('quick_action', {
@@ -394,7 +400,7 @@ const useQuickActions = () => {
       commonActions.push({
         Icon: CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent<HTMLAnchorElement>) => {
           handleFocusAnimationPanel()(evt);
 
           void trackEvent('quick_action', {
@@ -410,7 +416,7 @@ const useQuickActions = () => {
     commonActions.push({
       Icon: Link,
       label: ACTIONS.ADD_LINK.text,
-      onClick: (evt) => {
+      onClick: (evt: MouseEvent<HTMLAnchorElement>) => {
         handleFocusLinkPanel()(evt);
 
         void trackEvent('quick_action', {
@@ -533,7 +539,7 @@ const useQuickActions = () => {
       {
         Icon: Captions,
         label: ACTIONS.ADD_CAPTIONS.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent<HTMLAnchorElement>) => {
           handleFocusCaptionsPanel()(evt);
 
           void trackEvent('quick_action', {
@@ -558,7 +564,7 @@ const useQuickActions = () => {
       {
         Icon: CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent<HTMLAnchorElement>) => {
           handleFocusAnimationPanel()(evt);
 
           void trackEvent('quick_action', {
