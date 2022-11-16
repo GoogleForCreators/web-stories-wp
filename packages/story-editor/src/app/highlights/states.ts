@@ -64,6 +64,14 @@ const keys = {
   PAGE_BACKGROUND_AUDIO: 'PAGE_BACKGROUND_AUDIO',
 };
 
+interface stylePaneIdsType {
+  SELECTION: string;
+  LINK: string;
+  ANIMATION: string;
+}
+
+const { SELECTION, ANIMATION, LINK } = STYLE_PANE_IDS as stylePaneIdsType;
+
 export const STATES = {
   [keys.STORY_TITLE]: {
     focus: true,
@@ -77,7 +85,7 @@ export const STATES = {
   [keys.STYLE_PANE]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: SELECTION,
   },
 
   [keys.POSTER]: {
@@ -99,47 +107,47 @@ export const STATES = {
   [keys.CAPTIONS]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: SELECTION,
   },
   [keys.ASSISTIVE_TEXT]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: SELECTION,
   },
   [keys.PAGE_BACKGROUND]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: SELECTION,
   },
   [keys.ANIMATION]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.ANIMATION,
+    section: ANIMATION,
   },
   [keys.FONT]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: SELECTION,
   },
   [keys.LINK]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.LINK,
+    section: LINK,
   },
   [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: SELECTION,
   },
   [keys.STYLE]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: SELECTION,
   },
   [keys.TEXT_COLOR]: {
     focus: true,
     tab: STYLE,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: SELECTION,
   },
 
   // Library

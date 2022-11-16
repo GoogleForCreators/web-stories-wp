@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { useContextSelector, identity } from '@googleforcreators/react';
+import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import Context from './context';
+import type { HighlightsState } from '../../types/highlightsProvider';
 
-function useHighlights(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-export default useHighlights;
+export default createContext<HighlightsState>({} as HighlightsState);

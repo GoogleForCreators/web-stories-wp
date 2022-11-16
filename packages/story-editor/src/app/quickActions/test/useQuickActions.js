@@ -24,18 +24,18 @@ import { Icons, useSnackbar } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { useQuickActions } from '..';
-import { states } from '../..';
-import useHighlights from '../../useHighlights';
-import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
-import { useStory, useStoryTriggersDispatch } from '../../../story';
-import { ACTIONS } from '../constants';
-import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
-import { useConfig, useLocalMedia } from '../../..';
-import useFFmpeg from '../../../media/utils/useFFmpeg';
+import { useQuickActions } from '../index';
+import { states } from '../../highlights';
+import useHighlights from '../../highlights/useHighlights';
+import { STORY_EVENTS } from '../../story/storyTriggers/storyEvents';
+import { useStory, useStoryTriggersDispatch } from '../../story';
+import { ACTIONS } from '../../highlights/constants';
+import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
+import { useConfig, useLocalMedia } from '../../index';
+import useFFmpeg from '../../media/utils/useFFmpeg';
 import { MediaPicker } from '../useQuickActions';
-import { noop } from '../../../../utils/noop';
-import useInsertElement from '../../../../components/canvas/useInsertElement';
+import { noop } from '../../../utils/noop';
+import useInsertElement from '../../../components/canvas/useInsertElement';
 
 const {
   Bucket,

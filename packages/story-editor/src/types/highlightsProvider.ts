@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { OUTLINE, FLASH } from './styles';
+import type { Element, ElementId } from '@googleforcreators/elements';
 
-export { default as useHighlights } from './useHighlights';
-export { default as HighlightsProvider } from './provider';
-export { default as states } from './states';
-export { ACTIONS } from './quickActions/constants';
-export { MediaPicker, useQuickActions } from './quickActions';
+export interface selectElementProps {
+  elements?: Element[];
+  elementId?: ElementId;
+  pageId?: string;
+}
 
-export const styles = {
-  OUTLINE,
-  FLASH,
-};
+export interface setHighlightProps {
+  elements?:  Element[];
+  elementId?: ElementId;
+  pageId?: string;
+  highlight?:  string;
+}
+
+
+export interface HighlightsState {
+  cancelEffect: (stateKey: string) => void
+  onFocusOut: () => void
+  setHighlights: (setHighlightProps) => void
+}

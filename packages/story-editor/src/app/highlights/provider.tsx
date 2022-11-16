@@ -17,16 +17,23 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../story';
+import type {
+  setHighlightProps,
+  selectElementProps,
+} from '../../types/highlightsProvider';
 import Context from './context';
 import { STATES } from './states';
 
-function HighlightsProvider({ children }) {
+interface HighlightsProviderProps {
+  children: ReactNode;
+}
+
+function HighlightsProvider({ children }: HighlightsProviderProps) {
   const [highlighted, setHighlighted] = useState({});
   const { setSelectedElementsById, setCurrentPage } = useStory(
     ({ actions }) => ({
@@ -36,13 +43,13 @@ function HighlightsProvider({ children }) {
   );
 
   const selectElement = useCallback(
-    ({ elementId, elements, pageId }) => {
+    ({ elementId, elements, pageId }: selectElementProps) => {
       if (pageId) {
         setCurrentPage({ pageId });
       }
       if (Array.isArray(elements)) {
         setSelectedElementsById({
-          elementIds: elements.map(({ id }) => id),
+          elementIds: elements.map((element) => element.id),
         });
       } else if (elementId) {
         setSelectedElementsById({ elementIds: [elementId] });
@@ -52,7 +59,7 @@ function HighlightsProvider({ children }) {
   );
 
   const setHighlights = useCallback(
-    ({ elements, elementId, pageId, highlight }) => {
+    ({ elements, elementId, pageId, highlight }: setHighlightProps) => {
       if (elements || elementId || pageId) {
         selectElement({ elements, elementId, pageId });
       }
@@ -72,7 +79,7 @@ function HighlightsProvider({ children }) {
   const onFocusOut = useCallback(() => setHighlighted({}), [setHighlighted]);
 
   const cancelEffect = useCallback(
-    (stateKey) =>
+    (stateKey: string) =>
       setHighlighted((state) => ({
         [stateKey]: { ...state[stateKey], showEffect: false },
       })),
@@ -91,9 +98,5 @@ function HighlightsProvider({ children }) {
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
-
-HighlightsProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default HighlightsProvider;

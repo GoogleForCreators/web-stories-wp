@@ -13,10 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import { OUTLINE, FLASH } from './styles';
 
-export default createContext({});
+export { default as useHighlights } from './useHighlights';
+export { default as HighlightsProvider } from './provider';
+export { default as states } from './states';
+export { ACTIONS } from './constants';
+
+export const styles = {
+  OUTLINE,
+  FLASH,
+};

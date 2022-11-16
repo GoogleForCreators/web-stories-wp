@@ -37,24 +37,24 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import states from '../states';
-import useHighlights from '../useHighlights';
-import updateProperties from '../../../components/style/updateProperties';
-import { useHistory } from '../../history';
-import { useConfig } from '../../config';
-import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../../media';
-import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../../story';
-import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
-import useFFmpeg from '../../media/utils/useFFmpeg';
-import useInsertElement from '../../../components/canvas/useInsertElement';
-import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
-import { useMediaRecording } from '../../../components/mediaRecording';
+import states from '../highlights/states';
+import useHighlights from '../highlights/useHighlights';
+import updateProperties from '../../components/style/updateProperties';
+import { useHistory } from '../history';
+import { useConfig } from '../config';
+import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../media';
+import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../story';
+import useApplyTextAutoStyle from '../../utils/useApplyTextAutoStyle';
+import useFFmpeg from '../media/utils/useFFmpeg';
+import useInsertElement from '../../components/canvas/useInsertElement';
+import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
+import { useMediaRecording } from '../../components/mediaRecording';
 import {
   BACKGROUND_BLUR_PX,
   VIDEO_EFFECTS,
-} from '../../../components/mediaRecording/constants';
+} from '../../components/mediaRecording/constants';
 import { getResetProperties } from './utils';
-import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
+import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from '../highlights/constants';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
