@@ -23,11 +23,12 @@ import {
   useCallback,
   createContext,
 } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
+import type { ReactNode } from 'react';
 
 /**
  * Internal dependencies
  */
+import type { State } from '../../../types/storyProvider';
 import { STORY_EVENTS, StoryEventRegisters } from './storyEvents';
 
 export const Context = createContext({ state: {}, actions: {} });
@@ -42,19 +43,23 @@ function createSubscriptionMap() {
   );
 }
 
-function reducer([currentStory], updatedStory) {
+function reducer([currentStory]: [State], updatedStory: State | null) {
   return [updatedStory, currentStory];
 }
 
-export function StoryTriggersProvider({ children, story }) {
+interface StoryTriggersProviderProps {
+  children: ReactNode;
+  story: State;
+}
+export function StoryTriggersProvider({
+  children,
+  story,
+}: StoryTriggersProviderProps) {
   // store prev & next versions of story to help compute internally fired events.
   // Not sure if this is necessarily needed but was used a lot in FTUE. Lets keep
   // an eye on this as we create more internal event registers, and we can always
   // remove if we end up not using it.
-  const [[currentStory, previousStory], updateStory] = useReducer(reducer, [
-    story,
-    null,
-  ]);
+  const [[currentStory, previousStory], updateStory] = useReducer(reducer, [story, null]);
   const subscriptionMap = useMemo(createSubscriptionMap, []);
 
   // Update story to derive events
@@ -111,8 +116,3 @@ export function StoryTriggersProvider({ children, story }) {
     </Context.Provider>
   );
 }
-
-StoryTriggersProvider.propTypes = {
-  story: PropTypes.object,
-  children: PropTypes.node,
-};

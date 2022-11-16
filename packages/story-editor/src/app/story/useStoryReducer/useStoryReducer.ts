@@ -67,7 +67,7 @@ function useStoryReducer(partial: Partial<State>): ReducerState {
     ...INITIAL_STATE,
     ...partial,
   } as State);
-
+console.log(state);
   const { internal, api } = useMemo(() => {
     const wrapWithDispatch = (
       actions: typeof internalActions | typeof exposedActions

@@ -18,13 +18,29 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { sessionStore } from '@googleforcreators/design-system';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import getSessionStorageKey from '../../../utils/getSessionStorageKey';
+import type { RestoreProps, State } from '../../../types/storyProvider';
+import type { Capabilities } from '../../../types/configProvider';
 
-function useLocalAutoSave({ restore, storyId, pages, capabilities, isNew }) {
+interface UseLocalAutoSaveProps {
+  restore: (props: RestoreProps) => State;
+  storyId: number;
+  pages: Page[];
+  capabilities: Capabilities;
+  isNew: boolean;
+}
+function useLocalAutoSave({
+  restore,
+  storyId,
+  pages,
+  capabilities,
+  isNew,
+}: UseLocalAutoSaveProps) {
   const restoreLocalAutoSave = useCallback(() => {
     const existingAutoSave = sessionStore.getItemByKey(
       getSessionStorageKey(storyId, isNew)

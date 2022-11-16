@@ -468,12 +468,27 @@ export interface RawStory {
 
 export interface State {
   story: Story;
-  selection: string[];
-  current: string | null;
+  selection?: string[];
+  current?: string | null;
   pages: Page[];
   animationState: string;
   capabilities: Record<string, boolean>;
   copiedElementState?: Element;
+  currentPage: Page | null;
+  currentPageId: string | null;
+  currentPageIndex: number | null;
+  currentPageNumber: number | null;
+  selectedElementIds: string[];
+  selectedElements: Element[];
+  selectedElementAnimations: Animation[];
+  hasSelection: boolean;
+  meta: {
+    isSaving: boolean;
+    isSavingStory: boolean;
+    isAutoSavingStory: boolean;
+    isFreshlyPublished: boolean;
+    isFreshlyPending: boolean;
+  },
 }
 
 export interface StoryProviderState {

@@ -19,12 +19,13 @@
  */
 import type { ReactNode } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
-import type { Animation, Page, StoryData } from '@googleforcreators/elements';
+import type { Animation, Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { STABLE_ARRAY } from '../../constants';
+import type { RawStory } from '../../types/storyProvider';
 import Context from './context';
 
 import useLoadStory from './effects/useLoadStory';
@@ -41,7 +42,7 @@ interface ProviderProps {
   storyId: number;
   initialEdits?: {
     [index: string]: unknown;
-    story?: StoryData;
+    story?: RawStory;
   };
   children: ReactNode;
 }
@@ -80,7 +81,7 @@ function StoryProvider({ storyId, initialEdits, children }: ProviderProps) {
 
   // Generate selection info
   const selectedElementIds = useMemo(
-    () => (selection.length > 0 ? selection : STABLE_ARRAY),
+    () => (selection && selection.length > 0 ? selection : STABLE_ARRAY),
     [selection]
   );
   const isCurrentPageEmpty = !currentPage;
@@ -90,7 +91,9 @@ function StoryProvider({ storyId, initialEdits, children }: ProviderProps) {
     if (isCurrentPageEmpty) {
       return STABLE_ARRAY;
     }
-    const els = currentPageElements?.filter(({ id }) => selection.includes(id));
+    const els = currentPageElements?.filter(
+      ({ id }) => selection && selection.includes(id)
+    );
     return els && els.length > 0 ? els : STABLE_ARRAY;
   }, [isCurrentPageEmpty, currentPageElements, selection]);
 
@@ -101,7 +104,7 @@ function StoryProvider({ storyId, initialEdits, children }: ProviderProps) {
     }
     const animations = (currentPageAnimations || []).reduce(
       (acc: Animation[], { targets, ...properties }) => {
-        if (targets.some((id) => selection.includes(id))) {
+        if (targets.some((id) => selection && selection.includes(id))) {
           return [...acc, { targets, ...properties }];
         }
         return acc;
