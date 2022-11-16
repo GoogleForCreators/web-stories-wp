@@ -99,7 +99,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	protected string $taxonomy_slug;
 
 	/**
-	 * Object type or array of object types with which the taxonomy should be associated.
+	 * Object type which the taxonomy should be associated.
 	 *
 	 * @var string
 	 */
