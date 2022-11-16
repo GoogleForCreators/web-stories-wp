@@ -22,12 +22,8 @@ import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Update page URL in browser.
- *
- * @param {number} postId Current story id.
- * @param {string} postEditURL Current story's edit link.
- * @return {Function} Function to refresh the post edit URL.
  */
-function useRefreshPostEditURL(postId, postEditURL) {
+function useRefreshPostEditURL(postId: number, postEditURL: string) {
   return useCallback(() => {
     try {
       const newUrl = new URL(postEditURL);
@@ -37,7 +33,7 @@ function useRefreshPostEditURL(postId, postEditURL) {
         sprintf(
           /* translators: %d: current story id. */
           __('Post %d', 'web-stories'),
-          postId
+          postId.toString()
         ),
         newUrl.toString()
       );

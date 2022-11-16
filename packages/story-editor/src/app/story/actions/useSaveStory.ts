@@ -22,6 +22,7 @@ import { useCallback, useState } from '@googleforcreators/react';
 import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
 import { stripHTML } from '@googleforcreators/dom';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -31,6 +32,8 @@ import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
+import type { Story } from '../../../types/storyProvider';
+import type { RESTError } from '../../../types/storyEditor';
 
 const HTTP_STATUS_DESCRIPTIONS = {
   400: _x('Bad Request', 'HTTP status description', 'web-stories'),
@@ -39,17 +42,22 @@ const HTTP_STATUS_DESCRIPTIONS = {
   500: _x('Internal Server Error', 'HTTP status description', 'web-stories'),
 };
 
+interface UseSaveStoryProps {
+  storyId: number;
+  pages: Page[];
+  story: Story;
+  updateStory: (data: { properties: Partial<Story> }) => Story;
+}
+
 /**
  * Custom hook to save story.
- *
- * @param {Object} properties Properties to update.
- * @param {number} properties.storyId Story post id.
- * @param {Array} properties.pages Array of all pages.
- * @param {Object} properties.story Story-global properties.
- * @param {Function} properties.updateStory Function to update a story.
- * @return {Function} Function that can be called to save a story.
  */
-function useSaveStory({ storyId, pages, story, updateStory }) {
+function useSaveStory({
+  storyId,
+  pages,
+  story,
+  updateStory,
+}: UseSaveStoryProps) {
   const {
     actions: { saveStoryById },
   } = useAPI();
@@ -92,7 +100,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             ...props,
           })
         )
-        .then((data) => {
+        .then((data: Story) => {
           const {
             status,
             slug,
@@ -104,7 +112,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             featuredMedia,
           } = data;
 
-          const properties = {
+          const properties: Partial<Story> = {
             status,
             slug,
             link,
@@ -125,7 +133,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
           setIsFreshlyPending(!isStoryAlreadyPending && isStoryPending);
         })
-        .catch((err) => {
+        .catch((err: RESTError) => {
           const description = err.message ? stripHTML(err.message) : null;
           let message = __('Failed to save the story', 'web-stories');
 
@@ -138,6 +146,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           }
 
           if (
+            err?.data?.status &&
             Object.prototype.hasOwnProperty.call(
               HTTP_STATUS_DESCRIPTIONS,
               err?.data?.status
@@ -148,20 +157,20 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
                 /* translators: 1: error message. 2: status code */
                 __('Failed to save the story: %1$s (%2$s)', 'web-stories'),
                 description,
-                HTTP_STATUS_DESCRIPTIONS[err?.data?.status]
+                HTTP_STATUS_DESCRIPTIONS[err.data.status]
               );
             } else {
               message = sprintf(
                 /* translators: %s: error message */
                 __('Failed to save the story: %s', 'web-stories'),
-                HTTP_STATUS_DESCRIPTIONS[err?.data?.status]
+                HTTP_STATUS_DESCRIPTIONS[err.data.status]
               );
             }
           }
 
           // eslint-disable-next-line no-console -- We want to surface this error.
           console.log(__('Failed to save the story', 'web-stories'), err);
-          trackError('save_story', description);
+          void trackError('save_story', description || '');
 
           showSnackbar({
             message,
