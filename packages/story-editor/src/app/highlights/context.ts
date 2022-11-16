@@ -23,4 +23,4 @@ import { createContext } from '@googleforcreators/react';
  */
 import type { HighlightsState } from '../../types/highlightsProvider';
 
-export default createContext<HighlightsState>({});
+export default createContext<HighlightsState>({} as HighlightsState);
