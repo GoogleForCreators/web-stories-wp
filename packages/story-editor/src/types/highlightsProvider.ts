@@ -36,5 +36,5 @@ export interface setHighlightProps {
 export interface HighlightsState {
   cancelEffect: (stateKey: string) => void
   onFocusOut: () => void
-  setHighlights: (setHighlightProps) => void
+  setHighlights: (highlights: setHighlightProps) => void
 }

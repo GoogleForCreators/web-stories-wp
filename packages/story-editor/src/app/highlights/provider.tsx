@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-
+import type { ReactNode } from 'react';
 /**
  * Internal dependencies
  */
