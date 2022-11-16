@@ -22,9 +22,8 @@ import { format as _format, toDate } from 'date-fns-tz';
 /**
  * Internal dependencies
  */
-import convertFormatString, {
-  FORMAT_TOKEN_SEPARATOR_REGEX,
-} from './convertFormatString';
+import { FORMAT_TOKEN_SEPARATOR_REGEX } from './constants';
+import convertFormatString from './convertFormatString';
 import getOptions from './getOptions';
 
 /**

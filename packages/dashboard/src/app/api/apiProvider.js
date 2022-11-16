@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -27,8 +26,7 @@ import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUsersApi';
 import useTaxonomyApi from './useTaxonomyApi';
-
-export const ApiContext = createContext({ state: {}, actions: {} });
+import ApiContext from './context';
 
 export default function ApiProvider({ children }) {
   const { api: usersApi } = useUsersApi();

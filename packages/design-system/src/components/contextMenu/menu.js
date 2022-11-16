@@ -37,9 +37,9 @@ import {
 } from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
-import { CONTEXT_MENU_SKIP_ELEMENT } from './constants';
+import { CONTEXT_MENU_MIN_WIDTH, CONTEXT_MENU_SKIP_ELEMENT } from './constants';
+import { MenuPropTypes } from './types';
 
-export const CONTEXT_MENU_MIN_WIDTH = 200;
 const CONTEXT_MENU_MAX_WIDTH = 300;
 
 const MenuWrapper = styled.div(
@@ -301,19 +301,6 @@ const Menu = forwardRef(
     );
   }
 );
-
-export const MenuPropTypes = {
-  children: PropTypes.node,
-  onFocus: PropTypes.func,
-  disableControlledTabNavigation: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  onCloseSubMenu: PropTypes.func,
-  isSubMenu: PropTypes.bool,
-  isSecondary: PropTypes.bool,
-  isRTL: PropTypes.bool,
-  parentMenuRef: PropTypes.object,
-  dismissOnEscape: PropTypes.bool,
-};
 
 Menu.propTypes = MenuPropTypes;
 

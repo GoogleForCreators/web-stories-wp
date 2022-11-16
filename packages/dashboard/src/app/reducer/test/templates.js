@@ -18,7 +18,8 @@
  * Internal dependencies
  */
 import { ERRORS } from '../../textContent';
-import templateReducer, {
+import {
+  templateReducer,
   ACTION_TYPES,
   defaultTemplatesState as initialState,
 } from '../templates';
