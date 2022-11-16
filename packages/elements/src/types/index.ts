@@ -20,4 +20,3 @@ export * from './elementType';
 export * from './elementDefinition';
 export * from './propTypes';
 export * from './page';
-export * from './story';

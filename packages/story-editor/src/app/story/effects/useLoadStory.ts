@@ -19,7 +19,7 @@
  */
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
-import { createPage, Story, StoryData } from '@googleforcreators/elements';
+import { createPage } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -28,11 +28,15 @@ import { useAPI } from '../../api';
 import { useHistory } from '../../history';
 import getUniquePresets from '../../../utils/getUniquePresets';
 import { useConfig } from '../../config';
-import type { RestoreProps, State } from '../../../types/storyProvider';
+import type {
+  RawStory,
+  RestoreProps,
+  State, Story,
+} from '../../../types/storyProvider';
 
 function loadStory(
   storyId: number,
-  post: StoryData,
+  post: RawStory,
   restore: (props: RestoreProps) => State,
   clearHistory: () => void,
   globalConfig: {
@@ -177,9 +181,10 @@ function useLoadStory({ storyId, story, shouldLoad, restore }: LoadStoryProps) {
     const globalConfig = { globalAutoAdvance, globalPageDuration };
     if (storyId && shouldLoad) {
       if (story) {
+        console.log('story', story);
         loadStory(storyId, story, restore, clearHistory, globalConfig);
       } else {
-        getStoryById(storyId).then((post) => {
+        getStoryById(storyId).then((post: RawStory) => {
           loadStory(storyId, post, restore, clearHistory, globalConfig);
         });
       }

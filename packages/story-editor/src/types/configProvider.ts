@@ -31,6 +31,11 @@ import type {
   VideoResource,
 } from '@googleforcreators/media';
 
+/**
+ * Internal dependencies
+ */
+import type { RawStory } from './storyProvider';
+
 export interface Capabilities {
   /** If the user has permissions to upload files. */
   hasUploadMediaAction?: boolean;
@@ -206,7 +211,7 @@ export interface APICallbacks {
   getPosterMediaById?: (id: number) => Promise<Resource>;
   getProducts?: () => Promise<ProductData[]>;
   getProxyUrl?: (src: string) => string;
-  getStoryById?: (id: number) => Promise<Story>;
+  getStoryById?: (id: number) => Promise<RawStory>;
   getTaxonomies?: () => Promise<Taxonomy[]>;
   getTaxonomyTerm?: (props: {
     search?: string;

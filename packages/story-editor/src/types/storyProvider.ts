@@ -20,12 +20,12 @@
 import type {
   Page,
   Element,
-  Story,
   Animation,
   Group,
+  StoryData,
 } from '@googleforcreators/elements';
-import type { ResourceId } from '@googleforcreators/media';
-
+import type { AudioResource, ResourceId } from '@googleforcreators/media';
+import type { Pattern } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
@@ -345,16 +345,6 @@ export type ReducerActionProps =
   | RemoveElementFromGroupAction
   | AddElementsAcrossPagesAction;
 
-export interface State {
-  story: Story;
-  selection: string[];
-  current: string | null;
-  pages: Page[];
-  animationState: string;
-  capabilities: Record<string, boolean>;
-  copiedElementState?: Element;
-}
-
 export type InternalActions = {
   restore: (props: RestoreProps) => State;
 };
@@ -365,4 +355,133 @@ export interface ReducerState {
   state: State;
   internal: InternalActions;
   api: ExternalActions;
+}
+
+export interface Story {
+  storyId: number;
+  title: string;
+  author: {
+    id: number;
+    name: string;
+  };
+  date: null | string;
+  modified: string;
+  excerpt: string;
+  slug: string;
+  link: string;
+  extras: Record<string, unknown>;
+  featuredMedia: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+    needsProxy: boolean;
+    isExternal: boolean;
+  };
+  permalinkConfig: null | {
+    prefix: string;
+    suffix: string;
+  };
+  publisherLogo: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+  };
+  previewLink: string;
+  editLink: string;
+  password: string;
+  embedPostLink: string;
+  revisions: {
+    count: number;
+  };
+  currentStoryStyles: {
+    colors: Pattern[];
+  };
+  globalStoryStyles: {
+    colors: Pattern[];
+    textStyles: Partial<Text>;
+  };
+  taxonomies: string[];
+  terms: string[];
+  status: string;
+  backgroundAudio?: {
+    resource: AudioResource;
+  };
+  autoAdvance?: boolean;
+  defaultPageDuration?: number;
+}
+
+// Raw story that comes to the provider from API callback.
+export interface RawStory {
+  id: number;
+  date: string;
+  modified: string;
+  password: string;
+  slug: string;
+  status: string;
+  link: string;
+  title: {
+    raw?: string;
+    rendered?: string;
+  };
+  excerpt: {
+    raw?: string;
+    rendered?: string;
+    protected?: boolean;
+  };
+  permalinkTemplate: string;
+  storyData: StoryData;
+  stylePresets: {
+    colors?: Pattern[];
+    textStyles?: Partial<Text>[];
+  };
+  previewLink: string;
+  editLink: string;
+  embedPostLink: string;
+  author: {
+    id: number;
+    name: string;
+  };
+  capabilities: Record<string, boolean>;
+  extras: Record<string, unknown>;
+  featuredMedia: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+    needsProxy: boolean;
+    isExternal: boolean;
+  };
+  publisherLogo: {
+    id: number;
+    height: number;
+    width: number;
+    url: string;
+  };
+  taxonomies: string[];
+  revisions: {
+    count: number;
+  };
+  terms: string[];
+}
+
+export interface State {
+  story: Story | undefined;
+  selection: string[];
+  current: string | null;
+  pages: Page[];
+  animationState: string;
+  capabilities: Record<string, boolean>;
+  copiedElementState?: Element;
+}
+
+export interface StoryProviderState {
+  state: State;
+  // @todo
+  actions: {};
+  internal: {
+    reducerState: ReducerState;
+    restore: (props: RestoreProps) => State;
+  };
 }

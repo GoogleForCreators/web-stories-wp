@@ -18,6 +18,7 @@
  * External dependencies
  */
 import type { Pattern } from '@googleforcreators/patterns';
+import type { AudioResource } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -79,62 +80,14 @@ export interface ProductData {
 }
 
 export interface StoryData {
-  id: number;
-  date: string;
-  modified: string;
-  password: string;
-  slug: string;
-  status: string;
-  link: string;
-  title: {
-    raw?: string;
-    rendered?: string;
+  version: number;
+  pages: Page[];
+  autoAdvance: boolean;
+  defaultPageDuration: number;
+  currentStoryStyles: {
+    colors: Pattern[];
   };
-  excerpt: {
-    raw?: string;
-    rendered?: string;
-    protected?: boolean;
+  backgroundAudio?: {
+    resource: AudioResource;
   };
-  permalinkTemplate: string;
-  storyData: {
-    version: number;
-    pages: Page[];
-    autoAdvance: boolean;
-    defaultPageDuration: number;
-    currentStoryStyles: {
-      colors: Pattern[];
-    };
-  };
-  stylePresets: {
-    colors?: Pattern[];
-    textStyles?: Partial<Text>[];
-  };
-  previewLink: string;
-  editLink: string;
-  embedPostLink: string;
-  author: {
-    id: number;
-    name: string;
-  };
-  capabilities: Record<string, boolean>;
-  extras: Record<string, unknown>;
-  featuredMedia: {
-    id: number;
-    height: number;
-    width: number;
-    url: string;
-    needsProxy: boolean;
-    isExternal: boolean;
-  };
-  publisherLogo: {
-    id: number;
-    height: number;
-    width: number;
-    url: string;
-  };
-  taxonomies: string[];
-  revisions: {
-    count: number;
-  };
-  terms: string[];
 }
