@@ -301,7 +301,7 @@ class Sanitization {
 		 * and therefore should not be preloaded as they might take away important bandwidth for the initial render."
 		 */
 		ksort( $amp_scripts );
-		$ordered_scripts = [ ...$ordered_scripts, ...$amp_scripts ];
+		$ordered_scripts = array_merge( $ordered_scripts, $amp_scripts );
 
 		/**
 		 * Script element.

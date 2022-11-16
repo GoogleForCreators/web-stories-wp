@@ -162,7 +162,7 @@ class Site_Health extends Service_Base implements Conditional {
 			],
 		];
 
-		return [ ...$debugging_information, ...$extra_data ];
+		return array_merge( $debugging_information, $extra_data );
 	}
 
 	/**
@@ -220,7 +220,7 @@ class Site_Health extends Service_Base implements Conditional {
 			],
 		];
 
-		return [ ...$core_extensions, ...$extensions ];
+		return array_merge( $core_extensions, $extensions );
 	}
 
 	/**
