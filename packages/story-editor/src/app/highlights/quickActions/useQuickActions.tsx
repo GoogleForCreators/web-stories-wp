@@ -106,31 +106,21 @@ const useQuickActions = () => {
     selectedElementAnimations,
     selectedElements,
     updateElementsById,
-  } = useStory(
-    ({
-      state: {
-        currentPage,
-        currentPageNumber,
-        selectedElementAnimations,
-        selectedElements,
-      },
-      actions: { updateElementsById },
-    }) => ({
-      backgroundElement: currentPage?.elements.find(
-        (element) => element.isBackground
-      ),
-      currentPageNumber,
-      selectedElementAnimations,
-      selectedElements,
-      updateElementsById,
-    })
-  );
+  } = useStory(({ state, actions }) => ({
+    backgroundElement: state.currentPage?.elements.find(
+      (element) => element.isBackground
+    ),
+    currentPageNumber: state.currentPageNumber,
+    selectedElementAnimations: state.selectedElementAnimations,
+    selectedElements: state.selectedElements,
+    updateElementsById: actions.updateElementsById,
+  }));
   const { undo } = useHistory(({ actions: { undo } }) => ({
     undo,
   }));
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
-  const { setHighlights } = useHighlights(({ setHighlights }) => ({
-    setHighlights,
+  const { setHighlights } = useHighlights((state) => ({
+    setHighlights: state.setHighlights,
   }));
 
   const {
@@ -264,7 +254,7 @@ const useQuickActions = () => {
         onAction: () => {
           undoRef.current();
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: `undo_${ACTIONS.RESET_ELEMENT.trackingEventName}`,
             element: elementType,
             isBackground: true,
@@ -344,7 +334,7 @@ const useQuickActions = () => {
         onClick: (evt) => {
           handleFocusPageBackground(backgroundElement?.id)(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.CHANGE_BACKGROUND_COLOR.trackingEventName,
             element: 'none',
           } as EventParameters);
@@ -357,7 +347,7 @@ const useQuickActions = () => {
         onClick: (evt) => {
           handleFocusMediaPanel()(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.INSERT_BACKGROUND_MEDIA.trackingEventName,
             element: 'none',
           } as EventParameters);
@@ -371,7 +361,7 @@ const useQuickActions = () => {
         onClick: (evt) => {
           handleFocusTextSetsPanel()(evt);
           insertElement('text', DEFAULT_PRESET);
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.INSERT_TEXT.trackingEventName,
             element: 'none',
           } as EventParameters);
@@ -407,7 +397,7 @@ const useQuickActions = () => {
         onClick: (evt) => {
           handleFocusAnimationPanel()(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.ADD_ANIMATION.trackingEventName,
             element: selectedElement?.type,
           } as EventParameters);
@@ -423,7 +413,7 @@ const useQuickActions = () => {
       onClick: (evt) => {
         handleFocusLinkPanel()(evt);
 
-        trackEvent('quick_action', {
+        void trackEvent('quick_action', {
           name: ACTIONS.ADD_LINK.trackingEventName,
           element: selectedElement?.type,
         } as EventParameters);
@@ -444,7 +434,7 @@ const useQuickActions = () => {
             elementType: selectedElement?.type,
           });
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.RESET_ELEMENT.trackingEventName,
             element: selectedElement?.type,
           } as EventParameters);
@@ -477,7 +467,7 @@ const useQuickActions = () => {
         onClick: () => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.REPLACE_MEDIA.trackingEventName,
             element: selectedElement?.type,
           } as EventParameters);
@@ -512,8 +502,8 @@ const useQuickActions = () => {
         Icon: ColorBucket,
         label: ACTIONS.AUTO_STYLE_TEXT.text,
         onClick: () => {
-          applyTextAutoStyle();
-          trackEvent('quick_action', {
+          void applyTextAutoStyle();
+          void trackEvent('quick_action', {
             name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
             element: selectedElement?.type,
           } as EventParameters);
@@ -546,7 +536,7 @@ const useQuickActions = () => {
         onClick: (evt) => {
           handleFocusCaptionsPanel()(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.ADD_CAPTIONS.trackingEventName,
             element: selectedElement?.type,
           } as EventParameters);
@@ -571,7 +561,7 @@ const useQuickActions = () => {
         onClick: (evt) => {
           handleFocusAnimationPanel()(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.ADD_ANIMATION.trackingEventName,
             element: selectedElement?.type,
             isBackground: true,
@@ -588,7 +578,7 @@ const useQuickActions = () => {
         onClick: () => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
             element: selectedElement?.type,
             isBackground: true,
@@ -609,7 +599,7 @@ const useQuickActions = () => {
           elementType: ELEMENT_TYPES.IMAGE,
         });
 
-        trackEvent('quick_action', {
+        void trackEvent('quick_action', {
           name: ACTIONS.RESET_ELEMENT.trackingEventName,
           element: selectedElement?.type,
           isBackground: true,
@@ -637,7 +627,7 @@ const useQuickActions = () => {
         Icon: Cross,
         label: __('Close', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_mode_toggled', {
+          void trackEvent('media_recording_mode_toggled', {
             status: 'closed',
           } as EventParameters);
           toggleRecordingMode();
@@ -648,7 +638,7 @@ const useQuickActions = () => {
         Icon: StyledSettings,
         label: __('Options', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_open_settings');
+          void trackEvent('media_recording_open_settings');
           toggleSettings();
         },
         disabled: !isReady,
@@ -661,7 +651,7 @@ const useQuickActions = () => {
           ? __('Disable Audio', 'web-stories')
           : __('Enable Audio', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_audio_toggled', {
+          void trackEvent('media_recording_audio_toggled', {
             status: hasAudio ? 'muted' : 'unmuted',
           } as EventParameters);
           toggleAudio();
@@ -675,7 +665,7 @@ const useQuickActions = () => {
           ? __('Disable Video', 'web-stories')
           : __('Enable Video', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_video_toggled', {
+          void trackEvent('media_recording_video_toggled', {
             status: hasVideo ? 'off' : 'on',
           } as EventParameters);
           toggleVideo();
@@ -693,7 +683,7 @@ const useQuickActions = () => {
             ? __('Disable Background Blur', 'web-stories')
             : __('Enable Background Blur', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_background_blur_px', {
+          void trackEvent('media_recording_background_blur_px', {
             value: videoEffect === VIDEO_EFFECTS.BLUR ? 0 : BACKGROUND_BLUR_PX,
           });
           const newVideoEffect =
@@ -709,7 +699,7 @@ const useQuickActions = () => {
         Icon: Scissors,
         label: __('Trim Video', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_trim_start');
+          void trackEvent('media_recording_trim_start');
           startTrim();
         },
         disabled:

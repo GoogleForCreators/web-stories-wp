@@ -21,6 +21,7 @@ import {
   getExtensionsFromMimeType,
   resourceList,
 } from '@googleforcreators/media';
+import type { Resource } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 
 /**
