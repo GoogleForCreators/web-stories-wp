@@ -31,7 +31,7 @@ import { useConfig } from '../../config';
 import type {
   RawStory,
   RestoreProps,
-  State, Story,
+  State,
 } from '../../../types/storyProvider';
 
 function loadStory(
@@ -163,7 +163,7 @@ function loadStory(
 
 interface LoadStoryProps {
   storyId: number;
-  story: Story;
+  story: RawStory;
   shouldLoad: boolean;
   restore: (props: RestoreProps) => State;
 }
@@ -181,7 +181,6 @@ function useLoadStory({ storyId, story, shouldLoad, restore }: LoadStoryProps) {
     const globalConfig = { globalAutoAdvance, globalPageDuration };
     if (storyId && shouldLoad) {
       if (story) {
-        console.log('story', story);
         loadStory(storyId, story, restore, clearHistory, globalConfig);
       } else {
         getStoryById(storyId).then((post: RawStory) => {
