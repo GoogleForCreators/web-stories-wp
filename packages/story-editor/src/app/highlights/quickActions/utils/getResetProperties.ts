@@ -17,13 +17,14 @@
  * External dependencies
  */
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { RESET_PROPERTIES, RESET_DEFAULTS } from '../constants';
 
-function isBorderRadiusDefault(element) {
+function isBorderRadiusDefault(element: Element) {
   // text element presets have a different default border radius
   if (element?.type === ELEMENT_TYPES.TEXT && element?.borderRadius) {
     return (
@@ -46,8 +47,8 @@ function isBorderRadiusDefault(element) {
  * @return array of properties to reset on element
  */
 const getResetProperties = (
-  selectedElement,
-  selectedElementAnimations = []
+  selectedElement: Element,
+  selectedElementAnimations: string[] = []
 ) => {
   if (!selectedElement) {
     return [];

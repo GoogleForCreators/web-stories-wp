@@ -18,19 +18,16 @@
  */
 import { rgba } from 'polished';
 import { css, keyframes } from 'styled-components';
-import {
-  theme as dsTheme,
-  themeHelpers,
-} from '@googleforcreators/design-system';
+import { theme, themeHelpers } from '@googleforcreators/design-system';
 
 const flash = keyframes`
   50% {
-    background-color: ${rgba(dsTheme.colors.standard.white, 0.3)};
+    background-color: ${rgba(theme.colors.standard.white, 0.3)};
   }
 `;
 
 export const FLASH = css`
-  background-color: ${rgba(dsTheme.colors.standard.white, 0)};
+  background-color: ${rgba(theme.colors.standard.white, 0)};
   animation: ${flash} 0.3s ease-in-out 2;
 `;
 

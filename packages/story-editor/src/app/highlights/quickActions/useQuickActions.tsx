@@ -286,13 +286,15 @@ const useQuickActions = () => {
    * @param {Event} ev The triggering event.
    */
   const handleFocusPanel = useCallback(
-    (highlight: string ) => (elementId: string) => (ev: MouseEvent<HTMLAnchorElement>) => {
-      ev.preventDefault();
-      setHighlights({
-        elementId: elementId || selectedElement?.id,
-        highlight,
-      });
-    },
+    (highlight: string) =>
+      (elementId: string) =>
+      (ev: MouseEvent<HTMLAnchorElement>) => {
+        ev.preventDefault();
+        setHighlights({
+          elementId: elementId || selectedElement?.id,
+          highlight,
+        });
+      },
     [setHighlights, selectedElement]
   );
 
