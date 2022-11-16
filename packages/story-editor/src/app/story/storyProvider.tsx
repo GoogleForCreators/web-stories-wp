@@ -19,7 +19,7 @@
  */
 import type { ReactNode } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
-import type { Animation, Page, Story } from '@googleforcreators/elements';
+import type { Animation, Page, StoryData } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -41,7 +41,7 @@ interface ProviderProps {
   storyId: number;
   initialEdits?: {
     [index: string]: unknown;
-    story?: Story;
+    story?: StoryData;
   };
   children: ReactNode;
 }

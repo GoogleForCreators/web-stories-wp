@@ -467,7 +467,7 @@ export interface RawStory {
 }
 
 export interface State {
-  story: Story | undefined;
+  story: Story;
   selection: string[];
   current: string | null;
   pages: Page[];
