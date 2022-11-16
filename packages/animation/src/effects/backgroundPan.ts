@@ -25,9 +25,8 @@ import type { DimensionableElement } from '@googleforcreators/units';
  * Internal dependencies
  */
 import type { GenericAnimation } from '../outputs';
-import SimpleAnimation from '../parts/createAnimation';
-import { AnimationDirection, AnimationType, FieldType } from '../types';
-import type { AnimationPart } from '../parts';
+import createAnimation from '../parts/createAnimation';
+import { AnimationDirection, FieldType } from '../types';
 
 type EffectBackgroundPanProps = {
   panDir?: AnimationDirection;
@@ -40,15 +39,13 @@ export function EffectBackgroundPan({
   delay,
   easing = 'cubic-bezier(.3,0,.55,1)',
   element,
-}: EffectBackgroundPanProps): AnimationPart<{ transform: string[] }> {
+}: EffectBackgroundPanProps) {
   const timings: GenericAnimation = {
     fill: 'both',
     duration,
     delay,
     easing,
   };
-
-  const animationName = `direction-${panDir}-${AnimationType.EffectBackgroundPan}`;
 
   const translateToOriginX = 'translate3d(0%, 0, 0)';
   const translateToOriginY = 'translate3d(0, 0%, 0)';
@@ -74,23 +71,7 @@ export function EffectBackgroundPan({
     transform: [translate.from[panDir], translate.to[panDir]],
   };
 
-  const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
-    keyframes,
-    timings,
-    false,
-    true
-  );
-
-  return {
-    id,
-    keyframes,
-    WAAPIAnimation,
-    AMPTarget,
-    AMPAnimation,
-    generatedKeyframes: {
-      [animationName]: keyframes,
-    },
-  };
+  return createAnimation(keyframes, timings, false, true);
 }
 
 export const fields = {
