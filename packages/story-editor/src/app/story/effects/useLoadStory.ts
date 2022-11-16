@@ -20,6 +20,7 @@
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
 import { createPage } from '@googleforcreators/elements';
+import type { Pattern } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -70,7 +71,7 @@ function loadStory(
     taxonomies,
     terms,
     revisions,
-  } = post;
+  }: RawStory = post;
 
   const date =
     ['draft', 'auto-draft', 'pending'].includes(status) &&
@@ -105,10 +106,10 @@ function loadStory(
   // Otherwise ensure the saved presets are unique.
   const newGlobalStoryStyles = {
     colors: globalStoryStyles.colors
-      ? getUniquePresets(globalStoryStyles.colors)
+      ? (getUniquePresets(globalStoryStyles.colors) as Pattern[])
       : [],
     textStyles: globalStoryStyles.textStyles
-      ? getUniquePresets(globalStoryStyles.textStyles)
+      ? (getUniquePresets(globalStoryStyles.textStyles) as Partial<Text>[])
       : [],
   };
 
@@ -134,7 +135,9 @@ function loadStory(
     revisions,
     currentStoryStyles: {
       colors: storyData?.currentStoryStyles?.colors
-        ? getUniquePresets(storyData.currentStoryStyles.colors)
+        ? (getUniquePresets(
+            storyData.currentStoryStyles.colors as Pattern
+          ) as Pattern[])
         : [],
     },
     globalStoryStyles: newGlobalStoryStyles,

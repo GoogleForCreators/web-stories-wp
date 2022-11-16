@@ -19,6 +19,7 @@
     "src/app/story/*",
     "src/app/story/**/*",
     "src/types/*",
-    "src/constants/*"
+    "src/constants/*",
+    "src/utils/*.ts"
   ]
 }

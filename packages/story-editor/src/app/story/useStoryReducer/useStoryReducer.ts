@@ -23,7 +23,12 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
-import type {ExternalActions, InternalActions, ReducerState, State} from '../../../types/storyProvider';
+import type {
+  ExternalActions,
+  InternalActions,
+  ReducerState,
+  State,
+} from '../../../types/storyProvider';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
@@ -33,7 +38,7 @@ const INITIAL_STATE = {
   current: null,
   selection: [],
   story: {},
-  animationState: STORY_ANIMATION_STATE.RESET,
+  animationState: STORY_ANIMATION_STATE.RESET as string,
   copiedElementState: {},
 };
 
