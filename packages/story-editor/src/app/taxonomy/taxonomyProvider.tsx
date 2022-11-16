@@ -39,7 +39,7 @@ import {
   cacheFromEmbeddedTerms,
 } from './utils';
 
-import type { Term } from '../../types/taxonomyProvider';
+import type { Terms } from '../../types/taxonomyProvider';
 
 function TaxonomyProvider(props: { children: React.ReactNode }) {
   const [taxonomies, setTaxonomies] = useState([]);
@@ -73,8 +73,10 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
         const result = await getTaxonomies();
         setTaxonomies(result);
       } catch (e) {
-        // eslint-disable-next-line no-console -- Log error
-        console.error(e.message);
+        if (e instanceof Error) {
+          // eslint-disable-next-line no-console -- Log error
+          console.error(e.message);
+        }
       }
     })();
   }, [hasTaxonomies, getTaxonomies]);
@@ -90,10 +92,11 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
       !hasHydrationRunOnce.current
     ) {
       const taxonomiesBySlug = dictionaryOnKey(taxonomies, 'slug');
-      const initialCache = mapObjectKeys(
+      const initialCache: {} | Terms = mapObjectKeys(
         cacheFromEmbeddedTerms(terms),
         (slug) => taxonomiesBySlug[slug]?.restBase
       );
+
       const initialSelectedTerms = mapObjectVals(initialCache, (val) =>
         Object.values(val).map((term) => term.id)
       );
@@ -191,8 +194,8 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   );
 
   const createTerm = useCallback(
-    async (taxonomy, termName, parent, addToSelection = false) => {
-      const data = { name: termName };
+    async (taxonomy, termName: string, parent: { id?: number, slug: string }, addToSelection = false) => {
+      const data: { name: string, parent?: number, slug?: string } = { name: termName };
       if (parent?.id) {
         data.parent = parent.id;
         data.slug = `${parent.slug}-${cleanForSlug(data.name)}`;

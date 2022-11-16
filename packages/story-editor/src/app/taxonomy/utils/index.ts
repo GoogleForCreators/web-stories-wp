@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import type { Terms, Term } from '../../../types/taxonomyProvider';
 /**
  * Takes an array of key value tuples and
  * returns an object.
@@ -101,9 +102,9 @@ export function dictionaryOnKey(arr = [], key) {
  * @param {Array.<Object[]>} embeddedTerms embedded wp:terms
  * @return {Object} a nested dictionary of { [taxonomy.slug]: { [term.slug]: term } }
  */
-export function cacheFromEmbeddedTerms(embeddedTerms = []) {
+export function cacheFromEmbeddedTerms(embeddedTerms: Terms) {
   return embeddedTerms.reduce((cache, taxonomy) => {
-    (taxonomy || []).forEach((term) => {
+    (taxonomy || []).forEach((term: Term) => {
       cache[term.taxonomy] = cache[term.taxonomy] || {};
       cache[term.taxonomy][term.slug] = term;
     });
