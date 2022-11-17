@@ -68,20 +68,27 @@ function useStoryReducer(partial: Partial<State>): ReducerState {
     ...partial,
   } as State);
   const { internal, api } = useMemo(() => {
-    const wrapWithDispatch = (
-      actions: typeof internalActions | typeof exposedActions
-    ) =>
+    const wrapWithDispatch = (actions: typeof internalActions) =>
       Object.keys(actions).reduce(
-        (collection: InternalActions | ExternalActions, action) => ({
+        (collection: InternalActions, action) => ({
           ...collection,
-          [action]: actions[action](dispatch),
+          [action]: actions[action as keyof typeof actions](dispatch),
         }),
-        {}
+        {} as InternalActions
+      );
+
+    const wrapWithDispatch2 = (actions: typeof exposedActions) =>
+      Object.keys(actions).reduce(
+        (collection: ExternalActions, action) => ({
+          ...collection,
+          [action]: actions[action as keyof typeof actions](dispatch),
+        }),
+        {} as ExternalActions
       );
 
     return {
       internal: wrapWithDispatch(internalActions) as InternalActions,
-      api: wrapWithDispatch(exposedActions) as ExternalActions,
+      api: wrapWithDispatch2(exposedActions) as ExternalActions,
     };
   }, [dispatch]);
 

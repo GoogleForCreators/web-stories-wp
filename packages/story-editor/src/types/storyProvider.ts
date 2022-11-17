@@ -349,7 +349,7 @@ export type InternalActions = {
   restore: (props: RestoreProps) => State;
 };
 export type ExternalActions = {
-  [index: string]: unknown;
+  addAnimations: (props: AddAnimationsProps) => State;
 };
 export interface ReducerState {
   state: State;
