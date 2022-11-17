@@ -164,6 +164,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return array<int, mixed> List of custom fonts.
+	 *
+	 * @phpstan-return Font[]
 	 */
 	protected function get_custom_fonts( $request ): array {
 		// Retrieve the list of registered collection query parameters.
@@ -193,7 +195,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
-		// Force sarch to be case-insensitive.
+		// Force search to be case-insensitive.
 
 		// Force the post_type argument, since it's not a user input variable.
 		$args['post_type'] = $this->post_type;
@@ -202,6 +204,12 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		$posts_query  = new WP_Query();
 		$query_result = $posts_query->query( $query_args );
 
+		/**
+		 * List of custom fonts.
+		 *
+		 * @var array $posts
+		 * @phpstan-var Font[] $posts
+		 */
 		$posts = [];
 
 		/**
@@ -264,6 +272,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 							 * Font data.
 							 *
 							 * @param array{family: string} $font
+							 * @return bool
 							 */
 							static fn( array $font ) => false !== stripos( $font['family'], $search )
 						)
@@ -285,7 +294,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$include_list = $request['include'];
 				$include_list = array_map( 'strtolower', $include_list );
 
-
 				$fonts = array_values(
 					array_filter(
 						$fonts,
@@ -293,8 +301,9 @@ class Font_Controller extends WP_REST_Posts_Controller {
 						 * Font data.
 						 *
 						 * @param array{family: string} $font
+						 * @return bool
 						 */
-						static fn( array $font ) => \in_array( strtolower( $font['family'] ), $include_list, true )
+						static fn( array $font ): bool => \in_array( strtolower( $font['family'] ), $include_list, true )
 					)
 				);
 			}
@@ -304,13 +313,14 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				// we only need to sort when including both.
 				usort(
 					$fonts,
-					static fn( $a, $b ) => (
-						/**
-						 * Font A and Font B.
-						 *
-						 * @phpstan-var Font $a
-						 * @phpstan-var Font $b
-						 */
+					/**
+					 * Font A and Font B.
+					 *
+					 * @param Font $a
+					 * @param Font $b
+					 * @return int
+					 */
+					static fn( array $a, array $b ): int => (
 						strnatcasecmp( $a['family'], $b['family'] )
 					)
 				);
