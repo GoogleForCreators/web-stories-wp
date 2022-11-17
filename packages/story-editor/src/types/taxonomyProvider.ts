@@ -28,55 +28,56 @@ export type Term = {
 };
 
 export type Taxonomy = {
+  restBase: string;
+  name: string;
+  restNamespace: string;
+  restPath: string;
+  showCloud?: boolean;
+  slug: string;
+  types: string[];
+  visibility: {
+    public: boolean;
+    publicly_queryable: boolean;
+    show_admin_column: boolean;
+    show_in_nav_menus: boolean;
+    show_in_quick_edit: boolean;
+    show_ui: boolean;
+  };
+  description: string;
+  hierarchical: boolean;
+  labels: {
+    add_new_item: string;
+    add_or_remove_items: string;
+    all_items: string;
+    back_to_items: string;
+    choose_from_most_used: string;
+    edit_item: string;
+    items_list: string;
+    items_list_navigation: string;
+    most_used: string;
+    name: string;
+    new_item_name: string;
+    no_terms: string;
+    not_found: string;
+    parent_item: string;
+    parent_item_colon: string;
+    popular_items: string;
+    search_items: string;
+    separate_items_with_commas: string;
+    singular_name: string;
+    update_item: string;
+    view_item: string;
+  };
   capabilities: {
     assign_terms: string;
     delete_terms: string;
     edit_terms: string;
     manage_terms: string;
-    description: string;
-    hierarchical: boolean;
-    labels: {
-      add_new_item: string;
-      add_or_remove_items: string;
-      all_items: string;
-      back_to_items: string;
-      choose_from_most_used: string;
-      edit_item: string;
-      items_list: string;
-      items_list_navigation: string;
-      most_used: string;
-      name: string;
-      new_item_name: string;
-      no_terms: string;
-      not_found: string;
-      parent_item: string;
-      parent_item_colon: string;
-      popular_items: string;
-      search_items: string;
-      separate_items_with_commas: string;
-      singular_name: string;
-      update_item: string;
-      view_item: string;
-    };
-    name: string;
-    restBase: string;
-    restNamespace: string;
-    restPath: string;
-    showCloud: boolean;
-    slug: string;
-    types: string[];
-    visibility: {
-      public: boolean;
-      publicly_queryable: boolean;
-      show_admin_column: boolean;
-      show_in_nav_menus: boolean;
-      show_in_quick_edit: boolean;
-      show_ui: boolean;
-    };
   };
 };
 
 export type TaxonomiesBySlug = Record<string, Taxonomy>;
+export type EmbeddedTerms = Record<string, Record<string, Term>>;
 
 export type Terms = [Term[]];
 

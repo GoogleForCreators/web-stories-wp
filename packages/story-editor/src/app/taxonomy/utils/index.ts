@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-import type { Terms, Term } from '../../../types/taxonomyProvider';
+import type {
+  Terms,
+  Term,
+  EmbeddedTerms,
+} from '../../../types/taxonomyProvider';
 /**
  * Takes an array of key value tuples and
  * returns an object.
@@ -85,10 +89,10 @@ export function mergeNestedDictionaries(dictA = {}, dictB = {}) {
  * property.
  *
  * @param {Array.<Object>} arr array of objects
- * @param {string} key key used to index poperty to be keyed on
+ * @param {string} key key used to index property to be keyed on
  * @return {Object} new object
  */
-export function dictionaryOnKey(arr = [], key) {
+export function dictionaryOnKey(arr = [], key: string) {
   return arr.reduce((map, item) => {
     map[item[key]] = item;
     return map;
@@ -102,8 +106,9 @@ export function dictionaryOnKey(arr = [], key) {
  * @param {Array.<Object[]>} embeddedTerms embedded wp:terms
  * @return {Object} a nested dictionary of { [taxonomy.slug]: { [term.slug]: term } }
  */
-export function cacheFromEmbeddedTerms(embeddedTerms: Terms) {
-  return embeddedTerms.reduce((cache, taxonomy) => {
+
+export function cacheFromEmbeddedTerms(embeddedTerms: Terms): EmbeddedTerms {
+  return embeddedTerms.reduce((cache: EmbeddedTerms, taxonomy) => {
     (taxonomy || []).forEach((term: Term) => {
       cache[term.taxonomy] = cache[term.taxonomy] || {};
       cache[term.taxonomy][term.slug] = term;
