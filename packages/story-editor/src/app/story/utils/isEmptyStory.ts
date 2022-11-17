@@ -18,9 +18,13 @@
  * External dependencies
  */
 import { shallowEqual } from '@googleforcreators/react';
-import { DEFAULT_PAGE_BACKGROUND_COLOR } from '@googleforcreators/elements';
+import {
+  DEFAULT_PAGE_BACKGROUND_COLOR,
+  DefaultBackgroundElement,
+  Page,
+} from '@googleforcreators/elements';
 
-const isEmptyStory = (pages) => {
+const isEmptyStory = (pages: Page[]) => {
   const hasOnlyOnePage = pages.length === 1;
   if (!hasOnlyOnePage) {
     return false;
@@ -31,7 +35,9 @@ const isEmptyStory = (pages) => {
     return false;
   }
 
-  const hasNoBackgroundMedia = pages[0].elements[0].isDefaultBackground;
+  const hasNoBackgroundMedia = (
+    pages[0].elements[0] as DefaultBackgroundElement
+  ).isDefaultBackground;
   if (!hasNoBackgroundMedia) {
     return false;
   }
@@ -41,10 +47,12 @@ const isEmptyStory = (pages) => {
     return false;
   }
 
-  const hasDefaultBackgroundColor = shallowEqual(
-    DEFAULT_PAGE_BACKGROUND_COLOR.color,
-    pages[0].backgroundColor.color
-  );
+  const hasDefaultBackgroundColor =
+    'color' in pages[0].backgroundColor &&
+    shallowEqual(
+      DEFAULT_PAGE_BACKGROUND_COLOR.color,
+      pages[0].backgroundColor.color
+    );
   if (!hasDefaultBackgroundColor) {
     return false;
   }

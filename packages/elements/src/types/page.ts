@@ -61,4 +61,9 @@ export interface Page {
   };
   autoAdvance?: boolean;
   defaultPageDuration?: number;
+  pageAttachment?: {
+    url: string;
+    ctaText: string;
+    theme: string;
+  };
 }

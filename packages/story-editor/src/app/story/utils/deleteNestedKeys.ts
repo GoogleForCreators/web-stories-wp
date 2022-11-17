@@ -19,12 +19,9 @@
  * Each path has to be in the format of nested keys separated by a dot, e.g. `foo.bar.a`
  *
  * Note that this function mutates the original object.
- *
- * @param {Array} paths Array of paths of keys.
- * @return {Object} Changed object.
  */
-function deleteNestedKeys(paths) {
-  return (object) => {
+function deleteNestedKeys(paths: string[]) {
+  return (object: Record<string, unknown>) => {
     if (!Array.isArray(paths)) {
       return;
     }

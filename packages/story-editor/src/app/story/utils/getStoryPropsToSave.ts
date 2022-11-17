@@ -17,14 +17,28 @@
  * External dependencies
  */
 import { getStoryMarkup } from '@googleforcreators/output';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import objectPick from '../../../utils/objectPick';
+import type { Story } from '../../../types/storyProvider';
+import type { MetaData } from '../../../types/configProvider';
 import getAllProducts from './getAllProducts';
 
-function getStoryPropsToSave({ story, pages, metadata, flags }) {
+interface StoryPropsToSave {
+  story: Story;
+  pages: Page[];
+  metadata: MetaData;
+  flags: Record<string, boolean>;
+}
+function getStoryPropsToSave({
+  story,
+  pages,
+  metadata,
+  flags,
+}: StoryPropsToSave) {
   const { terms, ...propsFromStory } = objectPick(story, [
     'title',
     'status',

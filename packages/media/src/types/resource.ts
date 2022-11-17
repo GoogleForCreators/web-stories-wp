@@ -87,6 +87,8 @@ export interface Resource {
   /** Resource author attribution */
   attribution?: Attribution;
 
+  poster?: string;
+
   // TODO: Figure out why sometimes _images_ end up having these properties.
   posterId?: ResourceId;
   isOptimized?: boolean;

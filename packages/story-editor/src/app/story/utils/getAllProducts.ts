@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { ELEMENT_TYPES, Page, ProductData } from '@googleforcreators/elements';
 
-function getAllProducts(pages) {
-  const products = [];
-  const productIds = [];
+function getAllProducts(pages: Page[]) {
+  const products: Element[] = [];
+  const productIds: string[] = [];
   pages.forEach(({ elements }) =>
     elements.forEach(({ product, type }) => {
       if (

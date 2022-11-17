@@ -17,15 +17,16 @@
  * External dependencies
  */
 import { isBlobURL } from '@googleforcreators/media';
+import type { MediaElement, Page } from '@googleforcreators/elements';
 
-function pageContainsBlobUrl(pages) {
+function pageContainsBlobUrl(pages: Page[]) {
   // skip entries that have a blob url
   // https://github.com/GoogleForCreators/web-stories-wp/issues/10289
   return pages.some((page) =>
     page.elements.some(
       (element) =>
-        isBlobURL(element?.resource?.src) ||
-        isBlobURL(element?.resource?.poster)
+        isBlobURL((element as MediaElement)?.resource?.src) ||
+        isBlobURL((element as MediaElement)?.resource?.poster)
     )
   );
 }
