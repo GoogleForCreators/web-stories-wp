@@ -225,7 +225,6 @@
   <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
       <exclude-pattern>web-stories.php</exclude-pattern>
       <exclude-pattern>includes/compat/*</exclude-pattern>
-      <exclude-pattern>includes/Services.php</exclude-pattern>
        <properties>
         <property name="enableMixedTypeHint" value="false" />
         <property name="enableUnionTypeHint" value="false" />

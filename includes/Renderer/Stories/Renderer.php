@@ -152,12 +152,23 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		// TODO, find a way to inject this a cleaner way.
 		$injector = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return;
-		}
 
-		$this->assets  = $injector->make( Assets::class );
-		$this->context = $injector->make( Context::class );
+		/**
+		 * Assets instance.
+		 *
+		 * @var Assets $assets Assets instance.
+		 */
+		$assets = $injector->make( Assets::class );
+
+		/**
+		 * Context instance.
+		 *
+		 * @var Context $context Context instance.
+		 */
+		$context = $injector->make( Context::class );
+
+		$this->assets  = $assets;
+		$this->context = $context;
 	}
 
 	/**

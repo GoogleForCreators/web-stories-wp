@@ -17,21 +17,22 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\KSES;
+
 /**
  * Trait Kses_Setup
  *
  * Helper trait to setup KSES. This is normally setup on init but needed to be manually fired in tests.
  */
 trait Kses_Setup {
-	public $kses; // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
-
+	public ?KSES $kses = null;
 	/**
 	 * Setup KSES init class.
 	 */
 	protected function kses_int(): void {
 		$settings        = $this->createMock( \Google\Web_Stories\Settings::class );
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $settings );
-		$this->kses      = new \Google\Web_Stories\KSES(
+		$this->kses      = new KSES(
 			$story_post_type,
 			new \Google\Web_Stories\Page_Template_Post_Type( $story_post_type )
 		);

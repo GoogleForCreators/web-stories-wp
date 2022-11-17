@@ -24,6 +24,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Admin\Customizer;
 use WP_Post;
 
 /**
@@ -64,11 +65,13 @@ function get_stories( array $attrs = [], array $query_args = [] ): array {
  */
 function render_theme_stories(): void {
 	$injector = Services::get_injector();
-	if ( ! method_exists( $injector, 'make' ) ) {
-		return;
-	}
 
-	$customizer = $injector->make( Admin\Customizer::class );
+	/**
+	 * Customizer instance.
+	 *
+	 * @var Customizer $customizer Customizer instance.
+	 */
+	$customizer = $injector->make( Customizer::class );
 	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $customizer->render_stories();
 }

@@ -21,24 +21,20 @@ final class Services {
 
 	/**
 	 * Plugin object instance.
-	 *
-	 * @var Plugin
 	 */
-	private static $plugin;
+	private static ?Plugin $plugin = null;
 
 	/**
 	 * Service container object instance.
 	 *
 	 * @var ServiceContainer<Service>
 	 */
-	private static $container;
+	private static ?ServiceContainer $container = null;
 
 	/**
 	 * Dependency injector object instance.
-	 *
-	 * @var Injector|Service
 	 */
-	private static $injector;
+	private static ?Injector $injector = null;
 
 	/**
 	 * Get a particular service out of the service container.
@@ -97,9 +93,9 @@ final class Services {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return Injector|Service Dependency injector object instance.
+	 * @return Injector Dependency injector object instance.
 	 */
-	public static function get_injector() {
+	public static function get_injector(): Injector {
 		if ( null === self::$injector ) {
 			self::$injector = self::get_container()->get( 'injector' );
 		}
