@@ -21,9 +21,13 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { StoryProviderState } from '../../types/storyProvider';
 import Context from './context';
 
-function useStory(selector) {
+export function useStory(): StoryProviderState;
+export function useStory<T>(
+  selector: (state: StoryProviderState) => T | StoryProviderState = identity
+) {
   return useContextSelector(Context, selector ?? identity);
 }
 

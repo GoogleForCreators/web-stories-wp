@@ -467,7 +467,7 @@ export interface RawStory {
 }
 
 export interface State {
-  story: Story;
+  story: Story | null;
   selection?: string[];
   current?: string | null;
   pages: Page[];
@@ -495,7 +495,7 @@ export interface StoryProviderState {
   state: State;
   // @todo
   actions: {};
-  internal: {
+  internal?: {
     reducerState: ReducerState;
     restore: (props: RestoreProps) => State;
   };

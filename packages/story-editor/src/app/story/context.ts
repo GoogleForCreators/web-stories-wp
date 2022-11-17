@@ -18,5 +18,34 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
+import type { Animation, Element, Page } from '@googleforcreators/elements';
 
-export default createContext({ state: {}, actions: {} });
+/**
+ * Internal dependencies
+ */
+import type { StoryProviderState } from '../../types/storyProvider';
+
+export default createContext<StoryProviderState>({
+  state: {
+    story: null,
+    pages: [] as Page[],
+    animationState: '',
+    capabilities: {},
+    currentPage: null,
+    currentPageId: null,
+    currentPageIndex: null,
+    currentPageNumber: null,
+    selectedElementIds: [],
+    selectedElements: [] as Element[],
+    selectedElementAnimations: [] as Animation[],
+    hasSelection: false,
+    meta: {
+      isSaving: false,
+      isSavingStory: false,
+      isAutoSavingStory: false,
+      isFreshlyPublished: false,
+      isFreshlyPending: false,
+    },
+  },
+  actions: {},
+});

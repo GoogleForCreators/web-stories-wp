@@ -17,20 +17,33 @@
 /**
  * External dependencies
  */
-import { ELEMENT_TYPES, Page, ProductData } from '@googleforcreators/elements';
+import {
+  Element,
+  ELEMENT_TYPES,
+  Page,
+  ProductElement,
+  ProductData,
+} from '@googleforcreators/elements';
 
-function getAllProducts(pages: Page[]) {
-  const products: Element[] = [];
+function isProduct(e: Element): e is ProductElement {
+  return 'product' in e;
+}
+function getAllProducts(pages: Page[]): ProductData[] {
+  const products: ProductData[] = [];
   const productIds: string[] = [];
   pages.forEach(({ elements }) =>
-    elements.forEach(({ product, type }) => {
+    elements.forEach((element) => {
+      if (!isProduct(element)) {
+        return;
+      }
+      const { product, type } = element;
       if (
         type === ELEMENT_TYPES.PRODUCT &&
         product &&
-        !productIds.includes(product?.productId)
+        !productIds.includes(product.productId)
       ) {
         products.push(product);
-        productIds.push(product?.productId);
+        productIds.push(product.productId);
       }
     })
   );
