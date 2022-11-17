@@ -56,5 +56,5 @@ export enum StoryAnimationState {
 }
 
 export interface AMPEffectTiming extends Omit<EffectTiming, 'iterations'> {
-  iterations: number | 'infinity' | undefined;
+  iterations?: number | 'infinity';
 }

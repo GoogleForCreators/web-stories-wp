@@ -20,22 +20,24 @@
 import sanitizeTimings from '../sanitizeTimings';
 
 describe('sanitizeTimings', () => {
-  it('should return 0 for values of `duration` and `delay` animation properties that are less than 0', () => {
-    [-1, -0, 0].forEach((value) => {
+  it.each([
+    [-1, 0],
+    [-0, 0],
+    [0, 0],
+    [1, 1],
+    [12, 12],
+    [51, 51],
+    [500, 500],
+    [2000, 2000],
+  ])(
+    'should sanitize values of `duration` and `delay` animation properties',
+    (value, output) => {
       const { duration, delay } = sanitizeTimings({
         duration: value,
         delay: value,
       });
-      expect(duration).toBe(0);
-      expect(delay).toBe(0);
-    });
-    [1, 0, 12, 51, 500, 2000].forEach((value) => {
-      const { duration, delay } = sanitizeTimings({
-        duration: value,
-        delay: value,
-      });
-      expect(duration).toBe(value);
-      expect(delay).toBe(value);
-    });
-  });
+      expect(duration).toBe(output);
+      expect(delay).toBe(output);
+    }
+  );
 });
