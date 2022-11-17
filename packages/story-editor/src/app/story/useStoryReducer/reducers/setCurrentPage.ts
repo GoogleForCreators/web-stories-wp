@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { SetCurrentPageProps, State } from '../../../../types/storyProvider';
+import type { SetCurrentPageProps, ReducerState } from '../../../../types/storyProvider';
 
 /**
  * Set current page to the given id.
@@ -32,7 +32,7 @@ import type { SetCurrentPageProps, State } from '../../../../types/storyProvider
  * If page is changed, selection is cleared
  */
 export const setCurrentPage = (
-  draft: State,
+  draft: ReducerState,
   { pageId }: SetCurrentPageProps
 ) => {
   const pageExists = draft.pages.some(({ id }) => id === pageId);

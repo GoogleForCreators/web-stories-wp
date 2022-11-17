@@ -23,7 +23,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { UpdateElementsProps, State } from '../../../../types/storyProvider';
+import type { UpdateElementsProps, ReducerState } from '../../../../types/storyProvider';
 import { updateElementWithUpdater, updateAnimations } from './utils';
 
 /**
@@ -41,7 +41,7 @@ import { updateElementWithUpdater, updateAnimations } from './utils';
  * Current selection and page is unchanged.
  */
 export const updateElements = (
-  draft: State,
+  draft: ReducerState,
   { elementIds, properties: propertiesOrUpdater }: UpdateElementsProps
 ) => {
   if (
@@ -49,7 +49,7 @@ export const updateElements = (
       STORY_ANIMATION_STATE.PLAYING,
       STORY_ANIMATION_STATE.PLAYING_SELECTED,
       STORY_ANIMATION_STATE.SCRUBBING,
-    ].includes(draft.animationState)
+    ].includes(draft.animationReducerState)
   ) {
     return;
   }

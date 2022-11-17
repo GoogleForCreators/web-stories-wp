@@ -23,14 +23,14 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { getAbsolutePosition } from './utils';
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 import type {ArrangeGroupProps} from "../../../../types/storyProvider";
 
 /**
  * Move group to a new position
  */
 export const arrangeGroup = (
-  draft: State,
+  draft: ReducerState,
   { groupId, position }: ArrangeGroupProps
 ) => {
   if (!groupId) {

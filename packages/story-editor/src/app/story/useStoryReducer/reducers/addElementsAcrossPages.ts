@@ -25,7 +25,7 @@ import { produce } from 'immer';
  */
 import type {
   AddElementsAcrossPagesProps,
-  State,
+  ReducerState,
 } from '../../../../types/storyProvider';
 import { addPage } from './addPage';
 import { addElements } from './addElements';
@@ -38,7 +38,7 @@ import { addElements } from './addElements';
  * Selection is unchanged afterwards.
  */
 const addElementsAcrossPages = (
-  draft: State,
+  draft: ReducerState,
   { page, position, elements }: AddElementsAcrossPagesProps
 ) => {
   elements.forEach((element, index) => {

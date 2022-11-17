@@ -29,7 +29,7 @@ import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
 import { removeAnimationsWithElementIds } from './utils';
 import type {CombineElementsProps} from "../../../../types/storyProvider";
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 
 /**
  * Combine elements by taking properties from a first item and
@@ -50,7 +50,7 @@ import type {State} from "@googleforcreators/types";
  * Updates selection to only include the second item after merge.
  */
 export const combineElements = (
-  draft: State,
+  draft: ReducerState,
   {
     firstElement,
     secondId,

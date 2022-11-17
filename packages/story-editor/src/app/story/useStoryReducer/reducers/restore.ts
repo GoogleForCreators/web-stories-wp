@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { RestoreProps, State } from '../../../../types/storyProvider';
+import type { RestoreProps, ReducerState } from '../../../../types/storyProvider';
 
 /**
  * Restore internal state completely from given state.
@@ -35,14 +35,14 @@ import type { RestoreProps, State } from '../../../../types/storyProvider';
  * - `story` is an object.
  */
 export const restore = (
-  draft: State,
+  draft: ReducerState,
   { pages, current, selection, story, capabilities }: RestoreProps
 ) => {
   if (!Array.isArray(pages) || pages.length === 0) {
     return undefined;
   }
 
-  const newState = typeof story === 'object' ? story : {};
+  const newReducerState = typeof story === 'object' ? story : {};
   const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
   const oldCurrent = current ?? draft.current;
   const newCurrent = pages.some(({ id }) => id === oldCurrent)
@@ -54,10 +54,10 @@ export const restore = (
     pages,
     current: newCurrent,
     selection: newSelection,
-    story: newState,
-    animationState: draft.animationState,
+    story: newReducerState,
+    animationReducerState: draft.animationReducerState,
     capabilities: newCapabilities,
-    copiedElementState: {},
+    copiedElementReducerState: {},
   };
 };
 

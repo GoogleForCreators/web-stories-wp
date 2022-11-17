@@ -23,7 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import type {
-  State,
+  ReducerState,
   UpdateElementsByFontFamilyProps,
 } from '../../../../types/storyProvider';
 import { updateElementWithUpdater } from './utils';
@@ -42,7 +42,7 @@ import { updateElementWithUpdater } from './utils';
  * Current selection and page is unchanged.
  */
 export const updateElementsByFontFamily = (
-  draft: State,
+  draft: ReducerState,
   { family, properties: propertiesOrUpdater }: UpdateElementsByFontFamilyProps
 ) => {
   if (!family) {

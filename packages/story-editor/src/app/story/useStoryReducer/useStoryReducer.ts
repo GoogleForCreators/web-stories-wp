@@ -27,7 +27,7 @@ import type {
   ExternalActions,
   InternalActions,
   ReducerState,
-  State,
+  ReducerProviderState,
 } from '../../../types/storyProvider';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
@@ -63,11 +63,11 @@ const INITIAL_STATE = {
  * - No validation of keys or values in the story object.
  */
 type Actions = InternalActions | ExternalActions;
-function useStoryReducer(partial: Partial<State>): ReducerState {
+function useStoryReducer(partial: Partial<ReducerState>): ReducerProviderState {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     ...partial,
-  } as State);
+  } as ReducerState);
   const { internal, api } = useMemo(() => {
     const wrapWithDispatch = (
       actions: typeof internalActions | typeof exposedActions

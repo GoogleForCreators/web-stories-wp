@@ -17,12 +17,18 @@
 /**
  * Internal dependencies
  */
-import type { ReducerActionProps, State } from '../../../types/storyProvider';
+import type {
+  ReducerActionProps,
+  ReducerState,
+} from '../../../types/storyProvider';
 import * as types from './types';
 import * as reducers from './reducers';
 
 // eslint-disable-next-line complexity -- reducer function, negligible.
-function reducer(state: State, { type, payload }: ReducerActionProps): State {
+function reducer(
+  state: ReducerState,
+  { type, payload }: ReducerActionProps
+): ReducerState {
   switch (type) {
     case types.ADD_PAGE: {
       return reducers.addPage(state, payload);

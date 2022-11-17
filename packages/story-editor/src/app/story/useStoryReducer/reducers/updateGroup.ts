@@ -22,13 +22,13 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { State, UpdateGroupProps } from '../../../../types/storyProvider';
+import type { ReducerState, UpdateGroupProps } from '../../../../types/storyProvider';
 
 /**
  * Update group by id.
  */
 export const updateGroup = (
-  draft: State,
+  draft: ReducerState,
   { groupId, properties }: UpdateGroupProps
 ) => {
   if (!groupId) {

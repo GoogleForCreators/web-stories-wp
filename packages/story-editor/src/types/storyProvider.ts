@@ -351,8 +351,8 @@ export type InternalActions = {
 export type ExternalActions = {
   addAnimations: (props: AddAnimationsProps) => State;
 };
-export interface ReducerState {
-  state: State;
+export interface ReducerProviderState {
+  state: ReducerState;
   internal: InternalActions;
   api: ExternalActions;
 }
@@ -466,7 +466,7 @@ export interface RawStory {
   terms: string[];
 }
 
-export interface State {
+export interface ReducerState {
   story: Story | null;
   selection?: string[];
   current?: string | null;
@@ -474,6 +474,9 @@ export interface State {
   animationState: string;
   capabilities: Record<string, boolean>;
   copiedElementState?: Element;
+}
+
+export interface State extends ReducerState {
   currentPage: Page | null;
   currentPageId: string | null;
   currentPageIndex: number | null;
@@ -495,7 +498,7 @@ export interface StoryProviderState {
   state: State;
   // @todo
   actions: {};
-  internal?: {
+  internal: {
     reducerState: ReducerState;
     restore: (props: RestoreProps) => State;
   };

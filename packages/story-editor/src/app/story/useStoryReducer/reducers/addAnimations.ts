@@ -23,7 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { exclusion } from './utils';
-import type {AddAnimationsProps, State} from "../../../../types/storyProvider";
+import type {AddAnimationsProps, ReducerState} from "../../../../types/storyProvider";
 
 /**
  * Add animations to current page.
@@ -37,7 +37,7 @@ import type {AddAnimationsProps, State} from "../../../../types/storyProvider";
  * Animations will be added to the end of the list of animations on the current page.
  */
 export const addAnimations = (
-  draft: State,
+  draft: ReducerState,
   { animations }: AddAnimationsProps
 ) => {
   if (!Array.isArray(animations)) {

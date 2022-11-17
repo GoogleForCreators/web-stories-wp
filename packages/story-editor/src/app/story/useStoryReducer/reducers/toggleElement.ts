@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 import type {ToggleElementInSelectionProps} from "../../../../types/storyProvider";
 
 /**
@@ -39,7 +39,7 @@ import type {ToggleElementInSelectionProps} from "../../../../types/storyProvide
  * @param {boolean} payload.withLinked Include elements from the group?
  */
 export const toggleElement = (
-  draft: State,
+  draft: ReducerState,
   { elementId, withLinked = false }: ToggleElementInSelectionProps
 ) => {
   if (!elementId) {

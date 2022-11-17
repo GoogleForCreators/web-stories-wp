@@ -24,7 +24,7 @@ import { produce } from 'immer';
  */
 import type {
   RemoveElementFromGroupProps,
-  State,
+  ReducerState,
 } from '../../../../types/storyProvider';
 import { arrangeElement } from './arrangeElement';
 import { getLastIndexOfGroup } from './utils';
@@ -38,7 +38,7 @@ import { getLastIndexOfGroup } from './utils';
  * @param {number} payload.groupId Selected element group id
  */
 export const removeElementFromGroup = (
-  draft: State,
+  draft: ReducerState,
   { elementId, groupId }: RemoveElementFromGroupProps
 ) => {
   const page = draft.pages.find(({ id }) => id === draft.current);

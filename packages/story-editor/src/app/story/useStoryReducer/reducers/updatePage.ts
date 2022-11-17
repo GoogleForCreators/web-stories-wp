@@ -23,7 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { PAGE_RESERVED_PROPERTIES } from '../types';
-import type { UpdatePageProps, State } from '../../../../types/storyProvider';
+import type { UpdatePageProps, ReducerState } from '../../../../types/storyProvider';
 import { objectWithout } from './utils';
 
 /**
@@ -34,7 +34,7 @@ import { objectWithout } from './utils';
  * Current page and selection is unchanged.
  */
 export const updatePage = (
-  draft: State,
+  draft: ReducerState,
   { pageId, properties }: UpdatePageProps
 ) => {
   const idToUpdate = (pageId === null ? draft.current : pageId) as

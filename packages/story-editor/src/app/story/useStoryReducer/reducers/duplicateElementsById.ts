@@ -23,7 +23,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { DuplicateElementsByIdProps, State } from '../../../../types/storyProvider';
+import type { DuplicateElementsByIdProps, ReducerState } from '../../../../types/storyProvider';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.
@@ -32,7 +32,7 @@ import type { DuplicateElementsByIdProps, State } from '../../../../types/storyP
  * If given `elementIds` are not a list, do nothing.
  */
 export const duplicateElementsById = (
-  draft: State,
+  draft: ReducerState,
   { elementIds }: DuplicateElementsByIdProps
 ) => {
   if (!Array.isArray(elementIds)) {

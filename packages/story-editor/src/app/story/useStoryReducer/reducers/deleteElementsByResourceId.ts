@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 import type {DeleteElementsByResourceIdProps} from "../../../../types/storyProvider";
 
 /**
@@ -31,7 +31,7 @@ import type {DeleteElementsByResourceIdProps} from "../../../../types/storyProvi
  * If no element with the given resource id is found, state is changed.
  */
 export const deleteElementsByResourceId = (
-  draft: State,
+  draft: ReducerState,
   { id }: DeleteElementsByResourceIdProps
 ) => {
   if (id === null) {

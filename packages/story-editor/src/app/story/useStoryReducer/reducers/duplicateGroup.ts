@@ -24,14 +24,14 @@ import { duplicateElement } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { addGroup } from './addGroup';
-import type {DuplicateGroupProps, State} from "../../../../types/storyProvider";
+import type {DuplicateGroupProps, ReducerState} from "../../../../types/storyProvider";
 
 /**
  * Duplicate group with all elements on the current page.
  * Set selected elements to be the newly created group.
  */
 export const duplicateGroup = (
-  draft: State,
+  draft: ReducerState,
   { oldGroupId, groupId, name, isLocked }: DuplicateGroupProps
 ) => {
   if (!oldGroupId || !groupId || !name) {

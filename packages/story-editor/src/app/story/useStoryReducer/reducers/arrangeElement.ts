@@ -23,7 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { getAbsolutePosition, moveArrayElement } from './utils';
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 import type {ArrangeElementProps} from "../../../../types/storyProvider";
 
 /**
@@ -57,7 +57,7 @@ import type {ArrangeElementProps} from "../../../../types/storyProvider";
  * TODO: Handle multi-element re-order when UX and priority is finalized.
  */
 export const arrangeElement = (
-  draft: State,
+  draft: ReducerState,
   { elementId, position, groupId = false }: ArrangeElementProps
 ) => {
   if (elementId === null && draft.selection.length !== 1) {

@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { ArrangePageProps, State } from '../../../../types/storyProvider';
+import type { ArrangePageProps, ReducerState } from '../../../../types/storyProvider';
 import { isInsideRange, moveArrayElement } from './utils';
 
 /**
@@ -38,7 +38,7 @@ import { isInsideRange, moveArrayElement } from './utils';
  * TODO: Handle multi-page re-order when UX and priority is finalized.
  */
 export const arrangePage = (
-  draft: State,
+  draft: ReducerState,
   { pageId, position }: ArrangePageProps
 ) => {
   // Abort if there's less than two elements (nothing to rearrange)

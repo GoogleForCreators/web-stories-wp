@@ -24,11 +24,11 @@ import { produce } from 'immer';
  */
 import { toggleElement } from './toggleElement';
 import { setSelectedElements } from './setSelectedElements';
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 import type {ToggleLayerProps} from "../../../../types/storyProvider";
 
 export const toggleLayer = (
-  draft: State,
+  draft: ReducerState,
   { elementId, metaKey, shiftKey, withLinked = false }: ToggleLayerProps
 ) => {
   // Meta pressed. Toggle this layer in the selection.

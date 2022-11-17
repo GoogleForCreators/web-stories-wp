@@ -45,7 +45,7 @@ export { default as toggleElement } from './toggleElement';
 export { default as toggleLayer } from './toggleLayer';
 
 // Manipulate animation state
-export { default as updateAnimationState } from './updateAnimationState';
+export { default as updateAnimationReducerState } from './updateAnimationReducerState';
 export { default as addAnimations } from './addAnimations';
 
 // Manipulate entire internal state.

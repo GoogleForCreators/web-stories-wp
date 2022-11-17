@@ -24,7 +24,7 @@ import { produce, current } from 'immer';
  * Internal dependencies
  */
 import { intersect } from './utils';
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 import type {SetSelectedElementsProps} from "../../../../types/storyProvider";
 
 /**
@@ -42,7 +42,7 @@ import type {SetSelectedElementsProps} from "../../../../types/storyProvider";
  * Current page and pages are unchanged.
  */
 export const setSelectedElements = (
-  draft: State,
+  draft: ReducerState,
   { elementIds, withLinked = false }: SetSelectedElementsProps
 ) => {
   const newElementIds =
@@ -100,7 +100,7 @@ export const setSelectedElements = (
         )
       : uniqueElementIds;
 
-  draft.animationState = STORY_ANIMATION_STATE.RESET;
+  draft.animationReducerState = STORY_ANIMATION_STATE.RESET;
   draft.selection = newSelection;
 };
 

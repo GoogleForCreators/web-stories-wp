@@ -23,7 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 import type {SetBackgroundElementProps} from "../../../../types/storyProvider";
 
 /**
@@ -39,7 +39,7 @@ import type {SetBackgroundElementProps} from "../../../../types/storyProvider";
  * element.
  */
 export const setBackgroundElement = (
-  draft: State,
+  draft: ReducerState,
   { elementId }: SetBackgroundElementProps
 ) => {
   const page = draft.pages.find(({ id }) => id === draft.current);

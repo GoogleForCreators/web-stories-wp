@@ -19,7 +19,7 @@
  */
 import { produce } from 'immer';
 import type {SelectElementProps} from "../../../../types/storyProvider";
-import type {State} from "@googleforcreators/types";
+import type {ReducerState} from "@googleforcreators/types";
 
 /**
  * Add the given id to the current selection.
@@ -31,7 +31,7 @@ import type {State} from "@googleforcreators/types";
  * @param {string} payload.elementId Element id to add to the current selection.
  */
 export const selectElement = (
-  draft: State,
+  draft: ReducerState,
   { elementId }: SelectElementProps
 ) => {
   if (!elementId || draft.selection.includes(elementId)) {

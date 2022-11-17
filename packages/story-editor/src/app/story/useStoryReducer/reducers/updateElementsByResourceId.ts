@@ -24,7 +24,7 @@ import { produce } from 'immer';
  */
 import type {
   UpdateElementsByResourceIdProps,
-  State,
+  ReducerState,
 } from '../../../../types/storyProvider';
 import { updateElementWithUpdater } from './utils';
 
@@ -42,7 +42,7 @@ import { updateElementWithUpdater } from './utils';
  * Current selection and page is unchanged.
  */
 export const updateElementsByResourceId = (
-  draft: State,
+  draft: ReducerState,
   { id, properties: propertiesOrUpdater }: UpdateElementsByResourceIdProps
 ) => {
   if (!id) {
