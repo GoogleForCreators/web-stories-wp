@@ -154,9 +154,9 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $class           The Class to call.
-	 * @param string $version         The new version.
-	 * @param string $current_version The current set version.
+	 * @param class-string $class           The Class to call.
+	 * @param string       $version         The new version.
+	 * @param string       $current_version The current set version.
 	 */
 	protected function run_upgrade_routine( string $class, string $version, string $current_version ): void {
 		if ( version_compare( $current_version, $version, '<' ) ) {
