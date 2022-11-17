@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './snackbar';
-export { default as PopupContext } from './popup/context';
-export { default as PopupProvider } from './popup/popupProvider';
-export { usePopup } from './popup/usePopup';
+
+export interface Notification {
+  id: string;
+  key: string;
+  'aria-label': string;
+  message: string;
+  onDismiss: () => void;
+}
+export interface SnackbarState {
+  showSnackbar: (snackbar: Omit<Notification, 'id'>) => void;
+  clearSnackbar: () => void;
+  removeSnack: (toRemove: Notification | Notification[]) => void;
+  currentSnacks: Notification[];
+  placement: string;
+}

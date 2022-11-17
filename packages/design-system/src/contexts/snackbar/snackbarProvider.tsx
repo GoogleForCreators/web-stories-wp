@@ -17,19 +17,27 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
+import type { ReactNode } from 'react';
+
 /**
  * Internal dependencies
  */
-import { Placement } from '../../components/snackbar/constants';
+import type { Notification } from '../../types/snackbar';
 import Context from './context';
 
-function SnackbarProvider({ children, placement = 'bottom' }) {
-  const [notifications, setNotifications] = useState([]);
+interface SnackbarProviderProps {
+  children: ReactNode;
+  placement?: string;
+}
+function SnackbarProvider({
+  children,
+  placement = 'bottom',
+}: SnackbarProviderProps) {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const remove = useCallback((toRemove) => {
+  const remove = useCallback((toRemove: Notification | Notification[]) => {
     setNotifications((currentNotifications) =>
       currentNotifications.filter((item) => {
         if (Array.isArray(toRemove)) {
@@ -40,7 +48,7 @@ function SnackbarProvider({ children, placement = 'bottom' }) {
     );
   }, []);
 
-  const create = useCallback((notification) => {
+  const create = useCallback((notification: Omit<Notification, 'id'>) => {
     const newNotification = {
       id: uuidv4(),
       ...notification,
@@ -70,10 +78,5 @@ function SnackbarProvider({ children, placement = 'bottom' }) {
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-SnackbarProvider.propTypes = {
-  placement: Placement,
-  children: PropTypes.node,
-};
 
 export default SnackbarProvider;

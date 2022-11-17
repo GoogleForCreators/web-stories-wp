@@ -3,6 +3,7 @@
     { "path": "packages/activation-notice" },
     { "path": "packages/element-library" },
     { "path": "packages/dashboard" },
+    { "path": "packages/design-system" },
     { "path": "packages/dom" },
     { "path": "packages/elements" },
     { "path": "packages/fonts" },

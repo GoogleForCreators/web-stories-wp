@@ -6,6 +6,7 @@
   },
   "references": [
     { "path": "../dom" },
+    { "path": "../design-system" },
     { "path": "../elements" },
     { "path": "../i18n" },
     { "path": "../masks" },

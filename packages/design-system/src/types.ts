@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { createContext } from '@googleforcreators/react';
+// Temporary workaround while this package is not fully converted yet.
+// Adjust tsconfig.json and "types" field in package.json and then
+// delete this file once complete.
 
-export default createContext({});
+export * from './contexts/snackbar';
+
+export {};

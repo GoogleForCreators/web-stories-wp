@@ -20,7 +20,6 @@
 import type {
   MediaElement,
   Page,
-  Story,
   FontData,
   ProductData,
 } from '@googleforcreators/elements';
@@ -34,7 +33,7 @@ import type {
 /**
  * Internal dependencies
  */
-import type { RawStory } from './storyProvider';
+import type { RawStory, Story } from './storyProvider';
 
 export interface Capabilities {
   /** If the user has permissions to upload files. */

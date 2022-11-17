@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './snackbar';
-export { default as PopupContext } from './popup/context';
-export { default as PopupProvider } from './popup/popupProvider';
-export { usePopup } from './popup/usePopup';
+
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
+
+/**
+ * Internal dependencies
+ */
+import type { SnackbarState } from '../../types/snackbar';
+
+export default createContext<SnackbarState>({
+  showSnackbar: () => false,
+  clearSnackbar: () => false,
+  removeSnack: () => false,
+  currentSnacks: [],
+  placement: '',
+});
