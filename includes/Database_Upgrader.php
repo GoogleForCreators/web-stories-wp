@@ -34,7 +34,7 @@ use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
-use Google\Web_Stories\Migrations\Migrate_Base;
+use Google\Web_Stories\Interfaces\Migration;
 use WP_Site;
 
 /**
@@ -163,7 +163,7 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 			/**
 			 * Instance of a migration class.
 			 *
-			 * @var Migrate_Base $routine
+			 * @var Migration $routine
 			 */
 			$routine = $this->injector->make( $class );
 			$routine->migrate();
