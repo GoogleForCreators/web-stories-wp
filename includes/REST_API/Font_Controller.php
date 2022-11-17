@@ -251,22 +251,21 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 				// For custom fonts the searching will be done in WP_Query already.
 				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) ) {
-					$fonts = array_values(
+					/**
+					 * Requested URL.
+					 *
+					 * @var string $search
+					 */
+					$search = $request['search'];
+					$fonts  = array_values(
 						array_filter(
 							$fonts,
-							static function( $font ) use ( $request ) { // phpcs:ignore SlevomatCodingStandard.Functions.RequireArrowFunction.RequiredArrowFunction
-								/**
-								 * Font data.
-								 *
-								 * @var array{family: string} $font
-								 */
-								/**
-								 * Request data.
-								 *
-								 * @var array{search: string} $request
-								 */
-								return false !== stripos( $font['family'], $request['search'] );
-							}
+							/**
+							 * Font data.
+							 *
+							 * @param array{family: string} $font
+							 */
+							static fn( array $font ) => false !== stripos( $font['family'], $search )
 						)
 					);
 				}
@@ -290,14 +289,12 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$fonts = array_values(
 					array_filter(
 						$fonts,
-						static function( $font ) use ( $include_list ) { // phpcs:ignore SlevomatCodingStandard.Functions.RequireArrowFunction.RequiredArrowFunction
-							/**
-							 * Font data.
-							 *
-							 * @var array{family: string} $font
-							 */
-							return \in_array( strtolower( $font['family'] ), $include_list, true );
-						}
+						/**
+						 * Font data.
+						 *
+						 * @param array{family: string} $font
+						 */
+						static fn( array $font ) => \in_array( strtolower( $font['family'] ), $include_list, true )
 					)
 				);
 			}
@@ -307,15 +304,15 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				// we only need to sort when including both.
 				usort(
 					$fonts,
-					static function( $a, $b ) { // phpcs:ignore SlevomatCodingStandard.Functions.RequireArrowFunction.RequiredArrowFunction
+					static fn( $a, $b ) => (
 						/**
 						 * Font A and Font B.
 						 *
 						 * @phpstan-var Font $a
 						 * @phpstan-var Font $b
 						 */
-						return strnatcasecmp( $a['family'], $b['family'] );
-					}
+						strnatcasecmp( $a['family'], $b['family'] )
+					)
 				);
 			}
 		}
