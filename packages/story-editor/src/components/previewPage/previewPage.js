@@ -23,7 +23,7 @@ import { generatePatternStyles } from '@googleforcreators/patterns';
 import {
   AnimationProvider,
   useStoryAnimationContext,
-  STORY_ANIMATION_STATE,
+  StoryAnimationState,
 } from '@googleforcreators/animation';
 
 /**
@@ -70,14 +70,14 @@ function PreviewPageAnimationController({ animationState }) {
 
   useEffect(() => {
     switch (animationState) {
-      case STORY_ANIMATION_STATE.PLAYING:
+      case StoryAnimationState.Playing:
         WAAPIAnimationMethods.play();
         return () => {};
-      case STORY_ANIMATION_STATE.RESET:
+      case StoryAnimationState.Reset:
         WAAPIAnimationMethods.reset();
         return () => {};
-      case STORY_ANIMATION_STATE.SCRUBBING:
-      case STORY_ANIMATION_STATE.PAUSED:
+      case StoryAnimationState.Scrubbing:
+      case StoryAnimationState.Paused:
         WAAPIAnimationMethods.pause();
         return () => {};
       default:
@@ -113,7 +113,7 @@ const PreviewPage = forwardRef(function PreviewPage(
   {
     page,
     pageSize,
-    animationState = STORY_ANIMATION_STATE.RESET,
+    animationState = StoryAnimationState.Reset,
     onAnimationComplete,
   },
   ref
@@ -137,7 +137,7 @@ const PreviewPage = forwardRef(function PreviewPage(
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   pageSize: PageSizePropType.isRequired,
-  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
+  animationState: PropTypes.oneOf(Object.values(StoryAnimationState)),
   onAnimationComplete: PropTypes.func,
 };
 
@@ -147,7 +147,7 @@ PreviewPageDisplay.propTypes = {
 };
 
 PreviewPageAnimationController.propTypes = {
-  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
+  animationState: PropTypes.oneOf(Object.values(StoryAnimationState)),
 };
 
 export default PreviewPage;

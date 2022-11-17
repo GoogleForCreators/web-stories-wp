@@ -24,8 +24,8 @@ import {
   ANIMATION_EFFECTS,
   ANIMATION_PARTS,
   BACKGROUND_ANIMATION_EFFECTS,
-  FIELD_TYPES,
-  getAnimationEffectProps,
+  FieldType,
+  getAnimationEffectFields,
   AnimationProps,
 } from '@googleforcreators/animation';
 
@@ -88,7 +88,7 @@ function EffectPanel({
   disabledTypeOptionsMap,
   disabled = false,
 }) {
-  const { props } = getAnimationEffectProps(type);
+  const fields = getAnimationEffectFields(type);
 
   const handleInputChange = useCallback(
     (updates, submitArg) => {
@@ -106,23 +106,23 @@ function EffectPanel({
   );
 
   const containsVisualPicker = useMemo(() => {
-    return Object.keys(props).reduce((memo, current) => {
+    return Object.keys(fields).reduce((memo, current) => {
       return (
-        props[current].type === FIELD_TYPES.DIRECTION_PICKER ||
-        props[current].type === FIELD_TYPES.ROTATION_PICKER ||
+        fields[current].type === FieldType.DirectionPicker ||
+        fields[current].type === FieldType.RotationPicker ||
         memo
       );
     }, false);
-  }, [props]);
+  }, [fields]);
 
-  const content = Object.keys(props).map((field, index) => (
+  const content = Object.keys(fields).map((field, index) => (
     <AnimationGridField
       key={field}
       isRotationComponent={containsVisualPicker && index === 0}
       isHalfWidthField={containsVisualPicker && (index === 1 || index === 2)}
     >
       <EffectInput
-        effectProps={props}
+        effectProps={fields}
         effectConfig={config}
         field={field}
         onChange={(value, submitArg) =>

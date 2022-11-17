@@ -24,7 +24,7 @@ import {
   getKeyboardMovement,
   useSnackbar,
 } from '@googleforcreators/design-system';
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 import {
   getDefinitionForType,
   ELEMENT_TYPES,
@@ -283,8 +283,8 @@ function useCanvasKeys(ref) {
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 
   const isPlaying = [
-    STORY_ANIMATION_STATE.PLAYING,
-    STORY_ANIMATION_STATE.PLAYING_SELECTED,
+    StoryAnimationState.Playing,
+    StoryAnimationState.PlayingSelected,
   ].includes(animationState);
   useGlobalKeyDownEffect(
     { key: ['mod+enter'] },
@@ -295,8 +295,8 @@ function useCanvasKeys(ref) {
       }
       updateAnimationState({
         animationState: isPlaying
-          ? STORY_ANIMATION_STATE.RESET
-          : STORY_ANIMATION_STATE.PLAYING,
+          ? StoryAnimationState.Reset
+          : StoryAnimationState.Playing,
       });
 
       trackEvent('canvas_play_animations', {

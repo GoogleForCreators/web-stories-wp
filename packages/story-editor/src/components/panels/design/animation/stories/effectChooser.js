@@ -17,7 +17,10 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { SCALE_DIRECTION, DIRECTION } from '@googleforcreators/animation';
+import {
+  ScaleDirection,
+  AnimationDirection,
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -33,8 +36,8 @@ const allEffectTypes = [
   ...Object.keys(backgroundEffectOptions),
 ];
 const allDirections = [
-  ...Object.values(DIRECTION),
-  ...Object.values(SCALE_DIRECTION),
+  ...Object.values(AnimationDirection),
+  ...Object.values(ScaleDirection),
 ];
 
 export default {

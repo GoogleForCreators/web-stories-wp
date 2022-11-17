@@ -119,8 +119,8 @@ export function createAnimationPart(
   return generator(args);
 }
 
-export function getAnimationEffectFields(type: AnimationType) {
-  const customProps: Partial<Record<AnimationType, unknown>> = {
+export function getAnimationEffectFields(type?: AnimationType) {
+  const customFieldsByType: Partial<Record<AnimationType, unknown>> = {
     [AnimationType.EffectFadeIn]: fadeFields,
     [AnimationType.EffectFlyIn]: flyInFields,
     [AnimationType.EffectPan]: panFields,
@@ -134,7 +134,7 @@ export function getAnimationEffectFields(type: AnimationType) {
     [AnimationType.EffectBackgroundZoomAndPan]: bgPanZoomFields,
   };
 
-  const customFields = customProps[type] || {};
+  const customFields = (type && customFieldsByType[type]) || {};
   const allFields = {
     ...basicAnimationFields,
     ...customFields,
@@ -145,7 +145,7 @@ export function getAnimationEffectFields(type: AnimationType) {
   };
   let fieldOrder = Object.keys(allFieldsOrder);
 
-  // PAN_AND_ZOOM design deviates from the normal input order by putting
+  // ZoomAndPand design deviates from the normal input order by putting
   // a custom field (zoom direction) at the end. This accomodates for that.
   const zoomField = 'zoomDirection';
   if (
@@ -161,7 +161,6 @@ export function getAnimationEffectFields(type: AnimationType) {
   // We want custom fields to appear above default fields, but we
   // also want custom fields to override any same-named default fields
   const fields = orderByKeys(allFields, fieldOrder);
-
   return fields;
 }
 

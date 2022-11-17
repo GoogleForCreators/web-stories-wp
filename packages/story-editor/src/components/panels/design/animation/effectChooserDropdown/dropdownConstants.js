@@ -21,8 +21,8 @@ import { __, _x, sprintf } from '@googleforcreators/i18n';
 import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,
-  DIRECTION,
-  SCALE_DIRECTION,
+  AnimationDirection,
+  ScaleDirection,
 } from '@googleforcreators/animation';
 
 /**
@@ -100,11 +100,11 @@ export const backgroundEffectOptions = {
   },
   [getDirectionalEffect(
     BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-    DIRECTION.LEFT_TO_RIGHT
+    AnimationDirection.LeftToRight
   )]: {
     value: getDirectionalEffect(
       BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-      DIRECTION.LEFT_TO_RIGHT
+      AnimationDirection.LeftToRight
     ),
     label: _x('Pan Left', 'animation effect', 'web-stories'),
     animation: {
@@ -114,7 +114,7 @@ export const backgroundEffectOptions = {
         _x('Pan Left', 'animation effect', 'web-stories')
       ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-      panDirection: DIRECTION.LEFT_TO_RIGHT,
+      panDirection: AnimationDirection.LeftToRight,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: PanLeftAnimation,
       size: 16,
@@ -122,11 +122,11 @@ export const backgroundEffectOptions = {
   },
   [getDirectionalEffect(
     BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-    DIRECTION.RIGHT_TO_LEFT
+    AnimationDirection.RightToLeft
   )]: {
     value: getDirectionalEffect(
       BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-      DIRECTION.RIGHT_TO_LEFT
+      AnimationDirection.RightToLeft
     ),
     label: _x('Pan Right', 'animation effect', 'web-stories'),
     animation: {
@@ -136,7 +136,7 @@ export const backgroundEffectOptions = {
         _x('Pan Right', 'animation effect', 'web-stories')
       ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-      panDirection: DIRECTION.RIGHT_TO_LEFT,
+      panDirection: AnimationDirection.RightToLeft,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: PanRightAnimation,
       size: 16,
@@ -144,11 +144,11 @@ export const backgroundEffectOptions = {
   },
   [getDirectionalEffect(
     BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-    DIRECTION.BOTTOM_TO_TOP
+    AnimationDirection.BottomToTop
   )]: {
     value: getDirectionalEffect(
       BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-      DIRECTION.BOTTOM_TO_TOP
+      AnimationDirection.BottomToTop
     ),
     label: _x('Pan Up', 'animation effect', 'web-stories'),
     animation: {
@@ -158,7 +158,7 @@ export const backgroundEffectOptions = {
         _x('Pan Up', 'animation effect', 'web-stories')
       ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-      panDirection: DIRECTION.BOTTOM_TO_TOP,
+      panDirection: AnimationDirection.BottomToTop,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: PanBottomAnimation,
       size: 16,
@@ -166,11 +166,11 @@ export const backgroundEffectOptions = {
   },
   [getDirectionalEffect(
     BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-    DIRECTION.TOP_TO_BOTTOM
+    AnimationDirection.TopToBottom
   )]: {
     value: getDirectionalEffect(
       BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-      DIRECTION.TOP_TO_BOTTOM
+      AnimationDirection.TopToBottom
     ),
     label: _x('Pan Down', 'animation effect', 'web-stories'),
     animation: {
@@ -180,7 +180,7 @@ export const backgroundEffectOptions = {
         _x('Pan Down', 'animation effect', 'web-stories')
       ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-      panDirection: DIRECTION.TOP_TO_BOTTOM,
+      panDirection: AnimationDirection.TopToBottom,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: PanTopAnimation,
       size: 16,
@@ -188,11 +188,11 @@ export const backgroundEffectOptions = {
   },
   [getDirectionalEffect(
     BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-    SCALE_DIRECTION.SCALE_IN
+    ScaleDirection.ScaleIn
   )]: {
     value: getDirectionalEffect(
       BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-      SCALE_DIRECTION.SCALE_IN
+      ScaleDirection.ScaleIn
     ),
     label: _x('Zoom In', 'animation effect', 'web-stories'),
     animation: {
@@ -202,7 +202,7 @@ export const backgroundEffectOptions = {
         _x('Zoom In', 'animation effect', 'web-stories')
       ),
       value: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-      zoomDirection: SCALE_DIRECTION.SCALE_IN,
+      zoomDirection: ScaleDirection.ScaleIn,
       gridSpace: GRID_SIZING.HALF,
       Effect: ZoomInAnimation,
       size: 14,
@@ -210,11 +210,11 @@ export const backgroundEffectOptions = {
   },
   [getDirectionalEffect(
     BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-    SCALE_DIRECTION.SCALE_OUT
+    ScaleDirection.ScaleOut
   )]: {
     value: getDirectionalEffect(
       BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-      SCALE_DIRECTION.SCALE_OUT
+      ScaleDirection.ScaleOut
     ),
     label: _x('Zoom Out', 'animation effect', 'web-stories'),
     animation: {
@@ -224,7 +224,7 @@ export const backgroundEffectOptions = {
         _x('Zoom Out', 'animation effect', 'web-stories')
       ),
       value: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-      zoomDirection: SCALE_DIRECTION.SCALE_OUT,
+      zoomDirection: ScaleDirection.ScaleOut,
       gridSpace: GRID_SIZING.HALF,
       Effect: ZoomOutAnimation,
       size: 20,
@@ -280,11 +280,11 @@ export const foregroundEffectOptions = {
   },
   [getDirectionalEffect(
     ANIMATION_EFFECTS.FLY_IN.value,
-    DIRECTION.LEFT_TO_RIGHT
+    AnimationDirection.LeftToRight
   )]: {
     value: getDirectionalEffect(
       ANIMATION_EFFECTS.FLY_IN.value,
-      DIRECTION.LEFT_TO_RIGHT
+      AnimationDirection.LeftToRight
     ),
     label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
@@ -294,7 +294,7 @@ export const foregroundEffectOptions = {
         _x('Fly In from Left', 'animation effect', 'web-stories')
       ),
       value: ANIMATION_EFFECTS.FLY_IN.value,
-      flyInDirection: DIRECTION.LEFT_TO_RIGHT,
+      flyInDirection: AnimationDirection.LeftToRight,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: FlyInLeftAnimation,
       size: 16,
@@ -302,11 +302,11 @@ export const foregroundEffectOptions = {
   },
   [getDirectionalEffect(
     ANIMATION_EFFECTS.FLY_IN.value,
-    DIRECTION.TOP_TO_BOTTOM
+    AnimationDirection.TopToBottom
   )]: {
     value: getDirectionalEffect(
       ANIMATION_EFFECTS.FLY_IN.value,
-      DIRECTION.TOP_TO_BOTTOM
+      AnimationDirection.TopToBottom
     ),
     label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
@@ -316,7 +316,7 @@ export const foregroundEffectOptions = {
         _x('Fly In from Top', 'animation effect', 'web-stories')
       ),
       value: ANIMATION_EFFECTS.FLY_IN.value,
-      flyInDirection: DIRECTION.TOP_TO_BOTTOM,
+      flyInDirection: AnimationDirection.TopToBottom,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: FlyInTopAnimation,
       size: 16,
@@ -324,11 +324,11 @@ export const foregroundEffectOptions = {
   },
   [getDirectionalEffect(
     ANIMATION_EFFECTS.FLY_IN.value,
-    DIRECTION.BOTTOM_TO_TOP
+    AnimationDirection.BottomToTop
   )]: {
     value: getDirectionalEffect(
       ANIMATION_EFFECTS.FLY_IN.value,
-      DIRECTION.BOTTOM_TO_TOP
+      AnimationDirection.BottomToTop
     ),
     label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
@@ -338,7 +338,7 @@ export const foregroundEffectOptions = {
         _x('Fly In from Bottom', 'animation effect', 'web-stories')
       ),
       value: ANIMATION_EFFECTS.FLY_IN.value,
-      flyInDirection: DIRECTION.BOTTOM_TO_TOP,
+      flyInDirection: AnimationDirection.BottomToTop,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: FlyInBottomAnimation,
       size: 16,
@@ -346,11 +346,11 @@ export const foregroundEffectOptions = {
   },
   [getDirectionalEffect(
     ANIMATION_EFFECTS.FLY_IN.value,
-    DIRECTION.RIGHT_TO_LEFT
+    AnimationDirection.RightToLeft
   )]: {
     value: getDirectionalEffect(
       ANIMATION_EFFECTS.FLY_IN.value,
-      DIRECTION.RIGHT_TO_LEFT
+      AnimationDirection.RightToLeft
     ),
     label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
@@ -360,7 +360,7 @@ export const foregroundEffectOptions = {
         _x('Fly In from Right', 'animation effect', 'web-stories')
       ),
       value: ANIMATION_EFFECTS.FLY_IN.value,
-      flyInDirection: DIRECTION.RIGHT_TO_LEFT,
+      flyInDirection: AnimationDirection.RightToLeft,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: FlyInRightAnimation,
       size: 16,
@@ -381,11 +381,11 @@ export const foregroundEffectOptions = {
   },
   [getDirectionalEffect(
     ANIMATION_EFFECTS.ROTATE_IN.value,
-    DIRECTION.LEFT_TO_RIGHT
+    AnimationDirection.LeftToRight
   )]: {
     value: getDirectionalEffect(
       ANIMATION_EFFECTS.ROTATE_IN.value,
-      DIRECTION.LEFT_TO_RIGHT
+      AnimationDirection.LeftToRight
     ),
     label: _x('Rotate', 'animation effect', 'web-stories'),
     animation: {
@@ -395,7 +395,7 @@ export const foregroundEffectOptions = {
         _x('Rotate In from Left', 'animation effect', 'web-stories')
       ),
       value: ANIMATION_EFFECTS.ROTATE_IN.value,
-      rotateInDirection: DIRECTION.LEFT_TO_RIGHT,
+      rotateInDirection: AnimationDirection.LeftToRight,
       gridSpace: GRID_SIZING.HALF,
       Effect: RotateInLeftAnimation,
       size: 18,
@@ -403,11 +403,11 @@ export const foregroundEffectOptions = {
   },
   [getDirectionalEffect(
     ANIMATION_EFFECTS.ROTATE_IN.value,
-    DIRECTION.RIGHT_TO_LEFT
+    AnimationDirection.RightToLeft
   )]: {
     value: getDirectionalEffect(
       ANIMATION_EFFECTS.ROTATE_IN.value,
-      DIRECTION.RIGHT_TO_LEFT
+      AnimationDirection.RightToLeft
     ),
     label: _x('Rotate', 'animation effect', 'web-stories'),
     animation: {
@@ -417,7 +417,7 @@ export const foregroundEffectOptions = {
         _x('Rotate In from Right', 'animation effect', 'web-stories')
       ),
       value: ANIMATION_EFFECTS.ROTATE_IN.value,
-      rotateInDirection: DIRECTION.RIGHT_TO_LEFT,
+      rotateInDirection: AnimationDirection.RightToLeft,
       gridSpace: GRID_SIZING.HALF,
       Effect: RotateInRightAnimation,
       size: 18,
@@ -439,11 +439,11 @@ export const foregroundEffectOptions = {
   },
   [getDirectionalEffect(
     ANIMATION_EFFECTS.WHOOSH_IN.value,
-    DIRECTION.LEFT_TO_RIGHT
+    AnimationDirection.LeftToRight
   )]: {
     value: getDirectionalEffect(
       ANIMATION_EFFECTS.WHOOSH_IN.value,
-      DIRECTION.LEFT_TO_RIGHT
+      AnimationDirection.LeftToRight
     ),
     label: ANIMATION_EFFECTS.WHOOSH_IN.name,
     animation: {
@@ -453,7 +453,7 @@ export const foregroundEffectOptions = {
         _x('Whoosh In from Left', 'animation effect', 'web-stories')
       ),
       value: ANIMATION_EFFECTS.WHOOSH_IN.value,
-      whooshInDirection: DIRECTION.LEFT_TO_RIGHT,
+      whooshInDirection: AnimationDirection.LeftToRight,
       gridSpace: GRID_SIZING.HALF,
       Effect: WhooshInLeftAnimation,
       size: 20,
@@ -461,11 +461,11 @@ export const foregroundEffectOptions = {
   },
   [getDirectionalEffect(
     ANIMATION_EFFECTS.WHOOSH_IN.value,
-    DIRECTION.RIGHT_TO_LEFT
+    AnimationDirection.RightToLeft
   )]: {
     value: getDirectionalEffect(
       ANIMATION_EFFECTS.WHOOSH_IN.value,
-      DIRECTION.RIGHT_TO_LEFT
+      AnimationDirection.RightToLeft
     ),
     label: ANIMATION_EFFECTS.WHOOSH_IN.name,
     animation: {
@@ -475,54 +475,50 @@ export const foregroundEffectOptions = {
         _x('Whoosh In from Right', 'animation effect', 'web-stories')
       ),
       value: ANIMATION_EFFECTS.WHOOSH_IN.value,
-      whooshInDirection: DIRECTION.RIGHT_TO_LEFT,
+      whooshInDirection: AnimationDirection.RightToLeft,
       gridSpace: GRID_SIZING.HALF,
       Effect: WhooshInRightAnimation,
       size: 20,
     },
   },
-  [getDirectionalEffect(
-    ANIMATION_EFFECTS.ZOOM.value,
-    SCALE_DIRECTION.SCALE_IN
-  )]: {
-    value: getDirectionalEffect(
-      ANIMATION_EFFECTS.ZOOM.value,
-      SCALE_DIRECTION.SCALE_IN
-    ),
-    label: _x('Scale In', 'animation effect', 'web-stories'),
-    animation: {
-      ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
-        __('"%s" Effect', 'web-stories'),
-        _x('Scale In', 'animation effect', 'web-stories')
+  [getDirectionalEffect(ANIMATION_EFFECTS.ZOOM.value, ScaleDirection.ScaleIn)]:
+    {
+      value: getDirectionalEffect(
+        ANIMATION_EFFECTS.ZOOM.value,
+        ScaleDirection.ScaleIn
       ),
-      value: ANIMATION_EFFECTS.ZOOM.value,
-      scaleDirection: SCALE_DIRECTION.SCALE_IN,
-      gridSpace: GRID_SIZING.HALF,
-      Effect: ZoomInAnimation,
-      size: 14,
+      label: _x('Scale In', 'animation effect', 'web-stories'),
+      animation: {
+        ariaLabel: sprintf(
+          /* translators: %s: animation effect. */
+          __('"%s" Effect', 'web-stories'),
+          _x('Scale In', 'animation effect', 'web-stories')
+        ),
+        value: ANIMATION_EFFECTS.ZOOM.value,
+        scaleDirection: ScaleDirection.ScaleIn,
+        gridSpace: GRID_SIZING.HALF,
+        Effect: ZoomInAnimation,
+        size: 14,
+      },
     },
-  },
-  [getDirectionalEffect(
-    ANIMATION_EFFECTS.ZOOM.value,
-    SCALE_DIRECTION.SCALE_OUT
-  )]: {
-    value: getDirectionalEffect(
-      ANIMATION_EFFECTS.ZOOM.value,
-      SCALE_DIRECTION.SCALE_OUT
-    ),
-    label: __('Scale Out', 'web-stories'),
-    animation: {
-      ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
-        __('"%s" Effect', 'web-stories'),
-        _x('Scale Out', 'animation effect', 'web-stories')
+  [getDirectionalEffect(ANIMATION_EFFECTS.ZOOM.value, ScaleDirection.ScaleOut)]:
+    {
+      value: getDirectionalEffect(
+        ANIMATION_EFFECTS.ZOOM.value,
+        ScaleDirection.ScaleOut
       ),
-      value: ANIMATION_EFFECTS.ZOOM.value,
-      scaleDirection: SCALE_DIRECTION.SCALE_OUT,
-      gridSpace: GRID_SIZING.HALF,
-      Effect: ZoomOutAnimation,
-      size: 20,
+      label: __('Scale Out', 'web-stories'),
+      animation: {
+        ariaLabel: sprintf(
+          /* translators: %s: animation effect. */
+          __('"%s" Effect', 'web-stories'),
+          _x('Scale Out', 'animation effect', 'web-stories')
+        ),
+        value: ANIMATION_EFFECTS.ZOOM.value,
+        scaleDirection: ScaleDirection.ScaleOut,
+        gridSpace: GRID_SIZING.HALF,
+        Effect: ZoomOutAnimation,
+        size: 20,
+      },
     },
-  },
 };
