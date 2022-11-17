@@ -16,8 +16,8 @@
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES } from '../../constants';
 import { createAnimationPart, throughput } from '..';
+import { AnimationType } from '../../types';
 
 describe('createAnimationPart', () => {
   /**
@@ -27,10 +27,8 @@ describe('createAnimationPart', () => {
    * incase they ever get support.
    */
   beforeEach(() => {
-    // @ts-ignore
-    jest.spyOn(window, 'KeyframeEffect').mockImplementation(() => ({}));
-    // @ts-ignore
-    jest.spyOn(window, 'Animation').mockImplementation(() => ({}));
+    jest.spyOn(window, 'KeyframeEffect');
+    jest.spyOn(window, 'Animation');
   });
   afterEach(() => {
     jest.restoreAllMocks();
@@ -41,7 +39,7 @@ describe('createAnimationPart', () => {
    * to a object as new animations
    * are created
    */
-  it.each(Object.values(ANIMATION_TYPES))(
+  it.each(Object.values(AnimationType))(
     'type: %s returns a valid object with keyframes and timings for a WAAPIAnimation',
     (type) => {
       const args = {};
@@ -56,7 +54,7 @@ describe('createAnimationPart', () => {
     // throughput should have the same signature as all parts
     const throughputNames = Array.from(Object.keys(throughput())).sort();
 
-    Object.values(ANIMATION_TYPES).forEach((type) => {
+    Object.values(AnimationType).forEach((type) => {
       const properties = Array.from(
         Object.keys(createAnimationPart(type, {}))
       ).sort();

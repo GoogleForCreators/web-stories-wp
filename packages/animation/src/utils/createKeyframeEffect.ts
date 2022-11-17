@@ -17,20 +17,19 @@
 /**
  * Internal dependencies
  */
-import type { Keyframes } from '../types';
+import type { Keyframes, AMPEffectTiming } from '../types';
 
 function createKeyframeEffect(
   target: Element,
   keyframes: Keyframes,
-  timings: EffectTiming
+  timings: AMPEffectTiming
 ) {
   // Translate AMP timings to Web API timings
-  const convertedTimings = Object.fromEntries(
-    Object.entries(timings).map(([key, value]) => [
-      key,
-      key === 'iterations' && value === 'infinity' ? Infinity : value,
-    ])
-  );
+  const convertedTimings: EffectTiming = {
+    ...timings,
+    iterations:
+      timings.iterations === 'infinity' ? Infinity : timings.iterations,
+  };
 
   return new KeyframeEffect(target, keyframes, convertedTimings);
 }

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { generatePulseKeyframes } from '..';
+import { generatePulseKeyframes } from '../pulse';
 
 describe('Pulse Effect', () => {
   describe('generatePulseKeyframes', () => {

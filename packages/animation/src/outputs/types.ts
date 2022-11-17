@@ -22,9 +22,9 @@ import type { CSSProperties, PropsWithChildren } from 'react';
 /**
  * Internal dependencies
  */
-import type { Keyframes } from '../types';
+import type { AMPEffectTiming, Keyframes } from '../types';
 
-export type GenericAnimation = EffectTiming & { easingPreset?: string };
+export type GenericAnimation = AMPEffectTiming & { easingPreset?: string };
 
 export interface AnimationConfig extends GenericAnimation {
   selector: string;

@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import type { AMPEffectTiming } from '../../types';
 import createKeyframeEffect from '../createKeyframeEffect';
 
 describe('createKeyframeEffect', () => {
@@ -24,7 +25,7 @@ describe('createKeyframeEffect', () => {
   const keyframes: Keyframe[] = [];
   describe('iteration property', () => {
     it('should swap "infinity" with Infinity', () => {
-      const timings = {
+      const timings: AMPEffectTiming = {
         iterations: 'infinity',
       };
 
@@ -54,7 +55,7 @@ describe('createKeyframeEffect', () => {
     });
 
     it('should pass through other properties', () => {
-      const timings = {
+      const timings: AMPEffectTiming = {
         duration: 1000,
         delay: 500,
         iterations: 3,

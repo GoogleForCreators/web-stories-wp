@@ -54,3 +54,7 @@ export enum StoryAnimationState {
   Playing = 'playing',
   PlayingSelected = 'playing-selected',
 }
+
+export interface AMPEffectTiming extends Omit<EffectTiming, 'iterations'> {
+  iterations: number | 'infinity' | undefined;
+}

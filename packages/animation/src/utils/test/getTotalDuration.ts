@@ -15,13 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { AnimationType } from '@googleforcreators/elements';
-
-/**
  * Internal dependencies
  */
+import { AnimationType } from '../../types';
 import { getTotalDuration } from '..';
 
 const ANIM_DEFAULTS = {

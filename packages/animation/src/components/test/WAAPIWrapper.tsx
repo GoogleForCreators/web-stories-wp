@@ -17,42 +17,61 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { render, act } from '@testing-library/react';
+import type { FunctionComponent } from 'react';
 
 /**
  * Internal dependencies
  */
+import { AnimationType, StoryAnimation } from '../../types';
 import Provider from '../provider';
+import type { Element } from '../types';
 import WAAPIWrapper from '../WAAPIWrapper';
+
+type Tracker = FunctionComponent<{ target: string }>;
+type TrackersProps = {
+  ElOneWAAPIInvocationTracker: Tracker;
+  ElTwoWAAPIInvocationTracker: Tracker;
+};
+type ElementsWithWrapperProps = {
+  animations: StoryAnimation[];
+  elements: Element[];
+  ElOneWAAPIInvocationTracker: Tracker;
+  ElTwoWAAPIInvocationTracker: Tracker;
+};
+function Trackers({
+  ElOneWAAPIInvocationTracker,
+  ElTwoWAAPIInvocationTracker,
+}: TrackersProps) {
+  return (
+    <div>
+      <ElOneWAAPIInvocationTracker target={'elOne'}>
+        <div />
+      </ElOneWAAPIInvocationTracker>
+      <ElTwoWAAPIInvocationTracker target={'elTwo'}>
+        <div />
+      </ElTwoWAAPIInvocationTracker>
+    </div>
+  );
+}
 
 describe('StoryAnimation.WAAPIWrapper', () => {
   describe('tracking necessary rerenders', () => {
     // Create mock data
-    const createMockAnim = (partial) => ({
+    const createMockAnim = (
+      partial: Partial<StoryAnimation>
+    ): StoryAnimation => ({
       id: 'animOne',
       targets: ['elOne'],
       delay: 0,
       duration: 350,
       iterations: 1,
       scale: 0.5,
-      type: 'effect-pulse',
+      type: AnimationType.EffectPulse,
       ...partial,
     });
-    const createMockElement = (partial) => ({
+    const createMockElement = (partial: Partial<Element>): Element => ({
       id: '2e04154c-bc58-4969-bb4d-c69d32da0eac',
-      flip: { vertical: false, horizontal: false },
-      height: 1,
-      isBackground: true,
-      isDefaultBackground: true,
-      lockAspectRatio: true,
-      mask: { type: 'rectangle' },
-      opacity: 100,
-      rotationAngle: 0,
-      type: 'shape',
-      width: 1,
-      x: 1,
-      y: 1,
       ...partial,
     });
     const initialAnimations = [
@@ -64,30 +83,14 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       createMockElement({ id: 'elTwo' }),
     ];
 
-    // Create React Mocks
-    const MemoizedInner = memo(
-      ({ ElOneWAAPIInvocationTracker, ElTwoWAAPIInvocationTracker }) => (
-        <div>
-          <ElOneWAAPIInvocationTracker target={'elOne'}>
-            <div />
-          </ElOneWAAPIInvocationTracker>
-          <ElTwoWAAPIInvocationTracker target={'elTwo'}>
-            <div />
-          </ElTwoWAAPIInvocationTracker>
-        </div>
-      )
-    );
     const ElementsWithWrapper = ({
       animations,
-
       elements,
-
       ElOneWAAPIInvocationTracker,
-
       ElTwoWAAPIInvocationTracker,
-    }) => (
+    }: ElementsWithWrapperProps) => (
       <Provider animations={animations} elements={elements}>
-        <MemoizedInner
+        <Trackers
           ElOneWAAPIInvocationTracker={ElOneWAAPIInvocationTracker}
           ElTwoWAAPIInvocationTracker={ElTwoWAAPIInvocationTracker}
         />
@@ -108,8 +111,8 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       );
 
       // See that mock methods were called on mount
-      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledOnce();
-      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledOnce();
+      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
 
       // Update animations with one new animation and one
       // previous animation instance
@@ -130,7 +133,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       // See that only the element effected by the animation update rerendered
       // See that mock methods were called on mount
       expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(2);
-      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledOnce();
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
     });
 
     it('doesnt rerender wrappers uneffected by element updates', () => {
@@ -147,16 +150,16 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       );
 
       // See that mock methods were called on mount
-      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledOnce();
-      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledOnce();
+      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
 
-      // Update animations with one new animation and one
-      // previous animation instance
+      // Update animations with one new element and one
+      // previous element instance
       act(() => {
         rerender(
           <ElementsWithWrapper
             animations={initialAnimations}
-            elements={[{ ...initialElements[0], x: 10 }, initialElements[1]]}
+            elements={[{ ...initialElements[0] }, initialElements[1]]}
             ElOneWAAPIInvocationTracker={ElOneWAAPIInvocationTracker}
             ElTwoWAAPIInvocationTracker={ElTwoWAAPIInvocationTracker}
           />
@@ -166,7 +169,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       // See that only the element effected by the animation update rerendered
       // See that mock methods were called on mount
       expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(2);
-      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledOnce();
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
     });
   });
 });
