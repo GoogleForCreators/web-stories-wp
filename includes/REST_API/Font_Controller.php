@@ -250,7 +250,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				array_push( $fonts, ...$this->get_builtin_fonts() );
 
 				// For custom fonts the searching will be done in WP_Query already.
-				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) && \is_string( $request['search'] ) ) {
+				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) ) {
 					$fonts = array_values(
 						array_filter(
 							$fonts,
