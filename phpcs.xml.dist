@@ -201,7 +201,6 @@
   </rule>
 
   <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
-        <exclude-pattern>scoper.inc.php</exclude-pattern>
         <exclude-pattern>web-stories.php</exclude-pattern>
         <exclude-pattern>includes/compat/*</exclude-pattern>
         <exclude-pattern>tests/*</exclude-pattern>
@@ -223,7 +222,6 @@
   />
 
   <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
-      <exclude-pattern>scoper.inc.php</exclude-pattern>
       <exclude-pattern>web-stories.php</exclude-pattern>
       <exclude-pattern>includes/compat/*</exclude-pattern>
       <exclude-pattern>tests/*</exclude-pattern>
