@@ -513,14 +513,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 		$short_name = substr( $fqcn, strrpos( $fqcn, '\\' ) + 1 );
 
 		// Turn camelCase or PascalCase into snake_case.
-		$snake_case = strtolower(
+		return strtolower(
 			trim(
 				(string) preg_replace( self::DETECT_CAPITALS_REGEX_PATTERN, '_$0', $short_name ),
 				'_'
 			)
 		);
-
-		return $snake_case;
 	}
 
 	/**

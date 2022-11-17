@@ -93,7 +93,7 @@ class Category_Taxonomy extends Taxonomy_Base {
 			'item_link'             => _x( 'Category Link', 'navigation link block title', 'web-stories' ),
 			'item_link_description' => _x( 'A link to a category.', 'navigation link block description', 'web-stories' ),
 		];
-		$args   = [
+		return [
 			'labels'                => $labels,
 			'hierarchical'          => true,
 			'public'                => false,
@@ -105,7 +105,5 @@ class Category_Taxonomy extends Taxonomy_Base {
 			'capabilities'          => self::DEFAULT_CAPABILITIES,
 			'rest_controller_class' => Stories_Terms_Controller::class,
 		];
-
-		return $args;
 	}
 }

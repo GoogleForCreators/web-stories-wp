@@ -213,8 +213,18 @@
       <property name="enableOnObjects" value="false" />
     </properties>
   </rule>
+
+  <rule ref="SlevomatCodingStandard.PHP">
+    <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
+    <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
+  </rule>
+
   <!-- Requires declaring visibility for class constants. -->
   <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
+
+  <rule ref="SlevomatCodingStandard.Variables">
+    <exclude name="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable" />
+  </rule>
 
   <!-- Requires use of null coalesce operator (??) when possible. -->
   <rule

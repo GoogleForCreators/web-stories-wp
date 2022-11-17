@@ -98,7 +98,7 @@ class Story_Revisions extends Service_Base {
 	 */
 	public function revisions_to_keep( $num ): int {
 		$num = (int) $num;
-		return ( $num >= 0 && $num < 10 ) ? $num : 10;
+		return $num >= 0 && $num < 10 ? $num : 10;
 	}
 
 	/**
@@ -251,17 +251,17 @@ Player;
 
 		wp_add_inline_script(
 			AMP_Story_Player_Assets::SCRIPT_HANDLE,
-			<<<JS
-	const loadPlayers = () => document.querySelectorAll('amp-story-player').forEach(playerEl => (new AmpStoryPlayer(window, playerEl)).load());
+			<<<'JS'
+    const loadPlayers = () => document.querySelectorAll('amp-story-player').forEach(playerEl => (new AmpStoryPlayer(window, playerEl)).load());
 
-	const originalFrame = wp.revisions.view.Frame;
-	wp.revisions.view.Frame = originalFrame.extend({
-		render: function() {
-			originalFrame.prototype.render.apply(this, arguments);
-			loadPlayers();
-			this.listenTo( this.model, 'update:diff', () => loadPlayers() );
-		},
-	});
+    const originalFrame = wp.revisions.view.Frame;
+    wp.revisions.view.Frame = originalFrame.extend({
+        render: function() {
+            originalFrame.prototype.render.apply(this, arguments);
+            loadPlayers();
+            this.listenTo( this.model, 'update:diff', () => loadPlayers() );
+        },
+    });
 JS
 		);
 	}

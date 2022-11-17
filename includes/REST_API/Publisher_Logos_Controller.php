@@ -486,7 +486,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 		$base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
 
 		// Entity meta.
-		$links = [
+		return [
 			'self'       => [
 				'href' => rest_url( trailingslashit( $base ) . $post->ID ),
 			],
@@ -494,8 +494,6 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 				'href' => rest_url( $base ),
 			],
 		];
-
-		return $links;
 	}
 
 	/**
@@ -510,7 +508,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 			return $this->add_additional_fields_schema( $this->schema );
 		}
 
-		$schema = [
+		return [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => 'publisher-logo',
 			'type'       => 'object',
@@ -542,7 +540,5 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 				],
 			],
 		];
-
-		return $schema;
 	}
 }

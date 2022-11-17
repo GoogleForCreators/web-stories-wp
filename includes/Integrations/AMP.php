@@ -262,7 +262,7 @@ class AMP extends Service_Base implements HasRequirements {
 	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
 		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
-			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
+			isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) &&
 			(
 				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
 				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] ) ||

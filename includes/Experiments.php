@@ -397,11 +397,9 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @return string[] List of all enabled experiments.
 	 */
 	public function get_enabled_experiments(): array {
-		$experiments = array_filter(
+		return array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]
 		);
-
-		return $experiments;
 	}
 }

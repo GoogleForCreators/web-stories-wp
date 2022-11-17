@@ -632,7 +632,7 @@ class Stories extends WP_Widget {
 				type="<?php echo esc_attr( (string) $args['type'] ); ?>"
 				id="<?php echo $this->get_field_id( $args['id'] ); ?>"
 				name="<?php echo $this->get_field_name( $args['name'] ); ?>"
-				value="<?php echo ( 'checkbox' === $args['type'] ) ? 1 : $args['value']; ?>"
+				value="<?php echo 'checkbox' === $args['type'] ? 1 : $args['value']; ?>"
 				<?php
 				if ( 'checkbox' === $args['type'] ) {
 					checked( 1, $args['value'], true );

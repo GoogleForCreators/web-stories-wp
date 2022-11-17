@@ -360,7 +360,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	protected function get_view_type(): string {
-		return ( ! empty( $this->attributes['view_type'] ) ) ? $this->attributes['view_type'] : 'circles';
+		return ! empty( $this->attributes['view_type'] ) ? $this->attributes['view_type'] : 'circles';
 	}
 
 	/**
@@ -404,7 +404,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function get_view_classes(): string {
 		$view_classes   = [];
-		$view_classes[] = ( ! empty( $this->attributes['view_type'] ) ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
+		$view_classes[] = ! empty( $this->attributes['view_type'] ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
 
 		if ( $this->is_view_type( 'grid' ) && ! empty( $this->attributes['number_of_columns'] ) ) {
 			$view_classes[] = sprintf( 'columns-%1$d', $this->attributes['number_of_columns'] );
@@ -437,8 +437,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected function get_container_classes(): string {
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
-		$container_classes[] = ( ! empty( $this->attributes['align'] ) ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
-		$container_classes[] = ( ! empty( $this->attributes['class'] ) ) ? $this->attributes['class'] : '';
+		$container_classes[] = ! empty( $this->attributes['align'] ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
+		$container_classes[] = ! empty( $this->attributes['class'] ) ? $this->attributes['class'] : '';
 
 		if ( ! empty( $this->attributes['show_archive_link'] ) ) {
 			$container_classes[] = 'has-archive-link';
@@ -765,7 +765,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					height="6"
 					layout="responsive"
 				>
-					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
+					<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 				</amp-story-player>
 			</div>
 		</amp-lightbox>

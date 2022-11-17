@@ -88,8 +88,7 @@ class Ad_Manager extends Service_Base implements HasRequirements {
 		 *
 		 * @var string
 		 */
-		$slot_id = $this->settings->get_setting( $this->settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
-		return $slot_id;
+		return $this->settings->get_setting( $this->settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
 	}
 
 	/**

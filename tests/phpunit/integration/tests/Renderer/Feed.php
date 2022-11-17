@@ -96,7 +96,7 @@ class Feed extends TestCase {
 			$out = ob_get_clean();
 		} catch ( \Google\Web_Stories\Tests\Integration\Renderer\Exception $e ) {
 			$out = ob_get_clean();
-			throw($e);
+			throw $e;
 		}
 		return $out;
 	}

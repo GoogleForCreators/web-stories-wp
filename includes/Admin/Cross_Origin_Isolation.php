@@ -211,7 +211,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 
 				$attribute = $match_value[1];
 				$value     = $match_value[4] ?? $match_value[3];
-				$cache_key = ( 'video' === $tag || 'audio' === $tag ) ? $tag : $attribute;
+				$cache_key = 'video' === $tag || 'audio' === $tag ? $tag : $attribute;
 
 				// If already processed tag/attribute and value before, skip.
 				if ( isset( $processed[ $cache_key ] ) && \in_array( $value, $processed[ $cache_key ], true ) ) {
@@ -319,7 +319,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 			return $html;
 		}
 
-		$new_html = str_replace(
+		return str_replace(
 			[
 				$attribute . '="' . $url . '"',
 				"{$attribute}='{$url}'",
@@ -330,8 +330,6 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 			],
 			$html
 		);
-
-		return $new_html;
 	}
 
 	/**

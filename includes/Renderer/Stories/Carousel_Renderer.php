@@ -121,10 +121,13 @@ class Carousel_Renderer extends Renderer {
 					?>
 					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>">
 						<?php
-						foreach ( $this->stories as $story ) {
-							$this->render_single_story_content();
-							$this->next();
-						}
+						array_map(
+							function() {
+								$this->render_single_story_content();
+								$this->next();
+							},
+							$this->stories
+						);
 						?>
 					</div>
 					<div tabindex="0" aria-label="<?php esc_attr_e( 'Previous', 'web-stories' ); ?>" class="glider-prev"></div>
@@ -141,10 +144,13 @@ class Carousel_Renderer extends Renderer {
 						aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
 					>
 						<?php
-						foreach ( $this->stories as $story ) {
-							$this->render_single_story_content();
-							$this->next();
-						}
+						array_map(
+							function() {
+								$this->render_single_story_content();
+								$this->next();
+							},
+							$this->stories
+						);
 						?>
 					</amp-carousel>
 					<?php

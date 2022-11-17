@@ -166,7 +166,7 @@ class Story_Query {
 	 */
 	public function get_renderer(): Renderer {
 		$story_attributes = $this->get_story_attributes();
-		$view_type        = ( ! empty( $story_attributes['view_type'] ) ) ? $story_attributes['view_type'] : '';
+		$view_type        = ! empty( $story_attributes['view_type'] ) ? $story_attributes['view_type'] : '';
 
 		switch ( $view_type ) {
 			case 'carousel':

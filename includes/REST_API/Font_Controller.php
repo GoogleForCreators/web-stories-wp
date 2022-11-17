@@ -320,9 +320,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					 * @param Font $b
 					 * @return int
 					 */
-					static fn( array $a, array $b ): int => (
-						strnatcasecmp( $a['family'], $b['family'] )
-					)
+					static fn( array $a, array $b ): int => strnatcasecmp( $a['family'], $b['family'] )
 				);
 			}
 		}

@@ -236,7 +236,7 @@ class Jetpack extends DependencyInjectedTestCase {
 			return $value;
 		}
 
-		$original_data = [
+		return [
 			[
 				'videopress' => [
 					'duration'      => 5000,
@@ -256,8 +256,6 @@ class Jetpack extends DependencyInjectedTestCase {
 				],
 			],
 		];
-
-		return $original_data;
 	}
 
 	/**
