@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from '@googleforcreators/react';
-import type { Page, Story } from '@googleforcreators/elements';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -26,6 +26,7 @@ import type { Page, Story } from '@googleforcreators/elements';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
+import type { Story } from '../../../types/storyProvider';
 
 interface AutoSaveProps {
   storyId: number;

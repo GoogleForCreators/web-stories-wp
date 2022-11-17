@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type {RestoreProps, State} from '../../../../types/storyProvider';
+import type { RestoreProps, State } from '../../../../types/storyProvider';
 
 /**
  * Restore internal state completely from given state.
