@@ -15,14 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Animation, Element } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import { LAYER_DIRECTIONS } from '../../../../constants';
 import { ELEMENT_RESERVED_PROPERTIES } from '../types';
 import objectWithout from '../../../../utils/objectWithout';
+import type { ElementUpdater } from '../../../../types/storyProvider';
 export { objectWithout };
 
-export function intersect(first, ...rest) {
+export function intersect(first: string[], ...rest: string[][]) {
   if (!first || !rest?.length) {
     return first;
   }
@@ -34,11 +40,15 @@ export function intersect(first, ...rest) {
   );
 }
 
-export function isInsideRange(index, start, end) {
+export function isInsideRange(index: number, start: number, end: number) {
   return index >= start && index <= end;
 }
 
-export function moveArrayElement(array, oldPosition, newPosition) {
+export function moveArrayElement(
+  array: Element[],
+  oldPosition: number,
+  newPosition: number
+) {
   // First remove from list.
   const element = array[oldPosition];
   const arrayWithoutElement = [
@@ -54,12 +64,18 @@ export function moveArrayElement(array, oldPosition, newPosition) {
   ];
 }
 
+interface PositionProps {
+  currentPosition: number;
+  minPosition: number;
+  maxPosition: number;
+  desiredPosition: string | number;
+}
 export function getAbsolutePosition({
   currentPosition,
   minPosition,
   maxPosition,
   desiredPosition,
-}) {
+}: PositionProps) {
   if (typeof desiredPosition === 'number') {
     return Math.min(maxPosition, Math.max(minPosition, desiredPosition));
   }
@@ -82,47 +98,62 @@ export function getAbsolutePosition({
   }
 }
 
-export function updateElementWithUpdater(element, properties) {
+export function updateElementWithUpdater(
+  element: Element,
+  properties: Partial<Element> | ElementUpdater
+) {
   const updater =
     typeof properties === 'function' ? properties(element) : properties;
-  const allowedProperties = objectWithout(updater, ELEMENT_RESERVED_PROPERTIES);
+  const allowedProperties: Partial<Element> | Element = objectWithout(
+    updater,
+    ELEMENT_RESERVED_PROPERTIES
+  );
   if (Object.keys(allowedProperties).length === 0) {
     return null;
   }
-  if (allowedProperties.animation) {
+  if ('animation' in allowedProperties) {
     return allowedProperties.animation;
   }
   Object.assign(element, allowedProperties);
   return null;
 }
 
-export function removeAnimationsWithElementIds(animations = [], ids = []) {
-  return animations.reduce((accum, animation) => {
+export function removeAnimationsWithElementIds(
+  animations: Animation[] = [],
+  ids: string[] = []
+) {
+  return animations.reduce((accum: Animation[], animation) => {
     if (ids.some((id) => animation.targets?.includes(id))) {
       return accum;
     }
     return [...accum, animation];
-  }, []);
+  }, [] as Animation[]);
 }
 
-export function updateAnimations(oldAnimations, animationUpdates) {
-  const newAnimations = oldAnimations.reduce((animations, animation) => {
-    const updatedAnimation = animationUpdates[animation.id];
+export function updateAnimations(
+  oldAnimations: Animation[],
+  animationUpdates: Animation[]
+) {
+  const newAnimations = oldAnimations.reduce(
+    (animations: Animation[], animation) => {
+      const updatedAnimation = animationUpdates[animation.id] as Animation;
 
-    // remove animation from lookup
-    delete animationUpdates[animation.id];
+      // remove animation from lookup
+      delete animationUpdates[animation.id];
 
-    if (updatedAnimation?.delete) {
-      // delete animation
-      return animations;
-    } else if (updatedAnimation) {
-      // update animation
-      return [...animations, updatedAnimation];
-    } else {
-      // No updates
-      return [...animations, animation];
-    }
-  }, []);
+      if (updatedAnimation?.delete) {
+        // delete animation
+        return animations;
+      } else if (updatedAnimation) {
+        // update animation
+        return [...animations, updatedAnimation];
+      } else {
+        // No updates
+        return [...animations, animation];
+      }
+    },
+    []
+  );
 
   // add animations
   Object.values(animationUpdates).forEach((a) => newAnimations.push(a));
@@ -137,14 +168,17 @@ export function updateAnimations(oldAnimations, animationUpdates) {
  * @typedef {Object.<string, any>} Entry
  */
 
+interface Entry {
+  id: string;
+}
 /**
  * Remove duplicate entries. Uses last instance if
  * multiple entries share the same id.
  *
- * @param {Array<Entry>} entries - set of entries with possible duplicate Ids
- * @return {Array<Entry>} New set of entries with only unique Ids
+ * @param entries - set of entries with possible duplicate Ids
+ * @return New set of entries with only unique Ids
  */
-export function removeDuplicates(entries = []) {
+export function removeDuplicates(entries: Entry[] = []) {
   // Use only last of multiple elements with same id by turning into an object and getting the values.
   return Object.values(
     Object.fromEntries(entries.map((entry) => [entry.id, entry]))
@@ -155,11 +189,11 @@ export function removeDuplicates(entries = []) {
  * Takes to sets of entries and returns unique entries
  * (keying on id) of right set not present in left set.
  *
- * @param {Array<Entry>} left - base set of entries
- * @param {Array<Entry>} right - new entries
- * @return {Array<Entry>} - right exclusion of sets set
+ * @param left - base set of entries
+ * @param right - new entries
+ * @return - right exclusion of sets set
  */
-export function exclusion(left = [], right = []) {
+export function exclusion(left: Entry[] = [], right: Entry[] = []) {
   const rightSet = removeDuplicates(right);
   const leftJoinKeys = left.map(({ id }) => id);
   return rightSet.filter(({ id }) => !leftJoinKeys.includes(id));
@@ -168,13 +202,19 @@ export function exclusion(left = [], right = []) {
 /**
  * Calculate the last index of a group.
  *
- * @param {Object} props Props
- * @param {Array} props.elements Elements array
- * @param {string} props.groupId Group id
- * @return {number} Last index of group
+ * @param props Props
+ * @param props.elements Elements array
+ * @param props.groupId Group id
+ * @return Last index of group
  */
-export function getLastIndexOfGroup({ elements, groupId }) {
-  const isMember = (e) => e.groupId === groupId;
+export function getLastIndexOfGroup({
+  elements,
+  groupId,
+}: {
+  elements: Element[];
+  groupId: string;
+}) {
+  const isMember = (e: Element) => e.groupId === groupId;
   const firstGroupElemenIndex = elements.findIndex(isMember);
   const groupSize = elements.filter(isMember).length;
   return firstGroupElemenIndex + groupSize - 1;

@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-export default function objectWithout(obj, propertiesToRemove) {
+export default function objectWithout(
+  obj: Record<string, unknown>,
+  propertiesToRemove: string[]
+) {
   return Object.keys(obj)
     .filter((key) => !propertiesToRemove.includes(key))
     .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});

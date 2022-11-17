@@ -94,7 +94,7 @@ export type DeleteElementsAction = {
   payload: DeleteElementsProps;
 };
 
-type ElementUpdater = (prevProps: Element) => Element;
+export type ElementUpdater = (prevProps: Element) => Element;
 export type UpdateElementsProps = {
   elementIds: string[] | null;
   properties: Partial<Element> | ElementUpdater;

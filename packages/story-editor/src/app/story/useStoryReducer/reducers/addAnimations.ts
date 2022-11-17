@@ -22,8 +22,11 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
+import type {
+  AddAnimationsProps,
+  ReducerState,
+} from '../../../../types/storyProvider';
 import { exclusion } from './utils';
-import type {AddAnimationsProps, ReducerState} from "../../../../types/storyProvider";
 
 /**
  * Add animations to current page.
@@ -45,6 +48,10 @@ export const addAnimations = (
   }
 
   const page = draft.pages.find(({ id }) => id === draft.current);
+
+  if (!page) {
+    return;
+  }
 
   if (!page.animations) {
     page.animations = [];

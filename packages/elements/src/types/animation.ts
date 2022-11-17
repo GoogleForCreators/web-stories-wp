@@ -65,4 +65,5 @@ export interface Animation {
   whooshInDir?: AnimationDirection;
   scaleDirection?: ZoomDirection;
   flyInDir?: AnimationDirection;
+  delete?: boolean;
 }

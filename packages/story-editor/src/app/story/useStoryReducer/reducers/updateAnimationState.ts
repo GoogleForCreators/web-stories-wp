@@ -24,18 +24,18 @@ import { produce } from 'immer';
  */
 import type {
   ReducerState,
-  UpdateAnimationReducerStateProps,
+  UpdateAnimationStateProps,
 } from '../../../../types/storyProvider';
 
 /**
  * Update the story animation state to play, pause, scrub or reset
  * active pages animations.
  */
-export const updateAnimationReducerState = (
+export const updateAnimationState = (
   draft: ReducerState,
-  { animationReducerState }: UpdateAnimationReducerStateProps
+  { animationState }: UpdateAnimationStateProps
 ) => {
-  draft.animationReducerState = animationReducerState;
+  draft.animationState = animationState;
 };
 
-export default produce(updateAnimationReducerState);
+export default produce(updateAnimationState);
