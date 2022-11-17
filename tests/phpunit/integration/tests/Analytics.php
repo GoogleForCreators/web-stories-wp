@@ -23,10 +23,7 @@ use Google\Web_Stories\Settings;
  * @coversDefaultClass \Google\Web_Stories\Analytics
  */
 class Analytics extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Analytics
-	 */
-	private $instance;
+	private \Google\Web_Stories\Analytics $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -31,22 +31,16 @@ use Google\Web_Stories\Interfaces\Field;
 class BaseField implements Field {
 	/**
 	 * Field label.
-	 *
-	 * @var string
 	 */
 	private string $label;
 
 	/**
 	 * Whether the field is enabled.
-	 *
-	 * @var bool
 	 */
 	private bool $hidden;
 
 	/**
 	 * Whether to display the field.
-	 *
-	 * @var bool
 	 */
 	private bool $show;
 

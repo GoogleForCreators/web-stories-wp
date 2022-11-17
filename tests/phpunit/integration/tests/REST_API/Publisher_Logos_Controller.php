@@ -13,44 +13,25 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Publisher_Logos_Controller
  */
 class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
-	/**
-	 * @var WP_REST_Server
-	 */
-	protected $server;
+	protected WP_REST_Server $server;
 
-	/**
-	 * @var int
-	 */
-	protected static $admin;
+	protected static int $admin;
 
-	/**
-	 * @var int
-	 */
-	protected static $editor;
+	protected static int $editor;
 
-	/**
-	 * @var int
-	 */
-	protected static $attachment_id_1;
+	protected static int $attachment_id_1;
 
-	/**
-	 * @var int
-	 */
-	protected static $attachment_id_2;
+	protected static int $attachment_id_2;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Publisher_Logos_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Publisher_Logos_Controller $controller;
 
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin = $factory->user->create(

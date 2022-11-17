@@ -28,10 +28,8 @@ use WP_Widget;
 class Stories extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Widgets\Stories
 	 */
-	private $instance;
+	private \Google\Web_Stories\Widgets\Stories $instance;
 
 	/**
 	 * Runs before any method in class is run.

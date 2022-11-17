@@ -29,17 +29,13 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * Author user ID.
-	 *
-	 * @var int
 	 */
-	protected static $author_id;
+	protected static int $author_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Stories_Autosaves_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$author_id = $factory->user->create(

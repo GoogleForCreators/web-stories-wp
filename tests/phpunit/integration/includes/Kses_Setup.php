@@ -23,10 +23,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * Helper trait to setup KSES. This is normally setup on init but needed to be manually fired in tests.
  */
 trait Kses_Setup {
-	/**
-	 * @var \Google\Web_Stories\KSES
-	 */
-	public $kses;
+	public $kses; // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
 
 	/**
 	 * Setup KSES init class.

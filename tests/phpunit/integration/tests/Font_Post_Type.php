@@ -23,10 +23,7 @@ namespace Google\Web_Stories\Tests\Integration;
 class Font_Post_Type extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
 
-	/**
-	 * @var \Google\Web_Stories\Font_Post_Type
-	 */
-	private $instance;
+	private \Google\Web_Stories\Font_Post_Type $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -28,29 +28,23 @@ class Carousel_Renderer extends TestCase {
 
 	/**
 	 * Stories mock object.
-	 *
-	 * @var Story_Query
 	 */
-	private $story_query;
+	private Story_Query $story_query;
 
 	/**
 	 * Story post ID.
-	 *
-	 * @var int
 	 */
-	private static $story_id;
+	private static int $story_id;
 
 	/**
 	 * Story model.
-	 *
-	 * @var Story
 	 */
-	private $story_model;
+	private Story $story_model;
 
 	/**
 	 * @var \WP_Post[]
 	 */
-	private $stories;
+	private array $stories;
 
 	/**
 	 * Runs once before any test in the class run.

@@ -21,10 +21,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
 class KSES extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\KSES
-	 */
-	private $instance;
+	private \Google\Web_Stories\KSES $instance;
 
 	public function set_up(): void {
 		parent::set_up();

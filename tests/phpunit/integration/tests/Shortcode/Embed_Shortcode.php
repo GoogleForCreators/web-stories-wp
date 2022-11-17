@@ -25,10 +25,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Embed_Shortcode extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Shortcode\Embed_Shortcode
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Shortcode\Embed_Shortcode $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -25,10 +25,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Blurhash extends TestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Blurhash
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Blurhash $instance;
 
 	public function set_up(): void {
 		parent::set_up();

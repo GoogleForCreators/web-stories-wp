@@ -21,10 +21,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\AdSense
  */
 class AdSense extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\AdSense
-	 */
-	private $instance;
+	private \Google\Web_Stories\AdSense $instance;
 
 	public function set_up(): void {
 		parent::set_up();

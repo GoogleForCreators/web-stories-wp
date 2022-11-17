@@ -28,10 +28,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Site_Kit extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Integrations\Site_Kit
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Integrations\Site_Kit $instance;
 
 	public function set_up(): void {
 		parent::set_up();

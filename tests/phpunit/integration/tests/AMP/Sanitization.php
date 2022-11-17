@@ -29,10 +29,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
  */
 class Sanitization extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\AMP\Sanitization
-	 */
-	private $instance;
+	private \Google\Web_Stories\AMP\Sanitization $instance;
 
 	public function set_up(): void {
 		parent::set_up();

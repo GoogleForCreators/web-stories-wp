@@ -31,10 +31,8 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Integrations\Jetpack
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Integrations\Jetpack $instance;
 
 	public function set_up(): void {
 		parent::set_up();

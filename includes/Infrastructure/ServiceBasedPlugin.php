@@ -61,15 +61,11 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 	/**
 	 * Enable filters.
-	 *
-	 * @var bool
 	 */
 	protected bool $enable_filters;
 
 	/**
 	 * Injector.
-	 *
-	 * @var Injector
 	 */
 	protected Injector $injector;
 

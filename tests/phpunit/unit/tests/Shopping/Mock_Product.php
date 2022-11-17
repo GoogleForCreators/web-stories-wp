@@ -22,12 +22,15 @@ namespace Google\Web_Stories\Tests\Unit\Shopping;
  * Mocks WooCommerce product methods as needed unit tests.
  */
 class Mock_Product {
-	protected $data;
+	/**
+	 * @var array<string, mixed> $data
+	 */
+	protected array $data;
 
 	/**
-	 * @param mixed $data
+	 * @param array<string, mixed> $data
 	 */
-	public function __construct( $product_data ) {
+	public function __construct( array $product_data ) {
 		$this->data = $product_data;
 	}
 

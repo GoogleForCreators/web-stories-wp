@@ -27,31 +27,23 @@ class Admin extends DependencyInjectedTestCase {
 
 	/**
 	 * Settings for test.
-	 * 
-	 * @var \Google\Web_Stories\Settings
 	 */
-	private $settings;
+	private \Google\Web_Stories\Settings $settings;
 	
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
 	 * Post ID.
-	 *
-	 * @var int
 	 */
-	protected static $post_id;
+	protected static int $post_id;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		
@@ -81,10 +73,8 @@ class Admin extends DependencyInjectedTestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Admin\Admin
 	 */
-	private $instance;
+	private \Google\Web_Stories\Admin\Admin $instance;
 
 	public function set_up(): void {
 		parent::set_up();

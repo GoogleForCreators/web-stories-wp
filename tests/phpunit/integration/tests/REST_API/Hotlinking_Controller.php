@@ -28,8 +28,8 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Hotlinking_Controller
  */
 class Hotlinking_Controller extends DependencyInjectedRestTestCase {
-	protected static $subscriber;
-	protected static $editor;
+	protected static int $subscriber;
+	protected static int $editor;
 
 	public const URL_INVALID      = 'https://https://invalid.commmm';
 	public const URL_404          = 'https://example.com/404/test.jpg';
@@ -44,17 +44,13 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Hotlinking_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Hotlinking_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(

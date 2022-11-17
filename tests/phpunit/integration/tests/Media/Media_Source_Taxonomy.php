@@ -27,10 +27,8 @@ use WP_REST_Request;
 class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Media_Source_Taxonomy
 	 */
-	private $instance;
+	private \Google\Web_Stories\Media\Media_Source_Taxonomy $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -27,10 +27,7 @@ use Google\Web_Stories\Tests\Unit\TestCase;
 class WooCommerce_Query extends TestCase {
 	use Private_Access;
 
-	/**
-	 * @var \Google\Web_Stories\Shopping\WooCommerce_Query
-	 */
-	private $instance;
+	private \Google\Web_Stories\Shopping\WooCommerce_Query $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -42,64 +42,46 @@ use WP_Post;
 class Story {
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
 	protected int $id = 0;
 
 	/**
 	 * Title.
-	 *
-	 * @var string
 	 */
 	protected string $title = '';
 
 	/**
 	 * Excerpt.
-	 *
-	 * @var string
 	 */
 	protected string $excerpt = '';
 
 	/**
 	 * URL.
-	 *
-	 * @var string
 	 */
 	protected string $url = '';
 
 	/**
 	 * Markup.
-	 *
-	 * @var string
 	 */
 	protected string $markup = '';
 
 	/**
 	 * Publisher name.
-	 *
-	 * @var string
 	 */
 	protected string $publisher_name = '';
 
 	/**
 	 * Publisher logo.
-	 *
-	 * @var string
 	 */
 	protected string $publisher_logo = '';
 
 	/**
 	 * Poster source set sizes.
-	 *
-	 * @var string
 	 */
 	protected string $poster_sizes = '';
 
 	/**
 	 * Poster source set.
-	 *
-	 * @var string
 	 */
 	protected string $poster_srcset = '';
 
@@ -128,22 +110,16 @@ class Story {
 
 	/**
 	 * Poster url - portrait.
-	 *
-	 * @var string
 	 */
 	protected string $poster_portrait = '';
 
 	/**
 	 * Date for the story.
-	 *
-	 * @var string
 	 */
 	protected string $date = '';
 
 	/**
 	 * Author of story.
-	 *
-	 * @var string
 	 */
 	protected string $author = '';
 

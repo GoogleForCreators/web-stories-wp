@@ -36,10 +36,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Stories_Shortcode extends TestCase {
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	private static $story_id;
+	private static int $story_id;
 
 	/**
 	 * Run before any test is run and class is being setup.

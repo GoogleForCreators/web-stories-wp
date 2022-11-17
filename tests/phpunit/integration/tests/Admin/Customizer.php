@@ -30,17 +30,13 @@ class Customizer extends DependencyInjectedTestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Admin\Customizer
 	 */
-	private $instance;
+	private \Google\Web_Stories\Admin\Customizer $instance;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \WP_Customize_Manager
 	 */
-	private $wp_customize_mock;
+	private \WP_Customize_Manager $wp_customize_mock;
 
 	public static function wpSetUpBeforeClass(): void {
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';

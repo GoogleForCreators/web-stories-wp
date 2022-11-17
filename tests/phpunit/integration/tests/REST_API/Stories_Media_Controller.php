@@ -27,37 +27,20 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Media_Controller
  */
 class Stories_Media_Controller extends DependencyInjectedRestTestCase {
-	/**
-	 * @var int
-	 */
-	protected static $user_id;
+	protected static int $user_id;
 
-	/**
-	 * @var int
-	 */
-	protected static $poster_attachment_id;
+	protected static int $poster_attachment_id;
 
-	/**
-	 * @var int
-	 */
-	protected static $mp4_attachment_id;
+	protected static int $mp4_attachment_id;
 
-	/**
-	 * @var int
-	 */
-	protected static $mov_attachment_id;
+	protected static int $mov_attachment_id;
 
-	/**
-	 * @var int
-	 */
-	protected static $post_id;
+	protected static int $post_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Stories_Media_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Stories_Media_Controller $controller;
 
 	/**
 	 * @param $factory

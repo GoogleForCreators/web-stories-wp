@@ -25,10 +25,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Conditional_Featured_Image extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Integrations\Conditional_Featured_Image
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Integrations\Conditional_Featured_Image $instance;
 
 	/**
 	 * Runs prior to each test and sets up the testee object.

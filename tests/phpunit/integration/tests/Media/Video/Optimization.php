@@ -25,10 +25,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Optimization extends TestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Video\Optimization
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Video\Optimization $instance;
 
 	public function set_up(): void {
 		parent::set_up();

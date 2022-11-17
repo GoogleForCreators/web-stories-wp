@@ -17,10 +17,8 @@ class BaseField extends TestCase {
 
 	/**
 	 * Object of class in test.
-	 *
-	 * @var Testee
 	 */
-	private static $testee;
+	private static Testee $testee;
 
 	/**
 	 * Runs before any test in class is executed.

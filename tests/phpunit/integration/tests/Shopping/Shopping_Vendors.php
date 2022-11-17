@@ -28,10 +28,8 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	use Mock_Vendor_Setup;
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Shopping\Shopping_Vendors
 	 */
-	private $instance;
+	private \Google\Web_Stories\Shopping\Shopping_Vendors $instance;
 
 	public function set_up(): void {
 		parent::set_up();

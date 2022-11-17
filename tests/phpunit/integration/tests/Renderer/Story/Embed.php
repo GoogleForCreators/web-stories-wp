@@ -9,15 +9,9 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  */
 class Embed extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Context
-	 */
-	private $context;
+	private \Google\Web_Stories\Context $context;
 
-	/**
-	 * @var \Google\Web_Stories\Assets
-	 */
-	private $assets;
+	private \Google\Web_Stories\Assets $assets;
 
 	public function set_up(): void {
 		parent::set_up();

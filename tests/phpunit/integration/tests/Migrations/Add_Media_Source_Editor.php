@@ -27,10 +27,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Add_Media_Source_Editor extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Migrations\Add_Media_Source_Editor
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Migrations\Add_Media_Source_Editor $instance;
 
 	public function set_up(): void {
 		parent::set_up();

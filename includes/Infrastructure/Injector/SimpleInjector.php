@@ -74,8 +74,6 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Instantiator.
-	 *
-	 * @var Instantiator
 	 */
 	private Instantiator $instantiator;
 

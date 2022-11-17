@@ -21,10 +21,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\Ad_Manager
  */
 class Ad_Manager extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Ad_Manager
-	 */
-	private $instance;
+	private \Google\Web_Stories\Ad_Manager $instance;
 
 	public function set_up(): void {
 		parent::set_up();

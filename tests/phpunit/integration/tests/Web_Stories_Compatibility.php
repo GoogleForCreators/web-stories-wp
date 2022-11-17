@@ -21,10 +21,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Web_Stories_Compatibility
  */
 class Web_Stories_Compatibility extends TestCase {
-	/**
-	 * @var \Web_Stories_Compatibility
-	 */
-	protected $instance;
+	protected \Web_Stories_Compatibility $instance;
 
 	public function set_up(): void {
 		parent::set_up();

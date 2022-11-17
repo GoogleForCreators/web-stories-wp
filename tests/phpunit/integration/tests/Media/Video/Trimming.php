@@ -26,10 +26,8 @@ class Trimming extends TestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Video\Trimming
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Video\Trimming $instance;
 
 	public function set_up(): void {
 		parent::set_up();

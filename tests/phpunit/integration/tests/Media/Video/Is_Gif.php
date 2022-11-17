@@ -25,10 +25,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Is_Gif extends TestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Video\Is_Gif
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Video\Is_Gif $instance;
 
 	public function set_up(): void {
 		parent::set_up();

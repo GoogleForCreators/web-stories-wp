@@ -25,24 +25,18 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	private $admin_id;
+	private int $admin_id;
 
 	/**
 	 * Contributor user for test.
-	 *
-	 * @var int
 	 */
-	private $contributor_id;
+	private int $contributor_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Admin\Cross_Origin_Isolation
 	 */
-	private $instance;
+	private \Google\Web_Stories\Admin\Cross_Origin_Isolation $instance;
 
 	public function set_up(): void {
 		parent::set_up();

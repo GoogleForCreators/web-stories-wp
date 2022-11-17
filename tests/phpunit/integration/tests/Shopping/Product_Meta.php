@@ -25,10 +25,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Product_Meta extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Shopping\Product_Meta
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Shopping\Product_Meta $instance;
 
 	public function set_up(): void {
 		parent::set_up();

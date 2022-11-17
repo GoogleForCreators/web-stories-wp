@@ -28,89 +28,44 @@ class Editor extends DependencyInjectedTestCase {
 
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Subscriber user for test.
-	 *
-	 * @var int
 	 */
-	protected static $subscriber_id;
+	protected static int $subscriber_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
-	/**
-	 * @var \Google\Web_Stories\Experiments
-	 */
-	private $experiments;
+	private \Google\Web_Stories\Experiments $experiments;
 
-	/**
-	 * @var \Google\Web_Stories\Assets
-	 */
-	private $assets;
+	private \Google\Web_Stories\Assets $assets;
 
-	/**
-	 * @var \Google\Web_Stories\Admin\Meta_Boxes
-	 */
-	private $meta_boxes;
+	private \Google\Web_Stories\Admin\Meta_Boxes $meta_boxes;
 
-	/**
-	 * @var \Google\Web_Stories\Admin\Google_Fonts
-	 */
-	private $google_fonts;
+	private \Google\Web_Stories\Admin\Google_Fonts $google_fonts;
 
-	/**
-	 * @var \Google\Web_Stories\Decoder
-	 */
-	private $decoder;
+	private \Google\Web_Stories\Decoder $decoder;
 
-	/**
-	 * @var \Google\Web_Stories\Locale
-	 */
-	private $locale;
+	private \Google\Web_Stories\Locale $locale;
 
-	/**
-	 * @var \Google\Web_Stories\Story_Post_Type
-	 */
-	private $story_post_type;
+	private \Google\Web_Stories\Story_Post_Type $story_post_type;
 
-	/**
-	 * @var \Google\Web_Stories\Page_Template_Post_Type
-	 */
-	private $page_template_post_type;
+	private \Google\Web_Stories\Page_Template_Post_Type $page_template_post_type;
 
-	/**
-	 * @var \Google\Web_Stories\Font_Post_Type
-	 */
-	private $fonts_post_type;
+	private \Google\Web_Stories\Font_Post_Type $fonts_post_type;
 
-	/**
-	 * @var \Google\Web_Stories\Media\Types
-	 */
-	private $types;
+	private \Google\Web_Stories\Media\Types $types;
 
-	/**
-	 * @var \Google\Web_Stories\Admin\Editor
-	 */
-	private $instance;
+	private \Google\Web_Stories\Admin\Editor $instance;
 
-	/**
-	 * @var \Google\Web_Stories\Context
-	 */
-	private $context;
+	private \Google\Web_Stories\Context $context;
 
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $settings;
+	private \Google\Web_Stories\Settings $settings;
 
 	/**
 	 * @param \WP_UnitTest_Factory $factory

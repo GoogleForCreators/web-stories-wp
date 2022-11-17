@@ -25,36 +25,25 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Story_Post_Type
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Story_Post_Type $instance;
 
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $settings;
+	private \Google\Web_Stories\Settings $settings;
 
 	/**
 	 * Archive page ID.
-	 *
-	 * @var int
 	 */
-	protected static $archive_page_id;
+	protected static int $archive_page_id;
 
 	/**
 	 * @param \WP_UnitTest_Factory $factory

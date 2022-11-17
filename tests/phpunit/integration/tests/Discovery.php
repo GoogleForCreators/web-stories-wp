@@ -24,38 +24,27 @@ use Google\Web_Stories\Settings;
  */
 class Discovery extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Discovery
-	 */
-	private $instance;
+	private \Google\Web_Stories\Discovery $instance;
 
 	/**
 	 * User ID.
-	 *
-	 * @var int
 	 */
-	protected static $user_id;
+	protected static int $user_id;
 
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
 	 * Image attachment id.
-	 *
-	 * @var int
 	 */
-	protected static $attachment_id;
+	protected static int $attachment_id;
 
 	/**
 	 * Archive page ID.
-	 *
-	 * @var int
 	 */
-	protected static $archive_page_id;
+	protected static int $archive_page_id;
 
 	/**
 	 * @param $factory

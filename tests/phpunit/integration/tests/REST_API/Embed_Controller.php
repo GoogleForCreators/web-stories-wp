@@ -29,10 +29,10 @@ use WP_REST_Server;
  */
 class Embed_Controller extends DependencyInjectedRestTestCase {
 
-	protected static $story_id;
-	protected static $subscriber;
-	protected static $editor;
-	protected static $admin;
+	protected static int $story_id;
+	protected static int $subscriber;
+	protected static int $editor;
+	protected static int $admin;
 
 	public const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
 	public const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
@@ -40,17 +40,13 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Embed_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Embed_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(

@@ -27,21 +27,16 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Page_Template_Controller
  */
 class Page_Template_Controller extends RestTestCase {
+	protected static int $user_id;
+	protected static int $user2_id;
+	protected static int $user3_id;
 
-	protected $server;
-
-	protected static $user_id;
-	protected static $user2_id;
-	protected static $user3_id;
-
-	protected static $author_id;
+	protected static int $author_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Page_Template_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Page_Template_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(

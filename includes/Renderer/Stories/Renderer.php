@@ -76,8 +76,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Number of instances invoked. Kept it static to keep track.
-	 *
-	 * @var int
 	 */
 	protected static int $instances = 0;
 
@@ -88,8 +86,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * This variable is used to add appropriate class to the Web Stories
 	 * wrapper.
-	 *
-	 * @var int
 	 */
 	protected int $instance_id = 0;
 
@@ -124,29 +120,21 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Pointer to iterate over stories.
-	 *
-	 * @var int
 	 */
 	private int $position = 0;
 
 	/**
 	 * Height for displaying story.
-	 *
-	 * @var int
 	 */
 	protected int $height = 308;
 
 	/**
 	 * Width for displaying story.
-	 *
-	 * @var int
 	 */
 	protected int $width = 185;
 
 	/**
 	 * Whether content overlay is enabled for story.
-	 *
-	 * @var bool
 	 */
 	protected bool $content_overlay;
 
