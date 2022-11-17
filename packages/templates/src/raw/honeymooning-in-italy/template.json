@@ -1,5 +1,5 @@
 {
-  "version": 45,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -28,9 +28,6 @@
           "y": -245,
           "width": 388,
           "height": 373,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "id": "f2201a06-f489-4521-8b8f-07b57ad7161f"
         },
@@ -46,9 +43,6 @@
           "type": "sticker",
           "width": 371,
           "height": 356,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" }
         },
         {
@@ -111,9 +105,6 @@
           "y": -2,
           "width": 283,
           "height": 106,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "40063a65-2c7a-4bc3-81dc-d240befed7bb"
         },
         {
@@ -172,9 +163,6 @@
           "y": 119,
           "width": 240,
           "height": 21,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "88973f2a-66da-4907-8014-dc6e57c926d0"
         },
         {
@@ -248,9 +236,6 @@
           "type": "sticker",
           "width": 382,
           "height": 367,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "id": "f0e871c2-3cda-404d-9180-ed53d6150c8f",
@@ -269,9 +254,6 @@
           "type": "sticker",
           "width": 382,
           "height": 367,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" }
         },
         {
@@ -373,9 +355,6 @@
           },
           "width": 283,
           "height": 42,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "40063a65-2c7a-4bc3-81dc-d240befed7bb",
           "id": "3db25d37-118f-4fa4-96d3-ba8cd849d286",
           "x": 76,
@@ -435,9 +414,6 @@
           },
           "width": 240,
           "height": 66,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "88973f2a-66da-4907-8014-dc6e57c926d0",
           "id": "ded1eb29-9fd8-4219-b406-1505edcf0191",
           "x": 76,
@@ -504,10 +480,7 @@
             "bottomLeft": 2
           },
           "width": 283,
-          "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 17
         }
       ],
       "backgroundColor": { "color": { "r": 254, "g": 246, "b": 223 } },
@@ -569,9 +542,6 @@
           "lockAspectRatio": true,
           "width": 382,
           "height": 367,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "id": "599eee86-ae04-4824-8b5d-268454107eb8",
@@ -590,9 +560,6 @@
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "width": 382,
           "height": 367,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "type": "sticker"
         },
@@ -694,9 +661,6 @@
           },
           "width": 283,
           "height": 81,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "3db25d37-118f-4fa4-96d3-ba8cd849d286",
           "id": "145c032f-3a8c-4834-88ed-838087d08131",
           "x": 65,
@@ -756,9 +720,6 @@
           },
           "width": 261,
           "height": 88,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "ded1eb29-9fd8-4219-b406-1505edcf0191",
           "id": "583c8c77-a7d5-40b0-80a8-f43e0e008365",
           "x": 64,
@@ -811,9 +772,6 @@
           "y": -245,
           "width": 388,
           "height": 373,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "id": "1fee32e4-057c-421c-93dc-a31cccf741fb",
           "type": "sticker"
@@ -829,9 +787,6 @@
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "width": 371,
           "height": 356,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "type": "sticker"
         },
@@ -933,9 +888,6 @@
           "y": 415,
           "width": 283,
           "height": 112,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "5ef7785c-7fb5-4aa4-8b2f-7fa0dcb40cf9",
           "type": "text",
           "tagName": "p"
@@ -995,9 +947,6 @@
           "y": 590,
           "width": 240,
           "height": 21,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "b3efd744-437b-4a7a-b453-045039dd563e",
           "type": "text"
         }
@@ -1055,9 +1004,6 @@
           "lockAspectRatio": true,
           "width": 382,
           "height": 367,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "id": "29c6278f-7aee-4cae-99ff-cde88f9569c7",
@@ -1076,9 +1022,6 @@
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "width": 382,
           "height": 367,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "type": "sticker"
         },
@@ -1179,9 +1122,6 @@
           },
           "width": 283,
           "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "40063a65-2c7a-4bc3-81dc-d240befed7bb",
           "id": "c42f74e8-a9bf-4cdc-a94b-7fdfcc89e59b",
           "x": 76,
@@ -1241,9 +1181,6 @@
           },
           "width": 253,
           "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "88973f2a-66da-4907-8014-dc6e57c926d0",
           "id": "c63f0fa6-2594-4af9-95d8-22e8c8c7b104",
           "x": 76,
@@ -1295,9 +1232,6 @@
           "lockAspectRatio": true,
           "width": 382,
           "height": 367,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "id": "d580b6fc-47d0-4f59-8130-d87ea334a95d",
@@ -1316,9 +1250,6 @@
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "width": 382,
           "height": 367,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "type": "sticker"
         },
@@ -1379,9 +1310,6 @@
           },
           "width": 299,
           "height": 42,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "3db25d37-118f-4fa4-96d3-ba8cd849d286",
           "id": "da32686c-63c4-461c-be70-e6829c7effea",
           "x": 57,
@@ -1441,9 +1369,6 @@
           },
           "width": 240,
           "height": 65,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "ded1eb29-9fd8-4219-b406-1505edcf0191",
           "id": "2c7c697d-cafc-4930-a9ec-05d9a64fc6ad",
           "x": 57,
@@ -1604,9 +1529,6 @@
           },
           "width": 283,
           "height": 78,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "1c476147-098b-467c-bb47-641299566361",
           "id": "4fe0fb5d-ae85-49c9-a706-68a3bd73971c",
           "x": 55,
@@ -1666,9 +1588,6 @@
           },
           "width": 88,
           "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "583c8c77-a7d5-40b0-80a8-f43e0e008365",
           "id": "c2fabfa0-d161-47e6-afd2-455b438d849f",
           "x": 51,
@@ -1772,10 +1691,7 @@
             "bottomLeft": 2
           },
           "width": 95,
-          "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 43
         },
         {
           "x": 134,
@@ -1834,10 +1750,7 @@
             "bottomLeft": 2
           },
           "width": 88,
-          "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 43
         },
         {
           "x": 57,
@@ -2016,9 +1929,6 @@
           "y": -245,
           "width": 388,
           "height": 373,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "id": "8d557a70-608c-4322-a840-bbc774586389",
           "type": "sticker"
@@ -2034,9 +1944,6 @@
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "width": 371,
           "height": 356,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "type": "sticker"
         },
@@ -2138,9 +2045,6 @@
           "y": 417,
           "width": 294,
           "height": 112,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "d0aa49f8-1d85-4f25-8a0b-db00060adb36",
           "type": "text",
           "tagName": "p"
@@ -2200,9 +2104,6 @@
           "y": 590,
           "width": 240,
           "height": 21,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "5b2443bd-2ca2-45c7-9a8e-5529ae95cbd8",
           "type": "text"
         }
@@ -2260,9 +2161,6 @@
           "lockAspectRatio": true,
           "width": 388,
           "height": 373,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "type": "sticker",
           "basedOn": "1fee32e4-057c-421c-93dc-a31cccf741fb",
@@ -2277,9 +2175,6 @@
           "lockAspectRatio": true,
           "width": 371,
           "height": 356,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "floralPattern" },
           "type": "sticker",
           "basedOn": "a704e766-b7b4-40f2-a8e8-b98423de89b0",
@@ -2345,9 +2240,6 @@
           },
           "width": 283,
           "height": 42,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "4fe0fb5d-ae85-49c9-a706-68a3bd73971c",
           "id": "1eabe3b5-cf96-470a-b9dd-883a2e183111",
           "x": 55,
@@ -2486,9 +2378,6 @@
           },
           "width": 108,
           "height": 66,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "9304e89e-22b4-40ae-bad3-52df88e6d838",
           "id": "96a88451-5c7f-4f26-8883-3a77501e2c82",
           "x": 239,
@@ -2553,9 +2442,6 @@
           },
           "width": 108,
           "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "tagName": "h3"
         }
       ],

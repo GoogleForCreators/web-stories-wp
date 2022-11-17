@@ -59,7 +59,7 @@ function setItemByKey(key, data) {
   }
 }
 
-export default {
+export const localStore = {
   getItemByKey,
   setItemByKey,
 };

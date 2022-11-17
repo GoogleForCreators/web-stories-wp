@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Migrations;
 
 use Google\Web_Stories\Settings;
@@ -58,7 +60,7 @@ class Update_Publisher_Logos extends Migrate_Base {
 	 */
 	public function migrate(): void {
 		$publisher_logo_id       = 0;
-		$publisher_logo_settings = (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
+		$publisher_logo_settings = (array) get_option( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
 
 		if ( ! empty( $publisher_logo_settings['active'] ) ) {
 			$publisher_logo_id = $publisher_logo_settings['active'];

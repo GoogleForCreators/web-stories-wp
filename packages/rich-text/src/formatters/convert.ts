@@ -29,7 +29,7 @@ import type {
  * Internal dependencies
  */
 import { ITALIC, UNDERLINE } from '../customConstants';
-import { weightToStyle } from './weight';
+import { weightToStyle } from './util';
 
 function convertStyles(
   contentBlock: ContentBlock,

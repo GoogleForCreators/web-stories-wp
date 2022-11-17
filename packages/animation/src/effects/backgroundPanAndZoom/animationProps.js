@@ -14,10 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-export {
-  default,
-  PanEffectInputPropTypes as PanAndZoomEffectInputPropTypes,
-} from '../backgroundPan/animationProps';
+export { default } from '../backgroundPan/animationProps';
