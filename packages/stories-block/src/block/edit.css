@@ -100,6 +100,7 @@
 .web-stories-story-picker-modal {
   width: 100%;
   height: 100%;
+  max-height: 100%;
   position: relative;
   overflow: hidden;
 }
@@ -117,8 +118,8 @@
 
 .web-stories-story-picker-modal__content {
   position: relative;
-  height: calc(100% - 110px);
-  margin: 0;
+  height: 100%;
+  margin: 0 0 20px 0;
   padding: 20px 0;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -169,6 +170,7 @@
   .web-stories-story-picker-filter {
     position: sticky;
     top: 0;
+    z-index: 3;
   }
 }
 
@@ -205,7 +207,12 @@
   .web-stories-story-picker-filter__search-container
   .components-base-control
   .components-select-control__input {
-  height: 34px;
+  height: 30px;
+}
+
+.web-stories-story-picker-filter .components-select-control {
+  gap: 0;
+  margin-top: 1px;
 }
 
 .web-stories-story-picker-filter__search-inner {
@@ -225,6 +232,7 @@
   top: 28px;
   border: 1px solid #757575;
   background: #fff;
+  z-index: 3;
 }
 
 .web-stories-story-picker-filter__combobox
