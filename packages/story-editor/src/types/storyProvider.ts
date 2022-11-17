@@ -488,7 +488,7 @@ export interface State {
     isAutoSavingStory: boolean;
     isFreshlyPublished: boolean;
     isFreshlyPending: boolean;
-  },
+  };
 }
 
 export interface StoryProviderState {

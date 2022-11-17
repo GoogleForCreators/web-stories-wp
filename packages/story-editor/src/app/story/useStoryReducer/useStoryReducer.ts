@@ -62,33 +62,27 @@ const INITIAL_STATE = {
  * - New pages aren't validated for type of elements property when added.
  * - No validation of keys or values in the story object.
  */
+type Actions = InternalActions | ExternalActions;
 function useStoryReducer(partial: Partial<State>): ReducerState {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     ...partial,
   } as State);
   const { internal, api } = useMemo(() => {
-    const wrapWithDispatch = (actions: typeof internalActions) =>
+    const wrapWithDispatch = (
+      actions: typeof internalActions | typeof exposedActions
+    ) =>
       Object.keys(actions).reduce(
-        (collection: InternalActions, action) => ({
+        (collection: Actions, action) => ({
           ...collection,
           [action]: actions[action as keyof typeof actions](dispatch),
         }),
-        {} as InternalActions
-      );
-
-    const wrapWithDispatch2 = (actions: typeof exposedActions) =>
-      Object.keys(actions).reduce(
-        (collection: ExternalActions, action) => ({
-          ...collection,
-          [action]: actions[action as keyof typeof actions](dispatch),
-        }),
-        {} as ExternalActions
+        {} as Actions
       );
 
     return {
       internal: wrapWithDispatch(internalActions) as InternalActions,
-      api: wrapWithDispatch2(exposedActions) as ExternalActions,
+      api: wrapWithDispatch(exposedActions) as ExternalActions,
     };
   }, [dispatch]);
 
