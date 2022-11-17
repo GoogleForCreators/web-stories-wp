@@ -47,14 +47,6 @@ export enum FieldType {
   Range = 'RANGE',
 }
 
-export enum StoryAnimationState {
-  Reset = 'reset',
-  Paused = 'paused',
-  Scrubbing = 'scrubbing',
-  Playing = 'playing',
-  PlayingSelected = 'playing-selected',
-}
-
 export interface AMPEffectTiming extends Omit<EffectTiming, 'iterations'> {
   iterations?: number | 'infinity';
 }

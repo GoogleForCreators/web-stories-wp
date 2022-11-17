@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-export * from './animation';
-export * from './storyAnimationState';
-export * from './effects';
-export * from './element';
-export * from './keyframes';
-export * from './propTypes';
+export enum StoryAnimationState {
+  Reset = 'reset',
+  Paused = 'paused',
+  Scrubbing = 'scrubbing',
+  Playing = 'playing',
+  PlayingSelected = 'playing-selected',
+}

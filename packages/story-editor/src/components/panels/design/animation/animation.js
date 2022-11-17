@@ -35,7 +35,7 @@ import {
   BG_MIN_SCALE,
   DIRECTION,
   SCALE_DIRECTION,
-  STORY_ANIMATION_STATE,
+  StoryAnimationState,
   getAnimationEffectDefaults,
 } from '@googleforcreators/animation';
 import { progress } from '@googleforcreators/units';
@@ -169,7 +169,7 @@ function AnimationPanel({
   const debouncedUpdateAnimationState = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
-        animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
+        animationState: StoryAnimationState.PlayingSelected,
       });
       playUpdatedAnimation.current = false;
     }

@@ -25,7 +25,7 @@ import { produce } from 'immer';
  *
  * @param {Object} draft Current state
  * @param {Object} payload Action payload
- * @param {string} payload.animationState STORY_ANIMATION_STATE state to update to.
+ * @param {string} payload.animationState StoryAnimationState state to update to.
  */
 export const updateAnimationState = (draft, { animationState }) => {
   draft.animationState = animationState;
