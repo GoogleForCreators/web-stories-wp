@@ -46,7 +46,7 @@ import Header from './header';
 import TemplateDetailsModal from './modal';
 import TemplateFiltersProvider from './filters/TemplateFiltersProvider';
 
-function ExploreTemplates() {
+function ExploreTemplatesView() {
   const speak = useLiveRegion();
   const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState(null);
@@ -292,4 +292,10 @@ function ExploreTemplates() {
   );
 }
 
-export default ExploreTemplates;
+export default function ExploreTemplates() {
+  return (
+    <TemplateFiltersProvider>
+      <ExploreTemplatesView />
+    </TemplateFiltersProvider>
+  );
+}

@@ -31,7 +31,7 @@ import Content from './content';
 import Header from './header';
 import StoryFiltersProvider from './filters/StoryFiltersProvider';
 
-function MyStories() {
+function MyStoriesView() {
   const {
     duplicateStory,
     fetchStories,
@@ -112,39 +112,43 @@ function MyStories() {
   }, [stories, storiesOrderById]);
 
   return (
-    <StoryFiltersProvider>
-      <Layout.Provider>
-        <Header
-          initialPageReady={initialPageReady}
-          stories={orderedStories}
-          totalStoriesByStatus={totalStoriesByStatus}
-          view={view}
-        />
+    <Layout.Provider>
+      <Header
+        initialPageReady={initialPageReady}
+        stories={orderedStories}
+        totalStoriesByStatus={totalStoriesByStatus}
+        view={view}
+      />
 
-        <Content
-          allPagesFetched={allPagesFetched}
-          canViewDefaultTemplates={canViewDefaultTemplates}
-          filtersObject={filtersObject}
-          loading={{
-            isLoading: isLoading,
-            showStoriesWhileLoading,
-          }}
-          page={page}
-          stories={orderedStories}
-          storyActions={{
-            duplicateStory,
-            trashStory,
-            updateStory,
-          }}
-          view={view}
-        />
+      <Content
+        allPagesFetched={allPagesFetched}
+        canViewDefaultTemplates={canViewDefaultTemplates}
+        filtersObject={filtersObject}
+        loading={{
+          isLoading: isLoading,
+          showStoriesWhileLoading,
+        }}
+        page={page}
+        stories={orderedStories}
+        storyActions={{
+          duplicateStory,
+          trashStory,
+          updateStory,
+        }}
+        view={view}
+      />
 
-        <Layout.Fixed>
-          <ScrollToTop />
-        </Layout.Fixed>
-      </Layout.Provider>
-    </StoryFiltersProvider>
+      <Layout.Fixed>
+        <ScrollToTop />
+      </Layout.Fixed>
+    </Layout.Provider>
   );
 }
 
-export default MyStories;
+export default function MyStories() {
+  return (
+    <StoryFiltersProvider>
+      <MyStoriesView />
+    </StoryFiltersProvider>
+  );
+}
