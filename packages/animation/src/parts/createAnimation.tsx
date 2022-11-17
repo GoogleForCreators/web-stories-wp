@@ -26,19 +26,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { AnimationOutput, GenericAnimation, WithAnimation } from '../outputs';
 import type { Keyframes } from '../types';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
+import sanitizeTimings from '../utils/sanitizeTimings';
 import type { AMPAnimationProps, WAAPIAnimation, AnimationPart } from './types';
-
-export const sanitizeTimings = ({
-  easing,
-  duration,
-  delay,
-  ...other
-}: GenericAnimation) => ({
-  ...other,
-  easing: easing || 'linear',
-  duration: typeof duration === 'number' ? Math.max(duration, 0) : 0,
-  delay: typeof delay === 'number' ? Math.max(delay, 0) : 0,
-});
 
 function createAnimation<T extends Keyframes>(
   keyframes: T,

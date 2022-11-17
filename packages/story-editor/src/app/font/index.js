@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
-export { default as FontProvider, GOOGLE_MENU_FONT_URL } from './fontProvider';
+export { default as FontProvider } from './fontProvider';
+export { GOOGLE_MENU_FONT_URL } from './constants';
 export { default as useFont } from './useFont';

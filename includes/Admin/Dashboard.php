@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
@@ -492,6 +494,7 @@ class Dashboard extends Service_Base {
 			'vendors'                 => $vendors,
 			'maxUpload'               => $max_upload_size,
 			'maxUploadFormatted'      => size_format( $max_upload_size ),
+			'editPostsCapabilityName' => $this->story_post_type->get_cap_name( 'edit_posts' ),
 			'capabilities'            => [
 				'canManageSettings' => current_user_can( 'manage_options' ),
 				'canUploadFiles'    => current_user_can( 'upload_files' ),

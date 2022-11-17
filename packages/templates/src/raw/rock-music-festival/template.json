@@ -1,5 +1,5 @@
 {
-  "version": 45,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -97,9 +97,6 @@
           "y": 473,
           "width": 165,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "080b6375-2871-41d7-9ca3-3c7e6cb1c3df"
         },
         {
@@ -165,10 +162,7 @@
             "bottomLeft": 2
           },
           "width": 209,
-          "height": 28,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 28
         },
         {
           "x": 45,
@@ -220,10 +214,7 @@
             "bottomLeft": 2
           },
           "width": 325,
-          "height": 176,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 176
         },
         {
           "opacity": 100,
@@ -235,9 +226,6 @@
           "y": 553,
           "width": 245,
           "height": 122,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamFlames" },
           "id": "7cff4dc0-6d11-4c1c-9feb-65772e3c0353"
         }
@@ -379,9 +367,6 @@
           "y": 395,
           "width": 317,
           "height": 219,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "86498944-f4b2-4f8f-9e42-8400a30707bf",
           "type": "text"
         },
@@ -395,9 +380,6 @@
           "y": 395,
           "width": 56,
           "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamWhiteLightning" },
           "id": "7eac8e45-87eb-4a40-a073-fef321319f35"
         },
@@ -411,9 +393,6 @@
           "y": 394,
           "width": 56,
           "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamWhiteLightning" },
           "id": "82c325e0-52b2-4f29-acc1-5e38c0bc26cc"
         }
@@ -555,9 +534,6 @@
           "y": 507,
           "width": 317,
           "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "42866736-232b-473e-b886-029ad6e2e4c6",
           "type": "text"
         },
@@ -570,9 +546,6 @@
           "y": 469,
           "width": 56,
           "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamWhiteLightning" },
           "id": "3e839cf5-bf3e-455b-8c99-b56c7bc116aa",
           "type": "sticker"
@@ -660,9 +633,6 @@
           "y": -129,
           "width": 401,
           "height": 329,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamLightning" },
           "id": "778ec7fd-1bd3-4362-89b6-47b096a06ee9"
         },
@@ -727,9 +697,6 @@
           "y": 483,
           "width": 317,
           "height": 136,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "103c2125-f9c7-4293-8bcf-a6440a05e80a",
           "type": "text"
         },
@@ -780,9 +747,6 @@
           },
           "width": 325,
           "height": 176,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "bb82bfe7-21df-41fb-931e-0ae8360a0588",
           "id": "c3359848-855e-4070-aa52-151466088fb0",
           "x": 47,
@@ -851,9 +815,6 @@
           },
           "width": 317,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -991,9 +952,6 @@
           "y": 449,
           "width": 317,
           "height": 164,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "ca3900cf-42b8-4a34-90e9-82549d4d4ab6",
           "type": "text"
         },
@@ -1006,9 +964,6 @@
           "y": 423,
           "width": 56,
           "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamWhiteLightning" },
           "id": "b2d81107-865d-4ee7-a1cd-60d26ef94770",
           "type": "sticker"
@@ -1155,9 +1110,6 @@
           "y": 496,
           "width": 268,
           "height": 107,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "d8669465-fc29-4a21-bde8-03f0e498f700",
           "type": "text"
         }
@@ -1293,9 +1245,6 @@
           },
           "width": 317,
           "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "basedOn": "d8669465-fc29-4a21-bde8-03f0e498f700",
           "id": "e6797678-86e7-46d5-b1d3-f166c0032f1b",
@@ -1310,9 +1259,6 @@
           "type": "sticker",
           "width": 56,
           "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamWhiteLightning" },
           "basedOn": "0e165b77-e5db-4c1d-895e-3c50e9a38beb",
           "id": "517bca34-1b00-4011-8e4b-72bbe2273d52",
@@ -1327,9 +1273,6 @@
           "type": "sticker",
           "width": 56,
           "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamWhiteLightning" },
           "basedOn": "d4022340-8457-4ff4-a876-6db92d8ac88a",
           "id": "30ab0e6f-14ab-4958-a0fd-44bea1d84cd0",
@@ -1468,9 +1411,6 @@
           },
           "width": 317,
           "height": 136,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "d8669465-fc29-4a21-bde8-03f0e498f700",
           "id": "0d782601-12da-4fcf-b7a8-b5f6f25cc0f6",
           "x": 47,
@@ -1642,9 +1582,6 @@
           "y": 535,
           "width": 317,
           "height": 79,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "4e43f1ad-93c9-4387-a0a3-9731d2811674",
           "type": "text"
         },
@@ -1694,9 +1631,6 @@
           },
           "width": 325,
           "height": 176,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "bb82bfe7-21df-41fb-931e-0ae8360a0588",
           "id": "4af4aaa1-6ae7-4ede-985c-8e4ff2e4c891",
           "x": 47,
@@ -1712,9 +1646,6 @@
           "y": 160,
           "width": 401,
           "height": 329,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamLightning" },
           "id": "cb2310ff-403e-4afd-8948-418903054cbf",
           "type": "sticker"
@@ -1859,9 +1790,6 @@
           },
           "width": 317,
           "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "d8669465-fc29-4a21-bde8-03f0e498f700",
           "id": "be2f47ca-876d-480d-a96f-15a3262ad695",
           "x": 47,
@@ -1993,9 +1921,6 @@
           },
           "width": 317,
           "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "d8669465-fc29-4a21-bde8-03f0e498f700",
           "id": "7bd6b7f0-f7de-4144-8cfb-126fcfc437f7",
           "x": 47,
@@ -2127,9 +2052,6 @@
           },
           "width": 317,
           "height": 79,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "d8669465-fc29-4a21-bde8-03f0e498f700",
           "id": "ef019b4d-19e3-4e3c-bf19-275948b160eb",
           "x": 47,
@@ -2226,9 +2148,6 @@
           "y": -53,
           "width": 396,
           "height": 329,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "rockInRotterdamLightning" },
           "id": "1df87336-c087-4d5f-a6be-82657dbc7173"
         },
@@ -2278,9 +2197,6 @@
           },
           "width": 317,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "d8669465-fc29-4a21-bde8-03f0e498f700",
           "id": "9ba68eec-c8d6-4e5d-a61e-58adfc207bbf",
           "x": 58,
@@ -2337,9 +2253,6 @@
           },
           "width": 317,
           "height": 63,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         },
         {
@@ -2401,9 +2314,6 @@
           },
           "width": 276,
           "height": 51,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "basedOn": "f80ecd99-fd85-4d11-a12b-ff0eda15f6bd",
           "id": "a90d2d23-1339-49d8-93a8-396a3515b05b",

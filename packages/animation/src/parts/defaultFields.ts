@@ -40,7 +40,7 @@ export const basicAnimationFields = {
   },
 };
 
-export default {
+export const allFields = {
   id: {
     type: FieldType.Hidden,
   },

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { WEIGHT } from '../customConstants';
+
 export const isStyle = (style: string | undefined, prefix: string) =>
   Boolean(style?.startsWith(prefix));
 
@@ -35,3 +40,7 @@ export const styleToNumeric = (prefix: string, style: string) => {
   }
   return parseInt(raw);
 };
+
+export function weightToStyle(weight: number) {
+  return numericToStyle(WEIGHT, weight);
+}

@@ -18,11 +18,12 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
  */
-import type { Element, Animation } from '../types';
+import type { Element } from '../types';
 import createNewElement from './createNewElement';
 
 /**
@@ -32,7 +33,7 @@ import createNewElement from './createNewElement';
  * @param originY Original Y.
  * @return Coordinates.
  */
-export function getOffsetCoordinates(originX: number, originY: number) {
+function getOffsetCoordinates(originX: number, originY: number) {
   const placementDiff = 30;
   const allowedBorderDistance = 20;
   const x = originX + placementDiff;
@@ -41,12 +42,6 @@ export function getOffsetCoordinates(originX: number, originY: number) {
     x: PAGE_WIDTH - x > allowedBorderDistance ? x : placementDiff,
     y: PAGE_HEIGHT - y > allowedBorderDistance ? y : placementDiff,
   };
-}
-
-interface DuplicateElementArgs {
-  element: Element;
-  animations?: Animation[];
-  existingElements?: Element[];
 }
 
 /**
@@ -62,12 +57,12 @@ interface DuplicateElementArgs {
  */
 interface DuplicateElementArgs {
   element: Element;
-  animations?: Animation[];
+  animations?: StoryAnimation[];
   existingElements?: Element[];
 }
 interface DuplicateElementReturn {
   element: Element;
-  elementAnimations: Animation[];
+  elementAnimations: StoryAnimation[];
 }
 function duplicateElement({
   element,

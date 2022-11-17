@@ -23,23 +23,8 @@ import { useMemo } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { KeyframesOutput } from '../outputs';
-import type { AnimationProviderState } from './types';
 import useStoryAnimationContext from './useStoryAnimationContext';
-
-export function generateKeyframesMap(
-  targets: string[],
-  getAnimationParts: AnimationProviderState['actions']['getAnimationParts']
-) {
-  const allKeyframeEntries = targets
-    .map((target) =>
-      getAnimationParts(target).map((part) =>
-        Object.entries(part.generatedKeyframes)
-      )
-    )
-    .flat(2);
-  const keyframesAsMap = new Map(allKeyframeEntries);
-  return Object.fromEntries(keyframesAsMap);
-}
+import generateKeyframesMap from './generateKeyframesMap';
 
 function AMPKeyframes() {
   const {
