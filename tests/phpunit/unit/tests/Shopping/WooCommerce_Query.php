@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -66,7 +69,7 @@ class WooCommerce_Query extends TestCase {
 					$products = [
 						new Mock_Product(
 							[
-								'id'                => '1',
+								'id'                => 1,
 								'image_id'          => 50,
 								'gallery_image_ids' => [
 									51,
@@ -78,7 +81,7 @@ class WooCommerce_Query extends TestCase {
 
 						new Mock_Product(
 							[
-								'id'                => '2',
+								'id'                => 2,
 								'image_id'          => null,
 								'gallery_image_ids' => [],
 							]
@@ -86,7 +89,7 @@ class WooCommerce_Query extends TestCase {
 
 						new Mock_Product(
 							[
-								'id'                => '3',
+								'id'                => 3,
 								'image_id'          => null,
 								'gallery_image_ids' => [
 									72,

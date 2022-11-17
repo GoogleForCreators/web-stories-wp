@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\Renderer\Story;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
