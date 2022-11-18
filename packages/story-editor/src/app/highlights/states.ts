@@ -22,7 +22,11 @@ import { STYLE_PANE_IDS } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { INSERT, DOCUMENT, STYLE } from '../../components/sidebar';
+import {
+  INSERT,
+  DOCUMENT,
+  STYLE as STYLE_SIDEBAR,
+} from '../../components/sidebar';
 import { PANE_IDS } from '../../components/library/paneIds';
 
 /**
@@ -33,36 +37,35 @@ import { PANE_IDS } from '../../components/library/paneIds';
  * @property {boolean} focus Whether there is a focusable element, use for accessibility
  */
 
-const keys = {
-  STORY_TITLE: 'STORY_TITLE',
-  ELEMENT_TOOLBAR_TOGGLE: 'ELEMENT_TOOLBAR_TOGGLE',
+const enum keys {
+  STORY_TITLE = 'STORY_TITLE',
+  ELEMENT_TOOLBAR_TOGGLE = 'ELEMENT_TOOLBAR_TOGGLE',
 
   // Sidebar tabs
-  STYLE_PANE: 'STYLE_PANE',
+  STYLE_PANE = 'STYLE_PANE',
 
-  // STYLE
-  ANIMATION: 'ANIMATION',
-  ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
-  CAPTIONS: 'CAPTIONS',
-  EXCERPT: 'EXCERPT',
-  LINK: 'LINK',
-  PAGE_BACKGROUND: 'PAGE_BACKGROUND',
-  POSTER: 'POSTER',
-  PUBLISHER_LOGO: 'PUBLISHER_LOGO',
-  VIDEO_A11Y_POSTER: 'VIDEO_A11Y_POSTER',
-  STYLE: 'STYLE',
-  FONT: 'FONT',
-  TEXT_COLOR: 'TEXT_COLOR',
+  ANIMATION = 'ANIMATION',
+  ASSISTIVE_TEXT = 'ASSISTIVE_TEXT',
+  CAPTIONS = 'CAPTIONS',
+  EXCERPT = 'EXCERPT',
+  LINK = 'LINK',
+  PAGE_BACKGROUND = 'PAGE_BACKGROUND',
+  POSTER = 'POSTER',
+  PUBLISHER_LOGO = 'PUBLISHER_LOGO',
+  VIDEO_A11Y_POSTER = 'VIDEO_A11Y_POSTER',
+  STYLE = 'STYLE',
+  FONT = 'FONT',
+  TEXT_COLOR = 'TEXT_COLOR',
 
   // LIBRARY
-  MEDIA: 'MEDIA',
-  MEDIA3P: 'MEDIA3P',
-  TEXT_SET: 'TEXT',
-  PAGE_TEMPLATES: 'PAGE_TEMPLATES',
+  MEDIA = 'MEDIA',
+  MEDIA3P = 'MEDIA3P',
+  TEXT_SET = 'TEXT',
+  PAGE_TEMPLATES = 'PAGE_TEMPLATES',
 
   // DOCUMENT
-  PAGE_BACKGROUND_AUDIO: 'PAGE_BACKGROUND_AUDIO',
-};
+  PAGE_BACKGROUND_AUDIO = 'PAGE_BACKGROUND_AUDIO',
+}
 
 interface stylePaneIdsType {
   SELECTION: string;
@@ -84,7 +87,7 @@ export const STATES = {
   // Sidebar tabs
   [keys.STYLE_PANE]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: SELECTION,
   },
 
@@ -102,51 +105,51 @@ export const STATES = {
   },
   [keys.PAGE_BACKGROUND_AUDIO]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
   },
   [keys.CAPTIONS]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: SELECTION,
   },
   [keys.ASSISTIVE_TEXT]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: SELECTION,
   },
   [keys.PAGE_BACKGROUND]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: SELECTION,
   },
   [keys.ANIMATION]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: ANIMATION,
   },
   [keys.FONT]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: SELECTION,
   },
   [keys.LINK]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: LINK,
   },
   [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: SELECTION,
   },
   [keys.STYLE]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: SELECTION,
   },
   [keys.TEXT_COLOR]: {
     focus: true,
-    tab: STYLE,
+    tab: STYLE_SIDEBAR,
     section: SELECTION,
   },
 

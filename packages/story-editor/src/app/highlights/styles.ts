@@ -18,10 +18,10 @@
  */
 import { rgba } from 'polished';
 import { css, keyframes } from 'styled-components';
-import {
-  theme as dsTheme,
-  themeHelpers,
-} from '@googleforcreators/design-system';
+import type { DefaultTheme } from 'styled-components';
+import { theme, themeHelpers } from '@googleforcreators/design-system';
+
+const dsTheme: DefaultTheme = theme as DefaultTheme;
 
 const flash = keyframes`
   50% {

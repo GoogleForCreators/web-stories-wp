@@ -78,11 +78,11 @@ export const ACTIONS = {
   },
 };
 
-export const RESET_PROPERTIES = {
-  ANIMATION: 'animation',
-  OVERLAY: 'overlay',
-  STYLES: 'styles',
-};
+export enum RESET_PROPERTIES {
+  ANIMATION = 'animation',
+  OVERLAY = 'overlay',
+  STYLES = 'styles',
+}
 
 export const RESET_DEFAULTS = {
   TEXT_BORDER_RADIUS: {

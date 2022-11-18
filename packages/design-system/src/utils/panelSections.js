@@ -19,10 +19,10 @@
  */
 import PanelTypes from './panelTypes';
 
-export const STYLE_PANE_IDS = {
-  SELECTION: 'selection',
-  LINK: 'link',
-  ANIMATION: 'animation',
+export enum STYLE_PANE_IDS {
+  SELECTION = 'selection',
+  LINK = 'link',
+  ANIMATION =  'animation',
 };
 
 const { LINK, ANIMATION, ...panelsExcludingLinkAndAnimation } = PanelTypes;
