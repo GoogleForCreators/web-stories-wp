@@ -28,7 +28,7 @@ function useHistory(): HistoryState;
 function useHistory<T>(
   selector: (state: HistoryState) => T | HistoryState = identity
 ) {
-  return useContextSelector(Context, selector ?? identity);
+  return useContextSelector(Context, selector);
 }
 
 export default useHistory;

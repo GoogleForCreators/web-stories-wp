@@ -19,6 +19,11 @@
  */
 import type { RefObject } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import type keys from '../components/keyboard/keys';
+
 export interface KeySpec {
   key: string | string[];
   shift?: boolean;
@@ -28,12 +33,7 @@ export interface KeySpec {
   editable?: boolean;
   allowDefault?: boolean;
 }
-export interface Keys {
-  undo: string;
-  redo: string;
-  delete: string[];
-  clone: string;
-}
+export type Keys = typeof keys;
 export type KeyEffectCallback = (event: KeyboardEvent) => void;
 export type KeyNameOrSpec = KeySpec | string | string[];
 

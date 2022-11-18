@@ -71,5 +71,6 @@ declare const WEB_STORIES_DISABLE_PREVENT: string;
 const shouldDisablePrevent =
   typeof WEB_STORIES_DISABLE_PREVENT !== 'undefined' &&
   WEB_STORIES_DISABLE_PREVENT === 'true';
-// eslint-disable-next-line @typescript-eslint/no-empty-function -- Needed here.
-export default shouldDisablePrevent ? () => () => {} : usePreventWindowUnload;
+export default shouldDisablePrevent
+  ? () => () => undefined
+  : usePreventWindowUnload;

@@ -24,7 +24,7 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
@@ -33,11 +33,10 @@ import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import useHistoryReducer from './useHistoryReducer';
 import Context from './context';
 
-interface HistoryProviderProps {
-  children: ReactNode;
-  size: number;
-}
-function HistoryProvider({ children, size = 50 }: HistoryProviderProps) {
+function HistoryProvider({
+  children,
+  size = 50,
+}: PropsWithChildren<{ size?: number }>) {
   const {
     requestedState,
     stateToHistory,

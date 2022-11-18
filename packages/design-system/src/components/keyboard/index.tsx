@@ -26,7 +26,7 @@ import {
   useBatchingCallback,
   useCallback,
 } from '@googleforcreators/react';
-import type { DependencyList, ReactNode } from 'react';
+import type { DependencyList, PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
@@ -262,7 +262,7 @@ function resolveKeySpec(keyDict: Keys, keyNameOrSpec: KeyNameOrSpec) {
     dialog = false,
     allowDefault = false,
   } = keySpec;
-  const mappedKeys = ([] as string[])
+  const mappedKeys = new Array<string>()
     .concat(keyOrArray)
     .map((key) => keyDict[key as keyof Keys] || key)
     .flat();
@@ -286,10 +286,10 @@ function addMods(keys: string[], shift: boolean) {
 }
 
 interface KeyHandlerProps {
-  repeat: boolean;
-  editable: boolean;
-  clickable: boolean;
-  dialog: boolean;
+  repeat?: boolean;
+  editable?: boolean;
+  clickable?: boolean;
+  dialog?: boolean;
   allowDefault?: boolean;
 }
 function createKeyHandler(
@@ -327,7 +327,12 @@ function createKeyHandler(
   };
 }
 
-function isClickableTarget({ tagName, type }: HTMLInputElement) {
+type ClickableHTMLElement =
+  | HTMLInputElement
+  | HTMLAnchorElement
+  | HTMLButtonElement
+  | HTMLTextAreaElement;
+function isClickableTarget({ tagName, type }: ClickableHTMLElement) {
   if (['BUTTON', 'A'].includes(tagName)) {
     return true;
   }
@@ -341,9 +346,9 @@ function isEditableTarget({
   tagName,
   isContentEditable,
   type,
-  readOnly,
-}: HTMLInputElement) {
-  if (readOnly === true) {
+  ...rest
+}: ClickableHTMLElement) {
+  if ('readOnly' in rest && rest.readOnly === true) {
     return false;
   }
   if (isContentEditable || tagName === 'TEXTAREA') {
@@ -378,7 +383,7 @@ export function isPlatformMacOS() {
 /**
  * Get the key specific to operating system.
  */
-export function getKeyForOS(key: string): string {
+export function getKeyForOS(key: string) {
   const isMacOS = isPlatformMacOS();
 
   const replacementKeyMap: Record<string, string> = {
@@ -475,15 +480,14 @@ export function createShortcutAriaLabel(shortcut: string) {
     .join(delimiter);
 }
 
-const Kbd = ({ children }: { children: ReactNode }) => <kbd>{children}</kbd>;
+const Kbd = ({ children }: PropsWithChildren<Record<string, unknown>>) => (
+  <kbd>{children}</kbd>
+);
 
 /**
  * Returns a prettified shortcut wrapped with a <kbd> element.
  */
-export function Shortcut({
-  component: Component = Kbd,
-  shortcut = '',
-}): ReactNode {
+export function Shortcut({ component: Component = Kbd, shortcut = '' }) {
   const chars = shortcut.split(' ');
 
   return (
