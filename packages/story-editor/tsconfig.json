@@ -16,6 +16,7 @@
     { "path": "../tracking" }
   ],
   "include": [
+    "src/app/api/*",
     "src/app/config/*",
     "src/app/story/*",
     "src/app/story/**/*",
