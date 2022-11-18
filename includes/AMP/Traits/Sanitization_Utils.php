@@ -644,7 +644,7 @@ trait Sanitization_Utils {
 		/**
 		 * List of <title> elements.
 		 *
-		 * @var DOMNodeList $titles Title elements.
+		 * @var DOMNodeList<DOMElement> $titles Title elements.
 		 */
 		$titles = $document->head->getElementsByTagName( 'title' );
 
@@ -658,15 +658,28 @@ trait Sanitization_Utils {
 		}
 
 		if ( 0 === $titles->length && ! empty( $title_tag ) ) {
+			/**
+			 * New title tag element.
+			 *
+			 * @var DOMElement $new_title
+			 */
 			$new_title = $document->createElement( 'title' );
-			$new_title->appendChild( $document->createTextNode( $title_tag ) );
+
+			/**
+			 * Title text node.
+			 *
+			 * @var \DOMText $text_node
+			 */
+			$text_node = $document->createTextNode( $title_tag );
+
+			$new_title->appendChild( $text_node );
 			$document->head->appendChild( $new_title );
 		}
 
 		/**
 		 * List of meta descriptions.
 		 *
-		 * @var DOMNodeList $meta_descriptions Meta descriptions.
+		 * @var DOMNodeList<DOMElement> $meta_descriptions Meta descriptions.
 		 */
 		$meta_descriptions = $document->xpath->query( './/meta[@name="description"]' );
 
@@ -680,7 +693,13 @@ trait Sanitization_Utils {
 		}
 
 		if ( 0 === $meta_descriptions->length && ! empty( $description ) ) {
+			/**
+			 * New meta description element.
+			 *
+			 * @var DOMElement $new_description
+			 */
 			$new_description = $document->createElement( 'meta' );
+
 			$new_description->setAttribute( 'name', 'description' );
 			$new_description->setAttribute( 'content', $description );
 			$document->head->appendChild( $new_description );
