@@ -11,5 +11,5 @@
     { "path": "../units" }
   ],
   "include": ["src/**/*"],
-  "exclude": ["src/**/stories**/*"]
+  "exclude": ["src/**/stories/**/*", "src/storybookUtils/**/*"]
 }
