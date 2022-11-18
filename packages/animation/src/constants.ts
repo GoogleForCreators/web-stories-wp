@@ -150,7 +150,7 @@ export const ANIMATION_PARTS = {
 
 export const SCALE_DIRECTIONS = {
   IN: [ScaleDirection.ScaleInTopLeft, ScaleDirection.ScaleInBottomRight],
-  OUT: [ScaleDirection.ScaleOutTopRight, ScaleDirection.ScaleInBottomRight],
+  OUT: [ScaleDirection.ScaleOutTopRight, ScaleDirection.ScaleOutBottomLeft],
 } as const;
 
 export const BG_MIN_SCALE = 100;
