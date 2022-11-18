@@ -626,4 +626,64 @@ trait Sanitization_Utils {
 			}
 		}
 	}
+
+	/**
+	 * Sanitizes <title> tags and meta descriptions.
+	 *
+	 * Ensures there's always just exactly one of each present.
+	 *
+	 * @since 1.28.0
+	 *
+	 * @link https://github.com/googleforcreators/web-stories-wp/issues/12655
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @param string                $title_tag   Title text to use if it's missing.
+	 * @param string                $description Description to use if it's missing.
+	 */
+	private function sanitize_title_and_meta_description( $document, string $title_tag, string $description ): void {
+		/**
+		 * List of <title> elements.
+		 *
+		 * @var DOMNodeList $titles Title elements.
+		 */
+		$titles = $document->head->getElementsByTagName( 'title' );
+
+		if ( $titles->length > 1 ) {
+			foreach ( $titles as $index => $title ) {
+				if ( 0 === $index ) {
+					continue;
+				}
+				$document->head->removeChild( $title );
+			}
+		}
+
+		if ( 0 === $titles->length && ! empty( $title_tag ) ) {
+			$new_title = $document->createElement( 'title' );
+			$new_title->appendChild( $document->createTextNode( $title_tag ) );
+			$document->head->appendChild( $new_title );
+		}
+
+		/**
+		 * List of meta descriptions.
+		 *
+		 * @var DOMNodeList $meta_descriptions Meta descriptions.
+		 */
+		$meta_descriptions = $document->xpath->query( './/meta[@name="description"]' );
+
+		if ( $meta_descriptions->length > 1 ) {
+			foreach ( $meta_descriptions as $index => $meta_description ) {
+				if ( 0 === $index ) {
+					continue;
+				}
+				$document->head->removeChild( $meta_description );
+			}
+		}
+
+		if ( 0 === $meta_descriptions->length && ! empty( $description ) ) {
+			$new_description = $document->createElement( 'meta' );
+			$new_description->setAttribute( 'name', 'description' );
+			$new_description->setAttribute( 'content', $description );
+			$document->head->appendChild( $new_description );
+		}
+	}
 }

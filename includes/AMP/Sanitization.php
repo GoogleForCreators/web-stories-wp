@@ -442,6 +442,8 @@ class Sanitization {
 				'publisher'      => $story->get_publisher_name(),
 				'poster_images'  => array_filter( $poster_images ),
 				'video_cache'    => $video_cache_enabled,
+				'title_tag'      => wp_get_document_title(),
+				'description'    => wp_strip_all_tags( get_the_excerpt() ),
 			];
 		}
 
