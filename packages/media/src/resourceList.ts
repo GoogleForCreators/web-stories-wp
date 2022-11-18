@@ -17,17 +17,11 @@
 /**
  * Internal dependencies
  */
-import type { ResourceId } from './types';
-
-export enum ResourceCacheEntryType {
-  Cached = 'cached',
-  Fullsize = 'fullsize',
-}
-
-export interface ResourceCacheEntry {
-  url: string;
-  type: ResourceCacheEntryType;
-}
+import {
+  ResourceId,
+  ResourceCacheEntry,
+  ResourceCacheEntryType,
+} from './types';
 
 interface ResourceCache {
   list: Record<ResourceId, ResourceCacheEntry>;
@@ -38,9 +32,7 @@ interface ResourceCache {
 
 /**
  * Temporary list to hold currently used resources and their state.
- * { type: string (cached|smallest|fullsize), url: string }
  */
-
 const resourceList: ResourceCache = {
   list: {},
   resetList: function () {

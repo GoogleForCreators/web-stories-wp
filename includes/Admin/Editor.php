@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
@@ -401,6 +403,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'generalSettingsLink'     => $general_settings_url,
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
 			'maxUpload'               => $max_upload_size,
+			'editPostsCapabilityName' => $this->story_post_type->get_cap_name( 'edit_posts' ),
 			'capabilities'            => [
 				'hasUploadMediaAction' => current_user_can( 'upload_files' ),
 				'canManageSettings'    => current_user_can( 'manage_options' ),

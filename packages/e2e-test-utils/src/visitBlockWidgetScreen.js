@@ -44,12 +44,6 @@ async function visitBlockWidgetScreen() {
         ?.isFeatureActive?.('core/edit-widgets', 'welcomeGuide');
     }
 
-    // WordPress < 5.9
-    if (wp.data.select('core/edit-widgets')) {
-      return wp.data
-        .select('core/edit-widgets')
-        ?.__unstableIsFeatureActive?.('welcomeGuide');
-    }
     return false;
   });
 
@@ -63,18 +57,11 @@ async function visitBlockWidgetScreen() {
         return;
       }
 
-      // WordPress < 5.9
+      // WordPress 5.9
       if (wp.data.dispatch('core/interface')) {
         wp.data
           .dispatch('core/interface')
           ?.toggleFeature?.('core/edit-widgets', 'welcomeGuide');
-      }
-
-      // WordPress < 5.9
-      if (wp.data.dispatch('core/edit-widgets')) {
-        wp.data
-          .dispatch('core/edit-widgets')
-          ?.__unstableToggleFeature?.('welcomeGuide');
       }
     });
   }

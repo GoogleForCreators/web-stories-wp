@@ -8,6 +8,8 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Infrastructure;
 
 /**

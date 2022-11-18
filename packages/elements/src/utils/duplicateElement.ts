@@ -32,7 +32,7 @@ import createNewElement from './createNewElement';
  * @param originY Original Y.
  * @return Coordinates.
  */
-export function getOffsetCoordinates(originX: number, originY: number) {
+function getOffsetCoordinates(originX: number, originY: number) {
   const placementDiff = 30;
   const allowedBorderDistance = 20;
   const x = originX + placementDiff;

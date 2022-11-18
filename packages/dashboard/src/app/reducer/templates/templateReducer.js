@@ -17,25 +17,8 @@
 /**
  * Internal dependencies
  */
-import groupBy from '../../utils/groupBy';
-
-export const ACTION_TYPES = {
-  LOADING_TEMPLATES: 'loading_templates',
-  FETCH_TEMPLATES_SUCCESS: 'fetch_templates_success',
-  FETCH_TEMPLATES_FAILURE: 'fetch_templates_failure',
-  PLACEHOLDER: 'placeholder',
-};
-
-export const defaultTemplatesState = {
-  allPagesFetched: false,
-  error: {},
-  isLoading: false,
-  templates: {},
-  templatesByTag: {},
-  templatesOrderById: [],
-  totalTemplates: null,
-  totalPages: null,
-};
+import groupBy from '../../../utils/groupBy';
+import { ACTION_TYPES, defaultTemplatesState } from './constants';
 
 function templateReducer(state, action) {
   switch (action.type) {
