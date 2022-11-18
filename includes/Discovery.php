@@ -119,7 +119,7 @@ class Discovery extends Service_Base implements HasRequirements {
 		 *
 		 * @since 1.25.0
 		 *
-		 * @param bool $enable_open_graph Whether to print the document title. Defaults to true for block themes, false otherwise.
+		 * @param bool $enable_open_graph Whether to print the document title. Default to true.
 		 */
 		$enable_metadata = apply_filters( 'web_stories_enable_document_title', true );
 		if ( ! $enable_metadata ) {
