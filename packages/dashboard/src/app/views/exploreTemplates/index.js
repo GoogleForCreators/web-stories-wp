@@ -259,36 +259,34 @@ function ExploreTemplatesView() {
   }, [orderedTemplates, replace, updateTemplateView]);
 
   return (
-    <TemplateFiltersProvider>
-      <Layout.Provider>
-        <Header
-          isLoading={isLoading && !totalTemplates}
-          totalTemplates={totalVisibleTemplates}
-          searchOptions={searchOptions}
-          view={view}
-        />
-        <Content
-          isLoading={isLoading}
-          allPagesFetched={allPagesFetched}
-          page={page}
-          templates={orderedTemplates}
-          totalTemplates={totalVisibleTemplates}
-          search={searchFilterValue}
-          view={view}
-          templateActions={templateActions}
-        />
-        <Layout.Fixed>
-          <ScrollToTop />
-        </Layout.Fixed>
-        <TemplateDetailsModal
-          activeTemplate={activeTemplate}
-          activeTemplateIndex={activeTemplateIndex}
-          isDetailsViewOpen={isDetailsViewOpen}
-          templateActions={templateActions}
-          filteredTemplatesLength={orderedTemplates.length}
-        />
-      </Layout.Provider>
-    </TemplateFiltersProvider>
+    <Layout.Provider>
+      <Header
+        isLoading={isLoading && !totalTemplates}
+        totalTemplates={totalVisibleTemplates}
+        searchOptions={searchOptions}
+        view={view}
+      />
+      <Content
+        isLoading={isLoading}
+        allPagesFetched={allPagesFetched}
+        page={page}
+        templates={orderedTemplates}
+        totalTemplates={totalVisibleTemplates}
+        search={searchFilterValue}
+        view={view}
+        templateActions={templateActions}
+      />
+      <Layout.Fixed>
+        <ScrollToTop />
+      </Layout.Fixed>
+      <TemplateDetailsModal
+        activeTemplate={activeTemplate}
+        activeTemplateIndex={activeTemplateIndex}
+        isDetailsViewOpen={isDetailsViewOpen}
+        templateActions={templateActions}
+        filteredTemplatesLength={orderedTemplates.length}
+      />
+    </Layout.Provider>
   );
 }
 
