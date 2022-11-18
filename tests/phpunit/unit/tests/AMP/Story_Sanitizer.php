@@ -314,6 +314,10 @@ class Story_Sanitizer extends TestCase {
 				'<html><head></head><body><a href="https://www.google.com" data-tooltip-icon="" data-tooltip-text="">Google</a></body></html>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" target="_blank" rel="noreferrer">Google</a></body></html>',
 			],
+			'Link without protocol'                => [
+				'<html><head></head><body><a href="www.google.com">Google</a></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" target="_blank" rel="noreferrer">Google</a></body></html>',
+			],
 		];
 	}
 

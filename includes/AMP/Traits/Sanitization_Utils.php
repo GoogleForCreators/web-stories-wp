@@ -88,7 +88,9 @@ trait Sanitization_Utils {
 				$link->setAttribute( 'target', '_blank' );
 			}
 
-			$is_link_to_same_origin = 0 === strpos( $link->getAttribute( 'href' ), home_url() );
+			$url = $link->getAttribute( 'href' );
+
+			$is_link_to_same_origin = 0 === strpos( $url, home_url() );
 
 			$rel = $link->getAttribute( 'rel' );
 
@@ -112,6 +114,17 @@ trait Sanitization_Utils {
 
 			if ( ! $link->getAttribute( 'data-tooltip-text' ) ) {
 				$link->removeAttribute( 'data-tooltip-text' );
+			}
+
+			// Extra hardening to catch links without a proper protocol.
+			// Matches withProtocol() util in the editor.
+			if (
+				0 !== stripos( $url, 'http://' ) &&
+				0 !== stripos( $url, 'https://' ) &&
+				0 !== stripos( $url, 'tel:' ) &&
+				0 !== stripos( $url, 'mailto:' )
+			) {
+				$link->setAttribute( 'href', 'https://' . $url );
 			}
 		}
 	}
