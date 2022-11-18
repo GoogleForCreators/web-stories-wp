@@ -39,6 +39,7 @@ import type {
   RefOrNode,
 } from '../../types/keyboard';
 import Context from './context';
+import { getNodeFromRefOrNode } from './utils';
 
 const PROP = '__WEB_STORIES_MT__';
 const NON_EDITABLE_INPUT_TYPES = [
@@ -85,12 +86,7 @@ function useKeyEffectInternal(
   const batchingCallback = useBatchingCallback(callback, deps || []);
   useEffect(
     () => {
-      let nodeEl;
-      if (refOrNode && 'current' in refOrNode) {
-        nodeEl = refOrNode.current;
-      } else {
-        nodeEl = refOrNode;
-      }
+      const nodeEl = getNodeFromRefOrNode(refOrNode);
       if (!nodeEl) {
         return undefined;
       }
@@ -220,12 +216,7 @@ export function useEscapeToBlurEffect(
     refOrNode,
     { key: 'esc', editable: true },
     () => {
-      let nodeEl;
-      if (refOrNode && 'current' in refOrNode) {
-        nodeEl = refOrNode.current;
-      } else {
-        nodeEl = refOrNode;
-      }
+      const nodeEl = getNodeFromRefOrNode(refOrNode);
       const { activeElement } = document;
       if (nodeEl && activeElement && nodeEl.contains(activeElement)) {
         (activeElement as HTMLInputElement).blur();
