@@ -23,12 +23,7 @@ import { useReducer, useCallback } from '@googleforcreators/react';
  * Internal dependencies
  */
 import type { HistoryEntry } from '../../types/historyProvider';
-import reducer, {
-  SET_CURRENT_STATE,
-  CLEAR_HISTORY,
-  REPLAY,
-  EMPTY_STATE,
-} from './reducer';
+import reducer, { ActionType, EMPTY_STATE } from './reducer';
 
 function useHistoryReducer(size: number) {
   // State has 4 parts:
@@ -63,7 +58,7 @@ function useHistoryReducer(size: number) {
         return false;
       }
 
-      dispatch({ type: REPLAY, payload: newOffset });
+      dispatch({ type: ActionType.Replay, payload: newOffset });
       return true;
     },
     [dispatch, offset, historyLength]
@@ -84,12 +79,12 @@ function useHistoryReducer(size: number) {
   );
 
   const clearHistory = useCallback(() => {
-    return dispatch({ type: CLEAR_HISTORY });
+    return dispatch({ type: ActionType.ClearHistory });
   }, [dispatch]);
 
   const stateToHistory = useCallback(
     (entry: HistoryEntry) => {
-      dispatch({ type: SET_CURRENT_STATE, payload: entry });
+      dispatch({ type: ActionType.SetCurrentState, payload: entry });
     },
     [dispatch]
   );

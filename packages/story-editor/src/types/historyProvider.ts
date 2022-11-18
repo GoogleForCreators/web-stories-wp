@@ -22,11 +22,7 @@ import type { Page, Story } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type {
-  CLEAR_HISTORY,
-  REPLAY,
-  SET_CURRENT_STATE,
-} from '../app/history/reducer';
+import type { ActionType } from '../app/history/reducer';
 
 export interface HistoryEntry {
   story: Story;
@@ -37,17 +33,17 @@ export interface HistoryEntry {
 }
 
 interface SetCurrentStateProps {
-  type: typeof SET_CURRENT_STATE;
+  type: ActionType.SetCurrentState;
   payload: HistoryEntry;
 }
 
 interface ClearHistoryProps {
-  type: typeof CLEAR_HISTORY;
+  type: ActionType.ClearHistory;
   payload?: null;
 }
 
 interface ReplayProps {
-  type: typeof REPLAY;
+  type: ActionType.Replay;
   payload: number;
 }
 export type ReducerProps =

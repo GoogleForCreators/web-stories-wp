@@ -23,9 +23,11 @@ import type {
   HistoryEntry,
 } from '../../types/historyProvider';
 
-export const SET_CURRENT_STATE = 'set_state';
-export const CLEAR_HISTORY = 'clear';
-export const REPLAY = 'replay';
+export enum ActionType {
+  SetCurrentState = 'set_state',
+  ClearHistory = 'clear',
+  Replay = 'replay',
+}
 
 export const EMPTY_STATE = {
   entries: [],
@@ -42,7 +44,7 @@ const reducer =
   ): ReducerState | never => {
     const currentEntry = state.entries[state.offset];
     switch (type) {
-      case SET_CURRENT_STATE:
+      case ActionType.SetCurrentState:
         // First check if everything in payload matches the current `requestedState`,
         // if so, update `offset` to match the state in entries and clear `requestedState`
         // and of course leave entries unchanged.
@@ -103,14 +105,14 @@ const reducer =
           requestedState: null,
         };
 
-      case REPLAY:
+      case ActionType.Replay:
         return {
           ...state,
           versionNumber: state.versionNumber + (state.offset - payload),
           requestedState: state.entries[payload],
         };
 
-      case CLEAR_HISTORY:
+      case ActionType.ClearHistory:
         return {
           ...EMPTY_STATE,
         };
