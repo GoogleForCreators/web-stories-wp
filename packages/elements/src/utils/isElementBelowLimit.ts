@@ -18,12 +18,15 @@
  * External dependencies
  */
 import {
-  Corners,
   DANGER_ZONE_HEIGHT,
   FULLBLEED_HEIGHT,
   getCorners,
 } from '@googleforcreators/units';
-import type { Element } from '@googleforcreators/types';
+
+/**
+ * Internal dependencies
+ */
+import type { Element } from '../types';
 
 function isElementBelowLimit(element: Element, verifyLink = true) {
   if (verifyLink && !element.link?.url?.length) {
@@ -33,10 +36,6 @@ function isElementBelowLimit(element: Element, verifyLink = true) {
   const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
   const { x, y, width, height, rotationAngle } = element;
   const points = getCorners(rotationAngle, x, y, width, height);
-  return (Object.keys(points) as Array<Extract<keyof Corners, Corners>>).some(
-    (point) => {
-      return (points[point] as typeof points[keyof typeof points]).y > limit;
-    }
-  );
+  return Object.values(points).some((coord) => coord.y > limit);
 }
 export default isElementBelowLimit;

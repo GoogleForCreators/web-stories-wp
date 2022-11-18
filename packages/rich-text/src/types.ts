@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Pattern } from '@googleforcreators/types';
+import type { Pattern } from '@googleforcreators/patterns';
 import type { EditorState, DraftInlineStyle } from 'draft-js';
 import type { CSSProperties } from 'react';
 
@@ -28,8 +28,8 @@ export type StyleSetter = (
   arg: AllowedSetterArgs
 ) => EditorState;
 
-export type SetStyleCallback = (styles: string[]) => unknown;
-export type StyleGetter = (styles: string[]) => string;
+export type SetStyleCallback = (styles?: string[]) => unknown;
+export type StyleGetter = (styles?: string[]) => string;
 
 export interface SelectionInfo {
   isBold: boolean;

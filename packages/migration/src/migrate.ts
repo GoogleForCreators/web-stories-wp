@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Story } from '@googleforcreators/types';
+import type { Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -68,6 +68,7 @@ import removeTrackName from './migrations/v0042_removeTrackName';
 import removeTagNames from './migrations/v0043_removeTagNames';
 import unusedProperties from './migrations/v0044_unusedProperties';
 import globalPageAdvancement from './migrations/v0045_globalPageAdvancement';
+import removeRedundantScalingProperties from './migrations/v0046_removeRedundantScalingProperties';
 
 type MigrationFn<T, S> = (storyData: T) => S;
 
@@ -119,6 +120,7 @@ const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = { // eslint-disable-
   43: [removeTagNames],
   44: [unusedProperties],
   45: [globalPageAdvancement],
+  46: [removeRedundantScalingProperties],
 };
 
 export const DATA_VERSION = Math.max.apply(
@@ -142,5 +144,3 @@ export function migrate(storyData: Story, version: number): Story {
   }
   return result;
 }
-
-export default migrate;

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 import { Pill } from '@googleforcreators/design-system';
 import { __, sprintf } from '@googleforcreators/i18n';
 import styled from 'styled-components';

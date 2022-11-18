@@ -31,11 +31,6 @@ import * as stickerElement from './sticker';
 import * as productElement from './product';
 
 const elementTypes = [
-  {
-    type: 'page',
-    defaultAttributes: {},
-    name: __('Page', 'web-stories'),
-  },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },
   { type: 'image', name: __('Image', 'web-stories'), ...imageElement },
   { type: 'shape', name: __('Shape', 'web-stories'), ...shapeElement },

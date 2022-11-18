@@ -41,7 +41,6 @@ const defaultProviderValues = {
   },
   config: {
     userId: 8675301,
-    allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
     apiCallbacks: {
       createStoryFromTemplate: noop, // Not required in general, but without this "use template" button will not render and a test will fail.
     },

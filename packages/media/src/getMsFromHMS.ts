@@ -20,7 +20,7 @@
  * @param time Time in HH:MM:SS or H:M:S format.
  * @return Milliseconds.
  */
-function getMsFromHMS(time: string): number {
+function getMsFromHMS(time: string | null): number {
   if (!time) {
     return 0;
   }

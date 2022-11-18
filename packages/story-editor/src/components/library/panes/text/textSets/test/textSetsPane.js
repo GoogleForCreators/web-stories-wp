@@ -28,7 +28,6 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
 import LibraryContext from '../../../../context';
 import FontContext from '../../../../../../app/font/context';
 import APIContext from '../../../../../../app/api/context';
-import ConfigContext from '../../../../../../app/config/context';
 import StoryContext from '../../../../../../app/story/context';
 import TextSetsPane from '../textSetsPane';
 
@@ -46,7 +45,6 @@ function setup() {
       registerTransformHandler: jest.fn(),
     },
   };
-  const configValue = { api: { stories: [] } };
   const fontsValue = {
     actions: {
       maybeEnqueueFontStyle: jest.fn(),
@@ -71,19 +69,17 @@ function setup() {
 
   return renderWithTheme(
     <TransformContext.Provider value={transformValue}>
-      <ConfigContext.Provider value={configValue}>
-        <APIContext.Provider value={apiValue}>
-          <StoryContext.Provider value={storyValue}>
-            <FontContext.Provider value={fontsValue}>
-              <LibraryContext.Provider value={libraryValue}>
-                <MockPane>
-                  {(paneRef) => <TextSetsPane paneRef={paneRef} />}
-                </MockPane>
-              </LibraryContext.Provider>
-            </FontContext.Provider>
-          </StoryContext.Provider>
-        </APIContext.Provider>
-      </ConfigContext.Provider>
+      <APIContext.Provider value={apiValue}>
+        <StoryContext.Provider value={storyValue}>
+          <FontContext.Provider value={fontsValue}>
+            <LibraryContext.Provider value={libraryValue}>
+              <MockPane>
+                {(paneRef) => <TextSetsPane paneRef={paneRef} />}
+              </MockPane>
+            </LibraryContext.Provider>
+          </FontContext.Provider>
+        </StoryContext.Provider>
+      </APIContext.Provider>
     </TransformContext.Provider>
   );
 }

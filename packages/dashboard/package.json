@@ -2,7 +2,7 @@
   "name": "@googleforcreators/dashboard",
   "description": "The core Web Stories dashboard web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202208291229",
+  "version": "0.1.202211151052",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -31,6 +31,7 @@
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
+  "types": "dist-types/index.d.ts",
   "source": "src/index.js",
   "publishConfig": {
     "access": "public"
@@ -39,6 +40,7 @@
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/element-library": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
@@ -228,7 +230,7 @@ class AMP extends Service_Base implements HasRequirements {
 		}
 
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
-			'publisher_logo' => $story->get_publisher_logo_url(),
+			'publisher_logo' => (string) $story->get_publisher_logo_url(),
 			'publisher'      => $story->get_publisher_name(),
 			'poster_images'  => array_filter( $poster_images ),
 			'video_cache'    => $video_cache_enabled,

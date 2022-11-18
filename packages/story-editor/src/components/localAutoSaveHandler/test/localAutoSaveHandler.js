@@ -53,6 +53,9 @@ function setup({
     state: {
       story: { status, storyId: 1 },
       pages: [{ id: 1 }],
+      meta: {
+        isAutoSavingStory: false,
+      },
     },
     actions: {
       restoreLocalAutoSave: jest.fn(),

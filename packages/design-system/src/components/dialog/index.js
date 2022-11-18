@@ -62,11 +62,26 @@ const DialogActions = styled.div`
     }
   }
 `;
+
 /**
- * Dialogs should be wrapped in a ThemeProvider
- * and given the inverted theme to the app.
+ * @typedef {Object} DialogProps
+ * @property {import('react').ReactNode} children Children.
+ * @property {string} title Title.
+ * @property {import('react').ReactNode[]} actions Actions.
+ * @property {boolean} isOpen Whether the dialog is open.
+ * @property {Function} onClose Close callback.
+ * @property {string} contentLabel Content label.
  */
 
+/**
+ * Dialog component.
+ *
+ * Dialogs should be wrapped in a ThemeProvider
+ * and given the inverted theme to the app.
+ *
+ * @param {DialogProps} Dialog props.
+ * @return {import('react').ReactElement} Dialog.
+ */
 export function Dialog({
   children,
   title,

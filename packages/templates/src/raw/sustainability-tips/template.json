@@ -1,5 +1,5 @@
 {
-  "version": 44,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -124,9 +124,6 @@
           "y": 4,
           "width": 325,
           "height": 167,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "a95e0ba7-ccc1-462e-879b-d705947194ec"
         },
         {
@@ -198,10 +195,7 @@
             "bottomLeft": 2
           },
           "width": 325,
-          "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 23
         },
         {
           "x": 44,
@@ -272,10 +266,7 @@
             "bottomLeft": 2
           },
           "width": 325,
-          "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 23
         }
       ],
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
@@ -406,9 +397,6 @@
           "y": 103,
           "width": 307,
           "height": 93,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "f1e453af-9648-48fa-98f7-f71096f8575d",
           "type": "text"
         },
@@ -481,9 +469,6 @@
           },
           "width": 325,
           "height": 33,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -555,9 +540,6 @@
           "y": 466,
           "width": 586,
           "height": 351,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "cloudBanner" },
           "id": "8222f5cf-0c35-4a2c-86b5-de59899d4efd"
         },
@@ -628,9 +610,6 @@
           "y": 553,
           "width": 307,
           "height": 71,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "9048c820-4244-4373-8947-b185ef5b178c",
           "type": "text"
         }
@@ -788,9 +767,6 @@
           "y": 103,
           "width": 307,
           "height": 93,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "053df1fd-98b1-4a8b-b291-8848d3d794e4",
           "type": "text"
         },
@@ -863,9 +839,6 @@
           },
           "width": 325,
           "height": 34,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -935,9 +908,6 @@
           "type": "sticker",
           "width": 586,
           "height": 351,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "cloudBanner" },
           "basedOn": "8222f5cf-0c35-4a2c-86b5-de59899d4efd",
           "id": "c651a97a-27ce-453d-809b-c71dff8cc029",
@@ -1011,9 +981,6 @@
           "y": 553,
           "width": 307,
           "height": 71,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "24f0ed91-58d9-4703-8f5a-ea6d84adc4cd",
           "type": "text"
         }
@@ -1173,9 +1140,6 @@
           "y": 103,
           "width": 307,
           "height": 93,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "4c651159-e6cc-47fc-ba54-292432f8b185",
           "type": "text"
         },
@@ -1248,9 +1212,6 @@
           },
           "width": 325,
           "height": 34,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -1320,9 +1281,6 @@
           "type": "sticker",
           "width": 586,
           "height": 351,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "cloudBanner" },
           "basedOn": "8222f5cf-0c35-4a2c-86b5-de59899d4efd",
           "id": "8de3373e-8c7f-4308-aaa6-0bf2f66cc061",
@@ -1396,9 +1354,6 @@
           "y": 508,
           "width": 307,
           "height": 115,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "6e413a4d-5546-4537-baf7-66c68b814714",
           "type": "text"
         }
@@ -1556,9 +1511,6 @@
           "y": 103,
           "width": 307,
           "height": 57,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "f4331b26-3fad-49ba-af63-170baad95e93",
           "type": "text"
         },
@@ -1631,9 +1583,6 @@
           },
           "width": 325,
           "height": 34,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -1703,9 +1652,6 @@
           "type": "sticker",
           "width": 586,
           "height": 351,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "cloudBanner" },
           "basedOn": "8de3373e-8c7f-4308-aaa6-0bf2f66cc061",
           "id": "c6a55251-32a4-455b-b41d-69cdca45e161",
@@ -1779,9 +1725,6 @@
           "y": 530,
           "width": 307,
           "height": 71,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "fca968a9-935c-4160-98c6-618c2ca8c2d4",
           "type": "text"
         }
@@ -1939,9 +1882,6 @@
           "y": 103,
           "width": 307,
           "height": 93,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "6d328bb3-8463-4622-9682-87713ffbcb2b",
           "type": "text"
         },
@@ -2014,9 +1954,6 @@
           },
           "width": 325,
           "height": 34,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -2078,9 +2015,6 @@
           "type": "sticker",
           "width": 586,
           "height": 351,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "cloudBanner" },
           "basedOn": "8de3373e-8c7f-4308-aaa6-0bf2f66cc061",
           "id": "bc26b204-0a5f-4fba-8072-0024b53e5a33",
@@ -2154,9 +2088,6 @@
           "y": 508,
           "width": 307,
           "height": 92,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "6e4137cb-093e-4a67-b8cd-52334cec3cba",
           "type": "text"
         }
@@ -2274,9 +2205,6 @@
           },
           "width": 307,
           "height": 111,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "basedOn": "274d0498-d63d-49e2-b49e-44e531a640c5",
           "id": "0225d77f-d1d1-4e77-b334-0fb8888c9c01",
@@ -2348,9 +2276,6 @@
           },
           "width": 307,
           "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "basedOn": "f1e453af-9648-48fa-98f7-f71096f8575d",
           "id": "18137c6a-cded-4510-abfc-833ff59855de",
@@ -2422,9 +2347,6 @@
           },
           "width": 325,
           "height": 33,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "basedOn": "61c44b93-02eb-4a20-b21a-cb4c259c7348",
           "id": "ecacbfe0-4372-4eba-b804-28c5e8e83b88",

@@ -24,7 +24,7 @@ import { createContext } from '@googleforcreators/react';
  */
 import type { State } from './types';
 
-export const INITIAL_STATE = {
+const INITIAL_STATE = {
   state: {},
   actions: {},
 };

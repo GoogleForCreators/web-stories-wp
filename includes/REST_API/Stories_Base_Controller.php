@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Decoder;
@@ -89,10 +91,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
-		$post_type_object = get_post_type_object( $post_type );
-		$this->namespace  = isset( $post_type_object, $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ?
-			$post_type_object->rest_namespace :
-			'web-stories/v1';
 
 		$injector = Services::get_injector();
 		if ( ! method_exists( $injector, 'make' ) ) {
@@ -390,65 +388,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			];
 		}
 
-		$links = $this->add_taxonomy_links( $links, $post );
-
-		return $links;
-	}
-
-	/**
-	 * Adds a REST API links for the taxonomies.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post  Post object.
-	 * @return array Modified list of links.
-	 *
-	 * @phpstan-param Links $links
-	 * @phpstan-return Links
-	 */
-	private function add_taxonomy_links( array $links, WP_Post $post ): array {
-		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
-
-		if ( empty( $taxonomies ) ) {
-			return $links;
-		}
-
-		$links['https://api.w.org/term'] = [];
-
-		foreach ( $taxonomies as $taxonomy_obj ) {
-			// Skip taxonomies that are not public.
-			if ( empty( $taxonomy_obj->show_in_rest ) ) {
-				continue;
-			}
-
-			$controller = $taxonomy_obj->get_rest_controller();
-
-			if ( ! $controller ) {
-				continue;
-			}
-
-			$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
-			$tax       = $taxonomy_obj->name;
-			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
-
-			$query_params = [
-				'post'     => $post->ID,
-				'per_page' => 100,
-			];
-
-			$terms_url = add_query_arg(
-				$query_params,
-				rest_url( sprintf( '%s/%s', $namespace, $tax_base ) )
-			);
-
-			$links['https://api.w.org/term'][] = [
-				'href'       => $terms_url,
-				'taxonomy'   => $tax,
-				'embeddable' => true,
-			];
-		}
-
 		return $links;
 	}
 
@@ -473,14 +412,5 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		return $rels;
-	}
-
-	/**
-	 * Return namespace.
-	 *
-	 * @since 1.12.0
-	 */
-	public function get_namespace(): string {
-		return $this->namespace;
 	}
 }

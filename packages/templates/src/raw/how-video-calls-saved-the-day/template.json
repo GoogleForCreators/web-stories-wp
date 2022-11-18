@@ -1,5 +1,5 @@
 {
-  "version": 44,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -86,9 +86,6 @@
           "y": 10,
           "width": 317,
           "height": 236,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "fa12a7c8-c985-459f-9c8e-401a76007576"
         },
         {
@@ -101,9 +98,6 @@
           "y": 295,
           "width": 287,
           "height": 204,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "aecd13c7-4abe-420c-bff8-1723d0adb3e0",
           "groupId": "f3f8ba78-47a0-4c12-8e45-a55263db974d"
@@ -118,9 +112,6 @@
           "y": 295,
           "width": 280,
           "height": 204,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "35934601-79e9-450b-94f2-72a239dee8ff",
           "groupId": "6af439e2-d568-4f3a-b21a-ac7bf4b1a0d2"
@@ -232,10 +223,7 @@
             "bottomLeft": 2
           },
           "width": 317,
-          "height": 58,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 58
         },
         {
           "x": -224,
@@ -281,9 +269,6 @@
           "y": 352,
           "width": 112,
           "height": 50,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsTooltip" },
           "id": "40a6f116-13f9-4091-b364-9ae673d43f60",
           "groupId": "a75a32db-67d1-4071-b7da-7d39b8f28830"
@@ -350,9 +335,6 @@
           "y": 365,
           "width": 44,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "e8c24d48-b29d-4948-9cbd-dbc0c9b3fbc3",
           "groupId": "a75a32db-67d1-4071-b7da-7d39b8f28830"
         },
@@ -420,9 +402,6 @@
           },
           "width": 20,
           "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 6.5625,
           "groupId": "a75a32db-67d1-4071-b7da-7d39b8f28830"
         }
@@ -538,9 +517,6 @@
           },
           "width": 314,
           "height": 212,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "29b95b5f-9249-4899-bd3c-491f83973861",
           "id": "67c004c2-88a9-40d3-9273-d6b32a77559e",
           "x": 50,
@@ -622,9 +598,6 @@
           },
           "width": 97,
           "height": 51,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "d9144810-2fe1-4198-98cc-e27ed5b5a51f",
           "tagName": "p"
         },
@@ -703,9 +676,6 @@
           },
           "width": 94,
           "height": 51,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "d9144810-2fe1-4198-98cc-e27ed5b5a51f",
           "tagName": "p"
         },
@@ -784,9 +754,6 @@
           },
           "width": 191,
           "height": 51,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "d9144810-2fe1-4198-98cc-e27ed5b5a51f",
           "tagName": "p"
         },
@@ -899,9 +866,6 @@
           "y": 393,
           "width": 419,
           "height": 306,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "1020e519-5e8f-4dbc-98c6-2d6cc2ba5b3b",
           "groupId": "aba13638-ddf4-4ee3-ace9-c6784a3beb62"
@@ -972,9 +936,6 @@
           },
           "width": 317,
           "height": 180,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "fa12a7c8-c985-459f-9c8e-401a76007576",
           "id": "cd4fb90a-54b2-4fa6-83fd-865e13fbdbfa",
           "x": 53,
@@ -1052,9 +1013,6 @@
           },
           "width": 36,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "4320a8bc-318d-4567-999f-50d5d8e8b9f6",
           "tagName": "p"
         },
@@ -1099,9 +1057,6 @@
           "type": "sticker",
           "width": 112,
           "height": 50,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsTooltip" },
           "basedOn": "40a6f116-13f9-4091-b364-9ae673d43f60",
           "id": "a01f052e-152a-4f8b-a47b-64142265abff",
@@ -1169,9 +1124,6 @@
           },
           "width": 55,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "e8c24d48-b29d-4948-9cbd-dbc0c9b3fbc3",
           "id": "4a218b08-a654-42d7-9a0d-b54c57c531c1",
           "x": 237,
@@ -1240,9 +1192,6 @@
           "y": 420,
           "width": 27,
           "height": 25,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "10df4f4e-1153-4106-963d-1d13ce047dc7",
           "marginOffset": 7.21875,
           "groupId": "993bd94e-33f1-4407-a78c-d601f60d4040"
@@ -1340,9 +1289,6 @@
           "y": 438,
           "width": 79,
           "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "7c280353-ec99-4412-96fe-92a2c8e49bae"
         },
@@ -1417,9 +1363,6 @@
           },
           "width": 314,
           "height": 113,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "55bcfb5d-944a-40fc-b0f2-f1f8658e6881",
           "id": "42d44268-ecf9-4285-b6a3-b700eb086d1b",
           "x": 50,
@@ -1500,10 +1443,7 @@
             "bottomLeft": 2
           },
           "width": 69,
-          "height": 20,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 20
         },
         {
           "opacity": 100,
@@ -1553,9 +1493,6 @@
           "y": 33,
           "width": 158,
           "height": 112,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "8aeb3479-a7c1-4fd4-9d35-516208f07f59",
           "groupId": "21f64464-a4ba-4dd7-b8f9-8f98e75c0c92"
@@ -1643,9 +1580,6 @@
           "type": "shape",
           "width": 268,
           "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "7c280353-ec99-4412-96fe-92a2c8e49bae",
           "id": "f6009e6a-abcc-4be4-8896-2a1dcd250781",
@@ -1726,9 +1660,6 @@
           },
           "width": 69,
           "height": 20,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         },
         {
@@ -1779,9 +1710,6 @@
           "y": 143,
           "width": 158,
           "height": 112,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "4e7397b4-8b9d-409b-9ff2-619c7483d5fc",
           "groupId": "f4d9f51a-0d82-4f3d-9993-3b4252075da8"
@@ -1888,9 +1816,6 @@
           "y": 439,
           "width": 312,
           "height": 117,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "5e5712fb-53ae-4f87-b882-28d86929fb73",
           "tagName": "p"
         }
@@ -1943,9 +1868,6 @@
           "y": 392,
           "width": 419,
           "height": 306,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "7ba63f7e-1ada-4388-9d2d-f599c1e77d21",
           "type": "sticker",
@@ -2016,9 +1938,6 @@
           },
           "width": 317,
           "height": 180,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "fa12a7c8-c985-459f-9c8e-401a76007576",
           "id": "cb9cdccc-75a4-42e9-b374-434741e4e136",
           "x": 53,
@@ -2096,9 +2015,6 @@
           },
           "width": 36,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "0818554c-bcab-414c-ab5c-7dae86c15717",
           "tagName": "p"
@@ -2145,9 +2061,6 @@
           "type": "sticker",
           "width": 112,
           "height": 50,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsTooltip" },
           "basedOn": "a01f052e-152a-4f8b-a47b-64142265abff",
           "id": "c7952817-a99a-4022-b60d-2d63a640939e",
@@ -2215,9 +2128,6 @@
           },
           "width": 61,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "4a218b08-a654-42d7-9a0d-b54c57c531c1",
           "id": "914656ba-28ae-411c-aa0e-439fb2b3aea9",
           "x": 237,
@@ -2286,9 +2196,6 @@
           "y": 420,
           "width": 20,
           "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "14eb0c30-651b-4dfa-aea1-794c3d8df75f",
           "marginOffset": 6.5625,
           "groupId": "2a4108b1-14db-4fc2-9a60-1a9069aed787"
@@ -2431,9 +2338,6 @@
           "type": "shape",
           "width": 79,
           "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "f6009e6a-abcc-4be4-8896-2a1dcd250781",
           "id": "a37f8a3e-a953-45d0-9cb1-e00335c66657",
@@ -2510,9 +2414,6 @@
           },
           "width": 314,
           "height": 84,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "55bcfb5d-944a-40fc-b0f2-f1f8658e6881",
           "id": "79adf470-d2c9-4fa9-bffb-06581df0d3d6",
           "x": 48,
@@ -2594,9 +2495,6 @@
           },
           "width": 69,
           "height": 20,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         },
         {
@@ -2647,9 +2545,6 @@
           "y": 112,
           "width": 158,
           "height": 112,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "5e1ff880-11f0-4fd1-b04d-2d1ebd6af7cd",
           "groupId": "c1a168fa-f682-44f8-8eb1-02d3a7e80279"
@@ -2736,9 +2631,6 @@
           "type": "shape",
           "width": 145,
           "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "f6009e6a-abcc-4be4-8896-2a1dcd250781",
           "id": "73c5174a-1816-4e3b-abe3-1b0434901d1b",
@@ -2819,9 +2711,6 @@
           },
           "width": 69,
           "height": 20,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         },
         {
@@ -2892,9 +2781,6 @@
           "y": 439,
           "width": 286,
           "height": 116,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "ef5f8776-7ec3-45ca-8745-ba312d632244",
           "tagName": "p"
         },
@@ -2908,9 +2794,6 @@
           "y": 33,
           "width": 412,
           "height": 293,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "df124319-286a-4426-bd31-76a1a2058dd2",
           "groupId": "bfc16459-4693-4003-8d25-30d83ba69471"
@@ -3154,9 +3037,6 @@
           },
           "width": 317,
           "height": 125,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "fa12a7c8-c985-459f-9c8e-401a76007576",
           "id": "8856d246-2f4b-456f-9e65-381c402385bb",
           "x": 47,
@@ -3237,10 +3117,7 @@
             "bottomLeft": 0
           },
           "width": 193,
-          "height": 51,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 51
         },
         {
           "opacity": 100,
@@ -3313,9 +3190,6 @@
           },
           "width": 189,
           "height": 51,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "89645e1e-02df-4a6a-9534-8194a0ddcf3e",
           "id": "95830244-e5c6-46ec-aeab-c07ae0f8679f",
           "x": 160,
@@ -3331,9 +3205,6 @@
           "y": 244,
           "width": 158,
           "height": 112,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "d0d37097-15ae-4a55-b377-60d87b617440",
           "groupId": "d57fa946-aff5-4b21-852a-d13fba941faf"
@@ -3350,9 +3221,6 @@
           "type": "sticker",
           "width": 158,
           "height": 112,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "groupId": "db10a96c-253b-4b41-be0d-33524c304eef"
         },

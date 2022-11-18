@@ -70,7 +70,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -96,7 +96,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
+        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -166,7 +166,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -257,7 +257,7 @@ jobs:
     needs: [e2e, nonce]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 

@@ -15,13 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import type { Dimensions } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
+import type { Dimensions } from './types';
 import preloadImage from './preloadImage';
 
 /**
