@@ -10,5 +10,6 @@
     { "path": "../react" },
     { "path": "../units" }
   ],
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/stories**/*"]
 }
