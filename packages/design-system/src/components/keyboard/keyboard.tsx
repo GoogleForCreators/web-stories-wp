@@ -42,8 +42,7 @@ import {
   resolveKeySpec,
   createKeyHandler,
   createShortcutAriaLabel,
-  isPlatformMacOS,
-  getKeyForOS,
+  prettifyShortcut,
 } from './utils';
 
 const globalRef: { current: null | HTMLElement } = { current: null };
@@ -208,32 +207,6 @@ export function useEscapeToBlurEffect(
     //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
     deps
   );
-}
-
-/**
- * Prettifies keyboard shortcuts in a platform-agnostic way.
- */
-export function prettifyShortcut(shortcut: string) {
-  const isMacOS = isPlatformMacOS();
-
-  const delimiter = isMacOS ? '' : '+';
-
-  return shortcut
-    .toLowerCase()
-    .replace('alt', getKeyForOS('alt'))
-    .replace('ctrl', getKeyForOS('ctrl'))
-    .replace('mod', getKeyForOS('mod'))
-    .replace('cmd', getKeyForOS('cmd'))
-    .replace('shift', getKeyForOS('shift'))
-    .replace('left', '←')
-    .replace('up', '↑')
-    .replace('right', '→')
-    .replace('down', '↓')
-    .replace('delete', '⌫')
-    .replace('enter', '⏎')
-    .split('+')
-    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-    .join(delimiter);
 }
 
 interface ShortcutProps {
