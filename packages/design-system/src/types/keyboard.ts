@@ -37,4 +37,4 @@ export type Keys = typeof keys;
 export type KeyEffectCallback = (event: KeyboardEvent) => void;
 export type KeyNameOrSpec = KeySpec | string | string[];
 
-export type RefOrNode = Element | RefObject<Element>;
+export type RefOrNode = Element | RefObject<Element> | null;

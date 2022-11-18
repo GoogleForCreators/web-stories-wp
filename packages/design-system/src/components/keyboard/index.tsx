@@ -470,15 +470,19 @@ export function createShortcutAriaLabel(shortcut: string) {
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join(delimiter);
 }
-
-const Kbd = ({ children }: PropsWithChildren<Record<string, unknown>>) => (
-  <kbd>{children}</kbd>
-);
-
+interface ShortcutProps {
+  component: ({
+    children,
+  }: PropsWithChildren<Record<string, unknown>>) => JSX.Element;
+  shortcut?: string;
+}
 /**
  * Returns a prettified shortcut wrapped with a <kbd> element.
  */
-export function Shortcut({ component: Component = Kbd, shortcut = '' }) {
+export function Shortcut({
+  component: Component,
+  shortcut = '',
+}: ShortcutProps) {
   const chars = shortcut.split(' ');
 
   return (
