@@ -392,7 +392,7 @@ class AMP extends Service_Base implements HasRequirements {
 			 * @var string $request_uri
 			 */
 			$request_uri = $_SERVER['REQUEST_URI'];
-			if ( false !== strpos( (string) wp_unslash( $request_uri ), $this->story_post_type->get_rest_url() ) ) {
+			if ( str_contains( (string) wp_unslash( $request_uri ), $this->story_post_type->get_rest_url() ) ) {
 				return $this->story_post_type->get_slug();
 			}
 		}

@@ -200,7 +200,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 			foreach ( $matches[0] as $index => $match ) {
 				$tag = $matches['tag'][ $index ];
 
-				if ( false !== strpos( $match, ' crossorigin=' ) ) {
+				if ( str_contains( $match, ' crossorigin=' ) ) {
 					continue;
 				}
 
@@ -222,7 +222,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 
 				// The only tags that can have <source> children.
 				if ( 'video' === $tag || 'audio' === $tag ) {
-					if ( ! $this->starts_with( $value, $site_url ) && ! $this->starts_with( $value, '/' ) ) {
+					if ( ! str_starts_with( $value, $site_url ) && ! str_starts_with( $value, '/' ) ) {
 						$html = str_replace( $match, str_replace( '<' . $tag, '<' . $tag . ' crossorigin="anonymous"', $match ), $html );
 					}
 				} else {
@@ -311,11 +311,11 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 		$site_url = site_url();
 		$url      = esc_url( $url );
 
-		if ( $this->starts_with( $url, $site_url ) ) {
+		if ( str_starts_with( $url, $site_url ) ) {
 			return $html;
 		}
 
-		if ( $this->starts_with( $url, '/' ) ) {
+		if ( str_starts_with( $url, '/' ) ) {
 			return $html;
 		}
 
@@ -364,17 +364,5 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 		}
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Does string start with.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param string $string       String to search.
-	 * @param string $start_string String to search with.
-	 */
-	private function starts_with( string $string, string $start_string ): bool {
-		return 0 === strpos( $string, $start_string );
 	}
 }

@@ -90,7 +90,7 @@ trait Sanitization_Utils {
 
 			$url = $link->getAttribute( 'href' );
 
-			$is_link_to_same_origin = 0 === strpos( $url, home_url() );
+			$is_link_to_same_origin = str_starts_with( $url, home_url() );
 
 			$rel = $link->getAttribute( 'rel' );
 
@@ -119,10 +119,10 @@ trait Sanitization_Utils {
 			// Extra hardening to catch links without a proper protocol.
 			// Matches withProtocol() util in the editor.
 			if (
-				0 !== stripos( $url, 'http://' ) &&
-				0 !== stripos( $url, 'https://' ) &&
-				0 !== stripos( $url, 'tel:' ) &&
-				0 !== stripos( $url, 'mailto:' )
+				! str_starts_with( $url, 'http://' ) &&
+				! str_starts_with( $url, 'https://' ) &&
+				! str_starts_with( $url, 'tel:' ) &&
+				! str_starts_with( $url, 'mailto:' )
 			) {
 				$link->setAttribute( 'href', 'https://' . $url );
 			}
@@ -326,7 +326,7 @@ trait Sanitization_Utils {
 		$existing_publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
 		// Backward compatibility for when fallback-wordpress-publisher-logo.png was provided by the plugin.
-		if ( ! $existing_publisher_logo || false !== strpos( $existing_publisher_logo, 'fallback-wordpress-publisher-logo.png' ) ) {
+		if ( ! $existing_publisher_logo || str_contains( $existing_publisher_logo, 'fallback-wordpress-publisher-logo.png' ) ) {
 			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 
@@ -492,7 +492,7 @@ trait Sanitization_Utils {
 	 * @return bool Whether it's a blob URL.
 	 */
 	private function is_blob_url( string $url ): bool {
-		return 0 === strpos( $url, 'blob:' );
+		return str_starts_with( $url, 'blob:' );
 	}
 
 	/**
@@ -621,7 +621,7 @@ trait Sanitization_Utils {
 		foreach ( $images as $image ) {
 			$src = $image->getAttribute( 'src' );
 
-			if ( $image->parentNode && false !== strpos( $src, $placeholder_img ) ) {
+			if ( $image->parentNode && str_contains( $src, $placeholder_img ) ) {
 				$image->parentNode->removeChild( $image );
 			}
 		}

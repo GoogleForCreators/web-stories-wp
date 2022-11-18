@@ -142,7 +142,7 @@ class Sanitization {
 		foreach ( $head_scripts as $script ) {
 			$src = $script->getAttribute( Attribute::SRC );
 
-			if ( ! $src || 0 !== strpos( $src, 'https://cdn.ampproject.org/' ) ) {
+			if ( ! $src || ! str_starts_with( $src, 'https://cdn.ampproject.org/' ) ) {
 				continue;
 			}
 
