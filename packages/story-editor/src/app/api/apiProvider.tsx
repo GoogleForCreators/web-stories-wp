@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useRef } from '@googleforcreators/react';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import { getAllTemplates, Template } from '@googleforcreators/templates';
 
 /**
@@ -27,21 +27,16 @@ import { getAllTemplates, Template } from '@googleforcreators/templates';
 import { useConfig } from '../config';
 import Context from './context';
 
-interface APIProviderProps {
-  children: ReactNode;
-}
-function APIProvider({ children }: APIProviderProps) {
+function APIProvider({ children }: PropsWithChildren<Record<string, never>>) {
   const { apiCallbacks: actions, cdnURL } = useConfig();
-  const pageTemplates = useRef<{ base: Template[] }>({
-    base: [],
-  });
+  const pageTemplates = useRef<Template[]>([]);
 
   actions.getPageTemplates = useCallback(async () => {
     // check if pageTemplates have been loaded yet
-    if (pageTemplates.current.base.length === 0) {
-      pageTemplates.current.base = await getAllTemplates({ cdnURL });
+    if (pageTemplates.current.length === 0) {
+      pageTemplates.current = await getAllTemplates({ cdnURL });
     }
-    return pageTemplates.current.base;
+    return pageTemplates.current;
   }, [cdnURL]);
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
