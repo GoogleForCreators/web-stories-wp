@@ -4,5 +4,11 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
+  "references": [
+    { "path": "../i18n" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../tracking" }
+  ],
   "include": ["src/**/*"]
 }
