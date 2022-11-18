@@ -23,6 +23,9 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
+
+
+import type { Story } from "@googleforcreators/elements/src/types";
 /**
  * Internal dependencies
  */
@@ -39,7 +42,7 @@ import {
   cacheFromEmbeddedTerms,
 } from './utils';
 
-import type { Term, TaxonomiesBySlug, Taxonomy, EmbeddedTerms } from '../../types/taxonomyProvider';
+import type { Term, TaxonomiesBySlug, Taxonomy, EmbeddedTerms, TermsIds } from '../../types/taxonomyProvider';
 
 function TaxonomyProvider(props: { children: React.ReactNode }) {
   const [taxonomies, setTaxonomies] = useState([]);
@@ -93,7 +96,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     ) {
       const taxonomiesBySlug: TaxonomiesBySlug = dictionaryOnKey(taxonomies, 'slug');
 
-      const initialCache = mapObjectKeys(
+      const initialCache: EmbeddedTerms = mapObjectKeys(
         cacheFromEmbeddedTerms(terms),
         (slug: string): string => taxonomiesBySlug[slug]?.restBase
       );
@@ -121,14 +124,14 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   ]);
 
   const setTerms = useCallback(
-    (taxonomy: Taxonomy, termIds = []) => {
+    (taxonomy: Taxonomy, termIds: TermsIds = []) => {
+
       updateStory({
         properties: (story) => {
           const newTerms =
             typeof termIds === 'function'
               ? termIds(story.terms[taxonomy.restBase])
               : termIds;
-
           return {
             ...story,
             terms: {
@@ -144,7 +147,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
 
   const addTermToSelection = useCallback(
     (taxonomy: Taxonomy, term: Term) => {
-      setTerms(taxonomy, (ids = []) =>
+      setTerms(taxonomy, (ids: number[] = []) =>
         ids.includes(term.id) ? ids : [...ids, term.id]
       );
     },
@@ -152,7 +155,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   );
 
   const addSearchResultsToCache = useCallback(
-    async (taxonomy: Taxonomy, args, addNameToSelection = false) => {
+    async (taxonomy: Taxonomy, args: { search?: string, per_page?: number }, addNameToSelection = false) => {
       let response = [];
       const termsEndpoint = taxonomy?.restPath;
       if (!termsEndpoint) {
@@ -162,8 +165,10 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
         response = await getTaxonomyTerm(termsEndpoint, args);
       } catch (e) {
         // Log error
-        // eslint-disable-next-line no-console -- We want to surface this error.
-        console.error(e.message);
+        if (e instanceof Error) {
+          // eslint-disable-next-line no-console -- We want to surface this error.
+          console.error(e.message);
+        }
       }
 
       // Avoid update if we're not actually adding any terms here
@@ -176,7 +181,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
         [taxonomy.restBase]: dictionaryOnKey(response, 'slug'),
       };
 
-      setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
+      setTermCache((cache: EmbeddedTerms) => mergeNestedDictionaries(cache, termResults));
 
       if (addNameToSelection && args.search) {
         const selectedTermSlug = cleanForSlug(args.search);
@@ -224,7 +229,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
         const incomingCache = {
           [taxonomy.restBase]: { [newTerm.slug]: newTerm },
         };
-        setTermCache((cache) => mergeNestedDictionaries(cache, incomingCache));
+        setTermCache((cache: EmbeddedTerms) => mergeNestedDictionaries(cache, incomingCache));
 
         if (addToSelection) {
           addTermToSelection(taxonomy, newTerm);
@@ -236,6 +241,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
         //
         // We could pull down only the exact term, but
         // we're modeling after Gutenberg.
+        // @ts-ignore Reason: This is a valid error code for API errors.
         if (e.code === 'term_exists') {
           addSearchResultsToCache(
             taxonomy,

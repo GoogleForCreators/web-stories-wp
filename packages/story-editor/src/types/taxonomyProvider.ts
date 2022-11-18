@@ -81,6 +81,8 @@ export type EmbeddedTerms = Record<string, Record<string, Term>>;
 
 export type Terms = [Term[]];
 
+export type TermsIds = (ids: number[]) => number[] | [];
+
 export interface TaxonomyState {
   actions: APICallbacks;
 }
