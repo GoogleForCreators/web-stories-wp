@@ -10,6 +10,7 @@
     { "path": "../react" }
   ],
   "include": [
+    "src/app/api/*",
     "src/app/config/*",
     "src/app/history",
     "src/types",
