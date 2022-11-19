@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useRef } from '@googleforcreators/react';
-import { getAllTemplates } from '@googleforcreators/templates';
+import type { PropsWithChildren } from 'react';
+import { getAllTemplates, Template } from '@googleforcreators/templates';
 
 /**
  * Internal dependencies
@@ -27,25 +27,19 @@ import { getAllTemplates } from '@googleforcreators/templates';
 import { useConfig } from '../config';
 import Context from './context';
 
-function APIProvider({ children }) {
+function APIProvider({ children }: PropsWithChildren<Record<string, never>>) {
   const { apiCallbacks: actions, cdnURL } = useConfig();
-  const pageTemplates = useRef({
-    base: [],
-  });
+  const pageTemplates = useRef<Template[]>([]);
 
   actions.getPageTemplates = useCallback(async () => {
     // check if pageTemplates have been loaded yet
-    if (pageTemplates.current.base.length === 0) {
-      pageTemplates.current.base = await getAllTemplates({ cdnURL });
+    if (pageTemplates.current.length === 0) {
+      pageTemplates.current = await getAllTemplates({ cdnURL });
     }
-    return pageTemplates.current.base;
+    return pageTemplates.current;
   }, [cdnURL]);
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
 }
-
-APIProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default APIProvider;

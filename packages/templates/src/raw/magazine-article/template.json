@@ -1,5 +1,5 @@
 {
-  "version": 45,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -29,9 +29,6 @@
           "y": -57,
           "width": 412,
           "height": 732,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "23744c49-09d3-48aa-994e-7f8f1309c2df"
         },
@@ -122,9 +119,6 @@
           "type": "shape",
           "width": 366,
           "height": 732,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" }
         },
         {
@@ -149,9 +143,6 @@
           "y": -57,
           "width": 366,
           "height": 515,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "bddf496a-8bb8-4fe4-bd60-0d29624cc059"
         },
@@ -166,9 +157,6 @@
           "y": 458,
           "width": 412,
           "height": 217,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "e39615c4-be0a-45e8-abb1-77a17312c38e"
         },
@@ -236,9 +224,6 @@
           "y": 394,
           "width": 200,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "eb0caa01-f3f2-4732-ba5e-c443975f14eb"
         },
         {
@@ -251,9 +236,6 @@
           "y": -80,
           "width": 333,
           "height": 475,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "flightPath" },
           "id": "e402376a-138c-4ba7-8093-d4cd607d1b80"
         },
@@ -323,9 +305,6 @@
           },
           "width": 295,
           "height": 169,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.6549999999999976
         }
       ],
@@ -402,9 +381,6 @@
           "y": 272,
           "width": 412,
           "height": 403,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "7a752561-e177-4b00-ac38-8f35773a2ce4"
         },
@@ -551,9 +527,6 @@
           "y": 437,
           "width": 327,
           "height": 128,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "7bc86bd3-6677-48ff-a233-e9fed282a812",
           "marginOffset": 0.84375
         }
@@ -621,9 +594,6 @@
           "y": -57,
           "width": 425,
           "height": 732,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "31cd45b4-2ef8-432e-8fe0-016b8de056fb"
         },
@@ -728,9 +698,6 @@
           },
           "width": 318,
           "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 4.299999999999997,
           "basedOn": "7bc86bd3-6677-48ff-a233-e9fed282a812",
           "id": "2b9d8f99-69fe-45e2-95eb-84c0e1044fb9",
@@ -803,9 +770,6 @@
           },
           "width": 292,
           "height": 85,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.144999999999996
         },
         {
@@ -819,9 +783,6 @@
           "y": 380,
           "width": 319,
           "height": 2,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "9f7d6608-b941-40fb-8fb1-b61e0c8f84f4"
         },
@@ -835,9 +796,6 @@
           "y": -375,
           "width": 417,
           "height": 595,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "flightPath" },
           "id": "371e6077-5535-49d0-89ba-ac60672cc6b3"
         }
@@ -940,9 +898,6 @@
           "y": -58,
           "width": 425,
           "height": 734,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "dbee76b3-4b16-4a14-ba62-3539856ba761",
           "type": "shape"
@@ -1047,9 +1002,6 @@
           },
           "width": 318,
           "height": 102,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 4.299999999999997,
           "basedOn": "7bc86bd3-6677-48ff-a233-e9fed282a812",
           "id": "82c58c80-002c-4a5d-a050-12d7337f6aef",
@@ -1162,9 +1114,6 @@
           "y": 280,
           "width": 421,
           "height": 395,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "de32848d-53df-4723-8b98-8cf69c2b23ef"
         },
@@ -1226,9 +1175,6 @@
           "type": "shape",
           "width": 427,
           "height": 341,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" }
         },
         {
@@ -1292,9 +1238,6 @@
           },
           "width": 318,
           "height": 102,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 4.299999999999997,
           "type": "text",
           "basedOn": "82c58c80-002c-4a5d-a050-12d7337f6aef",
@@ -1367,9 +1310,6 @@
           },
           "width": 327,
           "height": 102,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.299999999999997,
           "type": "text"
         }
@@ -1431,9 +1371,6 @@
           "y": -57,
           "width": 425,
           "height": 732,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "cc0b5576-1442-4601-bc31-b7b6c954b154",
           "type": "shape"
@@ -1538,9 +1475,6 @@
           },
           "width": 318,
           "height": 80,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 4.299999999999997,
           "basedOn": "7bc86bd3-6677-48ff-a233-e9fed282a812",
           "id": "bff428c7-9dd2-47f5-a56d-eeff5ece7a2e",
@@ -1613,9 +1547,6 @@
           },
           "width": 292,
           "height": 85,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.144999999999996,
           "type": "text"
         },
@@ -1629,9 +1560,6 @@
           "y": 380,
           "width": 319,
           "height": 2,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "da6036aa-ab9d-4db6-944d-8df3cf4fdd15",
           "type": "shape"
@@ -1646,9 +1574,6 @@
           "y": -160,
           "width": 288,
           "height": 411,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "flightPath" },
           "id": "7bfb15b9-715d-4524-90bf-b61c2b613082"
         }
@@ -1719,9 +1644,6 @@
           "y": 26,
           "width": 329,
           "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "427ea69f-cd46-4377-9bff-4cc498b923bd"
         },
@@ -1866,9 +1788,6 @@
           "y": 394,
           "width": 310,
           "height": 153,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "1dba92e9-a7a4-4fa8-84b8-1ddfd6e4a0d2",
           "marginOffset": 0.7593749999999986
         }
@@ -1930,9 +1849,6 @@
           "y": -57,
           "width": 427,
           "height": 732,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "10a746a2-5977-4a25-905f-57fa553bb7a3",
           "type": "shape"
@@ -2037,9 +1953,6 @@
           },
           "width": 318,
           "height": 76,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 4.299999999999997,
           "basedOn": "7bc86bd3-6677-48ff-a233-e9fed282a812",
           "id": "c7749f15-f6cd-4d6e-9007-fcd1b14997c0",
@@ -2131,9 +2044,6 @@
           "y": -57,
           "width": 431,
           "height": 732,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "b100334c-3616-4a8f-b81d-fac5749c0c6f",
           "type": "shape"
@@ -2238,9 +2148,6 @@
           },
           "width": 289,
           "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.8699999999999974,
           "basedOn": "7bc86bd3-6677-48ff-a233-e9fed282a812",
           "id": "8473fb01-5ac0-4658-ad01-aec4bd6cea0b",
@@ -2313,9 +2220,6 @@
           },
           "width": 292,
           "height": 166,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.144999999999996,
           "type": "text"
         },
@@ -2329,9 +2233,6 @@
           "y": 303,
           "width": 319,
           "height": 2,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "25923877-e6ef-49c9-8787-42348d5e0809",
           "type": "shape"
@@ -2346,9 +2247,6 @@
           "y": -50,
           "width": 288,
           "height": 411,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "flightPath" },
           "id": "2c2a0de2-4fa0-4e6b-869d-ea18f3d7df8c"
         }
@@ -2534,9 +2432,6 @@
           },
           "width": 327,
           "height": 102,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 4.729999999999997,
           "basedOn": "7bc86bd3-6677-48ff-a233-e9fed282a812",
           "id": "a506f0e0-2f63-461a-bbd5-047b9942c24e",
@@ -2604,9 +2499,6 @@
           "y": -57,
           "width": 50,
           "height": 534,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "e1c2f091-dd10-4a1c-83d5-ffccefc42485"
         },
@@ -2786,9 +2678,6 @@
           },
           "width": 327,
           "height": 101,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 4.729999999999997,
           "type": "text",
           "basedOn": "a506f0e0-2f63-461a-bbd5-047b9942c24e",
@@ -2830,9 +2719,6 @@
           "y": -57,
           "width": 427,
           "height": 732,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "5630d2ef-742a-421f-8177-f19a0a07d349"
         },
@@ -2938,9 +2824,6 @@
           "y": 489,
           "width": 107,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "13749516-1650-4bbd-93c7-d7120175250f",
           "marginOffset": 3.224999999999998,
           "tagName": "h2"
@@ -3006,9 +2889,6 @@
           },
           "width": 310,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.299999999999997,
           "type": "text",
           "basedOn": "86bb7ebb-0047-429f-a9f4-f5d9144ec79c",

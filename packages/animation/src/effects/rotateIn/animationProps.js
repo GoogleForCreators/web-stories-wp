@@ -17,18 +17,12 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
 import { FIELD_TYPES, DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
-
-export const RotateInEffectInputPropTypes = {
-  rotateInDir: PropTypes.shape(AnimationInputPropTypes),
-};
 
 export default {
   rotateInDir: {

@@ -17,16 +17,14 @@
 /**
  * External dependencies
  */
-import { createSolid } from '@googleforcreators/patterns';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
+import { DEFAULT_PAGE_BACKGROUND_COLOR } from '../constants';
 import { ElementType, Page } from '../types';
 import createNewElement from './createNewElement';
-
-export const DEFAULT_PAGE_BACKGROUND_COLOR = createSolid(255, 255, 255);
 
 const createPage = (pageProps: Partial<Page> | null = null): Page => {
   const backgroundElementProps = {

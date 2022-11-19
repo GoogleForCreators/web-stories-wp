@@ -28,6 +28,7 @@ import {
   BACKGROUND_ANIMATION_EFFECTS,
 } from '../constants';
 import { GeneralAnimationPropTypes } from '../outputs/types';
+import { AnimationInputPropTypes } from '../effects/types';
 
 export const AMPAnimationProps = {
   className: PropTypes.string,
@@ -45,4 +46,9 @@ export const AnimationProps = {
   ]),
   targets: PropTypes.arrayOf(PropTypes.string),
   ...GeneralAnimationPropTypes,
+};
+
+export const BasicAnimationInputPropTypes = {
+  duration: PropTypes.shape(AnimationInputPropTypes),
+  delay: PropTypes.shape(AnimationInputPropTypes),
 };

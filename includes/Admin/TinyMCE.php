@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
@@ -94,7 +96,7 @@ class TinyMCE extends Service_Base {
 		add_filter( 'mce_buttons', [ $this, 'tinymce_web_stories_button' ] );
 		add_filter( 'mce_external_plugins', [ $this, 'web_stories_mce_plugin' ] );
 		add_action( 'admin_footer', [ $this, 'web_stories_tinymce_root_element' ] );
-		add_action( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
+		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
 	}
 
 	/**

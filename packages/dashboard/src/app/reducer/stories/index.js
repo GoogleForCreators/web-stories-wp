@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { identity, useContextSelector } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useAPI(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useAPI;
+export * from './constants';
+export { default as storyReducer } from './storyReducer';

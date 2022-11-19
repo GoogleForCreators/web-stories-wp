@@ -51,7 +51,7 @@ export function deleteItemByKey(key) {
   }
 }
 
-export default {
+export const sessionStore = {
   getItemByKey,
   setItemByKey,
   deleteItemByKey,
