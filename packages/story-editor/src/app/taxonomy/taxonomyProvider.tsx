@@ -24,8 +24,8 @@ import {
   useState,
 } from '@googleforcreators/react';
 
+import type { Story } from "@googleforcreators/elements";
 
-import type { Story } from "@googleforcreators/elements/src/types";
 /**
  * Internal dependencies
  */
@@ -53,6 +53,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     actions: { clearHistory },
   } = useHistory();
   const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
+    // @ts-ignore
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
       isStoryLoaded: pages.length > 0,
@@ -62,6 +63,8 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   );
 
   const { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies } = useAPI(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // @ts-ignore Reason: update this after useAPI is updated ?
     ({ actions }) => actions
   );
 
@@ -124,17 +127,20 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   ]);
 
   const setTerms = useCallback(
+    // @ts-ignore Reason: @todo Type 'never[]' is not assignable to type 'TermsIds'.
     (taxonomy: Taxonomy, termIds: TermsIds = []) => {
 
       updateStory({
-        properties: (story) => {
+        properties: (story: Story) => {
           const newTerms =
             typeof termIds === 'function'
+              // @ts-ignore Reason: need to update the story type to add terms.
               ? termIds(story.terms[taxonomy.restBase])
               : termIds;
           return {
             ...story,
             terms: {
+              // @ts-ignore Reason: need to update the story type to add terms.
               ...story.terms,
               [taxonomy.restBase]: newTerms,
             },
