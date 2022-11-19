@@ -16,11 +16,11 @@
 /**
  * Internal dependencies
  */
-import { cleanElementFontProperties } from '../cleanElementFontProperties';
+import { getStoryFontsFromPages } from '../getStoryFontsFromPages';
 
-describe('cleanElementFontProperties', () => {
-  it('cleans font properties from elements', () => {
-    const fonts = {
+describe('getStoryFontsFromPages', () => {
+  it('clean font properties from elements', () => {
+    const elementfonts = {
       Oswald: {
         family: 'Oswald',
         service: 'fonts.google.com',
@@ -35,22 +35,20 @@ describe('cleanElementFontProperties', () => {
 
     const pages = [
       {
-        elements: [{ type: 'shape' }, { type: 'text', font: fonts['Oswald'] }],
+        elements: [
+          { type: 'shape' },
+          { type: 'text', font: elementfonts['Oswald'] },
+        ],
       },
       {
-        elements: [{ type: 'shape' }, { type: 'text', font: fonts['Roboto'] }],
+        elements: [
+          { type: 'shape' },
+          { type: 'text', font: elementfonts['Roboto'] },
+        ],
       },
     ];
 
-    const newPages = cleanElementFontProperties(pages);
-    expect(newPages[0].elements[1]).toStrictEqual({
-      type: 'text',
-      font: { family: 'Oswald' },
-    });
-
-    expect(newPages[1].elements[1]).toStrictEqual({
-      type: 'text',
-      font: { family: 'Roboto' },
-    });
+    const fonts = getStoryFontsFromPages(pages);
+    expect(fonts).toStrictEqual(elementfonts);
   });
 });
