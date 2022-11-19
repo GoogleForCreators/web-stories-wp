@@ -69,7 +69,7 @@ export interface PageV47 extends Omit<PageV46, 'elements'> {
 function removeElementFontProperties({ pages, ...rest }: StoryV46): StoryV47 {
   return {
     pages: pages.map(reducePage), // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Remove when is typed correctly.
-    fonts: rest.fonts,
+    fonts: rest?.fonts,
     ...rest,
   };
 }
@@ -93,21 +93,5 @@ function updateElement(element: UnionElementV46): UnionElementV47 {
   }
   return element;
 }
-
-/*
-function reduceStoryFonts(
-  element: UnionElementV46
-): Fonts | Record<string, never> {
-  let fonts: Fonts = {};
-
-  if ('font' in element) {
-    const { font } = element;
-    if (font.family) {
-      fonts[font.family] = font;
-    }
-  }
-  return fonts;
-}
-*/
 
 export default removeElementFontProperties;
