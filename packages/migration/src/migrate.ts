@@ -69,7 +69,7 @@ import removeTagNames from './migrations/v0043_removeTagNames';
 import unusedProperties from './migrations/v0044_unusedProperties';
 import globalPageAdvancement from './migrations/v0045_globalPageAdvancement';
 import removeRedundantScalingProperties from './migrations/v0046_removeRedundantScalingProperties';
-import removeElementFontProperties from './migrations/v0047_removeElementFontProperties';
+// import removeElementFontProperties from './migrations/v0047_removeElementFontProperties';
 
 type MigrationFn<T, S> = (storyData: T) => S;
 
@@ -122,7 +122,7 @@ const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = { // eslint-disable-
   44: [unusedProperties],
   45: [globalPageAdvancement],
   46: [removeRedundantScalingProperties],
-  47: [removeElementFontProperties],
+  // 47: [removeElementFontProperties],
 };
 
 export const DATA_VERSION = Math.max.apply(

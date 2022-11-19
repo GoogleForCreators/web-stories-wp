@@ -15,6 +15,10 @@
  */
 
 function populateElementFontProperties({ elements, ...rest }, fonts) {
+  if (!fonts) {
+    return { elements, ...rest };
+  }
+
   return {
     elements: elements.map((element) => {
       if (element.type === 'text' && Boolean(element.font?.family)) {

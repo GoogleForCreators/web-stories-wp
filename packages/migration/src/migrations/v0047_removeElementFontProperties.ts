@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import type { Fonts } from '../types/element';
 import type {
   GifResourceV46,
   ImageResourceV46,
@@ -59,7 +58,6 @@ export type UnionElementV47 =
 
 export interface StoryV47 extends Omit<StoryV46, 'pages'> {
   pages: PageV47[];
-  fonts: Fonts | Record<string, never>;
 }
 
 export interface PageV47 extends Omit<PageV46, 'elements'> {
@@ -68,8 +66,7 @@ export interface PageV47 extends Omit<PageV46, 'elements'> {
 
 function removeElementFontProperties({ pages, ...rest }: StoryV46): StoryV47 {
   return {
-    pages: pages.map(reducePage), // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Remove when is typed correctly.
-    fonts: rest?.fonts,
+    pages: pages.map(reducePage),
     ...rest,
   };
 }
