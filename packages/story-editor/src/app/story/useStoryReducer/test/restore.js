@@ -107,7 +107,7 @@ describe('restore', () => {
       pages: [],
       selection: [],
       current: null,
-      story: {},
+      story: { fonts: {} },
     });
   });
 
@@ -125,7 +125,7 @@ describe('restore', () => {
       pages: [],
       selection: [],
       current: null,
-      story: {},
+      story: { fonts: {} },
     });
   });
 
