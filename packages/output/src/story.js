@@ -36,7 +36,6 @@ function OutputStory({
     featuredMedia,
     link,
     title,
-    fonts,
     autoAdvance,
     defaultPageDuration,
     backgroundAudio,
@@ -86,7 +85,6 @@ function OutputStory({
         >
           {pages.map((page) => (
             <OutputPage
-              fonts={fonts}
               key={page.id}
               page={page}
               defaultAutoAdvance={autoAdvance}

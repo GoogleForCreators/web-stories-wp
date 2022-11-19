@@ -46,7 +46,6 @@ function FontDeclarations({ pages }) {
     // Prepare font objects for later use.
     for (const { font, content } of textElements) {
       const { service, family, variants = [], url } = font;
-
       if (!service || service === 'system') {
         continue;
       }
