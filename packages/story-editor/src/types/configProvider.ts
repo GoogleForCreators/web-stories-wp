@@ -30,6 +30,7 @@ import type {
   TrimData,
   VideoResource,
 } from '@googleforcreators/media';
+import type { Template } from '@googleforcreators/templates';
 
 export interface Capabilities {
   /** If the user has permissions to upload files. */
@@ -73,7 +74,7 @@ export interface Tip {
   href: string;
 }
 
-interface PageTemplate extends Page {
+export interface PageTemplate extends Page {
   version: string;
 }
 interface TemplateData {
@@ -187,7 +188,7 @@ export interface APICallbacks {
   getMediaForCorsCheck?: () => Promise<Resource[]>;
   getMutedMediaById?: (id: number) => Promise<VideoResource>;
   getOptimizedMediaById?: (id: number) => Promise<Resource>;
-  getPageTemplates?: () => Promise<PageTemplate[]>;
+  getPageTemplates?: () => Promise<Template[]>;
   getPosterMediaById?: (id: number) => Promise<Resource>;
   getProducts?: () => Promise<ProductData[]>;
   getProxyUrl?: (src: string) => string;
@@ -228,7 +229,7 @@ export interface ConfigState {
   /** Max allowed upload in bytes */
   maxUpload: number;
   capabilities: Capabilities;
-  metaData: MetaData;
+  metadata: MetaData;
   canViewDefaultTemplates: boolean;
   /** If to show the 3rd party media in the library */
   showMedia3p: boolean;
