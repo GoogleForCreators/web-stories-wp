@@ -387,7 +387,20 @@ class Editor extends Service_Base implements HasRequirements {
 				}
 			}
 		}
-		$revisionMessage = isset( $_GET['revision'] ) ? sprintf( __( 'Post restored to revision from %s.', 'web-stories' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false;
+		/**
+		 * Revision.
+		 *
+		 * @var int $revision
+		 */
+		$revision = isset( $_GET['revision'] ) ? absint( $_GET['revision'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		$revision_message = ! empty( $revision ) ?
+			sprintf(
+				/* translators: %s: Number of stories. */
+				__( 'Post restored to revision from %s.', 'web-stories' ),
+				wp_post_revision_title( $revision, false )
+			)
+			: false;
 
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
@@ -400,7 +413,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'storyId'                 => $story_id,
 			'dashboardLink'           => $dashboard_url,
 			'revisionLink'            => $revision_url,
-			'revisionMessage'         => $revisionMessage,
+			'revisionMessage'         => $revision_message,
 			'dashboardSettingsLink'   => $dashboard_settings_url,
 			'generalSettingsLink'     => $general_settings_url,
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
