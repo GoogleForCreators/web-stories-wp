@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { DefaultTheme } from 'styled-components';
-
-/**
  * Internal dependencies
  */
 import { dark as darkMode, light as lightMode } from './colors';
