@@ -5,8 +5,8 @@
     "declarationDir": "dist-types"
   },
   "references": [
-    { "path": "../../packages/react" },
-    { "path": "../../packages/elements" }
+    { "path": "../elements" },
+    { "path": "../react" }
   ],
   "include": [
     "src/app/config/*",
