@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -78,7 +78,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @var Decoder Decoder instance.
 	 */
-	private $decoder;
+	private Decoder $decoder;
 
 	/**
 	 * Constructor.
@@ -93,10 +93,14 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		parent::__construct( $post_type );
 
 		$injector = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return;
-		}
-		$this->decoder = $injector->make( Decoder::class );
+		/**
+		 * Decoder instance.
+		 *
+		 * @var Decoder $decoder Decoder instance.
+		 */
+		$decoder = $injector->make( Decoder::class );
+
+		$this->decoder = $decoder;
 	}
 
 	/**

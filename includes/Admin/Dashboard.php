@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -60,98 +60,98 @@ class Dashboard extends Service_Base {
 	 *
 	 * @var array<string,string|bool> List of the admin pages' hook_suffix values.
 	 */
-	private $hook_suffix = [];
+	private array $hook_suffix = [];
 
 	/**
 	 * Experiments instance.
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * Site_Kit instance.
 	 *
 	 * @var Site_Kit Site_Kit instance.
 	 */
-	private $site_kit;
+	private Site_Kit $site_kit;
 
 	/**
 	 * Decoder instance.
 	 *
 	 * @var Decoder Decoder instance.
 	 */
-	private $decoder;
+	private Decoder $decoder;
 
 	/**
 	 * Locale instance.
 	 *
 	 * @var Locale Locale instance.
 	 */
-	private $locale;
+	private Locale $locale;
 
 	/**
 	 * Google_Fonts instance.
 	 *
 	 * @var Google_Fonts Google_Fonts instance.
 	 */
-	private $google_fonts;
+	private Google_Fonts $google_fonts;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Font_Post_Type instance.
 	 *
 	 * @var Font_Post_Type Font_Post_Type instance.
 	 */
-	private $font_post_type;
+	private Font_Post_Type $font_post_type;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * Shopping_Vendors instance.
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
 	 */
-	private $shopping_vendors;
+	private Shopping_Vendors $shopping_vendors;
 
 	/**
 	 * WooCommerce instance.
 	 *
 	 * @var WooCommerce WooCommerce instance.
 	 */
-	private $woocommerce;
+	private WooCommerce $woocommerce;
 
 	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Dashboard constructor.
@@ -506,7 +506,7 @@ class Dashboard extends Service_Base {
 			],
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
-				$this->experiments->get_experiment_statuses( 'dashboard' )
+				$this->experiments->get_experiment_statuses( 'dashboard' ),
 			),
 			'globalAutoAdvance'       => (bool) $auto_advance,
 			'globalPageDuration'      => (float) $page_duration,

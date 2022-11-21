@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -50,7 +50,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * Constructor.
@@ -273,7 +273,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
 		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
 
-		return array_unique( array_merge( $thumb_ids, $parent_ids ) );
+		return array_unique( [ ...$thumb_ids, ...$parent_ids ] );
 	}
 
 	/**

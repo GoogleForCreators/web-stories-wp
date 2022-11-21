@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,10 +28,7 @@ use WP_Term_Query;
  */
 class Taxonomy_Base extends DependencyInjectedTestCase {
 
-	/**
-	 * @var  \Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy
-	 */
-	private $instance;
+	private \Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy $instance;
 
 	public function set_up(): void {
 		parent::set_up();

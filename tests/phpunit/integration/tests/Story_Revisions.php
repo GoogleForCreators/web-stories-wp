@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -26,10 +29,8 @@ class Story_Revisions extends DependencyInjectedTestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Story_Revisions
 	 */
-	private $instance;
+	private \Google\Web_Stories\Story_Revisions $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -144,7 +144,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
 	 */
-	private $shopping_vendors;
+	private Shopping_Vendors $shopping_vendors;
 
 	/**
 	 * Constructor.
