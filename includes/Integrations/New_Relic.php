@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
@@ -43,7 +43,7 @@ class New_Relic extends Service_Base implements Conditional {
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Single constructor.

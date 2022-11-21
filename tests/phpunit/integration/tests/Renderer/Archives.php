@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -28,17 +31,13 @@ class Archives extends TestCase {
 
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
 	 * @param \WP_UnitTest_Factory $factory

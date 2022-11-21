@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /*
  * Copyright 2021 Google LLC
  *
@@ -29,9 +32,7 @@ class Output_Buffer extends TestCase {
 
 		Monkey\Functions\stubs(
 			[
-				'get_post' => static function () {
-					return null;
-				},
+				'get_post' => static fn() => null,
 			]
 		);
 	}
@@ -106,16 +107,10 @@ class Output_Buffer extends TestCase {
 
 		Monkey\Functions\stubs(
 			[
-				'get_post'              => static function () {
-					return null;
-				},
-				'amp_is_available'      => static function () {
-					return true; },
-				'amp_is_enabled'        => static function () {
-					return true; },
-				'amp_is_post_supported' => static function ( $post ) {
-					return true;
-				},
+				'get_post'              => static fn() => null,
+				'amp_is_available'      => static fn() => true,
+				'amp_is_enabled'        => static fn() => true,
+				'amp_is_post_supported' => static fn( $post ) => true,
 			]
 		);
 

@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\Fixture;
 
 final class DummyClassWithNamedArguments {
 
-	/** @var int */
-	private $argument_a;
+	private int $argument_a;
 
-	/** @var string */
-	private $argument_b;
+	private string $argument_b;
 
 	public function __construct( $argument_a, $argument_b = 'Mr Meeseeks' ) {
 		$this->argument_a = $argument_a;

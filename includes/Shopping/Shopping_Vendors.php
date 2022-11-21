@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Shopping;
 
@@ -43,7 +43,7 @@ class Shopping_Vendors {
 	 *
 	 * @var Injector Injector instance.
 	 */
-	private $injector;
+	private Injector $injector;
 
 	/**
 	 * Shopping_Vendors constructor.

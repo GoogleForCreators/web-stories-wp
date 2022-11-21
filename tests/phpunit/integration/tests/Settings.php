@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -22,10 +25,7 @@ namespace Google\Web_Stories\Tests\Integration;
  */
 class Settings extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $instance;
+	private \Google\Web_Stories\Settings $instance;
 
 	public function set_up(): void {
 		parent::set_up();

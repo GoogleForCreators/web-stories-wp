@@ -134,7 +134,7 @@ if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.N
 
 	$story_path             = $story_initial_path . build_query( $story_query_params );
 	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
-	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
+	$initial_edits['story'] = ! empty( $story_data[ $story_path ]['body'] ) ? $story_data[ $story_path ]['body'] : [];
 }
 
 /**
@@ -168,7 +168,7 @@ wp_add_inline_script(
 	'after'
 );
 
-$init_script = <<<JS
+$init_script = <<<'JS'
 	wp.domReady( function() {
 	  webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
 	} );

@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -34,6 +34,7 @@ use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
+use Google\Web_Stories\Interfaces\Migration;
 use WP_Site;
 
 /**
@@ -82,9 +83,9 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	/**
 	 * Injector instance.
 	 *
-	 * @var Injector|Service Locale instance.
+	 * @var Injector Injector instance.
 	 */
-	private $injector;
+	private Injector $injector;
 
 	/**
 	 * Database_Upgrader constructor.
@@ -153,15 +154,17 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $class           The Class to call.
-	 * @param string $version         The new version.
-	 * @param string $current_version The current set version.
+	 * @param class-string $class           The Class to call.
+	 * @param string       $version         The new version.
+	 * @param string       $current_version The current set version.
 	 */
 	protected function run_upgrade_routine( string $class, string $version, string $current_version ): void {
 		if ( version_compare( $current_version, $version, '<' ) ) {
-			if ( ! method_exists( $this->injector, 'make' ) ) {
-				return;
-			}
+			/**
+			 * Instance of a migration class.
+			 *
+			 * @var Migration $routine
+			 */
 			$routine = $this->injector->make( $class );
 			$routine->migrate();
 		}
