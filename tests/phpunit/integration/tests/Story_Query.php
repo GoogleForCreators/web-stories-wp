@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -28,31 +31,27 @@ class Story_Query extends TestCase {
 
 	/**
 	 * Class in test.
-	 *
-	 * @var Testee
 	 */
-	private static $testee;
+	private static Testee $testee;
 
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	private static $story_id;
+	private static int $story_id;
 
 	/**
 	 * Default story arguments.
 	 *
-	 * @var array
+	 * @var array<string, mixed>
 	 */
-	private static $default_story_args;
+	private static array $default_story_args;
 
 	/**
 	 * Default query arguments.
 	 *
-	 * @var array
+	 * @var array<string, mixed>
 	 */
-	private static $default_query_args;
+	private static array $default_query_args = [];
 
 	/**
 	 * Runs once before any test in the class run.

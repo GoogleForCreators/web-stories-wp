@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -24,27 +27,15 @@ use Google\Web_Stories\Integrations\WooCommerce;
  * @coversDefaultClass \Google\Web_Stories\Tracking
  */
 class Tracking extends DependencyInjectedTestCase {
-	protected static $user_id;
+	protected static int $user_id;
 
-	/**
-	 * @var Site_Kit
-	 */
-	private $site_kit;
+	private Site_Kit $site_kit;
 
-	/**
-	 * @var WooCommerce
-	 */
-	private $woocommerce;
+	private WooCommerce $woocommerce;
 
-	/**
-	 * @var \Google\Web_Stories\Experiments
-	 */
-	private $experiments;
+	private \Google\Web_Stories\Experiments $experiments;
 
-	/**
-	 * @var \Google\Web_Stories\Tracking
-	 */
-	private $instance;
+	private \Google\Web_Stories\Tracking $instance;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(

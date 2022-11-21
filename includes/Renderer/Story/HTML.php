@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Renderer\Story;
 
@@ -40,14 +40,14 @@ class HTML {
 	 *
 	 * @var Story Post object.
 	 */
-	protected $story;
+	protected Story $story;
 
 	/**
 	 * Document instance.
 	 *
 	 * @var Document Document instance.
 	 */
-	protected $document;
+	protected Document $document;
 
 	/**
 	 * HTML constructor.

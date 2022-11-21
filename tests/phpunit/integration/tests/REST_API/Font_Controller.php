@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -28,16 +31,12 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Font_Controller
  */
 class Font_Controller extends RestTestCase {
-	protected $server;
-
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Font_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Font_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(

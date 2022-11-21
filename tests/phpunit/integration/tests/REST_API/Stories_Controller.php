@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -31,21 +34,17 @@ use WP_REST_Request;
  */
 class Stories_Controller extends DependencyInjectedRestTestCase {
 
-	protected $server;
+	protected static int $user_id;
+	protected static int $user2_id;
+	protected static int $user3_id;
 
-	protected static $user_id;
-	protected static $user2_id;
-	protected static $user3_id;
-
-	protected static $author_id;
-	protected static $contributor_id;
+	protected static int $author_id;
+	protected static int $contributor_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Stories_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Stories_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
@@ -359,9 +358,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 
-		$post               = get_post( $story );
-		list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
-		$permalink          = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
+		$post          = get_post( $story );
+		[ $permalink ] = get_sample_permalink( $post->ID, $post->post_title, '' );
+		$permalink     = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
 
 		$data = $response->get_data();
 		$this->assertArrayHasKey( 'preview_link', $data );

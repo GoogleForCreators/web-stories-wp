@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,17 +29,13 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Core_Themes_Support extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Integrations\Core_Themes_Support
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Integrations\Core_Themes_Support $instance;
 
 	/**
 	 * Current template.
-	 *
-	 * @var string
 	 */
-	protected $stylesheet;
+	protected string $stylesheet;
 
 	/**
 	 * Runs prior to each test and sets up the testee object.
