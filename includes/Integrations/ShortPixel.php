@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
@@ -55,9 +55,7 @@ class ShortPixel extends Service_Base {
 	public function image_urls( $urls ): array {
 		return array_filter(
 			$urls,
-			static function( $url ) {
-				return false === strpos( $url, 'web-stories-page-template' );
-			}
+			static fn( $url ) => false === strpos( $url, 'web-stories-page-template' )
 		);
 	}
 }

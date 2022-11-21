@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -24,10 +27,7 @@ use WP_Block_Type_Registry;
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
 class Web_Stories_Block extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Block\Web_Stories_Block
-	 */
-	private $instance;
+	private \Google\Web_Stories\Block\Web_Stories_Block $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -28,22 +31,15 @@ class Single extends DependencyInjectedTestCase {
 
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
-	/**
-	 * @var \Google\Web_Stories\Renderer\Single
-	 */
-	private $instance;
+	private \Google\Web_Stories\Renderer\Single $instance;
 
 	/**
 	 * @param \WP_UnitTest_Factory $factory

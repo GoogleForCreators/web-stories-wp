@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -80,7 +80,7 @@ class Story_Query {
 	 *
 	 * @var array<string, mixed> An array of story attributes.
 	 */
-	protected $story_attributes = [];
+	protected array $story_attributes = [];
 
 	/**
 	 * Story query arguments.
@@ -89,16 +89,14 @@ class Story_Query {
 	 *
 	 * @var array<string, mixed> An array of query arguments.
 	 */
-	protected $query_args = [];
+	protected array $query_args = [];
 
 	/**
 	 * Renderer object.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @var Renderer
 	 */
-	public $renderer;
+	public Renderer $renderer;
 
 	/**
 	 * Class constructor
@@ -168,7 +166,7 @@ class Story_Query {
 	 */
 	public function get_renderer(): Renderer {
 		$story_attributes = $this->get_story_attributes();
-		$view_type        = ( ! empty( $story_attributes['view_type'] ) ) ? $story_attributes['view_type'] : '';
+		$view_type        = ! empty( $story_attributes['view_type'] ) ? $story_attributes['view_type'] : '';
 
 		switch ( $view_type ) {
 			case 'carousel':

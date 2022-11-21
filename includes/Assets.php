@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -45,14 +45,14 @@ class Assets {
 	 *
 	 * @var array<string, bool>
 	 */
-	protected $register_styles = [];
+	protected array $register_styles = [];
 
 	/**
 	 * An array of registered scripts.
 	 *
 	 * @var array<string, bool>
 	 */
-	protected $register_scripts = [];
+	protected array $register_scripts = [];
 
 	/**
 	 * Get path to file and directory.
@@ -100,12 +100,12 @@ class Assets {
 		$chunks = is_readable( $chunks_file ) ? require $chunks_file : [];
 
 		// A hash calculated based on the file content of the entry point bundle at <$handle>.js.
-		$asset['version'] = $asset['version'] ?? WEBSTORIES_VERSION;
+		$asset['version'] ??= WEBSTORIES_VERSION;
 
-		$asset['dependencies'] = $asset['dependencies'] ?? [];
-		$asset['js']           = $chunks['js'] ?? [];
-		$asset['css']          = $chunks['css'] ?? [];
-		$asset['chunks']       = $chunks['chunks'] ?? [];
+		$asset['dependencies'] ??= [];
+		$asset['js']             = $chunks['js'] ?? [];
+		$asset['css']            = $chunks['css'] ?? [];
+		$asset['chunks']         = $chunks['chunks'] ?? [];
 
 		return $asset;
 	}
@@ -145,7 +145,7 @@ class Assets {
 		}
 
 		// Dynamically imported chunks MUST NOT be added as dependencies here.
-		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
+		$dependencies = [ ...$asset['dependencies'], ...$script_dependencies, ...$asset['js'] ];
 
 		$this->register_script(
 			$script_handle,
@@ -221,7 +221,7 @@ class Assets {
 				$chunk_version
 			);
 		}
-		$style_dependencies = array_merge( $style_dependencies, $asset['css'] );
+		$style_dependencies = [ ...$style_dependencies, ...$asset['css'] ];
 
 		$entry_version = $asset['version'];
 		$this->register_style(
@@ -401,9 +401,7 @@ class Assets {
 
 		return array_values(
 			array_map(
-				static function( $translations ) {
-					return json_decode( $translations, true );
-				},
+				static fn( $translations ) => json_decode( $translations, true ),
 				array_filter( $translations )
 			)
 		);

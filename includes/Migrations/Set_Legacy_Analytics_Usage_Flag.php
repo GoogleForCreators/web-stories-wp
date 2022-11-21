@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Migrations;
 
@@ -39,7 +39,7 @@ class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Migration constructor.

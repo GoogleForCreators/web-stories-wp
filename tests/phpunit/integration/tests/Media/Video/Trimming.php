@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,10 +29,8 @@ class Trimming extends TestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Video\Trimming
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Video\Trimming $instance;
 
 	public function set_up(): void {
 		parent::set_up();

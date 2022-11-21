@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
@@ -14,8 +16,8 @@ use WP_REST_Server;
  */
 class Link_Controller extends DependencyInjectedRestTestCase {
 
-	protected static $editor;
-	protected static $subscriber;
+	protected static int $editor;
+	protected static int $subscriber;
 
 	public const URL_INVALID             = 'https://https://invalid.commmm';
 	public const URL_404                 = 'https://example.com/404';
@@ -30,17 +32,13 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Link_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Link_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(

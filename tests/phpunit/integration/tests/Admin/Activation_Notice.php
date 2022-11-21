@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,10 +28,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Activation_Notice extends DependencyInjectedTestCase {
 	/**
 	 * Activation_Notice for test.
-	 *
-	 * @var \Google\Web_Stories\Admin\Activation_Notice
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Admin\Activation_Notice $instance;
 
 	public function set_up(): void {
 		parent::set_up();
