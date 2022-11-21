@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * DependencyInjectedTestCase class.
  *
@@ -19,24 +22,18 @@ abstract class DependencyInjectedTestCase extends TestCase {
 
 	/**
 	 * Plugin instance to test with.
-	 *
-	 * @var Plugin
 	 */
-	protected $plugin;
+	protected Plugin $plugin;
 
 	/**
 	 * Service container instance to test with.
-	 *
-	 * @var ServiceContainer
 	 */
-	protected $container;
+	protected ServiceContainer $container;
 
 	/**
 	 * Injector instance to test with.
-	 *
-	 * @var Injector
 	 */
-	protected $injector;
+	protected Injector $injector;
 
 	/**
 	 * Set up the service architecture before each test run.

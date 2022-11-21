@@ -15,7 +15,7 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Infrastructure\Injector;
 
@@ -47,37 +47,35 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @var array<string>
 	 */
-	private $mappings = [];
+	private array $mappings = [];
 
 	/**
 	 * Shared instances
 	 *
 	 * @var array<object|null>
 	 */
-	private $shared_instances = [];
+	private array $shared_instances = [];
 
 	/**
 	 * Delegates.
 	 *
 	 * @var array<callable>
 	 */
-	private $delegates = [];
+	private array $delegates = [];
 
 	/**
 	 * Argument mappings.
 	 *
 	 * @var array<string, array<mixed>>
 	 */
-	private $argument_mappings = [
+	private array $argument_mappings = [
 		self::GLOBAL_ARGUMENTS => [],
 	];
 
 	/**
 	 * Instantiator.
-	 *
-	 * @var Instantiator
 	 */
-	private $instantiator;
+	private Instantiator $instantiator;
 
 	/**
 	 * Instantiate a SimpleInjector object.
@@ -303,14 +301,12 @@ final class SimpleInjector implements Injector {
 		}
 
 		return array_map(
-			function ( ReflectionParameter $parameter ) use ( $injection_chain, $class, $arguments ) {
-				return $this->resolve_argument(
-					$injection_chain,
-					$class,
-					$parameter,
-					$arguments
-				);
-			},
+			fn( ReflectionParameter $parameter ) => $this->resolve_argument(
+				$injection_chain,
+				$class,
+				$parameter,
+				$arguments
+			),
 			$constructor->getParameters()
 		);
 	}

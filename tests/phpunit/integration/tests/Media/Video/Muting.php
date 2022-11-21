@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -25,10 +28,7 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\Media\Video\Muting
  */
 class Muting extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Media\Video\Muting
-	 */
-	private $instance;
+	private \Google\Web_Stories\Media\Video\Muting $instance;
 
 	public function set_up(): void {
 		parent::set_up();

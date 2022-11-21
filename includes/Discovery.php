@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -45,7 +45,7 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Constructor.
@@ -316,9 +316,9 @@ class Discovery extends Service_Base implements HasRequirements {
 			if ( ! empty( $aggregate_rating['review_count'] ) ) {
 				$data['aggregateRating'] = [
 					'@type'       => 'AggregateRating',
-					'ratingValue' => $aggregate_rating['rating_value'],
+					'ratingValue' => $aggregate_rating['rating_value'] ??= 0,
 					'reviewCount' => $aggregate_rating['review_count'],
-					'url'         => $aggregate_rating['review_url'],
+					'url'         => $aggregate_rating['review_url']   ??= '',
 				];
 			}
 			$product_data[] = $data;

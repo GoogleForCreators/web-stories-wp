@@ -1,9 +1,4 @@
-<?php
-/**
- * List view based controls state.
- */
-
-/**
+/*
  * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,32 +14,20 @@
  * limitations under the License.
  */
 
-declare(strict_types = 1);
-
-namespace Google\Web_Stories\Renderer\Stories\FieldState;
-
-use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
 
 /**
- * Class GridView.
+ * Internal dependencies
  */
-final class GridView extends BaseFieldState {
-	/**
-	 * Number of columns field.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function number_of_columns() {
-		$label = parent::number_of_columns()->label();
+import type { APIState } from '../../types/apiProvider';
+import Context from './context';
 
-		return $this->prepare_field(
-			[
-				'label'  => $label,
-				'show'   => true,
-				'hidden' => false,
-			]
-		);
-	}
+function useAPI(): APIState;
+function useAPI<T>(selector: (state: APIState) => T | APIState = identity) {
+  return useContextSelector(Context, selector ?? identity);
 }
+
+export default useAPI;

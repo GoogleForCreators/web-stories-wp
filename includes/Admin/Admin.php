@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -48,14 +48,14 @@ class Admin extends Service_Base {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Single constructor.

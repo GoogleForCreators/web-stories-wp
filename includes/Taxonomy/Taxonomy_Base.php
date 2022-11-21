@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Taxonomy;
 
@@ -93,17 +93,13 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
-	 *
-	 * @var string
 	 */
-	protected $taxonomy_slug;
+	protected string $taxonomy_slug;
 
 	/**
-	 * Object type or array of object types with which the taxonomy should be associated.
-	 *
-	 * @var string[]|string
+	 * Object type which the taxonomy should be associated.
 	 */
-	protected $taxonomy_post_type;
+	protected string $taxonomy_post_type;
 
 	/**
 	 * Register taxonomy on register service.

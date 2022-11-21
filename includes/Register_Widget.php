@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -41,7 +41,7 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @var Stories Stories instance.
 	 */
-	private $stories;
+	private Stories $stories;
 
 	/**
 	 * Register_Widget constructor.
