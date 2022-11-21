@@ -45,8 +45,8 @@ import {
 import type { Term, TaxonomiesBySlug, Taxonomy, EmbeddedTerms, TermsIds } from '../../types/taxonomyProvider';
 
 function TaxonomyProvider(props: { children: React.ReactNode }) {
-  const [taxonomies, setTaxonomies] = useState([]);
-  const [termCache, setTermCache] = useState({});
+  const [taxonomies, setTaxonomies] = useState<Taxonomy[] | never>([]);
+  const [termCache, setTermCache] = useState<EmbeddedTerms>({});
   // Should grab categories on mount
   const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
   const {
@@ -61,7 +61,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
       hasTaxonomies: story?.taxonomies?.length > 0,
     })
   );
-  
+
   // @ts-ignore Reason: update this after useAPI is updated ?
   const { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies } = useAPI(
     ({ actions }) => actions
@@ -96,7 +96,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
       isStoryLoaded &&
       !hasHydrationRunOnce.current
     ) {
-      const taxonomiesBySlug: TaxonomiesBySlug = dictionaryOnKey(taxonomies, 'slug');
+      const taxonomiesBySlug: TaxonomiesBySlug = dictionaryOnKey(taxonomies as [], 'slug');
 
       const initialCache: EmbeddedTerms = mapObjectKeys(
         cacheFromEmbeddedTerms(terms),
@@ -126,7 +126,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   ]);
 
   const setTerms = useCallback(
-    // @ts-ignore Reason: @todo Type 'never[]' is not assignable to type 'TermsIds'.
+    // @todo - Type 'never[]' is not assignable to type 'TermsIds'.
     (taxonomy: Taxonomy, termIds: TermsIds = []) => {
 
       updateStory({
@@ -258,6 +258,8 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     },
     [createTaxonomyTerm, termCache, addSearchResultsToCache, addTermToSelection]
   );
+
+  console.log("taxonomies", taxonomies);
 
   // Fetch hierarchical taxonomies on mount
   useEffect(() => {
