@@ -25,7 +25,7 @@ import type { Animation, Page } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { STABLE_ARRAY } from '../../constants';
-import type { RawStory } from '../../types/storyProvider';
+import type { RawStory } from '../../types';
 import Context from './context';
 
 import useLoadStory from './effects/useLoadStory';

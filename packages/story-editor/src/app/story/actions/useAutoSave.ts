@@ -26,7 +26,7 @@ import type { Page } from '@googleforcreators/elements';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
-import type { Story } from '../../../types/story';
+import type { Story, StorySaveData } from '../../../types';
 
 interface AutoSaveProps {
   storyId: number;
@@ -55,7 +55,7 @@ function useAutoSave({ storyId, pages, story }: AutoSaveProps) {
           flags,
         }),
         ...props,
-      }).finally(() => setIsAutoSaving(false));
+      } as StorySaveData).finally(() => setIsAutoSaving(false));
     },
     [story, pages, metadata, autoSaveById, storyId, flags]
   );

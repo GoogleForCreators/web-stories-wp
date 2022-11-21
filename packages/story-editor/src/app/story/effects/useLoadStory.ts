@@ -29,11 +29,7 @@ import { useAPI } from '../../api';
 import { useHistory } from '../../history';
 import getUniquePresets from '../../../utils/getUniquePresets';
 import { useConfig } from '../../config';
-import type {
-  RawStory,
-  RestoreProps,
-  State,
-} from '../../../types/storyProvider';
+import type { RawStory, RestoreProps, State } from '../../../types';
 
 function loadStory(
   storyId: number,
@@ -136,7 +132,7 @@ function loadStory(
     currentStoryStyles: {
       colors: storyData?.currentStoryStyles?.colors
         ? (getUniquePresets(
-            storyData.currentStoryStyles.colors as Pattern
+            storyData.currentStoryStyles.colors as Pattern[]
           ) as Pattern[])
         : [],
     },
@@ -186,7 +182,7 @@ function useLoadStory({ storyId, story, shouldLoad, restore }: LoadStoryProps) {
       if (story) {
         loadStory(storyId, story, restore, clearHistory, globalConfig);
       } else {
-        getStoryById(storyId).then((post: RawStory) => {
+        void getStoryById(storyId).then((post: RawStory) => {
           loadStory(storyId, post, restore, clearHistory, globalConfig);
         });
       }

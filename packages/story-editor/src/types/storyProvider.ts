@@ -359,7 +359,7 @@ export interface ReducerProviderState {
 export interface ReducerState {
   story: Story | null;
   selection?: string[];
-  current?: string | null;
+  current: string | null;
   pages: Page[];
   animationState: string;
   capabilities: Record<string, boolean>;

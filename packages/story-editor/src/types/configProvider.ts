@@ -175,7 +175,7 @@ export type Taxonomy = {
 
 export interface APICallbacks {
   addPageTemplate?: (data: TemplateData) => Promise<PageTemplate>;
-  autoSaveById?: (story: Story) => Promise<Story>;
+  autoSaveById?: (story: StorySaveData) => Promise<StoryReturnData>;
   createTaxonomyTerm?: (
     endpoint: string,
     term: {
@@ -217,7 +217,7 @@ export interface APICallbacks {
     search?: string;
     per_page?: number;
   }) => Promise<Term>;
-  saveStoryById: (data: StorySaveData) => Promise<StoryReturnData>;
+  saveStoryById?: (data: StorySaveData) => Promise<StoryReturnData>;
   updateCurrentUser?: (data: {
     mediaOptimization?: boolean;
     onboarding?: Record<string, boolean>;

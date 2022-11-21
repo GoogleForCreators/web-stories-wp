@@ -32,7 +32,7 @@ import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
-import type {Story, RESTError, StorySaveData} from '../../../types';
+import type { Story, RESTError, StorySaveData } from '../../../types';
 
 const HTTP_STATUS_DESCRIPTIONS = {
   400: _x('Bad Request', 'HTTP status description', 'web-stories'),
