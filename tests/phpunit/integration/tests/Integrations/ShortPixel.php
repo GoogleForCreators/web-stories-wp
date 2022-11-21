@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -24,10 +27,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  */
 class ShortPixel extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Integrations\ShortPixel
-	 */
-	private $instance;
+	private \Google\Web_Stories\Integrations\ShortPixel $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -30,15 +33,13 @@ use WP_REST_Request;
 class Products_Controller extends DependencyInjectedRestTestCase {
 	use Mock_Vendor_Setup;
 
-	protected static $editor;
-	protected static $subscriber;
+	protected static int $editor;
+	protected static int $subscriber;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Products_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Products_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(

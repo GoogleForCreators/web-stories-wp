@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -23,10 +26,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\Database_Upgrader
  */
 class Database_Upgrader extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Database_Upgrader
-	 */
-	private $instance;
+	private \Google\Web_Stories\Database_Upgrader $instance;
 
 	public function set_up(): void {
 		parent::set_up();

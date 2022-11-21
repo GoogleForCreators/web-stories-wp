@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
@@ -46,16 +46,16 @@ class Site_Kit extends Service_Base {
 	/**
 	 * Analytics instance.
 	 *
-	 * @var Analytics
+	 * @var Analytics Analytics instance.
 	 */
-	protected $analytics;
+	protected Analytics $analytics;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Constructor.
@@ -147,11 +147,8 @@ class Site_Kit extends Service_Base {
 		$default_config             = $this->analytics->get_default_configuration( $gtag_opt['vars']['gtag_id'] );
 		$default_config['triggers'] = $default_config['triggers'] ?? [];
 
-		$gtag_opt['triggers'] = $gtag_opt['triggers'] ?? [];
-		$gtag_opt['triggers'] = array_merge(
-			$default_config['triggers'],
-			$gtag_opt['triggers']
-		);
+		$gtag_opt['triggers'] ??= [];
+		$gtag_opt['triggers']   = array_merge( $default_config['triggers'], $gtag_opt['triggers'] );
 
 		return $gtag_opt;
 	}

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -27,10 +30,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Add_Media_Source_Recording extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Migrations\Add_Media_Source_Recording
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Migrations\Add_Media_Source_Recording $instance;
 
 	public function set_up(): void {
 		parent::set_up();

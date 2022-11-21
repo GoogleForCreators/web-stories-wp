@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,10 +28,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class SVG extends TestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\SVG
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\SVG $instance;
 
 	public function set_up(): void {
 		parent::set_up();

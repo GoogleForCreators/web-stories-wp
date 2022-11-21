@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -25,10 +28,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class TinyMCE extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Admin\TinyMCE
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Admin\TinyMCE $instance;
 
 	public function set_up(): void {
 		parent::set_up();

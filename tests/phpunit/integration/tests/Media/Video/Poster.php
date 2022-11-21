@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -24,10 +27,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\Media\Video\Poster
  */
 class Poster extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Media\Video\Poster
-	 */
-	private $instance;
+	private \Google\Web_Stories\Media\Video\Poster $instance;
 
 	public function set_up(): void {
 		parent::set_up();
