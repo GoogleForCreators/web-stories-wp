@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Renderer\Stories;
 
@@ -81,10 +81,13 @@ class Generic_Renderer extends Renderer {
 		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) $this->instance_id ); ?>">
 			<div class="web-stories-list__inner-wrapper" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
-				foreach ( $this->stories as $story ) {
-					$this->render_single_story_content();
-					$this->next();
-				}
+				array_map(
+					function() {
+						$this->render_single_story_content();
+						$this->next();
+					},
+					$this->stories 
+				);
 				$this->maybe_render_archive_link();
 				?>
 			</div>

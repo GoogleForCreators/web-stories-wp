@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -339,7 +339,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		if ( get_option( 'permalink_structure' ) && \is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $post_type_obj->has_archive || $ignore_has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+			$struct = true === $post_type_obj->has_archive || $ignore_has_archive ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {

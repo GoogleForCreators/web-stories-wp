@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -49,21 +49,21 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Tinymce constructor.

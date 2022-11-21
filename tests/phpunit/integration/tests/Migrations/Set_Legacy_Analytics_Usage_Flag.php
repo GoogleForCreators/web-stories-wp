@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -25,10 +28,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  * @coversDefaultClass \Google\Web_Stories\Migrations\Set_Legacy_Analytics_Usage_Flag
  */
 class Set_Legacy_Analytics_Usage_Flag extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Migrations\Set_Legacy_Analytics_Usage_Flag
-	 */
-	private $instance;
+	private \Google\Web_Stories\Migrations\Set_Legacy_Analytics_Usage_Flag $instance;
 
 	public function set_up(): void {
 		parent::set_up();

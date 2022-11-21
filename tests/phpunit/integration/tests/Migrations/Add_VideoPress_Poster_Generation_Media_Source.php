@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -27,10 +30,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Add_VideoPress_Poster_Generation_Media_Source extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Migrations\Add_VideoPress_Poster_Generation_Media_Source
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Migrations\Add_VideoPress_Poster_Generation_Media_Source $instance;
 
 	public function set_up(): void {
 		parent::set_up();

@@ -17,14 +17,11 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@googleforcreators/react';
+import { createContext } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
-import Context from './context';
+import type { APIState } from '../../types/apiProvider';
 
-function useAPI(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useAPI;
+export default createContext<APIState>({ actions: {} });

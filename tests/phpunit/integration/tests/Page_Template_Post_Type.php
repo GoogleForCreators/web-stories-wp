@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -23,10 +26,7 @@ namespace Google\Web_Stories\Tests\Integration;
 class Page_Template_Post_Type extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
 
-	/**
-	 * @var \Google\Web_Stories\Page_Template_Post_Type
-	 */
-	private $instance;
+	private \Google\Web_Stories\Page_Template_Post_Type $instance;
 
 	public function set_up(): void {
 		parent::set_up();

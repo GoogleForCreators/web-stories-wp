@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -89,6 +92,6 @@ class Image_Sizes extends TestCase {
 		);
 
 		$this->assertArrayHasKey( 'media_details', $video );
-		$this->assertArrayHasKey( 'media_details', $video );
+		$this->assertArrayHasKey( 'media_details', $image );
 	}
 }

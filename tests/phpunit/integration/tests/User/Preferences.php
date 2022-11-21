@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,22 +29,15 @@ use WP_REST_Request;
 class Preferences extends DependencyInjectedTestCase {
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Author user for test.
-	 *
-	 * @var int
 	 */
-	protected static $author_id;
+	protected static int $author_id;
 
-	/**
-	 * @var \Google\Web_Stories\User\Preferences
-	 */
-	private $instance;
+	private \Google\Web_Stories\User\Preferences $instance;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(

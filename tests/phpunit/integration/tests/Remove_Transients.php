@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,10 +28,8 @@ namespace Google\Web_Stories\Tests\Integration;
 class Remove_Transients extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Remove_Transients
 	 */
-	private $instance;
+	private \Google\Web_Stories\Remove_Transients $instance;
 
 	public function set_up(): void {
 		parent::set_up();
