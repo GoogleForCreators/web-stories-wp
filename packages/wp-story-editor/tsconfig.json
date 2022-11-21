@@ -6,7 +6,6 @@
   },
   "references": [
     { "path": "../react" },
-    { "path": "../types" },
     { "path": "../url" },
     { "path": "../migration" },
     { "path": "../i18n" },

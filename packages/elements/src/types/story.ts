@@ -23,7 +23,6 @@ import type { AudioResource } from '@googleforcreators/media';
  * Internal dependencies
  */
 import type { Page } from './page';
-import type { AudioResource } from "../resource";
 
 export interface Story {
   storyId: number;

@@ -26,6 +26,7 @@ export interface Config {
     hasUploadMediaAction: boolean;
   };
   storyId: number;
+  editPostsCapabilityName: string;
   nonce: string;
   encodeMarkup: boolean;
   metaBoxes: object;
