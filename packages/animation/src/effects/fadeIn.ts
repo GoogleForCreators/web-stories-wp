@@ -44,7 +44,7 @@ export function EffectFadeIn({
 
 export const fields = {
   duration: {
-    tooltip: __('Duration', 'web-stories'),
+    label: __('Duration', 'web-stories'),
     type: FieldType.Number,
     unit: _x('ms', 'Time in milliseconds', 'web-stories'),
     defaultValue: 600,
