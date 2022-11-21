@@ -169,9 +169,9 @@ wp_add_inline_script(
 );
 
 $init_script = <<<'JS'
-    wp.domReady( function() {
-      webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
-    } );
+	wp.domReady( function() {
+	  webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
+	} );
 JS;
 
 $script = sprintf( $init_script, wp_json_encode( $editor_settings ), wp_json_encode( $initial_edits ) );

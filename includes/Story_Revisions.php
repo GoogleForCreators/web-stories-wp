@@ -148,12 +148,8 @@ class Story_Revisions extends Service_Base {
 		);
 		$title = esc_html( get_the_title( $post ) );
 		return <<<Player
-<amp-story-player
-	style="width: 300px; height: 500px; display: flex;"
->
-	<a href="$url">$title</a>
-</amp-story-player>
-Player;
+				<amp-story-player style="width: 300px; height: 500px; display: flex;"><a href="$url">$title</a></amp-story-player>
+				Player;
 	}
 
 	/**
@@ -252,17 +248,16 @@ Player;
 		wp_add_inline_script(
 			AMP_Story_Player_Assets::SCRIPT_HANDLE,
 			<<<'JS'
-    const loadPlayers = () => document.querySelectorAll('amp-story-player').forEach(playerEl => (new AmpStoryPlayer(window, playerEl)).load());
-
-    const originalFrame = wp.revisions.view.Frame;
-    wp.revisions.view.Frame = originalFrame.extend({
-        render: function() {
-            originalFrame.prototype.render.apply(this, arguments);
-            loadPlayers();
-            this.listenTo( this.model, 'update:diff', () => loadPlayers() );
-        },
-    });
-JS
+				const loadPlayers = () => document.querySelectorAll('amp-story-player').forEach(playerEl => (new AmpStoryPlayer(window, playerEl)).load());
+				const originalFrame = wp.revisions.view.Frame;
+				wp.revisions.view.Frame = originalFrame.extend({
+					render: function() {
+						originalFrame.prototype.render.apply(this, arguments);
+						loadPlayers();
+						this.listenTo( this.model, 'update:diff', () => loadPlayers() );
+					},
+				});
+			JS
 		);
 	}
 }
