@@ -53,7 +53,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     actions: { clearHistory },
   } = useHistory();
   const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
-    // @ts-ignore
+    // @ts-ignore -- @todo should this wait for #12652 ?
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
       isStoryLoaded: pages.length > 0,
@@ -61,10 +61,9 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
       hasTaxonomies: story?.taxonomies?.length > 0,
     })
   );
-
+  
+  // @ts-ignore Reason: update this after useAPI is updated ?
   const { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies } = useAPI(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    // @ts-ignore Reason: update this after useAPI is updated ?
     ({ actions }) => actions
   );
 
