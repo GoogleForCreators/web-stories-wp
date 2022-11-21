@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -164,6 +164,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return array<int, mixed> List of custom fonts.
+	 *
+	 * @phpstan-return Font[]
 	 */
 	protected function get_custom_fonts( $request ): array {
 		// Retrieve the list of registered collection query parameters.
@@ -193,7 +195,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
-		// Force sarch to be case-insensitive.
+		// Force search to be case-insensitive.
 
 		// Force the post_type argument, since it's not a user input variable.
 		$args['post_type'] = $this->post_type;
@@ -202,6 +204,12 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		$posts_query  = new WP_Query();
 		$query_result = $posts_query->query( $query_args );
 
+		/**
+		 * List of custom fonts.
+		 *
+		 * @var array $posts
+		 * @phpstan-var Font[] $posts
+		 */
 		$posts = [];
 
 		/**
@@ -251,22 +259,22 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 				// For custom fonts the searching will be done in WP_Query already.
 				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) ) {
-					$fonts = array_values(
+					/**
+					 * Requested URL.
+					 *
+					 * @var string $search
+					 */
+					$search = $request['search'];
+					$fonts  = array_values(
 						array_filter(
 							$fonts,
-							static function( $font ) use ( $request ) {
-								/**
-								 * Font data.
-								 *
-								 * @var array{family: string} $font
-								 */
-								/**
-								 * Request data.
-								 *
-								 * @var array{search: string} $request
-								 */
-								return false !== stripos( $font['family'], $request['search'] );
-							}
+							/**
+							 * Font data.
+							 *
+							 * @param array{family: string} $font
+							 * @return bool
+							 */
+							static fn( array $font ) => false !== stripos( $font['family'], $search )
 						)
 					);
 				}
@@ -289,14 +297,13 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$fonts = array_values(
 					array_filter(
 						$fonts,
-						static function( $font ) use ( $include_list ) {
-							/**
-							 * Font data.
-							 *
-							 * @var array{family: string} $font
-							 */
-							return \in_array( strtolower( $font['family'] ), $include_list, true );
-						}
+						/**
+						 * Font data.
+						 *
+						 * @param array{family: string} $font
+						 * @return bool
+						 */
+						static fn( array $font ): bool => \in_array( strtolower( $font['family'] ), $include_list, true )
 					)
 				);
 			}
@@ -306,15 +313,14 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				// we only need to sort when including both.
 				usort(
 					$fonts,
-					static function( $a, $b ) {
-						/**
-						 * Font A and Font B.
-						 *
-						 * @phpstan-var Font $a
-						 * @phpstan-var Font $b
-						 */
-						return strnatcasecmp( $a['family'], $b['family'] );
-					}
+					/**
+					 * Font A and Font B.
+					 *
+					 * @param Font $a
+					 * @param Font $b
+					 * @return int
+					 */
+					static fn( array $a, array $b ): int => strnatcasecmp( $a['family'], $b['family'] )
 				);
 			}
 		}

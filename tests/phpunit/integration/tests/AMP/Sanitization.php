@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -29,10 +32,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
  */
 class Sanitization extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\AMP\Sanitization
-	 */
-	private $instance;
+	private \Google\Web_Stories\AMP\Sanitization $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -470,9 +470,7 @@ class Sanitization extends DependencyInjectedTestCase {
 		$validation_error_callback = [ $this->instance, 'validation_error_callback' ];
 		add_filter(
 			'web_stories_amp_dev_mode_element_xpaths',
-			function ( $xpaths ) use ( $element_xpaths ) {
-				return array_merge( $xpaths, $element_xpaths );
-			}
+			fn( $xpaths ) => array_merge( $xpaths, $element_xpaths )
 		);
 
 		// Check that AMP_Dev_Mode_Sanitizer is not registered if not in dev mode.

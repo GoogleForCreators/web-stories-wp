@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,46 +28,29 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Story_Post_Type
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Story_Archive $instance;
 
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $settings;
+	private \Google\Web_Stories\Settings $settings;
 
-	/**
-	 * @var \Google\Web_Stories\Story_Post_Type
-	 */
-	private $story_post_type;
+	private \Google\Web_Stories\Story_Post_Type $story_post_type;
 
 	/**
 	 * Archive page ID.
-	 *
-	 * @var int
 	 */
-	protected static $archive_page_id;
+	protected static int $archive_page_id;
 
-	/**
-	 * @var string
-	 */
-	protected $redirect_location;
+	protected string $redirect_location = '';
 
 	/**
 	 * @param \WP_UnitTest_Factory $factory
@@ -117,7 +103,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	public function tear_down(): void {
 		$this->remove_caps_from_roles();
 
-		$this->redirect_location = null;
+		$this->redirect_location = '';
 		remove_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
@@ -346,7 +332,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$result = $this->instance->redirect_post_type_archive_urls( true, $query );
 
 		$this->assertTrue( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -360,7 +346,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$result = $this->instance->redirect_post_type_archive_urls( true, $query );
 
 		$this->assertTrue( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -377,7 +363,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
 
 		$this->assertFalse( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -396,7 +382,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
 
 		$this->assertFalse( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -423,7 +409,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		remove_filter( 'post_type_archive_link', '__return_false' );
 
 		$this->assertFalse( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -447,7 +433,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		remove_filter( 'post_type_archive_link', '__return_false' );
 
 		$this->assertFalse( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**

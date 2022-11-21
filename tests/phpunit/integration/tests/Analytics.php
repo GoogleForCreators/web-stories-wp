@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -23,10 +26,7 @@ use Google\Web_Stories\Settings;
  * @coversDefaultClass \Google\Web_Stories\Analytics
  */
 class Analytics extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Analytics
-	 */
-	private $instance;
+	private \Google\Web_Stories\Analytics $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -64,7 +64,7 @@ class Analytics extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'config', $actual['vars'] );
 		$this->assertArrayHasKey( $tracking_id, $actual['vars']['config'] );
 		$this->assertArrayHasKey( 'triggers', $actual );
-		foreach ( $actual['triggers'] as $trigger => $trigger_config ) {
+		foreach ( array_values( $actual['triggers'] ) as $trigger_config ) {
 			$this->assertArrayHasKey( 'vars', $trigger_config );
 			$this->assertArrayHasKey( 'send_to', $trigger_config['vars'] );
 			$this->assertSame( $tracking_id, $trigger_config['vars']['send_to'] );

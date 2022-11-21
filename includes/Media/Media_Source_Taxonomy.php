@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Media;
 
@@ -45,7 +45,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
+
+	/**
+	 * Media Source key.
+	 */
+	public const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
 	 * Single constructor.
@@ -53,27 +58,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @param Context $context Context instance.
 	 */
 	public function __construct( Context $context ) {
-		$this->context = $context;
+		$this->context            = $context;
+		$this->taxonomy_slug      = 'web_story_media_source';
+		$this->taxonomy_post_type = 'attachment';
 	}
-
-	/**
-	 * Taxonomy key.
-	 *
-	 * @var string
-	 */
-	protected $taxonomy_slug = 'web_story_media_source';
-
-	/**
-	 * Post type.
-	 *
-	 * @var string
-	 */
-	protected $taxonomy_post_type = 'attachment';
-
-	/**
-	 * Media Source key.
-	 */
-	public const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
 	 * Init.
