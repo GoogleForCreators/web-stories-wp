@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,15 +28,9 @@ use Google\Web_Stories\Tests\Integration\Fixture\DummyPostTypeWithoutArchive;
  */
 class Post_Type_Base extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Post_Type_Base
-	 */
-	protected static $cpt_no_archive;
+	protected static \Google\Web_Stories\Post_Type_Base $cpt_no_archive;
 
-	/**
-	 * @var \Google\Web_Stories\Post_Type_Base
-	 */
-	protected static $cpt_custom_archive;
+	protected static \Google\Web_Stories\Post_Type_Base $cpt_custom_archive;
 
 	public function set_up(): void {
 		parent::set_up();

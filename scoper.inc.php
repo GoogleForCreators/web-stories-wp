@@ -8,6 +8,8 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+declare(strict_types = 1);
+
 use Isolated\Symfony\Component\Finder\Finder;
 
 $wp_classes   = json_decode( file_get_contents( 'vendor/sniccowp/php-scoper-wordpress-excludes/generated/exclude-wordpress-classes.json' ), true );

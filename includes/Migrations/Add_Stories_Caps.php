@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Migrations;
 
@@ -39,7 +39,7 @@ class Add_Stories_Caps extends Migrate_Base {
 	 *
 	 * @var Capabilities Experiments instance.
 	 */
-	private $capabilities;
+	private Capabilities $capabilities;
 
 	/**
 	 * Add_Stories_Caps constructor.

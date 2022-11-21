@@ -37,7 +37,7 @@ export default createContext<ConfigState>({
   cdnURL: '',
   maxUpload: 0,
   capabilities: {},
-  metaData: {},
+  metadata: {},
   canViewDefaultTemplates: false,
   showMedia3p: false,
   encodeMarkup: false,

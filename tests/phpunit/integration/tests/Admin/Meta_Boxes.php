@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,10 +29,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Meta_Boxes extends TestCase {
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	private $story_id;
+	private int $story_id;
 
 	public function set_up(): void {
 		parent::set_up();

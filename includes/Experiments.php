@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -54,7 +54,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Experiments constructor.
@@ -397,11 +397,9 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @return string[] List of all enabled experiments.
 	 */
 	public function get_enabled_experiments(): array {
-		$experiments = array_filter(
+		return array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]
 		);
-
-		return $experiments;
 	}
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -22,15 +25,9 @@ namespace Google\Web_Stories\Tests\Integration;
  */
 class Experiments extends DependencyInjectedTestCase {
 
-	/**
-	 * @var int
-	 */
-	protected static $user_id;
+	protected static int $user_id;
 
-	/**
-	 * @var \Google\Web_Stories\Experiments
-	 */
-	private $instance;
+	private \Google\Web_Stories\Experiments $instance;
 
 	/**
 	 * @param $factory

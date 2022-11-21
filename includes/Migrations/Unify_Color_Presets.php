@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Migrations;
 
@@ -54,7 +54,7 @@ class Unify_Color_Presets extends Migrate_Base {
 			return;
 		}
 
-		$colors = array_merge( $style_presets['fillColors'], $style_presets['textColors'] );
+		$colors = [ ... $style_presets['fillColors'], ...$style_presets['textColors'] ];
 
 		// Use only one array of colors for now.
 		$updated_style_presets = [

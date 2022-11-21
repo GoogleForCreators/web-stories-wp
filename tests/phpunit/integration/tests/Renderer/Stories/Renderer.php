@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Generic_Renderer class.
  *
@@ -41,31 +44,23 @@ class Renderer extends TestCase {
 
 	/**
 	 * Story post ID.
-	 *
-	 * @var int
 	 */
-	private static $story_id;
+	private static int $story_id;
 
 	/**
 	 * Poster attachment ID.
-	 *
-	 * @var int
 	 */
-	private static $poster_id;
+	private static int $poster_id;
 
 	/**
 	 * Stories mock object.
-	 *
-	 * @var Story_Query
 	 */
-	private $story_query;
+	private Story_Query $story_query;
 
 	/**
 	 * Story Model Mock.
-	 *
-	 * @var Story
 	 */
-	private $story_model;
+	private Story $story_model;
 
 	/**
 	 * Runs once before any test in the class run.
@@ -354,16 +349,14 @@ class Renderer extends TestCase {
 	}
 
 	public function test_render_link_attributes(): void {
-		$filter = static function( $attrs, $story, $position ) {
-			return [
-				'class'                              => '123',
-				'foo'                                => 'bar',
-				'"><script>console.log(1)</script>>' => 'bar',
-				'data-tgev'                          => 'event1234',
-				'data-tgev-metric'                   => 'ev',
-				'data-tgev-order'                    => $position,
-			];
-		};
+		$filter = static fn( $attrs, $story, $position ) => [
+			'class'                              => '123',
+			'foo'                                => 'bar',
+			'"><script>console.log(1)</script>>' => 'bar',
+			'data-tgev'                          => 'event1234',
+			'data-tgev-metric'                   => 'ev',
+			'data-tgev-order'                    => $position,
+		];
 
 		add_filter( 'web_stories_renderer_link_attributes', $filter, 10, 3 );
 

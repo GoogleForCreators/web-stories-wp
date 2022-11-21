@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -28,10 +31,8 @@ class Shopping_Vendors extends DependencyInjectedTestCase {
 	use Mock_Vendor_Setup;
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Shopping\Shopping_Vendors
 	 */
-	private $instance;
+	private \Google\Web_Stories\Shopping\Shopping_Vendors $instance;
 
 	public function set_up(): void {
 		parent::set_up();

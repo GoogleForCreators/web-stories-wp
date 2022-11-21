@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,15 +29,12 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Dashboard extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
 
-	/**
-	 * @var \Google\Web_Stories\Admin\Dashboard
-	 */
-	private $instance;
+	private \Google\Web_Stories\Admin\Dashboard $instance;
 
-	protected static $user_id;
+	protected static int $user_id;
 
-	protected static $cpt_has_archive = 'cpt_has_archive';
-	protected static $cpt_no_archive  = 'cpt_no_archive';
+	protected static string $cpt_has_archive = 'cpt_has_archive';
+	protected static string $cpt_no_archive  = 'cpt_no_archive';
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(

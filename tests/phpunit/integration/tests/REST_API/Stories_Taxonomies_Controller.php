@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
@@ -13,21 +16,17 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Taxonomies_Controller
  */
 class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
-	protected static $taxonomy_object;
+	protected static Taxonomy_Base $taxonomy_object;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Stories_Taxonomies_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Stories_Taxonomies_Controller $controller;
 
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
