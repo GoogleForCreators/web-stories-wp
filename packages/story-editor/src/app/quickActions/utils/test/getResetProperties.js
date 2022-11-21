@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { RESET_PROPERTIES } from '../../../highlights/constants';
+import { RESET_PROPERTIES } from '../../constants';
 import getResetProperties from '../getResetProperties';
 
 describe('getResetProperties', () => {

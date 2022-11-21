@@ -21,7 +21,7 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { RESET_PROPERTIES, RESET_DEFAULTS } from '../../highlights/constants';
+import { RESET_PROPERTIES, RESET_DEFAULTS } from '../constants';
 
 function isBorderRadiusDefault(element) {
   // text element presets have a different default border radius

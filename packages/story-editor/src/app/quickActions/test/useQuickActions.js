@@ -24,14 +24,14 @@ import { Icons, useSnackbar } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { useQuickActions } from '../index';
+import { useQuickActions } from '..';
 import { states } from '../../highlights';
 import useHighlights from '../../highlights/useHighlights';
 import { STORY_EVENTS } from '../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../story';
-import { ACTIONS } from '../../highlights/constants';
+import { ACTIONS } from '../constants';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
-import { useConfig, useLocalMedia } from '../../index';
+import { useConfig, useLocalMedia } from '../..';
 import useFFmpeg from '../../media/utils/useFFmpeg';
 import { MediaPicker } from '../useQuickActions';
 import { noop } from '../../../utils/noop';

@@ -54,7 +54,7 @@ import {
   VIDEO_EFFECTS,
 } from '../../components/mediaRecording/constants';
 import { getResetProperties } from './utils';
-import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from '../highlights/constants';
+import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
