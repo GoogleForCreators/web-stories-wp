@@ -15,6 +15,6 @@
     "src/app/story/**/*",
     "src/app/history/**/*",
     "src/app/api/*",
-    "src/utils/*"
+    "src/utils/cleanForSlug"
   ]
 }
