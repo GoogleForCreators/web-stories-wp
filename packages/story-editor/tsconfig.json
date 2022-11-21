@@ -8,7 +8,7 @@
     "src/app/config/*",
     "src/types",
     "src/typings",
-    "src/app/highlights/*"
+    "src/app/highlights/*",
     "src/app/api/*"
   ]
 }

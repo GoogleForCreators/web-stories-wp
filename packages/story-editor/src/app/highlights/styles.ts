@@ -21,6 +21,11 @@ import { css, keyframes } from 'styled-components';
 import type { DefaultTheme } from 'styled-components';
 import { theme, themeHelpers } from '@googleforcreators/design-system';
 
+interface themeHelpersProps {
+  focusCSS: () => string;
+}
+
+const { focusCSS } = themeHelpers as themeHelpersProps;
 const dsTheme: DefaultTheme = theme as DefaultTheme;
 
 const flash = keyframes`
@@ -35,5 +40,5 @@ export const FLASH = css`
 `;
 
 export const OUTLINE = css`
-  ${themeHelpers.focusCSS};
+  ${focusCSS};
 `;
