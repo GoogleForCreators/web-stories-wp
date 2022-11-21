@@ -15,12 +15,12 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type { DimensionableElement } from '@googleforcreators/units';
+import type { Element } from '../types';
 
 type stringable = string | number | boolean | null | undefined;
-type ElementWithRotation = Partial<Pick<DimensionableElement, 'rotationAngle'>>;
+type ElementWithRotation = Partial<Pick<Element, 'rotationAngle'>>;
 
 /**
  * Just the functional equivalent of your baseline template literal.

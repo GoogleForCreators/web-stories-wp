@@ -23,9 +23,8 @@ import type { FunctionComponent } from 'react';
 /**
  * Internal dependencies
  */
-import { AnimationType, StoryAnimation } from '../../types';
+import { AnimationType, Element, ElementId, StoryAnimation } from '../../types';
 import Provider from '../provider';
-import type { Element } from '../types';
 import WAAPIWrapper from '../WAAPIWrapper';
 
 type Tracker = FunctionComponent<{ target: string }>;
@@ -59,24 +58,29 @@ describe('StoryAnimation.WAAPIWrapper', () => {
   describe('tracking necessary rerenders', () => {
     // Create mock data
     const createMockAnim = (
-      partial: Partial<StoryAnimation>
+      id: string,
+      targets: ElementId[]
     ): StoryAnimation => ({
-      id: 'animOne',
-      targets: ['elOne'],
+      type: AnimationType.EffectPulse,
       delay: 0,
       duration: 350,
       iterations: 1,
       scale: 0.5,
-      type: AnimationType.EffectPulse,
-      ...partial,
+      id,
+      targets,
     });
     const createMockElement = (partial: Partial<Element>): Element => ({
       id: '2e04154c-bc58-4969-bb4d-c69d32da0eac',
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      rotationAngle: 0,
       ...partial,
     });
     const initialAnimations = [
-      createMockAnim({ id: 'animOne', targets: ['elOne'] }),
-      createMockAnim({ id: 'animTwo', targets: ['elTwo'] }),
+      createMockAnim('animOne', ['elOne']),
+      createMockAnim('animTwo', ['elTwo']),
     ];
     const initialElements = [
       createMockElement({ id: 'elOne' }),

@@ -17,20 +17,26 @@
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
-import { FieldType } from '../types';
+import { AMPEffectTiming, AnimationType, FieldType } from '../types';
 import createAnimation from './createAnimation';
 
-const defaults: GenericAnimation = {
+const defaults: AMPEffectTiming = {
   fill: 'both',
   duration: 1000,
 };
 
+export interface FadeAnimation extends AMPEffectTiming {
+  type: AnimationType.Fade;
+  fadeFrom?: number;
+  fadeTo?: number;
+}
+
 export function AnimationFade({
   fadeFrom = 0,
   fadeTo = 1,
+  type,
   ...args
-}: { fadeFrom?: number; fadeTo?: number } & GenericAnimation) {
+}: FadeAnimation) {
   const timings = { ...defaults, ...args };
   const keyframes = { opacity: [fadeFrom, fadeTo] };
   return createAnimation(keyframes, timings);

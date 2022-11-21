@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
+import type { AMPEffectTiming, AnimationType } from '../types';
 import createAnimation from './createAnimation';
 
 const keyframes = [
@@ -40,9 +40,13 @@ const keyframes = [
   { transform: 'scale(1)', offset: 1 },
 ];
 
-const defaults: GenericAnimation = { fill: 'both', duration: 1500 };
+const defaults: AMPEffectTiming = { fill: 'both', duration: 1500 };
 
-export function AnimationBounce(args: GenericAnimation) {
-  const timings = { ...defaults, ...args };
+export interface BounceAnimation extends AMPEffectTiming {
+  type: AnimationType.Bounce;
+}
+
+export function AnimationBounce({ type, ...args }: BounceAnimation) {
+  const timings: AMPEffectTiming = { ...defaults, ...args };
   return createAnimation(keyframes, timings);
 }

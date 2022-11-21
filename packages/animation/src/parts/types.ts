@@ -27,7 +27,7 @@ import type {
 /**
  * Internal dependencies
  */
-import type { Keyframes } from '../types';
+import type { AMPEffectTiming, Keyframes } from '../types';
 
 export type AMPAnimationProps = PropsWithChildren<{
   className?: string;
@@ -37,7 +37,7 @@ export type AMPAnimationProps = PropsWithChildren<{
 
 export interface WAAPIAnimation {
   keyframes: Keyframes;
-  timings: EffectTiming;
+  timings: AMPEffectTiming;
   useClippingContainer?: boolean;
   targetLeafElement?: boolean;
 }

@@ -22,13 +22,13 @@ import { _x, __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import { AnimationPulse } from '../parts/pulse';
-import { FieldType } from '../types';
+import { AMPEffectTiming, AnimationType, FieldType } from '../types';
 
-type EffectPulseProps = {
+export interface PulseEffect extends AMPEffectTiming {
   scale?: number;
-} & GenericAnimation;
+  type: AnimationType.EffectPulse;
+}
 
 export function EffectPulse({
   iterations = 1,
@@ -36,13 +36,14 @@ export function EffectPulse({
   duration = 1450,
   delay,
   easing = 'ease-in-out',
-}: EffectPulseProps) {
+}: PulseEffect) {
   return AnimationPulse({
     scale,
     duration,
     delay,
     easing,
     iterations,
+    type: AnimationType.Pulse,
   });
 }
 

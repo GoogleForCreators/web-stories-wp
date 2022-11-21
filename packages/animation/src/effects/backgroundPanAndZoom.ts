@@ -22,31 +22,39 @@ import { getElementOffsets, getElementOrigin } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import createAnimation from '../parts/createAnimation';
-import { AnimationDirection, ScaledElement, ScaleDirection } from '../types';
+import {
+  AMPEffectTiming,
+  AnimationDirection,
+  AnimationType,
+  Element,
+  ScaleDirection,
+} from '../types';
 import { EffectBackgroundPan } from './backgroundPan';
 import { EffectBackgroundZoom } from './backgroundZoom';
 
-const defaults: GenericAnimation = {
+const defaults: AMPEffectTiming = {
   fill: 'forwards',
   duration: 2000,
   easing: 'cubic-bezier(.14,.34,.47,.9)',
 };
 
-type EffectBackgroundPanAndZoomProps = {
+export interface PanAndZoomBackgroundEffect extends AMPEffectTiming {
   zoomDirection?: ScaleDirection;
   panDir?: AnimationDirection;
-  element: ScaledElement;
-} & GenericAnimation;
+  type: AnimationType.EffectBackgroundPanAndZoom;
+}
 
-export function EffectBackgroundPanAndZoom({
-  zoomDirection = ScaleDirection.ScaleIn,
-  panDir = AnimationDirection.RightToLeft,
-  element,
-  ...args
-}: EffectBackgroundPanAndZoomProps) {
-  const timings: GenericAnimation = { ...defaults, ...args };
+export function EffectBackgroundPanAndZoom(
+  {
+    zoomDirection = ScaleDirection.ScaleIn,
+    panDir = AnimationDirection.RightToLeft,
+    type,
+    ...args
+  }: PanAndZoomBackgroundEffect,
+  element: Element
+) {
+  const timings: AMPEffectTiming = { ...defaults, ...args };
 
   // We have to move the origin with respect to the pan
   // direction and the current element position relative to
@@ -76,15 +84,23 @@ export function EffectBackgroundPanAndZoom({
   // Background animations aren't really composable through element nesting
   // because they all target the same dom node. To accommomdate for this we
   // manually compose the keyframes and use those to generate a new animation.
-  const bgZoom = EffectBackgroundZoom({
-    element,
-    zoomDirection,
-    transformOrigin,
-  });
-  const bgPan = EffectBackgroundPan({
-    element,
-    panDir,
-  });
+  const bgZoom = EffectBackgroundZoom(
+    {
+      zoomDirection,
+      transformOrigin,
+      type: AnimationType.EffectBackgroundZoom,
+      ...args,
+    },
+    element
+  );
+  const bgPan = EffectBackgroundPan(
+    {
+      panDir,
+      type: AnimationType.EffectBackgroundPan,
+      ...args,
+    },
+    element
+  );
 
   const startTransform = `${bgPan.keyframes.transform[0]} ${bgZoom.keyframes.transform[0]}`;
   const zoomLastTransformIndex = (bgZoom.keyframes.transform.length || 1) - 1;

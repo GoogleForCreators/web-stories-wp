@@ -17,19 +17,19 @@
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
+import type { AMPEffectTiming } from '../types';
 
 function sanitizeTimings({
   easing,
   duration,
   delay,
-  ...other
-}: GenericAnimation) {
+  ...rest
+}: AMPEffectTiming): AMPEffectTiming {
   return {
-    ...other,
     easing: easing || 'linear',
     duration: typeof duration === 'number' ? Math.max(duration, 0) : 0,
     delay: typeof delay === 'number' ? Math.max(delay, 0) : 0,
+    ...rest,
   };
 }
 

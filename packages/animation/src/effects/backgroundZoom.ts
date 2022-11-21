@@ -25,31 +25,43 @@ import { sprintf, _x, __ } from '@googleforcreators/i18n';
  */
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '../constants';
 import { AnimationZoom } from '../parts/zoom';
-import { FieldType, ScaledElement, ScaleDirection } from '../types';
-import type { GenericAnimation } from '../outputs';
+import {
+  AMPEffectTiming,
+  AnimationType,
+  Element,
+  FieldType,
+  isScaledElement,
+  ScaleDirection,
+} from '../types';
 
 type TransformOrigin = {
   vertical: number;
   horizontal: number;
 };
 
-type EffectBackgroundZoomProps = {
+export interface ZoomBackgroundEffect extends AMPEffectTiming {
+  type: AnimationType.EffectBackgroundZoom;
   zoomDirection?: ScaleDirection;
   transformOrigin?: TransformOrigin;
-  element: ScaledElement;
-} & GenericAnimation;
+}
 
-export function EffectBackgroundZoom({
-  zoomDirection = ScaleDirection.ScaleOut,
-  transformOrigin,
-  element,
-  duration = 2000,
-  delay = 0,
-  easing = 'cubic-bezier(.3,0,.55,1)',
-}: EffectBackgroundZoomProps) {
+export function EffectBackgroundZoom(
+  {
+    zoomDirection = ScaleDirection.ScaleOut,
+    transformOrigin,
+    duration = 2000,
+    delay = 0,
+    easing = 'cubic-bezier(.3,0,.55,1)',
+  }: ZoomBackgroundEffect,
+  element: Element
+) {
   // Define the min/max range based off the element scale
   // at element scale 400, the range should be [1/4, 1]
   // at element scale 100, the range should be [1, 4]
+  if (!isScaledElement(element)) {
+    throw new Error('Should not happen');
+  }
+
   const range = {
     MIN: BG_MIN_SCALE / element.scale,
     MAX: BG_MAX_SCALE / element.scale,
@@ -64,6 +76,7 @@ export function EffectBackgroundZoom({
     1 + (zoomDirection === ScaleDirection.ScaleOut ? 1 : -1) * delta;
 
   return AnimationZoom({
+    type: AnimationType.Zoom,
     // make sure we stay within min/max range so image always fills canvas
     zoomFrom: clamp(zoomFrom, range),
     zoomTo: 1,

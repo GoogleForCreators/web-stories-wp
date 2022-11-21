@@ -23,16 +23,20 @@ import {
   DANGER_ZONE_HEIGHT,
   dataToEditorY,
   getBox,
-  DimensionableElement,
   ElementBox,
 } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import createAnimation from '../parts/createAnimation';
-import { AnimationDirection, FieldType } from '../types';
+import {
+  AMPEffectTiming,
+  AnimationDirection,
+  AnimationType,
+  Element,
+  FieldType,
+} from '../types';
 
 function getTargetScale({ width, height }: ElementBox) {
   if (width < PAGE_WIDTH || height < FULLBLEED_HEIGHT) {
@@ -48,19 +52,21 @@ function getTargetScale({ width, height }: ElementBox) {
   return 1;
 }
 
-type EffectPanProps = {
+export interface PanEffect extends AMPEffectTiming {
   panDir?: AnimationDirection;
-  element: DimensionableElement;
-} & GenericAnimation;
+  type: AnimationType.EffectPan;
+}
 
-export function EffectPan({
-  panDir = AnimationDirection.RightToLeft,
-  element,
-  duration = 1000,
-  delay,
-  easing,
-}: EffectPanProps) {
-  const timings: GenericAnimation = {
+export function EffectPan(
+  {
+    panDir = AnimationDirection.RightToLeft,
+    duration = 1000,
+    delay,
+    easing,
+  }: PanEffect,
+  element: Element
+) {
+  const timings: AMPEffectTiming = {
     fill: 'both',
     duration,
     delay,

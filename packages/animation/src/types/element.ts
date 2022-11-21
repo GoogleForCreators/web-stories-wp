@@ -19,6 +19,16 @@
  */
 import type { DimensionableElement } from '@googleforcreators/units';
 
-export interface ScaledElement extends DimensionableElement {
+export type ElementId = string | number;
+
+export interface Element extends DimensionableElement {
+  id: ElementId;
+}
+
+export interface ScaledElement extends Element {
   scale: number;
+}
+
+export function isScaledElement(e: Element): e is ScaledElement {
+  return 'scale' in e;
 }

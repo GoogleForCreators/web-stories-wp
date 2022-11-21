@@ -15,18 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import type { DimensionableElement } from '@googleforcreators/units';
-
-/**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import createAnimation from '../parts/createAnimation';
+import type { AMPEffectTiming, AnimationType, Element } from '../types';
 import { getGlobalSpace } from '../utils';
 
-const defaultTimings: GenericAnimation = {
+const defaultTimings: AMPEffectTiming = {
   delay: 0,
   duration: 1000,
   fill: 'both',
@@ -34,11 +29,14 @@ const defaultTimings: GenericAnimation = {
   easing: 'cubic-bezier(0.4, 0.4, 0.0, 1)',
 };
 
-type EffectTwirlInProps = {
-  element: DimensionableElement;
-} & GenericAnimation;
+export interface TwirlInEffect extends AMPEffectTiming {
+  type: AnimationType.EffectTwirlIn;
+}
 
-export function EffectTwirlIn({ element, ...args }: EffectTwirlInProps) {
+export function EffectTwirlIn(
+  { type, ...args }: TwirlInEffect,
+  element: Element
+) {
   const global = getGlobalSpace(element);
   const keyframes = {
     transform: [global`rotate(-540deg) scale(0.1)`, 'none'],

@@ -15,32 +15,24 @@
  */
 
 /**
- * External dependencies
- */
-import type { DimensionableElement } from '@googleforcreators/units';
-
-/**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
-import { FieldType } from '../types';
+import { AMPEffectTiming, AnimationType, Element, FieldType } from '../types';
 import { defaultUnit, getGlobalSpace } from '../utils';
 import createAnimation from './createAnimation';
 
-const defaults: GenericAnimation = { fill: 'forwards', duration: 1000 };
+const defaults: AMPEffectTiming = { fill: 'forwards', duration: 1000 };
 
-type AnimationSpinProps = {
+export interface SpinAnimation extends AMPEffectTiming {
   rotation?: string | number;
   stopAngle?: number;
-  element: DimensionableElement;
-} & GenericAnimation;
+  type: AnimationType.Spin;
+}
 
-export function AnimationSpin({
-  rotation = 0,
-  stopAngle = 0,
-  element,
-  ...args
-}: AnimationSpinProps) {
+export function AnimationSpin(
+  { rotation = 0, stopAngle = 0, type, ...args }: SpinAnimation,
+  element: Element
+) {
   const global = getGlobalSpace(element);
   const timings = { ...defaults, ...args };
   const keyframes = {

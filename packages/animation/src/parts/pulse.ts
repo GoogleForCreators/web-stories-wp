@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
+import type { AMPEffectTiming, AnimationType } from '../types';
 import createAnimation from './createAnimation';
 
 export function generatePulseKeyframes(scale: number) {
@@ -35,15 +35,21 @@ export function generatePulseKeyframes(scale: number) {
   };
 }
 
-const defaults: GenericAnimation = { fill: 'both', duration: 400 };
+const defaults: AMPEffectTiming = { fill: 'both', duration: 400 };
+
+export interface PulseAnimation extends AMPEffectTiming {
+  type: AnimationType.Pulse;
+  scale?: number;
+}
 
 export function AnimationPulse({
   iterations = 1,
   scale = 0.5,
   easing = 'cubic-bezier(0.3, 0.0, 0.0, 1)',
+  type,
   ...args
-}: { scale?: number } & GenericAnimation) {
-  const timings: GenericAnimation = {
+}: PulseAnimation) {
+  const timings: AMPEffectTiming = {
     ...defaults,
     ...args,
     iterations,

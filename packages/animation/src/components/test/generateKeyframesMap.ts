@@ -18,12 +18,12 @@
  * Internal dependencies
  */
 import type { AnimationPart } from '../../parts';
-import type { Keyframes } from '../../types';
+import type { ElementId, Keyframes } from '../../types';
 import generateKeyframesMap from '../generateKeyframesMap';
 
 type AnimationParts = Record<string, AnimationPart[]>;
 
-const mockGetAnimationParts = (src: AnimationParts) => (target: string) =>
+const mockGetAnimationParts = (src: AnimationParts) => (target: ElementId) =>
   src[target];
 
 const mockCreateAnimationPart = (

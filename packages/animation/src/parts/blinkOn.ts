@@ -19,14 +19,13 @@
  */
 import generateLookupMap from '../utils/generateLookupMap';
 import padArray from '../utils/padArray';
-import type { GenericAnimation } from '../outputs';
-import { FieldType } from '../types';
+import { AMPEffectTiming, AnimationType, FieldType } from '../types';
 import createAnimation from './createAnimation';
 
 const DEFAULT_BLINKS = 10;
 const AVAILABLE_OPACITY = [0, 0.25, 0.75, 1];
 
-const defaults: GenericAnimation = { fill: 'forwards' };
+const defaults: AMPEffectTiming = { fill: 'forwards' };
 
 function range(i: number) {
   return Array<number>(i)
@@ -49,11 +48,17 @@ function generateOpacityFrames(blinkCount: number = DEFAULT_BLINKS) {
   return padArray(opacityFrames, 3);
 }
 
+export interface BlinkOnAnimation extends AMPEffectTiming {
+  blinkCount?: number;
+  type: AnimationType.BlinkOn;
+}
+
 export function AnimationBlinkOn({
-  blinkCount,
+  blinkCount = DEFAULT_BLINKS,
+  type,
   ...args
-}: { blinkCount: number } & GenericAnimation) {
-  const timings = { ...defaults, ...args };
+}: BlinkOnAnimation) {
+  const timings: AMPEffectTiming = { ...defaults, ...args };
   const keyframes = { opacity: [0, ...generateOpacityFrames(blinkCount), 1] };
   return createAnimation(keyframes, timings);
 }

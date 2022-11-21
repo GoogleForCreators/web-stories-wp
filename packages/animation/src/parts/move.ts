@@ -15,36 +15,33 @@
  */
 
 /**
- * External dependencies
- */
-import type { DimensionableElement } from '@googleforcreators/units';
-
-/**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
-import { FieldType } from '../types';
+import { AMPEffectTiming, AnimationType, Element, FieldType } from '../types';
 import { defaultUnit, getGlobalSpace } from '../utils';
 import createAnimation from './createAnimation';
 
-const defaults: GenericAnimation = { fill: 'both', duration: 1000 };
+const defaults: AMPEffectTiming = { fill: 'both', duration: 1000 };
 
-type AnimationMoveProps = {
+export interface MoveAnimation extends AMPEffectTiming {
+  type: AnimationType.Move;
   overflowHidden?: boolean;
   offsetX?: string | number;
   offsetY?: string | number;
-  element: DimensionableElement;
-} & GenericAnimation;
+}
 
-export function AnimationMove({
-  overflowHidden = false,
-  offsetX = 0,
-  offsetY = 0,
-  element,
-  ...args
-}: AnimationMoveProps) {
+export function AnimationMove(
+  {
+    overflowHidden = false,
+    offsetX = 0,
+    offsetY = 0,
+    type,
+    ...args
+  }: MoveAnimation,
+  element: Element
+) {
   const global = getGlobalSpace(element);
-  const timings: GenericAnimation = { ...defaults, ...args };
+  const timings: AMPEffectTiming = { ...defaults, ...args };
   const keyframes = {
     transform: [
       global`translate3d(${defaultUnit(offsetX, 'px')}, ${defaultUnit(

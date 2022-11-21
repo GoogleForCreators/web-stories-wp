@@ -19,32 +19,39 @@
  */
 import { getElementOffsets } from '@googleforcreators/media';
 import { sprintf, _x, __ } from '@googleforcreators/i18n';
-import type { DimensionableElement } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import createAnimation from '../parts/createAnimation';
-import { AnimationDirection, FieldType } from '../types';
+import {
+  AMPEffectTiming,
+  AnimationDirection,
+  AnimationType,
+  Element,
+  FieldType,
+} from '../types';
 
-type EffectBackgroundPanProps = {
+export interface PanBackgroundEffect extends AMPEffectTiming {
   panDir?: AnimationDirection;
-  element: DimensionableElement;
-} & GenericAnimation;
+  type: AnimationType.EffectBackgroundPan;
+}
 
-export function EffectBackgroundPan({
-  panDir = AnimationDirection.RightToLeft,
-  duration = 2000,
-  delay,
-  easing = 'cubic-bezier(.3,0,.55,1)',
-  element,
-}: EffectBackgroundPanProps) {
-  const timings: GenericAnimation = {
+export function EffectBackgroundPan(
+  {
+    panDir = AnimationDirection.RightToLeft,
+    duration = 2000,
+    easing = 'cubic-bezier(.3,0,.55,1)',
+    type,
+    ...args
+  }: PanBackgroundEffect,
+  element: Element
+) {
+  const timings: AMPEffectTiming = {
     fill: 'both',
     duration,
-    delay,
     easing,
+    ...args,
   };
 
   const translateToOriginX = 'translate3d(0%, 0, 0)';

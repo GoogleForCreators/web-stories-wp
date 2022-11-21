@@ -24,20 +24,25 @@ import { sprintf, _x, __ } from '@googleforcreators/i18n';
  */
 import { AnimationZoom } from '../parts/zoom';
 import { AnimationFade } from '../parts/fade';
-import { FieldType, ScaleDirection } from '../types';
-import type { GenericAnimation } from '../outputs';
+import {
+  AMPEffectTiming,
+  AnimationType,
+  FieldType,
+  ScaleDirection,
+} from '../types';
 import type { AnimationPart } from '../parts';
 
-type EffectZoomProps = {
+export interface ZoomEffect extends AMPEffectTiming {
   scaleDirection?: ScaleDirection;
-} & GenericAnimation;
+  type: AnimationType.EffectZoom;
+}
 
 export function EffectZoom({
   scaleDirection = ScaleDirection.ScaleIn,
   duration = 1000,
   delay = 0,
   easing = 'cubic-bezier(.3,0,.55,1)',
-}: EffectZoomProps): AnimationPart {
+}: ZoomEffect): AnimationPart {
   const id = uuidv4();
 
   const zoom = AnimationZoom({
@@ -46,6 +51,7 @@ export function EffectZoom({
     duration,
     delay,
     easing,
+    type: AnimationType.Zoom,
   });
 
   const fade = AnimationFade({
@@ -54,6 +60,7 @@ export function EffectZoom({
     duration: duration,
     delay,
     easing,
+    type: AnimationType.Fade,
   });
 
   const keyframes = {

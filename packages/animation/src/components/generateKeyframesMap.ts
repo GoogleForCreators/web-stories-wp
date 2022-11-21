@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import type { AnimationProviderState } from './types';
+import type { AnimationProviderState, ElementId } from './types';
 
 export function generateKeyframesMap(
-  targets: string[],
+  targets: ElementId[],
   getAnimationParts: AnimationProviderState['actions']['getAnimationParts']
 ) {
   const allKeyframeEntries = targets

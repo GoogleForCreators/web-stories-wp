@@ -22,23 +22,24 @@ import { _x, __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import { AnimationFade } from '../parts/fade';
-import { FieldType } from '../types';
+import { AMPEffectTiming, AnimationType, FieldType } from '../types';
 
-type EffectFlyInProps = GenericAnimation;
-
+export interface FadeInEffect extends AMPEffectTiming {
+  type: AnimationType.EffectFadeIn;
+}
 export function EffectFadeIn({
   duration = 600,
   delay = 0,
   easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
-}: EffectFlyInProps) {
+}: FadeInEffect) {
   return AnimationFade({
     fadeFrom: 0,
     fadeTo: 1,
     duration,
     delay,
     easing,
+    type: AnimationType.Fade,
   });
 }
 

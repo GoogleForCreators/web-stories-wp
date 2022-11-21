@@ -51,7 +51,7 @@ export const BEZIER = {
   outCirc: 'cubic-bezier(0.075, 0.82, 0.165, 1)',
   inOutCirc: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
   default: 'cubic-bezier(0.4, 0.4, 0.0, 1)',
-};
+} as const;
 
 export type BezierType = keyof typeof BEZIER;
 
@@ -104,7 +104,7 @@ export const BACKGROUND_ANIMATION_EFFECTS = {
     name: ANIMATION_EFFECTS.PAN.name,
   },
   PAN_AND_ZOOM: {
-    value: AnimationType.EffectBackgroundZoomAndPan,
+    value: AnimationType.EffectBackgroundPanAndZoom,
     name: _x('Pan and Zoom', 'animation effect', 'web-stories'),
   },
 };

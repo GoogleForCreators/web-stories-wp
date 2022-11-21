@@ -15,13 +15,31 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { PropsWithChildren, HTMLAttributes } from 'react';
+
+/**
  * Internal dependencies
  */
-import type { StoryAnimation } from '../types';
+import type { AnimationPart } from './types';
 
-export function getTotalDuration(animations: StoryAnimation[] = []) {
-  return animations.reduce(
-    (total, { duration = 0, delay = 0 }) => Math.max(total, duration + delay),
-    0
-  );
+function EmptyAMPTarget({
+  children,
+  ...rest
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+  return <div {...rest}>{children}</div>;
 }
+
+function emptyAnimationPart(): AnimationPart {
+  return {
+    id: '-1',
+    keyframes: {},
+    generatedKeyframes: {},
+    WAAPIAnimation: { keyframes: {}, timings: {} },
+    AMPTarget: EmptyAMPTarget,
+    AMPAnimation: () => null,
+  };
+}
+
+export default emptyAnimationPart;

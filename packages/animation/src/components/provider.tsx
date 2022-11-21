@@ -37,7 +37,7 @@ if (!('KeyframeEffect' in window)) {
  * Internal dependencies
  */
 import { AnimationPart, createAnimationPart } from '../parts';
-import type { StoryAnimation } from '../types';
+import type { Element, StoryAnimation } from '../types';
 import type {
   ElementId,
   ElementMap,
@@ -58,7 +58,7 @@ const createOnFinishPromise = (animation: Animation) => {
 
 const filterWAAPIAnimations = (
   animations: WAAPIElementAnimation[],
-  selectedElementIds: string[]
+  selectedElementIds: ElementId[]
 ) =>
   selectedElementIds.length > 0
     ? animations.filter(({ elementId }) =>
@@ -135,15 +135,19 @@ function Provider({
         );
       } else {
         // Generate new animationPart if input has changed.
-        const { id, targets, type, ...args } = animation;
+        const { targets } = animation;
 
         (targets || []).forEach((elementId) => {
           const generatedParts = _animationPartsMap.get(elementId) || [];
           const element = elementsInstanceMap.get(elementId);
 
+          if (!element) {
+            throw new Error('Should not happen');
+          }
+
           _animationPartsMap.set(elementId, [
             ...generatedParts,
-            createAnimationPart(type, { ...args, element }),
+            createAnimationPart(animation, element),
           ]);
         });
       }

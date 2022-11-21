@@ -20,40 +20,34 @@
 import { AnimationType } from '../../types';
 import { getTotalDuration } from '..';
 
-const ANIM_DEFAULTS = {
+const BASE_ANIMATION = {
   id: '1',
-  type: AnimationType.BlinkOn,
-  delay: 0,
-  duration: 0,
   targets: [],
 };
+const type = AnimationType.BlinkOn as const;
 
 describe('getTotalDuration', () => {
   it('returns 0 if no animations supplied', () => {
-    expect(getTotalDuration({})).toBe(0);
+    expect(getTotalDuration()).toBe(0);
   });
 
   it('calculates the longest duration properly', () => {
     expect(
-      getTotalDuration({
-        animations: [
-          { ...ANIM_DEFAULTS, duration: 20, delay: 10 },
-          { ...ANIM_DEFAULTS, duration: 90, delay: 110 },
-          { ...ANIM_DEFAULTS, duration: 50, delay: 5 },
-        ],
-      })
+      getTotalDuration([
+        { ...BASE_ANIMATION, type, duration: 20, delay: 10 },
+        { ...BASE_ANIMATION, type, duration: 90, delay: 110 },
+        { ...BASE_ANIMATION, type, duration: 50, delay: 5 },
+      ])
     ).toBe(200);
   });
 
   it('calculates properly if missing duration or delay on animation', () => {
     expect(
-      getTotalDuration({
-        animations: [
-          { ...ANIM_DEFAULTS, duration: 50, delay: 10 },
-          ANIM_DEFAULTS,
-          { ...ANIM_DEFAULTS, duration: 40 },
-        ],
-      })
+      getTotalDuration([
+        { ...BASE_ANIMATION, type, duration: 50, delay: 10 },
+        { ...BASE_ANIMATION, type },
+        { ...BASE_ANIMATION, type, duration: 40 },
+      ])
     ).toBe(60);
   });
 });

@@ -17,11 +17,16 @@
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
-import { Axis, FieldType, Rotation } from '../types';
+import {
+  AMPEffectTiming,
+  AnimationType,
+  Axis,
+  FieldType,
+  Rotation,
+} from '../types';
 import createAnimation from './createAnimation';
 
-const defaults: GenericAnimation = { fill: 'both', duration: 1000 };
+const defaults: AMPEffectTiming = { fill: 'both', duration: 1000 };
 
 const keyframesLookup = {
   [Rotation.Clockwise]: {
@@ -50,12 +55,19 @@ const keyframesLookup = {
   },
 };
 
+export interface FlipAnimation extends AMPEffectTiming {
+  axis: Axis;
+  rotation: Rotation;
+  type: AnimationType.Flip;
+}
+
 export function AnimationFlip({
   axis = Axis.Y,
   rotation = Rotation.Clockwise,
+  type,
   ...args
-}: { axis: Axis; rotation: Rotation } & GenericAnimation) {
-  const timings = { ...defaults, ...args };
+}: FlipAnimation) {
+  const timings: AMPEffectTiming = { ...defaults, ...args };
   const keyframes = keyframesLookup[rotation][axis];
   return createAnimation(keyframes, timings);
 }

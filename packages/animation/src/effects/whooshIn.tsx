@@ -18,32 +18,39 @@
  * External dependencies
  */
 import { _x, __ } from '@googleforcreators/i18n';
-import type { DimensionableElement } from '@googleforcreators/units';
 import type { CSSProperties, PropsWithChildren } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import type { AnimationPart } from '../parts';
 import { AnimationFade } from '../parts/fade';
 import { AnimationMove } from '../parts/move';
 import { AnimationZoom } from '../parts/zoom';
-import { AnimationDirection, FieldType } from '../types';
+import {
+  AMPEffectTiming,
+  AnimationDirection,
+  AnimationType,
+  Element,
+  FieldType,
+} from '../types';
 import getOffPageOffset from '../utils/getOffPageOffset';
 
-type EffectWhooshInProps = {
+export interface WhooshInEffect extends AMPEffectTiming {
   whooshInDir?: AnimationDirection;
-  element: DimensionableElement;
-} & GenericAnimation;
+  type: AnimationType.EffectWhooshIn;
+}
 
-export function EffectWhooshIn({
-  whooshInDir = AnimationDirection.LeftToRight,
-  element,
-  duration = 600,
-  easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
-  delay,
-}: EffectWhooshInProps): AnimationPart {
+export function EffectWhooshIn(
+  {
+    whooshInDir = AnimationDirection.LeftToRight,
+    duration = 600,
+    easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
+    delay,
+  }: WhooshInEffect,
+  element: Element
+): AnimationPart {
   const id = uuidv4();
 
   const { offsetLeft, offsetRight } = getOffPageOffset(element);
@@ -53,13 +60,16 @@ export function EffectWhooshIn({
       ? `${offsetRight}%`
       : `${offsetLeft}%`;
 
-  const move = AnimationMove({
-    offsetX,
-    duration,
-    delay,
-    easing,
-    element,
-  });
+  const move = AnimationMove(
+    {
+      offsetX,
+      duration,
+      delay,
+      easing,
+      type: AnimationType.Move,
+    },
+    element
+  );
 
   const fade = AnimationFade({
     fadeFrom: 0,
@@ -67,6 +77,7 @@ export function EffectWhooshIn({
     duration,
     delay,
     easing,
+    type: AnimationType.Fade,
   });
 
   const zoom = AnimationZoom({
@@ -75,6 +86,7 @@ export function EffectWhooshIn({
     duration,
     delay,
     easing,
+    type: AnimationType.Zoom,
   });
 
   const [moveTransformStart, moveTransformEnd] = move.keyframes.transform;

@@ -23,15 +23,15 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { AnimationOutput, GenericAnimation, WithAnimation } from '../outputs';
-import type { Keyframes } from '../types';
+import { AnimationOutput, WithAnimation } from '../outputs';
+import type { AMPEffectTiming, Keyframes } from '../types';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 import sanitizeTimings from '../utils/sanitizeTimings';
 import type { AMPAnimationProps, WAAPIAnimation, AnimationPart } from './types';
 
 function createAnimation<T extends Keyframes>(
   keyframes: T,
-  timings: GenericAnimation,
+  timings: AMPEffectTiming,
   useClippingContainer = false,
   targetLeafElement = false
 ): AnimationPart<T> {

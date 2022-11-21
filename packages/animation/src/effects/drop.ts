@@ -23,9 +23,14 @@ import type { DimensionableElement } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import createAnimation from '../parts/createAnimation';
-import { FieldType, Keyframes } from '../types';
+import {
+  AMPEffectTiming,
+  AnimationType,
+  Element,
+  FieldType,
+  Keyframes,
+} from '../types';
 import { getGlobalSpace, getOffPageOffset } from '../utils';
 
 function getMinTopOffset(element: DimensionableElement) {
@@ -91,17 +96,15 @@ function getDropKeyframes(element: DimensionableElement): Keyframes {
   ];
 }
 
-type EffectDropProps = {
-  element: DimensionableElement;
-} & GenericAnimation;
+export interface DropEffect extends AMPEffectTiming {
+  type: AnimationType.EffectDrop;
+}
 
-export function EffectDrop({
-  element,
-  fill = 'both',
-  duration = 1600,
-  delay = 0,
-}: EffectDropProps) {
-  const timings: GenericAnimation = { fill, duration, delay };
+export function EffectDrop(
+  { fill = 'both', duration = 1600, delay = 0 }: DropEffect,
+  element: Element
+) {
+  const timings: AMPEffectTiming = { fill, duration, delay };
   const keyframes = getDropKeyframes(element);
   return createAnimation(keyframes, timings);
 }

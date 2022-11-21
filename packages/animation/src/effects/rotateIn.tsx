@@ -18,34 +18,40 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import type { DimensionableElement } from '@googleforcreators/units';
 import type { CSSProperties, PropsWithChildren } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
 import type { AnimationPart } from '../parts';
 import { AnimationMove } from '../parts/move';
 import { AnimationSpin } from '../parts/spin';
-import { AnimationDirection, FieldType } from '../types';
+import {
+  AMPEffectTiming,
+  AnimationDirection,
+  AnimationType,
+  Element,
+  FieldType,
+} from '../types';
 import { getOffPageOffset } from '../utils';
 
 const numberOfRotations = 1;
 const stopAngle = 0;
 
-type EffectRotateInProps = {
+export interface RotateInEffect extends AMPEffectTiming {
   rotateInDir?: AnimationDirection;
-  element: DimensionableElement;
-} & GenericAnimation;
+  type: AnimationType.EffectRotateIn;
+}
 
-export function EffectRotateIn({
-  rotateInDir = AnimationDirection.LeftToRight,
-  element,
-  duration = 1000,
-  easing = 'cubic-bezier(.2, 0, .8, 1)',
-  delay,
-}: EffectRotateInProps): AnimationPart {
+export function EffectRotateIn(
+  {
+    rotateInDir = AnimationDirection.LeftToRight,
+    duration = 1000,
+    easing = 'cubic-bezier(.2, 0, .8, 1)',
+    delay,
+  }: RotateInEffect,
+  element: Element
+): AnimationPart {
   const id = uuidv4();
 
   const { offsetLeft, offsetRight } = getOffPageOffset(element);
@@ -55,26 +61,32 @@ export function EffectRotateIn({
       ? `${offsetRight}%`
       : `${offsetLeft}%`;
 
-  const move = AnimationMove({
-    offsetX,
-    duration,
-    delay,
-    easing,
-    element,
-  });
+  const move = AnimationMove(
+    {
+      offsetX,
+      duration,
+      delay,
+      easing,
+      type: AnimationType.Move,
+    },
+    element
+  );
 
-  const spin = AnimationSpin({
-    rotation: `${
-      (rotateInDir === AnimationDirection.LeftToRight ? -1 : 1) *
-      180 *
-      numberOfRotations
-    }`,
-    stopAngle,
-    duration,
-    delay,
-    easing: 'cubic-bezier(.2, 0, .5, 1)',
-    element,
-  });
+  const spin = AnimationSpin(
+    {
+      rotation: `${
+        (rotateInDir === AnimationDirection.LeftToRight ? -1 : 1) *
+        180 *
+        numberOfRotations
+      }`,
+      stopAngle,
+      duration,
+      delay,
+      easing: 'cubic-bezier(.2, 0, .5, 1)',
+      type: AnimationType.Spin,
+    },
+    element
+  );
 
   const [moveTransformStart, moveTransformEnd] = move.keyframes.transform;
   const [spinTransformStart, spinTransformEnd] = spin.keyframes.transform;

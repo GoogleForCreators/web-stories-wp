@@ -47,6 +47,8 @@ export enum FieldType {
   Range = 'RANGE',
 }
 
-export interface AMPEffectTiming extends Omit<EffectTiming, 'iterations'> {
+export interface AMPEffectTiming
+  extends Omit<EffectTiming, 'iterations' | 'duration'> {
   iterations?: number | 'infinity';
+  duration?: number;
 }

@@ -33,7 +33,7 @@ function getAutoAdvanceAfter({
 }) {
   const { resource, loop } = backgroundAudio || {};
 
-  const animationDuration = getTotalDuration({ animations }) / 1000;
+  const animationDuration = getTotalDuration(animations) / 1000;
   const backgroundAudioDuration =
     !loop && resource?.length ? resource.length : 0;
 

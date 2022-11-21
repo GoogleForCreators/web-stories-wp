@@ -23,15 +23,19 @@ import type { PropsWithChildren } from 'react';
  * Internal dependencies
  */
 import type { AnimationPart } from '../parts';
-import type { Keyframes, StoryAnimation } from '../types';
+import type {
+  AMPEffectTiming,
+  Element,
+  ElementId,
+  Keyframes,
+  StoryAnimation,
+} from '../types';
 
 // We can't depend on the elements package, but we also don't actually need to.
 // The only thing we need concerning elements is the fact, that they're an object
 // with a string id, so this will suffice.
-export type ElementId = string;
-export interface Element {
-  id: ElementId;
-}
+
+export { ElementId };
 
 export type ElementAnimationHoister = (
   elementAnimation: WAAPIElementAnimation
@@ -42,7 +46,7 @@ export type AnimationHoister = (animation: Animation) => () => void;
 export interface AnimationProviderState {
   state: {
     providerId: string;
-    animationTargets: string[];
+    animationTargets: ElementId[];
   };
   actions: {
     getAnimationParts: (target: ElementId) => AnimationPart[];
@@ -75,7 +79,7 @@ export type ElementMap = Map<ElementId, Element>;
 
 export type WAAPIAnimationWrapperProps = PropsWithChildren<{
   keyframes: Keyframes;
-  timings: EffectTiming;
+  timings: AMPEffectTiming;
   hoistAnimation: AnimationHoister;
   targetLeafElement?: boolean;
 }>;

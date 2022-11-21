@@ -81,25 +81,25 @@ describe('AnimationProvider', () => {
         {
           id: '1',
           targets,
-          type: AnimationType.Move,
+          type: AnimationType.Move as const,
           duration: 1000,
         },
         {
           id: '2',
           targets,
-          type: AnimationType.Spin,
+          type: AnimationType.Spin as const,
           duration: 1000,
         },
         {
           id: '3',
           targets: ['other-target'],
-          type: AnimationType.Move,
+          type: AnimationType.Move as const,
           duration: 1000,
         },
         {
           id: '4',
           targets: [target, 'other-target'],
-          type: AnimationType.Zoom,
+          type: AnimationType.Zoom as const,
           duration: 1000,
         },
       ];
@@ -124,9 +124,9 @@ describe('AnimationProvider', () => {
       const targets = [target];
       const args = { someProp: 1, duration: 1000 };
       const types = [
-        AnimationType.Move,
-        AnimationType.Spin,
-        AnimationType.Zoom,
+        AnimationType.Move as const,
+        AnimationType.Spin as const,
+        AnimationType.Zoom as const,
       ];
       const animations = [
         { id: '1', targets, type: types[0], ...args },
@@ -180,7 +180,7 @@ describe('AnimationProvider', () => {
         rotationAngle: 0,
       };
       const elements = [element1, element2];
-      const animType = AnimationType.Move;
+      const animType = AnimationType.Move as const;
       const args = [
         { bounces: 3, duration: 1000 },
         { blinks: 2, offset: 20, blarks: 6, duration: 1000 },

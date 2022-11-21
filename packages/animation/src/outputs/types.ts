@@ -24,9 +24,7 @@ import type { CSSProperties, PropsWithChildren } from 'react';
  */
 import type { AMPEffectTiming, Keyframes } from '../types';
 
-export type GenericAnimation = AMPEffectTiming & { easingPreset?: string };
-
-export interface AnimationConfig extends GenericAnimation {
+export interface AnimationConfig extends AMPEffectTiming {
   selector: string;
   animation?: string;
   keyframes?: Keyframes;
@@ -44,7 +42,7 @@ export type WithAnimationProps = PropsWithChildren<{
   useClippingContainer?: boolean;
 }>;
 
-export interface KeyframesOutputProps extends GenericAnimation {
+export interface KeyframesOutputProps extends AMPEffectTiming {
   id: string;
   keyframes: Keyframes;
 }

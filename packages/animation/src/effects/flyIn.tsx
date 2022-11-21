@@ -18,7 +18,6 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import type { CSSProperties, PropsWithChildren } from 'react';
-import type { DimensionableElement } from '@googleforcreators/units';
 import { _x, __ } from '@googleforcreators/i18n';
 
 /**
@@ -27,22 +26,29 @@ import { _x, __ } from '@googleforcreators/i18n';
 import { AnimationMove } from '../parts/move';
 import { AnimationFade } from '../parts/fade';
 import { getOffPageOffset } from '../utils';
-import { AnimationDirection, FieldType } from '../types';
-import type { GenericAnimation } from '../outputs';
+import {
+  AMPEffectTiming,
+  AnimationDirection,
+  AnimationType,
+  Element,
+  FieldType,
+} from '../types';
 import type { AnimationPart } from '../parts';
 
-type EffectFlyInProps = {
+export interface FlyInEffect extends AMPEffectTiming {
   flyInDir?: AnimationDirection;
-  element: DimensionableElement;
-} & GenericAnimation;
+  type: AnimationType.EffectFlyIn;
+}
 
-export function EffectFlyIn({
-  flyInDir = AnimationDirection.TopToBottom,
-  element,
-  duration = 600,
-  delay = 0,
-  easing = 'cubic-bezier(0.2, 0.6, 0.0, 1)',
-}: EffectFlyInProps): AnimationPart {
+export function EffectFlyIn(
+  {
+    flyInDir = AnimationDirection.TopToBottom,
+    duration = 600,
+    delay = 0,
+    easing = 'cubic-bezier(0.2, 0.6, 0.0, 1)',
+  }: FlyInEffect,
+  element: Element
+): AnimationPart {
   const id = uuidv4();
   const { offsetTop, offsetLeft, offsetRight, offsetBottom } =
     getOffPageOffset(element);
@@ -68,15 +74,19 @@ export function EffectFlyIn({
     duration: duration,
     delay,
     easing,
+    type: AnimationType.Fade,
   });
 
-  const move = AnimationMove({
-    ...offsetLookup[flyInDir],
-    duration,
-    delay,
-    easing,
-    element,
-  });
+  const move = AnimationMove(
+    {
+      ...offsetLookup[flyInDir],
+      duration,
+      delay,
+      easing,
+      type: AnimationType.Move,
+    },
+    element
+  );
 
   const keyframes = {
     ...move.keyframes,

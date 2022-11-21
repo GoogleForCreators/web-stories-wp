@@ -17,13 +17,13 @@
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
-import { FieldType } from '../types';
+import { AMPEffectTiming, AnimationType, FieldType } from '../types';
 import createAnimation from './createAnimation';
 
-const defaults: GenericAnimation = { fill: 'forwards', duration: 1000 };
+const defaults: AMPEffectTiming = { fill: 'forwards', duration: 1000 };
 
-type AnimationZoomProps = {
+export interface ZoomAnimation extends AMPEffectTiming {
+  type: AnimationType.Zoom;
   zoomFrom?: number;
   zoomTo?: number;
   targetLeafElement?: boolean;
@@ -31,15 +31,16 @@ type AnimationZoomProps = {
     horizontal: number;
     vertical: number;
   };
-} & GenericAnimation;
+}
 
 export function AnimationZoom({
   zoomFrom = 0,
   zoomTo = 1,
   targetLeafElement = false,
   transformOrigin,
+  type,
   ...args
-}: AnimationZoomProps) {
+}: ZoomAnimation) {
   const timings = { ...defaults, ...args };
   const keyframes = { transform: [`scale(${zoomFrom})`, `scale(${zoomTo})`] };
 

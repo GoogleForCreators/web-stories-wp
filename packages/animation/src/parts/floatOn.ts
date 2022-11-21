@@ -17,11 +17,15 @@
 /**
  * Internal dependencies
  */
-import type { GenericAnimation } from '../outputs';
-import { AnimationDirection, FieldType } from '../types';
+import {
+  AMPEffectTiming,
+  AnimationDirection,
+  AnimationType,
+  FieldType,
+} from '../types';
 import createAnimation from './createAnimation';
 
-const defaults: GenericAnimation = { fill: 'both', duration: 1000 };
+const defaults: AMPEffectTiming = { fill: 'both', duration: 1000 };
 
 const keyframesLookup: Record<
   AnimationDirection,
@@ -41,11 +45,17 @@ const keyframesLookup: Record<
   },
 };
 
+export interface FloatOnAnimation extends AMPEffectTiming {
+  floatOnDir?: AnimationDirection;
+  type: AnimationType.FloatOn;
+}
+
 export function AnimationFloatOn({
   floatOnDir = AnimationDirection.BottomToTop,
+  type,
   ...args
-}: { floatOnDir: AnimationDirection } & GenericAnimation) {
-  const timings: GenericAnimation = { ...defaults, ...args };
+}: FloatOnAnimation) {
+  const timings: AMPEffectTiming = { ...defaults, ...args };
   const keyframes = keyframesLookup[floatOnDir];
   return createAnimation(keyframes, timings);
 }
