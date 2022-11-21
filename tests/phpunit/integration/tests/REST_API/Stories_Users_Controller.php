@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,14 +29,12 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
  */
 class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 
-	protected static $user_id;
+	protected static int $user_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Stories_Users_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Stories_Users_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(

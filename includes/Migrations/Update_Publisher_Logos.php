@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Migrations;
 
@@ -39,7 +39,7 @@ class Update_Publisher_Logos extends Migrate_Base {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Analytics constructor.

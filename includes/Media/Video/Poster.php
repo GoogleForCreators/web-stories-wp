@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Media\Video;
 
@@ -53,7 +53,7 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	 *
 	 * @var Media_Source_Taxonomy Experiments instance.
 	 */
-	protected $media_source_taxonomy;
+	protected Media_Source_Taxonomy $media_source_taxonomy;
 
 	/**
 	 * Poster constructor.

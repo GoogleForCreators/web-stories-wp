@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
@@ -44,7 +44,7 @@ class Core_Themes_Support extends Service_Base {
 	 *
 	 * @var string[]
 	 */
-	protected static $supported_themes = [
+	protected static array $supported_themes = [
 		'twentytwentyone',
 		'twentytwenty',
 		'twentynineteen',
@@ -63,7 +63,7 @@ class Core_Themes_Support extends Service_Base {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Core theme supports constructor.

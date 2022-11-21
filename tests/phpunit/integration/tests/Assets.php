@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -74,7 +77,7 @@ class Assets extends TestCase {
 	 */
 	public function test_enqueue_style(): void {
 		$assets = new \Google\Web_Stories\Assets();
-		$assets->enqueue_style( 'test_style', false );
+		$assets->enqueue_style( 'test_style', '' );
 		$register_styles = $this->get_private_property( $assets, 'register_styles' );
 		$this->assertArrayHasKey( 'test_style', $register_styles );
 		$this->assertTrue( wp_style_is( 'test_style' ) );
@@ -85,7 +88,7 @@ class Assets extends TestCase {
 	 */
 	public function test_enqueue_script(): void {
 		$assets = new \Google\Web_Stories\Assets();
-		$assets->enqueue_script( 'test_script', false );
+		$assets->enqueue_script( 'test_script', '' );
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
 		$this->assertArrayHasKey( 'test_script', $register_scripts );
 		$this->assertTrue( wp_script_is( 'test_script' ) );

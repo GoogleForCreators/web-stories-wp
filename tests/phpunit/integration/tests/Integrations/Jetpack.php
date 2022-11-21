@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -31,10 +34,8 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Integrations\Jetpack
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Integrations\Jetpack $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -235,7 +236,7 @@ class Jetpack extends DependencyInjectedTestCase {
 			return $value;
 		}
 
-		$original_data = [
+		return [
 			[
 				'videopress' => [
 					'duration'      => 5000,
@@ -255,8 +256,6 @@ class Jetpack extends DependencyInjectedTestCase {
 				],
 			],
 		];
-
-		return $original_data;
 	}
 
 	/**
