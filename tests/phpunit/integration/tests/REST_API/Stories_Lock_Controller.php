@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -26,16 +29,14 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
  */
 class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
-	protected static $author_id;
-	protected static $subscriber;
-	protected static $editor;
+	protected static int $author_id;
+	protected static int $subscriber;
+	protected static int $editor;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Stories_Lock_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Stories_Lock_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(

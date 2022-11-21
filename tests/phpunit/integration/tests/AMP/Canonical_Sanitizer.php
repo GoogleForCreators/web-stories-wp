@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -24,7 +27,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
  * @coversDefaultClass \Google\Web_Stories\AMP\Canonical_Sanitizer
  */
 class Canonical_Sanitizer extends TestCase {
-	protected static $user_id;
+	protected static int $user_id;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(

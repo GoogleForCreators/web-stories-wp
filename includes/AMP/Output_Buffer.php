@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\AMP;
 
@@ -47,31 +47,29 @@ class Output_Buffer extends Service_Base implements Conditional {
 
 	/**
 	 * Whether output buffering has started.
-	 *
-	 * @var bool
 	 */
-	protected $is_output_buffering = false;
+	protected bool $is_output_buffering = false;
 
 	/**
 	 * Sanitization instance.
 	 *
 	 * @var Sanitization Sanitization instance.
 	 */
-	private $sanitization;
+	private Sanitization $sanitization;
 
 	/**
 	 * Optimization instance.
 	 *
 	 * @var Optimization Optimization instance.
 	 */
-	private $optimization;
+	private Optimization $optimization;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Output_Buffer constructor.

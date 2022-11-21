@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -37,9 +40,7 @@ class Meta_Sanitizer extends TestCase {
 
 		Monkey\Functions\stubs(
 			[
-				'wp_parse_url' => static function ( $url, $component = -1 ) {
-					return parse_url( $url, $component ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
-				},
+				'wp_parse_url' => static fn( $url, $component = -1 ) => parse_url( $url, $component ), // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
 			]
 		);
 	}
@@ -50,9 +51,7 @@ class Meta_Sanitizer extends TestCase {
 	public function test_expected_meta_tags(): void {
 		$named_specs = array_filter(
 			AMP_Allowed_Tags_Generated::get_allowed_tag( 'meta' ),
-			static function ( $spec ) {
-				return isset( $spec['tag_spec']['spec_name'] ) && \Google\Web_Stories\AMP\Meta_Sanitizer::BODY_ANCESTOR_META_TAG_SPEC_NAME === $spec['tag_spec']['spec_name'];
-			}
+			static fn( $spec ) => isset( $spec['tag_spec']['spec_name'] ) && \Google\Web_Stories\AMP\Meta_Sanitizer::BODY_ANCESTOR_META_TAG_SPEC_NAME === $spec['tag_spec']['spec_name']
 		);
 		$this->assertCount( 1, $named_specs );
 

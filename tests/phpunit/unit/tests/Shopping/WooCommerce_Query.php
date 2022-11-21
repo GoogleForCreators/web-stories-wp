@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -27,10 +30,7 @@ use Google\Web_Stories\Tests\Unit\TestCase;
 class WooCommerce_Query extends TestCase {
 	use Private_Access;
 
-	/**
-	 * @var \Google\Web_Stories\Shopping\WooCommerce_Query
-	 */
-	private $instance;
+	private \Google\Web_Stories\Shopping\WooCommerce_Query $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -42,9 +42,7 @@ class WooCommerce_Query extends TestCase {
 				'_prime_post_caches',
 				'get_post_meta',
 				'wp_strip_all_tags',
-				'get_woocommerce_currency' => static function () {
-					return 'USD';
-				},
+				'get_woocommerce_currency' => static fn() => 'USD',
 			]
 		);
 
@@ -71,7 +69,7 @@ class WooCommerce_Query extends TestCase {
 					$products = [
 						new Mock_Product(
 							[
-								'id'                => '1',
+								'id'                => 1,
 								'image_id'          => 50,
 								'gallery_image_ids' => [
 									51,
@@ -83,7 +81,7 @@ class WooCommerce_Query extends TestCase {
 
 						new Mock_Product(
 							[
-								'id'                => '2',
+								'id'                => 2,
 								'image_id'          => null,
 								'gallery_image_ids' => [],
 							]
@@ -91,7 +89,7 @@ class WooCommerce_Query extends TestCase {
 
 						new Mock_Product(
 							[
-								'id'                => '3',
+								'id'                => 3,
 								'image_id'          => null,
 								'gallery_image_ids' => [
 									72,
@@ -166,12 +164,8 @@ class WooCommerce_Query extends TestCase {
 	public function test_get_product_image(): void {
 		Monkey\Functions\stubs(
 			[
-				'wp_get_attachment_image_url' => static function ( $id ) {
-					return sprintf( 'http://example.com/%s', $id );
-				},
-				'get_post_meta'               => static function () {
-					return 'image alt';
-				},
+				'wp_get_attachment_image_url' => static fn( $id ) => sprintf( 'http://example.com/%s', $id ),
+				'get_post_meta'               => static fn() => 'image alt',
 
 			]
 		);

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -27,15 +30,13 @@ use WP_REST_Request;
  */
 class Status_Check_Controller extends DependencyInjectedRestTestCase {
 
-	protected static $editor;
-	protected static $subscriber;
+	protected static int $editor;
+	protected static int $subscriber;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Status_Check_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Status_Check_Controller $controller;
 
 	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(
