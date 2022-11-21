@@ -23,8 +23,7 @@ import type { Page } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import objectPick from '../../../utils/objectPick';
-import type { Story } from '../../../types/storyProvider';
-import type { MetaData } from '../../../types/configProvider';
+import type { Story, StorySaveData, MetaData } from '../../../types';
 import getAllProducts from './getAllProducts';
 
 interface StoryPropsToSave {
@@ -38,7 +37,7 @@ function getStoryPropsToSave({
   pages,
   metadata,
   flags,
-}: StoryPropsToSave) {
+}: StoryPropsToSave): StorySaveData {
   const { terms, ...propsFromStory } = objectPick(story, [
     'title',
     'status',
@@ -58,14 +57,14 @@ function getStoryPropsToSave({
     'terms',
   ]);
   const products = getAllProducts(pages);
-  const content = getStoryMarkup(story, pages, metadata, flags);
+  const content = getStoryMarkup(story, pages, metadata, flags) as string;
   return {
     content,
     pages,
     ...propsFromStory,
     ...terms,
     products,
-  };
+  } as StorySaveData;
 }
 
 export default getStoryPropsToSave;

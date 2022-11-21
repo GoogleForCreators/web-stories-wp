@@ -26,7 +26,7 @@ import type { Page } from '@googleforcreators/elements';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
-import type { Story } from '../../../types/storyProvider';
+import type { Story } from '../../../types/story';
 
 interface AutoSaveProps {
   storyId: number;

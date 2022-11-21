@@ -32,8 +32,7 @@ import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
-import type { Story } from '../../../types/storyProvider';
-import type { RESTError } from '../../../types/storyEditor';
+import type {Story, RESTError, StorySaveData} from '../../../types';
 
 const HTTP_STATUS_DESCRIPTIONS = {
   400: _x('Bad Request', 'HTTP status description', 'web-stories'),
@@ -98,9 +97,9 @@ function useSaveStory({
             // Saving an auto-draft should create a draft by default.
             status: 'auto-draft' === story.status ? 'draft' : story.status,
             ...props,
-          })
+          } as StorySaveData)
         )
-        .then((data: Story) => {
+        .then((data) => {
           const {
             status,
             slug,

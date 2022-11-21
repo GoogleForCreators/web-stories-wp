@@ -34,7 +34,7 @@ import type { Template } from '@googleforcreators/templates';
 /**
  * Internal dependencies
  */
-import type { RawStory, Story } from './storyProvider';
+import type {RawStory, Story, StoryReturnData, StorySaveData} from './story';
 
 export interface Capabilities {
   /** If the user has permissions to upload files. */
@@ -217,7 +217,7 @@ export interface APICallbacks {
     search?: string;
     per_page?: number;
   }) => Promise<Term>;
-  saveStoryById?: (data: Story) => Promise<Story>;
+  saveStoryById: (data: StorySaveData) => Promise<StoryReturnData>;
   updateCurrentUser?: (data: {
     mediaOptimization?: boolean;
     onboarding?: Record<string, boolean>;
