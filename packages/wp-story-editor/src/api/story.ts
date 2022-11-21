@@ -19,7 +19,7 @@
 import { addQueryArgs } from '@googleforcreators/url';
 import { DATA_VERSION } from '@googleforcreators/migration';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
-import type { Story } from '@googleforcreators/types';
+import type { Story } from '@googleforcreators/elements';
 
 /**
  * WordPress dependencies

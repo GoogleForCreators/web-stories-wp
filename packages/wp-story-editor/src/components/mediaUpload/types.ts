@@ -22,7 +22,7 @@ import type {
   ResourceType,
   VideoResource,
   AudioResource,
-} from '@googleforcreators/types';
+} from '@googleforcreators/media';
 
 export interface useMediaPickerProps {
   title: string;

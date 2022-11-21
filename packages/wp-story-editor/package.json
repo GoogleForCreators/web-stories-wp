@@ -40,7 +40,6 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/story-editor": "*",
     "@googleforcreators/tracking": "*",
-    "@googleforcreators/types": "*",
     "@googleforcreators/url": "*",
     "@web-stories-wp/wp-utils": "*",
     "@wordpress/api-fetch": "^6.14.0",
