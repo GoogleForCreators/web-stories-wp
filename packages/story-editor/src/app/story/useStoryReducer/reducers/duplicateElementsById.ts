@@ -17,13 +17,17 @@
 /**
  * External dependencies
  */
-import { duplicateElement, ELEMENT_TYPES } from '@googleforcreators/elements';
+import {
+  duplicateElement,
+  ELEMENT_TYPES,
+  elementIs,
+} from '@googleforcreators/elements';
 import { produce } from 'immer';
 
 /**
  * Internal dependencies
  */
-import type { DuplicateElementsByIdProps, ReducerState } from '../../../../types/storyProvider';
+import type { DuplicateElementsByIdProps, ReducerState } from '../../../../types';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.
@@ -40,6 +44,9 @@ export const duplicateElementsById = (
   }
 
   const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
   let hasDeletedSomething = false;
 
   elementIds.forEach((elementId) => {
@@ -51,7 +58,10 @@ export const duplicateElementsById = (
 
     const elementToDuplicate = page.elements[elementIndex];
 
-    if (elementToDuplicate.isBackground) {
+    if (
+      elementIs.backgroundable(elementToDuplicate) &&
+      elementToDuplicate.isBackground
+    ) {
       return;
     }
 

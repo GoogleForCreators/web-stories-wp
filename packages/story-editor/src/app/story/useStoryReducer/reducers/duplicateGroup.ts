@@ -18,13 +18,14 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { duplicateElement } from '@googleforcreators/elements';
+import { duplicateElement, elementIs } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
+import type { DuplicateGroupProps, ReducerState } from '../../../../types';
 import { addGroup } from './addGroup';
-import type {DuplicateGroupProps, ReducerState} from "../../../../types/storyProvider";
 
 /**
  * Duplicate group with all elements on the current page.
@@ -40,19 +41,23 @@ export const duplicateGroup = (
 
   // Check that old group exists
   const page = draft.pages.find(({ id }) => id === draft.current);
-  if (!page.groups?.[oldGroupId]) {
+  if (!page?.groups?.[oldGroupId]) {
     return;
   }
 
   // Check that old group has members
-  const isInGroup = (el) => el.groupId === oldGroupId;
+  const isInGroup = (el: Element) => el.groupId === oldGroupId;
   const members = page.elements.filter(isInGroup);
   if (!members.length) {
     return;
   }
 
   // Check that old group doesn't include background
-  if (members.some(({ isBackground }) => isBackground)) {
+  if (
+    members.some(
+      (element) => elementIs.backgroundable(element) && element.isBackground
+    )
+  ) {
     return;
   }
 

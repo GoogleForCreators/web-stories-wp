@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
+import type { ArrangeGroupProps, ReducerState } from '../../../../types';
 import { getAbsolutePosition } from './utils';
-import type {ReducerState} from "@googleforcreators/types";
-import type {ArrangeGroupProps} from "../../../../types/storyProvider";
 
 /**
  * Move group to a new position
@@ -37,10 +37,12 @@ export const arrangeGroup = (
     return;
   }
 
-  const { elements, groups } = draft.pages.find(
-    ({ id }) => id === draft.current
-  );
-  const isInGroup = (el) => el.groupId === groupId;
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
+  const { elements, groups } = page;
+  const isInGroup = (el: Element) => el.groupId === groupId;
 
   // If group doesn't exist or doesn't have any elements, abort
   if (!groups?.[groupId] || !elements.some(isInGroup)) {

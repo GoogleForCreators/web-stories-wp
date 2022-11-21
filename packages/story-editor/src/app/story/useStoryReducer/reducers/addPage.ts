@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { AddPageProps, ReducerState } from '../../../../types/storyProvider';
+import type { AddPageProps, ReducerState } from '../../../../types';
 import { isInsideRange } from './utils';
 
 /**

@@ -26,7 +26,7 @@ import { produce } from 'immer';
 import type {
   AddElementsAcrossPagesProps,
   ReducerState,
-} from '../../../../types/storyProvider';
+} from '../../../../types';
 import { addPage } from './addPage';
 import { addElements } from './addElements';
 

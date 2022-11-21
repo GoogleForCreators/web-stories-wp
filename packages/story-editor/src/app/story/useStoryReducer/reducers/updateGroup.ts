@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { ReducerState, UpdateGroupProps } from '../../../../types/storyProvider';
+import type { ReducerState, UpdateGroupProps } from '../../../../types';
 
 /**
  * Update group by id.
@@ -35,7 +35,11 @@ export const updateGroup = (
     return;
   }
 
-  const { groups } = draft.pages.find(({ id }) => id === draft.current);
+  const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
+  const { groups } = page;
 
   // Should only update existing groups
   if (!groups?.[groupId]) {

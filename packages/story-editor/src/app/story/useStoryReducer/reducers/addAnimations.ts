@@ -18,14 +18,12 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Animation } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import type {
-  AddAnimationsProps,
-  ReducerState,
-} from '../../../../types/storyProvider';
+import type { AddAnimationsProps, ReducerState } from '../../../../types';
 import { exclusion } from './utils';
 
 /**
@@ -57,7 +55,7 @@ export const addAnimations = (
     page.animations = [];
   }
   page.animations = page.animations.concat(
-    exclusion(page.animations, animations)
+    exclusion(page.animations, animations) as Animation[]
   );
 };
 

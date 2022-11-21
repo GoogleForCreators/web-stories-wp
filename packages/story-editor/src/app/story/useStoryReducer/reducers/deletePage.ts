@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { DeletePageProps, ReducerState } from '../../../../types/storyProvider';
+import type { DeletePageProps, ReducerState } from '../../../../types';
 
 /**
  * Delete page by id or delete current page if no id given.
@@ -36,7 +36,10 @@ import type { DeletePageProps, ReducerState } from '../../../../types/storyProvi
  *
  * If a page is deleted, selection is cleared.
  */
-export const deletePage = (draft: ReducerState, { pageId }: DeletePageProps) => {
+export const deletePage = (
+  draft: ReducerState,
+  { pageId }: DeletePageProps
+) => {
   if (draft.pages.length <= 1) {
     return;
   }

@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
+import type { ArrangeElementProps, ReducerState } from '../../../../types';
 import { getAbsolutePosition, moveArrayElement } from './utils';
-import type {ReducerState} from "@googleforcreators/types";
-import type {ArrangeElementProps} from "../../../../types/storyProvider";
 
 /**
  * Move element in element order on the current page (optionally handle group id when moved in the Layers Panel).
@@ -69,7 +69,7 @@ export const arrangeElement = (
   const page = draft.pages.find(({ id }) => id === draft.current);
 
   // Abort if there's less than three elements (nothing to rearrange as first is bg)
-  if (page.elements.length < 3) {
+  if (!page || page.elements.length < 3) {
     return;
   }
 
@@ -100,10 +100,10 @@ export const arrangeElement = (
   // Update group id on current element
   if (groupId) {
     // Can only change groups to a group that exists
-    if (!page.groups[groupId]) {
+    if (!page.groups?.[groupId as string]) {
       return;
     }
-    page.elements[currentPosition].groupId = groupId;
+    page.elements[currentPosition].groupId = groupId as string;
   } else if (groupId === undefined || groupId === null) {
     delete page.elements[currentPosition].groupId;
   }
@@ -113,13 +113,13 @@ export const arrangeElement = (
     const groupHasElements = page.elements.some(
       (e) => e.groupId === currentGroupId
     );
-    if (!groupHasElements) {
+    if (!groupHasElements && page.groups) {
       delete page.groups[currentGroupId];
     }
   }
 
   // Then reorder if relevant
-  page.elements = moveArrayElement(page.elements, currentPosition, newPosition);
+  page.elements = moveArrayElement(page.elements, currentPosition, newPosition) as Element[];
 };
 
 export default produce(arrangeElement);

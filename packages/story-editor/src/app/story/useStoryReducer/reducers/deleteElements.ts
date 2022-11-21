@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
+import type { DeleteElementsProps, ReducerState } from '../../../../types';
 import { intersect } from './utils';
-import type {DeleteElementsProps} from "../../../../types/storyProvider";
-import type {ReducerState} from "@googleforcreators/types";
 
 /**
  * Delete elements by the given list of ids.
@@ -43,10 +43,6 @@ import type {ReducerState} from "@googleforcreators/types";
  * Otherwise selection is unchanged.
  *
  * Current page is unchanged.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {Array.<string>} payload.elementIds List of ids of elements to delete.
  */
 export const deleteElements = (
   draft: ReducerState,
@@ -59,13 +55,18 @@ export const deleteElements = (
   }
 
   const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
   const pageElementIds = page.elements.map(({ id }) => id);
   const backgroundElement = page.elements[0];
 
   const isDeletingBackground = idsToDelete.some(
     (id) => id === backgroundElement.id
   );
-  const backgroundIsDefault = backgroundElement.isDefaultBackground;
+  const backgroundIsDefault =
+    elementIs.defaultBackground(backgroundElement) &&
+    backgroundElement.isDefaultBackground;
 
   const validDeletionIds =
     isDeletingBackground && backgroundIsDefault
@@ -84,7 +85,11 @@ export const deleteElements = (
   );
 
   // Restore default background if non-default bg has been deleted.
-  if (isDeletingBackground && !backgroundIsDefault) {
+  if (
+    isDeletingBackground &&
+    !backgroundIsDefault &&
+    page.defaultBackgroundElement
+  ) {
     page.elements.unshift(page.defaultBackgroundElement);
   }
 

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Animation, Element } from '@googleforcreators/elements';
+import type {Animation, Element, Page} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -45,7 +45,7 @@ export function isInsideRange(index: number, start: number, end: number) {
 }
 
 export function moveArrayElement(
-  array: Element[],
+  array: Page[] | Element[],
   oldPosition: number,
   newPosition: number
 ) {
@@ -101,7 +101,7 @@ export function getAbsolutePosition({
 export function updateElementWithUpdater(
   element: Element,
   properties: Partial<Element> | ElementUpdater
-) {
+): null | void {
   const updater =
     typeof properties === 'function' ? properties(element) : properties;
   const allowedProperties: Partial<Element> | Element = objectWithout(

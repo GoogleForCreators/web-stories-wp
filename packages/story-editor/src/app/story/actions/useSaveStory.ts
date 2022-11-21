@@ -32,7 +32,7 @@ import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
-import type { Story, RESTError, StorySaveData } from '../../../types';
+import type {Story, RESTError, StorySaveData, UpdateStoryProps, State} from '../../../types';
 
 const HTTP_STATUS_DESCRIPTIONS = {
   400: _x('Bad Request', 'HTTP status description', 'web-stories'),
@@ -45,7 +45,7 @@ interface UseSaveStoryProps {
   storyId: number;
   pages: Page[];
   story: Story;
-  updateStory: (data: { properties: Partial<Story> }) => Story;
+  updateStory: (props: UpdateStoryProps) => State;
 }
 
 /**

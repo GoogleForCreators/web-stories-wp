@@ -23,9 +23,9 @@ import { produce, current } from 'immer';
 /**
  * Internal dependencies
  */
+import type { SetSelectedElementsProps, ReducerState } from '../../../../types';
 import { intersect } from './utils';
-import type {ReducerState} from "@googleforcreators/types";
-import type {SetSelectedElementsProps} from "../../../../types/storyProvider";
+import {elementIs} from "@googleforcreators/elements";
 
 /**
  * Set selected elements to the given list of ids.
@@ -55,6 +55,9 @@ export const setSelectedElements = (
   }
 
   const currentPage = draft.pages.find(({ id }) => id === draft.current);
+  if (!currentPage) {
+    return;
+  }
   let allIds = newElementIds;
 
   if (withLinked) {
@@ -84,19 +87,24 @@ export const setSelectedElements = (
 
   // If it's a non-group multi-selection, filter out the background element,
   // locked elements, and video placeholders.
-  const byId = (id) => currentPage.elements.find(({ id: i }) => i === id);
+  const byId = (id: string) =>
+    currentPage.elements.find(({ id: i }) => i === id);
   const isMultiSelection = uniqueElementIds.length > 1;
   const isGroupSelection = withLinked;
-  const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
-  const isNotLockedElement = (id) => !byId(id).isLocked;
-  const isNotVideoPlaceholder = (id) => !byId(id).resource?.isPlaceholder;
+  const isNotBackgroundElement = (id: string) =>
+    currentPage.elements[0].id !== id;
+  const isLockedElement = (id: string) => byId(id)?.isLocked;
+  const isVideoPlaceholder = (id: string) => {
+    const e = byId(id);
+    return e && elementIs.media(e) && e.resource?.isPlaceholder;
+  };
   const newSelection =
     isMultiSelection && !isGroupSelection
       ? uniqueElementIds.filter(
           (id) =>
             isNotBackgroundElement(id) &&
-            isNotVideoPlaceholder(id) &&
-            isNotLockedElement(id)
+            !isVideoPlaceholder(id) &&
+            !isLockedElement(id)
         )
       : uniqueElementIds;
 

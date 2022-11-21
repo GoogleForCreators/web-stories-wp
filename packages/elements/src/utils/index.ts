@@ -23,3 +23,4 @@ export { default as getLayerName } from './getLayerName';
 export { default as duplicateElement } from './duplicateElement';
 export * from './getElementOffsets';
 export { default as getElementOrigin } from './getElementOrigin';
+export { default as elementIs } from './elementIs';

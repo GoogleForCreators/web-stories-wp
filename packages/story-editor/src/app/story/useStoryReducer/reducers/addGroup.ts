@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { AddGroupProps, ReducerState } from '../../../../types/storyProvider';
+import type { AddGroupProps, ReducerState } from '../../../../types';
 
 /**
  * Add a group to the current page groups list (id, name).
@@ -36,6 +36,9 @@ export const addGroup = (
   }
 
   const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
 
   if (!page.groups) {
     page.groups = {};

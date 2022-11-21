@@ -21,15 +21,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { canSupportMultiBorder } from '@googleforcreators/masks';
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '@googleforcreators/element-library';
 import { produce } from 'immer';
+import type { Element } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
+import type { CombineElementsProps, ReducerState } from '../../../../types';
 import { removeAnimationsWithElementIds } from './utils';
-import type {CombineElementsProps} from "../../../../types/storyProvider";
-import type {ReducerState} from "@googleforcreators/types";
 
 /**
  * Combine elements by taking properties from a first item and
@@ -64,17 +65,23 @@ export const combineElements = (
   const element = firstElement;
 
   const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
 
   const secondElementPosition = page.elements.findIndex(
     ({ id }) => id === secondId
   );
   const secondElement = page.elements[secondElementPosition];
 
-  if (!element || !element.resource || !secondElement) {
+  if (!elementIs.media(element) || !secondElement) {
     return;
   }
 
-  if (secondElement.isDefaultBackground) {
+  if (
+    elementIs.defaultBackground(secondElement) &&
+    secondElement.isDefaultBackground
+  ) {
     page.defaultBackgroundElement = {
       ...secondElement,
       // But generate a new ID for this temp background element
@@ -94,7 +101,10 @@ export const combineElements = (
   ];
 
   // If the element we're dropping into is not background, maintain link and border.
-  if (!secondElement.isBackground) {
+  if (
+    !('isBackground' in secondElement) ||
+    (elementIs.backgroundable(secondElement) && !secondElement.isBackground)
+  ) {
     propsFromFirst.push('link');
     propsFromFirst.push('border');
     if (canSupportMultiBorder(secondElement)) {
@@ -107,14 +117,14 @@ export const combineElements = (
     propsFromFirst.push('flip', 'overlay', 'width', 'height', 'x', 'y');
   }
 
-  const newElement = {
+  const newElement: Element = {
     // First copy everything from existing element except if it was default background
     ...objectWithout(secondElement, ['isDefaultBackground']),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
     // Then copy all relevant attributes from new element
     ...objectPick(element, propsFromFirst),
-  };
+  } as Element;
 
   // Elements are now
   page.elements = page.elements

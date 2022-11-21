@@ -25,26 +25,24 @@ import { produce } from 'immer';
 import type {
   RemoveElementFromGroupProps,
   ReducerState,
-} from '../../../../types/storyProvider';
+} from '../../../../types';
 import { arrangeElement } from './arrangeElement';
 import { getLastIndexOfGroup } from './utils';
 
 /**
  * Remove element from group.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {number} payload.elementId Selected element id
- * @param {number} payload.groupId Selected element group id
  */
 export const removeElementFromGroup = (
   draft: ReducerState,
   { elementId, groupId }: RemoveElementFromGroupProps
 ) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
   const { elements } = page;
   const element = elements.find(({ id }) => id === elementId);
-  if (element.groupId !== groupId) {
+  if (!element || element.groupId !== groupId) {
     return;
   }
 

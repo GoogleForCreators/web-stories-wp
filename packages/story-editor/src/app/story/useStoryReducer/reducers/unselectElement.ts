@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { UnselectElementProps, ReducerState } from '../../../../types/storyProvider';
+import type { UnselectElementProps, ReducerState } from '../../../../types';
 
 /**
  * Remove the given id from the current selection.

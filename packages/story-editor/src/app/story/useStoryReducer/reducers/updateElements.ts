@@ -23,7 +23,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { UpdateElementsProps, ReducerState } from '../../../../types/storyProvider';
+import type { UpdateElementsProps, ReducerState } from '../../../../types';
 import { updateElementWithUpdater, updateAnimations } from './utils';
 
 /**
@@ -56,6 +56,9 @@ export const updateElements = (
 
   const idsToUpdate = elementIds === null ? draft.selection : elementIds;
   const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page || !idsToUpdate) {
+    return;
+  }
   const animationLookup = {};
   page.elements
     .filter(({ id }) => idsToUpdate.includes(id))

@@ -18,17 +18,17 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type {SelectElementProps} from "../../../../types/storyProvider";
-import type {ReducerState} from "@googleforcreators/types";
+import { elementIs } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
+import type { SelectElementProps, ReducerState } from '../../../../types';
 
 /**
  * Add the given id to the current selection.
  *
  * If no id is given or id is already in the current selection, nothing happens.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.elementId Element id to add to the current selection.
  */
 export const selectElement = (
   draft: ReducerState,
@@ -39,10 +39,14 @@ export const selectElement = (
   }
 
   const currentPage = draft.pages.find(({ id }) => id === draft.current);
-  const byId = (i) => currentPage.elements.find(({ id }) => id === i);
+  if (!currentPage) {
+    return;
+  }
+  const byId = (i: string) => currentPage.elements.find(({ id }) => id === i);
   const isBackgroundElement = currentPage.elements[0].id === elementId;
   const element = byId(elementId);
-  const isVideoPlaceholder = element?.resource?.isPlaceholder;
+  const isVideoPlaceholder =
+    element && elementIs.media(element) && element.resource?.isPlaceholder;
   const hasExistingSelection = draft.selection.length > 0;
 
   // The bg element can't be added to non-empty selection.

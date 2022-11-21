@@ -18,11 +18,12 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import type { ArrangePageProps, ReducerState } from '../../../../types/storyProvider';
+import type { ArrangePageProps, ReducerState } from '../../../../types';
 import { isInsideRange, moveArrayElement } from './utils';
 
 /**
@@ -57,7 +58,7 @@ export const arrangePage = (
     return;
   }
 
-  draft.pages = moveArrayElement(draft.pages, pageIndex, position);
+  draft.pages = moveArrayElement(draft.pages, pageIndex, position) as Page[];
 };
 
 export default produce(arrangePage);

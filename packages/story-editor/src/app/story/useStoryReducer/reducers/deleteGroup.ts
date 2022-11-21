@@ -22,35 +22,40 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { DeleteGroupProps, ReducerState } from '../../../../types/storyProvider';
+import type { DeleteGroupProps, ReducerState } from '../../../../types';
 import { deleteElements } from './deleteElements';
 
 /**
  * Delete group by id.
  */
 const deleteGroup = produce(
-  (draft: ReducerState, { groupId, includeElements = false }: DeleteGroupProps) => {
-  const { elements, groups } = draft.pages.find(
-    ({ id }) => id === draft.current
-  );
-  if (!groupId || !groups?.[groupId]) {
-    return;
-  }
+  (
+    draft: ReducerState,
+    { groupId, includeElements = false }: DeleteGroupProps
+  ) => {
+    const page = draft.pages.find(({ id }) => id === draft.current);
+    if (!page) {
+      return;
+    }
+    const { elements, groups } = page;
+    if (!groupId || !groups?.[groupId]) {
+      return;
+    }
 
-  // Delete the group object completely
-  delete groups[groupId];
+    // Delete the group object completely
+    delete groups[groupId];
 
-  // If includeElements is true, remove elements as well
-  // Otherwise just unset groupId on elements
-  const groupElements = elements.filter((el) => el.groupId === groupId);
-  if (includeElements) {
-    const elementIds = groupElements.map(({ id }) => id);
-    deleteElements(draft, { elementIds });
-  } else {
-    groupElements.forEach((el) => {
-      delete el.groupId;
-    });
-  }
+    // If includeElements is true, remove elements as well
+    // Otherwise just unset groupId on elements
+    const groupElements = elements.filter((el) => el.groupId === groupId);
+    if (includeElements) {
+      const elementIds = groupElements.map(({ id }) => id);
+      deleteElements(draft, { elementIds });
+    } else {
+      groupElements.forEach((el) => {
+        delete el.groupId;
+      });
+    }
 });
 
 export default deleteGroup;

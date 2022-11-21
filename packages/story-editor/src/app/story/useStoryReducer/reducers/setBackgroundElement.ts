@@ -18,13 +18,16 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
+import type {
+  SetBackgroundElementProps,
+  ReducerState,
+} from '../../../../types';
 import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
-import type {ReducerState} from "@googleforcreators/types";
-import type {SetBackgroundElementProps} from "../../../../types/storyProvider";
 
 /**
  * Set background element on the current page to element matching the given id.
@@ -43,21 +46,31 @@ export const setBackgroundElement = (
   { elementId }: SetBackgroundElementProps
 ) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
   const currentBackgroundElement = page.elements[0];
 
   // If new id is null, clear background attribute and proceed
   if (elementId === null) {
-    if (currentBackgroundElement.isDefaultBackground) {
+    if (
+      elementIs.defaultBackground(currentBackgroundElement) &&
+      currentBackgroundElement.isDefaultBackground
+    ) {
       // Nothing to do here, we can't unset default background
       return;
     }
 
     // Unset isBackground for the element, too.
     page.elements.forEach((element) => {
-      delete element.isBackground;
+      if (elementIs.backgroundable(element)) {
+        delete element.isBackground;
+      }
     });
-    page.elements.unshift(page.defaultBackgroundElement);
-    draft.selection = [page.defaultBackgroundElement.id];
+    if (page.defaultBackgroundElement) {
+      page.elements.unshift(page.defaultBackgroundElement);
+      draft.selection = [page.defaultBackgroundElement.id];
+    }
   } else {
     // Does the element even exist or is it already background
     const elementPosition = page.elements.findIndex(
@@ -70,7 +83,9 @@ export const setBackgroundElement = (
     }
 
     // If current bg is default, save it as such
-    const wasDefault = currentBackgroundElement.isDefaultBackground;
+    const wasDefault =
+      elementIs.defaultBackground(currentBackgroundElement) &&
+      currentBackgroundElement.isDefaultBackground;
     if (wasDefault) {
       page.defaultBackgroundElement = currentBackgroundElement;
     }
@@ -91,7 +106,7 @@ export const setBackgroundElement = (
     page.elements = moveArrayElement(page.elements, currentPosition, 0);
     page.elements.forEach((element) => {
       // Set isBackground for the element.
-      if (element.id === elementId) {
+      if (element.id === elementId && elementIs.backgroundable(element)) {
         element.isBackground = true;
         if (Object.prototype.hasOwnProperty.call(element, 'opacity')) {
           element.opacity = 100;
@@ -108,7 +123,7 @@ export const setBackgroundElement = (
   // Remove any applied background animations
   // or exising element animations.
   const backgroundElementId = page.elements.find(
-    (element) => element.isBackground
+    (element) => elementIs.backgroundable(element) && element.isBackground
   );
   page.animations = removeAnimationsWithElementIds(page.animations, [
     elementId,

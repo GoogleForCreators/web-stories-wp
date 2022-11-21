@@ -23,7 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import objectPick from '../../../../utils/objectPick';
-import type { ReducerState } from '../../../../types/storyProvider';
+import type { ReducerState } from '../../../../types';
 
 export const ATTRIBUTES_TO_COPY = [
   'background',
@@ -55,7 +55,13 @@ export const copySelectedElement = (draft: ReducerState) => {
   }
 
   const page = draft.pages.find(({ id }) => id === draft.current);
+  if (!page) {
+    return;
+  }
   const element = page.elements.find(({ id }) => id === draft.selection[0]);
+  if (!element) {
+    return;
+  }
 
   // find related animations
   const elementAnimations = (page.animations || []).filter(({ targets }) =>
@@ -63,9 +69,12 @@ export const copySelectedElement = (draft: ReducerState) => {
   );
 
   // omit properties that must not be copied
-  const copiedStyles = objectPick(element, ATTRIBUTES_TO_COPY);
+  const copiedStyles = objectPick(
+    element,
+    ATTRIBUTES_TO_COPY
+  ) as Partial<Element>;
 
-  draft.copiedElementReducerState = {
+  draft.copiedElementState = {
     animations: elementAnimations,
     styles: copiedStyles,
     type: element.type,

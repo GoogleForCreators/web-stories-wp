@@ -22,10 +22,9 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
+import type { ToggleLayerProps, ReducerState } from '../../../../types';
 import { toggleElement } from './toggleElement';
 import { setSelectedElements } from './setSelectedElements';
-import type {ReducerState} from "@googleforcreators/types";
-import type {ToggleLayerProps} from "../../../../types/storyProvider";
 
 export const toggleLayer = (
   draft: ReducerState,
@@ -50,6 +49,9 @@ export const toggleLayer = (
   // select everything between this layer and the first selected layer
   const firstId = draft.selection[0];
   const currentPage = draft.pages.find(({ id }) => id === draft.current);
+  if (!currentPage) {
+    return;
+  }
   const pageElementIds = currentPage.elements.map((el) => el.id);
   const firstIndex = pageElementIds.findIndex((id) => id === firstId);
   const clickedIndex = pageElementIds.findIndex((id) => id === elementId);

@@ -17,21 +17,18 @@
 /**
  * External dependencies
  */
-import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { Element, elementIs, ElementType } from '@googleforcreators/elements';
 import { produce } from 'immer';
 
 /**
  * Internal dependencies
  */
 import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
+import type { AddElementsProps, ReducerState } from '../../../../types';
 import { exclusion } from './utils';
-import type {ReducerState} from "@googleforcreators/types";
-import type {AddElementsProps} from "../../../../types/storyProvider";
 
-const isProduct = ({ type }: { type: string }) =>
-  type === ELEMENT_TYPES.PRODUCT;
-const isNotProduct = ({ type }: { type: string }) =>
-  type !== ELEMENT_TYPES.PRODUCT;
+const isProduct = ({ type }: Element) => type === ElementType.Product;
+const isNotProduct = ({ type }: Element) => type !== ElementType.Product;
 
 /**
  * Add elements to current page.
@@ -50,7 +47,6 @@ export const addElements = (
   draft: ReducerState,
   { elements, pageId, updateSelection = true }: AddElementsProps
 ) => {
-  console.log(draft);
   if (!Array.isArray(elements)) {
     return;
   }
@@ -58,8 +54,11 @@ export const addElements = (
   const page = draft.pages.find(({ id }) =>
     pageId ? id === pageId : id === draft.current
   );
+  if (!page) {
+    return;
+  }
 
-  const newElements = exclusion(page.elements, elements);
+  const newElements = exclusion(page.elements, elements) as Element[];
 
   if (newElements.length === 0) {
     return;
@@ -80,10 +79,10 @@ export const addElements = (
   if (newProducts.length) {
     const currentProducts = page.elements
       .filter(isProduct)
-      .map(({ product }) => product?.productId);
+      .map((e) => elementIs.product(e) && e.product?.productId);
 
     const uniqueProducts = newProducts.filter(
-      ({ product }) => !currentProducts.includes(product?.productId)
+      (e) => elementIs.product(e) && !currentProducts.includes(e.product?.productId)
     );
 
     // Then, if the number of products after adding these would still be within

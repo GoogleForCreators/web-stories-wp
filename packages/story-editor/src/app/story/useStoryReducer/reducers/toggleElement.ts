@@ -18,8 +18,14 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type {ReducerState} from "@googleforcreators/types";
-import type {ToggleElementInSelectionProps} from "../../../../types/storyProvider";
+
+/**
+ * Internal dependencies
+ */
+import type {
+  ToggleElementInSelectionProps,
+  ReducerState,
+} from '../../../../types';
 
 /**
  * Toggle element id in selection.
@@ -32,11 +38,6 @@ import type {ToggleElementInSelectionProps} from "../../../../types/storyProvide
  * element is locked, create new selection of only the new element.
  *
  * If no id is given, do nothing.
- *
- * @param {Object} draft Current state
- * @param {Object} payload Action payload
- * @param {string} payload.elementId Id to either add or remove from selection.
- * @param {boolean} payload.withLinked Include elements from the group?
  */
 export const toggleElement = (
   draft: ReducerState,
@@ -46,8 +47,10 @@ export const toggleElement = (
     return;
   }
 
-  const wasSelected = draft.selection.includes(elementId);
   const currentPage = draft.pages.find(({ id }) => id === draft.current);
+  if (!currentPage) {
+    return;
+  }
   const backgroundElementId = currentPage.elements[0].id;
   const isBackgroundElement = backgroundElementId === elementId;
   const hasExistingSelection = draft.selection.length > 0;
@@ -67,6 +70,7 @@ export const toggleElement = (
   }
 
   // If it wasn't selected, we're adding the element(s) to the selection.
+  const wasSelected = draft.selection.includes(elementId);
   if (!wasSelected) {
     // The bg element can't be added to non-empty selection
     if (isBackgroundElement && hasExistingSelection) {
@@ -79,15 +83,15 @@ export const toggleElement = (
     // * if new selection is a locked element
     const selectionWasOnlyBackground =
       draft.selection.includes(backgroundElementId);
-    const getElementById = (byId) =>
+    const getElementById = (byId: string) =>
       currentPage.elements.find(({ id }) => id === byId);
     const oldElementIsLocked =
       draft.selection.length > 0
-        ? getElementById(draft.selection[0]).isLocked
+        ? getElementById(draft.selection[0])?.isLocked
         : false;
     const newElement = getElementById(elementId);
     const resultIsOnlyNewElement =
-      selectionWasOnlyBackground || oldElementIsLocked || newElement.isLocked;
+      selectionWasOnlyBackground || oldElementIsLocked || newElement?.isLocked;
 
     // If either of those, return a selection with only the new element(s)
     if (resultIsOnlyNewElement) {

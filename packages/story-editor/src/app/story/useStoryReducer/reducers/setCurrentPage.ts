@@ -22,7 +22,7 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { SetCurrentPageProps, ReducerState } from '../../../../types/storyProvider';
+import type { SetCurrentPageProps, ReducerState } from '../../../../types';
 
 /**
  * Set current page to the given id.

@@ -18,8 +18,15 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type {ReducerState} from "@googleforcreators/types";
-import type {DeleteElementsByResourceIdProps} from "../../../../types/storyProvider";
+import { elementIs } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
+import type {
+  DeleteElementsByResourceIdProps,
+  ReducerState,
+} from '../../../../types';
 
 /**
  * Delete elements by the given resource id.
@@ -39,30 +46,32 @@ export const deleteElementsByResourceId = (
   }
 
   const hasElementWithResourceId = draft.pages.some((page) =>
-    page.elements.some((element) => element.resource?.id === id)
+    page.elements.some(
+      (element) => elementIs.media(element) && element.resource?.id === id
+    )
   );
 
   if (!hasElementWithResourceId) {
     return;
   }
 
-  const idsToDelete = [];
+  const idsToDelete: string[] = [];
 
   draft.pages.forEach((page) => {
     const { elements, animations } = page;
 
-    const isDeletingBackground = elements[0].resource?.id === id;
+    const isDeletingBackground =
+      elementIs.media(elements[0]) && elements[0].resource?.id === id;
 
     page.elements = elements.filter((element) => {
-      const { id: elementId, resource } = element;
-      if (resource?.id === id) {
-        idsToDelete.push(elementId);
+      if (elementIs.media(element) && element.resource?.id === id) {
+        idsToDelete.push(element.id);
         return false;
       }
       return true;
     });
 
-    if (isDeletingBackground) {
+    if (isDeletingBackground && page.defaultBackgroundElement) {
       page.elements.unshift(page.defaultBackgroundElement);
     }
 

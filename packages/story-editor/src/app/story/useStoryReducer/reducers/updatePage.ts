@@ -23,7 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { PAGE_RESERVED_PROPERTIES } from '../types';
-import type { UpdatePageProps, ReducerState } from '../../../../types/storyProvider';
+import type { UpdatePageProps, ReducerState } from '../../../../types';
 import { objectWithout } from './utils';
 
 /**

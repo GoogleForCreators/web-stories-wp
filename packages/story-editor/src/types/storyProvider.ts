@@ -157,8 +157,9 @@ export type ArrangeGroupAction = {
   payload: ArrangeGroupProps;
 };
 
+type ElementIdsFunc = (props: string[]) => string[];
 export type SetSelectedElementsProps = {
-  elementIds: string[];
+  elementIds: string[] | ElementIdsFunc;
   withLinked?: boolean;
 };
 export type SetSelectedElementsAction = {
@@ -349,6 +350,7 @@ export type InternalActions = {
 };
 export type ExternalActions = {
   addAnimations: (props: AddAnimationsProps) => State;
+  updateStory: (props: UpdateStoryProps) => State;
 };
 export interface ReducerProviderState {
   state: ReducerState;
@@ -357,8 +359,8 @@ export interface ReducerProviderState {
 }
 
 export interface ReducerState {
-  story: Story | null;
-  selection?: string[];
+  story: Story;
+  selection: string[];
   current: string | null;
   pages: Page[];
   animationState: string;

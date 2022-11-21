@@ -112,3 +112,12 @@ export interface ProductElement extends Element {
   type: ElementType.Product;
   product: ProductData;
 }
+
+export interface TextElement extends Element {
+  content: string;
+  font: {
+    service: string;
+    family: string;
+    fallbacks: string[];
+  };
+}
