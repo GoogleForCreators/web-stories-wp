@@ -43,6 +43,7 @@ import {
 } from './utils';
 
 import type { Term, TaxonomiesBySlug, Taxonomy, EmbeddedTerms, TermsIds } from '../../types/taxonomyProvider';
+import type { APIState } from '../../types/apiProvider';
 
 function TaxonomyProvider(props: { children: React.ReactNode }) {
   const [taxonomies, setTaxonomies] = useState<Taxonomy[] | never>([]);
@@ -62,8 +63,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     })
   );
 
-  // @ts-ignore Reason: update this after useAPI is updated ?
-  const { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies } = useAPI(
+  const { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies }: APIState["actions"] = useAPI(
     ({ actions }) => actions
   );
 
