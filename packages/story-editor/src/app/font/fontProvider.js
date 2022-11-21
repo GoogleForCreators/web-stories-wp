@@ -29,8 +29,7 @@ import { FONT_WEIGHT_NAMES } from '../../constants';
 import { useAPI } from '../api';
 import Context from './context';
 import useLoadFontFiles from './actions/useLoadFontFiles';
-
-export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
+import { GOOGLE_MENU_FONT_URL } from './constants';
 
 function FontProvider({ children }) {
   const [queriedFonts, setQueriedFonts] = useState([]);

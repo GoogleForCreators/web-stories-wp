@@ -19,7 +19,7 @@
  */
 import { createContext } from '@wordpress/element';
 
-export const INITIAL_STATE = {};
+const INITIAL_STATE = {};
 
 export interface ContextState {
   isRTL: boolean;

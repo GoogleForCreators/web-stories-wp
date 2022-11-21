@@ -15,6 +15,8 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Infrastructure\Injector;
 
 /**
@@ -35,14 +37,14 @@ final class InjectionChain {
 	 *
 	 * @var string[]
 	 */
-	private $chain = [];
+	private array $chain = [];
 
 	/**
 	 * Resolutions.
 	 *
 	 * @var array<bool>
 	 */
-	private $resolutions = [];
+	private array $resolutions = [];
 
 	/**
 	 * Add class to injection chain.

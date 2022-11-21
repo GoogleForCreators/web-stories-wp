@@ -18,16 +18,19 @@
  * External dependencies
  */
 import type {
-  Font,
   MediaElement,
   Page,
-  Product,
+  Story,
+  FontData,
+  ProductData,
+} from '@googleforcreators/elements';
+import type {
   Resource,
   ResourceId,
-  Story,
   TrimData,
   VideoResource,
-} from '@googleforcreators/types';
+} from '@googleforcreators/media';
+import type { Template } from '@googleforcreators/templates';
 
 export interface Capabilities {
   /** If the user has permissions to upload files. */
@@ -71,7 +74,7 @@ export interface Tip {
   href: string;
 }
 
-interface PageTemplate extends Page {
+export interface PageTemplate extends Page {
   version: string;
 }
 interface TemplateData {
@@ -185,7 +188,7 @@ export interface APICallbacks {
     hasMore: boolean;
     templates: PageTemplate[];
   }>;
-  getFonts?: (props: GetFontProps) => Promise<Font[]>;
+  getFonts?: (props: GetFontProps) => Promise<FontData[]>;
   getHotlinkInfo?: (link: string) => Promise<HotlinkInfo>;
   getLinkMetadata?: (link: string) => Promise<LinkMetaData>;
   getMedia?: (props: {
@@ -200,9 +203,9 @@ export interface APICallbacks {
   getMediaForCorsCheck?: () => Promise<Resource[]>;
   getMutedMediaById?: (id: number) => Promise<VideoResource>;
   getOptimizedMediaById?: (id: number) => Promise<Resource>;
-  getPageTemplates?: () => Promise<PageTemplate[]>;
+  getPageTemplates?: () => Promise<Template[]>;
   getPosterMediaById?: (id: number) => Promise<Resource>;
-  getProducts?: () => Promise<Product[]>;
+  getProducts?: () => Promise<ProductData[]>;
   getProxyUrl?: (src: string) => string;
   getStoryById?: (id: number) => Promise<Story>;
   getTaxonomies?: () => Promise<Taxonomy[]>;
@@ -241,7 +244,7 @@ export interface ConfigState {
   /** Max allowed upload in bytes */
   maxUpload: number;
   capabilities: Capabilities;
-  metaData: MetaData;
+  metadata: MetaData;
   canViewDefaultTemplates: boolean;
   /** If to show the 3rd party media in the library */
   showMedia3p: boolean;

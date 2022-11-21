@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Integrations\WooCommerce;
@@ -40,7 +42,7 @@ class WooCommerce_Query implements Product_Query {
 	 *
 	 * @var WooCommerce WooCommerce instance.
 	 */
-	private $woocommerce;
+	private WooCommerce $woocommerce;
 
 	/**
 	 * Constructor.

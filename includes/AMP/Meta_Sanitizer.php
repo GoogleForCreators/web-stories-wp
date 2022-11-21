@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\AMP;
 
 use Google\Web_Stories_Dependencies\AMP_Meta_Sanitizer;

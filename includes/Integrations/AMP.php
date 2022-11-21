@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
@@ -64,21 +66,21 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Analytics constructor.
@@ -173,7 +175,7 @@ class AMP extends Service_Base implements HasRequirements {
 		$post_types = array_diff( $post_types, [ $story_post_type ] );
 
 		if ( $this->get_request_post_type() === $story_post_type ) {
-			$post_types = array_merge( $post_types, [ $story_post_type ] );
+			$post_types = [ ...$post_types, $story_post_type ];
 		}
 
 		return array_unique( array_values( $post_types ) );
@@ -260,7 +262,7 @@ class AMP extends Service_Base implements HasRequirements {
 	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
 		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
-			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
+			isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) &&
 			(
 				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
 				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] ) ||

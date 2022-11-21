@@ -19,14 +19,16 @@
 import PropTypes from 'prop-types';
 import { useMemo, forwardRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
+
 /**
  * Internal dependencies
  */
 import { noop } from '../../utils';
 import { SmartPopover, Shadow } from './styled';
-import Menu, { MenuPropTypes } from './menu';
+import Menu from './menu';
 import AnimationContainer from './animationContainer';
 import { ContextMenuProvider } from './contextMenuProvider';
+import { MenuPropTypes } from './types';
 
 const ContextMenu = forwardRef(
   (

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Renderer\Stories;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
@@ -53,14 +55,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	protected $assets;
+	protected Assets $assets;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	protected $context;
+	protected Context $context;
 
 	/**
 	 * Web Stories stylesheet handle.
@@ -74,10 +76,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Number of instances invoked. Kept it static to keep track.
-	 *
-	 * @var int
 	 */
-	protected static $instances = 0;
+	protected static int $instances = 0;
 
 	/**
 	 * Object ID for the Renderer class.
@@ -86,17 +86,15 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * This variable is used to add appropriate class to the Web Stories
 	 * wrapper.
-	 *
-	 * @var int
 	 */
-	protected $instance_id = 0;
+	protected int $instance_id = 0;
 
 	/**
 	 * Story_Query instance.
 	 *
 	 * @var Story_Query Story_Query instance.
 	 */
-	protected $query;
+	protected Story_Query $query;
 
 	/**
 	 * Story attributes
@@ -104,49 +102,41 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @var array<string, string|int|bool> An array of story attributes.
 	 * @phpstan-var StoryAttributes
 	 */
-	protected $attributes = [];
+	protected array $attributes = [];
 
 	/**
 	 * Story posts.
 	 *
 	 * @var Story[] An array of story posts.
 	 */
-	protected $stories = [];
+	protected array $stories = [];
 
 	/**
 	 * Holds required html for the lightbox.
 	 *
 	 * @var string A string of lightbox markup.
 	 */
-	protected $lightbox_html = '';
+	protected string $lightbox_html = '';
 
 	/**
 	 * Pointer to iterate over stories.
-	 *
-	 * @var int
 	 */
-	private $position = 0;
+	private int $position = 0;
 
 	/**
 	 * Height for displaying story.
-	 *
-	 * @var int
 	 */
-	protected $height = 308;
+	protected int $height = 308;
 
 	/**
 	 * Width for displaying story.
-	 *
-	 * @var int
 	 */
-	protected $width = 185;
+	protected int $width = 185;
 
 	/**
 	 * Whether content overlay is enabled for story.
-	 *
-	 * @var bool
 	 */
-	protected $content_overlay;
+	protected bool $content_overlay;
 
 	/**
 	 * Constructor
@@ -162,12 +152,23 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		// TODO, find a way to inject this a cleaner way.
 		$injector = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return;
-		}
 
-		$this->assets  = $injector->make( Assets::class );
-		$this->context = $injector->make( Context::class );
+		/**
+		 * Assets instance.
+		 *
+		 * @var Assets $assets Assets instance.
+		 */
+		$assets = $injector->make( Assets::class );
+
+		/**
+		 * Context instance.
+		 *
+		 * @var Context $context Context instance.
+		 */
+		$context = $injector->make( Context::class );
+
+		$this->assets  = $assets;
+		$this->context = $context;
 	}
 
 	/**
@@ -359,7 +360,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	protected function get_view_type(): string {
-		return ( ! empty( $this->attributes['view_type'] ) ) ? $this->attributes['view_type'] : 'circles';
+		return ! empty( $this->attributes['view_type'] ) ? $this->attributes['view_type'] : 'circles';
 	}
 
 	/**
@@ -403,7 +404,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function get_view_classes(): string {
 		$view_classes   = [];
-		$view_classes[] = ( ! empty( $this->attributes['view_type'] ) ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
+		$view_classes[] = ! empty( $this->attributes['view_type'] ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
 
 		if ( $this->is_view_type( 'grid' ) && ! empty( $this->attributes['number_of_columns'] ) ) {
 			$view_classes[] = sprintf( 'columns-%1$d', $this->attributes['number_of_columns'] );
@@ -436,8 +437,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected function get_container_classes(): string {
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
-		$container_classes[] = ( ! empty( $this->attributes['align'] ) ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
-		$container_classes[] = ( ! empty( $this->attributes['class'] ) ) ? $this->attributes['class'] : '';
+		$container_classes[] = ! empty( $this->attributes['align'] ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
+		$container_classes[] = ! empty( $this->attributes['class'] ) ? $this->attributes['class'] : '';
 
 		if ( ! empty( $this->attributes['show_archive_link'] ) ) {
 			$container_classes[] = 'has-archive-link';
@@ -764,7 +765,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					height="6"
 					layout="responsive"
 				>
-					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
+					<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 				</amp-story-player>
 			</div>
 		</amp-lightbox>

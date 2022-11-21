@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -27,38 +30,30 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Shopify_Query extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Shopping\Shopify_Query
 	 */
-	private $instance;
+	private \Google\Web_Stories\Shopping\Shopify_Query $instance;
 
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
 	/**
 	 * Most recent request body.
-	 *
-	 * @var string
 	 */
-	protected $request_body;
+	protected string $request_body;
 
 	/**
 	 * Most recent response body.
-	 *
-	 * @var string
 	 */
-	protected $response_body;
+	protected string $response_body;
 
 	public function set_up(): void {
 		parent::set_up();
 
 		$this->request_count = 0;
-		$this->request_body  = null;
-		$this->response_body = null;
+		$this->request_body  = '';
+		$this->response_body = '';
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Shopping\Shopify_Query::class );
 	}

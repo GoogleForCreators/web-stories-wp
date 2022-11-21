@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\AMP\Output_Buffer;
@@ -206,9 +208,7 @@ class Plugin extends ServiceBasedPlugin {
 	 */
 	protected function get_delegations(): array {
 		return [
-			Injector::class => static function () {
-				return Services::get( 'injector' );
-			},
+			Injector::class => static fn() => Services::get( 'injector' ),
 		];
 	}
 }

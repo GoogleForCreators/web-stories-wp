@@ -15,48 +15,49 @@
  */
 
 /**
- * External dependencies
- */
-import type { Page } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
-import createNewElement from './createNewElement';
+import type { Page } from '../types';
+import createPage from './createPage';
 import duplicateElement from './duplicateElement';
 
-interface AccValue {
-  elements: Element[];
-  animations: Animation[];
-}
+// Required<> is a reverse Partial<> - removing the optional
+// part from the animations property
+type ElementsAndAnimationsOnly = Required<
+  Pick<Page, 'elements' | 'animations'>
+>;
 
-function duplicatePage(oldPage: Page): Page {
-  const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
+const duplicatePage = (oldPage: Page) => {
+  const {
+    elements: oldElements,
+    animations: oldAnimations = [],
+    ...rest
+  } = oldPage;
 
-  const { elements, animations } = oldElements.reduce(
-    (acc: AccValue, oldElement) => {
-      const { element, elementAnimations } = duplicateElement({
-        element: oldElement,
-        animations: oldAnimations,
-      });
-      return {
-        elements: [...acc.elements, element],
-        animations: [...acc.animations, ...elementAnimations],
-      } as AccValue;
-    },
-    {
-      elements: [],
-      animations: [],
-    } as AccValue
-  );
+  const elementAndAnimations: ElementsAndAnimationsOnly =
+    oldElements.reduce<ElementsAndAnimationsOnly>(
+      ({ elements, animations }, oldElement) => {
+        const { element, elementAnimations } = duplicateElement({
+          element: oldElement,
+          animations: oldAnimations,
+        });
+        return {
+          elements: [...elements, element],
+          animations: [...animations, ...elementAnimations],
+        };
+      },
+      {
+        elements: [],
+        animations: [],
+      }
+    );
 
-  const newAttributes = {
-    elements,
-    animations,
+  const newAttributes: Partial<Page> = {
+    ...elementAndAnimations,
     ...rest,
   };
 
-  return createNewElement('page', newAttributes) as Page;
-}
+  return createPage(newAttributes);
+};
 
 export default duplicatePage;

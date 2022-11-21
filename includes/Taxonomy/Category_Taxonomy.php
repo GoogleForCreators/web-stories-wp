@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Taxonomy;
 
 use Google\Web_Stories\REST_API\Stories_Terms_Controller;
@@ -36,19 +38,13 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Category_Taxonomy extends Taxonomy_Base {
 	/**
-	 * Taxonomy key.
-	 *
-	 * @var string
-	 */
-	protected $taxonomy_slug = 'web_story_category';
-
-	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
 	public function __construct( Story_Post_Type $story_post_type ) {
 		$this->taxonomy_post_type = $story_post_type->get_slug();
+		$this->taxonomy_slug      = 'web_story_category';
 	}
 
 	/**
@@ -97,7 +93,7 @@ class Category_Taxonomy extends Taxonomy_Base {
 			'item_link'             => _x( 'Category Link', 'navigation link block title', 'web-stories' ),
 			'item_link_description' => _x( 'A link to a category.', 'navigation link block description', 'web-stories' ),
 		];
-		$args   = [
+		return [
 			'labels'                => $labels,
 			'hierarchical'          => true,
 			'public'                => false,
@@ -109,7 +105,5 @@ class Category_Taxonomy extends Taxonomy_Base {
 			'capabilities'          => self::DEFAULT_CAPABILITIES,
 			'rest_controller_class' => Stories_Terms_Controller::class,
 		];
-
-		return $args;
 	}
 }

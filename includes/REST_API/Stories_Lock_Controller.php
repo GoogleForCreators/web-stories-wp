@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -44,14 +46,14 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Parent post controller.
 	 *
-	 * @var WP_REST_Controller
+	 * @var WP_REST_Controller WP_REST_Controller instance.
 	 */
-	private $parent_controller;
+	private WP_REST_Controller $parent_controller;
 
 	/**
 	 * Constructor.

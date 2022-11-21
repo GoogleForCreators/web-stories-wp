@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Story } from '@googleforcreators/types';
+import type { Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -144,5 +144,3 @@ export function migrate(storyData: Story, version: number): Story {
   }
   return result;
 }
-
-export default migrate;

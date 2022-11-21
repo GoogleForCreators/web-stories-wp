@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\AMP;
 
 use DOMElement;
@@ -60,7 +62,7 @@ class Sanitization {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Analytics constructor.
@@ -177,7 +179,7 @@ class Sanitization {
 		$extension_specs            = AMP_Allowed_Tags_Generated::get_extension_specs();
 		$superfluous_script_handles = array_diff(
 			array_keys( $amp_scripts ),
-			array_merge( array_keys( $scripts ), [ Amp::RUNTIME ] )
+			[ ...array_keys( $scripts ), Amp::RUNTIME ]
 		);
 
 		foreach ( $superfluous_script_handles as $superfluous_script_handle ) {

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { createSolid } from '@googleforcreators/patterns';
+
 export const ELEMENT_TYPES = {
   IMAGE: 'image',
   SHAPE: 'shape',
@@ -22,14 +27,14 @@ export const ELEMENT_TYPES = {
   GIF: 'gif',
   STICKER: 'sticker',
   PRODUCT: 'product',
-};
+} as const;
 
 export const MEDIA_ELEMENT_TYPES = [
   ELEMENT_TYPES.IMAGE,
   ELEMENT_TYPES.VIDEO,
   ELEMENT_TYPES.GIF,
   ELEMENT_TYPES.PRODUCT,
-];
+] as const;
 
 export const MULTIPLE_VALUE = '((MULTIPLE))';
 
@@ -85,3 +90,5 @@ export const OverlayType = {
   LINEAR: 'linear',
   RADIAL: 'radial',
 };
+
+export const DEFAULT_PAGE_BACKGROUND_COLOR = createSolid(255, 255, 255);

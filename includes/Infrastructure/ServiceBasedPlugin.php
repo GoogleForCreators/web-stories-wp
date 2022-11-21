@@ -15,6 +15,8 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Infrastructure;
 
 use Google\Web_Stories\Exception\InvalidService;
@@ -59,24 +61,20 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 	/**
 	 * Enable filters.
-	 *
-	 * @var bool
 	 */
-	protected $enable_filters;
+	protected bool $enable_filters;
 
 	/**
 	 * Injector.
-	 *
-	 * @var Injector
 	 */
-	protected $injector;
+	protected Injector $injector;
 
 	/**
 	 * ServiceContainer.
 	 *
 	 * @var ServiceContainer<Service>
 	 */
-	protected $service_container;
+	protected ServiceContainer $service_container;
 
 	/**
 	 * Instantiate a Theme object.
@@ -515,14 +513,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 		$short_name = substr( $fqcn, strrpos( $fqcn, '\\' ) + 1 );
 
 		// Turn camelCase or PascalCase into snake_case.
-		$snake_case = strtolower(
+		return strtolower(
 			trim(
 				(string) preg_replace( self::DETECT_CAPITALS_REGEX_PATTERN, '_$0', $short_name ),
 				'_'
 			)
 		);
-
-		return $snake_case;
 	}
 
 	/**
@@ -617,9 +613,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		 */
 		if ( ! is_a( $class, Registerable::class, true ) ) {
 			return new LazilyInstantiatedService(
-				function () use ( $class ) {
-					return $this->injector->make( $class );
-				}
+				fn() => $this->injector->make( $class )
 			);
 		}
 

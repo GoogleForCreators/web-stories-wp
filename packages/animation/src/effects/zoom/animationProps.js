@@ -17,18 +17,12 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { __, sprintf, _x } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
 import { FIELD_TYPES, SCALE_DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
-
-export const ZoomEffectInputPropTypes = {
-  scaleDirection: PropTypes.shape(AnimationInputPropTypes),
-};
 
 export default {
   scaleDirection: {

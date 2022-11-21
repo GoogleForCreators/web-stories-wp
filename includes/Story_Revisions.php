@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use WP_Post;
@@ -52,14 +54,14 @@ class Story_Revisions extends Service_Base {
 	 *
 	 * @var Story_Post_Type Story post type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Single constructor.
@@ -79,7 +81,7 @@ class Story_Revisions extends Service_Base {
 	 */
 	public function register(): void {
 		$post_type = $this->story_post_type->get_slug();
-		add_action( "wp_{$post_type}_revisions_to_keep", [ $this, 'revisions_to_keep' ] );
+		add_filter( "wp_{$post_type}_revisions_to_keep", [ $this, 'revisions_to_keep' ] );
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_get_revision_ui_diff', [ $this, 'filter_revision_ui_diff' ], 10, 3 );
 
@@ -96,7 +98,7 @@ class Story_Revisions extends Service_Base {
 	 */
 	public function revisions_to_keep( $num ): int {
 		$num = (int) $num;
-		return ( $num >= 0 && $num < 10 ) ? $num : 10;
+		return $num >= 0 && $num < 10 ? $num : 10;
 	}
 
 	/**
@@ -146,12 +148,8 @@ class Story_Revisions extends Service_Base {
 		);
 		$title = esc_html( get_the_title( $post ) );
 		return <<<Player
-<amp-story-player
-	style="width: 300px; height: 500px; display: flex;"
->
-	<a href="$url">$title</a>
-</amp-story-player>
-Player;
+				<amp-story-player style="width: 300px; height: 500px; display: flex;"><a href="$url">$title</a></amp-story-player>
+				Player;
 	}
 
 	/**
@@ -249,18 +247,17 @@ Player;
 
 		wp_add_inline_script(
 			AMP_Story_Player_Assets::SCRIPT_HANDLE,
-			<<<JS
-	const loadPlayers = () => document.querySelectorAll('amp-story-player').forEach(playerEl => (new AmpStoryPlayer(window, playerEl)).load());
-
-	const originalFrame = wp.revisions.view.Frame;
-	wp.revisions.view.Frame = originalFrame.extend({
-		render: function() {
-			originalFrame.prototype.render.apply(this, arguments);
-			loadPlayers();
-			this.listenTo( this.model, 'update:diff', () => loadPlayers() );
-		},
-	});
-JS
+			<<<'JS'
+				const loadPlayers = () => document.querySelectorAll('amp-story-player').forEach(playerEl => (new AmpStoryPlayer(window, playerEl)).load());
+				const originalFrame = wp.revisions.view.Frame;
+				wp.revisions.view.Frame = originalFrame.extend({
+					render: function() {
+						originalFrame.prototype.render.apply(this, arguments);
+						loadPlayers();
+						this.listenTo( this.model, 'update:diff', () => loadPlayers() );
+					},
+				});
+			JS
 		);
 	}
 }

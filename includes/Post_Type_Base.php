@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
@@ -225,7 +227,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_url(): string {
-		return rest_get_route_for_post_type_items( $this->get_rest_base() );
+		return rest_get_route_for_post_type_items( $this->get_slug() );
 	}
 
 	/**
@@ -337,7 +339,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		if ( get_option( 'permalink_structure' ) && \is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $post_type_obj->has_archive || $ignore_has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+			$struct = true === $post_type_obj->has_archive || $ignore_has_archive ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {

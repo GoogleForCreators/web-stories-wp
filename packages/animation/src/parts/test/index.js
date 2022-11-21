@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import { sanitizeTimings } from '../simpleAnimation';
+import { sanitizeTimings } from '../utils';
 import { AnimationPart, throughput } from '..';
 
 describe('AnimationPart', () => {

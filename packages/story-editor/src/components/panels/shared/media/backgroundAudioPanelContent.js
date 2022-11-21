@@ -40,9 +40,9 @@ import {
   getExtensionsFromMimeType,
   preloadVideo,
   getVideoLength,
+  BackgroundAudioPropType,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
-import { BackgroundAudioPropType } from '@googleforcreators/elements';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -117,7 +117,7 @@ function BackgroundAudioPanelContent({
 
   const onSelect = useCallback(
     /**
-     * @param {import('@googleforcreators/types').AudioResource} resource Audio resource.
+     * @param {import('@googleforcreators/media').AudioResource} resource Audio resource.
      */
     ({ src, id, mimeType, needsProxy, length, lengthFormatted }) => {
       const updatedBackgroundAudio = {

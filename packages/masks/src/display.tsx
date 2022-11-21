@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useUnits } from '@googleforcreators/units';
-import type { Border, MediaElement } from '@googleforcreators/types';
+import type { Border, MediaElement } from '@googleforcreators/elements';
 import type { CSSProperties } from 'react';
 
 /**

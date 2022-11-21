@@ -26,7 +26,7 @@ import {
 /**
  * Internal dependencies
  */
-import { ApiContext } from '../../../api/apiProvider';
+import ApiContext from '../../../api/context';
 import useApiAlerts from '../../../api/useApiAlerts';
 
 const SnackbarView = () => {

@@ -33,7 +33,7 @@ export function getAuthors(config: Config, search: string) {
   return apiFetch({
     path: addQueryArgs(config.api.users, {
       per_page: '100',
-      who: 'authors',
+      capabilities: config.editPostsCapabilityName,
       search,
     }),
   }).then((resp) => {

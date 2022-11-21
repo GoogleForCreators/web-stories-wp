@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
@@ -62,84 +64,84 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * Decoder instance.
 	 *
 	 * @var Decoder Decoder instance.
 	 */
-	private $decoder;
+	private Decoder $decoder;
 
 	/**
 	 * Meta boxes instance.
 	 *
-	 * @var Meta_Boxes
+	 * @var Meta_Boxes Meta_Boxes instance.
 	 */
-	private $meta_boxes;
+	private Meta_Boxes $meta_boxes;
 
 	/**
 	 * Locale instance.
 	 *
 	 * @var Locale Locale instance.
 	 */
-	private $locale;
+	private Locale $locale;
 
 	/**
 	 * Google_Fonts instance.
 	 *
 	 * @var Google_Fonts Google_Fonts instance.
 	 */
-	private $google_fonts;
+	private Google_Fonts $google_fonts;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Page_Template_Post_Type instance.
 	 *
 	 * @var Page_Template_Post_Type Page_Template_Post_Type instance.
 	 */
-	private $page_template_post_type;
+	private Page_Template_Post_Type $page_template_post_type;
 
 	/**
 	 * Font_Post_Type instance.
 	 *
 	 * @var Font_Post_Type Font_Post_Type instance.
 	 */
-	private $font_post_type;
+	private Font_Post_Type $font_post_type;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Dashboard constructor.
@@ -401,6 +403,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'generalSettingsLink'     => $general_settings_url,
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
 			'maxUpload'               => $max_upload_size,
+			'editPostsCapabilityName' => $this->story_post_type->get_cap_name( 'edit_posts' ),
 			'capabilities'            => [
 				'hasUploadMediaAction' => current_user_can( 'upload_files' ),
 				'canManageSettings'    => current_user_can( 'manage_options' ),
@@ -442,7 +445,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'mediainfoUrl'            => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/mediainfo.js@0.1.7/dist/mediainfo.min.js',
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
-				$this->experiments->get_experiment_statuses( 'editor' )
+				$this->experiments->get_experiment_statuses( 'editor' ),
 			),
 		];
 

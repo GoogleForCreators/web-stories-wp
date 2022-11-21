@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Context;
@@ -90,14 +92,14 @@ class Jetpack extends Service_Base {
 	 *
 	 * @var Media_Source_Taxonomy Experiments instance.
 	 */
-	protected $media_source_taxonomy;
+	protected Media_Source_Taxonomy $media_source_taxonomy;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Jetpack constructor.

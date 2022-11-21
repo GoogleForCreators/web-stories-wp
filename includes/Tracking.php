@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
@@ -57,42 +59,42 @@ class Tracking extends Service_Base {
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * Site_Kit instance.
 	 *
 	 * @var Site_Kit Site_Kit instance.
 	 */
-	private $site_kit;
+	private Site_Kit $site_kit;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Preferences instance.
 	 *
 	 * @var Preferences Preferences instance.
 	 */
-	private $preferences;
+	private Preferences $preferences;
 
 	/**
 	 * WooCommerce instance.
 	 *
 	 * @var WooCommerce WooCommerce instance.
 	 */
-	private $woocommerce;
+	private WooCommerce $woocommerce;
 
 	/**
 	 * Tracking constructor.
@@ -190,7 +192,7 @@ class Tracking extends Service_Base {
 		 * @var null|WP_User $current_user
 		 */
 		$current_user = wp_get_current_user();
-		$roles        = ( $current_user instanceof WP_User ) ? $current_user->roles : [];
+		$roles        = $current_user instanceof WP_User ? $current_user->roles : [];
 		$role         = ! empty( $roles ) && \is_array( $roles ) ? array_shift( $roles ) : '';
 		$experiments  = implode( ',', $this->experiments->get_enabled_experiments() );
 

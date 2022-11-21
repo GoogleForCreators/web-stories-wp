@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -49,14 +51,14 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Page_Template_Post_Type instance.
 	 *
 	 * @var Page_Template_Post_Type Page_Template_Post_Type instance.
 	 */
-	private $page_template_post_type;
+	private Page_Template_Post_Type $page_template_post_type;
 
 	/**
 	 * KSES constructor.
@@ -179,7 +181,7 @@ class KSES extends Service_Base implements HasRequirements {
 
 		if ( isset( $unsanitized_postarr['post_content'] ) ) {
 			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 
 			$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
 
@@ -853,9 +855,7 @@ class KSES extends Service_Base implements HasRequirements {
 	public function filter_content_save_pre_before_kses( $post_content ): string {
 		return (string) preg_replace_callback(
 			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
-			static function ( $matches ) {
-				return $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'];
-			},
+			static fn( $matches ) => $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'],
 			$post_content
 		);
 	}

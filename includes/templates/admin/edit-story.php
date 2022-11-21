@@ -34,6 +34,7 @@ global $post_type, $post_type_object, $post;
 $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 $initial_edits     = [ 'story' => null ];
 
+
 // Preload common data.
 // Important: keep in sync with usage & definition in React app.
 $preload_paths = [
@@ -72,12 +73,6 @@ $preload_paths = [
 			'context'  => 'view',
 			'per_page' => 10,
 			'_fields'  => 'source_url',
-		]
-	),
-	'/web-stories/v1/users/?' . build_query(
-		[
-			'per_page' => 100,
-			'who'      => 'authors',
 		]
 	),
 	'/web-stories/v1/users/me/',
@@ -139,7 +134,7 @@ if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.N
 
 	$story_path             = $story_initial_path . build_query( $story_query_params );
 	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
-	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
+	$initial_edits['story'] = ! empty( $story_data[ $story_path ]['body'] ) ? $story_data[ $story_path ]['body'] : [];
 }
 
 /**
@@ -173,7 +168,7 @@ wp_add_inline_script(
 	'after'
 );
 
-$init_script = <<<JS
+$init_script = <<<'JS'
 	wp.domReady( function() {
 	  webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
 	} );

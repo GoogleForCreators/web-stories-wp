@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
 
 /**
@@ -29,12 +28,6 @@ import {
   FIELD_TYPES,
   BEZIER,
 } from '../constants';
-import { AnimationInputPropTypes } from '../effects/types';
-
-export const BasicAnimationInputPropTypes = {
-  duration: PropTypes.shape(AnimationInputPropTypes),
-  delay: PropTypes.shape(AnimationInputPropTypes),
-};
 
 export const basicAnimationProps = {
   duration: {

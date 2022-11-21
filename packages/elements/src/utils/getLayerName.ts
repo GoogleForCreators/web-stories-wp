@@ -18,23 +18,15 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import type {
-  Element,
-  MediaElement,
-  ShapeElement,
-} from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import type { ElementDefinition } from '../elementType';
+import type { BackgroundableElement, Element } from '../types';
 import getDefinitionForType from './getDefinitionForType';
 
-type ElementWithBackground = MediaElement | ShapeElement;
-function elementAsBackground(
-  element: Element
-): element is ElementWithBackground {
-  return 'isBackground' in element;
+function isBackgroundableElement(e: Element): e is BackgroundableElement {
+  return 'isBackground' in e;
 }
 
 /**
@@ -48,13 +40,11 @@ function getLayerName(element: Element) {
     return element.layerName;
   }
 
-  if (elementAsBackground(element) && element.isBackground) {
+  if (isBackgroundableElement(element) && element.isBackground) {
     return __('Background', 'web-stories');
   }
 
-  return (getDefinitionForType(element.type) as ElementDefinition).getLayerText(
-    element
-  );
+  return getDefinitionForType(element.type)?.getLayerText(element);
 }
 
 export default getLayerName;

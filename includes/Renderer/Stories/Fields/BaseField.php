@@ -19,6 +19,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Renderer\Stories\Fields;
 
 use Google\Web_Stories\Interfaces\Field;
@@ -29,24 +31,18 @@ use Google\Web_Stories\Interfaces\Field;
 class BaseField implements Field {
 	/**
 	 * Field label.
-	 *
-	 * @var string
 	 */
-	private $label;
+	private string $label;
 
 	/**
 	 * Whether the field is enabled.
-	 *
-	 * @var bool
 	 */
-	private $hidden;
+	private bool $hidden;
 
 	/**
 	 * Whether to display the field.
-	 *
-	 * @var bool
 	 */
-	private $show;
+	private bool $show;
 
 	/**
 	 * BaseField constructor.
