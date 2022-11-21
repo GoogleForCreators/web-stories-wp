@@ -20,27 +20,27 @@
  * Internal dependencies
  */
 import type { BezierType } from '../constants';
-import type { PanBackgroundEffect } from '../effects/backgroundPan';
-import type { PanAndZoomBackgroundEffect } from '../effects/backgroundPanAndZoom';
-import type { ZoomBackgroundEffect } from '../effects/backgroundZoom';
-import type { DropEffect } from '../effects/drop';
-import type { FadeInEffect } from '../effects/fadeIn';
-import type { FlyInEffect } from '../effects/flyIn';
-import type { PanEffect } from '../effects/pan';
-import type { PulseEffect } from '../effects/pulse';
-import type { RotateInEffect } from '../effects/rotateIn';
-import type { TwirlInEffect } from '../effects/twirlIn';
-import type { WhooshInEffect } from '../effects/whooshIn';
-import type { ZoomEffect } from '../effects/zoom';
-import type { BlinkOnAnimation } from '../parts/blinkOn';
-import type { BounceAnimation } from '../parts/bounce';
-import type { FadeAnimation } from '../parts/fade';
-import type { FlipAnimation } from '../parts/flip';
-import type { FloatOnAnimation } from '../parts/floatOn';
-import type { MoveAnimation } from '../parts/move';
-import type { PulseAnimation } from '../parts/pulse';
-import type { SpinAnimation } from '../parts/spin';
-import type { ZoomAnimation } from '../parts/zoom';
+import type { PanBackgroundEffect } from '../parts/effects/backgroundPan';
+import type { PanAndZoomBackgroundEffect } from '../parts/effects/backgroundPanAndZoom';
+import type { ZoomBackgroundEffect } from '../parts/effects/backgroundZoom';
+import type { DropEffect } from '../parts/effects/drop';
+import type { FadeInEffect } from '../parts/effects/fadeIn';
+import type { FlyInEffect } from '../parts/effects/flyIn';
+import type { PanEffect } from '../parts/effects/pan';
+import type { PulseEffect } from '../parts/effects/pulse';
+import type { RotateInEffect } from '../parts/effects/rotateIn';
+import type { TwirlInEffect } from '../parts/effects/twirlIn';
+import type { WhooshInEffect } from '../parts/effects/whooshIn';
+import type { ZoomEffect } from '../parts/effects/zoom';
+import type { BlinkOnAnimation } from '../parts/simple/blinkOn';
+import type { BounceAnimation } from '../parts/simple/bounce';
+import type { FadeAnimation } from '../parts/simple/fade';
+import type { FlipAnimation } from '../parts/simple/flip';
+import type { FloatOnAnimation } from '../parts/simple/floatOn';
+import type { MoveAnimation } from '../parts/simple/move';
+import type { PulseAnimation } from '../parts/simple/pulse';
+import type { SpinAnimation } from '../parts/simple/spin';
+import type { ZoomAnimation } from '../parts/simple/zoom';
 import type { ElementId } from './element';
 
 export enum AnimationType {

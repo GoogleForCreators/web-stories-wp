@@ -24,39 +24,39 @@ import {
   AnimationType,
   Element,
 } from '../types';
+import { orderByKeys } from '../utils';
 import getDefaultFieldValue from '../utils/getDefaultFieldValue';
-import { EffectDrop, fields as dropFields } from '../effects/drop';
-import { EffectFadeIn, fields as fadeFields } from '../effects/fadeIn';
-import { EffectFlyIn, fields as flyInFields } from '../effects/flyIn';
-import { EffectPan, fields as panFields } from '../effects/pan';
-import { EffectPulse, fields as pulseFields } from '../effects/pulse';
-import { EffectTwirlIn } from '../effects/twirlIn';
-import { EffectWhooshIn, fields as whooshInFields } from '../effects/whooshIn';
-import { EffectZoom, fields as zoomFields } from '../effects/zoom';
-import { EffectRotateIn, fields as rotateInFields } from '../effects/rotateIn';
+import { EffectDrop, fields as dropFields } from './effects/drop';
+import { EffectFadeIn, fields as fadeFields } from './effects/fadeIn';
+import { EffectFlyIn, fields as flyInFields } from './effects/flyIn';
+import { EffectPan, fields as panFields } from './effects/pan';
+import { EffectPulse, fields as pulseFields } from './effects/pulse';
+import { EffectTwirlIn } from './effects/twirlIn';
+import { EffectWhooshIn, fields as whooshInFields } from './effects/whooshIn';
+import { EffectZoom, fields as zoomFields } from './effects/zoom';
+import { EffectRotateIn, fields as rotateInFields } from './effects/rotateIn';
 import {
   EffectBackgroundZoom,
   fields as bgZoomFields,
-} from '../effects/backgroundZoom';
+} from './effects/backgroundZoom';
 import {
   EffectBackgroundPan,
   fields as bgPanFields,
-} from '../effects/backgroundPan';
+} from './effects/backgroundPan';
 import {
   EffectBackgroundPanAndZoom,
   fields as bgPanZoomFields,
-} from '../effects/backgroundPanAndZoom';
+} from './effects/backgroundPanAndZoom';
 
-import { orderByKeys } from '../utils';
-import { AnimationBounce } from './bounce';
-import { AnimationBlinkOn } from './blinkOn';
-import { AnimationFade } from './fade';
-import { AnimationFlip } from './flip';
-import { AnimationFloatOn } from './floatOn';
-import { AnimationMove } from './move';
-import { AnimationPulse } from './pulse';
-import { AnimationSpin } from './spin';
-import { AnimationZoom } from './zoom';
+import { AnimationBounce } from './simple/bounce';
+import { AnimationBlinkOn } from './simple/blinkOn';
+import { AnimationFade } from './simple/fade';
+import { AnimationFlip } from './simple/flip';
+import { AnimationFloatOn } from './simple/floatOn';
+import { AnimationMove } from './simple/move';
+import { AnimationPulse } from './simple/pulse';
+import { AnimationSpin } from './simple/spin';
+import { AnimationZoom } from './simple/zoom';
 
 import { basicAnimationFields } from './defaultFields';
 import type { AnimationPart } from './types';
