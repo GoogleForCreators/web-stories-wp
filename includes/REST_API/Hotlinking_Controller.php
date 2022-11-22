@@ -269,7 +269,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 		$headers   = wp_remote_retrieve_headers( $response );
 		$mime_type = $headers['content-type'];
-		if ( $mime_type && false !== strpos( $mime_type, ';' ) ) {
+		if ( $mime_type && str_contains( $mime_type, ';' ) ) {
 			$pieces    = explode( ';', $mime_type );
 			$mime_type = array_shift( $pieces );
 		}
@@ -799,14 +799,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public function stream_headers( $handle, $header ): int {
 		// Parse Status-Line, the first component in the HTTP response, e.g. HTTP/1.1 200 OK.
 		// Extract the status code to re-send that here.
-		if ( 0 === strpos( $header, 'HTTP/' ) ) {
+		if ( str_starts_with( $header, 'HTTP/' ) ) {
 			$status = explode( ' ', $header );
 			http_response_code( (int) $status[1] );
 			return \strlen( $header );
 		}
 
 		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
-			if ( 0 === stripos( $header, strtolower( $_header ) . ': ' ) ) {
+			if ( str_starts_with( strtolower( $header ), strtolower( $_header ) . ': ' ) ) {
 				header( $header, true );
 			}
 		}
