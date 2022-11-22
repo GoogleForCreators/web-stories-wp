@@ -20,6 +20,7 @@
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
 import { createPage } from '@googleforcreators/elements';
+import { populateElementFontData } from '@googleforcreators/output';
 
 /**
  * Internal dependencies
@@ -28,7 +29,6 @@ import { useAPI } from '../../api';
 import { useHistory } from '../../history';
 import getUniquePresets from '../../../utils/getUniquePresets';
 import { useConfig } from '../../config';
-import { populateElementFontData } from '../../../utils/populateElementFontData';
 
 function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   const {
