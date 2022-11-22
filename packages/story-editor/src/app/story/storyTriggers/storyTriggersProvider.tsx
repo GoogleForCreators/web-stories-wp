@@ -23,7 +23,7 @@ import {
   useCallback,
   createContext,
 } from '@googleforcreators/react';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
@@ -33,7 +33,8 @@ import { STORY_EVENTS, StoryEventRegisters } from './storyEvents';
 
 export const Context = createContext<StoryTriggersState>([]);
 
-function createSubscriptionMap() {
+type Listener = (story?: State) => void;
+function createSubscriptionMap(): Record<string, Map<symbol, Listener>> {
   return Object.values(STORY_EVENTS).reduce(
     (accum, evenType) => ({
       ...accum,
@@ -47,22 +48,17 @@ function reducer([currentStory]: [State], updatedStory: State) {
   return [updatedStory, currentStory];
 }
 
-interface StoryTriggersProviderProps {
-  children: ReactNode;
-  story: State;
-}
+type StoryTuple = [State, State];
 export function StoryTriggersProvider({
   children,
   story,
-}: StoryTriggersProviderProps) {
+}: PropsWithChildren<{ story: State }>) {
   // store prev & next versions of story to help compute internally fired events.
   // Not sure if this is necessarily needed but was used a lot in FTUE. Lets keep
   // an eye on this as we create more internal event registers, and we can always
   // remove if we end up not using it.
-  const [[currentStory, previousStory], updateStory] = useReducer(reducer, [
-    story,
-    null,
-  ]);
+  const [[currentStory, previousStory], updateStory]: [StoryTuple, () => void] =
+    useReducer(reducer, [story, null]);
   const subscriptionMap = useMemo(createSubscriptionMap, []);
 
   // Update story to derive events
@@ -71,7 +67,7 @@ export function StoryTriggersProvider({
   // Method provided to listen to story events
   // return self cleanup method
   const addEventListener = useCallback(
-    (eventType, listener) => {
+    (eventType: string, listener: Listener) => {
       const key = Symbol();
       subscriptionMap[eventType].set(key, listener);
       return () => subscriptionMap[eventType].delete(key);
@@ -82,7 +78,9 @@ export function StoryTriggersProvider({
   // Method to push events into the queue
   const dispatchStoryEvent = useCallback(
     (eventType) => {
-      subscriptionMap[eventType]?.forEach((listener) => listener(currentStory));
+      subscriptionMap[eventType as keyof typeof subscriptionMap]?.forEach(
+        (listener) => listener(currentStory)
+      );
     },
     [subscriptionMap, currentStory]
   );
@@ -118,7 +116,4 @@ export function StoryTriggersProvider({
       </>
     </Context.Provider>
   );
-}
-
-export class TriggersContextValue {
 }

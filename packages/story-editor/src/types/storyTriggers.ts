@@ -26,4 +26,5 @@ export type StoryTriggersState = (
 export interface OnActionProps {
   currentStory: State;
   dispatchStoryEvent: (eventType: string) => void;
+  previousStory?: State;
 }
