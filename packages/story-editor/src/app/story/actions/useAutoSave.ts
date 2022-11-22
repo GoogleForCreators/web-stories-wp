@@ -44,7 +44,7 @@ function useAutoSave({ storyId, pages, story }: AutoSaveProps) {
   const [isAutoSaving, setIsAutoSaving] = useState(false);
 
   const autoSave = useCallback(
-    (props) => {
+    (props: Partial<StorySaveData>) => {
       setIsAutoSaving(true);
       return autoSaveById({
         storyId,

@@ -55,7 +55,7 @@ export const restore = (
     current: newCurrent,
     selection: newSelection,
     story: newReducerState,
-    animationReducerState: draft.animationReducerState,
+    animationState: draft.animationState,
     capabilities: newCapabilities,
     copiedElementReducerState: {},
   };

@@ -23,7 +23,7 @@ import type { Animation, Element, Page } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { StoryProviderState } from '../../types/storyProvider';
+import type { StoryProviderState } from '../../types';
 
 export default createContext<StoryProviderState>({
   state: {

@@ -49,7 +49,7 @@ export const updateElements = (
       STORY_ANIMATION_STATE.PLAYING,
       STORY_ANIMATION_STATE.PLAYING_SELECTED,
       STORY_ANIMATION_STATE.SCRUBBING,
-    ].includes(draft.animationReducerState)
+    ].includes(draft.animationState)
   ) {
     return;
   }

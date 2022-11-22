@@ -17,10 +17,7 @@
 /**
  * Internal dependencies
  */
-import type {
-  ReducerActionProps,
-  ReducerState,
-} from '../../../types/storyProvider';
+import type { ReducerActionProps, ReducerState } from '../../../types';
 import * as types from './types';
 import * as reducers from './reducers';
 

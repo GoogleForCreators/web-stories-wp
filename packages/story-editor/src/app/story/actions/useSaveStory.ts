@@ -73,7 +73,7 @@ function useSaveStory({
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
 
   const saveStory = useCallback(
-    (props) => {
+    (props: Partial<StorySaveData>) => {
       setIsSaving(true);
 
       const isStoryAlreadyPublished = ['publish', 'future', 'private'].includes(

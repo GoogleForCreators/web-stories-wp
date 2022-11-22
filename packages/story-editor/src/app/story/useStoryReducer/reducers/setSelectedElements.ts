@@ -108,7 +108,7 @@ export const setSelectedElements = (
         )
       : uniqueElementIds;
 
-  draft.animationReducerState = STORY_ANIMATION_STATE.RESET;
+  draft.animationState = STORY_ANIMATION_STATE.RESET;
   draft.selection = newSelection;
 };
 

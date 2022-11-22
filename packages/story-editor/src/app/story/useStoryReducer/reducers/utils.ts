@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type {Animation, Element, Page} from '@googleforcreators/elements';
+import type { Animation, Element, Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -25,7 +25,7 @@ import type {Animation, Element, Page} from '@googleforcreators/elements';
 import { LAYER_DIRECTIONS } from '../../../../constants';
 import { ELEMENT_RESERVED_PROPERTIES } from '../types';
 import objectWithout from '../../../../utils/objectWithout';
-import type { ElementUpdater } from '../../../../types/storyProvider';
+import type { ElementUpdater } from '../../../../types';
 export { objectWithout };
 
 export function intersect(first: string[], ...rest: string[][]) {

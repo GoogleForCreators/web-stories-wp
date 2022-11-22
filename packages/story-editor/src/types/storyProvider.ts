@@ -28,7 +28,7 @@ import type { ResourceId } from '@googleforcreators/media';
  * Internal dependencies
  */
 import type * as actionTypes from '../app/story/useStoryReducer/types';
-import type { Story } from './story';
+import type { Story, StorySaveData } from './story';
 
 export type AddPageProps = {
   page: Page;
@@ -348,9 +348,66 @@ export type ReducerActionProps =
 export type InternalActions = {
   restore: (props: RestoreProps) => State;
 };
+
+interface DeleteElementProps {
+  elementId: string;
+}
+interface UpdateElementProps {
+  elementId: string;
+  properties: Partial<Element> | ElementUpdater;
+}
 export type ExternalActions = {
-  addAnimations: (props: AddAnimationsProps) => State;
-  updateStory: (props: UpdateStoryProps) => State;
+  addAnimations: (props: AddAnimationsProps) => ReducerState;
+  updateStory: (props: UpdateStoryProps) => ReducerState;
+  addPage: (props: AddPageProps) => ReducerState;
+  addPageAt: (props: AddPageProps) => ReducerState;
+  copySelectedElement: () => ReducerState;
+  deletePage: (props: DeletePageProps) => ReducerState;
+  deleteCurrentPage: () => ReducerState;
+  updatePageProperties: (props: UpdatePageProps) => ReducerState;
+  updateCurrentPageProperties: (props: UpdatePageProps) => ReducerState;
+  arrangePage: (props: ArrangePageProps) => ReducerState;
+  setCurrentPage: (props: SetCurrentPageProps) => ReducerState;
+  addElements: (props: AddElementsProps) => ReducerState;
+  addElement: (props: AddElementsProps) => ReducerState;
+  deleteElementsById: (props: DeleteElementsProps) => ReducerState;
+  deleteElementById: (props: DeleteElementProps) => ReducerState;
+  deleteSelectedElements: () => ReducerState;
+  updateElementsById: (props: UpdateElementsProps) => ReducerState;
+  updateElementsByResourceId: (
+    props: UpdateElementsByResourceIdProps
+  ) => ReducerState;
+  deleteElementsByResourceId: (
+    props: DeleteElementsByResourceIdProps
+  ) => ReducerState;
+  updateElementById: (props: UpdateElementProps) => ReducerState;
+  duplicateElementsById: (props: DuplicateElementsByIdAction) => ReducerState;
+  updateSelectedElements: (props: UpdateElementsProps) => ReducerState;
+  combineElements: (props: CombineElementsProps) => ReducerState;
+  setBackgroundElement: (props: SetBackgroundElementProps) => ReducerState;
+  clearBackgroundElement: () => ReducerState;
+  arrangeElement: (props: ArrangeElementProps) => ReducerState;
+  arrangeGroup: (props: ArrangeGroupProps) => ReducerState;
+  arrangeSelection: (props: ArrangeElementProps) => ReducerState;
+  setSelectedElementsById: (props: SetSelectedElementsProps) => ReducerState;
+  clearSelection: () => ReducerState;
+  addElementToSelection: (props: SelectElementProps) => ReducerState;
+  removeElementFromSelection: (props: UnselectElementProps) => ReducerState;
+  toggleElementInSelection: (
+    props: ToggleElementInSelectionProps
+  ) => ReducerState;
+  updateAnimationState: (props: UpdateAnimationStateProps) => ReducerState;
+  toggleLayer: (props: ToggleLayerProps) => ReducerState;
+  updateElementsByFontFamily: (
+    props: UpdateElementsByFontFamilyProps
+  ) => ReducerState;
+  addGroup: (props: AddGroupProps) => ReducerState;
+  updateGroupById: (props: UpdateGroupProps) => ReducerState;
+  deleteGroupById: (props: DeleteGroupProps) => ReducerState;
+  deleteGroupAndElementsById: (props: DeleteGroupProps) => ReducerState;
+  duplicateGroupById: (props: DuplicateGroupProps) => ReducerState;
+  removeElementFromGroup: (props: RemoveElementFromGroupProps) => ReducerState;
+  addElementsAcrossPages: (props: AddElementsAcrossPagesProps) => ReducerState;
 };
 export interface ReducerProviderState {
   state: ReducerState;
@@ -386,10 +443,14 @@ export interface State extends ReducerState {
   };
 }
 
+interface SaveActions {
+  autoSave: (props: Partial<StorySaveData>) => void;
+  saveStory: (props: Partial<StorySaveData>) => void;
+  restoreLocalAutoSave: () => void;
+}
 export interface StoryProviderState {
   state: State;
-  // @todo
-  actions: {};
+  actions: InternalActions & ExternalActions & SaveActions;
   internal: {
     reducerState: ReducerState;
     restore: (props: RestoreProps) => State;

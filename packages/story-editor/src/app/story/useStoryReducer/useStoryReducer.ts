@@ -28,7 +28,7 @@ import type {
   InternalActions,
   ReducerState,
   ReducerProviderState,
-} from '../../../types/storyProvider';
+} from '../../../types';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
