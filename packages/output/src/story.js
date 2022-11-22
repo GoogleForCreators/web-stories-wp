@@ -30,12 +30,14 @@ import CustomCSS from './utils/styles';
 import FontDeclarations from './utils/fontDeclarations';
 import OutputPage from './page';
 import getPreloadResources from './utils/getPreloadResources';
+import { populateElementFontData } from './utils/populateElementFontData';
 
 function OutputStory({
   story: {
     featuredMedia,
     link,
     title,
+    fonts,
     autoAdvance,
     defaultPageDuration,
     backgroundAudio,
@@ -50,6 +52,10 @@ function OutputStory({
 
   const featuredMediaUrl = featuredMedia?.url || '';
   const publisherLogoUrl = publisherLogo?.url || '';
+
+  if (fonts) {
+    pages = populateElementFontData(pages, fonts);
+  }
 
   return (
     <html amp="" lang="en">
