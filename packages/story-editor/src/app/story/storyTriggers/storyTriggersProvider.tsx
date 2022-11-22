@@ -44,11 +44,11 @@ function createSubscriptionMap(): Record<string, Map<symbol, Listener>> {
   );
 }
 
-function reducer([currentStory]: [State], updatedStory: State) {
+function reducer([currentStory]: StoryTuple, updatedStory: State): StoryTuple {
   return [updatedStory, currentStory];
 }
 
-type StoryTuple = [State, State];
+type StoryTuple = [State, State | null];
 export function StoryTriggersProvider({
   children,
   story,
@@ -57,8 +57,10 @@ export function StoryTriggersProvider({
   // Not sure if this is necessarily needed but was used a lot in FTUE. Lets keep
   // an eye on this as we create more internal event registers, and we can always
   // remove if we end up not using it.
-  const [[currentStory, previousStory], updateStory]: [StoryTuple, () => void] =
-    useReducer(reducer, [story, null]);
+  const [[currentStory, previousStory], updateStory] = useReducer(reducer, [
+    story,
+    null,
+  ] as StoryTuple);
   const subscriptionMap = useMemo(createSubscriptionMap, []);
 
   // Update story to derive events

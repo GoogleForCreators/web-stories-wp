@@ -24,7 +24,7 @@ import { useRef, useEffect } from '@googleforcreators/react';
 import type { OnActionProps, State } from '../../../../types';
 import { STORY_EVENTS } from './types';
 
-export function isNewStory(story: State) {
+export function isNewStory(story: State | null) {
   return (
     story?.pages?.length === 0 ||
     (story?.pages?.length === 1 && story?.pages[0]?.elements?.length <= 1)
