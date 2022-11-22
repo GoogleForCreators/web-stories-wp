@@ -23,6 +23,7 @@ namespace Google\Web_Stories\Tests\Unit\AMP;
 use AMP_DOM_Utils;
 use Brain\Monkey;
 use Google\Web_Stories\Tests\Unit\TestCase;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
@@ -99,6 +100,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher_logo' => 'https://example.com/publisher_logo.png',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -116,6 +119,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'Poster image is missing'     => [
@@ -126,6 +131,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'Poster image is empty'       => [
@@ -136,6 +143,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'Poster image is overridden'  => [
@@ -149,6 +158,8 @@ class Story_Sanitizer extends TestCase {
 						'poster-landscape-src' => 'https://example.com/landscape.png',
 					],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 		];
@@ -179,6 +190,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => 'New publisher',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'no_publisher'            => [
@@ -189,6 +202,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => 'New publisher',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'missing_publisher'       => [
@@ -199,6 +214,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'empty_publisher'         => [
@@ -209,6 +226,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'double_quotes_publisher' => [
@@ -219,6 +238,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '"double quotes"',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'single_quotes_publisher' => [
@@ -229,6 +250,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => "'single quotes'",
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'not_english_publisher'   => [
@@ -239,6 +262,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => 'PRÓXIMA',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'html_publisher'          => [
@@ -249,6 +274,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => 'this > that < that <randomhtml />',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 		];
@@ -280,6 +307,9 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
+
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -317,6 +347,10 @@ class Story_Sanitizer extends TestCase {
 				'<html><head></head><body><a href="https://www.google.com" data-tooltip-icon="" data-tooltip-text="">Google</a></body></html>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" target="_blank" rel="noreferrer">Google</a></body></html>',
 			],
+			'Link without protocol'                => [
+				'<html><head></head><body><a href="www.google.com">Google</a></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" target="_blank" rel="noreferrer">Google</a></body></html>',
+			],
 		];
 	}
 
@@ -324,12 +358,14 @@ class Story_Sanitizer extends TestCase {
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_a_tags
 	 * @dataProvider data_test_transform_a_tags
 	 */
-	public function test_transform_a_tags( $source, $expected ): void {
+	public function test_transform_a_tags( string $source, string $expected ): void {
 		$args = [
 			'publisher_logo' => '',
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -348,6 +384,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -367,6 +405,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -385,6 +425,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => true,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -403,6 +445,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -421,6 +465,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -439,6 +485,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -457,6 +505,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -475,6 +525,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -493,6 +545,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -511,6 +565,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -550,6 +606,8 @@ HTML;
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -599,6 +657,8 @@ HTML;
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -644,11 +704,12 @@ HTML;
 HTML;
 
 		$args = [
-			'publisher_logo'    => '',
-			'publisher'         => '',
-			'poster_images'     => [],
-			'video_cache'       => false,
-			'semantic_headings' => true,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -694,6 +755,8 @@ HTML;
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -705,4 +768,58 @@ HTML;
 		$this->assertStringContainsString( 'Paragraph</span></span></p>', $actual );
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_title_and_meta_description
+	 * @dataProvider data_test_sanitize_title_and_meta_description
+	 */
+	public function test_sanitize_title_and_meta_description( string $source, string $expected ): void {
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+			'title_tag'      => 'New title tag',
+			'description'    => 'New description',
+		];
+
+		/**
+		 * @var Document $dom
+		 */
+		$dom = Document::fromHtml( $source );
+
+		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom, $args );
+		$sanitizer->sanitize();
+
+		$actual = $dom->saveHTML( $dom->documentElement );
+
+		$this->assertSame( $expected, $actual );
+	}
+
+	/**
+	 * @return array<string, array<int, string>>
+	 */
+	public function data_test_sanitize_title_and_meta_description(): array {
+		return [
+			'Both title tag and description present'      => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="Existing description"></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="Existing description"></head><body></body></html>',
+			],
+			'Missing title tag and description'           => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>New title tag</title><meta name="description" content="New description"></head><body></body></html>',
+			],
+			'Missing title tag'                           => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><meta name="description" content="Existing description"></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><meta name="description" content="Existing description"><title>New title tag</title></head><body></body></html>',
+			],
+			'Missing description'                         => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="New description"></head><body></body></html>',
+			],
+			'Duplicate title tag and description present' => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><title>Another title</title><meta name="description" content="Existing description"><meta name="description" content="Another description"></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="Existing description"></head><body></body></html>',
+			],
+		];
+	}
 }

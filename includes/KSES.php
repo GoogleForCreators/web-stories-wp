@@ -441,7 +441,7 @@ class KSES extends Service_Base implements HasRequirements {
 
 			$parts = explode( ':', $css_item, 2 );
 
-			if ( false === strpos( $css_item, ':' ) ) {
+			if ( ! str_contains( $css_item, ':' ) ) {
 				$found = true;
 			} else {
 				$css_selector = trim( $parts[0] );
