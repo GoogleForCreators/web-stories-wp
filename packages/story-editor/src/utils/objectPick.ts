@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-export default function pick(o, fields = []) {
+export default function pick(o: Record<string, any>, fields: string[] = []) {
   if (!o || typeof o !== 'object') {
     return {};
   }
   return Object.assign(
     {},
     ...fields.map((prop) => (o && prop in o ? { [prop]: o && o[prop] } : {}))
-  );
+  ) as Record<string, any>;
 }

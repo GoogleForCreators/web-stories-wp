@@ -19,6 +19,7 @@
  */
 import { useReducer, useMemo } from '@googleforcreators/react';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -28,18 +29,19 @@ import type {
   InternalActions,
   ReducerState,
   ReducerProviderState,
+  Story,
 } from '../../../types';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   pages: [],
   capabilities: {},
   current: null,
   selection: [],
-  story: {},
+  story: null as unknown as Story,
   animationState: STORY_ANIMATION_STATE.RESET as string,
-  copiedElementState: {},
+  copiedElementState: {} as Element,
 };
 
 /**
