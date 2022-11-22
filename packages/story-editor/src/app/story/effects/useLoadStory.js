@@ -84,7 +84,10 @@ function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   const storyData =
     storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
   let pages = storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
-  pages = populateElementFontData(pages, storyData?.fonts);
+
+  if (storyData?.fonts && Object.keys(storyData?.fonts).length >= 1) {
+    pages = populateElementFontData(pages, storyData?.fonts);
+  }
 
   // Initialize color/style presets, if missing.
   // Otherwise ensure the saved presets are unique.
