@@ -60,5 +60,6 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 		$this->sanitize_srcset( $this->dom );
 		$this->sanitize_amp_story_page_outlink( $this->dom );
 		$this->remove_page_template_placeholder_images( $this->dom );
+		$this->sanitize_title_and_meta_description( $this->dom, $this->args['title_tag'], $this->args['description'] );
 	}
 }

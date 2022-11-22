@@ -142,7 +142,6 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::add_attribute
-	 * @covers ::starts_with
 	 */
 	public function test_add_attribute(): void {
 		$html      = "<img src='http://www.google.com/test.jpg' alt='test' />";
@@ -153,7 +152,6 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	}
 	/**
 	 * @covers ::add_attribute
-	 * @covers ::starts_with
 	 */
 	public function test_add_attribute_local_image(): void {
 		$url       = site_url( '/test.jpg' );
@@ -165,7 +163,6 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::add_attribute
-	 * @covers ::starts_with
 	 */
 	public function test_add_attribute_relative_image(): void {
 		$html      = "<img src='/test.jpg' alt='test' />";
@@ -173,26 +170,6 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		$url       = '/test.jpg';
 		$result    = $this->call_private_method( $this->instance, 'add_attribute', [ $html, $attribute, $url ] );
 		$this->assertStringNotContainsString( 'crossorigin', $result );
-	}
-
-	/**
-	 * @covers ::starts_with
-	 */
-	public function test_starts_with(): void {
-		$string       = 'hello world';
-		$start_string = 'hello';
-		$result       = $this->call_private_method( $this->instance, 'starts_with', [ $string, $start_string ] );
-		$this->assertTrue( $result );
-	}
-
-	/**
-	 * @covers ::starts_with
-	 */
-	public function test_starts_with_fail(): void {
-		$string       = 'hello world';
-		$start_string = 'world';
-		$result       = $this->call_private_method( $this->instance, 'starts_with', [ $string, $start_string ] );
-		$this->assertFalse( $result );
 	}
 
 	/**

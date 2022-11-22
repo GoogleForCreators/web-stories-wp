@@ -108,7 +108,7 @@ class HTML {
 		$replaced_content = preg_replace_callback(
 			'/<a[^>]+href="(?P<href>[^"]+)"[^>]*>\1<\/a>/m',
 			static function( $matches ) {
-				if ( 0 === strpos( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
+				if ( str_starts_with( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
 					$script_url = $matches['href'];
 
 					// Turns `<a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a>`
