@@ -53,7 +53,7 @@ function OutputStory({
   const featuredMediaUrl = featuredMedia?.url || '';
   const publisherLogoUrl = publisherLogo?.url || '';
 
-  if (fonts) {
+  if (fonts && Object.keys(fonts).length >= 1) {
     pages = populateElementFontData(pages, fonts);
   }
 
