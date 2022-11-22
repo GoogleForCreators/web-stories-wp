@@ -17,22 +17,24 @@
  * External dependencies
  */
 import { useRef, useEffect } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
-import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
+import type { OnActionProps, State } from '../../../../types';
 import { STORY_EVENTS } from './types';
 
-export function isNewStory(story) {
+export function isNewStory(story: State) {
   return (
     story?.pages?.length === 0 ||
     (story?.pages?.length === 1 && story?.pages[0]?.elements?.length <= 1)
   );
 }
 
-function OnInitialElementAddedRegister({ currentStory, dispatchStoryEvent }) {
+function OnInitialElementAddedRegister({
+  currentStory,
+  dispatchStoryEvent,
+}: OnActionProps) {
   const hasFiredOnceRef = useRef(false);
 
   // Dispatch `onInitialElementAdded` story event once, the first time
@@ -46,27 +48,5 @@ function OnInitialElementAddedRegister({ currentStory, dispatchStoryEvent }) {
 
   return null;
 }
-
-OnInitialElementAddedRegister.propTypes = {
-  currentStory: PropTypes.shape({
-    story: PropTypes.shape({
-      pages: PropTypes.arrayOf(
-        PropTypes.shape({
-          elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
-        })
-      ),
-    }),
-  }),
-  prevStory: PropTypes.shape({
-    story: PropTypes.shape({
-      pages: PropTypes.arrayOf(
-        PropTypes.shape({
-          elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
-        })
-      ),
-    }),
-  }),
-  dispatchStoryEvent: PropTypes.func.isRequired,
-};
 
 export { OnInitialElementAddedRegister };

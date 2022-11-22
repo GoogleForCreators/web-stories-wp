@@ -25,20 +25,29 @@ import {
 /**
  * Internal dependencies
  */
+import type { StoryTriggersState } from '../../../types';
 import { Context } from './storyTriggersProvider';
 
-export function useStoryTriggers(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export function useStoryTriggers(): StoryTriggersState;
+export function useStoryTriggers<T>(
+  selector: (state: StoryTriggersState) => T | StoryTriggersState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
-function getAddEventListener(v) {
+interface Value {
+  0: (eventType: string, listener: Listener) => void;
+  1: (eventType: string) => void;
+}
+function getAddEventListener(v: Value) {
   return v[0];
 }
 
-function getDispatch(v) {
+function getDispatch(v: Value) {
   return v[1];
 }
 
+type Listener<T> = (props: T) => void;
 /**
  * Example usage:
  * ```js
@@ -49,13 +58,11 @@ function getDispatch(v) {
         // on this event
       }, [])
     )
- * ```
- *
- * @param {string} eventType a `STORY_EVENT`
- * @param {Function} listener preferably memoized.
- * @return {void}
  */
-export function useStoryTriggerListener(eventType, listener) {
+export function useStoryTriggerListener<T>(
+  eventType: string,
+  listener: Listener<T>
+) {
   const addEventListener = useContextSelector(Context, getAddEventListener);
   useEffect(
     () => addEventListener(eventType, listener),

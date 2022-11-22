@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './story';
-export * from './storyProvider';
-export * from './configProvider';
-export * from './apiProvider';
-export * from './storyEditor';
-export * from './storyTriggers';
+/**
+ * Internal dependencies
+ */
+import type { State } from './storyProvider';
+
+export interface StoryTriggersState {}
+
+export interface OnActionProps {
+  currentStory: State;
+  dispatchStoryEvent: (eventType: string) => void;
+}

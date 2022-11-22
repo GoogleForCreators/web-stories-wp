@@ -17,14 +17,17 @@
  * External dependencies
  */
 import { useRef, useEffect } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import type { OnActionProps } from '../../../../types';
 import { STORY_EVENTS } from './types';
 
-function OnPageAddedRegister({ currentStory, dispatchStoryEvent }) {
+function OnPageAddedRegister({
+  currentStory,
+  dispatchStoryEvent,
+}: OnActionProps) {
   const hasFiredOnceRef = useRef({
     [STORY_EVENTS.onSecondPageAdded]: false,
     [STORY_EVENTS.onFifthPageAdded]: false,
@@ -56,15 +59,5 @@ function OnPageAddedRegister({ currentStory, dispatchStoryEvent }) {
 
   return null;
 }
-
-OnPageAddedRegister.propTypes = {
-  currentStory: PropTypes.shape({
-    pages: PropTypes.array,
-  }),
-  prevStory: PropTypes.shape({
-    pages: PropTypes.array,
-  }),
-  dispatchStoryEvent: PropTypes.func.isRequired,
-};
 
 export { OnPageAddedRegister };
