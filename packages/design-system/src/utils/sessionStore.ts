@@ -23,31 +23,39 @@ export const SESSION_STORAGE_PREFIX = {
   LOCAL_AUTOSAVE_PREFIX: 'wp_stories_autosave_story',
 };
 
-export function getItemByKey(key) {
+export function getItemByKey(key: string) {
   let parsed;
   try {
     const stored = window.sessionStorage.getItem(key);
-    parsed = JSON.parse(stored);
+    if (stored) {
+      parsed = JSON.parse(stored) as Record<string, unknown>;
+    }
   } catch (err) {
-    trackError('session_storage_read', err.message);
+    if (err instanceof Error) {
+      void trackError('session_storage_read', err.message);
+    }
   }
 
   return parsed;
 }
 
-export function setItemByKey(key, data) {
+export function setItemByKey(key: string, data: Record<string, unknown>) {
   try {
     window.sessionStorage.setItem(key, JSON.stringify(data));
   } catch (err) {
-    trackError('session_storage_write', err.message);
+    if (err instanceof Error) {
+      void trackError('session_storage_write', err.message);
+    }
   }
 }
 
-export function deleteItemByKey(key) {
+export function deleteItemByKey(key: string) {
   try {
     window.sessionStorage.removeItem(key);
   } catch (err) {
-    trackError('session_storage_delete', err.message);
+    if (err instanceof Error) {
+      void trackError('session_storage_delete', err.message);
+    }
   }
 }
 

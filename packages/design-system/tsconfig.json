@@ -8,6 +8,7 @@
     "src/contexts/snackbar/*",
     "src/types.ts",
     "src/types/*",
-    "src/components/snackbar/constants.ts"
+    "src/components/snackbar/constants.ts",
+    "src/utils/*.ts",
   ]
 }
