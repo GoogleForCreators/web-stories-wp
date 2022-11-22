@@ -19,5 +19,6 @@
 // delete this file once complete.
 
 export * from './contexts/snackbar';
+export * from './utils/sessionStore';
 
 export {};
