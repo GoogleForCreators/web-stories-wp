@@ -417,6 +417,11 @@ export interface ReducerProviderState {
   api: ExternalActions;
 }
 
+export interface CopiedElementState {
+  animations?: Animation[];
+  styles: Record<string, unknown>;
+  type: string;
+}
 export interface ReducerState {
   story: Story;
   selection: string[];
@@ -424,7 +429,7 @@ export interface ReducerState {
   pages: Page[];
   animationState: string;
   capabilities: Capabilities;
-  copiedElementState?: Element;
+  copiedElementState?: CopiedElementState;
 }
 
 export interface State extends Omit<ReducerState, 'current' | 'selection'> {
