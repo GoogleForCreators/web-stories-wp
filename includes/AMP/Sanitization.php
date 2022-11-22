@@ -142,7 +142,7 @@ class Sanitization {
 		foreach ( $head_scripts as $script ) {
 			$src = $script->getAttribute( Attribute::SRC );
 
-			if ( ! $src || 0 !== strpos( $src, 'https://cdn.ampproject.org/' ) ) {
+			if ( ! $src || ! str_starts_with( $src, 'https://cdn.ampproject.org/' ) ) {
 				continue;
 			}
 
@@ -442,6 +442,8 @@ class Sanitization {
 				'publisher'      => $story->get_publisher_name(),
 				'poster_images'  => array_filter( $poster_images ),
 				'video_cache'    => $video_cache_enabled,
+				'title_tag'      => wp_get_document_title(),
+				'description'    => wp_strip_all_tags( get_the_excerpt() ),
 			];
 		}
 

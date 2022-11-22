@@ -55,7 +55,7 @@ class ShortPixel extends Service_Base {
 	public function image_urls( $urls ): array {
 		return array_filter(
 			$urls,
-			static fn( $url ) => false === strpos( $url, 'web-stories-page-template' )
+			static fn( $url ) => ! str_contains( $url, 'web-stories-page-template' )
 		);
 	}
 }
