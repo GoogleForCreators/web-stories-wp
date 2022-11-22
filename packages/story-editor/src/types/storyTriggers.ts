@@ -18,7 +18,10 @@
  */
 import type { State } from './storyProvider';
 
-export interface StoryTriggersState {}
+export type StoryTriggersState = (
+  | ((eventType: string, listener: any) => () => void)
+  | ((eventType: string) => void)
+)[];
 
 export interface OnActionProps {
   currentStory: State;

@@ -35,15 +35,11 @@ export function useStoryTriggers<T>(
   return useContextSelector(Context, selector);
 }
 
-interface Value {
-  0: (eventType: string, listener: Listener) => void;
-  1: (eventType: string) => void;
-}
-function getAddEventListener(v: Value) {
+function getAddEventListener(v: StoryTriggersState) {
   return v[0];
 }
 
-function getDispatch(v: Value) {
+function getDispatch(v: StoryTriggersState) {
   return v[1];
 }
 
@@ -77,8 +73,6 @@ export function useStoryTriggerListener<T>(
  *   // later in some effect or action
  *  dispatchStoryEvent(STORY_EVENTS.onInitialElementAdded);
  * ```
- *
- * @return {Function} takes and dispatches a `STORY_EVENT`
  */
 export function useStoryTriggersDispatch() {
   return useContextSelector(Context, getDispatch);
