@@ -345,8 +345,9 @@ export type ReducerActionProps =
   | RemoveElementFromGroupAction
   | AddElementsAcrossPagesAction;
 
+export type Restore = (props: RestoreProps) => ReducerState;
 export type InternalActions = {
-  restore: (props: RestoreProps) => ReducerState;
+  restore: Restore;
 };
 
 interface DeleteElementProps {
@@ -453,6 +454,6 @@ export interface StoryProviderState {
   actions: ExternalActions & SaveActions;
   internal: {
     reducerState: ReducerState;
-    restore: (props: RestoreProps) => ReducerState;
+    restore: Restore;
   };
 }

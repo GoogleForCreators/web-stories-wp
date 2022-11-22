@@ -29,12 +29,12 @@ import { useAPI } from '../../api';
 import { useHistory } from '../../history';
 import getUniquePresets from '../../../utils/getUniquePresets';
 import { useConfig } from '../../config';
-import type { RawStory, ReducerState, RestoreProps } from '../../../types';
+import type { RawStory, Restore } from '../../../types';
 
 function loadStory(
   storyId: number,
   post: RawStory,
-  restore: (props: RestoreProps) => ReducerState,
+  restore: Restore,
   clearHistory: () => void,
   globalConfig: {
     globalAutoAdvance?: boolean;
@@ -162,7 +162,7 @@ interface LoadStoryProps {
   storyId: number;
   story: RawStory | undefined;
   shouldLoad: boolean;
-  restore: (props: RestoreProps) => ReducerState;
+  restore: Restore;
 }
 // When ID is set, load story from API.
 function useLoadStory({ storyId, story, shouldLoad, restore }: LoadStoryProps) {
