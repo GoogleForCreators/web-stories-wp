@@ -19,7 +19,6 @@
  */
 import { useReducer, useMemo } from '@googleforcreators/react';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
-import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
