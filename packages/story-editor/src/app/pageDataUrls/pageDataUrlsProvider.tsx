@@ -18,6 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo, useCallback, useState } from '@googleforcreators/react';
+import type { Page } from "@googleforcreators/elements";
 
 /**
  * Internal dependencies
@@ -42,7 +43,7 @@ function PageDataUrlProvider({ children }) {
    * @return {Function} function to cancel image generation request
    */
   const queuePageImageGeneration = useCallback(
-    (storyPage) => {
+    (storyPage: Page) => {
       const idleTaskUid = storyPage.id;
       const idleTask = async () => {
         const dataUrl = await storyPageToDataUrl(storyPage, {});

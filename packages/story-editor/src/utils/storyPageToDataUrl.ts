@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { PAGE_RATIO } from '@googleforcreators/units';
+import type { Page } from "@googleforcreators/elements";
 /**
  * Internal dependencies
  */
 import storyPageToNode from './storyPageToNode';
+
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -35,7 +37,7 @@ import storyPageToNode from './storyPageToNode';
  * @param {number} options.width desired width of image. Dictates height and container height
  * @return {Promise<string>} jpeg dataUrl
  */
-async function storyPageToDataUrl(page, { width = 400, ...options }) {
+async function storyPageToDataUrl(page: Page, { width = 400, ...options }) {
   const htmlToImage = await import(
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );

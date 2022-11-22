@@ -4,6 +4,8 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "references": [{ "path": "../react" }],
+  "references": [
+    { "path": "../elements" },
+    { "path": "../react" }],
   "include": ["src/app/config/*", "src/types", "src/app/api/*"]
 }
