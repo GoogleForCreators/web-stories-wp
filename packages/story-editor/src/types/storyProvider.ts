@@ -241,7 +241,7 @@ export type CopySelectedElementAction = {
   payload: null;
 };
 
-export type RestoreProps = Partial<State>;
+export type RestoreProps = Partial<ReducerState>;
 export type RestoreAction = {
   type: typeof actionTypes.RESTORE;
   payload: RestoreProps;
@@ -346,7 +346,7 @@ export type ReducerActionProps =
   | AddElementsAcrossPagesAction;
 
 export type InternalActions = {
-  restore: (props: RestoreProps) => State;
+  restore: (props: RestoreProps) => ReducerState;
 };
 
 interface DeleteElementProps {
@@ -425,7 +425,7 @@ export interface ReducerState {
   copiedElementState?: Element;
 }
 
-export interface State extends ReducerState {
+export interface State extends Omit<ReducerState, 'current' | 'selection'> {
   currentPage: Page | null;
   currentPageId: string | null;
   currentPageIndex: number | null;
@@ -450,9 +450,9 @@ interface SaveActions {
 }
 export interface StoryProviderState {
   state: State;
-  actions: InternalActions & ExternalActions & SaveActions;
+  actions: ExternalActions & SaveActions;
   internal: {
     reducerState: ReducerState;
-    restore: (props: RestoreProps) => State;
+    restore: (props: RestoreProps) => ReducerState;
   };
 }
