@@ -50,7 +50,7 @@ function useLocalAutoSave({
     }
 
     restore({
-      current: pages[0],
+      current: pages[0].id,
       selection: [],
       capabilities,
       ...existingAutoSave,

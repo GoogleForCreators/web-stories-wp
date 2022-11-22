@@ -39,7 +39,7 @@ export const INITIAL_STATE = {
   capabilities: {},
   current: null,
   selection: [],
-  story: null as unknown as Story,
+  story: {} as Story,
   animationState: STORY_ANIMATION_STATE.RESET as string,
   copiedElementState: {} as Element,
 };

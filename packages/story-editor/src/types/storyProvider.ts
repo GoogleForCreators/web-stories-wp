@@ -29,6 +29,7 @@ import type { ResourceId } from '@googleforcreators/media';
  */
 import type * as actionTypes from '../app/story/useStoryReducer/types';
 import type { Story, StorySaveData } from './story';
+import type { Capabilities } from './configProvider';
 
 export type AddPageProps = {
   page: Page;
@@ -422,7 +423,7 @@ export interface ReducerState {
   current: string | null;
   pages: Page[];
   animationState: string;
-  capabilities: Record<string, boolean>;
+  capabilities: Capabilities;
   copiedElementState?: Element;
 }
 
