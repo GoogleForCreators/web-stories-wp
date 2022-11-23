@@ -20,6 +20,7 @@ export interface Notification {
   'aria-label': string;
   message: string;
   onDismiss: () => void;
+  dismissible?: boolean;
 }
 export interface SnackbarState {
   showSnackbar: (snackbar: Omit<Notification, 'id'>) => void;

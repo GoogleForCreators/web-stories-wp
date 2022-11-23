@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { Element } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
