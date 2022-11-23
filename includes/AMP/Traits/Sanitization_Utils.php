@@ -88,7 +88,9 @@ trait Sanitization_Utils {
 				$link->setAttribute( 'target', '_blank' );
 			}
 
-			$is_link_to_same_origin = 0 === strpos( $link->getAttribute( 'href' ), home_url() );
+			$url = $link->getAttribute( 'href' );
+
+			$is_link_to_same_origin = str_starts_with( $url, home_url() );
 
 			$rel = $link->getAttribute( 'rel' );
 
@@ -112,6 +114,17 @@ trait Sanitization_Utils {
 
 			if ( ! $link->getAttribute( 'data-tooltip-text' ) ) {
 				$link->removeAttribute( 'data-tooltip-text' );
+			}
+
+			// Extra hardening to catch links without a proper protocol.
+			// Matches withProtocol() util in the editor.
+			if (
+				! str_starts_with( $url, 'http://' ) &&
+				! str_starts_with( $url, 'https://' ) &&
+				! str_starts_with( $url, 'tel:' ) &&
+				! str_starts_with( $url, 'mailto:' )
+			) {
+				$link->setAttribute( 'href', 'https://' . $url );
 			}
 		}
 	}
@@ -313,7 +326,7 @@ trait Sanitization_Utils {
 		$existing_publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
 		// Backward compatibility for when fallback-wordpress-publisher-logo.png was provided by the plugin.
-		if ( ! $existing_publisher_logo || false !== strpos( $existing_publisher_logo, 'fallback-wordpress-publisher-logo.png' ) ) {
+		if ( ! $existing_publisher_logo || str_contains( $existing_publisher_logo, 'fallback-wordpress-publisher-logo.png' ) ) {
 			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 
@@ -479,7 +492,7 @@ trait Sanitization_Utils {
 	 * @return bool Whether it's a blob URL.
 	 */
 	private function is_blob_url( string $url ): bool {
-		return 0 === strpos( $url, 'blob:' );
+		return str_starts_with( $url, 'blob:' );
 	}
 
 	/**
@@ -608,9 +621,88 @@ trait Sanitization_Utils {
 		foreach ( $images as $image ) {
 			$src = $image->getAttribute( 'src' );
 
-			if ( $image->parentNode && false !== strpos( $src, $placeholder_img ) ) {
+			if ( $image->parentNode && str_contains( $src, $placeholder_img ) ) {
 				$image->parentNode->removeChild( $image );
 			}
+		}
+	}
+
+	/**
+	 * Sanitizes <title> tags and meta descriptions.
+	 *
+	 * Ensures there's always just exactly one of each present.
+	 *
+	 * @since 1.28.0
+	 *
+	 * @link https://github.com/googleforcreators/web-stories-wp/issues/12655
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @param string                $title_tag   Title text to use if it's missing.
+	 * @param string                $description Description to use if it's missing.
+	 */
+	private function sanitize_title_and_meta_description( $document, string $title_tag, string $description ): void {
+		/**
+		 * List of <title> elements.
+		 *
+		 * @var DOMNodeList<DOMElement> $titles Title elements.
+		 */
+		$titles = $document->head->getElementsByTagName( 'title' );
+
+		if ( $titles->length > 1 ) {
+			foreach ( $titles as $index => $title ) {
+				if ( 0 === $index ) {
+					continue;
+				}
+				$document->head->removeChild( $title );
+			}
+		}
+
+		if ( 0 === $titles->length && ! empty( $title_tag ) ) {
+			/**
+			 * New title tag element.
+			 *
+			 * @var DOMElement $new_title
+			 */
+			$new_title = $document->createElement( 'title' );
+
+			/**
+			 * Title text node.
+			 *
+			 * @var \DOMText $text_node
+			 */
+			$text_node = $document->createTextNode( $title_tag );
+
+			$new_title->appendChild( $text_node );
+			$document->head->appendChild( $new_title );
+		}
+
+		/**
+		 * List of meta descriptions.
+		 *
+		 * @var DOMNodeList<DOMElement> $meta_descriptions Meta descriptions.
+		 */
+		$meta_descriptions = $document->xpath->query( './/meta[@name="description"]' );
+
+		if ( $meta_descriptions->length > 1 ) {
+			foreach ( $meta_descriptions as $index => $meta_description ) {
+				if ( 0 === $index ) {
+					continue;
+				}
+				$document->head->removeChild( $meta_description );
+			}
+		}
+
+		if ( 0 === $meta_descriptions->length && ! empty( $description ) ) {
+			/**
+			 * New meta description element.
+			 *
+			 * @var DOMElement $new_description
+			 */
+			$new_description = $document->createElement( 'meta' );
+
+			$new_description->setAttribute( 'name', 'description' );
+			$new_description->setAttribute( 'content', $description );
+			$document->head->appendChild( $new_description );
 		}
 	}
 }
