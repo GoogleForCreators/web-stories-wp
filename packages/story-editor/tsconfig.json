@@ -5,16 +5,20 @@
     "declarationDir": "dist-types"
   },
   "references": [
+    { "path": "../design-system" },
     { "path": "../elements" },
     { "path": "../react" }
   ],
   "include": [
+    "src/app/api/*",
     "src/app/config/*",
+    "src/app/history",
     "src/types",
     "src/app/taxonomy/**/*",
     "src/app/story/**/*",
     "src/app/history/**/*",
     "src/app/api/*",
-    "src/utils/cleanForSlug"
+    "src/utils/cleanForSlug",
+    "src/utils/usePreventWindowUnload.ts"
   ]
 }

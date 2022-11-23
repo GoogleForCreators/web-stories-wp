@@ -22,14 +22,10 @@ import { useReducer, useCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import reducer, {
-  SET_CURRENT_STATE,
-  CLEAR_HISTORY,
-  REPLAY,
-  EMPTY_STATE,
-} from './reducer';
+import type { HistoryEntry } from '../../types/historyProvider';
+import reducer, { ActionType, EMPTY_STATE } from './reducer';
 
-function useHistoryReducer(size) {
+function useHistoryReducer(size: number) {
   // State has 4 parts:
   //
   // `state.entries` is an array of the last changes (up to `size`) to
@@ -56,13 +52,13 @@ function useHistoryReducer(size) {
   // It appears the only reason for deps here is to return boolean from this
   // method, which is otherwise appears to be unused.
   const replay = useCallback(
-    (deltaOffset) => {
+    (deltaOffset: number) => {
       const newOffset = offset + deltaOffset;
       if (newOffset < 0 || newOffset > historyLength - 1) {
         return false;
       }
 
-      dispatch({ type: REPLAY, payload: newOffset });
+      dispatch({ type: ActionType.Replay, payload: newOffset });
       return true;
     },
     [dispatch, offset, historyLength]
@@ -83,12 +79,12 @@ function useHistoryReducer(size) {
   );
 
   const clearHistory = useCallback(() => {
-    return dispatch({ type: CLEAR_HISTORY });
+    return dispatch({ type: ActionType.ClearHistory });
   }, [dispatch]);
 
   const stateToHistory = useCallback(
-    (entry) => {
-      dispatch({ type: SET_CURRENT_STATE, payload: entry });
+    (entry: HistoryEntry) => {
+      dispatch({ type: ActionType.SetCurrentState, payload: entry });
     },
     [dispatch]
   );

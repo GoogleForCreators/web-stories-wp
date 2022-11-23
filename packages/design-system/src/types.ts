@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { identity, useContextSelector } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import Context from './context';
+// Temporary workaround while this package is not fully converted yet.
+// Adjust tsconfig.json and "types" field in package.json and then
+// delete this file once complete.
 
-function useHistory(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
+export * from './components/keyboard';
+export * from './types/keyboard';
 
-export default useHistory;
+export {};
