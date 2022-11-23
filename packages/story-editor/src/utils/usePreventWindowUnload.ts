@@ -23,15 +23,18 @@ import {
   useContext,
 } from '@googleforcreators/react';
 
-const PreventUnloadContext = createContext({ listeners: new Map() });
+type EventListener = (event: BeforeUnloadEvent) => void;
+interface PreventUnloadContextState {
+  listeners: Map<string, EventListener>;
+}
+const PreventUnloadContext = createContext<PreventUnloadContextState>({
+  listeners: new Map(),
+});
 
 /**
  * This is a helper that to compliant the correct register/unregister system of `beforeunload` event
- *
- * @param {Event} event beforeunload Event object
- * @param {string} id Identifier to register beforeunload Event in the onbeforeunload listener
  */
-const beforeUnloadListener = (event, id) => {
+const beforeUnloadListener = (event: BeforeUnloadEvent, id: string) => {
   event.preventDefault();
   event.returnValue = id;
 };
@@ -39,16 +42,23 @@ const beforeUnloadListener = (event, id) => {
 function usePreventWindowUnload() {
   const context = useContext(PreventUnloadContext);
   const setPreventUnload = useCallback(
-    (id, value) => {
+    (id: string, value: boolean) => {
+      const listener = context.listeners.get(id);
       if (value) {
         // Register beforeunload by scope
         if (!context.listeners.has(id)) {
-          context.listeners.set(id, (event) => beforeUnloadListener(event, id));
+          context.listeners.set(id, (event: BeforeUnloadEvent) =>
+            beforeUnloadListener(event, id)
+          );
         }
-        window.addEventListener('beforeunload', context.listeners.get(id));
+        if (listener) {
+          window.addEventListener('beforeunload', listener);
+        }
       } else {
         // Unregister beforeunload by scope
-        window.removeEventListener('beforeunload', context.listeners.get(id));
+        if (listener) {
+          window.removeEventListener('beforeunload', listener);
+        }
         context.listeners.delete(id);
       }
     },
@@ -57,7 +67,10 @@ function usePreventWindowUnload() {
   return setPreventUnload;
 }
 
+declare const WEB_STORIES_DISABLE_PREVENT: string;
 const shouldDisablePrevent =
   typeof WEB_STORIES_DISABLE_PREVENT !== 'undefined' &&
   WEB_STORIES_DISABLE_PREVENT === 'true';
-export default shouldDisablePrevent ? () => () => {} : usePreventWindowUnload;
+export default shouldDisablePrevent
+  ? () => () => undefined
+  : usePreventWindowUnload;
