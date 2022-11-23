@@ -73,8 +73,8 @@ function useKeyEffectInternal(
         return undefined;
       }
       if (
-        nodeEl.nodeType !== /* ELEMENT */ 1 &&
-        nodeEl.nodeType !== /* DOCUMENT */ 9
+        nodeEl.nodeType !== Node.ELEMENT_NODE &&
+        nodeEl.nodeType !== Node.DOCUMENT_NODE
       ) {
         throw new Error('only an element or a document node can be used');
       }
