@@ -22,9 +22,9 @@ import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { HistoryState } from '../../types/historyProvider';
+import type { HistoryProviderState } from '../../types';
 
-export default createContext<HistoryState>({
+export default createContext<HistoryProviderState>({
   state: {
     currentEntry: {
       selection: [],

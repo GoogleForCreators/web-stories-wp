@@ -19,3 +19,4 @@ export * from './configProvider';
 export * from './apiProvider';
 export * from './storyEditor';
 export * from './storyTriggers';
+export * from './historyProvider';

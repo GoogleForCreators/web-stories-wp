@@ -23,8 +23,9 @@ import { useEffect } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { useHistory } from '../../history';
+import type { Restore } from '../../../types';
 
-function useHistoryReplay({ restore }) {
+function useHistoryReplay({ restore }: { restore: Restore }) {
   const {
     state: { requestedState },
   } = useHistory();

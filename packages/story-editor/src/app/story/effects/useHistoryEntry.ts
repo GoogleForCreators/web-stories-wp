@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useRef } from '@googleforcreators/react';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -25,6 +26,7 @@ import { useEffect, useRef } from '@googleforcreators/react';
 import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
 import pageContainsBlobUrl from '../utils/pageContainsBlobUrl';
+import type { HistoryEntry } from '../../../types';
 
 // Changes to these properties of elements do not create a new history entry
 // if only one (or multiple) of these properties change but nothing else changes.
@@ -51,27 +53,33 @@ const ELEMENT_PROPS_TO_IGNORE = [
 ];
 
 // Record any change to core variables in history (history will know if it's a replay)
-function useHistoryEntry({ story, current, pages, selection, capabilities }) {
+function useHistoryEntry({
+  story,
+  current,
+  pages,
+  selection,
+  capabilities,
+}: HistoryEntry) {
   const {
     state: { currentEntry },
     actions: { stateToHistory },
   } = useHistory();
 
-  const currentHistoryEntryRef = useRef();
+  const currentHistoryEntryRef = useRef<HistoryEntry>();
   useEffect(() => {
     if (currentEntry) {
       currentHistoryEntryRef.current = structuredClone(currentEntry);
     }
   }, [currentEntry]);
 
-  const currentPageIndexRef = useRef();
-  const selectedElementIdsRef = useRef();
+  const currentPageIdRef = useRef<string | null>(null);
+  const selectedElementIdsRef = useRef<string[]>([]);
   useEffect(() => {
-    currentPageIndexRef.current = current;
+    currentPageIdRef.current = current;
     selectedElementIdsRef.current = selection;
   }, [current, selection]);
 
-  const deleteKeysFromPages = (list) => {
+  const deleteKeysFromPages = (list: Page[]) => {
     // Create a copy of the list not to influence the original.
     return structuredClone(list).map((page) => {
       page.elements.forEach(deleteNestedKeys(ELEMENT_PROPS_TO_IGNORE));
@@ -96,8 +104,10 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
       };
       const onlyPagesChanged = Object.keys(withoutPages).every(
         (key) =>
-          JSON.stringify(withoutPages[key]) ===
-          JSON.stringify(currentHistoryEntryRef.current[key])
+          JSON.stringify(withoutPages[key as keyof typeof withoutPages]) ===
+          JSON.stringify(
+            currentHistoryEntryRef.current?.[key as keyof HistoryEntry]
+          )
       );
       // If only pages have changed, check if relevant properties have changed.
       if (onlyPagesChanged) {
@@ -119,7 +129,7 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
     if (!skipAddingEntry) {
       stateToHistory({
         story,
-        current: currentPageIndexRef.current,
+        current: currentPageIdRef.current,
         selection: selectedElementIdsRef.current,
         pages,
         capabilities,
