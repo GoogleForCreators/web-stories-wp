@@ -40,17 +40,6 @@ export interface FontMetrics {
   lGap: number;
 }
 
-export interface Font {
-  family: string;
-  fallback?: string[];
-  service?: string;
-  metrics?: FontMetrics;
-}
-
-export interface Fonts {
-  [family: string]: Font;
-}
-
 export interface LinkV0 {
   url: string;
   desc?: string;

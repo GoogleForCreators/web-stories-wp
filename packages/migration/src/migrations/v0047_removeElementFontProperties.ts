@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import type { Font, Fonts } from '../types/element';
+import type { FontMetrics } from '../types/element';
+
 import type {
   GifResourceV46,
   ImageResourceV46,
@@ -56,6 +57,17 @@ export type UnionElementV47 =
   | GifElementV47
   | TextElementV47
   | ProductElementV47;
+
+interface Font {
+  family: string;
+  fallback?: string[];
+  service?: string;
+  metrics?: FontMetrics;
+}
+
+interface Fonts {
+  [family: string]: Font;
+}
 
 export interface StoryV47 extends Omit<StoryV46, 'pages'> {
   pages: PageV47[];
