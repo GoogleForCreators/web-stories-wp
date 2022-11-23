@@ -22,6 +22,7 @@ parameters:
       path: includes/Admin/Customizer.php
   paths:
     - includes/
+    - tests/phpunit/integration/
     - uninstall.php
   excludePaths:
     - includes/vendor/*
