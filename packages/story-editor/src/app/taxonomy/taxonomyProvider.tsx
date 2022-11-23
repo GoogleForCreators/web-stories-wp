@@ -42,7 +42,7 @@ import {
   cacheFromEmbeddedTerms,
 } from './utils';
 
-import type { Term, TaxonomiesBySlug, Taxonomy, EmbeddedTerms, TermsIds } from '../../types/taxonomyProvider';
+import type { Term, Taxonomy, TaxonomiesBySlug, EmbeddedTerms, TermsIds } from '../../types/taxonomyProvider';
 import type { APIState } from '../../types/apiProvider';
 
 function TaxonomyProvider(props: { children: React.ReactNode }) {
@@ -69,7 +69,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
 
   // Get all registered `web-story` taxonomies.
   useEffect(() => {
-    if (!hasTaxonomies) {
+    if (!hasTaxonomies || !getTaxonomies) {
       return;
     }
 
@@ -161,7 +161,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
 
   const addSearchResultsToCache = useCallback(
     async (taxonomy: Taxonomy, args: { search?: string, per_page?: number }, addNameToSelection = false) => {
-      let response = [];
+      let response: Term[] | [] = [];
       const termsEndpoint = taxonomy?.restPath;
       if (!termsEndpoint || !getTaxonomyTerm) {
         return [];
@@ -183,7 +183,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
 
       // Format results to fit in our { [taxonomy]: { [slug]: term } } map
       const termResults = {
-        [taxonomy.restBase]: dictionaryOnKey(response, 'slug'),
+        [taxonomy.restBase]: dictionaryOnKey(response as [], 'slug'),
       };
 
       setTermCache((cache: EmbeddedTerms) => mergeNestedDictionaries(cache, termResults));
@@ -213,7 +213,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
       }
 
       // make sure the term doesn't already exist locally
-      const preEmptiveSlug = data?.slug || cleanForSlug(termName);
+      const preEmptiveSlug = data?.slug || cleanForSlug(termName) || "";
       const cachedTerm = termCache[taxonomy.restBase]?.[preEmptiveSlug];
       if (cachedTerm) {
         if (addToSelection) {

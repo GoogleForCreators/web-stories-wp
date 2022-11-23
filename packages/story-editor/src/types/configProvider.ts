@@ -32,6 +32,12 @@ import type {
 } from '@googleforcreators/media';
 import type { Template } from '@googleforcreators/templates';
 
+/**
+ * Internal dependencies
+ */
+
+import type { Term, Taxonomy } from '../types/taxonomyProvider';
+
 export interface Capabilities {
   /** If the user has permissions to upload files. */
   hasUploadMediaAction?: boolean;
@@ -82,13 +88,6 @@ interface TemplateData {
   featured_media: number;
   title?: string;
 }
-
-type Term = {
-  id: number;
-  name: string;
-  slug: string;
-  taxonomy: string;
-};
 
 type Author = {
   id: number;
@@ -194,10 +193,13 @@ export interface APICallbacks {
   getProxyUrl?: (src: string) => string;
   getStoryById?: (id: number) => Promise<Story>;
   getTaxonomies?: () => Promise<Taxonomy[]>;
-  getTaxonomyTerm?: (props: {
-    search?: string;
-    per_page?: number;
-  }) => Promise<Term>;
+  getTaxonomyTerm?: (
+    restPath: string,
+    props: {
+      search?: string;
+      per_page?: number;
+    }
+  ) => Promise<Term[]>;
   saveStoryById?: (data: Story) => Promise<Story>;
   updateCurrentUser?: (data: {
     mediaOptimization?: boolean;

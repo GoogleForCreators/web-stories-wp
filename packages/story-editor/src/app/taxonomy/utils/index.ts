@@ -92,7 +92,7 @@ export function mergeNestedDictionaries(dictA = {}, dictB = {}) {
  * @param {string} key key used to index property to be keyed on
  * @return {Object} new object
  */
-export function dictionaryOnKey(arr = [], key: string) {
+export function dictionaryOnKey(arr: [] = [], key: string) {
   return arr.reduce((map, item) => {
     map[item[key]] = item;
     return map;
