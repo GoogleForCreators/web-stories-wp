@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import Context from './context';
+import type { User } from './configProvider';
 
-function useCurrentUser(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export interface updateCurrentUserProps {
+  mediaOptimization: boolean;
 }
 
-export default useCurrentUser;
+export interface CurrentUserState {
+  state: {
+    currentUser?: User;
+  };
+  actions: {
+    toggleWebStoriesMediaOptimization?: () => void;
+    updateCurrentUser?: ( props: updateCurrentUserProps ) => void;
+  };
+}

@@ -17,25 +17,33 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
-
+import type { ReactNode } from 'react';
 /**
  * Internal dependencies
  */
 import { useAPI } from '../api';
+import type { User } from '../../types/configProvider';
+import type {
+  CurrentUserState,
+  updateCurrentUserProps,
+} from '../../types/currentUserProvider';
 import Context from './context';
 
-function CurrentUserProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState({});
+export interface CurrentUserProviderProps {
+  children: ReactNode;
+}
+
+function CurrentUserProvider({ children }: CurrentUserProviderProps) {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const {
     actions: { getCurrentUser, updateCurrentUser: _updateCurrentUser },
   } = useAPI();
 
   useEffect(() => {
     let isMounted = true;
-    if (getCurrentUser && !Object.keys(currentUser).length) {
-      getCurrentUser().then((user) => {
+    if (getCurrentUser && currentUser === null) {
+      void getCurrentUser().then((user: User) => {
         if (!isMounted) {
           return;
         }
@@ -49,13 +57,18 @@ function CurrentUserProvider({ children }) {
   }, [currentUser, getCurrentUser]);
 
   const updateCurrentUser = useCallback(
-    (data) =>
-      _updateCurrentUser ? _updateCurrentUser(data).then(setCurrentUser) : null,
+    (data: updateCurrentUserProps) =>
+      _updateCurrentUser
+        ? void _updateCurrentUser(data).then(setCurrentUser)
+        : null,
     [_updateCurrentUser]
   );
 
   const toggleWebStoriesMediaOptimization = useCallback(() => {
-    return updateCurrentUser({
+    if (!currentUser) {
+      return;
+    }
+    void updateCurrentUser({
       mediaOptimization: !currentUser.mediaOptimization,
     });
   }, [currentUser, updateCurrentUser]);
@@ -68,13 +81,9 @@ function CurrentUserProvider({ children }) {
       toggleWebStoriesMediaOptimization,
       updateCurrentUser,
     },
-  };
+  } as CurrentUserState;
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-CurrentUserProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default CurrentUserProvider;
