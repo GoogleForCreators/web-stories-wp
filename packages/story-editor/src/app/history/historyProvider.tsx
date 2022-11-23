@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import {
   useCallback,
   useEffect,
@@ -25,6 +24,7 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
@@ -33,7 +33,10 @@ import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import useHistoryReducer from './useHistoryReducer';
 import Context from './context';
 
-function HistoryProvider({ children, size }) {
+function HistoryProvider({
+  children,
+  size = 50,
+}: PropsWithChildren<{ size?: number }>) {
   const {
     requestedState,
     stateToHistory,
@@ -89,14 +92,5 @@ function HistoryProvider({ children, size }) {
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-HistoryProvider.propTypes = {
-  children: PropTypes.node,
-  size: PropTypes.number,
-};
-
-HistoryProvider.defaultProps = {
-  size: 50,
-};
 
 export default HistoryProvider;

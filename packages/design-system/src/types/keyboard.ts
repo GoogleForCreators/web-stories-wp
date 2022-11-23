@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,27 +17,24 @@
 /**
  * External dependencies
  */
-import type { DefaultTheme } from 'styled-components';
+import type { RefObject } from 'react';
 
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-import { THEME_CONSTANTS, BEZIER } from './constants';
-import * as ThemeGlobals from './global';
-import * as themeHelpers from './helpers';
-import { typography } from './typography';
-import { borders } from './borders';
-import { breakpoint, raw } from './breakpoint';
+import type keys from '../components/keyboard/keys';
 
-export const theme: DefaultTheme = {
-  borders,
-  typography,
-  colors: { ...darkMode },
-  breakpoint: {
-    ...breakpoint,
-    raw,
-  },
-};
+export interface KeySpec {
+  key: string | string[];
+  shift?: boolean;
+  clickable?: boolean;
+  dialog?: boolean;
+  repeat?: boolean;
+  editable?: boolean;
+  allowDefault?: boolean;
+}
+export type Keys = typeof keys;
+export type KeyEffectCallback = (event: KeyboardEvent) => void;
+export type KeyNameOrSpec = KeySpec | string | string[];
 
-export { lightMode, THEME_CONSTANTS, themeHelpers, ThemeGlobals, BEZIER };
+export type RefOrNode = Element | RefObject<Element> | null;
