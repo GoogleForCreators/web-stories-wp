@@ -17,13 +17,7 @@
 /**
  * Internal dependencies
  */
-import {
-  default as useReducer,
-  SET_CURRENT_STATE,
-  CLEAR_HISTORY,
-  EMPTY_STATE,
-  REPLAY,
-} from '../reducer';
+import { default as useReducer, ActionType, EMPTY_STATE } from '../reducer';
 
 describe('reducer', () => {
   const size = 5;
@@ -46,7 +40,7 @@ describe('reducer', () => {
 
       const newEntry = { id: 2 };
       const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
+        type: ActionType.SetCurrentState,
         payload: newEntry,
       });
 
@@ -61,7 +55,7 @@ describe('reducer', () => {
       };
       const newEntry = { id: 4 };
       const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
+        type: ActionType.SetCurrentState,
         payload: newEntry,
       });
 
@@ -79,7 +73,7 @@ describe('reducer', () => {
       };
       const newEntry = { id: 2 };
       const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
+        type: ActionType.SetCurrentState,
         payload: newEntry,
       });
 
@@ -97,7 +91,7 @@ describe('reducer', () => {
       };
       const newEntry = { id: 7 };
       const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
+        type: ActionType.SetCurrentState,
         payload: newEntry,
       });
       expect(result.entries).toHaveLength(size);
@@ -112,7 +106,7 @@ describe('reducer', () => {
       };
 
       const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
+        type: ActionType.SetCurrentState,
         payload: requestedState,
       });
 
@@ -133,7 +127,7 @@ describe('reducer', () => {
       };
 
       const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
+        type: ActionType.SetCurrentState,
         payload: requestedState,
       });
 
@@ -165,7 +159,7 @@ describe('reducer', () => {
       };
 
       const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
+        type: ActionType.SetCurrentState,
         payload: requestedState,
       });
 
@@ -191,7 +185,7 @@ describe('reducer', () => {
       };
 
       const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
+        type: ActionType.SetCurrentState,
         payload: requestedState,
       });
 
@@ -210,7 +204,7 @@ describe('reducer', () => {
       };
 
       const result = reducer(initialState, {
-        type: CLEAR_HISTORY,
+        type: ActionType.ClearHistory,
       });
 
       expect(result).toMatchObject(EMPTY_STATE);
@@ -226,7 +220,7 @@ describe('reducer', () => {
       };
 
       const result = reducer(initialState, {
-        type: REPLAY,
+        type: ActionType.Replay,
         payload: 1,
       });
 
@@ -243,14 +237,14 @@ describe('reducer', () => {
       };
 
       const result1 = reducer(initialState, {
-        type: REPLAY,
+        type: ActionType.Replay,
         payload: 2,
       });
 
       expect(result1.versionNumber).toBe(5);
 
       const result2 = reducer(initialState, {
-        type: REPLAY,
+        type: ActionType.Replay,
         payload: 5,
       });
       expect(result2.versionNumber).toBe(2);

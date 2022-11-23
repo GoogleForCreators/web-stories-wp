@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,14 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { filterContext } from './TemplateFiltersProvider';
+import type { HistoryState } from '../../types/historyProvider';
+import Context from './context';
 
-export default function useTemplateFilters(selector = identity) {
-  return useContextSelector(filterContext, selector);
+function useHistory(): HistoryState;
+function useHistory<T>(
+  selector: (state: HistoryState) => T | HistoryState = identity
+) {
+  return useContextSelector(Context, selector);
 }
+
+export default useHistory;

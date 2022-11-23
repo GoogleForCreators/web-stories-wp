@@ -10,5 +10,5 @@
     { "path": "../react" },
     { "path": "../tracking" }
   ],
-  "include": ["src/**/*"]
+  "include": ["src/types.ts", "src/components/keyboard/*", "src/types/*"]
 }

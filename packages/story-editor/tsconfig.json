@@ -4,11 +4,18 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
+  "references": [
+    { "path": "../design-system" },
+    { "path": "../elements" },
+    { "path": "../react" }
+  ],
   "include": [
+    "src/app/api/*",
     "src/app/config/*",
+    "src/app/highlights/*",
+    "src/app/history",
     "src/types",
     "src/typings",
-    "src/app/highlights/*",
-    "src/app/api/*"
+    "src/utils/usePreventWindowUnload.ts"
   ]
 }
