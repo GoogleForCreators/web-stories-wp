@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import type { Font, Fonts } from '../types/element';
 import type {
   GifResourceV46,
   ImageResourceV46,
@@ -58,16 +59,34 @@ export type UnionElementV47 =
 
 export interface StoryV47 extends Omit<StoryV46, 'pages'> {
   pages: PageV47[];
+  fonts: Fonts;
 }
 
 export interface PageV47 extends Omit<PageV46, 'elements'> {
   elements: UnionElementV47[];
 }
 
+function getStoryFontsFromPages(pages: PageV46[]): Fonts {
+  const fonts: Fonts = {};
+  pages.forEach(({ elements = [] }) =>
+    elements.forEach((element: UnionElementV46) => {
+      if (
+        element.type === 'text' &&
+        'font' in element &&
+        Boolean(element.font?.family)
+      ) {
+        fonts[element.font.family] = element.font as Font;
+      }
+    })
+  );
+  return fonts;
+}
+
 function removeElementFontProperties({ pages, ...rest }: StoryV46): StoryV47 {
   return {
     pages: pages.map(reducePage),
     ...rest,
+    fonts: getStoryFontsFromPages(pages),
   };
 }
 
