@@ -13,26 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import StoryFiltersProvider from '../myStories/filters/StoryFiltersProvider';
-import TemplateFiltersProvider from '../exploreTemplates/filters/TemplateFiltersProvider';
-
-export default function FiltersProvider({ children }) {
-  return (
-    <StoryFiltersProvider>
-      <TemplateFiltersProvider>{children}</TemplateFiltersProvider>
-    </StoryFiltersProvider>
-  );
-}
-
-FiltersProvider.propTypes = {
-  children: PropTypes.node,
-};
+export * from './keyboard';
+export * from './utils';

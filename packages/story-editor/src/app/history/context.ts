@@ -19,4 +19,34 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-export default createContext({ state: {}, actions: {} });
+/**
+ * Internal dependencies
+ */
+import type { HistoryState } from '../../types/historyProvider';
+
+export default createContext<HistoryState>({
+  state: {
+    currentEntry: {
+      selection: [],
+      capabilities: {},
+      story: {
+        version: 0,
+        pages: [],
+      },
+      pages: [],
+      current: null,
+    },
+    hasNewChanges: false,
+    requestedState: null,
+    canUndo: false,
+    canRedo: false,
+    versionNumber: 0,
+  },
+  actions: {
+    stateToHistory: () => null,
+    clearHistory: () => null,
+    resetNewChanges: () => null,
+    undo: () => false,
+    redo: () => false,
+  },
+});

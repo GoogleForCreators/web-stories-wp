@@ -18,6 +18,8 @@
 // Adjust tsconfig.json and "types" field in package.json and then
 // delete this file once complete.
 
+export * from './components/keyboard';
+export * from './types/keyboard';
 export * from './contexts/snackbar';
 export * from './utils/sessionStore';
 

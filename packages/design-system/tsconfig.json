@@ -4,11 +4,18 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
+  "references": [
+    { "path": "../i18n" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../tracking" }
+  ],
   "include": [
-    "src/contexts/snackbar/*",
-    "src/types.ts",
-    "src/types/*",
+    "src/components/keyboard/*",
     "src/components/snackbar/constants.ts",
-    "src/utils/*.ts",
+    "src/contexts/snackbar/*",
+    "src/types/*",
+    "src/types.ts",
+    "src/utils/*.ts"
   ]
 }
