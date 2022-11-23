@@ -22,17 +22,22 @@ import { TEMPLATE_SORT_KEYS } from '../../../constants/templates';
 import * as types from './types';
 
 /**
+ * @typedef {Object} Payload
+ * @property {string} key Key for associated filter.
+ * @property {Object} value Value to set on the filter.
+ */
+
+/**
  * Update the filters state
  *
  * TODO: May need updating to handle all filter types within the dashboard.
  *
  * @param {Object} state Current state
- * @param {Object} payload Action payload
- * @param {string} payload.key Key for associated filter.
- * @param {Object} payload.value Value to set on the filter.
+ * @param {Object} args Arguments
+ * @param {Object} args.type type Action type.
+ * @param {Payload} args.payload Action payload
  * @return {Object} New state
  */
-
 const reducer = (state, { type, payload = {} }) => {
   switch (type) {
     case types.UPDATE_FILTER: {

@@ -222,22 +222,29 @@ export function TelemetryBannerContainer(props) {
 }
 
 export default function TelemetryBanner() {
-  const { currentPath } = useRouteHistory(({ state }) => ({
+  const { currentPath, hasAvailableRoutes } = useRouteHistory(({ state }) => ({
     currentPath: state.currentPath,
+    hasAvailableRoutes: state.availableRoutes.length > 0,
   }));
   const headerEl = useRef(null);
   const [, forceUpdate] = useState(false);
 
   useEffect(() => {
+    if (!hasAvailableRoutes) {
+      return;
+    }
+
     if (
       [APP_ROUTES.DASHBOARD, APP_ROUTES.TEMPLATES_GALLERY].includes(currentPath)
     ) {
       headerEl.current = document.getElementById('body-view-options-header');
       forceUpdate((value) => !value);
     }
-  }, [currentPath, forceUpdate]);
+  }, [currentPath, hasAvailableRoutes]);
 
-  return headerEl.current
-    ? createPortal(<TelemetryBannerContainer />, headerEl.current)
-    : null;
+  if (!headerEl.current) {
+    return null;
+  }
+
+  return createPortal(<TelemetryBannerContainer />, headerEl.current);
 }
