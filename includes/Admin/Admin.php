@@ -115,7 +115,7 @@ class Admin extends Service_Base {
 		$class .= ' edit-story';
 
 		// Overrides regular WordPress behavior by collapsing the admin menu by default.
-		if ( false === strpos( $class, 'folded' ) ) {
+		if ( ! str_contains( $class, 'folded' ) ) {
 			$class .= ' folded';
 		}
 
