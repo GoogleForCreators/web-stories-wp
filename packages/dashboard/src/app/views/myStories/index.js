@@ -29,8 +29,9 @@ import useApi from '../../api/useApi';
 import useStoryFilters from './filters/useStoryFilters';
 import Content from './content';
 import Header from './header';
+import StoryFiltersProvider from './filters/StoryFiltersProvider';
 
-function MyStories() {
+function MyStoriesView() {
   const {
     duplicateStory,
     fetchStories,
@@ -144,4 +145,10 @@ function MyStories() {
   );
 }
 
-export default MyStories;
+export default function MyStories() {
+  return (
+    <StoryFiltersProvider>
+      <MyStoriesView />
+    </StoryFiltersProvider>
+  );
+}
