@@ -23,6 +23,6 @@ import { identity, useContextSelector } from '@googleforcreators/react';
  */
 import { filterContext } from './TemplateFiltersProvider';
 
-export default function useStoryFilters(selector = identity) {
+export default function useTemplateFilters(selector = identity) {
   return useContextSelector(filterContext, selector);
 }

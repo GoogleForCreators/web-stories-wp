@@ -143,7 +143,7 @@ function getStoriesState() {
   };
 }
 
-function fetchStories({ sort, filters }, currentState) {
+function fetchStories({ sort = {}, filters = {} }, currentState) {
   const storiesState = currentState ? { ...currentState } : getStoriesState();
   const {
     author,
