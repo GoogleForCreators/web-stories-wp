@@ -221,14 +221,6 @@ const updateStory =
   ({ properties }) =>
     dispatch({ type: types.UPDATE_STORY, payload: { properties } });
 
-const updateStoryFonts =
-  (dispatch) =>
-  ({ properties }) =>
-    dispatch({
-      type: types.UPDATE_STORY_FONTS,
-      payload: properties,
-    });
-
 const updateAnimationState =
   (dispatch) =>
   ({ animationState }) =>
@@ -351,7 +343,6 @@ export const exposedActions = {
   updateAnimationState,
   addAnimations,
   updateStory,
-  updateStoryFonts,
   toggleLayer,
   updateElementsByFontFamily,
   addGroup,

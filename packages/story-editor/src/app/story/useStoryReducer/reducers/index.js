@@ -53,7 +53,6 @@ export { default as restore } from './restore';
 
 // Manipulate story-global properties.
 export { default as updateStory } from './updateStory';
-export { default as updateStoryFonts } from './updateStoryFonts';
 
 // Layer groups.
 export { default as addGroup } from './addGroup';

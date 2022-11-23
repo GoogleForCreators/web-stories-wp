@@ -46,7 +46,6 @@ export const TOGGLE_LAYER = 'TOGGLE_LAYER';
 
 // Manipulate story-global state.
 export const UPDATE_STORY = 'UPDATE_STORY';
-export const UPDATE_STORY_FONTS = 'UPDATE_STORY_FONTS';
 
 // Manipulate animation state.
 export const UPDATE_ANIMATION_STATE = 'UPDATE_ANIMATION_STATE';
