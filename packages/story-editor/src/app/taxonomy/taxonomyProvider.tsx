@@ -163,7 +163,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     async (taxonomy: Taxonomy, args: { search?: string, per_page?: number }, addNameToSelection = false) => {
       let response = [];
       const termsEndpoint = taxonomy?.restPath;
-      if (!termsEndpoint) {
+      if (!termsEndpoint || !getTaxonomyTerm) {
         return [];
       }
       try {
@@ -224,7 +224,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
       }
 
       const termsEndpoint = taxonomy?.restPath;
-      if (!termsEndpoint) {
+      if (!termsEndpoint || !createTaxonomyTerm) {
         return;
       }
 
