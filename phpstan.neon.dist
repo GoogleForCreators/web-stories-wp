@@ -22,6 +22,7 @@ parameters:
       path: includes/Admin/Customizer.php
   paths:
     - includes/
+    - tests/phpunit/unit/
     - uninstall.php
   excludePaths:
     - includes/vendor/*
@@ -36,6 +37,7 @@ parameters:
   stubFiles:
     - tests/phpstan/stubs/wordpress-override.php
   bootstrapFiles:
+    - tests/phpunit/unit/bootstrap.php
     - tests/phpstan/bootstrap.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
