@@ -396,8 +396,8 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$revision_message = ! empty( $revision ) ?
 			sprintf(
-				/* translators: %s: Number of stories. */
-				__( 'Post restored to revision from %s.', 'web-stories' ),
+				/* translators: %s: Date and time of the revision. */
+				__( 'Story restored to revision from %s.', 'web-stories' ),
 				wp_post_revision_title( $revision, false )
 			)
 			: false;
