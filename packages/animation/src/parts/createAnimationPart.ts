@@ -24,29 +24,18 @@ import {
   AnimationType,
   Element,
 } from '../types';
-import { orderByKeys } from '../utils';
-import getDefaultFieldValue from '../utils/getDefaultFieldValue';
-import { EffectDrop, fields as dropFields } from './effects/drop';
-import { EffectFadeIn, fields as fadeFields } from './effects/fadeIn';
-import { EffectFlyIn, fields as flyInFields } from './effects/flyIn';
-import { EffectPan, fields as panFields } from './effects/pan';
-import { EffectPulse, fields as pulseFields } from './effects/pulse';
+import { EffectDrop } from './effects/drop';
+import { EffectFadeIn } from './effects/fadeIn';
+import { EffectFlyIn } from './effects/flyIn';
+import { EffectPan } from './effects/pan';
+import { EffectPulse } from './effects/pulse';
 import { EffectTwirlIn } from './effects/twirlIn';
-import { EffectWhooshIn, fields as whooshInFields } from './effects/whooshIn';
-import { EffectZoom, fields as zoomFields } from './effects/zoom';
-import { EffectRotateIn, fields as rotateInFields } from './effects/rotateIn';
-import {
-  EffectBackgroundZoom,
-  fields as bgZoomFields,
-} from './effects/backgroundZoom';
-import {
-  EffectBackgroundPan,
-  fields as bgPanFields,
-} from './effects/backgroundPan';
-import {
-  EffectBackgroundPanAndZoom,
-  fields as bgPanZoomFields,
-} from './effects/backgroundPanAndZoom';
+import { EffectWhooshIn } from './effects/whooshIn';
+import { EffectZoom } from './effects/zoom';
+import { EffectRotateIn } from './effects/rotateIn';
+import { EffectBackgroundZoom } from './effects/backgroundZoom';
+import { EffectBackgroundPan } from './effects/backgroundPan';
+import { EffectBackgroundPanAndZoom } from './effects/backgroundPanAndZoom';
 
 import { AnimationBounce } from './simple/bounce';
 import { AnimationBlinkOn } from './simple/blinkOn';
@@ -58,7 +47,6 @@ import { AnimationPulse } from './simple/pulse';
 import { AnimationSpin } from './simple/spin';
 import { AnimationZoom } from './simple/zoom';
 
-import { basicAnimationFields } from './defaultFields';
 import type { AnimationPart } from './types';
 import emptyAnimationPart from './emptyAnimationPart';
 
@@ -126,61 +114,6 @@ function createAnimationPart(
     default:
       return emptyAnimationPart();
   }
-}
-
-export function getAnimationEffectFields(type?: AnimationType) {
-  const customFieldsByType: Partial<Record<AnimationType, unknown>> = {
-    [AnimationType.EffectFadeIn]: fadeFields,
-    [AnimationType.EffectFlyIn]: flyInFields,
-    [AnimationType.EffectPan]: panFields,
-    [AnimationType.EffectPulse]: pulseFields,
-    [AnimationType.EffectWhooshIn]: whooshInFields,
-    [AnimationType.EffectZoom]: zoomFields,
-    [AnimationType.EffectDrop]: dropFields,
-    [AnimationType.EffectRotateIn]: rotateInFields,
-    [AnimationType.EffectBackgroundZoom]: bgZoomFields,
-    [AnimationType.EffectBackgroundPan]: bgPanFields,
-    [AnimationType.EffectBackgroundPanAndZoom]: bgPanZoomFields,
-  };
-
-  const customFields = (type && customFieldsByType[type]) || {};
-  const allFields = {
-    ...basicAnimationFields,
-    ...customFields,
-  };
-  const allFieldsOrder = {
-    ...customFields,
-    ...basicAnimationFields,
-  };
-  let fieldOrder = Object.keys(allFieldsOrder);
-
-  // ZoomAndPand design deviates from the normal input order by putting
-  // a custom field (zoom direction) at the end. This accomodates for that.
-  const zoomField = 'zoomDirection';
-  if (
-    type === AnimationType.EffectBackgroundPanAndZoom &&
-    fieldOrder.includes(zoomField)
-  ) {
-    fieldOrder = fieldOrder
-      .filter((field) => field !== zoomField)
-      .concat([zoomField]);
-  }
-
-  // This order is important.
-  // We want custom fields to appear above default fields, but we
-  // also want custom fields to override any same-named default fields
-  const fields = orderByKeys(allFields, fieldOrder);
-  return fields;
-}
-
-export function getAnimationEffectDefaults(type: AnimationType) {
-  const fields = getAnimationEffectFields(type);
-  return Object.fromEntries(
-    Object.entries(fields).map(([key, value]) => [
-      key,
-      value.defaultValue ?? getDefaultFieldValue(value.type),
-    ])
-  );
 }
 
 export default createAnimationPart;

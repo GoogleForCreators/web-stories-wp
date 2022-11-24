@@ -15,4 +15,5 @@
  */
 
 export { default as createAnimationPart } from './createAnimationPart';
+export * from './getAnimationEffectFields';
 export * from './types';
