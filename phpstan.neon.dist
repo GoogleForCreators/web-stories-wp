@@ -30,6 +30,7 @@ parameters:
   scanDirectories:
     - third-party/
   scanFiles:
+    - web-stories.php
     - vendor/php-stubs/wordpress-tests-stubs/wordpress-tests-stubs.php
     - tests/phpstan/stubs/amp.php
     - tests/phpstan/stubs/wordpress-seo.php
