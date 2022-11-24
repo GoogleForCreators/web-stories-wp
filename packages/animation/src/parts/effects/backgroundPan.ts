@@ -82,7 +82,7 @@ export function EffectBackgroundPan(
 }
 
 export const fields = {
-  panDirection: {
+  panDir: {
     label: __('Direction', 'web-stories'),
     tooltip: sprintf(
       /* translators: 1: scaleIn. 2: scaleOut */
