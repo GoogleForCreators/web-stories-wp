@@ -4,6 +4,7 @@
     { "path": "packages/animation" },
     { "path": "packages/element-library" },
     { "path": "packages/dashboard" },
+    { "path": "packages/design-system" },
     { "path": "packages/elements" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
