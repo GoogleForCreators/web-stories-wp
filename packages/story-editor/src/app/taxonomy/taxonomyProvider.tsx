@@ -126,20 +126,16 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   ]);
 
   const setTerms = useCallback(
-    // @todo - Type 'never[]' is not assignable to type 'TermsIds'.
-    (taxonomy: Taxonomy, termIds: TermsIds = []) => {
-
+    (taxonomy: Taxonomy, termIds: [] | TermsIds = []) => {
       updateStory({
         properties: (story: Story) => {
           const newTerms =
             typeof termIds === 'function'
-              // @ts-ignore Reason: need to update the story type to add terms.
-              ? termIds(story.terms[taxonomy.restBase])
+              ? termIds(story.terms && story.terms[taxonomy.restBase] || [])
               : termIds;
           return {
             ...story,
             terms: {
-              // @ts-ignore Reason: need to update the story type to add terms.
               ...story.terms,
               [taxonomy.restBase]: newTerms,
             },
@@ -258,8 +254,6 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     },
     [createTaxonomyTerm, termCache, addSearchResultsToCache, addTermToSelection]
   );
-
-  console.log("taxonomies", taxonomies);
 
   // Fetch hierarchical taxonomies on mount
   useEffect(() => {

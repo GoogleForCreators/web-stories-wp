@@ -18,6 +18,7 @@
  * External dependencies
  */
 import type { AudioResource } from '@googleforcreators/media';
+import type { Taxonomy } from '@googleforcreators/story-editor/src/types/taxonomyProvider';
 
 /**
  * Internal dependencies
@@ -30,6 +31,7 @@ export interface Story {
   backgroundAudio?: {
     resource: AudioResource;
   };
+  terms: Record<Taxonomy['slug'], number[]> | null;
   autoAdvance?: boolean;
   defaultPageDuration?: number;
 }
