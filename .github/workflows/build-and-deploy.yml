@@ -160,7 +160,7 @@ jobs:
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          npx webpack --node-env=development
+          npx webpack --env=development
           npm run workflow:build-plugin -- --zip web-stories-dev.zip
 
       # Upload ZIP file to GCS for use in QA environment.

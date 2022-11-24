@@ -13,9 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const SET_CURRENT_STATE = 'set_state';
-export const CLEAR_HISTORY = 'clear';
-export const REPLAY = 'replay';
+
+/**
+ * Internal dependencies
+ */
+import type {
+  ReducerState,
+  ReducerProps,
+  HistoryEntry,
+} from '../../types/historyProvider';
+
+export enum ActionType {
+  SetCurrentState = 'set_state',
+  ClearHistory = 'clear',
+  Replay = 'replay',
+}
 
 export const EMPTY_STATE = {
   entries: [],
@@ -25,17 +37,24 @@ export const EMPTY_STATE = {
 };
 
 const reducer =
-  (size) =>
-  (state, { type, payload }) => {
+  (size: number) =>
+  (
+    state: ReducerState,
+    { type, payload }: ReducerProps
+  ): ReducerState | never => {
     const currentEntry = state.entries[state.offset];
     switch (type) {
-      case SET_CURRENT_STATE:
+      case ActionType.SetCurrentState:
         // First check if everything in payload matches the current `requestedState`,
         // if so, update `offset` to match the state in entries and clear `requestedState`
         // and of course leave entries unchanged.
         if (state.requestedState) {
           const isReplay = Object.keys(state.requestedState).every(
-            (key) => state.requestedState[key] === payload[key]
+            (key) =>
+              // TS complains about this potentially being `null` despite of the check above.
+              state.requestedState &&
+              state.requestedState[key as keyof HistoryEntry] ===
+                payload[key as keyof HistoryEntry]
           );
 
           if (isReplay) {
@@ -48,7 +67,10 @@ const reducer =
               currentEntry.current !== state.requestedState.current
             ) {
               const changedPage = currentEntry.pages.filter((page, index) => {
-                return page !== state.requestedState.pages[index];
+                return (
+                  state.requestedState &&
+                  page !== state.requestedState.pages[index]
+                );
               });
               // If a changed page was found.
               if (changedPage.length === 1) {
@@ -83,20 +105,20 @@ const reducer =
           requestedState: null,
         };
 
-      case REPLAY:
+      case ActionType.Replay:
         return {
           ...state,
           versionNumber: state.versionNumber + (state.offset - payload),
           requestedState: state.entries[payload],
         };
 
-      case CLEAR_HISTORY:
+      case ActionType.ClearHistory:
         return {
           ...EMPTY_STATE,
         };
 
       default:
-        throw new Error(`Unknown history reducer action: ${type}`);
+        throw new Error(`Unknown history reducer action: ${type as string}`);
     }
   };
 

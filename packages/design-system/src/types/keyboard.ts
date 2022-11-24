@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,24 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import type { RefObject } from 'react';
 
-export default createContext({ state: {}, actions: {} });
+/**
+ * Internal dependencies
+ */
+import type keys from '../components/keyboard/keys';
+
+export interface KeySpec {
+  key: string | string[];
+  shift?: boolean;
+  clickable?: boolean;
+  dialog?: boolean;
+  repeat?: boolean;
+  editable?: boolean;
+  allowDefault?: boolean;
+}
+export type Keys = typeof keys;
+export type KeyEffectCallback = (event: KeyboardEvent) => void;
+export type KeyNameOrSpec = KeySpec | string | string[];
+
+export type RefOrNode = Element | RefObject<Element> | null;
