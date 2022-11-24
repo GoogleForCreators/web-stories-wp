@@ -84,5 +84,19 @@ export type Terms = [Term[]];
 export type TermsIds = (ids: number[]) => number[] | [];
 
 export interface TaxonomyState {
-  actions: APICallbacks;
+  state: { taxonomies: TaxonomiesBySlug; termCache: TermsIds; terms: Terms };
+  actions: {
+    createTerm: (
+      taxonomy: Taxonomy,
+      termName: string,
+      parent: { id?: number; slug: string; addToSelection: boolean }
+    ) => Promise<Term>;
+    addSearchResultsToCache: (
+      taxonomy: Taxonomy,
+      args: { search?: string; per_page?: number },
+      addNameToSelection: boolean
+    ) => void;
+    setTerms: (taxonomy: Taxonomy, ids: number[]) => void;
+    addTermToSelection: (taxonomy: Taxonomy, selectedTerm: Term) => void;
+  };
 }
