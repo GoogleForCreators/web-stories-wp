@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import type { APICallbacks } from './configProvider';
 
 export type Term = {
   id: number;
@@ -89,14 +85,15 @@ export interface TaxonomyState {
     createTerm: (
       taxonomy: Taxonomy,
       termName: string,
-      parent: { id?: number; slug: string; addToSelection: boolean }
-    ) => Promise<Term>;
+      parent: { id?: number; slug: string; addToSelection: boolean },
+      addNameToSelection?: boolean
+    ) => Promise<void>;
     addSearchResultsToCache: (
       taxonomy: Taxonomy,
       args: { search?: string; per_page?: number },
-      addNameToSelection: boolean
+      addNameToSelection?: boolean
     ) => void;
-    setTerms: (taxonomy: Taxonomy, ids: number[]) => void;
+    setTerms: (taxonomy: Taxonomy, ids: [] | TermsIds) => void;
     addTermToSelection: (taxonomy: Taxonomy, selectedTerm: Term) => void;
   };
 }

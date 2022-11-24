@@ -42,7 +42,13 @@ import {
   cacheFromEmbeddedTerms,
 } from './utils';
 
-import type { Term, Taxonomy, TaxonomiesBySlug, EmbeddedTerms, TermsIds } from '../../types/taxonomyProvider';
+import type {
+  Term,
+  Taxonomy,
+  TaxonomiesBySlug,
+  EmbeddedTerms,
+  TaxonomyState
+} from '../../types/taxonomyProvider';
 import type { APIState } from '../../types/apiProvider';
 
 function TaxonomyProvider(props: { children: React.ReactNode }) {
@@ -92,9 +98,9 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   const hasHydrationRunOnce = useRef(false);
   useEffect(() => {
     if (
-      taxonomies.length > 0 &&
+      taxonomies && taxonomies.length > 0 &&
       isStoryLoaded &&
-      !hasHydrationRunOnce.current
+      !hasHydrationRunOnce || !hasHydrationRunOnce.current
     ) {
       const taxonomiesBySlug: TaxonomiesBySlug = dictionaryOnKey(taxonomies as [], 'slug');
 
@@ -125,19 +131,19 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     updateStory,
   ]);
 
-  const setTerms = useCallback(
-    (taxonomy: Taxonomy, termIds: [] | TermsIds = []) => {
+  const setTerms: TaxonomyState["actions"]["setTerms"] = useCallback(
+    (taxonomy, termIds) => {
       updateStory({
         properties: (story: Story) => {
           const newTerms =
             typeof termIds === 'function'
-              ? termIds(story.terms && story.terms[taxonomy.restBase] || [])
+              ? termIds(story?.terms && story?.terms[taxonomy.restBase] || [])
               : termIds;
           return {
             ...story,
             terms: {
-              ...story.terms,
-              [taxonomy.restBase]: newTerms,
+              ...story?.terms,
+              [taxonomy?.restBase]: newTerms,
             },
           };
         },
@@ -155,8 +161,8 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     [setTerms]
   );
 
-  const addSearchResultsToCache = useCallback(
-    async (taxonomy: Taxonomy, args: { search?: string, per_page?: number }, addNameToSelection = false) => {
+  const addSearchResultsToCache: TaxonomyState["actions"]["addSearchResultsToCache"] = useCallback(
+    async (taxonomy, args, addNameToSelection = false) => {
       let response: Term[] | [] = [];
       const termsEndpoint = taxonomy?.restPath;
       if (!termsEndpoint || !getTaxonomyTerm) {
@@ -200,8 +206,8 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     [getTaxonomyTerm, addTermToSelection]
   );
 
-  const createTerm = useCallback(
-    async (taxonomy: Taxonomy, termName: string, parent: { id?: number, slug: string }, addToSelection = false) => {
+  const createTerm: TaxonomyState["actions"]["createTerm"] = useCallback(
+    async (taxonomy, termName, parent, addToSelection) => {
       const data: { name: string, parent?: number, slug?: string } = { name: termName };
       if (parent?.id) {
         data.parent = parent.id;
@@ -210,7 +216,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
 
       // make sure the term doesn't already exist locally
       const preEmptiveSlug = data?.slug || cleanForSlug(termName) || "";
-      const cachedTerm = termCache[taxonomy.restBase]?.[preEmptiveSlug];
+      const cachedTerm = termCache[taxonomy?.restBase]?.[preEmptiveSlug];
       if (cachedTerm) {
         if (addToSelection) {
           addTermToSelection(taxonomy, cachedTerm);
