@@ -55,7 +55,11 @@ export const arrangeGroup = (
   const groupSize = groupEndIndex - groupStartIndex + 1;
 
   // Splice out the entire group and replace with dummy entry
-  const groupSlice = elements.splice(groupStartIndex, groupSize, 'dummy');
+  const groupSlice = elements.splice(
+    groupStartIndex,
+    groupSize,
+    'dummy' as unknown as Element
+  );
 
   // Dummy entry is needed to calculate the new position as if the group is one entry
   const minPosition = 1;
@@ -68,7 +72,7 @@ export const arrangeGroup = (
   });
 
   // remove the dummy entry
-  elements.splice(elements.indexOf('dummy'), 1);
+  elements.splice(elements.indexOf('dummy' as unknown as Element), 1);
 
   // Insert the new elements at position
   elements.splice(newPosition, 0, ...groupSlice);

@@ -119,7 +119,7 @@ export const combineElements = (
 
   const newElement: Element = {
     // First copy everything from existing element except if it was default background
-    ...objectWithout(secondElement, ['isDefaultBackground']),
+    ...objectWithout<Element>(secondElement, ['isDefaultBackground']),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
     // Then copy all relevant attributes from new element

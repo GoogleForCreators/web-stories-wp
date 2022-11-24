@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-export default function objectWithout(
-  obj: Record<string, unknown>,
+export default function objectWithout<T extends object>(
+  obj: T,
   propertiesToRemove: string[]
 ) {
   return Object.keys(obj)
     .filter((key) => !propertiesToRemove.includes(key))
-    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
+    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key as keyof T] }), {});
 }

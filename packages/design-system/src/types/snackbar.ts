@@ -15,11 +15,11 @@
  */
 
 export interface Notification {
-  id: string;
-  key: string;
-  'aria-label': string;
+  id?: string;
+  key?: string;
+  'aria-label'?: string;
   message: string;
-  onDismiss: () => void;
+  onDismiss?: () => void;
   dismissible?: boolean;
 }
 export interface SnackbarState {
