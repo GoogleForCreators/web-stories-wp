@@ -35,7 +35,7 @@ type ElementWithRotation = Partial<Pick<Element, 'rotationAngle'>>;
  * @return string result
  */
 export function literal(
-  strings: TemplateStringsArray,
+  strings: ReadonlyArray<string>,
   ...args: stringable[]
 ): string {
   return strings

@@ -19,21 +19,14 @@
  */
 import { getGlobalSpace, literal } from '..';
 
-// Necessary util function for type safety
-function asTSA(a: ReadonlyArray<string>): TemplateStringsArray {
-  return { ...a, raw: a };
-}
-
 describe('literal', () => {
   it('interpolates the same as a template literal given an empty string', () => {
-    expect(literal(asTSA(['']))).toBe(``);
+    expect(literal([''])).toBe(``);
   });
 
   it('interpolates the same as a template literal given some args', () => {
     const args = ['am', 'dog'];
-    expect(literal(asTSA(['I ', ' a ']), ...args)).toBe(
-      `I ${args[0]} a ${args[1]}`
-    );
+    expect(literal(['I ', ' a '], ...args)).toBe(`I ${args[0]} a ${args[1]}`);
   });
 });
 
