@@ -125,9 +125,11 @@ function EffectPanel({
         effectProps={fields}
         effectConfig={config}
         field={field}
-        onChange={(value, submitArg) =>
-          handleInputChange({ [field]: Math.max(value, 0) }, submitArg)
-        }
+        onChange={(value, submitArg) => {
+          const fittedValue =
+            typeof value === 'number' ? Math.max(value, 0) : value;
+          handleInputChange({ [field]: fittedValue }, submitArg);
+        }}
         disabledOptions={disabledTypeOptionsMap[type]?.options || []}
         disabled={disabled}
         tooltip={disabledTypeOptionsMap[type]?.tooltip}
