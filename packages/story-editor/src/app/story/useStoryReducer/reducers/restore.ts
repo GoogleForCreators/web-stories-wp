@@ -57,7 +57,7 @@ export const restore = (
     story: newReducerState,
     animationState: draft.animationState,
     capabilities: newCapabilities,
-    copiedElementReducerState: {},
+    copiedElementState: {},
   };
 };
 
