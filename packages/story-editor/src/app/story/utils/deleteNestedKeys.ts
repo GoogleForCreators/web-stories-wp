@@ -20,8 +20,8 @@
  *
  * Note that this function mutates the original object.
  */
-function deleteNestedKeys(paths: string[]) {
-  return (object: Record<string, unknown>) => {
+function deleteNestedKeys<T extends Record<string, object>>(paths: string[]) {
+  return (object: T) => {
     if (!Array.isArray(paths)) {
       return;
     }
@@ -36,7 +36,11 @@ function deleteNestedKeys(paths: string[]) {
       }
       const lastKey = keys.pop();
       const nextLastKey = keys.pop();
-      const nextLastObj = keys.reduce((a, key) => a?.[key] || a, object);
+      const nextLastObj: T = keys.reduce((a, key) => a?.[key] || a, object);
+
+      if (!nextLastObj || !nextLastKey || !lastKey) {
+        return;
+      }
       // Make sure we're not trying to get a property out of `undefined` or `null`.
       if (
         Object.prototype.hasOwnProperty.call(nextLastObj, nextLastKey) &&

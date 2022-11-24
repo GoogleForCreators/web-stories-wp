@@ -31,10 +31,8 @@ import type {
   Story,
   CopiedElementState,
 } from '../../../types';
-import {DispatchType, exposedActions, internalActions} from './actions';
+import { DispatchType, exposedActions, internalActions } from './actions';
 import reducer from './reducer';
-import {Dispatch} from "react";
-import {ReducerActionProps} from "../../../types";
 
 export const INITIAL_STATE = {
   pages: [],
