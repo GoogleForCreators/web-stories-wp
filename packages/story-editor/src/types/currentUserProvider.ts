@@ -27,7 +27,7 @@ export interface CurrentUserState {
     currentUser?: User;
   };
   actions: {
-    toggleWebStoriesMediaOptimization?: () => void;
-    updateCurrentUser?: (props: updateCurrentUserProps) => void;
+    toggleWebStoriesMediaOptimization?: () => Promise<User> | null;
+    updateCurrentUser?: (props: updateCurrentUserProps) => Promise<User> | null;
   };
 }

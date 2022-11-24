@@ -58,17 +58,15 @@ function CurrentUserProvider({ children }: CurrentUserProviderProps) {
 
   const updateCurrentUser = useCallback(
     (data: updateCurrentUserProps) =>
-      _updateCurrentUser
-        ? void _updateCurrentUser(data).then(setCurrentUser)
-        : null,
+      _updateCurrentUser ? _updateCurrentUser(data).then(setCurrentUser) : null,
     [_updateCurrentUser]
   );
 
   const toggleWebStoriesMediaOptimization = useCallback(() => {
     if (!currentUser) {
-      return;
+      return null;
     }
-    void updateCurrentUser({
+    return updateCurrentUser({
       mediaOptimization: !currentUser.mediaOptimization,
     });
   }, [currentUser, updateCurrentUser]);
