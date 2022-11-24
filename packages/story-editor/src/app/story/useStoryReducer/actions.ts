@@ -59,7 +59,7 @@ import type {
 } from '../../../types/storyProvider';
 import * as types from './types';
 
-type DispatchType = Dispatch<ReducerActionProps>;
+export type DispatchType = Dispatch<ReducerActionProps>;
 // Exposed actions
 const addPage =
   (dispatch: DispatchType) =>

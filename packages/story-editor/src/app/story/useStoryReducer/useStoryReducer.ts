@@ -31,8 +31,10 @@ import type {
   Story,
   CopiedElementState,
 } from '../../../types';
-import { exposedActions, internalActions } from './actions';
+import {DispatchType, exposedActions, internalActions} from './actions';
 import reducer from './reducer';
+import {Dispatch} from "react";
+import {ReducerActionProps} from "../../../types";
 
 export const INITIAL_STATE = {
   pages: [],
@@ -71,8 +73,10 @@ function useStoryReducer(partial: Partial<ReducerState>): ReducerProviderState {
     ...partial,
   } as ReducerState);
   const { internal, api } = useMemo(() => {
-    const wrapWithDispatch = (
-      actions: typeof internalActions | typeof exposedActions
+    const wrapWithDispatch = <
+      T extends Record<string, (props: DispatchType) => unknown>
+    >(
+      actions: T
     ) =>
       Object.keys(actions).reduce(
         (collection: Actions, action) => ({
@@ -83,7 +87,9 @@ function useStoryReducer(partial: Partial<ReducerState>): ReducerProviderState {
       );
 
     return {
-      internal: wrapWithDispatch(internalActions) as InternalActions,
+      internal: wrapWithDispatch<typeof internalActions>(
+        internalActions
+      ) as InternalActions,
       api: wrapWithDispatch(exposedActions) as ExternalActions,
     };
   }, [dispatch]);
