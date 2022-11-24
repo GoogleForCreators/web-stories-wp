@@ -184,7 +184,27 @@ describe('Story output', () => {
           page: {
             id: '123',
           },
-          elements: [],
+          elements: [
+            {
+              type: 'text',
+              id: '123',
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              content: 'Hello World',
+              color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+              padding: {
+                horizontal: 0,
+                vertical: 0,
+              },
+              font: {
+                family: 'Roboto',
+                service: 'fonts.google.com',
+              },
+            },
+          ],
         },
       ],
       metadata: {
