@@ -76,7 +76,7 @@ class Meta_Sanitizer extends TestCase {
 	/**
 	 * Provide data to the test_sanitize method.
 	 *
-	 * @return array<string, string[]>
+	 * @return array<string, string[]> Array of arrays with test data.
 	 */
 	public function get_data_for_sanitize(): array {
 		$script1 = 'document.body.textContent += "First!";';
