@@ -92,7 +92,7 @@ function useSaveStory({
       // errors caused by getStoryPropsToSave() / getStoryMarkup().
       return Promise.resolve()
         .then(() =>
-          saveStoryById({
+          saveStoryById?.({
             storyId,
             ...getStoryPropsToSave({
               story,
@@ -106,6 +106,9 @@ function useSaveStory({
           } as StorySaveData)
         )
         .then((data) => {
+          if (!data) {
+            return;
+          }
           const {
             status,
             slug,

@@ -59,7 +59,7 @@ export const selectElement = (
   // or the new element is locked, set selection to new element only
   const isLockedElement = element?.isLocked;
   const wasBackground = draft.selection.includes(currentPage.elements[0].id);
-  const wasLockedElement = draft.selection.some((id) => byId(id).isLocked);
+  const wasLockedElement = draft.selection.some((id) => byId(id)?.isLocked);
   if (wasBackground || isLockedElement || wasLockedElement) {
     draft.selection = [elementId];
   } else {
