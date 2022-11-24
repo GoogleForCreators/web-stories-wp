@@ -24,7 +24,7 @@ export type Term = {
 };
 
 export type Taxonomy = {
-  restBase: 'web_story_category' | 'web_story_tag' | string;
+  restBase: string;
   name: string;
   restNamespace: string;
   restPath: string;
