@@ -120,9 +120,9 @@ export type AnimationInputWithPreset = AnimationInput & {
   easingPreset?: BezierType;
 };
 
-// Renamed this to StoryAnimation to avoid a clash with the imported Animation
-// interface from `@types/web-animations-js` that we cannot rename due to how
-// we have to import it at the top of this file.
+// Renamed this from just Animation to StoryAnimation to avoid a clash with the
+// imported Animation interface from `@types/web-animations-js` that we cannot
+// rename due to how we have to import it at the top of this file.
 export type StoryAnimation = AnimationInputWithPreset & {
   id: string;
   targets: ElementId[];
