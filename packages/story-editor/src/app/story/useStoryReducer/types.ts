@@ -14,45 +14,57 @@
  * limitations under the License.
  */
 
-// Manipulate pages.
-export const ADD_PAGE = 'ADD_PAGE';
-export const UPDATE_PAGE = 'UPDATE_PAGE';
-export const DELETE_PAGE = 'DELETE_PAGE';
-export const ARRANGE_PAGE = 'ARRANGE_PAGE';
+export enum ActionTypes {
+  // Manipulate pages.
+  AddPage = 'ADD_PAGE',
+  UpdatePage = 'UPDATE_PAGE',
+  DeletePage = 'DELETE_PAGE',
+  ArrangePage = 'ARRANGE_PAGE',
 
-// Manipulate elements on a page.
-export const DELETE_ELEMENTS = 'DELETE_ELEMENTS';
-export const ADD_ELEMENTS = 'ADD_ELEMENTS';
-export const UPDATE_ELEMENTS = 'UPDATE_ELEMENTS';
-export const UPDATE_ELEMENTS_BY_RESOURCE_ID = 'UPDATE_ELEMENTS_BY_RESOURCE_ID';
-export const DELETE_ELEMENTS_BY_RESOURCE_ID = 'DELETE_ELEMENTS_BY_RESOURCE_ID';
-export const SET_BACKGROUND_ELEMENT = 'SET_BACKGROUND_ELEMENT';
-export const ARRANGE_ELEMENT = 'ARRANGE_ELEMENT';
-export const ARRANGE_GROUP = 'ARRANGE_GROUP';
-export const COMBINE_ELEMENTS = 'COMBINE_ELEMENTS';
-export const DUPLICATE_ELEMENTS_BY_ID = 'DUPLICATE_ELEMENTS_BY_ID';
-export const COPY_SELECTED_ELEMENT = 'COPY_SELECTED_ELEMENT';
-export const UPDATE_ELEMENTS_BY_FONT_FAMILY = 'UPDATE_ELEMENTS_BY_FONT_FAMILY';
+  // Manipulate elements on a page.
+  DeleteElements = 'DELETE_ELEMENTS',
+  AddElements = 'ADD_ELEMENTS',
+  UpdateElements = 'UPDATE_ELEMENTS',
+  UpdateElementsByResourceId = 'UPDATE_ELEMENTS_BY_RESOURCE_ID',
+  DeleteElementsByResourceId = 'DELETE_ELEMENTS_BY_RESOURCE_ID',
+  SetBackgroundElement = 'SET_BACKGROUND_ELEMENT',
+  ArrangeElement = 'ARRANGE_ELEMENT',
+  ArrangeGroup = 'ARRANGE_GROUP',
+  CombineElements = 'COMBINE_ELEMENTS',
+  DuplicateElementsById = 'DUPLICATE_ELEMENTS_BY_ID',
+  CopySelectedElement = 'COPY_SELECTED_ELEMENT',
+  UpdateElementsByFontFamily = 'UPDATE_ELEMENTS_BY_FONT_FAMILY',
 
-// Manipulate current page.
-export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+  // Manipulate current page.
+  SetCurrentPage = 'SET_CURRENT_PAGE',
 
-// Manipulate list of selected elements.
-export const SET_SELECTED_ELEMENTS = 'SET_SELECTED_ELEMENTS';
-export const SELECT_ELEMENT = 'SELECT_ELEMENT';
-export const UNSELECT_ELEMENT = 'UNSELECT_ELEMENT';
-export const TOGGLE_ELEMENT_IN_SELECTION = 'TOGGLE_ELEMENT_IN_SELECTION';
-export const TOGGLE_LAYER = 'TOGGLE_LAYER';
+  // Manipulate list of selected elements.
+  SetSelectedElements = 'SET_SELECTED_ELEMENTS',
+  SelectElement = 'SELECT_ELEMENT',
+  UnselectElement = 'UNSELECT_ELEMENT',
+  ToggleElementInSelection = 'TOGGLE_ELEMENT_IN_SELECTION',
+  ToggleLayer = 'TOGGLE_LAYER',
 
-// Manipulate story-global state.
-export const UPDATE_STORY = 'UPDATE_STORY';
+  // Manipulate story-global state.
+  UpdateStory = 'UPDATE_STORY',
 
-// Manipulate animation state.
-export const UPDATE_ANIMATION_STATE = 'UPDATE_ANIMATION_STATE';
-export const ADD_ANIMATIONS = 'ADD_ANIMATIONS';
+  // Manipulate animation state.
+  UpdateAnimationState = 'UPDATE_ANIMATION_STATE',
+  AddAnimations = 'ADD_ANIMATIONS',
 
-// Manipulate entire internal state.
-export const RESTORE = 'RESTORE';
+  // Manipulate entire internal state.
+  Restore = 'RESTORE',
+
+  // Layer groups
+  AddGroup = 'ADD_GROUP',
+  UpdateGroup = 'UPDATE_GROUP',
+  DeleteGroup = 'DELETE_GROUP',
+  DuplicateGroup = 'DUPLICATE_GROUP',
+  RemoveElementFromGroup = 'REMOVE_ELEMENT_FROM_GROUP',
+
+  // Video segmentation.
+  AddElementsAcrossPages = 'ADD_ELEMENTS_ACROSS_PAGES',
+}
 
 // Reserved property names for pages, elements and groups.
 export const PAGE_RESERVED_PROPERTIES = ['id', 'elements', 'groups'];
@@ -61,13 +73,3 @@ export const ELEMENT_RESERVED_PROPERTIES = [
   'isBackground',
   'isDefaultBackground',
 ];
-
-// Layer groups
-export const ADD_GROUP = 'ADD_GROUP';
-export const UPDATE_GROUP = 'UPDATE_GROUP';
-export const DELETE_GROUP = 'DELETE_GROUP';
-export const DUPLICATE_GROUP = 'DUPLICATE_GROUP';
-export const REMOVE_ELEMENT_FROM_GROUP = 'REMOVE_ELEMENT_FROM_GROUP';
-
-// Video segmentation.
-export const ADD_ELEMENTS_ACROSS_PAGES = 'ADD_ELEMENTS_ACROSS_PAGES';

@@ -27,7 +27,7 @@ import type { ResourceId } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import type * as actionTypes from '../app/story/useStoryReducer/types';
+import type { ActionTypes } from '../app/story/useStoryReducer/types';
 import type { Story, StorySaveData } from './story';
 import type { Capabilities } from './configProvider';
 
@@ -37,7 +37,7 @@ export type AddPageProps = {
   updateSelection: boolean;
 };
 export type AddPageAction = {
-  type: typeof actionTypes.ADD_PAGE;
+  type: typeof ActionTypes.AddPage;
   payload: AddPageProps;
 };
 
@@ -45,7 +45,7 @@ export type DeletePageProps = {
   pageId: string | null;
 };
 export type DeletePageAction = {
-  type: typeof actionTypes.DELETE_PAGE;
+  type: typeof ActionTypes.DeletePage;
   payload: DeletePageProps;
 };
 
@@ -54,7 +54,7 @@ export type UpdatePageProps = {
   properties: Partial<Page>;
 };
 export type UpdatePageAction = {
-  type: typeof actionTypes.UPDATE_PAGE;
+  type: typeof ActionTypes.UpdatePage;
   payload: UpdatePageProps;
 };
 
@@ -63,7 +63,7 @@ export type ArrangePageProps = {
   position: number;
 };
 export type ArrangePageAction = {
-  type: typeof actionTypes.ARRANGE_PAGE;
+  type: typeof ActionTypes.ArrangePage;
   payload: ArrangePageProps;
 };
 
@@ -71,7 +71,7 @@ export type SetCurrentPageProps = {
   pageId: string;
 };
 export type SetCurrentPagePageAction = {
-  type: typeof actionTypes.SET_CURRENT_PAGE;
+  type: typeof ActionTypes.SetCurrentPage;
   payload: SetCurrentPageProps;
 };
 
@@ -82,7 +82,7 @@ export type AddElementsProps = {
 };
 
 export type AddElementsAction = {
-  type: typeof actionTypes.ADD_ELEMENTS;
+  type: typeof ActionTypes.AddElements;
   payload: AddElementsProps;
 };
 
@@ -90,7 +90,7 @@ export type DeleteElementsProps = {
   elementIds: string[] | null;
 };
 export type DeleteElementsAction = {
-  type: typeof actionTypes.DELETE_ELEMENTS;
+  type: typeof ActionTypes.DeleteElements;
   payload: DeleteElementsProps;
 };
 
@@ -100,7 +100,7 @@ export type UpdateElementsProps = {
   properties: Partial<Element> | ElementUpdater;
 };
 export type UpdateElementsAction = {
-  type: typeof actionTypes.UPDATE_ELEMENTS;
+  type: typeof ActionTypes.UpdateElements;
   payload: UpdateElementsProps;
 };
 
@@ -109,7 +109,7 @@ export type UpdateElementsByResourceIdProps = {
   properties: Partial<Element> | ElementUpdater;
 };
 export type UpdateElementsByResourceIdAction = {
-  type: typeof actionTypes.UPDATE_ELEMENTS_BY_RESOURCE_ID;
+  type: typeof ActionTypes.UpdateElementsByResourceId;
   payload: UpdateElementsByResourceIdProps;
 };
 
@@ -117,7 +117,7 @@ export type DeleteElementsByResourceIdProps = {
   id: ResourceId;
 };
 export type DeleteElementsByResourceIdAction = {
-  type: typeof actionTypes.DELETE_ELEMENTS_BY_RESOURCE_ID;
+  type: typeof ActionTypes.DeleteElementsByResourceId;
   payload: DeleteElementsByResourceIdProps;
 };
 
@@ -127,7 +127,7 @@ export type CombineElementsProps = {
   shouldRetainAnimations: boolean;
 };
 export type CombineElementsAction = {
-  type: typeof actionTypes.COMBINE_ELEMENTS;
+  type: typeof ActionTypes.CombineElements;
   payload: CombineElementsProps;
 };
 
@@ -135,7 +135,7 @@ export type SetBackgroundElementProps = {
   elementId: string | null;
 };
 export type SetBackgroundElementAction = {
-  type: typeof actionTypes.SET_BACKGROUND_ELEMENT;
+  type: typeof ActionTypes.SetBackgroundElement;
   payload: SetBackgroundElementProps;
 };
 
@@ -145,7 +145,7 @@ export type ArrangeElementProps = {
   groupId?: string | boolean;
 };
 export type ArrangeElementAction = {
-  type: typeof actionTypes.ARRANGE_ELEMENT;
+  type: typeof ActionTypes.ArrangeElement;
   payload: ArrangeElementProps;
 };
 
@@ -154,7 +154,7 @@ export type ArrangeGroupProps = {
   position: number | string;
 };
 export type ArrangeGroupAction = {
-  type: typeof actionTypes.ARRANGE_GROUP;
+  type: typeof ActionTypes.ArrangeGroup;
   payload: ArrangeGroupProps;
 };
 
@@ -164,7 +164,7 @@ export type SetSelectedElementsProps = {
   withLinked?: boolean;
 };
 export type SetSelectedElementsAction = {
-  type: typeof actionTypes.SET_SELECTED_ELEMENTS;
+  type: typeof ActionTypes.SetSelectedElements;
   payload: SetSelectedElementsProps;
 };
 
@@ -172,7 +172,7 @@ export type SelectElementProps = {
   elementId: string;
 };
 export type SelectElementAction = {
-  type: typeof actionTypes.SELECT_ELEMENT;
+  type: typeof ActionTypes.SelectElement;
   payload: SelectElementProps;
 };
 
@@ -180,7 +180,7 @@ export type UnselectElementProps = {
   elementId: string;
 };
 export type UnselectElementAction = {
-  type: typeof actionTypes.UNSELECT_ELEMENT;
+  type: typeof ActionTypes.UnselectElement;
   payload: UnselectElementProps;
 };
 
@@ -189,7 +189,7 @@ export type ToggleElementInSelectionProps = {
   withLinked?: boolean;
 };
 export type ToggleElementInSelectionAction = {
-  type: typeof actionTypes.TOGGLE_ELEMENT_IN_SELECTION;
+  type: typeof ActionTypes.ToggleElementInSelection;
   payload: ToggleElementInSelectionProps;
 };
 
@@ -200,7 +200,7 @@ export type ToggleLayerProps = {
   withLinked?: boolean;
 };
 export type ToggleLayerAction = {
-  type: typeof actionTypes.TOGGLE_LAYER;
+  type: typeof ActionTypes.ToggleLayer;
   payload: ToggleLayerProps;
 };
 
@@ -208,7 +208,7 @@ export type DuplicateElementsByIdProps = {
   elementIds: string[];
 };
 export type DuplicateElementsByIdAction = {
-  type: typeof actionTypes.DUPLICATE_ELEMENTS_BY_ID;
+  type: typeof ActionTypes.DuplicateElementsById;
   payload: DuplicateElementsByIdProps;
 };
 
@@ -217,7 +217,7 @@ export type UpdateStoryProps = {
   properties: Partial<Story> | StoryUpdater;
 };
 export type UpdateStoryAction = {
-  type: typeof actionTypes.UPDATE_STORY;
+  type: typeof ActionTypes.UpdateStory;
   payload: UpdateStoryProps;
 };
 
@@ -225,7 +225,7 @@ export type UpdateAnimationStateProps = {
   animationState: string;
 };
 export type UpdateAnimationStateAction = {
-  type: typeof actionTypes.UPDATE_ANIMATION_STATE;
+  type: typeof ActionTypes.UpdateAnimationState;
   payload: UpdateAnimationStateProps;
 };
 
@@ -233,18 +233,18 @@ export type AddAnimationsProps = {
   animations: Animation[];
 };
 export type AddAnimationsAction = {
-  type: typeof actionTypes.ADD_ANIMATIONS;
+  type: typeof ActionTypes.AddAnimations;
   payload: AddAnimationsProps;
 };
 
 export type CopySelectedElementAction = {
-  type: typeof actionTypes.COPY_SELECTED_ELEMENT;
+  type: typeof ActionTypes.CopySelectedElement;
   payload: null;
 };
 
 export type RestoreProps = Partial<ReducerState>;
 export type RestoreAction = {
-  type: typeof actionTypes.RESTORE;
+  type: typeof ActionTypes.Restore;
   payload: RestoreProps;
 };
 
@@ -253,7 +253,7 @@ export type UpdateElementsByFontFamilyProps = {
   properties: Partial<Element> | ElementUpdater;
 };
 export type UpdateElementsByFontFamilyAction = {
-  type: typeof actionTypes.UPDATE_ELEMENTS_BY_FONT_FAMILY;
+  type: typeof ActionTypes.UpdateElementsByFontFamily;
   payload: UpdateElementsByFontFamilyProps;
 };
 
@@ -263,7 +263,7 @@ export type AddGroupProps = {
   isLocked?: boolean;
 };
 export type AddGroupAction = {
-  type: typeof actionTypes.ADD_GROUP;
+  type: typeof ActionTypes.AddGroup;
   payload: AddGroupProps;
 };
 
@@ -272,13 +272,13 @@ export type UpdateGroupProps = {
   properties: Partial<Group>;
 };
 export type UpdateGroupAction = {
-  type: typeof actionTypes.UPDATE_GROUP;
+  type: typeof ActionTypes.UpdateGroup;
   payload: UpdateGroupProps;
 };
 
 export type DeleteGroupProps = { groupId: string; includeElements?: boolean };
 export type DeleteGroupAction = {
-  type: typeof actionTypes.DELETE_GROUP;
+  type: typeof ActionTypes.DeleteGroup;
   payload: DeleteGroupProps;
 };
 
@@ -289,7 +289,7 @@ export type DuplicateGroupProps = {
   isLocked: boolean;
 };
 export type DuplicateGroupAction = {
-  type: typeof actionTypes.DUPLICATE_GROUP;
+  type: typeof ActionTypes.DuplicateGroup;
   payload: DuplicateGroupProps;
 };
 
@@ -298,7 +298,7 @@ export type RemoveElementFromGroupProps = {
   groupId: string;
 };
 export type RemoveElementFromGroupAction = {
-  type: typeof actionTypes.REMOVE_ELEMENT_FROM_GROUP;
+  type: typeof ActionTypes.RemoveElementFromGroup;
   payload: RemoveElementFromGroupProps;
 };
 
@@ -308,7 +308,7 @@ export type AddElementsAcrossPagesProps = {
   elements: Element[];
 };
 export type AddElementsAcrossPagesAction = {
-  type: typeof actionTypes.ADD_ELEMENTS_ACROSS_PAGES;
+  type: typeof ActionTypes.AddElementsAcrossPages;
   payload: AddElementsAcrossPagesProps;
 };
 

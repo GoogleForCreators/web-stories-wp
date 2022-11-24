@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import type { ReducerActionProps, ReducerState } from '../../../types';
-import * as types from './types';
+import { ActionTypes } from './types';
 import * as reducers from './reducers';
 
 // eslint-disable-next-line complexity -- reducer function, negligible.
@@ -27,131 +27,131 @@ function reducer(
   { type, payload }: ReducerActionProps
 ): ReducerState {
   switch (type) {
-    case types.ADD_PAGE: {
+    case ActionTypes.AddPage: {
       return reducers.addPage(state, payload);
     }
 
-    case types.DELETE_PAGE: {
+    case ActionTypes.DeletePage: {
       return reducers.deletePage(state, payload);
     }
 
-    case types.UPDATE_PAGE: {
+    case ActionTypes.UpdatePage: {
       return reducers.updatePage(state, payload);
     }
 
-    case types.ARRANGE_PAGE: {
+    case ActionTypes.ArrangePage: {
       return reducers.arrangePage(state, payload);
     }
 
-    case types.SET_CURRENT_PAGE: {
+    case ActionTypes.SetCurrentPage: {
       return reducers.setCurrentPage(state, payload);
     }
 
-    case types.ADD_ELEMENTS: {
+    case ActionTypes.AddElements: {
       return reducers.addElements(state, payload);
     }
 
-    case types.DELETE_ELEMENTS: {
+    case ActionTypes.DeleteElements: {
       return reducers.deleteElements(state, payload);
     }
 
-    case types.UPDATE_ELEMENTS: {
+    case ActionTypes.UpdateElements: {
       return reducers.updateElements(state, payload);
     }
 
-    case types.UPDATE_ELEMENTS_BY_RESOURCE_ID: {
+    case ActionTypes.UpdateElementsByResourceId: {
       return reducers.updateElementsByResourceId(state, payload);
     }
 
-    case types.DELETE_ELEMENTS_BY_RESOURCE_ID: {
+    case ActionTypes.DeleteElementsByResourceId: {
       return reducers.deleteElementsByResourceId(state, payload);
     }
 
-    case types.COMBINE_ELEMENTS: {
+    case ActionTypes.CombineElements: {
       return reducers.combineElements(state, payload);
     }
 
-    case types.SET_BACKGROUND_ELEMENT: {
+    case ActionTypes.SetBackgroundElement: {
       return reducers.setBackgroundElement(state, payload);
     }
 
-    case types.ARRANGE_ELEMENT: {
+    case ActionTypes.ArrangeElement: {
       return reducers.arrangeElement(state, payload);
     }
 
-    case types.ARRANGE_GROUP: {
+    case ActionTypes.ArrangeGroup: {
       return reducers.arrangeGroup(state, payload);
     }
 
-    case types.SET_SELECTED_ELEMENTS: {
+    case ActionTypes.SetSelectedElements: {
       return reducers.setSelectedElements(state, payload);
     }
 
-    case types.SELECT_ELEMENT: {
+    case ActionTypes.SelectElement: {
       return reducers.selectElement(state, payload);
     }
 
-    case types.UNSELECT_ELEMENT: {
+    case ActionTypes.UnselectElement: {
       return reducers.unselectElement(state, payload);
     }
 
-    case types.TOGGLE_ELEMENT_IN_SELECTION: {
+    case ActionTypes.ToggleElementInSelection: {
       return reducers.toggleElement(state, payload);
     }
 
-    case types.TOGGLE_LAYER: {
+    case ActionTypes.ToggleLayer: {
       return reducers.toggleLayer(state, payload);
     }
 
-    case types.DUPLICATE_ELEMENTS_BY_ID: {
+    case ActionTypes.DuplicateElementsById: {
       return reducers.duplicateElementsById(state, payload);
     }
 
-    case types.UPDATE_STORY: {
+    case ActionTypes.UpdateStory: {
       return reducers.updateStory(state, payload);
     }
 
-    case types.UPDATE_ANIMATION_STATE: {
+    case ActionTypes.UpdateAnimationState: {
       return reducers.updateAnimationState(state, payload);
     }
 
-    case types.ADD_ANIMATIONS: {
+    case ActionTypes.AddAnimations: {
       return reducers.addAnimations(state, payload);
     }
 
-    case types.COPY_SELECTED_ELEMENT: {
+    case ActionTypes.CopySelectedElement: {
       return reducers.copySelectedElement(state);
     }
 
-    case types.RESTORE: {
+    case ActionTypes.Restore: {
       return reducers.restore(state, payload);
     }
 
-    case types.UPDATE_ELEMENTS_BY_FONT_FAMILY: {
+    case ActionTypes.UpdateElementsByFontFamily: {
       return reducers.updateElementsByFontFamily(state, payload);
     }
 
-    case types.ADD_GROUP: {
+    case ActionTypes.AddGroup: {
       return reducers.addGroup(state, payload);
     }
 
-    case types.UPDATE_GROUP: {
+    case ActionTypes.UpdateGroup: {
       return reducers.updateGroup(state, payload);
     }
 
-    case types.DELETE_GROUP: {
+    case ActionTypes.DeleteGroup: {
       return reducers.deleteGroup(state, payload);
     }
 
-    case types.DUPLICATE_GROUP: {
+    case ActionTypes.DuplicateGroup: {
       return reducers.duplicateGroup(state, payload);
     }
 
-    case types.REMOVE_ELEMENT_FROM_GROUP: {
+    case ActionTypes.RemoveElementFromGroup: {
       return reducers.removeElementFromGroup(state, payload);
     }
 
-    case types.ADD_ELEMENTS_ACROSS_PAGES: {
+    case ActionTypes.AddElementsAcrossPages: {
       return reducers.addElementsAcrossPages(state, payload);
     }
 
