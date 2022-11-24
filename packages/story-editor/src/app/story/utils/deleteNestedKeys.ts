@@ -36,7 +36,10 @@ function deleteNestedKeys<T extends Record<string, object>>(paths: string[]) {
       }
       const lastKey = keys.pop();
       const nextLastKey = keys.pop();
-      const nextLastObj: T = keys.reduce((a, key) => a?.[key] || a, object);
+      const nextLastObj = keys.reduce<Partial<T>>(
+        (a, key) => a?.[key] || a,
+        object
+      );
 
       if (!nextLastObj || !nextLastKey || !lastKey) {
         return;

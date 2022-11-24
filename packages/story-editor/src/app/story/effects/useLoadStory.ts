@@ -180,7 +180,7 @@ function useLoadStory({ storyId, story, shouldLoad, restore }: LoadStoryProps) {
       if (story) {
         loadStory(storyId, story, restore, clearHistory, globalConfig);
       } else {
-        void getStoryById(storyId).then((post: RawStory) => {
+        void getStoryById?.(storyId).then((post: RawStory) => {
           loadStory(storyId, post, restore, clearHistory, globalConfig);
         });
       }
