@@ -28,6 +28,6 @@ export interface CurrentUserState {
   };
   actions: {
     toggleWebStoriesMediaOptimization?: () => void;
-    updateCurrentUser?: ( props: updateCurrentUserProps ) => void;
+    updateCurrentUser?: (props: updateCurrentUserProps) => void;
   };
 }
