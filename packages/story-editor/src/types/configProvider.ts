@@ -31,7 +31,7 @@ export interface Capabilities {
   canManageSettings?: boolean;
 }
 
-export interface MimeTypes {
+interface MimeTypes {
   audio?: string[];
   image?: string[];
   caption?: string[];
@@ -39,7 +39,7 @@ export interface MimeTypes {
   video?: string[];
 }
 
-export interface Locale {
+interface Locale {
   locale?: string;
   dateFormat?: string;
   timeFormat?: string;
@@ -58,7 +58,7 @@ export interface MetaData {
   publisher?: string;
 }
 
-export interface Tip {
+interface Tip {
   title: string;
   figureSrcImg: string;
   figureAlt: string;
