@@ -26,10 +26,6 @@ import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../../utils/storyPageToDataUrl';
 import Context from './context';
 
-/**
- * @typedef {import('../../types.js').Page} Page
- */
-
 function PageDataUrlProvider({ children }: { children: React.ReactNode }) {
   const [dataUrls, setDataUrls] = useState<Record<string, string>>({});
   const queueIdleTask = useIdleTaskQueue();
