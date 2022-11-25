@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
 import type { Animation, Page } from '@googleforcreators/elements';
 
@@ -43,9 +43,12 @@ interface ProviderProps {
   initialEdits?: {
     story?: RawStory;
   };
-  children: ReactNode;
 }
-function StoryProvider({ storyId, initialEdits, children }: ProviderProps) {
+function StoryProvider({
+  storyId,
+  initialEdits,
+  children,
+}: PropsWithChildren<ProviderProps>) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
   const {
     state: reducerState,
