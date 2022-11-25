@@ -10,6 +10,5 @@
     { "path": "../react" },
     { "path": "../units" }
   ],
-  "include": ["src/**/*"],
-  "exclude": ["src/**/stories/**/*", "src/storybookUtils/**/*"]
+  "include": ["src/**/*"]
 }

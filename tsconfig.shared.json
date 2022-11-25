@@ -36,6 +36,7 @@
     "packages/*/node_modules/**",
     "**/karma/**",
     "**/stories/**",
+    "**/storybookUtils/**",
     "**/test/**/*.js",
     "**/testUtils/**/*.js"
   ]
