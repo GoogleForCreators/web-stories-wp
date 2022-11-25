@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,19 @@
  */
 import type { PropsWithChildren } from 'react';
 
-declare namespace JSX {
-  interface IntrinsicElements {
-    'amp-story-animation': PropsWithChildren<{
-      layout: string;
-      trigger: string;
-    }>;
-    'amp-animation': PropsWithChildren<{
-      id: string;
-      layout: string;
-    }>;
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'amp-story-animation': PropsWithChildren<{
+        layout: string;
+        trigger: string;
+      }>;
+      'amp-animation': PropsWithChildren<{
+        id: string;
+        layout: string;
+      }>;
+    }
   }
 }
+
+export {};
