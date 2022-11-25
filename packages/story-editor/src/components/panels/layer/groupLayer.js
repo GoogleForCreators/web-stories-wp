@@ -45,7 +45,7 @@ const GroupIconsWrapper = styled.div`
 
   /*
   * moves the click target + positioning to the left
-  * this ensures a better click target for 
+  * this ensures a better click target for
   * the arrow expand collapse state
   */
   transform: translateX(-12px);
@@ -59,7 +59,7 @@ const ChevronDown = styled(Icons.ChevronDown)`
 
 const ChevronRight = styled(Icons.ChevronDown)`
   /*
-  * Using ChevronDown and rotating it here 
+  * Using ChevronDown and rotating it here
   * vs ChevronRightSmall to keep consistent sizing between states
   */
   min-width: 32px;
@@ -73,7 +73,7 @@ function GroupLayer({ groupId }) {
     updateGroupById: actions.updateGroupById,
   }));
 
-  const { name, isLocked, isCollapsed } = groups[groupId];
+  const { name, isLocked, isHidden, isCollapsed } = groups[groupId];
 
   const { isSelected, handleClick } = useGroupSelection(groupId);
 
@@ -98,6 +98,8 @@ function GroupLayer({ groupId }) {
     [handleGroupArrowClick, isCollapsed]
   );
 
+  const LayerVisibilityIcon = () => isHidden && <Icons.VisibilityOff />;
+
   return (
     <Layer
       id={groupId}
@@ -111,8 +113,10 @@ function GroupLayer({ groupId }) {
       }
       layerName={name}
       handleClick={handleClick}
+      hasLayerHiddenIcon={isHidden}
       isSelected={isSelected}
       LayerIcon={GroupLayerIcon}
+      LayerVisibilityIcon={LayerVisibilityIcon}
       hasLayerLockIcon={isLocked}
       LayerLockIcon={Icons.LockClosed}
       actions={<GroupLayerActions groupId={groupId} />}

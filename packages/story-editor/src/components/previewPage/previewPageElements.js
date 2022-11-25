@@ -26,15 +26,17 @@ import DisplayElement from '../canvas/displayElement';
 import StoryPropTypes from '../../types';
 
 function PreviewPageElements({ page }) {
-  return page.elements.map((element) => (
-    <DisplayElement
-      previewMode
-      key={element.id}
-      page={page}
-      element={element}
-      isAnimatable
-    />
-  ));
+  return page.elements
+    .filter((element) => !element.isHidden)
+    .map((element) => (
+      <DisplayElement
+        previewMode
+        key={element.id}
+        page={page}
+        element={element}
+        isAnimatable
+      />
+    ));
 }
 
 PreviewPageElements.propTypes = {

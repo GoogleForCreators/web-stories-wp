@@ -51,11 +51,25 @@ function GroupLayerActions({ groupId }) {
 
   const group = groups[groupId];
 
+  const visibilityTitle = group.isHidden
+    ? __('Show Layer', 'web-stories')
+    : __('Hide Layer', 'web-stories');
   const lockTitle = group.isLocked
     ? __('Unlock Group', 'web-stories')
     : __('Lock Group', 'web-stories');
 
-  const { name, isLocked, isCollapsed } = group;
+  const { name, isLocked, isHidden, isCollapsed } = group;
+
+  const handleHideGroup = useCallback(() => {
+    updateGroupById({
+      groupId,
+      properties: { isHidden: !isHidden },
+    });
+    updateElementsById({
+      elementIds: groupLayers.map((layer) => layer.id),
+      properties: { isHidden: !isHidden },
+    });
+  }, [groupId, groupLayers, isHidden, updateElementsById, updateGroupById]);
 
   const handleLockGroup = useCallback(() => {
     updateGroupById({
@@ -85,8 +99,16 @@ function GroupLayerActions({ groupId }) {
     [groupId, deleteGroupAndElementsById]
   );
 
+  const VisibilityIcon = group.isHidden
+    ? Icons.VisibilityOff
+    : Icons.Visibility;
+
   return (
     <>
+      <LayerAction label={visibilityTitle} handleClick={handleHideGroup}>
+        <VisibilityIcon />
+      </LayerAction>
+
       <LayerAction
         label={__('Delete Group', 'web-stories')}
         handleClick={handleDeleteGroup}

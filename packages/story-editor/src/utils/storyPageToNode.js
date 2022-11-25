@@ -92,13 +92,15 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
                     renderFullHeightThumb ? (containerHeight - height) / 2 : 0
                   }
                 >
-                  {page.elements.map((element) => (
-                    <DisplayElement
-                      key={element.id}
-                      previewMode
-                      element={element}
-                    />
-                  ))}
+                  {page.elements
+                    .filter((element) => !element.isHidden)
+                    .map((element) => (
+                      <DisplayElement
+                        key={element.id}
+                        previewMode
+                        element={element}
+                      />
+                    ))}
                 </FullHeight>
               </PreviewWrapper>
             </Page>

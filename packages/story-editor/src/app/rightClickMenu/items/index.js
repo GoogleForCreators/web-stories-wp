@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export { default as LayerHide } from './layerHide';
 export { default as LayerLock } from './layerLock';
 export { default as LayerName } from './layerName';
 export { default as LayerUngroup } from './layerUngroup';

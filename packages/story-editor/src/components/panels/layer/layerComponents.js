@@ -184,6 +184,19 @@ export const LayerText = styled(Text).attrs({
   text-overflow: ' ';
   overflow: hidden;
   max-width: 100%;
+  ${({ isHidden }) =>
+    isHidden &&
+    css`
+      opacity: 0.3;
+    `};
+`;
+
+export const LayerIconWrapper = styled.div`
+  ${({ isHidden }) =>
+    isHidden &&
+    css`
+      opacity: 0.3;
+    `};
 `;
 
 export const IconWrapper = styled.div`
@@ -203,6 +216,9 @@ export const IconWrapper = styled.div`
     width: 100%;
     color: ${({ theme }) => theme.colors.fg.secondary};
   }
+`;
+export const HiddenIconWrapper = styled(IconWrapper)`
+  right: 78px;
 `;
 
 export const LayerContentContainer = styled.div`

@@ -179,13 +179,15 @@ function OutputPage({
         >
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
-              {regularElements.map((element) => (
-                <OutputElement
-                  key={element.id}
-                  element={element}
-                  flags={flags}
-                />
-              ))}
+              {regularElements
+                .filter((element) => !element.isHidden)
+                .map((element) => (
+                  <OutputElement
+                    key={element.id}
+                    element={element}
+                    flags={flags}
+                  />
+                ))}
             </div>
           </div>
         </amp-story-grid-layer>
