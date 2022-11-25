@@ -23,6 +23,7 @@
     "src/app/story/**/*",
     "src/types/*",
     "src/constants/*",
-    "src/utils/*.ts"
+    "src/utils/*.ts",
+    "src/typings/*",
   ]
 }
