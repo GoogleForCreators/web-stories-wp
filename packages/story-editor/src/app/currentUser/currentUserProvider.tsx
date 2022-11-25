@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 /**
  * Internal dependencies
  */
@@ -30,11 +30,9 @@ import type {
 } from '../../types/currentUserProvider';
 import Context from './context';
 
-export interface CurrentUserProviderProps {
-  children: ReactNode;
-}
-
-function CurrentUserProvider({ children }: CurrentUserProviderProps) {
+function CurrentUserProvider({
+  children,
+}: PropsWithChildren<Record<string, never>>) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const {
     actions: { getCurrentUser, updateCurrentUser: _updateCurrentUser },
@@ -71,7 +69,7 @@ function CurrentUserProvider({ children }: CurrentUserProviderProps) {
     });
   }, [currentUser, updateCurrentUser]);
 
-  const state = {
+  const state: CurrentUserState = {
     state: {
       currentUser,
     },
@@ -79,7 +77,7 @@ function CurrentUserProvider({ children }: CurrentUserProviderProps) {
       toggleWebStoriesMediaOptimization,
       updateCurrentUser,
     },
-  } as CurrentUserState;
+  };
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

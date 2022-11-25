@@ -24,10 +24,10 @@ export interface updateCurrentUserProps {
 
 export interface CurrentUserState {
   state: {
-    currentUser?: User;
+    currentUser: User | null;
   };
   actions: {
-    toggleWebStoriesMediaOptimization?: () => Promise<User> | null;
-    updateCurrentUser?: (props: updateCurrentUserProps) => Promise<User> | null;
+    toggleWebStoriesMediaOptimization?: () => Promise<void> | null;
+    updateCurrentUser?: (props: updateCurrentUserProps) => Promise<void> | null;
   };
 }

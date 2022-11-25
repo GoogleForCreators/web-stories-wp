@@ -24,4 +24,9 @@ import { createContext } from '@googleforcreators/react';
  */
 import type { CurrentUserState } from '../../types/currentUserProvider';
 
-export default createContext<CurrentUserState>({ state: {}, actions: {} });
+export default createContext<CurrentUserState>({
+  state: {
+    currentUser: null,
+  },
+  actions: {},
+});
