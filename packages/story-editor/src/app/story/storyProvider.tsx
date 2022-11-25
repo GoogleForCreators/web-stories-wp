@@ -41,7 +41,6 @@ import useLocalAutoSave from './actions/useLocalAutoSave';
 interface ProviderProps {
   storyId: number;
   initialEdits?: {
-    [index: string]: unknown;
     story?: RawStory;
   };
   children: ReactNode;
