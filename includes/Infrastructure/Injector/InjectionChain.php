@@ -29,6 +29,8 @@ namespace Google\Web_Stories\Infrastructure\Injector;
  * @internal
  *
  * @since 1.6.0
+ *
+ * @template T
  */
 final class InjectionChain {
 
@@ -36,6 +38,7 @@ final class InjectionChain {
 	 * Chain.
 	 *
 	 * @var string[]
+	 * @phpstan-var class-string<T>[]
 	 */
 	private array $chain = [];
 
@@ -53,6 +56,8 @@ final class InjectionChain {
 	 *
 	 * @param string $class Class to add to injection chain.
 	 * @return self Modified injection chain.
+	 *
+	 * @phpstan-param class-string<T> $class
 	 */
 	public function add_to_chain( string $class ): self {
 		$new_chain          = clone $this;
@@ -84,6 +89,8 @@ final class InjectionChain {
 	 * @throws \LogicException If the injection chain is accessed too early.
 	 *
 	 * @return string Last class pushed to the injection chain.
+	 *
+	 * @phpstan-return class-string<T>
 	 */
 	public function get_class(): string {
 		if ( empty( $this->chain ) ) {

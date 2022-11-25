@@ -41,6 +41,8 @@ interface HasRequirements {
 	 * @since 1.11.0
 	 *
 	 * @return string[] List of required services.
+	 *
+	 * @phpstan-return class-string<Service>[] List of required services.
 	 */
 	public static function get_requirements(): array;
 }

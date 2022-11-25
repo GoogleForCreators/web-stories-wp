@@ -33,6 +33,8 @@ use function array_map;
  * @internal
  *
  * @since 1.6.0
+ *
+ * @template T
  */
 final class SimpleInjector implements Injector {
 
@@ -45,21 +47,22 @@ final class SimpleInjector implements Injector {
 	/**
 	 * Mappings.
 	 *
-	 * @var array<string>
+	 * @var string[]
+	 * @phpstan-var class-string<T>[]
 	 */
 	private array $mappings = [];
 
 	/**
 	 * Shared instances
 	 *
-	 * @var array<object|null>
+	 * @var array<T|null>
 	 */
 	private array $shared_instances = [];
 
 	/**
 	 * Delegates.
 	 *
-	 * @var array<callable>
+	 * @var callable[]
 	 */
 	private array $delegates = [];
 
@@ -74,6 +77,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Instantiator.
+	 *
+	 * @var Instantiator<T>
 	 */
 	private Instantiator $instantiator;
 
@@ -93,12 +98,15 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param class-string   $interface_or_class Interface or class to make an object instance out of.
-	 * @param class-string[] $arguments          Optional. Additional arguments to pass to the constructor.
-	 *                                           Defaults to an empty array.
-	 * @return object Instantiated object.
+	 * @param string   $interface_or_class Interface or class to make an object instance out of.
+	 * @param string[] $arguments          Optional. Additional arguments to pass to the constructor.
+	 *                                     Defaults to an empty array.
+	 * @return T Instantiated object.
+	 *
+	 * @phpstan-param class-string<T> $interface_or_class Interface or class to make an object instance out of.
+	 * @phpstan-param class-string[]  $arguments          Optional. Additional arguments to pass to the constructor.
 	 */
-	public function make( $interface_or_class, array $arguments = [] ): object {
+	public function make( string $interface_or_class, array $arguments = [] ) {
 		$injection_chain = $this->resolve(
 			new InjectionChain(),
 			$interface_or_class
@@ -143,6 +151,9 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @param string $from Interface or class to bind an implementation to.
 	 * @param string $to Interface or class that provides the implementation.
+	 *
+	 * @phpstan-param class-string<T> $from Interface or class to bind an implementation to.
+	 * @phpstan-param class-string<T> $to   Interface or class that provides the implementation.
 	 */
 	public function bind( string $from, string $to ): Injector {
 		$this->mappings[ $from ] = $to;
@@ -176,6 +187,8 @@ final class SimpleInjector implements Injector {
 	 * @since 1.6.0
 	 *
 	 * @param string $interface_or_class Interface or class to reuse.
+	 *
+	 * @phpstan-param class-string<T> $interface_or_class Interface or class to reuse.
 	 */
 	public function share( string $interface_or_class ): Injector {
 		$this->shared_instances[ $interface_or_class ] = null;
@@ -190,6 +203,8 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @param string   $interface_or_class Interface or class to delegate the instantiation of.
 	 * @param callable $callable           Callable to use for instantiation.
+	 *
+	 * @phpstan-param class-string<T> $interface_or_class Interface or class to delegate the instantiation of.
 	 */
 	public function delegate( string $interface_or_class, callable $callable ): Injector {
 		$this->delegates[ $interface_or_class ] = $callable;
@@ -203,13 +218,15 @@ final class SimpleInjector implements Injector {
 	 * @since 1.6.0
 	 *
 	 * @param InjectionChain $injection_chain    Injection chain to track resolutions.
-	 * @param string         $interface_or_class Interface or class to make an  object instance out of.
-	 * @return object Instantiated object.
+	 * @param string         $interface_or_class Interface or class to make an object instance out of.
+	 * @return T Instantiated object.
+	 *
+	 * @phpstan-param class-string<T> $interface_or_class Interface or class to make an object instance out of.
 	 */
 	private function make_dependency(
 		InjectionChain $injection_chain,
 		string $interface_or_class
-	): object {
+	) {
 		$injection_chain = $this->resolve(
 			$injection_chain,
 			$interface_or_class
@@ -253,6 +270,8 @@ final class SimpleInjector implements Injector {
 	 * @param InjectionChain $injection_chain    Injection chain to track resolutions.
 	 * @param string         $interface_or_class Interface or class to resolve.
 	 * @return InjectionChain Modified Injection chain
+	 *
+	 * @phpstan-param class-string<T> $interface_or_class Interface or class to resolve.
 	 */
 	private function resolve(
 		InjectionChain $injection_chain,
@@ -362,6 +381,11 @@ final class SimpleInjector implements Injector {
 			);
 		}
 
+		/**
+		 * Interface or class.
+		 *
+		 * @var class-string<T> $type
+		 */
 		$type = $type instanceof ReflectionNamedType
 			? $type->getName()
 			: (string) $type;
@@ -445,14 +469,25 @@ final class SimpleInjector implements Injector {
 	 * @throws FailedToMakeInstance If an uninstantiated shared instance is requested.
 	 *
 	 * @param string $class Class to get the shared instance for.
-	 * @return object Shared instance.
+	 * @return T Shared instance.
+	 *
+	 * @phpstan-param class-string<T> $class Class to get the shared instance for.
+	 * @phpstan-return T Shared instance.
 	 */
-	private function get_shared_instance( string $class ): object {
+	private function get_shared_instance( string $class ) {
 		if ( ! $this->has_shared_instance( $class ) ) {
 			throw FailedToMakeInstance::for_uninstantiated_shared_instance( $class );
 		}
 
-		return (object) $this->shared_instances[ $class ];
+
+		/**
+		 * Shared instance.
+		 *
+		 * @var T $instance
+		 */
+		$instance = $this->shared_instances[ $class ];
+
+		return $instance;
 	}
 
 	/**
