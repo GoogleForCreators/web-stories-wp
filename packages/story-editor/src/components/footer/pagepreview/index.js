@@ -172,15 +172,13 @@ function PagePreview({ page, label, ...props }) {
               />
             ) : (
               <PageOffset $top={pageYOffset}>
-                {page.elements
-                  .filter((element) => !element.isHidden)
-                  .map((element) => (
-                    <DisplayElement
-                      key={element.id}
-                      previewMode
-                      element={element}
-                    />
-                  ))}
+                {page.elements.map((element) => (
+                  <DisplayElement
+                    key={element.id}
+                    previewMode
+                    element={element}
+                  />
+                ))}
               </PageOffset>
             )}
           </PreviewWrapper>

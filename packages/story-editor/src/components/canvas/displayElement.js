@@ -112,6 +112,10 @@ function DisplayElement({
   isAnimatable = false,
   siblingCount = 0,
 }) {
+  if (element.isHidden) {
+    return null;
+  }
+
   const { getBox, getBoxWithBorder, dataToEditorX } = useUnits((state) => ({
     getBox: state.actions.getBox,
     getBoxWithBorder: state.actions.getBoxWithBorder,
