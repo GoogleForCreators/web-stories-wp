@@ -28,7 +28,6 @@
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
     "phpstan/extension-installer": "^1.1",
-    "phpstan/phpstan-phpunit": "^1.2",
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^8.0.0",
