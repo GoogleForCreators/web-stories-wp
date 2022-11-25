@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import type { Story } from "@googleforcreators/elements";
 import {
   useCallback,
   useEffect,
@@ -24,11 +25,18 @@ import {
   useState,
 } from '@googleforcreators/react';
 
-import type { Story } from "@googleforcreators/elements";
-
 /**
  * Internal dependencies
  */
+import type {
+  Term,
+  Taxonomy,
+  TaxonomiesBySlug,
+  EmbeddedTerms,
+  TaxonomyState,
+} from '../../types/taxonomyProvider';
+import type { APIState } from '../../types/apiProvider';
+
 import cleanForSlug from '../../utils/cleanForSlug';
 import { useAPI } from '../api';
 import { useHistory } from '../history';
@@ -41,15 +49,6 @@ import {
   mapObjectKeys,
   cacheFromEmbeddedTerms,
 } from './utils';
-
-import type {
-  Term,
-  Taxonomy,
-  TaxonomiesBySlug,
-  EmbeddedTerms,
-  TaxonomyState
-} from '../../types/taxonomyProvider';
-import type { APIState } from '../../types/apiProvider';
 
 function TaxonomyProvider(props: { children: React.ReactNode }) {
   const [taxonomies, setTaxonomies] = useState<Taxonomy[] | never>([]);
@@ -105,6 +104,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
       const taxonomiesBySlug: TaxonomiesBySlug = dictionaryOnKey(taxonomies as [], 'slug');
 
       const initialCache: EmbeddedTerms = mapObjectKeys(
+        // @ts-ignore -- @todo #12652 -- should get typing for this
         cacheFromEmbeddedTerms(terms),
         (slug: string): string => taxonomiesBySlug[slug]?.restBase
       );
