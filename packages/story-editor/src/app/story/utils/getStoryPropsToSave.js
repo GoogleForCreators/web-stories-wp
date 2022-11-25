@@ -47,8 +47,11 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'terms',
   ]);
 
-  // pull story fonts from pages / elements
+  // clean up fonts to store at the story level
+  // this avoids storing the same font (properties) multiple times
+  // see: https://github.com/GoogleForCreators/web-stories-wp/issues/12261
   const cleandFonts = getStoryFontsFromPages(pages);
+  // clean up text elements to remove font properties from individual elements
   const cleanedPages = cleanElementFontProperties(pages);
   const products = getAllProducts(cleanedPages);
   const content = getStoryMarkup(

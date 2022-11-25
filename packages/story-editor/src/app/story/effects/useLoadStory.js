@@ -86,6 +86,8 @@ function loadStory(storyId, post, restore, clearHistory, globalConfig) {
   let pages = storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
 
   if (storyData?.fonts && Object.keys(storyData?.fonts).length >= 1) {
+    // fonts are stored in storyData,
+    // so we need to populate the font data back to the elements
     pages = populateElementFontData(pages, storyData?.fonts);
   }
 
