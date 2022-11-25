@@ -26,7 +26,7 @@ import { useAPI } from '../api';
 import type { User } from '../../types/configProvider';
 import type {
   CurrentUserState,
-  updateCurrentUserProps,
+  UpdateCurrentUserProps,
 } from '../../types/currentUserProvider';
 import Context from './context';
 
@@ -55,7 +55,7 @@ function CurrentUserProvider({
   }, [currentUser, getCurrentUser]);
 
   const updateCurrentUser = useCallback(
-    (data: updateCurrentUserProps) =>
+    (data: UpdateCurrentUserProps) =>
       _updateCurrentUser ? _updateCurrentUser(data).then(setCurrentUser) : null,
     [_updateCurrentUser]
   );

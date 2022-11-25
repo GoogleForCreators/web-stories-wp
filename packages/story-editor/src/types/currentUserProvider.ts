@@ -18,7 +18,7 @@
  */
 import type { User } from './configProvider';
 
-export interface updateCurrentUserProps {
+export interface UpdateCurrentUserProps {
   mediaOptimization: boolean;
 }
 
@@ -28,6 +28,6 @@ export interface CurrentUserState {
   };
   actions: {
     toggleWebStoriesMediaOptimization?: () => Promise<void> | null;
-    updateCurrentUser?: (props: updateCurrentUserProps) => Promise<void> | null;
+    updateCurrentUser?: (data: UpdateCurrentUserProps) => Promise<void> | null;
   };
 }
