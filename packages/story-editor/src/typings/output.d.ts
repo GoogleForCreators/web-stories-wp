@@ -23,5 +23,5 @@ declare module '@googleforcreators/output' {
     metadata: [],
     flags: Record<string, boolean>
   ): string;
-  export = getStoryMarkup;
+  export { getStoryMarkup };
 }
