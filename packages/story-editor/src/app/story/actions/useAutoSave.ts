@@ -55,7 +55,7 @@ function useAutoSave({ storyId, pages, story }: AutoSaveProps) {
           flags,
         }),
         ...props,
-      } as StorySaveData).finally(() => setIsAutoSaving(false));
+      }).finally(() => setIsAutoSaving(false));
     },
     [story, pages, metadata, autoSaveById, storyId, flags]
   );

@@ -103,7 +103,7 @@ function useSaveStory({
             // Saving an auto-draft should create a draft by default.
             status: 'auto-draft' === story.status ? 'draft' : story.status,
             ...props,
-          } as StorySaveData)
+          })
         )
         .then((data) => {
           if (!data) {

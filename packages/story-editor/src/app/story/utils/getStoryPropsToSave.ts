@@ -57,6 +57,7 @@ function getStoryPropsToSave({
     'terms',
   ]);
   const products = getAllProducts(pages);
+  // @todo Remove casting once we have the module.
   const content = getStoryMarkup(story, pages, metadata, flags) as string;
   return {
     content,
