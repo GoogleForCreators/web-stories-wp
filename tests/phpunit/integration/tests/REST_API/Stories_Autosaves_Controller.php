@@ -22,6 +22,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Autosaves_Controller
@@ -40,7 +41,7 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Stories_Autosaves_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$author_id = $factory->user->create(
 			[
 				'role' => 'author',

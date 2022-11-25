@@ -22,6 +22,7 @@ namespace Google\Web_Stories\Tests\Integration\AMP;
 
 use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Canonical_Sanitizer
@@ -29,7 +30,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 class Canonical_Sanitizer extends TestCase {
 	protected static int $user_id;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',

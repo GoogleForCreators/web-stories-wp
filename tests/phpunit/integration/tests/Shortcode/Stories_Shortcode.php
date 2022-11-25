@@ -32,6 +32,7 @@ namespace Google\Web_Stories\Tests\Integration\Shortcode;
 use Google\Web_Stories\Shortcode\Stories_Shortcode as Testee;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Stories_Shortcode
@@ -45,7 +46,7 @@ class Stories_Shortcode extends TestCase {
 	/**
 	 * Run before any test is run and class is being setup.
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/amp.php';
 
 		self::$story_id = $factory->post->create(

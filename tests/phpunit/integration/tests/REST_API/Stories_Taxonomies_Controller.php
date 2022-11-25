@@ -9,6 +9,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Taxonomies_Controller
@@ -28,7 +29,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	 */
 	protected static int $admin_id;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -115,7 +116,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_collection_params
 	 * @dataProvider data_show_ui
 	 */
-	public function test_get_items_hierarchical( $hierarchical ): void {
+	public function test_get_items_hierarchical( bool $hierarchical ): void {
 		$this->controller->register();
 
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
@@ -132,7 +133,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	}
 
 	/**
-	 * @return array
+	 * @return array<string, bool[]>
 	 */
 	public function data_show_ui(): array {
 		return [

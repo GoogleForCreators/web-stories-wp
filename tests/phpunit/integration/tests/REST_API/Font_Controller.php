@@ -24,6 +24,7 @@ use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Tests\Integration\RestTestCase;
 use WP_REST_Request;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Font_Controller
@@ -38,7 +39,7 @@ class Font_Controller extends RestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Font_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[
 				'role'         => 'administrator',

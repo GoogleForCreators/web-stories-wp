@@ -24,6 +24,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Hotlinking_Controller
@@ -55,7 +56,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Hotlinking_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -589,10 +590,16 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		];
 	}
 
+	/**
+	 * @return array<int>
+	 */
 	public function callback_custom_safe_ports(): array {
 		return [ 81, 444, 8081 ];
 	}
 
+	/**
+	 * @return array<int>
+	 */
 	public function callback_remove_safe_ports(): array {
 		return [];
 	}

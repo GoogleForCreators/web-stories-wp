@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Settings;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Discovery
@@ -49,10 +50,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 */
 	protected static int $archive_page_id;
 
-	/**
-	 * @param $factory
-	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',

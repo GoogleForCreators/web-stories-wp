@@ -22,6 +22,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Status_Check_Controller
@@ -38,7 +39,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Status_Check_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',

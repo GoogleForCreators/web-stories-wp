@@ -8,6 +8,7 @@ use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Publisher_Logos_Controller
@@ -35,7 +36,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 */
 	protected int $request_count = 0;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -170,7 +171,10 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/publisher-logos' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertCount( 2, $data );
+		$this->assertIsArray( $data[0] );
+		$this->assertIsArray( $data[1] );
 		$this->assertSame( self::$attachment_id_1, $data[0]['id'] );
 		$this->assertSame( get_the_title( self::$attachment_id_1 ), $data[0]['title'] );
 		$this->assertSame( wp_get_attachment_url( self::$attachment_id_1 ), $data[0]['url'] );
@@ -214,6 +218,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_1,
@@ -246,6 +251,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_1,
@@ -283,6 +289,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_2,
@@ -317,6 +324,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				[
@@ -406,6 +414,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_2,
@@ -445,6 +454,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_2 );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'deleted'  => true,
@@ -478,6 +488,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'deleted'  => true,
@@ -513,6 +524,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'deleted'  => true,
@@ -607,6 +619,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_2,

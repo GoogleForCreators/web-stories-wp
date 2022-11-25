@@ -45,6 +45,9 @@ class Capabilities extends TestCase {
 	 */
 	public function test_add_caps_to_roles(): void {
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$this->assertNotNull( $post_type_object );
+
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
 		$capability = new \Google\Web_Stories\User\Capabilities();
@@ -52,6 +55,9 @@ class Capabilities extends TestCase {
 
 		$administrator = get_role( 'administrator' );
 		$editor        = get_role( 'editor' );
+
+		$this->assertNotNull( $administrator );
+		$this->assertNotNull( $editor );
 
 		foreach ( $all_capabilities as $cap ) {
 			$this->assertTrue( $administrator->has_cap( $cap ) );

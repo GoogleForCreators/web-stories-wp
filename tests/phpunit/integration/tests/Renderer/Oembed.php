@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
 use Google\Web_Stories\Tests\Integration\TestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Class Single
@@ -40,9 +41,9 @@ class Oembed extends TestCase {
 	protected static int $story_id;
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);

@@ -20,9 +20,11 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Media_Controller
@@ -48,7 +50,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @param $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 
 		self::$user_id = $factory->user->create(
 			[
@@ -59,7 +61,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 
 		self::$post_id = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'publish',
 				'post_author' => self::$user_id,
 			]

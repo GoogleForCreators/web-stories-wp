@@ -22,6 +22,7 @@ namespace Google\Web_Stories\Tests\Integration\User;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Preferences
@@ -39,7 +40,7 @@ class Preferences extends DependencyInjectedTestCase {
 
 	private \Google\Web_Stories\User\Preferences $instance;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -185,13 +186,14 @@ class Preferences extends DependencyInjectedTestCase {
 		);
 
 		$response = rest_get_server()->dispatch( $request );
-		if ( is_a( $response, 'WP_REST_Response' ) ) {
+		if ( $response instanceof \WP_REST_Response ) {
 			$response = $response->as_error();
 		}
 
 		$this->assertWPError( $response );
 		$this->assertSame( 'rest_cannot_edit', $response->get_error_code() );
 		$data = $response->get_error_data();
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'status', $data );
 		$this->assertEquals( 403, $data['status'] );
 	}
@@ -210,7 +212,7 @@ class Preferences extends DependencyInjectedTestCase {
 
 		$this->assertFalse( get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true ) );
 		$this->assertTrue( get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true ) );
-		$this->assertFalse( get_user_meta( \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, true ) );
+		$this->assertFalse( get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, true ) );
 	}
 
 	/**
@@ -243,6 +245,7 @@ class Preferences extends DependencyInjectedTestCase {
 
 		$this->assertWPError( $response );
 		$data = $response->get_error_data();
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'status', $data );
 		$this->assertEquals( 400, $data['status'] );
 	}

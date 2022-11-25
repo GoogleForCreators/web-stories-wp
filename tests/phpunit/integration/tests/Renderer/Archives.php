@@ -20,7 +20,9 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Class Archives
@@ -40,16 +42,16 @@ class Archives extends TestCase {
 	protected static int $story_id;
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -72,7 +74,7 @@ class Archives extends TestCase {
 	 * @covers ::embed_player
 	 */
 	public function test_embed_player(): void {
-		$this->go_to( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
+		$this->go_to( get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ) );
 
 		$content = get_echo( 'the_content' );
 		$this->assertStringContainsString( '<amp-story-player', $content );

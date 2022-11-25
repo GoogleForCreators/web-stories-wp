@@ -26,6 +26,7 @@ use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Controller
@@ -46,7 +47,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Stories_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -183,6 +184,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
+		$this->assertIsArray( $statuses );
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'pending', $statuses );
@@ -235,6 +237,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
+		$this->assertIsArray( $statuses );
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'pending', $statuses );
@@ -269,6 +272,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
+		$this->assertIsArray( $statuses );
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'draft', $statuses );
@@ -293,22 +297,27 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
-		$story   = self::factory()->post->create(
+
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$user_id,
 			]
 		);
+
+		$view_link = get_preview_post_link( $story );
+		$edit_link = get_edit_post_link( $story, 'rest-api' );
+
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'preview_link', $data );
-		$view_link = get_preview_post_link( $story );
 		$this->assertSame( $view_link, $data['preview_link'] );
 		$this->assertArrayHasKey( 'edit_link', $data );
-		$edit_link = get_edit_post_link( $story, 'rest-api' );
 		$this->assertSame( $edit_link, $data['edit_link'] );
 		$this->assertArrayHasKey( 'embed_post_link', $data );
 		$this->assertStringContainsString( (string) $story, $data['embed_post_link'] );
@@ -363,6 +372,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$permalink     = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'preview_link', $data );
 		$this->assertNotEmpty( $data['preview_link'] );
 		$this->assertSame( $permalink, $data['preview_link'] );
@@ -470,14 +480,16 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$data     = $response->get_data();
 
 		// Body of request.
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'headers', $data );
 		$this->assertArrayHasKey( 'body', $data );
 		$this->assertArrayHasKey( 'status', $data );
 
-		$statues  = $data['headers']['X-WP-TotalByStatus'];
-		$statuses = json_decode( $statues, true );
+		$statuses = $data['headers']['X-WP-TotalByStatus'];
+		$statuses = json_decode( $statuses, true );
 
 		// Headers.
+		$this->assertIsArray( $statuses );
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'future', $statuses );
@@ -544,6 +556,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		wp_delete_attachment( $attachment_id, true );
 
+		$this->assertNotFalse( $attachment_src );
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1], $attachment_src[2] );
@@ -598,6 +612,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$content_width = $_content_width;
 
+		$this->assertNotFalse( $attachment_src );
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1], $attachment_src[2] );
@@ -647,6 +663,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertEqualSetsWithIndex(
 			[
@@ -701,6 +718,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		wp_delete_attachment( $attachment_id, true );
 
+		$this->assertNotFalse( $attachment_src );
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertEqualSetsWithIndex(
 			[
@@ -724,6 +743,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$data = $this->controller->get_item_schema();
 
 		$this->assertArrayHasKey( 'properties', $data );
+		$this->assertIsArray( $data['properties'] );
 		$this->assertArrayHasKey( 'story_data', $data['properties'] );
 	}
 
@@ -738,7 +758,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'orderby', 'story_author' );
 
 		$response = rest_get_server()->dispatch( $request );
-		$results  = wp_list_pluck( $response->get_data(), 'author' );
+		$data     = $response->get_data();
+
+		$this->assertIsArray( $data );
+		$results = wp_list_pluck( $data, 'author' );
 
 		$this->assertSame(
 			[
@@ -759,7 +782,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'orderby', 'story_author' );
 
 		$response = rest_get_server()->dispatch( $request );
-		$results  = wp_list_pluck( $response->get_data(), 'author' );
+		$data     = $response->get_data();
+
+		$this->assertIsArray( $data );
+		$results = wp_list_pluck( $data, 'author' );
 
 		$this->assertSame(
 			[
@@ -879,6 +905,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'web_stories_demo', $collection_params );
 		$this->assertArrayHasKey( 'orderby', $collection_params );
 		$this->assertArrayHasKey( 'enum', $collection_params['orderby'] );
+		$this->assertIsArray( $collection_params['orderby'] );
 		$this->assertContains( 'story_author', $collection_params['orderby']['enum'] );
 	}
 
@@ -905,6 +932,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+		$this->assertIsArray( $new_data );
 		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
@@ -954,6 +982,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+		$this->assertIsArray( $new_data );
 		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertArrayHasKey( 'raw', $new_data['content'] );
 		$this->assertArrayHasKey( 'title', $new_data );

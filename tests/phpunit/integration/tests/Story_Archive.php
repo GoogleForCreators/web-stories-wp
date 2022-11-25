@@ -20,6 +20,8 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use WP_UnitTest_Factory;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Archive
  */
@@ -53,9 +55,9 @@ class Story_Archive extends DependencyInjectedTestCase {
 	protected string $redirect_location = '';
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -92,7 +94,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 					->willReturn( true );
 
 		$this->settings        = $this->injector->make( \Google\Web_Stories\Settings::class );
-		$this->story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
+		$this->story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->settings );
 		$this->instance        = new \Google\Web_Stories\Story_Archive( $this->settings, $this->story_post_type );
 
 		$this->add_caps_to_roles();

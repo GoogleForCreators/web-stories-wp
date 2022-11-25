@@ -31,9 +31,11 @@ namespace Google\Web_Stories\Tests\Integration\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Integration\Test_Renderer;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Generic_Renderer class.
@@ -65,12 +67,12 @@ class Renderer extends TestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 *
-	 * @param \WP_UnitTest_Factory $factory Factory class object.
+	 * @param WP_UnitTest_Factory $factory Factory class object.
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'  => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'  => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title' => 'Story Title',
 			]
 		);
@@ -316,7 +318,7 @@ class Renderer extends TestCase {
 
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
 
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();
 		$this->call_private_method( $renderer, 'maybe_render_archive_link' );
 		$expected = ob_get_clean();

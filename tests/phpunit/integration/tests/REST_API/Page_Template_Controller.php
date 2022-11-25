@@ -23,6 +23,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 use DateTime;
 use Google\Web_Stories\Tests\Integration\RestTestCase;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Page_Template_Controller
@@ -41,7 +42,7 @@ class Page_Template_Controller extends RestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Page_Template_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',

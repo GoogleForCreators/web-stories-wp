@@ -20,7 +20,9 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Class Single
@@ -42,16 +44,16 @@ class Single extends DependencyInjectedTestCase {
 	private \Google\Web_Stories\Renderer\Single $instance;
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -113,6 +115,6 @@ class Single extends DependencyInjectedTestCase {
 		$show_admin_bar = $this->instance->show_admin_bar( 'current' );
 
 		$this->assertFalse( $show_admin_bar );
-		$this->assertTrue( is_singular( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
+		$this->assertTrue( is_singular( Story_Post_Type::POST_TYPE_SLUG ) );
 	}
 }

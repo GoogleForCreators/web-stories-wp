@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Users_Controller
@@ -36,7 +37,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Stories_Users_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',

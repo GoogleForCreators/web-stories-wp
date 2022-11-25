@@ -18,7 +18,7 @@ use WP_REST_Server;
 class Stories_Terms_Controller extends RestTestCase {
 	protected static Taxonomy_Base $taxonomy_object;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass(): void {
 		self::$taxonomy_object = new DummyTaxonomy();
 		self::$taxonomy_object->register_taxonomy();
 	}

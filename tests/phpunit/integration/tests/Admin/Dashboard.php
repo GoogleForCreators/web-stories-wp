@@ -22,6 +22,7 @@ namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Dashboard
@@ -36,7 +37,7 @@ class Dashboard extends DependencyInjectedTestCase {
 	protected static string $cpt_has_archive = 'cpt_has_archive';
 	protected static string $cpt_no_archive  = 'cpt_no_archive';
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
