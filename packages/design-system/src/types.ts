@@ -14,25 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
+// Temporary workaround while this package is not fully converted yet.
+// Adjust tsconfig.json and "types" field in package.json and then
+// delete this file once complete.
 
-/**
- * Internal dependencies
- */
-import StoryFiltersProvider from '../myStories/filters/StoryFiltersProvider';
-import TemplateFiltersProvider from '../exploreTemplates/filters/TemplateFiltersProvider';
+export * from './components/keyboard';
+export * from './types/keyboard';
 
-export default function FiltersProvider({ children }) {
-  return (
-    <StoryFiltersProvider>
-      <TemplateFiltersProvider>{children}</TemplateFiltersProvider>
-    </StoryFiltersProvider>
-  );
-}
-
-FiltersProvider.propTypes = {
-  children: PropTypes.node,
-};
+export {};
