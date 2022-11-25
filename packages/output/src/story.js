@@ -54,6 +54,7 @@ function OutputStory({
   const publisherLogoUrl = publisherLogo?.url || '';
 
   if (fonts && Object.keys(fonts).length >= 1) {
+    // if fonts are stored at the story level, populate the font data to the elements
     pages = populateElementFontData(pages, fonts);
   }
 
