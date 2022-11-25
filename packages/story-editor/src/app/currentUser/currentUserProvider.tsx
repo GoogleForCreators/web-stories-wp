@@ -61,7 +61,7 @@ function CurrentUserProvider({
   );
 
   const toggleWebStoriesMediaOptimization = useCallback(() => {
-    if (!currentUser) {
+    if (currentUser === null) {
       return null;
     }
     return updateCurrentUser({
