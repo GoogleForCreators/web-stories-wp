@@ -18,31 +18,30 @@
  * External dependencies
  */
 import { PAGE_RATIO } from '@googleforcreators/units';
-import type { Page } from "@googleforcreators/elements";
+import type { Page } from '@googleforcreators/elements';
+import type { Options } from 'html-to-image/lib/types';
 /**
  * Internal dependencies
  */
 import storyPageToNode from './storyPageToNode';
 
-
-/**
- * @typedef {import('../../../types').Page} Page
- */
-
 /**
  * Async method to generate a dataUrl from a story page.
  *
- * @param {Page} page Page object.
- * @param {Object} options options to pass to htmlToImage.toJpeg
- * @param {number} options.width desired width of image. Dictates height and container height
- * @return {Promise<string>} jpeg dataUrl
+ * @param page Page object.
+ * @param options options to pass to htmlToImage.toJpeg
+ * @param options.width desired width of image. Dictates height and container height
+ * @return jpeg dataUrl
  */
-async function storyPageToDataUrl(page: Page, { width = 400, ...options }) {
+async function storyPageToDataUrl(
+  page: Page,
+  { width = 400, ...options }: Options
+): Promise<string> {
   const htmlToImage = await import(
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );
 
-  const [node, cleanup] = await storyPageToNode(page, width);
+  const [node, cleanup] = storyPageToNode(page, width);
 
   const dataUrl = await htmlToImage.toJpeg(node, {
     ...options,
@@ -50,7 +49,7 @@ async function storyPageToDataUrl(page: Page, { width = 400, ...options }) {
     height: width * (1 / PAGE_RATIO),
     canvasHeight: width * (1 / PAGE_RATIO),
     canvasWidth: width,
-  });
+  } as Options);
 
   cleanup();
 

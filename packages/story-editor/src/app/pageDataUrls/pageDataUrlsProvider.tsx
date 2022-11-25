@@ -16,9 +16,8 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { Page } from '@googleforcreators/elements';
 import { useMemo, useCallback, useState } from '@googleforcreators/react';
-import type { Page } from "@googleforcreators/elements";
 
 /**
  * Internal dependencies
@@ -31,8 +30,8 @@ import Context from './context';
  * @typedef {import('../../types.js').Page} Page
  */
 
-function PageDataUrlProvider({ children }) {
-  const [dataUrls, setDataUrls] = useState({});
+function PageDataUrlProvider({ children }: { children: React.ReactNode }) {
+  const [dataUrls, setDataUrls] = useState<Record<string, string>>({});
   const queueIdleTask = useIdleTaskQueue();
 
   /**
@@ -42,20 +41,25 @@ function PageDataUrlProvider({ children }) {
    * @param {Page} storyPage Page object.
    * @return {Function} function to cancel image generation request
    */
-  const queuePageImageGeneration = useCallback(
+  const queuePageImageGeneration: (Page) => void = useCallback(
     (storyPage: Page) => {
-      const idleTaskUid = storyPage.id;
-      const idleTask = async () => {
+      const idleTaskUid: string = storyPage.id;
+      const idleTask: () => Promise<void> = async () => {
         const dataUrl = await storyPageToDataUrl(storyPage, {});
         setDataUrls((state) => ({
           ...state,
-          [storyPage.id]: dataUrl,
+          [storyPage?.id]: dataUrl,
         }));
       };
 
-      const clearQueueOfPageTask = queueIdleTask([idleTaskUid, idleTask]);
-      return () => {
-        clearQueueOfPageTask();
+      const clearQueueOfPageTask = queueIdleTask([
+        idleTaskUid,
+        idleTask,
+      ]) as () => void;
+      return (): void => {
+        if (typeof clearQueueOfPageTask === 'function') {
+          clearQueueOfPageTask();
+        }
       };
     },
     [queueIdleTask]
@@ -75,8 +79,5 @@ function PageDataUrlProvider({ children }) {
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-PageDataUrlProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default PageDataUrlProvider;
