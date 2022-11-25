@@ -15,23 +15,23 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Page } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import storyPageToNode from './storyPageToNode';
 
 /**
- * @typedef {import('../../../types').Page} Page
- */
-
-/**
  * Async method to generate a dataUrl from a story page.
  *
- * @param {Page} page Page object.
- * @param {Object} options options to pass to htmlToImage.toJpeg
- * @param {number} options.width desired width of image. Dictates height and container height
- * @return {Promise<string>} jpeg dataUrl
+ * @param page Page object.
+ * @param options options to pass to htmlToImage.toJpeg
+ * @param options.width desired width of image. Dictates height and container height
+ * @return jpeg dataUrl
  */
-async function storyPageToCanvas(page, { width = 400, ...options }) {
+async function storyPageToCanvas(page: Page, { width = 400, ...options }) {
   const htmlToImage = await import(
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );

@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-export default function pick(o, fields = []) {
-  if (!o || typeof o !== 'object') {
-    return {};
-  }
-  return Object.assign(
-    {},
-    ...fields.map((prop) => (o && prop in o ? { [prop]: o && o[prop] } : {}))
-  );
+export default function objectWithout(
+  obj: object,
+  propertiesToRemove: string[]
+) {
+  return Object.keys(obj)
+    .filter((key) => !propertiesToRemove.includes(key))
+    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
 }

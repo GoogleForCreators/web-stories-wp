@@ -21,8 +21,9 @@ import {
   PAGE_HEIGHT,
   PAGE_WIDTH,
 } from '@googleforcreators/units';
+import type { Element } from '@googleforcreators/elements';
 
-export function isOffCanvas(selectedElement) {
+export function isOffCanvas(selectedElement: Element) {
   const { x, y, width, height } = selectedElement;
   let offCanvas = false;
   let offCanvasTop = 0;

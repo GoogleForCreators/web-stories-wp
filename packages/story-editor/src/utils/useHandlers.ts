@@ -15,22 +15,25 @@
  */
 
 /**
- * Helper function to get create a js error.
- *
- * @param {string} name Error name.
- * @param {string} fileName File name.
- * @param {string} message Message in error.
- * @return {Error} Error Object.
+ * External dependencies
  */
-function createError(name, fileName, message) {
-  const validError = new Error();
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 
-  validError.name = name;
-  validError.file = fileName;
-  validError.isUserError = true;
-  validError.message = message;
+function useHandlers() {
+  const handlersRef = useRef([]);
 
-  return validError;
+  const registerHandler = useCallback((handler: () => void) => {
+    const handlerList = handlersRef.current;
+    handlerList.push(handler);
+    return () => {
+      handlerList.splice(handlerList.indexOf(handler), 1);
+    };
+  }, []);
+
+  return useMemo(
+    () => [handlersRef.current, registerHandler],
+    [registerHandler]
+  );
 }
 
-export default createError;
+export default useHandlers;

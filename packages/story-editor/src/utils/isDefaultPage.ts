@@ -19,18 +19,15 @@
  */
 import { shallowEqual } from '@googleforcreators/react';
 import { createPage } from '@googleforcreators/elements';
-
-/**
- * @typedef {import('../../../types').Page} Page
- */
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Determine if a page has background or element changes different from the default page.
  *
- * @param {Page} page Page object.
- * @return {boolean} If the page is equivalent to the default page.
+ * @param page Page object.
+ * @return If the page is equivalent to the default page.
  */
-const isDefaultPage = (page) => {
+const isDefaultPage = (page: Page) => {
   // Check if page has more than just the single default background element
   if (page.elements.length > 1) {
     return false;

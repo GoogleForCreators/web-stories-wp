@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import type { MediaElement } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { isOffCanvas } from './isOffCanvas';
 
-export function getCropParams(selectedElement) {
+export function getCropParams(selectedElement: MediaElement) {
   const { offCanvasLeft, offCanvasRight, offCanvasTop, offCanvasBottom } =
     isOffCanvas(selectedElement);
   const percentage = selectedElement.width / selectedElement.resource.width;

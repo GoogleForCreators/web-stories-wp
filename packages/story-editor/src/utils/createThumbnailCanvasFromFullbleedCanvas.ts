@@ -22,10 +22,12 @@ import { PAGE_RATIO } from '@googleforcreators/units';
  * Creates a thumbnail aspect ratio canvas when given a fullbleed aspect
  * ratio canvas.
  *
- * @param {HTMLCanvasElement} fullbleedCanvas fullbleed aspect ratio canvas element
- * @return {HTMLCanvasElement} a new thumbnail aspect ratio canvas element
+ * @param fullbleedCanvas fullbleed aspect ratio canvas element
+ * @return a new thumbnail aspect ratio canvas element
  */
-function createThumbnailCanvasFromFullbleedCanvas(fullbleedCanvas) {
+function createThumbnailCanvasFromFullbleedCanvas(
+  fullbleedCanvas: HTMLCanvasElement
+) {
   const thumbnailCanvas = document.createElement('canvas');
   const thumbnailContext = thumbnailCanvas.getContext('2d');
 

@@ -24,14 +24,14 @@ import { useState, useCallback } from '@googleforcreators/react';
  * any function given to unwrap the inner value, which can then be a function),
  * so we use a wrapper object in stead of double-functioning.
  *
- * @param {Function} initialValue  Initial value of the variable
- * @return {Array} Array of value, setter and clearer.
+ * @param  initialValue  Initial value of the variable
+ * @return Array of value, setter and clearer.
  */
 function useFunctionState(initialValue = undefined) {
   const [value, setValue] = useState({ handler: initialValue });
 
   const setter = useCallback(
-    (handler) =>
+    (handler: () => void) =>
       setValue({
         handler: typeof handler === 'function' ? handler : undefined,
       }),

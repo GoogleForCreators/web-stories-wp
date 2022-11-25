@@ -25,21 +25,15 @@ import { useEffect } from '@googleforcreators/react';
 import nativeCopyPasteExpected from './nativeCopyPasteExpected';
 
 /**
- * @callback CopyCutHandler
- * @param {ClipboardEvent} event
+ * @param copyCutHandler Copy & Cut handler.
+ * @param pasteHandler Paste handler.
  */
-/**
- * @callback PasteHandler
- * @param {ClipboardEvent} event
- */
-
-/**
- * @param {CopyCutHandler} copyCutHandler Copy & Cut handler.
- * @param {PasteHandler} pasteHandler Paste handler.
- */
-function useGlobalClipboardHandlers(copyCutHandler, pasteHandler) {
+function useGlobalClipboardHandlers(
+  copyCutHandler: (event: ClipboardEvent) => void,
+  pasteHandler: (event: ClipboardEvent) => void
+) {
   useEffect(() => {
-    const copyCutHandlerWrapper = (evt) => {
+    const copyCutHandlerWrapper = (evt: ClipboardEvent) => {
       const { clipboardData } = evt;
 
       // Elements that either handle their own clipboard or have selection.
@@ -56,7 +50,7 @@ function useGlobalClipboardHandlers(copyCutHandler, pasteHandler) {
     };
 
     // We always use global handler for pasting.
-    const pasteHandlerWrapper = (evt) => {
+    const pasteHandlerWrapper = (evt: ClipboardEvent) => {
       if (!nativeCopyPasteExpected()) {
         pasteHandler(evt);
       }

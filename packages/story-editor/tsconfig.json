@@ -14,6 +14,6 @@
     "src/app/config/*",
     "src/app/history",
     "src/types",
-    "src/utils/usePreventWindowUnload.ts"
+    "src/utils"
   ]
 }

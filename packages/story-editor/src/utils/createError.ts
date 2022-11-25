@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function getUniquePresets(presets) {
-  const list = presets.map((preset) => JSON.stringify(preset));
-  return Array.from(new Set(list)).map((preset) => JSON.parse(preset));
+
+/**
+ * Helper function to get create a js error.
+ *
+ * @param name Error name.
+ * @param fileName File name.
+ * @param message Message in error.
+ * @return Error Object.
+ */
+function createError(name: string, fileName: string, message: string) {
+  const validError = new Error();
+
+  validError.name = name;
+  validError.file = fileName;
+  validError.isUserError = true;
+  validError.message = message;
+
+  return validError;
 }
 
-export default getUniquePresets;
+export default createError;

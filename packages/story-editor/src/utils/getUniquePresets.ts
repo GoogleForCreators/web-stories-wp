@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export default function objectWithout(obj, propertiesToRemove) {
-  return Object.keys(obj)
-    .filter((key) => !propertiesToRemove.includes(key))
-    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
+function getUniquePresets(presets: string[]): string[] {
+  const list = presets.map((preset) => JSON.stringify(preset));
+  return Array.from(new Set(list)).map((preset) => JSON.parse(preset));
 }
+
+export default getUniquePresets;

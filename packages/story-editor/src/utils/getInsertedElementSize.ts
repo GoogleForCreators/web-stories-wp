@@ -24,24 +24,26 @@ import {
   DEFAULT_DPR,
 } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import type { ElementType } from '@googleforcreators/elements';
+import type { Resource } from '@googleforcreators/media';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 /**
- * @param {?number|undefined} value The value.
- * @return {boolean} Whether the value has been set.
+ * @param The value.
+ * @return  Whether the value has been set.
  */
 function isNum(value) {
   return typeof value === 'number';
 }
 
 function getInsertedElementSize(
-  type,
-  width,
-  height,
+  type: ElementType,
+  width: number,
+  height: number,
   attrs,
   ratio = 1,
-  resource = null
+  resource: Resource
 ) {
   const { updateForResizeEvent, defaultAttributes } =
     getDefinitionForType(type);
@@ -59,7 +61,11 @@ function getInsertedElementSize(
       width = PAGE_WIDTH / 2;
     }
   }
-  if (!isNum(height) && updateForResizeEvent) {
+  if (
+    !isNum(height) &&
+    updateForResizeEvent &&
+    updateForResizeEvent instanceof Function
+  ) {
     // Try resize API with width-only direction.
     height = updateForResizeEvent(
       {

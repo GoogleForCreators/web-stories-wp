@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,23 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef } from '@googleforcreators/react';
+import { SESSION_STORAGE_PREFIX } from '@googleforcreators/design-system';
 
-function useHandlers() {
-  const handlersRef = useRef([]);
-
-  const registerHandler = useCallback((handler) => {
-    const handlerList = handlersRef.current;
-    handlerList.push(handler);
-    return () => {
-      handlerList.splice(handlerList.indexOf(handler), 1);
-    };
-  }, []);
-
-  return useMemo(
-    () => [handlersRef.current, registerHandler],
-    [registerHandler]
-  );
+// Note: this key format is also used in the `dashboard` package which should be updated in case of changes.
+// See https://github.com/GoogleForCreators/web-stories-wp/pull/12416/files#diff-a314e9df4ccf61e1a84cd3ca5b318a729c086e49e92da545b5a6272da3666b98R43
+export default function getSessionStorageKey(storyId: number, isNew: boolean) {
+  return `${SESSION_STORAGE_PREFIX.LOCAL_AUTOSAVE_PREFIX}_${
+    isNew ? 'auto-draft' : storyId
+  }`;
 }
-
-export default useHandlers;
