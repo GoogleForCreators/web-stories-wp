@@ -276,8 +276,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		foreach ( $actual['products'] as $product ) {
 			$this->assertInstanceOf( Product::class, $product );
 
-			$this->assertIsArray( $product );
-			$this->assertMatchesProductSchema( json_decode( wp_json_encode( $product ), true ) );
+			$this->assertMatchesProductSchema( json_decode( (string) wp_json_encode( $product ), true ) );
 		}
 	}
 
