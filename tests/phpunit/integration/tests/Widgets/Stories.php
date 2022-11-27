@@ -123,8 +123,10 @@ class Stories extends DependencyInjectedTestCase {
 
 		$old_instance = [];
 
+		/**
+		 * @var array<string, mixed> $expected
+		 */
 		$expected = $this->call_private_method( $this->instance, 'default_values' );
-
 
 		$instance = $this->instance->update( $new_instance, $old_instance );
 
@@ -204,6 +206,9 @@ class Stories extends DependencyInjectedTestCase {
 			'id'    => '123',
 		];
 
+		/**
+		 * @var string $label
+		 */
 		$label = $this->call_private_method( $this->instance, 'label', [ $args ] );
 
 		$this->assertStringContainsString( 'Test input', $label );

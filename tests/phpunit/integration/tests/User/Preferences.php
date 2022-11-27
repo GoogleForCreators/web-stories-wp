@@ -89,6 +89,7 @@ class Preferences extends DependencyInjectedTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'meta', $data );
 		$this->assertArrayHasKey( \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, $data['meta'] );
 		$this->assertArrayHasKey( \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, $data['meta'] );
@@ -114,6 +115,7 @@ class Preferences extends DependencyInjectedTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'meta', $data );
 		$this->assertArrayHasKey( \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, $data['meta'] );
 		$this->assertArrayHasKey( \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, $data['meta'] );
@@ -150,6 +152,7 @@ class Preferences extends DependencyInjectedTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'meta', $data );
 		$this->assertArrayHasKey( \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, $data['meta'] );
 		$this->assertArrayHasKey( \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, $data['meta'] );

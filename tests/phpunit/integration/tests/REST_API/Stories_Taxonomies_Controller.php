@@ -92,7 +92,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_collection_params
 	 * @dataProvider data_show_ui
 	 */
-	public function test_get_items_show_ui( $show_ui ): void {
+	public function test_get_items_show_ui( bool $show_ui ): void {
 		wp_set_current_user( self::$admin_id );
 		$this->controller->register();
 
@@ -104,7 +104,9 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		$this->assertFalse( $response->is_error() );
 		$data = $response->get_data();
 		$this->assertNotEmpty( $data );
+		$this->assertIsArray( $data );
 		foreach ( $data as $tax ) {
+			$this->assertIsArray( $tax );
 			$this->assertArrayHasKey( 'visibility', $tax );
 			$this->assertArrayHasKey( 'show_ui', $tax['visibility'] );
 			$this->assertSame( $show_ui, $tax['visibility']['show_ui'] );
@@ -126,7 +128,9 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		$this->assertFalse( $response->is_error() );
 		$data = $response->get_data();
 		$this->assertNotEmpty( $data );
+		$this->assertIsArray( $data );
 		foreach ( $data as $tax ) {
+			$this->assertIsArray( $tax );
 			$this->assertArrayHasKey( 'hierarchical', $tax );
 			$this->assertSame( $hierarchical, $tax['hierarchical'] );
 		}

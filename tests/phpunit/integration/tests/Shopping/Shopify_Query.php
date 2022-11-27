@@ -116,8 +116,8 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	/**
 	 * Mock extensions[code] response.
 	 *
-	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param array<string, string>  $r       HTTP request arguments.
+	 * @param mixed                 $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param array<string, string> $r       HTTP request arguments.
 	 * @return array{response: array<string, int>, body?: string} Response data.
 	 */
 	public function mock_response_extensions_code( $preempt, array $r ): array {
@@ -134,9 +134,9 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	/**
 	 * Mock no results response.
 	 *
-	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param array<string, string>  $r       HTTP request arguments.
-	 * @return array Response data.
+	 * @param mixed                 $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param array<string, string> $r       HTTP request arguments.
+	 * @return array{response: array<string, int>, body?: string} Response data.
 	 */
 	public function mock_response_no_results( $preempt, array $r ): array {
 		++$this->request_count;
@@ -146,7 +146,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 			'response' => [
 				'code' => 200,
 			],
-			'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_empty_search.json' ),
+			'body'     => (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_empty_search.json' ),
 		];
 	}
 
@@ -213,6 +213,9 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 
+		/**
+		 * @var string $cache_key
+		 */
 		$cache_key = $this->call_private_method(
 			$this->instance,
 			'get_cache_key',
@@ -375,6 +378,9 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @param string[] $args
+	 * @param string[] $expected
+	 *
 	 * @covers ::fetch_remote_products
 	 * @covers ::get_search
 	 * @covers ::get_products_query

@@ -80,6 +80,8 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -89,8 +91,9 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
-		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+		$this->assertNotWPError( $poster_attachment_id );
 
+		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
 		$image = $this->instance->wp_prepare_attachment_for_js(
 			[
@@ -127,6 +130,8 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
@@ -147,6 +152,9 @@ class Muting extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Video',
 			]
 		);
+
+		$this->assertNotWPError( $video_attachment_id );
+
 		update_post_meta( $video_attachment_id, $this->instance::IS_MUTED_POST_META_KEY, '1' );
 		$result = $this->instance->get_callback_is_muted( [ 'id' => $video_attachment_id ] );
 		$this->assertTrue( $result );
@@ -167,6 +175,8 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$actual = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
 		$this->assertTrue( $actual );
 	}
@@ -183,6 +193,8 @@ class Muting extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Video',
 			]
 		);
+
+		$this->assertNotWPError( $video_attachment_id );
 
 		$result = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
 		$this->assertInstanceOf( 'WP_Error', $result );
@@ -201,6 +213,8 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$muted_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -209,6 +223,8 @@ class Muting extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $muted_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, $muted_attachment_id );
 		$this->assertSame( $muted_attachment_id, (int) get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true ) );
@@ -230,6 +246,8 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$muted_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -238,6 +256,8 @@ class Muting extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $muted_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, $muted_attachment_id );
 		add_post_meta( $muted_attachment_id, $this->instance::IS_MUTED_POST_META_KEY, '1' );

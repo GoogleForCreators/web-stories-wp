@@ -70,7 +70,10 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$video_attachment_id  = self::factory()->attachment->create_object(
+
+		$this->assertNotWPError( $poster_attachment_id );
+
+		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -79,12 +82,15 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'featured_media', $data );
 		$this->assertEquals( $poster_attachment_id, $data['featured_media'] );
 		$this->assertEquals( wp_get_attachment_url( $poster_attachment_id ), $data['featured_media_src']['src'] );
@@ -103,6 +109,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -111,6 +119,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
@@ -131,8 +141,10 @@ class Poster extends DependencyInjectedTestCase {
 			get_post( $video_attachment_id )
 		);
 
+		$this->assertIsArray( $video );
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
+		$this->assertIsArray( $image );
 		$this->assertArrayNotHasKey( 'featured_media', $image );
 		$this->assertArrayNotHasKey( 'featured_media_src', $image );
 	}
@@ -149,6 +161,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $attachment_id );
 
 		$result = $this->instance->get_thumbnail_data( $attachment_id );
 
@@ -173,9 +187,14 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 
 		$result = $this->instance->get_thumbnail_data( $poster_attachment_id );
+
+		$this->assertIsArray( $result );
+		$this->assertArrayHasKey( 'generated', $result );
 		$this->assertTrue( $result['generated'] );
 	}
 
@@ -192,6 +211,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -200,6 +221,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
@@ -222,6 +245,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -230,6 +255,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
@@ -250,6 +277,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -258,6 +287,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		add_post_meta( $video_attachment_id, $this->instance::POSTER_ID_POST_META_KEY, $poster_attachment_id );
@@ -280,6 +311,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -288,6 +321,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 		add_post_meta( $poster_attachment_id, $this->instance::POSTER_POST_META_KEY, '1' );
@@ -308,6 +343,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		$result1 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
 		$this->assertFalse( $result1 );

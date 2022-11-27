@@ -157,6 +157,8 @@ class SVG extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$this->instance->register();
 
 		$attachment_metadata = wp_generate_attachment_metadata( $attachment_id, get_attached_file( $attachment_id ) );
@@ -183,6 +185,8 @@ class SVG extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$result = $this->instance->wp_generate_attachment_metadata( [], $attachment_id, 'update' );
 		$this->assertEqualSets( [], $result );
 	}
@@ -200,6 +204,8 @@ class SVG extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $attachment_id );
 
 		$result = $this->instance->wp_generate_attachment_metadata( [], $attachment_id, 'create' );
 		$this->assertEqualSets( [], $result );

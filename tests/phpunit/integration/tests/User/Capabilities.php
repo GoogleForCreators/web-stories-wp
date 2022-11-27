@@ -73,6 +73,7 @@ class Capabilities extends TestCase {
 		$capability->remove_caps_from_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$this->assertNotNull( $post_type_object );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 		$all_capabilities = array_filter(
 			$all_capabilities,
@@ -101,10 +102,14 @@ class Capabilities extends TestCase {
 		$capability->add_caps_to_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$this->assertNotNull( $post_type_object );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
 		$administrator = get_role( 'administrator' );
 		$editor        = get_role( 'editor' );
+
+		$this->assertNotNull( $administrator );
+		$this->assertNotNull( $editor );
 
 		restore_current_blog();
 

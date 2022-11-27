@@ -20,6 +20,9 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Renderer\Story\Image;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_UnitTest_Factory;
 
@@ -50,7 +53,7 @@ class Oembed extends TestCase {
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -107,9 +110,9 @@ class Oembed extends TestCase {
 	public function test_filter_embed_htmla(): void {
 		$renderer     = new \Google\Web_Stories\Renderer\Oembed();
 		$current_post = get_post( self::$story_id );
-		$story        = new \Google\Web_Stories\Model\Story();
+		$story        = new Story();
 		$story->load_from_post( $current_post );
-		$image_renderer = new \Google\Web_Stories\Renderer\Story\Image( $story );
+		$image_renderer = new Image( $story );
 		$output         = $image_renderer->render(
 			[
 				'height' => 10000,

@@ -60,6 +60,8 @@ class Optimization extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$optimized_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -68,6 +70,8 @@ class Optimization extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $optimized_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, $optimized_attachment_id );
 		$this->assertSame( $optimized_attachment_id, (int) get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true ) );
@@ -88,6 +92,8 @@ class Optimization extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$optimized_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -96,6 +102,8 @@ class Optimization extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $optimized_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, $optimized_attachment_id );
 		$this->instance->on_plugin_uninstall();

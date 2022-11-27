@@ -35,6 +35,7 @@ use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Integration\Test_Renderer;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use WP_UnitTest_Factory;
 
 /**
@@ -56,8 +57,10 @@ class Renderer extends TestCase {
 
 	/**
 	 * Stories mock object.
+	 *
+	 * @var Story_Query & MockObject
 	 */
-	private Story_Query $story_query;
+	private $story_query;
 
 	/**
 	 * Story Model Mock.
@@ -77,7 +80,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		self::$poster_id = self::factory()->attachment->create_object(
+		self::$poster_id = self::factory()->attachment->cr(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -167,12 +170,11 @@ class Renderer extends TestCase {
 		);
 
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
-		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
 		$this->call_private_method( $renderer, 'render_story_with_poster' );
-		$output = ob_get_clean();
+		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 		$this->assertStringNotContainsString( '<img', $output );
@@ -197,12 +199,11 @@ class Renderer extends TestCase {
 		);
 
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
-		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
 		$this->call_private_method( $renderer, 'render_story_with_poster' );
-		$output = ob_get_clean();
+		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 	}
@@ -226,12 +227,11 @@ class Renderer extends TestCase {
 		);
 
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
-		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
 		$this->call_private_method( $renderer, 'render_story_with_poster' );
-		$output = ob_get_clean();
+		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 	}
@@ -241,13 +241,12 @@ class Renderer extends TestCase {
 	 */
 	public function test_get_content_overlay(): void {
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
-		$renderer->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 		$this->set_private_property( $renderer, 'content_overlay', false );
 
 		ob_start();
 		$this->call_private_method( $renderer, 'get_content_overlay' );
-		$output = ob_get_clean();
+		$output = (string) ob_get_clean();
 
 		$this->assertEmpty( $output );
 
@@ -256,7 +255,7 @@ class Renderer extends TestCase {
 
 		ob_start();
 		$this->call_private_method( $renderer, 'get_content_overlay' );
-		$output = ob_get_clean();
+		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'story-content-overlay__title', $output );
 	}
@@ -321,11 +320,11 @@ class Renderer extends TestCase {
 		$archive_link = get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();
 		$this->call_private_method( $renderer, 'maybe_render_archive_link' );
-		$expected = ob_get_clean();
+		$output = (string) ob_get_clean();
 
-		$this->assertStringContainsString( 'web-stories-list__archive-link', $expected );
-		$this->assertStringContainsString( $archive_link, $expected );
-		$this->assertStringContainsString( 'View all stories', $expected );
+		$this->assertStringContainsString( 'web-stories-list__archive-link', $output );
+		$this->assertStringContainsString( $archive_link, $output );
+		$this->assertStringContainsString( 'View all stories', $output );
 
 	}
 

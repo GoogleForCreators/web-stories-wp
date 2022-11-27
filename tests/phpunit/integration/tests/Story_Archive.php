@@ -114,7 +114,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		parent::tear_down();
 	}
 
-	public function filter_wp_redirect( $location ): bool {
+	public function filter_wp_redirect( string $location ): bool {
 		$this->redirect_location = $location;
 
 		return false;
@@ -147,7 +147,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	public function test_pre_get_posts_default_archive(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
 
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -167,7 +167,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		$this->story_post_type->register_post_type();
 
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -267,6 +267,9 @@ class Story_Archive extends DependencyInjectedTestCase {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
+		/**
+		 * @var array<string,string> $actual
+		 */
 		$actual = $this->call_private_method(
 			$this->instance,
 			'filter_display_post_states',
@@ -301,6 +304,9 @@ class Story_Archive extends DependencyInjectedTestCase {
 			]
 		);
 
+		/**
+		 * @var array<string,string> $actual
+		 */
 		$actual = $this->call_private_method(
 			$this->instance,
 			'filter_display_post_states',

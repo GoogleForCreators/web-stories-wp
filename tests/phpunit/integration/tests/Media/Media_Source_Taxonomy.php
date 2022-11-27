@@ -135,6 +135,8 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -143,6 +145,8 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 

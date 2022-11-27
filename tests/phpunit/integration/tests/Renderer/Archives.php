@@ -74,7 +74,7 @@ class Archives extends TestCase {
 	 * @covers ::embed_player
 	 */
 	public function test_embed_player(): void {
-		$this->go_to( get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ) );
+		$this->go_to( (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ) );
 
 		$content = get_echo( 'the_content' );
 		$this->assertStringContainsString( '<amp-story-player', $content );

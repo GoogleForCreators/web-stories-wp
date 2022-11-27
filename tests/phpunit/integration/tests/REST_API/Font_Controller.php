@@ -87,6 +87,7 @@ class Font_Controller extends RestTestCase {
 	public function test_get_item_schema(): void {
 		$actual = $this->controller->get_item_schema();
 
+		$this->assertIsArray( $actual );
 		$this->assertCount( 9, array_keys( $actual['properties'] ) );
 		$this->assertArrayHasKey( 'family', $actual['properties'] );
 		$this->assertArrayHasKey( 'fallbacks', $actual['properties'] );
@@ -106,6 +107,7 @@ class Font_Controller extends RestTestCase {
 		$this->controller->register_routes();
 
 		$collection_params = $this->controller->get_collection_params();
+		$this->assertIsArray( $collection_params );
 		$this->assertArrayHasKey( 'search', $collection_params );
 		$this->assertArrayHasKey( 'include', $collection_params );
 		$this->assertArrayHasKey( 'service', $collection_params );
@@ -138,7 +140,10 @@ class Font_Controller extends RestTestCase {
 
 		$data = $response->get_data();
 
+		$this->assertIsArray( $data );
+
 		foreach ( $data as $font ) {
+			$this->assertIsArray( $font );
 			$this->assertArrayHasKey( 'service', $font );
 			$this->assertNotSame( 'custom', $font['service'] );
 			$this->assertTrue( 'system' === $font['service'] || 'fonts.google.com' === $font['service'] );
@@ -160,9 +165,11 @@ class Font_Controller extends RestTestCase {
 
 		$data = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertCount( 3, $data );
 
 		foreach ( $data as $font ) {
+			$this->assertIsArray( $font );
 			$this->assertArrayHasKey( 'service', $font );
 			$this->assertSame( 'custom', $font['service'] );
 		}
@@ -183,7 +190,12 @@ class Font_Controller extends RestTestCase {
 
 		$data = $response->get_data();
 
+		$this->assertIsArray( $data );
+		$this->assertIsArray( $data[0] );
 		$this->assertCount( 3, $data );
+		$this->assertIsArray( $data[0] );
+		$this->assertIsArray( $data[1] );
+		$this->assertIsArray( $data[2] );
 		$this->assertSame( 'Arial', $data[0]['family'] );
 		$this->assertSame( 'Overpass Regular', $data[1]['family'] );
 		$this->assertSame( 'Roboto', $data[2]['family'] );
@@ -204,9 +216,12 @@ class Font_Controller extends RestTestCase {
 
 		$data = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertCount( 9, $data );
 
 		foreach ( $data as $font ) {
+			$this->assertIsArray( $font );
+			$this->assertIsString( $font['family'] );
 			$this->assertStringContainsStringIgnoringCase( 'over', $font['family'] );
 		}
 	}
@@ -253,6 +268,7 @@ class Font_Controller extends RestTestCase {
 
 		$data = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'id', $data );
 		$this->assertIsInt( $data['id'] );
 		$this->assertArrayHasKey( 'family', $data );
@@ -297,6 +313,7 @@ class Font_Controller extends RestTestCase {
 			$data
 		);
 
+		$this->assertNotNull( $post );
 		$this->assertSame( 'Vazir Regular 2', $post->post_title );
 		$this->assertSame( 'publish', $post->post_status );
 		$this->assertSame(
@@ -374,6 +391,7 @@ class Font_Controller extends RestTestCase {
 		$data = $response->get_data();
 
 		$this->assertSame( 200, $response->get_status() );
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'deleted', $data );
 		$this->assertTrue( $data['deleted'] );
 		$this->assertNull( get_post( $post_id ) );
