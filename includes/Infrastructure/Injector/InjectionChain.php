@@ -46,6 +46,7 @@ final class InjectionChain {
 	 * Resolutions.
 	 *
 	 * @var array<bool>
+	 * @phpstan-var array<class-string, bool>
 	 */
 	private array $resolutions = [];
 
@@ -73,6 +74,8 @@ final class InjectionChain {
 	 *
 	 * @param string $resolution Resolution to add.
 	 * @return self Modified injection chain.
+	 *
+	 * @phpstan-param class-string $resolution
 	 */
 	public function add_resolution( string $resolution ): self {
 		$new_chain                             = clone $this;
@@ -108,6 +111,8 @@ final class InjectionChain {
 	 * @since 1.6.0
 	 *
 	 * @return string[] Chain of injections.
+	 *
+	 * @phpstan-return class-string[]
 	 */
 	public function get_chain(): array {
 		return \array_reverse( $this->chain );
@@ -120,6 +125,8 @@ final class InjectionChain {
 	 *
 	 * @param string $resolution Resolution to check for.
 	 * @return bool Whether the resolution was found.
+	 *
+	 * @phpstan-param class-string<T> $resolution
 	 */
 	public function has_resolution( string $resolution ): bool {
 		return \array_key_exists( $resolution, $this->resolutions );
