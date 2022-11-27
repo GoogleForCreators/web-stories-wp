@@ -38,18 +38,9 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Stories_Shortcode
  */
 class Stories_Shortcode extends TestCase {
-	/**
-	 * Story ID.
-	 */
-	private static int $story_id;
-
-	/**
-	 * Run before any test is run and class is being setup.
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
-		require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/amp.php';
-
-		self::$story_id = $factory->post->create(
+		// So there is an en existing story to be displayed by the shortcode.
+		$factory->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'publish',
@@ -58,9 +49,6 @@ class Stories_Shortcode extends TestCase {
 		);
 	}
 
-	/**
-	 * Runs after all tests are run.
-	 */
 	public function tear_down(): void {
 		remove_shortcode( Testee::SHORTCODE_NAME );
 

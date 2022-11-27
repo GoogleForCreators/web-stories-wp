@@ -182,6 +182,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		$html   = str_replace( '--SITE_URL--', $site_url, $html );
 		$result = $this->call_private_method( $this->instance, 'replace_in_dom', [ $html ] );
 
+		$this->assertIsString( $result );
 		$this->assertStringContainsString( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0.js"></script>', $result );
 		$this->assertStringContainsString( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>', $result );
 		$this->assertStringContainsString( '<link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?display=swap&#038;family=Roboto" rel="stylesheet" />', $result );

@@ -113,6 +113,11 @@ class Settings extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @param string $name
+	 * @param array{type?: string, description?: string, sanitize_callback?: callable, show_in_rest?: bool|array, default?: mixed} $args
+	 * @param mixed $value
+	 * @param mixed $expected
+	 *
 	 * @covers ::get_setting
 	 * @dataProvider data_test_types
 	 */

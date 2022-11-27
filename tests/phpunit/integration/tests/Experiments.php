@@ -31,9 +31,6 @@ class Experiments extends DependencyInjectedTestCase {
 
 	private \Google\Web_Stories\Experiments $instance;
 
-	/**
-	 * @param $factory
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[

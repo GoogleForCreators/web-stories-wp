@@ -110,6 +110,7 @@ class Jetpack extends DependencyInjectedTestCase {
 
 		$data = $results->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'mime_type', $data );
 		$this->assertSame( 'video/mp4', $data['mime_type'] );
 
@@ -172,6 +173,7 @@ class Jetpack extends DependencyInjectedTestCase {
 
 		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'mime', $data );
 		$this->assertSame( 'video/mp4', $data['mime'] );
 
@@ -214,24 +216,24 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @param string $milliseconds
+	 * @param int|float $milliseconds
 	 * @param string $string
 	 *
-	 * @dataProvider get_format_milliseconds_data
+	 * @dataProvider data_format_milliseconds
 	 * @covers ::format_milliseconds
 	 */
-	public function test_format_milliseconds( $milliseconds, $string ): void {
+	public function test_format_milliseconds( $milliseconds, string $string ): void {
 		$result = $this->call_private_method( $this->instance, 'format_milliseconds', [ $milliseconds ] );
 		$this->assertSame( $result, $string );
 	}
 
 	/**
 	 * @param mixed $value
-	 * @param $object_id
-	 * @param $meta_key
+	 * @param int $object_id
+	 * @param string $meta_key
 	 * @return \array[][]|mixed
 	 */
-	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {
+	public function filter_wp_get_attachment_metadata( $value, int $object_id, string $meta_key ) {
 		if ( '_wp_attachment_metadata' !== $meta_key ) {
 			return $value;
 		}
@@ -259,9 +261,9 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @return array[]
+	 * @return array<int|string, array<int|float|string>>
 	 */
-	public function get_format_milliseconds_data(): array {
+	public function data_format_milliseconds(): array {
 		return [
 			'5000'      => [
 				5000,
