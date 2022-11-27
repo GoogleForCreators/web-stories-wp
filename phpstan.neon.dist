@@ -24,6 +24,8 @@ parameters:
     - includes/
     - tests/phpunit/integration/includes
     - tests/phpunit/integration/tests
+    - tests/phpunit/unit/includes/
+    - tests/phpunit/unit/tests/
     - uninstall.php
   excludePaths:
     - includes/vendor/*

@@ -116,6 +116,9 @@ class WooCommerce_Query extends TestCase {
 		);
 
 		$results = $this->instance->get_search( 'hoodie' );
+		$this->assertIsArray( $results );
+		$this->assertArrayHasKey( 'products', $results );
+		$this->assertIsArray( $results['products'] );
 		$this->assertEquals( 'http://example.com/50', $results['products'][0]->get_images()[0]['url'] );
 		$this->assertEquals( 'http://example.com/60', $results['products'][0]->get_images()[3]['url'] );
 		$this->assertEquals( 'http://example.com/72', $results['products'][2]->get_images()[1]['url'] );
@@ -154,7 +157,8 @@ class WooCommerce_Query extends TestCase {
 
 		$ids = $this->call_private_method( $this->instance, 'get_product_image_ids', [ $product ] );
 
-		$this->assertEquals( 1, \count( $ids ) );
+		$this->assertIsArray( $ids );
+		$this->assertCount( 1, $ids );
 		$this->assertContains( 27, $ids );
 	}
 
