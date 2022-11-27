@@ -212,7 +212,7 @@ class Preferences extends DependencyInjectedTestCase {
 
 		$this->assertFalse( get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true ) );
 		$this->assertTrue( get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true ) );
-		$this->assertFalse( get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, true ) );
+		$this->assertSame( [], get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, true ) );
 	}
 
 	/**
