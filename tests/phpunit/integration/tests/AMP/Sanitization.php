@@ -52,8 +52,8 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @see Test_AMP_Theme_Support::test_scripts_get_moved_to_head
 	 *
-	 * @covers ::sanitize_document()
-	 * @covers ::ensure_required_markup()
+	 * @covers ::sanitize_document
+	 * @covers ::ensure_required_markup
 	 */
 	public function test_scripts_get_moved_to_head(): void {
 		ob_start();
@@ -88,7 +88,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @see Test_AMP_Theme_Support::test_unneeded_scripts_get_removed
 	 *
-	 * @covers ::ensure_required_markup()
+	 * @covers ::ensure_required_markup
 	 */
 	public function test_unneeded_scripts_get_removed(): void {
 		ob_start();
@@ -133,8 +133,8 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @see Test_AMP_Theme_Support::test_duplicate_scripts_are_removed
 	 *
-	 * @covers AMP_Theme_Support::prepare_response()
-	 * @covers AMP_Theme_Support::ensure_required_markup()
+	 * @covers AMP_Theme_Support::prepare_response
+	 * @covers AMP_Theme_Support::ensure_required_markup
 	 */
 	public function test_duplicate_scripts_are_removed(): void {
 		ob_start();
@@ -184,7 +184,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::ensure_required_markup()
+	 * @covers ::ensure_required_markup
 	 */
 	public function test_missing_scripts_get_added(): void {
 		ob_start();

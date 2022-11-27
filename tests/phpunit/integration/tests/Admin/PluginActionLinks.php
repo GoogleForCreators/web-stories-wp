@@ -52,7 +52,7 @@ class PluginActionLinks extends TestCase {
 	/**
 	 * Test ::action_links().
 	 *
-	 * @covers ::action_links()
+	 * @covers ::action_links
 	 */
 	public function test_action_links(): void {
 
