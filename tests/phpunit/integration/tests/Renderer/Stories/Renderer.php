@@ -80,7 +80,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		self::$poster_id = self::factory()->attachment->cr(
+		self::$poster_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
