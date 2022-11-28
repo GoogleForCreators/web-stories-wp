@@ -44,7 +44,7 @@ export enum FieldType {
   Float = 'float',
   Text = 'text',
   Checkbox = 'checkbox',
-  Range = 'RANGE',
+  Range = 'range',
 }
 
 export interface AMPEffectTiming
