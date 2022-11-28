@@ -22,13 +22,14 @@ import type {
   Element,
   Animation,
   Group,
+  Story,
 } from '@googleforcreators/elements';
 import type { ResourceId } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
 import type { ActionTypes } from '../app/story/useStoryReducer/types';
-import type { Story, StorySaveData } from './story';
+import type { StorySaveData } from './story';
 import type { Capabilities } from './configProvider';
 
 export type AddPageProps = {

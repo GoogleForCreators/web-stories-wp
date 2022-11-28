@@ -18,11 +18,12 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
+import type { Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import type { HistoryProviderState, Story } from '../../types';
+import type { HistoryProviderState } from '../../types';
 
 export default createContext<HistoryProviderState>({
   state: {

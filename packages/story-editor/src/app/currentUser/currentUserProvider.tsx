@@ -23,7 +23,7 @@ import type { PropsWithChildren } from 'react';
  * Internal dependencies
  */
 import { useAPI } from '../api';
-import type { User } from '../../types/configProvider';
+import type { User } from '../../types';
 import type {
   CurrentUserState,
   UpdateCurrentUserProps,

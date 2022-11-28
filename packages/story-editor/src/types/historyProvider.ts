@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import type { Page } from '@googleforcreators/elements';
+import type { Page, Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import type { ActionType } from '../app/history/reducer';
-import type { Story } from './story';
 import type { Capabilities } from './configProvider';
 
 export interface HistoryEntry {

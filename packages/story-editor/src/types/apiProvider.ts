@@ -35,7 +35,7 @@ import type { Template } from '@googleforcreators/templates';
  */
 import type { RawStory, StoryReturnData, StorySaveData } from './story';
 import type { PageTemplate, Taxonomy } from './configProvider';
-import type {User} from "./storyEditor";
+import type { User } from './storyEditor';
 
 interface TemplateData {
   story_data: PageTemplate;

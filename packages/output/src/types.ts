@@ -18,9 +18,18 @@
 // Adjust tsconfig.json and "types" field in package.json and then
 // delete this file once complete.
 
+/**
+ * External dependencies
+ */
+import type { Page, Story } from '@googleforcreators/elements';
+
+interface MetaData {
+  publisher?: string;
+}
+
 export declare function getStoryMarkup(
-  story: '',
-  pages: [],
-  metadata: [],
+  story: Story,
+  pages: Page[],
+  metadata: MetaData,
   flags: Record<string, boolean>
 ): string;

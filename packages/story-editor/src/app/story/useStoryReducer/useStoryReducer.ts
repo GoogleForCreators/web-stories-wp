@@ -19,6 +19,7 @@
  */
 import { useReducer, useMemo } from '@googleforcreators/react';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import type { Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -28,7 +29,6 @@ import type {
   InternalActions,
   ReducerState,
   ReducerProviderState,
-  Story,
   CopiedElementState,
 } from '../../../types';
 import { DispatchType, exposedActions, internalActions } from './actions';

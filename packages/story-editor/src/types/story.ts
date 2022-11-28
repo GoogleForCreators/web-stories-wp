@@ -17,9 +17,13 @@
 /**
  * External dependencies
  */
-import type { Page, ProductData, StoryData } from '@googleforcreators/elements';
+import type {
+  Page,
+  ProductData,
+  StoryData,
+  Story,
+} from '@googleforcreators/elements';
 import type { Pattern } from '@googleforcreators/patterns';
-import type { AudioResource } from '@googleforcreators/media';
 
 interface FeaturedMedia {
   id: number;
@@ -28,58 +32,6 @@ interface FeaturedMedia {
   url: string;
   needsProxy: boolean;
   isExternal: boolean;
-}
-interface PublisherLogo {
-  id: number;
-  height: number;
-  width: number;
-  url: string;
-}
-
-interface Author {
-  id: number;
-  name: string;
-}
-interface CurrentStyles {
-  colors: Pattern[];
-}
-interface GlobalStyles {
-  colors: Pattern[];
-  textStyles: Partial<Text>;
-}
-export interface Story {
-  storyId: number;
-  title: string;
-  author: Author;
-  date: null | string;
-  modified: string;
-  excerpt: string;
-  slug: string;
-  link: string;
-  extras: Record<string, unknown>;
-  featuredMedia: FeaturedMedia;
-  permalinkConfig: null | {
-    prefix: string;
-    suffix: string;
-  };
-  publisherLogo: PublisherLogo;
-  previewLink: string;
-  editLink: string;
-  password: string;
-  embedPostLink: string;
-  revisions: {
-    count: number;
-  };
-  currentStoryStyles: CurrentStyles;
-  globalStoryStyles: GlobalStyles;
-  taxonomies: string[];
-  terms: string[];
-  status: string;
-  backgroundAudio?: {
-    resource: AudioResource;
-  };
-  autoAdvance?: boolean;
-  defaultPageDuration?: number;
 }
 
 // Data required by API callbacks for saving a story.

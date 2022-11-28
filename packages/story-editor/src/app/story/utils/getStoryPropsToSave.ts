@@ -17,13 +17,13 @@
  * External dependencies
  */
 import { getStoryMarkup } from '@googleforcreators/output';
-import type { Page } from '@googleforcreators/elements';
+import type { Page, Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import objectPick from '../../../utils/objectPick';
-import type { Story, StorySaveData, MetaData } from '../../../types';
+import type { StorySaveData, MetaData } from '../../../types';
 import getAllProducts from './getAllProducts';
 
 interface StoryPropsToSave {
@@ -57,8 +57,7 @@ function getStoryPropsToSave({
     'terms',
   ]);
   const products = getAllProducts(pages);
-  // @todo Remove casting once we have the module.
-  const content = getStoryMarkup(story, pages, metadata, flags) as string;
+  const content = getStoryMarkup(story, pages, metadata, flags);
   return {
     content,
     pages,

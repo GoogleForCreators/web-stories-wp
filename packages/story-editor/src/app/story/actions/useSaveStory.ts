@@ -22,7 +22,7 @@ import { useCallback, useState } from '@googleforcreators/react';
 import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
 import { stripHTML } from '@googleforcreators/dom';
-import type { Page } from '@googleforcreators/elements';
+import type { Page, Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -33,7 +33,6 @@ import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
 import type {
-  Story,
   RESTError,
   StorySaveData,
   UpdateStoryProps,
