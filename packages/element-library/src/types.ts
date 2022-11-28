@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-export default function objectWithout<T extends object>(
-  obj: T,
-  propertiesToRemove: string[]
-): Partial<T> {
-  return Object.keys(obj)
-    .filter((key) => !propertiesToRemove.includes(key))
-    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key as keyof T] }), {});
-}
+// Temporary workaround while this package is not fully converted yet.
+// Adjust tsconfig.json and "types" field in package.json and then
+// delete this file once complete.
+
+export * from './constants';
+
+export {};

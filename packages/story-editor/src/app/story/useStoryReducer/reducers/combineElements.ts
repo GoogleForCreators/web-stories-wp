@@ -117,11 +117,11 @@ export const combineElements = (
     propsFromFirst.push('flip', 'overlay', 'width', 'height', 'x', 'y');
   }
 
-  const newElement: Element = {
+  const newElement = {
     // First copy everything from existing element except if it was default background
     ...objectWithout<Element>(secondElement, ['isDefaultBackground']),
     // Then set sensible default attributes
-    ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
+    ...(DEFAULT_ATTRIBUTES_FOR_MEDIA as Partial<Element>),
     // Then copy all relevant attributes from new element
     ...objectPick(element, propsFromFirst),
   } as Element;

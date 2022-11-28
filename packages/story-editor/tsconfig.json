@@ -8,6 +8,7 @@
     { "path": "../dom" },
     { "path": "../design-system" },
     { "path": "../elements" },
+    { "path": "../element-library" },
     { "path": "../i18n" },
     { "path": "../masks" },
     { "path": "../migration" },

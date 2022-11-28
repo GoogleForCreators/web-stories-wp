@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-export default function pick(o: Record<string, any>, fields: string[] = []) {
+export default function pick<T>(o: T, fields: string[] = []): Partial<T> {
   if (!o || typeof o !== 'object') {
     return {};
   }
   return Object.assign(
     {},
-    ...fields.map((prop) => (o && prop in o ? { [prop]: o && o[prop] } : {}))
-  ) as Record<string, any>;
+    ...fields.map((prop) =>
+      o && prop in o ? { [prop]: o && o[prop as keyof T] } : {}
+    )
+  ) as Partial<T>;
 }

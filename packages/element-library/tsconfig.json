@@ -18,5 +18,5 @@
     { "path": "../transform" },
     { "path": "../units" }
   ],
-  "include": ["src/types/**/*"]
+  "include": ["src/constants.ts", "src/types.ts"]
 }

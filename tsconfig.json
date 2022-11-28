@@ -6,6 +6,7 @@
     { "path": "packages/design-system" },
     { "path": "packages/dom" },
     { "path": "packages/elements" },
+    { "path": "packages/element-library" },
     { "path": "packages/fonts" },
     { "path": "packages/i18n" },
     { "path": "packages/masks" },
