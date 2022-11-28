@@ -54,9 +54,12 @@ class Canonical_Sanitizer extends TestCase {
 
 		$source = '<html><head><title>Example</title></head><body><p>Hello World</p></body></html>';
 
+		/**
+		 * @var Document $dom
+		 */
 		$dom = Document::fromHtml( $source );
 
-		$this->go_to( get_preview_post_link( $post_id ) );
+		$this->go_to( (string) get_preview_post_link( $post_id ) );
 		$this->assertQueryTrue( 'is_single', 'is_singular', 'is_preview' );
 
 		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(

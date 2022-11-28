@@ -59,7 +59,7 @@ class Admin extends DependencyInjectedTestCase {
 			[ 'role' => 'administrator' ]
 		);
 
-		self::$story_id       = $factory->post->create(
+		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Admin Test Story',
@@ -67,8 +67,13 @@ class Admin extends DependencyInjectedTestCase {
 				'post_content' => 'Example content',
 			]
 		);
-		self::$post_id        = $factory->post->create( [] );
-		$poster_attachment_id = self::factory()->attachment->create_object(
+
+		self::$post_id = $factory->post->create( [] );
+
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -76,6 +81,7 @@ class Admin extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 

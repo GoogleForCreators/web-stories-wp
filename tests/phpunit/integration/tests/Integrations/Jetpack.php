@@ -23,6 +23,7 @@ namespace Google\Web_Stories\Tests\Integration\Integrations;
 use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Term;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
@@ -92,6 +93,8 @@ class Jetpack extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$post = get_post( $video_attachment_id );
 
 		$data = [
@@ -142,10 +145,15 @@ class Jetpack extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		$this->instance->register();
 
 		add_post_meta( $poster_attachment_id, Jetpack_Integration::VIDEOPRESS_POSTER_META_KEY, 'hello world' );
 
+		/**
+		 * @var WP_Term[] $terms
+		 */
 		$terms = wp_get_post_terms( $poster_attachment_id, $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
@@ -168,8 +176,11 @@ class Jetpack extends DependencyInjectedTestCase {
 		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
 
 		$attachment = get_post( $video_attachment_id );
-		$response   = wp_prepare_attachment_for_js( $attachment );
-		$data       = $this->instance->filter_admin_ajax_response( $response, $attachment );
+
+		$this->assertNotNull( $attachment );
+
+		$response = wp_prepare_attachment_for_js( $attachment );
+		$data     = $this->instance->filter_admin_ajax_response( $response, $attachment );
 
 		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
 

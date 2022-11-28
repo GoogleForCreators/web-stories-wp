@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Media\Base_Color;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
@@ -58,7 +59,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$post_id = self::factory()->post->create(
+		self::$post_id = $factory->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'publish',
@@ -75,7 +76,10 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$mp4_attachment_id = $factory->attachment->create_object(
+		/**
+		 * @var int $mp4_attachment_id
+		 */
+		$mp4_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => self::$post_id,
@@ -84,7 +88,12 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$poster_attachment_id = $factory->attachment->create_object(
+		self::$mp4_attachment_id = $mp4_attachment_id;
+
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -93,9 +102,14 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		self::$poster_attachment_id = $poster_attachment_id;
+
 		set_post_thumbnail( self::$mp4_attachment_id, self::$poster_attachment_id );
 
-		self::$mov_attachment_id = $factory->attachment->create_object(
+		/**
+		 * @var int $mov_attachment_id
+		 */
+		$mov_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mov',
 				'post_parent'    => self::$post_id,
@@ -103,6 +117,8 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 				'post_title'     => 'Test Video Move',
 			]
 		);
+
+		self::$mov_attachment_id = $mov_attachment_id;
 	}
 
 	public function set_up(): void {
@@ -235,6 +251,8 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		wp_set_current_user( self::$user_id );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
@@ -305,9 +323,11 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $original_attachment_id );
+
 		update_post_meta( $original_attachment_id, '_wp_attachment_image_alt', 'Test alt' );
 		$color = '#0f0f0f';
-		update_post_meta( $original_attachment_id, \Google\Web_Stories\Media\Base_Color::BASE_COLOR_POST_META_KEY, $color );
+		update_post_meta( $original_attachment_id, Base_Color::BASE_COLOR_POST_META_KEY, $color );
 
 		wp_set_current_user( self::$user_id );
 
@@ -325,6 +345,9 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 
 		$attachment = get_post( $data['id'] );
 
+		$this->assertNotNull( $attachment );
+
+		$this->assertIsArray( $data['title'] );
 		$this->assertSame( 'Test Video', $data['title']['raw'] );
 		$this->assertSame( 'Test Video', $attachment->post_title );
 		$this->assertSame( 'Test excerpt', $data['caption']['raw'] );

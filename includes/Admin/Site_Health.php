@@ -97,6 +97,10 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @param array|mixed $debugging_information The debugging information from Core.
 	 * @return array|mixed The debugging information, with added information for Web stories.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($debugging_information is array<T> ? array<T> : mixed)
 	 */
 	public function add_debug_information( $debugging_information ) {
 		$enabled_experiments = [];
@@ -183,6 +187,10 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @param array|mixed $core_extensions The existing extensions from Core.
 	 * @return array|mixed The extensions, including those for Web Stories.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($core_extensions is array<T> ? array<T> : mixed)
 	 */
 	public function add_extensions( $core_extensions ) {
 		if ( ! \is_array( $core_extensions ) ) {
@@ -230,6 +238,10 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @param array|mixed $test_result Site Health test result.
 	 * @return array|mixed Modified test result.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($test_result is array<T> ? array<T> : mixed)
 	 */
 	public function modify_test_result( $test_result ) {
 		if ( ! \is_array( $test_result ) ) {

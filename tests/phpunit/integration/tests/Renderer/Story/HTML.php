@@ -160,6 +160,9 @@ class HTML extends TestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
+		/**
+		 * @var string $actual
+		 */
 		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
 
 		remove_all_actions( 'web_stories_print_analytics' );
@@ -177,6 +180,9 @@ class HTML extends TestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
+		/**
+		 * @var string $actual
+		 */
 		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
 
 		$this->assertStringNotContainsString( '<amp-analytics type="gtag" data-credentials="include"', $actual );
@@ -193,6 +199,9 @@ class HTML extends TestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
+		/**
+		 * @var string $actual
+		 */
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
 		$this->assertStringContainsString( '<amp-story-social-share layout="nodisplay"><script type="application/json">', $actual );
@@ -210,6 +219,9 @@ class HTML extends TestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
+		/**
+		 * @var string $actual
+		 */
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
 		remove_filter( 'web_stories_share_providers', '__return_empty_array' );
@@ -227,6 +239,9 @@ class HTML extends TestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
+		/**
+		 * @var string $actual
+		 */
 		$actual = $this->call_private_method( $renderer, 'fix_malformed_script_link_tags', [ $source ] );
 
 		$this->assertStringNotContainsString( '<a ', $actual );
@@ -243,6 +258,9 @@ class HTML extends TestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
+		/**
+		 * @var string $actual
+		 */
 		$actual = $this->call_private_method( $renderer, 'fix_malformed_script_link_tags', [ $source ] );
 
 		$this->assertStringContainsString( '<amp-story-page-outlink layout="nodisplay"><a href="https://example.com">Learn more</a></amp-story-page-outlink>', $actual );

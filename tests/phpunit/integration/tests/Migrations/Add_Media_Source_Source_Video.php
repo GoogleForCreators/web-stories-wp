@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Term;
 
 /**
  * Class Add_Media_Source_Source_Video
@@ -48,6 +49,9 @@ class Add_Media_Source_Source_Video extends DependencyInjectedTestCase {
 		$this->instance->migrate();
 		$term = $this->call_private_method( $this->instance, 'get_term' );
 
+		/**
+		 * @var WP_Term[] $terms
+		 */
 		$terms = get_terms(
 			[
 				'taxonomy'   => $this->container->get( 'media.media_source' )->get_taxonomy_slug(),

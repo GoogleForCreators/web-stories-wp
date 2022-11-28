@@ -50,7 +50,10 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$attachment_id_1 = self::factory()->attachment->create_object(
+		/**
+		 * @var int $attachment_id_1
+		 */
+		$attachment_id_1 = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -59,7 +62,12 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$attachment_id_2 = self::factory()->attachment->create_object(
+		self::$attachment_id_1 = $attachment_id_1;
+
+		/**
+		 * @var int $attachment_id_2
+		 */
+		$attachment_id_2 = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -67,6 +75,8 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		self::$attachment_id_2 = $attachment_id_2;
 	}
 
 	public function set_up(): void {
@@ -110,6 +120,8 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$data = $this->controller->get_item_schema();
 
 		$properties = $data['properties'];
+
+		$this->assertIsArray( $properties );
 		$this->assertArrayHasKey( 'id', $properties );
 		$this->assertArrayHasKey( 'title', $properties );
 		$this->assertArrayHasKey( 'url', $properties );
@@ -247,8 +259,15 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
 		$this->assertIsArray( $data );
@@ -285,8 +304,15 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
 		$this->assertIsArray( $data );
@@ -320,8 +346,15 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
 		$this->assertIsArray( $data );
@@ -410,8 +443,15 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
 		$this->assertIsArray( $data );
@@ -484,8 +524,15 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_1 );
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
 		$this->assertIsArray( $data );
@@ -520,8 +567,15 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_1 );
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
 		$this->assertIsArray( $data );
@@ -590,7 +644,10 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$this->assertErrorResponse( 'rest_forbidden', $response, 403 );
 		$this->assertSame( self::$attachment_id_1, $active_publisher_logo_id );
@@ -616,7 +673,10 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
 		$this->assertIsArray( $data );

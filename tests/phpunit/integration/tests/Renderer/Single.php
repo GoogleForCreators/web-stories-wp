@@ -61,7 +61,10 @@ class Single extends DependencyInjectedTestCase {
 			]
 		);
 
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -69,6 +72,7 @@ class Single extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
@@ -83,7 +87,7 @@ class Single extends DependencyInjectedTestCase {
 	 */
 	public function test_filter_template_include(): void {
 		$this->set_permalink_structure( '/%postname%/' );
-		$this->go_to( get_permalink( self::$story_id ) );
+		$this->go_to( (string) get_permalink( self::$story_id ) );
 
 		$template_include = $this->instance->filter_template_include( 'current' );
 		$this->assertStringContainsString( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
@@ -94,7 +98,7 @@ class Single extends DependencyInjectedTestCase {
 	 */
 	public function test_filter_template_include_with_password(): void {
 		$this->set_permalink_structure( '/%postname%/' );
-		$this->go_to( get_permalink( self::$story_id ) );
+		$this->go_to( (string) get_permalink( self::$story_id ) );
 
 		add_filter( 'post_password_required', '__return_true' );
 
@@ -110,7 +114,7 @@ class Single extends DependencyInjectedTestCase {
 	 */
 	public function test_show_admin_bar(): void {
 		$this->set_permalink_structure( '/%postname%/' );
-		$this->go_to( get_permalink( self::$story_id ) );
+		$this->go_to( (string) get_permalink( self::$story_id ) );
 
 		$show_admin_bar = $this->instance->show_admin_bar( 'current' );
 

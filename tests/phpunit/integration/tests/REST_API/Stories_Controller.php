@@ -368,7 +368,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 
-		$post          = get_post( $story );
+		$post = get_post( $story );
+
+		$this->assertNotNull( $post );
+
 		[ $permalink ] = get_sample_permalink( $post->ID, $post->post_title, '' );
 		$permalink     = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
 
@@ -516,7 +519,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
+
+		$this->assertNotWPError( $attachment_id );
+
 		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
@@ -570,7 +576,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
+
+		$this->assertNotWPError( $attachment_id );
+
 		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
@@ -667,7 +676,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
+
+		$this->assertNotWPError( $attachment_id );
+
 		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
 		set_post_thumbnail( $story, $attachment_id );
 
@@ -788,8 +800,12 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
+		$this->assertNotWPError( $publisher_logo_id );
+
 		set_post_thumbnail( $original_id, $attachment_id );
 		update_post_meta( $original_id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
 
@@ -894,6 +910,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'orderby', $collection_params );
 		$this->assertArrayHasKey( 'enum', $collection_params['orderby'] );
 		$this->assertIsArray( $collection_params['orderby'] );
+		$this->assertIsArray( $collection_params['orderby']['enum'] );
 		$this->assertContains( 'story_author', $collection_params['orderby']['enum'] );
 	}
 
@@ -946,9 +963,13 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-		$custom_poster     = [
+		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
+		$this->assertNotWPError( $publisher_logo_id );
+
+		$custom_poster = [
 			'url'        => 'http://www.example.com/image.png',
 			'width'      => 1000,
 			'height'     => 1000,
@@ -1069,7 +1090,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
+
 		set_post_thumbnail( $original_id, $attachment_id );
 
 		wp_set_current_user( self::$contributor_id );

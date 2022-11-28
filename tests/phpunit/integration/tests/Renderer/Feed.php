@@ -59,7 +59,10 @@ class Feed extends TestCase {
 			]
 		);
 
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,

@@ -62,6 +62,8 @@ class Image_Sizes extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -70,6 +72,8 @@ class Image_Sizes extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
@@ -91,6 +95,8 @@ class Image_Sizes extends TestCase {
 			get_post( $video_attachment_id )
 		);
 
+		$this->assertIsArray( $video );
+		$this->assertIsArray( $image );
 		$this->assertArrayHasKey( 'media_details', $video );
 		$this->assertArrayHasKey( 'media_details', $image );
 	}
