@@ -21,10 +21,14 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { CurrentUserState } from '../../types/currentUserProvider';
 import Context from './context';
 
-function useCurrentUser(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useCurrentUser(): CurrentUserState;
+function useCurrentUser<T>(
+  selector: (state: CurrentUserState) => T | CurrentUserState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
 export default useCurrentUser;
