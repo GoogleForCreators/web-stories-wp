@@ -181,7 +181,7 @@ function SelectionCanvas({ children }) {
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const lassoP = new SAT.Box(new SAT.Vector(lx, ly), lw, lh).toPolygon();
       const newSelectedElementIds = currentPageElements
-        // Skip background and locked elements
+        // Skip background, hidden and locked elements
         .filter(
           ({ isBackground, isLocked, isHidden }) =>
             !isBackground && !isLocked && !isHidden

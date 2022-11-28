@@ -62,9 +62,8 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
     scrollTop: state.scrollTop,
   }));
 
-  const { isLocked, isHidden } = selectedElement;
-  const actionsEnabled =
-    !selectedElement.isBackground && !isLocked && !isHidden;
+  const { isBackground, isLocked, isHidden } = selectedElement;
+  const actionsEnabled = !isBackground && !isLocked && !isHidden;
 
   const latestEvent = useRef();
 

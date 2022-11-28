@@ -156,7 +156,8 @@ function FrameElement({ id }) {
   const { type, flip, isLocked, isHidden } = element;
 
   // Unlocked elements are always clickable,
-  // locked elements are only clickable if selected
+  // locked elements are only clickable if selected,
+  // hidden elements are never clickable.
   const isClickable = (!isLocked || isSelected) && !isHidden;
 
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
