@@ -98,13 +98,13 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string   $interface_or_class Interface or class to make an object instance out of.
-	 * @param string[] $arguments          Optional. Additional arguments to pass to the constructor.
-	 *                                     Defaults to an empty array.
+	 * @param string               $interface_or_class Interface or class to make an object instance out of.
+	 * @param array<string, mixed> $arguments    Optional. Additional arguments to pass to the constructor.
+	 *                                    Defaults to an empty array.
 	 * @return T Instantiated object.
 	 *
 	 * @phpstan-param class-string<T> $interface_or_class Interface or class to make an object instance out of.
-	 * @phpstan-param class-string[]  $arguments          Optional. Additional arguments to pass to the constructor.
+	 * @phpstan-param array<string, mixed>  $arguments          Optional. Additional arguments to pass to the constructor.
 	 */
 	public function make( string $interface_or_class, array $arguments = [] ) {
 		$injection_chain = $this->resolve(
