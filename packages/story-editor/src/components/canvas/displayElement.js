@@ -112,10 +112,6 @@ function DisplayElement({
   isAnimatable = false,
   siblingCount = 0,
 }) {
-  if (element.isHidden) {
-    return null;
-  }
-
   const { getBox, getBoxWithBorder, dataToEditorX } = useUnits((state) => ({
     getBox: state.actions.getBox,
     getBoxWithBorder: state.actions.getBoxWithBorder,
@@ -175,10 +171,6 @@ function DisplayElement({
 
   const wrapperRef = useRef(null);
 
-  // The element content will use box without border, the wrapper will use box with border.
-  const box = getBox(element);
-  const boxWithBorder = getBoxWithBorder(element);
-
   const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   useTransformHandler(id, (transform) => {
     const target = wrapperRef.current;
@@ -230,6 +222,14 @@ function DisplayElement({
     targetRef: bgOverlayRef,
     resetOnNullTransform: false,
   });
+
+  if (element.isHidden) {
+    return null;
+  }
+
+  // The element content will use box without border, the wrapper will use box with border.
+  const box = getBox(element);
+  const boxWithBorder = getBoxWithBorder(element);
 
   const responsiveBorder = getResponsiveBorder(
     border,
