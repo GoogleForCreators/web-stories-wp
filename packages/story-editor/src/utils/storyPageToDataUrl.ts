@@ -41,7 +41,7 @@ async function storyPageToDataUrl(
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );
 
-  const [node, cleanup] = storyPageToNode(page, width);
+  const [node, cleanup] = await storyPageToNode(page, width);
 
   const dataUrl = await htmlToImage.toJpeg(node, {
     ...options,
