@@ -28,7 +28,7 @@ function useCurrentUser(): CurrentUserState;
 function useCurrentUser<T>(
   selector: (state: CurrentUserState) => T | CurrentUserState = identity
 ) {
-  return useContextSelector(Context, selector ?? identity);
+  return useContextSelector(Context, selector);
 }
 
 export default useCurrentUser;
