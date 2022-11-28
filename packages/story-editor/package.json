@@ -105,6 +105,6 @@
     "jest-matcher-deep-close-to": "^3.0.2",
     "mockdate": "^3.0.5",
     "react": "^17.0.2",
-    "react-moveable": "^0.39.3"
+    "react-moveable": "^0.43.1"
   }
 }
