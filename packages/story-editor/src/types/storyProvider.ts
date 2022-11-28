@@ -420,8 +420,8 @@ export interface ReducerProviderState {
 
 export interface CopiedElementState {
   animations?: Animation[];
-  styles: Record<string, unknown>;
-  type: string;
+  styles?: Record<string, unknown>;
+  type?: string;
 }
 export interface ReducerState {
   story: Story;

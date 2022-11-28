@@ -29,7 +29,6 @@ import type {
   InternalActions,
   ReducerState,
   ReducerProviderState,
-  CopiedElementState,
 } from '../../../types';
 import { DispatchType, exposedActions, internalActions } from './actions';
 import reducer from './reducer';
@@ -41,7 +40,7 @@ export const INITIAL_STATE = {
   selection: [],
   story: {} as Story,
   animationState: STORY_ANIMATION_STATE.RESET as string,
-  copiedElementState: {} as CopiedElementState,
+  copiedElementState: {},
 };
 
 /**

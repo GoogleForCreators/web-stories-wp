@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
+import type { Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -37,12 +38,12 @@ import type { RestoreProps, ReducerState } from '../../../../types';
 export const restore = (
   draft: ReducerState,
   { pages, current, selection, story, capabilities }: RestoreProps
-) => {
+): ReducerState | undefined => {
   if (!Array.isArray(pages) || pages.length === 0) {
     return undefined;
   }
 
-  const newReducerState = typeof story === 'object' ? story : {};
+  const newReducerState = typeof story === 'object' ? story : ({} as Story);
   const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
   const oldCurrent = current ?? draft.current;
   const newCurrent = pages.some(({ id }) => id === oldCurrent)
