@@ -46,8 +46,7 @@
     "flagged": "^2.0.6",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.6",
-    "uuid": "^9.0.0",
-    "web-animations-js": "^2.3.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",

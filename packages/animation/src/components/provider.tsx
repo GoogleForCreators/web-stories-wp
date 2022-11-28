@@ -27,12 +27,6 @@ import {
 import { clamp } from '@googleforcreators/units';
 import { v4 as uuidv4 } from 'uuid';
 
-if (!('KeyframeEffect' in window)) {
-  import(
-    /* webpackChunkName: "chunk-web-animations-js" */ 'web-animations-js/web-animations-next-lite.min.js'
-  ).catch(() => undefined);
-}
-
 /**
  * Internal dependencies
  */
