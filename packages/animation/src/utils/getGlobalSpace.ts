@@ -19,7 +19,7 @@
  */
 import type { Element } from '../types';
 
-type stringable = string | number | boolean | null | undefined;
+type Stringable = string | number | boolean | null | undefined;
 type ElementWithRotation = Partial<Pick<Element, 'rotationAngle'>>;
 
 /**
@@ -36,10 +36,10 @@ type ElementWithRotation = Partial<Pick<Element, 'rotationAngle'>>;
  */
 export function literal(
   strings: ReadonlyArray<string>,
-  ...args: stringable[]
+  ...args: Stringable[]
 ): string {
   return strings
-    .reduce<stringable[]>((accum, str, i) => accum.concat([str, args[i]]), [])
+    .reduce<Stringable[]>((accum, str, i) => accum.concat([str, args[i]]), [])
     .join('');
 }
 
@@ -62,7 +62,7 @@ export function literal(
  */
 export function getGlobalSpace(element: ElementWithRotation = {}) {
   const angle = element?.rotationAngle || 0;
-  function global(strings: TemplateStringsArray, ...args: stringable[]) {
+  function global(strings: TemplateStringsArray, ...args: Stringable[]) {
     return `rotate(${-1 * angle}deg) ${literal(
       strings,
       ...args

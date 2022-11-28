@@ -15,8 +15,3 @@
  */
 
 export type Keyframes = Keyframe[] | PropertyIndexedKeyframes;
-
-export type Property = string | number | null | undefined;
-export interface CSSVariables {
-  [key: `--${string}`]: Property;
-}

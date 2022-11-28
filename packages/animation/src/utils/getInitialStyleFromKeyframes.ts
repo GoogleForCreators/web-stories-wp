@@ -17,9 +17,14 @@
 /**
  * Internal dependencies
  */
-import type { CSSVariables, Keyframes, Property } from '../types';
+import type { Keyframes } from '../types';
 
 const ALLOWLIST = ['opacity', 'transform'];
+
+type CSSProperty = string | number | null | undefined;
+interface CSSVariables {
+  [key: `--${string}`]: CSSProperty;
+}
 
 /**
  * Get a key-value pair of custom CSS properties based on keyframes.
@@ -51,9 +56,9 @@ function getInitialStyleFromKeyframes(keyframes: Keyframes) {
   Object.entries(frame).forEach(([key, value]) => {
     if (ALLOWLIST.includes(key.toLowerCase())) {
       if (Array.isArray(value)) {
-        initialStyle[`--initial-${key}`] = value[0] as Property;
+        initialStyle[`--initial-${key}`] = value[0] as CSSProperty;
       } else {
-        initialStyle[`--initial-${key}`] = value as Property;
+        initialStyle[`--initial-${key}`] = value as CSSProperty;
       }
     }
   });
