@@ -32,6 +32,7 @@
 /**
  * External dependencies
  */
+import { getMediaSizePositionProps, Resource } from '@googleforcreators/media';
 import {
   getBox,
   FULLBLEED_HEIGHT,
@@ -43,8 +44,16 @@ import {
 /**
  * Internal dependencies
  */
-import type { MediaElement } from './types';
-import getMediaSizePositionProps from './getMediaSizePositionProps';
+import type { ScaledElement } from '../types';
+
+// This type also exists in the elements package, but it doesn't
+// really make sense to reuse this one there. This is only for internal
+// use in this file.
+interface MediaElement extends ScaledElement {
+  resource: Resource;
+  focalX?: number;
+  focalY?: number;
+}
 
 const PRECISION = 1;
 

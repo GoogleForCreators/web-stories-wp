@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { getElementOffsets } from '@googleforcreators/media';
 import { sprintf, _x, __ } from '@googleforcreators/i18n';
 
 /**
@@ -31,6 +30,7 @@ import {
   Element,
   FieldType,
 } from '../../types';
+import { getElementOffsets } from '../../utils';
 
 export interface PanBackgroundEffect extends AMPEffectTiming {
   panDir?: AnimationDirection;

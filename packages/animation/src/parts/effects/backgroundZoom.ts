@@ -17,13 +17,13 @@
  * External dependencies
  */
 import { clamp, progress, lerp } from '@googleforcreators/units';
-import { getElementOffsets, getElementOrigin } from '@googleforcreators/media';
 import { sprintf, _x, __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../constants';
+import { getElementOffsets, getElementOrigin } from '../../utils';
 import { AnimationZoom } from '../simple/zoom';
 import {
   AMPEffectTiming,
@@ -63,8 +63,8 @@ export function EffectBackgroundZoom(
   }
 
   const range = {
-    MIN: BG_MIN_SCALE / element.scale,
-    MAX: BG_MAX_SCALE / element.scale,
+    MIN: BG_MIN_SCALE / (element.scale || 1),
+    MAX: BG_MAX_SCALE / (element.scale || 1),
   };
 
   // Compute what a 50% difference is relative to [0%, 400%]

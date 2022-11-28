@@ -18,3 +18,4 @@ export { getGlobalSpace, literal } from './getGlobalSpace';
 export { default as getOffPageOffset } from './getOffPageOffset';
 export { getTotalDuration } from './getTotalDuration';
 export { orderByKeys } from './orderByKeys';
+export * from './getElementOffsets';

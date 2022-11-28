@@ -46,4 +46,3 @@ export { default as hasVideoGotAudio } from './hasVideoGotAudio';
 export { default as getImageFromVideo } from './getImageFromVideo';
 export { default as blobToFile } from './blobToFile';
 export { default as getCanvasBlob } from './getCanvasBlob';
-export * from './getElementOffsets';

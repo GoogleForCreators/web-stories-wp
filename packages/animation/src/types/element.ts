@@ -26,7 +26,7 @@ export interface Element extends DimensionableElement {
 }
 
 export interface ScaledElement extends Element {
-  scale: number;
+  scale?: number;
 }
 
 export function isScaledElement(e: Element): e is ScaledElement {

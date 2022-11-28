@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { getElementOffsets, getElementOrigin } from '@googleforcreators/media';
-
-/**
  * Internal dependencies
  */
 import createAnimation from '../createAnimation';
@@ -30,6 +25,7 @@ import {
   Element,
   ScaleDirection,
 } from '../../types';
+import { getElementOrigin, getElementOffsets } from '../../utils';
 import { EffectBackgroundPan } from './backgroundPan';
 import { EffectBackgroundZoom } from './backgroundZoom';
 
