@@ -18,6 +18,7 @@
  */
 import type { Page } from '@googleforcreators/elements';
 import { useMemo, useCallback, useState } from '@googleforcreators/react';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
@@ -26,7 +27,11 @@ import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../../utils/storyPageToDataUrl';
 import Context from './context';
 
-function PageDataUrlProvider({ children }: { children: React.ReactNode }) {
+function PageDataUrlProvider({
+  children,
+}: {
+  children: PropsWithChildren<Record<string, never>>;
+}) {
   const [dataUrls, setDataUrls] = useState<Record<string, string>>({});
   const queueIdleTask = useIdleTaskQueue();
 
@@ -37,7 +42,7 @@ function PageDataUrlProvider({ children }: { children: React.ReactNode }) {
    * @param {Page} storyPage Page object.
    * @return {Function} function to cancel image generation request
    */
-  const queuePageImageGeneration: (Page) => void = useCallback(
+  const queuePageImageGeneration: (Page: Page) => void = useCallback(
     (storyPage: Page) => {
       const idleTaskUid: string = storyPage.id;
       const idleTask: () => Promise<void> = async () => {
