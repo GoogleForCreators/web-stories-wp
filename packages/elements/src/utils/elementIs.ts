@@ -38,7 +38,8 @@ function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement {
 }
 
 function isBackgroundable(e: Element): e is BackgroundableElement {
-  return 'isBackground' in e;
+  // All media is backgroundable.
+  return 'isBackground' in e || 'resource' in e;
 }
 
 function isProduct(e: Element): e is ProductElement {
