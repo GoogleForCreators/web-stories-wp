@@ -42,6 +42,12 @@ export interface WAAPIAnimation {
   targetLeafElement?: boolean;
 }
 
+// This generic seems weird, but is very important. It allows complex effects
+// to reach into the keyframes of their constituent animation parts and
+// recompose them into combined keyframes.
+// See how e.g. RotateIn is able to compose the move and spin keyframes.
+// This is only possible because the keyframes property of each part isn't
+// generically types as Keyframes but as a specific simple object.
 export interface AnimationPart<T extends Keyframes = Keyframes> {
   id: string;
   keyframes: T;
