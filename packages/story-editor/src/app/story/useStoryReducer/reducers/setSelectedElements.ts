@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { elementIs } from '@googleforcreators/elements';
 import { produce, current } from 'immer';
 
 /**
@@ -25,7 +26,6 @@ import { produce, current } from 'immer';
  */
 import type { SetSelectedElementsProps, ReducerState } from '../../../../types';
 import { intersect } from './utils';
-import {elementIs} from "@googleforcreators/elements";
 
 /**
  * Set selected elements to the given list of ids.

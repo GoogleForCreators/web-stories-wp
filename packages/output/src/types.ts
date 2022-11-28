@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-import '@googleforcreators/output';
+// Temporary workaround while this package is not fully converted yet.
+// Adjust tsconfig.json and "types" field in package.json and then
+// delete this file once complete.
 
-declare module '@googleforcreators/output' {
-  function getStoryMarkup(
-    story: '',
-    pages: [],
-    metadata: [],
-    flags: Record<string, boolean>
-  ): string;
-  export { getStoryMarkup };
-}
+export declare function getStoryMarkup(
+  story: '',
+  pages: [],
+  metadata: [],
+  flags: Record<string, boolean>
+): string;
