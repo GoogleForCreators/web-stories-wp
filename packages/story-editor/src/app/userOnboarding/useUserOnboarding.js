@@ -22,7 +22,7 @@ import { useCallback, useDebouncedCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { KEYS } from '../../components/helpCenter/constants';
+import { KEYS } from '../helpCenter/constants';
 import { useHelpCenter } from '../helpCenter';
 import { noop } from '../../utils/noop';
 

@@ -171,7 +171,7 @@ export function QuickTip({
 
 QuickTip.propTypes = {
   /* Temporary props: `figureAlt`, `figureSrc`.
-  See packages/story-editor/src/components/helpCenter/constants.js. */
+  See packages/story-editor/src/app/helpCenter/constants.js. */
   figureAlt: PropTypes.string,
   figureSrc: PropTypes.string,
   figureSrcImg: PropTypes.string,
