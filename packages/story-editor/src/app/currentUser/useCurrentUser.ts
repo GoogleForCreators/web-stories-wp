@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export interface RESTError {
-  message?: string;
-  data?: {
-    status: 400 | 401 | 403 | 500;
-  };
+
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import type { CurrentUserState } from '../../types/currentUserProvider';
+import Context from './context';
+
+function useCurrentUser(): CurrentUserState;
+function useCurrentUser<T>(
+  selector: (state: CurrentUserState) => T | CurrentUserState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
-export type User = {
-  id: number;
-  mediaOptimization: boolean;
-  onboarding: Record<string, boolean>;
-  trackingOptin: boolean;
-};
+export default useCurrentUser;

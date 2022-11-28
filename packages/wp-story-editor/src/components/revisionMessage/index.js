@@ -13,18 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { identity, useContextSelector } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useCurrentUser(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useCurrentUser;
+export { default } from './revisionMessage';

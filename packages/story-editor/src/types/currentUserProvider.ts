@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export interface RESTError {
-  message?: string;
-  data?: {
-    status: 400 | 401 | 403 | 500;
-  };
+/**
+ * Internal dependencies
+ */
+import type { User } from './configProvider';
+
+export interface UpdateCurrentUserProps {
+  mediaOptimization: boolean;
 }
 
-export type User = {
-  id: number;
-  mediaOptimization: boolean;
-  onboarding: Record<string, boolean>;
-  trackingOptin: boolean;
-};
+export interface CurrentUserState {
+  state: {
+    currentUser: User | null;
+  };
+  actions: {
+    toggleWebStoriesMediaOptimization?: () => Promise<void> | null;
+    updateCurrentUser?: (data: UpdateCurrentUserProps) => Promise<void> | null;
+  };
+}

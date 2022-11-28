@@ -35,6 +35,7 @@ import type { Template } from '@googleforcreators/templates';
  */
 import type { RawStory, StoryReturnData, StorySaveData } from './story';
 import type { PageTemplate, Taxonomy } from './configProvider';
+import type {User} from "./storyEditor";
 
 interface TemplateData {
   story_data: PageTemplate;
@@ -57,13 +58,6 @@ type Author = {
   slug: string;
   link: string;
   avatarUrls?: Record<number, string>;
-};
-
-type User = {
-  id: number;
-  mediaOptimization: boolean;
-  onboarding: Record<string, boolean>;
-  trackingOptin: boolean;
 };
 
 type GetFontProps = {
