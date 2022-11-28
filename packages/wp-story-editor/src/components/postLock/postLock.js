@@ -84,7 +84,7 @@ function PostLock() {
   }, [storyId, stories]);
 
   const currentUserLoaded = useMemo(
-    () => Boolean(Object.keys(currentUser).length),
+    () => currentUser && Boolean(Object.keys(currentUser).length),
     [currentUser]
   );
 
