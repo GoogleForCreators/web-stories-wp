@@ -31,6 +31,7 @@ function ItemOverlay({
   story,
   addSelectedStory,
   removeSelectedStory,
+  isSelectable,
 }) {
   const onClickOverlay = useCallback(
     (event) => {
@@ -57,6 +58,10 @@ function ItemOverlay({
     },
     [removeSelectedStory, addSelectedStory, story, isSelected]
   );
+
+  if (!isSelectable) {
+    return <div className="web-stories-story-preview-card__overlay" />;
+  }
 
   return (
     <button
@@ -88,6 +93,7 @@ ItemOverlay.propTypes = {
   story: PropTypes.object.isRequired,
   addSelectedStory: PropTypes.func,
   removeSelectedStory: PropTypes.func,
+  isSelectable: PropTypes.bool,
 };
 
 export default ItemOverlay;
