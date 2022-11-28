@@ -189,7 +189,10 @@ class Renderer extends TestCase {
 	 * @covers ::render_story_with_poster
 	 */
 	public function test_render_story_with_poster(): void {
-		wp_maybe_generate_attachment_metadata( get_post( self::$poster_id ) );
+		$poster_attachment = get_post( self::$poster_id );
+		$this->assertNotNull( $poster_attachment );
+
+		wp_maybe_generate_attachment_metadata( $poster_attachment );
 		set_post_thumbnail( self::$story_id, self::$poster_id );
 
 		$this->story_model = new Story();

@@ -22,7 +22,6 @@ namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use WP_Customize_Manager;
 
 /**
@@ -39,10 +38,8 @@ class Customizer extends DependencyInjectedTestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var WP_Customize_Manager & MockObject
 	 */
-	private $wp_customize_mock;
+	private WP_Customize_Manager $wp_customize_mock;
 
 	public static function wpSetUpBeforeClass(): void {
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';

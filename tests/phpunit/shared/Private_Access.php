@@ -37,8 +37,7 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 *
-	 * @param object|string $object      Object instance or class string to call the method of.
-	 * @param string        $method_name Name of the method to call.
+	 * @param array{object|string, string} $callable      Object instance or class string to call the method of.
 	 * @param array         $args        Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
 	 *

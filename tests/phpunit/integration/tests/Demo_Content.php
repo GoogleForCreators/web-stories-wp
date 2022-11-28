@@ -26,7 +26,11 @@ namespace Google\Web_Stories\Tests\Integration;
 class Demo_Content extends TestCase {
 	public function test_json_file_contains_replaceable_urls(): void {
 		$file  = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/stories/demo.json';
-		$story = json_decode( file_get_contents( $file ), true ); // phpcs:ignore
+		$story = json_decode( (string) file_get_contents( $file ), true ); // phpcs:ignore
+
+		$this->assertIsArray( $story );
+		$this->assertArrayHasKey( 'pages', $story );
+		$this->assertIsArray( $story['page'] );
 
 		foreach ( $story['pages'] as $page ) {
 			foreach ( $page['elements'] as $element ) {

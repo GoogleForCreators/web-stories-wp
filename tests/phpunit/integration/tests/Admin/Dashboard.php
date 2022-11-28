@@ -195,7 +195,10 @@ class Dashboard extends DependencyInjectedTestCase {
 		);
 
 		$this->instance->add_menu_page();
-		$this->instance->enqueue_assets( $this->instance->get_hook_suffix( 'stories-dashboard' ) );
+		$hook_suffix = $this->instance->get_hook_suffix( 'stories-dashboard' );
+
+		$this->assertIsString( $hook_suffix );
+		$this->instance->enqueue_assets( $hook_suffix );
 
 		$this->assertTrue( wp_script_is( $this->instance::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );

@@ -126,9 +126,11 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
+			$this->assertIsArray( $product );
 			$this->assertArrayHasKey( 'productId', $product );
 			$this->assertArrayHasKey( 'productTitle', $product );
 			$this->assertArrayHasKey( 'productBrand', $product );
@@ -151,9 +153,11 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
+			$this->assertIsArray( $product );
 			$this->assertArrayHasKey( 'productId', $product );
 			$this->assertArrayNotHasKey( 'productTitle', $product );
 			$this->assertArrayNotHasKey( 'productBrand', $product );
@@ -203,10 +207,11 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'per_page', $per_page );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
-
+		$this->assertIsArray( $data );
 		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
+			$this->assertIsArray( $product );
 			$this->assertMatchesProductSchema( $product );
 		}
 	}

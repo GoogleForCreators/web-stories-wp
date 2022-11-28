@@ -138,9 +138,11 @@ class SVG extends TestCase {
 	 */
 	public function test_filter_list_of_allowed_filetypes(): void {
 		$this->instance->register();
-
-		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
-		$this->assertContains( 'svg', $site_exts );
+		/**
+		 * @var string $upload_filetypes
+		 */
+		$upload_filetypes = get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
+		$this->assertStringContainsString( 'svg', $upload_filetypes );
 	}
 
 	/**
@@ -161,7 +163,7 @@ class SVG extends TestCase {
 
 		$this->instance->register();
 
-		$attachment_metadata = wp_generate_attachment_metadata( $attachment_id, get_attached_file( $attachment_id ) );
+		$attachment_metadata = wp_generate_attachment_metadata( $attachment_id, (string) get_attached_file( $attachment_id ) );
 		$this->assertArrayHasKey( 'width', $attachment_metadata );
 		$this->assertArrayHasKey( 'height', $attachment_metadata );
 		$this->assertArrayHasKey( 'file', $attachment_metadata );
@@ -331,6 +333,8 @@ class SVG extends TestCase {
 	public function test_wp_handle_upload(): void {
 		$upload = [
 			'tmp_name' => WEB_STORIES_TEST_DATA_DIR . '/video-play.svg',
+			'file'     => WEB_STORIES_TEST_DATA_DIR . '/video-play.svg',
+			'url'      => 'http://www.example.com/video-play.svg',
 			'type'     => 'image/svg+xml',
 		];
 		$data   = $this->instance->wp_handle_upload( $upload );
@@ -344,6 +348,8 @@ class SVG extends TestCase {
 		$upload = [
 			'tmp_name' => WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg',
 			'type'     => 'image/jpeg',
+			'file'     => WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg',
+			'url'      => 'http://www.example.com/attachment.jpg',
 		];
 		$data   = $this->instance->wp_handle_upload( $upload );
 		$this->assertSame( $data, $upload );

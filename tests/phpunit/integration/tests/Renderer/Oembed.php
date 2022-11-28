@@ -94,11 +94,13 @@ class Oembed extends TestCase {
 	 * @covers ::filter_oembed_response_data
 	 */
 	public function test_filter_oembed_response_data(): void {
-		$renderer = new \Google\Web_Stories\Renderer\Oembed();
-		$old      = [
+		$renderer     = new \Google\Web_Stories\Renderer\Oembed();
+		$old          = [
 			'existing' => 'data',
 		];
-		$actual   = $renderer->filter_oembed_response_data( $old, get_post( self::$story_id ), 600 );
+		$current_post = get_post( self::$story_id );
+		$this->assertNotNull( $current_post );
+		$actual   = $renderer->filter_oembed_response_data( $old, $current_post, 600 );
 		$expected = [
 			'existing' => 'data',
 			'width'    => 360,
@@ -114,7 +116,8 @@ class Oembed extends TestCase {
 	public function test_filter_embed_htmla(): void {
 		$renderer     = new \Google\Web_Stories\Renderer\Oembed();
 		$current_post = get_post( self::$story_id );
-		$story        = new Story();
+		$this->assertNotNull( $current_post );
+		$story = new Story();
 		$story->load_from_post( $current_post );
 		$image_renderer = new Image( $story );
 		$output         = $image_renderer->render(

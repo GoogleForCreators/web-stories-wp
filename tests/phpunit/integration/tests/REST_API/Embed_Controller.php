@@ -271,7 +271,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		$this->set_permalink_structure( '' );
 
-		$response = $this->dispatch_request( get_permalink( self::$story_id ) );
+		$response = $this->dispatch_request( (string) get_permalink( self::$story_id ) );
 		$data     = $response->get_data();
 
 		$expected = [
@@ -301,7 +301,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$editor );
 
-		$response = $this->dispatch_request( get_permalink( self::$story_id ) );
+		$response = $this->dispatch_request( (string) get_permalink( self::$story_id ) );
 		$data     = $response->get_data();
 
 		$expected = [
@@ -334,7 +334,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$admin );
 
-		$permalink = get_permalink( self::$story_id );
+		$permalink = (string) get_permalink( self::$story_id );
 
 		$blog_id = self::factory()->blog->create();
 		add_user_to_blog( $blog_id, self::$admin, 'administrator' );

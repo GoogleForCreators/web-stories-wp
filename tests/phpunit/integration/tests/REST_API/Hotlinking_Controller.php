@@ -504,8 +504,14 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_should_validate_with_an_unsafe_port_when_the_host_and_port_match_the_home_url(): void {
-		$original_home    = get_option( 'home' );
-		$home_parsed      = wp_parse_url( $original_home );
+		/**
+		 * Home URL.
+		 *
+		 * @var string
+		 */
+		$original_home = get_option( 'home' );
+		$home_parsed   = wp_parse_url( $original_home );
+		$this->assertIsArray( $home_parsed );
 		$home_scheme_host = implode( '://', \array_slice( $home_parsed, 0, 2 ) );
 		$home_modified    = $home_scheme_host . ':83';
 

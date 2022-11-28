@@ -80,6 +80,7 @@ trait REST_Setup {
 
 		if ( null !== $status ) {
 			$data = $response->get_error_data();
+			$this->assertIsArray( $data );
 			$this->assertArrayHasKey( 'status', $data );
 			$this->assertSame( $status, $data['status'] );
 		}

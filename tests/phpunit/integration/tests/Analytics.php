@@ -58,13 +58,17 @@ class Analytics extends DependencyInjectedTestCase {
 	public function test_get_default_configuration(): void {
 		$tracking_id = '123456789';
 		$actual      = $this->instance->get_default_configuration( $tracking_id );
+		$this->assertIsArray( $actual );
 		$this->assertArrayHasKey( 'vars', $actual );
+		$this->assertIsArray( $actual['vars'] );
 		$this->assertArrayHasKey( 'gtag_id', $actual['vars'] );
 		$this->assertSame( (string) $tracking_id, $actual['vars']['gtag_id'] );
 		$this->assertArrayHasKey( 'config', $actual['vars'] );
+		$this->assertIsArray( $actual['vars']['config'] );
 		$this->assertArrayHasKey( $tracking_id, $actual['vars']['config'] );
 		$this->assertArrayHasKey( 'triggers', $actual );
 		foreach ( array_values( $actual['triggers'] ) as $trigger_config ) {
+			$this->assertIsArray( $trigger_config );
 			$this->assertArrayHasKey( 'vars', $trigger_config );
 			$this->assertArrayHasKey( 'send_to', $trigger_config['vars'] );
 			$this->assertSame( $tracking_id, $trigger_config['vars']['send_to'] );

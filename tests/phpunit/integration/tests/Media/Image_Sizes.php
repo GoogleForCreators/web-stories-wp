@@ -77,22 +77,27 @@ class Image_Sizes extends TestCase {
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		$media = new \Google\Web_Stories\Media\Image_Sizes();
-		$image = $media->wp_prepare_attachment_for_js(
+		$media            = new \Google\Web_Stories\Media\Image_Sizes();
+		$image_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $image_attachment );
+
+		$image            = $media->wp_prepare_attachment_for_js(
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
 				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			],
-			get_post( $poster_attachment_id )
+			$image_attachment
 		);
+		$video_attachment = get_post( $video_attachment_id );
+		$this->assertNotNull( $video_attachment );
 		$video = $media->wp_prepare_attachment_for_js(
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
 				'url'  => wp_get_attachment_url( $video_attachment_id ),
 			],
-			get_post( $video_attachment_id )
+			$video_attachment
 		);
 
 		$this->assertIsArray( $video );

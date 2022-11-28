@@ -334,6 +334,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEquals( 201, $response->get_status() );
 		$this->assertEquals( 'image', $data['media_type'] );
 
+		$this->assertIsInt( $data['id'] );
 		$attachment = get_post( $data['id'] );
 
 		$this->assertNotNull( $attachment );

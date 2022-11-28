@@ -96,6 +96,7 @@ class Jetpack extends DependencyInjectedTestCase {
 		$this->assertNotWPError( $video_attachment_id );
 
 		$post = get_post( $video_attachment_id );
+		$this->assertNotNull( $post );
 
 		$data = [
 			'source_url'         => self::ATTACHMENT_URL,
@@ -104,6 +105,7 @@ class Jetpack extends DependencyInjectedTestCase {
 		];
 
 		$response = rest_ensure_response( $data );
+		$this->assertNotWPError( $response );
 
 		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
 
@@ -174,13 +176,14 @@ class Jetpack extends DependencyInjectedTestCase {
 		);
 
 		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
-
+		$this->assertNotWPError( $video_attachment_id );
 		$attachment = get_post( $video_attachment_id );
 
 		$this->assertNotNull( $attachment );
 
 		$response = wp_prepare_attachment_for_js( $attachment );
-		$data     = $this->instance->filter_admin_ajax_response( $response, $attachment );
+		$this->assertIsArray( $response );
+		$data = $this->instance->filter_admin_ajax_response( $response, $attachment );
 
 		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
 
@@ -197,7 +200,9 @@ class Jetpack extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'url', $data );
 		$this->assertSame( 'https://videopress.example.com/videos/video.mp4', $data['url'] );
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'media_details', $data );
+		$this->assertIsArray( $data['media_details'] );
 		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );
 		$this->assertArrayHasKey( 'length', $data['media_details'] );
 		$this->assertSame( '0:05', $data['media_details']['length_formatted'] );

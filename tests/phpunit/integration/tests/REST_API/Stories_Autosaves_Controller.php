@@ -83,6 +83,7 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
 
+		$this->assertIsArray( $new_data );
 		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );

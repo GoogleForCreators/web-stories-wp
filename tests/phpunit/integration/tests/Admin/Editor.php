@@ -166,8 +166,10 @@ class Editor extends DependencyInjectedTestCase {
 		$this->assets->expects( $this->once() )->method( 'register_script_asset' )->with(
 			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
 		);
+		$current_post = get_post( self::$story_id );
+		$this->assertNotNull( $current_post );
 
-		$this->instance->replace_editor( true, get_post( self::$story_id ) );
+		$this->instance->replace_editor( true, $current_post );
 	}
 
 	/**
@@ -179,6 +181,10 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
+		$this->assertIsArray( $results );
+		$this->assertArrayHasKey( 'capabilities', $results );
+		$this->assertIsArray( $results['capabilities'] );
+		$this->assertArrayHasKey( 'hasUploadMediaAction', $results['capabilities'] );
 		$this->assertTrue( $results['capabilities']['hasUploadMediaAction'] );
 	}
 
@@ -191,6 +197,10 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
+		$this->assertIsArray( $results );
+		$this->assertArrayHasKey( 'capabilities', $results );
+		$this->assertIsArray( $results['capabilities'] );
+		$this->assertArrayHasKey( 'hasUploadMediaAction', $results['capabilities'] );
 		$this->assertFalse( $results['capabilities']['hasUploadMediaAction'] );
 	}
 
@@ -202,6 +212,10 @@ class Editor extends DependencyInjectedTestCase {
 		update_option( 'blogname', "S'mores" );
 
 		$results = $this->instance->get_editor_settings();
+		$this->assertIsArray( $results );
+		$this->assertArrayHasKey( 'metadata', $results );
+		$this->assertIsArray( $results['metadata'] );
+		$this->assertArrayHasKey( 'publisher', $results['metadata'] );
 
 		update_option( 'blogname', $blogname );
 

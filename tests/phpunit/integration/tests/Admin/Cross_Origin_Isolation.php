@@ -179,7 +179,8 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	public function test_replace_in_dom(): void {
 		$site_url = site_url();
 
-		$html   = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/cross_origin_content.html' );
+		$html = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/cross_origin_content.html' );
+		$this->assertIsString( $html );
 		$html   = str_replace( '--SITE_URL--', $site_url, $html );
 		$result = $this->call_private_method( [ $this->instance, 'replace_in_dom' ], [ $html ] );
 

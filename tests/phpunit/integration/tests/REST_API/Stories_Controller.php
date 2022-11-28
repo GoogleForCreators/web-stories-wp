@@ -523,7 +523,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertNotWPError( $attachment_id );
 
-		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
+		$attachment = get_post( $attachment_id );
+		$this->assertNotNull( $attachment );
+
+		wp_maybe_generate_attachment_metadata( $attachment );
 		set_post_thumbnail( $story, $attachment_id );
 
 		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
@@ -580,7 +583,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertNotWPError( $attachment_id );
 
-		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
+		$attachment = get_post( $attachment_id );
+		$this->assertNotNull( $attachment );
+
+		wp_maybe_generate_attachment_metadata( $attachment );
 		set_post_thumbnail( $story, $attachment_id );
 
 		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
@@ -680,7 +686,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertNotWPError( $attachment_id );
 
-		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
+		$attachment = get_post( $attachment_id );
+		$this->assertNotNull( $attachment );
+
+		wp_maybe_generate_attachment_metadata( $attachment );
 		set_post_thumbnail( $story, $attachment_id );
 
 		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );

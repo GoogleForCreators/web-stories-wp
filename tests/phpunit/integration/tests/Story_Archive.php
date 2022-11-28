@@ -20,6 +20,9 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Archive as Testee;
+use Google\Web_Stories\Story_Post_Type;
 use WP_UnitTest_Factory;
 
 /**
@@ -41,11 +44,11 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
 	 */
-	protected \Google\Web_Stories\Story_Archive $instance;
+	protected Testee $instance;
 
-	private \Google\Web_Stories\Settings $settings;
+	private Settings $settings;
 
-	private \Google\Web_Stories\Story_Post_Type $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Archive page ID.
@@ -64,7 +67,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -92,13 +95,10 @@ class Story_Archive extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
+		$this->settings        = $this->injector->make( Settings::class );
+		$this->story_post_type = new Story_Post_Type( $this->settings );
+		$this->instance        = new Testee( $this->settings, $this->story_post_type );
 
-		$this->settings        = $this->injector->make( \Google\Web_Stories\Settings::class );
-		$this->story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->settings );
-		$this->instance        = new \Google\Web_Stories\Story_Archive( $this->settings, $this->story_post_type );
 
 		$this->add_caps_to_roles();
 
@@ -150,7 +150,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	public function test_pre_get_posts_default_archive(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
 
-		$archive_link = (string) get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -170,7 +170,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		$this->story_post_type->register_post_type();
 
-		$archive_link = (string) get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -191,10 +191,15 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		wp_delete_post( $archive_page_id );
 
-		$archive         = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		$archive = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		/**
+		 * @var int $archive_page_id
+		 */
 		$archive_page_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
+		$this->assertIsString( $archive );
 		$this->assertSame( 'default', $archive );
+		$this->assertIsInt( $archive_page_id );
 		$this->assertSame( 0, $archive_page_id );
 	}
 
@@ -209,10 +214,15 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		wp_delete_post( $archive_page_id, true );
 
-		$archive         = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		$archive = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		/**
+		 * @var int $archive_page_id
+		 */
 		$archive_page_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
+		$this->assertIsString( $archive );
 		$this->assertSame( 'default', $archive );
+		$this->assertIsInt( $archive_page_id );
 		$this->assertSame( 0, $archive_page_id );
 	}
 
@@ -230,7 +240,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 			]
 		);
 
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -251,13 +261,10 @@ class Story_Archive extends DependencyInjectedTestCase {
 	 * @covers ::filter_display_post_states
 	 */
 	public function test_filter_display_post_states(): void {
-		$actual = $this->call_private_method(
-			[ $this->instance, 'filter_display_post_states' ],
-			[
-				[],
-				get_post( self::$archive_page_id ),
-			]
-		);
+		$archive_page = get_post( self::$archive_page_id );
+		$this->assertNotNull( $archive_page );
+
+		$actual = $this->instance->filter_display_post_states( [], $archive_page );
 
 		$this->assertSame( [], $actual );
 	}
@@ -269,17 +276,15 @@ class Story_Archive extends DependencyInjectedTestCase {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
-		$actual = $this->call_private_method(
-			[ $this->instance, 'filter_display_post_states' ],
-			[
-				[],
-				get_post( self::$archive_page_id ),
-			]
-		);
+		$archive_page = get_post( self::$archive_page_id );
+		$this->assertNotNull( $archive_page );
+
+		$actual = $this->instance->filter_display_post_states( [], $archive_page );
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
+		$this->assertIsArray( $actual );
 		$this->assertEqualSetsWithIndex(
 			[
 				'web_stories_archive_page' => __( 'Web Stories Archive Page', 'web-stories' ),
@@ -302,13 +307,10 @@ class Story_Archive extends DependencyInjectedTestCase {
 			]
 		);
 
-		$actual = $this->call_private_method(
-			[ $this->instance, 'filter_display_post_states' ],
-			[
-				[],
-				get_post( self::$archive_page_id ),
-			]
-		);
+		$archive_page = get_post( self::$archive_page_id );
+		$this->assertNotNull( $archive_page );
+
+		$actual = $this->instance->filter_display_post_states( [], $archive_page );
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );

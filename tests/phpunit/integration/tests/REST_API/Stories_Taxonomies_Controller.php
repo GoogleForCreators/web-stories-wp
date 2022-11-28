@@ -81,6 +81,9 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertNotEmpty( $response->get_data() );
+		$this->assertIsArray( $response->get_data() );
+		$this->assertIsArray( $response_hierarchical->get_data() );
+		$this->assertIsArray( $response_flat->get_data() );
 		$this->assertCount(
 			\count( $response_hierarchical->get_data() ) + \count( $response_flat->get_data() ),
 			$response->get_data()

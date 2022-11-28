@@ -57,7 +57,7 @@ class Discovery extends DependencyInjectedTestCase {
 			]
 		);
 
-		self::$story_id      = $factory->post->create(
+		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Discovery Test Story',
@@ -66,16 +66,26 @@ class Discovery extends DependencyInjectedTestCase {
 				'post_author'  => self::$user_id,
 			]
 		);
-		self::$attachment_id = $factory->attachment->create_object(
-			DIR_TESTDATA . '/images/canola.jpg',
-			self::$story_id,
+		/**
+		 * @var int $attachment_id
+		 */
+		$attachment_id = $factory->attachment->create_object(
 			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => self::$story_id,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
 			]
 		);
 
-		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
+		self::$attachment_id = $attachment_id;
+
+		/**
+		 * @var \WP_Post $current_post
+		 */
+		$current_post = get_post( self::$attachment_id );
+
+		wp_maybe_generate_attachment_metadata( $current_post );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
 
 		add_theme_support( 'automatic-feed-links' );
@@ -95,7 +105,7 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->instance = $this->injector->make( \Google\Web_Stories\Discovery::class );
 
 		$this->set_permalink_structure( '/%postname%/' );
-		$this->go_to( get_permalink( self::$story_id ) );
+		$this->go_to( (string) get_permalink( self::$story_id ) );
 	}
 
 	/**

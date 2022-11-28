@@ -90,6 +90,7 @@ class Single extends DependencyInjectedTestCase {
 		$this->go_to( (string) get_permalink( self::$story_id ) );
 
 		$template_include = $this->instance->filter_template_include( 'current' );
+		$this->assertIsString( $template_include );
 		$this->assertStringContainsString( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
 	}
 
@@ -106,6 +107,7 @@ class Single extends DependencyInjectedTestCase {
 
 		remove_filter( 'post_password_required', '__return_true' );
 
+		$this->assertIsString( $template_include );
 		$this->assertStringContainsString( 'current', $template_include );
 	}
 

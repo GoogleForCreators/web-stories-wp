@@ -111,7 +111,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->go_to( get_permalink( $story_id ) );
+		$this->go_to( (string) get_permalink( $story_id ) );
 
 		$analytics = $this->createMock( Analytics::class );
 		$analytics->method( 'get_default_configuration' )
@@ -130,6 +130,8 @@ class Site_Kit extends DependencyInjectedTestCase {
 		);
 		$actual         = $this->instance->filter_site_kit_gtag_opt( $gtag );
 
+		$this->assertIsArray( $actual );
+		$this->assertIsArray( $actual['triggers'] );
 		$this->assertArrayHasKey( 'storyProgress', $actual['triggers'] );
 		$this->assertArrayHasKey( 'storyEnd', $actual['triggers'] );
 	}

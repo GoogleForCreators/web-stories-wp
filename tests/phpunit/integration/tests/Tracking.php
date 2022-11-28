@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use _WP_Dependency;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\User\Preferences;
@@ -101,8 +102,19 @@ class Tracking extends DependencyInjectedTestCase {
 
 		$this->instance->register();
 
+		/**
+		 * An array of all registered dependencies keyed by handle.
+		 *
+		 * @var _WP_Dependency[] $registered
+		 */
+		$registered = wp_scripts()->registered;
+
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'registered' ) );
-		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ]->src );
+		$this->assertArrayHasKey( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, $registered );
+		$handle = $registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ];
+		$this->assertInstanceOf( '_WP_Dependency', $handle );
+
+		$this->assertEmpty( $handle->src );
 		$after = wp_scripts()->get_data( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'after' );
 		$this->assertNotEmpty( $after );
 	}

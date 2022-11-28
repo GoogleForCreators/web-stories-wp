@@ -178,7 +178,11 @@ class Muting extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $video_attachment_id );
 
-		$actual = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
+		$video_attachment = get_post( $video_attachment_id );
+
+		$this->assertNotNull( $video_attachment );
+
+		$actual = $this->instance->update_callback_is_muted( true, $video_attachment );
 		$this->assertTrue( $actual );
 	}
 
@@ -197,8 +201,12 @@ class Muting extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $video_attachment_id );
 
-		$result = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
-		$this->assertInstanceOf( 'WP_Error', $result );
+		$video_attachment = get_post( $video_attachment_id );
+
+		$this->assertNotNull( $video_attachment );
+
+		$actual = $this->instance->update_callback_is_muted( true, $video_attachment );
+		$this->assertInstanceOf( 'WP_Error', $actual );
 	}
 
 	/**

@@ -112,6 +112,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'success', $data );
 		$this->assertTrue( $data['success'] );
 	}

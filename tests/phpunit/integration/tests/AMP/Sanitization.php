@@ -87,7 +87,10 @@ class Sanitization extends DependencyInjectedTestCase {
 		$scripts = $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' );
 		$this->assertSame( 2, $scripts->length );
 		foreach ( $scripts as $script ) {
+			$this->assertIsObject( $script );
+			$this->assertObjectHasAttribute( 'parentNode', $script );
 			$this->assertSame( 'head', $script->parentNode->nodeName );
+
 		}
 	}
 
@@ -127,8 +130,11 @@ class Sanitization extends DependencyInjectedTestCase {
 		 */
 		$actual_script_srcs = [];
 
-		/** @var DOMElement $script Script. */
-		foreach ( $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' ) as $script ) {
+		/**
+		 * @var DOMElement[] $scripts
+		 */
+		$scripts = $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' );
+		foreach ( $scripts as $script ) {
 			$actual_script_srcs[] = $script->getAttribute( 'src' );
 		}
 
@@ -180,17 +186,12 @@ class Sanitization extends DependencyInjectedTestCase {
 		$script_srcs = [];
 
 		/**
-		 * Scripts.
+		 * Script.
 		 *
-		 * @var DOMNodeList $scripts
+		 * @var DOMElement[]  $scripts
 		 */
 		$scripts = $document->xpath->query( '//script[ @src ]' );
 
-		/**
-		 * Script.
-		 *
-		 * @var DOMElement $script
-		 */
 		foreach ( $scripts as $script ) {
 			$script_srcs[] = $script->getAttribute( 'src' );
 		}
@@ -241,8 +242,13 @@ class Sanitization extends DependencyInjectedTestCase {
 		 */
 		$actual_script_srcs = [];
 
-		/** @var DOMElement $script Script. */
-		foreach ( $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' ) as $script ) {
+		/**
+		 * Script.
+		 *
+		 * @var DOMElement[]  $scripts
+		 */
+		$scripts = $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' );
+		foreach ( $scripts as $script ) {
 			$actual_script_srcs[] = $script->getAttribute( 'src' );
 		}
 

@@ -223,7 +223,6 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_disabled_experiments(): void {
-		$experiments    = new \Google\Web_Stories\Experiments( $this->settings );
 		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings );
 
 		$actual = $this->instance->get_has_archive();
@@ -284,7 +283,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertIsString( $actual );
-		$this->assertSame( urldecode( get_page_uri( self::$archive_page_id ) ), $actual );
+		$this->assertSame( urldecode( (string) get_page_uri( self::$archive_page_id ) ), $actual );
 	}
 
 	/**
