@@ -76,7 +76,7 @@ class Optimization extends TestCase {
 		add_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, $optimized_attachment_id );
 		$post_meta = get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true );
 		$this->assertIsNumeric( $post_meta );
-		$this->assertSame( $optimized_attachment_id, $post_meta );
+		$this->assertSame( $optimized_attachment_id, (int) $post_meta );
 		wp_delete_attachment( $optimized_attachment_id );
 		$this->assertEmpty( get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true ) );
 	}

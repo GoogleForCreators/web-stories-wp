@@ -435,7 +435,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
+		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		remove_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
 		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 	}

@@ -851,7 +851,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$posts = [ get_post( $original_id ) ];
 
-		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_user_ids' ], [ $posts ] );
 		$this->assertEqualSets( [ self::$user_id ], $result );
 	}
 

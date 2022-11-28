@@ -236,7 +236,9 @@ class Muting extends DependencyInjectedTestCase {
 		$this->assertNotWPError( $muted_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, $muted_attachment_id );
-		$this->assertSame( $muted_attachment_id, get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true ) );
+		$post_meta = get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true );
+		$this->assertIsNumeric( $post_meta );
+		$this->assertSame( $muted_attachment_id, (int) $post_meta );
 		wp_delete_attachment( $muted_attachment_id );
 		$this->assertEmpty( get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true ) );
 	}
