@@ -32,22 +32,22 @@ trait MarkupComparison {
 	 * @param string $expected Expected markup.
 	 * @param string $actual   Actual markup.
 	 */
-	protected function assertEqualMarkup( $expected, $actual ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
+	protected function assertEqualMarkup( $expected, $actual ) : void { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 		// Normalize whitespace (`foo   bar` => `foo bar`).
-		$actual   = preg_replace( '/\s+/', ' ', $actual );
-		$expected = preg_replace( '/\s+/', ' ', $expected );
+		$actual   = (string) preg_replace( '/\s+/', ' ', $actual );
+		$expected = (string) preg_replace( '/\s+/', ' ', $expected );
 
 		// Remove whitespace between elements (` <br> <br> ` => `<br><br>`).
-		$actual   = preg_replace( '/(?<=>)\s+(?=<)/', '', trim( $actual ) );
-		$expected = preg_replace( '/(?<=>)\s+(?=<)/', '', trim( $expected ) );
+		$actual   = (string) preg_replace( '/(?<=>)\s+(?=<)/', '', trim( $actual ) );
+		$expected = (string) preg_replace( '/(?<=>)\s+(?=<)/', '', trim( $expected ) );
 
 		// Normalize boolean attributes that use their name as value.
-		$actual   = preg_replace( '/(?<=\s)([a-zA-Z-_]+)="(?:\1|)"/i', '$1', $actual );
-		$expected = preg_replace( '/(?<=\s)([a-zA-Z-_]+)="(?:\1|)"/i', '$1', $expected );
+		$actual   = (string) preg_replace( '/(?<=\s)([a-zA-Z-_]+)="(?:\1|)"/i', '$1', $actual );
+		$expected = (string) preg_replace( '/(?<=\s)([a-zA-Z-_]+)="(?:\1|)"/i', '$1', $expected );
 
 		// Split into an array of individual elements.
-		$actual   = preg_split( '#(<[^>]+>|[^<>]+)#', $actual, -1, PREG_SPLIT_DELIM_CAPTURE );
-		$expected = preg_split( '#(<[^>]+>|[^<>]+)#', $expected, -1, PREG_SPLIT_DELIM_CAPTURE );
+		$actual   = (array) preg_split( '#(<[^>]+>|[^<>]+)#', $actual, -1, PREG_SPLIT_DELIM_CAPTURE );
+		$expected = (array) preg_split( '#(<[^>]+>|[^<>]+)#', $expected, -1, PREG_SPLIT_DELIM_CAPTURE );
 
 		$this->assertEquals( array_filter( $expected ), array_filter( $actual ) );
 	}
@@ -58,34 +58,34 @@ trait MarkupComparison {
 	 * @param string $expected Expected markup.
 	 * @param string $actual   Actual markup.
 	 */
-	protected function assertSimilarMarkup( $expected, $actual ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
+	protected function assertSimilarMarkup( $expected, $actual ) :void { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 		// Normalize whitespace (`foo   bar` => `foo bar`).
-		$actual   = preg_replace( '/\s+/', ' ', $actual );
-		$expected = preg_replace( '/\s+/', ' ', $expected );
+		$actual   = (string) preg_replace( '/\s+/', ' ', $actual );
+		$expected = (string) preg_replace( '/\s+/', ' ', $expected );
 
 		// Remove whitespace between elements (`<br> <br>` => `<br><br>`).
-		$actual   = preg_replace( '/(?<=>)\s+(?=<)/', '', trim( $actual ) );
-		$expected = preg_replace( '/(?<=>)\s+(?=<)/', '', trim( $expected ) );
+		$actual   = (string) preg_replace( '/(?<=>)\s+(?=<)/', '', trim( $actual ) );
+		$expected = (string) preg_replace( '/(?<=>)\s+(?=<)/', '', trim( $expected ) );
 
 		// Remove empty values (`foo=""` => `foo`).
-		$actual   = preg_replace( '/=([\'"]){2}/', '', $actual );
-		$expected = preg_replace( '/=([\'"]){2}/', '', $expected );
+		$actual   = (string) preg_replace( '/=([\'"]){2}/', '', $actual );
+		$expected = (string) preg_replace( '/=([\'"]){2}/', '', $expected );
 
 		// Normalize case of doctype element.
-		$actual   = preg_replace( '/<!doctype/i', '<!DOCTYPE', $actual );
-		$expected = preg_replace( '/<!doctype/i', '<!DOCTYPE', $expected );
+		$actual   = (string) preg_replace( '/<!doctype/i', '<!DOCTYPE', $actual );
+		$expected = (string) preg_replace( '/<!doctype/i', '<!DOCTYPE', $expected );
 
 		// Wrap all attributes in quotes (`foo=bar` => `foo="bar"`).
-		$actual   = preg_replace( '/(\s+[a-zA-Z-_]+)=(?!")([a-zA-Z-_.]+)/', '\1="\2"', $actual );
-		$expected = preg_replace( '/(\s+[a-zA-Z-_]+)=(?!")([a-zA-Z-_.]+)/', '\1="\2"', $expected );
+		$actual   = (string) preg_replace( '/(\s+[a-zA-Z-_]+)=(?!")([a-zA-Z-_.]+)/', '\1="\2"', $actual );
+		$expected = (string) preg_replace( '/(\s+[a-zA-Z-_]+)=(?!")([a-zA-Z-_.]+)/', '\1="\2"', $expected );
 
 		// Normalize empty JSON objects (`<script> { } </script>` => `<script>{}</script>`).
-		$actual   = preg_replace( '/>\s*{\s*}\s*</', '>{}<', $actual );
-		$expected = preg_replace( '/>\s*{\s*}\s*</', '>{}<', $expected );
+		$actual   = (string) preg_replace( '/>\s*{\s*}\s*</', '>{}<', $actual );
+		$expected = (string) preg_replace( '/>\s*{\s*}\s*</', '>{}<', $expected );
 
 		// Normalize boolean attributes that use their name as value.
-		$actual   = preg_replace( '/(?<=\s)([a-zA-Z-_]+)="(?:\1|)"/i', '$1', $actual );
-		$expected = preg_replace( '/(?<=\s)([a-zA-Z-_]+)="(?:\1|)"/i', '$1', $expected );
+		$actual   = (string) preg_replace( '/(?<=\s)([a-zA-Z-_]+)="(?:\1|)"/i', '$1', $actual );
+		$expected = (string) preg_replace( '/(?<=\s)([a-zA-Z-_]+)="(?:\1|)"/i', '$1', $expected );
 
 		$normalize_attributes = static function ( $element ) {
 			// Extract attributes for the given element.
@@ -97,7 +97,7 @@ trait MarkupComparison {
 			$attributes = array_map(
 				'trim',
 				array_filter(
-					preg_split(
+					(array) preg_split(
 						'#(\s+[^"\'\s=]+(?:=(?:"[^"]+"|\'[^\']+\'|[^"\'\s]+))?)#',
 						$matches[2],
 						-1,
@@ -119,8 +119,8 @@ trait MarkupComparison {
 		};
 
 		// Split into an array of individual elements.
-		$actual   = preg_split( '#(<[^>]+>|[^<>]+)#', $actual, -1, PREG_SPLIT_DELIM_CAPTURE );
-		$expected = preg_split( '#(<[^>]+>|[^<>]+)#', $expected, -1, PREG_SPLIT_DELIM_CAPTURE );
+		$actual   = (array) preg_split( '#(<[^>]+>|[^<>]+)#', $actual, -1, PREG_SPLIT_DELIM_CAPTURE );
+		$expected = (array) preg_split( '#(<[^>]+>|[^<>]+)#', $expected, -1, PREG_SPLIT_DELIM_CAPTURE );
 
 		// Normalize the attributes for each individual element.
 		$actual   = array_map( $normalize_attributes, array_filter( $actual ) );

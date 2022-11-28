@@ -25,7 +25,6 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories_Dependencies\AMP_Dev_Mode_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
-use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
@@ -457,7 +456,7 @@ class Sanitization extends DependencyInjectedTestCase {
 		$this->assertEquals( AMP_Layout_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 4 ] );
 		$this->assertEquals( AMP_Style_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 3 ] );
 		$this->assertEquals( \Google\Web_Stories\AMP\Meta_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 2 ] );
-		$this->assertEquals( AMP_Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 1 ] );
+		$this->assertEquals( \Google\Web_Stories\AMP\Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 1 ] );
 	}
 
 	/**
