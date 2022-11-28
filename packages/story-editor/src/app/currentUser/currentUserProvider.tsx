@@ -17,25 +17,31 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
-
+import type { PropsWithChildren } from 'react';
 /**
  * Internal dependencies
  */
 import { useAPI } from '../api';
+import type { User } from '../../types/configProvider';
+import type {
+  CurrentUserState,
+  UpdateCurrentUserProps,
+} from '../../types/currentUserProvider';
 import Context from './context';
 
-function CurrentUserProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState({});
+function CurrentUserProvider({
+  children,
+}: PropsWithChildren<Record<string, never>>) {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const {
     actions: { getCurrentUser, updateCurrentUser: _updateCurrentUser },
   } = useAPI();
 
   useEffect(() => {
     let isMounted = true;
-    if (getCurrentUser && !Object.keys(currentUser).length) {
-      getCurrentUser().then((user) => {
+    if (getCurrentUser && currentUser === null) {
+      void getCurrentUser().then((user: User) => {
         if (!isMounted) {
           return;
         }
@@ -49,18 +55,21 @@ function CurrentUserProvider({ children }) {
   }, [currentUser, getCurrentUser]);
 
   const updateCurrentUser = useCallback(
-    (data) =>
+    (data: UpdateCurrentUserProps) =>
       _updateCurrentUser ? _updateCurrentUser(data).then(setCurrentUser) : null,
     [_updateCurrentUser]
   );
 
   const toggleWebStoriesMediaOptimization = useCallback(() => {
+    if (currentUser === null) {
+      return null;
+    }
     return updateCurrentUser({
       mediaOptimization: !currentUser.mediaOptimization,
     });
   }, [currentUser, updateCurrentUser]);
 
-  const state = {
+  const state: CurrentUserState = {
     state: {
       currentUser,
     },
@@ -72,9 +81,5 @@ function CurrentUserProvider({ children }) {
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-CurrentUserProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default CurrentUserProvider;

@@ -12,6 +12,7 @@
   "include": [
     "src/app/api/*",
     "src/app/config/*",
+    "src/app/currentUser/*",
     "src/app/history",
     "src/types",
     "src/utils/usePreventWindowUnload.ts"

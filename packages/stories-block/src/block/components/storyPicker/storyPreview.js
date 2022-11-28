@@ -38,6 +38,7 @@ function StoryPreview({
   isSelected,
   addSelectedStory = noop,
   removeSelectedStory = noop,
+  isSelectable = true,
 }) {
   // @todo Keep an eye on this experimental API, make necessary changes when this gets updated in core.
   const dateFormat = __experimentalGetSettings().formats.date;
@@ -83,6 +84,7 @@ function StoryPreview({
           story={story}
           addSelectedStory={addSelectedStory}
           removeSelectedStory={removeSelectedStory}
+          isSelectable={isSelectable}
         />
         {posterImage && (
           <img src={posterImage} alt="" width={640} height={853} />
@@ -108,6 +110,7 @@ StoryPreview.propTypes = {
   isSelected: PropTypes.bool,
   addSelectedStory: PropTypes.func,
   removeSelectedStory: PropTypes.func,
+  isSelectable: PropTypes.bool,
 };
 
 export default StoryPreview;
