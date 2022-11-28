@@ -87,7 +87,7 @@ class SVG extends TestCase {
 	 * @covers ::svg_already_enabled
 	 */
 	public function test_svg_already_enabled(): void {
-		$_results = $this->call_private_method( $this->instance, 'svg_already_enabled' );
+		$_results = $this->call_private_method( [ $this->instance, 'svg_already_enabled' ] );
 
 		$this->assertFalse( $_results );
 	}
@@ -215,7 +215,7 @@ class SVG extends TestCase {
 	 * @covers ::sanitize
 	 */
 	public function test_sanitize(): void {
-		$_results = $this->call_private_method( $this->instance, 'sanitize', [ WEB_STORIES_TEST_DATA_DIR . '/video-play.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'sanitize' ], [ WEB_STORIES_TEST_DATA_DIR . '/video-play.svg' ] );
 
 		$this->assertTrue( $_results );
 	}
@@ -224,7 +224,7 @@ class SVG extends TestCase {
 	 * @covers ::sanitize
 	 */
 	public function test_sanitize_fail(): void {
-		$_results = $this->call_private_method( $this->instance, 'sanitize', [ WEB_STORIES_TEST_DATA_DIR . '/animated.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'sanitize' ], [ WEB_STORIES_TEST_DATA_DIR . '/animated.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'insecure_svg_file', $_results->get_error_code() );
@@ -237,7 +237,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_from_viewbox(): void {
-		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/why.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'get_svg_size' ], [ WEB_STORIES_TEST_DATA_DIR . '/why.svg' ] );
 
 		$this->assertEqualSetsWithIndex(
 			[
@@ -256,7 +256,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_invalid_size(): void {
-		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/add.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'get_svg_size' ], [ WEB_STORIES_TEST_DATA_DIR . '/add.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
@@ -269,7 +269,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_invalid_viewbox(): void {
-		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/add-invalid.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'get_svg_size' ], [ WEB_STORIES_TEST_DATA_DIR . '/add-invalid.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
@@ -280,7 +280,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_xml_invalid_file(): void {
-		$_results = $this->call_private_method( $this->instance, 'get_xml', [ '<invalid' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'get_xml' ], [ '<invalid' ] );
 
 		$this->assertFalse( $_results );
 	}
@@ -290,7 +290,7 @@ class SVG extends TestCase {
 	 * @covers ::get_svg_data
 	 */
 	public function test_sanitize_invalid_file(): void {
-		$_results = $this->call_private_method( $this->instance, 'sanitize', [ '' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'sanitize' ], [ '' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_xml_svg', $_results->get_error_code() );

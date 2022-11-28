@@ -811,10 +811,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$posts = [ get_post( $original_id ) ];
 
-		/**
-		 * @var int[] $result
-		 */
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [ $attachment_id, $publisher_logo_id ], $result );
 	}
 
@@ -824,10 +821,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_attached_post_ids_empty(): void {
 		$posts = [];
 
-		/**
-		 * @var int[] $result
-		 */
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -848,10 +842,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$posts = [ get_post( $original_id ) ];
 
-		/**
-		 * @var int[] $result
-		 */
-		$result = $this->call_private_method( $this->controller, 'get_attached_user_ids', [ $posts ] );
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [ self::$user_id ], $result );
 	}
 
@@ -861,10 +852,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_attached_user_ids_empty(): void {
 		$posts = [];
 
-		/**
-		 * @var int[] $result
-		 */
-		$result = $this->call_private_method( $this->controller, 'get_attached_user_ids', [ $posts ] );
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 

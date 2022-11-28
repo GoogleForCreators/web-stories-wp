@@ -80,7 +80,10 @@ class Renderer extends TestCase {
 			]
 		);
 
-		self::$poster_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_id
+		 */
+		$poster_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -88,6 +91,8 @@ class Renderer extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		self::$poster_id = $poster_id;
 	}
 
 	/**
@@ -130,11 +135,11 @@ class Renderer extends TestCase {
 
 		$renderer = new Test_Renderer( $this->story_query );
 
-		$output = $this->call_private_method( $renderer, 'is_view_type', [ 'grid' ] );
+		$output = $this->call_private_method( [ $renderer, 'is_view_type' ], [ 'grid' ] );
 
 		$this->assertTrue( $output );
 
-		$output = $this->call_private_method( $renderer, 'is_view_type', [ 'list' ] );
+		$output = $this->call_private_method( [ $renderer, 'is_view_type' ], [ 'list' ] );
 
 		$this->assertFalse( $output );
 	}
@@ -151,7 +156,7 @@ class Renderer extends TestCase {
 		);
 		$renderer = new Test_Renderer( $this->story_query );
 
-		$output = $this->call_private_method( $renderer, 'get_view_type' );
+		$output = $this->call_private_method( [ $renderer, 'get_view_type' ] );
 
 		$this->assertEquals( 'grid', $output );
 
@@ -173,7 +178,7 @@ class Renderer extends TestCase {
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_poster' );
+		$this->call_private_method( [ $renderer, 'render_story_with_poster' ] );
 		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
@@ -187,7 +192,7 @@ class Renderer extends TestCase {
 		wp_maybe_generate_attachment_metadata( get_post( self::$poster_id ) );
 		set_post_thumbnail( self::$story_id, self::$poster_id );
 
-		$this->story_model = new \Google\Web_Stories\Model\Story();
+		$this->story_model = new Story();
 		$this->story_model->load_from_post( self::$poster_id );
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
@@ -202,7 +207,7 @@ class Renderer extends TestCase {
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_poster' );
+		$this->call_private_method( [ $renderer, 'render_story_with_poster' ] );
 		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
@@ -215,7 +220,7 @@ class Renderer extends TestCase {
 	public function test_render_story_with_poster_missing_srcset_and_sizes(): void {
 		set_post_thumbnail( self::$story_id, self::$poster_id );
 
-		$this->story_model = new \Google\Web_Stories\Model\Story();
+		$this->story_model = new Story();
 		$this->story_model->load_from_post( self::$poster_id );
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
@@ -230,7 +235,7 @@ class Renderer extends TestCase {
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_poster' );
+		$this->call_private_method( [ $renderer, 'render_story_with_poster' ] );
 		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
@@ -245,7 +250,7 @@ class Renderer extends TestCase {
 		$this->set_private_property( $renderer, 'content_overlay', false );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'get_content_overlay' );
+		$this->call_private_method( [ $renderer, 'get_content_overlay' ] );
 		$output = (string) ob_get_clean();
 
 		$this->assertEmpty( $output );
@@ -254,7 +259,7 @@ class Renderer extends TestCase {
 		$this->set_private_property( $renderer, 'content_overlay', true );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'get_content_overlay' );
+		$this->call_private_method( [ $renderer, 'get_content_overlay' ] );
 		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'story-content-overlay__title', $output );
@@ -273,7 +278,7 @@ class Renderer extends TestCase {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$expected = 'web-stories-list__story';
 
-		$output = $this->call_private_method( $renderer, 'get_single_story_classes' );
+		$output = $this->call_private_method( [ $renderer, 'get_single_story_classes' ] );
 
 		$this->assertEquals( $expected, $output );
 	}
@@ -296,7 +301,7 @@ class Renderer extends TestCase {
 
 		$expected = 'web-stories-list alignnone test is-view-type-circles is-style-default has-title is-carousel';
 
-		$output = $this->call_private_method( $renderer, 'get_container_classes' );
+		$output = $this->call_private_method( [ $renderer, 'get_container_classes' ] );
 
 		$this->assertEquals( $expected, $output );
 	}
@@ -317,9 +322,9 @@ class Renderer extends TestCase {
 
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
 
-		$archive_link = get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();
-		$this->call_private_method( $renderer, 'maybe_render_archive_link' );
+		$this->call_private_method( [ $renderer, 'maybe_render_archive_link' ] );
 		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__archive-link', $output );
@@ -364,7 +369,7 @@ class Renderer extends TestCase {
 		$renderer = new Test_Renderer( $this->story_query );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_link_attributes' );
+		$this->call_private_method( [ $renderer, 'render_link_attributes' ] );
 		$expected = ob_get_clean();
 
 		remove_filter( 'web_stories_renderer_link_attributes', $filter );

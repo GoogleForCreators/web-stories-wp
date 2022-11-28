@@ -86,10 +86,7 @@ class Optimization extends TestCase {
 	public function test_get_optimizer_configuration(): void {
 		$optimization = new \Google\Web_Stories\AMP\Optimization();
 
-		/**
-		 * @var Configuration $configuration
-		 */
-		$configuration = $this->call_private_method( $optimization, 'get_optimizer_configuration' );
+		$configuration = $this->call_private_method( [ $optimization, 'get_optimizer_configuration' ] );
 
 		/**
 		 * @var array<string, array<string, mixed>> $config_array
@@ -112,10 +109,7 @@ class Optimization extends TestCase {
 
 		$optimization = new \Google\Web_Stories\AMP\Optimization();
 
-		/**
-		 * @var Configuration $configuration
-		 */
-		$configuration = $this->call_private_method( $optimization, 'get_optimizer_configuration' );
+		$configuration = $this->call_private_method( [ $optimization, 'get_optimizer_configuration' ] );
 
 		/**
 		 * @var array<string, array<string, mixed>> $config_array

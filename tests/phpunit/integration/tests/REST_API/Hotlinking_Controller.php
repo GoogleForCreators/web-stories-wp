@@ -446,7 +446,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$story_post_type = $this->injector->make( Story_Post_Type::class );
 		$types           = $this->injector->make( Types::class );
 		$controller      = new \Google\Web_Stories\REST_API\Hotlinking_Controller( $story_post_type, $types );
-		$mime_types      = $this->call_private_method( $controller, 'get_allowed_mime_types' );
+		$mime_types      = $this->call_private_method( [ $controller, 'get_allowed_mime_types' ] );
 		$this->assertIsArray( $mime_types );
 		$this->assertArrayHasKey( 'audio', $mime_types );
 		$this->assertArrayHasKey( 'video', $mime_types );
@@ -471,7 +471,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			add_filter( 'http_allowed_safe_ports', $cb_safe_ports );
 		}
 
-		$this->assertSame( $expected, $this->call_private_method( $this->controller, 'validate_url', [ $url ] ) );
+		$this->assertSame( $expected, $this->call_private_method( [ $this->controller, 'validate_url' ], [ $url ] ) );
 	}
 
 	/**
@@ -513,7 +513,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 
 		$url = $home_modified . '/caniload.php';
 
-		$actual = $this->call_private_method( $this->controller, 'validate_url', [ $url ] );
+		$actual = $this->call_private_method( [ $this->controller, 'validate_url' ], [ $url ] );
 
 		update_option( 'home', $original_home );
 
@@ -541,7 +541,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			add_filter( 'http_allowed_safe_ports', $cb_safe_ports );
 		}
 
-		$this->assertFalse( $this->call_private_method( $this->controller, 'validate_url', [ $url ] ) );
+		$this->assertFalse( $this->call_private_method( [ $this->controller, 'validate_url' ], [ $url ] ) );
 	}
 
 	/**

@@ -136,6 +136,7 @@ class Muting extends DependencyInjectedTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( $this->instance::IS_MUTED_REST_API_KEY, $data );
 		$this->assertNull( $data[ $this->instance::IS_MUTED_REST_API_KEY ] );
 	}
@@ -227,7 +228,7 @@ class Muting extends DependencyInjectedTestCase {
 		$this->assertNotWPError( $muted_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, $muted_attachment_id );
-		$this->assertSame( $muted_attachment_id, (int) get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true ) );
+		$this->assertSame( $muted_attachment_id, get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true ) );
 		wp_delete_attachment( $muted_attachment_id );
 		$this->assertEmpty( get_post_meta( $video_attachment_id, $this->instance::MUTED_ID_POST_META_KEY, true ) );
 	}

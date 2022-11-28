@@ -131,7 +131,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_post_type_icon
 	 */
 	public function test_get_post_type_icon(): void {
-		$valid = $this->call_private_method( $this->instance, 'get_post_type_icon' );
+		$valid = $this->call_private_method( [ $this->instance, 'get_post_type_icon' ] );
 		$this->assertStringContainsString( 'data:image/svg+xml;base64', $valid );
 	}
 

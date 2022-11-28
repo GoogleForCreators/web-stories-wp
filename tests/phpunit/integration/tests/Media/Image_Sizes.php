@@ -42,7 +42,7 @@ class Image_Sizes extends TestCase {
 	 */
 	public function test_add_image_sizes(): void {
 		$media = new \Google\Web_Stories\Media\Image_Sizes();
-		$this->call_private_method( $media, 'add_image_sizes' );
+		$this->call_private_method( [ $media, 'add_image_sizes' ] );
 
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Image_Sizes::STORY_THUMBNAIL_IMAGE_SIZE ) );

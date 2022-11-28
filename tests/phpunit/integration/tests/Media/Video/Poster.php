@@ -346,15 +346,15 @@ class Poster extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $poster_attachment_id );
 
-		$result1 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
+		$result1 = $this->call_private_method( [ $this->instance, 'is_poster' ], [ $poster_attachment_id ] );
 		$this->assertFalse( $result1 );
 
 		wp_set_object_terms( $poster_attachment_id, 'editor', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
-		$result2 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
+		$result2 = $this->call_private_method( [ $this->instance, 'is_poster' ], [ $poster_attachment_id ] );
 		$this->assertFalse( $result2 );
 
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
-		$result3 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
+		$result3 = $this->call_private_method( [ $this->instance, 'is_poster' ], [ $poster_attachment_id ] );
 		$this->assertTrue( $result3 );
 	}
 }

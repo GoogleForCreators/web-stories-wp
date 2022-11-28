@@ -262,10 +262,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	 * @covers ::get_extension_sources
 	 */
 	public function test_get_extension_sources(): void {
-		/**
-		 * @var array<string,string> $sources
-		 */
-		$sources = $this->call_private_method( $this->instance, 'get_extension_sources' );
+		$sources = $this->call_private_method( [ $this->instance, 'get_extension_sources' ] );
 
 		$actual = [];
 
@@ -430,11 +427,11 @@ class Sanitization extends DependencyInjectedTestCase {
 	 */
 	public function test_is_amp_dev_mode(): void {
 
-		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		remove_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 	}
 
 	/**
@@ -449,7 +446,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 		$this->assertTrue( is_admin_bar_showing() );
 		$this->assertTrue( is_user_logged_in() );
-		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 	}
 
 	/**
@@ -464,7 +461,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 		$this->assertFalse( is_user_logged_in() );
 		$this->assertTrue( is_admin_bar_showing() );
-		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 	}
 
 	/**
@@ -482,7 +479,7 @@ class Sanitization extends DependencyInjectedTestCase {
 			}
 		);
 
-		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
+		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
 
 		$ordered_sanitizers = array_keys( $sanitizers );
 		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ \count( $ordered_sanitizers ) - 5 ] );
@@ -507,22 +504,16 @@ class Sanitization extends DependencyInjectedTestCase {
 
 		// Check that AMP_Dev_Mode_Sanitizer is not registered if not in dev mode.
 
-		/**
-		 * @var array<string, array<string, mixed>> $sanitizers
-		 */
-		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
-		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		$this->assertArrayNotHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 
 		// Check that AMP_Dev_Mode_Sanitizer is registered once in dev mode, but not with admin bar showing yet.
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
 
-		/**
-		 * @var array<string, array<string, mixed>> $sanitizers
-		 */
-		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
+		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
 		$this->assertFalse( is_admin_bar_showing() );
-		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		$this->assertArrayHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 		$this->assertEquals( AMP_Dev_Mode_Sanitizer::class, current( array_keys( $sanitizers ) ) );
 		$this->assertEquals(
@@ -538,10 +529,10 @@ class Sanitization extends DependencyInjectedTestCase {
 		/**
 		 * @var array<string, array<string, array<mixed>>> $sanitizers
 		 */
-		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
+		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
 
 		$this->assertTrue( is_admin_bar_showing() );
-		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		$this->assertArrayHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 		$this->assertEqualSets(
 			array_merge(

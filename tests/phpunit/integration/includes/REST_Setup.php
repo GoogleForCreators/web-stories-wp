@@ -69,7 +69,7 @@ trait REST_Setup {
 	 * @param WP_REST_Response|WP_Error|bool $response Response object.
 	 * @param int|null                       $status   Status code.
 	 */
-	protected function assertErrorResponse( $code, $response, $status = null ): void {
+	protected function assertErrorResponse( string $code, $response, ?int $status = null ): void {
 
 		if ( $response instanceof WP_REST_Response ) {
 			$response = $response->as_error();

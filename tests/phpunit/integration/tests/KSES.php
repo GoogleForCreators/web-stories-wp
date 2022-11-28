@@ -81,8 +81,7 @@ class KSES extends DependencyInjectedTestCase {
 		];
 
 		$output = $this->call_private_method(
-			$this->instance,
-			'array_merge_recursive_distinct',
+			[ $this->instance, 'array_merge_recursive_distinct' ],
 			[
 				$input_array1,
 				$input_array2,

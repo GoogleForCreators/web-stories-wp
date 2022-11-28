@@ -194,10 +194,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_attached_post_ids(): void {
 		$posts = [ get_post( self::$mov_attachment_id ), get_post( self::$mp4_attachment_id ) ];
 
-		/**
-		 * @var int[] $result
-		 */
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [ self::$post_id, self::$poster_attachment_id ], $result );
 	}
 
@@ -207,10 +204,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_attached_post_ids_empty(): void {
 		$posts = [];
 
-		/**
-		 * @var int[] $result
-		 */
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -228,10 +222,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		);
 		$posts         = [ $poster_object ];
 
-		/**
-		 * @var int[] $result
-		 */
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 

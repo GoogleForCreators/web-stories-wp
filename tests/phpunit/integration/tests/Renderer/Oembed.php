@@ -81,7 +81,7 @@ class Oembed extends TestCase {
 	 */
 	public function test_get_embed_height_width(): void {
 		$renderer = new \Google\Web_Stories\Renderer\Oembed();
-		$actual   = $this->call_private_method( $renderer, 'get_embed_height_width', [ 600 ] );
+		$actual   = $this->call_private_method( [ $renderer, 'get_embed_height_width' ], [ 600 ] );
 		$expected = [
 			'width'  => 360,
 			'height' => 600,

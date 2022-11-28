@@ -376,10 +376,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 
 		update_post_meta( $story, '_edit_lock', $new_lock );
 
-		/**
-		 * @var array{time?: int, user?: int} $data
-		 */
-		$data = $this->call_private_method( $this->controller, 'get_lock', [ $story ] );
+		$data = $this->call_private_method( [ $this->controller, 'get_lock' ], [ $story ] );
 
 		$this->assertArrayHasKey( 'time', $data );
 		$this->assertArrayHasKey( 'user', $data );

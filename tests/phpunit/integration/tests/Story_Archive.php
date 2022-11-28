@@ -252,8 +252,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	 */
 	public function test_filter_display_post_states(): void {
 		$actual = $this->call_private_method(
-			$this->instance,
-			'filter_display_post_states',
+			[ $this->instance, 'filter_display_post_states' ],
 			[
 				[],
 				get_post( self::$archive_page_id ),
@@ -270,12 +269,8 @@ class Story_Archive extends DependencyInjectedTestCase {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
-		/**
-		 * @var array<string,string> $actual
-		 */
 		$actual = $this->call_private_method(
-			$this->instance,
-			'filter_display_post_states',
+			[ $this->instance, 'filter_display_post_states' ],
 			[
 				[],
 				get_post( self::$archive_page_id ),
@@ -307,12 +302,8 @@ class Story_Archive extends DependencyInjectedTestCase {
 			]
 		);
 
-		/**
-		 * @var array<string,string> $actual
-		 */
 		$actual = $this->call_private_method(
-			$this->instance,
-			'filter_display_post_states',
+			[ $this->instance, 'filter_display_post_states' ],
 			[
 				[],
 				get_post( self::$archive_page_id ),

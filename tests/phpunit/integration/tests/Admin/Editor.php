@@ -228,7 +228,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 		$this->experiments->method( 'is_experiment_enabled' )->willReturn( true );
 
-		$this->call_private_method( $this->instance, 'setup_lock', [ self::$story_id ] );
+		$this->call_private_method( [ $this->instance, 'setup_lock' ], [ self::$story_id ] );
 
 		$value = get_post_meta( self::$story_id, '_edit_lock', true );
 
@@ -244,7 +244,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 		$this->experiments->method( 'is_experiment_enabled' )->willReturn( true );
 
-		$this->call_private_method( $this->instance, 'setup_lock', [ self::$story_id ] );
+		$this->call_private_method( [ $this->instance, 'setup_lock' ], [ self::$story_id ] );
 
 		$value = get_post_meta( self::$story_id, '_edit_lock', true );
 

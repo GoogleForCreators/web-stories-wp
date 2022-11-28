@@ -139,7 +139,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_schemaorg_metadata
 	 */
 	public function test_get_schemaorg_metadata(): void {
-		$result = $this->call_private_method( $this->instance, 'get_schemaorg_metadata' );
+		$result = $this->call_private_method( [ $this->instance, 'get_schemaorg_metadata' ] );
 		$this->assertArrayHasKey( 'mainEntityOfPage', $result );
 		$this->assertArrayHasKey( 'headline', $result );
 		$this->assertArrayHasKey( 'datePublished', $result );
@@ -167,7 +167,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_open_graph_metadata
 	 */
 	public function test_get_open_graph_metadata(): void {
-		$result = $this->call_private_method( $this->instance, 'get_open_graph_metadata' );
+		$result = $this->call_private_method( [ $this->instance, 'get_open_graph_metadata' ] );
 		$this->assertArrayHasKey( 'og:locale', $result );
 		$this->assertArrayHasKey( 'og:type', $result );
 		$this->assertArrayHasKey( 'og:description', $result );
@@ -219,7 +219,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_twitter_metadata
 	 */
 	public function test_get_twitter_metadata(): void {
-		$result = $this->call_private_method( $this->instance, 'get_twitter_metadata' );
+		$result = $this->call_private_method( [ $this->instance, 'get_twitter_metadata' ] );
 		$this->assertArrayHasKey( 'twitter:card', $result );
 		$this->assertArrayHasKey( 'twitter:image', $result );
 		$this->assertArrayHasKey( 'twitter:image:alt', $result );
@@ -256,7 +256,7 @@ class Discovery extends DependencyInjectedTestCase {
 			]
 		);
 
-		$result = $this->call_private_method( $this->instance, 'get_product_data', [ [ $product_object ] ] );
+		$result = $this->call_private_method( [ $this->instance, 'get_product_data' ], [ [ $product_object ] ] );
 
 		$expected = [
 			'products' =>
@@ -299,7 +299,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_product_data
 	 */
 	public function test_get_product_data_empty_story(): void {
-		$result = $this->call_private_method( $this->instance, 'get_product_data', [ [] ] );
+		$result = $this->call_private_method( [ $this->instance, 'get_product_data' ], [ [] ] );
 
 		$expected = [];
 

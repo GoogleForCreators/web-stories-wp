@@ -83,7 +83,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	 * @covers ::register_taxonomy
 	 */
 	public function test_register_taxonomy(): void {
-		$this->call_private_method( $this->instance, 'register_taxonomy' );
+		$this->call_private_method( [ $this->instance, 'register_taxonomy' ] );
 
 		$this->assertTrue( taxonomy_exists( $this->instance->get_taxonomy_slug() ) );
 	}
@@ -201,7 +201,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$args      = [
 			'tax_query' => $tax_query,
 		];
-		$results   = $this->call_private_method( $this->instance, 'get_exclude_tax_query', [ $args ] );
+		$results   = $this->call_private_method( [ $this->instance, 'get_exclude_tax_query' ], [ $args ] );
 		remove_filter( 'web_stories_hide_auto_generated_attachments', '__return_false' );
 		$this->assertSame( $tax_query, $results );
 	}

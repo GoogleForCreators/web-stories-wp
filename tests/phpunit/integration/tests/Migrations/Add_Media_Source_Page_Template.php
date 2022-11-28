@@ -38,7 +38,7 @@ class Add_Media_Source_Page_Template extends DependencyInjectedTestCase {
 		$instance = $this->injector->make( \Google\Web_Stories\Migrations\Add_Media_Source_Page_Template::class );
 		$instance->migrate();
 
-		$term = $this->call_private_method( $instance, 'get_term' );
+		$term = $this->call_private_method( [ $instance, 'get_term' ] );
 
 		/**
 		 * @var WP_Term[] $terms

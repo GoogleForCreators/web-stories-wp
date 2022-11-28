@@ -83,8 +83,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$post_type->register();
 
 		$result1 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
+			[ $this->controller, 'user_posts_count_public' ],
 			[
 				self::$user_id,
 				$post_type->get_slug(),
@@ -100,8 +99,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 		$result2 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
+			[ $this->controller, 'user_posts_count_public' ],
 			[
 				self::$user_id,
 				$post_type->get_slug(),
@@ -113,8 +111,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		wp_delete_post( $post_id, true );
 
 		$result3 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
+			[ $this->controller, 'user_posts_count_public' ],
 			[
 				self::$user_id,
 				$post_type->get_slug(),
@@ -134,8 +131,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$post_type->register();
 		$result1 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
+			[ $this->controller, 'user_posts_count_public' ],
 			[
 				-1,
 				$post_type->get_slug(),
@@ -143,7 +139,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		);
 		$this->assertEquals( 0, $result1 );
 
-		$result1 = $this->call_private_method( $this->controller, 'user_posts_count_public', [ self::$user_id, 'invalid' ] );
+		$result1 = $this->call_private_method( [ $this->controller, 'user_posts_count_public' ], [ self::$user_id, 'invalid' ] );
 
 		$this->assertEquals( 0, $result1 );
 	}

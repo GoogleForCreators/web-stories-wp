@@ -123,10 +123,7 @@ class Stories extends DependencyInjectedTestCase {
 
 		$old_instance = [];
 
-		/**
-		 * @var array<string, mixed> $expected
-		 */
-		$expected = $this->call_private_method( $this->instance, 'default_values' );
+		$expected = $this->call_private_method( [ $this->instance, 'default_values' ] );
 
 		$instance = $this->instance->update( $new_instance, $old_instance );
 
@@ -143,7 +140,7 @@ class Stories extends DependencyInjectedTestCase {
 				'label' => 'Test input',
 				'value' => 3,
 			];
-			$this->call_private_method( $this->instance, 'input', [ $args ] );
+			$this->call_private_method( [ $this->instance, 'input' ], [ $args ] );
 		};
 
 		$dropdown = get_echo( $function );
@@ -164,7 +161,7 @@ class Stories extends DependencyInjectedTestCase {
 				'options'  => range( 'A', 'Z' ),
 				'selected' => 3,
 			];
-			$this->call_private_method( $this->instance, 'dropdown', [ $args ] );
+			$this->call_private_method( [ $this->instance, 'dropdown' ], [ $args ] );
 		};
 
 		$dropdown = get_echo( $function );
@@ -186,7 +183,7 @@ class Stories extends DependencyInjectedTestCase {
 				'options'  => range( 'A', 'Z' ),
 				'selected' => 3,
 			];
-			$this->call_private_method( $this->instance, 'radio', [ $args ] );
+			$this->call_private_method( [ $this->instance, 'radio' ], [ $args ] );
 		};
 
 		$radio = get_echo( $function );
@@ -206,10 +203,7 @@ class Stories extends DependencyInjectedTestCase {
 			'id'    => '123',
 		];
 
-		/**
-		 * @var string $label
-		 */
-		$label = $this->call_private_method( $this->instance, 'label', [ $args ] );
+		$label = $this->call_private_method( [ $this->instance, 'label' ], [ $args ] );
 
 		$this->assertStringContainsString( 'Test input', $label );
 		$this->assertStringContainsString( '<label', $label );

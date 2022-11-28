@@ -142,12 +142,12 @@ class Site_Kit extends DependencyInjectedTestCase {
 	public function test_get_site_kit_active_modules_option(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
-		$actual_before = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
+		$actual_before = $this->call_private_method( [ $this->instance, 'get_site_kit_active_modules_option' ] );
 
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
-		$actual_after = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
+		$actual_after = $this->call_private_method( [ $this->instance, 'get_site_kit_active_modules_option' ] );
 
 		delete_option( 'googlesitekit_active_modules' );
 		delete_option( 'googlesitekit_analytics_settings' );
@@ -155,7 +155,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 		update_option( 'googlesitekit-active-modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
-		$actual_after_legacy = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
+		$actual_after_legacy = $this->call_private_method( [ $this->instance, 'get_site_kit_active_modules_option' ] );
 
 		$this->assertEmpty( $actual_before );
 		$this->assertSame( [ 'analytics' ], $actual_after );

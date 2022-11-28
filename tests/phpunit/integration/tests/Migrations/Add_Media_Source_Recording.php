@@ -47,7 +47,7 @@ class Add_Media_Source_Recording extends DependencyInjectedTestCase {
 	 */
 	public function test_migrate(): void {
 		$this->instance->migrate();
-		$term = $this->call_private_method( $this->instance, 'get_term' );
+		$term = $this->call_private_method( [ $this->instance, 'get_term' ] );
 
 		/**
 		 * @var WP_Term[] $terms

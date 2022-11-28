@@ -100,7 +100,7 @@ class Stories_Shortcode extends TestCase {
 			'orderby'           => 'post_title',
 		];
 
-		$args = $this->call_private_method( $stories_shortcode, 'prepare_story_args', [ $attributes ] );
+		$args = $this->call_private_method( [ $stories_shortcode, 'prepare_story_args' ], [ $attributes ] );
 		$this->assertArrayHasKey( 'posts_per_page', $args );
 		$this->assertSame( 100, $args['posts_per_page'] );
 	}
@@ -141,7 +141,7 @@ class Stories_Shortcode extends TestCase {
 			'sharp_corners'      => 'false',
 		];
 
-		$actual = $this->call_private_method( $shortcode, 'prepare_story_attrs', [ $attributes ] );
+		$actual = $this->call_private_method( [ $shortcode, 'prepare_story_attrs' ], [ $attributes ] );
 
 		$this->assertEqualSets( $expected, $actual );
 	}

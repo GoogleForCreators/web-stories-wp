@@ -217,8 +217,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		 * @var string $cache_key
 		 */
 		$cache_key = $this->call_private_method(
-			$this->instance,
-			'get_cache_key',
+			[ $this->instance, 'get_cache_key' ],
 			[
 				$search_term,
 				$after,
