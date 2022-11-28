@@ -61,7 +61,7 @@ export function getAnimationEffectFields(type?: AnimationType) {
   let fieldOrder = Object.keys(allFieldsOrder);
 
   // ZoomAndPand design deviates from the normal input order by putting
-  // a custom field (zoom direction) at the end. This accomodates for that.
+  // a custom field (zoom direction) at the end. This accommodates for that.
   const zoomField = 'zoomDirection';
   if (
     type === AnimationType.EffectBackgroundPanAndZoom &&
