@@ -32,7 +32,7 @@ import { useHelpCenter } from '../../app/helpCenter';
 import Popup from '../secondaryPopup';
 import Navigator from './navigator';
 import Companion from './companion';
-import { POPUP_ID, KEYS } from './constants';
+import { POPUP_ID, KEYS } from '../../app/helpCenter/constants';
 import { Toggle } from './toggle';
 import { forceFocusCompanion } from './utils';
 

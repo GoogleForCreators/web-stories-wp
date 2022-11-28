@@ -14,15 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useContextSelector, identity } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import Context from '../context';
-
-export function useHelpCenter(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
+export { default as HelpCenterProvider } from './provider';
+export { default as useHelpCenter } from './useHelpCenter';

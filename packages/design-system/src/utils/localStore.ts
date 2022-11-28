@@ -40,22 +40,26 @@ export const LOCAL_STORAGE_PREFIX = {
   MEDIA_RECORDING_VIDEO_EFFECT: 'web_stories_media_recording_video_effect',
 };
 
-function getItemByKey(key) {
-  let parsed = null;
+function getMessage(err: unknown): string {
+  return err instanceof Error ? err.message : 'Unknown error';
+}
+
+function getItemByKey(key: string): unknown {
+  let parsed: unknown = null;
   try {
     const stored = localStorage.getItem(key);
-    parsed = JSON.parse(stored);
-  } catch (err) {
-    trackError('local_storage_read', err.message);
+    parsed = stored !== null ? JSON.parse(stored) : stored;
+  } catch (err: unknown) {
+    void trackError('local_storage_read', getMessage(err));
   }
   return parsed;
 }
 
-function setItemByKey(key, data) {
+function setItemByKey(key: string, data: unknown) {
   try {
     localStorage.setItem(key, JSON.stringify(data));
   } catch (err) {
-    trackError('local_storage_write', err.message);
+    void trackError('local_storage_write', getMessage(err));
   }
 }
 

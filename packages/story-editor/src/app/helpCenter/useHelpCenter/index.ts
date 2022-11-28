@@ -17,6 +17,18 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import { useContextSelector, identity } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import Context from '../context';
+import type { HelpCenterContext } from '../types';
 
-export default createContext({ state: {}, actions: {} });
+function useHelpCenter(): HelpCenterContext;
+function useHelpCenter<T>(
+  selector: (state: HelpCenterContext) => T | HelpCenterContext = identity
+) {
+  return useContextSelector(Context, selector);
+}
+
+export default useHelpCenter;
