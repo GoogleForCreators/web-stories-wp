@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Internal dependencies
+ */
+import type { ZoomSetting } from '../constants';
+
 export interface LayoutProviderState {
   actions: {
     closeCarousel: () => void;
@@ -33,8 +39,7 @@ export interface LayoutProviderState {
     hasExtraPages: boolean;
     extraPageWidth: number;
     extraPageCount: number;
-    // @todo Use enum.
-    zoomSetting: string;
+    zoomSetting: ZoomSetting;
     zoomLevel: number;
     workspaceWidth: number;
     workspaceHeight: number;

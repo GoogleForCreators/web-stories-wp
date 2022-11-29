@@ -37,12 +37,12 @@ export enum ZoomSetting {
   Fixed = 'FIXED',
 }
 
-export const CAROUSEL_STATE = {
-  OPEN: 'OPEN',
-  OPENING: 'OPENING',
-  CLOSED: 'CLOSED',
-  CLOSING: 'CLOSING',
-};
+export enum CarouselState {
+  Open = 'OPEN',
+  Opening = 'OPENING',
+  Closed = 'CLOSED',
+  Closing = 'CLOSING',
+}
 
 export const CAROUSEL_TRANSITION_DURATION = 300;
 

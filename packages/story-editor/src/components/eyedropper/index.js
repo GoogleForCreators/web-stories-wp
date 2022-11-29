@@ -23,7 +23,7 @@ import { useCallback } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { useCanvas, useLayout } from '../../app';
-import { ZOOM_SETTING } from '../../constants';
+import { ZoomSetting } from '../../constants';
 import useEyeDropperApi from './useEyeDropperApi';
 
 export default ({ onChange }) => {
@@ -80,7 +80,7 @@ export default ({ onChange }) => {
           return;
         }
 
-        if (!resetZoom && zoomSetting !== ZOOM_SETTING.FIT) {
+        if (!resetZoom && zoomSetting !== ZoomSetting.Fit) {
           return;
         }
         if (resetZoom) {
@@ -119,7 +119,7 @@ export default ({ onChange }) => {
 
         if (!eyedropperPixelData || !resetZoom) {
           if (resetZoom) {
-            setZoomSetting(ZOOM_SETTING.FIT);
+            setZoomSetting(ZoomSetting.Fit);
           }
           await prepareEyedropper();
         }

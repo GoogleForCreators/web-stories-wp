@@ -32,7 +32,7 @@ import { useTransform } from '@googleforcreators/transform';
 /**
  * Internal dependencies
  */
-import { ZOOM_SETTING, TRACKING_EVENTS } from '../../../../constants';
+import { ZoomSetting, TRACKING_EVENTS } from '../../../../constants';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
@@ -204,7 +204,7 @@ function LibraryMoveable({
     set(frame.translate);
     setIsDragging(true);
     startEventTracking(inputEvent);
-    setZoomSetting(ZOOM_SETTING.FIT);
+    setZoomSetting(ZoomSetting.Fit);
 
     // Position the clone that's being dragged.
     const { offsetX, offsetY } = getTargetOffset();
