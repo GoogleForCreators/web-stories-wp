@@ -19,9 +19,9 @@
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
-  DIRECTION,
-  ROTATION,
-  SCALE_DIRECTION,
+  AnimationDirection,
+  Rotation,
+  ScaleDirection,
 } from '@googleforcreators/animation';
 
 /**
@@ -43,33 +43,33 @@ export const _default = () => {
   return (
     <Panel>
       <DirectionRadioInput
-        directions={Object.values(DIRECTION)}
-        defaultChecked={DIRECTION.TOP_TO_BOTTOM}
+        directions={Object.values(AnimationDirection)}
+        defaultChecked={AnimationDirection.TopToBottom}
       />
     </Panel>
   );
 };
 
-export const Rotation = () => {
+export const WithRotation = () => {
   return (
     <Panel>
       <DirectionRadioInput
-        directions={[ROTATION.CLOCKWISE, ROTATION.COUNTER_CLOCKWISE]}
-        defaultChecked={ROTATION.CLOCKWISE}
+        directions={[Rotation.Clockwise, Rotation.CounterClockwise]}
+        defaultChecked={Rotation.Clockwise}
       />
     </Panel>
   );
 };
 
 export const Scale = () => {
-  const [value, setValue] = useState(SCALE_DIRECTION.SCALE_IN);
+  const [value, setValue] = useState(ScaleDirection.ScaleIn);
   return (
     <Panel>
       <DirectionRadioInput
         value={value}
         onChange={({ target }) => setValue(target.value)}
-        directions={[SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT]}
-        defaultChecked={SCALE_DIRECTION.SCALE_IN}
+        directions={[ScaleDirection.ScaleIn, ScaleDirection.ScaleOut]}
+        defaultChecked={ScaleDirection.ScaleIn}
       />
     </Panel>
   );
