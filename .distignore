@@ -34,7 +34,6 @@ web-stories-scraper
 .gitattributes
 .gitignore
 .imgbotconfig
-.lgtm.yml
 .markdownlint.json
 .markdownlintignore
 .npmignore
