@@ -23,7 +23,10 @@ import { BEZIER } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { ScheduledTransition } from '../../transition/scheduledTransition';
-import { TRANSITION_DURATION, Z_INDEX } from '../constants';
+import {
+  TRANSITION_DURATION,
+  Z_INDEX,
+} from '../../../app/helpCenter/constants';
 
 const DURATION = 1.2 * TRANSITION_DURATION;
 

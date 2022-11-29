@@ -16,11 +16,8 @@
 /**
  * Internal dependencies
  */
-import { getInitialState } from '../../provider';
-import {
-  DONE_TIP_ENTRY,
-  TIPS,
-} from '../../../../components/helpCenter/constants';
+import { getInitialState } from '../../useHelpCenterReducer';
+import { DONE_TIP_ENTRY, TIPS } from '../../constants';
 import {
   composeEffects,
   createDynamicNavigationFlow,
@@ -36,11 +33,10 @@ import {
 } from '../effects';
 
 const BASE_NAVIGATION_FLOW = Object.keys(TIPS);
-const TIP_KEYS_MAP = Object.keys(TIPS).reduce((keyMap, key) => {
-  keyMap[key] = true;
-  return keyMap;
-}, {});
-const initialState = getInitialState({ additionalTips: {} });
+const TIP_KEYS_MAP = Object.fromEntries(
+  Object.keys(TIPS).map((key) => [key, true])
+);
+const initialState = getInitialState({});
 
 const mockState = (overrides = {}) => ({
   ...initialState,
@@ -49,11 +45,17 @@ const mockState = (overrides = {}) => ({
 
 describe('composeEffects', () => {
   it('retains all properties from next state', () => {
+    type DummyEffect = {
+      someDerivedState: boolean;
+      prop1: boolean;
+      prop2: Record<string, unknown>;
+      prop3: string;
+    };
     const emptyEffect = () => ({});
     const nonEmptyEffect = () => ({ someDerivedState: true });
     const overwritingEffect = () => ({ prop3: 'someOtherString' });
 
-    const effects = composeEffects([
+    const effects = composeEffects<Partial<DummyEffect>, Partial<DummyEffect>>([
       emptyEffect,
       nonEmptyEffect,
       overwritingEffect,

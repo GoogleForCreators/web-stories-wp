@@ -31,7 +31,7 @@ import {
  * Internal dependencies
  */
 import { NAVIGATION_HEIGHT } from '../../secondaryPopup';
-import { GUTTER_WIDTH } from '../constants';
+import { GUTTER_WIDTH } from '../../../app/helpCenter/constants';
 import { useConfig } from '../../../app';
 import { Transitioner } from './transitioner';
 import DoneCheckmark from './icons/doneCheckmark.svg';
@@ -171,7 +171,7 @@ export function QuickTip({
 
 QuickTip.propTypes = {
   /* Temporary props: `figureAlt`, `figureSrc`.
-  See packages/story-editor/src/components/helpCenter/constants.js. */
+  See packages/story-editor/src/app/helpCenter/constants.js. */
   figureAlt: PropTypes.string,
   figureSrc: PropTypes.string,
   figureSrcImg: PropTypes.string,

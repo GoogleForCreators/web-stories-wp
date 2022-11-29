@@ -13,26 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { DONE_TIP_ENTRY } from '../../../components/helpCenter/constants';
+import type { HelpCenterState } from '../types';
+import { DONE_TIP_ENTRY } from '../constants';
 
-const isMenuIndex = (previous, next) => next.navigationIndex < 0;
+declare const WEB_STORIES_DISABLE_QUICK_TIPS: 'true' | 'false' | undefined;
 
-const isComingFromMenu = (previous, next) =>
+const isMenuIndex = (_previous: HelpCenterState, next: HelpCenterState) =>
+  next.navigationIndex < 0;
+
+const isComingFromMenu = (previous: HelpCenterState, next: HelpCenterState) =>
   previous.navigationIndex < 0 && next.navigationIndex >= 0;
 
-const navigationFlowTips = (previous, next) => {
+const navigationFlowTips = (
+  _previous: HelpCenterState,
+  next: HelpCenterState
+) => {
   return (next.navigationFlow || []).filter((key) =>
     next.tipKeys.includes(key)
   );
 };
 
-const isInitialHydrate = (previous, next) =>
+const isInitialHydrate = (previous: HelpCenterState, next: HelpCenterState) =>
   !previous.isHydrated && next.isHydrated;
 
-export const resetNavigationIndexOnOpen = (previous, next) => {
+export const resetNavigationIndexOnOpen = (
+  previous: HelpCenterState,
+  next: HelpCenterState
+) => {
   const isOpening = !previous.isOpen && next.isOpen;
   const isOpeningToTip = !previous.isOpeningToTip && next.isOpeningToTip;
   const result = {
@@ -42,22 +53,34 @@ export const resetNavigationIndexOnOpen = (previous, next) => {
   return result;
 };
 
-export const deriveBottomNavigation = (previous, next) => ({
+export const deriveBottomNavigation = (
+  previous: HelpCenterState,
+  next: HelpCenterState
+) => ({
   hasBottomNavigation: !isMenuIndex(previous, next),
 });
 
-export const deriveTransitionDirection = (previous, next) => ({
+export const deriveTransitionDirection = (
+  previous: HelpCenterState,
+  next: HelpCenterState
+) => ({
   isLeftToRightTransition:
     !isMenuIndex(previous, next) &&
     next.navigationIndex - previous.navigationIndex > 0,
 });
 
-export const deriveDisabledButtons = (previous, next) => ({
+export const deriveDisabledButtons = (
+  _previous: HelpCenterState,
+  next: HelpCenterState
+) => ({
   isPrevDisabled: next.navigationIndex <= 0,
   isNextDisabled: next.navigationIndex >= next.navigationFlow?.length - 1,
 });
 
-export const deriveReadTip = (previous, next) => {
+export const deriveReadTip = (
+  previous: HelpCenterState,
+  next: HelpCenterState
+) => {
   const readTipKey =
     !isMenuIndex(previous, next) &&
     navigationFlowTips(previous, next)?.[next.navigationIndex];
@@ -72,7 +95,10 @@ export const deriveReadTip = (previous, next) => {
   return { readTips };
 };
 
-export const createDynamicNavigationFlow = (previous, next) => {
+export const createDynamicNavigationFlow = (
+  previous: HelpCenterState,
+  next: HelpCenterState
+) => {
   if (!isComingFromMenu(previous, next)) {
     return {};
   }
@@ -86,14 +112,20 @@ export const createDynamicNavigationFlow = (previous, next) => {
   };
 };
 
-export function deriveUnreadTipsCount(previous, next) {
+export function deriveUnreadTipsCount(
+  _previous: HelpCenterState,
+  next: HelpCenterState
+) {
   return {
     unreadTipsCount:
       next.tipKeys.filter((tip) => !next.readTips[tip])?.length || 0,
   };
 }
 
-export function deriveAutoOpen(previous, next) {
+export function deriveAutoOpen(
+  previous: HelpCenterState,
+  next: HelpCenterState
+) {
   if (
     typeof WEB_STORIES_DISABLE_QUICK_TIPS !== 'undefined' &&
     WEB_STORIES_DISABLE_QUICK_TIPS === 'true'
@@ -109,7 +141,7 @@ export function deriveAutoOpen(previous, next) {
 
 // If there are any unread tips, we respect users last open setting.
 // If all tips are read, we want the popup closed regardless of user setting.
-export function deriveInitialOpen(persisted) {
+export function deriveInitialOpen(persisted: Partial<HelpCenterState>) {
   if (
     typeof WEB_STORIES_DISABLE_QUICK_TIPS !== 'undefined' &&
     WEB_STORIES_DISABLE_QUICK_TIPS === 'true'
@@ -124,7 +156,9 @@ export function deriveInitialOpen(persisted) {
     : {};
 }
 
-export function deriveInitialUnreadTipsCount(persisted) {
+export function deriveInitialUnreadTipsCount(
+  persisted: Partial<HelpCenterState>
+) {
   return persisted?.unreadTipsCount
     ? {
         unreadTipsCount: persisted?.unreadTipsCount,
@@ -132,23 +166,27 @@ export function deriveInitialUnreadTipsCount(persisted) {
     : {};
 }
 
-export function resetIsOpeningToTip(previous, next) {
+export function resetIsOpeningToTip(
+  previous: HelpCenterState,
+  next: HelpCenterState
+) {
   return {
     isOpeningToTip: next.isOpeningToTip && !previous.isOpeningToTip,
   };
 }
+
+type StateEffect<P, N> = (previous: P, next: N) => Partial<N>;
 
 /**
  * Takes an array of effects and returns a composed function
  * that given next and previous state runs through each effect
  * and computes the resulting state.
  *
- * @param {Array<Function>} effects arry of effects
- * @return {Function} (previous, next) => <object in shape of next>
+ * @param effects array of effects
+ * @return (previous, next) => <object in shape of next>
  */
-export const composeEffects =
-  (effects = []) =>
-  (previous, next) =>
+export function composeEffects<P, N>(effects: StateEffect<P, N>[]) {
+  return (previous: P, next: N): N =>
     effects.reduce(
       (effectedNext, effect) => ({
         ...next,
@@ -157,3 +195,4 @@ export const composeEffects =
       }),
       next
     );
+}
