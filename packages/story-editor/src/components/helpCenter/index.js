@@ -29,10 +29,10 @@ import { useStoryTriggerListener, STORY_EVENTS } from '../../app/story';
 import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import DirectionAware from '../directionAware';
 import { useHelpCenter } from '../../app/helpCenter';
+import { POPUP_ID, KEYS } from '../../app/helpCenter/constants';
 import Popup from '../secondaryPopup';
 import Navigator from './navigator';
 import Companion from './companion';
-import { POPUP_ID, KEYS } from '../../app/helpCenter/constants';
 import { Toggle } from './toggle';
 import { forceFocusCompanion } from './utils';
 

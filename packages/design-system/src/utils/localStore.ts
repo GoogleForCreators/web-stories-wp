@@ -49,7 +49,7 @@ function getItemByKey(key: string): unknown {
   try {
     const stored = localStorage.getItem(key);
     parsed = stored !== null ? JSON.parse(stored) : stored;
-  } catch (err: unknown) {
+  } catch (err) {
     void trackError('local_storage_read', getMessage(err));
   }
   return parsed;
