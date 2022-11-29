@@ -16,6 +16,8 @@
     "src/contexts/snackbar/*",
     "src/types/*",
     "src/types.ts",
-    "src/utils/*.ts"
+    "src/utils/*.ts",
+    "src/utils/constants.ts",
+    "src/utils/localStore.ts"
   ]
 }

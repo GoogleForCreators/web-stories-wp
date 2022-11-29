@@ -22,7 +22,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { noop } from '../../../utils/noop';
-import { GUTTER_WIDTH } from '../constants';
+import { GUTTER_WIDTH } from '../../../app/helpCenter/constants';
 import { Header } from './header';
 import { Tips } from './tips';
 import { Transitioner } from './transitioner';

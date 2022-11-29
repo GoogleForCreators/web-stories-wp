@@ -58,12 +58,12 @@ export interface MetaData {
   publisher?: string;
 }
 
-interface Tip {
+export interface Tip {
   title: string;
-  figureSrcImg: string;
-  figureAlt: string;
+  figureSrcImg?: string;
+  figureAlt?: string;
   description: string[];
-  href: string;
+  href?: string;
 }
 
 export interface PageTemplate extends Page {

@@ -151,11 +151,7 @@ export interface APICallbacks {
     per_page?: number;
   }) => Promise<Term>;
   saveStoryById?: (data: StorySaveData) => Promise<StoryReturnData>;
-  updateCurrentUser?: (data: {
-    mediaOptimization?: boolean;
-    onboarding?: Record<string, boolean>;
-    trackingOptin?: boolean;
-  }) => Promise<User>;
+  updateCurrentUser?: (data: Partial<User>) => Promise<User>;
   updateMedia?: (id: number, data: Partial<Resource>) => Promise<Resource>;
   updatePageTemplate?: (
     id: number,

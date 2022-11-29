@@ -25,7 +25,7 @@ import { memo } from '@googleforcreators/react';
  */
 import { Menu } from '../menu';
 import { QuickTip } from '../quickTip';
-import { DONE_TIP_ENTRY } from '../constants';
+import { DONE_TIP_ENTRY } from '../../../app/helpCenter/constants';
 import { useHelpCenter } from '../../../app';
 
 function Companion({
