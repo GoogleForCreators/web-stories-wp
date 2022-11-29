@@ -19,7 +19,12 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-export default createContext({
+/**
+ * Internal dependencies
+ */
+import type { LayoutProviderState } from '../../types';
+
+export default createContext<LayoutProviderState>({
   actions: { setZoomSetting: () => {} },
   state: {},
 });

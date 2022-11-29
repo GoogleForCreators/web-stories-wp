@@ -26,20 +26,22 @@ import { CAROUSEL_STATE, CAROUSEL_TRANSITION_DURATION } from '../../constants';
 
 const TRANSITION_STATES = [CAROUSEL_STATE.OPENING, CAROUSEL_STATE.CLOSING];
 
+// @todo Use enum.
+type CarouselState = string;
 const carouselStateReducer = {
   // Only open if currently closed (and mark as OPENING, not actually open yet)
   // If in any other state, do nothing.
-  openCarousel: (state) =>
+  openCarousel: (state: CarouselState) =>
     state === CAROUSEL_STATE.CLOSED ? CAROUSEL_STATE.OPENING : state,
 
   // Only closed if currently open (and mark as CLOSING, not actually closed yet)
   // If in any other state, do nothing.
-  closeCarousel: (state) =>
+  closeCarousel: (state: CarouselState) =>
     state === CAROUSEL_STATE.OPEN ? CAROUSEL_STATE.CLOSING : state,
 
   // Mark transition to new state as completed - must be in a transition state.
   // If in any other state, do nothing.
-  completeTransition: (state) =>
+  completeTransition: (state: CarouselState) =>
     ({
       [CAROUSEL_STATE.OPENING]: CAROUSEL_STATE.OPEN,
       [CAROUSEL_STATE.CLOSING]: CAROUSEL_STATE.CLOSED,

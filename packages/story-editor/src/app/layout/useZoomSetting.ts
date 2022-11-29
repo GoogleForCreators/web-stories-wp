@@ -46,11 +46,11 @@ const ZOOM_PADDING_FIT = 144;
 
 const INITIAL_STATE = {
   zoomSetting: ZOOM_SETTING.FIT,
-  zoomLevel: null,
+  zoomLevel: 0,
   workspaceSize: {
-    width: null,
-    height: null,
-    availableHeight: null,
+    width: 0,
+    height: 0,
+    availableHeight: 0,
   },
   scrollOffset: {
     left: 0,
@@ -58,8 +58,35 @@ const INITIAL_STATE = {
   },
 };
 
+interface WorkspaceSize {
+  width: number;
+  height: number;
+  availableHeight: number;
+}
+interface ScrollOffset {
+  left: number;
+  top: number;
+}
+interface ReducerState {
+  zoomSetting: string;
+  zoomLevel: number;
+  workspaceSize: WorkspaceSize;
+  scrollOffset: ScrollOffset;
+}
+interface SetZoomSettingProps {
+  payload: string;
+}
+interface SetZoomLevelProps {
+  payload: number;
+}
+interface SetScrollOffsetProps {
+  payload: ScrollOffset;
+}
+interface SetWorkspaceSizeProps {
+  payload: WorkspaceSize;
+}
 const reducer = {
-  setZoomSetting: (state, { payload }) => ({
+  setZoomSetting: (state: ReducerState, { payload }: SetZoomSettingProps): ReducerState => ({
     ...state,
     zoomSetting: payload,
     scrollOffset: {
@@ -67,24 +94,24 @@ const reducer = {
       top: 0,
     },
   }),
-  setZoomLevel: (state, { payload }) => ({
+  setZoomLevel: (state: ReducerState, { payload }: SetZoomLevelProps): ReducerState => ({
     ...state,
     zoomLevel: payload,
     zoomSetting: ZOOM_SETTING.FIXED,
   }),
-  setScrollOffset: (state, { payload }) => ({
+  setScrollOffset: (state: ReducerState, { payload }: SetScrollOffsetProps): ReducerState => ({
     ...state,
     scrollOffset: payload,
   }),
-  setWorkspaceSize: (state, { payload }) => ({
+  setWorkspaceSize: (state: ReducerState, { payload }: SetWorkspaceSizeProps): ReducerState => ({
     ...state,
     workspaceSize: payload,
   }),
 };
 
-function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
+function calculateViewportProperties(workspaceSize: WorkspaceSize, zoomSetting: string, zoomLevel: number) {
   // Calculate page size based on zoom setting
-  let maxPageWidth;
+  let maxPageWidth = 0;
   const workspaceRatio = workspaceSize.width / workspaceSize.availableHeight;
   switch (zoomSetting) {
     case ZOOM_SETTING.FILL: {
