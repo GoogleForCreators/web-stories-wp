@@ -23,7 +23,7 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { DONE_TIP_ENTRY, KEYS, TIPS } from '../constants';
+import { DONE_TIP_ENTRY, KEYS, TIPS } from '../../../app/helpCenter/constants';
 
 describe('Help Center integration', () => {
   let fixture;

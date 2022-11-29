@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import { memo, useRef, useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PAGE_WIDTH } from '@googleforcreators/units';
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 import {
   themeHelpers,
   useKeyDownEffect,
@@ -166,7 +166,7 @@ function FrameElements() {
       state.currentPage?.elements?.map((el) => el.id) || STABLE_ARRAY
   );
   const isAnimating = useStory(({ state }) =>
-    [STORY_ANIMATION_STATE.PLAYING, STORY_ANIMATION_STATE.SCRUBBING].includes(
+    [StoryAnimationState.Playing, StoryAnimationState.Scrubbing].includes(
       state.animationState
     )
   );

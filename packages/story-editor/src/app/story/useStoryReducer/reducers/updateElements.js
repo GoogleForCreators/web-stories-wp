@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 import { produce } from 'immer';
 
 /**
@@ -51,9 +51,9 @@ export const updateElements = (
 ) => {
   if (
     [
-      STORY_ANIMATION_STATE.PLAYING,
-      STORY_ANIMATION_STATE.PLAYING_SELECTED,
-      STORY_ANIMATION_STATE.SCRUBBING,
+      StoryAnimationState.Playing,
+      StoryAnimationState.PlayingSelected,
+      StoryAnimationState.Scrubbing,
     ].includes(draft.animationState)
   ) {
     return;

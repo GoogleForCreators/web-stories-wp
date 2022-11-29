@@ -28,5 +28,8 @@ export default createContext<CurrentUserState>({
   state: {
     currentUser: null,
   },
-  actions: {},
+  actions: {
+    updateCurrentUser: () => null,
+    toggleWebStoriesMediaOptimization: () => null,
+  },
 });

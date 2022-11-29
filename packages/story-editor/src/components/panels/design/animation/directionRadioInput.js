@@ -29,10 +29,10 @@ import {
   Icons,
 } from '@googleforcreators/design-system';
 import {
-  DIRECTION,
-  ROTATION,
-  SCALE_DIRECTION,
-  SCALE_DIRECTION_MAP,
+  AnimationDirection,
+  Rotation,
+  ScaleDirection,
+  SCALE_DIRECTIONS,
 } from '@googleforcreators/animation';
 /**
  * Internal dependencies
@@ -56,21 +56,21 @@ const StyledButton = styled(Button)`
     transform-origin: 50% 50%;
     transform: ${({ direction }) => {
       switch (direction) {
-        case DIRECTION.RIGHT_TO_LEFT:
+        case AnimationDirection.RightToLeft:
           return 'rotate(270deg)';
-        case DIRECTION.TOP_TO_BOTTOM:
+        case AnimationDirection.TopToBottom:
           return 'rotate(180deg)';
-        case DIRECTION.LEFT_TO_RIGHT:
+        case AnimationDirection.LeftToRight:
           return 'rotate(90deg)';
-        case ROTATION.COUNTER_CLOCKWISE:
+        case Rotation.CounterClockwise:
           return 'rotateX(180deg) rotateZ(90deg)';
-        case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+        case ScaleDirection.ScaleOutBottomLeft:
           return 'rotate(-135deg)';
-        case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+        case ScaleDirection.ScaleInTopLeft:
           return 'rotate(135deg)';
-        case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+        case ScaleDirection.ScaleOutTopRight:
           return 'rotate(-315deg)';
-        case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+        case ScaleDirection.ScaleInBottomRight:
           return 'rotate(315deg)';
         default:
           return 'rotate(0deg)';
@@ -88,9 +88,10 @@ const Direction = ({ className, direction, ...rest }) => (
     direction={direction}
     {...rest}
   >
-    {[...Object.values(DIRECTION), ...Object.values(SCALE_DIRECTION)].includes(
-      direction
-    ) && <Icons.ArrowUp />}
+    {[
+      ...Object.values(AnimationDirection),
+      ...Object.values(ScaleDirection),
+    ].includes(direction) && <Icons.ArrowUp />}
   </StyledButton>
 );
 
@@ -123,47 +124,47 @@ const Label = styled.label`
 
   ${({ direction }) => {
     switch (direction) {
-      case DIRECTION.RIGHT_TO_LEFT:
+      case AnimationDirection.RightToLeft:
         return css`
           top: 50%;
           right: ${SPACE_FROM_EDGE}px;
           transform: translateY(-50%);
         `;
-      case DIRECTION.TOP_TO_BOTTOM:
+      case AnimationDirection.TopToBottom:
         return css`
           top: ${SPACE_FROM_EDGE}px;
           left: 50%;
           transform: translateX(-50%);
         `;
-      case DIRECTION.LEFT_TO_RIGHT:
+      case AnimationDirection.LeftToRight:
         return css`
           top: 50%;
           left: ${SPACE_FROM_EDGE}px;
           transform: translateY(-50%);
         `;
-      case ROTATION.COUNTER_CLOCKWISE:
+      case Rotation.CounterClockwise:
         return css`
           bottom: ${SPACE_FROM_EDGE}px;
           right: ${SPACE_FROM_EDGE}px;
           transform: translate(-10%, -10%);
         `;
 
-      case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+      case ScaleDirection.ScaleOutBottomLeft:
         return css`
           bottom: ${SPACE_FROM_EDGE}px;
           left: ${SPACE_FROM_EDGE}px;
         `;
-      case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+      case ScaleDirection.ScaleInTopLeft:
         return css`
           top: ${SPACE_FROM_EDGE}px;
           left: ${SPACE_FROM_EDGE}px;
         `;
-      case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+      case ScaleDirection.ScaleOutTopRight:
         return css`
           top: ${SPACE_FROM_EDGE}px;
           right: ${SPACE_FROM_EDGE}px;
         `;
-      case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+      case ScaleDirection.ScaleInBottomRight:
         return css`
           bottom: ${SPACE_FROM_EDGE}px;
           right: ${SPACE_FROM_EDGE}px;
@@ -195,58 +196,52 @@ const RadioGroup = styled.div`
 `;
 
 const translations = {
-  [DIRECTION.RIGHT_TO_LEFT]: _x(
+  [AnimationDirection.RightToLeft]: _x(
     'right to left',
     'animation direction',
     'web-stories'
   ),
-  [DIRECTION.LEFT_TO_RIGHT]: _x(
+  [AnimationDirection.LeftToRight]: _x(
     'left to right',
     'animation direction',
     'web-stories'
   ),
-  [DIRECTION.TOP_TO_BOTTOM]: _x(
+  [AnimationDirection.TopToBottom]: _x(
     'top to bottom',
     'animation direction',
     'web-stories'
   ),
-  [DIRECTION.BOTTOM_TO_TOP]: _x(
+  [AnimationDirection.BottomToTop]: _x(
     'bottom to top',
     'animation direction',
     'web-stories'
   ),
-  [ROTATION.CLOCKWISE]: _x('clockwise', 'rotation direction', 'web-stories'),
-  [ROTATION.COUNTER_CLOCKWISE]: _x(
+  [Rotation.Clockwise]: _x('clockwise', 'rotation direction', 'web-stories'),
+  [Rotation.CounterClockwise]: _x(
     'counterclockwise',
     'rotation direction',
     'web-stories'
   ),
-  [SCALE_DIRECTION.SCALE_IN]: _x('scale in', 'scale direction', 'web-stories'),
-  [SCALE_DIRECTION.SCALE_OUT]: _x(
-    'scale out',
-    'scale direction',
-    'web-stories'
-  ),
+  [ScaleDirection.ScaleIn]: _x('scale in', 'scale direction', 'web-stories'),
+  [ScaleDirection.ScaleOut]: _x('scale out', 'scale direction', 'web-stories'),
 };
 
 const valueForInternalValue = (value) => {
   switch (value) {
-    case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
-      return SCALE_DIRECTION.SCALE_IN;
-    case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
-      return SCALE_DIRECTION.SCALE_IN;
-    case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
-      return SCALE_DIRECTION.SCALE_OUT;
-    case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
-      return SCALE_DIRECTION.SCALE_OUT;
+    case ScaleDirection.ScaleInTopLeft:
+      return ScaleDirection.ScaleIn;
+    case ScaleDirection.ScaleInBottomRight:
+      return ScaleDirection.ScaleIn;
+    case ScaleDirection.ScaleOutBottomLeft:
+      return ScaleDirection.ScaleOut;
+    case ScaleDirection.ScaleOutTopRight:
+      return ScaleDirection.ScaleOut;
     default:
       return value;
   }
 };
 const isInternalScaleDirection = (value) =>
-  [...SCALE_DIRECTION_MAP.SCALE_IN, ...SCALE_DIRECTION_MAP.SCALE_OUT].includes(
-    value
-  );
+  [...SCALE_DIRECTIONS.IN, ...SCALE_DIRECTIONS.OUT].includes(value);
 
 const splitCamelCase = (camelCase = '') =>
   camelCase
@@ -263,17 +258,17 @@ const getPostfixFromCamelCase = (camelCase = '') => {
 };
 
 const STANDARD_NAV_ORDER = [
-  DIRECTION.TOP_TO_BOTTOM,
-  DIRECTION.RIGHT_TO_LEFT,
-  DIRECTION.BOTTOM_TO_TOP,
-  DIRECTION.LEFT_TO_RIGHT,
+  AnimationDirection.TopToBottom,
+  AnimationDirection.RightToLeft,
+  AnimationDirection.BottomToTop,
+  AnimationDirection.LeftToRight,
 ];
 
 const SCALE_NAV_ORDER = [
-  SCALE_DIRECTION.SCALE_IN_TOP_LEFT,
-  SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT,
-  SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT,
-  SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT,
+  ScaleDirection.ScaleInTopLeft,
+  ScaleDirection.ScaleOutTopRight,
+  ScaleDirection.ScaleInBottomRight,
+  ScaleDirection.ScaleOutBottomLeft,
 ];
 
 const sortInputOrderForKeyboardUsability = (
@@ -301,8 +296,8 @@ export const DirectionRadioInput = ({
   const flattenedDirections = useMemo(() => {
     const dir = [];
     if (
-      !directions.includes(SCALE_DIRECTION.SCALE_OUT) &&
-      !directions.includes(SCALE_DIRECTION.SCALE_IN)
+      !directions.includes(ScaleDirection.ScaleOut) &&
+      !directions.includes(ScaleDirection.ScaleIn)
     ) {
       dir.push(
         ...sortInputOrderForKeyboardUsability(
@@ -314,10 +309,10 @@ export const DirectionRadioInput = ({
     } else {
       const scaleDir = [];
 
-      directions.includes(SCALE_DIRECTION.SCALE_OUT) &&
-        scaleDir.push(...SCALE_DIRECTION_MAP.SCALE_OUT);
-      directions.includes(SCALE_DIRECTION.SCALE_IN) &&
-        scaleDir.push(...SCALE_DIRECTION_MAP.SCALE_IN);
+      directions.includes(ScaleDirection.ScaleOut) &&
+        scaleDir.push(...SCALE_DIRECTIONS.OUT);
+      directions.includes(ScaleDirection.ScaleIn) &&
+        scaleDir.push(...SCALE_DIRECTIONS.IN);
       dir.push(
         ...sortInputOrderForKeyboardUsability(scaleDir, SCALE_NAV_ORDER, isRTL)
       );
@@ -368,9 +363,9 @@ export const DirectionRadioInput = ({
 };
 
 const directionPropType = PropTypes.oneOf([
-  ...Object.values(DIRECTION),
-  ...Object.values(ROTATION),
-  ...Object.values(SCALE_DIRECTION),
+  ...Object.values(AnimationDirection),
+  ...Object.values(Rotation),
+  ...Object.values(ScaleDirection),
 ]);
 
 DirectionRadioInput.propTypes = {

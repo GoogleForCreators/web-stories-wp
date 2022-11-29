@@ -21,5 +21,6 @@ export * from './videoResource';
 export * from './audioResource';
 export * from './sequenceResource';
 export * from './resourceInput';
+export * from './mediaElement';
 export * from './propTypes';
 export * from './resourceCache';
