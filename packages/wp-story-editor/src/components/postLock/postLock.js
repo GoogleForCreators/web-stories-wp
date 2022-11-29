@@ -207,7 +207,6 @@ function PostLock() {
         onClose={closeDialog}
         previewLink={previewLink}
         dashboardLink={dashboardLink}
-        showTakeOver
       />
     );
   }
