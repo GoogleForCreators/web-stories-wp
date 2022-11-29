@@ -50,26 +50,23 @@ function GroupLayerActions({ groupId }) {
   }));
 
   const group = groups[groupId];
+  const allLayersHidden = groupLayers.every((layer) => layer.isHidden);
 
-  const visibilityTitle = group.isHidden
-    ? __('Show Layer', 'web-stories')
-    : __('Hide Layer', 'web-stories');
+  const visibilityTitle = allLayersHidden
+    ? __('Show Group', 'web-stories')
+    : __('Hide Group', 'web-stories');
   const lockTitle = group.isLocked
     ? __('Unlock Group', 'web-stories')
     : __('Lock Group', 'web-stories');
 
-  const { name, isLocked, isHidden, isCollapsed } = group;
+  const { name, isLocked, isCollapsed } = group;
 
   const handleHideGroup = useCallback(() => {
-    updateGroupById({
-      groupId,
-      properties: { isHidden: !isHidden },
-    });
     updateElementsById({
       elementIds: groupLayers.map((layer) => layer.id),
-      properties: { isHidden: !isHidden },
+      properties: { isHidden: !allLayersHidden },
     });
-  }, [groupId, groupLayers, isHidden, updateElementsById, updateGroupById]);
+  }, [allLayersHidden, groupLayers, updateElementsById]);
 
   const handleLockGroup = useCallback(() => {
     updateGroupById({
@@ -99,16 +96,12 @@ function GroupLayerActions({ groupId }) {
     [groupId, deleteGroupAndElementsById]
   );
 
-  const VisibilityIcon = group.isHidden
+  const VisibilityIcon = allLayersHidden
     ? Icons.VisibilityOff
     : Icons.Visibility;
 
   return (
     <>
-      <LayerAction label={visibilityTitle} handleClick={handleHideGroup}>
-        <VisibilityIcon />
-      </LayerAction>
-
       <LayerAction
         label={__('Delete Group', 'web-stories')}
         handleClick={handleDeleteGroup}
@@ -121,6 +114,10 @@ function GroupLayerActions({ groupId }) {
         handleClick={handleDuplicateGroup}
       >
         <Icons.PagePlus />
+      </LayerAction>
+
+      <LayerAction label={visibilityTitle} handleClick={handleHideGroup}>
+        <VisibilityIcon />
       </LayerAction>
 
       <LayerAction label={lockTitle} handleClick={handleLockGroup}>

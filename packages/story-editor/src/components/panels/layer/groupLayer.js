@@ -68,12 +68,17 @@ const ChevronRight = styled(Icons.ChevronDown)`
 `;
 
 function GroupLayer({ groupId }) {
-  const { groups, updateGroupById } = useStory(({ actions, state }) => ({
-    groups: state.currentPage.groups,
-    updateGroupById: actions.updateGroupById,
-  }));
+  const { groups, updateGroupById, groupLayers } = useStory(
+    ({ actions, state }) => ({
+      groups: state.currentPage.groups,
+      updateGroupById: actions.updateGroupById,
+      groupLayers: state.currentPage.elements.filter(
+        (el) => el.groupId === groupId
+      ),
+    })
+  );
 
-  const { name, isLocked, isHidden, isCollapsed } = groups[groupId];
+  const { name, isLocked, isCollapsed } = groups[groupId];
 
   const { isSelected, handleClick } = useGroupSelection(groupId);
 
@@ -98,7 +103,8 @@ function GroupLayer({ groupId }) {
     [handleGroupArrowClick, isCollapsed]
   );
 
-  const LayerVisibilityIcon = () => isHidden && <Icons.VisibilityOff />;
+  const allLayersHidden = groupLayers.every((layer) => layer.isHidden);
+  const LayerVisibilityIcon = () => allLayersHidden && <Icons.VisibilityOff />;
 
   return (
     <Layer
@@ -113,7 +119,7 @@ function GroupLayer({ groupId }) {
       }
       layerName={name}
       handleClick={handleClick}
-      hasLayerHiddenIcon={isHidden}
+      hasLayerHiddenIcon={allLayersHidden}
       isSelected={isSelected}
       LayerIcon={GroupLayerIcon}
       LayerVisibilityIcon={LayerVisibilityIcon}
