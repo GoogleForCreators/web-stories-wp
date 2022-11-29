@@ -66,7 +66,7 @@ const getBlurHashFromImage = async (src) => {
       componentY: 4,
     });
     worker.addEventListener('message', (event) => {
-      worker.terminate(); // lgtm [js/property-access-on-non-object]
+      worker.terminate();
       trackTiming();
       if (event.data.type === 'success') {
         resolve(event.data.blurHash);
@@ -76,7 +76,7 @@ const getBlurHashFromImage = async (src) => {
       }
     });
     worker.addEventListener('error', (e) => {
-      worker.terminate(); // lgtm [js/property-access-on-non-object]
+      worker.terminate();
       trackTiming();
       trackError('blurhash_generation', e?.message);
       reject(e);
