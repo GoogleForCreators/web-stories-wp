@@ -19,7 +19,7 @@
  */
 import { createContext } from '@googleforcreators/react';
 import type { Element, Page, Story } from '@googleforcreators/elements';
-import type { StoryAnimation } from '@googleforcreators/animation';
+import type { StoryAnimation, StoryAnimationState } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -31,7 +31,7 @@ export default createContext<StoryProviderState>({
   state: {
     story: {} as Story,
     pages: [] as Page[],
-    animationState: '',
+    animationState: '' as StoryAnimationState,
     capabilities: {},
     currentPage: null,
     currentPageId: null,
