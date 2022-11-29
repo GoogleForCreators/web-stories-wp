@@ -30,7 +30,7 @@ import { themeHelpers } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { POPUP_ID } from '../constants';
+import { POPUP_ID } from '../../../app/helpCenter/constants';
 import { NavigationWrapper, TopNavigation } from '../../secondaryPopup';
 import { BottomNavigation } from './bottomNavigation';
 import { removeInnerElementFromLayoutFlow } from './utils';

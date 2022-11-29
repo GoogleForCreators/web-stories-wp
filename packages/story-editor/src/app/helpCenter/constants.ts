@@ -118,7 +118,7 @@ export const DONE_TIP_ENTRY = [
       ),
     ],
   },
-];
+] as const;
 
 export const GUTTER_WIDTH = 24;
 

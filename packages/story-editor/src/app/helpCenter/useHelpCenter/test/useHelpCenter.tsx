@@ -13,23 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
+import type { PropsWithChildren } from 'react';
+
 /**
  * Internal dependencies
  */
 import APIContext from '../../../api/context';
 import { CurrentUserProvider } from '../../../currentUser';
-import { DONE_TIP_ENTRY } from '../../../../components/helpCenter/constants';
-import { useHelpCenter } from '..';
+import { DONE_TIP_ENTRY } from '../../constants';
+import useHelpCenter from '..';
 import HelpCenterProvider from '../../provider';
+import type { User } from '../../../../types/configProvider';
 
 function setup() {
-  const currentUser = { meta: {} };
+  const currentUser: User = {
+    id: 0,
+    mediaOptimization: false,
+    onboarding: {},
+    trackingOptin: false,
+  };
   const currentUserPromise = jest.fn(
-    () => new Promise((resolve) => resolve(currentUser))
+    () => new Promise<User>((resolve) => resolve(currentUser))
   );
   const apiContextValue = {
     state: {
@@ -40,7 +49,7 @@ function setup() {
       getCurrentUser: currentUserPromise,
     },
   };
-  const wrapper = ({ children }) => (
+  const wrapper = ({ children }: PropsWithChildren<undefined>) => (
     <APIContext.Provider value={apiContextValue}>
       <CurrentUserProvider>
         <HelpCenterProvider>{children}</HelpCenterProvider>
@@ -52,31 +61,20 @@ function setup() {
 }
 
 describe('useHelpCenter', () => {
-  it('always returns the same actions by reference', async () => {
+  it('always returns the same actions by reference', () => {
     const { result } = setup();
     const initialActionsReference = result.current.actions;
-    const actions = Object.keys(initialActionsReference);
-    for (let i = 0; i < actions.length - 1; i++) {
-      const action = initialActionsReference[actions[i]];
-      // eslint-disable-next-line no-await-in-loop
-      await act(async () => {
-        await action();
-      });
-      expect(result.current.actions).toBe(initialActionsReference);
-    }
+    act(() => initialActionsReference.goToNext());
+    expect(result.current.actions).toBe(initialActionsReference);
   });
 
   describe('goToNext', () => {
-    it('doesnt increment out of navigation flow bounds', async () => {
+    it('doesnt increment out of navigation flow bounds', () => {
       const { result } = setup();
 
       for (let i = 0; i < result.current.state.navigationFlow.length + 5; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        await act(async () => {
-          await result.current.actions.goToNext();
-        });
+        act(() => result.current.actions.goToNext());
         const expected =
-          //eslint-disable-next-line jest/no-conditional-in-test
           i < result.current.state.navigationFlow.length
             ? i
             : result.current.state.navigationFlow.length - 1;
@@ -84,16 +82,12 @@ describe('useHelpCenter', () => {
       }
     });
 
-    it('updates the read status of the tip', async () => {
+    it('updates the read status of the tip', () => {
       const { result } = setup();
-      const expected = {};
+      const expected: Record<string, boolean> = {};
       for (let i = 0; i < result.current.state.navigationFlow.length; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        await act(async () => {
-          await result.current.actions.goToNext();
-        });
+        act(() => result.current.actions.goToNext());
         const expectedKey = result.current.state.navigationFlow[i];
-        //eslint-disable-next-line jest/no-conditional-in-test
         if (expectedKey !== DONE_TIP_ENTRY[0]) {
           expected[expectedKey] = true;
         }
@@ -103,39 +97,30 @@ describe('useHelpCenter', () => {
   });
 
   describe('goToPrev', () => {
-    it('doesnt decrement out of navigation flow bounds', async () => {
+    it('doesnt decrement out of navigation flow bounds', () => {
       const { result } = setup();
       // navigate to last tip in navigation flow
       for (let i = 0; i < result.current.state.navigationFlow.length; ++i) {
-        // eslint-disable-next-line no-await-in-loop
-        await act(async () => {
-          await result.current.actions.goToNext();
-        });
+        act(() => result.current.actions.goToNext());
       }
 
       // navigate way back past first tip
       for (let i = 0; i < result.current.state.navigationFlow.length + 5; i++) {
         const lastIndex = result.current.state.navigationFlow.length - 1;
         const currentIndex = lastIndex - i;
-        //eslint-disable-next-line jest/no-conditional-in-test
         const expected = currentIndex > 0 ? currentIndex : 0;
         expect(result.current.state.navigationIndex).toBe(expected);
-        // eslint-disable-next-line no-await-in-loop
-        await act(async () => {
-          await result.current.actions.goToPrev();
-        });
+        act(() => result.current.actions.goToPrev());
       }
     });
 
-    it('updates the read status of the tip', async () => {
+    it('updates the read status of the tip', () => {
       const { result } = setup();
 
       // go to the last tip
       const lastTipIndex = result.current.state.navigationFlow.length - 1;
       const lastTip = result.current.state.navigationFlow[lastTipIndex];
-      await act(async () => {
-        await result.current.actions.goToTip(lastTip);
-      });
+      act(() => result.current.actions.goToTip(lastTip));
 
       // that tip should be read
       const expected = { [lastTip]: true };
@@ -146,81 +131,64 @@ describe('useHelpCenter', () => {
         const expectedKey = result.current.state.navigationFlow[i];
         expected[expectedKey] = true;
         expect(result.current.state.readTips).toStrictEqual(expected);
-        // eslint-disable-next-line no-await-in-loop
-        await act(async () => {
-          await result.current.actions.goToPrev();
-        });
+        act(() => result.current.actions.goToPrev());
       }
     });
   });
 
   describe('goToMenu', () => {
-    it('always sets the navigationIndex to -1', async () => {
+    it('always sets the navigationIndex to -1', () => {
       const { result } = setup();
       for (let i = 0; i < 3; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        await act(async () => {
-          await result.current.actions.goToNext();
-        });
+        act(() => result.current.actions.goToNext());
       }
-      await act(async () => {
-        await result.current.actions.goToMenu();
-      });
+      act(() => result.current.actions.goToMenu());
       expect(result.current.state.navigationIndex).toBe(-1);
     });
   });
 
   describe('goToTip', () => {
-    it('sets navigationIndex to -1 (main menu) if key isnt in navigationFlow', async () => {
+    it('sets navigationIndex to -1 (main menu) if key isnt in navigationFlow', () => {
       const { result } = setup();
       // navigate away from main menu
-      await act(async () => {
-        await result.current.actions.goToTip(
-          result.current.state.navigationFlow.length - 1
-        );
-      });
+      act(() =>
+        result.current.actions.goToTip(
+          String(result.current.state.navigationFlow.length - 1)
+        )
+      );
       // navigate to unspecified key
-      await act(async () => {
-        await result.current.actions.goToTip('this isnt a tip key');
-      });
+      act(() => result.current.actions.goToTip('this isnt a tip key'));
       expect(result.current.state.navigationIndex).toBe(-1);
     });
 
-    it('sets navigationIndex to index of key in navigation flow', async () => {
+    it('sets navigationIndex to index of key in navigation flow', () => {
       const { result } = setup();
       for (let i = 0; i < result.current.state.navigationFlow.length - 1; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        await act(async () => {
-          await result.current.actions.goToTip(
-            result.current.state.navigationFlow[i]
-          );
-        });
+        act(() =>
+          result.current.actions.goToTip(result.current.state.navigationFlow[i])
+        );
         expect(result.current.state.navigationIndex).toBe(i);
       }
     });
   });
 
   describe('openToUnreadTip', () => {
-    it('should only open the tip if it is not already read', async () => {
+    it('should only open the tip if it is not already read', () => {
       const { result } = setup();
-      await act(async () => {
-        await result.current.actions.goToTip('cropSelectedElements');
-        await result.current.actions.goToMenu();
-        await result.current.actions.close();
+      act(() => {
+        result.current.actions.goToTip('cropSelectedElements');
+        result.current.actions.goToMenu();
+        result.current.actions.close();
       });
 
       expect(result.current.state.navigationIndex).toBe(-1);
       expect(result.current.state.isOpen).toBeFalse();
 
-      await act(async () => {
-        await result.current.actions.openToUnreadTip('cropSelectedElements');
-      });
+      act(() => result.current.actions.openToUnreadTip('cropSelectedElements'));
       expect(result.current.state.navigationIndex).toBe(-1);
       expect(result.current.state.isOpen).toBeFalse();
 
-      await act(async () => {
-        await result.current.actions.openToUnreadTip('addBackgroundMedia');
-      });
+      act(() => result.current.actions.openToUnreadTip('addBackgroundMedia'));
       expect(result.current.state.navigationIndex).toBe(
         result.current.state.navigationFlow.findIndex(
           (v) => v === 'addBackgroundMedia'
