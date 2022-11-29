@@ -56,7 +56,7 @@ jobs:
       checks: write # for ataylorme/eslint-annotate-action to create checks
       contents: read # for actions/checkout to fetch code
       pull-requests: read # for ataylorme/eslint-annotate-action to get changed PR files
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
