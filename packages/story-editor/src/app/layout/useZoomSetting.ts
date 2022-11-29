@@ -29,7 +29,7 @@ import { themeHelpers } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import {
-  ZOOM_SETTING,
+  ZoomSetting,
   PAGE_NAV_WIDTH,
   PAGE_WIDTH_FACTOR,
   MAX_EXTRA_PAGES,
@@ -45,7 +45,7 @@ const ZOOM_PADDING_NONE = 12;
 const ZOOM_PADDING_FIT = 144;
 
 const INITIAL_STATE = {
-  zoomSetting: ZOOM_SETTING.FIT,
+  zoomSetting: ZoomSetting.Fit,
   zoomLevel: 0,
   workspaceSize: {
     width: 0,
@@ -68,13 +68,13 @@ interface ScrollOffset {
   top: number;
 }
 interface ReducerState {
-  zoomSetting: string;
+  zoomSetting: ZoomSetting;
   zoomLevel: number;
   workspaceSize: WorkspaceSize;
   scrollOffset: ScrollOffset;
 }
 interface SetZoomSettingProps {
-  payload: string;
+  payload: ZoomSetting;
 }
 interface SetZoomLevelProps {
   payload: number;
@@ -97,7 +97,7 @@ const reducer = {
   setZoomLevel: (state: ReducerState, { payload }: SetZoomLevelProps): ReducerState => ({
     ...state,
     zoomLevel: payload,
-    zoomSetting: ZOOM_SETTING.FIXED,
+    zoomSetting: ZoomSetting.Fixed,
   }),
   setScrollOffset: (state: ReducerState, { payload }: SetScrollOffsetProps): ReducerState => ({
     ...state,
@@ -114,7 +114,7 @@ function calculateViewportProperties(workspaceSize: WorkspaceSize, zoomSetting: 
   let maxPageWidth = 0;
   const workspaceRatio = workspaceSize.width / workspaceSize.availableHeight;
   switch (zoomSetting) {
-    case ZOOM_SETTING.FILL: {
+    case ZoomSetting.Fill: {
       // See how much we can fit inside so all space is used minus gap
       if (workspaceRatio > FULLBLEED_RATIO) {
         // workspace is limited in the height, so use the width minus room for scrollbar
@@ -131,7 +131,7 @@ function calculateViewportProperties(workspaceSize: WorkspaceSize, zoomSetting: 
       }
       break;
     }
-    case ZOOM_SETTING.FIT: {
+    case ZoomSetting.Fit: {
       // See how much we can fit inside so all is visible
       // However, leave some extra space, as we don't want it to hug too tightly to the edges.
       const maxWidth = workspaceSize.width - ZOOM_PADDING_FIT;
@@ -233,8 +233,8 @@ function useZoomSetting() {
       (pageWidth / PAGE_WIDTH_FACTOR) * PAGE_WIDTH_FACTOR
     );
     switch (zoomSetting) {
-      case ZOOM_SETTING.FILL:
-      case ZOOM_SETTING.FIT:
+      case ZoomSetting.Fill:
+      case ZoomSetting.Fit:
         return maxPageWidth / PAGE_WIDTH;
       default:
         return _zoomLevel;

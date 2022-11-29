@@ -16,6 +16,7 @@
     "src/app/helpCenter/**/*",
     "src/app/history",
     "src/app/layout/*",
+    "src/constants/*",
     "src/types",
     "src/utils/usePreventWindowUnload.ts"
   ]
