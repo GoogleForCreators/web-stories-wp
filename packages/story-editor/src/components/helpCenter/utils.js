@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { FOCUSABLE_POPUP_CHILDREN_SELECTOR } from './constants';
+import { FOCUSABLE_POPUP_CHILDREN_SELECTOR } from '../../app/helpCenter/constants';
 
 export function forceFocusCompanion() {
   document.querySelector(FOCUSABLE_POPUP_CHILDREN_SELECTOR)?.focus();

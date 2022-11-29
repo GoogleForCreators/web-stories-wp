@@ -20,5 +20,7 @@
 
 export * from './components/keyboard';
 export * from './types/keyboard';
+export * from './utils/constants';
+export * from './utils/localStore';
 
 export {};

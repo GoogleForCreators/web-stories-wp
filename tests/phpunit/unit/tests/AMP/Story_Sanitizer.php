@@ -56,19 +56,28 @@ class Story_Sanitizer extends TestCase {
 	 * Helper method for tests.
 	 *
 	 * @param string $source
-	 * @param array $sanitizer_args
+	 * @param array<string, array<string, mixed>|string|bool> $sanitizer_args
 	 * @return string Sanitized HTML.
 	 */
 	protected function sanitize_and_get( $source, $sanitizer_args ): string {
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
 		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
-		$dom->documentElement->setAttribute( 'amp', '' );
-
+		if ( $dom->documentElement ) {
+			$dom->documentElement->setAttribute( 'amp', '' );
+		}
 		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom, $sanitizer_args );
 		$sanitizer->sanitize();
 
 		return $dom->saveHTML( $dom->documentElement );
 	}
 
+	/**
+	 * @return array<string, string[]>
+	 */
 	public function get_publisher_logo_data(): array {
 		return [
 			'publisher_logo_exists'  => [
@@ -109,6 +118,9 @@ class Story_Sanitizer extends TestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	/**
+	 * @return array<string, array<string|array<string, mixed>>>
+	 */
 	public function get_poster_image_data(): array {
 		return [
 			'Poster image already exists' => [
@@ -168,7 +180,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
-	 * @param array  $args     Args.
+	 * @param array<string, array<string, mixed>|string|bool>  $args     Args.
 	 *
 	 * @dataProvider get_poster_image_data
 	 * @covers ::sanitize
@@ -180,6 +192,9 @@ class Story_Sanitizer extends TestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	/**
+	 * @return array<string, array<string|array<string, mixed>>>
+	 */
 	public function get_publisher_data(): array {
 		return [
 			'publisher_exists'        => [
@@ -284,7 +299,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
-	 * @param array  $args   Args
+	 * @param array<string, array<string|array<string, mixed>>>  $args   Args
 	 *
 	 * @dataProvider get_publisher_data
 	 * @covers ::sanitize
@@ -317,6 +332,9 @@ class Story_Sanitizer extends TestCase {
 		$this->assertStringContainsString( ' lang="en-US"', $actual );
 	}
 
+	/**
+	 * @return array<string, array<int, string>>
+	 */
 	public function data_test_transform_a_tags(): array {
 		return [
 			'Link without rel or target attribute' => [

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -35,9 +35,9 @@ function Selection(props) {
   const { selectedElements, isAnimating } = useStory((state) => ({
     selectedElements: state.state.selectedElements,
     isAnimating: [
-      STORY_ANIMATION_STATE.PLAYING,
-      STORY_ANIMATION_STATE.PLAYING_SELECTED,
-      STORY_ANIMATION_STATE.SCRUBBING,
+      StoryAnimationState.Playing,
+      StoryAnimationState.PlayingSelected,
+      StoryAnimationState.Scrubbing,
     ].includes(state.state.animationState),
   }));
   const { editingElement, lastSelectionEvent, nodesById, onMoveableMount } =
