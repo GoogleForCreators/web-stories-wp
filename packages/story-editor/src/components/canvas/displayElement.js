@@ -165,7 +165,6 @@ function DisplayElement({
       }
     : null;
 
-  const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.resource.type) || {};
 
@@ -226,6 +225,8 @@ function DisplayElement({
   if (element.isHidden) {
     return null;
   }
+
+  const { Display } = getDefinitionForType(type);
 
   // The element content will use box without border, the wrapper will use box with border.
   const box = getBox(element);
