@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Animation } from '@googleforcreators/elements';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -55,7 +55,7 @@ export const addAnimations = (
     page.animations = [];
   }
   page.animations = page.animations.concat(
-    exclusion(page.animations, animations) as Animation[]
+    exclusion(page.animations, animations) as StoryAnimation[]
   );
 };
 

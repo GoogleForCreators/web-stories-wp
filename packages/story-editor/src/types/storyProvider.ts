@@ -19,7 +19,7 @@
  */
 import type { Page, Element, Group, Story } from '@googleforcreators/elements';
 import type { ResourceId } from '@googleforcreators/media';
-import type { StoryAnimation } from '@googleforcreators/animation';
+import type { StoryAnimation, StoryAnimationState } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -219,7 +219,7 @@ export type UpdateStoryAction = {
 };
 
 export type UpdateAnimationStateProps = {
-  animationState: string;
+  animationState: StoryAnimationState;
 };
 export type UpdateAnimationStateAction = {
   type: typeof ActionTypes.UpdateAnimationState;
@@ -424,7 +424,7 @@ export interface ReducerState {
   selection: string[];
   current: string | null;
   pages: Page[];
-  animationState: string;
+  animationState: StoryAnimationState;
   capabilities: Capabilities;
   copiedElementState?: CopiedElementState;
 }

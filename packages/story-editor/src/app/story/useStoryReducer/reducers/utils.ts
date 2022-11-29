@@ -99,10 +99,18 @@ export function getAbsolutePosition({
   }
 }
 
+interface AllowedProperties extends Partial<Element> {
+  animation: StoryAnimation;
+}
+function isAnimationUpdate(
+  props: Partial<Element> | Element
+): props is AllowedProperties {
+  return 'animation' in props;
+}
 export function updateElementWithUpdater(
   element: Element,
   properties: Partial<Element> | ElementUpdater
-): null | void {
+): null | void | StoryAnimation {
   const updater =
     typeof properties === 'function' ? properties(element) : properties;
   const allowedProperties: Partial<Element> | Element = objectWithout(
@@ -112,7 +120,7 @@ export function updateElementWithUpdater(
   if (Object.keys(allowedProperties).length === 0) {
     return null;
   }
-  if ('animation' in allowedProperties) {
+  if (isAnimationUpdate(allowedProperties)) {
     return allowedProperties.animation;
   }
   Object.assign(element, allowedProperties);
@@ -133,7 +141,7 @@ export function removeAnimationsWithElementIds(
 
 export function updateAnimations(
   oldAnimations: StoryAnimation[],
-  animationUpdates: StoryAnimation[]
+  animationUpdates: Record<string, StoryAnimation>
 ) {
   const newAnimations = oldAnimations.reduce(
     (animations: StoryAnimation[], animation) => {

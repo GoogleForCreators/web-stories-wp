@@ -18,12 +18,8 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
-import type {
-  Animation,
-  Element,
-  Page,
-  Story,
-} from '@googleforcreators/elements';
+import type { Element, Page, Story } from '@googleforcreators/elements';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -43,7 +39,7 @@ export default createContext<StoryProviderState>({
     currentPageNumber: null,
     selectedElementIds: [],
     selectedElements: [] as Element[],
-    selectedElementAnimations: [] as Animation[],
+    selectedElementAnimations: [] as StoryAnimation[],
     hasSelection: false,
     meta: {
       isSaving: false,

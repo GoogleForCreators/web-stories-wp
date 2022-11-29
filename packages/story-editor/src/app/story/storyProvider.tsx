@@ -105,7 +105,7 @@ function StoryProvider({
     if (isCurrentPageEmpty) {
       return STABLE_ARRAY;
     }
-    const animations = (currentPageAnimations || []).reduce(
+    const animations: StoryAnimation[] = (currentPageAnimations || []).reduce(
       (acc: StoryAnimation[], { targets, ...properties }) => {
         if (targets.some((id) => selection && selection.includes(id))) {
           return [...acc, { targets, ...properties }];

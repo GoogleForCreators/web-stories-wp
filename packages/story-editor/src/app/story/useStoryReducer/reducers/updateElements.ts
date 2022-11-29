@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { StoryAnimationState } from '@googleforcreators/animation';
+import {
+  StoryAnimation,
+  StoryAnimationState,
+} from '@googleforcreators/animation';
 import { produce } from 'immer';
 
 /**
@@ -59,7 +62,7 @@ export const updateElements = (
   if (!page || !idsToUpdate) {
     return;
   }
-  const animationLookup = {};
+  const animationLookup: Record<string, StoryAnimation> = {};
   page.elements
     .filter(({ id }) => idsToUpdate.includes(id))
     .forEach((element) => {
