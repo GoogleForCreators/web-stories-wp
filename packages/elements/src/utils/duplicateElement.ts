@@ -18,11 +18,12 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
  */
-import type { Element, Animation } from '../types';
+import type { Element } from '../types';
 import createNewElement from './createNewElement';
 
 /**
@@ -43,12 +44,6 @@ function getOffsetCoordinates(originX: number, originY: number) {
   };
 }
 
-interface DuplicateElementArgs {
-  element: Element;
-  animations?: Animation[];
-  existingElements?: Element[];
-}
-
 /**
  * returns a copy of element and element's animations as well
  * as offsetting the elements position if the new element is based
@@ -62,12 +57,12 @@ interface DuplicateElementArgs {
  */
 interface DuplicateElementArgs {
   element: Element;
-  animations?: Animation[];
+  animations?: StoryAnimation[];
   existingElements?: Element[];
 }
 interface DuplicateElementReturn {
   element: Element;
-  elementAnimations: Animation[];
+  elementAnimations: StoryAnimation[];
 }
 function duplicateElement({
   element,

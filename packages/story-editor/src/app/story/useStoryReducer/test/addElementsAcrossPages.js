@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -96,7 +96,7 @@ describe('addElementsAcrossPages', () => {
       ],
       current: '111',
       selection: ['000'],
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
       capabilities: {},
       copiedElementState: {},
       story: { fonts: {} },

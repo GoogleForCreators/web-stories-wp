@@ -22,7 +22,7 @@ import { BEZIER } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { TRANSITION_DURATION } from '../constants';
+import { TRANSITION_DURATION } from '../../../app/helpCenter/constants';
 
 /**
  * Removes inner Element from the layout flow without disrupting
