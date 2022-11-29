@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import type { Animation, Element, Page } from '@googleforcreators/elements';
+import type { Element, Page } from '@googleforcreators/elements';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -119,24 +120,24 @@ export function updateElementWithUpdater(
 }
 
 export function removeAnimationsWithElementIds(
-  animations: Animation[] = [],
+  animations: StoryAnimation[] = [],
   ids: string[] = []
 ) {
-  return animations.reduce((accum: Animation[], animation) => {
+  return animations.reduce((accum: StoryAnimation[], animation) => {
     if (ids.some((id) => animation.targets?.includes(id))) {
       return accum;
     }
     return [...accum, animation];
-  }, [] as Animation[]);
+  }, [] as StoryAnimation[]);
 }
 
 export function updateAnimations(
-  oldAnimations: Animation[],
-  animationUpdates: Animation[]
+  oldAnimations: StoryAnimation[],
+  animationUpdates: StoryAnimation[]
 ) {
   const newAnimations = oldAnimations.reduce(
-    (animations: Animation[], animation) => {
-      const updatedAnimation = animationUpdates[animation.id] as Animation;
+    (animations: StoryAnimation[], animation) => {
+      const updatedAnimation = animationUpdates[animation.id];
 
       // remove animation from lookup
       delete animationUpdates[animation.id];

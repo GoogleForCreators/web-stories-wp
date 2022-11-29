@@ -19,7 +19,8 @@
  */
 import type { PropsWithChildren } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
-import type { Animation, Page } from '@googleforcreators/elements';
+import type { Page } from '@googleforcreators/elements';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -105,7 +106,7 @@ function StoryProvider({
       return STABLE_ARRAY;
     }
     const animations = (currentPageAnimations || []).reduce(
-      (acc: Animation[], { targets, ...properties }) => {
+      (acc: StoryAnimation[], { targets, ...properties }) => {
         if (targets.some((id) => selection && selection.includes(id))) {
           return [...acc, { targets, ...properties }];
         }

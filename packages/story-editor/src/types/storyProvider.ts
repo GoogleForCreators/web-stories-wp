@@ -17,14 +17,10 @@
 /**
  * External dependencies
  */
-import type {
-  Page,
-  Element,
-  Animation,
-  Group,
-  Story,
-} from '@googleforcreators/elements';
+import type { Page, Element, Group, Story } from '@googleforcreators/elements';
 import type { ResourceId } from '@googleforcreators/media';
+import type { StoryAnimation } from '@googleforcreators/animation';
+
 /**
  * Internal dependencies
  */
@@ -231,7 +227,7 @@ export type UpdateAnimationStateAction = {
 };
 
 export type AddAnimationsProps = {
-  animations: Animation[];
+  animations: StoryAnimation[];
 };
 export type AddAnimationsAction = {
   type: typeof ActionTypes.AddAnimations;
@@ -419,7 +415,7 @@ export interface ReducerProviderState {
 }
 
 export interface CopiedElementState {
-  animations?: Animation[];
+  animations?: StoryAnimation[];
   styles?: Record<string, unknown>;
   type?: string;
 }
@@ -440,7 +436,7 @@ export interface State extends Omit<ReducerState, 'current' | 'selection'> {
   currentPageNumber: number | null;
   selectedElementIds: string[];
   selectedElements: Element[];
-  selectedElementAnimations: Animation[];
+  selectedElementAnimations: StoryAnimation[];
   hasSelection: boolean;
   meta: {
     isSaving: boolean;
