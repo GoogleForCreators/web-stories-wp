@@ -199,17 +199,22 @@ export const LayerIconWrapper = styled.div`
     `};
 `;
 
-export const IconWrapper = styled.div`
+export const FadeOutWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   position: absolute;
   right: 0;
+  aspect-ratio: 1;
+  ${fadeOutCss}
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   width: 32px;
   aspect-ratio: 1;
-
-  ${fadeOutCss}
-
   svg {
     position: relative;
     display: block;
@@ -218,7 +223,7 @@ export const IconWrapper = styled.div`
   }
 `;
 export const HiddenIconWrapper = styled(IconWrapper)`
-  right: 78px;
+  margin-right: -6px;
 `;
 
 export const LayerContentContainer = styled.div`

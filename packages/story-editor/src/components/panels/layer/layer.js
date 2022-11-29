@@ -38,6 +38,7 @@ import {
   LayerContentContainer,
   HiddenIconWrapper,
   LayerIconWrapper,
+  FadeOutWrapper,
 } from './layerComponents.js';
 
 function Layer({
@@ -98,15 +99,19 @@ function Layer({
               <LayerContentContainer>
                 <LayerText isHidden={hasLayerHiddenIcon}>{layerName}</LayerText>
               </LayerContentContainer>
-              {hasLayerHiddenIcon && (
-                <HiddenIconWrapper>
-                  <LayerVisibilityIcon />
-                </HiddenIconWrapper>
-              )}
-              {hasLayerLockIcon && (
-                <IconWrapper>
-                  <LayerLockIcon />
-                </IconWrapper>
+              {(hasLayerHiddenIcon || hasLayerLockIcon) && (
+                <FadeOutWrapper>
+                  {hasLayerHiddenIcon && (
+                    <HiddenIconWrapper>
+                      {hasLayerHiddenIcon && <LayerVisibilityIcon />}
+                    </HiddenIconWrapper>
+                  )}
+                  {(hasLayerHiddenIcon || hasLayerLockIcon) && (
+                    <IconWrapper>
+                      {hasLayerLockIcon && <LayerLockIcon />}
+                    </IconWrapper>
+                  )}
+                </FadeOutWrapper>
               )}
             </LayerDescription>
           </LayerButton>

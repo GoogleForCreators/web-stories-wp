@@ -102,9 +102,6 @@ function ElementLayerActions({ element }) {
       >
         <Icons.RemoveMask />
       </LayerAction>
-      <LayerAction label={visibilityTitle} handleClick={handleHideElement}>
-        <VisibilityIcon />
-      </LayerAction>
       <LayerAction
         label={__('Delete Layer', 'web-stories')}
         handleClick={handleDeleteElement}
@@ -121,6 +118,9 @@ function ElementLayerActions({ element }) {
         handleClick={handleDuplicateElement}
       >
         <Icons.PagePlus />
+      </LayerAction>
+      <LayerAction label={visibilityTitle} handleClick={handleHideElement}>
+        <VisibilityIcon />
       </LayerAction>
       <LayerAction
         label={lockTitle}
