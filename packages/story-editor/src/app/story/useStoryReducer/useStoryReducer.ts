@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useReducer, useMemo } from '@googleforcreators/react';
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 import type { Story } from '@googleforcreators/elements';
 
 /**
@@ -39,7 +39,7 @@ export const INITIAL_STATE = {
   current: null,
   selection: [],
   story: {} as Story,
-  animationState: STORY_ANIMATION_STATE.RESET as string,
+  animationState: StoryAnimationState.Reset,
   copiedElementState: {},
 };
 

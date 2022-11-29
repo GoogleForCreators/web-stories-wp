@@ -1,6 +1,7 @@
 {
   "references": [
     { "path": "packages/activation-notice" },
+    { "path": "packages/animation" },
     { "path": "packages/element-library" },
     { "path": "packages/dashboard" },
     { "path": "packages/design-system" },

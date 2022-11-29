@@ -28,8 +28,8 @@ import {
 import PropTypes from 'prop-types';
 import { _x, __ } from '@googleforcreators/i18n';
 import {
-  StoryAnimation,
-  STORY_ANIMATION_STATE,
+  AnimationProvider,
+  StoryAnimationState,
   useStoryAnimationContext,
 } from '@googleforcreators/animation';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
@@ -94,17 +94,17 @@ function DisplayPageAnimationController({ resetAnimationState }) {
 
   useEffect(() => {
     switch (animationState) {
-      case STORY_ANIMATION_STATE.PLAYING_SELECTED:
-      case STORY_ANIMATION_STATE.PLAYING:
+      case StoryAnimationState.PlayingSelected:
+      case StoryAnimationState.Playing:
         WAAPIAnimationMethods.play();
         return;
 
-      case STORY_ANIMATION_STATE.RESET:
+      case StoryAnimationState.Reset:
         WAAPIAnimationMethods.reset();
         return;
 
-      case STORY_ANIMATION_STATE.SCRUBBING:
-      case STORY_ANIMATION_STATE.PAUSED:
+      case StoryAnimationState.Scrubbing:
+      case StoryAnimationState.Paused:
         WAAPIAnimationMethods.pause();
         return;
       default:
@@ -134,7 +134,7 @@ function StoryAnimations({ children }) {
   } = useStory(({ state, actions }) => {
     return {
       isAnimationPlaying:
-        state.animationState === STORY_ANIMATION_STATE.PLAYING_SELECTED,
+        state.animationState === StoryAnimationState.PlayingSelected,
       currentPageAnimations: state.currentPage?.animations || STABLE_ARRAY,
       currentPageElements: state.currentPage?.elements || STABLE_ARRAY,
       selectedElements: state.selectedElements,
@@ -143,7 +143,7 @@ function StoryAnimations({ children }) {
   });
 
   const resetAnimationState = useCallback(() => {
-    updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
+    updateAnimationState({ animationState: StoryAnimationState.Reset });
   }, [updateAnimationState]);
 
   const animatedElements = useMemo(
@@ -152,7 +152,7 @@ function StoryAnimations({ children }) {
   );
 
   return (
-    <StoryAnimation.Provider
+    <AnimationProvider
       animations={currentPageAnimations}
       elements={currentPageElements}
       onWAAPIFinish={resetAnimationState}
@@ -162,7 +162,7 @@ function StoryAnimations({ children }) {
         resetAnimationState={resetAnimationState}
       />
       {children}
-    </StoryAnimation.Provider>
+    </AnimationProvider>
   );
 }
 

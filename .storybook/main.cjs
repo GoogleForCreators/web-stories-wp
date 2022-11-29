@@ -46,6 +46,7 @@ module.exports = {
     '../packages/wp-story-editor/src/**/stories/*.@(js|mdx)',
     '../packages/activation-notice/src/**/stories/*.@(js|mdx)',
     '../packages/design-system/src/**/stories/*.@(js|mdx)',
+    '../packages/animation/src/**/stories/*.@(js|mdx)',
   ],
   addons: [
     '@storybook/addon-a11y/register',

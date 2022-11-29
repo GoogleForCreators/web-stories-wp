@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 import { elementIs } from '@googleforcreators/elements';
 import { produce, current } from 'immer';
 
@@ -108,7 +108,7 @@ export const setSelectedElements = (
         )
       : uniqueElementIds;
 
-  draft.animationState = STORY_ANIMATION_STATE.RESET;
+  draft.animationState = StoryAnimationState.Reset;
   draft.selection = newSelection;
 };
 

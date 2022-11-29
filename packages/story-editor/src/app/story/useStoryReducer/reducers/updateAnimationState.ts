@@ -25,7 +25,7 @@ import { produce } from 'immer';
 import type {
   ReducerState,
   UpdateAnimationStateProps,
-} from '../../../../types/storyProvider';
+} from '../../../../types';
 
 /**
  * Update the story animation state to play, pause, scrub or reset
