@@ -22,14 +22,34 @@ import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { CurrentUserState } from '../../types/currentUserProvider';
+import type { HelpCenterContext } from './types';
 
-export default createContext<CurrentUserState>({
+export default createContext<HelpCenterContext>({
   state: {
-    currentUser: null,
+    isOpen: false,
+    isOpeningToTip: false,
+    navigationIndex: -1,
+    navigationFlow: [],
+    isLeftToRightTransition: false,
+    hasBottomNavigation: false,
+    isPrevDisabled: false,
+    isNextDisabled: false,
+    readTips: {},
+    readError: false,
+    unreadTipsCount: 0,
+    isHydrated: false,
+    tips: {},
+    tipKeys: [],
   },
   actions: {
-    updateCurrentUser: () => null,
-    toggleWebStoriesMediaOptimization: () => null,
+    goToNext: () => undefined,
+    goToPrev: () => undefined,
+    goToMenu: () => undefined,
+    goToTip: () => undefined,
+    openToUnreadTip: () => undefined,
+    toggle: () => undefined,
+    close: () => undefined,
+    hydrateReadTipsSuccess: () => undefined,
+    persistingReadTipsError: () => undefined,
   },
 });

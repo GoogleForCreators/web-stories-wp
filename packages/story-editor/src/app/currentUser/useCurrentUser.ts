@@ -25,6 +25,7 @@ import type { CurrentUserState } from '../../types/currentUserProvider';
 import Context from './context';
 
 function useCurrentUser(): CurrentUserState;
+function useCurrentUser<T>(selector: (state: CurrentUserState) => T): T;
 function useCurrentUser<T>(
   selector: (state: CurrentUserState) => T | CurrentUserState = identity
 ) {
