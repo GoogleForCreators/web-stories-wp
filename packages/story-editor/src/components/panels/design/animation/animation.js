@@ -37,13 +37,11 @@ import {
   ScaleDirection,
   StoryAnimationState,
   getAnimationEffectDefaults,
+  getHasElementOffsets,
+  DEFAULT_HAS_OFFSETS,
 } from '@googleforcreators/animation';
 import { progress } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
-import {
-  getHasElementOffsets,
-  DEFAULT_HAS_OFFSETS,
-} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
