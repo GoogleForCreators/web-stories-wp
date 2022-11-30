@@ -31,7 +31,7 @@ import type { PageDataUrlsState, PageDataUrlsActions } from './types';
 function PageDataUrlProvider({
   children,
 }: {
-  children: PropsWithChildren<Record<string, never>>;
+  children: PropsWithChildren<unknown>;
 }) {
   const [dataUrls, setDataUrls] = useState<PageDataUrlsState['dataUrls']>({});
   const queueIdleTask = useIdleTaskQueue();
