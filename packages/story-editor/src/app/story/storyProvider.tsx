@@ -105,8 +105,8 @@ function StoryProvider({
     if (isCurrentPageEmpty || selection.length === 0) {
       return STABLE_ARRAY;
     }
-    const animations: StoryAnimation[] = (currentPageAnimations || []).filter(
-      ({ targets }) => !targets.some((id) => selection.includes(id))
+    const animations = (currentPageAnimations || []).filter(({ targets }) =>
+      targets.some((id) => selection && selection.includes(id))
     );
     return animations.length > 0 ? animations : STABLE_ARRAY;
   }, [isCurrentPageEmpty, selection, currentPageAnimations]);
