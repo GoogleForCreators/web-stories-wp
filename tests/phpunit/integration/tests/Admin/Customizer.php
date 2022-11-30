@@ -201,7 +201,7 @@ class Customizer extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_archive_link]', $settings );
 		$this->assertArrayHasKey( 'web_stories_customizer_settings[archive_link_label]', $settings );
 	}
-	
+
 	/**
 	 * @covers ::validate_number_of_stories
 	 */

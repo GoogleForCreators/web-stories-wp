@@ -62,9 +62,6 @@ class Poster extends DependencyInjectedTestCase {
 	public function test_rest_api_init(): void {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 
-		/**
-		 * @var int $poster_attachment_id
-		 */
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -114,9 +111,6 @@ class Poster extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $video_attachment_id );
 
-		/**
-		 * @var int $poster_attachment_id
-		 */
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -190,9 +184,6 @@ class Poster extends DependencyInjectedTestCase {
 	 * @covers ::get_thumbnail_data
 	 */
 	public function test_get_thumbnail_data_generated(): void {
-		/**
-		 * @var int $poster_attachment_id
-		 */
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -228,9 +219,6 @@ class Poster extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $video_attachment_id );
 
-		/**
-		 * @var int $poster_attachment_id
-		 */
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -265,9 +253,6 @@ class Poster extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $video_attachment_id );
 
-		/**
-		 * @var int $poster_attachment_id
-		 */
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -300,9 +285,6 @@ class Poster extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $video_attachment_id );
 
-		/**
-		 * @var int $poster_attachment_id
-		 */
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -337,9 +319,6 @@ class Poster extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $video_attachment_id );
 
-		/**
-		 * @var int $poster_attachment_id
-		 */
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -362,9 +341,6 @@ class Poster extends DependencyInjectedTestCase {
 	 * @covers ::is_poster
 	 */
 	public function test_is_poster(): void {
-		/**
-		 * @var int $poster_attachment_id
-		 */
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
