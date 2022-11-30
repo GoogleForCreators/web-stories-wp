@@ -219,6 +219,20 @@ class HTML extends TestCase {
 	}
 
 	/**
+	 * @covers ::fix_incorrect_charset
+	 */
+	public function test_fix_incorrect_charset(): void {
+		$source = '<html><head><meta charSet="utf-8" /></head><body><amp-story></amp-story></body></html>';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'fix_incorrect_charset', [ $source ] );
+
+		$this->assertStringNotContainsString( '<meta charset="utf-8"/>', $actual );
+	}
+
+	/**
 	 * @covers ::fix_malformed_script_link_tags
 	 */
 	public function test_fix_malformed_script_link_tags(): void {
