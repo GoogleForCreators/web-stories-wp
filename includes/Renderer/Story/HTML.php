@@ -29,7 +29,6 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * Class HTML
@@ -41,13 +40,6 @@ class HTML {
 	 * @var Story Post object.
 	 */
 	protected Story $story;
-
-	/**
-	 * Document instance.
-	 *
-	 * @var Document Document instance.
-	 */
-	protected Document $document;
 
 	/**
 	 * HTML constructor.
