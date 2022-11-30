@@ -18,7 +18,7 @@
  * Checks if the native copy paste should proceed,
  * either if text is selected or if there's focus on a text/number input.
  *
- * @return {boolean} If native handling is expected.
+ * @return If native handling is expected.
  */
 function nativeCopyPasteExpected() {
   const { activeElement } = document;

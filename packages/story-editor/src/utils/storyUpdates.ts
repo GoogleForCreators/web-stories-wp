@@ -22,18 +22,33 @@
  */
 import cleanForSlug from './cleanForSlug';
 
+interface updateStoryProps {
+  properties: {
+    slug: string;
+  };
+}
+
+interface updateSlugProps {
+  currentSlug: string;
+  currentTitle: string;
+  updateStory: (props: updateStoryProps) => void;
+}
+
 /**
  * For use on blur of updating story title
  * that can impact what story slug is if
  * not set independently.
  *
- * @param {Object} args Necessary data for update.
- * @param {string} args.currentSlug The currently assigned value to story's slug.
- * @param {string} args.currentTitle The currently assigned value to story's title.
- * @param {Function} args.updateStory The callback to useStory's action for updating the story with new slug.
- * @return {void}
+ * @param args Necessary data for update.
+ * @param args.currentSlug The currently assigned value to story's slug.
+ * @param args.currentTitle The currently assigned value to story's title.
+ * @param args.updateStory The callback to useStory's action for updating the story with new slug.ß
  */
-export const updateSlug = ({ currentSlug, currentTitle, updateStory }) => {
+export const updateSlug = ({
+  currentSlug,
+  currentTitle,
+  updateStory,
+}: updateSlugProps) => {
   if (!currentSlug) {
     const cleanSlug = encodeURIComponent(cleanForSlug(currentTitle));
     updateStory({ properties: { slug: cleanSlug } });

@@ -24,7 +24,7 @@ import {
   DEFAULT_DPR,
 } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
-import type { ElementType } from '@googleforcreators/elements';
+import type { Element, ElementType } from '@googleforcreators/elements';
 import type { Resource } from '@googleforcreators/media';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];
@@ -37,6 +37,16 @@ function isNum(value) {
   return typeof value === 'number';
 }
 
+interface getDefinitionForTypeProp {
+  updateForResizeEvent: (
+    element: Element,
+    direction: number[],
+    newWidth: number,
+    newHeight: number
+  ) => { height: number };
+  defaultAttributes: () => void;
+}
+
 function getInsertedElementSize(
   type: ElementType,
   width: number,
@@ -45,7 +55,7 @@ function getInsertedElementSize(
   ratio = 1,
   resource: Resource
 ) {
-  const { updateForResizeEvent, defaultAttributes } =
+  const { updateForResizeEvent, defaultAttributes }: getDefinitionForTypeProp =
     getDefinitionForType(type);
 
   if (!isNum(width)) {
@@ -67,14 +77,16 @@ function getInsertedElementSize(
     updateForResizeEvent instanceof Function
   ) {
     // Try resize API with width-only direction.
-    height = updateForResizeEvent(
+    const { height: newHeight } = updateForResizeEvent(
       {
         ...defaultAttributes,
         ...attrs,
-      },
+      } as Element,
       RESIZE_WIDTH_DIRECTION,
-      width
-    ).height;
+      width,
+      0
+    );
+    height = newHeight;
   }
   if (!isNum(height)) {
     // Fallback to simple ratio calculation.

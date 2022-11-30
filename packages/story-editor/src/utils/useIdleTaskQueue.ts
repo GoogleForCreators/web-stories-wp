@@ -26,7 +26,7 @@ import { requestIdleCallback, cancelIdleCallback } from './idleCallback';
 /**
  * Creates a FIFO idle task queue
  *
- * @return {Function} queueIdleTask
+ * @return queueIdleTask
  */
 function useIdleTaskQueue() {
   const taskQueue = useRef([]);
