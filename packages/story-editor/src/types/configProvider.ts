@@ -100,7 +100,7 @@ type Author = {
   avatarUrls?: Record<number, string>;
 };
 
-type User = {
+export type User = {
   id: number;
   mediaOptimization: boolean;
   onboarding: Record<string, boolean>;
