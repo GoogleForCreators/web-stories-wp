@@ -26,13 +26,14 @@ import type { PropsWithChildren } from 'react';
 import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../../utils/storyPageToDataUrl';
 import Context from './context';
+import type { PageDataUrlsState } from './types';
 
 function PageDataUrlProvider({
   children,
 }: {
   children: PropsWithChildren<Record<string, never>>;
 }) {
-  const [dataUrls, setDataUrls] = useState<Record<string, string>>({});
+  const [dataUrls, setDataUrls] = useState<PageDataUrlsState['dataUrls']>({});
   const queueIdleTask = useIdleTaskQueue();
 
   /**
