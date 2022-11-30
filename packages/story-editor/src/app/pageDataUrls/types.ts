@@ -13,12 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type { Page } from '@googleforcreators/elements';
+
 export interface PageDataUrlsState {
   dataUrls: Record<string, string>;
 }
 
 export interface PageDataUrlsActions {
-  queuePageImageGeneration?: () => void;
+  queuePageImageGeneration?: (Page: Page) => void;
 }
 
 export interface PageDataUrlsContext {
