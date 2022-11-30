@@ -36,7 +36,7 @@ async function storyPageToCanvas(page: Page, { width = 400, ...options }) {
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );
 
-  const [node, cleanup] = await storyPageToNode(page, width, {
+  const [node, cleanup] = storyPageToNode(page, width, {
     renderFullHeightThumb: true,
   });
 

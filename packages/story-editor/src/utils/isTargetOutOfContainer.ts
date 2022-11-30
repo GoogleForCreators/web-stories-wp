@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function isTargetOutOfContainer(target, container) {
+function isTargetOutOfContainer(target: Element, container: Element) {
   const { left, right, top, bottom } = target.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
   return (

@@ -18,7 +18,10 @@ export default function objectWithout(
   obj: object,
   propertiesToRemove: string[]
 ) {
-  return Object.keys(obj)
-    .filter((key) => !propertiesToRemove.includes(key))
-    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
+  return (
+    Object.keys(obj)
+      .filter((key) => !propertiesToRemove.includes(key))
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Known issue.
+      .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {})
+  );
 }

@@ -23,6 +23,8 @@ import { useRef, useCallback } from '@googleforcreators/react';
  */
 import { requestIdleCallback, cancelIdleCallback } from './idleCallback';
 
+type Tuple = [string, () => Promise<void>];
+
 /**
  * Creates a FIFO idle task queue
  *
@@ -47,30 +49,33 @@ function useIdleTaskQueue() {
       return;
     }
 
-    const [taskId, task] = taskQueue.current.shift();
-    const idleCallbackId = requestIdleCallback(async () => {
-      await task();
-      currentTask.current = [null, null];
-      runTaskQueue();
+    const [taskId, task] = taskQueue.current.shift() as Tuple;
+    const idleCallbackId = requestIdleCallback(() => {
+      void task().then(() => {
+        currentTask.current = [null, null];
+        runTaskQueue();
+      });
     });
-    currentTask.current = [taskId, idleCallbackId];
+    currentTask.current = [taskId, idleCallbackId] as Tuple;
   }, []);
 
   /**
    * Clears queue of any tasks associated with the
    * given task id.
    *
-   * @param {string} id id of a task
+   * @param id id of a task
    * @return {void}
    */
   const clearQueuedTask = useCallback(
-    (id) => {
+    (id: string) => {
       // Remove any queued tasks associated with this task Id
-      taskQueue.current = taskQueue.current.filter(([taskId]) => taskId !== id);
+      taskQueue.current = taskQueue.current.filter(
+        ([taskId]: [string]) => taskId !== id
+      );
 
       // If the current requested task hasn't fired, clear it
       // and restart the queue on the next task
-      const [taskId, idleCallbackId] = currentTask.current;
+      const [taskId, idleCallbackId]: Tuple = currentTask.current;
       if (id === taskId) {
         cancelIdleCallback(idleCallbackId);
         currentTask.current = [null, null];
@@ -91,7 +96,7 @@ function useIdleTaskQueue() {
    * @return {Function} function to cancel image generation request
    */
   const queueIdleTask = useCallback(
-    ([id, task]) => {
+    ([id, task]: Tuple) => {
       // Clear queue of any stale tasks
       clearQueuedTask(id);
 

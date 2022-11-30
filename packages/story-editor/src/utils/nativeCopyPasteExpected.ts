@@ -22,13 +22,14 @@
  */
 function nativeCopyPasteExpected() {
   const { activeElement } = document;
-  const { tagName, type, contentEditable } = activeElement;
+  const { tagName, type, contentEditable } = activeElement as Element;
 
   // If it's an input in focus, do native handling.
   if (
     'true' === contentEditable ||
     'textarea' === tagName.toLowerCase() ||
     ('input' === tagName.toLowerCase() &&
+      typeof type === 'string' &&
       ['text', 'number', 'search', 'email', 'tel', 'url'].includes(type))
   ) {
     return true;

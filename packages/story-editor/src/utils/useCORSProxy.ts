@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-
+import type { Resource } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
@@ -40,7 +40,7 @@ function useCORSProxy() {
    *
    * @type {function(string): Promise<boolean>}
    */
-  const checkResourceAccess = useCallback(async (link) => {
+  const checkResourceAccess = useCallback(async (link: string) => {
     let shouldProxy = false;
     if (!link) {
       return shouldProxy;
@@ -64,7 +64,7 @@ function useCORSProxy() {
    * @return {null|string} Return proxied source or null.
    */
   const getProxiedUrl = useCallback(
-    (resource, src) => {
+    (resource: Resource, src: string) => {
       const { needsProxy } = resource;
       if (needsProxy && src) {
         return getProxyUrl(src);
