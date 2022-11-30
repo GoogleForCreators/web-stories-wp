@@ -56,7 +56,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	public function test_prepare_item_for_response(): void {
 		$this->controller->register();
 
-		$slug     = $this->get_private_property( self::$taxonomy_object, 'taxonomy_slug' );
+		$slug     = self::$taxonomy_object->get_taxonomy_slug();
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies/' . $slug );
 		$response = rest_get_server()->dispatch( $request );
 		$links    = $response->get_links();

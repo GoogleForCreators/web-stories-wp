@@ -45,10 +45,7 @@ class Taxonomy_Base extends DependencyInjectedTestCase {
 	 */
 	public function test_register_taxonomy(): void {
 		$this->instance->register_taxonomy();
-		/**
-		 * @var string $slug
-		 */
-		$slug = $this->get_private_property( $this->instance, 'taxonomy_slug' );
+		$slug = $this->instance->get_taxonomy_slug();
 		$this->assertTrue( taxonomy_exists( $slug ) );
 	}
 
@@ -57,10 +54,7 @@ class Taxonomy_Base extends DependencyInjectedTestCase {
 	 */
 	public function test_unregister_taxonomy(): void {
 		$this->instance->register();
-		/**
-		 * @var string $slug
-		 */
-		$slug = $this->get_private_property( $this->instance, 'taxonomy_slug' );
+		$slug = $this->instance->get_taxonomy_slug();
 		$this->assertTrue( taxonomy_exists( $slug ) );
 		$this->instance->unregister_taxonomy();
 		$this->assertFalse( taxonomy_exists( $slug ) );
