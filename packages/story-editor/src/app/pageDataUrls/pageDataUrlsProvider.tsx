@@ -26,7 +26,7 @@ import type { PropsWithChildren } from 'react';
 import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../../utils/storyPageToDataUrl';
 import Context from './context';
-import type { PageDataUrlsState } from './types';
+import type { PageDataUrlsState, PageDataUrlsActions } from './types';
 
 function PageDataUrlProvider({
   children,
@@ -43,29 +43,30 @@ function PageDataUrlProvider({
    * @param {Page} storyPage Page object.
    * @return {Function} function to cancel image generation request
    */
-  const queuePageImageGeneration: (Page: Page) => void = useCallback(
-    (storyPage: Page) => {
-      const idleTaskUid: string = storyPage.id;
-      const idleTask: () => Promise<void> = async () => {
-        const dataUrl = await storyPageToDataUrl(storyPage, {});
-        setDataUrls((state) => ({
-          ...state,
-          [storyPage?.id]: dataUrl,
-        }));
-      };
+  const queuePageImageGeneration: PageDataUrlsActions['queuePageImageGeneration'] =
+    useCallback(
+      (storyPage: Page) => {
+        const idleTaskUid: string = storyPage.id;
+        const idleTask: () => Promise<void> = async () => {
+          const dataUrl = await storyPageToDataUrl(storyPage, {});
+          setDataUrls((state) => ({
+            ...state,
+            [storyPage?.id]: dataUrl,
+          }));
+        };
 
-      const clearQueueOfPageTask = queueIdleTask([
-        idleTaskUid,
-        idleTask,
-      ]) as () => void;
-      return (): void => {
-        if (typeof clearQueueOfPageTask === 'function') {
-          clearQueueOfPageTask();
-        }
-      };
-    },
-    [queueIdleTask]
-  );
+        const clearQueueOfPageTask = queueIdleTask([
+          idleTaskUid,
+          idleTask,
+        ]) as () => void;
+        return (): void => {
+          if (typeof clearQueueOfPageTask === 'function') {
+            clearQueueOfPageTask();
+          }
+        };
+      },
+      [queueIdleTask]
+    );
 
   const value = useMemo(
     () => ({
