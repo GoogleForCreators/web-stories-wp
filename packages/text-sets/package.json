@@ -38,6 +38,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/elements": "*",
     "@googleforcreators/migration": "*"
   },
   "devDependencies": {

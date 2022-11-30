@@ -5,6 +5,7 @@
     "declarationDir": "dist-types"
   },
   "references": [
+    { "path": "../animation" },
     { "path": "../i18n" },
     { "path": "../media" },
     { "path": "../patterns" },

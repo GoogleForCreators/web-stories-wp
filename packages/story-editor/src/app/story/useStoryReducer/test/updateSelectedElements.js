@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -80,19 +80,19 @@ describe('updateSelectedElements', () => {
       selection: ['123', '456'],
     });
 
-    updateAnimationState({ animationState: STORY_ANIMATION_STATE.PLAYING });
+    updateAnimationState({ animationState: StoryAnimationState.Playing });
     const playingResult = updateSelectedElements({ properties: { a: 1 } });
 
-    updateAnimationState({ animationState: STORY_ANIMATION_STATE.SCRUBBING });
+    updateAnimationState({ animationState: StoryAnimationState.Scrubbing });
     const scrubbingResult = updateSelectedElements({ properties: { a: 1 } });
 
     expect(playingResult).toStrictEqual({
       ...initialState,
-      animationState: STORY_ANIMATION_STATE.PLAYING,
+      animationState: StoryAnimationState.Playing,
     });
     expect(scrubbingResult).toStrictEqual({
       ...initialState,
-      animationState: STORY_ANIMATION_STATE.SCRUBBING,
+      animationState: StoryAnimationState.Scrubbing,
     });
   });
 

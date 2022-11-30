@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
@@ -281,10 +281,10 @@ describe('setSelectedElementsById', () => {
       selection: ['e3'],
     });
 
-    updateAnimationState({ animationState: STORY_ANIMATION_STATE.PLAYING });
+    updateAnimationState({ animationState: StoryAnimationState.Playing });
     const result = setSelectedElementsById({ elementIds: ['e3'] });
 
-    expect(result.animationState).toStrictEqual(STORY_ANIMATION_STATE.PLAYING);
+    expect(result.animationState).toStrictEqual(StoryAnimationState.Playing);
   });
 
   it('should reset animationState if selection has changed', () => {
@@ -293,7 +293,7 @@ describe('setSelectedElementsById', () => {
 
     // Set an initial state.
     restore({
-      animationState: STORY_ANIMATION_STATE.PLAYING,
+      animationState: StoryAnimationState.Playing,
       pages: [
         {
           id: '111',
@@ -308,9 +308,9 @@ describe('setSelectedElementsById', () => {
       selection: ['e2'],
     });
 
-    updateAnimationState({ animationState: STORY_ANIMATION_STATE.PLAYING });
+    updateAnimationState({ animationState: StoryAnimationState.Playing });
     const result = setSelectedElementsById({ elementIds: ['e3'] });
 
-    expect(result.animationState).toStrictEqual(STORY_ANIMATION_STATE.RESET);
+    expect(result.animationState).toStrictEqual(StoryAnimationState.Reset);
   });
 });

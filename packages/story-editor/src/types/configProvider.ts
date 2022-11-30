@@ -74,10 +74,10 @@ export interface MetaData {
 
 export interface Tip {
   title: string;
-  figureSrcImg: string;
-  figureAlt: string;
+  figureSrcImg?: string;
+  figureAlt?: string;
   description: string[];
-  href: string;
+  href?: string;
 }
 
 export interface PageTemplate extends Page {
@@ -201,11 +201,7 @@ export interface APICallbacks {
     }
   ) => Promise<Term[]>;
   saveStoryById?: (data: Story) => Promise<Story>;
-  updateCurrentUser?: (data: {
-    mediaOptimization?: boolean;
-    onboarding?: Record<string, boolean>;
-    trackingOptin?: boolean;
-  }) => Promise<User>;
+  updateCurrentUser?: (data: Partial<User>) => Promise<User>;
   updateMedia?: (id: number, data: Partial<Resource>) => Promise<Resource>;
   updatePageTemplate?: (
     id: number,
