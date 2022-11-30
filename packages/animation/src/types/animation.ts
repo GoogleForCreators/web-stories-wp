@@ -126,5 +126,4 @@ export type AnimationInputWithPreset = AnimationInput & {
 export type StoryAnimation = AnimationInputWithPreset & {
   id: string;
   targets: ElementId[];
-  delete?: boolean;
 };

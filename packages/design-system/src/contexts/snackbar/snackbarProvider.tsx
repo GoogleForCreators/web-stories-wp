@@ -29,7 +29,7 @@ import Context from './context';
 
 interface SnackbarProviderProps {
   children: ReactNode;
-  placement?: string;
+  placement?: 'bottom' | 'top';
 }
 function SnackbarProvider({
   children,

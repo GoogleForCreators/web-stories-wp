@@ -132,6 +132,9 @@ export function removeAnimationsWithElementIds(
   );
 }
 
+type AnimationToDelete = StoryAnimation & {
+  delete?: boolean;
+};
 export function updateAnimations(
   oldAnimations: StoryAnimation[],
   animationUpdates: Record<string, StoryAnimation>
@@ -143,7 +146,7 @@ export function updateAnimations(
       // remove animation from lookup
       delete animationUpdates[animation.id];
 
-      if (updatedAnimation?.delete) {
+      if ((updatedAnimation as AnimationToDelete)?.delete) {
         // delete animation
         return animations;
       } else if (updatedAnimation) {
