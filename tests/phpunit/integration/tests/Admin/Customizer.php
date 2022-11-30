@@ -40,7 +40,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
 	 */
-	private ?WP_Customize_Manager $wp_customize_mock = null;
+	private ?WP_Customize_Manager $wp_customize = null;
 
 	public static function wpSetUpBeforeClass(): void {
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';
@@ -55,13 +55,13 @@ class Customizer extends DependencyInjectedTestCase {
 
 		$wp_customize            = new WP_Customize_Manager();
 		$GLOBALS['wp_customize'] = $wp_customize;
-		$this->wp_customize_mock = $GLOBALS['wp_customize'];
+		$this->wp_customize      = $GLOBALS['wp_customize'];
 
 		$this->instance = $this->injector->make( TheCustomizer::class );
 	}
 
 	public function tear_down(): void {
-		$this->wp_customize_mock = null;
+		$this->wp_customize = null;
 		unset( $GLOBALS['wp_customize'] );
 
 		remove_theme_support( 'web-stories' );
@@ -156,8 +156,8 @@ class Customizer extends DependencyInjectedTestCase {
 	public function test_customizer_web_stories_section_added(): void {
 		$this->add_web_stories_theme_support();
 
-		$this->assertInstanceOf( WP_Customize_Manager::class, $this->wp_customize_mock );
-		$this->wp_customize_mock->add_section(
+		$this->assertInstanceOf( WP_Customize_Manager::class, $this->wp_customize );
+		$this->wp_customize->add_section(
 			TheCustomizer::SECTION_SLUG,
 			[
 				'title'          => 'Web Stories',
@@ -165,8 +165,8 @@ class Customizer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->instance->register_customizer_settings( $this->wp_customize_mock );
-		$settings = $this->wp_customize_mock->sections();
+		$this->instance->register_customizer_settings( $this->wp_customize );
+		$settings = $this->wp_customize->sections();
 		$this->assertIsArray( $settings );
 		$this->assertArrayHasKey( TheCustomizer::SECTION_SLUG, $settings );
 		$this->assertInstanceOf( WP_Customize_Section::class, $settings[ TheCustomizer::SECTION_SLUG ] );
@@ -182,9 +182,9 @@ class Customizer extends DependencyInjectedTestCase {
 	 */
 	public function test_customizer_settings_added(): void {
 		$this->add_web_stories_theme_support();
-		$this->assertInstanceOf( WP_Customize_Manager::class, $this->wp_customize_mock );
-		$this->instance->register_customizer_settings( $this->wp_customize_mock );
-		$settings = $this->wp_customize_mock->settings();
+		$this->assertInstanceOf( WP_Customize_Manager::class, $this->wp_customize );
+		$this->instance->register_customizer_settings( $this->wp_customize );
+		$settings = $this->wp_customize->settings();
 		$this->assertIsArray( $settings );
 		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_stories]', $settings );
 		$this->assertArrayHasKey( 'web_stories_customizer_settings[view_type]', $settings );
