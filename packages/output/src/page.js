@@ -111,7 +111,7 @@ function OutputPage({
   });
 
   const products = elements
-    .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+    .filter(({ type, isHidden }) => type === ELEMENT_TYPES.PRODUCT && !isHidden)
     .map(({ product }) => product)
     .filter(Boolean);
 
