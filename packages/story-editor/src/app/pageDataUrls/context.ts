@@ -17,5 +17,14 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import type { PageDataUrlsContext } from './types';
 
-export default createContext({ actions: {}, state: {} });
+export default createContext<PageDataUrlsContext>({
+  state: {
+    dataUrls: {},
+  },
+  actions: {},
+});
