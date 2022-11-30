@@ -20,20 +20,6 @@
 import { setupReducer } from './_utils';
 
 describe('addElements', () => {
-  it('should ignore non-list arguments', () => {
-    const { restore, addElements } = setupReducer();
-
-    // Set an initial state with a current page and other elements.
-    const initialState = restore({
-      pages: [{ id: '111', elements: [{ id: '000' }] }],
-      current: '111',
-    });
-
-    const result = addElements({ elements: false });
-
-    expect(result).toStrictEqual(initialState);
-  });
-
   it('should ignore an empty list', () => {
     const { restore, addElements } = setupReducer();
 
