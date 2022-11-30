@@ -53,7 +53,7 @@ async function storyPageToDataUrl(
     height: width * (1 / PAGE_RATIO),
     canvasHeight: width * (1 / PAGE_RATIO),
     canvasWidth: width,
-  } as Options);
+  });
 
   cleanup();
 

@@ -45,7 +45,7 @@ function PageDataUrlProvider({
    */
   const queuePageImageGeneration: PageDataUrlsActions['queuePageImageGeneration'] =
     useCallback(
-      (storyPage: Page) => {
+      (storyPage) => {
         const idleTaskUid: string = storyPage.id;
         const idleTask: () => Promise<void> = async () => {
           const dataUrl = await storyPageToDataUrl(storyPage, {});
