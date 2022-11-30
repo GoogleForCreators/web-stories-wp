@@ -244,6 +244,6 @@ class Output_Buffer extends Service_Base implements Conditional {
 			"\n" .
 			"\n" .
 			// translators: 1: error message. 2: location.
-			sprintf( esc_html__( 'Error message: %1$s (%2$s)' ), $throwable->getMessage(), $throwable->getFile() . ':' . $throwable->getLine() );
+			sprintf( esc_html__( 'Error message: %1$s (%2$s)', 'web-stories' ) ), $throwable->getMessage(), $throwable->getFile() . ':' . $throwable->getLine() );
 	}
 }

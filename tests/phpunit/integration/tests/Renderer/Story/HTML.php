@@ -229,7 +229,7 @@ class HTML extends TestCase {
 
 		$actual = $this->call_private_method( $renderer, 'fix_incorrect_charset', [ $source ] );
 
-		$this->assertStringNotContainsString( '<meta charset="utf-8"/>', $actual );
+		$this->assertStringContainsString( '<meta charset="utf-8"/>', $actual );
 	}
 
 	/**
