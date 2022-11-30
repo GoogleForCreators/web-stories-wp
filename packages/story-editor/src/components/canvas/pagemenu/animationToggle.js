@@ -21,7 +21,7 @@ import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import { Icons } from '@googleforcreators/design-system';
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
@@ -43,8 +43,8 @@ function AnimationToggle() {
     }
   );
   const isPlaying = [
-    STORY_ANIMATION_STATE.PLAYING,
-    STORY_ANIMATION_STATE.PLAYING_SELECTED,
+    StoryAnimationState.Playing,
+    StoryAnimationState.PlayingSelected,
   ].includes(animationState);
 
   const tooltip = isFirstPage
@@ -63,8 +63,8 @@ function AnimationToggle() {
   const toggleAnimationState = useCallback(() => {
     updateAnimationState({
       animationState: isPlaying
-        ? STORY_ANIMATION_STATE.RESET
-        : STORY_ANIMATION_STATE.PLAYING,
+        ? StoryAnimationState.Reset
+        : StoryAnimationState.Playing,
     });
 
     trackEvent('canvas_play_animations', {

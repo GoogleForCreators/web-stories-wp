@@ -30,7 +30,6 @@ export default {
     },
     dashboardLink: 'http://www.example.com/dashboard',
     previewLink: 'http://www.example.com/preview',
-    showTakeOver: false,
     isOpen: true,
   },
   argTypes: {

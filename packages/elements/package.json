@@ -37,6 +37,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/animation": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/patterns": "*",
