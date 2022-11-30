@@ -20,7 +20,6 @@
 import type { PropsWithChildren } from 'react';
 import { useMemo, useEffect } from '@googleforcreators/react';
 import type { Page } from '@googleforcreators/elements';
-import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
