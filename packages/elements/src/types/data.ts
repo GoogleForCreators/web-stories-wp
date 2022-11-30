@@ -79,6 +79,7 @@ export interface ProductData {
   productUrl: string;
 }
 
+// Data retrieved as part of the raw data from the backend, used for example in the templates, in migration.
 export interface StoryData {
   version: number;
   pages: Page[];

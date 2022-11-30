@@ -43,10 +43,10 @@ describe('getLayerArrangementProps', () => {
     ];
     expect(
       getLayerArrangementProps('ArrowUp', false, [{ id: 'b' }], elements)
-    ).toStrictEqual({ position: LAYER_DIRECTIONS.FORWARD });
+    ).toStrictEqual({ position: LayerDirection.Forward });
     expect(
       getLayerArrangementProps('ArrowDown', false, [{ id: 'c' }], elements)
-    ).toStrictEqual({ position: LAYER_DIRECTIONS.BACKWARD });
+    ).toStrictEqual({ position: LayerDirection.Backward });
   });
 
   it('should get the layer group and position correctly for first/last layers of the group', () => {
@@ -92,7 +92,7 @@ describe('getLayerArrangementProps', () => {
         [{ id: 'd', groupId: 'g1' }],
         elements
       )
-    ).toStrictEqual({ position: LAYER_DIRECTIONS.FORWARD });
+    ).toStrictEqual({ position: LayerDirection.Forward });
     expect(
       getLayerArrangementProps(
         'ArrowDown',
@@ -100,7 +100,7 @@ describe('getLayerArrangementProps', () => {
         [{ id: 'd', groupId: 'g1' }],
         elements
       )
-    ).toStrictEqual({ position: LAYER_DIRECTIONS.BACKWARD });
+    ).toStrictEqual({ position: LayerDirection.Backward });
   });
 
   it('should get the layer group and position correctly when moving an element into a group', () => {

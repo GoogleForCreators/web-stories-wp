@@ -28,7 +28,7 @@ export function getItemByKey(key: string) {
   try {
     const stored = window.sessionStorage.getItem(key);
     if (stored) {
-      parsed = JSON.parse(stored) as Record<string, unknown>;
+      parsed = JSON.parse(stored) as unknown;
     }
   } catch (err) {
     if (err instanceof Error) {

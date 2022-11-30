@@ -23,7 +23,7 @@ import type { StoryAnimation } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
-import { LAYER_DIRECTIONS } from '../../../../constants';
+import { LayerDirection } from '../../../../constants';
 import { ELEMENT_RESERVED_PROPERTIES } from '../types';
 import objectWithout from '../../../../utils/objectWithout';
 import type { ElementUpdater } from '../../../../types';
@@ -69,7 +69,7 @@ interface PositionProps {
   currentPosition: number;
   minPosition: number;
   maxPosition: number;
-  desiredPosition: string | number;
+  desiredPosition: LayerDirection | number;
 }
 export function getAbsolutePosition({
   currentPosition,
@@ -81,18 +81,14 @@ export function getAbsolutePosition({
     return Math.min(maxPosition, Math.max(minPosition, desiredPosition));
   }
 
-  if (typeof desiredPosition !== 'string') {
-    return currentPosition;
-  }
-
   switch (desiredPosition) {
-    case LAYER_DIRECTIONS.FRONT:
+    case LayerDirection.Front:
       return maxPosition;
-    case LAYER_DIRECTIONS.BACK:
+    case LayerDirection.Back:
       return minPosition;
-    case LAYER_DIRECTIONS.FORWARD:
+    case LayerDirection.Forward:
       return Math.min(maxPosition, currentPosition + 1);
-    case LAYER_DIRECTIONS.BACKWARD:
+    case LayerDirection.Backward:
       return Math.max(minPosition, currentPosition - 1);
     default:
       return currentPosition;
@@ -131,12 +127,9 @@ export function removeAnimationsWithElementIds(
   animations: StoryAnimation[] = [],
   ids: string[] = []
 ) {
-  return animations.reduce((accum: StoryAnimation[], animation) => {
-    if (ids.some((id) => animation.targets?.includes(id))) {
-      return accum;
-    }
-    return [...accum, animation];
-  }, [] as StoryAnimation[]);
+  return animations.filter(
+    ({ targets }) => !ids.some((id) => targets?.includes(id))
+  );
 }
 
 export function updateAnimations(

@@ -28,6 +28,7 @@ import type {
  * Internal dependencies
  */
 import type { ActionTypes } from '../app/story/useStoryReducer/types';
+import type { LayerDirection } from '../constants';
 import type { StorySaveData } from './story';
 import type { Capabilities } from './configProvider';
 
@@ -141,7 +142,7 @@ export type SetBackgroundElementAction = {
 
 export type ArrangeElementProps = {
   elementId: string | null;
-  position: number | string;
+  position: number | LayerDirection;
   groupId?: string | boolean;
 };
 export type ArrangeElementAction = {
@@ -151,7 +152,7 @@ export type ArrangeElementAction = {
 
 export type ArrangeGroupProps = {
   groupId: string;
-  position: number | string;
+  position: number | LayerDirection;
 };
 export type ArrangeGroupAction = {
   type: ActionTypes.ArrangeGroup;

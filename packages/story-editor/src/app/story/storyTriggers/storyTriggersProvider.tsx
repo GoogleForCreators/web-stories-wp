@@ -79,10 +79,8 @@ export function StoryTriggersProvider({
 
   // Method to push events into the queue
   const dispatchStoryEvent = useCallback(
-    (eventType) => {
-      subscriptionMap[eventType as keyof typeof subscriptionMap]?.forEach(
-        (listener) => listener(currentStory)
-      );
+    (eventType: string) => {
+      subscriptionMap[eventType]?.forEach((listener) => listener(currentStory));
     },
     [subscriptionMap, currentStory]
   );

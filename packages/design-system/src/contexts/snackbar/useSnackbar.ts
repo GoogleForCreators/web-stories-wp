@@ -29,5 +29,5 @@ export function useSnackbar(): SnackbarState;
 export function useSnackbar<T>(
   selector: (state: SnackbarState) => T | SnackbarState = identity
 ) {
-  return useContextSelector(Context, selector ?? identity);
+  return useContextSelector(Context, selector);
 }

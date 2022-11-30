@@ -18,7 +18,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { sessionStore } from '@googleforcreators/design-system';
-import type { Page } from '@googleforcreators/elements';
+import type {Page, Story} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -43,7 +43,7 @@ function useLocalAutoSave({
   const restoreLocalAutoSave = useCallback(() => {
     const existingAutoSave = sessionStore.getItemByKey(
       getSessionStorageKey(storyId, isNew)
-    );
+    ) as { story?: Story, pages?: Page[] };
     // If either of the values is missing, nothing to do.
     if (!existingAutoSave?.story || !existingAutoSave?.pages) {
       return;

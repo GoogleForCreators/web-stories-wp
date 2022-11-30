@@ -47,7 +47,7 @@ interface GlobalStyles {
   textStyles: Partial<Text>;
 }
 
-// General story post data
+// General story post data as it is in the story state and history entry.
 export interface Story {
   storyId: number;
   title: string;

@@ -311,7 +311,7 @@ describe('arrangeElement', () => {
 
     const result = arrangeElement({
       elementId: '234',
-      position: LAYER_DIRECTIONS.FRONT,
+      position: LayerDirection.Front,
     });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
@@ -329,7 +329,7 @@ describe('arrangeElement', () => {
 
     const result = arrangeElement({
       elementId: '456',
-      position: LAYER_DIRECTIONS.BACK,
+      position: LayerDirection.Back,
     });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
@@ -347,7 +347,7 @@ describe('arrangeElement', () => {
 
     const result = arrangeElement({
       elementId: '234',
-      position: LAYER_DIRECTIONS.FORWARD,
+      position: LayerDirection.Forward,
     });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
@@ -365,7 +365,7 @@ describe('arrangeElement', () => {
 
     const result = arrangeElement({
       elementId: '345',
-      position: LAYER_DIRECTIONS.BACKWARD,
+      position: LayerDirection.Backward,
     });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
@@ -440,7 +440,7 @@ describe('arrangeElement', () => {
     // Try to move the element just above the background further backwards.
     const result = arrangeElement({
       elementId: '234',
-      position: LAYER_DIRECTIONS.BACKWARD,
+      position: LayerDirection.Backward,
     });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
@@ -459,7 +459,7 @@ describe('arrangeElement', () => {
     // Try to move any non-bg element to position BACK
     const result = arrangeElement({
       elementId: '345',
-      position: LAYER_DIRECTIONS.BACK,
+      position: LayerDirection.Back,
     });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
