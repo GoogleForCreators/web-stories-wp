@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { LAYER_DIRECTIONS } from '../../../../constants';
+import { LayerDirection } from '../../../../constants';
 import { setupReducer } from './_utils';
 
 describe('arrangeElement', () => {

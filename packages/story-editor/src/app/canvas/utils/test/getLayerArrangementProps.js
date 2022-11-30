@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import getLayerArrangementProps from '../getLayerArrangementProps';
-import { LAYER_DIRECTIONS } from '../../../../constants';
+import { LayerDirection } from '../../../../constants';
 
 describe('getLayerArrangementProps', () => {
   it('should do nothing when more or less than one element is selected', () => {

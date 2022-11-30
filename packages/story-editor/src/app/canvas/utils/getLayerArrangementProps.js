@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { LAYER_DIRECTIONS } from '../../../constants';
+import { LayerDirection } from '../../../constants';
 
 function getLayerArrangementProps(key, shift, selectedElements, elements) {
   // This only supports moving single layer.
