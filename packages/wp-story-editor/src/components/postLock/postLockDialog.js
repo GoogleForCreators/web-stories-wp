@@ -45,7 +45,6 @@ import {
  * @param {string} props.dashboardLink Link to dashboard.
  * @param {string} props.previewLink Preview link.
  * @param {Function} props.onClose Function when dialog is closed.
- * @param {boolean} props.showTakeOver Weather or not to show take over button.
  * @return {*} Render.
  */
 function PostLockDialog({
@@ -54,7 +53,6 @@ function PostLockDialog({
   owner,
   dashboardLink,
   previewLink,
-  showTakeOver = false,
 }) {
   return (
     <Dialog
@@ -74,15 +72,13 @@ function PostLockDialog({
           >
             {__('Preview', 'web-stories')}
           </Button>
-          {showTakeOver && (
-            <Button
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
-              onClick={onClose}
-            >
-              {__('Take over', 'web-stories')}
-            </Button>
-          )}
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onClose}
+          >
+            {__('Take over', 'web-stories')}
+          </Button>
           <Button
             type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.SMALL}
@@ -106,42 +102,28 @@ function PostLockDialog({
             />
           </DialogImageWrapper>
         )}
-
         <DialogContent>
           <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {showTakeOver ? (
-              <>
-                {sprintf(
-                  /* translators: %s: owner's name */
-                  __(
-                    '%s is currently working on this story, which means you cannot make changes, unless you take over.',
-                    'web-stories'
-                  ),
-                  owner?.name
-                )}
-              </>
-            ) : (
-              sprintf(
+            <>
+              {sprintf(
                 /* translators: %s: owner's name */
                 __(
-                  '%s is currently working on this story, which means you cannot make changes.',
-                  'web-stories'
-                ),
-                owner?.name
-              )
-            )}
-          </DialogText>
-          {showTakeOver && (
-            <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-              {sprintf(
-                /* translators: %s: owner's name */ __(
-                  'If you take over, %s will lose editing control to the story, but their changes will be saved.',
+                  '%s is currently working on this story, which means you cannot make changes, unless you take over.',
                   'web-stories'
                 ),
                 owner?.name
               )}
-            </DialogText>
-          )}
+            </>
+          </DialogText>
+          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {sprintf(
+              /* translators: %s: owner's name */ __(
+                'If you take over, %s will lose editing control to the story, but their changes will be saved.',
+                'web-stories'
+              ),
+              owner?.name
+            )}
+          </DialogText>
         </DialogContent>
       </DialogWrapper>
     </Dialog>
@@ -150,7 +132,6 @@ function PostLockDialog({
 
 PostLockDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  showTakeOver: PropTypes.bool,
   owner: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
   previewLink: PropTypes.string,

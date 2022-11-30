@@ -20,7 +20,10 @@
 import { useState } from '@googleforcreators/react';
 import { fireEvent, screen } from '@testing-library/react';
 import PropTypes from 'prop-types';
-import { DIRECTION, SCALE_DIRECTION } from '@googleforcreators/animation';
+import {
+  AnimationDirection,
+  ScaleDirection,
+} from '@googleforcreators/animation';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
@@ -57,7 +60,10 @@ describe('<DirectionRadioInput />', () => {
   it('should render directions supplied as buttons', () => {
     renderWithTheme(
       <DirectionRadioInput
-        directions={[DIRECTION.TOP_TO_BOTTOM, DIRECTION.BOTTOM_TO_TOP]}
+        directions={[
+          AnimationDirection.TopToBottom,
+          AnimationDirection.BottomToTop,
+        ]}
         onChange={() => {}}
       />
     );
@@ -67,7 +73,10 @@ describe('<DirectionRadioInput />', () => {
 
   it('should call onChange when button clicked', () => {
     const onChange = jest.fn((value) => value);
-    const directions = [DIRECTION.TOP_TO_BOTTOM, DIRECTION.BOTTOM_TO_TOP];
+    const directions = [
+      AnimationDirection.TopToBottom,
+      AnimationDirection.BottomToTop,
+    ];
     renderWithTheme(
       <DirectionRadioInput onChange={onChange} directions={directions} />
     );
@@ -84,7 +93,7 @@ describe('<DirectionRadioInput />', () => {
     renderWithTheme(
       <DirectionRadioInputUncontrolled
         onChange={onChange}
-        directions={[SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT]}
+        directions={[ScaleDirection.ScaleIn, ScaleDirection.ScaleOut]}
       />
     );
 
