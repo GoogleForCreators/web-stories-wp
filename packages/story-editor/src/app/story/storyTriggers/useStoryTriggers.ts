@@ -25,7 +25,7 @@ import {
 /**
  * Internal dependencies
  */
-import type { StoryTriggersState } from '../../../types';
+import type { Listener, StoryTriggersState } from '../../../types';
 import { Context } from './storyTriggersProvider';
 
 export function useStoryTriggers(): StoryTriggersState;
@@ -43,7 +43,6 @@ function getDispatch(v: StoryTriggersState) {
   return v[1];
 }
 
-type Listener<T> = (props: T) => void;
 /**
  * Example usage:
  * ```js
@@ -55,10 +54,7 @@ type Listener<T> = (props: T) => void;
       }, [])
     )
  */
-export function useStoryTriggerListener<T>(
-  eventType: string,
-  listener: Listener<T>
-) {
+export function useStoryTriggerListener(eventType: string, listener: Listener) {
   const addEventListener = useContextSelector(Context, getAddEventListener);
   useEffect(
     () => addEventListener(eventType, listener),

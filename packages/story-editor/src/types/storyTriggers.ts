@@ -18,8 +18,9 @@
  */
 import type { State } from './storyProvider';
 
+export type Listener = (props?: State) => void;
 export type StoryTriggersState = (
-  | ((eventType: string, listener: any) => () => void)
+  | ((eventType: string, listener: Listener) => () => void)
   | ((eventType: string) => void)
 )[];
 
