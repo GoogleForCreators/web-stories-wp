@@ -31,8 +31,17 @@ import {
   seekVideo,
   preloadVideo,
   blobToFile,
+  ResourceInput,
+  Resource,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
+
+export enum ResourceType {
+  Image = 'image',
+  Video = 'video',
+  Gif = 'gif',
+  Audio = 'audio',
+}
 
 /**
  * Internal dependencies
@@ -46,22 +55,26 @@ import getPosterName from './getPosterName';
  * @param {File} file File object.
  * @return {Promise<import('@googleforcreators/media').Resource>} Local image resource object.
  */
-const getImageResource = async (file) => {
+const getImageResource = async (file: File): Promise<Resource | null> => {
   const alt = getFileBasename(file);
   const mimeType = file.type;
 
-  const reader = await createFileReader(file);
+  const reader: FileReader = await createFileReader(file);
+
+  if (!reader.result) {
+    return null;
+  }
 
   const src = createBlob(new window.Blob([reader.result], { type: mimeType }));
   const { width, height } = await getImageDimensions(src);
 
   return createResource({
-    type: 'image',
+    type: ResourceType.Image,
     mimeType,
     src,
     ...getResourceSize({ width, height }),
     alt,
-  });
+  } as ResourceInput);
 };
 
 /**
@@ -70,11 +83,15 @@ const getImageResource = async (file) => {
  * @param {File} file File object.
  * @return {Promise<import('@googleforcreators/media').Resource>} Local video resource object.
  */
-const getVideoResource = async (file) => {
+const getVideoResource = async (file: File): Promise<Resource | null> => {
   const alt = getFileBasename(file);
   const mimeType = file.type;
 
   const reader = await createFileReader(file);
+
+  if (!reader.result) {
+    return null;
+  }
 
   const src = createBlob(new Blob([reader.result], { type: mimeType }));
 
@@ -82,12 +99,17 @@ const getVideoResource = async (file) => {
   // that cannot be *played* by the browser, but could still be used for generating a poster.
 
   const videoEl = await preloadVideo(src);
+  if (!videoEl) {
+    return null;
+  }
+
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
 
   const { length, lengthFormatted } = getVideoLength(videoEl);
 
   await seekVideo(videoEl);
   const hasAudio = hasVideoGotAudio(videoEl);
+
   const posterFile = blobToFile(
     await getImageFromVideo(videoEl),
     getPosterName(getFileBasename(file)),
@@ -97,7 +119,7 @@ const getVideoResource = async (file) => {
   const { width, height } = await getImageDimensions(poster);
 
   const resource = createResource({
-    type: 'video',
+    type: ResourceType.Video,
     mimeType,
     src: canPlayVideo ? src : '',
     ...getResourceSize({ width, height }),
@@ -106,7 +128,7 @@ const getVideoResource = async (file) => {
     length,
     lengthFormatted,
     alt,
-  });
+  } as ResourceInput);
 
   return { resource, posterFile };
 };

@@ -18,7 +18,7 @@
  */
 import { MEDIA_POSTER_IMAGE_FILE_TYPE } from '../../../constants';
 
-const getPosterName = (fileName) => {
+const getPosterName = (fileName: string) => {
   return fileName + '-poster.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
 };
 export default getPosterName;
