@@ -18,12 +18,26 @@
  * External dependencies
  */
 import type { AudioResource } from '@googleforcreators/media';
-import type { Taxonomy } from '@googleforcreators/story-editor/src/types/taxonomyProvider';
 
 /**
  * Internal dependencies
  */
 import type { Page } from './page';
+
+type Taxonomy = {
+  name: string;
+  slug: string;
+  capabilities: Record<string, string>;
+  description?: string;
+  labels: Record<string, string>;
+  types: string[];
+  showCloud?: boolean;
+  hierarchical: boolean;
+  restBase: string;
+  restNamespace: string;
+  visibility: Record<string, boolean>;
+  restPath: string;
+};
 
 export interface Story {
   version: number;
