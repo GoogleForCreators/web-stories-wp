@@ -1,7 +1,0 @@
-path_classifiers:
-  library:
-    - packages/imgareaselect/src
-  test:
-    - packages/e2e-tests
-    - packages/e2e-test-utils
-    - packages/karma-fixture

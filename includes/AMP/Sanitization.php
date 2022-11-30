@@ -40,7 +40,6 @@ use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
-use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Amp;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
@@ -404,8 +403,8 @@ class Sanitization {
 		}
 
 		$sanitizers = [
-			AMP_Script_Sanitizer::class            => [],
-			AMP_Style_Sanitizer::class             => [
+			AMP_Script_Sanitizer::class        => [],
+			AMP_Style_Sanitizer::class         => [
 
 				/*
 				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
@@ -417,12 +416,12 @@ class Sanitization {
 					'amp-story-captions',
 				],
 			],
-			Meta_Sanitizer::class                  => [],
-			AMP_Layout_Sanitizer::class            => [],
-			Canonical_Sanitizer::class             => [
+			Meta_Sanitizer::class              => [],
+			AMP_Layout_Sanitizer::class        => [],
+			Canonical_Sanitizer::class         => [
 				'canonical_url' => $canonical_url,
 			],
-			AMP_Tag_And_Attribute_Sanitizer::class => [],
+			Tag_And_Attribute_Sanitizer::class => [],
 		];
 
 		$post = get_queried_object();
@@ -488,12 +487,12 @@ class Sanitization {
 
 		// Force certain sanitizers to be at end.
 		// AMP_Style_Sanitizer needs to catch any CSS changes from previous sanitizers.
-		// AMP_Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
+		// Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
 		foreach ( [
 			AMP_Layout_Sanitizer::class,
 			AMP_Style_Sanitizer::class,
 			Meta_Sanitizer::class,
-			AMP_Tag_And_Attribute_Sanitizer::class,
+			Tag_And_Attribute_Sanitizer::class,
 		] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];
