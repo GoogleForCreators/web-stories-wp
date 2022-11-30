@@ -41,10 +41,6 @@ export const addAnimations = (
   draft: ReducerState,
   { animations }: AddAnimationsProps
 ) => {
-  if (!Array.isArray(animations)) {
-    return;
-  }
-
   const page = draft.pages.find(({ id }) => id === draft.current);
 
   if (!page) {
@@ -55,7 +51,7 @@ export const addAnimations = (
     page.animations = [];
   }
   page.animations = page.animations.concat(
-    exclusion(page.animations, animations) as StoryAnimation[]
+    exclusion<StoryAnimation>(page.animations, animations)
   );
 };
 

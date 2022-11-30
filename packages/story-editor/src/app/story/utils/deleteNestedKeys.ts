@@ -22,9 +22,6 @@
  */
 function deleteNestedKeys<T extends Record<string, object>>(paths: string[]) {
   return (object: T) => {
-    if (!Array.isArray(paths)) {
-      return;
-    }
     paths.forEach((path) => {
       const keys = path.split('.');
       if (!keys.length) {

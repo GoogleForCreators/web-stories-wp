@@ -160,7 +160,7 @@ function loadStory(
 
 interface LoadStoryProps {
   storyId: number;
-  story: RawStory | undefined;
+  story?: RawStory;
   shouldLoad: boolean;
   restore: Restore;
 }

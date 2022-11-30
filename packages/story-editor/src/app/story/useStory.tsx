@@ -28,7 +28,7 @@ export function useStory(): StoryProviderState;
 export function useStory<T>(
   selector: (state: StoryProviderState) => T | StoryProviderState = identity
 ) {
-  return useContextSelector(Context, selector ?? identity);
+  return useContextSelector(Context, selector);
 }
 
 export default useStory;

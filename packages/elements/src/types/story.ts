@@ -46,6 +46,8 @@ interface GlobalStyles {
   colors: Pattern[];
   textStyles: Partial<Text>;
 }
+
+// General story post data
 export interface Story {
   storyId: number;
   title: string;

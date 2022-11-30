@@ -65,7 +65,7 @@ function useHistoryEntry({
     actions: { stateToHistory },
   } = useHistory();
 
-  const currentHistoryEntryRef = useRef<HistoryEntry>();
+  const currentHistoryEntryRef = useRef<HistoryEntry | null>(null);
   useEffect(() => {
     if (currentEntry) {
       currentHistoryEntryRef.current = structuredClone(currentEntry);

@@ -23,14 +23,14 @@ import type { Page, Story } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import objectPick from '../../../utils/objectPick';
-import type { StorySaveData, MetaData } from '../../../types';
+import type { StorySaveData, MetaData, Flags } from '../../../types';
 import getAllProducts from './getAllProducts';
 
 interface StoryPropsToSave {
   story: Story;
   pages: Page[];
   metadata: MetaData;
-  flags: Record<string, boolean>;
+  flags: Flags;
 }
 function getStoryPropsToSave({
   story,

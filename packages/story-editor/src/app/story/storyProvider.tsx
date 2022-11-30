@@ -102,17 +102,11 @@ function StoryProvider({
 
   const currentPageAnimations = currentPage?.animations;
   const selectedElementAnimations = useMemo(() => {
-    if (isCurrentPageEmpty) {
+    if (isCurrentPageEmpty || selection.length === 0) {
       return STABLE_ARRAY;
     }
-    const animations: StoryAnimation[] = (currentPageAnimations || []).reduce(
-      (acc: StoryAnimation[], { targets, ...properties }) => {
-        if (targets.some((id) => selection && selection.includes(id))) {
-          return [...acc, { targets, ...properties }];
-        }
-        return acc;
-      },
-      []
+    const animations: StoryAnimation[] = (currentPageAnimations || []).filter(
+      ({ targets }) => !targets.some((id) => selection.includes(id))
     );
     return animations.length > 0 ? animations : STABLE_ARRAY;
   }, [isCurrentPageEmpty, selection, currentPageAnimations]);

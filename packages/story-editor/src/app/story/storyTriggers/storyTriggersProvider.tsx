@@ -44,11 +44,11 @@ function createSubscriptionMap(): Record<string, Map<symbol, Listener>> {
   );
 }
 
+type StoryTuple = [State, State | null];
 function reducer([currentStory]: StoryTuple, updatedStory: State): StoryTuple {
   return [updatedStory, currentStory];
 }
 
-type StoryTuple = [State, State | null];
 export function StoryTriggersProvider({
   children,
   story,

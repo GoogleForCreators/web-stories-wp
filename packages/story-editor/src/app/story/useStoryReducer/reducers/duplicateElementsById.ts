@@ -39,10 +39,6 @@ export const duplicateElementsById = (
   draft: ReducerState,
   { elementIds }: DuplicateElementsByIdProps
 ) => {
-  if (!Array.isArray(elementIds)) {
-    return;
-  }
-
   const page = draft.pages.find(({ id }) => id === draft.current);
   if (!page) {
     return;

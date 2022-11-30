@@ -17,7 +17,11 @@
  * External dependencies
  */
 import { isBlobURL } from '@googleforcreators/media';
-import type { MediaElement, Page } from '@googleforcreators/elements';
+import type {
+  MediaElement,
+  Page,
+  SequenceMediaElement,
+} from '@googleforcreators/elements';
 
 function pageContainsBlobUrl(pages: Page[]) {
   // skip entries that have a blob url
@@ -26,7 +30,7 @@ function pageContainsBlobUrl(pages: Page[]) {
     page.elements.some(
       (element) =>
         isBlobURL((element as MediaElement)?.resource?.src) ||
-        isBlobURL((element as MediaElement)?.resource?.poster)
+        isBlobURL((element as SequenceMediaElement)?.resource?.poster)
     )
   );
 }

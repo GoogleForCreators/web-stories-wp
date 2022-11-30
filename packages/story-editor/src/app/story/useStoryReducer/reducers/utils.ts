@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Element, Page } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
 import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
@@ -29,7 +29,7 @@ import objectWithout from '../../../../utils/objectWithout';
 import type { ElementUpdater } from '../../../../types';
 export { objectWithout };
 
-export function intersect(first: string[], ...rest: string[][]) {
+export function intersect<T>(first: T[], ...rest: T[][]) {
   if (!first || !rest?.length) {
     return first;
   }
@@ -45,8 +45,8 @@ export function isInsideRange(index: number, start: number, end: number) {
   return index >= start && index <= end;
 }
 
-export function moveArrayElement(
-  array: Page[] | Element[],
+export function moveArrayElement<T>(
+  array: T[],
   oldPosition: number,
   newPosition: number
 ) {
@@ -187,7 +187,7 @@ interface Entry {
  * @param entries - set of entries with possible duplicate Ids
  * @return New set of entries with only unique Ids
  */
-export function removeDuplicates(entries: Entry[] = []) {
+export function removeDuplicates<T extends Entry>(entries: T[] = []) {
   // Use only last of multiple elements with same id by turning into an object and getting the values.
   return Object.values(
     Object.fromEntries(entries.map((entry) => [entry.id, entry]))
@@ -202,7 +202,7 @@ export function removeDuplicates(entries: Entry[] = []) {
  * @param right - new entries
  * @return - right exclusion of sets set
  */
-export function exclusion(left: Entry[] = [], right: Entry[] = []) {
+export function exclusion<T extends Entry>(left: T[] = [], right: T[] = []) {
   const rightSet = removeDuplicates(right);
   const leftJoinKeys = left.map(({ id }) => id);
   return rightSet.filter(({ id }) => !leftJoinKeys.includes(id));
@@ -224,7 +224,7 @@ export function getLastIndexOfGroup({
   groupId: string;
 }) {
   const isMember = (e: Element) => e.groupId === groupId;
-  const firstGroupElemenIndex = elements.findIndex(isMember);
+  const firstGroupElementIndex = elements.findIndex(isMember);
   const groupSize = elements.filter(isMember).length;
-  return firstGroupElemenIndex + groupSize - 1;
+  return firstGroupElementIndex + groupSize - 1;
 }

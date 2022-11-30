@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+export type Flags = Record<string, boolean>;
+
 export interface RESTError {
   message?: string;
   data?: {

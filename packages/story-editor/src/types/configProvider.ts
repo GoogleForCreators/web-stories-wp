@@ -23,6 +23,7 @@ import type { Page } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import type { APICallbacks } from './apiProvider';
+import type { Flags } from './storyEditor';
 
 export interface Capabilities {
   /** If the user has permissions to upload files. */
@@ -122,6 +123,6 @@ export interface ConfigState {
   shoppingProvider: string;
   mediainfoUrl: string;
   /** Feature flags */
-  flags: Record<string, boolean>;
+  flags: Flags;
   additionalTips: Record<string, Tip>;
 }

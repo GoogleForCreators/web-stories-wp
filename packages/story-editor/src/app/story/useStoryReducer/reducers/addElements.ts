@@ -47,10 +47,6 @@ export const addElements = (
   draft: ReducerState,
   { elements, pageId, updateSelection = true }: AddElementsProps
 ) => {
-  if (!Array.isArray(elements)) {
-    return;
-  }
-
   const page = draft.pages.find(({ id }) =>
     pageId ? id === pageId : id === draft.current
   );
@@ -58,7 +54,7 @@ export const addElements = (
     return;
   }
 
-  const newElements = exclusion(page.elements, elements) as Element[];
+  const newElements = exclusion<Element>(page.elements, elements);
 
   if (newElements.length === 0) {
     return;
