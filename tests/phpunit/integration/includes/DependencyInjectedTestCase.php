@@ -14,6 +14,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Infrastructure\Injector;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\ServiceContainer;
 use Google\Web_Stories\Plugin;
 use Google\Web_Stories\Services;
@@ -27,6 +28,8 @@ abstract class DependencyInjectedTestCase extends TestCase {
 
 	/**
 	 * Service container instance to test with.
+	 *
+	 * @var ServiceContainer<Service>
 	 */
 	protected ServiceContainer $container;
 

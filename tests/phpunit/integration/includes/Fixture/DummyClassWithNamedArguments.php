@@ -10,7 +10,7 @@ final class DummyClassWithNamedArguments {
 
 	private string $argument_b;
 
-	public function __construct( $argument_a, $argument_b = 'Mr Meeseeks' ) {
+	public function __construct( int $argument_a, string $argument_b = 'Mr Meeseeks' ) {
 		$this->argument_a = $argument_a;
 		$this->argument_b = $argument_b;
 	}

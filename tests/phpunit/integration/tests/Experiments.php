@@ -20,6 +20,8 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use WP_UnitTest_Factory;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Experiments
  */
@@ -29,10 +31,7 @@ class Experiments extends DependencyInjectedTestCase {
 
 	private \Google\Web_Stories\Experiments $instance;
 
-	/**
-	 * @param $factory
-	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
