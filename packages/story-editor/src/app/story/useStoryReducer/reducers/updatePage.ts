@@ -41,9 +41,7 @@ export const updatePage = (
   draft: ReducerStateDraft,
   { pageId, properties }: UpdatePageProps
 ) => {
-  const idToUpdate = (pageId === null ? draft.current : pageId) as
-    | string
-    | undefined;
+  const idToUpdate = pageId === null ? (draft.current as string) : pageId;
   const page = draft.pages.find(({ id }) => id === idToUpdate);
   if (!page) {
     return;

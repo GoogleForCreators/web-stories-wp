@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -104,10 +103,10 @@ export const arrangeElement = (
   // Update group id on current element
   if (groupId) {
     // Can only change groups to a group that exists
-    if (!page.groups?.[groupId as string]) {
+    if (!page.groups?.groupId) {
       return;
     }
-    page.elements[currentPosition].groupId = groupId as string;
+    page.elements[currentPosition].groupId = groupId;
   } else if (groupId === undefined || groupId === null) {
     delete page.elements[currentPosition].groupId;
   }
@@ -123,7 +122,7 @@ export const arrangeElement = (
   }
 
   // Then reorder if relevant
-  page.elements = moveArrayElement(page.elements, currentPosition, newPosition) as Element[];
+  page.elements = moveArrayElement(page.elements, currentPosition, newPosition);
 };
 
 export default produce<ReducerState, [ArrangeElementProps]>(arrangeElement);

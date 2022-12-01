@@ -144,7 +144,7 @@ export type SetBackgroundElementAction = {
 export type ArrangeElementProps = {
   elementId: string | null;
   position: number | LayerDirection;
-  groupId?: string | boolean;
+  groupId?: string | false;
 };
 export type ArrangeElementAction = {
   type: ActionTypes.ArrangeElement;

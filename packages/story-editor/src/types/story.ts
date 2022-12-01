@@ -22,6 +22,7 @@ import type {
   ProductData,
   StoryData,
   Story,
+  TextElement,
 } from '@googleforcreators/elements';
 import type { Pattern } from '@googleforcreators/patterns';
 
@@ -98,7 +99,7 @@ export interface RawStory {
   storyData: StoryData;
   stylePresets: {
     colors?: Pattern[];
-    textStyles?: Partial<Text>[];
+    textStyles?: Partial<TextElement>[];
   };
   previewLink: string;
   editLink: string;

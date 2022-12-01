@@ -105,10 +105,7 @@ export const combineElements = (
   ];
 
   // If the element we're dropping into is not background, maintain link and border.
-  if (
-    !('isBackground' in secondElement) ||
-    (elementIs.backgroundable(secondElement) && !secondElement.isBackground)
-  ) {
+  if (elementIs.backgroundable(secondElement) && !secondElement.isBackground) {
     propsFromFirst.push('link');
     propsFromFirst.push('border');
     if (canSupportMultiBorder(secondElement)) {

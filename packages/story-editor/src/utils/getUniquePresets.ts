@@ -17,12 +17,13 @@
  * External dependencies
  */
 import type { Pattern } from '@googleforcreators/patterns';
+import type { TextElement } from '@googleforcreators/elements';
 
-function getUniquePresets(presets: Pattern[] | Partial<Text>[]) {
+function getUniquePresets<T extends Pattern | Partial<TextElement>>(
+  presets: T[]
+): T[] {
   const list = presets.map((preset) => JSON.stringify(preset));
-  return Array.from(new Set(list)).map(
-    (preset) => JSON.parse(preset) as Pattern | Partial<Text>
-  );
+  return Array.from(new Set(list)).map((preset) => JSON.parse(preset) as T);
 }
 
 export default getUniquePresets;

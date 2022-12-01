@@ -127,13 +127,13 @@ export const setBackgroundElement = (
 
   // Remove any applied background animations
   // or exising element animations.
-  const backgroundElementId = page.elements.find(
+  const backgroundElement = page.elements.find(
     (element) => elementIs.backgroundable(element) && element.isBackground
   );
-  if (backgroundElementId) {
+  if (backgroundElement) {
     page.animations = removeAnimationsWithElementIds(page.animations, [
       elementId as string,
-      backgroundElementId.id,
+      backgroundElement.id,
     ]);
   }
 };

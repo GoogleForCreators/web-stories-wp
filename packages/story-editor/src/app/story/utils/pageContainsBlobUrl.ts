@@ -18,10 +18,10 @@
  */
 import { isBlobURL } from '@googleforcreators/media';
 import type {
-  MediaElement,
   Page,
   SequenceMediaElement,
 } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
 
 function pageContainsBlobUrl(pages: Page[]) {
   // skip entries that have a blob url
@@ -29,8 +29,10 @@ function pageContainsBlobUrl(pages: Page[]) {
   return pages.some((page) =>
     page.elements.some(
       (element) =>
-        isBlobURL((element as MediaElement)?.resource?.src) ||
-        isBlobURL((element as SequenceMediaElement)?.resource?.poster)
+        elementIs.media(element) &&
+        (isBlobURL(element.resource.src) ||
+          (elementIs.sequenceMedia(element) &&
+            isBlobURL((element as SequenceMediaElement)?.resource?.poster)))
     )
   );
 }

@@ -79,8 +79,6 @@ export const duplicateGroup = (
     element.groupId = groupId;
 
     if (elementAnimations.length && page.animations) {
-      // If duplicated element has animations, so does existing, so animations
-      // array already exists
       page.animations.push(...elementAnimations);
     }
 

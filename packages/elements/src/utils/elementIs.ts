@@ -22,7 +22,7 @@ import type {
   Element,
   MediaElement,
   TextElement,
-  ProductElement,
+  ProductElement, SequenceMediaElement,
 } from '../types';
 
 function isMediaElement(e: Element): e is MediaElement {
@@ -46,12 +46,17 @@ function isProduct(e: Element): e is ProductElement {
   return 'product' in e;
 }
 
+function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement {
+  return 'poster' in e.resource;
+}
+
 const elementIs = {
   media: isMediaElement,
   text: isTextElement,
   defaultBackground: isDefaultBackgroundElement,
   backgroundable: isBackgroundable,
   product: isProduct,
+  sequenceMedia: isSequenceMediaElement,
 };
 
 export default elementIs;

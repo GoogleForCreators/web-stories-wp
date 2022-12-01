@@ -54,7 +54,7 @@ export const updateElementsByResourceId = (
   draft.pages.forEach((page) => {
     page.elements
       .filter(
-        (element) => elementIs.media(element) && element.resource?.id === id
+        (element) => elementIs.media(element) && element.resource.id === id
       )
       .forEach((element) =>
         updateElementWithUpdater(element, propertiesOrUpdater)

@@ -19,8 +19,7 @@
  */
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
-import { createPage } from '@googleforcreators/elements';
-import type { Pattern } from '@googleforcreators/patterns';
+import { createPage, TextElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -102,10 +101,10 @@ function loadStory(
   // Otherwise ensure the saved presets are unique.
   const newGlobalStoryStyles = {
     colors: globalStoryStyles.colors
-      ? (getUniquePresets(globalStoryStyles.colors) as Pattern[])
+      ? getUniquePresets(globalStoryStyles.colors)
       : [],
     textStyles: globalStoryStyles.textStyles
-      ? (getUniquePresets(globalStoryStyles.textStyles) as Partial<Text>[])
+      ? getUniquePresets<Partial<TextElement>>(globalStoryStyles.textStyles)
       : [],
   };
 
@@ -131,7 +130,7 @@ function loadStory(
     revisions,
     currentStoryStyles: {
       colors: storyData?.currentStoryStyles?.colors
-        ? (getUniquePresets(storyData.currentStoryStyles.colors) as Pattern[])
+        ? getUniquePresets(storyData.currentStoryStyles.colors)
         : [],
     },
     globalStoryStyles: newGlobalStoryStyles,

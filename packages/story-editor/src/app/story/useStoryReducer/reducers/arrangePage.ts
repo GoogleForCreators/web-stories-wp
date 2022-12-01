@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -62,7 +61,7 @@ export const arrangePage = (
     return;
   }
 
-  draft.pages = moveArrayElement(draft.pages, pageIndex, position) as Page[];
+  draft.pages = moveArrayElement(draft.pages, pageIndex, position);
 };
 
 export default produce<ReducerState, [ArrangePageProps]>(arrangePage);

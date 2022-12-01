@@ -47,7 +47,7 @@ export const restore = (
     return undefined;
   }
 
-  const newReducerState = typeof story === 'object' ? story : ({} as Story);
+  const newStory = typeof story === 'object' ? story : ({} as Story);
   const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
   const oldCurrent = current ?? draft.current;
   const newCurrent = pages.some(({ id }) => id === oldCurrent)
@@ -59,7 +59,7 @@ export const restore = (
     pages,
     current: newCurrent,
     selection: newSelection,
-    story: newReducerState,
+    story: newStory,
     animationState: draft.animationState,
     capabilities: newCapabilities,
     copiedElementState: {},

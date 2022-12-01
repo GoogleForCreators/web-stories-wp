@@ -38,7 +38,7 @@ export const selectElement = (
   draft: ReducerStateDraft,
   { elementId }: SelectElementProps
 ) => {
-  if (!elementId || draft.selection.includes(elementId)) {
+  if (draft.selection.includes(elementId)) {
     return;
   }
 

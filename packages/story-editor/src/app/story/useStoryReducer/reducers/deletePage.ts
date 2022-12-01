@@ -48,7 +48,7 @@ export const deletePage = (
     return;
   }
 
-  const idToDelete = (pageId === null ? draft.current : pageId);
+  const idToDelete = pageId === null ? draft.current : pageId;
 
   const pageIndex = draft.pages.findIndex(({ id }) => id === idToDelete);
   if (pageIndex === -1) {

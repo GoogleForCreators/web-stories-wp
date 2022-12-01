@@ -104,9 +104,9 @@ function useHistoryEntry({
         story,
         capabilities,
       };
-      const onlyPagesChanged = Object.keys(withoutPages).every(
-        (key) =>
-          JSON.stringify(withoutPages[key as keyof typeof withoutPages]) ===
+      const onlyPagesChanged = Object.entries(withoutPages).every(
+        ([key, value]) =>
+          JSON.stringify(value) ===
           JSON.stringify(
             currentHistoryEntryRef.current?.[key as keyof HistoryEntry]
           )

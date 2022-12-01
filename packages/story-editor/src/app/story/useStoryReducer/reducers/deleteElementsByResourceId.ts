@@ -48,7 +48,7 @@ export const deleteElementsByResourceId = (
 
   const hasElementWithResourceId = draft.pages.some((page) =>
     page.elements.some(
-      (element) => elementIs.media(element) && element.resource?.id === id
+      (element) => elementIs.media(element) && element.resource.id === id
     )
   );
 
