@@ -82,7 +82,9 @@ function useHistoryEntry({
   const deleteKeysFromPages = (list: Page[]) => {
     // Create a copy of the list not to influence the original.
     return structuredClone(list).map((page) => {
-      page.elements.forEach(deleteNestedKeys(ELEMENT_PROPS_TO_IGNORE));
+      page.elements.forEach((element) =>
+        deleteNestedKeys(ELEMENT_PROPS_TO_IGNORE)({ ...element })
+      );
       return page;
     });
   };

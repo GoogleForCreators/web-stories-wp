@@ -20,7 +20,7 @@
  *
  * Note that this function mutates the original object.
  */
-function deleteNestedKeys<T extends Record<string, object>>(paths: string[]) {
+function deleteNestedKeys<T extends Record<string, unknown>>(paths: string[]) {
   return (object: T) => {
     paths.forEach((path) => {
       const keys = path.split('.');
