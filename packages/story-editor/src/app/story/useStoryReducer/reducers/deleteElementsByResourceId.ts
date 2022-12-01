@@ -56,7 +56,7 @@ export const deleteElementsByResourceId = (
     return;
   }
 
-  const idsToDelete: string[] = [];
+  const deletedElementIds: string[] = [];
 
   draft.pages.forEach((page) => {
     const { elements, animations } = page;
@@ -66,7 +66,7 @@ export const deleteElementsByResourceId = (
 
     page.elements = elements.filter((element) => {
       if (elementIs.media(element) && element.resource?.id === id) {
-        idsToDelete.push(element.id);
+        deletedElementIds.push(element.id);
         return false;
       }
       return true;
@@ -79,13 +79,13 @@ export const deleteElementsByResourceId = (
     // Remove animations associated with elements
     if (animations) {
       page.animations = animations.filter((anim) =>
-        anim.targets.some((elementId) => !idsToDelete.includes(elementId))
+        anim.targets.some((elementId) => !deletedElementIds.includes(elementId))
       );
     }
   });
 
   draft.selection = draft.selection.filter(
-    (selectedId) => !idsToDelete.includes(selectedId)
+    (selectedId) => !deletedElementIds.includes(selectedId)
   );
 };
 
