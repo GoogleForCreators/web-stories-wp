@@ -98,7 +98,7 @@ export function getAbsolutePosition({
 interface AllowedProperties extends Partial<Element> {
   animation: StoryAnimation;
 }
-function isAnimationUpdate(
+function isWithAnimation(
   props: Partial<Element> | Element
 ): props is AllowedProperties {
   return 'animation' in props;
@@ -116,7 +116,7 @@ export function updateElementWithUpdater(
   if (Object.keys(allowedProperties).length === 0) {
     return null;
   }
-  if (isAnimationUpdate(allowedProperties)) {
+  if (isWithAnimation(allowedProperties) && allowedProperties.animation) {
     return allowedProperties.animation;
   }
   Object.assign(element, allowedProperties);
