@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { produce, current } from 'immer';
+import { produce, current, Draft } from 'immer';
+import type { Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -39,7 +40,7 @@ export const updateStory = (
 ) => {
   // If properties is a callback, replace story with callback response
   if (typeof properties === 'function') {
-    draft.story = properties(current(draft.story));
+    draft.story = properties<Draft<Story>>(current(draft.story));
     return;
   }
   // Otherwise copy all the properties into the existing story object

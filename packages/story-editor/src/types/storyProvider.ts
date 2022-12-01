@@ -214,7 +214,7 @@ export type DuplicateElementsByIdAction = {
   payload: DuplicateElementsByIdProps;
 };
 
-type StoryUpdater = (story: Story) => Story;
+type StoryUpdater = <T = Story>(story: T) => T;
 export type UpdateStoryProps = {
   properties: Partial<Story> | StoryUpdater;
 };
