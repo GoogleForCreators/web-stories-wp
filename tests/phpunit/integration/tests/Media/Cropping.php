@@ -68,9 +68,12 @@ class Cropping extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-
+		$this->assertNotWPError( $video_attachment_id );
+		$this->assertNotWPError( $cropped_attachment_id );
 		add_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, $cropped_attachment_id );
-		$this->assertSame( $cropped_attachment_id, (int) get_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, true ) );
+		$post_meta = get_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, true );
+		$this->assertIsNumeric( $post_meta );
+		$this->assertSame( $cropped_attachment_id, (int) $post_meta );
 		wp_delete_attachment( $cropped_attachment_id );
 		$this->assertEmpty( get_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, true ) );
 	}
@@ -88,7 +91,7 @@ class Cropping extends TestCase {
 				'post_title'     => 'Test Video',
 			]
 		);
-
+		$this->assertNotWPError( $video_attachment_id );
 		add_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, 999 );
 		$this->instance->on_plugin_uninstall();
 		$this->assertSame( '', get_post_meta( $video_attachment_id, $this->instance::CROPPED_ID_POST_META_KEY, true ) );

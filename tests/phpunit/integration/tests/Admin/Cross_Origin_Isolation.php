@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use Google\Web_Stories\User\Preferences;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Cross_Origin_Isolation
@@ -59,8 +60,8 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	}
 
 	public function tear_down(): void {
-		delete_user_meta( $this->admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
-		delete_user_meta( $this->contributor_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		delete_user_meta( $this->admin_id, Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		delete_user_meta( $this->contributor_id, Preferences::MEDIA_OPTIMIZATION_META_KEY );
 
 		parent::tear_down();
 	}
@@ -70,7 +71,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	 */
 	public function test_register(): void {
 		wp_set_current_user( $this->admin_id );
-		update_user_meta( $this->admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		update_user_meta( $this->admin_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
@@ -89,9 +90,9 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	 */
 	public function test_needs_isolation(): void {
 		wp_set_current_user( $this->admin_id );
-		update_user_meta( $this->admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		update_user_meta( $this->admin_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+		$actual = $this->call_private_method( [ $this->instance, 'needs_isolation' ] );
 
 		$this->assertTrue( $actual );
 	}
@@ -102,7 +103,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	public function test_needs_isolation_default_user_meta_value(): void {
 		wp_set_current_user( $this->admin_id );
 
-		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+		$actual = $this->call_private_method( [ $this->instance, 'needs_isolation' ] );
 
 		$this->assertTrue( $actual );
 	}
@@ -111,7 +112,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	 * @covers ::needs_isolation
 	 */
 	public function test_needs_isolation_no_user(): void {
-		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+		$actual = $this->call_private_method( [ $this->instance, 'needs_isolation' ] );
 
 		$this->assertFalse( $actual );
 	}
@@ -121,9 +122,9 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	 */
 	public function test_needs_isolation_opt_out(): void {
 		wp_set_current_user( $this->admin_id );
-		update_user_meta( $this->admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+		update_user_meta( $this->admin_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 
-		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+		$actual = $this->call_private_method( [ $this->instance, 'needs_isolation' ] );
 
 		$this->assertFalse( $actual );
 	}
@@ -133,9 +134,9 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	 */
 	public function test_needs_isolation_no_upload_caps(): void {
 		wp_set_current_user( $this->contributor_id );
-		update_user_meta( $this->contributor_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		update_user_meta( $this->contributor_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+		$actual = $this->call_private_method( [ $this->instance, 'needs_isolation' ] );
 
 		$this->assertFalse( $actual );
 	}
@@ -147,7 +148,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		$html      = "<img src='http://www.google.com/test.jpg' alt='test' />";
 		$attribute = 'src';
 		$url       = 'http://www.google.com/test.jpg';
-		$result    = $this->call_private_method( $this->instance, 'add_attribute', [ $html, $attribute, $url ] );
+		$result    = $this->call_private_method( [ $this->instance, 'add_attribute' ], [ $html, $attribute, $url ] );
 		$this->assertStringContainsString( 'crossorigin', $result );
 	}
 	/**
@@ -157,7 +158,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		$url       = site_url( '/test.jpg' );
 		$html      = sprintf( "<img src='%s' alt='test' />", $url );
 		$attribute = 'src';
-		$result    = $this->call_private_method( $this->instance, 'add_attribute', [ $html, $attribute, $url ] );
+		$result    = $this->call_private_method( [ $this->instance, 'add_attribute' ], [ $html, $attribute, $url ] );
 		$this->assertStringNotContainsString( 'crossorigin', $result );
 	}
 
@@ -168,7 +169,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		$html      = "<img src='/test.jpg' alt='test' />";
 		$attribute = 'src';
 		$url       = '/test.jpg';
-		$result    = $this->call_private_method( $this->instance, 'add_attribute', [ $html, $attribute, $url ] );
+		$result    = $this->call_private_method( [ $this->instance, 'add_attribute' ], [ $html, $attribute, $url ] );
 		$this->assertStringNotContainsString( 'crossorigin', $result );
 	}
 
@@ -178,10 +179,12 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	public function test_replace_in_dom(): void {
 		$site_url = site_url();
 
-		$html   = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/cross_origin_content.html' );
+		$html = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/cross_origin_content.html' );
+		$this->assertIsString( $html );
 		$html   = str_replace( '--SITE_URL--', $site_url, $html );
-		$result = $this->call_private_method( $this->instance, 'replace_in_dom', [ $html ] );
+		$result = $this->call_private_method( [ $this->instance, 'replace_in_dom' ], [ $html ] );
 
+		$this->assertIsString( $result );
 		$this->assertStringContainsString( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0.js"></script>', $result );
 		$this->assertStringContainsString( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>', $result );
 		$this->assertStringContainsString( '<link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?display=swap&#038;family=Roboto" rel="stylesheet" />', $result );
@@ -209,7 +212,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	 */
 	public function test_replace_in_dom_invalid(): void {
 		$html   = '<html><img src="http://www.example.com/test1.jpg" /><invalid /</html';
-		$result = $this->call_private_method( $this->instance, 'replace_in_dom', [ $html ] );
+		$result = $this->call_private_method( [ $this->instance, 'replace_in_dom' ], [ $html ] );
 		$this->assertStringContainsString( '<img crossorigin="anonymous" src="http://www.example.com/test1.jpg" />', $result );
 	}
 

@@ -20,9 +20,11 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Media\Base_Color;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
-use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Media_Controller
@@ -48,7 +50,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @param $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 
 		self::$user_id = $factory->user->create(
 			[
@@ -57,9 +59,9 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$post_id = self::factory()->post->create(
+		self::$post_id = $factory->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'publish',
 				'post_author' => self::$user_id,
 			]
@@ -74,7 +76,10 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$mp4_attachment_id = $factory->attachment->create_object(
+		/**
+		 * @var int $mp4_attachment_id
+		 */
+		$mp4_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => self::$post_id,
@@ -83,7 +88,12 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$poster_attachment_id = $factory->attachment->create_object(
+		self::$mp4_attachment_id = $mp4_attachment_id;
+
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -92,9 +102,14 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		self::$poster_attachment_id = $poster_attachment_id;
+
 		set_post_thumbnail( self::$mp4_attachment_id, self::$poster_attachment_id );
 
-		self::$mov_attachment_id = $factory->attachment->create_object(
+		/**
+		 * @var int $mov_attachment_id
+		 */
+		$mov_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mov',
 				'post_parent'    => self::$post_id,
@@ -102,6 +117,8 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 				'post_title'     => 'Test Video Move',
 			]
 		);
+
+		self::$mov_attachment_id = $mov_attachment_id;
 	}
 
 	public function set_up(): void {
@@ -125,7 +142,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		// Body of request.
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'headers', $data );
 		$this->assertArrayHasKey( 'body', $data );
 		$this->assertArrayHasKey( 'status', $data );
@@ -143,6 +160,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertCount( 2, $data );
 		$mime_type = wp_list_pluck( $data, 'mime_type' );
 		$this->assertNotContains( 'video/mov', $mime_type );
@@ -163,6 +181,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertCount( 1, $data );
 		$mime_type = wp_list_pluck( $data, 'mime_type' );
 		$this->assertNotContains( 'video/mov', $mime_type );
@@ -173,8 +192,9 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_attached_post_ids
 	 */
 	public function test_get_attached_post_ids(): void {
-		$posts  = [ get_post( self::$mov_attachment_id ), get_post( self::$mp4_attachment_id ) ];
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$posts = [ get_post( self::$mov_attachment_id ), get_post( self::$mp4_attachment_id ) ];
+
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [ self::$post_id, self::$poster_attachment_id ], $result );
 	}
 
@@ -182,8 +202,9 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_attached_post_ids
 	 */
 	public function test_get_attached_post_ids_empty(): void {
-		$posts  = [];
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$posts = [];
+
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -200,7 +221,8 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 		$posts         = [ $poster_object ];
-		$result        = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -220,6 +242,8 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		wp_set_current_user( self::$user_id );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
@@ -231,10 +255,11 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
 		$request->set_param( 'post', $poster_attachment_id );
 
-		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
+		$request->set_body( (string) file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertEquals( 201, $response->get_status() );
 		$this->assertEquals( 'image', $data['media_type'] );
 
@@ -265,7 +290,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
 		$request->set_param( 'post', $revision_id );
 
-		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
+		$request->set_body( (string) file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
 	}
@@ -289,9 +314,11 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $original_attachment_id );
+
 		update_post_meta( $original_attachment_id, '_wp_attachment_image_alt', 'Test alt' );
 		$color = '#0f0f0f';
-		update_post_meta( $original_attachment_id, \Google\Web_Stories\Media\Base_Color::BASE_COLOR_POST_META_KEY, $color );
+		update_post_meta( $original_attachment_id, Base_Color::BASE_COLOR_POST_META_KEY, $color );
 
 		wp_set_current_user( self::$user_id );
 
@@ -299,15 +326,20 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$request->set_header( 'Content-Type', 'image/jpeg' );
 		$request->set_header( 'Content-Disposition', 'attachment; filename=canola.jpg' );
 		$request->set_param( 'original_id', $original_attachment_id );
-		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
+		$request->set_body( (string) file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertEquals( 201, $response->get_status() );
 		$this->assertEquals( 'image', $data['media_type'] );
 
+		$this->assertIsInt( $data['id'] );
 		$attachment = get_post( $data['id'] );
 
+		$this->assertNotNull( $attachment );
+
+		$this->assertIsArray( $data['title'] );
 		$this->assertSame( 'Test Video', $data['title']['raw'] );
 		$this->assertSame( 'Test Video', $attachment->post_title );
 		$this->assertSame( 'Test excerpt', $data['caption']['raw'] );
@@ -319,43 +351,6 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'meta', $data );
 		$this->assertArrayHasKey( 'web_stories_base_color', $data['meta'] );
 		$this->assertSame( $color, $data['meta']['web_stories_base_color'] );
-	}
-
-	/**
-	 * @covers ::get_item
-	 * @covers ::prepare_links
-	 * @covers ::add_taxonomy_links
-	 */
-	public function test_get_add_taxonomy_links(): void {
-		$this->controller->register();
-
-		$object = new DummyTaxonomy();
-		$this->set_private_property( $object, 'taxonomy_post_type', 'attachment' );
-		$object->register_taxonomy();
-
-		wp_set_current_user( self::$user_id );
-
-		$original_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
-				'post_parent'    => 0,
-				'post_mime_type' => 'video/mp4',
-				'post_title'     => 'Test Video',
-				'post_content'   => 'Test content',
-				'post_excerpt'   => 'Test excerpt',
-			]
-		);
-
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media/' . $original_attachment_id );
-		$request->set_param( 'context', 'edit' );
-		$response = rest_get_server()->dispatch( $request );
-		$links    = $response->get_links();
-
-		$this->assertArrayHasKey( 'https://api.w.org/term', $links );
-		foreach ( $links['https://api.w.org/term'] as $taxonomy ) {
-			$this->assertArrayHasKey( 'href', $taxonomy );
-			$this->assertStringContainsString( 'web-stories/v1', $taxonomy['href'] );
-		}
 	}
 
 	/**
@@ -376,7 +371,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
 		$request->set_param( 'original_id', 999 );
 
-		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
+		$request->set_body( (string) file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
 
 		$this->assertErrorResponse( 'rest_post_invalid_id', $response, 404 );
@@ -392,6 +387,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 
 		$this->assertArrayHasKey( 'schema', $data );
