@@ -140,7 +140,7 @@ class WooCommerce_Query extends TestCase {
 			]
 		);
 
-		$ids = $this->call_private_method( $this->instance, 'get_product_image_ids', [ $product ] );
+		$ids = $this->call_private_method( [ $this->instance, 'get_product_image_ids' ], [ $product ] );
 
 		$this->assertEquals( [ 50, 51, 59 ], $ids );
 
@@ -155,7 +155,7 @@ class WooCommerce_Query extends TestCase {
 			]
 		);
 
-		$ids = $this->call_private_method( $this->instance, 'get_product_image_ids', [ $product ] );
+		$ids = $this->call_private_method( [ $this->instance, 'get_product_image_ids' ], [ $product ] );
 
 		$this->assertIsArray( $ids );
 		$this->assertCount( 1, $ids );
@@ -174,7 +174,7 @@ class WooCommerce_Query extends TestCase {
 			]
 		);
 
-		$results = $this->call_private_method( $this->instance, 'get_product_image', [ 2 ] );
+		$results = $this->call_private_method( [ $this->instance, 'get_product_image' ], [ 2 ] );
 
 		$this->assertEquals(
 			[

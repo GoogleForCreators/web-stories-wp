@@ -122,6 +122,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 			[
 				'url'   => 'https://example.com/story.html',
 				'title' => 'Example Story',
+				'align' => 'none',
 			]
 		);
 
@@ -143,6 +144,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 				'url'    => 'https://example.com/story.html',
 				'title'  => 'Example Story',
 				'poster' => 'https://example.com/story.jpg',
+				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
 			]

@@ -65,11 +65,11 @@ trait REST_Setup {
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/2382765afa36e10bf3c74420024ad4e85763a47c/tests/phpunit/includes/testcase-rest-api.php#L4-L18
 	 *
-	 * @param string                    $code     Status code.
-	 * @param WP_REST_Response|WP_Error $response Response object.
-	 * @param int|null                  $status   Status code.
+	 * @param string                         $code     Status code.
+	 * @param WP_REST_Response|WP_Error|bool $response Response object.
+	 * @param int|null                       $status   Status code.
 	 */
-	protected function assertErrorResponse( $code, $response, $status = null ): void {
+	protected function assertErrorResponse( string $code, $response, ?int $status = null ): void {
 
 		if ( $response instanceof WP_REST_Response ) {
 			$response = $response->as_error();
@@ -80,6 +80,7 @@ trait REST_Setup {
 
 		if ( null !== $status ) {
 			$data = $response->get_error_data();
+			$this->assertIsArray( $data );
 			$this->assertArrayHasKey( 'status', $data );
 			$this->assertSame( $status, $data['status'] );
 		}

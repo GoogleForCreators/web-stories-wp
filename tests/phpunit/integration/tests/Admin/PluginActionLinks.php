@@ -52,18 +52,20 @@ class PluginActionLinks extends TestCase {
 	/**
 	 * Test ::action_links().
 	 *
-	 * @covers ::action_links()
+	 * @covers ::action_links
 	 */
 	public function test_action_links(): void {
-
 		$initial_meta = [
 			'Link 1',
 			'Link 2',
 		];
 
-		$instance  = new \Google\Web_Stories\Admin\PluginActionLinks();
-		$links     = $instance->action_links( $initial_meta );
+		$instance = new \Google\Web_Stories\Admin\PluginActionLinks();
+		$links    = $instance->action_links( $initial_meta );
+
+		$this->assertIsArray( $links );
 		$last_link = end( $links );
+		$this->assertIsString( $last_link );
 		$this->assertStringContainsString( 'Settings', $last_link );
 	}
 }

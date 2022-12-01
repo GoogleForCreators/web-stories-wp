@@ -41,6 +41,7 @@ class Font_Post_Type extends DependencyInjectedTestCase {
 		$this->instance->register();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Font_Post_Type::POST_TYPE_SLUG );
+		$this->assertNotNull( $post_type_object );
 		$this->assertSame( 'edit_web-stories', $post_type_object->cap->read_post );
 		$this->assertSame( 'manage_options', $post_type_object->cap->edit_posts );
 		$this->assertSame( 'manage_options', $post_type_object->cap->delete_posts );

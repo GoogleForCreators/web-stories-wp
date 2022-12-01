@@ -37,7 +37,7 @@ class Add_Media_Source_Page_Template extends DependencyInjectedTestCase {
 		$instance = $this->injector->make( \Google\Web_Stories\Migrations\Add_Media_Source_Page_Template::class );
 		$instance->migrate();
 
-		$term = $this->call_private_method( $instance, 'get_term' );
+		$term = $this->call_private_method( [ $instance, 'get_term' ] );
 
 		$terms = get_terms(
 			[
@@ -45,6 +45,7 @@ class Add_Media_Source_Page_Template extends DependencyInjectedTestCase {
 				'hide_empty' => false,
 			]
 		);
+		$this->assertNotWPError( $terms );
 
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertContains( $term, $slugs );

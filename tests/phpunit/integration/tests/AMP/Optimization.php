@@ -64,8 +64,11 @@ class Optimization extends TestCase {
 		</html>
 
 		<?php
-		$original_html = ob_get_clean();
+		$original_html = (string) ob_get_clean();
 
+		/**
+		 * @var Document $document
+		 */
 		$document = Document::fromHtml( $original_html );
 
 		$optimization = new \Google\Web_Stories\AMP\Optimization();
@@ -81,9 +84,14 @@ class Optimization extends TestCase {
 	 * @covers ::get_optimizer_configuration
 	 */
 	public function test_get_optimizer_configuration(): void {
-		$optimization  = new \Google\Web_Stories\AMP\Optimization();
-		$configuration = $this->call_private_method( $optimization, 'get_optimizer_configuration' );
-		$config_array  = $this->get_private_property( $configuration, 'configuration' );
+		$optimization = new \Google\Web_Stories\AMP\Optimization();
+
+		$configuration = $this->call_private_method( [ $optimization, 'get_optimizer_configuration' ] );
+
+		/**
+		 * @var array<string, array<string, mixed>> $config_array
+		 */
+		$config_array = $this->get_private_property( $configuration, 'configuration' );
 
 		$transformers   = Configuration::DEFAULT_TRANSFORMERS;
 		$transformers[] = AmpStoryCssOptimizer::class;
@@ -98,9 +106,16 @@ class Optimization extends TestCase {
 	 */
 	public function test_get_optimizer_configuration_no_ssr(): void {
 		add_filter( 'web_stories_enable_ssr', '__return_false' );
-		$optimization  = new \Google\Web_Stories\AMP\Optimization();
-		$configuration = $this->call_private_method( $optimization, 'get_optimizer_configuration' );
-		$config_array  = $this->get_private_property( $configuration, 'configuration' );
+
+		$optimization = new \Google\Web_Stories\AMP\Optimization();
+
+		$configuration = $this->call_private_method( [ $optimization, 'get_optimizer_configuration' ] );
+
+		/**
+		 * @var array<string, array<string, mixed>> $config_array
+		 */
+		$config_array = $this->get_private_property( $configuration, 'configuration' );
+
 		remove_filter( 'web_stories_enable_ssr', '__return_false' );
 
 		$transformers = [

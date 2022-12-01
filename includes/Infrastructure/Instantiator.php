@@ -28,6 +28,8 @@ namespace Google\Web_Stories\Infrastructure;
  * @internal
  *
  * @since 1.6.0
+ *
+ * @template T
  */
 interface Instantiator {
 	/**
@@ -37,7 +39,9 @@ interface Instantiator {
 	 *
 	 * @param string            $class        Class to make an object instance out of.
 	 * @param array<int, mixed> $dependencies Optional. Dependencies of the class.
-	 * @return object Instantiated object.
+	 * @return T Instantiated object.
+	 *
+	 * @phpstan-param class-string<T> $class Class to make an object instance out of.
 	 */
-	public function instantiate( string $class, array $dependencies = [] ): object;
+	public function instantiate( string $class, array $dependencies = [] );
 }
