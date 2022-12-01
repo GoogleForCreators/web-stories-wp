@@ -20,7 +20,11 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Renderer\Story\Image;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Class Single
@@ -40,16 +44,16 @@ class Oembed extends TestCase {
 	protected static int $story_id;
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -57,7 +61,10 @@ class Oembed extends TestCase {
 			]
 		);
 
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -65,6 +72,7 @@ class Oembed extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
@@ -73,7 +81,7 @@ class Oembed extends TestCase {
 	 */
 	public function test_get_embed_height_width(): void {
 		$renderer = new \Google\Web_Stories\Renderer\Oembed();
-		$actual   = $this->call_private_method( $renderer, 'get_embed_height_width', [ 600 ] );
+		$actual   = $this->call_private_method( [ $renderer, 'get_embed_height_width' ], [ 600 ] );
 		$expected = [
 			'width'  => 360,
 			'height' => 600,
@@ -86,11 +94,13 @@ class Oembed extends TestCase {
 	 * @covers ::filter_oembed_response_data
 	 */
 	public function test_filter_oembed_response_data(): void {
-		$renderer = new \Google\Web_Stories\Renderer\Oembed();
-		$old      = [
+		$renderer     = new \Google\Web_Stories\Renderer\Oembed();
+		$old          = [
 			'existing' => 'data',
 		];
-		$actual   = $renderer->filter_oembed_response_data( $old, get_post( self::$story_id ), 600 );
+		$current_post = get_post( self::$story_id );
+		$this->assertNotNull( $current_post );
+		$actual   = $renderer->filter_oembed_response_data( $old, $current_post, 600 );
 		$expected = [
 			'existing' => 'data',
 			'width'    => 360,
@@ -106,9 +116,10 @@ class Oembed extends TestCase {
 	public function test_filter_embed_htmla(): void {
 		$renderer     = new \Google\Web_Stories\Renderer\Oembed();
 		$current_post = get_post( self::$story_id );
-		$story        = new \Google\Web_Stories\Model\Story();
+		$this->assertNotNull( $current_post );
+		$story = new Story();
 		$story->load_from_post( $current_post );
-		$image_renderer = new \Google\Web_Stories\Renderer\Story\Image( $story );
+		$image_renderer = new Image( $story );
 		$output         = $image_renderer->render(
 			[
 				'height' => 10000,
