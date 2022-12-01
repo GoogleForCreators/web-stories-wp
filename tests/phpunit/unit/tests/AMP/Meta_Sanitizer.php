@@ -22,6 +22,7 @@ namespace Google\Web_Stories\Tests\Unit\AMP;
 
 use AMP_Allowed_Tags_Generated;
 use Brain\Monkey;
+use Google\Web_Stories\AMP\Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories\Tests\Unit\MarkupComparison;
 use Google\Web_Stories\Tests\Unit\ScriptHash;
 use Google\Web_Stories\Tests\Unit\TestCase;
@@ -260,7 +261,7 @@ class Meta_Sanitizer extends TestCase {
 		$sanitizer = new \Google\Web_Stories\AMP\Meta_Sanitizer( $dom );
 		$sanitizer->sanitize();
 
-		$sanitizer = new \Google\Web_Stories\AMP\Tag_And_Attribute_Sanitizer(
+		$sanitizer = new Tag_And_Attribute_Sanitizer(
 			$dom,
 			[ 'use_document_element' => true ]
 		);

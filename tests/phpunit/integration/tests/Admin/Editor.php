@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Google_Fonts;
+use Google\Web_Stories\Admin\Meta_Boxes;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
@@ -110,7 +111,7 @@ class Editor extends DependencyInjectedTestCase {
 		parent::set_up();
 
 		$this->experiments       = $this->createMock( Experiments::class );
-		$meta_boxes              = $this->injector->make( \Google\Web_Stories\Admin\Meta_Boxes::class );
+		$meta_boxes              = $this->injector->make( Meta_Boxes::class );
 		$decoder                 = $this->injector->make( Decoder::class );
 		$locale                  = $this->injector->make( Locale::class );
 		$google_fonts            = $this->injector->make( Google_Fonts::class );

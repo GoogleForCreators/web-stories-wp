@@ -8,6 +8,9 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -34,8 +37,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<h1><?php esc_html_e( 'Experimental Settings', 'web-stories' ); ?></h1>
 		<?php settings_errors(); ?>
 		<form method="post" action="options.php">
-			<?php settings_fields( \Google\Web_Stories\Settings::SETTING_GROUP_EXPERIMENTS ); ?>
-			<?php do_settings_sections( \Google\Web_Stories\Experiments::PAGE_NAME ); ?>
+			<?php settings_fields( Settings::SETTING_GROUP_EXPERIMENTS ); ?>
+			<?php do_settings_sections( Experiments::PAGE_NAME ); ?>
 			<?php submit_button(); ?>
 		</form>
 	</div>

@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Renderer\Stories;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
+use Google\Web_Stories\Renderer\Stories\Renderer;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Integration\TestCase;
@@ -98,8 +99,8 @@ class Generic_Renderer extends TestCase {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		$this->assertTrue( wp_script_is( \Google\Web_Stories\Renderer\Stories\Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
-		$this->assertTrue( wp_style_is( \Google\Web_Stories\Renderer\Stories\Renderer::STYLE_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( Renderer::STYLE_HANDLE, 'registered' ) );
 	}
 
 	/**
@@ -133,6 +134,6 @@ class Generic_Renderer extends TestCase {
 		$this->assertStringContainsString( 'web-stories-list__story', $output );
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 
-		$this->assertTrue( wp_script_is( \Google\Web_Stories\Renderer\Stories\Renderer::LIGHTBOX_SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE ) );
 	}
 }

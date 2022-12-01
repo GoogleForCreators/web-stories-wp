@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_UnitTest_Factory;
 
@@ -45,7 +46,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
+		$post_type = Story_Post_Type::POST_TYPE_SLUG;
 
 		$factory->post->create_many(
 			3,
@@ -79,7 +80,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 */
 	public function test_count_user_posts(): void {
 		$this->controller->register();
-		$post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$post_type = $this->injector->make( Story_Post_Type::class );
 		$post_type->register();
 
 		$result1 = $this->call_private_method(
@@ -128,7 +129,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	public function test_count_user_posts_invalid(): void {
 		$this->controller->register();
 
-		$post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$post_type = $this->injector->make( Story_Post_Type::class );
 		$post_type->register();
 		$result1 = $this->call_private_method(
 			[ $this->controller, 'user_posts_count_public' ],

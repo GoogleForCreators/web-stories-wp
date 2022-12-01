@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
 use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
+use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_Term;
@@ -213,7 +214,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @covers ::filter_ajax_query_attachments_args
 	 */
 	public function test_filter_ajax_query_attachments_args(): void {
-		$types                = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$types                = $this->injector->make( Types::class );
 		$allowed_mime_types   = $types->get_allowed_mime_types();
 		$allowed_mime_types   = array_merge( ...array_values( $allowed_mime_types ) );
 		$allowed_mime_types[] = $this->instance::VIDEOPRESS_MIME_TYPE;

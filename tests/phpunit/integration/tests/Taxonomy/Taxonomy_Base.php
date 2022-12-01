@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Taxonomy;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_Term;
 use WP_Term_Query;
 
@@ -29,12 +30,12 @@ use WP_Term_Query;
  */
 class Taxonomy_Base extends DependencyInjectedTestCase {
 
-	private \Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy $instance;
+	private DummyTaxonomy $instance;
 
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->instance = $this->injector->make( \Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy::class );
+		$this->instance = $this->injector->make( DummyTaxonomy::class );
 		$this->instance->register_taxonomy();
 		self::factory()->term->create_many( 5, [ 'taxonomy' => $this->instance->get_taxonomy_slug() ] );
 		$this->instance->unregister_taxonomy();
