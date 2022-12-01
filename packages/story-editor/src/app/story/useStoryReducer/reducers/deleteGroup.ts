@@ -60,6 +60,7 @@ const deleteGroup = produce<ReducerState, [DeleteGroupProps]>(
         delete el.groupId;
       });
     }
-});
+  }
+);
 
 export default deleteGroup;

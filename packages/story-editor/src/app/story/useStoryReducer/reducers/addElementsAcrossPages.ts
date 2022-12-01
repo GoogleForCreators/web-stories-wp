@@ -25,7 +25,8 @@ import { produce } from 'immer';
  */
 import type {
   AddElementsAcrossPagesProps,
-  ReducerState, ReducerStateDraft,
+  ReducerState,
+  ReducerStateDraft,
 } from '../../../../types';
 import { addPage } from './addPage';
 import { addElements } from './addElements';

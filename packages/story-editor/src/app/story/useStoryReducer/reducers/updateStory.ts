@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { produce, current, Draft } from 'immer';
+import { produce, current } from 'immer';
+import type { Draft } from 'immer';
 import type { Story } from '@googleforcreators/elements';
 
 /**

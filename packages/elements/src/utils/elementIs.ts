@@ -22,7 +22,8 @@ import type {
   Element,
   MediaElement,
   TextElement,
-  ProductElement, SequenceMediaElement,
+  ProductElement,
+  SequenceMediaElement,
 } from '../types';
 
 function isMediaElement(e: Element): e is MediaElement {

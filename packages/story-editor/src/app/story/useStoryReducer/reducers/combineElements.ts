@@ -32,7 +32,7 @@ import objectWithout from '../../../../utils/objectWithout';
 import type {
   CombineElementsProps,
   ReducerState,
-  ReducerStateDraft
+  ReducerStateDraft,
 } from '../../../../types';
 import { removeAnimationsWithElementIds } from './utils';
 
