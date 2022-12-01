@@ -24,6 +24,7 @@ import {
   ensureFontLoaded,
   loadInlineStylesheet,
 } from '@googleforcreators/dom';
+import { FontData } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -31,7 +32,7 @@ import {
 import cleanForSlug from '../../../utils/cleanForSlug';
 
 function useLoadFontFiles() {
-  const maybeLoadFont = useCallback(async (font) => {
+  const maybeLoadFont = useCallback(async (font: FontData) => {
     const { family, service, variants, url } = font;
 
     const handle = cleanForSlug(family);
@@ -67,7 +68,7 @@ function useLoadFontFiles() {
    * @return {Promise<boolean>} Returns fonts loaded promise
    */
   const maybeEnqueueFontStyle = useCallback(
-    (fonts) => {
+    (fonts: FontData[]) => {
       return Promise.allSettled(
         fonts.map(async ({ font, fontWeight, fontStyle, content }) => {
           const { family, service } = font;

@@ -17,14 +17,30 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@googleforcreators/react';
+import { createContext } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
-import Context from './context';
+import type { FontProviderState } from './types';
 
-function useFont(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useFont;
+export default createContext<FontProviderState>({
+  state: {
+    fonts: [],
+    curatedFonts: [],
+    customFonts: [],
+    recentFonts: [],
+  },
+  actions: {
+    getFontsBySearch: () => [],
+    getFontByName: () => null,
+    maybeEnqueueFontStyle: () => undefined,
+    getFontWeight: () => 400,
+    getFontFallback: () => '',
+    ensureMenuFontsLoaded: () => undefined,
+    ensureCustomFontsLoaded: () => undefined,
+    addRecentFont: () => undefined,
+    getCustomFonts: () => [],
+    getCuratedFonts: () => [],
+  },
+});

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { PropsWithChildren } from 'react';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { loadStylesheet } from '@googleforcreators/dom';
@@ -31,11 +31,11 @@ import Context from './context';
 import useLoadFontFiles from './actions/useLoadFontFiles';
 import { GOOGLE_MENU_FONT_URL } from './constants';
 
-function FontProvider({ children }) {
-  const [queriedFonts, setQueriedFonts] = useState([]);
-  const [curatedFonts, setCuratedFonts] = useState([]);
-  const [recentFonts, setRecentFonts] = useState([]);
-  const [customFonts, setCustomFonts] = useState(null);
+function FontProvider({ children }: PropsWithChildren<unknown>) {
+  const [queriedFonts, setQueriedFonts] = useState<FontData[]>([]);
+  const [curatedFonts, setCuratedFonts] = useState<FontData[]>([]);
+  const [recentFonts, setRecentFonts] = useState<FontData[]>([]);
+  const [customFonts, setCustomFonts] = useState<FontData[] | null>(null);
   const {
     actions: { getFonts },
   } = useAPI();
@@ -222,9 +222,5 @@ function FontProvider({ children }) {
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-FontProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default FontProvider;
