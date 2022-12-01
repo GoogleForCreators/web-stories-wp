@@ -18,7 +18,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { sessionStore } from '@googleforcreators/design-system';
-import type {Page, Story} from '@googleforcreators/elements';
+import type { Page, Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
