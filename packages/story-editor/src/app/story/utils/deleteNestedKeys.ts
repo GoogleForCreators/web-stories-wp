@@ -47,7 +47,7 @@ function deleteNestedKeys<T extends Record<string, object>>(paths: string[]) {
         'object' === typeof nextLastObj[nextLastKey] &&
         nextLastObj[nextLastKey]
       ) {
-        delete nextLastObj[nextLastKey][lastKey];
+        delete (nextLastObj[nextLastKey] as Record<string, unknown>)[lastKey];
       }
     });
   };
