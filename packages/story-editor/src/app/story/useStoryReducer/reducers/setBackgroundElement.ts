@@ -26,6 +26,7 @@ import { elementIs, Element } from '@googleforcreators/elements';
 import type {
   SetBackgroundElementProps,
   ReducerState,
+  ReducerStateDraft,
 } from '../../../../types';
 import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
 
@@ -42,7 +43,7 @@ import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
  * element.
  */
 export const setBackgroundElement = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementId }: SetBackgroundElementProps
 ) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
@@ -137,4 +138,6 @@ export const setBackgroundElement = (
   }
 };
 
-export default produce(setBackgroundElement);
+export default produce<ReducerState, [SetBackgroundElementProps]>(
+  setBackgroundElement
+);

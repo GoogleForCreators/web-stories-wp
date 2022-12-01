@@ -23,7 +23,11 @@ import type { Element } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { ArrangeElementProps, ReducerState } from '../../../../types';
+import type {
+  ArrangeElementProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { getAbsolutePosition, moveArrayElement } from './utils';
 
 /**
@@ -57,7 +61,7 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * TODO: Handle multi-element re-order when UX and priority is finalized.
  */
 export const arrangeElement = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementId, position, groupId = false }: ArrangeElementProps
 ) => {
   if (elementId === null && draft.selection.length !== 1) {
@@ -122,4 +126,4 @@ export const arrangeElement = (
   page.elements = moveArrayElement(page.elements, currentPosition, newPosition) as Element[];
 };
 
-export default produce(arrangeElement);
+export default produce<ReducerState, [ArrangeElementProps]>(arrangeElement);

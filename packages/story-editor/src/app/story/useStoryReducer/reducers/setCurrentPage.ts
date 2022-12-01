@@ -22,7 +22,11 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { SetCurrentPageProps, ReducerState } from '../../../../types';
+import type {
+  SetCurrentPageProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 
 /**
  * Set current page to the given id.
@@ -32,7 +36,7 @@ import type { SetCurrentPageProps, ReducerState } from '../../../../types';
  * If page is changed, selection is cleared
  */
 export const setCurrentPage = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { pageId }: SetCurrentPageProps
 ) => {
   const pageExists = draft.pages.some(({ id }) => id === pageId);
@@ -45,4 +49,4 @@ export const setCurrentPage = (
   draft.selection = [];
 };
 
-export default produce(setCurrentPage);
+export default produce<ReducerState, [SetCurrentPageProps]>(setCurrentPage);

@@ -25,6 +25,7 @@ import { produce } from 'immer';
 import type {
   RemoveElementFromGroupProps,
   ReducerState,
+  ReducerStateDraft,
 } from '../../../../types';
 import { arrangeElement } from './arrangeElement';
 import { getLastIndexOfGroup } from './utils';
@@ -33,7 +34,7 @@ import { getLastIndexOfGroup } from './utils';
  * Remove element from group.
  */
 export const removeElementFromGroup = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementId, groupId }: RemoveElementFromGroupProps
 ) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
@@ -61,4 +62,6 @@ export const removeElementFromGroup = (
   arrangeElement(draft, { elementId, position });
 };
 
-export default produce(removeElementFromGroup);
+export default produce<ReducerState, [RemoveElementFromGroupProps]>(
+  removeElementFromGroup
+);

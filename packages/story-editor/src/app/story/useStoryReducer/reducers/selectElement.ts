@@ -23,7 +23,11 @@ import { elementIs } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { SelectElementProps, ReducerState } from '../../../../types';
+import type {
+  SelectElementProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 
 /**
  * Add the given id to the current selection.
@@ -31,7 +35,7 @@ import type { SelectElementProps, ReducerState } from '../../../../types';
  * If no id is given or id is already in the current selection, nothing happens.
  */
 export const selectElement = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementId }: SelectElementProps
 ) => {
   if (!elementId || draft.selection.includes(elementId)) {
@@ -67,4 +71,4 @@ export const selectElement = (
   }
 };
 
-export default produce(selectElement);
+export default produce<ReducerState, [SelectElementProps]>(selectElement);

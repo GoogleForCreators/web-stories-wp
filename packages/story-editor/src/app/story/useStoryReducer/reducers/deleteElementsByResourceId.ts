@@ -26,6 +26,7 @@ import { elementIs } from '@googleforcreators/elements';
 import type {
   DeleteElementsByResourceIdProps,
   ReducerState,
+  ReducerStateDraft,
 } from '../../../../types';
 
 /**
@@ -38,7 +39,7 @@ import type {
  * If no element with the given resource id is found, state is changed.
  */
 export const deleteElementsByResourceId = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { id }: DeleteElementsByResourceIdProps
 ) => {
   if (id === null) {
@@ -88,4 +89,6 @@ export const deleteElementsByResourceId = (
   );
 };
 
-export default produce(deleteElementsByResourceId);
+export default produce<ReducerState, [DeleteElementsByResourceIdProps]>(
+  deleteElementsByResourceId
+);

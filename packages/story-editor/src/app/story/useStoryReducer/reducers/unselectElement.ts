@@ -22,7 +22,11 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { UnselectElementProps, ReducerState } from '../../../../types';
+import type {
+  UnselectElementProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 
 /**
  * Remove the given id from the current selection.
@@ -30,7 +34,7 @@ import type { UnselectElementProps, ReducerState } from '../../../../types';
  * If no id is given or id is not in the current selection, nothing happens.
  */
 export const unselectElement = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementId }: UnselectElementProps
 ) => {
   const index = draft.selection.indexOf(elementId);
@@ -40,4 +44,4 @@ export const unselectElement = (
   draft.selection.splice(index, 1);
 };
 
-export default produce(unselectElement);
+export default produce<ReducerState, [UnselectElementProps]>(unselectElement);

@@ -23,7 +23,11 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { PAGE_RESERVED_PROPERTIES } from '../types';
-import type { UpdatePageProps, ReducerState } from '../../../../types';
+import type {
+  UpdatePageProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { objectWithout } from './utils';
 
 /**
@@ -34,7 +38,7 @@ import { objectWithout } from './utils';
  * Current page and selection is unchanged.
  */
 export const updatePage = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { pageId, properties }: UpdatePageProps
 ) => {
   const idToUpdate = (pageId === null ? draft.current : pageId) as
@@ -48,4 +52,4 @@ export const updatePage = (
   Object.assign(page, allowedProperties);
 };
 
-export default produce(updatePage);
+export default produce<ReducerState, [UpdatePageProps]>(updatePage);

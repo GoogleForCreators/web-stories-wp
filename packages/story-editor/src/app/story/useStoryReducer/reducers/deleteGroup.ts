@@ -22,15 +22,19 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { DeleteGroupProps, ReducerState } from '../../../../types';
+import type {
+  DeleteGroupProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { deleteElements } from './deleteElements';
 
 /**
  * Delete group by id.
  */
-const deleteGroup = produce(
+const deleteGroup = produce<ReducerState, [DeleteGroupProps]>(
   (
-    draft: ReducerState,
+    draft: ReducerStateDraft,
     { groupId, includeElements = false }: DeleteGroupProps
   ) => {
     const page = draft.pages.find(({ id }) => id === draft.current);

@@ -22,7 +22,11 @@ import { produce, current } from 'immer';
 /**
  * Internal dependencies
  */
-import type { UpdateStoryProps, ReducerState } from '../../../../types';
+import type {
+  UpdateStoryProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 
 /**
  * Update story properties.
@@ -30,7 +34,7 @@ import type { UpdateStoryProps, ReducerState } from '../../../../types';
  * No validation is performed and existing values are overwritten.
  */
 export const updateStory = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { properties }: UpdateStoryProps
 ) => {
   // If properties is a callback, replace story with callback response
@@ -42,4 +46,4 @@ export const updateStory = (
   Object.assign(draft.story, properties);
 };
 
-export default produce(updateStory);
+export default produce<ReducerState, [UpdateStoryProps]>(updateStory);

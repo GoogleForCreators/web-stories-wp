@@ -22,13 +22,17 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { AddGroupProps, ReducerState } from '../../../../types';
+import type {
+  AddGroupProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 
 /**
  * Add a group to the current page groups list (id, name).
  */
 export const addGroup = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { groupId, name, isLocked = false }: AddGroupProps
 ) => {
   if (!groupId || !name) {
@@ -46,4 +50,4 @@ export const addGroup = (
   page.groups[groupId] = { name, isLocked };
 };
 
-export default produce(addGroup);
+export default produce<ReducerState, [AddGroupProps]>(addGroup);

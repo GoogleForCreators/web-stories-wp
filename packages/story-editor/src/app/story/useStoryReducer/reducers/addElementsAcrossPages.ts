@@ -25,7 +25,7 @@ import { produce } from 'immer';
  */
 import type {
   AddElementsAcrossPagesProps,
-  ReducerState,
+  ReducerState, ReducerStateDraft,
 } from '../../../../types';
 import { addPage } from './addPage';
 import { addElements } from './addElements';
@@ -38,7 +38,7 @@ import { addElements } from './addElements';
  * Selection is unchanged afterwards.
  */
 const addElementsAcrossPages = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { page, position, elements }: AddElementsAcrossPagesProps
 ) => {
   elements.forEach((element, index) => {
@@ -60,4 +60,6 @@ const addElementsAcrossPages = (
   });
 };
 
-export default produce(addElementsAcrossPages);
+export default produce<ReducerState, [AddElementsAcrossPagesProps]>(
+  addElementsAcrossPages
+);

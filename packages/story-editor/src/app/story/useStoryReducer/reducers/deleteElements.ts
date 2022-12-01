@@ -23,7 +23,11 @@ import { elementIs } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { DeleteElementsProps, ReducerState } from '../../../../types';
+import type {
+  DeleteElementsProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { intersect } from './utils';
 
 /**
@@ -45,7 +49,7 @@ import { intersect } from './utils';
  * Current page is unchanged.
  */
 export const deleteElements = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementIds }: DeleteElementsProps
 ) => {
   const idsToDelete = elementIds === null ? draft.selection : elementIds;
@@ -105,4 +109,4 @@ export const deleteElements = (
   );
 };
 
-export default produce(deleteElements);
+export default produce<ReducerState, [DeleteElementsProps]>(deleteElements);

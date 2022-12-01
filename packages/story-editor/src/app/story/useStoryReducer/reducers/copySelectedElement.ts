@@ -23,7 +23,7 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import objectPick from '../../../../utils/objectPick';
-import type { ReducerState } from '../../../../types';
+import type { ReducerState, ReducerStateDraft } from '../../../../types';
 
 export const ATTRIBUTES_TO_COPY = [
   'background',
@@ -48,7 +48,7 @@ export const ATTRIBUTES_TO_COPY = [
  * Copies the styles and animations of the selected element
  * on the current page.
  */
-export const copySelectedElement = (draft: ReducerState) => {
+export const copySelectedElement = (draft: ReducerStateDraft) => {
   // we can only copy one element and it has to exist
   if (draft.selection?.length !== 1 || !draft.selection[0]) {
     return;
@@ -81,4 +81,4 @@ export const copySelectedElement = (draft: ReducerState) => {
   };
 };
 
-export default produce(copySelectedElement);
+export default produce<ReducerState, []>(copySelectedElement);

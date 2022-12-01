@@ -29,7 +29,11 @@ import { elementIs } from '@googleforcreators/elements';
  */
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
-import type { CombineElementsProps, ReducerState } from '../../../../types';
+import type {
+  CombineElementsProps,
+  ReducerState,
+  ReducerStateDraft
+} from '../../../../types';
 import { removeAnimationsWithElementIds } from './utils';
 
 /**
@@ -51,7 +55,7 @@ import { removeAnimationsWithElementIds } from './utils';
  * Updates selection to only include the second item after merge.
  */
 export const combineElements = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   {
     firstElement,
     secondId,
@@ -150,4 +154,4 @@ export const combineElements = (
   draft.selection = [secondId];
 };
 
-export default produce(combineElements);
+export default produce<ReducerState, [CombineElementsProps]>(combineElements);

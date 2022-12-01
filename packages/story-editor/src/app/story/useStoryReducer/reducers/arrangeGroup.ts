@@ -23,14 +23,18 @@ import type { Element } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { ArrangeGroupProps, ReducerState } from '../../../../types';
+import type {
+  ArrangeGroupProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { getAbsolutePosition } from './utils';
 
 /**
  * Move group to a new position
  */
 export const arrangeGroup = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { groupId, position }: ArrangeGroupProps
 ) => {
   if (!groupId) {
@@ -78,4 +82,4 @@ export const arrangeGroup = (
   elements.splice(newPosition, 0, ...groupSlice);
 };
 
-export default produce(arrangeGroup);
+export default produce<ReducerState, [ArrangeGroupProps]>(arrangeGroup);

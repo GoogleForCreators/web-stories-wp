@@ -24,7 +24,11 @@ import { produce, current } from 'immer';
 /**
  * Internal dependencies
  */
-import type { SetSelectedElementsProps, ReducerState } from '../../../../types';
+import type {
+  SetSelectedElementsProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { intersect } from './utils';
 
 /**
@@ -42,7 +46,7 @@ import { intersect } from './utils';
  * Current page and pages are unchanged.
  */
 export const setSelectedElements = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementIds, withLinked = false }: SetSelectedElementsProps
 ) => {
   const newElementIds =
@@ -112,4 +116,6 @@ export const setSelectedElements = (
   draft.selection = newSelection;
 };
 
-export default produce(setSelectedElements);
+export default produce<ReducerState, [SetSelectedElementsProps]>(
+  setSelectedElements
+);

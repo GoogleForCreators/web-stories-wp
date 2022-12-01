@@ -23,7 +23,11 @@ import type { StoryAnimation } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
-import type { AddAnimationsProps, ReducerState } from '../../../../types';
+import type {
+  AddAnimationsProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { exclusion } from './utils';
 
 /**
@@ -38,7 +42,7 @@ import { exclusion } from './utils';
  * Animations will be added to the end of the list of animations on the current page.
  */
 export const addAnimations = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { animations }: AddAnimationsProps
 ) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
@@ -55,4 +59,4 @@ export const addAnimations = (
   );
 };
 
-export default produce(addAnimations);
+export default produce<ReducerState, [AddAnimationsProps]>(addAnimations);

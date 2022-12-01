@@ -24,7 +24,11 @@ import type { Element } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { DuplicateGroupProps, ReducerState } from '../../../../types';
+import type {
+  DuplicateGroupProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { addGroup } from './addGroup';
 
 /**
@@ -32,7 +36,7 @@ import { addGroup } from './addGroup';
  * Set selected elements to be the newly created group.
  */
 export const duplicateGroup = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { oldGroupId, groupId, name, isLocked }: DuplicateGroupProps
 ) => {
   if (!oldGroupId || !groupId || !name) {
@@ -90,4 +94,4 @@ export const duplicateGroup = (
   draft.selection = newElements.map(({ id }) => id);
 };
 
-export default produce(duplicateGroup);
+export default produce<ReducerState, [DuplicateGroupProps]>(duplicateGroup);

@@ -22,12 +22,16 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { ToggleLayerProps, ReducerState } from '../../../../types';
+import type {
+  ToggleLayerProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { toggleElement } from './toggleElement';
 import { setSelectedElements } from './setSelectedElements';
 
 export const toggleLayer = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementId, metaKey, shiftKey, withLinked = false }: ToggleLayerProps
 ) => {
   // Meta pressed. Toggle this layer in the selection.
@@ -69,4 +73,4 @@ export const toggleLayer = (
   });
 };
 
-export default produce(toggleLayer);
+export default produce<ReducerState, [ToggleLayerProps]>(toggleLayer);

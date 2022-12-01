@@ -25,6 +25,7 @@ import { produce } from 'immer';
 import type {
   ToggleElementInSelectionProps,
   ReducerState,
+  ReducerStateDraft,
 } from '../../../../types';
 
 /**
@@ -40,7 +41,7 @@ import type {
  * If no id is given, do nothing.
  */
 export const toggleElement = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementId, withLinked = false }: ToggleElementInSelectionProps
 ) => {
   if (!elementId) {
@@ -108,4 +109,6 @@ export const toggleElement = (
   draft.selection = draft.selection.filter((id) => !allIds.includes(id));
 };
 
-export default produce(toggleElement);
+export default produce<ReducerState, [ToggleElementInSelectionProps]>(
+  toggleElement
+);

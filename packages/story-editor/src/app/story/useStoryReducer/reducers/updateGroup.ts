@@ -22,13 +22,17 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { ReducerState, UpdateGroupProps } from '../../../../types';
+import type {
+  ReducerState,
+  ReducerStateDraft,
+  UpdateGroupProps,
+} from '../../../../types';
 
 /**
  * Update group by id.
  */
 export const updateGroup = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { groupId, properties }: UpdateGroupProps
 ) => {
   if (!groupId) {
@@ -49,4 +53,4 @@ export const updateGroup = (
   Object.assign(groups[groupId], properties);
 };
 
-export default produce(updateGroup);
+export default produce<ReducerState, [UpdateGroupProps]>(updateGroup);

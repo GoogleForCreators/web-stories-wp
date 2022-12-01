@@ -23,7 +23,11 @@ import type { Page } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { ArrangePageProps, ReducerState } from '../../../../types';
+import type {
+  ArrangePageProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { isInsideRange, moveArrayElement } from './utils';
 
 /**
@@ -39,7 +43,7 @@ import { isInsideRange, moveArrayElement } from './utils';
  * TODO: Handle multi-page re-order when UX and priority is finalized.
  */
 export const arrangePage = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { pageId, position }: ArrangePageProps
 ) => {
   // Abort if there's less than two elements (nothing to rearrange)
@@ -61,4 +65,4 @@ export const arrangePage = (
   draft.pages = moveArrayElement(draft.pages, pageIndex, position) as Page[];
 };
 
-export default produce(arrangePage);
+export default produce<ReducerState, [ArrangePageProps]>(arrangePage);

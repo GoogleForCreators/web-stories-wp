@@ -23,6 +23,7 @@ import type {
   StoryAnimation,
   StoryAnimationState,
 } from '@googleforcreators/animation';
+import type { Draft } from 'immer';
 
 /**
  * Internal dependencies
@@ -432,6 +433,7 @@ export interface ReducerState {
   capabilities: Capabilities;
   copiedElementState?: CopiedElementState;
 }
+export type ReducerStateDraft = Draft<ReducerState>;
 
 export interface State extends Omit<ReducerState, 'current' | 'selection'> {
   currentPage: Page | null;

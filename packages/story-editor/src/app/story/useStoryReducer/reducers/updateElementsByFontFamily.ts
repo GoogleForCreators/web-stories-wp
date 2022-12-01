@@ -25,6 +25,7 @@ import { elementIs } from '@googleforcreators/elements';
  */
 import type {
   ReducerState,
+  ReducerStateDraft,
   UpdateElementsByFontFamilyProps,
 } from '../../../../types';
 import { updateElementWithUpdater } from './utils';
@@ -43,7 +44,7 @@ import { updateElementWithUpdater } from './utils';
  * Current selection and page is unchanged.
  */
 export const updateElementsByFontFamily = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { family, properties: propertiesOrUpdater }: UpdateElementsByFontFamilyProps
 ) => {
   if (!family) {
@@ -61,4 +62,6 @@ export const updateElementsByFontFamily = (
   });
 };
 
-export default produce(updateElementsByFontFamily);
+export default produce<ReducerState, [UpdateElementsByFontFamilyProps]>(
+  updateElementsByFontFamily
+);

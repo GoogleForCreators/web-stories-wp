@@ -23,7 +23,11 @@ import type { Story } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { RestoreProps, ReducerState } from '../../../../types';
+import type {
+  RestoreProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 
 /**
  * Restore internal state completely from given state.
@@ -36,7 +40,7 @@ import type { RestoreProps, ReducerState } from '../../../../types';
  * - `story` is an object.
  */
 export const restore = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { pages, current, selection, story, capabilities }: RestoreProps
 ): ReducerState | undefined => {
   if (!Array.isArray(pages) || pages.length === 0) {
@@ -62,4 +66,4 @@ export const restore = (
   };
 };
 
-export default produce(restore);
+export default produce<ReducerState, [RestoreProps]>(restore);

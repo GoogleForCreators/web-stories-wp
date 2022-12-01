@@ -22,7 +22,11 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { AddPageProps, ReducerState } from '../../../../types';
+import type {
+  AddPageProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { isInsideRange } from './utils';
 
 /**
@@ -37,7 +41,7 @@ import { isInsideRange } from './utils';
  * Selection is cleared by default.
  */
 export const addPage = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { page, position, updateSelection = true }: AddPageProps
 ) => {
   // Ensure new page has at least one element
@@ -60,4 +64,4 @@ export const addPage = (
   }
 };
 
-export default produce(addPage);
+export default produce<ReducerState, [AddPageProps]>(addPage);

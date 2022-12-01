@@ -27,7 +27,11 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { DuplicateElementsByIdProps, ReducerState } from '../../../../types';
+import type {
+  DuplicateElementsByIdProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.
@@ -36,7 +40,7 @@ import type { DuplicateElementsByIdProps, ReducerState } from '../../../../types
  * If given `elementIds` are not a list, do nothing.
  */
 export const duplicateElementsById = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementIds }: DuplicateElementsByIdProps
 ) => {
   const page = draft.pages.find(({ id }) => id === draft.current);
@@ -85,4 +89,6 @@ export const duplicateElementsById = (
   });
 };
 
-export default produce(duplicateElementsById);
+export default produce<ReducerState, [DuplicateElementsByIdProps]>(
+  duplicateElementsById
+);

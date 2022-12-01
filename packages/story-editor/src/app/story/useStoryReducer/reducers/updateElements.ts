@@ -26,7 +26,11 @@ import { produce } from 'immer';
 /**
  * Internal dependencies
  */
-import type { UpdateElementsProps, ReducerState } from '../../../../types';
+import type {
+  UpdateElementsProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { updateElementWithUpdater, updateAnimations } from './utils';
 
 /**
@@ -44,7 +48,7 @@ import { updateElementWithUpdater, updateAnimations } from './utils';
  * Current selection and page is unchanged.
  */
 export const updateElements = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elementIds, properties: propertiesOrUpdater }: UpdateElementsProps
 ) => {
   if (
@@ -84,4 +88,4 @@ export const updateElements = (
   }
 };
 
-export default produce(updateElements);
+export default produce<ReducerState, [UpdateElementsProps]>(updateElements);

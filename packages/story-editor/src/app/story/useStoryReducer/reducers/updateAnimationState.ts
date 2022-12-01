@@ -24,6 +24,7 @@ import { produce } from 'immer';
  */
 import type {
   ReducerState,
+  ReducerStateDraft,
   UpdateAnimationStateProps,
 } from '../../../../types';
 
@@ -32,10 +33,12 @@ import type {
  * active pages animations.
  */
 export const updateAnimationState = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { animationState }: UpdateAnimationStateProps
 ) => {
   draft.animationState = animationState;
 };
 
-export default produce(updateAnimationState);
+export default produce<ReducerState, [UpdateAnimationStateProps]>(
+  updateAnimationState
+);

@@ -24,7 +24,11 @@ import { produce } from 'immer';
  * Internal dependencies
  */
 import { MAX_PRODUCTS_PER_PAGE } from '../../../../constants';
-import type { AddElementsProps, ReducerState } from '../../../../types';
+import type {
+  AddElementsProps,
+  ReducerState,
+  ReducerStateDraft,
+} from '../../../../types';
 import { exclusion } from './utils';
 
 const isProduct = ({ type }: Element) => type === ElementType.Product;
@@ -44,7 +48,7 @@ const isNotProduct = ({ type }: Element) => type !== ElementType.Product;
  * Selection is set to be exactly the new elements by default.
  */
 export const addElements = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { elements, pageId, updateSelection = true }: AddElementsProps
 ) => {
   const page = draft.pages.find(({ id }) =>
@@ -99,4 +103,4 @@ export const addElements = (
   }
 };
 
-export default produce(addElements);
+export default produce<ReducerState, [AddElementsProps]>(addElements);

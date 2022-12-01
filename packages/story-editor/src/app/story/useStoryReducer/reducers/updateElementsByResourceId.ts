@@ -26,6 +26,7 @@ import { elementIs } from '@googleforcreators/elements';
 import type {
   UpdateElementsByResourceIdProps,
   ReducerState,
+  ReducerStateDraft,
 } from '../../../../types';
 import { updateElementWithUpdater } from './utils';
 
@@ -43,7 +44,7 @@ import { updateElementWithUpdater } from './utils';
  * Current selection and page is unchanged.
  */
 export const updateElementsByResourceId = (
-  draft: ReducerState,
+  draft: ReducerStateDraft,
   { id, properties: propertiesOrUpdater }: UpdateElementsByResourceIdProps
 ) => {
   if (!id) {
@@ -61,4 +62,6 @@ export const updateElementsByResourceId = (
   });
 };
 
-export default produce(updateElementsByResourceId);
+export default produce<ReducerState, [UpdateElementsByResourceIdProps]>(
+  updateElementsByResourceId
+);
