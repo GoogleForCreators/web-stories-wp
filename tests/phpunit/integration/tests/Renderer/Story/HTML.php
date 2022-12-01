@@ -233,7 +233,7 @@ class HTML extends TestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
-		$actual = $this->call_private_method( $renderer, 'fix_incorrect_charset', [ $source ] );
+		$actual = $this->call_private_method( [ $renderer, 'fix_incorrect_charset' ], [ $source ] );
 
 		$this->assertStringContainsString( '<meta charset="utf-8"/>', $actual );
 	}
