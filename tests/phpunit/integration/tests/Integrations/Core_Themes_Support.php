@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
 use Google\Web_Stories\Admin\Customizer;
+use Google\Web_Stories\Integrations\Core_Themes_Support as Testee;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -30,7 +31,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
 	 */
-	protected \Google\Web_Stories\Integrations\Core_Themes_Support $instance;
+	protected Testee $instance;
 
 	/**
 	 * Current template.
@@ -49,7 +50,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 		update_option( 'stylesheet', 'twentytwentyone' );
 		update_option( Customizer::STORY_OPTION, [ 'show_stories' => true ] );
 
-		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\Core_Themes_Support::class );
+		$this->instance = $this->injector->make( Testee::class );
 	}
 
 	/**
@@ -107,9 +108,10 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 			'twentyten',
 		];
 
-		$actual = $this->get_static_private_property( $this->instance, 'supported_themes' );
+		$actual = $this->get_static_private_property( Testee::class, 'supported_themes' );
 
-		$this->assertEquals( $actual, $expected );
+		$this->assertIsArray( $actual );
+		$this->assertEqualSets( $actual, $expected );
 	}
 
 	/**
@@ -146,6 +148,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 		$actual = ob_get_clean();
 
 		$this->assertTrue( wp_script_is( 'web-stories-theme-style-twentytwentyone' ) );
+		$this->assertIsString( $actual );
 		$this->assertStringContainsString( 'web-stories-theme-header-section', $actual );
 	}
 }

@@ -113,15 +113,23 @@ class Settings extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @param string $name
+	 * @param array{type?: string, description?: string, sanitize_callback?: callable, show_in_rest?: bool|array<mixed>, default?: mixed} $args
+	 * @param mixed $value
+	 * @param mixed $expected
+	 *
 	 * @covers ::get_setting
 	 * @dataProvider data_test_types
 	 */
-	public function test_get_setting_uses_type( $name, $args, $value, $expected ): void {
+	public function test_get_setting_uses_type( string $name, array $args, $value, $expected ): void {
 		register_setting( 'test_group', $name, $args );
 		add_option( $name, $value );
 		$this->assertSame( $expected, $this->instance->get_setting( $name ) );
 	}
 
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
 	public function data_test_types(): array {
 		return [
 			'array from string' => [

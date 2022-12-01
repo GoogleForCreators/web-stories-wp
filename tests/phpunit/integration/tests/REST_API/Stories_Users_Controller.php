@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Users_Controller
@@ -36,7 +37,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Stories_Users_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -82,8 +83,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$post_type->register();
 
 		$result1 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
+			[ $this->controller, 'user_posts_count_public' ],
 			[
 				self::$user_id,
 				$post_type->get_slug(),
@@ -99,8 +99,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 		$result2 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
+			[ $this->controller, 'user_posts_count_public' ],
 			[
 				self::$user_id,
 				$post_type->get_slug(),
@@ -112,8 +111,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		wp_delete_post( $post_id, true );
 
 		$result3 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
+			[ $this->controller, 'user_posts_count_public' ],
 			[
 				self::$user_id,
 				$post_type->get_slug(),
@@ -133,8 +131,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		$post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$post_type->register();
 		$result1 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
+			[ $this->controller, 'user_posts_count_public' ],
 			[
 				-1,
 				$post_type->get_slug(),
@@ -142,7 +139,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		);
 		$this->assertEquals( 0, $result1 );
 
-		$result1 = $this->call_private_method( $this->controller, 'user_posts_count_public', [ self::$user_id, 'invalid' ] );
+		$result1 = $this->call_private_method( [ $this->controller, 'user_posts_count_public' ], [ self::$user_id, 'invalid' ] );
 
 		$this->assertEquals( 0, $result1 );
 	}
