@@ -31,23 +31,6 @@ import { ContentType, ProviderType } from './constants';
 
 /** @typedef {import('react').React.Component} ReactComponent */
 
-/**
- * @typedef ProviderConfiguration
- * @property {string} displayName The display name of the provider.
- * @property {?ContentType} contentTypeFilter Optional. The content type to filter by.
- * @property {boolean} supportsCategories Whether this provider supports
- * filtering media by category.
- * @property {boolean} requiresAuthorAttribution Whether this provider
- * requires showing author
- * attribution on each media element.
- * @property {function(): ReactComponent} attributionComponent A function that
- * constructs an attribution React Component for this provider.
- * @property {string} fetchMediaErrorMessage An error message to show if
- * fetching media from this provider fails.
- * @property {?string} fetchCategoriesErrorMessage An error message to show if
- * fetching categories from this provider fails. Only needs to be specified if
- * the `supportsCategories` is true.
- */
 
 /**
  * @type {Object.<string, ProviderConfiguration>}

@@ -26,6 +26,7 @@ import {
  * Internal dependencies
  */
 import { PROVIDERS } from '../media3p/providerConfiguration';
+import type { Provider } from '../types';
 
 /**
  * Author object.
@@ -220,7 +221,7 @@ function mediaUrlToImageSizeDescription(media, url, originalSize) {
   if (!originalWidth || !originalHeight) {
     throw new Error('No original size present.');
   }
-  const provider = PROVIDERS[media.provider.toLowerCase()];
+  const provider: Provider = PROVIDERS[media.provider.toLowerCase()];
   if ((!url.width || !url.height) && !provider.defaultPreviewWidth) {
     throw new Error('Missing width and height for: ' + media);
   }
@@ -231,7 +232,8 @@ function mediaUrlToImageSizeDescription(media, url, originalSize) {
     width: url.width ?? provider.defaultPreviewWidth,
     height:
       url.height ??
-      (provider.defaultPreviewWidth * originalHeight) / originalWidth,
+      ((provider.defaultPreviewWidth || url.height) * originalHeight) /
+        originalWidth,
   };
 }
 
