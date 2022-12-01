@@ -39,7 +39,7 @@ import {
  * @typedef {import('@googleforcreators/media').Resource} Resource
  */
 
-function loadScriptOnce(url) {
+function loadScriptOnce(url: string) {
   if (document.querySelector(`script[src="${url}"]`)) {
     return Promise.resolve();
   }
@@ -85,7 +85,13 @@ function loadScriptOnce(url) {
  * @param {number} obj.height Height.
  * @return {boolean} Whether the resource/file has small enough dimensions.
  */
-const hasSmallDimensions = ({ width, height }) =>
+const hasSmallDimensions = ({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) =>
   width * height <=
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
     MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
@@ -104,7 +110,7 @@ const hasSmallDimensions = ({ width, height }) =>
  * @param {number} duration Duration.
  * @return {boolean} Whether the file has a good file size / duration ratio.
  */
-const hasSmallFileSize = (fileSize, duration) =>
+const hasSmallFileSize = (fileSize, duration: number) =>
   fileSize <=
   (MEDIA_VIDEO_FILE_SIZE_THRESHOLD / MEDIA_RECOMMENDED_MAX_VIDEO_DURATION) *
     duration;

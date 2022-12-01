@@ -99,18 +99,15 @@ const getVideoResource = async (file: File): Promise<Resource | null> => {
   // that cannot be *played* by the browser, but could still be used for generating a poster.
 
   const videoEl = await preloadVideo(src);
-  if (!videoEl) {
-    return null;
-  }
 
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
 
   const { length, lengthFormatted } = getVideoLength(videoEl);
 
   await seekVideo(videoEl);
-  const hasAudio = hasVideoGotAudio(videoEl);
+  const hasAudio = videoEl && hasVideoGotAudio(videoEl);
 
-  const posterFile = blobToFile(
+  const posterFile = videoEl && blobToFile(
     await getImageFromVideo(videoEl),
     getPosterName(getFileBasename(file)),
     MEDIA_POSTER_IMAGE_MIME_TYPE
