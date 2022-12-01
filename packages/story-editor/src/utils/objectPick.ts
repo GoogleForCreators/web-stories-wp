@@ -18,10 +18,6 @@ export default function pick(o: object, fields: string[] = []): object {
   if (!o || typeof o !== 'object') {
     return {};
   }
-  return Object.assign(
-    {},
-    ...fields.map((prop: string) =>
-      o && prop in o ? { [prop]: o && o[prop] } : {}
-    )
-  );
+
+  return Object.fromEntries(fields.map((k) => [k, o[k]]));
 }

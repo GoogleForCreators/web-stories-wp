@@ -37,7 +37,7 @@ function useRefreshPostEditURL(postId: number, postEditURL: string) {
         sprintf(
           /* translators: %d: current story id. */
           __('Post %d', 'web-stories'),
-          postId
+          String(postId)
         ),
         newUrl.toString()
       );

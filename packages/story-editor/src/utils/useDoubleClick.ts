@@ -62,8 +62,8 @@ const useDoubleClick = (
   onDoubleClick: clickCallback,
   ms = 200
 ) => {
-  const [target, setTarget] = useState(null);
-  const [lastEvent, setLastEvent] = useState(null);
+  const [target, setTarget] = useState<Element | null>(null);
+  const [lastEvent, setLastEvent] = useState<Event | null>(null);
   const getHandler = useCallback(
     (newTarget: Element) => (evt: Event) => {
       evt.stopPropagation();
@@ -88,7 +88,9 @@ const useDoubleClick = (
     }
     const int = setTimeout(() => {
       setTarget(null);
-      onSingleClick(lastEvent, target);
+      if (lastEvent && target) {
+        onSingleClick(lastEvent, target);
+      }
     }, ms);
     return () => {
       clearTimeout(int);

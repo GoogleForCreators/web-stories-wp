@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+interface ElementProps extends Element {
+  tagName: string;
+  type?: string;
+  contentEditable: string;
+}
+
 /**
  * Checks if the native copy paste should proceed,
  * either if text is selected or if there's focus on a text/number input.
@@ -22,21 +28,24 @@
  */
 function nativeCopyPasteExpected() {
   const { activeElement } = document;
-  const { tagName, type, contentEditable } = activeElement as Element;
 
-  // If it's an input in focus, do native handling.
-  if (
-    'true' === contentEditable ||
-    'textarea' === tagName.toLowerCase() ||
-    ('input' === tagName.toLowerCase() &&
-      typeof type === 'string' &&
-      ['text', 'number', 'search', 'email', 'tel', 'url'].includes(type))
-  ) {
-    return true;
+  if (activeElement) {
+    const { tagName, type, contentEditable } = activeElement as ElementProps;
+
+    // If it's an input in focus, do native handling.
+    if (
+      'true' === contentEditable ||
+      'textarea' === tagName.toLowerCase() ||
+      ('input' === tagName.toLowerCase() &&
+        typeof type === 'string' &&
+        ['text', 'number', 'search', 'email', 'tel', 'url'].includes(type))
+    ) {
+      return true;
+    }
   }
-
   const selection = window.getSelection();
-  const range = selection.rangeCount ? selection.getRangeAt(0) : null;
+  const range =
+    selection && selection.rangeCount ? selection.getRangeAt(0) : null;
 
   return Boolean(range && !range.collapsed);
 }

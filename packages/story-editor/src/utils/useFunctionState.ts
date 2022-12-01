@@ -31,7 +31,7 @@ function useFunctionState(initialValue = undefined) {
   const [value, setValue] = useState({ handler: initialValue });
 
   const setter = useCallback(
-    (handler: () => void) =>
+    (handler: any) =>
       setValue({
         handler: typeof handler === 'function' ? handler : undefined,
       }),

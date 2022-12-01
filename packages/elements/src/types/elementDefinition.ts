@@ -90,6 +90,12 @@ export interface ElementDefinition<E extends Element = Element> {
     minHeight: number;
   };
   panels: string[];
+  updateForResizeEvent?: (
+    element: Element,
+    direction: number[],
+    newWidth: number,
+    newHeight: number
+  ) => { height: number };
 }
 
 export type ElementTypes = Record<ElementType, ElementDefinition<Element>>;

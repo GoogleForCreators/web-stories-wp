@@ -19,8 +19,12 @@
  */
 import { css } from 'styled-components';
 
+interface pointerEventsCssProps {
+  pointerEvents?: string;
+}
+
 const pointerEventsCss = css`
-  ${({ pointerEvents }) => {
+  ${({ pointerEvents }: pointerEventsCssProps) => {
     if (pointerEvents && typeof pointerEvents === 'string') {
       return `pointer-events: ${pointerEvents};`;
     }

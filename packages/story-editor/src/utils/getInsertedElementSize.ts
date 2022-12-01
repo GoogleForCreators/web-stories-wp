@@ -33,31 +33,18 @@ const RESIZE_WIDTH_DIRECTION = [1, 0];
  * @param The value.
  * @return  Whether the value has been set.
  */
-function isNum(value) {
+function isNum(value: any) {
   return typeof value === 'number';
-}
-
-interface getDefinitionForTypeProp {
-  updateForResizeEvent: (
-    element: Element,
-    direction: number[],
-    newWidth: number,
-    newHeight: number
-  ) => { height: number };
-  defaultAttributes: () => void;
 }
 
 function getInsertedElementSize(
   type: ElementType,
   width: number,
   height: number,
-  attrs,
+  attrs: object,
   ratio = 1,
   resource: Resource
 ) {
-  const { updateForResizeEvent, defaultAttributes }: getDefinitionForTypeProp =
-    getDefinitionForType(type);
-
   if (!isNum(width)) {
     if (isNum(height)) {
       // Height is known: use aspect ratio.
@@ -71,22 +58,27 @@ function getInsertedElementSize(
       width = PAGE_WIDTH / 2;
     }
   }
-  if (
-    !isNum(height) &&
-    updateForResizeEvent &&
-    updateForResizeEvent instanceof Function
-  ) {
-    // Try resize API with width-only direction.
-    const { height: newHeight } = updateForResizeEvent(
-      {
-        ...defaultAttributes,
-        ...attrs,
-      } as Element,
-      RESIZE_WIDTH_DIRECTION,
-      width,
-      0
-    );
-    height = newHeight;
+  if (!isNum(height)) {
+    const elementType = getDefinitionForType(type);
+    if (
+      elementType &&
+      elementType.updateForResizeEvent &&
+      elementType.defaultAttributes
+    ) {
+      const { updateForResizeEvent, defaultAttributes } = elementType;
+
+      // Try resize API with width-only direction.
+      const { height: newHeight } = updateForResizeEvent(
+        {
+          ...defaultAttributes,
+          ...attrs,
+        } as Element,
+        RESIZE_WIDTH_DIRECTION,
+        width,
+        0
+      );
+      height = newHeight;
+    }
   }
   if (!isNum(height)) {
     // Fallback to simple ratio calculation.

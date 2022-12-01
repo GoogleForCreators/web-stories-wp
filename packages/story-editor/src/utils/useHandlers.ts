@@ -19,10 +19,12 @@
  */
 import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 
-function useHandlers() {
-  const handlersRef = useRef([]);
+type HandleFn = () => void;
 
-  const registerHandler = useCallback((handler: () => void) => {
+function useHandlers() {
+  const handlersRef = useRef<HandleFn[]>([]);
+
+  const registerHandler = useCallback((handler: HandleFn) => {
     const handlerList = handlersRef.current;
     handlerList.push(handler);
     return () => {

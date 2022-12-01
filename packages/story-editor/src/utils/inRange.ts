@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const inRange = (value, { MIN, MAX }) => value >= MIN && value <= MAX;
+
+interface minMaxProps {
+  MIN: number;
+  MAX: number;
+}
+
+const inRange = (value: number, { MIN, MAX }: minMaxProps) =>
+  value >= MIN && value <= MAX;
 
 export default inRange;

@@ -23,7 +23,10 @@ import { useRef, useCallback } from '@googleforcreators/react';
  */
 import { requestIdleCallback, cancelIdleCallback } from './idleCallback';
 
-type Tuple = [string, () => Promise<void>];
+interface Task {
+  taskId: string | null;
+  task: number | null | (() => Promise<void>);
+}
 
 /**
  * Creates a FIFO idle task queue
@@ -31,9 +34,9 @@ type Tuple = [string, () => Promise<void>];
  * @return queueIdleTask
  */
 function useIdleTaskQueue() {
-  const taskQueue = useRef([]);
+  const taskQueue = useRef<Task[]>([{ taskId: null, task: null }]);
   const isTaskQueueRunning = useRef(false);
-  const currentTask = useRef([null, null]);
+  const currentTask = useRef<Task>({ taskId: null, task: null });
 
   /**
    * Recursively runs idle task queue sequentially
@@ -49,14 +52,16 @@ function useIdleTaskQueue() {
       return;
     }
 
-    const [taskId, task] = taskQueue.current.shift() as Tuple;
+    const { taskId, task } = taskQueue.current.shift() as Task;
     const idleCallbackId = requestIdleCallback(() => {
-      void task().then(() => {
-        currentTask.current = [null, null];
-        runTaskQueue();
-      });
+      if (typeof task === 'function') {
+        void task().then(() => {
+          currentTask.current = { taskId: null, task: null };
+          runTaskQueue();
+        });
+      }
     });
-    currentTask.current = [taskId, idleCallbackId] as Tuple;
+    currentTask.current = { taskId, task: idleCallbackId };
   }, []);
 
   /**
@@ -70,15 +75,15 @@ function useIdleTaskQueue() {
     (id: string) => {
       // Remove any queued tasks associated with this task Id
       taskQueue.current = taskQueue.current.filter(
-        ([taskId]: [string]) => taskId !== id
+        ({ taskId }: Task) => taskId !== id
       );
 
       // If the current requested task hasn't fired, clear it
       // and restart the queue on the next task
-      const [taskId, idleCallbackId]: Tuple = currentTask.current;
-      if (id === taskId) {
-        cancelIdleCallback(idleCallbackId);
-        currentTask.current = [null, null];
+      const { taskId, task }: Task = currentTask.current;
+      if (id === taskId && typeof task === 'number') {
+        cancelIdleCallback(task);
+        currentTask.current = { taskId: null, task: null };
         runTaskQueue();
       }
     },
@@ -96,12 +101,13 @@ function useIdleTaskQueue() {
    * @return {Function} function to cancel image generation request
    */
   const queueIdleTask = useCallback(
-    ([id, task]: Tuple) => {
-      // Clear queue of any stale tasks
-      clearQueuedTask(id);
-
+    ({ taskId, task }: Task) => {
+      if (taskId) {
+        // Clear queue of any stale tasks
+        clearQueuedTask(taskId);
+      }
       // Add request to generate page image generation queue
-      taskQueue.current.push([id, task]);
+      taskQueue.current.push({ taskId, task });
 
       // If the queue has stopped processing because
       // it ran out of entries, restart it
@@ -110,7 +116,9 @@ function useIdleTaskQueue() {
       }
 
       return () => {
-        clearQueuedTask(id);
+        if (taskId) {
+          clearQueuedTask(taskId);
+        }
       };
     },
     [runTaskQueue, clearQueuedTask]
