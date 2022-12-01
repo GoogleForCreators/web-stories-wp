@@ -63,7 +63,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @var array<string, array{functions: string[], classes: string[]}>
+	 * @var array<string, array{functions?: string[], classes?: string[]}>
 	 */
 	protected $extensions = array();
 
@@ -349,7 +349,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @return array<string, array{functions: string[], classes: string[]}>
+	 * @return array<string, array{functions?: string[], classes?: string[]}>
 	 */
 	public function get_extensions() {
 		return $this->extensions;
@@ -416,7 +416,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array<string, array{functions: string[], classes: string[]}> $extensions Array of extensions.
+	 * @param array<string, array{functions?: string[], classes?: string[]}> $extensions Array of extensions.
 	 * @return void
 	 */
 	public function set_extensions( array $extensions ) {

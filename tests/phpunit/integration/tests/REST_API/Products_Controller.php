@@ -24,6 +24,7 @@ use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use Google\Web_Stories\Tests\Integration\Mock_Vendor_Setup;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Products_Controller
@@ -41,7 +42,7 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private \Google\Web_Stories\REST_API\Products_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -125,9 +126,11 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
+			$this->assertIsArray( $product );
 			$this->assertArrayHasKey( 'productId', $product );
 			$this->assertArrayHasKey( 'productTitle', $product );
 			$this->assertArrayHasKey( 'productBrand', $product );
@@ -150,9 +153,11 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
+			$this->assertIsArray( $product );
 			$this->assertArrayHasKey( 'productId', $product );
 			$this->assertArrayNotHasKey( 'productTitle', $product );
 			$this->assertArrayNotHasKey( 'productBrand', $product );
@@ -202,10 +207,11 @@ class Products_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'per_page', $per_page );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
-
+		$this->assertIsArray( $data );
 		$this->assertCount( $per_page, $data );
 
 		foreach ( $data as $product ) {
+			$this->assertIsArray( $product );
 			$this->assertMatchesProductSchema( $product );
 		}
 	}

@@ -143,6 +143,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 * @return array|mixed $response Filtered attachment data.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
 		if ( ! \is_array( $response ) ) {
@@ -256,6 +260,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param array<string, mixed>|mixed $args Query args.
 	 * @return array<string, mixed>|mixed Filtered query args.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($args is array<T> ? array<T> : mixed)
 	 */
 	public function filter_ajax_query_attachments_args( $args ) {
 		if ( ! \is_array( $args ) ) {
@@ -292,6 +300,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param array<string, mixed>|mixed $args Query args.
 	 * @return array<string, mixed>|mixed Filtered query args.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($args is array<T> ? array<T> : mixed)
 	 */
 	public function filter_rest_generated_media_attachments( $args ) {
 		if ( ! \is_array( $args ) ) {

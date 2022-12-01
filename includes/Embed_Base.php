@@ -119,6 +119,10 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @param array<string, array<string,bool>>|mixed $allowed_tags Allowed tags.
 	 * @return array<string, array<string,bool>>|mixed Allowed tags.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($allowed_tags is array<T> ? array<T> : mixed)
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! \is_array( $allowed_tags ) ) {
