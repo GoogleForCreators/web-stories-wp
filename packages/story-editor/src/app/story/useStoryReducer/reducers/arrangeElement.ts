@@ -103,7 +103,7 @@ export const arrangeElement = (
   // Update group id on current element
   if (groupId) {
     // Can only change groups to a group that exists
-    if (!page.groups?.groupId) {
+    if (!page.groups?.[groupId]) {
       return;
     }
     page.elements[currentPosition].groupId = groupId;

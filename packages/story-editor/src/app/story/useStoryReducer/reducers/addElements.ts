@@ -82,7 +82,8 @@ export const addElements = (
       .map((e) => elementIs.product(e) && e.product?.productId);
 
     const uniqueProducts = newProducts.filter(
-      (e) => elementIs.product(e) && !currentProducts.includes(e.product?.productId)
+      (e) =>
+        elementIs.product(e) && !currentProducts.includes(e.product?.productId)
     );
 
     // Then, if the number of products after adding these would still be within
