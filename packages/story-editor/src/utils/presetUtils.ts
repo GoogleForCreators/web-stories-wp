@@ -30,7 +30,8 @@ import type { Pattern } from '@googleforcreators/patterns';
 import type {
   Element,
   DefaultBackgroundElement,
-  DefaultBackgroundElement,
+  TextElement,
+  ElementType,
   Page,
 } from '@googleforcreators/elements';
 /**
@@ -167,7 +168,7 @@ export function getTextInlineStyles(content: string) {
 }
 
 export function getTextPresets(
-  elements: DefaultBackgroundElement[],
+  elements: TextElement[],
   storyStyles: storyStylesProps,
   type: string,
   isBackgroundColor: boolean
@@ -188,7 +189,7 @@ export function getTextPresets(
     PRESET_TYPES.COLOR === type
       ? []
       : elements
-          .map((text) => {
+          .map((text: TextElement) => {
             return {
               ...objectPick(text, TEXT_PRESET_STYLES),
               ...getTextInlineStyles(text.content),
@@ -223,7 +224,7 @@ export function getPagePreset(page: Page, storyStyles: storyStylesProps) {
   };
 }
 
-export function areAllType(elType: string, selectedElements: Element[]) {
+export function areAllType(elType: ElementType, selectedElements: Element[]) {
   return (
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => elType === type)

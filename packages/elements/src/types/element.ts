@@ -102,6 +102,10 @@ export interface MediaElement extends BackgroundableElement {
   focalX?: number;
   focalY?: number;
 }
+export interface TextElement extends Element {
+  backgroundColor: Solid;
+  content: string;
+}
 
 export interface SequenceMediaElement extends MediaElement {
   resource: SequenceResource;
