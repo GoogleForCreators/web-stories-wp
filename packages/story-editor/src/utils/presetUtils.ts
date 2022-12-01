@@ -26,7 +26,13 @@ import {
 import { getHTMLInfo } from '@googleforcreators/rich-text';
 import { generateFontFamily } from '@googleforcreators/element-library';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/elements';
-
+import type { Pattern } from '@googleforcreators/patterns';
+import type {
+  Element,
+  DefaultBackgroundElement,
+  DefaultBackgroundElement,
+  Page,
+} from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -43,10 +49,34 @@ const TEXT_PRESET_STYLES = [
   'textAlign',
 ];
 
-export function findMatchingColor(color, storyStyles, isText) {
+interface storyStylesProps {
+  colors: string[];
+  textStyles: string[];
+}
+
+interface presetProps {
+  color: string;
+  backgroundColor: string;
+  font: string;
+  fontWeight: string;
+  backgroundTextMode: string;
+  textAlign: string;
+  letterSpacing: string;
+  lineHeight: string;
+  isItalic: boolean;
+  isUnderline: boolean;
+  padding: string;
+  fontSize: string;
+}
+
+export function findMatchingColor(
+  color: Pattern,
+  storyStyles: storyStylesProps,
+  isText: boolean
+) {
   const colorsToMatch = storyStyles.colors;
   const patternType = isText ? 'color' : 'background';
-  return colorsToMatch.find((value) => {
+  return colorsToMatch.find((value: string) => {
     try {
       return isPatternEqual(value, color, patternType);
     } catch (e) {
@@ -56,7 +86,10 @@ export function findMatchingColor(color, storyStyles, isText) {
   });
 }
 
-export function findMatchingStylePreset(preset, storyStyles) {
+export function findMatchingStylePreset(
+  preset: presetProps,
+  storyStyles: storyStylesProps
+) {
   const stylesToMatch = storyStyles.textStyles;
   const toAdd = convertToCSS(generatePresetStyle(preset));
   return stylesToMatch.find(
@@ -64,7 +97,10 @@ export function findMatchingStylePreset(preset, storyStyles) {
   );
 }
 
-export function generatePresetStyle(preset, prepareForCSS) {
+export function generatePresetStyle(
+  preset: presetProps,
+  prepareForCSS = false
+) {
   const {
     color,
     backgroundColor,
@@ -118,7 +154,7 @@ function getExtractedInlineValue(value) {
   return value !== MULTIPLE_VALUE ? value : null;
 }
 
-export function getTextInlineStyles(content) {
+export function getTextInlineStyles(content: string) {
   const { color, fontWeight, isItalic, isUnderline, letterSpacing } =
     getHTMLInfo(content);
   return {
@@ -130,7 +166,12 @@ export function getTextInlineStyles(content) {
   };
 }
 
-export function getTextPresets(elements, storyStyles, type, isBackgroundColor) {
+export function getTextPresets(
+  elements: DefaultBackgroundElement[],
+  storyStyles: storyStylesProps,
+  type: string,
+  isBackgroundColor: boolean
+) {
   const colors =
     PRESET_TYPES.STYLE === type
       ? []
@@ -151,7 +192,7 @@ export function getTextPresets(elements, storyStyles, type, isBackgroundColor) {
             return {
               ...objectPick(text, TEXT_PRESET_STYLES),
               ...getTextInlineStyles(text.content),
-            };
+            } as presetProps;
           })
           .filter((preset) => !findMatchingStylePreset(preset, storyStyles));
   return {
@@ -160,7 +201,10 @@ export function getTextPresets(elements, storyStyles, type, isBackgroundColor) {
   };
 }
 
-export function getShapePresets(elements, storyStyles) {
+export function getShapePresets(
+  elements: DefaultBackgroundElement[],
+  storyStyles: storyStylesProps
+) {
   const colors = elements
     .map(({ backgroundColor }) => {
       return backgroundColor ? backgroundColor : null;
@@ -171,7 +215,7 @@ export function getShapePresets(elements, storyStyles) {
   };
 }
 
-export function getPagePreset(page, storyStyles) {
+export function getPagePreset(page: Page, storyStyles: storyStylesProps) {
   return {
     colors: [page.backgroundColor].filter(
       (color) => color && !findMatchingColor(color, storyStyles, false)
@@ -179,7 +223,7 @@ export function getPagePreset(page, storyStyles) {
   };
 }
 
-export function areAllType(elType, selectedElements) {
+export function areAllType(elType: string, selectedElements: Element[]) {
   return (
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => elType === type)

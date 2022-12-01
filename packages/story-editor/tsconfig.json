@@ -16,6 +16,6 @@
     "src/app/helpCenter/**/*",
     "src/app/history",
     "src/types",
-    "src/utils"
+    "src/utils/*.ts"
   ]
 }
