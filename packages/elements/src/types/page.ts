@@ -66,4 +66,8 @@ export interface Page {
     ctaText: string;
     theme: string;
   };
+  shoppingAttachment?: {
+    ctaText: string;
+    theme: string;
+  };
 }
