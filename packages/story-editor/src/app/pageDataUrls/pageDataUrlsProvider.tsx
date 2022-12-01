@@ -58,7 +58,7 @@ function PageDataUrlProvider({
         const clearQueueOfPageTask = queueIdleTask([
           idleTaskUid,
           idleTask,
-        ]) as () => void;
+        ]);
         return (): void => {
           if (typeof clearQueueOfPageTask === 'function') {
             clearQueueOfPageTask();
