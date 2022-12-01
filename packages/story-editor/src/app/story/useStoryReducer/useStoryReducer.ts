@@ -18,8 +18,6 @@
  * External dependencies
  */
 import { useReducer, useMemo } from '@googleforcreators/react';
-import { StoryAnimationState } from '@googleforcreators/animation';
-import type { Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -30,18 +28,9 @@ import type {
   ReducerState,
   ReducerProviderState,
 } from '../../../types';
+import { INITIAL_STATE } from '../constants';
 import { DispatchType, exposedActions, internalActions } from './actions';
 import reducer from './reducer';
-
-export const INITIAL_STATE = {
-  pages: [],
-  capabilities: {},
-  current: null,
-  selection: [],
-  story: {} as Story,
-  animationState: StoryAnimationState.Reset,
-  copiedElementState: {},
-};
 
 /**
  * More description to follow - especially about return value.

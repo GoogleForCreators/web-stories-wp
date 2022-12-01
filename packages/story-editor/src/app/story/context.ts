@@ -19,13 +19,16 @@
  */
 import { createContext } from '@googleforcreators/react';
 import type { Element, Page, Story } from '@googleforcreators/elements';
-import type { StoryAnimation, StoryAnimationState } from '@googleforcreators/animation';
+import type {
+  StoryAnimation,
+  StoryAnimationState,
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
  */
 import type { StoryProviderState } from '../../types';
-import { INITIAL_STATE } from './useStoryReducer/useStoryReducer';
+import { INITIAL_STATE } from './constants';
 
 export default createContext<StoryProviderState>({
   state: {
