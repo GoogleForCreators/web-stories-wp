@@ -30,7 +30,7 @@ function pageContainsBlobUrl(pages: Page[]) {
     page.elements.some(
       (element) =>
         elementIs.media(element) &&
-        (isBlobURL(element.resource.src) ||
+        (isBlobURL(element.resource?.src) ||
           (elementIs.sequenceMedia(element) &&
             isBlobURL((element as SequenceMediaElement)?.resource?.poster)))
     )
