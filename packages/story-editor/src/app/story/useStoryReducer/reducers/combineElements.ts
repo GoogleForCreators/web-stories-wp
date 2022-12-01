@@ -105,17 +105,17 @@ export const combineElements = (
   ];
 
   // If the element we're dropping into is not background, maintain link and border.
-  if (elementIs.backgroundable(secondElement) && !secondElement.isBackground) {
+  if (elementIs.backgroundable(secondElement) && secondElement.isBackground) {
+    // If we're dropping into background, maintain the flip and overlay, too.
+    // Only copy position properties for backgrounds, as they're ignored while being background
+    // For non-backgrounds, elements should keep original positions from secondElement
+    propsFromFirst.push('flip', 'overlay', 'width', 'height', 'x', 'y');
+  } else {
     propsFromFirst.push('link');
     propsFromFirst.push('border');
     if (canSupportMultiBorder(secondElement)) {
       propsFromFirst.push('borderRadius');
     }
-  } else {
-    // If we're dropping into background, maintain the flip and overlay, too.
-    // Only copy position properties for backgrounds, as they're ignored while being background
-    // For non-backgrounds, elements should keep original positions from secondElement
-    propsFromFirst.push('flip', 'overlay', 'width', 'height', 'x', 'y');
   }
 
   const newElement = {
