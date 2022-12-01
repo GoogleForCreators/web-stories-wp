@@ -62,10 +62,10 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 * Mock default response.
 	 *
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param mixed  $r       HTTP request arguments.
-	 * @return mixed Response data.
+	 * @param array<string, string>  $r       HTTP request arguments.
+	 * @return array{response: array<string, int>, body?: string} Response data.
 	 */
-	public function mock_response_default( $preempt, $r ) {
+	public function mock_response_default( $preempt, array $r ): array {
 		++$this->request_count;
 		$this->request_body = $r['body'];
 
@@ -73,7 +73,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 			'response' => [
 				'code' => 200,
 			],
-			'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_default.json' ),
+			'body'     => (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_default.json' ),
 		];
 	}
 
@@ -81,10 +81,10 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 * Mock unauthorized response.
 	 *
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param mixed  $r       HTTP request arguments.
-	 * @return mixed Response data.
+	 * @param array<string, string>  $r       HTTP request arguments.
+	 * @return array{response: array<string, int>, body?: string} Response data.
 	 */
-	public function mock_response_unauthorized( $preempt, $r ) {
+	public function mock_response_unauthorized( $preempt, array $r ): array {
 		++$this->request_count;
 		$this->request_body = $r['body'];
 
@@ -99,10 +99,10 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 * Mock 404 response.
 	 *
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param mixed  $r       HTTP request arguments.
-	 * @return mixed Response data.
+	 * @param array<string, string>  $r       HTTP request arguments.
+	 * @return array{response: array<string, int>, body?: string} Response data.
 	 */
-	public function mock_response_not_found( $preempt, $r ) {
+	public function mock_response_not_found( $preempt, array $r ): array {
 		++$this->request_count;
 		$this->request_body = $r['body'];
 
@@ -116,11 +116,11 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	/**
 	 * Mock extensions[code] response.
 	 *
-	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param mixed  $r       HTTP request arguments.
-	 * @return mixed Response data.
+	 * @param mixed                 $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param array<string, string> $r       HTTP request arguments.
+	 * @return array{response: array<string, int>, body?: string} Response data.
 	 */
-	public function mock_response_extensions_code( $preempt, $r ) {
+	public function mock_response_extensions_code( $preempt, array $r ): array {
 		++$this->request_count;
 		$this->request_body = $r['body'];
 		return [
@@ -134,11 +134,11 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	/**
 	 * Mock no results response.
 	 *
-	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param mixed  $r       HTTP request arguments.
-	 * @return mixed Response data.
+	 * @param mixed                 $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param array<string, string> $r       HTTP request arguments.
+	 * @return array{response: array<string, int>, body?: string} Response data.
 	 */
-	public function mock_response_no_results( $preempt, $r ) {
+	public function mock_response_no_results( $preempt, array $r ): array {
 		++$this->request_count;
 		$this->request_body = $r['body'];
 
@@ -146,7 +146,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 			'response' => [
 				'code' => 200,
 			],
-			'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_empty_search.json' ),
+			'body'     => (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_empty_search.json' ),
 		];
 	}
 
@@ -213,9 +213,11 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 
+		/**
+		 * @var string $cache_key
+		 */
 		$cache_key = $this->call_private_method(
-			$this->instance,
-			'get_cache_key',
+			[ $this->instance, 'get_cache_key' ],
 			[
 				$search_term,
 				$after,
@@ -276,7 +278,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		foreach ( $actual['products'] as $product ) {
 			$this->assertInstanceOf( Product::class, $product );
 
-			$this->assertMatchesProductSchema( json_decode( wp_json_encode( $product ), true ) );
+			$this->assertMatchesProductSchema( json_decode( (string) wp_json_encode( $product ), true ) );
 		}
 	}
 
@@ -345,8 +347,10 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	}
 
 	/**
-	* @dataProvider data_test_get_search_sort_by_query
-	*/
+	 * @return array<string, array<int, array<int, int|string>>>
+	 *
+	 * @dataProvider data_test_get_search_sort_by_query
+	 */
 	public function data_test_get_search_sort_by_query(): array {
 		return [
 			'Default search'  => [
@@ -373,13 +377,16 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @param string[] $args
+	 * @param string[] $expected
+	 *
 	 * @covers ::fetch_remote_products
 	 * @covers ::get_search
 	 * @covers ::get_products_query
 	 * @covers ::execute_query
 	 * @dataProvider data_test_get_search_sort_by_query
 	 */
-	public function test_get_search_sort_by_query( $args, $expected ): void {
+	public function test_get_search_sort_by_query( array $args, array $expected ): void {
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 		add_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ], 10, 2 );
@@ -391,8 +398,10 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	}
 
 	/**
-	* @dataProvider data_test_get_search_extensions_code_response
-	*/
+	 * @return array<string, string[]>
+	 *
+	 * @dataProvider data_test_get_search_extensions_code_response
+	 */
 	public function data_test_get_search_extensions_code_response(): array {
 		return [
 			'THROTTLED'             => [
@@ -426,11 +435,11 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 * @covers ::execute_query
 	 * @dataProvider data_test_get_search_extensions_code_response
 	 */
-	public function test_get_search_extensions_code_response( $args, $expected ): void {
+	public function test_get_search_extensions_code_response( string $args, string $expected ): void {
 		update_option( Settings::SETTING_NAME_SHOPIFY_HOST, 'example.myshopify.com' );
 		update_option( Settings::SETTING_NAME_SHOPIFY_ACCESS_TOKEN, '1234' );
 
-		$this->response_body = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_' . $args . '.json' );
+		$this->response_body = (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/shopify_response_' . $args . '.json' );
 
 		add_filter( 'pre_http_request', [ $this, 'mock_response_extensions_code' ], 10, 2 );
 

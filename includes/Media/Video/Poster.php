@@ -176,7 +176,11 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	 *
 	 * @param array<string, mixed>|mixed $response   Array of prepared attachment data.
 	 * @param WP_Post                    $attachment Attachment object.
-	 * @return array<string, mixed>|mixed $response;
+	 * @return array<string, mixed>|mixed $response
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response, WP_Post $attachment ) {
 		if ( ! \is_array( $response ) ) {

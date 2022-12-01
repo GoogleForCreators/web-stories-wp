@@ -81,8 +81,7 @@ class KSES extends DependencyInjectedTestCase {
 		];
 
 		$output = $this->call_private_method(
-			$this->instance,
-			'array_merge_recursive_distinct',
+			[ $this->instance, 'array_merge_recursive_distinct' ],
 			[
 				$input_array1,
 				$input_array2,
@@ -100,6 +99,8 @@ class KSES extends DependencyInjectedTestCase {
 	 *         @string string $expected Expected string of CSS rules.
 	 *     }
 	 * }
+	 *
+	 * @phpstan-return array<int, array{css: string, expected: string}>
 	 */
 	public function data_test_safecss_filter_attr(): array {
 		return [
@@ -279,6 +280,8 @@ class KSES extends DependencyInjectedTestCase {
 	 *         @string string $expected Expected string of CSS rules.
 	 *     }
 	 * }
+	 *
+	 * @phpstan-return array<int, array{css: string, expected: string}|string[]>
 	 */
 	public function data_test_safecss_filter_attr_extended(): array {
 		return [
@@ -403,6 +406,7 @@ class KSES extends DependencyInjectedTestCase {
 
 		$result = $this->instance->filter_kses_allowed_html( $allowed_tags );
 
+		$this->assertIsArray( $result );
 		$this->assertArrayHasKey( 'img', $result );
 		$this->assertArrayHasKey( 'width', $result['img'] );
 		$this->assertArrayHasKey( 'intrinsicsize', $result['img'] );
@@ -410,8 +414,11 @@ class KSES extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'width', $result['testing'] );
 	}
 
+	/**
+	 * @return array<string, string[]>
+	 */
 	public function data_test_filter_kses_allowed_html(): array {
-		$blue_rings_svg = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/multipleBlueRings.svg' );
+		$blue_rings_svg = (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/multipleBlueRings.svg' );
 
 		return [
 			'Video Element'                    => [

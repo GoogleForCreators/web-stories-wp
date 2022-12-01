@@ -59,6 +59,8 @@ class Is_Gif extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		add_post_meta( $video_attachment_id, $this->instance::IS_GIF_POST_META_KEY, 999 );
 		$this->instance->on_plugin_uninstall();
 		$this->assertSame( '', get_post_meta( $video_attachment_id, $this->instance::IS_GIF_POST_META_KEY, true ) );
