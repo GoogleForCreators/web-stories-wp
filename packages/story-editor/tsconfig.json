@@ -18,6 +18,7 @@
     "src/app/history",
     "src/app/font",
     "src/types",
-    "src/utils/usePreventWindowUnload.ts"
+    "src/utils/usePreventWindowUnload.ts",
+    "src/utils/cleanForSlug.ts"
   ]
 }

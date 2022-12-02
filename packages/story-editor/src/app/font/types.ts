@@ -19,23 +19,35 @@
  */
 import type { FontData, FontWeight } from '@googleforcreators/elements';
 
+export interface FontWeightOption {
+  name: string;
+  value: FontWeight;
+}
+
 export interface FontProviderState {
   state: {
     fonts: FontData[];
     curatedFonts: FontData[];
-    customFonts: FontData[];
+    customFonts: FontData[] | null;
     recentFonts: FontData[];
   };
   actions: {
-    getFontsBySearch: () => FontData[];
-    getFontByName: () => FontData | null;
-    maybeEnqueueFontStyle: () => void;
-    getFontWeight: () => FontWeight;
-    getFontFallback: () => string;
-    ensureMenuFontsLoaded: () => void;
-    ensureCustomFontsLoaded: () => void;
+    getFontsBySearch: (name: string) => Promise<FontData[]>;
+    getFontByName: (name: string) => FontData | null;
+    maybeEnqueueFontStyle: (fonts: FontConfig[]) => Promise<unknown>;
+    getFontWeight: (name: string) => FontWeightOption[];
+    getFontFallback: (name: string) => string[];
+    ensureMenuFontsLoaded: (fonts: string[]) => void;
+    ensureCustomFontsLoaded: (fonts: string[]) => void;
     addRecentFont: (font: FontData) => void;
-    getCustomFonts: () => FontData[];
-    getCuratedFonts: () => FontData[];
+    getCustomFonts: () => Promise<unknown>;
+    getCuratedFonts: () => Promise<unknown>;
   };
+}
+
+export interface FontConfig {
+  font: FontData;
+  fontStyle: 'italic' | 'normal';
+  content: string;
+  fontWeight?: FontWeight;
 }

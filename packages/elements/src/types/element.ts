@@ -106,3 +106,12 @@ export interface MediaElement extends BackgroundableElement {
 export interface SequenceMediaElement extends MediaElement {
   resource: SequenceResource;
 }
+
+export interface TextElement extends Element {
+  content: string;
+  font: {
+    service: string;
+    family: string;
+    fallbacks: string[];
+  };
+}
