@@ -18,14 +18,8 @@
  * External dependencies
  */
 import { shallowEqual } from '@googleforcreators/react';
-import { createPage } from '@googleforcreators/elements';
-import { PatternType } from '@googleforcreators/patterns';
-import type {
-  Page,
-  Element,
-  BackgroundableElement,
-  DefaultBackgroundElement,
-} from '@googleforcreators/elements';
+import { createPage, elementIs } from '@googleforcreators/elements';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Determine if a page has background or element changes different from the default page.
@@ -43,21 +37,28 @@ const isDefaultPage = (page: Page) => {
 
   // Check if background color is different
   if (
-    page.backgroundColor.type === PatternType.Solid &&
-    !shallowEqual(
-      page.backgroundColor?.color,
-      defaultPage.backgroundColor?.color
-    )
+    'color' in page.backgroundColor &&
+    'color' in defaultPage.backgroundColor
   ) {
-    return false;
+    if (
+      !shallowEqual(
+        page.backgroundColor.color,
+        defaultPage.backgroundColor.color
+      )
+    ) {
+      return false;
+    }
   }
 
   // Check if background element is not default
   const backgroundElement = page.elements.find(
-    (e: Element | BackgroundableElement | DefaultBackgroundElement) =>
-      e.isBackground
+    (e) => elementIs.backgroundable(e) && e.isBackground
   );
-  if (backgroundElement && !backgroundElement.isDefaultBackground) {
+  if (
+    backgroundElement &&
+    elementIs.defaultBackground(backgroundElement) &&
+    !backgroundElement.isDefaultBackground
+  ) {
     return false;
   }
 

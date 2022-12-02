@@ -19,18 +19,25 @@
  */
 import { __, sprintf } from '@googleforcreators/i18n';
 
-interface GroupProps {
-  name?: string;
+interface GroupsProps {
+  [key: string]: {
+    name?: string;
+  };
 }
 
-export function getNextGroupNumber(groups: Record<string, GroupProps>) {
+export function getNextGroupNumber(groups: GroupsProps) {
   const nums = [0];
   const defaultName = __('Group', 'web-stories');
   for (const prop in groups) {
     if (!Object.prototype.hasOwnProperty.call(groups[prop], 'name')) {
       continue;
     }
-    const parts = groups[prop]?.name.split(' ');
+    const { name = '' } = groups[prop];
+    if (!name) {
+      continue;
+    }
+
+    const parts = name.split(' ');
     if (parts[0] === defaultName && parts[1]) {
       nums.push(Number(parts[1]));
     }
@@ -38,13 +45,13 @@ export function getNextGroupNumber(groups: Record<string, GroupProps>) {
   return Math.max(...nums) + 1;
 }
 
-function generateGroupName(groups: Record<string, GroupProps>, name: string) {
+function generateGroupName(groups: GroupsProps, name: string) {
   if (!name) {
     const groupNumber = getNextGroupNumber(groups);
     return sprintf(
       /* translators: %d: group number. */
       __('Group %d', 'web-stories'),
-      groupNumber
+      groupNumber.toString()
     );
   }
 

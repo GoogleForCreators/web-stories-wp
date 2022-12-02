@@ -36,8 +36,9 @@ function createThumbnailCanvasFromFullbleedCanvas(
   const dy = (fullbleedHeight - thumbnailHeight) / 2;
   thumbnailCanvas.width = fullbleedCanvas.width;
   thumbnailCanvas.height = thumbnailHeight;
-  thumbnailContext.drawImage(fullbleedCanvas, 0, -dy);
-
+  if (thumbnailContext) {
+    thumbnailContext.drawImage(fullbleedCanvas, 0, -dy);
+  }
   return thumbnailCanvas;
 }
 

@@ -15,6 +15,7 @@
     { "path": "../output" },
     { "path": "../patterns" },
     { "path": "../react" },
+    { "path": "../text-sets" },
     { "path": "../tracking" }
   ],
   "include": [

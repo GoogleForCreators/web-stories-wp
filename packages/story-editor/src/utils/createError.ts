@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+class CustomError extends Error {
+  public file = '';
+  public isUserError = false;
+}
 /**
  * Helper function to get create a js error.
  *
@@ -23,7 +27,7 @@
  * @return Error Object.
  */
 function createError(name: string, fileName: string, message: string) {
-  const validError = new Error();
+  const validError = new CustomError();
 
   validError.name = name;
   validError.file = fileName;

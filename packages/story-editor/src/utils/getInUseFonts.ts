@@ -15,19 +15,23 @@
  */
 
 /**
- * Returns a list of font names used across all pages in a story.
- *
- * @param {Array<import('../types').Page>} pages List of pages.
- * @return {Array<string>} Font names.
+ * External dependencies
  */
-export function getInUseFontsForPages(pages) {
+import type { Page } from '@googleforcreators/elements';
+import type { TextSet } from '@googleforcreators/text-sets';
+import { elementIs } from '@googleforcreators/elements';
+
+/**
+ * Returns a list of font names used across all pages in a story.
+ */
+export function getInUseFontsForPages(pages: Page[]) {
   return (
     Array.from(
       new Set(
         pages
           .map(({ elements = [] }) =>
             elements.map((element) => {
-              if (element.type === 'text' && Boolean(element.font?.family)) {
+              if (elementIs.text(element) && Boolean(element.font?.family)) {
                 return element.font?.family;
               }
               return null;
@@ -40,23 +44,31 @@ export function getInUseFontsForPages(pages) {
   );
 }
 
+interface getTextSetsForFontsProps {
+  fonts: string[];
+  textSets: TextSet[];
+}
+
 /**
  * Returns a list of text sets that include the fonts provided in the options object.
  *
- * @param {Array<Object>} options Object containing an array of fonts and text sets to filter.
- * @return {Array<Object>} List of text sets that match the array of fonts.
+ * @param options Object containing an array of fonts and text sets to filter.
+ * @return List of text sets that match the array of fonts.
  */
-export function getTextSetsForFonts({ fonts, textSets }) {
+export function getTextSetsForFonts({
+  fonts,
+  textSets,
+}: getTextSetsForFontsProps) {
   return textSets
     .map((currentTextSet) => {
       const hasFontInUse = currentTextSet.elements.reduce(
         (elementMemo, currentElement) => {
           if (
-            currentElement.type === 'text' &&
+            elementIs.text(currentElement) &&
             Boolean(currentElement.font?.family)
           ) {
             return (
-              elementMemo | (fonts.indexOf(currentElement.font?.family) !== -1)
+              elementMemo || fonts.indexOf(currentElement.font?.family) !== -1
             );
           }
           return elementMemo;
