@@ -19,7 +19,11 @@
  */
 import { __, sprintf } from '@googleforcreators/i18n';
 
-export function getNextGroupNumber(groups) {
+interface GroupProps {
+  name?: string;
+}
+
+export function getNextGroupNumber(groups: Record<string, GroupProps>) {
   const nums = [0];
   const defaultName = __('Group', 'web-stories');
   for (const prop in groups) {
@@ -34,7 +38,7 @@ export function getNextGroupNumber(groups) {
   return Math.max(...nums) + 1;
 }
 
-function generateGroupName(groups, name) {
+function generateGroupName(groups: Record<string, GroupProps>, name: string) {
   if (!name) {
     const groupNumber = getNextGroupNumber(groups);
     return sprintf(
