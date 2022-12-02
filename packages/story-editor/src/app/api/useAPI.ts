@@ -22,7 +22,7 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { APIState } from '../../types/apiProvider';
+import type { APIState } from '../../types';
 import Context from './context';
 
 function useAPI(): APIState;

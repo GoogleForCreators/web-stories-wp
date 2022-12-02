@@ -17,20 +17,13 @@
 /**
  * External dependencies
  */
-import type {
-  MediaElement,
-  Page,
-  Story,
-  FontData,
-  ProductData,
-} from '@googleforcreators/elements';
-import type {
-  Resource,
-  ResourceId,
-  TrimData,
-  VideoResource,
-} from '@googleforcreators/media';
-import type { Template } from '@googleforcreators/templates';
+import type { Page } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
+import type { APICallbacks } from './apiProvider';
+import type { Flags } from './storyEditor';
 
 /**
  * Internal dependencies
@@ -45,7 +38,7 @@ export interface Capabilities {
   canManageSettings?: boolean;
 }
 
-export interface MimeTypes {
+interface MimeTypes {
   audio?: string[];
   image?: string[];
   caption?: string[];
@@ -53,7 +46,7 @@ export interface MimeTypes {
   video?: string[];
 }
 
-export interface Locale {
+interface Locale {
   locale?: string;
   dateFormat?: string;
   timeFormat?: string;
@@ -247,6 +240,6 @@ export interface ConfigState {
   shoppingProvider: string;
   mediainfoUrl: string;
   /** Feature flags */
-  flags: Record<string, boolean>;
+  flags: Flags;
   additionalTips: Record<string, Tip>;
 }

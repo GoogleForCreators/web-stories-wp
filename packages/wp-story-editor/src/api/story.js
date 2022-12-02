@@ -44,6 +44,7 @@ export function getStoryById(config, storyId) {
 const getStorySaveData = (
   {
     pages,
+    fonts,
     featuredMedia,
     globalStoryStyles,
     publisherLogo,
@@ -62,6 +63,7 @@ const getStorySaveData = (
     story_data: {
       version: DATA_VERSION,
       pages,
+      fonts,
       autoAdvance,
       defaultPageDuration,
       currentStoryStyles,

@@ -28,7 +28,7 @@ import { CurrentUserProvider } from '../../../currentUser';
 import { DONE_TIP_ENTRY } from '../../constants';
 import useHelpCenter from '..';
 import HelpCenterProvider from '../../provider';
-import type { User } from '../../../../types/configProvider';
+import type { User } from '../../../../types';
 
 function setup() {
   const currentUser: User = {

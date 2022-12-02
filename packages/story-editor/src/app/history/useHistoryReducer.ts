@@ -22,7 +22,7 @@ import { useReducer, useCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { HistoryEntry } from '../../types/historyProvider';
+import type { HistoryEntry } from '../../types';
 import reducer, { ActionType, EMPTY_STATE } from './reducer';
 
 function useHistoryReducer(size: number) {

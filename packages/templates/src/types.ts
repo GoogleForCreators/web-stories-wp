@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Story, Page, Element } from '@googleforcreators/elements';
+import type { StoryData, Page, Element } from '@googleforcreators/elements';
 
 export interface Color {
   label: string;
@@ -37,7 +37,7 @@ export interface MetaData {
   modified?: string;
 }
 
-export interface TemplateData extends Omit<Story, 'pages'> {
+export interface TemplateData extends Omit<StoryData, 'pages'> {
   current: null;
   selection: never[];
   story: Record<string, never>;
