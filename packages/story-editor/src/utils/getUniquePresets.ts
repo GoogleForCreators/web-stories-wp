@@ -13,9 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function getUniquePresets(presets: string[]) {
+/**
+ * External dependencies
+ */
+import type { Pattern } from '@googleforcreators/patterns';
+import type { TextElement } from '@googleforcreators/elements';
+
+function getUniquePresets<T extends Pattern | Partial<TextElement>>(
+  presets: T[]
+): T[] {
   const list = presets.map((preset) => JSON.stringify(preset));
-  return Array.from(new Set(list)).map((preset) => String(JSON.parse(preset)));
+  return Array.from(new Set(list)).map((preset) => JSON.parse(preset) as T);
 }
 
 export default getUniquePresets;

@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-export default function objectWithout(
-  obj: object,
+export default function objectWithout<T extends object>(
+  obj: T,
   propertiesToRemove: string[]
-) {
-  return (
-    Object.keys(obj)
-      .filter((key) => !propertiesToRemove.includes(key))
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Known issue.
-      .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {})
-  );
+): Partial<T> {
+  return Object.keys(obj)
+    .filter((key) => !propertiesToRemove.includes(key))
+    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key as keyof T] }), {});
 }

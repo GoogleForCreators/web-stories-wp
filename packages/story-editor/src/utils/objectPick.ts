@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-export default function pick(o: object, fields: string[] = []): object {
-  if (!o || typeof o !== 'object') {
-    return {};
-  }
-
-  return Object.fromEntries(fields.map((k) => [k, o[k]]));
+export default function pick<T extends object>(
+  o: T,
+  fields: string[] = []
+): Partial<T> {
+  return Object.assign(
+    {},
+    ...fields.map((prop) =>
+      o && prop in o ? { [prop]: o && o[prop as keyof T] } : {}
+    )
+  ) as Partial<T>;
 }
