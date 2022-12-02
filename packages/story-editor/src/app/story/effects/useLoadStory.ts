@@ -20,6 +20,7 @@
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
 import { createPage, TextElement } from '@googleforcreators/elements';
+import { populateElementFontData } from '@googleforcreators/output';
 
 /**
  * Internal dependencies
@@ -92,10 +93,16 @@ function loadStory(
   // If there are no pages, create empty page.
   const storyData =
     storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
-  const pages =
+  let pages =
     storyData?.pages && storyData.pages.length > 0
       ? storyData.pages
       : [createPage()];
+
+  if (storyData?.fonts && Object.keys(storyData?.fonts).length >= 1) {
+    // fonts are stored in storyData,
+    // so we need to populate the font data back to the elements
+    pages = populateElementFontData(pages, storyData.fonts);
+  }
 
   // Initialize color/style presets, if missing.
   // Otherwise ensure the saved presets are unique.
@@ -112,6 +119,7 @@ function loadStory(
   const story = {
     storyId: storyId,
     title,
+    fonts: storyData?.fonts || {},
     status,
     author,
     date,

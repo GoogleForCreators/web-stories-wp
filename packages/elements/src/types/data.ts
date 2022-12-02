@@ -91,4 +91,5 @@ export interface StoryData {
   backgroundAudio?: {
     resource: AudioResource;
   };
+  fonts?: Record<string, FontData>;
 }

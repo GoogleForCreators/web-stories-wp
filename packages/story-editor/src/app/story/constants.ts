@@ -24,7 +24,7 @@ export const INITIAL_STATE = {
   capabilities: {},
   current: null,
   selection: [],
-  story: {} as Story,
+  story: { fonts: {} } as Story,
   animationState: StoryAnimationState.Reset,
   copiedElementState: {},
 };

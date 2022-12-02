@@ -25,6 +25,8 @@ import type { Page, Story } from '@googleforcreators/elements';
 import objectPick from '../../../utils/objectPick';
 import type { StorySaveData, MetaData, Flags } from '../../../types';
 import getAllProducts from './getAllProducts';
+import { cleanElementFontProperties } from './cleanElementFontProperties';
+import { getStoryFontsFromPages } from './getStoryFontsFromPages';
 
 interface StoryPropsToSave {
   story: Story;
@@ -38,8 +40,9 @@ function getStoryPropsToSave({
   metadata,
   flags,
 }: StoryPropsToSave): StorySaveData {
-  const { terms, ...propsFromStory } = objectPick(story, [
+  const { terms, fonts, ...propsFromStory } = objectPick(story, [
     'title',
+    'fonts',
     'status',
     'author',
     'date',
@@ -56,12 +59,26 @@ function getStoryPropsToSave({
     'backgroundAudio',
     'terms',
   ]);
-  const products = getAllProducts(pages);
-  const content = getStoryMarkup(story, pages, metadata, flags);
+
+  // clean up fonts to store at the story level
+  // this avoids storing the same font (properties) multiple times
+  // see: https://github.com/GoogleForCreators/web-stories-wp/issues/12261
+  const cleandFonts = getStoryFontsFromPages(pages);
+  // clean up text elements to remove font properties from individual elements
+  const cleanedPages = cleanElementFontProperties(pages);
+  const products = getAllProducts(cleanedPages);
+  const content = getStoryMarkup(
+    { ...story, fonts: cleandFonts },
+    cleanedPages,
+    metadata,
+    flags
+  );
+
   return {
     content,
-    pages,
+    pages: cleanedPages,
     ...propsFromStory,
+    fonts: cleandFonts,
     ...terms,
     products,
   } as StorySaveData;

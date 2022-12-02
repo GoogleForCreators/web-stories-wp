@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,18 @@
  * limitations under the License.
  */
 
-export { default as OutputStory } from './story';
-export { default as getStoryMarkup } from './utils/getStoryMarkup';
-export { populateElementFontData } from './utils/populateElementFontData';
-export { default as getTextElementTagNames } from './utils/getTextElementTagNames';
-export * from './constants';
+function reduceElementFontProperties({ elements, ...rest }) {
+  return {
+    elements: elements.map((element) => {
+      if (element.type === 'text' && Boolean(element.font?.family)) {
+        return { ...element, font: { family: element.font.family } };
+      }
+      return element;
+    }),
+    ...rest,
+  };
+}
+
+export function cleanElementFontProperties(data) {
+  return data.map((page) => reduceElementFontProperties(page));
+}

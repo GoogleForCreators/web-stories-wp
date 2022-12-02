@@ -20,6 +20,11 @@
 import type { Pattern } from '@googleforcreators/patterns';
 import type { AudioResource } from '@googleforcreators/media';
 
+/**
+ * Internal dependencies
+ */
+import type { FontData } from './data';
+
 interface FeaturedMedia {
   id: number;
   height: number;
@@ -79,6 +84,7 @@ export interface Story {
   backgroundAudio?: {
     resource: AudioResource;
   };
+  fonts: Record<string, FontData>;
   autoAdvance?: boolean;
   defaultPageDuration?: number;
 }
