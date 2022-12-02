@@ -34,7 +34,8 @@ import type { Template } from '@googleforcreators/templates';
  * Internal dependencies
  */
 import type { RawStory, StoryReturnData, StorySaveData } from './story';
-import type { PageTemplate, Taxonomy } from './configProvider';
+import type { PageTemplate } from './configProvider';
+import type { Taxonomy, Term } from '../types/taxonomyProvider';
 import type { User } from './storyEditor';
 
 interface TemplateData {
@@ -42,13 +43,6 @@ interface TemplateData {
   featured_media: number;
   title?: string;
 }
-
-type Term = {
-  id: number;
-  name: string;
-  slug: string;
-  taxonomy: string;
-};
 
 type Author = {
   id: number;
@@ -146,10 +140,13 @@ export interface APICallbacks {
   getProxyUrl?: (src: string) => string;
   getStoryById?: (id: number) => Promise<RawStory>;
   getTaxonomies?: () => Promise<Taxonomy[]>;
-  getTaxonomyTerm?: (props: {
-    search?: string;
-    per_page?: number;
-  }) => Promise<Term>;
+  getTaxonomyTerm?: (
+    termsEndpoint: string,
+    props: {
+      search?: string;
+      per_page?: number;
+    }
+  ) => Promise<Term | []>;
   saveStoryById?: (data: StorySaveData) => Promise<StoryReturnData>;
   updateCurrentUser?: (data: Partial<User>) => Promise<User>;
   updateMedia?: (id: number, data: Partial<Resource>) => Promise<Resource>;

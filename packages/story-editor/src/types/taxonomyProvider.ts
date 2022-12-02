@@ -44,6 +44,7 @@ export type Taxonomy = {
 };
 
 export type TaxonomiesBySlug = Record<string, Taxonomy>;
+
 export type EmbeddedTerms = Record<string, Record<string, Term>>;
 
 export type Terms = [Term[]];

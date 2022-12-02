@@ -59,11 +59,10 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
     actions: { clearHistory },
   } = useHistory();
   const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
-    // @ts-ignore -- @todo should this wait for #12652 ?
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
-      isStoryLoaded: pages.length > 0,
-      terms: story.terms,
+      isStoryLoaded: pages?.length > 0,
+      terms: story?.terms,
       hasTaxonomies: story?.taxonomies?.length > 0,
     })
   );
@@ -104,7 +103,6 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
       const taxonomiesBySlug: TaxonomiesBySlug = dictionaryOnKey(taxonomies as [], 'slug');
 
       const initialCache: EmbeddedTerms = mapObjectKeys(
-        // @ts-ignore -- @todo #12652 -- should get typing for this
         cacheFromEmbeddedTerms(terms),
         (slug: string): string => taxonomiesBySlug[slug]?.restBase
       );
@@ -169,7 +167,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
         return [];
       }
       try {
-        response = await getTaxonomyTerm(termsEndpoint, args);
+        response = await getTaxonomyTerm(termsEndpoint, { search: args?.search, per_page: args?.per_page });
       } catch (e) {
         // Log error
         if (e instanceof Error) {
