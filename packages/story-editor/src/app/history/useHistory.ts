@@ -21,12 +21,12 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { HistoryState } from '../../types/historyProvider';
+import type { HistoryProviderState } from '../../types';
 import Context from './context';
 
-function useHistory(): HistoryState;
+function useHistory(): HistoryProviderState;
 function useHistory<T>(
-  selector: (state: HistoryState) => T | HistoryState = identity
+  selector: (state: HistoryProviderState) => T | HistoryProviderState = identity
 ) {
   return useContextSelector(Context, selector);
 }

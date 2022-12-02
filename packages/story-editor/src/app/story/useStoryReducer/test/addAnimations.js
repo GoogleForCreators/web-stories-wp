@@ -19,20 +19,6 @@
 import { setupReducer } from './_utils';
 
 describe('addAnimations', () => {
-  it('should ignore non-list arguments', () => {
-    const { restore, addAnimations } = setupReducer();
-
-    // Set an initial state with a current page and an animation.
-    const initialState = restore({
-      pages: [{ id: '111', elements: [{ id: '000' }] }],
-      current: '111',
-    });
-
-    const result = addAnimations({ animations: false });
-
-    expect(result).toStrictEqual(initialState);
-  });
-
   it('should ignore an empty list', () => {
     const { restore, addAnimations } = setupReducer();
 

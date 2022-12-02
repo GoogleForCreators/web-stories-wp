@@ -49,6 +49,7 @@ describe('Story output', () => {
           width: 640,
           height: 853,
         },
+        fonts: {},
         publisherLogo: {
           id: 1,
           url: 'https://example.com/logo.png',
