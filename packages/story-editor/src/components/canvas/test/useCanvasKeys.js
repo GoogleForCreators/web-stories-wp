@@ -27,8 +27,8 @@ import { elementTypes } from '@googleforcreators/element-library';
  */
 import useHighlights from '../../../app/highlights/useHighlights';
 import useCanvasKeys from '../../../app/canvas/useCanvasKeys';
-import StoryContext from '../../../app/story/context.js';
-import CanvasContext from '../../../app/canvas/context.js';
+import StoryContext from '../../../app/story/context';
+import CanvasContext from '../../../app/canvas/context';
 
 jest.mock('../../../app/highlights/useHighlights', () => ({
   ...jest.requireActual('../../../app/highlights/useHighlights'),

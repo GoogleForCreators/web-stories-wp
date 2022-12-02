@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import type {
-  ReducerState,
+  HistoryReducerState,
   ReducerProps,
   HistoryEntry,
 } from '../../types/historyProvider';
@@ -39,9 +39,9 @@ export const EMPTY_STATE = {
 const reducer =
   (size: number) =>
   (
-    state: ReducerState,
+    state: HistoryReducerState,
     { type, payload }: ReducerProps
-  ): ReducerState | never => {
+  ): HistoryReducerState | never => {
     const currentEntry = state.entries[state.offset];
     switch (type) {
       case ActionType.SetCurrentState:

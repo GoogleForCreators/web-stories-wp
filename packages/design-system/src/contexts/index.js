@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export { default as SnackbarContext } from './snackbar/context';
-export { default as SnackbarProvider } from './snackbar/snackbarProvider';
-export { useSnackbar } from './snackbar/useSnackbar';
+export * from './snackbar';
 export { default as PopupContext } from './popup/context';
 export { default as PopupProvider } from './popup/popupProvider';
 export { usePopup } from './popup/usePopup';
