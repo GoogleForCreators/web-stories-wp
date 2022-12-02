@@ -110,7 +110,10 @@ class Story_Revisions extends Service_Base {
 	 * @param array<string,mixed> $story  Story post array.
 	 * @return array|mixed Array of allowed fields.
 	 *
+	 * @template T
+	 *
 	 * @phpstan-param PostData $story
+	 * @phpstan-return ($fields is array<T> ? array<T> : mixed)
 	 */
 	public function filter_revision_fields( $fields, array $story ) {
 		if ( ! \is_array( $fields ) ) {

@@ -46,7 +46,7 @@ class Add_Media_Source_Gif_Conversion extends DependencyInjectedTestCase {
 	 */
 	public function test_migrate(): void {
 		$this->instance->migrate();
-		$term = $this->call_private_method( $this->instance, 'get_term' );
+		$term = $this->call_private_method( [ $this->instance, 'get_term' ] );
 
 		$terms = get_terms(
 			[
@@ -54,6 +54,8 @@ class Add_Media_Source_Gif_Conversion extends DependencyInjectedTestCase {
 				'hide_empty' => false,
 			]
 		);
+
+		$this->assertNotWPError( $terms );
 
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertContains( $term, $slugs );

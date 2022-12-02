@@ -9,6 +9,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Taxonomies_Controller
@@ -28,7 +29,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	 */
 	protected static int $admin_id;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -55,7 +56,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	public function test_prepare_item_for_response(): void {
 		$this->controller->register();
 
-		$slug     = $this->get_private_property( self::$taxonomy_object, 'taxonomy_slug' );
+		$slug     = self::$taxonomy_object->get_taxonomy_slug();
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies/' . $slug );
 		$response = rest_get_server()->dispatch( $request );
 		$links    = $response->get_links();
@@ -80,6 +81,9 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertNotEmpty( $response->get_data() );
+		$this->assertIsArray( $response->get_data() );
+		$this->assertIsArray( $response_hierarchical->get_data() );
+		$this->assertIsArray( $response_flat->get_data() );
 		$this->assertCount(
 			\count( $response_hierarchical->get_data() ) + \count( $response_flat->get_data() ),
 			$response->get_data()
@@ -91,7 +95,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_collection_params
 	 * @dataProvider data_show_ui
 	 */
-	public function test_get_items_show_ui( $show_ui ): void {
+	public function test_get_items_show_ui( bool $show_ui ): void {
 		wp_set_current_user( self::$admin_id );
 		$this->controller->register();
 
@@ -103,7 +107,9 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		$this->assertFalse( $response->is_error() );
 		$data = $response->get_data();
 		$this->assertNotEmpty( $data );
+		$this->assertIsArray( $data );
 		foreach ( $data as $tax ) {
+			$this->assertIsArray( $tax );
 			$this->assertArrayHasKey( 'visibility', $tax );
 			$this->assertArrayHasKey( 'show_ui', $tax['visibility'] );
 			$this->assertSame( $show_ui, $tax['visibility']['show_ui'] );
@@ -115,7 +121,7 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_collection_params
 	 * @dataProvider data_show_ui
 	 */
-	public function test_get_items_hierarchical( $hierarchical ): void {
+	public function test_get_items_hierarchical( bool $hierarchical ): void {
 		$this->controller->register();
 
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies' );
@@ -125,14 +131,16 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 		$this->assertFalse( $response->is_error() );
 		$data = $response->get_data();
 		$this->assertNotEmpty( $data );
+		$this->assertIsArray( $data );
 		foreach ( $data as $tax ) {
+			$this->assertIsArray( $tax );
 			$this->assertArrayHasKey( 'hierarchical', $tax );
 			$this->assertSame( $hierarchical, $tax['hierarchical'] );
 		}
 	}
 
 	/**
-	 * @return array
+	 * @return array<string, bool[]>
 	 */
 	public function data_show_ui(): array {
 		return [

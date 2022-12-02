@@ -70,14 +70,14 @@ use Google\Web_Stories\Tracking;
  *   height?: int,
  *   align: string,
  *   stories?: int[],
- *   viewType: string,
+ *   viewType?: string,
  *   numOfStories?: int,
- *   numOfColumns: int,
- *   circleSize: int,
- *   imageAlignment: string,
- *   orderby: string,
- *   order: string,
- *   archiveLinkLabel: string,
+ *   numOfColumns?: int,
+ *   circleSize?: int,
+ *   imageAlignment?: string,
+ *   orderby?: string,
+ *   order?: string,
+ *   archiveLinkLabel?: string,
  *   authors?: int[],
  *   fieldState?: array<string, mixed>
  * }
@@ -314,11 +314,11 @@ class Web_Stories_Block extends Embed_Base {
 
 			$story_attributes = [
 				'align'              => $attributes['align'],
-				'view_type'          => $attributes['viewType'],
-				'archive_link_label' => $attributes['archiveLinkLabel'],
-				'circle_size'        => $attributes['circleSize'],
-				'image_alignment'    => $attributes['imageAlignment'],
-				'number_of_columns'  => $attributes['numOfColumns'],
+				'view_type'          => $attributes['viewType']         ??= '',
+				'archive_link_label' => $attributes['archiveLinkLabel'] ??= __( 'View all stories', 'web-stories' ),
+				'circle_size'        => $attributes['circleSize']       ??= 96,
+				'image_alignment'    => $attributes['imageAlignment']   ??= 96,
+				'number_of_columns'  => $attributes['numOfColumns']     ??= 2,
 			];
 
 			/**

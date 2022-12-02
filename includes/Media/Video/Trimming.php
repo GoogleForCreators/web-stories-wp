@@ -102,8 +102,12 @@ class Trimming extends Service_Base implements HasMeta, PluginUninstallAware {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array|mixed $response   Array of prepared attachment data.
-	 * @return array|mixed $response;
+	 * @param array|mixed $response Array of prepared attachment data.
+	 * @return array|mixed Response data.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
 		if ( ! \is_array( $response ) ) {

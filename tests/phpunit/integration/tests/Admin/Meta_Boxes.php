@@ -93,8 +93,12 @@ class Meta_Boxes extends TestCase {
 
 		add_action( 'add_meta_boxes', [ $this, 'register_test_meta_boxes' ] );
 
+
+		$current_post = get_post( $this->story_id );
+
+		$this->assertNotNull( $current_post );
 		// Registers default meta boxes.
-		register_and_do_post_meta_boxes( get_post( $this->story_id ) );
+		register_and_do_post_meta_boxes( $current_post );
 
 		$registered_meta_boxes = [];
 
@@ -134,8 +138,12 @@ class Meta_Boxes extends TestCase {
 
 		add_action( 'add_meta_boxes', [ $this, 'register_test_meta_boxes' ] );
 
+		$current_post = get_post( $this->story_id );
+
+		$this->assertNotNull( $current_post );
+
 		// Registers default meta boxes.
-		register_and_do_post_meta_boxes( get_post( $this->story_id ) );
+		register_and_do_post_meta_boxes( $current_post );
 
 		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$actual     = $meta_boxes->get_meta_boxes_per_location();

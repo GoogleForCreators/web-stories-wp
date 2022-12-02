@@ -5,10 +5,18 @@
     "declarationDir": "dist-types"
   },
   "references": [
+    { "path": "../dom" },
     { "path": "../design-system" },
     { "path": "../elements" },
+    { "path": "../element-library" },
     { "path": "../fonts" },
-    { "path": "../react" }
+    { "path": "../i18n" },
+    { "path": "../masks" },
+    { "path": "../migration" },
+    { "path": "../output" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../tracking" }
   ],
   "include": [
     "src/app/api",
@@ -17,7 +25,11 @@
     "src/app/helpCenter",
     "src/app/history",
     "src/app/font",
+    "src/app/story",
     "src/types",
+    "src/constants",
+    "src/utils/*.ts",
+    "src/typings/*",
     "src/utils/usePreventWindowUnload.ts",
     "src/utils/cleanForSlug.ts"
   ]

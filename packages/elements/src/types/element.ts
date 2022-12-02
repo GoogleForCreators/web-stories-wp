@@ -25,6 +25,7 @@ import type { ElementBox } from '@googleforcreators/units';
  * Internal dependencies
  */
 import type { ElementType } from './elementType';
+import type { ProductData } from './data';
 
 export interface Link {
   url: string;
@@ -107,11 +108,36 @@ export interface SequenceMediaElement extends MediaElement {
   resource: SequenceResource;
 }
 
+export interface ProductElement extends Element {
+  type: ElementType.Product;
+  product: ProductData;
+}
+
+interface BaseTextElementFont {
+  service: string;
+  family: string;
+  fallbacks: string[];
+}
+
+export interface GoogleTextElementFont extends BaseTextElementFont {
+  service: 'fonts.google.com';
+}
+
+export interface SystemTextElementFont extends BaseTextElementFont {
+  service: 'system';
+}
+
+export interface CustomTextElementFont extends BaseTextElementFont {
+  service: 'custom';
+  url: string;
+}
+
+export type TextElementFont =
+  | GoogleTextElementFont
+  | SystemTextElementFont
+  | CustomTextElementFont;
+
 export interface TextElement extends Element {
   content: string;
-  font: {
-    service: string;
-    family: string;
-    fallbacks: string[];
-  };
+  font: TextElementFont;
 }
