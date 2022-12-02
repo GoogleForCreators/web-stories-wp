@@ -22,10 +22,6 @@ import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Update page URL in browser.
- *
- * @param postId Current story id.
- * @param postEditURL Current story's edit link.
- * @return Function to refresh the post edit URL.
  */
 function useRefreshPostEditURL(postId: number, postEditURL: string) {
   return useCallback(() => {

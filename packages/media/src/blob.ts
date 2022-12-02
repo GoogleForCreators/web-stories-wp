@@ -61,6 +61,6 @@ export function revokeBlob(url: string): void {
  * @param url The URL.
  * @return Is the url a blob url?
  */
-export function isBlobURL(url: string): boolean {
-  return url?.startsWith('blob:');
+export function isBlobURL(url?: string): boolean {
+  return url ? url.startsWith('blob:') : false;
 }

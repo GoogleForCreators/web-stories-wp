@@ -50,30 +50,6 @@ describe('addElementToSelection', () => {
     expect(secondResult).toStrictEqual(firstResult);
   });
 
-  it('should ignore missing element id', () => {
-    const { restore, addElementToSelection } = setupReducer();
-
-    // Set an initial state.
-    const initialState = restore({
-      pages: [
-        {
-          id: '111',
-          elements: [
-            { id: 'e1', isBackground: true },
-            { id: 'e2' },
-            { id: 'e3' },
-          ],
-        },
-      ],
-      current: '111',
-      selection: ['e1', 'e2'],
-    });
-
-    // Add no element
-    const failedAttempt = addElementToSelection({ elementId: null });
-    expect(failedAttempt).toStrictEqual(initialState);
-  });
-
   it('should not allow adding video placeholder to non-empty selection', () => {
     const { restore, addElementToSelection } = setupReducer();
 

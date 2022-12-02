@@ -25,6 +25,7 @@ import type { ElementBox } from '@googleforcreators/units';
  * Internal dependencies
  */
 import type { ElementType } from './elementType';
+import type { ProductData } from './data';
 
 export interface Link {
   url: string;
@@ -109,4 +110,18 @@ export interface TextElement extends Element {
 
 export interface SequenceMediaElement extends MediaElement {
   resource: SequenceResource;
+}
+
+export interface ProductElement extends Element {
+  type: ElementType.Product;
+  product: ProductData;
+}
+
+export interface TextElement extends Element {
+  content: string;
+  font: {
+    service: string;
+    family: string;
+    fallbacks: string[];
+  };
 }
