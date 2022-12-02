@@ -38,7 +38,7 @@ import storyPageToNode from './storyPageToNode';
 async function storyPageToDataUrl(page, { width = 400, ...options }) {
   const htmlToImage = await import(
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
-    );
+  );
 
   const [node, cleanup] = await storyPageToNode(page, width);
 

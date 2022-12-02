@@ -45,7 +45,7 @@ export function getNextGroupNumber(groups: GroupsProps) {
   return Math.max(...nums) + 1;
 }
 
-function generateGroupName(groups: GroupsProps, name: string) {
+function generateGroupName(groups: GroupsProps, name: string) : string {
   if (!name) {
     const groupNumber = getNextGroupNumber(groups);
     return sprintf(

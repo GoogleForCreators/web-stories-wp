@@ -23,6 +23,9 @@ import {
   duplicateElement,
 } from '@googleforcreators/elements';
 
+import type { Page, Element } from '@googleforcreators/elements';
+import type { StoryAnimation } from '@googleforcreators/animation';
+
 /**
  * Internal dependencies
  */
@@ -30,31 +33,59 @@ import generateGroupName from './generateGroupName';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
+interface GroupsProps {
+  [key: string]: {
+    name?: string;
+  };
+}
+
+interface PayloadProps {
+  sentinel: string;
+  items: Elements[];
+  animations: StoryAnimation[];
+  groups: GroupsProps;
+}
+
+interface ProcessedPayloadProps {
+  animations: StoryAnimation[];
+  elements: Element[];
+}
 /**
  * Processes pasted content to find story elements.
  *
- * @param {DocumentFragment} content NodeList representation of the content.
- * @param {Object}           currentPage Current page.
- * @return {Object} Object containing found elements and animations arrays.
+ * @param content NodeList representation of the content.
+ * @param           currentPage Current page.
+ * @return Object containing found elements and animations arrays.
  */
-export function processPastedElements(content, currentPage) {
-  let foundElementsAndAnimations = { animations: [], elements: [] };
+export function processPastedElements(
+  content: DocumentFragment,
+  currentPage: Page
+) {
+  let foundElementsAndAnimations: {
+    animations: StoryAnimation[];
+    elements: Element[];
+    groups: GroupsProps;
+  } = { animations: [], elements: [], groups: {} };
   for (let n = content.firstChild; n; n = n.nextSibling) {
     if (
       n.nodeType !== /* COMMENT */ 8 ||
-      n.nodeValue?.indexOf('Fragment') !== -1
+      (typeof n.nodeValue === 'string' &&
+        n.nodeValue?.indexOf('Fragment') !== -1)
     ) {
       continue;
     }
-    const payload = JSON.parse(
+    const payload: PayloadProps = JSON.parse(
       n.nodeValue.replace(new RegExp(DOUBLE_DASH_ESCAPE, 'g'), '--')
-    );
+    ) as PayloadProps;
     if (payload.sentinel !== 'story-elements') {
       continue;
     }
 
-    const processedPayload = payload.items.reduce(
-      ({ elements, animations }, payloadElement) => {
+    const processedPayload: ProcessedPayloadProps = payload.items.reduce(
+      (
+        { elements, animations }: ProcessedPayloadProps,
+        payloadElement: Element
+      ) => {
         const { element, elementAnimations } = duplicateElement({
           element: {
             ...payloadElement,
@@ -70,7 +101,7 @@ export function processPastedElements(content, currentPage) {
         };
       },
       { animations: [], elements: [] }
-    );
+    ) as ProcessedPayloadProps;
 
     const groups = { ...payload.groups };
     for (const prop of Object.keys(groups)) {
@@ -96,24 +127,24 @@ export function processPastedElements(content, currentPage) {
 /**
  * Processes copied/cut content for preparing elements to add to clipboard.
  *
- * @param {Object} page Page which all the elements belong to.
- * @param {Array} elements Array of story elements.
- * @param {Array} animations Array of story animations.
- * @param {Array} groups Array of page groups used in the elements.
- * @param {Object} evt Copy/cut event object.
+ * @param page Page which all the elements belong to.
+ * @param elements Array of story elements.
+ * @param animations Array of story animations.
+ * @param groups Array of page groups used in the elements.
+ * @param evt Copy/cut event object.
  */
 export function addElementsToClipboard(
-  page,
-  elements,
-  animations,
-  groups,
-  evt
+  page: Page,
+  elements: Element[],
+  animations: StoryAnimation[],
+  groups: GroupsProps,
+  evt: ClipboardEvent
 ) {
   if (!elements.length || !evt) {
     return;
   }
   const { clipboardData } = evt;
-  const payload = {
+  const payload: PayloadProps = {
     sentinel: 'story-elements',
     // @todo: Ensure that there's no unserializable data here. The easiest
     // would be to keep all serializable data together and all non-serializable

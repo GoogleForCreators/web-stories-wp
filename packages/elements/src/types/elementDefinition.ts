@@ -71,7 +71,7 @@ export interface ElementDefinition<E extends Element = Element> {
   Frame: React.VoidFunctionComponent<FrameProps<E>>;
   Output: React.VoidFunctionComponent<OutputProps<E>>;
   LayerIcon: React.VoidFunctionComponent<LayerIconProps<E>>;
-  TextContent: React.VoidFunctionComponent<TextContentProps<E>>;
+  TextContent: (element: E) => string;
   Display: React.VoidFunctionComponent<DisplayProps<E>>;
   canFlip: boolean;
   isMaskable: boolean;

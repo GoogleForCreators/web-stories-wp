@@ -28,6 +28,7 @@
     "src/types/*",
     "src/constants/*",
     "src/utils/*.ts",
+    "src/utils/*.tsx",
     "src/typings/*"
   ]
 }
