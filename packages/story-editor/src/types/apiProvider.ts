@@ -33,9 +33,9 @@ import type { Template } from '@googleforcreators/templates';
 /**
  * Internal dependencies
  */
+import type { Taxonomy, Term } from './taxonomyProvider';
 import type { RawStory, StoryReturnData, StorySaveData } from './story';
 import type { PageTemplate } from './configProvider';
-import type { Taxonomy, Term } from '../types/taxonomyProvider';
 import type { User } from './storyEditor';
 
 interface TemplateData {
@@ -146,7 +146,7 @@ export interface APICallbacks {
       search?: string;
       per_page?: number;
     }
-  ) => Promise<Term | []>;
+  ) => Promise<Term[] | []>;
   saveStoryById?: (data: StorySaveData) => Promise<StoryReturnData>;
   updateCurrentUser?: (data: Partial<User>) => Promise<User>;
   updateMedia?: (id: number, data: Partial<Resource>) => Promise<Resource>;
