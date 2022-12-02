@@ -66,6 +66,10 @@ class PluginRowMeta extends Service_Base {
 	 *                              and plugin URI.
 	 * @param string         $plugin_file Path to the plugin file relative to the plugins directory.
 	 * @return string[]|mixed Plugin row meta.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($meta is array<T> ? array<T> : mixed)
 	 */
 	public function get_plugin_row_meta( $meta, $plugin_file ) {
 		if ( plugin_basename( WEBSTORIES_PLUGIN_FILE ) !== $plugin_file ) {

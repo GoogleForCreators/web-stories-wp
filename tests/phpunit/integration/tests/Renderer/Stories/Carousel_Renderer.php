@@ -20,9 +20,11 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Renderer\Stories;
 
-use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Carousel_Renderer
@@ -31,8 +33,10 @@ class Carousel_Renderer extends TestCase {
 
 	/**
 	 * Stories mock object.
+	 *
+	 * @var Story_Query & MockObject
 	 */
-	private Story_Query $story_query;
+	private $story_query;
 
 	/**
 	 * Story post ID.
@@ -40,24 +44,14 @@ class Carousel_Renderer extends TestCase {
 	private static int $story_id;
 
 	/**
-	 * Story model.
-	 */
-	private Story $story_model;
-
-	/**
-	 * @var \WP_Post[]
-	 */
-	private array $stories;
-
-	/**
 	 * Runs once before any test in the class run.
 	 *
-	 * @param \WP_UnitTest_Factory $factory Factory class object.
+	 * @param WP_UnitTest_Factory $factory Factory class object.
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Example title',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -72,7 +66,6 @@ class Carousel_Renderer extends TestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->story_model = $this->createMock( Story::class );
 		$this->story_query = $this->createMock( Story_Query::class );
 		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
@@ -103,7 +96,6 @@ class Carousel_Renderer extends TestCase {
 	 * @covers ::render
 	 */
 	public function test_render(): void {
-
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'          => 'carousel',

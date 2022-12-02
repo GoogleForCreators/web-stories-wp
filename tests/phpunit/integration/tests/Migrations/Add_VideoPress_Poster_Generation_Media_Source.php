@@ -20,7 +20,9 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
+use Google\Web_Stories\Integrations\Jetpack;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Term;
 
 /**
  * Class Add_VideoPress_Poster_Generation_Media_Source
@@ -53,6 +55,8 @@ class Add_VideoPress_Poster_Generation_Media_Source extends DependencyInjectedTe
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -62,12 +66,17 @@ class Add_VideoPress_Poster_Generation_Media_Source extends DependencyInjectedTe
 			]
 		);
 
-		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Integrations\Jetpack::VIDEOPRESS_POSTER_META_KEY, 'true' );
+		$this->assertNotWPError( $poster_attachment_id );
 
-		$slug = $this->call_private_method( $this->instance, 'get_term_name' );
+		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, Jetpack::VIDEOPRESS_POSTER_META_KEY, 'true' );
+
+		$slug = $this->call_private_method( [ $this->instance, 'get_term_name' ] );
 		$this->instance->migrate();
 
+		/**
+		 * @var WP_Term[] $terms
+		 */
 		$terms = wp_get_post_terms( $poster_attachment_id, $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
@@ -79,7 +88,7 @@ class Add_VideoPress_Poster_Generation_Media_Source extends DependencyInjectedTe
 	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::get_post_meta_key
 	 */
 	public function test_get_post_meta_key(): void {
-		$results = $this->call_private_method( $this->instance, 'get_post_meta_key' );
-		$this->assertSame( \Google\Web_Stories\Integrations\Jetpack::VIDEOPRESS_POSTER_META_KEY, $results );
+		$results = $this->call_private_method( [ $this->instance, 'get_post_meta_key' ] );
+		$this->assertSame( Jetpack::VIDEOPRESS_POSTER_META_KEY, $results );
 	}
 }

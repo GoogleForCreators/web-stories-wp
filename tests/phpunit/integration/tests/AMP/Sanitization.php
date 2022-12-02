@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\AMP;
 
 use DOMElement;
+use DOMNodeList;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories_Dependencies\AMP_Dev_Mode_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
@@ -51,8 +52,8 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @see Test_AMP_Theme_Support::test_scripts_get_moved_to_head
 	 *
-	 * @covers ::sanitize_document()
-	 * @covers ::ensure_required_markup()
+	 * @covers ::sanitize_document
+	 * @covers ::ensure_required_markup
 	 */
 	public function test_scripts_get_moved_to_head(): void {
 		ob_start();
@@ -72,22 +73,31 @@ class Sanitization extends DependencyInjectedTestCase {
 		</body>
 		</html>
 		<?php
-		$original_html = ob_get_clean();
+		$original_html = (string) ob_get_clean();
 
+		/**
+		 * @var Document $document
+		 */
 		$document = Document::fromHtml( $original_html );
 		$this->instance->sanitize_document( $document );
 
+		/**
+		 * @var DOMNodeList $scripts
+		 */
 		$scripts = $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' );
 		$this->assertSame( 2, $scripts->length );
 		foreach ( $scripts as $script ) {
+			$this->assertIsObject( $script );
+			$this->assertObjectHasAttribute( 'parentNode', $script );
 			$this->assertSame( 'head', $script->parentNode->nodeName );
+
 		}
 	}
 
 	/**
 	 * @see Test_AMP_Theme_Support::test_unneeded_scripts_get_removed
 	 *
-	 * @covers ::ensure_required_markup()
+	 * @covers ::ensure_required_markup
 	 */
 	public function test_unneeded_scripts_get_removed(): void {
 		ob_start();
@@ -107,14 +117,24 @@ class Sanitization extends DependencyInjectedTestCase {
 		</body>
 		</html>
 		<?php
-		$original_html = ob_get_clean();
+		$original_html = (string) ob_get_clean();
 
+		/**
+		 * @var Document $document
+		 */
 		$document = Document::fromHtml( $original_html );
 		$this->instance->sanitize_document( $document );
 
-		/** @var DOMElement $script Script. */
+		/**
+		 * @var string[] $actual_script_srcs
+		 */
 		$actual_script_srcs = [];
-		foreach ( $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' ) as $script ) {
+
+		/**
+		 * @var DOMElement[] $scripts
+		 */
+		$scripts = $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' );
+		foreach ( $scripts as $script ) {
 			$actual_script_srcs[] = $script->getAttribute( 'src' );
 		}
 
@@ -132,8 +152,8 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @see Test_AMP_Theme_Support::test_duplicate_scripts_are_removed
 	 *
-	 * @covers AMP_Theme_Support::prepare_response()
-	 * @covers AMP_Theme_Support::ensure_required_markup()
+	 * @covers AMP_Theme_Support::prepare_response
+	 * @covers AMP_Theme_Support::ensure_required_markup
 	 */
 	public function test_duplicate_scripts_are_removed(): void {
 		ob_start();
@@ -155,8 +175,11 @@ class Sanitization extends DependencyInjectedTestCase {
 		</body>
 		</html>
 		<?php
-		$original_html = ob_get_clean();
+		$original_html = (string) ob_get_clean();
 
+		/**
+		 * @var Document $document
+		 */
 		$document = Document::fromHtml( $original_html );
 		$this->instance->sanitize_document( $document );
 
@@ -165,9 +188,10 @@ class Sanitization extends DependencyInjectedTestCase {
 		/**
 		 * Script.
 		 *
-		 * @var DOMElement $script
+		 * @var DOMElement[]  $scripts
 		 */
 		$scripts = $document->xpath->query( '//script[ @src ]' );
+
 		foreach ( $scripts as $script ) {
 			$script_srcs[] = $script->getAttribute( 'src' );
 		}
@@ -183,7 +207,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::ensure_required_markup()
+	 * @covers ::ensure_required_markup
 	 */
 	public function test_missing_scripts_get_added(): void {
 		ob_start();
@@ -205,14 +229,26 @@ class Sanitization extends DependencyInjectedTestCase {
 		</body>
 		</html>
 		<?php
-		$original_html = ob_get_clean();
+		$original_html = (string) ob_get_clean();
 
+		/**
+		 * @var Document $document
+		 */
 		$document = Document::fromHtml( $original_html );
 		$this->instance->sanitize_document( $document );
 
-		/** @var DOMElement $script Script. */
+		/**
+		 * @var string[] $actual_script_srcs
+		 */
 		$actual_script_srcs = [];
-		foreach ( $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' ) as $script ) {
+
+		/**
+		 * Script.
+		 *
+		 * @var DOMElement[]  $scripts
+		 */
+		$scripts = $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' );
+		foreach ( $scripts as $script ) {
 			$actual_script_srcs[] = $script->getAttribute( 'src' );
 		}
 
@@ -232,7 +268,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	 * @covers ::get_extension_sources
 	 */
 	public function test_get_extension_sources(): void {
-		$sources = $this->call_private_method( $this->instance, 'get_extension_sources' );
+		$sources = $this->call_private_method( [ $this->instance, 'get_extension_sources' ] );
 
 		$actual = [];
 
@@ -397,11 +433,11 @@ class Sanitization extends DependencyInjectedTestCase {
 	 */
 	public function test_is_amp_dev_mode(): void {
 
-		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		remove_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 	}
 
 	/**
@@ -416,7 +452,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 		$this->assertTrue( is_admin_bar_showing() );
 		$this->assertTrue( is_user_logged_in() );
-		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 	}
 
 	/**
@@ -431,7 +467,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 		$this->assertFalse( is_user_logged_in() );
 		$this->assertTrue( is_admin_bar_showing() );
-		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 	}
 
 	/**
@@ -449,7 +485,7 @@ class Sanitization extends DependencyInjectedTestCase {
 			}
 		);
 
-		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
+		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
 
 		$ordered_sanitizers = array_keys( $sanitizers );
 		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ \count( $ordered_sanitizers ) - 5 ] );
@@ -473,15 +509,17 @@ class Sanitization extends DependencyInjectedTestCase {
 		);
 
 		// Check that AMP_Dev_Mode_Sanitizer is not registered if not in dev mode.
-		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
-		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+
+		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
+		$this->assertFalse( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		$this->assertArrayNotHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 
 		// Check that AMP_Dev_Mode_Sanitizer is registered once in dev mode, but not with admin bar showing yet.
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
+
+		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
 		$this->assertFalse( is_admin_bar_showing() );
-		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		$this->assertArrayHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 		$this->assertEquals( AMP_Dev_Mode_Sanitizer::class, current( array_keys( $sanitizers ) ) );
 		$this->assertEquals(
@@ -494,10 +532,13 @@ class Sanitization extends DependencyInjectedTestCase {
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
 		add_filter( 'show_admin_bar', '__return_true' );
 
-		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
+		/**
+		 * @var array<string, array<string, array<mixed>>> $sanitizers
+		 */
+		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
 
 		$this->assertTrue( is_admin_bar_showing() );
-		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
 		$this->assertArrayHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 		$this->assertEqualSets(
 			array_merge(
@@ -534,8 +575,11 @@ class Sanitization extends DependencyInjectedTestCase {
 		</body>
 		</html>
 		<?php
-		$original_html = ob_get_clean();
+		$original_html = (string) ob_get_clean();
 
+		/**
+		 * @var Document $document
+		 */
 		$document = Document::fromHtml( $original_html );
 		$this->instance->sanitize_document( $document );
 
@@ -565,8 +609,11 @@ class Sanitization extends DependencyInjectedTestCase {
 		</body>
 		</html>
 		<?php
-		$original_html = ob_get_clean();
+		$original_html = (string) ob_get_clean();
 
+		/**
+		 * @var Document $document
+		 */
 		$document = Document::fromHtml( $original_html );
 		$this->instance->sanitize_document( $document );
 
