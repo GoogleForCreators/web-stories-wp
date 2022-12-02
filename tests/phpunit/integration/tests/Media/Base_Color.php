@@ -68,6 +68,8 @@ class Base_Color extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$color = '#000000';
 
 		update_post_meta( $attachment_id, $this->instance::BASE_COLOR_POST_META_KEY, $color );
@@ -97,6 +99,8 @@ class Base_Color extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $attachment_id );
 
 		$color = '#000000';
 

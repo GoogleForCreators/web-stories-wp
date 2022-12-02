@@ -9,6 +9,8 @@ use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 
 /**
  * Dummy taxonomy.
+ *
+ * @phpstan-import-type TaxonomyArgs from \Google\Web_Stories\Taxonomy\Taxonomy_Base
  */
 class DummyTaxonomy extends Taxonomy_Base {
 	public function __construct() {
@@ -17,7 +19,7 @@ class DummyTaxonomy extends Taxonomy_Base {
 	}
 
 	/**
-	 * @return array
+	 * @return TaxonomyArgs Taxonomy args.
 	 */
 	protected function taxonomy_args(): array {
 		return [

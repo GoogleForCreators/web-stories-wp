@@ -77,30 +77,6 @@ describe('deleteNestedKeys', () => {
     });
   });
 
-  it('should not do anything in case of incorrect paths', () => {
-    const object = {
-      bar: 'Hello World',
-      foo: {
-        bar: {
-          a: 'Hello',
-          b: 'World',
-          c: '!',
-        },
-      },
-    };
-    deleteNestedKeys(13)(object);
-    expect(object).toStrictEqual({
-      bar: 'Hello World',
-      foo: {
-        bar: {
-          a: 'Hello',
-          b: 'World',
-          c: '!',
-        },
-      },
-    });
-  });
-
   it('should delete properties with `null` and `undefined` as values', () => {
     const object = {
       bar: 'Hello World',

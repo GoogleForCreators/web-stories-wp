@@ -157,31 +157,6 @@ describe('setSelectedElementsById', () => {
     expect(result.selection).toStrictEqual(['e3', 'e2']);
   });
 
-  it('should ignore non-list arguments', () => {
-    const { restore, setSelectedElementsById } = setupReducer();
-
-    // Set an initial state.
-    restore({
-      pages: [
-        {
-          id: '111',
-          elements: [
-            { id: 'e1', isBackground: true },
-            { id: 'e2' },
-            { id: 'e3' },
-          ],
-        },
-      ],
-      current: '111',
-      selection: ['e1', 'e2'],
-    });
-
-    // Can't clear by setting to null (hint: use clearSelection)
-    const result = setSelectedElementsById({ elementIds: null });
-
-    expect(result.selection).toStrictEqual(['e1', 'e2']);
-  });
-
   it('should remove background if included among other elements', () => {
     const { restore, setSelectedElementsById } = setupReducer();
 

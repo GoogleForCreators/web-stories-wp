@@ -53,12 +53,12 @@ export const DESIGN_SPACE_MARGIN = 48;
 
 export const TEXT_SET_SIZE = 150;
 
-export const LAYER_DIRECTIONS = {
-  FRONT: 'FRONT',
-  BACK: 'BACK',
-  FORWARD: 'FORWARD',
-  BACKWARD: 'BACKWARD',
-};
+export enum LayerDirection {
+  Front = 'FRONT',
+  Back = 'BACK',
+  Forward = 'FORWARD',
+  Backward = 'BACKWARD',
+}
 
 export const FONT_WEIGHT = {
   NORMAL: 400,

@@ -104,6 +104,9 @@ class AMP extends DependencyInjectedTestCase {
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $actual );
 	}
 
+	/**
+	 * @return array<string, array{0: array<int, mixed>, 1: bool}>
+	 */
 	public function data_test_filter_amp_to_amp_linking_element_excluded(): array {
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 
@@ -139,10 +142,12 @@ class AMP extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @param array<mixed> $args
+	 *
 	 * @covers ::filter_amp_to_amp_linking_element_excluded
 	 * @dataProvider data_test_filter_amp_to_amp_linking_element_excluded
 	 */
-	public function test_filter_amp_to_amp_linking_element_excluded( $args, $expected ): void {
+	public function test_filter_amp_to_amp_linking_element_excluded( array $args, bool $expected ): void {
 		$actual = $this->instance->filter_amp_to_amp_linking_element_excluded( ...$args );
 		$this->assertSame( $actual, $expected );
 	}

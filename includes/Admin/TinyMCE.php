@@ -117,6 +117,10 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @param array|mixed $buttons Array of TinyMCE buttons.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($buttons is array<T> ? array<T> : mixed)
 	 */
 	public function tinymce_web_stories_button( $buttons ) {
 		if ( ! \is_array( $buttons ) ) {
@@ -134,6 +138,10 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @param array|mixed $plugins Array of TinyMCE plugin scripts.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($plugins is array<T> ? array<T> : mixed)
 	 */
 	public function web_stories_mce_plugin( $plugins ) {
 		if ( ! \is_array( $plugins ) ) {
