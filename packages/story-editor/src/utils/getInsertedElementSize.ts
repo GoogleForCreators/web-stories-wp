@@ -33,7 +33,7 @@ const RESIZE_WIDTH_DIRECTION = [1, 0];
  * @param The value.
  * @return  Whether the value has been set.
  */
-function isNum(value: any) {
+function isNum(value: unknown) {
   return typeof value === 'number';
 }
 

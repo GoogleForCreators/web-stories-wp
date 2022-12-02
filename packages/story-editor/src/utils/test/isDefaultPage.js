@@ -40,9 +40,8 @@ describe('isDefaultPage', () => {
     const page = createPage({
       backgroundColor: {
         ...createSolid(0, 0, 0),
-        type: PatternType.Solid
+        type: PatternType.Solid,
       },
-
     });
     expect(isDefaultPage(page)).toBeFalse();
   });

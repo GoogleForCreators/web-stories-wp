@@ -51,7 +51,7 @@ describe('useIdleTaskQueue', () => {
     });
     cancelIdleCallback.mockImplementation((idleCallbackId) => {
       mockIdleCallbacks = mockIdleCallbacks.filter(
-        ( { taskId }) => taskId !== idleCallbackId
+        ({ taskId }) => taskId !== idleCallbackId
       );
     });
   });
@@ -68,9 +68,9 @@ describe('useIdleTaskQueue', () => {
       const {
         result: { current: queueIdleTask },
       } = renderHook(() => useIdleTaskQueue());
-      const task1Tuple = { taskId:1, task:jest.fn(() => Promise.resolve())};
-      const task2Tuple = { taskId:2, task:jest.fn(() => Promise.resolve())};
-      const task3Tuple = { taskId:3, task:jest.fn(() => Promise.resolve())};
+      const task1Tuple = { taskId: 1, task: jest.fn(() => Promise.resolve()) };
+      const task2Tuple = { taskId: 2, task: jest.fn(() => Promise.resolve()) };
+      const task3Tuple = { taskId: 3, task: jest.fn(() => Promise.resolve()) };
 
       // queue all tasks
       queueIdleTask(task1Tuple);

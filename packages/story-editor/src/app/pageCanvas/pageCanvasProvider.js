@@ -22,7 +22,7 @@ import { useCallback, useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import storyPageToCanvas from '../../utils/storyPageToCanvas';
+import storyPageToCanvas from './utils/storyPageToCanvas';
 import { getAccessibleTextColorsFromPixels } from '../../utils/contrastUtils';
 import useIdleQueue from '../../utils/useIdleTaskQueue';
 import { useStory } from '../story';

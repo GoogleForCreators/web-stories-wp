@@ -35,8 +35,8 @@ import { TransformProvider } from '@googleforcreators/transform';
 /**
  * Internal dependencies
  */
-import { FontProvider } from '../app/font';
-import DisplayElement from '../components/canvas/displayElement';
+import { FontProvider } from '../../font';
+import DisplayElement from '../../../components/canvas/displayElement';
 
 const Page = styled.div`
   display: block;
