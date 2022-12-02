@@ -26,7 +26,13 @@ import {
  * Internal dependencies
  */
 import { PROVIDERS } from '../media3p/providerConfiguration';
-import type { Provider } from '../types';
+import type {
+  Provider,
+  Media3pMedia,
+  ImageUrl,
+  MediaUrls,
+  ImageSizes,
+} from '../types';
 
 /**
  * Author object.
@@ -87,16 +93,20 @@ import type { Provider } from '../types';
  * @param {Media3pMedia} m The Media3P Media object.
  * @return {Object} The array of "sizes"-type objects.
  */
-function getImageUrls(m) {
+function getImageUrls(m: Media3pMedia): ImageSizes | [] {
   // The rest of the application expects 3 named "sizes": "full", "large" and
   // "web_stories_thumbnail". We use the biggest as "full", the next biggest
   // as "large", and the smallest as "web_stories_thumbnail". The rest are
   // named according to their size.
-  if (m.imageUrls?.length < 3) {
+  if (!m.imageUrls || m.imageUrls?.length < 3) {
     throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
   }
 
   const sizesFromBiggest = sortMediaBySize(m, m.imageUrls);
+
+  if (sizesFromBiggest.length < 3) {
+    throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
+  }
 
   const namedSizes = [
     ['full', sizesFromBiggest[0]],
@@ -117,17 +127,17 @@ function getImageUrls(m) {
  * @param {Media3pMedia} m The Media3P Media object
  * @return {Object} The array of "sizes"-type objects.
  */
-function getGifUrls(m) {
+function getGifUrls(m: Media3pMedia) {
   // The rest of the application expects 3 named "sizes": "full", "large" and
   // "web_stories_thumbnail". We use the biggest as "full", the next biggest
   // as "large", and the smallest as "web_stories_thumbnail". The rest are
   // named according to their size.
-  if (m.imageUrls?.length < 3) {
+  if (!m.imageUrls || m.imageUrls?.length < 3) {
     throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
   }
 
   const previewUrl = m.imageUrls
-    .filter(({ imageName }) => imageName.endsWith('preview'))
+    .filter(({ imageName }: ImageUrl) => imageName.endsWith('preview'))
     .map(({ url }) => url)
     .shift();
 
@@ -180,11 +190,11 @@ function getGifUrls(m) {
  * @param {Media3pMedia} m The Media3P Media object.
  * @return {Object} The array of "sizes"-type objects.
  */
-function getVideoUrls(m) {
+function getVideoUrls(m: Media3pMedia) {
   // The rest of the application expects 2 named "sizes": "full", and "preview"
   // The highest fidelity is used (videoUrls is ordered by fidelity from the backend)
   // as "full", and the lowest as "preview".
-  if (m.videoUrls?.length < 2) {
+  if (!m.videoUrls || m.videoUrls?.length < 2) {
     throw new Error('Invalid number of urls for asset. Need at least 2: ' + m);
   }
 
@@ -196,7 +206,14 @@ function getVideoUrls(m) {
   };
 }
 
-function sortMediaBySize(m, mediaUrls) {
+function sortMediaBySize(
+  m: Media3pMedia,
+  mediaUrls: MediaUrls
+): ImageSizes | [] {
+  if (!mediaUrls) {
+    return [];
+  }
+
   // https://github.com/GoogleForCreators/web-stories-wp/issues/12083
   if (mediaUrls.length < 1) {
     return [];
@@ -216,7 +233,11 @@ function getOriginalSize(mediaUrls) {
   };
 }
 
-function mediaUrlToImageSizeDescription(media, url, originalSize) {
+function mediaUrlToImageSizeDescription(
+  media: Media3pMedia,
+  url: ImageUrl,
+  originalSize: { originalWidth: number; originalHeight: number }
+) {
   const { originalWidth, originalHeight } = originalSize;
   if (!originalWidth || !originalHeight) {
     throw new Error('No original size present.');
@@ -237,7 +258,7 @@ function mediaUrlToImageSizeDescription(media, url, originalSize) {
   };
 }
 
-function getAttributionFromMedia3p(m) {
+function getAttributionFromMedia3p(m: Media3pMedia) {
   return (
     (m.author || m.registerUsageUrl) && {
       author: m.author && {
@@ -249,7 +270,7 @@ function getAttributionFromMedia3p(m) {
   );
 }
 
-function getImageResourceFromMedia3p(m) {
+function getImageResourceFromMedia3p(m: Media3pMedia) {
   const imageUrls = getImageUrls(m);
   return createResource({
     id: m.name,
@@ -269,7 +290,7 @@ function getImageResourceFromMedia3p(m) {
   });
 }
 
-function getVideoResourceFromMedia3p(m) {
+function getVideoResourceFromMedia3p(m: Media3pMedia) {
   const videoUrls = getVideoUrls(m);
   const length = parseInt(m.videoMetadata.duration.trimEnd('s'));
   return createResource({
@@ -295,7 +316,7 @@ function getVideoResourceFromMedia3p(m) {
   });
 }
 
-function getGifResourceFromMedia3p(m) {
+function getGifResourceFromMedia3p(m: Media3pMedia) {
   const { imageUrls, videoUrls, previewUrl } = getGifUrls(m);
   return createResource({
     id: m.name,
@@ -321,7 +342,7 @@ function getGifResourceFromMedia3p(m) {
   });
 }
 
-function getStickerResourceFromMedia3p(m) {
+function getStickerResourceFromMedia3p(m: Media3pMedia) {
   // Animated WebP images are typically larger than GIFs, albeit with
   // better quality.
   // For now we prefer lower-quality GIFs, but this can be revisited again in the future.
@@ -356,7 +377,7 @@ function getStickerResourceFromMedia3p(m) {
  * @param {Media3pMedia} m A Media3P Media object.
  * @return {import('@googleforcreators/media').Resource} Resource object.
  */
-export default function getResourceFromMedia3p(m) {
+export default function getResourceFromMedia3p(m: Media3pMedia) {
   switch (m.type.toLowerCase()) {
     case 'image':
       return getImageResourceFromMedia3p(m);
