@@ -205,7 +205,7 @@ function TaxonomyProvider(props: { children: React.ReactNode }) {
   );
 
   const createTerm: TaxonomyState["actions"]["createTerm"] = useCallback(
-    async (taxonomy, termName, parent, addToSelection) => {
+    async (taxonomy, termName, parent, addToSelection = false) => {
       const data: { name: string, parent?: number, slug?: string } = { name: termName };
       if (parent?.id) {
         data.parent = parent.id;
