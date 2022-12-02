@@ -44,7 +44,6 @@ const isDefaultPage = (page: Page) => {
   // Check if background color is different
   if (
     page.backgroundColor.type === PatternType.Solid &&
-    defaultPage.backgroundColor.type === PatternType.Solid &&
     !shallowEqual(
       page.backgroundColor?.color,
       defaultPage.backgroundColor?.color

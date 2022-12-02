@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createSolid } from '@googleforcreators/patterns';
+import { createSolid, PatternType } from '@googleforcreators/patterns';
 import { createPage, registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
@@ -38,7 +38,11 @@ describe('isDefaultPage', () => {
 
   it('should return false with custom background color', () => {
     const page = createPage({
-      backgroundColor: createSolid(0, 0, 0),
+      backgroundColor: {
+        ...createSolid(0, 0, 0),
+        type: PatternType.Solid
+      },
+
     });
     expect(isDefaultPage(page)).toBeFalse();
   });
