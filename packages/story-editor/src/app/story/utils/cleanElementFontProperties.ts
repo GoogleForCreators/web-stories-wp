@@ -13,14 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function getStoryFontsFromPages(pages) {
-  const fonts = {};
-  pages.forEach(({ elements = [] }) =>
-    elements.forEach((element) => {
-      if (element.type === 'text' && Boolean(element.font?.family)) {
-        fonts[element.font.family] = element.font;
+
+/**
+ * External dependencies
+ */
+import type { Page } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
+
+function reduceElementFontProperties({ elements, ...rest }: Page): Page {
+  return {
+    elements: elements.map((element) => {
+      if (elementIs.text(element) && Boolean(element.font?.family)) {
+        return { ...element, font: { family: element.font.family } };
       }
-    })
-  );
-  return fonts;
+      return element;
+    }),
+    ...rest,
+  };
+}
+
+export function cleanElementFontProperties(data: Page[]) {
+  return data.map((page) => reduceElementFontProperties(page));
 }

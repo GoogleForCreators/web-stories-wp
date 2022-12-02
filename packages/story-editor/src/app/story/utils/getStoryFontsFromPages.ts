@@ -13,23 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import type { FontData, Page } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
 
-function populateElementFontProperties({ elements, ...rest }, fonts) {
-  if (!fonts) {
-    return { elements, ...rest };
-  }
-
-  return {
-    elements: elements.map((element) => {
-      if (element.type === 'text' && Boolean(element.font?.family)) {
-        return { ...element, font: fonts[element.font?.family] };
+export function getStoryFontsFromPages(pages: Page[]) {
+  const fonts: Record<string, FontData> = {};
+  pages.forEach(({ elements = [] }) =>
+    elements.forEach((element) => {
+      if (elementIs.text(element) && Boolean(element.font?.family)) {
+        fonts[element.font.family] = element.font;
       }
-      return element;
-    }),
-    ...rest,
-  };
-}
-
-export function populateElementFontData(data, fonts) {
-  return data.map((page) => populateElementFontProperties(page, fonts));
+    })
+  );
+  return fonts;
 }

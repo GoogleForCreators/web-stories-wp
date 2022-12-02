@@ -33,3 +33,5 @@ export declare function getStoryMarkup(
   metadata: MetaData,
   flags: Record<string, boolean>
 ): string;
+
+export * from './utils/populateElementFontData';

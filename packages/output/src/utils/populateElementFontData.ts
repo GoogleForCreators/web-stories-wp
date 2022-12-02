@@ -14,11 +14,29 @@
  * limitations under the License.
  */
 
-function reduceElementFontProperties({ elements, ...rest }) {
+/**
+ * External dependencies
+ */
+import type { Page, FontData } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
+
+type Fonts = Record<string, FontData>;
+function populateElementFontProperties(
+  { elements, ...rest }: Page,
+  fonts: Fonts
+) {
+  if (!fonts) {
+    return { elements, ...rest };
+  }
+
   return {
     elements: elements.map((element) => {
-      if (element.type === 'text' && Boolean(element.font?.family)) {
-        return { ...element, font: { family: element.font.family } };
+      if (
+        elementIs.text(element) &&
+        element.type === 'text' &&
+        Boolean(element.font?.family)
+      ) {
+        return { ...element, font: fonts[element.font?.family] };
       }
       return element;
     }),
@@ -26,6 +44,6 @@ function reduceElementFontProperties({ elements, ...rest }) {
   };
 }
 
-export function cleanElementFontProperties(data) {
-  return data.map((page) => reduceElementFontProperties(page));
+export function populateElementFontData(data: Page[], fonts: Fonts): Page[] {
+  return data.map((page) => populateElementFontProperties(page, fonts));
 }
