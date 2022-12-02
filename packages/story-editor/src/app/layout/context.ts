@@ -23,8 +23,35 @@ import { createContext } from '@googleforcreators/react';
  * Internal dependencies
  */
 import type { LayoutProviderState } from '../../types';
+import { CarouselState, ZoomSetting } from '../../constants';
 
 export default createContext<LayoutProviderState>({
-  actions: { setZoomSetting: () => {} },
-  state: {},
+  actions: {
+    setZoomSetting: () => undefined,
+    closeCarousel: () => undefined,
+    openCarousel: () => undefined,
+    setScrollOffset: () => undefined,
+    setZoomLevel: () => undefined,
+  },
+  state: {
+    pageWidth: 0,
+    pageHeight: 0,
+    hasHorizontalOverflow: false,
+    hasVerticalOverflow: false,
+    hasPageNavigation: false,
+    pagePadding: 0,
+    viewportWidth: 0,
+    viewportHeight: 0,
+    hasExtraPages: false,
+    extraPageWidth: 0,
+    extraPageCount: 0,
+    zoomSetting: ZoomSetting.Fit,
+    zoomLevel: 0,
+    workspaceWidth: 0,
+    workspaceHeight: 0,
+    scrollLeft: 0,
+    scrollTop: 0,
+    carouselState: CarouselState.Open,
+    isCarouselInTransition: false,
+  },
 });
