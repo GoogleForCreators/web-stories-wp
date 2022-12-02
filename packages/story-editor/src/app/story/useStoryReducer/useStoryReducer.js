@@ -31,7 +31,7 @@ const INITIAL_STATE = {
   capabilities: {},
   current: null,
   selection: [],
-  story: {},
+  story: { fonts: {} },
   animationState: StoryAnimationState.Reset,
   copiedElementState: {},
 };

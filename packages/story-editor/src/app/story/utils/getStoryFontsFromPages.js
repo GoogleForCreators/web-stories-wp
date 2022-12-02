@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export { default as OutputStory } from './story';
-export { default as getStoryMarkup } from './utils/getStoryMarkup';
-export { populateElementFontData } from './utils/populateElementFontData';
-export { default as getTextElementTagNames } from './utils/getTextElementTagNames';
-export * from './constants';
+export function getStoryFontsFromPages(pages) {
+  const fonts = {};
+  pages.forEach(({ elements = [] }) =>
+    elements.forEach((element) => {
+      if (element.type === 'text' && Boolean(element.font?.family)) {
+        fonts[element.font.family] = element.font;
+      }
+    })
+  );
+  return fonts;
+}
