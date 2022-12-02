@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import type { User } from './configProvider';
+import type { User } from './storyEditor';
 
 export interface CurrentUserState {
   state: {

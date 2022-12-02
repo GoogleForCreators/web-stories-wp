@@ -28,7 +28,7 @@ import {
   exclusion,
   getLastIndexOfGroup,
 } from '../utils';
-import { LAYER_DIRECTIONS } from '../../../../../constants';
+import { LayerDirection } from '../../../../../constants';
 
 const ABC = ['A', 'B', 'C'];
 const BCD = ['B', 'C', 'D'];
@@ -127,7 +127,7 @@ describe('getAbsolutePosition', () => {
       currentPosition: 10,
       minPosition: 0,
       maxPosition: 20,
-      desiredPosition: LAYER_DIRECTIONS.BACK,
+      desiredPosition: LayerDirection.Back,
     });
     expect(resultToBack).toBe(0);
 
@@ -135,7 +135,7 @@ describe('getAbsolutePosition', () => {
       currentPosition: 10,
       minPosition: 0,
       maxPosition: 20,
-      desiredPosition: LAYER_DIRECTIONS.FRONT,
+      desiredPosition: LayerDirection.Front,
     });
     expect(resultToFront).toBe(20);
   });
@@ -145,7 +145,7 @@ describe('getAbsolutePosition', () => {
       currentPosition: 10,
       minPosition: 0,
       maxPosition: 20,
-      desiredPosition: LAYER_DIRECTIONS.BACKWARD,
+      desiredPosition: LayerDirection.Backward,
     });
     expect(resultGoingBackward).toBe(9);
 
@@ -153,7 +153,7 @@ describe('getAbsolutePosition', () => {
       currentPosition: 0,
       minPosition: 0,
       maxPosition: 20,
-      desiredPosition: LAYER_DIRECTIONS.BACKWARD,
+      desiredPosition: LayerDirection.Backward,
     });
     expect(resultGoingBelow).toBe(0);
 
@@ -161,7 +161,7 @@ describe('getAbsolutePosition', () => {
       currentPosition: 10,
       minPosition: 0,
       maxPosition: 20,
-      desiredPosition: LAYER_DIRECTIONS.FORWARD,
+      desiredPosition: LayerDirection.Forward,
     });
     expect(resultGoingForward).toBe(11);
 
@@ -169,7 +169,7 @@ describe('getAbsolutePosition', () => {
       currentPosition: 20,
       minPosition: 0,
       maxPosition: 20,
-      desiredPosition: LAYER_DIRECTIONS.FORWARD,
+      desiredPosition: LayerDirection.Forward,
     });
     expect(resultGoingAbove).toBe(20);
   });

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { LAYER_DIRECTIONS } from '../../../constants';
+import { LayerDirection } from '../../../constants';
 
 function getLayerArrangementProps(key, shift, selectedElements, elements) {
   // This only supports moving single layer.
@@ -26,10 +26,10 @@ function getLayerArrangementProps(key, shift, selectedElements, elements) {
   }
   let position = null;
   if (key === 'ArrowUp') {
-    position = shift ? LAYER_DIRECTIONS.FRONT : LAYER_DIRECTIONS.FORWARD;
+    position = shift ? LayerDirection.Front : LayerDirection.Forward;
   }
   if (key === 'ArrowDown') {
-    position = shift ? LAYER_DIRECTIONS.BACK : LAYER_DIRECTIONS.BACKWARD;
+    position = shift ? LayerDirection.Back : LayerDirection.Backward;
   }
   if (!position) {
     return {};
@@ -45,8 +45,8 @@ function getLayerArrangementProps(key, shift, selectedElements, elements) {
     const isLastInGroup = elements[currentPosition - 1]?.groupId !== groupId;
     const isFirstInGroup = elements[currentPosition + 1]?.groupId !== groupId;
     if (
-      (isLastInGroup && position === LAYER_DIRECTIONS.BACKWARD) ||
-      (isFirstInGroup && position === LAYER_DIRECTIONS.FORWARD)
+      (isLastInGroup && position === LayerDirection.Backward) ||
+      (isFirstInGroup && position === LayerDirection.Forward)
     ) {
       return {
         position: currentPosition,
@@ -57,7 +57,7 @@ function getLayerArrangementProps(key, shift, selectedElements, elements) {
     // If the element has a group below, just add it to the group.
     if (
       elements[currentPosition - 1]?.groupId &&
-      position === LAYER_DIRECTIONS.BACKWARD
+      position === LayerDirection.Backward
     ) {
       return {
         position: currentPosition,
@@ -67,7 +67,7 @@ function getLayerArrangementProps(key, shift, selectedElements, elements) {
     // If the element has a group above, just add it to the group.
     if (
       elements[currentPosition + 1]?.groupId &&
-      position === LAYER_DIRECTIONS.FORWARD
+      position === LayerDirection.Forward
     ) {
       return {
         position: currentPosition,
