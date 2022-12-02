@@ -54,12 +54,13 @@ export interface StorySaveData
     | 'autoAdvance'
     | 'defaultPageDuration'
     | 'backgroundAudio'
-    | 'terms'
   > {
   storyId?: number;
   content: string;
   products: ProductData[];
   pages: Page[];
+  // Term IDs.
+  web_story_data?: number[];
 }
 
 // Data that's returned from API after saving.
