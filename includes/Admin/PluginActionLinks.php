@@ -65,6 +65,10 @@ class PluginActionLinks extends Service_Base {
 	 *
 	 * @param  array|mixed $links Plugin action links.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($links is array<T> ? array<T> : mixed)
 	 */
 	public function action_links( $links ) {
 		if ( ! \is_array( $links ) ) {

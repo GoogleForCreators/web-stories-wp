@@ -69,6 +69,9 @@ class Story_Revisions extends DependencyInjectedTestCase {
 		$this->assertSame( $expected, $this->instance->revisions_to_keep( $num ) );
 	}
 
+	/**
+	 * @return array<array{num: mixed, expected: int}>
+	 */
 	public function data_test_revisions_to_keep(): array {
 		return [
 			[
@@ -110,7 +113,16 @@ class Story_Revisions extends DependencyInjectedTestCase {
 	 * @covers ::filter_revision_fields
 	 */
 	public function test_filter_revision_fields_not_an_array(): void {
-		$this->assertSame( 'foo', $this->instance->filter_revision_fields( 'foo', [] ) );
+		$this->assertSame(
+			'foo',
+			$this->instance->filter_revision_fields(
+				'foo',
+				[
+					'post_type'   => 'post',
+					'post_parent' => 0,
+				]
+			)
+		);
 	}
 
 	/**

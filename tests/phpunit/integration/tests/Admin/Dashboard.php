@@ -22,6 +22,7 @@ namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Dashboard
@@ -36,7 +37,7 @@ class Dashboard extends DependencyInjectedTestCase {
 	protected static string $cpt_has_archive = 'cpt_has_archive';
 	protected static string $cpt_no_archive  = 'cpt_no_archive';
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -194,7 +195,10 @@ class Dashboard extends DependencyInjectedTestCase {
 		);
 
 		$this->instance->add_menu_page();
-		$this->instance->enqueue_assets( $this->instance->get_hook_suffix( 'stories-dashboard' ) );
+		$hook_suffix = $this->instance->get_hook_suffix( 'stories-dashboard' );
+
+		$this->assertIsString( $hook_suffix );
+		$this->instance->enqueue_assets( $hook_suffix );
 
 		$this->assertTrue( wp_script_is( $this->instance::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );

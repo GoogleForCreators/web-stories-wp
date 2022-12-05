@@ -18,12 +18,12 @@
  * External dependencies
  */
 import type { Pattern } from '@googleforcreators/patterns';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
  */
 import type { DefaultBackgroundElement, Element, ElementId } from './element';
-import type { Animation } from './animation';
 
 export interface Group {
   name: string;
@@ -47,7 +47,7 @@ export interface Page {
   id: ElementId;
   elements: Element[];
   defaultBackgroundElement?: DefaultBackgroundElement;
-  animations?: Animation[];
+  animations?: StoryAnimation[];
   backgroundColor: Pattern;
   groups?: Groups;
   backgroundAudio?: {
@@ -61,4 +61,13 @@ export interface Page {
   };
   autoAdvance?: boolean;
   defaultPageDuration?: number;
+  pageAttachment?: {
+    url: string;
+    ctaText: string;
+    theme: string;
+  };
+  shoppingAttachment?: {
+    ctaText: string;
+    theme: string;
+  };
 }

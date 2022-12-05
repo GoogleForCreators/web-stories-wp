@@ -379,7 +379,9 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 
 		$schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'product',
+			// This must not be an actually existing post type like "product".
+			// See https://github.com/GoogleForCreators/web-stories-wp/issues/12735.
+			'title'      => 'web-story-product',
 			'type'       => 'object',
 			'properties' => [
 				'productId'            => [

@@ -114,6 +114,10 @@ class Core_Themes_Support extends Service_Base {
 	 *
 	 * @param array|mixed $classes Array of body classes.
 	 * @return array|mixed Updated array of classes.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($classes is array<T> ? array<T> : mixed)
 	 */
 	public function add_core_theme_classes( $classes ) {
 		if ( ! \is_array( $classes ) ) {

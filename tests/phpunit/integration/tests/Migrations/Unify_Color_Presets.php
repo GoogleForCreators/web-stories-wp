@@ -59,6 +59,8 @@ class Unify_Color_Presets extends TestCase {
 		$object->migrate();
 
 		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+		$this->assertIsArray( $style_presets );
+		$this->assertArrayHasKey( 'colors', $style_presets );
 		$this->assertSame(
 			$style_presets['colors'],
 			[

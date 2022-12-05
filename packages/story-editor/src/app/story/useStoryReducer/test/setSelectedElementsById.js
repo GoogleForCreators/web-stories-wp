@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
@@ -157,31 +157,6 @@ describe('setSelectedElementsById', () => {
     expect(result.selection).toStrictEqual(['e3', 'e2']);
   });
 
-  it('should ignore non-list arguments', () => {
-    const { restore, setSelectedElementsById } = setupReducer();
-
-    // Set an initial state.
-    restore({
-      pages: [
-        {
-          id: '111',
-          elements: [
-            { id: 'e1', isBackground: true },
-            { id: 'e2' },
-            { id: 'e3' },
-          ],
-        },
-      ],
-      current: '111',
-      selection: ['e1', 'e2'],
-    });
-
-    // Can't clear by setting to null (hint: use clearSelection)
-    const result = setSelectedElementsById({ elementIds: null });
-
-    expect(result.selection).toStrictEqual(['e1', 'e2']);
-  });
-
   it('should remove background if included among other elements', () => {
     const { restore, setSelectedElementsById } = setupReducer();
 
@@ -281,10 +256,10 @@ describe('setSelectedElementsById', () => {
       selection: ['e3'],
     });
 
-    updateAnimationState({ animationState: STORY_ANIMATION_STATE.PLAYING });
+    updateAnimationState({ animationState: StoryAnimationState.Playing });
     const result = setSelectedElementsById({ elementIds: ['e3'] });
 
-    expect(result.animationState).toStrictEqual(STORY_ANIMATION_STATE.PLAYING);
+    expect(result.animationState).toStrictEqual(StoryAnimationState.Playing);
   });
 
   it('should reset animationState if selection has changed', () => {
@@ -293,7 +268,7 @@ describe('setSelectedElementsById', () => {
 
     // Set an initial state.
     restore({
-      animationState: STORY_ANIMATION_STATE.PLAYING,
+      animationState: StoryAnimationState.Playing,
       pages: [
         {
           id: '111',
@@ -308,9 +283,9 @@ describe('setSelectedElementsById', () => {
       selection: ['e2'],
     });
 
-    updateAnimationState({ animationState: STORY_ANIMATION_STATE.PLAYING });
+    updateAnimationState({ animationState: StoryAnimationState.Playing });
     const result = setSelectedElementsById({ elementIds: ['e3'] });
 
-    expect(result.animationState).toStrictEqual(STORY_ANIMATION_STATE.RESET);
+    expect(result.animationState).toStrictEqual(StoryAnimationState.Reset);
   });
 });

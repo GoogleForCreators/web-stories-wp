@@ -21,7 +21,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import { useUserOnboarding } from '../..';
-import { KEYS } from '../../../components/helpCenter/constants';
+import { KEYS } from '../../helpCenter/constants';
 import { useHelpCenter } from '../../helpCenter';
 jest.mock('../../helpCenter');
 

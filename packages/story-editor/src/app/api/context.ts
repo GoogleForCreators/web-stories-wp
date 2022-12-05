@@ -22,6 +22,6 @@ import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { APIState } from '../../types/apiProvider';
+import type { APIState } from '../../types';
 
 export default createContext<APIState>({ actions: {} });

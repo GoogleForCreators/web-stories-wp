@@ -22,7 +22,7 @@ import { memo, useRef, useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { calcRotatedResizeOffset, useUnits } from '@googleforcreators/units';
-import { StoryAnimation } from '@googleforcreators/animation';
+import { WAAPIWrapper } from '@googleforcreators/animation';
 import { useTransformHandler } from '@googleforcreators/transform';
 import {
   getDefinitionForType,
@@ -93,9 +93,7 @@ const ReplacementContainer = styled.div`
 
 function AnimationWrapper({ children, id, isAnimatable }) {
   return isAnimatable ? (
-    <StoryAnimation.WAAPIWrapper target={id}>
-      {children}
-    </StoryAnimation.WAAPIWrapper>
+    <WAAPIWrapper target={id}>{children}</WAAPIWrapper>
   ) : (
     children
   );

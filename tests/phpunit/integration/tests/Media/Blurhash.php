@@ -77,6 +77,8 @@ class Blurhash extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$blurhash = '000000';
 
 		update_post_meta( $attachment_id, $this->instance::BLURHASH_POST_META_KEY, $blurhash );
@@ -106,6 +108,8 @@ class Blurhash extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $attachment_id );
 
 		$blurhash = '000000';
 
