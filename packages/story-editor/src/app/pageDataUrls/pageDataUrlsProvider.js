@@ -52,7 +52,10 @@ function PageDataUrlProvider({ children }) {
         }));
       };
 
-      const clearQueueOfPageTask = queueIdleTask({ taskId: idleTaskUid, task: idleTask});
+      const clearQueueOfPageTask = queueIdleTask({
+        taskId: idleTaskUid,
+        task: idleTask,
+      });
       return () => {
         clearQueueOfPageTask();
       };
