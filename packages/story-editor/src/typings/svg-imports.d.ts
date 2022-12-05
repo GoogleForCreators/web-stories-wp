@@ -14,24 +14,19 @@
  * limitations under the License.
  */
 
-import MediaInfoFactory from 'mediainfo.js';
+import { ReactElement, SVGProps } from 'react';
 
-declare global {
-  var WEB_STORIES_ENV: string;
+declare module 'icons/*.svg' {
+  const Icon: (props: SVGProps<SVGElement>) => ReactElement;
+  export default Icon;
 }
 
-declare global {
-  interface Array<T> {
-    findLastIndex(
-      predicate: (value: T, index: number, obj: T[]) => unknown,
-      thisArg?: any
-    ): number;
-  }
-
-  interface Window {
-    // Made available by useMediaInfo()
-    MediaInfo?: typeof MediaInfoFactory;
-  }
+declare module 'images/*.svg' {
+  const Image: (props: SVGProps<SVGElement>) => ReactElement;
+  export default Image;
 }
 
-export {};
+declare module 'inline-icons/*.svg' {
+  const content: string;
+  export default content;
+}

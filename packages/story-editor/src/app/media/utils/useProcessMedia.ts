@@ -21,6 +21,9 @@ import {
   fetchRemoteBlob,
   fetchRemoteFile,
   isAnimatedGif,
+  Resource,
+  ResourceId,
+  VideoResource,
 } from '@googleforcreators/media';
 import { DANGER_ZONE_HEIGHT } from '@googleforcreators/units';
 import { trackError } from '@googleforcreators/tracking';
@@ -28,17 +31,30 @@ import { trackError } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
+import type {
+  ElementId,
+  ElementType,
+  MediaElement,
+} from '@googleforcreators/elements';
 import useAPI from '../../api/useAPI';
 import useStory from '../../story/useStory';
+import type { CropParams, UpdateMediaProps, UploadMediaArgs } from '../types';
 import useFFmpeg from './useFFmpeg';
 import useMediaInfo from './useMediaInfo';
+
+interface UseProcessMediaProps {
+  uploadMedia: (files: File[], args: UploadMediaArgs) => unknown;
+  postProcessingResource: (resource: Resource) => void;
+  updateMedia: (id: ResourceId, data: UpdateMediaProps) => void;
+  deleteMediaElement: (args: { id: ResourceId }) => void;
+}
 
 function useProcessMedia({
   uploadMedia,
   postProcessingResource,
   updateMedia,
   deleteMediaElement,
-}) {
+}: UseProcessMediaProps) {
   const {
     actions: { getOptimizedMediaById, getMutedMediaById },
   } = useAPI();
@@ -54,14 +70,20 @@ function useProcessMedia({
   const { isConsideredOptimized } = useMediaInfo();
 
   const copyResourceData = useCallback(
-    ({ oldResource, resource }) => {
+    ({
+      oldResource,
+      resource,
+    }: {
+      oldResource: Resource;
+      resource: Resource;
+    }) => {
       const { id, alt } = oldResource;
 
       updateElementsByResourceId({
         id,
         properties: () => {
           return {
-            type: resource.type,
+            type: resource.type as unknown as ElementType,
             resource: {
               ...resource,
               alt,
@@ -74,14 +96,22 @@ function useProcessMedia({
   );
 
   const copyResourceDataByElementId = useCallback(
-    ({ elementId, oldResource, resource }) => {
+    ({
+      elementId,
+      oldResource,
+      resource,
+    }: {
+      elementId: ElementId;
+      oldResource: Pick<Resource, 'id' | 'alt'>;
+      resource: Resource;
+    }) => {
       const { alt } = oldResource;
 
-      updateElementById({
+      updateElementById<MediaElement>({
         elementId,
         properties: () => {
           return {
-            type: resource.type,
+            type: resource.type as unknown as ElementType,
             resource: {
               ...resource,
               alt,
@@ -94,8 +124,11 @@ function useProcessMedia({
   );
 
   const updateExistingElementById = useCallback(
-    (elementId, resource) => {
-      updateElementById({
+    <T extends Resource = Resource>(
+      elementId: ElementId,
+      resource: Partial<T>
+    ) => {
+      updateElementById<MediaElement>({
         elementId,
         properties: (element) => {
           return {
@@ -111,7 +144,10 @@ function useProcessMedia({
   );
 
   const updateExistingElementsByResourceId = useCallback(
-    (resourceId, resource) => {
+    <T extends Resource = Resource>(
+      resourceId: ResourceId,
+      resource: Partial<T>
+    ) => {
       updateElementsByResourceId({
         id: resourceId,
         properties: (element) => {
@@ -128,7 +164,7 @@ function useProcessMedia({
   );
 
   const updateOldTranscodedObject = useCallback(
-    (oldId, newId, mediaSource) => {
+    (oldId: ResourceId, newId: ResourceId, mediaSource: string) => {
       updateMedia(oldId, {
         mediaSource,
         optimizedId: newId,
@@ -138,7 +174,7 @@ function useProcessMedia({
   );
 
   const updateOldMutedObject = useCallback(
-    (oldId, newId) => {
+    (oldId: ResourceId, newId: ResourceId) => {
       updateMedia(oldId, {
         mutedId: newId,
       });
@@ -149,10 +185,10 @@ function useProcessMedia({
   /**
    * Optimize video existing video using FFmpeg.
    *
-   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param resource Resource object.
    */
   const optimizeVideo = useCallback(
-    ({ resource: oldResource }) => {
+    ({ resource: oldResource }: { resource: VideoResource }) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
 
       const onUploadError = () =>
@@ -160,7 +196,13 @@ function useProcessMedia({
           isOptimized: false,
         });
 
-      const onUploadSuccess = ({ id, resource }) => {
+      const onUploadSuccess = ({
+        id,
+        resource,
+      }: {
+        id: ResourceId;
+        resource: Resource;
+      }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(resourceId, resource.id, 'source-video');
         deleteMediaElement({ id: resourceId });
@@ -173,23 +215,25 @@ function useProcessMedia({
       };
 
       // TODO: Confirm which properties exactly need to be updated.
-      const onUploadProgress = ({ resource }) => {
+      const onUploadProgress = ({ resource }: { resource: Resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
         updateExistingElementsByResourceId(resourceId, {
           ...oldResourceWithId,
         });
       };
 
-      (async () => {
-        const optimizedResource = await getOptimizedMediaById(resourceId);
+      void (async () => {
+        if (getOptimizedMediaById) {
+          const optimizedResource = await getOptimizedMediaById(resourceId);
 
-        // This video was optimized before, no need to optimize it again.
-        if (optimizedResource) {
-          updateExistingElementsByResourceId(resourceId, optimizedResource);
-          return;
+          // This video was optimized before, no need to optimize it again.
+          if (optimizedResource) {
+            updateExistingElementsByResourceId(resourceId, optimizedResource);
+            return;
+          }
         }
 
-        let file = false;
+        let file = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
@@ -235,12 +279,24 @@ function useProcessMedia({
   /**
    * Trim existing video using FFmpeg.
    *
-   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param resource Resource object.
    * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
    */
   const trimExistingVideo = useCallback(
-    ({ resource: oldResource, canvasResourceId, elementId, start, end }) => {
+    ({
+      resource: oldResource,
+      canvasResourceId,
+      elementId,
+      start,
+      end,
+    }: {
+      resource: VideoResource;
+      canvasResourceId: ResourceId;
+      elementId: ElementId;
+      start: string;
+      end: string;
+    }) => {
       const { id: resourceId, ...oldResourceWithoutId } = oldResource;
       const { src: url, mimeType, poster, isMuted, isOptimized } = oldResource;
 
@@ -251,17 +307,23 @@ function useProcessMedia({
       };
 
       const onUploadStart = () =>
-        updateExistingElementById(elementId, {
+        updateExistingElementById<VideoResource>(elementId, {
           trimData,
         });
 
       const onUploadError = () =>
-        updateExistingElementById(elementId, {
-          trimData: oldResource.trimData || {},
+        updateExistingElementById<VideoResource>(elementId, {
+          trimData: oldResource.trimData || undefined,
         });
 
-      const onUploadSuccess = ({ id, resource }) => {
-        const oldCanvasResource = {
+      const onUploadSuccess = ({
+        id,
+        resource,
+      }: {
+        id: ResourceId;
+        resource: Resource;
+      }) => {
+        const oldCanvasResource: Pick<Resource, 'id' | 'alt'> = {
           alt: oldResource.alt,
           id: canvasResourceId,
         };
@@ -278,7 +340,7 @@ function useProcessMedia({
         }
       };
 
-      const onUploadProgress = ({ resource }) => {
+      const onUploadProgress = ({ resource }: { resource: Resource }) => {
         const newResourceWithCanvasId = { ...resource, id: canvasResourceId };
         updateExistingElementById(elementId, {
           ...newResourceWithCanvasId,
@@ -286,8 +348,8 @@ function useProcessMedia({
       };
 
       const process = async () => {
-        let file = false;
-        let posterFile = false;
+        let file = null;
+        let posterFile = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
@@ -336,20 +398,26 @@ function useProcessMedia({
   /**
    * Mute existing video using FFmpeg.
    *
-   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param resource Resource object.
    */
   const muteExistingVideo = useCallback(
-    ({ resource: oldResource }) => {
+    ({ resource: oldResource }: { resource: VideoResource }) => {
       const { id: resourceId, ...oldResourceWithoutId } = oldResource;
       const { src: url, mimeType, poster, isOptimized } = oldResource;
 
       const onUploadError = () => {
-        updateExistingElementsByResourceId(resourceId, {
+        updateExistingElementsByResourceId<VideoResource>(resourceId, {
           isMuted: false,
         });
       };
 
-      const onUploadSuccess = ({ id, resource }) => {
+      const onUploadSuccess = ({
+        id,
+        resource,
+      }: {
+        id: ResourceId;
+        resource: Resource;
+      }) => {
         copyResourceData({ oldResource, resource });
         updateOldMutedObject(oldResource.id, resource.id);
 
@@ -361,24 +429,26 @@ function useProcessMedia({
       };
 
       // TODO: Confirm which properties exactly need to be updated.
-      const onUploadProgress = ({ resource }) => {
+      const onUploadProgress = ({ resource }: { resource: Resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
         updateExistingElementsByResourceId(resourceId, {
           ...oldResourceWithId,
         });
       };
 
-      (async () => {
-        const mutedResource = await getMutedMediaById(resourceId);
+      void (async () => {
+        if (getMutedMediaById) {
+          const mutedResource = await getMutedMediaById(resourceId);
 
-        // This video was muted before, no need to mute it again.
-        if (mutedResource) {
-          updateExistingElementsByResourceId(resourceId, mutedResource);
-          return;
+          // This video was muted before, no need to mute it again.
+          if (mutedResource) {
+            updateExistingElementsByResourceId(resourceId, mutedResource);
+            return;
+          }
         }
 
-        let file = false;
-        let posterFile = false;
+        let file = null;
+        let posterFile = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
@@ -424,13 +494,19 @@ function useProcessMedia({
   /**
    * Convert existing gif to a video using FFmpeg.
    *
-   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param resource Resource object.
    */
   const optimizeGif = useCallback(
-    ({ resource: oldResource }) => {
+    ({ resource: oldResource }: { resource: Resource }) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
 
-      const onUploadSuccess = ({ id, resource }) => {
+      const onUploadSuccess = ({
+        id,
+        resource,
+      }: {
+        id: ResourceId;
+        resource: Resource;
+      }) => {
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
@@ -443,7 +519,7 @@ function useProcessMedia({
       };
 
       // TODO: Confirm which properties exactly need to be updated.
-      const onUploadProgress = ({ resource }) => {
+      const onUploadProgress = ({ resource }: { resource: Resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
         updateExistingElementsByResourceId(resourceId, {
           ...oldResourceWithId,
@@ -451,7 +527,7 @@ function useProcessMedia({
       };
 
       const process = async () => {
-        let file = false;
+        let file = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
@@ -488,11 +564,17 @@ function useProcessMedia({
   /**
    * Crop video using FFmpeg.
    *
-   * @param {import('@googleforcreators/media').Resource} resource Resource object.
-   * @param {Object<{newWidth: number, newHeight: number, cropElement: Element}>} cropParams Crop params.
+   * @param resource Resource object.
+   * @param Crop params.
    */
   const cropExistingVideo = useCallback(
-    ({ id: elementId, resource: oldResource }, cropParams) => {
+    (
+      {
+        id: elementId,
+        resource: oldResource,
+      }: { id: ElementId; resource: Resource },
+      cropParams: CropParams
+    ) => {
       const { id: resourceId, ...oldResourceWithoutId } = oldResource;
       const { src: url, mimeType, isOptimized } = oldResource;
       const { newWidth, newHeight, cropElement } = cropParams;
@@ -505,16 +587,22 @@ function useProcessMedia({
       };
 
       // TODO: Confirm which properties exactly need to be updated.
-      const onUploadProgress = ({ resource }) => {
+      const onUploadProgress = ({ resource }: { resource: Resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
         updateExistingElementsByResourceId(resourceId, {
           ...oldResourceWithId,
         });
       };
 
-      const onUploadSuccess = ({ id, resource }) => {
+      const onUploadSuccess = ({
+        id,
+        resource,
+      }: {
+        id: ResourceId;
+        resource: Resource;
+      }) => {
         copyResourceData({ oldResource, resource });
-        updateElementById({
+        updateElementById<MediaElement>({
           elementId,
           properties: {
             x: cropElement.x < 0 ? 0 : cropElement.x,
@@ -536,7 +624,7 @@ function useProcessMedia({
       };
 
       const process = async () => {
-        let file = false;
+        let file = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
           await uploadMedia([file], {
@@ -558,7 +646,9 @@ function useProcessMedia({
             },
           });
         } catch (e) {
-          trackError('crop_existing_video', e.message);
+          if (e instanceof Error) {
+            void trackError('crop_existing_video', e.message);
+          }
           return;
         }
       };
@@ -576,12 +666,18 @@ function useProcessMedia({
   /**
    * Segment video using FFmpeg.
    *
-   * @param {import('@googleforcreators/media').Resource} resource Resource object.
+   * @param resource Resource object.
    * @param {Function} onUploadSuccess Callback for when upload finishes.
    * @return {string|null} Batch ID of the uploaded files on success, null otherwise.
    */
   const segmentVideo = useCallback(
-    async ({ resource, segmentTime }, onUploadSuccess) => {
+    async (
+      {
+        resource,
+        segmentTime,
+      }: { resource: VideoResource; segmentTime: number },
+      onUploadSuccess: (args: { id: ResourceId; resource: Resource }) => void
+    ) => {
       try {
         const { src: url, mimeType } = resource;
         const segmentedFiles = await ffSegmentVideo(
@@ -594,9 +690,11 @@ function useProcessMedia({
           onUploadSuccess: onUploadSuccess,
         });
       } catch (err) {
-        // eslint-disable-next-line no-console -- surface this error
-        console.log(err.message);
-        trackError('segment_video', err.message);
+        if (err instanceof Error) {
+          // eslint-disable-next-line no-console -- surface this error
+          console.log(err.message);
+          void trackError('segment_video', err.message);
+        }
         return null;
       }
     },

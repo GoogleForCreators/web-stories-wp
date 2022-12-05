@@ -22,6 +22,8 @@ import {
   trackError,
   trackEvent,
 } from '@googleforcreators/tracking';
+import type { VideoResource } from '@googleforcreators/media';
+import type { ReadChunkFunc } from 'mediainfo.js';
 
 /**
  * Internal dependencies
@@ -35,9 +37,60 @@ import {
   MEDIA_RECOMMENDED_MIN_VIDEO_FPS,
 } from '../../../constants';
 
-/**
- * @typedef {import('@googleforcreators/media').Resource} Resource
- */
+// More specific types than the ones from mediainfo.js
+// See also https://github.com/MediaArea/MediaInfoLib/tree/master/Source/Resource/Text/Stream
+
+interface GeneralTrack {
+  '@type': 'General';
+  FileSize: string;
+  Format: string;
+  FrameRate: string;
+  CodecID?: string;
+}
+
+interface ImageTrack {
+  '@type': 'Image';
+  Width: string;
+  Height: string;
+  ColorSpace: string;
+}
+interface VideoTrack {
+  '@type': 'Video';
+  Width: string;
+  Height: string;
+  ColorSpace: string;
+  Duration: string;
+  Format: string;
+}
+
+interface AudioTrack {
+  '@type': 'Audio';
+  Format: string;
+}
+
+type Track = GeneralTrack | ImageTrack | VideoTrack | AudioTrack;
+
+interface ResultObject {
+  '@ref': string;
+  media: {
+    track: Track[];
+  };
+}
+
+interface MediaInfoResult {
+  mimeType: string;
+  fileSize: number;
+  format?: string;
+  codec?: string;
+  frameRate?: number;
+  height: number;
+  width: number;
+  colorSpace?: string;
+  duration: number;
+  videoCodec?: string;
+  audioCodec?: string;
+  isMuted?: boolean;
+}
 
 function loadScriptOnce(url: string) {
   if (document.querySelector(`script[src="${url}"]`)) {
@@ -56,34 +109,12 @@ function loadScriptOnce(url: string) {
 }
 
 /**
- * @typedef MediaInfo
- * @property {string} mimeType File mime type.
- * @property {number} fileSize File size in bytes.
- * @property {string} format File format.
- * @property {string} codec File codec.
- * @property {number} frameRate Frame rate (rounded).
- * @property {number} height Height in px.
- * @property {number} width Width in px.
- * @property {string} colorSpace Color space.
- * @property {number} duration Video duration.
- * @property {string} videoCodec Video codec.
- * @property {string} audioCodec Audio codec.
- * @property {boolean} isMuted Whether the video is muted.
- */
-
-/**
- * @typedef MediaInfoReturnValue
- * @property {(file: File) => Promise<MediaInfo>} getFileInfo Return media file info.
- * @property {(resource: Resource, file: File) => Promise<MediaInfo>} isConsideredOptimized Determines a resource's optimization status.
- */
-
-/**
  * Determines whether the resource/file has small enough dimensions.
  *
- * @param {Object} obj Dimensions object.
- * @param {number} obj.width Width.
- * @param {number} obj.height Height.
- * @return {boolean} Whether the resource/file has small enough dimensions.
+ * @param obj Dimensions object.
+ * @param obj.width Width.
+ * @param obj.height Height.
+ * @return Whether the resource/file has small enough dimensions.
  */
 const hasSmallDimensions = ({
   width,
@@ -106,11 +137,11 @@ const hasSmallDimensions = ({
  * Example: 4MB for a 15s video, 12MB for a 45s long video.
  *
  * @todo Revisit to avoid fallacy that we're OK with such large file sizes.
- * @param {number} fileSize File size.
- * @param {number} duration Duration.
- * @return {boolean} Whether the file has a good file size / duration ratio.
+ * @param fileSize File size.
+ * @param duration Duration.
+ * @return Whether the file has a good file size / duration ratio.
  */
-const hasSmallFileSize = (fileSize, duration: number) =>
+const hasSmallFileSize = (fileSize: number, duration: number) =>
   fileSize <=
   (MEDIA_VIDEO_FILE_SIZE_THRESHOLD / MEDIA_RECOMMENDED_MAX_VIDEO_DURATION) *
     duration;
@@ -119,7 +150,7 @@ const hasSmallFileSize = (fileSize, duration: number) =>
  * Custom hook to interact with mediainfo.js.
  *
  * @see https://mediainfo.js.org/
- * @return {MediaInfoReturnValue} Functions and vars related to mediainfo.js usage.
+ * @return Functions and vars related to mediainfo.js usage.
  */
 function useMediaInfo() {
   const { mediainfoUrl } = useConfig();
@@ -128,22 +159,22 @@ function useMediaInfo() {
     /**
      * Returns information about a given media file.
      *
-     * @param {File} file File object.
-     * @return {Promise<MediaInfo|null>} File info or null on error.
+     * @param file File object.
+     * @return File info or null on error.
      */
-    async (file) => {
+    async (file: File) => {
       const getSize = () => file.size;
 
       // TODO: Look into using createFileReader from media package.
-      const readChunk = (chunkSize, offset) =>
+      const readChunk: ReadChunkFunc = (chunkSize, offset) =>
         new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onerror = reject;
           reader.onload = (event) => {
-            if (event.target.error) {
+            if (event.target?.error) {
               reject(event.target.error);
             }
-            resolve(new Uint8Array(event.target.result));
+            resolve(new Uint8Array(event.target?.result as ArrayBuffer));
           };
           reader.readAsArrayBuffer(file.slice(offset, offset + chunkSize));
         });
@@ -161,12 +192,12 @@ function useMediaInfo() {
         }
 
         const mediaInfo = await window.MediaInfo({ format: 'JSON' });
-        const result = JSON.parse(
-          await mediaInfo.analyzeData(getSize, readChunk)
-        );
+        const result: ResultObject = JSON.parse(
+          (await mediaInfo.analyzeData(getSize, readChunk)) as unknown as string
+        ) as ResultObject;
 
-        const normalizedResult = result.media.track.reduce(
-          (acc, track) => {
+        const normalizedResult: MediaInfoResult = result.media.track.reduce(
+          (acc: MediaInfoResult, track) => {
             if (track['@type'] === 'General') {
               acc.fileSize = Number(track.FileSize);
               acc.format = track.Format.toLowerCase().replace('mpeg-4', 'mp4');
@@ -193,7 +224,7 @@ function useMediaInfo() {
           },
           {
             mimeType: file.type,
-          }
+          } as MediaInfoResult
         );
 
         normalizedResult.isMuted = !normalizedResult.audioCodec;
@@ -205,7 +236,9 @@ function useMediaInfo() {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
 
-        trackError('mediainfo', err.message);
+        if (err instanceof Error) {
+          void trackError('mediainfo', err.message);
+        }
 
         return null;
       } finally {
@@ -222,11 +255,11 @@ function useMediaInfo() {
      * Checks things like dimensions, file size, mime type, and codecs.
      *
      * @todo Allow WebM with VP9 once Safari catches up.
-     * @param {Resource} resource Resource object.
-     * @param {File} file File object.
-     * @return {Promise<boolean>} Whether the file meets optimization criteria.
+     * @param resource Resource object.
+     * @param file File object.
+     * @return Whether the file meets optimization criteria.
      */
-    async (resource, file) => {
+    async (resource: VideoResource, file: File) => {
       // This should never happen, but just in case.
       if (resource.isOptimized) {
         return true;
@@ -272,7 +305,7 @@ function useMediaInfo() {
         isSupportedMp4 &&
         hasHighFps;
 
-      trackEvent('mediainfo_is_optimized', {
+      void trackEvent('mediainfo_is_optimized', {
         result,
         file_size: fileInfo.fileSize,
         file_type: fileInfo.mimeType,

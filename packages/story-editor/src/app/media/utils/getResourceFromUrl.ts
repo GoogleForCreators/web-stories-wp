@@ -21,35 +21,38 @@ import {
   createResource,
   getImageDimensions,
   getTypeFromMime,
-  preloadVideo,
-  seekVideo,
   getVideoLength,
   hasVideoGotAudio,
+  preloadVideo,
+  Resource,
+  seekVideo,
+  VideoResource,
 } from '@googleforcreators/media';
 
 /**
- * @typedef {Object} ResourceLike
- * @property {string} src Resource URL.
- * @property {string} mimeType Mime type.
- * @property {boolean} needsProxy Whether the resource needs a CORS proxy.
+ * Internal dependencies
  */
+import { ResourceType } from './getResourceFromLocalFile';
 
-/**
- * @typedef {import('@googleforcreators/media').Resource} Resource
- */
+type ResourceLike = Pick<
+  Resource,
+  'id' | 'src' | 'mimeType' | 'needsProxy' | 'alt'
+> &
+  Partial<Resource> &
+  Partial<VideoResource>;
 
 /**
  * Get a resource from a URL.
  *
- * @param {ResourceLike} resourceLike Resource-like object.
- * @return {Promise<Resource>} Resource object.
+ * @param resourceLike Resource-like object.
+ * @return Resource object.
  */
-async function getResourceFromUrl(resourceLike) {
+async function getResourceFromUrl(resourceLike: ResourceLike) {
   const {
     src,
     mimeType,
-    width,
-    height,
+    width = 0,
+    height = 0,
     isMuted,
     length,
     lengthFormatted,
@@ -57,18 +60,18 @@ async function getResourceFromUrl(resourceLike) {
   } = resourceLike;
   const type = getTypeFromMime(mimeType);
 
-  if (!['image', 'video'].includes(type)) {
+  if (![ResourceType.Image, ResourceType.Video].includes(type)) {
     throw new Error('Invalid media type.');
   }
 
-  const hasDimensions = width && height;
+  const hasDimensions = Boolean(width && height);
   const videoHasMissingMetadata =
     !hasDimensions ||
     isMuted === null ||
     length === null ||
     lengthFormatted === null;
 
-  const additionalData = {};
+  const additionalData: Record<string, unknown> = {};
 
   // Only need to fetch metadata if not already provided.
 

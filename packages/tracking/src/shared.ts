@@ -48,6 +48,15 @@ export interface EventParameters {
   event_label?: string;
   event_category?: string;
   status?: string;
+  original_length?: number;
+  new_length?: number;
+  start_offset?: number | null;
+  end_offset?: number | null;
+  result?: boolean;
+  file_size?: number;
+  file_type?: string;
+  width?: number;
+  height?: number;
 }
 
 interface Gtag {

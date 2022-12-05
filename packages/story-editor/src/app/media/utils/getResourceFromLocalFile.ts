@@ -52,21 +52,22 @@ import getPosterName from './getPosterName';
 /**
  * Generates a image resource object from a local File object.
  *
- * @param {File} file File object.
- * @return {Promise<import('@googleforcreators/media').Resource>} Local image resource object.
+ * @param file File object.
+ * @return Local image resource object.
  */
-const getImageResource = async (file: File): Promise<Resource | null> => {
-  const alt = getFileBasename(file);
-  const mimeType = file.type;
-
+async function getImageResource(file: File): Promise<Resource | null> {
   const reader: FileReader = await createFileReader(file);
 
   if (!reader.result) {
     return null;
   }
 
+  const mimeType = file.type;
+
   const src = createBlob(new window.Blob([reader.result], { type: mimeType }));
   const { width, height } = await getImageDimensions(src);
+
+  const alt = getFileBasename(file);
 
   return createResource({
     type: ResourceType.Image,
@@ -75,23 +76,24 @@ const getImageResource = async (file: File): Promise<Resource | null> => {
     ...getResourceSize({ width, height }),
     alt,
   } as ResourceInput);
-};
+}
 
 /**
  * Generates a video resource object from a local File object.
  *
- * @param {File} file File object.
- * @return {Promise<import('@googleforcreators/media').Resource>} Local video resource object.
+ * @param file File object.
+ * @return Local video resource object.
  */
-const getVideoResource = async (file: File): Promise<Resource | null> => {
-  const alt = getFileBasename(file);
-  const mimeType = file.type;
-
+async function getVideoResource(
+  file: File
+): Promise<{ resource: Resource; posterFile: File | null } | null> {
   const reader = await createFileReader(file);
 
   if (!reader.result) {
     return null;
   }
+
+  const mimeType = file.type;
 
   const src = createBlob(new Blob([reader.result], { type: mimeType }));
 
@@ -107,15 +109,23 @@ const getVideoResource = async (file: File): Promise<Resource | null> => {
   await seekVideo(videoEl);
   const hasAudio = videoEl && hasVideoGotAudio(videoEl);
 
-  const posterFile = videoEl && blobToFile(
-    await getImageFromVideo(videoEl),
-    getPosterName(getFileBasename(file)),
-    MEDIA_POSTER_IMAGE_MIME_TYPE
-  );
-  const poster = createBlob(posterFile);
-  const { width, height } = await getImageDimensions(poster);
+  const posterBlob = videoEl ? await getImageFromVideo(videoEl) : null;
+  const posterFile =
+    posterBlob &&
+    blobToFile(
+      posterBlob,
+      getPosterName(getFileBasename(file)),
+      MEDIA_POSTER_IMAGE_MIME_TYPE
+    );
+  const poster = posterFile ? createBlob(posterFile) : undefined;
+  const { width, height } = poster
+    ? await getImageDimensions(poster)
+    : { width: undefined, height: undefined };
+
+  const alt = getFileBasename(file);
 
   const resource = createResource({
+    id: uuidv4(),
     type: ResourceType.Video,
     mimeType,
     src: canPlayVideo ? src : '',
@@ -125,22 +135,23 @@ const getVideoResource = async (file: File): Promise<Resource | null> => {
     length,
     lengthFormatted,
     alt,
-  } as ResourceInput);
+  });
 
   return { resource, posterFile };
-};
+}
 
-const createPlaceholderResource = (properties) => {
+const createPlaceholderResource = (properties: ResourceInput) => {
   return createResource({ ...properties, isPlaceholder: true });
 };
 
-const getPlaceholderResource = (file) => {
+const getPlaceholderResource = (file: File) => {
   const alt = getFileBasename(file);
   const type = getTypeFromMime(file.type);
   const mimeType = type === 'image' ? 'image/png' : 'video/mp4';
 
   // The media library requires resources with valid mimeType and dimensions.
   return createPlaceholderResource({
+    id: uuidv4(),
     type: type || 'image',
     mimeType: mimeType,
     src: '',
@@ -152,13 +163,16 @@ const getPlaceholderResource = (file) => {
 /**
  * Generates a resource object from a local File object.
  *
- * @param {File} file File object.
- * @return {Promise<Object<{resource: import('@googleforcreators/media').Resource, posterFile: File}>>} Object containing resource object and poster file.
+ * @param file File object.
+ * @return Object containing resource object and poster file.
  */
-const getResourceFromLocalFile = async (file) => {
+async function getResourceFromLocalFile(
+  file: File
+): Promise<{ resource: Resource; posterFile: File | null }> {
   const type = getTypeFromMime(file.type);
 
-  let resource = getPlaceholderResource(file);
+  const fallbackResource = getPlaceholderResource(file);
+  let resource;
   let posterFile = null;
 
   try {
@@ -168,17 +182,21 @@ const getResourceFromLocalFile = async (file) => {
 
     if ('video' === type) {
       const results = await getVideoResource(file);
-      resource = results.resource;
-      posterFile = results.posterFile;
+      if (results) {
+        resource = results.resource;
+        posterFile = results.posterFile;
+      }
     }
   } catch {
     // Not interested in the error here.
     // We simply fall back to the placeholder resource.
   }
 
+  resource ||= fallbackResource;
+
   resource.id = uuidv4();
 
   return { resource, posterFile };
-};
+}
 
 export default getResourceFromLocalFile;

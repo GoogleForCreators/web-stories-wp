@@ -24,7 +24,10 @@ import {
   getFirstFrameOfVideo,
   getFileNameFromUrl,
   getFileBasename,
+  ResourceId,
+  blobToFile,
 } from '@googleforcreators/media';
+
 /**
  * Internal dependencies
  */
@@ -34,7 +37,17 @@ import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
 import getPosterName from './getPosterName';
 
-function useUploadVideoFrame({ updateMediaElement }) {
+function useUploadVideoFrame({
+  updateMediaElement,
+}: {
+  updateMediaElement: ({
+    id,
+    data,
+  }: {
+    id: string | number;
+    data: Record<string, unknown>;
+  }) => void;
+}) {
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -54,12 +67,12 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const uploadVideoPoster = useCallback(
     /**
      *
-     * @param {number} id Video ID.
-     * @param {string} fileName File name.
-     * @param {File} posterFile File object.
-     * @return {Promise<{posterHeight: *, posterWidth: *, poster: *, posterId: *}>} Poster information.
+     * @param id Video ID.
+     * @param fileName File name.
+     * @param posterFile File object.
+     * @return Poster information.
      */
-    async (id, fileName, posterFile) => {
+    async (id: ResourceId, fileName: string, posterFile?: File) => {
       // TODO: Make param mandatory; don't allow calling without.
       if (!posterFile) {
         return {};
@@ -73,6 +86,11 @@ function useUploadVideoFrame({ updateMediaElement }) {
         mediaId: id,
         mediaSource: 'poster-generation',
       });
+
+      if (!resource) {
+        return {};
+      }
+
       const {
         id: posterId,
         src: poster,
@@ -81,7 +99,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       } = resource;
 
       // If video ID is not set, skip relating media.
-      if (id) {
+      if (id && updateMedia) {
         await updateMedia(id, {
           posterId,
           storyId,
@@ -108,12 +126,10 @@ function useUploadVideoFrame({ updateMediaElement }) {
    */
   const uploadVideoFrame = useCallback(
     /**
-     *
-     * @param {number} id Video ID.
-     * @param {string} src Video URL.
-     * @return {Promise<void>}
+     * @param id Video ID.
+     * @param src Video URL.
      */
-    async (id, src) => {
+    async (id: ResourceId, src: string) => {
       const trackTiming = getTimeTracker('load_video_poster');
       try {
         const originalFileName = getFileNameFromUrl(src);
@@ -122,7 +138,11 @@ function useUploadVideoFrame({ updateMediaElement }) {
         );
         const obj = await getFirstFrameOfVideo(src);
         const { posterId, poster, posterWidth, posterHeight } =
-          await uploadVideoPoster(id, fileName, obj);
+          await uploadVideoPoster(
+            id,
+            fileName,
+            obj ? blobToFile(obj, fileName, 'image/jpeg') : undefined
+          );
 
         // Overwrite the original video dimensions. The poster reupload has more
         // accurate dimensions of the video that includes orientation changes.
@@ -133,15 +153,17 @@ function useUploadVideoFrame({ updateMediaElement }) {
               height: posterHeight,
             }) ||
           null;
-        const properties = ({ resource }) => ({
-          resource: {
-            ...resource,
-            posterId,
-            poster,
-            ...newSize,
-          },
+        updateElementsByResourceId({
+          id,
+          properties: ({ resource }) => ({
+            resource: {
+              ...resource,
+              posterId,
+              poster,
+              ...newSize,
+            },
+          }),
         });
-        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: {
@@ -152,7 +174,9 @@ function useUploadVideoFrame({ updateMediaElement }) {
         });
       } catch (err) {
         // TODO: Potentially display error message to user.
-        trackError('video_poster_generation', err.message);
+        if (err instanceof Error) {
+          void trackError('video_poster_generation', err.message);
+        }
       } finally {
         trackTiming();
       }

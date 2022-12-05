@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-import MediaInfoFactory from 'mediainfo.js';
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
 
-declare global {
-  var WEB_STORIES_ENV: string;
+/**
+ * Internal dependencies
+ */
+import type { StoryProviderState } from '../../types';
+import Context from './context';
+
+export function useStory(): StoryProviderState;
+export function useStory<T>(selector: (state: StoryProviderState) => T): T;
+export function useStory<T>(
+  selector: (state: StoryProviderState) => T | StoryProviderState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
-declare global {
-  interface Array<T> {
-    findLastIndex(
-      predicate: (value: T, index: number, obj: T[]) => unknown,
-      thisArg?: any
-    ): number;
-  }
-
-  interface Window {
-    // Made available by useMediaInfo()
-    MediaInfo?: typeof MediaInfoFactory;
-  }
-}
-
-export {};
+export default useStory;
