@@ -77,6 +77,7 @@
     "history": "^5.3.0",
     "html-to-image": "1.10.8",
     "immer": "^9.0.16",
+    "mediainfo.js": "^0.1.8",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "react-blurhash": "^0.2.0",
