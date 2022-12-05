@@ -133,9 +133,15 @@ function Provider({
         isAnimationRefenctiallyStable &&
         areAnimationTargetElementsReferenciallyStable
       ) {
-        animation.targets.forEach((elementId) =>
-          _animationPartsMap.set(elementId, oldAnimationPartsMap.get(elementId))
-        );
+        animation.targets.forEach((elementId) => {
+          const element = elementsInstanceMap.get(elementId);
+          if (!element.isHidden) {
+            _animationPartsMap.set(
+              elementId,
+              oldAnimationPartsMap.get(elementId)
+            );
+          }
+        });
       } else {
         // Generate new animationPart if input has changed.
         const { id, targets, type, ...args } = animation;
@@ -144,10 +150,12 @@ function Provider({
           const generatedParts = _animationPartsMap.get(elementId) || [];
           const element = elementsInstanceMap.get(elementId);
 
-          _animationPartsMap.set(elementId, [
-            ...generatedParts,
-            AnimationPart(type, { ...args, element }),
-          ]);
+          if (!element.isHidden) {
+            _animationPartsMap.set(elementId, [
+              ...generatedParts,
+              AnimationPart(type, { ...args, element }),
+            ]);
+          }
         });
       }
     }
