@@ -38,8 +38,7 @@ function getAutoAdvanceAfter({
       (target) => !elements.find((element) => element.id === target)?.isHidden
     )
   );
-  const animationDuration =
-    getTotalDuration(visibleAnimations) / 1000;
+  const animationDuration = getTotalDuration(visibleAnimations) / 1000;
   const backgroundAudioDuration =
     !loop && resource?.length ? resource.length : 0;
 
