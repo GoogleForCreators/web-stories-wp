@@ -23,7 +23,7 @@ import {
   PAGE_RATIO,
   FULLBLEED_RATIO,
 } from '@googleforcreators/units';
-import { themeHelpers } from '@googleforcreators/design-system';
+import { SCROLLBAR_WIDTH } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -120,12 +120,12 @@ function calculateViewportProperties(workspaceSize: WorkspaceSize, zoomSetting: 
         // workspace is limited in the height, so use the width minus room for scrollbar
         maxPageWidth =
           workspaceSize.width -
-          themeHelpers.SCROLLBAR_WIDTH -
+          SCROLLBAR_WIDTH -
           ZOOM_PADDING_LARGE;
       } else {
         // workspace is limited in the width, so use the height minus room for scrollbar converted
         maxPageWidth =
-          (workspaceSize.availableHeight - themeHelpers.SCROLLBAR_WIDTH) *
+          (workspaceSize.availableHeight - SCROLLBAR_WIDTH) *
             FULLBLEED_RATIO -
           ZOOM_PADDING_LARGE;
       }

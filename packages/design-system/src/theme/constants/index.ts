@@ -23,6 +23,8 @@ import * as TYPOGRAPHY from './typography';
 const ICON_SIZE = 32;
 const LARGE_BUTTON_SIZE = 56;
 
+// @todo This is a duplicate from themeHelpers. Remove when fully converting the design-system theme.
+export const SCROLLBAR_WIDTH = 11;
 export const THEME_CONSTANTS = {
   BREAKPOINTS,
   TYPOGRAPHY,
