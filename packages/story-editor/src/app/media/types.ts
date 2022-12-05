@@ -1,11 +1,54 @@
-export type ContentType = 'image' | 'video' | 'git' | 'sticker';
+/*
+ * Copyright 2022 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import type { FunctionComponent } from 'react';
+import type {
+  Resource,
+  ResourceId,
+  TrimData,
+  VideoResource,
+} from '@googleforcreators/media';
+import type { ElementId } from '@googleforcreators/elements';
+
+export const INITIAL_STATE = 'INITIAL_STATE';
+
+export enum ContentType {
+  Image = 'image',
+  Video = 'video',
+  Gif = 'gif',
+  Sticker = 'sticker',
+}
+
+export enum ProviderType {
+  Unsplash = 'UNSPLASH',
+  Coverr = 'COVERR',
+  Tenor = 'TENOR',
+  TenorStickers = 'TENOR_STICKERS',
+}
 
 export type Provider = {
+  provider: ProviderType;
   displayName: string;
   contentTypeFilter?: ContentType;
   supportsCategories: boolean;
   requiresAuthorAttribution: boolean;
-  attributionComponent: () => React.Component;
+  attributionComponent: FunctionComponent;
   fetchMediaErrorMessage: string;
   fetchCategoriesErrorMessage?: string;
   defaultPreviewWidth?: number;
@@ -13,19 +56,41 @@ export type Provider = {
 
 export type Providers = Record<string, Provider>;
 
-export type Media3pMedia = {
+export enum Media3pContentType {
+  Image = 'IMAGE',
+  Video = 'VIDEO',
+  Gif = 'GIF',
+  Sticker = 'STICKER',
+}
+
+type AbstractMedia3pMedia = {
   name: string;
-  provider: string;
-  type: 'IMAGE' | 'VIDEO';
+  provider: ProviderType;
+  type: Media3pContentType;
   author: { displayName: string; url: string };
+  title?: string;
   description?: string;
   createTime: string;
-  registerUsageUrl: string;
-  imageUrls: Record<string, ImageUrl>[] | undefined;
-  videoUrls: Record<string, VideoUrl>[] | undefined;
   updateTime?: string;
+  registerUsageUrl: string;
+  color?: string;
   blurHash?: string;
 };
+
+export type Media3pStillMedia = AbstractMedia3pMedia & {
+  type: Media3pContentType.Image;
+  imageUrls: ImageUrl[];
+};
+
+export type Media3pSequenceMedia = AbstractMedia3pMedia & {
+  imageUrls: ImageUrl[];
+  videoUrls: VideoUrl[];
+  videoMetadata: {
+    duration: string;
+  };
+};
+
+export type Media3pMedia = Media3pStillMedia | Media3pSequenceMedia;
 
 export type ImageUrl = {
   imageName?: string;
@@ -38,7 +103,7 @@ export type ImageUrl = {
 };
 
 export type VideoUrl = {
-  file: string;
+  url: string;
   mimeType: string;
   width: number;
   height: number;
@@ -53,6 +118,48 @@ export type ImageSize = {
   height: number;
 };
 
-export type MediaUrls = Media3pMedia['imageUrls'] | Media3pMedia['videoUrls'];
+export type MediaUrls = ImageUrl[] | VideoUrl[];
 
-export type ImageSizes = Record<string, ImageSize>;
+export interface ImageSizes {
+  [keyof: string]: ImageSize;
+  web_stories_thumbnail: ImageSize;
+  large: ImageSize;
+  full: ImageSize;
+}
+
+export type CropParams = {
+  newWidth: number;
+  newHeight: number;
+  cropElement: {
+    x: number;
+    y: number;
+  };
+  cropWidth: number;
+  cropHeight: number;
+  cropX: number;
+  cropY: number;
+};
+
+export interface UpdateMediaProps {
+  mediaSource?: string;
+  optimizedId?: ResourceId;
+  mutedId?: ResourceId;
+}
+
+export interface UploadMediaArgs {
+  onUploadStart?: (args: { resource: Resource }) => unknown;
+  onUploadSuccess?: (args: { id: number; resource: Resource }) => unknown;
+  onUploadProgress?: (args: { resource: Resource }) => unknown;
+  onUploadError?: () => unknown;
+  cropVideo?: boolean;
+  muteVideo?: boolean;
+  additionalData?: Record<string, unknown>;
+  originalResourceId?: ResourceId;
+  resource?: Partial<Resource> | Partial<VideoResource>;
+  storyId?: number | null;
+  altText?: string;
+  mediaSource?: string;
+  posterFile?: File | Blob | null;
+  elementId?: ElementId;
+  trimData?: TrimData;
+}

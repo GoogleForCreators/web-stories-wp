@@ -29,9 +29,7 @@
     "src/app/media/media3p/*.tsx",
     "src/app/media/utils/*.ts",
     "src/app/story",
-    "src/app/uploader",
     "src/constants/*",
-    "src/icons/**/*",
     "src/types/*",
     "src/typings/*",
     "src/utils/*.ts"

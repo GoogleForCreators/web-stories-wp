@@ -24,11 +24,11 @@ import { preloadImage } from '@googleforcreators/media';
 /**
  * Extracts the base color from an image element.
  *
- * @param {Image} img Image.
- * @return {Promise<string>} Hex color.
+ * @param img Image.
+ * @return Hex color.
  */
-async function extractColorFromImage(img) {
-  const { default: ColorThief } = await import(
+async function extractColorFromImage(img: HTMLImageElement): Promise<string> {
+  const ColorThief = await import(
     /* webpackChunkName: "chunk-colorthief" */ 'colorthief'
   );
 
@@ -38,7 +38,9 @@ async function extractColorFromImage(img) {
       const rgb = thief.getColor(img);
       resolve(getHexFromSolidArray(rgb));
     } catch (err) {
-      trackError('image_base_color', err.message);
+      if (err instanceof Error) {
+        void trackError('image_base_color', err.message);
+      }
       reject(err);
     }
   });
@@ -47,12 +49,12 @@ async function extractColorFromImage(img) {
 /**
  * Returns an images media base color as a hex string.
  *
- * @param {string} src Image src.
- * @param {number|string} [width] Image width.
- * @param {number|string} [height] Image height.
- * @return {Promise<string>} Hex color.
+ * @param src Image src.
+ * @param [width] Image width.
+ * @param [height] Image height.
+ * @return Hex color.
  */
-async function getMediaBaseColor(src, width = 10, height = 'auto') {
+async function getMediaBaseColor(src: string, width = 10, height = 'auto') {
   if (!src) {
     throw new Error('No source to image');
   }
@@ -64,7 +66,7 @@ async function getMediaBaseColor(src, width = 10, height = 'auto') {
     color = await extractColorFromImage(image);
   } catch (error) {
     // Known error of color thief with white only images.
-    if (error?.name !== 'TypeError') {
+    if (!(error instanceof TypeError)) {
       throw error;
     }
     color = '#ffffff';
