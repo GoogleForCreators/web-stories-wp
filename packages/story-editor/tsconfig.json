@@ -22,6 +22,8 @@
     "src/app/config/*",
     "src/app/currentUser/*",
     "src/app/helpCenter/**/*",
+    "src/components/library/paneIds.ts",
+    "src/components/sidebar/constants.ts",
     "src/app/highlights/*",
     "src/app/history",
     "src/app/story",

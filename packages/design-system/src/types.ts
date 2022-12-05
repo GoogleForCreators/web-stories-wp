@@ -24,5 +24,7 @@ export * from './utils/constants';
 export * from './utils/localStore';
 export * from './contexts/snackbar';
 export * from './utils/sessionStore';
+export * from './utils/panelTypes';
+export * from './utils/panelSections';
 
 export {};

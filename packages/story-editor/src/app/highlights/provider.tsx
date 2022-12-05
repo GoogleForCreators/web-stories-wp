@@ -17,30 +17,35 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../story';
+import { useStory } from '../story/useStory';
 import type {
   setHighlightProps,
   selectElementProps,
+  HighlightType,
 } from '../../types/highlightsProvider';
 import Context from './context';
 import { STATES } from './states';
 
-interface HighlightsProviderProps {
-  children: ReactNode;
-}
+type HighlightState = {
+  [k in HighlightType]: {
+    focus: boolean;
+    showEffect?: boolean;
+    tab: string;
+    section: string;
+  };
+};
 
-function HighlightsProvider({ children }: HighlightsProviderProps) {
-  const [highlighted, setHighlighted] = useState({});
-  const { setSelectedElementsById, setCurrentPage } = useStory(
-    ({ actions }) => ({
-      setSelectedElementsById: actions.setSelectedElementsById,
-      setCurrentPage: actions.setCurrentPage,
-    })
-  );
+function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
+  const [highlighted, setHighlighted] = useState<
+    HighlightState | Record<never, never>
+  >({});
+  const {
+    actions: { setSelectedElementsById, setCurrentPage },
+  } = useStory();
 
   const selectElement = useCallback(
     ({ elementId, elements, pageId }: selectElementProps) => {
@@ -64,12 +69,10 @@ function HighlightsProvider({ children }: HighlightsProviderProps) {
         selectElement({ elements, elementId, pageId });
       }
 
-      if (highlight) {
-        const { tab, section, ...highlightState } = STATES[highlight];
+      if (highlight && STATES[highlight]) {
+        const highlightState = STATES[highlight];
         setHighlighted({
           [highlight]: { ...highlightState, showEffect: true },
-          tab,
-          section,
         });
       }
     },
@@ -79,9 +82,9 @@ function HighlightsProvider({ children }: HighlightsProviderProps) {
   const onFocusOut = useCallback(() => setHighlighted({}), [setHighlighted]);
 
   const cancelEffect = useCallback(
-    (stateKey: string) =>
-      setHighlighted((state) => ({
-        [stateKey]: { ...state[stateKey], showEffect: false },
+    (highlight: HighlightType) =>
+      setHighlighted((state: HighlightState) => ({
+        [highlight]: { ...state[highlight], showEffect: false },
       })),
     []
   );

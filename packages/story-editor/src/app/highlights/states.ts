@@ -26,154 +26,107 @@ import {
   INSERT,
   DOCUMENT,
   STYLE as STYLE_SIDEBAR,
-} from '../../components/sidebar';
+} from '../../components/sidebar/constants';
 import { PANE_IDS } from '../../components/library/paneIds';
-
-/**
- * Highlight state object
- *
- * @typedef {Highlight} Highlight The current state of editor highlights
- * @property {string} tab The ID of the Sidebar tab to highlight
- * @property {boolean} focus Whether there is a focusable element, use for accessibility
- */
-
-const enum keys {
-  STORY_TITLE = 'STORY_TITLE',
-  ELEMENT_TOOLBAR_TOGGLE = 'ELEMENT_TOOLBAR_TOGGLE',
-
-  // Sidebar tabs
-  STYLE_PANE = 'STYLE_PANE',
-
-  ANIMATION = 'ANIMATION',
-  ASSISTIVE_TEXT = 'ASSISTIVE_TEXT',
-  CAPTIONS = 'CAPTIONS',
-  EXCERPT = 'EXCERPT',
-  LINK = 'LINK',
-  PAGE_BACKGROUND = 'PAGE_BACKGROUND',
-  POSTER = 'POSTER',
-  PUBLISHER_LOGO = 'PUBLISHER_LOGO',
-  VIDEO_A11Y_POSTER = 'VIDEO_A11Y_POSTER',
-  STYLE = 'STYLE',
-  FONT = 'FONT',
-  TEXT_COLOR = 'TEXT_COLOR',
-
-  // LIBRARY
-  MEDIA = 'MEDIA',
-  MEDIA3P = 'MEDIA3P',
-  TEXT_SET = 'TEXT',
-  PAGE_TEMPLATES = 'PAGE_TEMPLATES',
-
-  // DOCUMENT
-  PAGE_BACKGROUND_AUDIO = 'PAGE_BACKGROUND_AUDIO',
-}
-
-interface stylePaneIdsType {
-  SELECTION: string;
-  LINK: string;
-  ANIMATION: string;
-}
-
-const { SELECTION, ANIMATION, LINK } = STYLE_PANE_IDS as stylePaneIdsType;
+import { HighlightType } from '../../types/highlightsProvider';
 
 export const STATES = {
-  [keys.STORY_TITLE]: {
+  [HighlightType.STORY_TITLE]: {
     focus: true,
   },
 
-  [keys.ELEMENT_TOOLBAR_TOGGLE]: {
+  [HighlightType.ELEMENT_TOOLBAR_TOGGLE]: {
     focus: true,
   },
 
   // Sidebar tabs
-  [keys.STYLE_PANE]: {
+  [HighlightType.STYLE_PANE]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: SELECTION,
+    section: STYLE_PANE_IDS.SELECTION,
   },
 
-  [keys.POSTER]: {
+  [HighlightType.POSTER]: {
     focus: true,
     tab: DOCUMENT,
   },
-  [keys.PUBLISHER_LOGO]: {
+  [HighlightType.PUBLISHER_LOGO]: {
     focus: true,
     tab: DOCUMENT,
   },
-  [keys.EXCERPT]: {
+  [HighlightType.EXCERPT]: {
     focus: true,
     tab: DOCUMENT,
   },
-  [keys.PAGE_BACKGROUND_AUDIO]: {
+  [HighlightType.PAGE_BACKGROUND_AUDIO]: {
     focus: true,
     tab: STYLE_SIDEBAR,
   },
-  [keys.CAPTIONS]: {
+  [HighlightType.CAPTIONS]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: SELECTION,
+    section: STYLE_PANE_IDS.SELECTION,
   },
-  [keys.ASSISTIVE_TEXT]: {
+  [HighlightType.ASSISTIVE_TEXT]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: SELECTION,
+    section: STYLE_PANE_IDS.SELECTION,
   },
-  [keys.PAGE_BACKGROUND]: {
+  [HighlightType.PAGE_BACKGROUND]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: SELECTION,
+    section: STYLE_PANE_IDS.SELECTION,
   },
-  [keys.ANIMATION]: {
+  [HighlightType.ANIMATION]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: ANIMATION,
+    section: STYLE_PANE_IDS.ANIMATION,
   },
-  [keys.FONT]: {
+  [HighlightType.FONT]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: SELECTION,
+    section: STYLE_PANE_IDS.SELECTION,
   },
-  [keys.LINK]: {
+  [HighlightType.LINK]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: LINK,
+    section: STYLE_PANE_IDS.LINK,
   },
-  [keys.VIDEO_A11Y_POSTER]: {
+  [HighlightType.VIDEO_A11Y_POSTER]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: SELECTION,
+    section: STYLE_PANE_IDS.SELECTION,
   },
-  [keys.STYLE]: {
+  [HighlightType.STYLE]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: SELECTION,
+    section: STYLE_PANE_IDS.SELECTION,
   },
-  [keys.TEXT_COLOR]: {
+  [HighlightType.TEXT_COLOR]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: SELECTION,
+    section: STYLE_PANE_IDS.SELECTION,
   },
 
   // Library
-  [keys.MEDIA]: {
+  [HighlightType.MEDIA]: {
     focus: true,
     tab: INSERT,
     section: PANE_IDS.MEDIA,
   },
-  [keys.MEDIA3P]: {
+  [HighlightType.MEDIA3P]: {
     focus: true,
     tab: INSERT,
     section: PANE_IDS.MEDIA_3P,
   },
-  [keys.TEXT_SET]: {
+  [HighlightType.TEXT_SET]: {
     focus: true,
     tab: INSERT,
     section: PANE_IDS.TEXT,
   },
-  [keys.PAGE_TEMPLATES]: {
+  [HighlightType.PAGE_TEMPLATES]: {
     focus: true,
     tab: INSERT,
     section: PANE_IDS.PAGE_TEMPLATES,
   },
 };
-
-export default keys;

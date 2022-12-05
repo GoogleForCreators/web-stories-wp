@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-export const PANE_IDS = {
-  MEDIA: 'media',
-  MEDIA_3P: 'media3p',
-  TEXT: 'text',
-  SHAPES: 'shapes',
-  ELEMENTS: 'elements',
-  PAGE_TEMPLATES: 'pageTemplates',
-  SHOPPING: 'shopping',
+export enum PANE_IDS {
+  MEDIA= 'media',
+  MEDIA_3P= 'media3p',
+  TEXT= 'text',
+  SHAPES= 'shapes',
+  ELEMENTS= 'elements',
+  PAGE_TEMPLATES= 'pageTemplates',
+  SHOPPING= 'shopping',
 };
