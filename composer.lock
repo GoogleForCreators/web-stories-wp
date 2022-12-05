@@ -5149,16 +5149,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.15",
+            "version": "v5.4.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "ea59bb0edfaf9f28d18d8791410ee0355f317669"
+                "reference": "8e9b9c8dfb33af6057c94e1b44846bee700dc5ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/ea59bb0edfaf9f28d18d8791410ee0355f317669",
-                "reference": "ea59bb0edfaf9f28d18d8791410ee0355f317669",
+                "url": "https://api.github.com/repos/symfony/console/zipball/8e9b9c8dfb33af6057c94e1b44846bee700dc5ef",
+                "reference": "8e9b9c8dfb33af6057c94e1b44846bee700dc5ef",
                 "shasum": ""
             },
             "require": {
@@ -5228,7 +5228,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.15"
+                "source": "https://github.com/symfony/console/tree/v5.4.16"
             },
             "funding": [
                 {
@@ -5244,7 +5244,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-26T21:41:52+00:00"
+            "time": "2022-11-25T14:09:27+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -6188,16 +6188,16 @@
         },
         {
             "name": "szepeviktor/phpstan-wordpress",
-            "version": "v1.1.5",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/szepeviktor/phpstan-wordpress.git",
-                "reference": "3934e622e8434092aef69761d684281812fef868"
+                "reference": "27784541f184a1ea3b6656fc8a882bb9adf45fc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/3934e622e8434092aef69761d684281812fef868",
-                "reference": "3934e622e8434092aef69761d684281812fef868",
+                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/27784541f184a1ea3b6656fc8a882bb9adf45fc2",
+                "reference": "27784541f184a1ea3b6656fc8a882bb9adf45fc2",
                 "shasum": ""
             },
             "require": {
@@ -6241,7 +6241,7 @@
             ],
             "support": {
                 "issues": "https://github.com/szepeviktor/phpstan-wordpress/issues",
-                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.1.5"
+                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.1.6"
             },
             "funding": [
                 {
@@ -6253,7 +6253,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-11-12T15:03:29+00:00"
+            "time": "2022-12-01T14:56:51+00:00"
         },
         {
             "name": "thecodingmachine/safe",
