@@ -54,12 +54,13 @@ const isDefaultPage = (page: Page) => {
   const backgroundElement = page.elements.find(
     (e) => elementIs.backgroundable(e) && e.isBackground
   );
-  if (
-    backgroundElement &&
-    elementIs.defaultBackground(backgroundElement) &&
-    !backgroundElement.isDefaultBackground
-  ) {
-    return false;
+  if (backgroundElement) {
+    if (
+      !elementIs.defaultBackground(backgroundElement) ||
+      !backgroundElement.isDefaultBackground
+    ) {
+      return false;
+    }
   }
 
   return true;

@@ -34,7 +34,7 @@ interface Task {
  * @return queueIdleTask
  */
 function useIdleTaskQueue() {
-  const taskQueue = useRef<Task[]>([{ taskId: null, task: null }]);
+  const taskQueue = useRef<Task[]>([]);
   const isTaskQueueRunning = useRef(false);
   const currentTask = useRef<Task>({ taskId: null, task: null });
 
