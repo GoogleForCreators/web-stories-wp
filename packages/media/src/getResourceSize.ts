@@ -27,12 +27,17 @@ interface ResourceSizeParams {
   posterHeight?: number;
 }
 
+interface ResourceSize {
+  width: number;
+  height: number;
+}
+
 /**
  * Returns the best known size of the resource. The generated poster can
  * override the resource's size because the poster generation has a more
  * accurate data.
  *
- * @param obj - An object with height/width params.
+ * @param obj An object with height/width params.
  * @param obj.width Width.
  * @param obj.height Height.
  * @param [obj.posterGenerated] Whether a poster has been generated.
@@ -46,14 +51,14 @@ function getResourceSize({
   posterGenerated,
   posterWidth,
   posterHeight,
-}: ResourceSizeParams) {
+}: ResourceSizeParams): ResourceSize {
   // Use poster image size, if poster is generated.
   if (posterGenerated && posterWidth && posterHeight) {
     return { width: posterWidth, height: posterHeight };
   }
   // If height / width is set, then use them.
   if (width || height) {
-    return { width, height };
+    return { width: width ?? 0, height: height ?? 0 };
   }
 
   // Return a default height and width.

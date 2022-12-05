@@ -26,10 +26,6 @@ import getCanvasBlob from './getCanvasBlob';
  * @return JPEG image blob.
  */
 function getImageFromVideo(video: HTMLVideoElement): Promise<Blob | null> {
-  if (!video) {
-    return Promise.resolve(null);
-  }
-
   const canvas = document.createElement('canvas');
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
