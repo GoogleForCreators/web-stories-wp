@@ -18,7 +18,10 @@
  */
 import { css } from 'styled-components';
 
-export const SCROLLBAR_WIDTH = 11;
+/**
+ * Internal dependencies
+ */
+import { SCROLLBAR_WIDTH } from '../constants';
 
 /*
  * CSS for custom gray scrollbars for Chromium, Safari, Edge, & Opera.
