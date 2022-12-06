@@ -45,7 +45,7 @@ function ElementLayerActions({ element }) {
   const removeMaskTitle = __('Unmask', 'web-stories');
 
   const isNested = Boolean(element.groupId);
-  const { isLocked } = element;
+  const { isLocked, isHidden } = element;
 
   const lockTitle = useMemo(
     () =>
@@ -58,6 +58,9 @@ function ElementLayerActions({ element }) {
         : __('Lock Layer', 'web-stories'),
     [isLocked, isNested]
   );
+  const visibilityTitle = isHidden
+    ? __('Show Layer', 'web-stories')
+    : __('Hide Layer', 'web-stories');
 
   const handleDeleteElement = useCallback(
     () => deleteElementById({ elementId: element.id }),
@@ -78,7 +81,17 @@ function ElementLayerActions({ element }) {
     [element.id, isLocked, updateElementById]
   );
 
+  const handleHideElement = useCallback(
+    () =>
+      updateElementById({
+        elementId: element.id,
+        properties: { isHidden: !isHidden },
+      }),
+    [element.id, isHidden, updateElementById]
+  );
+
   const LockIcon = isLocked ? Icons.LockClosed : Icons.LockOpen;
+  const VisibilityIcon = isHidden ? Icons.VisibilityOff : Icons.Visibility;
 
   return (
     <>
@@ -105,6 +118,9 @@ function ElementLayerActions({ element }) {
         handleClick={handleDuplicateElement}
       >
         <Icons.PagePlus />
+      </LayerAction>
+      <LayerAction label={visibilityTitle} handleClick={handleHideElement}>
+        <VisibilityIcon />
       </LayerAction>
       <LayerAction
         label={lockTitle}

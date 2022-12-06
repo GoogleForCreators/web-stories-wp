@@ -86,6 +86,7 @@ export interface Element extends ElementBox {
   basedOn?: string;
   layerName?: string;
   isLocked?: boolean;
+  isHidden?: boolean;
 }
 
 export interface DefaultBackgroundElement extends Element {
