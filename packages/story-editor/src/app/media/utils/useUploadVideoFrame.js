@@ -24,10 +24,7 @@ import {
   getFirstFrameOfVideo,
   getFileNameFromUrl,
   getFileBasename,
-  ResourceId,
-  blobToFile,
 } from '@googleforcreators/media';
-
 /**
  * Internal dependencies
  */
@@ -37,17 +34,7 @@ import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
 import getPosterName from './getPosterName';
 
-function useUploadVideoFrame({
-  updateMediaElement,
-}: {
-  updateMediaElement: ({
-    id,
-    data,
-  }: {
-    id: string | number;
-    data: Record<string, unknown>;
-  }) => void;
-}) {
+function useUploadVideoFrame({ updateMediaElement }) {
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -67,12 +54,12 @@ function useUploadVideoFrame({
   const uploadVideoPoster = useCallback(
     /**
      *
-     * @param id Video ID.
-     * @param fileName File name.
-     * @param posterFile File object.
-     * @return Poster information.
+     * @param {number} id Video ID.
+     * @param {string} fileName File name.
+     * @param {File} posterFile File object.
+     * @return {Promise<{posterHeight: *, posterWidth: *, poster: *, posterId: *}>} Poster information.
      */
-    async (id: ResourceId, fileName: string, posterFile?: File) => {
+    async (id, fileName, posterFile) => {
       // TODO: Make param mandatory; don't allow calling without.
       if (!posterFile) {
         return {};
@@ -86,11 +73,6 @@ function useUploadVideoFrame({
         mediaId: id,
         mediaSource: 'poster-generation',
       });
-
-      if (!resource) {
-        return {};
-      }
-
       const {
         id: posterId,
         src: poster,
@@ -99,7 +81,7 @@ function useUploadVideoFrame({
       } = resource;
 
       // If video ID is not set, skip relating media.
-      if (id && updateMedia) {
+      if (id) {
         await updateMedia(id, {
           posterId,
           storyId,
@@ -126,10 +108,12 @@ function useUploadVideoFrame({
    */
   const uploadVideoFrame = useCallback(
     /**
-     * @param id Video ID.
-     * @param src Video URL.
+     *
+     * @param {number} id Video ID.
+     * @param {string} src Video URL.
+     * @return {Promise<void>}
      */
-    async (id: ResourceId, src: string) => {
+    async (id, src) => {
       const trackTiming = getTimeTracker('load_video_poster');
       try {
         const originalFileName = getFileNameFromUrl(src);
@@ -138,11 +122,7 @@ function useUploadVideoFrame({
         );
         const obj = await getFirstFrameOfVideo(src);
         const { posterId, poster, posterWidth, posterHeight } =
-          await uploadVideoPoster(
-            id,
-            fileName,
-            obj ? blobToFile(obj, fileName, 'image/jpeg') : undefined
-          );
+          await uploadVideoPoster(id, fileName, obj);
 
         // Overwrite the original video dimensions. The poster reupload has more
         // accurate dimensions of the video that includes orientation changes.
@@ -153,17 +133,15 @@ function useUploadVideoFrame({
               height: posterHeight,
             }) ||
           null;
-        updateElementsByResourceId({
-          id,
-          properties: ({ resource }) => ({
-            resource: {
-              ...resource,
-              posterId,
-              poster,
-              ...newSize,
-            },
-          }),
+        const properties = ({ resource }) => ({
+          resource: {
+            ...resource,
+            posterId,
+            poster,
+            ...newSize,
+          },
         });
+        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: {
@@ -174,9 +152,7 @@ function useUploadVideoFrame({
         });
       } catch (err) {
         // TODO: Potentially display error message to user.
-        if (err instanceof Error) {
-          void trackError('video_poster_generation', err.message);
-        }
+        trackError('video_poster_generation', err.message);
       } finally {
         trackTiming();
       }
