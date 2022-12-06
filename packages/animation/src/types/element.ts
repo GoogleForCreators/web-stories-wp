@@ -23,7 +23,7 @@ export type ElementId = string;
 
 export interface Element extends DimensionableElement {
   id: ElementId;
-  isHidden: boolean;
+  isHidden?: boolean;
 }
 
 export interface ScaledElement extends Element {
