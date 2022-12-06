@@ -84,7 +84,8 @@ function reducePage({ elements, ...rest }: PageV6): PageV7 {
 function updateElement(element: UnionElementV6): UnionElementV7 {
   // If it's a text element or already has flip set, return as is.
   if ('content' in element || 'flip' in element) {
-    return element;
+    // Casting since if flip was set, it was already UnionElementV7.
+    return element as UnionElementV7;
   }
   return {
     ...element,

@@ -181,8 +181,11 @@ function SelectionCanvas({ children }) {
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const lassoP = new SAT.Box(new SAT.Vector(lx, ly), lw, lh).toPolygon();
       const newSelectedElementIds = currentPageElements
-        // Skip background and locked elements
-        .filter(({ isBackground, isLocked }) => !isBackground && !isLocked)
+        // Skip background, hidden and locked elements
+        .filter(
+          ({ isBackground, isLocked, isHidden }) =>
+            !isBackground && !isLocked && !isHidden
+        )
         .map(({ id, ...rest }) => {
           const elementP = getElementPolygon({ id, ...rest });
           return SAT.testPolygonPolygon(lassoP, elementP) ? id : null;

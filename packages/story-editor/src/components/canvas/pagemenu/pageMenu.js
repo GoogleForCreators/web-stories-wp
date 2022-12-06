@@ -44,7 +44,7 @@ function PageMenu() {
     numberOfPages,
     deleteCurrentPage,
     addPage,
-    hasAnimations,
+    hasVisibleAnimations,
   } = useStory(
     ({
       state: { currentPage, pages },
@@ -55,7 +55,13 @@ function PageMenu() {
         numberOfPages: pages.length,
         deleteCurrentPage,
         addPage,
-        hasAnimations: currentPage?.animations?.length > 0,
+        hasVisibleAnimations: currentPage?.animations?.some((animation) =>
+          animation.targets.some(
+            (id) =>
+              !currentPage.elements.find((element) => element.id === id)
+                ?.isHidden
+          )
+        ),
       };
     }
   );
@@ -95,7 +101,7 @@ function PageMenu() {
 
   return (
     <Wrapper role="group" aria-label={__('Page actions', 'web-stories')}>
-      {hasAnimations && <AnimationToggle />}
+      {hasVisibleAnimations && <AnimationToggle />}
       <PageMenuButton
         ref={addPageButtonRef}
         title={__('New Page', 'web-stories')}

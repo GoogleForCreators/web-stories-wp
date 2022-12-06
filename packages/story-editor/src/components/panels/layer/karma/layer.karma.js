@@ -204,6 +204,47 @@ describe('Layer Panel', () => {
     ).toBe(2);
   });
 
+  it('should be able to hide and show elements with hide/show action', async () => {
+    await fixture.events.click(fixture.editor.sidebar.insertTab);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    // Select background for being able to insert another text.
+    const bgLayer = layerPanel.getLayerByInnerText('Background');
+    await fixture.events.click(bgLayer);
+    await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    expect(layerPanel.layers.length).toBe(3);
+    const elementALayer = layerPanel.getLayerByInnerText('Title 1');
+    const elementBLayer = layerPanel.getLayerByInnerText('Title 2');
+
+    let visibleCanvasElements = fixture.querySelectorAll(
+      `[data-testid="DisplayLayer"] [data-element-id]`
+    );
+    expect(visibleCanvasElements.length).toBe(3);
+
+    // Hover layer, hide it, and hover somewhere else
+    await fixture.events.hover(elementALayer);
+    const hideButton = within(elementALayer).getByLabelText(/Hide/);
+    await fixture.events.click(hideButton);
+    await fixture.events.hover(elementBLayer);
+
+    visibleCanvasElements = fixture.querySelectorAll(
+      `[data-testid="DisplayLayer"] [data-element-id]`
+    );
+    expect(visibleCanvasElements.length).toBe(2);
+
+    // Hover layer, disable lock, and hover somewhere else
+    await fixture.events.hover(elementALayer);
+    const showButton = within(elementALayer).getByLabelText(/Show/);
+    await fixture.events.click(showButton);
+    await fixture.events.hover(elementBLayer);
+    visibleCanvasElements = fixture.querySelectorAll(
+      `[data-testid="DisplayLayer"] [data-element-id]`
+    );
+    expect(visibleCanvasElements.length).toBe(3);
+  });
+
   it('should be able to lock and unlock elements with lock action', async () => {
     await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
