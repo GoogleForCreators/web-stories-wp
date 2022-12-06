@@ -28,7 +28,7 @@ import { preloadImage } from '@googleforcreators/media';
  * @return Hex color.
  */
 async function extractColorFromImage(img: HTMLImageElement): Promise<string> {
-  const ColorThief = await import(
+  const { default: ColorThief } = await import(
     /* webpackChunkName: "chunk-colorthief" */ 'colorthief'
   );
 
