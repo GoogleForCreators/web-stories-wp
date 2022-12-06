@@ -544,7 +544,7 @@ function useProcessMedia({
           onUploadSuccess,
           onUploadProgress,
           additionalData: {
-            original_id: resourceId,
+            originalId: resourceId,
           },
           originalResourceId: resourceId,
         });
@@ -633,7 +633,7 @@ function useProcessMedia({
             onUploadError,
             cropVideo: true,
             additionalData: {
-              original_id: resourceId,
+              originalId: resourceId,
               cropOriginId: resourceId,
               cropParams,
               mediaSource: isOptimized ? 'video-optimization' : 'editor',

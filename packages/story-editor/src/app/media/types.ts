@@ -146,6 +146,16 @@ export interface UpdateMediaProps {
   mutedId?: ResourceId;
 }
 
+interface UploadMediaAdditionalData {
+  originalId?: ResourceId;
+  isMuted?: boolean;
+  isGif?: boolean;
+  trimData?: TrimData;
+  mediaSource?: string;
+  cropOriginId?: ResourceId;
+  cropParams?: CropParams;
+}
+
 export interface UploadMediaArgs {
   onUploadStart?: (args: { resource: Resource }) => unknown;
   onUploadSuccess?: (args: { id: number; resource: Resource }) => unknown;
@@ -153,7 +163,7 @@ export interface UploadMediaArgs {
   onUploadError?: () => unknown;
   cropVideo?: boolean;
   muteVideo?: boolean;
-  additionalData?: Record<string, unknown>;
+  additionalData?: UploadMediaAdditionalData;
   originalResourceId?: ResourceId;
   resource?: Partial<Resource> | Partial<VideoResource>;
   storyId?: number | null;
