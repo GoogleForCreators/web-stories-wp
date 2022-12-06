@@ -48,7 +48,13 @@ function OutputElement({ element, flags }) {
     backgroundColor,
     backgroundTextMode,
     overlay,
+    isHidden,
   } = element;
+
+  if (isHidden) {
+    return null;
+  }
+
   const { Output, isMaskable } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
