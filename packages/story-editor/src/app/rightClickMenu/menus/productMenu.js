@@ -32,7 +32,7 @@ import {
 } from '../constants';
 import { useLayerActions } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
-import { LayerLock, LayerName, LayerUngroup } from '../items';
+import { LayerHide, LayerLock, LayerName, LayerUngroup } from '../items';
 import useRightClickMenu from '../useRightClickMenu';
 import {
   DEFAULT_DISPLACEMENT,
@@ -137,6 +137,7 @@ function ProductMenu({ parentMenuRef }) {
 
       <LayerName />
       <LayerLock />
+      <LayerHide />
       <LayerUngroup />
     </>
   );

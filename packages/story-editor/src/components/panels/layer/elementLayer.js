@@ -91,6 +91,7 @@ function ElementLayer({ element }) {
     [currentPageBackgroundColor, element, getProxiedUrl]
   );
 
+  const hasLayerHiddenIcon = element.isHidden;
   const hasLayerLockIcon = Boolean(isBackground || element.isLocked);
   const LayerLockIcon = useCallback(
     () =>
@@ -101,6 +102,7 @@ function ElementLayer({ element }) {
       ),
     [isBackground, isNested]
   );
+  const LayerVisibilityIcon = () => element.isHidden && <Icons.VisibilityOff />;
 
   return (
     <Layer
@@ -116,7 +118,9 @@ function ElementLayer({ element }) {
       isSelected={isSelected}
       LayerIcon={CompoundLayerIcon}
       hasLayerLockIcon={hasLayerLockIcon}
+      hasLayerHiddenIcon={hasLayerHiddenIcon}
       LayerLockIcon={LayerLockIcon}
+      LayerVisibilityIcon={LayerVisibilityIcon}
       hasActions={!isBackground}
       actions={<ElementLayerActions element={element} />}
       isNested={isNested}
