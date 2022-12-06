@@ -71,7 +71,7 @@ async function getResourceFromUrl(resourceLike: ResourceLike) {
     length === null ||
     lengthFormatted === null;
 
-  const additionalData: Record<string, unknown> = {};
+  const additionalData: Partial<VideoResource> = {};
 
   // Only need to fetch metadata if not already provided.
 
