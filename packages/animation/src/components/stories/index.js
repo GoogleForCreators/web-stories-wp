@@ -22,16 +22,16 @@ import { useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '..';
-import { ANIMATION_TYPES } from '../../constants';
+import * as StoryAnimation from '..';
 import { PlayButton } from '../../storybookUtils';
+import { AnimationType } from '../../types';
 
 export default {
   title: 'Dashboard/Components/StoryAnimation',
   component: StoryAnimation,
 };
 
-function ColorSquare({ color }) {
+function ColorSquare({ color, ...rest }) {
   return (
     <div
       style={{
@@ -42,6 +42,7 @@ function ColorSquare({ color }) {
         left: 0,
         backgroundColor: color,
       }}
+      {...rest}
     />
   );
 }
@@ -68,13 +69,13 @@ SquareWrapper.propTypes = {
 };
 
 const animations = [
-  { id: '1', targets: ['some-id'], type: ANIMATION_TYPES.FADE },
-  { id: '2', targets: ['some-id'], type: ANIMATION_TYPES.FLIP },
-  { id: '3', targets: ['some-id'], type: ANIMATION_TYPES.SPIN },
+  { id: '1', targets: ['some-id'], type: AnimationType.Fade },
+  { id: '2', targets: ['some-id'], type: AnimationType.Flip },
+  { id: '3', targets: ['some-id'], type: AnimationType.Spin },
   {
     id: '4',
     targets: ['some-id'],
-    type: ANIMATION_TYPES.FLOAT_ON,
+    type: AnimationType.FloatOn,
     duration: 1000,
   },
 ];
@@ -82,7 +83,7 @@ const animations = [
 export function _default() {
   const [state, setState] = useState(0);
   return (
-    <StoryAnimation.Provider
+    <StoryAnimation.AnimationProvider
       animations={animations}
       onWAAPIFinish={() => {
         setState((v) => v + 1);
@@ -91,10 +92,10 @@ export function _default() {
       <PlayButton />
       <SquareWrapper>
         <StoryAnimation.WAAPIWrapper target="some-id">
-          <ColorSquare color={state % 2 ? 'tomato' : 'green'} />
+          <ColorSquare id="some-id" color={state % 2 ? 'tomato' : 'green'} />
         </StoryAnimation.WAAPIWrapper>
       </SquareWrapper>
-    </StoryAnimation.Provider>
+    </StoryAnimation.AnimationProvider>
   );
 }
 
@@ -106,7 +107,7 @@ export function AMPStory() {
         {
           id: 'ir',
           targets: ['el1'],
-          type: ANIMATION_TYPES.BOUNCE,
+          type: AnimationType.Bounce,
           duration: 1000,
         },
       ],
@@ -117,7 +118,7 @@ export function AMPStory() {
         {
           id: 'a5',
           targets: ['el2'],
-          type: ANIMATION_TYPES.BOUNCE,
+          type: AnimationType.Bounce,
           duration: 2000,
         },
       ],
@@ -125,23 +126,23 @@ export function AMPStory() {
     {
       id: 'third-page',
       animations: [
-        { id: 'a1', targets: ['el3'], type: ANIMATION_TYPES.BOUNCE },
+        { id: 'a1', targets: ['el3'], type: AnimationType.Bounce },
         {
           id: 'a2',
           targets: ['el4'],
-          type: ANIMATION_TYPES.BOUNCE,
+          type: AnimationType.Bounce,
           delay: 100,
         },
         {
           id: 'a3',
           targets: ['el5'],
-          type: ANIMATION_TYPES.BOUNCE,
+          type: AnimationType.Bounce,
           delay: 300,
         },
         {
           id: 'a4',
           targets: ['el6'],
-          type: ANIMATION_TYPES.BOUNCE,
+          type: AnimationType.Bounce,
           delay: 500,
         },
       ],
@@ -163,8 +164,15 @@ export function AMPStory() {
         publisher-logo-src="https://example.com/logo/1x1.png"
         poster-portrait-src="https://example.com/my-story/poster/3x4.jpg"
       >
+        <amp-story-page id={'p0'}>
+          <amp-img
+            src="https://picsum.photos/id/58/300"
+            width="300"
+            height="300"
+          />
+        </amp-story-page>
         <amp-story-page id={pages[0].id}>
-          <StoryAnimation.Provider animations={pages[0].animations}>
+          <StoryAnimation.AnimationProvider animations={pages[0].animations}>
             <StoryAnimation.AMPKeyframes />
             <StoryAnimation.AMPAnimations />
 
@@ -173,15 +181,15 @@ export function AMPStory() {
               style={{ width: '300px', height: '300px' }}
             >
               <amp-img
-                src="https://i.picsum.photos/id/1069/300/300.jpg"
+                src="https://picsum.photos/id/237/300"
                 width="300"
                 height="300"
               />
             </StoryAnimation.AMPWrapper>
-          </StoryAnimation.Provider>
+          </StoryAnimation.AnimationProvider>
         </amp-story-page>
         <amp-story-page id={pages[1].id}>
-          <StoryAnimation.Provider animations={pages[1].animations}>
+          <StoryAnimation.AnimationProvider animations={pages[1].animations}>
             <StoryAnimation.AMPKeyframes />
             <StoryAnimation.AMPAnimations />
 
@@ -199,16 +207,16 @@ export function AMPStory() {
                 style={{ width: '300px', height: '300px' }}
               >
                 <amp-img
-                  src="https://i.picsum.photos/id/96/300/300.jpg"
+                  src="https://picsum.photos/id/17/300"
                   width="300"
                   height="300"
                 />
               </StoryAnimation.AMPWrapper>
             </div>
-          </StoryAnimation.Provider>
+          </StoryAnimation.AnimationProvider>
         </amp-story-page>
         <amp-story-page id={pages[2].id}>
-          <StoryAnimation.Provider animations={pages[2].animations}>
+          <StoryAnimation.AnimationProvider animations={pages[2].animations}>
             <StoryAnimation.AMPKeyframes />
             <StoryAnimation.AMPAnimations />
 
@@ -233,7 +241,7 @@ export function AMPStory() {
                 </StoryAnimation.AMPWrapper>
               ))}
             </amp-story-grid-layer>
-          </StoryAnimation.Provider>
+          </StoryAnimation.AnimationProvider>
         </amp-story-page>
       </amp-story>
     </div>

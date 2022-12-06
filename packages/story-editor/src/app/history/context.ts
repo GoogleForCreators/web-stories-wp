@@ -18,21 +18,19 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
+import type { Story } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import type { HistoryState } from '../../types/historyProvider';
+import type { HistoryProviderState } from '../../types';
 
-export default createContext<HistoryState>({
+export default createContext<HistoryProviderState>({
   state: {
     currentEntry: {
       selection: [],
       capabilities: {},
-      story: {
-        version: 0,
-        pages: [],
-      },
+      story: {} as Story,
       pages: [],
       current: null,
     },

@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@googleforcreators/units';
-import { StoryAnimation } from '@googleforcreators/animation';
+import { AMPWrapper } from '@googleforcreators/animation';
 import {
   BACKGROUND_TEXT_MODE,
   getDefinitionForType,
@@ -84,7 +84,7 @@ function OutputElement({ element, flags }) {
         opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
       }}
     >
-      <StoryAnimation.AMPWrapper target={id}>
+      <AMPWrapper target={id}>
         <WithMask
           className={!isMaskable ? undefined : 'mask'}
           element={element}
@@ -126,7 +126,7 @@ function OutputElement({ element, flags }) {
             />
           )}
         </WithMask>
-      </StoryAnimation.AMPWrapper>
+      </AMPWrapper>
     </div>
   );
 }

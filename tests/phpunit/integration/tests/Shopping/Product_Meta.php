@@ -59,6 +59,12 @@ class Product_Meta extends DependencyInjectedTestCase {
 		);
 		update_post_meta( $post->ID, $this->instance::PRODUCTS_POST_META_KEY, [ 'foo' => 'bar' ] );
 		$this->instance->on_plugin_uninstall();
-		$this->assertSameSets( [], get_post_meta( $post->ID, $this->instance::PRODUCTS_POST_META_KEY, true ) );
+
+		/**
+		 * @var array<mixed> $actual
+		 */
+		$actual = get_post_meta( $post->ID, $this->instance::PRODUCTS_POST_META_KEY, true );
+
+		$this->assertSameSets( [], $actual );
 	}
 }

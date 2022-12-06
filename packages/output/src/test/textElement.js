@@ -19,7 +19,7 @@
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { StoryAnimation } from '@googleforcreators/animation';
+import { AnimationProvider } from '@googleforcreators/animation';
 import {
   registerElementType,
   BACKGROUND_TEXT_MODE,
@@ -33,11 +33,7 @@ import OutputElement from '../element';
 import { DEFAULT_TEXT } from './_utils/constants';
 
 function WrapAnimation({ children }) {
-  return (
-    <StoryAnimation.Provider animations={[]}>
-      {children}
-    </StoryAnimation.Provider>
-  );
+  return <AnimationProvider animations={[]}>{children}</AnimationProvider>;
 }
 
 WrapAnimation.propTypes = {

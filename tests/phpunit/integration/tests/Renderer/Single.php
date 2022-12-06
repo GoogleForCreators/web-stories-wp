@@ -20,7 +20,9 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Class Single
@@ -42,16 +44,16 @@ class Single extends DependencyInjectedTestCase {
 	private \Google\Web_Stories\Renderer\Single $instance;
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -59,7 +61,10 @@ class Single extends DependencyInjectedTestCase {
 			]
 		);
 
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -67,6 +72,7 @@ class Single extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
@@ -81,9 +87,10 @@ class Single extends DependencyInjectedTestCase {
 	 */
 	public function test_filter_template_include(): void {
 		$this->set_permalink_structure( '/%postname%/' );
-		$this->go_to( get_permalink( self::$story_id ) );
+		$this->go_to( (string) get_permalink( self::$story_id ) );
 
 		$template_include = $this->instance->filter_template_include( 'current' );
+		$this->assertIsString( $template_include );
 		$this->assertStringContainsString( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
 	}
 
@@ -92,7 +99,7 @@ class Single extends DependencyInjectedTestCase {
 	 */
 	public function test_filter_template_include_with_password(): void {
 		$this->set_permalink_structure( '/%postname%/' );
-		$this->go_to( get_permalink( self::$story_id ) );
+		$this->go_to( (string) get_permalink( self::$story_id ) );
 
 		add_filter( 'post_password_required', '__return_true' );
 
@@ -100,6 +107,7 @@ class Single extends DependencyInjectedTestCase {
 
 		remove_filter( 'post_password_required', '__return_true' );
 
+		$this->assertIsString( $template_include );
 		$this->assertStringContainsString( 'current', $template_include );
 	}
 
@@ -108,11 +116,11 @@ class Single extends DependencyInjectedTestCase {
 	 */
 	public function test_show_admin_bar(): void {
 		$this->set_permalink_structure( '/%postname%/' );
-		$this->go_to( get_permalink( self::$story_id ) );
+		$this->go_to( (string) get_permalink( self::$story_id ) );
 
 		$show_admin_bar = $this->instance->show_admin_bar( 'current' );
 
 		$this->assertFalse( $show_admin_bar );
-		$this->assertTrue( is_singular( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
+		$this->assertTrue( is_singular( Story_Post_Type::POST_TYPE_SLUG ) );
 	}
 }

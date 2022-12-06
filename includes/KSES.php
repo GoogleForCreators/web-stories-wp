@@ -165,6 +165,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @phpstan-param PostData $data
 	 * @phpstan-param PostData $unsanitized_postarr
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($data is array<T> ? array<T> : mixed)
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
 		if ( ! \is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
@@ -202,6 +206,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @param string[]|mixed $attr Array of allowed CSS attributes.
 	 * @return string[]|mixed Filtered list of CSS attributes.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($attr is array<T> ? array<T> : mixed)
 	 */
 	public function filter_safe_style_css( $attr ) {
 		if ( ! \is_array( $attr ) ) {
@@ -555,6 +563,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @param array<string, array<string,bool>>|mixed $allowed_tags Allowed tags.
 	 * @return array<string, array<string,bool>>|mixed Allowed tags.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($allowed_tags is array<T> ? array<T> : mixed)
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! \is_array( $allowed_tags ) ) {

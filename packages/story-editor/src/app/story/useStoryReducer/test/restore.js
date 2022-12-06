@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
@@ -34,7 +34,7 @@ describe('restore', () => {
     const result = restore({ pages });
 
     expect(result).toStrictEqual({
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
       capabilities: {},
       copiedElementState: {},
       pages,
@@ -101,13 +101,13 @@ describe('restore', () => {
     });
 
     expect(result).toStrictEqual({
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
       capabilities: {},
       copiedElementState: {},
       pages: [],
       selection: [],
       current: null,
-      story: {},
+      story: { fonts: {} },
     });
   });
 
@@ -119,13 +119,13 @@ describe('restore', () => {
     const result = restore({});
 
     expect(result).toStrictEqual({
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
       capabilities: {},
       copiedElementState: {},
       pages: [],
       selection: [],
       current: null,
-      story: {},
+      story: { fonts: {} },
     });
   });
 
@@ -153,7 +153,7 @@ describe('restore', () => {
     const result = restore({ pages });
 
     expect(result).toStrictEqual({
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
       capabilities: {},
       copiedElementState: {},
       pages,
@@ -178,7 +178,7 @@ describe('restore', () => {
     const result = restore(storyWithNoCurrentPage);
 
     expect(result).toStrictEqual({
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
       capabilities: {},
       copiedElementState: {},
       ...storyWithNoCurrentPage,
@@ -202,7 +202,7 @@ describe('restore', () => {
 
     // Should set first story as current
     expect(result).toStrictEqual({
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
       capabilities: {},
       copiedElementState: {},
       ...storyWithNoCurrentPage,

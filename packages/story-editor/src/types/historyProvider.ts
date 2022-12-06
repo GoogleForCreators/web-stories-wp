@@ -23,13 +23,14 @@ import type { Page, Story } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import type { ActionType } from '../app/history/reducer';
+import type { Capabilities } from './configProvider';
 
 export interface HistoryEntry {
   story: Story;
   selection: string[];
   current: string | null;
   pages: Page[];
-  capabilities: Record<string, boolean>;
+  capabilities: Capabilities;
 }
 
 interface SetCurrentStateProps {
@@ -51,7 +52,7 @@ export type ReducerProps =
   | ClearHistoryProps
   | ReplayProps;
 
-export interface ReducerState {
+export interface HistoryReducerState {
   entries: HistoryEntry[];
   offset: number;
   requestedState: null | HistoryEntry;
@@ -65,7 +66,7 @@ export interface Actions {
   undo: (offset: number) => boolean;
   redo: (offset: number) => boolean;
 }
-export interface State {
+export interface HistoryState {
   currentEntry: HistoryEntry;
   hasNewChanges: boolean;
   requestedState: HistoryEntry | null;
@@ -73,7 +74,7 @@ export interface State {
   canRedo: boolean;
   versionNumber: number;
 }
-export interface HistoryState {
-  state: State;
+export interface HistoryProviderState {
+  state: HistoryState;
   actions: Actions;
 }

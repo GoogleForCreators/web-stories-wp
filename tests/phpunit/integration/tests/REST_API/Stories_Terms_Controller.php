@@ -18,7 +18,7 @@ use WP_REST_Server;
 class Stories_Terms_Controller extends RestTestCase {
 	protected static Taxonomy_Base $taxonomy_object;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass(): void {
 		self::$taxonomy_object = new DummyTaxonomy();
 		self::$taxonomy_object->register_taxonomy();
 	}
@@ -31,7 +31,7 @@ class Stories_Terms_Controller extends RestTestCase {
 	 * @covers ::prepare_links
 	 */
 	public function test_prepare_links(): void {
-		$slug     = $this->get_private_property( self::$taxonomy_object, 'taxonomy_slug' );
+		$slug     = self::$taxonomy_object->get_taxonomy_slug();
 		$term_id  = self::factory()->term->create( [ 'taxonomy' => $slug ] );
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/' . $slug . '/' . $term_id );
 		$response = rest_get_server()->dispatch( $request );

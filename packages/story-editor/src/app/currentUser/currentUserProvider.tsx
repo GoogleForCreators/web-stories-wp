@@ -23,16 +23,11 @@ import type { PropsWithChildren } from 'react';
  * Internal dependencies
  */
 import { useAPI } from '../api';
-import type { User } from '../../types/configProvider';
-import type {
-  CurrentUserState,
-  UpdateCurrentUserProps,
-} from '../../types/currentUserProvider';
+import type { User } from '../../types';
+import type { CurrentUserState } from '../../types/currentUserProvider';
 import Context from './context';
 
-function CurrentUserProvider({
-  children,
-}: PropsWithChildren<Record<string, never>>) {
+function CurrentUserProvider({ children }: PropsWithChildren<unknown>) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const {
     actions: { getCurrentUser, updateCurrentUser: _updateCurrentUser },
@@ -55,7 +50,7 @@ function CurrentUserProvider({
   }, [currentUser, getCurrentUser]);
 
   const updateCurrentUser = useCallback(
-    (data: UpdateCurrentUserProps) =>
+    (data: Partial<User>) =>
       _updateCurrentUser ? _updateCurrentUser(data).then(setCurrentUser) : null,
     [_updateCurrentUser]
   );

@@ -10,5 +10,14 @@
     { "path": "../react" },
     { "path": "../tracking" }
   ],
-  "include": ["src/types.ts", "src/components/keyboard/*", "src/types/*"]
+  "include": [
+    "src/components/keyboard/*",
+    "src/components/snackbar/constants.ts",
+    "src/contexts/snackbar/*",
+    "src/types/*",
+    "src/types.ts",
+    "src/utils/*.ts",
+    "src/utils/constants.ts",
+    "src/utils/localStore.ts"
+  ]
 }

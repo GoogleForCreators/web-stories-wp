@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Story } from '@googleforcreators/elements';
+import type { StoryData } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -128,7 +128,10 @@ export const DATA_VERSION = Math.max.apply(
   Object.keys(MIGRATIONS).map(Number)
 );
 
-export function migrate(storyData: Story, version: number): Story {
+export function migrate(
+  storyData: Partial<StoryData>,
+  version: number
+): Partial<StoryData> {
   let result = storyData;
   for (let v = version; v < DATA_VERSION; v++) {
     const migrations = MIGRATIONS[v + 1];
