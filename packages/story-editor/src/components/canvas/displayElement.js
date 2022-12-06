@@ -163,15 +163,10 @@ function DisplayElement({
       }
     : null;
 
-  const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.resource.type) || {};
 
   const wrapperRef = useRef(null);
-
-  // The element content will use box without border, the wrapper will use box with border.
-  const box = getBox(element);
-  const boxWithBorder = getBoxWithBorder(element);
 
   const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   useTransformHandler(id, (transform) => {
@@ -224,6 +219,16 @@ function DisplayElement({
     targetRef: bgOverlayRef,
     resetOnNullTransform: false,
   });
+
+  if (element.isHidden) {
+    return null;
+  }
+
+  const { Display } = getDefinitionForType(type);
+
+  // The element content will use box without border, the wrapper will use box with border.
+  const box = getBox(element);
+  const boxWithBorder = getBoxWithBorder(element);
 
   const responsiveBorder = getResponsiveBorder(
     border,
