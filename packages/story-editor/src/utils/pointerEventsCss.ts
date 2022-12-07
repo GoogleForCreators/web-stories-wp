@@ -19,17 +19,15 @@
  */
 import { css } from 'styled-components';
 
-interface pointerEventsCssProps {
-  pointerEvents?: string;
+type PointerEventsValue = 'none' | 'auto' | 'initial';
+
+interface WrapperProps {
+  pointerEvents?: PointerEventsValue;
 }
 
-const pointerEventsCss = css`
-  ${({ pointerEvents }: pointerEventsCssProps) => {
-    if (pointerEvents && typeof pointerEvents === 'string') {
-      return `pointer-events: ${pointerEvents};`;
-    }
-    return '';
-  }}
+const pointerEventsCss = css<WrapperProps>`
+  ${({ pointerEvents }) =>
+    pointerEvents ? `pointer-events: ${pointerEvents};` : ''}
 `;
 
 export default pointerEventsCss;
