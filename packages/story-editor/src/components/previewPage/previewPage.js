@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import StoryPropTypes, { PageSizePropType } from '../../types';
+import { StoryPropTypes, PageSizePropType } from '../../propTypes';
 import PagePreviewElements from './previewPageElements';
 
 /*
