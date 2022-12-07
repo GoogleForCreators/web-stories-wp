@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../types';
+import { StoryPropTypes } from '../../../propTypes';
 import PagePreview from '../../footer/pagepreview';
 import { THUMBNAIL_DIMENSIONS } from '../../thumbnail';
 

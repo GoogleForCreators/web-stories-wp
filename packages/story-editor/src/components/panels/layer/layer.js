@@ -36,6 +36,9 @@ import {
   LayerText,
   IconWrapper,
   LayerContentContainer,
+  HiddenIconWrapper,
+  LayerIconWrapper,
+  FadeOutWrapper,
 } from './layerComponents.js';
 
 function Layer({
@@ -46,7 +49,9 @@ function Layer({
   isSelected,
   LayerIcon,
   hasLayerLockIcon,
+  hasLayerHiddenIcon,
   LayerLockIcon,
+  LayerVisibilityIcon,
   actions,
   hasActions = true,
   isNested = false,
@@ -87,15 +92,26 @@ function Layer({
             isSelected={isSelected}
             isNested={isNested}
           >
-            <LayerIcon />
+            <LayerIconWrapper isHidden={hasLayerHiddenIcon}>
+              <LayerIcon />
+            </LayerIconWrapper>
             <LayerDescription>
               <LayerContentContainer>
-                <LayerText>{layerName}</LayerText>
+                <LayerText isHidden={hasLayerHiddenIcon}>{layerName}</LayerText>
               </LayerContentContainer>
-              {hasLayerLockIcon && (
-                <IconWrapper>
-                  <LayerLockIcon />
-                </IconWrapper>
+              {(hasLayerHiddenIcon || hasLayerLockIcon) && (
+                <FadeOutWrapper>
+                  {hasLayerHiddenIcon && (
+                    <HiddenIconWrapper>
+                      {hasLayerHiddenIcon && <LayerVisibilityIcon />}
+                    </HiddenIconWrapper>
+                  )}
+                  {(hasLayerHiddenIcon || hasLayerLockIcon) && (
+                    <IconWrapper>
+                      {hasLayerLockIcon && <LayerLockIcon />}
+                    </IconWrapper>
+                  )}
+                </FadeOutWrapper>
               )}
             </LayerDescription>
           </LayerButton>
@@ -113,7 +129,9 @@ Layer.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isSelected: PropTypes.bool.isRequired,
   LayerIcon: PropTypes.elementType.isRequired,
-  hasLayerLockIcon: PropTypes.bool.isRequired,
+  LayerVisibilityIcon: PropTypes.elementType.isRequired,
+  hasLayerLockIcon: PropTypes.bool,
+  hasLayerHiddenIcon: PropTypes.bool,
   LayerLockIcon: PropTypes.elementType.isRequired,
   actions: PropTypes.object.isRequired,
   hasActions: PropTypes.bool,

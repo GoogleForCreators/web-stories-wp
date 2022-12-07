@@ -26,7 +26,7 @@ import type { Options } from 'html-to-image/lib/types';
 import storyPageToNode from './storyPageToNode';
 
 /**
- * @typedef {import('../../../types').Page} Page
+ * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
 /**

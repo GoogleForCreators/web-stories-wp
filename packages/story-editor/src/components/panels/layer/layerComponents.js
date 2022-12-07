@@ -184,25 +184,46 @@ export const LayerText = styled(Text).attrs({
   text-overflow: ' ';
   overflow: hidden;
   max-width: 100%;
+  ${({ isHidden }) =>
+    isHidden &&
+    css`
+      opacity: 0.3;
+    `};
+`;
+
+export const LayerIconWrapper = styled.div`
+  ${({ isHidden }) =>
+    isHidden &&
+    css`
+      opacity: 0.3;
+    `};
+`;
+
+export const FadeOutWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  right: 0;
+  aspect-ratio: 1;
+  ${fadeOutCss}
 `;
 
 export const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  position: absolute;
-  right: 0;
   width: 32px;
   aspect-ratio: 1;
-
-  ${fadeOutCss}
-
   svg {
     position: relative;
     display: block;
     width: 100%;
     color: ${({ theme }) => theme.colors.fg.secondary};
   }
+`;
+export const HiddenIconWrapper = styled(IconWrapper)`
+  margin-right: -6px;
 `;
 
 export const LayerContentContainer = styled.div`
