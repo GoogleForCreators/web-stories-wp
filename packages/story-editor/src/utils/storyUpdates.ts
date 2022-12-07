@@ -20,18 +20,13 @@
 /**
  * Internal dependencies
  */
+import type { ReducerState, UpdateStoryProps } from '../types';
 import cleanForSlug from './cleanForSlug';
-
-interface updateStoryProps {
-  properties: {
-    slug: string;
-  };
-}
 
 interface updateSlugProps {
   currentSlug: string;
   currentTitle: string;
-  updateStory: (props: updateStoryProps) => void;
+  updateStory: (props: UpdateStoryProps) => ReducerState;
 }
 
 /**
