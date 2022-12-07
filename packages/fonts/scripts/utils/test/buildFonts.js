@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __setMockFiles, readFileSync } from 'fs';
-import got from 'got';
 
 /**
  * Internal dependencies
@@ -28,7 +27,6 @@ import buildFonts from '../buildFonts';
 import getFontMetrics from '../getFontMetrics';
 
 jest.mock('fs');
-jest.mock('got');
 jest.mock('../getFontMetrics.js');
 
 const ABEZEE_FONT_METRICS = {
@@ -64,7 +62,7 @@ const ABEZEE_FONT_AFTER = {
 
 describe('buildFonts', () => {
   const MOCK_FILE_INFO = {
-    '/assets/src/fonts/fonts.json': '',
+    '/assets/src/fonts/fonts.json': '{}',
   };
 
   beforeEach(() => {
@@ -72,23 +70,25 @@ describe('buildFonts', () => {
   });
 
   it('should combine system fonts with pre-existing list of Google Fonts', async () => {
-    got.mockImplementationOnce(() => {
+    global.fetch.mockImplementationOnce(() => {
       return {
-        body: JSON.stringify({
-          items: [
-            {
-              family: 'ABeeZee',
-              variants: ['regular', 'italic'],
-              category: 'sans-serif',
-              files: {
-                regular:
-                  'http://fonts.gstatic.com/s/abeezee/v13/esDR31xSG-6AGleN6tKukbcHCpE.ttf',
-                italic:
-                  'http://fonts.gstatic.com/s/abeezee/v13/esDT31xSG-6AGleN2tCklZUCGpG-GQ.ttf',
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            items: [
+              {
+                family: 'ABeeZee',
+                variants: ['regular', 'italic'],
+                category: 'sans-serif',
+                files: {
+                  regular:
+                    'http://fonts.gstatic.com/s/abeezee/v13/esDR31xSG-6AGleN6tKukbcHCpE.ttf',
+                  italic:
+                    'http://fonts.gstatic.com/s/abeezee/v13/esDT31xSG-6AGleN2tCklZUCGpG-GQ.ttf',
+                },
               },
-            },
-          ],
-        }),
+            ],
+          }),
       };
     });
 
@@ -107,11 +107,11 @@ describe('buildFonts', () => {
   });
 
   it('should bail on empty response', async () => {
-    got.mockImplementationOnce(() => ({ body: '' }));
+    global.fetch.mockImplementationOnce(() => ({ body: '' }));
 
     await buildFonts('/assets/src/fonts/fonts.json');
 
     const contentAfter = readFileSync('/assets/src/fonts/fonts.json');
-    expect(contentAfter).toBe('');
+    expect(contentAfter).toBe('{}');
   });
 });

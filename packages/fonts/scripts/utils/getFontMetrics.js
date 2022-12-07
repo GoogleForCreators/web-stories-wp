@@ -21,7 +21,6 @@ import { unlinkSync, writeFileSync } from 'fs';
 import Crypto from 'crypto';
 import { tmpdir } from 'os';
 import Path from 'path';
-import got from 'got';
 import { loadSync } from 'opentype.js';
 
 /**
@@ -62,10 +61,10 @@ function getTmpFileName() {
  * @return {Promise<FontMetrics>} Font metrics.
  */
 async function getFontMetrics(fontFileURL) {
-  const response = await got(fontFileURL);
+  const response = await fetch(fontFileURL);
 
   const tempFile = getTmpFileName();
-  writeFileSync(tempFile, response.rawBody);
+  writeFileSync(tempFile, Buffer.from(await response.arrayBuffer()));
   const fontInfo = loadSync(tempFile);
   unlinkSync(tempFile);
 
