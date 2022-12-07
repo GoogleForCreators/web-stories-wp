@@ -21,7 +21,7 @@ import { shallowEqual } from '@googleforcreators/react';
 import { createPage } from '@googleforcreators/elements';
 
 /**
- * @typedef {import('../../../types').Page} Page
+ * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
 /**

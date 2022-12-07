@@ -25,7 +25,7 @@ import { getDefinitionForType } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../types';
+import { StoryPropTypes } from '../../../propTypes';
 import { useStory } from '../../../app';
 import { TRACKING_EVENTS } from '../../../constants';
 import useShapeMask from '../../../utils/useShapeMask';

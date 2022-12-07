@@ -44,7 +44,7 @@ import {
   CANVAS_BOUNDING_BOX_IDS,
 } from '../../app';
 import { STABLE_ARRAY } from '../../constants';
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 import PageAttachment from './pageAttachment';
