@@ -27,8 +27,7 @@ export function getNextGroupNumber(groups: Groups) {
     if (!Object.prototype.hasOwnProperty.call(groups[prop], 'name')) {
       continue;
     }
-
-    const parts = groups[prop].name.split(' ');
+    const parts = groups[prop]?.name.split(' ');
     if (parts[0] === defaultName && parts[1]) {
       nums.push(Number(parts[1]));
     }
