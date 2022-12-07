@@ -19,7 +19,7 @@
  */
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 
-type clickCallback = (evt: Event, target: Element) => void;
+type ClickCallback = (evt: MouseEvent, target: Element) => void;
 
 /**
  * This hook creates a handler to use for double click listening
@@ -58,14 +58,14 @@ type clickCallback = (evt: Event, target: Element) => void;
  * @return Handler retrieval function to get an onClick listener (invoke with unique value).
  */
 const useDoubleClick = (
-  onSingleClick: clickCallback,
-  onDoubleClick: clickCallback,
+  onSingleClick: ClickCallback,
+  onDoubleClick: ClickCallback,
   ms = 200
 ) => {
   const [target, setTarget] = useState<Element | null>(null);
-  const [lastEvent, setLastEvent] = useState<Event | null>(null);
+  const [lastEvent, setLastEvent] = useState<MouseEvent | null>(null);
   const getHandler = useCallback(
-    (newTarget: Element) => (evt: Event) => {
+    (newTarget: Element) => (evt: MouseEvent) => {
       evt.stopPropagation();
 
       if (target !== newTarget) {
