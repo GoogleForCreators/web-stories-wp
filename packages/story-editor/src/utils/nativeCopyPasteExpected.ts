@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-interface ElementProps extends Element {
-  tagName: string;
-  type?: string;
-  contentEditable: string;
-}
-
 /**
  * Checks if the native copy paste should proceed,
  * either if text is selected or if there's focus on a text/number input.
@@ -30,7 +24,10 @@ function nativeCopyPasteExpected() {
   const { activeElement } = document;
 
   if (activeElement) {
-    const { tagName, type, contentEditable } = activeElement as ElementProps;
+    const { tagName, type, contentEditable } = activeElement as
+      | HTMLInputElement
+      | HTMLAnchorElement
+      | HTMLTextAreaElement;
 
     // If it's an input in focus, do native handling.
     if (
