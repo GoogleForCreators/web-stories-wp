@@ -35,7 +35,7 @@ import PageCanvasCacheValidator from './pageCanvasCacheValidator';
 import getPageWithoutSelection from './getPageWithoutSelection';
 
 /**
- * @typedef {import('../../../types').Page} Page
+ * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
 function PageCanvasProvider({ children }) {

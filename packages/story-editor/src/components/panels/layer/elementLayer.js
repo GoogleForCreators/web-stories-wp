@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../types';
+import { StoryPropTypes } from '../../../propTypes';
 import { useStory } from '../../../app';
 import useCORSProxy from '../../../utils/useCORSProxy';
 import { TRACKING_EVENTS } from '../../../constants';

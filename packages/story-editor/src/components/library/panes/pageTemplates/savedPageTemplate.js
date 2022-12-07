@@ -45,7 +45,7 @@ import { useAPI } from '../../../../app/api';
 import { useConfig } from '../../../../app/config';
 import { usePageDataUrls } from '../../../../app/pageDataUrls';
 import { useUploader } from '../../../../app/uploader';
-import { PageSizePropType } from '../../../../types';
+import { PageSizePropType } from '../../../../propTypes';
 import { focusStyle } from '../../../panels/shared/styles';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
