@@ -61,6 +61,8 @@ export interface DisplayProps<E extends Element> {
   element: E;
 }
 
+export type Direction = [0|1, 0|1];
+
 export interface ElementDefinition<E extends Element = Element> {
   type: ElementType;
   name: string;
@@ -92,7 +94,7 @@ export interface ElementDefinition<E extends Element = Element> {
   panels: string[];
   updateForResizeEvent?: (
     element: Element,
-    direction: number[],
+    direction: Direction,
     newWidth: number,
     newHeight: number
   ) => { height: number };

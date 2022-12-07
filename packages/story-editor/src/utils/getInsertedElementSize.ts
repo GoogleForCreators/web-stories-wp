@@ -24,10 +24,14 @@ import {
   DEFAULT_DPR,
 } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
-import type { Element, ElementType } from '@googleforcreators/elements';
+import type {
+  Element,
+  ElementType,
+  Direction,
+} from '@googleforcreators/elements';
 import type { Resource } from '@googleforcreators/media';
 
-const RESIZE_WIDTH_DIRECTION = [1, 0];
+const RESIZE_WIDTH_DIRECTION: Direction = [1, 0];
 
 /**
  * @param The value.
