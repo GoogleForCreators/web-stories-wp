@@ -50,7 +50,7 @@ export const updateSlug = ({
   updateStory,
 }: updateSlugProps) => {
   if (!currentSlug) {
-    const cleanSlug = encodeURIComponent(String(cleanForSlug(currentTitle)));
+    const cleanSlug = encodeURIComponent(cleanForSlug(currentTitle));
     updateStory({ properties: { slug: cleanSlug } });
   }
 };

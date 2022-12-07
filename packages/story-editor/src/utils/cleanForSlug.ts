@@ -42,7 +42,7 @@ export default function cleanForSlug(string: string, isEditing = false) {
     return '';
   }
 
-  return (
+  return String(
     [removeAccents(string)]
       // Convert each group of whitespace, periods, and forward slashes to a hyphen.
       .map((s) => s.replace(/[\s./_]/g, '-'))
