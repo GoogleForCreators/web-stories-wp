@@ -36,7 +36,7 @@ export function getNextGroupNumber(groups: Groups) {
   return Math.max(...nums) + 1;
 }
 
-function generateGroupName(groups: Groups, name: string): string {
+function generateGroupName(groups: Groups, name: string) {
   if (!name) {
     const groupNumber = getNextGroupNumber(groups);
     return sprintf(
