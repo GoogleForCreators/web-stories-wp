@@ -23,11 +23,11 @@
     "src/app/currentUser/*",
     "src/app/helpCenter/**/*",
     "src/app/history",
+    "src/app/pageDataUrls/**/*",
     "src/app/story",
-    "src/types/*",
     "src/constants/*",
-    "src/utils/*.ts",
+    "src/types/*",
     "src/typings/*",
-    "src/app/pageDataUrls/*"
+    "src/utils/*.ts"
   ]
 }

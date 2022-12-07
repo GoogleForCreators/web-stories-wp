@@ -24,7 +24,7 @@ export interface PageDataUrlsState {
 }
 
 export interface PageDataUrlsActions {
-  queuePageImageGeneration?: (Page: Page) => void;
+  queuePageImageGeneration: (Page: Page) => void;
 }
 
 export interface PageDataUrlsContext {

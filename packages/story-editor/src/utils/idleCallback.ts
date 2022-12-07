@@ -17,15 +17,17 @@
 /* Source: https://github.com/behnammodi/polyfill/blob/master/window.polyfill.js */
 const requestIdleCallback =
   window.requestIdleCallback ||
-  function (callback, options) {
-    options = options || {};
+  function (
+    callback: IdleRequestCallback,
+    options: IdleRequestOptions = {}
+  ): number {
     const relaxation = 1;
     const timeout = options.timeout || relaxation;
     const start = performance.now();
     return setTimeout(() => {
       callback({
         get didTimeout() {
-          return options.timeout
+          return typeof options.timeout !== 'undefined'
             ? false
             : performance.now() - start - relaxation > timeout;
         },
@@ -33,12 +35,12 @@ const requestIdleCallback =
           return Math.max(0, relaxation + (performance.now() - start));
         },
       });
-    }, relaxation);
+    }, relaxation) as unknown as number;
   };
 
 const cancelIdleCallback =
   window.cancelIdleCallback ||
-  function (id) {
+  function (id: number) {
     clearTimeout(id);
   };
 

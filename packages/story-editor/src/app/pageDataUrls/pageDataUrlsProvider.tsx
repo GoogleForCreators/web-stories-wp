@@ -39,13 +39,10 @@ function PageDataUrlProvider({
   /**
    * Add page image generation task to a idle task
    * queue.
-   *
-   * @param {Page} storyPage Page object.
-   * @return {Function} function to cancel image generation request
    */
   const queuePageImageGeneration: PageDataUrlsActions['queuePageImageGeneration'] =
     useCallback(
-      (storyPage) => {
+      (storyPage: Page) => {
         const idleTaskUid: string = storyPage.id;
         const idleTask: () => Promise<void> = async () => {
           const dataUrl = await storyPageToDataUrl(storyPage, {});
@@ -55,10 +52,7 @@ function PageDataUrlProvider({
           }));
         };
 
-        const clearQueueOfPageTask = queueIdleTask([
-          idleTaskUid,
-          idleTask,
-        ]);
+        const clearQueueOfPageTask = queueIdleTask([idleTaskUid, idleTask]);
         return (): void => {
           if (typeof clearQueueOfPageTask === 'function') {
             clearQueueOfPageTask();

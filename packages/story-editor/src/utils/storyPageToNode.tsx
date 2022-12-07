@@ -29,8 +29,10 @@ import {
   UnitsProvider,
 } from '@googleforcreators/units';
 import styled, { ThemeProvider } from 'styled-components';
-import { generatePatternStyles } from '@googleforcreators/patterns';
+import { generatePatternStyles, Pattern } from '@googleforcreators/patterns';
 import { TransformProvider } from '@googleforcreators/transform';
+import type { Page } from '@googleforcreators/elements';
+import type { RefCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -38,7 +40,12 @@ import { TransformProvider } from '@googleforcreators/transform';
 import { FontProvider } from '../app/font';
 import DisplayElement from '../components/canvas/displayElement';
 
-const Page = styled.div`
+interface PageWrapperProps {
+  height: number;
+  width: number;
+}
+
+const PageWrapper = styled.div<PageWrapperProps>`
   display: block;
   position: relative;
   padding: 0;
@@ -50,16 +57,24 @@ const Page = styled.div`
   outline: 0;
 `;
 
-const PreviewWrapper = styled.div`
+interface PreviewWrapperProps {
+  $background: Pattern;
+}
+
+const PreviewWrapper = styled.div<PreviewWrapperProps>`
   height: 100%;
   position: relative;
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors.fg.white};
   border-radius: 4px;
-  ${({ background }) => generatePatternStyles(background)}
+  ${({ $background }) => generatePatternStyles($background)}
 `;
 
-const FullHeight = styled.div`
+interface FullHeightProps {
+  yOffset: number;
+}
+
+const FullHeight = styled.div<FullHeightProps>`
   position: absolute;
   top: ${({ yOffset }) => yOffset}px;
   bottom: ${({ yOffset }) => yOffset}px;
@@ -67,9 +82,23 @@ const FullHeight = styled.div`
   left: 0;
 `;
 
+interface PageWithDependenciesProps {
+  page: Page;
+  width: number;
+  height: number;
+  renderFullHeightThumb?: boolean;
+  containerHeight: number;
+}
+
 const PageWithDependencies = forwardRef(function PageWithDependencies(
-  { page, width, height, renderFullHeightThumb = false, containerHeight },
-  ref
+  {
+    page,
+    width,
+    height,
+    renderFullHeightThumb = false,
+    containerHeight,
+  }: PageWithDependenciesProps,
+  ref: RefCallback<HTMLElement>
 ) {
   return (
     <ThemeProvider theme={ds_theme}>
@@ -81,12 +110,12 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
               height,
             }}
           >
-            <Page
+            <PageWrapper
               ref={ref}
               height={renderFullHeightThumb ? containerHeight : height}
               width={width}
             >
-              <PreviewWrapper background={page.backgroundColor}>
+              <PreviewWrapper $background={page.backgroundColor}>
                 <FullHeight
                   yOffset={
                     renderFullHeightThumb ? (containerHeight - height) / 2 : 0
@@ -101,7 +130,7 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
                   ))}
                 </FullHeight>
               </PreviewWrapper>
-            </Page>
+            </PageWrapper>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>
@@ -109,9 +138,9 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
   );
 });
 
-/**
- * @typedef {import('@googleforcreators/elements').Page} Page
- */
+interface Options {
+  renderFullHeightThumb?: boolean;
+}
 
 /**
  * Takes a story page and generates a DOM node containing the rendered
@@ -121,12 +150,16 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
  * **IMPORTANT:** Not calling the returned `cleanup()` method after use of
  * page DOM node will result in memory leak.
  *
- * @param {Page} page Page object.
- * @param {number} width desired width of image. Dictates height and container height
- * @param {{ renderFullHeightThumb: boolean }} opts - options to alter the rendered node.
- * @return {[HTMLElement, Function]} tuple containing DOM node and cleanup method
+ * @param page Page object.
+ * @param width Desired width of image. Dictates height and container height
+ * @param opts Options to alter the rendered node.
+ * @return Tuple containing DOM node and cleanup method
  */
-async function storyPageToNode(page, width, opts = {}) {
+async function storyPageToNode(
+  page: Page,
+  width: number,
+  opts: Options = {}
+): Promise<[HTMLElement, () => void]> {
   const { renderFullHeightThumb = false } = opts;
   const height = width * (1 / PAGE_RATIO);
   const containerHeight = width * (1 / FULLBLEED_RATIO);
@@ -144,8 +177,8 @@ async function storyPageToNode(page, width, opts = {}) {
      pointer-events: none;
    `;
 
-  const node = await new Promise((resolve) => {
-    const resolverRef = (htmlNode) => {
+  const node = await new Promise<HTMLElement>((resolve) => {
+    const resolverRef = (htmlNode: HTMLElement) => {
       if (!htmlNode) {
         return;
       }

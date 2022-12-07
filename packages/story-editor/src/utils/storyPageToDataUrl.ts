@@ -26,16 +26,11 @@ import type { Options } from 'html-to-image/lib/types';
 import storyPageToNode from './storyPageToNode';
 
 /**
- * @typedef {import('@googleforcreators/elements').Page} Page
- */
-
-/**
  * Async method to generate a dataUrl from a story page.
  *
- * @param {Page} page Page object.
- * @param {Object} options options to pass to htmlToImage.toJpeg
- * @param {number} options.width desired width of image. Dictates height and container height
- * @return {Promise<string>} jpeg dataUrl
+ * @param page Page object.
+ * @param args Options to pass to htmlToImage.toJpeg
+ * @return jpeg dataUrl
  */
 async function storyPageToDataUrl(
   page: Page,
