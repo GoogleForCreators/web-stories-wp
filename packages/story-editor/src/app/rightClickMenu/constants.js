@@ -61,6 +61,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   UNGROUP_LAYERS: __('Ungroup Layers', 'web-stories'),
   UNGROUP_LAYER: __('Remove from Group', 'web-stories'),
   LOCK_UNLOCK: __('Lock/Unlock', 'web-stories'),
+  HIDE_SHOW: __('Hide/Show', 'web-stories'),
   RENAME_LAYER: __('Rename Layer', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
