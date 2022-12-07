@@ -43,7 +43,7 @@ import useFFmpeg from './useFFmpeg';
 import useMediaInfo from './useMediaInfo';
 
 interface UseProcessMediaProps {
-  uploadMedia: (files: File[], args: UploadMediaArgs) => unknown;
+  uploadMedia: (files: File[], args: UploadMediaArgs) => string | null;
   postProcessingResource: (resource: Resource) => void;
   updateMedia: (id: ResourceId, data: UpdateMediaProps) => void;
   deleteMediaElement: (args: { id: ResourceId }) => void;

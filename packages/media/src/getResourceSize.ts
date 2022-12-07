@@ -46,11 +46,11 @@ interface ResourceSize {
  * @return The resource's size (width and height).
  */
 function getResourceSize({
-  width,
-  height,
+  width = 0,
+  height = 0,
   posterGenerated,
-  posterWidth,
-  posterHeight,
+  posterWidth = 0,
+  posterHeight = 0,
 }: ResourceSizeParams): ResourceSize {
   // Use poster image size, if poster is generated.
   if (posterGenerated && posterWidth && posterHeight) {
@@ -58,7 +58,7 @@ function getResourceSize({
   }
   // If height / width is set, then use them.
   if (width || height) {
-    return { width: width ?? 0, height: height ?? 0 };
+    return { width, height };
   }
 
   // Return a default height and width.
