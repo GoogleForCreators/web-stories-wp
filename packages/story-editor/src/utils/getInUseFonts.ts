@@ -30,12 +30,9 @@ export function getInUseFontsForPages(pages: Page[]) {
       new Set(
         pages
           .map(({ elements = [] }) =>
-            elements.map((element) => {
-              if (elementIs.text(element) && Boolean(element.font?.family)) {
-                return element.font?.family;
-              }
-              return null;
-            })
+            elements.map((element) =>
+              elementIs.text(element) ? element.font.family : null
+            )
           )
           .flat()
           .filter(Boolean)
@@ -63,15 +60,13 @@ export function getTextSetsForFonts({
     .map((currentTextSet) => {
       const hasFontInUse = currentTextSet.elements.reduce(
         (elementMemo, currentElement) => {
-          if (
-            elementIs.text(currentElement) &&
-            Boolean(currentElement.font?.family)
-          ) {
-            return (
-              elementMemo || fonts.indexOf(currentElement.font?.family) !== -1
-            );
+          if (!elementIs.text(currentElement)) {
+            return elementMemo;
           }
-          return elementMemo;
+
+          return (
+            elementMemo || fonts.indexOf(currentElement.font.family) !== -1
+          );
         },
         false
       );
