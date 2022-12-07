@@ -24,13 +24,15 @@ import { useEffect } from '@googleforcreators/react';
  */
 import nativeCopyPasteExpected from './nativeCopyPasteExpected';
 
+type HandlerCallback = (event: ClipboardEvent) => void;
+
 /**
  * @param copyCutHandler Copy & Cut handler.
  * @param pasteHandler Paste handler.
  */
 function useGlobalClipboardHandlers(
-  copyCutHandler: (event: ClipboardEvent) => void,
-  pasteHandler: (event: ClipboardEvent) => void
+  copyCutHandler: HandlerCallback,
+  pasteHandler: HandlerCallback
 ) {
   useEffect(() => {
     const copyCutHandlerWrapper = (evt: ClipboardEvent) => {
