@@ -38,16 +38,10 @@ const isDefaultPage = (page: Page) => {
   // Check if background color is different
   if (
     'color' in page.backgroundColor &&
-    'color' in defaultPage.backgroundColor
+    'color' in defaultPage.backgroundColor &&
+    !shallowEqual(page.backgroundColor.color, defaultPage.backgroundColor.color)
   ) {
-    if (
-      !shallowEqual(
-        page.backgroundColor.color,
-        defaultPage.backgroundColor.color
-      )
-    ) {
-      return false;
-    }
+    return false;
   }
 
   // Check if background element is not default
