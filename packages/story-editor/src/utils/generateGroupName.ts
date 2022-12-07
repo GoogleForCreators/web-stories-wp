@@ -18,14 +18,9 @@
  * External dependencies
  */
 import { __, sprintf } from '@googleforcreators/i18n';
+import type { Groups } from '@googleforcreators/elements';
 
-interface GroupsProps {
-  [key: string]: {
-    name?: string;
-  };
-}
-
-export function getNextGroupNumber(groups: GroupsProps) {
+export function getNextGroupNumber(groups: Groups) {
   const nums = [0];
   const defaultName = __('Group', 'web-stories');
   for (const prop in groups) {
@@ -45,7 +40,7 @@ export function getNextGroupNumber(groups: GroupsProps) {
   return Math.max(...nums) + 1;
 }
 
-function generateGroupName(groups: GroupsProps, name: string): string {
+function generateGroupName(groups: Groups, name: string): string {
   if (!name) {
     const groupNumber = getNextGroupNumber(groups);
     return sprintf(
