@@ -43,7 +43,7 @@ import {
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 import useCORSProxy from '../../utils/useCORSProxy';
 import { useLocalMedia, useFont } from '../../app';
 import renderResourcePlaceholder from './renderResourcePlaceholder';

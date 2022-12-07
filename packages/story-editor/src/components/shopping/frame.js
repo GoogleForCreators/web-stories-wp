@@ -26,7 +26,7 @@ import { useEffect } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 import Tooltip from '../tooltip';
 import { useConfig, useFont } from '../../app';
 import PillIcon from './icons/pill.svg';

@@ -46,7 +46,7 @@ import { getDefinitionForType } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import StoryPropTypes, { AnimationPropType } from '../../../../types';
+import { StoryPropTypes, AnimationPropType } from '../../../../propTypes';
 import { useStory } from '../../../../app';
 import { DESIGN_COPY } from '../../../checklist';
 import Warning from '../warning';
