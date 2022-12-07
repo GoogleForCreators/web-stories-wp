@@ -25,7 +25,7 @@ const requestIdleCallback =
     return setTimeout(() => {
       callback({
         get didTimeout() {
-          return options?.timeout
+          return options.timeout
             ? false
             : performance.now() - start - relaxation > timeout;
         },

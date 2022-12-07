@@ -37,7 +37,7 @@ interface updateSlugProps {
  * @param args Necessary data for update.
  * @param args.currentSlug The currently assigned value to story's slug.
  * @param args.currentTitle The currently assigned value to story's title.
- * @param args.updateStory The callback to useStory's action for updating the story with new slug.ß
+ * @param args.updateStory The callback to useStory's action for updating the story with new slug.
  */
 export const updateSlug = ({
   currentSlug,
