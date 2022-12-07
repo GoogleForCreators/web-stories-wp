@@ -22,7 +22,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 16",
+    "node": ">= 18",
     "npm": ">= 7.3"
   },
   "type": "module",
@@ -195,7 +195,7 @@
       "puppeteer": "^19.0.0"
     },
     "date-fns": "^2.29.3",
-    "eslint-plugin-jsdoc": "^39.6.4"
+    "eslint-plugin-jsdoc": "$eslint-plugin-jsdoc"
   },
   "scripts": {
     "build": "npm-run-all build:*",
