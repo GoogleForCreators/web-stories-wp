@@ -36,10 +36,10 @@ export enum ContentType {
 }
 
 export enum ProviderType {
-  Unsplash = 'UNSPLASH',
-  Coverr = 'COVERR',
-  Tenor = 'TENOR',
-  TenorStickers = 'TENOR_STICKERS',
+  Unsplash = 'unsplash',
+  Coverr = 'coverr',
+  Tenor = 'tenor',
+  TenorStickers = 'tenor_stickers',
 }
 
 export type Provider = {
