@@ -31,14 +31,9 @@
     "src/app/media/utils/*.ts",
     "src/app/story",
     "src/constants/*",
-<<<<<<< try/convert-ts-utils
     "src/utils/**/*.ts",
     "src/utils/**/*.tsx",
-    "src/typings/*"
-=======
     "src/types/*",
-    "src/typings/*",
-    "src/utils/*.ts"
->>>>>>> main
+    "src/typings/*"
   ]
 }
