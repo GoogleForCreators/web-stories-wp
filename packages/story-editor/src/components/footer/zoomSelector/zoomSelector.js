@@ -109,7 +109,7 @@ function ZoomSelector() {
 
   const handleSetZoom = useCallback(
     (_event, value) => {
-      if (Object.prototype.hasOwnProperty.call(ZoomSetting, value)) {
+      if (Object.values(ZoomSetting).includes(value)) {
         setZoomSetting(value);
       } else {
         setZoomLevel(value);
