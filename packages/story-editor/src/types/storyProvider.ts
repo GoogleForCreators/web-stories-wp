@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import type { Page, Element, Group, Story } from '@googleforcreators/elements';
+import type {
+  Page,
+  Element,
+  Group,
+  Story,
+  MediaElement,
+} from '@googleforcreators/elements';
 import type { ResourceId } from '@googleforcreators/media';
 import type {
   StoryAnimation,
@@ -96,7 +102,7 @@ export type DeleteElementsAction = {
   payload: DeleteElementsProps;
 };
 
-export type ElementUpdater = (prevProps: Element) => Element;
+export type ElementUpdater<T = Element> = (prevProps: T) => T | Partial<T>;
 export type UpdateElementsProps = {
   elementIds: string[] | null;
   properties: Partial<Element> | ElementUpdater;
@@ -108,7 +114,7 @@ export type UpdateElementsAction = {
 
 export type UpdateElementsByResourceIdProps = {
   id: ResourceId;
-  properties: Partial<Element> | ElementUpdater;
+  properties: Partial<MediaElement> | ElementUpdater<MediaElement>;
 };
 export type UpdateElementsByResourceIdAction = {
   type: ActionTypes.UpdateElementsByResourceId;
@@ -356,9 +362,9 @@ export type InternalActions = {
 interface DeleteElementProps {
   elementId: string;
 }
-interface UpdateElementProps {
+interface UpdateElementProps<T extends Element = Element> {
   elementId: string;
-  properties: Partial<Element> | ElementUpdater;
+  properties: Partial<T> | ElementUpdater<T>;
 }
 export type ExternalActions = {
   addAnimations: (props: AddAnimationsProps) => ReducerState;
@@ -384,7 +390,9 @@ export type ExternalActions = {
   deleteElementsByResourceId: (
     props: DeleteElementsByResourceIdProps
   ) => ReducerState;
-  updateElementById: (props: UpdateElementProps) => ReducerState;
+  updateElementById: <T extends Element = Element>(
+    props: UpdateElementProps<T>
+  ) => ReducerState;
   duplicateElementsById: (props: DuplicateElementsByIdAction) => ReducerState;
   updateSelectedElements: (props: UpdateElementsProps) => ReducerState;
   combineElements: (props: CombineElementsProps) => ReducerState;

@@ -24,7 +24,7 @@ import { PAGE_RATIO } from '@googleforcreators/units';
 import storyPageToNode from './storyPageToNode';
 
 /**
- * @typedef {import('../../../types').Page} Page
+ * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
 /**

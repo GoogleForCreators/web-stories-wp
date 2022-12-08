@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { MEDIA_POSTER_IMAGE_FILE_TYPE } from '../../../constants';
 
-export const ContentType = {
-  IMAGE: 'image',
-  VIDEO: 'video',
-  GIF: 'gif',
-  STICKER: 'sticker',
-};
+function getPosterName(fileName: string) {
+  return fileName + '-poster.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
+}
 
-export const ProviderType = {
-  UNSPLASH: 'unsplash',
-  COVERR: 'coverr',
-  TENOR: 'tenor',
-  TENOR_STICKERS: 'tenor_stickers',
-};
+export default getPosterName;

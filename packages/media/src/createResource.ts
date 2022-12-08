@@ -40,7 +40,7 @@ function createResource({
   posterId,
   length,
   lengthFormatted,
-  sizes,
+  sizes = {},
   output,
   width = 0,
   height = 0,

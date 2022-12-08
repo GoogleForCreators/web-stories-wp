@@ -50,12 +50,23 @@ function GroupLayerActions({ groupId }) {
   }));
 
   const group = groups[groupId];
+  const allLayersHidden = groupLayers.every((layer) => layer.isHidden);
 
+  const visibilityTitle = allLayersHidden
+    ? __('Show Group', 'web-stories')
+    : __('Hide Group', 'web-stories');
   const lockTitle = group.isLocked
     ? __('Unlock Group', 'web-stories')
     : __('Lock Group', 'web-stories');
 
   const { name, isLocked, isCollapsed } = group;
+
+  const handleHideGroup = useCallback(() => {
+    updateElementsById({
+      elementIds: groupLayers.map((layer) => layer.id),
+      properties: { isHidden: !allLayersHidden },
+    });
+  }, [allLayersHidden, groupLayers, updateElementsById]);
 
   const handleLockGroup = useCallback(() => {
     updateGroupById({
@@ -85,6 +96,10 @@ function GroupLayerActions({ groupId }) {
     [groupId, deleteGroupAndElementsById]
   );
 
+  const VisibilityIcon = allLayersHidden
+    ? Icons.VisibilityOff
+    : Icons.Visibility;
+
   return (
     <>
       <LayerAction
@@ -99,6 +114,10 @@ function GroupLayerActions({ groupId }) {
         handleClick={handleDuplicateGroup}
       >
         <Icons.PagePlus />
+      </LayerAction>
+
+      <LayerAction label={visibilityTitle} handleClick={handleHideGroup}>
+        <VisibilityIcon />
       </LayerAction>
 
       <LayerAction label={lockTitle} handleClick={handleLockGroup}>

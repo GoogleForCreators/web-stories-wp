@@ -16,6 +16,7 @@
     { "path": "../output" },
     { "path": "../patterns" },
     { "path": "../react" },
+    { "path": "../templates" },
     { "path": "../tracking" }
   ],
   "include": [
@@ -25,10 +26,14 @@
     "src/app/helpCenter",
     "src/app/history",
     "src/app/font",
+    "src/app/media/*.ts",
+    "src/app/media/media3p/*.ts",
+    "src/app/media/media3p/*.tsx",
+    "src/app/media/utils/*.ts",
     "src/app/story",
-    "src/types",
-    "src/constants",
-    "src/utils/*.ts",
-    "src/typings/*"
+    "src/constants/*",
+    "src/types/*",
+    "src/typings/*",
+    "src/utils/*.ts"
   ]
 }
