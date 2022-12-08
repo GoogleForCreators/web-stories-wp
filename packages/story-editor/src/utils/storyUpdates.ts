@@ -23,7 +23,7 @@
 import type { ReducerState, UpdateStoryProps } from '../types';
 import cleanForSlug from './cleanForSlug';
 
-interface updateSlugProps {
+interface UpdateSlugProps {
   currentSlug: string;
   currentTitle: string;
   updateStory: (props: UpdateStoryProps) => ReducerState;
@@ -43,7 +43,7 @@ export const updateSlug = ({
   currentSlug,
   currentTitle,
   updateStory,
-}: updateSlugProps) => {
+}: UpdateSlugProps) => {
   if (!currentSlug) {
     const cleanSlug = encodeURIComponent(cleanForSlug(currentTitle));
     updateStory({ properties: { slug: cleanSlug } });
