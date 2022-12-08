@@ -29,7 +29,7 @@ import {
  * Internal dependencies
  */
 import { useConfig, useStory, useLayout } from '../../../app';
-import { CAROUSEL_STATE } from '../../../constants';
+import { CarouselState } from '../../../constants';
 
 function useCarouselScroll({
   listElement,
@@ -112,7 +112,7 @@ function useCarouselScroll({
 
   // If the carousel drawer is collapsed, reset first scroll to true
   useEffect(() => {
-    if (carouselState === CAROUSEL_STATE.CLOSED) {
+    if (carouselState === CarouselState.Closed) {
       firstScroll.current = true;
     }
   }, [carouselState]);

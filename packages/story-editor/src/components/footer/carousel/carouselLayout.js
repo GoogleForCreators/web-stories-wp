@@ -27,7 +27,7 @@ import { useRef } from '@googleforcreators/react';
  */
 import { useLayout } from '../../../app';
 import {
-  CAROUSEL_STATE,
+  CarouselState,
   CAROUSEL_TRANSITION_DURATION,
 } from '../../../constants';
 import { Z_INDEX_FOOTER } from '../../../constants/zIndex';
@@ -116,12 +116,11 @@ function CarouselLayout() {
     return null;
   }
 
-  const isCollapsed = carouselState === CAROUSEL_STATE.CLOSED;
+  const isCollapsed = carouselState === CarouselState.Closed;
 
-  const isOpenOrOpening = [
-    CAROUSEL_STATE.OPEN,
-    CAROUSEL_STATE.OPENING,
-  ].includes(carouselState);
+  const isOpenOrOpening = [CarouselState.Open, CarouselState.Opening].includes(
+    carouselState
+  );
 
   return (
     <CSSTransition
