@@ -86,7 +86,10 @@ interface SetWorkspaceSizeProps {
   payload: WorkspaceSize;
 }
 const reducer = {
-  setZoomSetting: (state: ReducerState, { payload }: SetZoomSettingProps): ReducerState => ({
+  setZoomSetting: (
+    state: ReducerState,
+    { payload }: SetZoomSettingProps
+  ): ReducerState => ({
     ...state,
     zoomSetting: payload,
     scrollOffset: {
@@ -94,22 +97,35 @@ const reducer = {
       top: 0,
     },
   }),
-  setZoomLevel: (state: ReducerState, { payload }: SetZoomLevelProps): ReducerState => ({
+  setZoomLevel: (
+    state: ReducerState,
+    { payload }: SetZoomLevelProps
+  ): ReducerState => ({
     ...state,
     zoomLevel: payload,
     zoomSetting: ZoomSetting.Fixed,
   }),
-  setScrollOffset: (state: ReducerState, { payload }: SetScrollOffsetProps): ReducerState => ({
+  setScrollOffset: (
+    state: ReducerState,
+    { payload }: SetScrollOffsetProps
+  ): ReducerState => ({
     ...state,
     scrollOffset: payload,
   }),
-  setWorkspaceSize: (state: ReducerState, { payload }: SetWorkspaceSizeProps): ReducerState => ({
+  setWorkspaceSize: (
+    state: ReducerState,
+    { payload }: SetWorkspaceSizeProps
+  ): ReducerState => ({
     ...state,
     workspaceSize: payload,
   }),
 };
 
-function calculateViewportProperties(workspaceSize: WorkspaceSize, zoomSetting: string, zoomLevel: number) {
+function calculateViewportProperties(
+  workspaceSize: WorkspaceSize,
+  zoomSetting: string,
+  zoomLevel: number
+) {
   // Calculate page size based on zoom setting
   let maxPageWidth = 0;
   const workspaceRatio = workspaceSize.width / workspaceSize.availableHeight;
