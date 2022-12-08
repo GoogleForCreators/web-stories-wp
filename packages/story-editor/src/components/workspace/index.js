@@ -35,6 +35,7 @@ function Workspace({ header, footer }) {
     editingElementState: state.state.editingElementState,
   }));
 
+  console.log(editingElementState);
   return (
     <VideoTrimProvider>
       <RichTextProvider editingState={editingElementState}>

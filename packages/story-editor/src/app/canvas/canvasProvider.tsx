@@ -55,7 +55,7 @@ function CanvasProvider({ children }) {
   const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
   const [eyedropperImg, setEyedropperImg] = useState(null);
   const [eyedropperPixelData, setEyedropperPixelData] = useState(null);
-  const [isEyedropperActive, setIsEyedropperActive] = useState(null);
+  const [isEyedropperActive, setIsEyedropperActive] = useState(false);
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
   const [renamableLayer, setRenamableLayer] = useState(null);
   const [floatingMenuPosition, setFloatingMenuPosition] = useState(() => {
