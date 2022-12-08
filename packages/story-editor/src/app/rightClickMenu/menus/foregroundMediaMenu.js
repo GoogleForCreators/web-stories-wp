@@ -41,7 +41,7 @@ import { useStory, useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
-import { LayerLock, LayerName, LayerUngroup } from '../items';
+import { LayerHide, LayerLock, LayerName, LayerUngroup } from '../items';
 import { isOffCanvas } from '../../../utils/isOffCanvas';
 import {
   DEFAULT_DISPLACEMENT,
@@ -203,6 +203,7 @@ function ForegroundMediaMenu({ parentMenuRef }) {
 
       <LayerName />
       <LayerLock />
+      <LayerHide />
       <LayerUngroup />
 
       <ContextMenuComponents.MenuSeparator />

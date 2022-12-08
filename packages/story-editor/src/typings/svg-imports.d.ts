@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import type { DimensionableElement } from '@googleforcreators/units';
+import { ReactElement, SVGProps } from 'react';
 
-export type ElementId = string;
-
-export interface Element extends DimensionableElement {
-  id: ElementId;
-  isHidden?: boolean;
+declare module 'icons/*.svg' {
+  const Icon: (props: SVGProps<SVGElement>) => ReactElement;
+  export default Icon;
 }
 
-export interface ScaledElement extends Element {
-  scale?: number;
+declare module 'images/*.svg' {
+  const Image: (props: SVGProps<SVGElement>) => ReactElement;
+  export default Image;
 }
 
-export function isScaledElement(e: Element): e is ScaledElement {
-  return 'scale' in e;
+declare module 'inline-icons/*.svg' {
+  const content: string;
+  export default content;
 }
