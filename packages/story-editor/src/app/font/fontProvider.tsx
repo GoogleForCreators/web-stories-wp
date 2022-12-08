@@ -37,14 +37,14 @@ function FontProvider({ children }: PropsWithChildren<unknown>) {
   const [queriedFonts, setQueriedFonts] = useState<FontData[]>([]);
   const [curatedFonts, setCuratedFonts] = useState<FontData[]>([]);
   const [recentFonts, setRecentFonts] = useState<FontData[]>([]);
-  const [customFonts, setCustomFonts] = useState<FontData[] | null>(null);
+  const [customFonts, setCustomFonts] = useState<FontData[]>([]);
   const {
     actions: { getFonts },
   } = useAPI();
 
   const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
-  const getCustomFonts = useCallback(async () => {
+  const loadCustomFonts = useCallback(async () => {
     if (customFonts || !getFonts) {
       return;
     }
@@ -68,7 +68,7 @@ function FontProvider({ children }: PropsWithChildren<unknown>) {
     setCustomFonts(formattedFonts);
   }, [getFonts, customFonts]);
 
-  const getCuratedFonts = useCallback(async () => {
+  const loadCuratedFonts = useCallback(async () => {
     if (curatedFonts.length || !getFonts) {
       return;
     }
@@ -219,8 +219,8 @@ function FontProvider({ children }: PropsWithChildren<unknown>) {
       ensureMenuFontsLoaded,
       ensureCustomFontsLoaded,
       addRecentFont,
-      getCustomFonts,
-      getCuratedFonts,
+      loadCustomFonts,
+      loadCuratedFonts,
     },
   };
 

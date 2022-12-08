@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import type { FontData, FontWeight } from '@googleforcreators/elements';
+import type {
+  FontData,
+  FontStyle,
+  FontWeight,
+} from '@googleforcreators/elements';
 
 export interface FontWeightOption {
   name: string;
@@ -28,7 +32,7 @@ export interface FontProviderState {
   state: {
     fonts: FontData[];
     curatedFonts: FontData[];
-    customFonts: FontData[] | null;
+    customFonts: FontData[];
     recentFonts: FontData[];
   };
   actions: {
@@ -40,14 +44,14 @@ export interface FontProviderState {
     ensureMenuFontsLoaded: (fonts: string[]) => void;
     ensureCustomFontsLoaded: (fonts: string[]) => void;
     addRecentFont: (font: FontData) => void;
-    getCustomFonts: () => Promise<unknown>;
-    getCuratedFonts: () => Promise<unknown>;
+    loadCustomFonts: () => Promise<void>;
+    loadCuratedFonts: () => Promise<void>;
   };
 }
 
 export interface FontConfig {
   font: FontData;
-  fontStyle: 'italic' | 'normal';
+  fontStyle: FontStyle;
   content: string;
   fontWeight?: FontWeight;
 }

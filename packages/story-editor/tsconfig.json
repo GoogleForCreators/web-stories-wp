@@ -29,8 +29,6 @@
     "src/types",
     "src/constants",
     "src/utils/*.ts",
-    "src/typings/*",
-    "src/utils/usePreventWindowUnload.ts",
-    "src/utils/cleanForSlug.ts"
+    "src/typings/*"
   ]
 }

@@ -40,7 +40,7 @@ export default createContext<FontProviderState>({
     ensureMenuFontsLoaded: () => undefined,
     ensureCustomFontsLoaded: () => undefined,
     addRecentFont: () => undefined,
-    getCustomFonts: () => Promise.resolve(),
-    getCuratedFonts: () => Promise.resolve(),
+    loadCustomFonts: () => Promise.resolve(),
+    loadCuratedFonts: () => Promise.resolve(),
   },
 });
