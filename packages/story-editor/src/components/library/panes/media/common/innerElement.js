@@ -201,18 +201,18 @@ function InnerElement({
     ...commonProps,
     title: alt,
     alt: null,
-    loop: type === ContentType.GIF,
+    loop: type === ContentType.Gif,
     muted: true,
     preload: 'metadata',
     poster: displayPoster,
     showWithoutDelay: active,
   };
 
-  if (type === ContentType.IMAGE || type === ContentType.STICKER) {
+  if (type === ContentType.Image || type === ContentType.Sticker) {
     // eslint-disable-next-line styled-components-a11y/alt-text -- False positive.
     media = <Image key={src} {...imageProps} ref={mediaElement} />;
     cloneProps.src = thumbnailURL;
-  } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
+  } else if ([ContentType.Video, ContentType.Gif].includes(type)) {
     media = (
       <>
         {poster && !active ? (
@@ -221,7 +221,7 @@ function InnerElement({
         ) : (
           // eslint-disable-next-line jsx-a11y/media-has-caption,styled-components-a11y/media-has-caption -- No captions/tracks because video is muted.
           <Video key={src} {...videoProps} ref={mediaElement}>
-            {type === ContentType.GIF ? (
+            {type === ContentType.Gif ? (
               resource.output.src && (
                 <source
                   src={resource.output.src}
@@ -236,12 +236,12 @@ function InnerElement({
             )}
           </Video>
         )}
-        {type === ContentType.VIDEO && showVideoDetail && lengthFormatted && (
+        {type === ContentType.Video && showVideoDetail && lengthFormatted && (
           <DurationWrapper>
             <Duration>{lengthFormatted}</Duration>
           </DurationWrapper>
         )}
-        {type === ContentType.VIDEO && showVideoDetail && isMuted && (
+        {type === ContentType.Video && showVideoDetail && isMuted && (
           <MuteWrapper>
             <Icons.Muted />
           </MuteWrapper>
@@ -268,7 +268,7 @@ function InnerElement({
     handleDrag(resource, event.clientX, event.clientY);
   };
 
-  const imageURL = type === ContentType.IMAGE ? thumbnailURL : poster;
+  const imageURL = type === ContentType.Image ? thumbnailURL : poster;
 
   return (
     <>

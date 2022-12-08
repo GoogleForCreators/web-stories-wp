@@ -16,6 +16,7 @@
     { "path": "../patterns" },
     { "path": "../react" },
     { "path": "../text-sets" },
+    { "path": "../templates" },
     { "path": "../tracking" }
   ],
   "include": [
@@ -24,11 +25,20 @@
     "src/app/currentUser/*",
     "src/app/helpCenter/**/*",
     "src/app/history",
+    "src/app/media/*.ts",
+    "src/app/media/media3p/*.ts",
+    "src/app/media/media3p/*.tsx",
+    "src/app/media/utils/*.ts",
     "src/app/story",
-    "src/types/*",
     "src/constants/*",
+<<<<<<< try/convert-ts-utils
     "src/utils/**/*.ts",
     "src/utils/**/*.tsx",
     "src/typings/*"
+=======
+    "src/types/*",
+    "src/typings/*",
+    "src/utils/*.ts"
+>>>>>>> main
   ]
 }

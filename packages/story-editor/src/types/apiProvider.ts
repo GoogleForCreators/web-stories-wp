@@ -17,11 +17,7 @@
 /**
  * External dependencies
  */
-import type {
-  FontData,
-  MediaElement,
-  ProductData,
-} from '@googleforcreators/elements';
+import type { FontData, ProductData } from '@googleforcreators/elements';
 import type {
   Resource,
   ResourceId,
@@ -82,29 +78,34 @@ type LinkMetaData = {
 };
 
 type UploadMediaProps = {
-  onUploadSuccess?: (media: MediaElement) => void;
-  onUploadProgress?: (media: MediaElement) => void;
-  onUploadError?: (media: MediaElement) => void;
-  cropVideo?: boolean;
-  additionalData: {
-    originalId?: number;
-    mediaId?: number;
-    storyId?: number;
-    templateId?: number;
-    optimizedId?: number;
-    cropOriginId?: number;
-    mutedId?: number;
-    posterId?: number;
-    isMuted?: boolean;
-    mediaSource?: string;
-    trimData?: TrimData;
-    baseColor?: string;
-    blurHash?: string;
-    isGif?: boolean;
-    altText?: string;
-  };
-  originalResourceId: ResourceId;
-  resource: Resource;
+  originalId?: ResourceId;
+  mediaId?: number;
+  storyId?: number | null;
+  templateId?: number;
+  optimizedId?: ResourceId;
+  cropOriginId?: ResourceId;
+  mutedId?: ResourceId;
+  posterId?: ResourceId;
+  isMuted?: boolean;
+  mediaSource?: string;
+  trimData?: TrimData;
+  baseColor?: string;
+  blurHash?: string;
+  isGif?: boolean;
+  altText?: string;
+};
+
+type UpdateMediaProps = {
+  storyId?: number | null;
+  optimizedId?: ResourceId;
+  cropOriginId?: ResourceId;
+  mutedId?: number;
+  posterId?: ResourceId;
+  isMuted?: boolean;
+  mediaSource?: string;
+  baseColor?: string;
+  blurHash?: string;
+  altText?: string;
 };
 export interface APICallbacks {
   addPageTemplate?: (data: TemplateData) => Promise<PageTemplate>;
@@ -138,10 +139,10 @@ export interface APICallbacks {
   }>;
   getMediaById?: (id: number) => Promise<Resource>;
   getMediaForCorsCheck?: () => Promise<Resource[]>;
-  getMutedMediaById?: (id: number) => Promise<VideoResource>;
-  getOptimizedMediaById?: (id: number) => Promise<Resource>;
+  getMutedMediaById?: (id: ResourceId) => Promise<VideoResource>;
+  getOptimizedMediaById?: (id: ResourceId) => Promise<Resource>;
   getPageTemplates?: () => Promise<Template[]>;
-  getPosterMediaById?: (id: number) => Promise<Resource>;
+  getPosterMediaById?: (id: ResourceId) => Promise<Resource>;
   getProducts?: () => Promise<ProductData[]>;
   getProxyUrl?: (src: string) => string;
   getStoryById?: (id: number) => Promise<RawStory>;
@@ -152,12 +153,12 @@ export interface APICallbacks {
   }) => Promise<Term>;
   saveStoryById?: (data: StorySaveData) => Promise<StoryReturnData>;
   updateCurrentUser?: (data: Partial<User>) => Promise<User>;
-  updateMedia?: (id: number, data: Partial<Resource>) => Promise<Resource>;
+  updateMedia?: (id: ResourceId, data: UpdateMediaProps) => Promise<Resource>;
   updatePageTemplate?: (
     id: number,
     data: Partial<PageTemplate>
   ) => Promise<PageTemplate>;
-  uploadMedia?: (files: string[], props: UploadMediaProps) => Promise<Resource>;
+  uploadMedia?: (file: File, props: UploadMediaProps) => Promise<Resource>;
 }
 
 export interface APIState {

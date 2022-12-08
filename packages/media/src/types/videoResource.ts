@@ -19,10 +19,11 @@
  */
 import type { ResourceType } from './resourceType';
 import type { SequenceResource } from './sequenceResource';
+import type { ResourceId } from './resource';
 
 export interface TrimData {
   /** ID of the original video. */
-  original: string;
+  original: ResourceId;
   /** Time stamp of start time of new video. Example '00:01:02.345'. */
   start: string;
   /** Time stamp of end time of new video. Example '00:01:02.345'. */

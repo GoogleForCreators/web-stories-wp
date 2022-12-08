@@ -29,6 +29,7 @@ import {
 /**
  * Internal dependencies
  */
+import type { FFmpeg } from '@ffmpeg/ffmpeg';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
 import {
@@ -40,6 +41,7 @@ import {
   MEDIA_POSTER_IMAGE_FILE_TYPE,
 } from '../../../constants';
 import { TRANSCODABLE_MIME_TYPES } from '../constants';
+import type { CropParams } from '../types';
 import getPosterName from './getPosterName';
 
 const isDevelopment =
@@ -49,11 +51,11 @@ const isDevelopment =
  * Checks whether the file size is too large for transcoding.
  *
  * @see https://github.com/ffmpegwasm/ffmpeg.wasm/tree/9b56b7f05b552c404aa0f62f46bed2592d9daf06#what-is-the-maximum-size-of-input-file
- * @param {File} file File object.
- * @param {number} file.size File size.
- * @return {boolean} Whether the file is too  large.
+ * @param file File object.
+ * @return Whether the file is too  large.
  */
-const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
+const isFileTooLarge = ({ size }: File) =>
+  size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 const FFMPEG_CONFIG = {
   CODEC: [
@@ -126,7 +128,7 @@ const FFMPEG_SHARED_CONFIG = [
  * Custom hook to interact with FFmpeg.
  *
  * @see https://ffmpeg.org/ffmpeg.html
- * @return {FFmpegData} Functions and vars related to FFmpeg usage.
+ * @return Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
   const {
@@ -146,7 +148,7 @@ function useFFmpeg() {
   const isCrossOriginIsolationEnabled = Boolean(window?.crossOriginIsolated);
 
   const getFFmpegInstance = useCallback(
-    async (file) => {
+    async (file: File) => {
       const { createFFmpeg, fetchFile } = await import(
         /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
       );
@@ -173,7 +175,7 @@ function useFFmpeg() {
    * @return {Promise<File>} File object for the video frame.
    */
   const getFirstFrameOfVideo = useCallback(
-    async (file) => {
+    async (file: File) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_video_poster_ffmpeg');
 
@@ -210,12 +212,14 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
 
-        trackError('video_poster_generation_ffmpeg', err.message);
+        if (err instanceof Error) {
+          void trackError('video_poster_generation_ffmpeg', err.message);
+        }
 
         throw err;
       } finally {
         try {
-          ffmpeg.exit();
+          ffmpeg?.exit();
         } catch {
           // Not interested in errors here.
         }
@@ -233,7 +237,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Transcoded video file object.
    */
   const transcodeVideo = useCallback(
-    async (file) => {
+    async (file: File) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_video_transcoding');
 
@@ -266,12 +270,14 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
 
-        trackError('video_transcoding', err.message);
+        if (err instanceof Error) {
+          void trackError('video_transcoding', err.message);
+        }
 
         throw err;
       } finally {
         try {
-          ffmpeg.exit();
+          ffmpeg?.exit();
         } catch {
           // Not interested in errors here.
         }
@@ -290,14 +296,21 @@ function useFFmpeg() {
    * @return {Promise<File[]>} Segmented video files .
    */
   const segmentVideo = useCallback(
-    async (file, segmentTime, fileLength) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
+    async (file: File, segmentTime: number, fileLength: number) => {
+      // eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('segment_video');
-      let ffmpeg;
+
+      let ffmpeg: FFmpeg | undefined;
+
       try {
         ffmpeg = await getFFmpegInstance(file);
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
+
+        if (!ext) {
+          throw new Error('Invalid file extension');
+        }
+
         const outputFileName = getFileBasename(file) + '_%03d.' + ext;
         const keyframes = [];
         for (let i = segmentTime; i < fileLength; i += segmentTime) {
@@ -319,34 +332,39 @@ function useFFmpeg() {
           '-segment_times',
           `${segmentTimes}`,
           '-segment_time_delta', //account for possible roundings operated when setting key frame times.
-          `${(1 / (2 * FFMPEG_CONFIG.FPS[1])).toFixed(2)}`,
+          `${(1 / (2 * Number(FFMPEG_CONFIG.FPS[1]))).toFixed(2)}`,
           '-reset_timestamps',
           '1',
           outputFileName
         );
 
-        const files = [];
-        await ffmpeg
+        return ffmpeg
           .FS('readdir', '/')
           .filter(
             (outputFile) =>
               outputFile !== file.name && outputFile.endsWith(`.${ext}`)
           )
-          .forEach(async (outputFile) => {
-            const data = await ffmpeg.FS('readFile', outputFile);
-            files.push(
-              blobToFile(new Blob([data.buffer], { type }), outputFile, type)
+          .map((outputFile) => {
+            const data = (ffmpeg as FFmpeg).FS('readFile', outputFile);
+            return blobToFile(
+              new Blob([data.buffer], { type }),
+              outputFile,
+              type
             );
-          });
-        return files.sort((a, b) => a.name.localeCompare(b.name));
+          })
+          .sort((a, b) => a.name.localeCompare(b.name));
       } catch (err) {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
-        trackError('segment_video', err.message);
+
+        if (err instanceof Error) {
+          void trackError('segment_video', err.message);
+        }
+
         throw err;
       } finally {
         try {
-          ffmpeg.exit();
+          ffmpeg?.exit();
         } catch {
           // Not interested in errors here.
         }
@@ -366,7 +384,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Transcoded video file object.
    */
   const trimVideo = useCallback(
-    async (file, start, end) => {
+    async (file: File, start: number, end: number) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_trim_video_transcoding');
 
@@ -377,6 +395,11 @@ function useFFmpeg() {
 
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
+
+        if (!ext) {
+          throw new Error('Invalid file extension');
+        }
+
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileBasename(file) + '-trimmed.' + ext;
 
@@ -385,9 +408,9 @@ function useFFmpeg() {
           '-i',
           file.name,
           '-ss',
-          start,
+          start.toString(),
           '-to',
-          end,
+          end.toString(),
           tempFileName
         );
         const data = ffmpeg.FS('readFile', tempFileName);
@@ -401,12 +424,14 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.log(err);
 
-        trackError('trim_video_transcoding', err.message);
+        if (err instanceof Error) {
+          void trackError('trim_video_transcoding', err.message);
+        }
 
         throw err;
       } finally {
         try {
-          ffmpeg.exit();
+          ffmpeg?.exit();
         } catch {
           // Not interested in errors here.
         }
@@ -421,7 +446,7 @@ function useFFmpeg() {
    * Crop Video to remove portions of the video using FFmpeg.
    */
   const cropVideo = useCallback(
-    async (file, cropParams) => {
+    async (file: File, cropParams: CropParams) => {
       let ffmpeg;
 
       const { cropWidth, cropHeight, cropX, cropY } = cropParams;
@@ -431,6 +456,11 @@ function useFFmpeg() {
 
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
+
+        if (!ext) {
+          throw new Error('Invalid file extension');
+        }
+
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileBasename(file) + '-cropped.' + ext;
         const crop = `crop=${cropWidth}:${cropHeight}:${cropX}:${cropY}`;
@@ -457,7 +487,7 @@ function useFFmpeg() {
         throw err;
       } finally {
         try {
-          ffmpeg.exit();
+          ffmpeg?.exit();
         } catch {
           // Not interested in errors here.
         }
@@ -473,7 +503,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Transcoded video file object.
    */
   const stripAudioFromVideo = useCallback(
-    async (file) => {
+    async (file: File) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
 
@@ -484,6 +514,11 @@ function useFFmpeg() {
 
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const ext = getExtensionFromMimeType(type);
+
+        if (!ext) {
+          throw new Error('Invalid file extension');
+        }
+
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileBasename(file) + '-muted.' + ext;
 
@@ -510,12 +545,14 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.log(err);
 
-        trackError('mute_video_transcoding', err.message);
+        if (err instanceof Error) {
+          void trackError('mute_video_transcoding', err.message);
+        }
 
         throw err;
       } finally {
         try {
-          ffmpeg.exit();
+          ffmpeg?.exit();
         } catch {
           // Not interested in errors here.
         }
@@ -533,7 +570,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Converted video file object.
    */
   const convertGifToVideo = useCallback(
-    async (file) => {
+    async (file: File) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_gif_conversion');
 
@@ -557,7 +594,7 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new blobToFile(
+        return blobToFile(
           new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE }),
           outputFileName,
           MEDIA_TRANSCODED_MIME_TYPE
@@ -566,12 +603,14 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
 
-        trackError('gif_conversion', err.message);
+        if (err instanceof Error) {
+          void trackError('gif_conversion', err.message);
+        }
 
         throw err;
       } finally {
         try {
-          ffmpeg.exit();
+          ffmpeg?.exit();
           // eslint-disable-next-line no-empty -- no-op
         } catch (e) {}
 
@@ -588,7 +627,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Converted video file object.
    */
   const convertToMp3 = useCallback(
-    async (file) => {
+    async (file: File) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_mp3_conversion');
 
@@ -610,7 +649,7 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new blobToFile(
+        return blobToFile(
           new Blob([data.buffer], { type: 'audio/mpeg' }),
           outputFileName,
           'audio/mpeg'
@@ -619,12 +658,14 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
 
-        trackError('mp3_conversion', err.message);
+        if (err instanceof Error) {
+          void trackError('mp3_conversion', err.message);
+        }
 
         throw err;
       } finally {
         try {
-          ffmpeg.exit();
+          ffmpeg?.exit();
           // eslint-disable-next-line no-empty -- no-op
         } catch (e) {}
 
@@ -636,19 +677,14 @@ function useFFmpeg() {
 
   /**
    * Determines whether the given file can be transcoded.
-   *
-   * @param {File} file File object.
-   * @return {boolean} Whether transcoding is likely possible.
    */
   const canTranscodeFile = useCallback(
-    (file) => TRANSCODABLE_MIME_TYPES.includes(file.type),
+    (file: File) => TRANSCODABLE_MIME_TYPES.includes(file.type),
     []
   );
 
   /**
    * Whether user opted in to video optimization.
-   *
-   * @type {boolean}
    */
   const isUserSettingEnabled = Boolean(currentUser?.mediaOptimization);
 
@@ -656,13 +692,12 @@ function useFFmpeg() {
    * Whether transcoding as a whole is supported.
    *
    * Considers user opt-in, cross-site isolation, and upload permissions.
-   *
-   * @type {boolean}
    */
-  const isTranscodingEnabled =
+  const isTranscodingEnabled = Boolean(
     hasUploadMediaAction &&
-    isUserSettingEnabled &&
-    isCrossOriginIsolationEnabled;
+      isUserSettingEnabled &&
+      isCrossOriginIsolationEnabled
+  );
 
   return useMemo(
     () => ({

@@ -19,6 +19,10 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import type { Resource } from '@googleforcreators/media';
+<<<<<<< try/convert-ts-utils
+=======
+
+>>>>>>> main
 /**
  * Internal dependencies
  */

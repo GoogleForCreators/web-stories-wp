@@ -18,6 +18,8 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import type { Resource } from '@googleforcreators/media';
+import type { ElementId, ElementType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -30,7 +32,7 @@ function useUpdateElementDimensions() {
   }));
 
   const updateElementDimensions = useCallback(
-    ({ id, resource }) => {
+    ({ id, resource }: { id: ElementId; resource: Resource }) => {
       updateElementsByResourceId({
         id,
         properties: (el) => {
@@ -40,14 +42,14 @@ function useUpdateElementDimensions() {
 
           if (!hasChangedDimensions) {
             return {
-              type: resource.type,
+              type: resource.type as unknown as ElementType,
               resource,
             };
           }
 
           return {
             resource,
-            type: resource.type,
+            type: resource.type as unknown as ElementType,
             width: resource.width,
             height: resource.height,
             x: PAGE_WIDTH / 2 - resource.width / 2,
