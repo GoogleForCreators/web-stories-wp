@@ -23,13 +23,13 @@ import {
   PAGE_RATIO,
   FULLBLEED_RATIO,
 } from '@googleforcreators/units';
-import { themeHelpers } from '@googleforcreators/design-system';
+import { THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import {
-  ZOOM_SETTING,
+  ZoomSetting,
   PAGE_NAV_WIDTH,
   PAGE_WIDTH_FACTOR,
   MAX_EXTRA_PAGES,
@@ -45,12 +45,12 @@ const ZOOM_PADDING_NONE = 12;
 const ZOOM_PADDING_FIT = 144;
 
 const INITIAL_STATE = {
-  zoomSetting: ZOOM_SETTING.FIT,
-  zoomLevel: null,
+  zoomSetting: ZoomSetting.Fit,
+  zoomLevel: 0,
   workspaceSize: {
-    width: null,
-    height: null,
-    availableHeight: null,
+    width: 0,
+    height: 0,
+    availableHeight: 0,
   },
   scrollOffset: {
     left: 0,
@@ -58,8 +58,38 @@ const INITIAL_STATE = {
   },
 };
 
+interface WorkspaceSize {
+  width: number;
+  height: number;
+  availableHeight: number;
+}
+interface ScrollOffset {
+  left: number;
+  top: number;
+}
+interface ReducerState {
+  zoomSetting: ZoomSetting;
+  zoomLevel: number;
+  workspaceSize: WorkspaceSize;
+  scrollOffset: ScrollOffset;
+}
+interface SetZoomSettingProps {
+  payload: ZoomSetting;
+}
+interface SetZoomLevelProps {
+  payload: number;
+}
+interface SetScrollOffsetProps {
+  payload: ScrollOffset;
+}
+interface SetWorkspaceSizeProps {
+  payload: WorkspaceSize;
+}
 const reducer = {
-  setZoomSetting: (state, { payload }) => ({
+  setZoomSetting: (
+    state: ReducerState,
+    { payload }: SetZoomSettingProps
+  ): ReducerState => ({
     ...state,
     zoomSetting: payload,
     scrollOffset: {
@@ -67,44 +97,57 @@ const reducer = {
       top: 0,
     },
   }),
-  setZoomLevel: (state, { payload }) => ({
+  setZoomLevel: (
+    state: ReducerState,
+    { payload }: SetZoomLevelProps
+  ): ReducerState => ({
     ...state,
     zoomLevel: payload,
-    zoomSetting: ZOOM_SETTING.FIXED,
+    zoomSetting: ZoomSetting.Fixed,
   }),
-  setScrollOffset: (state, { payload }) => ({
+  setScrollOffset: (
+    state: ReducerState,
+    { payload }: SetScrollOffsetProps
+  ): ReducerState => ({
     ...state,
     scrollOffset: payload,
   }),
-  setWorkspaceSize: (state, { payload }) => ({
+  setWorkspaceSize: (
+    state: ReducerState,
+    { payload }: SetWorkspaceSizeProps
+  ): ReducerState => ({
     ...state,
     workspaceSize: payload,
   }),
 };
 
-function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
+function calculateViewportProperties(
+  workspaceSize: WorkspaceSize,
+  zoomSetting: string,
+  zoomLevel: number
+) {
   // Calculate page size based on zoom setting
-  let maxPageWidth;
+  let maxPageWidth = 0;
   const workspaceRatio = workspaceSize.width / workspaceSize.availableHeight;
   switch (zoomSetting) {
-    case ZOOM_SETTING.FILL: {
+    case ZoomSetting.Fill: {
       // See how much we can fit inside so all space is used minus gap
       if (workspaceRatio > FULLBLEED_RATIO) {
         // workspace is limited in the height, so use the width minus room for scrollbar
         maxPageWidth =
           workspaceSize.width -
-          themeHelpers.SCROLLBAR_WIDTH -
+          THEME_CONSTANTS.SCROLLBAR_WIDTH -
           ZOOM_PADDING_LARGE;
       } else {
         // workspace is limited in the width, so use the height minus room for scrollbar converted
         maxPageWidth =
-          (workspaceSize.availableHeight - themeHelpers.SCROLLBAR_WIDTH) *
+          (workspaceSize.availableHeight - THEME_CONSTANTS.SCROLLBAR_WIDTH) *
             FULLBLEED_RATIO -
           ZOOM_PADDING_LARGE;
       }
       break;
     }
-    case ZOOM_SETTING.FIT: {
+    case ZoomSetting.Fit: {
       // See how much we can fit inside so all is visible
       // However, leave some extra space, as we don't want it to hug too tightly to the edges.
       const maxWidth = workspaceSize.width - ZOOM_PADDING_FIT;
@@ -206,8 +249,8 @@ function useZoomSetting() {
       (pageWidth / PAGE_WIDTH_FACTOR) * PAGE_WIDTH_FACTOR
     );
     switch (zoomSetting) {
-      case ZOOM_SETTING.FILL:
-      case ZOOM_SETTING.FIT:
+      case ZoomSetting.Fill:
+      case ZoomSetting.Fit:
         return maxPageWidth / PAGE_WIDTH;
       default:
         return _zoomLevel;

@@ -32,7 +32,7 @@ import { Fragment } from '@googleforcreators/react';
  */
 import { useLayout } from '../../app';
 import { MediaPicker, useQuickActions } from '../../app/highlights';
-import { ZOOM_SETTING } from '../../constants';
+import { ZoomSetting } from '../../constants';
 import {
   Z_INDEX_CANVAS_SIDE_MENU,
   Z_INDEX_CANVAS_SIDE_MENU_RECORDING_MODE,
@@ -83,7 +83,7 @@ function PageSideMenu() {
     ({ state: { isInRecordingMode } }) => ({ isInRecordingMode })
   );
 
-  const isZoomed = zoomSetting !== ZOOM_SETTING.FIT;
+  const isZoomed = zoomSetting !== ZoomSetting.Fit;
 
   return (
     <MenusWrapper
