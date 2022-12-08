@@ -20,11 +20,7 @@ import PropTypes from 'prop-types';
 import { useMemo, useRef } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Radio,
-  ThemeGlobals,
-  themeHelpers,
-} from '@googleforcreators/design-system';
+import { Radio, themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -37,7 +33,7 @@ const VisuallyHiddenLabel = styled.h3`
 
 const StyledRadio = styled(Radio)`
   input:focus + span,
-  input&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} + span {
+  input:focus-visible + span {
     ${({ theme }) =>
       `box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;`};
   }

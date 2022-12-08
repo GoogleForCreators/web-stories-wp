@@ -30,7 +30,7 @@ interface ConfigParams {
   custom_map?: Record<string, string | number>;
 }
 
-interface ControlParams {
+export interface ControlParams {
   groups?: string | string[] | undefined;
   send_to?: string | string[] | undefined;
   event_callback?: (() => void) | undefined;
@@ -47,6 +47,7 @@ export interface EventParameters {
   unread_count?: number;
   event_label?: string;
   event_category?: string;
+  status?: string;
 }
 
 interface Gtag {

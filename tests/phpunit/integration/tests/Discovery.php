@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -18,56 +21,43 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Settings;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Discovery
  */
 class Discovery extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Discovery
-	 */
-	private $instance;
+	private \Google\Web_Stories\Discovery $instance;
 
 	/**
 	 * User ID.
-	 *
-	 * @var int
 	 */
-	protected static $user_id;
+	protected static int $user_id;
 
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
 	 * Image attachment id.
-	 *
-	 * @var int
 	 */
-	protected static $attachment_id;
+	protected static int $attachment_id;
 
 	/**
 	 * Archive page ID.
-	 *
-	 * @var int
 	 */
-	protected static $archive_page_id;
+	protected static int $archive_page_id;
 
-	/**
-	 * @param $factory
-	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
 			]
 		);
 
-		self::$story_id      = $factory->post->create(
+		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Discovery Test Story',
@@ -76,16 +66,26 @@ class Discovery extends DependencyInjectedTestCase {
 				'post_author'  => self::$user_id,
 			]
 		);
-		self::$attachment_id = $factory->attachment->create_object(
-			DIR_TESTDATA . '/images/canola.jpg',
-			self::$story_id,
+		/**
+		 * @var int $attachment_id
+		 */
+		$attachment_id = $factory->attachment->create_object(
 			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => self::$story_id,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
 			]
 		);
 
-		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
+		self::$attachment_id = $attachment_id;
+
+		/**
+		 * @var \WP_Post $current_post
+		 */
+		$current_post = get_post( self::$attachment_id );
+
+		wp_maybe_generate_attachment_metadata( $current_post );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
 
 		add_theme_support( 'automatic-feed-links' );
@@ -105,7 +105,7 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->instance = $this->injector->make( \Google\Web_Stories\Discovery::class );
 
 		$this->set_permalink_structure( '/%postname%/' );
-		$this->go_to( get_permalink( self::$story_id ) );
+		$this->go_to( (string) get_permalink( self::$story_id ) );
 	}
 
 	/**
@@ -119,7 +119,6 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_open_graph_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_twitter_metadata' ] ) );
 		$this->assertSame( 4, has_action( 'web_stories_story_head', [ $this->instance, 'print_feed_link' ] ) );
-
 	}
 
 	/**
@@ -150,7 +149,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_schemaorg_metadata
 	 */
 	public function test_get_schemaorg_metadata(): void {
-		$result = $this->call_private_method( $this->instance, 'get_schemaorg_metadata' );
+		$result = $this->call_private_method( [ $this->instance, 'get_schemaorg_metadata' ] );
 		$this->assertArrayHasKey( 'mainEntityOfPage', $result );
 		$this->assertArrayHasKey( 'headline', $result );
 		$this->assertArrayHasKey( 'datePublished', $result );
@@ -178,7 +177,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_open_graph_metadata
 	 */
 	public function test_get_open_graph_metadata(): void {
-		$result = $this->call_private_method( $this->instance, 'get_open_graph_metadata' );
+		$result = $this->call_private_method( [ $this->instance, 'get_open_graph_metadata' ] );
 		$this->assertArrayHasKey( 'og:locale', $result );
 		$this->assertArrayHasKey( 'og:type', $result );
 		$this->assertArrayHasKey( 'og:description', $result );
@@ -230,7 +229,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_twitter_metadata
 	 */
 	public function test_get_twitter_metadata(): void {
-		$result = $this->call_private_method( $this->instance, 'get_twitter_metadata' );
+		$result = $this->call_private_method( [ $this->instance, 'get_twitter_metadata' ] );
 		$this->assertArrayHasKey( 'twitter:card', $result );
 		$this->assertArrayHasKey( 'twitter:image', $result );
 		$this->assertArrayHasKey( 'twitter:image:alt', $result );
@@ -267,7 +266,7 @@ class Discovery extends DependencyInjectedTestCase {
 			]
 		);
 
-		$result = $this->call_private_method( $this->instance, 'get_product_data', [ [ $product_object ] ] );
+		$result = $this->call_private_method( [ $this->instance, 'get_product_data' ], [ [ $product_object ] ] );
 
 		$expected = [
 			'products' =>
@@ -310,7 +309,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_product_data
 	 */
 	public function test_get_product_data_empty_story(): void {
-		$result = $this->call_private_method( $this->instance, 'get_product_data', [ [] ] );
+		$result = $this->call_private_method( [ $this->instance, 'get_product_data' ], [ [] ] );
 
 		$expected = [];
 

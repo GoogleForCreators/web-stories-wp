@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Story } from '@googleforcreators/types';
+import type { StoryData } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -66,6 +66,9 @@ import andadaFontToAndadaPro from './migrations/v0040_andadaFontToAndadaPro';
 import removeFontProperties from './migrations/v0041_removeFontProperties';
 import removeTrackName from './migrations/v0042_removeTrackName';
 import removeTagNames from './migrations/v0043_removeTagNames';
+import unusedProperties from './migrations/v0044_unusedProperties';
+import globalPageAdvancement from './migrations/v0045_globalPageAdvancement';
+import removeRedundantScalingProperties from './migrations/v0046_removeRedundantScalingProperties';
 
 type MigrationFn<T, S> = (storyData: T) => S;
 
@@ -115,6 +118,9 @@ const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = { // eslint-disable-
   41: [removeFontProperties],
   42: [removeTrackName],
   43: [removeTagNames],
+  44: [unusedProperties],
+  45: [globalPageAdvancement],
+  46: [removeRedundantScalingProperties],
 };
 
 export const DATA_VERSION = Math.max.apply(
@@ -122,7 +128,10 @@ export const DATA_VERSION = Math.max.apply(
   Object.keys(MIGRATIONS).map(Number)
 );
 
-export function migrate(storyData: Story, version: number): Story {
+export function migrate(
+  storyData: Partial<StoryData>,
+  version: number
+): Partial<StoryData> {
   let result = storyData;
   for (let v = version; v < DATA_VERSION; v++) {
     const migrations = MIGRATIONS[v + 1];
@@ -138,5 +147,3 @@ export function migrate(storyData: Story, version: number): Story {
   }
   return result;
 }
-
-export default migrate;

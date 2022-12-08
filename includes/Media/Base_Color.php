@@ -24,15 +24,18 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 
 /**
  * Class Base_Color
  */
-class Base_Color extends Service_Base implements HasMeta {
+class Base_Color extends Service_Base implements HasMeta, PluginUninstallAware {
 
 	/**
 	 * The base color meta key.
@@ -81,6 +84,10 @@ class Base_Color extends Service_Base implements HasMeta {
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 * @return array|mixed $response;
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
 		if ( ! \is_array( $response ) ) {
@@ -97,5 +104,14 @@ class Base_Color extends Service_Base implements HasMeta {
 		$response[ self::BASE_COLOR_POST_META_KEY ] = get_post_meta( $post_id, self::BASE_COLOR_POST_META_KEY, true );
 
 		return $response;
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::BASE_COLOR_POST_META_KEY );
 	}
 }

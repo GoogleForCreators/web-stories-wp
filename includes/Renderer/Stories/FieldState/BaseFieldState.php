@@ -19,6 +19,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
 use Google\Web_Stories\Interfaces\Field;
@@ -33,10 +35,8 @@ class BaseFieldState implements FieldState {
 
 	/**
 	 * Post type has archive.
-	 *
-	 * @var bool
 	 */
-	protected $has_archive = false;
+	protected bool $has_archive = false;
 
 	/**
 	 * Constructor.

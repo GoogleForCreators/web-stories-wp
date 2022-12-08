@@ -28,7 +28,6 @@ import {
 import {
   Text,
   useKeyDownEffect,
-  ThemeGlobals,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
@@ -42,7 +41,7 @@ import { getHTMLFormatters } from '@googleforcreators/rich-text';
  */
 import { useFont, useStory } from '../../../../app';
 import { useCalculateAccessibleTextColors } from '../../../../app/pageCanvas';
-import StoryPropTypes from '../../../../types';
+import { StoryPropTypes } from '../../../../propTypes';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';
@@ -68,8 +67,7 @@ const Preview = styled.button`
 
   ${({ isTextSelected }) => (isTextSelected ? focusStyle : 'outline: none;')}
 
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
-    &[data-focus-visible-added] [role='presentation'] {
+  &:focus-visible [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Renderer;
 
 use Google\Web_Stories\Context;
@@ -38,7 +40,7 @@ class Single extends Service_Base {
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Single constructor.

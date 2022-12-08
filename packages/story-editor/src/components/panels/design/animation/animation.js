@@ -33,22 +33,20 @@ import {
   BACKGROUND_ANIMATION_EFFECTS,
   BG_MAX_SCALE,
   BG_MIN_SCALE,
-  DIRECTION,
-  SCALE_DIRECTION,
-  STORY_ANIMATION_STATE,
+  AnimationDirection,
+  ScaleDirection,
+  StoryAnimationState,
   getAnimationEffectDefaults,
-} from '@googleforcreators/animation';
-import { progress } from '@googleforcreators/units';
-import {
-  getDefinitionForType,
   getHasElementOffsets,
   DEFAULT_HAS_OFFSETS,
-} from '@googleforcreators/elements';
+} from '@googleforcreators/animation';
+import { progress } from '@googleforcreators/units';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes, { AnimationPropType } from '../../../../types';
+import { StoryPropTypes, AnimationPropType } from '../../../../propTypes';
 import { useStory } from '../../../../app';
 import { DESIGN_COPY } from '../../../checklist';
 import Warning from '../warning';
@@ -169,7 +167,7 @@ function AnimationPanel({
   const debouncedUpdateAnimationState = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
-        animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
+        animationState: StoryAnimationState.PlayingSelected,
       });
       playUpdatedAnimation.current = false;
     }
@@ -213,28 +211,28 @@ function AnimationPanel({
         [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: {
           tooltip: backgroundAnimationTooltip,
           options: [
-            !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
-            !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
-            !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
-            !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
+            !hasOffset.bottom && AnimationDirection.TopToBottom,
+            !hasOffset.left && AnimationDirection.RightToLeft,
+            !hasOffset.top && AnimationDirection.BottomToTop,
+            !hasOffset.right && AnimationDirection.LeftToRight,
           ].filter(Boolean),
         },
         [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: {
           tooltip: backgroundAnimationTooltip,
           options: [
-            normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
-            normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
+            normalizedScale <= 0.01 && ScaleDirection.ScaleIn,
+            normalizedScale >= 0.99 && ScaleDirection.ScaleOut,
           ].filter(Boolean),
         },
         [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value]: {
           tooltip: backgroundAnimationTooltip,
           options: [
-            !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
-            !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
-            !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
-            !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
-            normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
-            normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
+            !hasOffset.bottom && AnimationDirection.TopToBottom,
+            !hasOffset.left && AnimationDirection.RightToLeft,
+            !hasOffset.top && AnimationDirection.BottomToTop,
+            !hasOffset.right && AnimationDirection.LeftToRight,
+            normalizedScale <= 0.01 && ScaleDirection.ScaleIn,
+            normalizedScale >= 0.99 && ScaleDirection.ScaleOut,
           ].filter(Boolean),
         },
       };

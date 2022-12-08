@@ -177,11 +177,13 @@ export const createStoryFromTemplate = (config, template) => {
     createSolidFromString(color)
   );
 
+  // If available, take the global values.
+  const { globalPageDuration = 7, globalAutoAdvance = true } = config;
   const storyData = {
     pages,
     version,
-    autoAdvance: true,
-    defaultPageDuration: 7,
+    autoAdvance: globalAutoAdvance,
+    defaultPageDuration: globalPageDuration,
     currentStoryStyles: {
       colors: convertedColors,
     },

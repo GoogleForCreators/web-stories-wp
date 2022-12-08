@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use WP_Post;
@@ -40,14 +42,14 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Analytics constructor.
@@ -190,6 +192,10 @@ class Story_Archive extends Service_Base {
 	 * @param string[]|mixed $post_states An array of post display states.
 	 * @param WP_Post|null   $post        The current post object.
 	 * @return string[]|mixed Filtered post display states.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($post_states is array<T> ? array<T> : mixed)
 	 */
 	public function filter_display_post_states( $post_states, $post ) {
 		if ( ! \is_array( $post_states ) || ! $post ) {

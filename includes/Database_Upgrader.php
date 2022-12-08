@@ -24,19 +24,23 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
+use Google\Web_Stories\Interfaces\Migration;
 use WP_Site;
 
 /**
  * Class Database_Upgrader
  */
-class Database_Upgrader implements Service, Registerable, PluginActivationAware, SiteInitializationAware {
+class Database_Upgrader implements Service, Registerable, PluginActivationAware, SiteInitializationAware, PluginUninstallAware {
 
 	/**
 	 * The slug of database option.
@@ -79,9 +83,9 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	/**
 	 * Injector instance.
 	 *
-	 * @var Injector|Service Locale instance.
+	 * @var Injector Injector instance.
 	 */
-	private $injector;
+	private Injector $injector;
 
 	/**
 	 * Database_Upgrader constructor.
@@ -150,15 +154,17 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $class           The Class to call.
-	 * @param string $version         The new version.
-	 * @param string $current_version The current set version.
+	 * @param class-string $class           The Class to call.
+	 * @param string       $version         The new version.
+	 * @param string       $current_version The current set version.
 	 */
 	protected function run_upgrade_routine( string $class, string $version, string $current_version ): void {
 		if ( version_compare( $current_version, $version, '<' ) ) {
-			if ( ! method_exists( $this->injector, 'make' ) ) {
-				return;
-			}
+			/**
+			 * Instance of a migration class.
+			 *
+			 * @var Migration $routine
+			 */
 			$routine = $this->injector->make( $class );
 			$routine->migrate();
 		}
@@ -174,5 +180,15 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	protected function finish_up( string $previous_version ): void {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
 		update_option( self::OPTION, WEBSTORIES_DB_VERSION );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_option( self::PREVIOUS_OPTION );
+		delete_option( self::OPTION );
 	}
 }

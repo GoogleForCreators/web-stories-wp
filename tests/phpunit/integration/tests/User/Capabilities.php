@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -42,6 +45,9 @@ class Capabilities extends TestCase {
 	 */
 	public function test_add_caps_to_roles(): void {
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$this->assertNotNull( $post_type_object );
+
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
 		$capability = new \Google\Web_Stories\User\Capabilities();
@@ -49,6 +55,9 @@ class Capabilities extends TestCase {
 
 		$administrator = get_role( 'administrator' );
 		$editor        = get_role( 'editor' );
+
+		$this->assertNotNull( $administrator );
+		$this->assertNotNull( $editor );
 
 		foreach ( $all_capabilities as $cap ) {
 			$this->assertTrue( $administrator->has_cap( $cap ) );
@@ -64,12 +73,11 @@ class Capabilities extends TestCase {
 		$capability->remove_caps_from_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$this->assertNotNull( $post_type_object );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 		$all_capabilities = array_filter(
 			$all_capabilities,
-			static function ( $value ) {
-				return 'read' !== $value;
-			}
+			static fn( $value ) => 'read' !== $value
 		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
@@ -94,10 +102,14 @@ class Capabilities extends TestCase {
 		$capability->add_caps_to_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$this->assertNotNull( $post_type_object );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
 		$administrator = get_role( 'administrator' );
 		$editor        = get_role( 'editor' );
+
+		$this->assertNotNull( $administrator );
+		$this->assertNotNull( $editor );
 
 		restore_current_blog();
 

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Shopping;
 
 use JsonSerializable;
@@ -54,34 +56,24 @@ use JsonSerializable;
 class Product implements JsonSerializable {
 	/**
 	 * Product id.
-	 *
-	 * @var string
 	 */
-	protected $id = '';
+	protected string $id = '';
 	/**
 	 * Product title.
-	 *
-	 * @var string
 	 */
-	protected $title = '';
+	protected string $title = '';
 	/**
 	 * Product brand.
-	 *
-	 * @var string
 	 */
-	protected $brand = '';
+	protected string $brand = '';
 	/**
 	 * Product Price.
-	 *
-	 * @var float
 	 */
-	protected $price = 0.0;
+	protected float $price = 0.0;
 	/**
 	 * Product's price currency.
-	 *
-	 * @var string
 	 */
-	protected $price_currency = '';
+	protected string $price_currency = '';
 
 	/**
 	 * Product images as an array.
@@ -89,28 +81,24 @@ class Product implements JsonSerializable {
 	 * @var array{url: string, alt: string}[]
 	 * @phpstan-var ProductImage[]
 	 */
-	protected $images = [];
+	protected array $images = [];
 
 	/**
 	 * Product Details.
-	 *
-	 * @var string
 	 */
-	protected $details = '';
+	protected string $details = '';
 
 	/**
 	 * Product url.
-	 *
-	 * @var string
 	 */
-	protected $url = '';
+	protected string $url = '';
 
 	/**
 	 * Product rating.
 	 *
-	 * @var array{rating_value: float, review_count: int, review_url: string}
+	 * @var array{rating_value?: float, review_count?: int, review_url?: string}
 	 */
-	protected $aggregate_rating;
+	protected array $aggregate_rating = [];
 
 	/**
 	 * Product constructor.
@@ -121,7 +109,7 @@ class Product implements JsonSerializable {
 	 */
 	public function __construct( array $product = [] ) {
 		foreach ( $product as $key => $value ) {
-			if ( property_exists( $this, $key ) ) {
+			if ( property_exists( $this, $key ) && ! \is_null( $value ) ) {
 				$this->$key = $value;
 			}
 		}
@@ -340,7 +328,7 @@ class Product implements JsonSerializable {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @return array{rating_value: float, review_count: int, review_url: string}
+	 * @return array{rating_value?: float, review_count?: int, review_url?: string}
 	 */
 	public function get_aggregate_rating(): ?array {
 		return $this->aggregate_rating;

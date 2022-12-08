@@ -24,15 +24,18 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 
 /**
  * Class Cropping
  */
-class Cropping extends Service_Base implements HasMeta {
+class Cropping extends Service_Base implements HasMeta, PluginUninstallAware {
 
 	/**
 	 * The cropped video id post meta key.
@@ -79,5 +82,14 @@ class Cropping extends Service_Base implements HasMeta {
 	 */
 	public function delete_video( int $attachment_id ): void {
 		delete_metadata( 'post', 0, self::CROPPED_ID_POST_META_KEY, $attachment_id, true );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::CROPPED_ID_POST_META_KEY );
 	}
 }

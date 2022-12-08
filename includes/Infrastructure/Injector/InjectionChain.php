@@ -15,6 +15,8 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Infrastructure\Injector;
 
 /**
@@ -27,6 +29,8 @@ namespace Google\Web_Stories\Infrastructure\Injector;
  * @internal
  *
  * @since 1.6.0
+ *
+ * @template T
  */
 final class InjectionChain {
 
@@ -34,15 +38,17 @@ final class InjectionChain {
 	 * Chain.
 	 *
 	 * @var string[]
+	 * @phpstan-var class-string<T>[]
 	 */
-	private $chain = [];
+	private array $chain = [];
 
 	/**
 	 * Resolutions.
 	 *
 	 * @var array<bool>
+	 * @phpstan-var array<class-string, bool>
 	 */
-	private $resolutions = [];
+	private array $resolutions = [];
 
 	/**
 	 * Add class to injection chain.
@@ -51,6 +57,8 @@ final class InjectionChain {
 	 *
 	 * @param string $class Class to add to injection chain.
 	 * @return self Modified injection chain.
+	 *
+	 * @phpstan-param class-string<T> $class
 	 */
 	public function add_to_chain( string $class ): self {
 		$new_chain          = clone $this;
@@ -66,6 +74,8 @@ final class InjectionChain {
 	 *
 	 * @param string $resolution Resolution to add.
 	 * @return self Modified injection chain.
+	 *
+	 * @phpstan-param class-string $resolution
 	 */
 	public function add_resolution( string $resolution ): self {
 		$new_chain                             = clone $this;
@@ -82,6 +92,8 @@ final class InjectionChain {
 	 * @throws \LogicException If the injection chain is accessed too early.
 	 *
 	 * @return string Last class pushed to the injection chain.
+	 *
+	 * @phpstan-return class-string<T>
 	 */
 	public function get_class(): string {
 		if ( empty( $this->chain ) ) {
@@ -99,6 +111,8 @@ final class InjectionChain {
 	 * @since 1.6.0
 	 *
 	 * @return string[] Chain of injections.
+	 *
+	 * @phpstan-return class-string[]
 	 */
 	public function get_chain(): array {
 		return \array_reverse( $this->chain );
@@ -111,6 +125,8 @@ final class InjectionChain {
 	 *
 	 * @param string $resolution Resolution to check for.
 	 * @return bool Whether the resolution was found.
+	 *
+	 * @phpstan-param class-string<T> $resolution
 	 */
 	public function has_resolution( string $resolution ): bool {
 		return \array_key_exists( $resolution, $this->resolutions );

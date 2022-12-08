@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\Renderer\Story;
 
 use Google\Web_Stories\Tests\Integration\TestCase;
@@ -53,7 +55,11 @@ class Image extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		wp_maybe_generate_attachment_metadata( get_post( $poster_attachment_id ) );
+		$this->assertNotWPError( $poster_attachment_id );
+		$poster_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $poster_attachment );
+
+		wp_maybe_generate_attachment_metadata( $poster_attachment );
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 
 		$story = new \Google\Web_Stories\Model\Story();
@@ -97,6 +103,9 @@ class Image extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+		$this->assertNotWPError( $poster_attachment_id );
+		$poster_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $poster_attachment );
 
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 

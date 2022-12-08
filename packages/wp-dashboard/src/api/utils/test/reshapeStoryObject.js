@@ -51,18 +51,18 @@ describe('reshapeStoryObject', () => {
       },
       _embedded: {
         author: [{ id: 1, name: 'admin' }],
-        'wp:lock': [{ locked: true, time: '1628506372', user: 1 }],
-        'wp:lockuser': [
+        'wp:lock': [
           {
-            id: 1,
-            name: 'admin',
-            url: 'http://localhost:8899',
-            description: '',
-            link: 'http://localhost:8899/author/admin',
-            avatar_urls: {
-              24: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=24&d=mm&r=g',
-              48: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=48&d=mm&r=g',
-              96: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=96&d=mm&r=g',
+            locked: true,
+            time: '1628506372',
+            user: {
+              id: 1,
+              name: 'admin',
+              avatar: {
+                24: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=24&d=mm&r=g',
+                48: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=48&d=mm&r=g',
+                96: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=96&d=mm&r=g',
+              },
             },
           },
         ],
@@ -127,14 +127,14 @@ describe('reshapeStoryObject', () => {
       },
       _embedded: {
         author: [{ id: 1, name: 'admin' }],
-        'wp:lock': [{ locked: true, time: '1628506372', user: 1 }],
-        'wp:lockuser': [
+        'wp:lock': [
           {
-            id: 1,
-            name: 'admin',
-            url: 'http://localhost:8899',
-            description: '',
-            link: 'http://localhost:8899/author/admin',
+            locked: true,
+            time: '1628506372',
+            user: {
+              id: 1,
+              name: 'admin',
+            },
           },
         ],
       },

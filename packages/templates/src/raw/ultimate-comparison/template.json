@@ -1,33 +1,19 @@
 {
-  "current": null,
-  "selection": [],
-  "story": {},
-  "version": 43,
+  "version": 46,
   "pages": [
     {
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -334,
           "y": -331.5,
           "width": 1080,
           "height": 1281,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "image",
           "id": "c7f24a7c-dca3-40d8-b1ba-57b2cdda81bb",
@@ -52,33 +38,15 @@
           "overlay": {
             "type": "linear",
             "stops": [
-              {
-                "color": {
-                  "r": 0,
-                  "g": 0,
-                  "b": 0,
-                  "a": 0
-                },
-                "position": 0.26
-              },
-              {
-                "color": {
-                  "r": 0,
-                  "g": 0,
-                  "b": 0
-                },
-                "position": 1
-              }
+              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0.26 },
+              { "color": { "r": 0, "g": 0, "b": 0 }, "position": 1 }
             ],
             "alpha": 0.8
           }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -121,23 +89,12 @@
             }
           },
           "fontSize": 38,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2; text-transform: uppercase\">The battle of noise cancelling headphones</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -149,17 +106,11 @@
           "y": 385,
           "width": 317,
           "height": 153,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "409d1f48-430b-4661-a45c-d216ffae3359"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -204,23 +155,12 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">The ultimate comparison</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -232,37 +172,20 @@
           "y": 358,
           "width": 234,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "26fa841d-4fc4-4eff-b272-e655d15b76e9"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "type": "shape",
           "x": 0,
           "y": 359,
           "width": 6,
           "height": 170,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "5e9bbca5-9939-4fb0-a107-68d39f263084"
         },
         {
@@ -271,10 +194,7 @@
           "id": "82d2cab0-eaaf-45c4-96d2-d174c4634a0e",
           "basedOn": "26fa841d-4fc4-4eff-b272-e655d15b76e9",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -319,23 +239,12 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fbe6d7; letter-spacing: 0.02em; text-transform: uppercase\">By: John Derric</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -344,43 +253,23 @@
             "bottomLeft": 2
           },
           "width": 234,
-          "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 19
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "f1bd71af-ab18-4da6-ac5b-5cda241c9ccb",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -393,26 +282,15 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -434,
           "y": -651,
           "width": 1280,
           "height": 1920,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "image",
           "id": "68f166d4-de2b-4a4b-ae13-5c58dfa5803b",
@@ -434,21 +312,11 @@
             "baseColor": "#45403d",
             "isExternal": true
           },
-          "overlay": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0,
-              "a": 0.2
-            }
-          }
+          "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.2 } }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -491,23 +359,12 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2; letter-spacing: 0.02em\">We demand a premium listening experience that doesn't skimp on the bells and whistles. Read on to see which headphones rise to the occasion.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -517,9 +374,6 @@
           },
           "width": 313,
           "height": 172,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "25e7cccb-ad86-43b9-b8d9-4c1ee7cf7f4c",
           "id": "46f08b51-2ddd-4408-a6c7-ce72b673dc85",
           "x": 48,
@@ -527,37 +381,20 @@
           "tagName": "p"
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "af404a13-9c10-415a-9df4-129656b2fb6d",
       "defaultBackgroundElement": {
         "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
         "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255
-          }
-        },
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
@@ -579,19 +416,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -599,19 +431,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 212,
-              "g": 216,
-              "b": 217
-            }
-          },
+          "backgroundColor": { "color": { "r": 212, "g": 216, "b": 217 } },
           "type": "image",
           "x": 47,
           "y": -60,
@@ -620,9 +443,7 @@
           "scale": 100,
           "focalX": 50.888543826733155,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "732b09ad-605e-42e9-874b-4a74ba138a29",
           "border": {
             "left": 0,
@@ -630,13 +451,7 @@
             "top": 0,
             "bottom": 0,
             "lockedWidth": false,
-            "color": {
-              "color": {
-                "r": 222,
-                "g": 112,
-                "b": 50
-              }
-            }
+            "color": { "color": { "r": 222, "g": 112, "b": 50 } }
           },
           "resource": {
             "type": "image",
@@ -660,49 +475,26 @@
           "id": "340bc823-a3fe-4a5f-91f6-22631bf3424d",
           "basedOn": "732b09ad-605e-42e9-874b-4a74ba138a29",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "type": "shape",
           "width": 365,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "border": {
             "left": 0,
             "right": 0,
             "top": 0,
             "bottom": 0,
             "lockedWidth": false,
-            "color": {
-              "color": {
-                "r": 222,
-                "g": 112,
-                "b": 50
-              }
-            }
+            "color": { "color": { "r": 222, "g": 112, "b": 50 } }
           }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -747,13 +539,7 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 6,
-              "g": 6,
-              "b": 7
-            }
-          },
+          "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
           "lineHeight": 1.14,
           "textAlign": "center",
           "padding": {
@@ -764,7 +550,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">01</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -774,9 +559,6 @@
           },
           "width": 66,
           "height": 65,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "82d2cab0-eaaf-45c4-96d2-d174c4634a0e",
           "id": "dc1a8c40-1df3-448a-ba5a-6465c8bf1c2c",
           "x": 347,
@@ -785,10 +567,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -833,23 +612,12 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #3e3939\">These headphones not only look incredibly sophisticated, they're comfortable and block out noise completely.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -859,9 +627,6 @@
           },
           "width": 234,
           "height": 72,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "26fa841d-4fc4-4eff-b272-e655d15b76e9",
           "id": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "x": 140,
@@ -869,10 +634,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -915,23 +677,12 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #0c0b0b; text-transform: uppercase\">TeoLAB X9</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -941,22 +692,13 @@
           },
           "width": 313,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "3869bae7-fb89-4e2e-87ec-98f66e8e6066",
           "id": "21f43598-56b7-43d9-8112-8713d004d822",
           "x": 48,
           "y": 468
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 248,
-          "b": 242
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 248, "b": 242 } },
       "type": "page",
       "id": "d636baa1-3fcc-4418-87c3-3b6c8cc49623",
       "animations": [
@@ -990,19 +732,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -1010,10 +747,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1058,23 +792,12 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff8f2; letter-spacing: 0.02em; text-transform: uppercase\">$399 USD</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1084,9 +807,6 @@
           },
           "width": 234,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "id": "1d7a5db6-9046-4f36-ba99-e0b3ad88c427",
           "x": 85,
@@ -1095,10 +815,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1141,23 +858,12 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2; text-transform: uppercase\">TeoLAB X9</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1167,9 +873,6 @@
           },
           "width": 313,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "21f43598-56b7-43d9-8112-8713d004d822",
           "id": "4ce813d2-6a07-4a87-935a-cd71f538f996",
           "x": 85,
@@ -1178,19 +881,10 @@
         },
         {
           "opacity": 90,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "x": 0,
           "y": 96,
@@ -1199,9 +893,7 @@
           "scale": 120,
           "focalX": 40.1976055003798,
           "focalY": 44.13836611739884,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "resource": {
             "type": "image",
@@ -1225,28 +917,17 @@
           "id": "3d709325-743c-47fd-a27f-5abf15cafa83",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 90,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "width": 145,
           "height": 258,
           "scale": 137,
           "focalX": 44.634448369447725,
           "focalY": 53.70038043486364,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "resource": {
             "type": "image",
             "mimeType": "image/png",
@@ -1269,10 +950,7 @@
           "id": "edf1779b-4505-4f81-a425-21f04356e16c",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1317,23 +995,12 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff8f2\">Pros</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1343,9 +1010,6 @@
           },
           "width": 34,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "0a18f55e-2e2c-4ea4-89b4-48508bf53ac9"
         },
         {
@@ -1354,10 +1018,7 @@
           "id": "3e0dce9d-118f-4365-bf42-d95d1b9f08ad",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1402,23 +1063,12 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff8f2\">Cons</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1428,38 +1078,22 @@
           },
           "width": 43,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "845ad86c-e09b-4412-b7d1-98eb17607aef"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "type": "shape",
           "x": 49,
           "y": 413,
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "2f224bc7-225d-4ec3-9529-fea1fb09b255"
         },
         {
@@ -1468,10 +1102,7 @@
           "id": "a1f84f55-01c2-4502-b703-cd41ea83a723",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1516,23 +1147,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2\">Nice headphone fit</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1542,9 +1162,6 @@
           },
           "width": 134,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "0a18f55e-2e2c-4ea4-89b4-48508bf53ac9"
         },
         {
@@ -1553,10 +1170,7 @@
           "id": "8b90c646-3c22-4c74-bdc8-449dfc338628",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1601,23 +1215,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2\">Can be a large fit</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1627,9 +1230,6 @@
           },
           "width": 134,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "845ad86c-e09b-4412-b7d1-98eb17607aef"
         },
         {
@@ -1638,29 +1238,16 @@
           "id": "e530f07c-bad3-4367-95be-724e86739066",
           "basedOn": "2f224bc7-225d-4ec3-9529-fea1fb09b255",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "type": "shape",
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          }
+          "mask": { "type": "rectangle" }
         },
         {
           "x": 49,
@@ -1668,10 +1255,7 @@
           "id": "a55067d4-bc22-449e-8bf4-fb2ee3e1f61a",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1716,23 +1300,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2\">Spacious soundstage</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1742,9 +1315,6 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "0a18f55e-2e2c-4ea4-89b4-48508bf53ac9"
         },
         {
@@ -1753,10 +1323,7 @@
           "id": "410dc217-a73a-4ca2-a58f-911a5a5ad9ef",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1801,23 +1368,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2\">Clarity of sound overcorrects for high pitches</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1827,9 +1383,6 @@
           },
           "width": 134,
           "height": 54,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "845ad86c-e09b-4412-b7d1-98eb17607aef"
         },
         {
@@ -1838,29 +1391,16 @@
           "id": "36362b98-a242-42b6-858e-45df2b225e40",
           "basedOn": "2f224bc7-225d-4ec3-9529-fea1fb09b255",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "type": "shape",
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          }
+          "mask": { "type": "rectangle" }
         },
         {
           "x": 49,
@@ -1868,10 +1408,7 @@
           "id": "e2e5902a-c8e7-4be3-8432-1ce2df1be4b4",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1916,23 +1453,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2\">Blocks out background noise</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1942,9 +1468,6 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "0a18f55e-2e2c-4ea4-89b4-48508bf53ac9"
         },
         {
@@ -1953,10 +1476,7 @@
           "id": "c74cd2ff-e9a1-4bd8-8b91-1dd369373091",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2001,23 +1521,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2\">Can be pricey</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2027,19 +1536,10 @@
           },
           "width": 134,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "845ad86c-e09b-4412-b7d1-98eb17607aef"
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 6,
-          "g": 6,
-          "b": 7
-        }
-      },
+      "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
       "type": "page",
       "id": "9b4a6651-8a12-4055-9e20-c33b027bdb23",
       "animations": [
@@ -2147,19 +1647,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "f6e529c4-dbe7-457c-985c-6ebf84f8810f",
@@ -2167,19 +1662,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 212,
-              "g": 216,
-              "b": 217
-            }
-          },
+          "backgroundColor": { "color": { "r": 212, "g": 216, "b": 217 } },
           "x": 0,
           "y": -59,
           "width": 365,
@@ -2187,9 +1673,7 @@
           "scale": 105,
           "focalX": 49.53457228123499,
           "focalY": 52.286379349015355,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "7761bc63-d69f-4920-9140-e13d344bc07f",
           "border": {
             "left": 0,
@@ -2197,13 +1681,7 @@
             "top": 0,
             "bottom": 0,
             "lockedWidth": false,
-            "color": {
-              "color": {
-                "r": 222,
-                "g": 112,
-                "b": 50
-              }
-            }
+            "color": { "color": { "r": 222, "g": 112, "b": 50 } }
           },
           "type": "image",
           "resource": {
@@ -2224,53 +1702,30 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "x": 0,
           "y": 349,
           "id": "2243d4b1-ec78-4234-afd2-ae9b7cd6ee6a",
           "basedOn": "732b09ad-605e-42e9-874b-4a74ba138a29",
           "width": 365,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "border": {
             "left": 0,
             "right": 0,
             "top": 0,
             "bottom": 0,
             "lockedWidth": false,
-            "color": {
-              "color": {
-                "r": 222,
-                "g": 112,
-                "b": 50
-              }
-            }
+            "color": { "color": { "r": 222, "g": 112, "b": 50 } }
           },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -2315,13 +1770,7 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 6,
-              "g": 6,
-              "b": 7
-            }
-          },
+          "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
           "lineHeight": 1.14,
           "textAlign": "center",
           "padding": {
@@ -2331,7 +1780,6 @@
             "vertical": 23
           },
           "content": "<span style=\"color: #fff\">02</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -2341,9 +1789,6 @@
           },
           "width": 66,
           "height": 65,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "82d2cab0-eaaf-45c4-96d2-d174c4634a0e",
           "id": "af14575b-fe88-4b59-af6d-06aaa56eca6f",
           "x": 299,
@@ -2353,10 +1798,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2401,22 +1843,11 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #3e3939\">Superior sound with a pure voice assistant.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2426,9 +1857,6 @@
           },
           "width": 234,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "26fa841d-4fc4-4eff-b272-e655d15b76e9",
           "id": "a85d23b2-d423-440c-82e6-44b87d37af0d",
           "x": 140,
@@ -2437,10 +1865,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2483,22 +1908,11 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #0c0b0b; text-transform: uppercase\">KROX WH-1000XM3</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2508,9 +1922,6 @@
           },
           "width": 313,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "3869bae7-fb89-4e2e-87ec-98f66e8e6066",
           "id": "e1c6f95f-7edb-44f8-9b1d-bf5a62d3de09",
           "x": 48,
@@ -2543,13 +1954,7 @@
           "delay": 250
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 248,
-          "b": 242
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 248, "b": 242 } },
       "type": "page",
       "id": "61b8b7dd-4fe4-452a-8965-4e79fcda8f69",
       "pageTemplateType": null
@@ -2558,19 +1963,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "23602568-add0-48c4-a76c-b550bb7da0e0",
@@ -2578,10 +1978,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2626,22 +2023,11 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff8f2; letter-spacing: 0.02em\">$378 USD</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2651,9 +2037,6 @@
           },
           "width": 234,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "id": "2b10a841-466b-4f5d-b352-0151690194ea",
           "x": 85,
@@ -2663,10 +2046,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2709,22 +2089,11 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff8f2; text-transform: uppercase\">KROX WH-1000XM3</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2734,9 +2103,6 @@
           },
           "width": 272,
           "height": 62,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "21f43598-56b7-43d9-8112-8713d004d822",
           "id": "5b67b8df-f9e3-4eda-98d3-19f3a7f8216e",
           "x": 85,
@@ -2746,19 +2112,10 @@
         },
         {
           "opacity": 90,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
           "y": 96,
           "width": 266,
@@ -2766,9 +2123,7 @@
           "scale": 129,
           "focalX": 40.881493488725404,
           "focalY": 40.81394899604929,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "82972bdd-0a23-4370-be81-338340816b90",
           "type": "image",
           "resource": {
@@ -2789,19 +2144,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": true
-          },
+          "flip": { "vertical": false, "horizontal": true },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 267,
           "y": 96,
           "id": "9291815a-caf4-4c23-a8ad-b3d200fba313",
@@ -2811,9 +2157,7 @@
           "scale": 190,
           "focalX": 47.776525791331935,
           "focalY": 51.667605656501046,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2833,10 +2177,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2881,26 +2222,15 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 398,
           "id": "45cf6bdf-b001-4cc8-9346-90ff2e8dac30",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"font-weight: 700; color: #fff8f2\">Pros</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2910,18 +2240,12 @@
           },
           "width": 34,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "bfe9a8e6-7035-488b-8999-0ca4dfdb2ef0"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2966,26 +2290,15 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 223,
           "y": 398,
           "id": "fe9d7f5b-bf27-40c0-b063-ecb77aec1bfe",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"font-weight: 700; color: #fff8f2\">Cons</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2995,47 +2308,28 @@
           },
           "width": 43,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "7c53b632-dbfe-4b1b-98dd-f8c3f7f827bb"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 424,
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "56887a35-7289-4962-aa88-f68adf9bf46f",
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3080,26 +2374,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 437,
           "id": "94b87c82-6ef8-4e1f-b334-8bb710022f6b",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Voice assistant</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3109,18 +2392,12 @@
           },
           "width": 134,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "bfe9a8e6-7035-488b-8999-0ca4dfdb2ef0"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3165,26 +2442,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 223,
           "y": 437,
           "id": "9f39e42a-f838-4ca9-9b4a-e73e6bb67ac1",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Speaking but not hearing yourself</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3194,27 +2460,16 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "7c53b632-dbfe-4b1b-98dd-f8c3f7f827bb"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 480,
@@ -3222,20 +2477,12 @@
           "basedOn": "2f224bc7-225d-4ec3-9529-fea1fb09b255",
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3280,26 +2527,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 493,
           "id": "a3a9934e-5f87-4f18-b595-5482a403e47c",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Spacious soundstage</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3309,18 +2545,12 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "bfe9a8e6-7035-488b-8999-0ca4dfdb2ef0"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3365,26 +2595,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 224,
           "y": 493,
           "id": "8e17920d-d6a1-47ac-a01b-03f8f7101785",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">More bass and depth of sound vs. higher pitches</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3394,27 +2613,16 @@
           },
           "width": 134,
           "height": 53,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "7c53b632-dbfe-4b1b-98dd-f8c3f7f827bb"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 553,
@@ -3422,20 +2630,12 @@
           "basedOn": "2f224bc7-225d-4ec3-9529-fea1fb09b255",
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3480,26 +2680,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 566,
           "id": "33159e88-340f-48d8-a6c4-65dabc9c3251",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Blocks out background noise</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3509,18 +2698,12 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "bfe9a8e6-7035-488b-8999-0ca4dfdb2ef0"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3565,26 +2748,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 225,
           "y": 566,
           "id": "3e5cbbf6-8ea5-48af-bcb7-ff688528b60c",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Can be pricey</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3594,9 +2766,6 @@
           },
           "width": 134,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "7c53b632-dbfe-4b1b-98dd-f8c3f7f827bb"
         }
@@ -3683,13 +2852,7 @@
           "delay": 600
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 6,
-          "g": 6,
-          "b": 7
-        }
-      },
+      "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
       "type": "page",
       "id": "ec643a90-770d-435b-a6fb-a435405301a4",
       "pageTemplateType": null,
@@ -3715,19 +2878,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "12a28ef9-9a03-4d3b-aed8-4fe56ced4e06",
@@ -3739,40 +2897,23 @@
           "id": "bc8ab70e-e1b1-4c2c-a6f9-d87458ae1ece",
           "basedOn": "732b09ad-605e-42e9-874b-4a74ba138a29",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "width": 365,
           "height": 415,
           "scale": 100,
           "focalX": 52.21600689739534,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "border": {
             "left": 0,
             "right": 0,
             "top": 0,
             "bottom": 0,
             "lockedWidth": false,
-            "color": {
-              "color": {
-                "r": 222,
-                "g": 112,
-                "b": 50
-              }
-            }
+            "color": { "color": { "r": 222, "g": 112, "b": 50 } }
           },
           "type": "image",
           "resource": {
@@ -3793,53 +2934,30 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "x": 47,
           "y": 351,
           "id": "58f8250e-a4b1-4062-80e2-15630f8a1641",
           "basedOn": "732b09ad-605e-42e9-874b-4a74ba138a29",
           "width": 365,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "border": {
             "left": 0,
             "right": 0,
             "top": 0,
             "bottom": 0,
             "lockedWidth": false,
-            "color": {
-              "color": {
-                "r": 222,
-                "g": 112,
-                "b": 50
-              }
-            }
+            "color": { "color": { "r": 222, "g": 112, "b": 50 } }
           },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -3884,13 +3002,7 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 6,
-              "g": 6,
-              "b": 7
-            }
-          },
+          "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
           "lineHeight": 1.14,
           "textAlign": "center",
           "padding": {
@@ -3900,7 +3012,6 @@
             "vertical": 23
           },
           "content": "<span style=\"color: #fff\">03</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -3910,9 +3021,6 @@
           },
           "width": 64,
           "height": 65,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "82d2cab0-eaaf-45c4-96d2-d174c4634a0e",
           "id": "0c867697-07b0-44e9-8238-483973e6e4b6",
           "x": 348,
@@ -3922,10 +3030,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3970,22 +3075,11 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #3e3939\">Premium on-ear&nbsp;</span>\n<span style=\"color: #3e3939\">noise-cancellers for a less&nbsp;</span>\n<span style=\"color: #3e3939\">than premium price.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3995,9 +3089,6 @@
           },
           "width": 234,
           "height": 53,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "26fa841d-4fc4-4eff-b272-e655d15b76e9",
           "id": "b2b120f7-837b-4c13-a059-67621c905308",
           "x": 140,
@@ -4006,10 +3097,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4052,22 +3140,11 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #0c0b0b; text-transform: uppercase\">MAAB PH805</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4077,9 +3154,6 @@
           },
           "width": 313,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "3869bae7-fb89-4e2e-87ec-98f66e8e6066",
           "id": "9badd786-0ef6-4f90-90d5-a2d963301c9f",
           "x": 48,
@@ -4112,13 +3186,7 @@
           "delay": 250
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 248,
-          "b": 242
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 248, "b": 242 } },
       "type": "page",
       "id": "0b0a26c1-4b43-48cc-9b10-5ec80c9849e6",
       "pageTemplateType": null
@@ -4127,19 +3195,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "4257f684-a4a7-429c-865f-3c3cccab0625",
@@ -4147,10 +3210,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4195,22 +3255,11 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff8f2; letter-spacing: 0.02em\">$289 USD</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4220,9 +3269,6 @@
           },
           "width": 234,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "id": "7f4f523b-a22d-43ca-8678-3e77854b140c",
           "x": 85,
@@ -4232,10 +3278,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4278,22 +3321,11 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff8f2; text-transform: uppercase\">MAAB</span>\n<span style=\"color: #fff8f2; text-transform: uppercase\">PH805</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4303,9 +3335,6 @@
           },
           "width": 272,
           "height": 62,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "21f43598-56b7-43d9-8112-8713d004d822",
           "id": "2569e09d-f521-4cbf-a47c-505771c26fe9",
           "x": 85,
@@ -4315,10 +3344,7 @@
         },
         {
           "opacity": 90,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -4339,30 +3365,19 @@
             "baseColor": "#938d8c",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": -1,
           "y": 96,
           "width": 266,
           "height": 258,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "99363490-078c-4d81-b93c-b5d8e4c53f1c",
           "type": "image",
           "groupId": "058bf694-0585-469a-b1dc-2af4cc0209cc"
         },
         {
           "opacity": 90,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -4383,30 +3398,19 @@
             "baseColor": "#7a7a84",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 267,
           "y": 96,
           "id": "d18132ab-00d8-4faa-aecd-09074ede27f0",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "width": 146,
           "height": 258,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4451,26 +3455,15 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 398,
           "id": "2d99f757-dff8-4b1a-8605-722e239100a4",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"font-weight: 700; color: #fff8f2\">Pros</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4480,18 +3473,12 @@
           },
           "width": 34,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "5084dd49-d705-49e4-92d7-328b84857ac2"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4536,26 +3523,15 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 224,
           "y": 398,
           "id": "8ff8c32e-2aba-4f39-9b53-188e6f4b9988",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"font-weight: 700; color: #fff8f2\">Cons</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4565,47 +3541,28 @@
           },
           "width": 43,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "edd168c4-9e02-4ce6-bc12-4e6cda22c8be"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 424,
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "a621eceb-75ae-41a1-b0c6-a94f414cf0de",
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4650,26 +3607,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 437,
           "id": "9fbc20f8-e2b8-4f73-bf52-0a509616cd99",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Minimal look</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4679,18 +3625,12 @@
           },
           "width": 134,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "5084dd49-d705-49e4-92d7-328b84857ac2"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4735,26 +3675,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 225,
           "y": 437,
           "id": "fa37253f-576c-4fd4-8de5-1a82bcf0240d",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Tight headphone fit</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4764,27 +3693,16 @@
           },
           "width": 142,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "edd168c4-9e02-4ce6-bc12-4e6cda22c8be"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 461,
@@ -4792,20 +3710,12 @@
           "basedOn": "2f224bc7-225d-4ec3-9529-fea1fb09b255",
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4850,26 +3760,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 474,
           "id": "eee81c42-0d89-41ac-9166-29d6a60f09d2",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Balanced sound</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4879,18 +3778,12 @@
           },
           "width": 134,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "5084dd49-d705-49e4-92d7-328b84857ac2"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4935,26 +3828,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 223,
           "y": 474,
           "id": "40a6914a-d145-41c6-a302-6074cb16af4c",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Loose fit over the \near</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4964,27 +3846,16 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "edd168c4-9e02-4ce6-bc12-4e6cda22c8be"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 516,
@@ -4992,20 +3863,12 @@
           "basedOn": "2f224bc7-225d-4ec3-9529-fea1fb09b255",
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -5050,26 +3913,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 529,
           "id": "43d23b6e-8645-430f-943b-cbe797394b1e",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Blocks out background noise</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5079,18 +3931,12 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "5084dd49-d705-49e4-92d7-328b84857ac2"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -5135,26 +3981,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 223,
           "y": 529,
           "id": "bd41c6ef-113f-4de9-a88a-2f424544243e",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Proper fit over ear is difficult to achieve</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5164,38 +3999,21 @@
           },
           "width": 141,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "edd168c4-9e02-4ce6-bc12-4e6cda22c8be"
         },
         {
           "opacity": 15,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 6,
-              "g": 6,
-              "b": 7
-            }
-          },
+          "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
           "type": "shape",
           "x": -1,
           "y": 96,
           "width": 266,
           "height": 258,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "b810c43c-219d-469e-bfc0-8184724da67e",
           "groupId": "058bf694-0585-469a-b1dc-2af4cc0209cc"
         }
@@ -5282,13 +4100,7 @@
           "delay": 600
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 6,
-          "g": 6,
-          "b": 7
-        }
-      },
+      "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
       "type": "page",
       "id": "ec8a2052-1146-4399-ad06-d15180749c4e",
       "pageTemplateType": null,
@@ -5319,19 +4131,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "774d703d-f06b-4bc1-b090-ccb5bf9531bc",
@@ -5339,19 +4146,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 212,
-              "g": 216,
-              "b": 217
-            }
-          },
+          "backgroundColor": { "color": { "r": 212, "g": 216, "b": 217 } },
           "x": 0,
           "y": -59,
           "width": 365,
@@ -5359,9 +4157,7 @@
           "scale": 105,
           "focalX": 48.517036807697664,
           "focalY": 52.286379349015355,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "33962ba8-ee88-4654-afc7-4a6f3e00e843",
           "border": {
             "left": 0,
@@ -5369,13 +4165,7 @@
             "top": 0,
             "bottom": 0,
             "lockedWidth": false,
-            "color": {
-              "color": {
-                "r": 222,
-                "g": 112,
-                "b": 50
-              }
-            }
+            "color": { "color": { "r": 222, "g": 112, "b": 50 } }
           },
           "type": "image",
           "resource": {
@@ -5396,53 +4186,30 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "x": 0,
           "y": 349,
           "id": "1720e776-6b6b-4c42-a20c-7b055f713814",
           "basedOn": "732b09ad-605e-42e9-874b-4a74ba138a29",
           "width": 365,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "border": {
             "left": 0,
             "right": 0,
             "top": 0,
             "bottom": 0,
             "lockedWidth": false,
-            "color": {
-              "color": {
-                "r": 222,
-                "g": 112,
-                "b": 50
-              }
-            }
+            "color": { "color": { "r": 222, "g": 112, "b": 50 } }
           },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -5487,13 +4254,7 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 6,
-              "g": 6,
-              "b": 7
-            }
-          },
+          "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
           "lineHeight": 1.14,
           "textAlign": "center",
           "padding": {
@@ -5503,7 +4264,6 @@
             "vertical": 23
           },
           "content": "<span style=\"color: #fff\">04</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -5513,9 +4273,6 @@
           },
           "width": 66,
           "height": 65,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "82d2cab0-eaaf-45c4-96d2-d174c4634a0e",
           "id": "475ffc44-499d-4ba8-87ea-fb5a9e792bed",
           "x": 299,
@@ -5525,10 +4282,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -5573,22 +4327,11 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #3e3939\">The Beats Solo Pro takes sound and design seriously.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5598,9 +4341,6 @@
           },
           "width": 224,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "26fa841d-4fc4-4eff-b272-e655d15b76e9",
           "id": "6d1a8019-7b6e-4b2b-80a0-79477648774e",
           "x": 140,
@@ -5609,10 +4349,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -5655,22 +4392,11 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #0c0b0b; text-transform: uppercase\">Bool solo pro</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5680,9 +4406,6 @@
           },
           "width": 313,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "3869bae7-fb89-4e2e-87ec-98f66e8e6066",
           "id": "3614f35f-be79-46dc-800e-c77a6e6520b4",
           "x": 48,
@@ -5715,13 +4438,7 @@
           "delay": 250
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 248,
-          "b": 242
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 248, "b": 242 } },
       "type": "page",
       "id": "83187b22-480b-49c5-afa5-dd8342a85a8d",
       "pageTemplateType": null
@@ -5730,19 +4447,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "94e4bf8c-486c-43b1-870b-5cdf227b0dc9",
@@ -5750,10 +4462,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -5798,22 +4507,11 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff8f2; letter-spacing: 0.02em\">$399 USD</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5823,9 +4521,6 @@
           },
           "width": 234,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "id": "9337d6e7-9163-4368-84ce-b0048fd620aa",
           "x": 85,
@@ -5835,10 +4530,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -5881,22 +4573,11 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #fff8f2; text-transform: uppercase\">Bool&nbsp;</span>\n<span style=\"color: #fff8f2; text-transform: uppercase\">solo pro</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5906,9 +4587,6 @@
           },
           "width": 272,
           "height": 62,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "21f43598-56b7-43d9-8112-8713d004d822",
           "id": "86df2622-7854-42d1-a941-cbd7b70c7d77",
           "x": 85,
@@ -5918,10 +4596,7 @@
         },
         {
           "opacity": 90,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -5942,29 +4617,18 @@
             "baseColor": "#beaca5",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": -1,
           "y": 96,
           "width": 266,
           "height": 258,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "f7b43e55-fe65-4e05-9f8d-98bd19e80aa2",
           "type": "image"
         },
         {
           "opacity": 90,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 100,
@@ -5985,30 +4649,19 @@
             "baseColor": "#a59385",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 266,
           "y": 96,
           "id": "87b25fef-82de-4413-9a0a-5b76a3a90533",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "width": 146,
           "height": 258,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -6053,26 +4706,15 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 398,
           "id": "52e639fa-90de-4caf-8bb8-811bcb481e68",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"font-weight: 700; color: #fff8f2\">Pros</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6082,18 +4724,12 @@
           },
           "width": 34,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "da6258c7-43c9-4d30-bfb4-20a86424e917"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -6138,26 +4774,15 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 223,
           "y": 398,
           "id": "9924c9b2-7480-43ba-b0f0-2538e9476f98",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"font-weight: 700; color: #fff8f2\">Cons</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6167,47 +4792,28 @@
           },
           "width": 43,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "5de0f1c9-99a4-46c9-8f64-9b035a0d4a9e"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 424,
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "660d35e1-cfb7-4af3-99ec-21a8c88eaeae",
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -6252,26 +4858,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 437,
           "id": "4ba4d009-59ba-4450-aa0d-62608de9677b",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">More accurate sound</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6281,18 +4876,12 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "da6258c7-43c9-4d30-bfb4-20a86424e917"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -6337,26 +4926,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 223,
           "y": 437,
           "id": "66a9af56-e98a-4839-a333-6bc53e616446",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Tight headphone fit</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6366,27 +4944,16 @@
           },
           "width": 142,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "5de0f1c9-99a4-46c9-8f64-9b035a0d4a9e"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 480,
@@ -6394,20 +4961,12 @@
           "basedOn": "2f224bc7-225d-4ec3-9529-fea1fb09b255",
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -6452,26 +5011,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 493,
           "id": "b0f5027d-a530-435c-a744-054be8e21aa0",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Best-sounding Beats headphones</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6481,18 +5029,12 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "da6258c7-43c9-4d30-bfb4-20a86424e917"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -6537,26 +5079,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 223,
           "y": 493,
           "id": "139b2e14-c7c6-4909-a03c-df4bb37b2641",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">A bit large and unwieldy</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6566,27 +5097,16 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "5de0f1c9-99a4-46c9-8f64-9b035a0d4a9e"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 248,
-              "b": 242,
-              "a": 0.3
-            }
+            "color": { "r": 255, "g": 248, "b": 242, "a": 0.3 }
           },
           "x": 49,
           "y": 536,
@@ -6594,20 +5114,12 @@
           "basedOn": "2f224bc7-225d-4ec3-9529-fea1fb09b255",
           "width": 363,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -6652,26 +5164,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 49,
           "y": 549,
           "id": "e94ac728-94a4-43f1-abe8-ca34eeab6e6a",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Effective noise cancelling</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6681,18 +5182,12 @@
           },
           "width": 134,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "da6258c7-43c9-4d30-bfb4-20a86424e917"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -6737,26 +5232,15 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 223,
           "y": 549,
           "id": "de9fff52-0ed6-4500-b84e-5bb83f31f1e0",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "content": "<span style=\"color: #fff8f2\">Can be pricey</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -6766,9 +5250,6 @@
           },
           "width": 134,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "5de0f1c9-99a4-46c9-8f64-9b035a0d4a9e"
         }
@@ -6855,13 +5336,7 @@
           "delay": 600
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 6,
-          "g": 6,
-          "b": 7
-        }
-      },
+      "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
       "type": "page",
       "id": "fe2623ee-7d43-4d5c-b6cd-f8defc375dd1",
       "pageTemplateType": null,
@@ -6887,19 +5362,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -6907,19 +5377,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "x": 0,
           "y": 218,
@@ -6928,9 +5389,7 @@
           "scale": 100,
           "focalX": 51.60095445269871,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "3f5df7ab-4ff0-43e1-8313-cbd064b3788e",
           "resource": {
             "type": "image",
@@ -6951,19 +5410,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "x": 295,
           "y": 63,
@@ -6972,9 +5422,7 @@
           "scale": 140,
           "focalX": 56.92762954805808,
           "focalY": 38.12406363190044,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "3143a8cf-8c52-419f-9ba9-135ab2f928c3",
           "resource": {
             "type": "image",
@@ -6998,35 +5446,18 @@
           "id": "3932e4d5-cacd-4e3d-9fb3-a1a6cc5e0f27",
           "basedOn": "3143a8cf-8c52-419f-9ba9-135ab2f928c3",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "type": "shape",
           "width": 118,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          }
+          "mask": { "type": "rectangle" }
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -7071,23 +5502,12 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #3e3939\">Superior sound with a sophisticated look to match.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7097,9 +5517,6 @@
           },
           "width": 234,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "id": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "x": 46,
@@ -7107,10 +5524,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -7153,23 +5567,12 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #060607; text-transform: uppercase\">TeoLAB X9</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7179,9 +5582,6 @@
           },
           "width": 235,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "21f43598-56b7-43d9-8112-8713d004d822",
           "id": "2329b36d-1672-4df9-a66e-ca381883194e",
           "x": 46,
@@ -7193,10 +5593,7 @@
           "id": "31928933-f3ff-4700-a1ee-f7f95722a4bb",
           "basedOn": "21f43598-56b7-43d9-8112-8713d004d822",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -7239,23 +5636,12 @@
             }
           },
           "fontSize": 34,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #060607; text-transform: uppercase\">The Winner</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7264,10 +5650,7 @@
             "bottomLeft": 2
           },
           "width": 308,
-          "height": 45,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 45
         },
         {
           "x": 0,
@@ -7275,37 +5658,17 @@
           "id": "0653137b-7b3c-49db-af8a-cddf0a2ef09b",
           "basedOn": "3143a8cf-8c52-419f-9ba9-135ab2f928c3",
           "opacity": 10,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 6,
-              "g": 6,
-              "b": 7
-            }
-          },
+          "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
           "type": "shape",
           "width": 412,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          }
+          "mask": { "type": "rectangle" }
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 248,
-          "b": 242
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 248, "b": 242 } },
       "type": "page",
       "id": "b3d720f6-7a30-48d0-90ca-12563e788039",
       "animations": [
@@ -7340,19 +5703,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "6dbf8e53-6b59-45a9-8f4e-ba9997bc226c",
@@ -7360,19 +5718,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
           "y": 218,
           "width": 412,
@@ -7380,9 +5729,7 @@
           "scale": 105,
           "focalX": 50.09529490789873,
           "focalY": 52.20981164803007,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "17349aef-d259-4387-b25a-c5834aa50cf3",
           "type": "image",
           "resource": {
@@ -7404,10 +5751,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "scale": 148,
@@ -7428,58 +5772,33 @@
             "baseColor": "#dcd5d0",
             "isExternal": true
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 295,
           "y": 63,
           "width": 118,
           "height": 156,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "1e4871c8-4d1a-4c61-9c89-6560557de40e",
           "type": "image"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "x": 295,
           "y": 213,
           "id": "364ceeb5-7922-4905-99cc-0ed8a0fced67",
           "basedOn": "3143a8cf-8c52-419f-9ba9-135ab2f928c3",
           "width": 118,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -7524,22 +5843,11 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #3e3939\">The longest battery life and the highest frequency range.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7549,9 +5857,6 @@
           },
           "width": 234,
           "height": 36,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
           "id": "9a20dfbf-f0fd-4cae-9e95-0e874e6e3720",
           "x": 46,
@@ -7560,10 +5865,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -7606,22 +5908,11 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #060607; letter-spacing: 0.01em\">KROX WH-1000XM3</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7631,9 +5922,6 @@
           },
           "width": 196,
           "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "21f43598-56b7-43d9-8112-8713d004d822",
           "id": "27505f24-a7c3-47ce-8d5e-f68d219cf71c",
           "x": 46,
@@ -7642,10 +5930,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -7688,26 +5973,15 @@
             }
           },
           "fontSize": 34,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "right",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "x": 48,
           "y": 0,
           "id": "6cb55866-bb54-4af6-8508-f28d87d7de0f",
           "basedOn": "21f43598-56b7-43d9-8112-8713d004d822",
           "content": "<span style=\"color: #060607; text-transform: uppercase\">The Contender</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7717,38 +5991,21 @@
           },
           "width": 317,
           "height": 45,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         },
         {
           "opacity": 10,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 6,
-              "g": 6,
-              "b": 7
-            }
-          },
+          "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
           "x": 0,
           "y": 63,
           "id": "50edac92-c9cd-4e3f-8b56-7948e0519ce8",
           "basedOn": "3143a8cf-8c52-419f-9ba9-135ab2f928c3",
           "width": 412,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape"
         }
       ],
@@ -7778,13 +6035,7 @@
           "delay": 400
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 248,
-          "b": 242
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 248, "b": 242 } },
       "type": "page",
       "id": "e353672c-5b08-4f7f-9b6e-dba3d7e45076",
       "pageTemplateType": null
@@ -7793,19 +6044,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -7813,10 +6059,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -7859,23 +6102,12 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #060607; text-transform: uppercase\">How do they compare</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -7885,9 +6117,6 @@
           },
           "width": 223,
           "height": 62,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "4ce813d2-6a07-4a87-935a-cd71f538f996",
           "id": "7ff70c7d-22e1-4a26-8bc3-6661226daed7",
           "x": 95,
@@ -7895,19 +6124,10 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "x": 48,
           "y": 116,
@@ -7916,9 +6136,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "id": "01eddcff-d596-49cf-99cd-3ba558b49b85",
           "resource": {
             "type": "image",
@@ -7940,28 +6158,17 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 212,
-              "g": 216,
-              "b": 217
-            }
-          },
+          "backgroundColor": { "color": { "r": 212, "g": 216, "b": 217 } },
           "type": "image",
           "width": 150,
           "height": 114,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "basedOn": "dd1ffcd7-9fae-48ca-a368-032b52bb1538",
           "id": "0b0f1e2f-e4cd-4cc5-a1c4-946fc95aed77",
           "x": 214,
@@ -7986,10 +6193,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8034,23 +6238,12 @@
             }
           },
           "fontSize": 14,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #181617; text-transform: uppercase\">TeoLAB X9</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8060,9 +6253,6 @@
           },
           "width": 149,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "id": "86ae8463-8b3a-4bd6-ae7a-34323459dc76",
           "x": 49,
@@ -8075,10 +6265,7 @@
           "id": "40f2ee94-88dc-4396-9a55-cf39885bf358",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8123,23 +6310,12 @@
             }
           },
           "fontSize": 14,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #181617; letter-spacing: 0.01em\">KROX WH-1000XM3</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8149,9 +6325,6 @@
           },
           "width": 149,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -8160,10 +6333,7 @@
           "id": "fa3da0c2-fdf2-4829-bdef-d922289a4851",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8208,23 +6378,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Frequency</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8234,9 +6393,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8245,10 +6401,7 @@
           "id": "32a4105c-9768-42d0-9af7-bba04b8fcd13",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8293,23 +6446,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">20 – 25.000 Hz</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8319,9 +6461,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8330,10 +6469,7 @@
           "id": "3356890c-edd8-4b34-8061-5d7123a2a264",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8378,23 +6514,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Microphone</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8404,9 +6529,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8415,10 +6537,7 @@
           "id": "2196a6d7-f25a-415a-afac-8e7295ce0554",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8463,23 +6582,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">One electret type</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8489,9 +6597,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8500,10 +6605,7 @@
           "id": "9cb81c72-03f8-4a33-8cee-6e1c38be4ab1",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8548,23 +6650,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Sensitivity</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8574,9 +6665,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8585,10 +6673,7 @@
           "id": "b5efe4a2-8723-4112-9515-94486f15666a",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8633,23 +6718,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">85 dB/mW @ 1kHz</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8659,9 +6733,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8670,10 +6741,7 @@
           "id": "807871ca-88d0-4fbd-8a48-b6469f814615",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8718,23 +6786,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Battery</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8744,9 +6801,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8755,10 +6809,7 @@
           "id": "13583b50-067d-4a7a-8147-d06179a47fae",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8803,23 +6854,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">Up to 19 hours</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8829,9 +6869,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8840,10 +6877,7 @@
           "id": "04fb3d4f-d685-4967-8dde-f5c22b2b3498",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8888,23 +6922,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Impedance</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8914,9 +6937,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -8925,10 +6945,7 @@
           "id": "b5237dec-49c4-474f-bf0c-f5e8df449b76",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -8973,23 +6990,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">28 Ohm</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -8999,9 +7005,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "86c547b4-f610-4fa5-be12-1ce54d2003f1"
         },
         {
@@ -9010,10 +7013,7 @@
           "id": "52d5f3a9-3581-47ed-8ff6-1698590ed4ba",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9058,23 +7058,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Frequency</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9084,9 +7073,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9095,10 +7081,7 @@
           "id": "626eb2ab-9453-4a85-9eef-9d3b074ca361",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9143,23 +7126,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">20 – 25.000 Hz</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9169,9 +7141,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9180,10 +7149,7 @@
           "id": "b2e7f45d-c94c-4356-807e-6c47bad5f439",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9228,23 +7194,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Microphone</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9254,9 +7209,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9265,10 +7217,7 @@
           "id": "807d0910-3d71-499a-a318-142baddd0763",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9313,23 +7262,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">Omnidirectional</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9339,9 +7277,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9350,10 +7285,7 @@
           "id": "7f1c0ab4-f316-47e4-be55-faef47f692e8",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9398,23 +7330,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Sensitivity</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9424,9 +7345,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9435,10 +7353,7 @@
           "id": "35324db5-5a10-4abb-86cb-408e84eaf034",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9483,23 +7398,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">91 dB/mW @ 1kHz</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9509,9 +7413,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9520,10 +7421,7 @@
           "id": "abe479e6-9389-4888-9f95-ab87c6c08a02",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9568,23 +7466,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Battery</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9594,9 +7481,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9605,10 +7489,7 @@
           "id": "65229104-a2b4-4bbb-ac04-850ddcf44fd5",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9653,23 +7534,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">Up to 24 hours</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9679,9 +7549,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9690,10 +7557,7 @@
           "id": "4dd27d61-114e-415d-87b6-6ea8aacef40a",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9738,23 +7602,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #161415\">Impedance</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9764,9 +7617,6 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         },
         {
@@ -9775,10 +7625,7 @@
           "id": "72424921-73f5-45a3-9d55-340437b6193c",
           "basedOn": "3616e6cf-4a95-41d0-aeea-477432a76b9c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9823,23 +7670,12 @@
             }
           },
           "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.18,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #161415\">25 Ohm</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9849,19 +7685,10 @@
           },
           "width": 149,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a972dfec-5fe8-4f03-a5e7-47500398a717"
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 248,
-          "b": 242
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 248, "b": 242 } },
       "type": "page",
       "id": "1b0c21fe-d7f9-4406-ab6f-38aee909c546",
       "animations": [],
@@ -9883,19 +7710,14 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -9903,10 +7725,7 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -9949,23 +7768,12 @@
             }
           },
           "fontSize": 28,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff8f2; text-transform: uppercase\">Other stories</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -9975,9 +7783,6 @@
           },
           "width": 246,
           "height": 62,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "4ce813d2-6a07-4a87-935a-cd71f538f996",
           "id": "a37f3de2-c49b-492e-852e-d43435badf57",
           "x": 96,
@@ -9985,28 +7790,17 @@
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "width": 145,
           "height": 110,
           "scale": 130,
           "focalX": 56.00233130547906,
           "focalY": 50.91464096083488,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "id": "23510da7-ee9f-4ab8-951f-2315601110c1",
           "x": 8,
@@ -10034,36 +7828,19 @@
           "id": "e03163b7-6f7e-44f5-9add-dced0fd59322",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "type": "shape",
           "width": 145,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "groupId": "0e9deeb5-de18-4368-a1c2-e67b39b448c1"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -10108,23 +7885,12 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Hottest bluetooth headphones</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -10134,9 +7900,6 @@
           },
           "width": 164,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "846090c0-7224-4aa8-a5af-4ba7e913fc5c",
           "id": "cd8af3fa-a10d-4f6b-8036-ef67fd1dbd7d",
           "x": 161,
@@ -10150,28 +7913,14 @@
           "id": "1facff90-3339-4675-9e70-b55ea9726b53",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 81,
-              "g": 79,
-              "b": 77
-            }
-          },
+          "backgroundColor": { "color": { "r": 81, "g": 79, "b": 77 } },
           "type": "shape",
           "width": 201,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "groupId": "0e9deeb5-de18-4368-a1c2-e67b39b448c1"
         },
         {
@@ -10180,28 +7929,17 @@
           "id": "468147c4-759a-4877-9972-b5eef91d951f",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "width": 145,
           "height": 110,
           "scale": 114,
           "focalX": 42.99765412344801,
           "focalY": 50.130376452750546,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "resource": {
             "type": "image",
             "mimeType": "image/png",
@@ -10225,28 +7963,14 @@
           "id": "2b33fe58-e795-41ca-9c03-b4870e9f70e3",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "type": "shape",
           "width": 145,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "groupId": "b2020f0a-e409-4b59-a5a5-ed40cd44d2fb"
         },
         {
@@ -10255,10 +7979,7 @@
           "id": "0883a59c-74e1-4acb-b656-bbe5edbd743c",
           "basedOn": "846090c0-7224-4aa8-a5af-4ba7e913fc5c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -10303,23 +8024,12 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">The best laptops for 2020</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -10329,9 +8039,6 @@
           },
           "width": 150,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "b2020f0a-e409-4b59-a5a5-ed40cd44d2fb",
           "tagName": "h3"
         },
@@ -10341,28 +8048,14 @@
           "id": "6c6b20af-dfc3-44ea-bfac-eaf95eec4767",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 81,
-              "g": 79,
-              "b": 77
-            }
-          },
+          "backgroundColor": { "color": { "r": 81, "g": 79, "b": 77 } },
           "type": "shape",
           "width": 201,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "groupId": "b2020f0a-e409-4b59-a5a5-ed40cd44d2fb"
         },
         {
@@ -10371,28 +8064,17 @@
           "id": "95a83083-4629-4970-8457-65da3768d752",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
           "width": 145,
           "height": 110,
           "scale": 137,
           "focalX": 57.32296937164805,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "resource": {
             "type": "image",
             "mimeType": "image/png",
@@ -10416,28 +8098,14 @@
           "id": "56645d09-0785-47f8-b5da-cee8fa9206e7",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 222,
-              "g": 112,
-              "b": 50
-            }
-          },
+          "backgroundColor": { "color": { "r": 222, "g": 112, "b": 50 } },
           "type": "shape",
           "width": 145,
           "height": 6,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "groupId": "10b7fbec-26a1-4d97-ad6e-9a9db8fdcf0c"
         },
         {
@@ -10446,10 +8114,7 @@
           "id": "747ed5e6-c012-496e-a9f9-df79c5b5764c",
           "basedOn": "846090c0-7224-4aa8-a5af-4ba7e913fc5c",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -10494,23 +8159,12 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Digital Trends: smartwatch review</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -10520,9 +8174,6 @@
           },
           "width": 168,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "10b7fbec-26a1-4d97-ad6e-9a9db8fdcf0c",
           "tagName": "h3"
         },
@@ -10532,38 +8183,18 @@
           "id": "414ec340-6aa0-47bb-a35a-bb54334d0e91",
           "basedOn": "4478889d-8cac-4e32-8c89-d56d8a28e3b8",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 81,
-              "g": 79,
-              "b": 77
-            }
-          },
+          "backgroundColor": { "color": { "r": 81, "g": 79, "b": 77 } },
           "type": "shape",
           "width": 201,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
+          "mask": { "type": "rectangle" },
           "groupId": "10b7fbec-26a1-4d97-ad6e-9a9db8fdcf0c"
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 6,
-          "g": 6,
-          "b": 7
-        }
-      },
+      "backgroundColor": { "color": { "r": 6, "g": 6, "b": 7 } },
       "type": "page",
       "id": "d3884429-7d9c-4434-b74d-cfcbee66bbf1",
       "animations": [
@@ -10685,5 +8316,8 @@
         }
       }
     }
-  ]
+  ],
+  "current": null,
+  "selection": [],
+  "story": {}
 }

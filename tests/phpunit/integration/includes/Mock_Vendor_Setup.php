@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -43,10 +46,10 @@ trait Mock_Vendor_Setup {
 	/**
 	 * Add mock vendor to array with filter.
 	 *
-	 * @param array $vendors
-	 * @return array
+	 * @param array<string, array<string,string>> $unused
+	 * @return array<string, array<string,string>>
 	 */
-	public function add_mock_vendor( $vendors ): array {
+	public function add_mock_vendor( array $unused ): array {
 		return [
 			'none'    => [
 				'label' => 'None',

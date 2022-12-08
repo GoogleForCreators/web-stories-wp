@@ -24,15 +24,18 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 
 /**
  * Class Blurhash
  */
-class Blurhash extends Service_Base implements HasMeta {
+class Blurhash extends Service_Base implements HasMeta, PluginUninstallAware {
 
 	/**
 	 * The blurhash meta key.
@@ -80,6 +83,10 @@ class Blurhash extends Service_Base implements HasMeta {
 	 *
 	 * @param array|mixed $response Array of prepared attachment data.
 	 * @return array|mixed Response data.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
 		if ( ! \is_array( $response ) ) {
@@ -96,5 +103,14 @@ class Blurhash extends Service_Base implements HasMeta {
 		$response[ self::BLURHASH_POST_META_KEY ] = get_post_meta( $post_id, self::BLURHASH_POST_META_KEY, true );
 
 		return $response;
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::BLURHASH_POST_META_KEY );
 	}
 }

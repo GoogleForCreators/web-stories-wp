@@ -24,9 +24,12 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use WP_Post;
@@ -34,7 +37,7 @@ use WP_Post;
 /**
  * Class Poster
  */
-class Poster extends Service_Base implements HasMeta {
+class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	/**
 	 * The poster post meta key.
 	 */
@@ -50,7 +53,7 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @var Media_Source_Taxonomy Experiments instance.
 	 */
-	protected $media_source_taxonomy;
+	protected Media_Source_Taxonomy $media_source_taxonomy;
 
 	/**
 	 * Poster constructor.
@@ -173,7 +176,11 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @param array<string, mixed>|mixed $response   Array of prepared attachment data.
 	 * @param WP_Post                    $attachment Attachment object.
-	 * @return array<string, mixed>|mixed $response;
+	 * @return array<string, mixed>|mixed $response
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response, WP_Post $attachment ) {
 		if ( ! \is_array( $response ) ) {
@@ -258,5 +265,15 @@ class Poster extends Service_Base implements HasMeta {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::POSTER_ID_POST_META_KEY );
+		delete_post_meta_by_key( self::POSTER_POST_META_KEY );
 	}
 }

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Model\Story;
@@ -44,14 +46,14 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	protected $assets;
+	protected Assets $assets;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	protected $context;
+	protected Context $context;
 
 	/**
 	 * Embed Base constructor.
@@ -82,7 +84,7 @@ abstract class Embed_Base extends Service_Base {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
 
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 	}
 
 	/**
@@ -117,6 +119,10 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @param array<string, array<string,bool>>|mixed $allowed_tags Allowed tags.
 	 * @return array<string, array<string,bool>>|mixed Allowed tags.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($allowed_tags is array<T> ? array<T> : mixed)
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! \is_array( $allowed_tags ) ) {

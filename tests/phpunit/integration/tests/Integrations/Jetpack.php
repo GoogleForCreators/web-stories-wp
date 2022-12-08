@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -20,6 +23,7 @@ namespace Google\Web_Stories\Tests\Integration\Integrations;
 use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Term;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
@@ -31,10 +35,8 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Integrations\Jetpack
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Integrations\Jetpack $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -91,7 +93,10 @@ class Jetpack extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$post = get_post( $video_attachment_id );
+		$this->assertNotNull( $post );
 
 		$data = [
 			'source_url'         => self::ATTACHMENT_URL,
@@ -100,6 +105,7 @@ class Jetpack extends DependencyInjectedTestCase {
 		];
 
 		$response = rest_ensure_response( $data );
+		$this->assertNotWPError( $response );
 
 		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
 
@@ -109,6 +115,7 @@ class Jetpack extends DependencyInjectedTestCase {
 
 		$data = $results->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'mime_type', $data );
 		$this->assertSame( 'video/mp4', $data['mime_type'] );
 
@@ -140,10 +147,15 @@ class Jetpack extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		$this->instance->register();
 
 		add_post_meta( $poster_attachment_id, Jetpack_Integration::VIDEOPRESS_POSTER_META_KEY, 'hello world' );
 
+		/**
+		 * @var WP_Term[] $terms
+		 */
 		$terms = wp_get_post_terms( $poster_attachment_id, $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
@@ -164,13 +176,18 @@ class Jetpack extends DependencyInjectedTestCase {
 		);
 
 		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
-
+		$this->assertNotWPError( $video_attachment_id );
 		$attachment = get_post( $video_attachment_id );
-		$response   = wp_prepare_attachment_for_js( $attachment );
-		$data       = $this->instance->filter_admin_ajax_response( $response, $attachment );
+
+		$this->assertNotNull( $attachment );
+
+		$response = wp_prepare_attachment_for_js( $attachment );
+		$this->assertIsArray( $response );
+		$data = $this->instance->filter_admin_ajax_response( $response, $attachment );
 
 		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'mime', $data );
 		$this->assertSame( 'video/mp4', $data['mime'] );
 
@@ -183,7 +200,9 @@ class Jetpack extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'url', $data );
 		$this->assertSame( 'https://videopress.example.com/videos/video.mp4', $data['url'] );
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'media_details', $data );
+		$this->assertIsArray( $data['media_details'] );
 		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );
 		$this->assertArrayHasKey( 'length', $data['media_details'] );
 		$this->assertSame( '0:05', $data['media_details']['length_formatted'] );
@@ -213,29 +232,29 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @param string $milliseconds
+	 * @param int|float $milliseconds
 	 * @param string $string
 	 *
-	 * @dataProvider get_format_milliseconds_data
+	 * @dataProvider data_format_milliseconds
 	 * @covers ::format_milliseconds
 	 */
-	public function test_format_milliseconds( $milliseconds, $string ): void {
-		$result = $this->call_private_method( $this->instance, 'format_milliseconds', [ $milliseconds ] );
+	public function test_format_milliseconds( $milliseconds, string $string ): void {
+		$result = $this->call_private_method( [ $this->instance, 'format_milliseconds' ], [ $milliseconds ] );
 		$this->assertSame( $result, $string );
 	}
 
 	/**
 	 * @param mixed $value
-	 * @param $object_id
-	 * @param $meta_key
+	 * @param int $object_id
+	 * @param string $meta_key
 	 * @return \array[][]|mixed
 	 */
-	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {
+	public function filter_wp_get_attachment_metadata( $value, int $object_id, string $meta_key ) {
 		if ( '_wp_attachment_metadata' !== $meta_key ) {
 			return $value;
 		}
 
-		$original_data = [
+		return [
 			[
 				'videopress' => [
 					'duration'      => 5000,
@@ -255,14 +274,12 @@ class Jetpack extends DependencyInjectedTestCase {
 				],
 			],
 		];
-
-		return $original_data;
 	}
 
 	/**
-	 * @return array[]
+	 * @return array<int|string, array<int|float|string>>
 	 */
-	public function get_format_milliseconds_data(): array {
+	public function data_format_milliseconds(): array {
 		return [
 			'5000'      => [
 				5000,

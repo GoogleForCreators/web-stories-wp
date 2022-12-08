@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -19,6 +22,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Status_Check_Controller
@@ -27,17 +31,15 @@ use WP_REST_Request;
  */
 class Status_Check_Controller extends DependencyInjectedRestTestCase {
 
-	protected static $editor;
-	protected static $subscriber;
+	protected static int $editor;
+	protected static int $subscriber;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Status_Check_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Status_Check_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -110,6 +112,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'success', $data );
 		$this->assertTrue( $data['success'] );
 	}

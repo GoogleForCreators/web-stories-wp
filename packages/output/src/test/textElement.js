@@ -17,11 +17,9 @@
 /**
  * External dependencies
  */
-jest.mock('flagged');
-import { useFeature } from 'flagged';
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { StoryAnimation } from '@googleforcreators/animation';
+import { AnimationProvider } from '@googleforcreators/animation';
 import {
   registerElementType,
   BACKGROUND_TEXT_MODE,
@@ -35,11 +33,7 @@ import OutputElement from '../element';
 import { DEFAULT_TEXT } from './_utils/constants';
 
 function WrapAnimation({ children }) {
-  return (
-    <StoryAnimation.Provider animations={[]}>
-      {children}
-    </StoryAnimation.Provider>
-  );
+  return <AnimationProvider animations={[]}>{children}</AnimationProvider>;
 }
 
 WrapAnimation.propTypes = {
@@ -104,14 +98,6 @@ const TEXT_WITH_ROTATION = {
 
 describe('Text Element output', () => {
   beforeAll(() => {
-    useFeature.mockImplementation((feature) => {
-      const config = {
-        enableAnimation: false,
-      };
-
-      return config[feature];
-    });
-
     elementTypes.forEach(registerElementType);
   });
 
@@ -260,6 +246,8 @@ describe('Text Element output', () => {
   });
 
   describe('AMP validation', () => {
+    jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
     it('should produce valid AMP output when setting text color', async () => {
       await expect(
         <WrapAnimation>

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -44,14 +46,14 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Parent post controller.
 	 *
-	 * @var WP_REST_Controller
+	 * @var WP_REST_Controller WP_REST_Controller instance.
 	 */
-	private $parent_controller;
+	private WP_REST_Controller $parent_controller;
 
 	/**
 	 * Constructor.
@@ -63,11 +65,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	public function __construct( Story_Post_Type $story_post_type ) {
 		$this->story_post_type = $story_post_type;
 
-		$rest_base         = $story_post_type->get_rest_base();
-		$parent_controller = $story_post_type->get_parent_controller();
-
-		$this->parent_controller = $parent_controller;
-		$this->rest_base         = $rest_base;
+		$this->parent_controller = $story_post_type->get_parent_controller();
+		$this->rest_base         = $story_post_type->get_rest_base();
 		$this->namespace         = $story_post_type->get_rest_namespace();
 	}
 
@@ -303,9 +302,16 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$lock_data = [
 			'locked' => false,
 			'time'   => '',
-			'user'   => 0,
+			'user'   => [
+				'name' => '',
+				'id'   => 0,
+			],
 			'nonce'  => $nonce,
 		];
+
+		if ( get_option( 'show_avatars' ) ) {
+			$lock_data['user']['avatar'] = [];
+		}
 
 		if ( ! empty( $item ) ) {
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
@@ -318,6 +324,19 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 					'user'   => isset( $item['user'] ) ? (int) $item['user'] : 0,
 					'nonce'  => $nonce,
 				];
+				if ( isset( $item['user'] ) ) {
+					$user = get_user_by( 'id', $item['user'] );
+					if ( $user ) {
+						$lock_data['user'] = [
+							'name' => $user->display_name,
+							'id'   => $item['user'],
+						];
+
+						if ( get_option( 'show_avatars' ) ) {
+							$lock_data['user']['avatar'] = rest_get_avatar_urls( $user );
+						}
+					}
+				}
 			}
 		}
 
@@ -433,12 +452,49 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'user'   => [
-					'description' => __( 'The ID for the author of the lock.', 'web-stories' ),
-					'type'        => 'integer',
-					'context'     => [ 'view', 'edit', 'embed' ],
+					'description' => __( 'User', 'web-stories' ),
+					'type'        => 'object',
+					'properties'  => [
+						'id'   => [
+							'description' => __( 'The ID for the author of the lock.', 'web-stories' ),
+							'type'        => 'integer',
+							'readonly'    => true,
+							'context'     => [ 'view', 'edit', 'embed' ],
+						],
+						'name' => [
+							'description' => __( 'Display name for the user.', 'web-stories' ),
+							'type'        => 'string',
+							'readonly'    => true,
+							'context'     => [ 'embed', 'view', 'edit' ],
+						],
+					],
 				],
 			],
 		];
+
+		if ( get_option( 'show_avatars' ) ) {
+			$avatar_properties = [];
+
+			$avatar_sizes = rest_get_avatar_sizes();
+
+			foreach ( $avatar_sizes as $size ) {
+				$avatar_properties[ $size ] = [
+					/* translators: %d: Avatar image size in pixels. */
+					'description' => sprintf( __( 'Avatar URL with image size of %d pixels.', 'web-stories' ), $size ),
+					'type'        => 'string',
+					'format'      => 'uri',
+					'context'     => [ 'embed', 'view', 'edit' ],
+				];
+			}
+
+			$schema['properties']['user']['properties']['avatar'] = [
+				'description' => __( 'Avatar URLs for the user.', 'web-stories' ),
+				'type'        => 'object',
+				'context'     => [ 'embed', 'view', 'edit' ],
+				'readonly'    => true,
+				'properties'  => $avatar_properties,
+			];
+		}
 
 		$this->schema = $schema;
 

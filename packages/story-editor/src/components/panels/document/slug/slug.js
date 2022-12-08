@@ -21,12 +21,8 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import {
-  Input,
-  Link,
-  ThemeGlobals,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { Input, Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { safeDecodeURIComponent } from '@googleforcreators/url';
 
 /**
  * Internal dependencies
@@ -53,7 +49,7 @@ const PermalinkRow = styled(Row)`
 
     :active,
     :focus,
-    .${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+    :focus-visible {
       color: ${({ theme }) => theme.colors.fg.primary};
     }
   }
@@ -75,7 +71,12 @@ function SlugPanel({ nameOverride }) {
         story: { slug = '', link, permalinkConfig },
       },
       actions: { updateStory },
-    }) => ({ slug, link, permalinkConfig, updateStory })
+    }) => ({
+      slug: safeDecodeURIComponent(slug),
+      link,
+      permalinkConfig,
+      updateStory,
+    })
   );
   const [slug, setSlug] = useState(savedSlug);
 

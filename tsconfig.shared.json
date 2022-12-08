@@ -28,16 +28,20 @@
     "pretty": true,
     "sourceMap": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
-    "types": [],
     "paths": {
       "react": ["./node_modules/preact/compat/"],
       "react-dom": ["./node_modules/preact/compat/"]
-    }
+    },
+    "types": ["jest", "jest-extended", "node"]
   },
   "exclude": [
     "packages/*/dist-*/**",
     "packages/*/dist/**",
-    "**/test/**",
-    "**/karma/**"
+    "packages/*/node_modules/**",
+    "**/karma/**",
+    "**/stories/**",
+    "**/storybookUtils/**",
+    "**/test/**/*.js",
+    "**/testUtils/**/*.js"
   ]
 }

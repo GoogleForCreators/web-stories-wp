@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ruleset name="Web Stories PHP Coding Standards Rules">
-  <config name="minimum_supported_wp_version" value="5.7" />
+  <config name="minimum_supported_wp_version" value="5.9" />
 
   <rule ref="WordPress-Core">
     <type>error</type>
@@ -16,6 +16,7 @@
     <exclude-pattern>tests/*</exclude-pattern>
     <!-- Documentation is organized with the use of namespaces. -->
     <exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+    <exclude name="Squiz.Commenting.VariableComment.MissingVar" />
   </rule>
 
   <rule ref="WordPress-Extra">
@@ -34,6 +35,10 @@
 
   <rule ref="WordPress.Security.NonceVerification">
     <exclude-pattern>tests/*</exclude-pattern>
+  </rule>
+
+  <rule ref="WordPress.WP.AlternativeFunctions">
+     <exclude-pattern>tests/*</exclude-pattern>
   </rule>
 
   <rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
@@ -79,8 +84,8 @@
 
   <rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis" />
 
-  <!-- Check for cross-version support for PHP 7.2 and higher. -->
-  <config name="testVersion" value="7.2-" />
+  <!-- Check for cross-version support for PHP 7.4 and higher. -->
+  <config name="testVersion" value="7.4-" />
   <rule ref="PHPCompatibilityWP" />
 
   <!-- The main plugin file should be parsable by PHP 5.6. -->
@@ -184,19 +189,58 @@
     </properties>
   </rule>
 
+  <!-- Requires arrow functions if possible. -->
+  <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
+  <!-- Enforces correct space usage in array functions. -->
+  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
+    <properties>
+      <property name="spacesCountAfterKeyword" value="0"/>
+      <property name="spacesCountBeforeArrow" value="1"/>
+      <property name="spacesCountAfterArrow" value="1"/>
+      <property name="allowMultiLine" value="true"/>
+    </properties>
+  </rule>
+
+  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <exclude-pattern>web-stories.php</exclude-pattern>
+        <exclude-pattern>includes/compat/*</exclude-pattern>
+        <exclude-pattern>includes/templates/*</exclude-pattern>
+    </rule>
+
   <!-- Class names should be referenced via ::class constant when possible. -->
   <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
     <properties>
       <property name="enableOnObjects" value="false" />
     </properties>
   </rule>
+
+  <rule ref="SlevomatCodingStandard.PHP">
+    <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
+    <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
+  </rule>
+
   <!-- Requires declaring visibility for class constants. -->
   <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
+
+  <rule ref="SlevomatCodingStandard.Variables">
+    <exclude name="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable" />
+  </rule>
 
   <!-- Requires use of null coalesce operator (??) when possible. -->
   <rule
     ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"
   />
+
+  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+      <exclude-pattern>web-stories.php</exclude-pattern>
+      <exclude-pattern>includes/compat/*</exclude-pattern>
+       <properties>
+        <property name="enableMixedTypeHint" value="false" />
+        <property name="enableUnionTypeHint" value="false" />
+        <property name="enableIntersectionTypeHint" value="false" />
+        <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
+      </properties>
+  </rule>
 
   <!-- Reports forbidden annotations. -->
   <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">

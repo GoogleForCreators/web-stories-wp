@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { migrate } from '@googleforcreators/migration';
-import type { Element } from '@googleforcreators/types';
+import type { Element } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */

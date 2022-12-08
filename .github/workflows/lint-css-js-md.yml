@@ -56,10 +56,10 @@ jobs:
       checks: write # for ataylorme/eslint-annotate-action to create checks
       contents: read # for actions/checkout to fetch code
       pull-requests: read # for ataylorme/eslint-annotate-action to get changed PR files
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -93,6 +93,8 @@ jobs:
 
       - name: JS Lint
         run: npm run lint:js
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         if: >
           github.event.pull_request.head.repo.fork == true ||
           github.event.pull_request.user.login == 'dependabot[bot]'
@@ -100,6 +102,8 @@ jobs:
       - name: JS Lint Report
         run: npm run lint:js:report
         continue-on-error: true
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         # Prevent generating the ESLint report if PR is from a fork or authored by Dependabot.
         if: >
           github.event.pull_request.head.repo.fork == false &&

@@ -24,9 +24,12 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\User;
 
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\Infrastructure\SiteRemovalAware;
@@ -38,7 +41,7 @@ use WP_Site;
 /**
  * Class Capabilities
  */
-class Capabilities implements Service, PluginActivationAware, SiteInitializationAware, SiteRemovalAware {
+class Capabilities implements Service, PluginActivationAware, SiteInitializationAware, SiteRemovalAware, PluginUninstallAware {
 	/**
 	 * Act on plugin activation.
 	 *
@@ -69,6 +72,15 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @param WP_Site $site The site being removed.
 	 */
 	public function on_site_removal( WP_Site $site ): void {
+		$this->remove_caps_from_roles();
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
 		$this->remove_caps_from_roles();
 	}
 
@@ -138,9 +150,7 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 		$all_capabilities     = array_values( $all_capabilities_raw );
 		$all_capabilities     = array_filter(
 			$all_capabilities,
-			static function ( $value ) {
-				return 'read' !== $value;
-			}
+			static fn( $value ) => 'read' !== $value
 		);
 		$all_roles            = wp_roles();
 		$roles                = array_values( (array) $all_roles->role_objects );

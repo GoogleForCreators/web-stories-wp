@@ -21,16 +21,12 @@ import { useMemo, useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
+import { NumericInput, DropDown } from '@googleforcreators/design-system';
 import {
-  NumericInput,
-  DropDown,
-  ThemeGlobals,
-} from '@googleforcreators/design-system';
-import {
-  FIELD_TYPES,
-  DIRECTION,
-  ROTATION,
-  SCALE_DIRECTION,
+  FieldType,
+  AnimationDirection,
+  Rotation,
+  ScaleDirection,
   GeneralAnimationPropTypes,
   AnimationFormPropTypes,
 } from '@googleforcreators/animation';
@@ -65,16 +61,16 @@ const StyledDropDown = styled(DropDown)`
     &:hover {
       ${outerGridBordersCss}
     }
-    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
+    &:focus-visible {
       border-radius: ${({ theme }) => theme.borders.radius.small};
     }
   }
 `;
 
 const allAnimations = [
-  ...Object.values(DIRECTION),
-  ...Object.values(ROTATION),
-  ...Object.values(SCALE_DIRECTION),
+  ...Object.values(AnimationDirection),
+  ...Object.values(Rotation),
+  ...Object.values(ScaleDirection),
 ];
 
 function EffectInput({
@@ -96,9 +92,9 @@ function EffectInput({
   }, [disabledOptions, disabled]);
 
   const valueForField = effectConfig[field] ?? effectProps[field].defaultValue;
-  const isFloat = effectProps[field].type === FIELD_TYPES.FLOAT;
+  const isFloat = effectProps[field].type === FieldType.Float;
   switch (effectProps[field].type) {
-    case FIELD_TYPES.DROPDOWN:
+    case FieldType.Dropdown:
       return (
         <StyledDropDown
           options={(effectProps[field].values || []).map(
@@ -116,7 +112,7 @@ function EffectInput({
           disabled={disabled}
         />
       );
-    case FIELD_TYPES.DIRECTION_PICKER:
+    case FieldType.DirectionPicker:
       return (
         <DirectionRadioInput
           value={valueForField}

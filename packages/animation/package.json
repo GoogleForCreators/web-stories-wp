@@ -2,7 +2,7 @@
   "name": "@googleforcreators/animation",
   "description": "Web Stories editor animation library.",
   "private": false,
-  "version": "0.1.202208291229",
+  "version": "0.1.202212071230",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -28,28 +28,30 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
+    "@googleforcreators/media": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
     "flagged": "^2.0.6",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.6",
-    "uuid": "^9.0.0",
-    "web-animations-js": "^2.3.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1"
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/styled-components": "^5.1.26",
+    "@types/web-animations-js": "^2.2.12"
   }
 }

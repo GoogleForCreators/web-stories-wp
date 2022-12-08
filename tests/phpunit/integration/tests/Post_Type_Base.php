@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,15 +28,9 @@ use Google\Web_Stories\Tests\Integration\Fixture\DummyPostTypeWithoutArchive;
  */
 class Post_Type_Base extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Post_Type_Base
-	 */
-	protected static $cpt_no_archive;
+	protected static \Google\Web_Stories\Post_Type_Base $cpt_no_archive;
 
-	/**
-	 * @var \Google\Web_Stories\Post_Type_Base
-	 */
-	protected static $cpt_custom_archive;
+	protected static \Google\Web_Stories\Post_Type_Base $cpt_custom_archive;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -137,5 +134,31 @@ class Post_Type_Base extends DependencyInjectedTestCase {
 
 		$link = self::$cpt_custom_archive->get_archive_link( true );
 		$this->assertSame( home_url( '/cpt-custom-archive/' ), $link );
+	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		self::$cpt_custom_archive->register();
+		self::factory()->post->create(
+			[
+				'post_type'    => self::$cpt_custom_archive->get_slug(),
+				'post_status'  => 'publish',
+				'post_content' => 'Example content',
+			]
+		);
+		self::$cpt_custom_archive->on_plugin_uninstall();
+		$cpt_posts = get_posts(
+			[
+				'fields'           => 'ids',
+				'suppress_filters' => false,
+				'post_status'      => 'any',
+				'post_type'        => self::$cpt_custom_archive->get_slug(),
+				'posts_per_page'   => -1,
+			]
+		);
+
+		$this->assertSameSets( [], $cpt_posts );
 	}
 }

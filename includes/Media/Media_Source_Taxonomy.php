@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Context;
@@ -43,7 +45,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
+
+	/**
+	 * Media Source key.
+	 */
+	public const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
 	 * Single constructor.
@@ -51,27 +58,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @param Context $context Context instance.
 	 */
 	public function __construct( Context $context ) {
-		$this->context = $context;
+		$this->context            = $context;
+		$this->taxonomy_slug      = 'web_story_media_source';
+		$this->taxonomy_post_type = 'attachment';
 	}
-
-	/**
-	 * Taxonomy key.
-	 *
-	 * @var string
-	 */
-	protected $taxonomy_slug = 'web_story_media_source';
-
-	/**
-	 * Post type.
-	 *
-	 * @var string
-	 */
-	protected $taxonomy_post_type = 'attachment';
-
-	/**
-	 * Media Source key.
-	 */
-	public const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
 	 * Init.
@@ -87,7 +77,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		// Hide video posters from Media grid view.
 		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
 		// Hide video posters from Media list view.
-		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
+		add_action( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
 		add_filter( 'web_stories_rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ] );
 	}
@@ -153,6 +143,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 * @return array|mixed $response Filtered attachment data.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
 		if ( ! \is_array( $response ) ) {
@@ -266,6 +260,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param array<string, mixed>|mixed $args Query args.
 	 * @return array<string, mixed>|mixed Filtered query args.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($args is array<T> ? array<T> : mixed)
 	 */
 	public function filter_ajax_query_attachments_args( $args ) {
 		if ( ! \is_array( $args ) ) {
@@ -285,7 +283,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param WP_Query $query WP_Query instance, passed by reference.
 	 */
-	public function filter_generated_media_attachments( &$query ): void {
+	public function filter_generated_media_attachments( WP_Query $query ): void {
 		if ( is_admin() && $query->is_main_query() && $this->context->is_upload_screen() ) {
 			$tax_query = $query->get( 'tax_query' );
 
@@ -302,6 +300,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param array<string, mixed>|mixed $args Query args.
 	 * @return array<string, mixed>|mixed Filtered query args.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($args is array<T> ? array<T> : mixed)
 	 */
 	public function filter_rest_generated_media_attachments( $args ) {
 		if ( ! \is_array( $args ) ) {

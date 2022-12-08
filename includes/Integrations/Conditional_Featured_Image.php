@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Service_Base;
@@ -39,7 +41,7 @@ class Conditional_Featured_Image extends Service_Base {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Conditional_Featured_Image constructor.

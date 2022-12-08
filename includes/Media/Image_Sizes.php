@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Service_Base;
@@ -115,6 +117,10 @@ class Image_Sizes extends Service_Base {
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 * @param WP_Post     $attachment Attachment object.
 	 * @return array|mixed $response;
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response, $attachment ) {
 		if ( ! \is_array( $response ) ) {

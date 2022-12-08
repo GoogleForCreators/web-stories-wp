@@ -1,5 +1,5 @@
 {
-  "version": 43,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -31,9 +31,6 @@
           "y": 131,
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "borderRadius": {
@@ -68,9 +65,6 @@
           "type": "shape",
           "width": 265,
           "height": 357,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -100,9 +94,6 @@
           "y": 609,
           "width": 57,
           "height": 9,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "0e2c1625-4aac-4476-8b1d-84c9fbfd90b7",
           "groupId": "73e659e8-f68a-40fb-8a60-23d007df1b31"
@@ -120,9 +111,6 @@
           "type": "shape",
           "width": 57,
           "height": 9,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "groupId": "73e659e8-f68a-40fb-8a60-23d007df1b31"
         },
@@ -135,9 +123,6 @@
           "type": "shape",
           "width": 57,
           "height": 9,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "0e2c1625-4aac-4476-8b1d-84c9fbfd90b7",
           "id": "7e7f69f3-472e-42cf-863f-989c27ece528",
@@ -154,9 +139,6 @@
           "type": "shape",
           "width": 57,
           "height": 9,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "7e7f69f3-472e-42cf-863f-989c27ece528",
           "id": "e13185ca-4f74-4957-b149-6a0939ee4950",
@@ -297,7 +279,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #272727\">Taking Care</span>\n<span style=\"font-weight: 300; color: #272727\">Of Yourself</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -309,9 +290,6 @@
           "y": 404,
           "width": 294,
           "height": 131,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf"
         },
         {
@@ -371,7 +349,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #272727\">With Monique Robbins</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -383,9 +360,6 @@
           "y": 536,
           "width": 175,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "73929614-83f4-446e-883c-376f0fbdb2be"
         }
       ],
@@ -453,9 +427,6 @@
           "type": "shape",
           "width": 457,
           "height": 666,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -489,9 +460,6 @@
           "type": "shape",
           "width": 151,
           "height": 151,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -576,7 +544,6 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff\">We’re probably working longer hours from home now, which means we’re tied to our kitchen tables and home offices. Here are some tips to keeping that pep in your step.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": false,
             "topLeft": 40,
@@ -586,9 +553,6 @@
           },
           "width": 353,
           "height": 222,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "c8a77205-6c1e-4c60-8c50-0a359acfbcb7",
           "id": "c2d0f8f7-b86a-4e92-b421-635887ec7869",
           "x": 29,
@@ -675,9 +639,6 @@
           "type": "shape",
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -711,9 +672,6 @@
           "type": "shape",
           "width": 151,
           "height": 151,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -747,9 +705,6 @@
           "y": 354,
           "width": 43,
           "height": 7,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "ee50414e-7e2c-4518-9899-85d4d2b8c2d3"
         },
@@ -846,7 +801,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727\">Excercise</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -856,9 +810,6 @@
           },
           "width": 294,
           "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf",
           "id": "0fd3cc0e-a22b-49cb-94ae-101d68438d57",
           "x": 47,
@@ -921,7 +872,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #272727\">Even a light yoga session will counteract a lot of sitting during your work day.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -931,9 +881,6 @@
           },
           "width": 243,
           "height": 79,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "id": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "x": 47,
@@ -1000,7 +947,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 1</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1009,10 +955,7 @@
             "bottomLeft": 2
           },
           "width": 165,
-          "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 17
         }
       ],
       "backgroundColor": { "color": { "r": 245, "g": 244, "b": 238 } },
@@ -1086,9 +1029,6 @@
           "type": "shape",
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -1122,9 +1062,6 @@
           "type": "shape",
           "width": 265,
           "height": 357,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -1156,9 +1093,6 @@
           "type": "shape",
           "width": 353,
           "height": 144,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 40,
@@ -1271,7 +1205,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Splurge</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1281,9 +1214,6 @@
           },
           "width": 84,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "x": 223,
@@ -1351,7 +1281,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Equinox</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1361,9 +1290,6 @@
           },
           "width": 84,
           "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "a9f1ec9d-9ba6-4e10-8e0a-4eafc385d937"
         },
         {
@@ -1469,7 +1395,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Save</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1479,9 +1404,6 @@
           },
           "width": 84,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "04546939-096c-4eab-8b75-be91b5743753"
         },
         {
@@ -1545,7 +1467,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Jumprope at your local park or try a Youtube series</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1555,9 +1476,6 @@
           },
           "width": 143,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "04546939-096c-4eab-8b75-be91b5743753"
         },
         {
@@ -1617,7 +1535,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Best</span>\n<span style=\"font-weight: 300; color: #fff\">Exercise</span>\n<span style=\"font-weight: 300; color: #fff\">Options</span>\n<span style=\"font-weight: 300; color: #fff\">In NYC</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1626,10 +1543,7 @@
             "bottomLeft": 2
           },
           "width": 218,
-          "height": 164,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "height": 164
         }
       ],
       "backgroundColor": { "color": { "r": 94, "g": 86, "b": 74 } },
@@ -1697,9 +1611,6 @@
           },
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -1733,9 +1644,6 @@
           },
           "width": 151,
           "height": 151,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -1769,9 +1677,6 @@
           "y": 355,
           "width": 43,
           "height": 7,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "f5dae377-1d10-48f8-8b70-8a7f9dbea6d9",
           "type": "shape",
@@ -1869,7 +1774,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #272727\">Sleep More</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1879,9 +1783,6 @@
           },
           "width": 294,
           "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf",
           "id": "a6c52001-a70d-4d54-9fd5-5a2a4d29a676",
           "x": 47,
@@ -1944,7 +1845,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 300; color: #272727\">Are you getting at least 8 hours (or more) of sleep a night? Tracking sleep can definitely help you figure out.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1954,9 +1854,6 @@
           },
           "width": 274,
           "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "id": "a946962e-b0ae-4b08-9cf6-28547453f3cc",
           "x": 47,
@@ -2023,7 +1920,6 @@
           "id": "faa16b91-1010-403e-a964-a1ea9cfc8070",
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 2</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2033,9 +1929,6 @@
           },
           "width": 165,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -2110,9 +2003,6 @@
           },
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -2146,9 +2036,6 @@
           },
           "width": 265,
           "height": 357,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -2180,9 +2067,6 @@
           "backgroundColor": { "color": { "r": 122, "g": 135, "b": 168 } },
           "width": 353,
           "height": 144,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 40,
@@ -2294,7 +2178,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Sleep Control</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2304,9 +2187,6 @@
           },
           "width": 84,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "87ba7d25-84a3-4a49-a9cc-cb4b5d835e7f",
           "x": 223,
@@ -2374,7 +2254,6 @@
           "id": "a26f74d2-d0ce-4415-831f-cb89121a17d8",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Track your sleep and monitor your movement.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2384,9 +2263,6 @@
           },
           "width": 122,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "bb04fb07-bbf4-4ec6-8387-be22d1469465"
         },
@@ -2491,7 +2367,6 @@
           "id": "100f8d9c-97e4-4e40-ab0a-a44675606f11",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Auto Ring</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2501,9 +2376,6 @@
           },
           "width": 111,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "f129f23c-2ced-4b86-a615-07e02d99e73b"
         },
@@ -2567,7 +2439,6 @@
           "id": "0a96264e-c16d-46ad-8d31-32078648a8d1",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Track your sleep and your waking productivity.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2577,9 +2448,6 @@
           },
           "width": 143,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "f129f23c-2ced-4b86-a615-07e02d99e73b"
         },
@@ -2639,7 +2507,6 @@
           "id": "eca5be61-27ff-42fa-a2aa-5c65d11491aa",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #f5f4ee\">Best</span>\n<span style=\"font-weight: 300; color: #f5f4ee\">Mindfulness</span>\n<span style=\"font-weight: 300; color: #f5f4ee\">Apps</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2649,9 +2516,6 @@
           },
           "width": 218,
           "height": 126,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -2720,9 +2584,6 @@
           },
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -2756,9 +2617,6 @@
           },
           "width": 151,
           "height": 151,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -2792,9 +2650,6 @@
           "y": 355,
           "width": 43,
           "height": 7,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "7b8cc4d9-0ce8-4132-b1f2-a769b4d174cd",
           "type": "shape",
@@ -2892,7 +2747,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"color: #272727\">Get Your Daily&nbsp;</span>\n<span style=\"color: #272727\">Dose Of Vitamins</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2902,9 +2756,6 @@
           },
           "width": 294,
           "height": 76,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf",
           "id": "a5d9ab76-e2de-48c9-9278-c816e7de19b9",
           "x": 47,
@@ -2967,7 +2818,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 300; color: #272727\">B12 and iron are your best friends for energy.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2977,9 +2827,6 @@
           },
           "width": 243,
           "height": 51,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "id": "cee59c11-98af-4b62-b994-26c835f7261f",
           "x": 47,
@@ -3046,7 +2893,6 @@
           "id": "4cac393e-db45-4d98-8d69-148218f4d990",
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 3</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3056,9 +2902,6 @@
           },
           "width": 165,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -3133,9 +2976,6 @@
           },
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -3169,9 +3009,6 @@
           },
           "width": 265,
           "height": 357,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -3203,9 +3040,6 @@
           "backgroundColor": { "color": { "r": 88, "g": 128, "b": 97 } },
           "width": 353,
           "height": 144,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 40,
@@ -3317,7 +3151,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Kale and Broccoli</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3327,9 +3160,6 @@
           },
           "width": 87,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "703c5e62-ccf4-4942-ada6-f4d073642914",
           "x": 223,
@@ -3397,7 +3227,6 @@
           "id": "e6cfd7b3-a0b2-4e1a-adaf-8dc35d608181",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">These are your #1 powerhouse greens.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3407,9 +3236,6 @@
           },
           "width": 115,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "2dbfbeb5-5d4a-4c0e-8870-368dd3c6a325"
         },
@@ -3514,7 +3340,6 @@
           "id": "8858ce0a-1566-44ef-a136-8230812ed6ad",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Tomatoes</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3524,9 +3349,6 @@
           },
           "width": 97,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "d101ba21-6c8c-40f8-aef1-5c73bfa120d7"
         },
@@ -3590,7 +3412,6 @@
           "id": "911a0d6f-a200-462c-a692-fa61fce57f21",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Eat them raw or cooked. They’re great for energy.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3600,9 +3421,6 @@
           },
           "width": 143,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "d101ba21-6c8c-40f8-aef1-5c73bfa120d7"
         },
@@ -3662,7 +3480,6 @@
           "id": "b14d1d3b-ffef-4f72-bc91-97f78984d651",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Best</span>\n<span style=\"font-weight: 300; color: #fff\">Vitamin-Loaded</span>\n<span style=\"font-weight: 300; color: #fff\">Food</span>\n<span style=\"font-weight: 300; color: #fff\">Options</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3672,9 +3489,6 @@
           },
           "width": 240,
           "height": 164,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -3743,9 +3557,6 @@
           },
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -3779,9 +3590,6 @@
           },
           "width": 151,
           "height": 151,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -3815,9 +3623,6 @@
           "y": 355,
           "width": 43,
           "height": 7,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "29050045-f073-4127-9e2d-957e8f7674e2",
           "type": "shape",
@@ -3915,7 +3720,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 400; color: #272727\">Skip the coffee</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3925,9 +3729,6 @@
           },
           "width": 294,
           "height": 43,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf",
           "id": "bcdda95e-4253-45e2-b2f6-4edf1725a92f",
           "x": 47,
@@ -3990,7 +3791,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 300; color: #272727\">Coffee is a really short term solution for more energy. Try playing the long game instead.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4000,9 +3800,6 @@
           },
           "width": 256,
           "height": 80,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "id": "7e26dfe0-3594-45de-87e7-15da45884e37",
           "x": 47,
@@ -4069,7 +3866,6 @@
           "id": "6d000e40-1624-4ebe-82bc-ee5772773d11",
           "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 4</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4079,9 +3875,6 @@
           },
           "width": 165,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -4156,9 +3949,6 @@
           },
           "width": 457,
           "height": 616,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -4192,9 +3982,6 @@
           },
           "width": 265,
           "height": 357,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -4226,9 +4013,6 @@
           "backgroundColor": { "color": { "r": 135, "g": 140, "b": 82 } },
           "width": 353,
           "height": 144,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 40,
@@ -4340,7 +4124,6 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Tea and Sympathy</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4350,9 +4133,6 @@
           },
           "width": 117,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "2c6c86d3-f394-4de8-8a82-6303134e8d03",
           "x": 223,
@@ -4420,7 +4200,6 @@
           "id": "533013ae-d961-4d45-b416-4bc74a688835",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">A classic NY tea shop that never goes out of style.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4430,9 +4209,6 @@
           },
           "width": 143,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "ad3f83e7-2118-42ec-8056-3c3dd577b031"
         },
@@ -4537,7 +4313,6 @@
           "id": "be43cfd2-77d6-402a-b727-eaa974cbfcef",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Cha An</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4547,9 +4322,6 @@
           },
           "width": 84,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "fb446e2c-b395-472c-8f1f-6b5ff827ac81"
         },
@@ -4613,7 +4385,6 @@
           "id": "036397e6-36ce-41a6-b381-c9c47c3eb0fb",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Take a trip to Japan in NY and explore unique teas.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4623,9 +4394,6 @@
           },
           "width": 143,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text",
           "groupId": "fb446e2c-b395-472c-8f1f-6b5ff827ac81"
         },
@@ -4685,7 +4453,6 @@
           "id": "3beb3cc9-a05c-44db-aab6-72e1ea9e9c4d",
           "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Best</span>\n<span style=\"font-weight: 300; color: #fff\">exercise</span>\n<span style=\"font-weight: 300; color: #fff\">options</span>\n<span style=\"font-weight: 300; color: #fff\">in NYC</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4695,9 +4462,6 @@
           },
           "width": 218,
           "height": 164,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "type": "text"
         }
       ],
@@ -4768,9 +4532,6 @@
           "y": 107,
           "width": 457,
           "height": 654,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "9ab45f9e-d1dd-4354-94a6-2c0a3d8351c5",
           "borderRadius": {
@@ -4805,9 +4566,6 @@
           "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "width": 265,
           "height": 357,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 200,
@@ -4921,7 +4679,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #272727\">Let’s</span>\n<span style=\"font-weight: 300; color: #272727\">Recap</span>\n<span style=\"font-weight: 300; color: #272727\">What We</span>\n<span style=\"font-weight: 300; color: #272727\">Learned</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 0,
@@ -4931,9 +4688,6 @@
           },
           "width": 218,
           "height": 164,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "cae57128-b8d9-4f3c-a0a1-cb93d7f3c9de",
           "id": "003a97fd-898a-4c6b-955f-40ad905be703",
           "x": 47,
@@ -5080,7 +4834,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727; letter-spacing: 0.1em; text-transform: uppercase\">Exercise</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5090,9 +4843,6 @@
           },
           "width": 84,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "id": "b9b2aa64-41af-4b5a-96bf-e966d11eef1b",
           "x": 51,
@@ -5160,7 +4910,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727; letter-spacing: 0.1em; text-transform: uppercase\">Sleep More</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5170,9 +4919,6 @@
           },
           "width": 115,
           "height": 17,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "25258554-a2fb-4a8c-b22a-ffe3de09551c"
         },
         {
@@ -5236,7 +4982,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727; letter-spacing: 0.1em; text-transform: uppercase\">Get your vitamins</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5246,9 +4991,6 @@
           },
           "width": 115,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "28b266c2-f8b6-48cf-93a5-e52705452e96"
         },
         {
@@ -5353,7 +5095,6 @@
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
           "content": "<span style=\"color: #272727; letter-spacing: 0.1em; text-transform: uppercase\">Skip the coffee</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -5363,9 +5104,6 @@
           },
           "width": 115,
           "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "groupId": "74c6bc9a-cee5-4732-9c4c-930ac27e0bfa"
         }
       ],

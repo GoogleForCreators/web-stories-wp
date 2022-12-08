@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -60,6 +63,8 @@ class Remove_Broken_Text_Styles extends TestCase {
 		$object->migrate();
 
 		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+		$this->assertIsArray( $style_presets );
+		$this->assertArrayHasKey( 'textStyles', $style_presets );
 		$this->assertSame(
 			$style_presets['textStyles'],
 			[

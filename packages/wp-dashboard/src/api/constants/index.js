@@ -25,6 +25,7 @@ export const STORY_FIELDS = [
   'link',
   'preview_link',
   'edit_link',
+  '_links', // Needed for WP 6.1+
   // _web_stories_envelope will add these fields, we need them too.
   'body',
   'status',
@@ -34,7 +35,7 @@ export const STORY_FIELDS = [
 export const SEARCH_PAGES_FIELDS = ['id', 'title'];
 export const GET_PAGE_FIELDS = ['title', 'link'];
 
-export const STORY_EMBED = 'wp:lock,wp:lockuser,author';
+export const STORY_EMBED = 'wp:lock,author';
 
 export const REST_LINKS = {
   EDIT: 'wp:action-edit',

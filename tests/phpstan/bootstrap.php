@@ -17,3 +17,10 @@ define( 'WEBSTORIES_DEV_MODE', true );
 define( 'WPCOM_IS_VIP_ENV', true );
 
 define( 'AMP__VERSION', '1.2.3' );
+
+
+// Used only in tests:
+
+define( 'WPINC', '' );
+define( 'DIR_TESTDATA', '' );
+define( 'WEB_STORIES_TEST_DATA_DIR', '' );

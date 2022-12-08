@@ -24,11 +24,7 @@ import { addQueryArgs } from '@googleforcreators/url';
 import apiFetch from '@wordpress/api-fetch';
 
 export function getStoryLockById(storyId, stories) {
-  const path = addQueryArgs(`${stories}${storyId}/lock/`, {
-    _embed: 'author',
-  });
-
-  return apiFetch({ path });
+  return apiFetch({ path: `${stories}${storyId}/lock/` });
 }
 
 export function setStoryLockById(storyId, stories) {

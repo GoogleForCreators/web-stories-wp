@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -28,7 +31,11 @@ class Captions extends TestCase {
 	 * @group ms-required
 	 */
 	public function test_filter_list_of_allowed_filetypes(): void {
-		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
+		/**
+		 * @var string $upload_filetypes
+		 */
+		$upload_filetypes = get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
+		$site_exts        = explode( ' ', $upload_filetypes );
 		$this->assertContains( 'vtt', $site_exts );
 	}
 }

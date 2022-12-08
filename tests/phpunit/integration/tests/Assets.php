@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -16,6 +19,8 @@
  */
 
 namespace Google\Web_Stories\Tests\Integration;
+
+use _WP_Dependency;
 
 /**
  * Class Assets
@@ -39,6 +44,7 @@ class Assets extends TestCase {
 		$assets          = new \Google\Web_Stories\Assets();
 		$results         = $assets->register_style( 'test_style', false );
 		$register_styles = $this->get_private_property( $assets, 'register_styles' );
+		$this->assertIsArray( $register_styles );
 		$this->assertArrayHasKey( 'test_style', $register_styles );
 		$this->assertTrue( $results );
 	}
@@ -50,10 +56,17 @@ class Assets extends TestCase {
 		$assets           = new \Google\Web_Stories\Assets();
 		$results          = $assets->register_script( 'test_script', 'https://example.com/test.js' );
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
+		$this->assertIsArray( $register_scripts );
 		$this->assertArrayHasKey( 'test_script', $register_scripts );
 		$this->assertTrue( $results );
-		$this->assertArrayHasKey( 'test_script', wp_scripts()->registered );
-		$this->assertSame( 'web-stories', wp_scripts()->registered['test_script']->textdomain );
+		/**
+		 * An array of all registered dependencies keyed by handle.
+		 *
+		 * @var _WP_Dependency[] $registered
+		 */
+		$registered = wp_scripts()->registered;
+		$this->assertArrayHasKey( 'test_script', $registered );
+		$this->assertSame( 'web-stories', $registered['test_script']->textdomain );
 	}
 
 	/**
@@ -63,10 +76,17 @@ class Assets extends TestCase {
 		$assets           = new \Google\Web_Stories\Assets();
 		$results          = $assets->register_script( 'test_script', false );
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
+		$this->assertIsArray( $register_scripts );
 		$this->assertArrayHasKey( 'test_script', $register_scripts );
 		$this->assertTrue( $results );
-		$this->assertArrayHasKey( 'test_script', wp_scripts()->registered );
-		$this->assertNull( wp_scripts()->registered['test_script']->textdomain );
+		/**
+		 * An array of all registered dependencies keyed by handle.
+		 *
+		 * @var _WP_Dependency[] $registered
+		 */
+		$registered = wp_scripts()->registered;
+		$this->assertArrayHasKey( 'test_script', $registered );
+		$this->assertNull( $registered['test_script']->textdomain );
 	}
 
 	/**
@@ -74,8 +94,9 @@ class Assets extends TestCase {
 	 */
 	public function test_enqueue_style(): void {
 		$assets = new \Google\Web_Stories\Assets();
-		$assets->enqueue_style( 'test_style', false );
+		$assets->enqueue_style( 'test_style', '' );
 		$register_styles = $this->get_private_property( $assets, 'register_styles' );
+		$this->assertIsArray( $register_styles );
 		$this->assertArrayHasKey( 'test_style', $register_styles );
 		$this->assertTrue( wp_style_is( 'test_style' ) );
 	}
@@ -85,8 +106,9 @@ class Assets extends TestCase {
 	 */
 	public function test_enqueue_script(): void {
 		$assets = new \Google\Web_Stories\Assets();
-		$assets->enqueue_script( 'test_script', false );
+		$assets->enqueue_script( 'test_script', '' );
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
+		$this->assertIsArray( $register_scripts );
 		$this->assertArrayHasKey( 'test_script', $register_scripts );
 		$this->assertTrue( wp_script_is( 'test_script' ) );
 	}
@@ -131,15 +153,21 @@ class Assets extends TestCase {
 		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );
 		$this->assertTrue( wp_script_is( 'dynamic_import_chunk', 'registered' ) );
 
+		/**
+		 * An array of all registered dependencies keyed by handle.
+		 *
+		 * @var _WP_Dependency[] $registered
+		 */
+		$registered = wp_scripts()->registered;
 		// Verifies that wp_set_script_translations() has been called.
-		$this->assertSame( 'web-stories', wp_scripts()->registered['test_script']->textdomain );
-		$this->assertSame( 'web-stories', wp_scripts()->registered['fake_js_chunk']->textdomain );
-		$this->assertSame( 'web-stories', wp_scripts()->registered['dynamic_import_chunk']->textdomain );
-		$this->assertContains( 'wp-i18n', wp_scripts()->registered['test_script']->deps );
-		$this->assertContains( 'fake_js_chunk', wp_scripts()->registered['test_script']->deps );
-		$this->assertNotContains( 'dynamic_import_chunk', wp_scripts()->registered['test_script']->deps );
-		$this->assertContains( 'wp-i18n', wp_scripts()->registered['fake_js_chunk']->deps );
-		$this->assertContains( 'wp-i18n', wp_scripts()->registered['dynamic_import_chunk']->deps );
+		$this->assertSame( 'web-stories', $registered['test_script']->textdomain );
+		$this->assertSame( 'web-stories', $registered['fake_js_chunk']->textdomain );
+		$this->assertSame( 'web-stories', $registered['dynamic_import_chunk']->textdomain );
+		$this->assertContains( 'wp-i18n', $registered['test_script']->deps );
+		$this->assertContains( 'fake_js_chunk', $registered['test_script']->deps );
+		$this->assertNotContains( 'dynamic_import_chunk', $registered['test_script']->deps );
+		$this->assertContains( 'wp-i18n', $registered['fake_js_chunk']->deps );
+		$this->assertContains( 'wp-i18n', $registered['dynamic_import_chunk']->deps );
 	}
 
 	/**

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
@@ -56,7 +58,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @var array<string,mixed>
 	 * @phpstan-var QueryArgs
 	 */
-	private $args = [];
+	private array $args = [];
 
 	/**
 	 * Default style presets to pass if not set.
@@ -358,7 +360,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$thumb_ids     = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
 		$publisher_ids = array_filter( array_map( [ $this, 'get_publisher_logo_id' ], $posts ) );
 
-		return array_unique( array_merge( $thumb_ids, $publisher_ids ) );
+		return array_unique( [ ...$thumb_ids, ...$publisher_ids ] );
 	}
 
 	/**
@@ -656,7 +658,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
 			if ( $poster_src ) {
 				[$url, $width, $height] = $poster_src;
 

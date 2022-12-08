@@ -2,7 +2,7 @@
   "name": "@googleforcreators/media",
   "description": "Functionality for creating and working with media resources in the Web Stories editor.",
   "private": false,
-  "version": "0.1.202208291229",
+  "version": "0.1.202212071230",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -40,7 +40,6 @@
   "dependencies": {
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
-    "@googleforcreators/types": "*",
     "@googleforcreators/units": "*",
     "mime": "^3.0.0",
     "prop-types": "^15.8.1"

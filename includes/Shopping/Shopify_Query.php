@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Interfaces\Product_Query;
@@ -85,7 +87,7 @@ class Shopify_Query implements Product_Query {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Constructor.

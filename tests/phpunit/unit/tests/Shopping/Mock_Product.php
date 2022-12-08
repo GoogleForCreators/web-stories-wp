@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -22,12 +25,15 @@ namespace Google\Web_Stories\Tests\Unit\Shopping;
  * Mocks WooCommerce product methods as needed unit tests.
  */
 class Mock_Product {
-	protected $data;
+	/**
+	 * @var array<string, mixed> $data
+	 */
+	protected array $data;
 
 	/**
-	 * @param mixed $data
+	 * @param array<string, mixed> $product_data
 	 */
-	public function __construct( $product_data ) {
+	public function __construct( array $product_data ) {
 		$this->data = $product_data;
 	}
 
@@ -45,7 +51,7 @@ class Mock_Product {
 	/**
 	 * Pulls a prop from the data array if it exists
 	 *
-	 * @param mixed $prop
+	 * @param string $prop
 	 * @return mixed
 	 */
 	public function get_prop( $prop ) {
@@ -58,18 +64,43 @@ class Mock_Product {
 		return $value;
 	}
 
+	/**
+	 */
 	public function get_id(): ?int {
-		return $this->get_prop( 'id' );
-	}
+		/**
+		 * ID
+		 *
+		 * @var int|null $id ID
+		 */
+		$id = $this->get_prop( 'id' );
 
-	public function get_image_id(): ?int {
-		return $this->get_prop( 'image_id' );
+		return $id;
 	}
 
 	/**
-	 * @return array|null
+	 */
+	public function get_image_id(): ?int {
+		/**
+		 * Image id.
+		 *
+		 * @var int|null $image_id Image id.
+		 */
+		$image_id = $this->get_prop( 'image_id' );
+
+		return $image_id;
+	}
+
+	/**
+	 * @return int[]|null
 	 */
 	public function get_gallery_image_ids(): ?array {
-		return $this->get_prop( 'gallery_image_ids' );
+		/**
+		 * Gallery image ids.
+		 *
+		 * @var int[]|null $gallery_image_ids Gallery image id.
+		 */
+		$gallery_image_ids = $this->get_prop( 'gallery_image_ids' );
+
+		return $gallery_image_ids;
 	}
 }

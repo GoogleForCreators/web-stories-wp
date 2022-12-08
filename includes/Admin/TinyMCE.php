@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
@@ -47,21 +49,21 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Tinymce constructor.
@@ -94,7 +96,7 @@ class TinyMCE extends Service_Base {
 		add_filter( 'mce_buttons', [ $this, 'tinymce_web_stories_button' ] );
 		add_filter( 'mce_external_plugins', [ $this, 'web_stories_mce_plugin' ] );
 		add_action( 'admin_footer', [ $this, 'web_stories_tinymce_root_element' ] );
-		add_action( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
+		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
 	}
 
 	/**
@@ -115,6 +117,10 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @param array|mixed $buttons Array of TinyMCE buttons.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($buttons is array<T> ? array<T> : mixed)
 	 */
 	public function tinymce_web_stories_button( $buttons ) {
 		if ( ! \is_array( $buttons ) ) {
@@ -132,6 +138,10 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @param array|mixed $plugins Array of TinyMCE plugin scripts.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($plugins is array<T> ? array<T> : mixed)
 	 */
 	public function web_stories_mce_plugin( $plugins ) {
 		if ( ! \is_array( $plugins ) ) {

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Exception;
 
 use Google\Web_Stories\Infrastructure\Injector\InjectionChain;

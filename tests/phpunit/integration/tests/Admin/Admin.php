@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -18,7 +21,10 @@
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use DateTime;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Admin
@@ -27,48 +33,45 @@ class Admin extends DependencyInjectedTestCase {
 
 	/**
 	 * Settings for test.
-	 * 
-	 * @var \Google\Web_Stories\Settings
 	 */
-	private $settings;
-	
+	private Settings $settings;
+
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
 	 * Post ID.
-	 *
-	 * @var int
 	 */
-	protected static $post_id;
+	protected static int $post_id;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
-		
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
+
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
-		self::$story_id       = $factory->post->create(
+		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Admin Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
 			]
 		);
-		self::$post_id        = $factory->post->create( [] );
-		$poster_attachment_id = self::factory()->attachment->create_object(
+
+		self::$post_id = $factory->post->create( [] );
+
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -76,19 +79,18 @@ class Admin extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Admin\Admin
 	 */
-	private $instance;
+	private \Google\Web_Stories\Admin\Admin $instance;
 
 	public function set_up(): void {
 		parent::set_up();
-		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
+		$this->settings = $this->injector->make( Settings::class );
 		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\Admin::class );
 	}
 
@@ -109,8 +111,9 @@ class Admin extends DependencyInjectedTestCase {
 	 */
 	public function test_admin_body_class(): void {
 		wp_set_current_user( self::$admin_id );
-		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
 		$result                    = $this->instance->admin_body_class( 'current' );
+		$this->assertIsString( $result );
 		$this->assertStringContainsString( 'folded', $result );
 	}
 
@@ -121,8 +124,11 @@ class Admin extends DependencyInjectedTestCase {
 		wp_set_current_user( self::$admin_id );
 
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
-		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$current_post           = get_post( self::$post_id );
+		$this->assertNotNull( $current_post );
+		$result = $this->instance->prefill_post_content( 'current', $current_post );
+		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$this->assertIsString( $result );
 		$this->assertStringContainsString( 'wp-block-web-stories-embed', $result );
 		$this->assertStringContainsString( $poster, $result );
 	}
@@ -132,20 +138,23 @@ class Admin extends DependencyInjectedTestCase {
 	 */
 	public function test_prefill_post_content_url_scheduled(): void {
 		wp_set_current_user( self::$admin_id );
-	
+
 		$story_id = self::factory()->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status'  => 'future',
 				'post_date'    => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_title'   => 'Example',
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			]
 		);
-	
+
 		$_GET['from-web-story'] = $story_id;
-		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
-	
+		$current_post           = get_post( self::$post_id );
+		$this->assertNotNull( $current_post );
+		$result = $this->instance->prefill_post_content( 'current', $current_post );
+
+		$this->assertIsString( $result );
 		$this->assertStringNotContainsString( sprintf( '"url":"http://example.org/?post_type=web-story&#038;p=%s', $story_id ), $result );
 		$this->assertStringContainsString( sprintf( '"url":"http://example.org/?post_type=web-story&p=%s', $story_id ), $result );
 	}
@@ -157,7 +166,11 @@ class Admin extends DependencyInjectedTestCase {
 		wp_set_current_user( 0 );
 
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
+
+		$current_post = get_post( self::$post_id );
+		$this->assertNotNull( $current_post );
+		$result = $this->instance->prefill_post_content( 'current', $current_post );
+		$this->assertIsString( $result );
 		$this->assertSame( 'current', $result );
 	}
 
@@ -171,8 +184,11 @@ class Admin extends DependencyInjectedTestCase {
 		wp_set_current_user( self::$admin_id );
 
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
-		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$current_post           = get_post( self::$post_id );
+		$this->assertNotNull( $current_post );
+		$result = $this->instance->prefill_post_content( 'current', $current_post );
+		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$this->assertIsString( $result );
 		$this->assertStringContainsString( '[web_stories_embed', $result );
 		$this->assertStringContainsString( $poster, $result );
 		remove_filter( 'use_block_editor_for_post', '__return_false' );
@@ -185,7 +201,9 @@ class Admin extends DependencyInjectedTestCase {
 		wp_set_current_user( self::$admin_id );
 
 		$_GET['from-web-story'] = 999999999;
-		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
+		$current_post           = get_post( self::$post_id );
+		$this->assertNotNull( $current_post );
+		$result = $this->instance->prefill_post_content( 'current', $current_post );
 		$this->assertSame( 'current', $result );
 	}
 
@@ -208,7 +226,11 @@ class Admin extends DependencyInjectedTestCase {
 
 		$_GET['from-web-story'] = self::$story_id;
 
-		$original_title = get_post( self::$story_id )->post_title;
+		$current_post = get_post( self::$post_id );
+		$this->assertNotNull( $current_post );
+		$result = $this->instance->prefill_post_content( 'current', $current_post );
+
+		$original_title = $current_post->post_title;
 
 		wp_update_post(
 			[

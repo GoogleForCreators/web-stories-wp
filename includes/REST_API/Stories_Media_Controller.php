@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\Delayed;
@@ -48,7 +50,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * Constructor.
@@ -271,7 +273,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
 		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
 
-		return array_unique( array_merge( $thumb_ids, $parent_ids ) );
+		return array_unique( [ ...$thumb_ids, ...$parent_ids ] );
 	}
 
 	/**
@@ -354,74 +356,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		 * @param WP_REST_Request  $request  Request used to generate the response.
 		 */
 		return apply_filters( 'web_stories_rest_prepare_attachment', $response, $post, $request );
-	}
-
-	/**
-	 * Prepares links for the request.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param WP_Post $post Post object.
-	 * @return array Links for the given post.
-	 *
-	 * @phpstan-return Links
-	 */
-	protected function prepare_links( $post ): array {
-		$links = parent::prepare_links( $post );
-		$links = $this->add_taxonomy_links( $links, $post );
-
-		return $links;
-	}
-
-	/**
-	 * Adds a REST API links for the taxonomies.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post  Post object.
-	 * @return array Modified list of links.
-	 *
-	 * @phpstan-param Links $links
-	 * @phpstan-return Links
-	 */
-	private function add_taxonomy_links( array $links, WP_Post $post ): array {
-		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
-
-		if ( empty( $taxonomies ) ) {
-			return $links;
-		}
-		$links['https://api.w.org/term'] = [];
-
-		foreach ( $taxonomies as $taxonomy_obj ) {
-			// Skip taxonomies that are not public.
-			if ( empty( $taxonomy_obj->show_in_rest ) ) {
-				continue;
-			}
-
-			$controller = $taxonomy_obj->get_rest_controller();
-
-			if ( ! $controller ) {
-				continue;
-			}
-
-			$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
-			$tax       = $taxonomy_obj->name;
-			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
-
-			$terms_url = add_query_arg(
-				'post',
-				$post->ID,
-				rest_url( sprintf( '%s/%s', $namespace, $tax_base ) )
-			);
-
-			$links['https://api.w.org/term'][] = [
-				'href'       => $terms_url,
-				'taxonomy'   => $tax,
-				'embeddable' => true,
-			];
-		}
-		return $links;
 	}
 
 	/**

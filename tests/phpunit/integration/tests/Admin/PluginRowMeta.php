@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * PluginRowMeta class.
  *
@@ -48,7 +51,7 @@ class PluginRowMeta extends TestCase {
 	/**
 	 * Test ::get_plugin_row_meta().
 	 *
-	 * @covers ::get_plugin_row_meta()
+	 * @covers ::get_plugin_row_meta
 	 */
 	public function test_get_plugin_row_meta(): void {
 

@@ -59,12 +59,13 @@ const SwitchContainer = styled.div`
   justify-content: center;
   align-items: center;
   appearance: none;
-  background: ${({ theme }) => theme.colors.divider.secondary};
+  background: ${({ theme, darkTheme }) =>
+    darkTheme ? theme.colors.divider.secondary : theme.colors.bg.tertiary};
   border-radius: 100px;
   color: ${({ theme }) => theme.colors.fg.primary};
   cursor: pointer;
 
-  ${({ disabled, theme }) =>
+  ${({ disabled, theme, darkTheme }) =>
     disabled
       ? css`
           cursor: default;
@@ -76,7 +77,9 @@ const SwitchContainer = styled.div`
         `
       : css`
           :hover ${SlidingButton} {
-            background-color: ${theme.colors.interactiveBg.primaryHover};
+            background-color: ${darkTheme
+              ? theme.colors.interactiveBg.primaryHover
+              : theme.colors.interactiveBg.brandNormal};
           }
         `};
 `;
@@ -108,10 +111,17 @@ const RadioButtonLabel = styled(Text).attrs({
   width: 50%;
   padding: 0px 6px;
   z-index: 1;
-  color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.inverted.fg.primary : theme.colors.fg.secondary};
-  background-color: ${({ isActive, theme }) =>
-    isActive && theme.colors.interactiveBg.primaryNormal};
+  color: ${({ isActive, theme, darkTheme }) =>
+    isActive
+      ? darkTheme
+        ? theme.colors.inverted.fg.primary
+        : theme.colors.fg.primary
+      : theme.colors.fg.secondary};
+  background-color: ${({ isActive, theme, darkTheme }) =>
+    isActive &&
+    (darkTheme
+      ? theme.colors.interactiveBg.primaryNormal
+      : theme.colors.interactiveBg.brandNormal)};
   border-radius: 100px;
   cursor: pointer;
   overflow: hidden;
@@ -150,6 +160,7 @@ const RadioButtonLabel = styled(Text).attrs({
  * @param {Function} props.onChange change event handler
  * @param {string} props.onLabel label for the 'on' radio button
  * @param {boolean} props.value the value of the radio group
+ * @param {string} props.darkTheme If to use dark theme, defaults to `true`.
  * @return {Object} The radio button
  */
 export const Switch = forwardRef(function Switch(
@@ -161,7 +172,8 @@ export const Switch = forwardRef(function Switch(
     offLabel,
     onChange,
     onLabel,
-    value,
+    value = false,
+    darkTheme = true,
     ...props
   },
   ref
@@ -190,6 +202,7 @@ export const Switch = forwardRef(function Switch(
       aria-labelledby={ids.group}
       aria-disabled={disabled}
       disabled={disabled}
+      darkTheme={darkTheme}
     >
       <VisuallyHiddenRadioGroupLabel id={ids.group}>
         {groupLabel}
@@ -199,6 +212,7 @@ export const Switch = forwardRef(function Switch(
         htmlFor={ids.onInput}
         isActive={value}
         disabled={disabled}
+        darkTheme={darkTheme}
       >
         {onLabel}
         <HiddenRadioButton
@@ -214,6 +228,7 @@ export const Switch = forwardRef(function Switch(
         htmlFor={ids.offInput}
         isActive={!value}
         disabled={disabled}
+        darkTheme={darkTheme}
       >
         {offLabel}
         <HiddenRadioButton
@@ -240,8 +255,6 @@ export const SwitchPropTypes = {
   onChange: PropTypes.func.isRequired,
   onLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   value: PropTypes.bool,
+  darkTheme: PropTypes.bool,
 };
 Switch.propTypes = SwitchPropTypes;
-Switch.defaultProps = {
-  value: false,
-};

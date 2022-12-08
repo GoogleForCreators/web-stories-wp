@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Renderer\Stories\FieldStateFactory;
 
 use Google\Web_Stories\Infrastructure\Injector;
@@ -44,7 +46,7 @@ class Factory implements FieldStateFactory {
 	 *
 	 * @var Injector Injector instance.
 	 */
-	private $injector;
+	private Injector $injector;
 
 	/**
 	 * Factory constructor.

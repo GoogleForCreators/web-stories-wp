@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media;
 
 use DOMDocument;
@@ -61,7 +63,7 @@ class SVG extends Service_Base {
 	 *
 	 * @var string[]
 	 */
-	protected $svgs = [];
+	protected array $svgs = [];
 
 	/**
 	 * Experiments instance.
@@ -70,7 +72,7 @@ class SVG extends Service_Base {
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * SVG constructor.
@@ -294,7 +296,7 @@ class SVG extends Service_Base {
 			}
 			$pieces = explode( ' ', $view_box );
 			if ( 4 === \count( $pieces ) ) {
-				list (, , $width, $height ) = $pieces;
+				[, , $width, $height] = $pieces;
 			}
 		}
 

@@ -29,7 +29,7 @@ describe('setBackgroundElement', () => {
           id: '111',
           elements: [
             { id: '000', isBackground: true },
-            { id: '123', opacity: 20 },
+            { id: '123', opacity: 20, isBackground: false },
           ],
         },
       ],
@@ -43,14 +43,17 @@ describe('setBackgroundElement', () => {
       { id: '123', isBackground: true, opacity: 100 },
     ]);
   });
-  it('should not set opacity for new backgroud elements if none was present', () => {
+  it('should not set opacity for new background elements if none was present', () => {
     const { restore, setBackgroundElement } = setupReducer();
 
     restore({
       pages: [
         {
           id: '111',
-          elements: [{ id: '000', isBackground: true }, { id: '123' }],
+          elements: [
+            { id: '000', isBackground: true },
+            { id: '123', isBackground: false },
+          ],
         },
       ],
       current: '111',
@@ -74,7 +77,7 @@ describe('setBackgroundElement', () => {
           id: '111',
           elements: [
             { id: '123', isBackground: true },
-            { id: '456' },
+            { id: '456', isBackground: false },
             { id: '789' },
           ],
         },
@@ -178,7 +181,7 @@ describe('setBackgroundElement', () => {
           elements: [
             { id: '123', isBackground: true, isDefaultBackground: true },
             { id: '456' },
-            { id: '789' },
+            { id: '789', isBackground: false },
           ],
         },
       ],
@@ -212,7 +215,7 @@ describe('setBackgroundElement', () => {
           elements: [
             { id: '123', isBackground: true },
             { id: '456' },
-            { id: '789' },
+            { id: '789', isBackground: false },
           ],
         },
       ],
@@ -240,7 +243,7 @@ describe('setBackgroundElement', () => {
           elements: [
             { id: '123', isBackground: true },
             { id: '456' },
-            { id: '789' },
+            { id: '789', isBackground: false },
           ],
         },
       ],

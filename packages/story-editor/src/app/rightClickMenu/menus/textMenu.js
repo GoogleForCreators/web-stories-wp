@@ -38,7 +38,7 @@ import {
 } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
 import useHeadingSelect from '../hooks/useHeadingSelect';
-import { LayerLock, LayerName, LayerUngroup } from '../items';
+import { LayerLock, LayerHide, LayerName, LayerUngroup } from '../items';
 import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import {
@@ -207,6 +207,7 @@ function TextMenu({ parentMenuRef }) {
 
       <LayerName />
       <LayerLock />
+      <LayerHide />
       <LayerUngroup />
 
       <ContextMenuComponents.MenuSeparator />

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -17,8 +20,10 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Lock_Controller
@@ -26,18 +31,16 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
  */
 class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
-	protected static $author_id;
-	protected static $subscriber;
-	protected static $editor;
+	protected static int $author_id;
+	protected static int $subscriber;
+	protected static int $editor;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Stories_Lock_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Stories_Lock_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -83,7 +86,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		wp_set_current_user( self::$author_id );
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -91,6 +94,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'locked', $data );
 		$this->assertFalse( $data['locked'] );
 	}
@@ -141,7 +145,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -161,7 +165,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		wp_set_current_user( self::$subscriber );
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -183,7 +187,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		wp_set_current_user( self::$author_id );
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -194,7 +198,50 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 		$links    = $response->get_links();
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'locked', $data );
+		$this->assertArrayHasKey( 'user', $data );
+		$this->assertArrayHasKey( 'id', $data['user'] );
+		$this->assertArrayHasKey( 'name', $data['user'] );
+		$this->assertArrayHasKey( 'avatar', $data['user'] );
+		$this->assertSame( self::$author_id, $data['user']['id'] );
+		$this->assertTrue( $data['locked'] );
+
+		$this->assertArrayHasKey( 'self', $links );
+		$this->assertArrayHasKey( 'author', $links );
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 * @covers ::prepare_links
+	 * @covers ::get_item_permissions_check
+	 */
+	public function test_get_item_with_lock_disabled_avatar(): void {
+		update_option( 'show_avatars', false );
+		$this->controller->register();
+
+		wp_set_current_user( self::$author_id );
+		$story    = self::factory()->post->create(
+			[
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'draft',
+				'post_author' => self::$author_id,
+			]
+		);
+		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
+		update_post_meta( $story, '_edit_lock', $new_lock );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+		$links    = $response->get_links();
+		$this->assertIsArray( $data );
+		$this->assertArrayHasKey( 'locked', $data );
+		$this->assertArrayHasKey( 'user', $data );
+		$this->assertArrayHasKey( 'id', $data['user'] );
+		$this->assertArrayHasKey( 'name', $data['user'] );
+		$this->assertArrayNotHasKey( 'avatar', $data['user'] );
+		$this->assertSame( self::$author_id, $data['user']['id'] );
 		$this->assertTrue( $data['locked'] );
 
 		$this->assertArrayHasKey( 'self', $links );
@@ -212,7 +259,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		wp_set_current_user( self::$author_id );
 		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -221,6 +268,8 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'locked', $data );
 		$this->assertTrue( $data['locked'] );
 	}
@@ -236,7 +285,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		wp_set_current_user( self::$author_id );
 		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -246,6 +295,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'deleted', $data );
 		$this->assertArrayHasKey( 'previous', $data );
 		$this->assertArrayHasKey( 'locked', $data['previous'] );
@@ -264,7 +314,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		wp_set_current_user( self::$author_id );
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -276,6 +326,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'deleted', $data );
 		$this->assertArrayHasKey( 'previous', $data );
 		$this->assertArrayHasKey( 'locked', $data['previous'] );
@@ -294,7 +345,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		wp_set_current_user( self::$editor );
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -316,7 +367,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
@@ -324,7 +375,9 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
 
 		update_post_meta( $story, '_edit_lock', $new_lock );
-		$data = $this->call_private_method( $this->controller, 'get_lock', [ $story ] );
+
+		$data = $this->call_private_method( [ $this->controller, 'get_lock' ], [ $story ] );
+
 		$this->assertArrayHasKey( 'time', $data );
 		$this->assertArrayHasKey( 'user', $data );
 		$this->assertEquals( $data['user'], self::$author_id );

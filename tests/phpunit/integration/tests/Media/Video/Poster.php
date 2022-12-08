@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -24,10 +27,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\Media\Video\Poster
  */
 class Poster extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Media\Video\Poster
-	 */
-	private $instance;
+	private \Google\Web_Stories\Media\Video\Poster $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -70,7 +70,10 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$video_attachment_id  = self::factory()->attachment->create_object(
+
+		$this->assertNotWPError( $poster_attachment_id );
+
+		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -79,12 +82,15 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'featured_media', $data );
 		$this->assertEquals( $poster_attachment_id, $data['featured_media'] );
 		$this->assertEquals( wp_get_attachment_url( $poster_attachment_id ), $data['featured_media_src']['src'] );
@@ -103,6 +109,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -112,7 +120,12 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+
+		$image_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $image_attachment );
 
 		$image = $this->instance->wp_prepare_attachment_for_js(
 			[
@@ -120,19 +133,24 @@ class Poster extends DependencyInjectedTestCase {
 				'type' => 'image',
 				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			],
-			get_post( $poster_attachment_id )
+			$image_attachment
 		);
+
+		$video_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $video_attachment );
 		$video = $this->instance->wp_prepare_attachment_for_js(
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
 				'url'  => wp_get_attachment_url( $video_attachment_id ),
 			],
-			get_post( $video_attachment_id )
+			$video_attachment
 		);
 
+		$this->assertIsArray( $video );
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
+		$this->assertIsArray( $image );
 		$this->assertArrayNotHasKey( 'featured_media', $image );
 		$this->assertArrayNotHasKey( 'featured_media_src', $image );
 	}
@@ -149,6 +167,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $attachment_id );
 
 		$result = $this->instance->get_thumbnail_data( $attachment_id );
 
@@ -173,9 +193,14 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 
 		$result = $this->instance->get_thumbnail_data( $poster_attachment_id );
+
+		$this->assertIsArray( $result );
+		$this->assertArrayHasKey( 'generated', $result );
 		$this->assertTrue( $result['generated'] );
 	}
 
@@ -192,6 +217,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -200,6 +227,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
@@ -222,6 +251,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -230,6 +261,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
@@ -250,6 +283,8 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -259,12 +294,47 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		add_post_meta( $video_attachment_id, $this->instance::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
 		wp_delete_attachment( $video_attachment_id );
 		$this->assertNull( get_post( $poster_attachment_id ) );
+	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$this->assertNotWPError( $video_attachment_id );
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		$this->assertNotWPError( $poster_attachment_id );
+
+		add_post_meta( $video_attachment_id, $this->instance::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, $this->instance::POSTER_POST_META_KEY, '1' );
+		$this->instance->on_plugin_uninstall();
+		$this->assertSame( 0, get_post_meta( $video_attachment_id, $this->instance::POSTER_ID_POST_META_KEY, true ) );
+		$this->assertSame( '', get_post_meta( $poster_attachment_id, $this->instance::POSTER_POST_META_KEY, true ) );
 	}
 
 	/**
@@ -280,15 +350,17 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
-		$result1 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
+		$this->assertNotWPError( $poster_attachment_id );
+
+		$result1 = $this->call_private_method( [ $this->instance, 'is_poster' ], [ $poster_attachment_id ] );
 		$this->assertFalse( $result1 );
 
 		wp_set_object_terms( $poster_attachment_id, 'editor', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
-		$result2 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
+		$result2 = $this->call_private_method( [ $this->instance, 'is_poster' ], [ $poster_attachment_id ] );
 		$this->assertFalse( $result2 );
 
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
-		$result3 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
+		$result3 = $this->call_private_method( [ $this->instance, 'is_poster' ], [ $poster_attachment_id ] );
 		$this->assertTrue( $result3 );
 	}
 }

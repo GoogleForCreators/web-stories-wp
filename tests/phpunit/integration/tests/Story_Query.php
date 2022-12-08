@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -20,6 +23,7 @@ namespace Google\Web_Stories\Tests\Integration;
 use Google\Web_Stories\Renderer\Stories\Carousel_Renderer;
 use Google\Web_Stories\Story_Post_Type as Story_CPT;
 use Google\Web_Stories\Story_Query as Testee;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Query
@@ -28,39 +32,27 @@ class Story_Query extends TestCase {
 
 	/**
 	 * Class in test.
-	 *
-	 * @var Testee
 	 */
-	private static $testee;
+	private static Testee $testee;
 
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	private static $story_id;
+	private static int $story_id;
 
 	/**
 	 * Default story arguments.
 	 *
-	 * @var array
+	 * @var array<string, mixed>
 	 */
-	private static $default_story_args;
-
-	/**
-	 * Default query arguments.
-	 *
-	 * @var array
-	 */
-	private static $default_query_args;
+	private static array $default_story_args;
 
 	/**
 	 * Runs once before any test in the class run.
 	 *
-	 * @param \WP_UnitTest_Factory $factory Factory class object.
+	 * @param WP_UnitTest_Factory $factory Factory class object.
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
-
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$testee = new Testee();
 
 		self::$story_id = $factory->post->create(
@@ -86,15 +78,6 @@ class Story_Query extends TestCase {
 			'class'              => '',
 			'circle_size'        => 150,
 		];
-
-		self::$default_query_args = [
-			'post_type'        => Story_CPT::POST_TYPE_SLUG,
-			'posts_per_page'   => 10,
-			'post_status'      => 'publish',
-			'suppress_filters' => false,
-			'no_found_rows'    => true,
-		];
-
 	}
 
 	/**

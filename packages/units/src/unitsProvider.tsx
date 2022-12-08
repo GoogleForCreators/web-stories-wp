@@ -19,12 +19,12 @@
  */
 import type { ReactNode } from 'react';
 import { useMemo } from '@googleforcreators/react';
-import type { Element } from '@googleforcreators/types';
 
 /**
  * Internal dependencies
  */
-import Context, { ContextState } from './context';
+import Context from './context';
+import type { State, DimensionableElement } from './types';
 import {
   dataToEditorX,
   dataToEditorY,
@@ -46,7 +46,7 @@ interface UnitsProviderProps {
 
 function UnitsProvider({ pageSize, children }: UnitsProviderProps) {
   const { width: pageWidth, height: pageHeight } = pageSize;
-  const state: ContextState = useMemo(
+  const state: State = useMemo(
     () => ({
       state: {
         pageSize: { width: pageWidth, height: pageHeight },
@@ -54,12 +54,13 @@ function UnitsProvider({ pageSize, children }: UnitsProviderProps) {
       actions: {
         dataToEditorX: (x: number) => dataToEditorX(x, pageWidth),
         dataToEditorY: (y: number) => dataToEditorY(y, pageHeight),
-        editorToDataX: (x: number, withRounding: boolean) =>
+        editorToDataX: (x: number, withRounding?: boolean) =>
           editorToDataX(x, pageWidth, withRounding),
-        editorToDataY: (y: number, withRounding: boolean) =>
+        editorToDataY: (y: number, withRounding?: boolean) =>
           editorToDataY(y, pageHeight, withRounding),
-        getBox: (element: Element) => getBox(element, pageWidth, pageHeight),
-        getBoxWithBorder: (element: Element) =>
+        getBox: (element: DimensionableElement) =>
+          getBox(element, pageWidth, pageHeight),
+        getBoxWithBorder: (element: DimensionableElement) =>
           getBoxWithBorder(element, pageWidth, pageHeight),
       },
     }),

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -24,10 +27,7 @@ use WP_Block_Type_Registry;
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
 class Web_Stories_Block extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\Block\Web_Stories_Block
-	 */
-	private $instance;
+	private \Google\Web_Stories\Block\Web_Stories_Block $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -122,6 +122,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 			[
 				'url'   => 'https://example.com/story.html',
 				'title' => 'Example Story',
+				'align' => 'none',
 			]
 		);
 
@@ -143,6 +144,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 				'url'    => 'https://example.com/story.html',
 				'title'  => 'Example Story',
 				'poster' => 'https://example.com/story.jpg',
+				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
 			]

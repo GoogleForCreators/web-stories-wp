@@ -1,5 +1,5 @@
 {
-  "version": 43,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -69,15 +69,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "<span style=\"font-weight: 300; font-style: italic\">The best humans are kind to everyone, even artificial someones.</span>",
-          "fontWeight": 400,
           "marginOffset": 9.84375,
           "x": 41,
           "y": 208,
           "width": 330,
           "height": 171,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "3ba10c6c-92e9-41f6-8bb2-9fa271f4c999"
         },
         {
@@ -136,9 +132,6 @@
           "y": 396,
           "width": 147,
           "height": 21,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "7f0b5ab5-e076-47c4-843d-1960734980a9"
         }
       ],
@@ -216,15 +209,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "San Francisco is a city that sleeps. It's full of dreamers.",
-          "fontWeight": 400,
           "marginOffset": 9.84375,
           "x": 40,
           "y": 233,
           "width": 330,
           "height": 123,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "773e33c5-e58b-45c3-ba2f-a11ecac17e4d"
         },
         {
@@ -283,9 +272,6 @@
           "y": 386,
           "width": 149,
           "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "30512f4c-15e6-4da5-bd28-02bc101ca768"
         },
         {
@@ -300,9 +286,6 @@
           "y": 369,
           "width": 120,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "71b5b0da-5d94-401d-b188-e2db311c9cba"
         },
@@ -317,9 +300,6 @@
           "y": 216,
           "width": 120,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "d2f56f7c-b011-4282-aa3f-97658fd61527"
         }
@@ -404,15 +384,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "<span style=\"text-transform: uppercase\">Everyone thinks I'm talking to myself, but I promise my plants are listening</span>",
-          "fontWeight": 400,
           "marginOffset": -10.5,
           "x": 70,
           "y": 169,
           "width": 309,
           "height": 245,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "b96c283b-0608-4b23-b050-a096508cdf41"
         },
         {
@@ -477,9 +453,6 @@
           "y": 425,
           "width": 184,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "fb736e78-7220-427f-9792-3ac6bc133ca2"
         },
         {
@@ -493,9 +466,6 @@
           "y": 169,
           "width": 4,
           "height": 240,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "ff09eeab-8607-4bf3-b657-8db968d40a1c"
         }
@@ -574,15 +544,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "<span style=\"font-style: italic\">If you don't like yourself, no one else will.</span>",
-          "fontWeight": 400,
           "marginOffset": -4.920999999999999,
           "x": 40,
           "y": 229,
           "width": 332,
           "height": 134,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "96783563-d957-4a76-b7ba-e045001a1601"
         },
         {
@@ -641,9 +607,6 @@
           "y": 374,
           "width": 152,
           "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "f2e8f4cc-ac67-49ef-b9d7-0dda9fc672ee"
         }
       ],
@@ -715,15 +678,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "<span style=\"font-weight: 500; text-transform: uppercase\">Minimalism maximizes what you care about.</span>",
-          "fontWeight": 400,
           "marginOffset": -16.043999999999997,
           "x": 41,
           "y": 226,
           "width": 332,
           "height": 157,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "177372d5-853d-45b6-8760-f334a5d641f7"
         },
         {
@@ -776,9 +735,6 @@
           "y": 386,
           "width": 147,
           "height": 27,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "81fe5f78-3b28-4e09-8777-115619be7e7b"
         }
       ],
@@ -852,15 +808,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "<span style=\"font-weight: 300\">I take my coffee black. I need it as strong as I am.</span>",
-          "fontWeight": 400,
           "marginOffset": -4.920999999999999,
           "x": 40,
           "y": 252,
           "width": 332,
           "height": 131,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "46c02eae-19bf-4ecd-a9e1-3276c64d1abb"
         },
         {
@@ -925,9 +877,6 @@
           "y": 397,
           "width": 165,
           "height": 22,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "765b2982-21f0-4b59-a379-32caa230f497"
         },
         {
@@ -941,9 +890,6 @@
           "y": 197,
           "width": 40,
           "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "circle" },
           "id": "32e21adc-45f0-4b0b-b9ba-c1c7697d5481"
         },
@@ -998,15 +944,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff\">“</span>",
-          "fontWeight": 400,
           "marginOffset": -11.890999999999998,
           "x": 197,
           "y": 202,
           "width": 18,
           "height": 58,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "b645062a-a2f6-46c1-9fca-6265614494c8"
         }
       ],
@@ -1089,9 +1031,6 @@
           "y": 389,
           "width": 324,
           "height": 54,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "42f83867-682c-4547-9011-a606e55d9b0a"
         },
         {
@@ -1149,9 +1088,6 @@
           "y": 386,
           "width": 301,
           "height": 54,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "8304683d-4da5-471a-90b7-0146592286a3"
         },
         {
@@ -1165,9 +1101,6 @@
           "y": 175,
           "width": 332,
           "height": 205,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "chat-bubble" },
           "id": "1362a62e-5729-4fcc-b05f-38bd4a6f991f"
         },
@@ -1183,9 +1116,6 @@
           "y": 179,
           "width": 332,
           "height": 205,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "chat-bubble" },
           "id": "dca26230-09aa-4b84-9cec-33b6ce885588"
         },
@@ -1239,15 +1169,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">I didn't work this hard to keep working this hard.</span>",
-          "fontWeight": 400,
           "marginOffset": -4.920999999999999,
           "x": 64,
           "y": 192,
           "width": 284,
           "height": 141,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "a6de316b-e55c-4aa7-9e16-a5b9f351e88e"
         }
       ],
@@ -1285,9 +1211,6 @@
           "y": 365,
           "width": 16,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "2c09cf58-9287-4e54-b2d5-658db44212e2"
         },
@@ -1303,9 +1226,6 @@
           "y": 365,
           "width": 16,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "feca60f0-b3d3-4afe-8de0-3a553849557e"
         },
@@ -1362,15 +1282,11 @@
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "content": "<span style=\"font-weight: 200\">My hair matches my life, it's all a mess.</span>",
-          "fontWeight": 400,
           "marginOffset": 9.84375,
           "x": 40,
           "y": 253,
           "width": 330,
           "height": 92,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "5526674b-2f67-4ec8-b34e-611965f4a090"
         },
         {
@@ -1421,9 +1337,6 @@
           "y": 355,
           "width": 131,
           "height": 21,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "6b96ea1d-a465-4800-bb26-35258a0fa0f9"
         },
         {
@@ -1435,9 +1348,6 @@
           "type": "shape",
           "width": 1,
           "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "a8f9dde5-cfd6-4504-a41a-41590f25a2eb",
           "id": "002f7939-e342-488c-8c9b-c4743160a34d",
@@ -1455,9 +1365,6 @@
           "y": 214,
           "width": 1,
           "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "a8f9dde5-cfd6-4504-a41a-41590f25a2eb"
         },
@@ -1470,9 +1377,6 @@
           "type": "shape",
           "width": 23,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "a8f9dde5-cfd6-4504-a41a-41590f25a2eb",
           "id": "864b0d4c-ee8a-486e-b801-4fcf8b5ef2d3",
@@ -1488,9 +1392,6 @@
           "type": "shape",
           "width": 23,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "864b0d4c-ee8a-486e-b801-4fcf8b5ef2d3",
           "id": "e28fb39d-b1ab-4417-98f8-2a071ddd0498",
@@ -1506,9 +1407,6 @@
           "type": "shape",
           "width": 1,
           "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "a8f9dde5-cfd6-4504-a41a-41590f25a2eb",
           "id": "5b825540-99a5-410d-b52a-a8284223e727",
@@ -1524,9 +1422,6 @@
           "type": "shape",
           "width": 23,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "864b0d4c-ee8a-486e-b801-4fcf8b5ef2d3",
           "id": "05f4dd37-e2a6-42f9-9f55-250dea0b0112",
@@ -1542,9 +1437,6 @@
           "type": "shape",
           "width": 23,
           "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "e28fb39d-b1ab-4417-98f8-2a071ddd0498",
           "id": "be47d78c-2b75-4a8e-998e-22154c96f22b",
@@ -1560,9 +1452,6 @@
           "type": "shape",
           "width": 1,
           "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "basedOn": "5b825540-99a5-410d-b52a-a8284223e727",
           "id": "97307ebd-da1e-4575-afa7-8fb0739c52fe",

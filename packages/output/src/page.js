@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
-import { StoryAnimation } from '@googleforcreators/animation';
+import { AnimationProvider, AMPAnimations } from '@googleforcreators/animation';
 import {
   ELEMENT_TYPES,
   StoryPropTypes,
@@ -111,7 +111,7 @@ function OutputPage({
   });
 
   const products = elements
-    .filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+    .filter(({ type, isHidden }) => type === ELEMENT_TYPES.PRODUCT && !isHidden)
     .map(({ product }) => product)
     .filter(Boolean);
 
@@ -145,8 +145,8 @@ function OutputPage({
           : undefined
       }
     >
-      <StoryAnimation.Provider animations={animations} elements={elements}>
-        <StoryAnimation.AMPAnimations />
+      <AnimationProvider animations={animations} elements={elements}>
+        <AMPAnimations />
 
         {backgroundElement && (
           <amp-story-grid-layer
@@ -189,7 +189,7 @@ function OutputPage({
             </div>
           </div>
         </amp-story-grid-layer>
-      </StoryAnimation.Provider>
+      </AnimationProvider>
 
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer

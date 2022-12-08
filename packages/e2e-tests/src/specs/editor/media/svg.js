@@ -27,6 +27,8 @@ import {
 
 const MODAL = '.media-modal';
 
+jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
 describe('SVG', () => {
   withExperimentalFeatures(['enableSVG']);
 

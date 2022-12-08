@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -40,8 +43,15 @@ class Update_Publisher_Logos extends DependencyInjectedTestCase {
 		$instance = $this->injector->make( \Google\Web_Stories\Migrations\Update_Publisher_Logos::class );
 		$instance->migrate();
 
-		$all_publisher_logos   = get_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo = (int) get_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var array<string, int> $all_publisher_logos
+		 */
+		$all_publisher_logos = get_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS );
+		/**
+		 * @var string $active_publisher_logo
+		 */
+		$active_publisher_logo = get_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		$active_publisher_logo = (int) $active_publisher_logo;
 
 		$this->assertEqualSets( [ 123 ], $all_publisher_logos );
 		$this->assertSame( 123, $active_publisher_logo );

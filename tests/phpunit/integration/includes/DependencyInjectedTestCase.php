@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * DependencyInjectedTestCase class.
  *
@@ -11,6 +14,7 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Infrastructure\Injector;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\ServiceContainer;
 use Google\Web_Stories\Plugin;
 use Google\Web_Stories\Services;
@@ -19,24 +23,20 @@ abstract class DependencyInjectedTestCase extends TestCase {
 
 	/**
 	 * Plugin instance to test with.
-	 *
-	 * @var Plugin
 	 */
-	protected $plugin;
+	protected Plugin $plugin;
 
 	/**
 	 * Service container instance to test with.
 	 *
-	 * @var ServiceContainer
+	 * @var ServiceContainer<Service>
 	 */
-	protected $container;
+	protected ServiceContainer $container;
 
 	/**
 	 * Injector instance to test with.
-	 *
-	 * @var Injector
 	 */
-	protected $injector;
+	protected Injector $injector;
 
 	/**
 	 * Set up the service architecture before each test run.

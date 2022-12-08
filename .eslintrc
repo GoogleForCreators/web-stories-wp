@@ -328,7 +328,6 @@
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": [
-          "./tsconfig.json",
           "./packages/*/tsconfig.json"
         ]
       },
@@ -387,7 +386,9 @@
       "files": [
         "__mocks__/**/*.js",
         "**/test/**/*.js",
+        "**/test/**/*.ts",
         "**/testUtils/**/*.js",
+        "**/testUtils/**/*.ts",
         "tests/js/**/*.js"
       ],
       "excludedFiles": [
@@ -429,6 +430,16 @@
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
+      }
+    },
+    {
+      "files": [
+        "**/test/**/*.ts",
+        "**/testUtils/**/*.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/unbound-method": "off",
+        "jest/unbound-method": "error"
       }
     },
     {
@@ -501,6 +512,15 @@
       ],
       "env": {
         "node": true
+      }
+    },
+    {
+      "files": [
+        "packages/jest-puppeteer-amp/src/**/*.js"
+      ],
+      "globals": {
+        "browser": "readonly",
+        "page": "readonly"
       }
     },
     {

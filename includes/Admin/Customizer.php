@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Infrastructure\Conditional;
@@ -102,28 +104,28 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @var WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 */
-	private $wp_customize;
+	private WP_Customize_Manager $wp_customize;
 
 	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Analytics constructor.
@@ -181,9 +183,7 @@ class Customizer extends Service_Base implements Conditional {
 
 		$theme_support = $this->get_stories_theme_support()['customizer'];
 
-		$active_callback = function() {
-			return $this->is_option_enabled( 'show_stories' );
-		};
+		$active_callback = fn() => $this->is_option_enabled( 'show_stories' );
 
 		$wp_customize->add_section(
 			self::SECTION_SLUG,
@@ -271,9 +271,7 @@ class Customizer extends Service_Base implements Conditional {
 					'min' => 1,
 					'max' => 4,
 				],
-				'active_callback' => function() {
-					return ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'grid' ) );
-				},
+				'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'grid' ) ),
 			]
 		);
 
@@ -340,9 +338,7 @@ class Customizer extends Service_Base implements Conditional {
 					'max'  => 200,
 					'step' => 5,
 				],
-				'active_callback' => function() {
-					return $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'circles' );
-				},
+				'active_callback' => fn() => $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'circles' ),
 			]
 		);
 
@@ -364,9 +360,7 @@ class Customizer extends Service_Base implements Conditional {
 					'left'  => __( 'Left', 'web-stories' ),
 					'right' => __( 'Right', 'web-stories' ),
 				],
-				'active_callback' => function() {
-					return ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' ) );
-				},
+				'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' ) ),
 			]
 		);
 
@@ -407,9 +401,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Display Excerpt', 'web-stories' ),
-					'active_callback' => function() {
-						return $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' );
-					},
+					'active_callback' => fn() => $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' ),
 				]
 			);
 		}
@@ -429,9 +421,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Display Author', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
-					},
+					'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) ),
 				]
 			);
 		}
@@ -451,9 +441,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Display Date', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
-					},
+					'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) ),
 				]
 			);
 		}
@@ -473,9 +461,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Sharp Corners', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
-					},
+					'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) ),
 				]
 			);
 		}
@@ -513,9 +499,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'text',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Archive Link Label', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && $this->is_option_enabled( 'show_archive_link' ) );
-					},
+					'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && $this->is_option_enabled( 'show_archive_link' ) ),
 				]
 			);
 		}

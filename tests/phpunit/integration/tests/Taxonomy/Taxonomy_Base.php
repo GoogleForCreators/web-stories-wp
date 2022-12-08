@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,20 +20,32 @@
 
 namespace Google\Web_Stories\Tests\Integration\Taxonomy;
 
-use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Term;
+use WP_Term_Query;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Taxonomy\Taxonomy_Base
  */
-class Taxonomy_Base extends TestCase {
+class Taxonomy_Base extends DependencyInjectedTestCase {
+
+	private \Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy $instance;
+
+	public function set_up(): void {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy::class );
+		$this->instance->register_taxonomy();
+		self::factory()->term->create_many( 5, [ 'taxonomy' => $this->instance->get_taxonomy_slug() ] );
+		$this->instance->unregister_taxonomy();
+	}
+
 	/**
 	 * @covers ::register_taxonomy
 	 */
 	public function test_register_taxonomy(): void {
-		$object = new DummyTaxonomy();
-		$object->register_taxonomy();
-		$slug = $this->get_private_property( $object, 'taxonomy_slug' );
+		$this->instance->register_taxonomy();
+		$slug = $this->instance->get_taxonomy_slug();
 		$this->assertTrue( taxonomy_exists( $slug ) );
 	}
 
@@ -38,11 +53,43 @@ class Taxonomy_Base extends TestCase {
 	 * @covers ::unregister_taxonomy
 	 */
 	public function test_unregister_taxonomy(): void {
-		$object = new DummyTaxonomy();
-		$object->register();
-		$slug = $this->get_private_property( $object, 'taxonomy_slug' );
+		$this->instance->register();
+		$slug = $this->instance->get_taxonomy_slug();
 		$this->assertTrue( taxonomy_exists( $slug ) );
-		$object->unregister_taxonomy();
+		$this->instance->unregister_taxonomy();
 		$this->assertFalse( taxonomy_exists( $slug ) );
+	}
+
+	/**
+	 * @covers ::on_plugin_uninstall
+	 */
+	public function test_on_plugin_uninstall(): void {
+		$this->instance->register();
+		$term_query = new WP_Term_Query();
+
+		/**
+		 * @var WP_Term[] $terms
+		 */
+		$terms = $term_query->query(
+			[
+				'taxonomy'   => $this->instance->get_taxonomy_slug(),
+				'hide_empty' => false,
+			]
+		);
+
+		$this->assertCount( 5, $terms );
+		$this->instance->on_plugin_uninstall();
+		$term_query = new WP_Term_Query();
+
+		/**
+		 * @var WP_Term[] $terms
+		 */
+		$terms = $term_query->query(
+			[
+				'taxonomy'   => $this->instance->get_taxonomy_slug(),
+				'hide_empty' => false,
+			]
+		);
+		$this->assertEqualSets( [], $terms );
 	}
 }

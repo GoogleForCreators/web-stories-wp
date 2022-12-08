@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -21,10 +24,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\AdSense
  */
 class AdSense extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\AdSense
-	 */
-	private $instance;
+	private \Google\Web_Stories\AdSense $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -57,7 +57,7 @@ class AdSense extends DependencyInjectedTestCase {
 	 * @covers ::get_publisher_id
 	 */
 	public function test_get_publisher_id(): void {
-		$result = $this->call_private_method( $this->instance, 'get_publisher_id' );
+		$result = $this->call_private_method( [ $this->instance, 'get_publisher_id' ] );
 		$this->assertSame( '456', $result );
 	}
 
@@ -65,7 +65,7 @@ class AdSense extends DependencyInjectedTestCase {
 	 * @covers ::get_slot_id
 	 */
 	public function test_get_slot_id(): void {
-		$result = $this->call_private_method( $this->instance, 'get_slot_id' );
+		$result = $this->call_private_method( [ $this->instance, 'get_slot_id' ] );
 		$this->assertSame( '123', $result );
 	}
 
@@ -73,7 +73,7 @@ class AdSense extends DependencyInjectedTestCase {
 	 * @covers ::is_enabled
 	 */
 	public function test_is_enabled(): void {
-		$result = $this->call_private_method( $this->instance, 'is_enabled' );
+		$result = $this->call_private_method( [ $this->instance, 'is_enabled' ] );
 		$this->assertTrue( $result );
 	}
 

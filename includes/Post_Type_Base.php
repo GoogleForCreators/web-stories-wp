@@ -26,10 +26,13 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Error;
 use WP_Post_Type;
@@ -85,7 +88,7 @@ use WP_Site;
  *   _edit_link?: string
  * }
  */
-abstract class Post_Type_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
+abstract class Post_Type_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware, PluginUninstallAware {
 
 	/**
 	 * Default REST Namespace.
@@ -224,7 +227,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_url(): string {
-		return sprintf( '/%s/%s', $this->get_rest_namespace(), $this->get_rest_base() );
+		return rest_get_route_for_post_type_items( $this->get_slug() );
 	}
 
 	/**
@@ -336,7 +339,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		if ( get_option( 'permalink_structure' ) && \is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $post_type_obj->has_archive || $ignore_has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+			$struct = true === $post_type_obj->has_archive || $ignore_has_archive ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {
@@ -349,5 +352,27 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 
 		/** This filter is documented in wp-includes/link-template.php */
 		return apply_filters( 'post_type_archive_link', $link, $this->get_slug() );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
+		$cpt_posts = get_posts(
+			[
+				'fields'           => 'ids',
+				'suppress_filters' => false,
+				'post_status'      => 'any',
+				'post_type'        => $this->get_slug(),
+				'posts_per_page'   => -1,
+			]
+		);
+
+		foreach ( $cpt_posts as $post_id ) {
+			wp_delete_post( (int) $post_id, true );
+		}
 	}
 }

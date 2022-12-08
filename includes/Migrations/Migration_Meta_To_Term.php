@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Migrations;
 
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
@@ -38,7 +40,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @var Media_Source_Taxonomy Experiments instance.
 	 */
-	protected $media_source_taxonomy;
+	protected Media_Source_Taxonomy $media_source_taxonomy;
 
 	/**
 	 * Migration_Meta_To_Term constructor.

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -90,14 +92,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * File pointer resource.
@@ -267,7 +269,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 		$headers   = wp_remote_retrieve_headers( $response );
 		$mime_type = $headers['content-type'];
-		if ( $mime_type && false !== strpos( $mime_type, ';' ) ) {
+		if ( $mime_type && str_contains( $mime_type, ';' ) ) {
 			$pieces    = explode( ';', $mime_type );
 			$mime_type = array_shift( $pieces );
 		}
@@ -797,14 +799,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public function stream_headers( $handle, $header ): int {
 		// Parse Status-Line, the first component in the HTTP response, e.g. HTTP/1.1 200 OK.
 		// Extract the status code to re-send that here.
-		if ( 0 === strpos( $header, 'HTTP/' ) ) {
+		if ( str_starts_with( $header, 'HTTP/' ) ) {
 			$status = explode( ' ', $header );
 			http_response_code( (int) $status[1] );
 			return \strlen( $header );
 		}
 
 		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
-			if ( 0 === stripos( $header, strtolower( $_header ) . ': ' ) ) {
+			if ( str_starts_with( strtolower( $header ), strtolower( $_header ) . ': ' ) ) {
 				header( $header, true );
 			}
 		}

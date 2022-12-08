@@ -70,7 +70,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -84,7 +84,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
+        uses: shivammathur/setup-php@1a18b2267f80291a81ca1d33e7c851fe09e7dfc4
         with:
           php-version: '8.0'
           coverage: none
@@ -96,7 +96,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
+        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -111,7 +111,7 @@ jobs:
         run: npm run workflow:build-plugin
 
       - name: Upload bundle
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         with:
           name: web-stories
           path: build/web-stories
@@ -132,10 +132,11 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     needs: [build, nonce]
     strategy:
+      fail-fast: false
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['5.7']
+        wp: ['5.9']
         snapshots: [false]
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
@@ -148,24 +149,10 @@ jobs:
             wp: 'latest'
             snapshots: true
             shard: '2/2'
-          - browser: 'chrome'
-            wp: 'latest'
-            snapshots: true
-            shard: '1/2'
-          - browser: 'chrome'
-            wp: '6.1-RC2'
-            experimental: true
-            snapshots: false
-            shard: '1/2'
-          - browser: 'chrome'
-            wp: '6.1-RC2'
-            experimental: true
-            snapshots: false
-            shard: '2/2'
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -173,7 +160,7 @@ jobs:
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Download bundle
-        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
+        uses: actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7
         with:
           name: web-stories
 
@@ -202,6 +189,13 @@ jobs:
           echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
+      - name: Download AMP validator JS
+        id: amp_validator
+        run: |
+          cd $RUNNER_TEMP && curl -O -f -s -S https://cdn.ampproject.org/v0/validator_wasm.js
+          AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
+          echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
+
       - name: Run E2E tests with percy
         run: npm run test:e2e:percy -- -- --shard=$SHARD
         env:
@@ -210,6 +204,7 @@ jobs:
           PERCY_BROWSER_EXECUTABLE: ${{ env.chromium_path }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
@@ -217,6 +212,7 @@ jobs:
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}
+          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
         if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
@@ -226,7 +222,7 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         if: always()
         with:
           name: failures-artifacts
@@ -245,7 +241,7 @@ jobs:
     needs: [e2e, nonce]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 

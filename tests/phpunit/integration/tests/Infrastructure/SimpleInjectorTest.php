@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\Infrastructure;
 
 use Google\Web_Stories\Exception\FailedToMakeInstance;
@@ -153,14 +155,18 @@ final class SimpleInjectorTest extends TestCase {
 	}
 
 	public function test_arguments_can_be_bound(): void {
-		$object = ( new SimpleInjector() )
+		/**
+		 * @var class-string $global_arguments
+		 */
+		$global_arguments = SimpleInjector::GLOBAL_ARGUMENTS;
+		$object           = ( new SimpleInjector() )
 			->bind_argument(
 				Fixture\DummyClassWithNamedArguments::class,
 				'argument_a',
 				42
 			)
 			->bind_argument(
-				SimpleInjector::GLOBAL_ARGUMENTS,
+				$global_arguments,
 				'argument_b',
 				'Mr Alderson'
 			)
@@ -176,8 +182,7 @@ final class SimpleInjectorTest extends TestCase {
 		$injector->bind_argument(
 			Fixture\DummyClassWithNamedArguments::class,
 			'argument_a',
-			static function ( $class, $parameter, $arguments ) {
-				return $arguments['number']; }
+			static fn( $class, $parameter, $arguments ) => $arguments['number']
 		);
 
 		$object = $injector->make( Fixture\DummyClassWithNamedArguments::class, [ 'number' => 123 ] );

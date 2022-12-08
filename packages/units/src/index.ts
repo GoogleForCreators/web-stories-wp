@@ -16,13 +16,12 @@
 
 export * from './constants';
 export * from './dimensions';
+export * from './types';
 
 export { default as UnitsProvider } from './unitsProvider';
 export { default as useUnits } from './useUnits';
 export { default as calcRotatedResizeOffset } from './calcRotatedResizeOffset';
 export * from './range';
-export {
-  default as getBoundRect,
-  calcRotatedObjectPositionAndSize,
-  getCorners,
-} from './getBoundRect';
+export { default as calcRotatedObjectPositionAndSize } from './calcRotatedObjectPositionAndSize';
+export { default as getBoundRect } from './getBoundRect';
+export { default as getCorners } from './getCorners';

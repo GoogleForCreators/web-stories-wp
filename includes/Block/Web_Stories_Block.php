@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Block;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
@@ -68,14 +70,14 @@ use Google\Web_Stories\Tracking;
  *   height?: int,
  *   align: string,
  *   stories?: int[],
- *   viewType: string,
+ *   viewType?: string,
  *   numOfStories?: int,
- *   numOfColumns: int,
- *   circleSize: int,
- *   imageAlignment: string,
- *   orderby: string,
- *   order: string,
- *   archiveLinkLabel: string,
+ *   numOfColumns?: int,
+ *   circleSize?: int,
+ *   imageAlignment?: string,
+ *   orderby?: string,
+ *   order?: string,
+ *   archiveLinkLabel?: string,
  *   authors?: int[],
  *   fieldState?: array<string, mixed>
  * }
@@ -90,10 +92,10 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Current block's block attributes.
 	 *
-	 * @var array Block Attributes.
+	 * @var array<string, mixed> Block Attributes.
 	 * @phpstan-var BlockAttributes
 	 */
-	protected $block_attributes;
+	protected array $block_attributes;
 
 	/**
 	 * Maximum number of stories users can select
@@ -105,14 +107,14 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	protected $story_post_type;
+	protected Story_Post_Type $story_post_type;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Embed Base constructor.
@@ -312,11 +314,11 @@ class Web_Stories_Block extends Embed_Base {
 
 			$story_attributes = [
 				'align'              => $attributes['align'],
-				'view_type'          => $attributes['viewType'],
-				'archive_link_label' => $attributes['archiveLinkLabel'],
-				'circle_size'        => $attributes['circleSize'],
-				'image_alignment'    => $attributes['imageAlignment'],
-				'number_of_columns'  => $attributes['numOfColumns'],
+				'view_type'          => $attributes['viewType']         ??= '',
+				'archive_link_label' => $attributes['archiveLinkLabel'] ??= __( 'View all stories', 'web-stories' ),
+				'circle_size'        => $attributes['circleSize']       ??= 96,
+				'image_alignment'    => $attributes['imageAlignment']   ??= 96,
+				'number_of_columns'  => $attributes['numOfColumns']     ??= 2,
 			];
 
 			/**

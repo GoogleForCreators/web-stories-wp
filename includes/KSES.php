@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -49,14 +51,14 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Page_Template_Post_Type instance.
 	 *
 	 * @var Page_Template_Post_Type Page_Template_Post_Type instance.
 	 */
-	private $page_template_post_type;
+	private Page_Template_Post_Type $page_template_post_type;
 
 	/**
 	 * KSES constructor.
@@ -163,6 +165,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @phpstan-param PostData $data
 	 * @phpstan-param PostData $unsanitized_postarr
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($data is array<T> ? array<T> : mixed)
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
 		if ( ! \is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
@@ -179,7 +185,7 @@ class KSES extends Service_Base implements HasRequirements {
 
 		if ( isset( $unsanitized_postarr['post_content'] ) ) {
 			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 
 			$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
 
@@ -200,6 +206,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @param string[]|mixed $attr Array of allowed CSS attributes.
 	 * @return string[]|mixed Filtered list of CSS attributes.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($attr is array<T> ? array<T> : mixed)
 	 */
 	public function filter_safe_style_css( $attr ) {
 		if ( ! \is_array( $attr ) ) {
@@ -439,7 +449,7 @@ class KSES extends Service_Base implements HasRequirements {
 
 			$parts = explode( ':', $css_item, 2 );
 
-			if ( false === strpos( $css_item, ':' ) ) {
+			if ( ! str_contains( $css_item, ':' ) ) {
 				$found = true;
 			} else {
 				$css_selector = trim( $parts[0] );
@@ -553,6 +563,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @param array<string, array<string,bool>>|mixed $allowed_tags Allowed tags.
 	 * @return array<string, array<string,bool>>|mixed Allowed tags.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($allowed_tags is array<T> ? array<T> : mixed)
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! \is_array( $allowed_tags ) ) {
@@ -853,9 +867,7 @@ class KSES extends Service_Base implements HasRequirements {
 	public function filter_content_save_pre_before_kses( $post_content ): string {
 		return (string) preg_replace_callback(
 			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
-			static function ( $matches ) {
-				return $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'];
-			},
+			static fn( $matches ) => $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'],
 			$post_content
 		);
 	}

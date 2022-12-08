@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
@@ -46,14 +48,14 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Crop Script constructor.

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 /**
@@ -43,14 +45,14 @@ class Assets {
 	 *
 	 * @var array<string, bool>
 	 */
-	protected $register_styles = [];
+	protected array $register_styles = [];
 
 	/**
 	 * An array of registered scripts.
 	 *
 	 * @var array<string, bool>
 	 */
-	protected $register_scripts = [];
+	protected array $register_scripts = [];
 
 	/**
 	 * Get path to file and directory.
@@ -98,12 +100,12 @@ class Assets {
 		$chunks = is_readable( $chunks_file ) ? require $chunks_file : [];
 
 		// A hash calculated based on the file content of the entry point bundle at <$handle>.js.
-		$asset['version'] = $asset['version'] ?? WEBSTORIES_VERSION;
+		$asset['version'] ??= WEBSTORIES_VERSION;
 
-		$asset['dependencies'] = $asset['dependencies'] ?? [];
-		$asset['js']           = $chunks['js'] ?? [];
-		$asset['css']          = $chunks['css'] ?? [];
-		$asset['chunks']       = $chunks['chunks'] ?? [];
+		$asset['dependencies'] ??= [];
+		$asset['js']             = $chunks['js'] ?? [];
+		$asset['css']            = $chunks['css'] ?? [];
+		$asset['chunks']         = $chunks['chunks'] ?? [];
 
 		return $asset;
 	}
@@ -143,7 +145,7 @@ class Assets {
 		}
 
 		// Dynamically imported chunks MUST NOT be added as dependencies here.
-		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
+		$dependencies = [ ...$asset['dependencies'], ...$script_dependencies, ...$asset['js'] ];
 
 		$this->register_script(
 			$script_handle,
@@ -219,7 +221,7 @@ class Assets {
 				$chunk_version
 			);
 		}
-		$style_dependencies = array_merge( $style_dependencies, $asset['css'] );
+		$style_dependencies = [ ...$style_dependencies, ...$asset['css'] ];
 
 		$entry_version = $asset['version'];
 		$this->register_style(
@@ -253,7 +255,7 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param string           $style_handle Name of the stylesheet. Should be unique.
-	 * @param string|bool      $src    Full URL of the stylesheet, or path of the stylesheet relative to the WordPress root directory.
+	 * @param string|false     $src    Full URL of the stylesheet, or path of the stylesheet relative to the WordPress root directory.
 	 *                                 If source is set to false, stylesheet is an alias of other stylesheets it depends on.
 	 * @param string[]         $deps   Optional. An array of registered stylesheet handles this stylesheet depends on. Default empty array.
 	 * @param string|bool|null $ver    Optional. String specifying stylesheet version number, if it has one, which is added to the URL
@@ -281,7 +283,7 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param string           $script_handle    Name of the script. Should be unique.
-	 * @param string|bool      $src       Full URL of the script, or path of the script relative to the WordPress root directory.
+	 * @param string|false     $src       Full URL of the script, or path of the script relative to the WordPress root directory.
 	 *                                    If source is set to false, script is an alias of other scripts it depends on.
 	 * @param string[]         $deps      Optional. An array of registered script handles this script depends on. Default empty array.
 	 * @param string|bool|null $ver       Optional. String specifying script version number, if it has one, which is added to the URL
@@ -399,9 +401,7 @@ class Assets {
 
 		return array_values(
 			array_map(
-				static function( $translations ) {
-					return json_decode( $translations, true );
-				},
+				static fn( $translations ) => json_decode( $translations, true ),
 				array_filter( $translations )
 			)
 		);

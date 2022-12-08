@@ -26,15 +26,18 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\User;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 
 /**
  * User Preferences class.
  */
-class Preferences extends Service_Base implements HasMeta {
+class Preferences extends Service_Base implements HasMeta, PluginUninstallAware {
 	/**
 	 * Name of the user meta key used for opt-in.
 	 */
@@ -136,5 +139,16 @@ class Preferences extends Service_Base implements HasMeta {
 	 */
 	public function get_preference( $user_id, $key ) {
 		return get_user_meta( $user_id, $key, true );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_metadata( 'user', 0, self::OPTIN_META_KEY, '', true );
+		delete_metadata( 'user', 0, self::ONBOARDING_META_KEY, '', true );
+		delete_metadata( 'user', 0, self::MEDIA_OPTIMIZATION_META_KEY, '', true );
 	}
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -28,10 +31,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Site_Kit extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Integrations\Site_Kit
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Integrations\Site_Kit $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -110,7 +111,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->go_to( get_permalink( $story_id ) );
+		$this->go_to( (string) get_permalink( $story_id ) );
 
 		$analytics = $this->createMock( Analytics::class );
 		$analytics->method( 'get_default_configuration' )
@@ -129,6 +130,8 @@ class Site_Kit extends DependencyInjectedTestCase {
 		);
 		$actual         = $this->instance->filter_site_kit_gtag_opt( $gtag );
 
+		$this->assertIsArray( $actual );
+		$this->assertIsArray( $actual['triggers'] );
 		$this->assertArrayHasKey( 'storyProgress', $actual['triggers'] );
 		$this->assertArrayHasKey( 'storyEnd', $actual['triggers'] );
 	}
@@ -141,12 +144,12 @@ class Site_Kit extends DependencyInjectedTestCase {
 	public function test_get_site_kit_active_modules_option(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
-		$actual_before = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
+		$actual_before = $this->call_private_method( [ $this->instance, 'get_site_kit_active_modules_option' ] );
 
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
-		$actual_after = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
+		$actual_after = $this->call_private_method( [ $this->instance, 'get_site_kit_active_modules_option' ] );
 
 		delete_option( 'googlesitekit_active_modules' );
 		delete_option( 'googlesitekit_analytics_settings' );
@@ -154,7 +157,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 		update_option( 'googlesitekit-active-modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
-		$actual_after_legacy = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
+		$actual_after_legacy = $this->call_private_method( [ $this->instance, 'get_site_kit_active_modules_option' ] );
 
 		$this->assertEmpty( $actual_before );
 		$this->assertSame( [ 'analytics' ], $actual_after );

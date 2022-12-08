@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * @typedef {import('../../../types').Page} Page
+ * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
 /**

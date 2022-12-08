@@ -2,7 +2,7 @@
   "name": "@googleforcreators/migration",
   "description": "Utility package for migrating stories to the latest data format.",
   "private": false,
-  "version": "0.1.202208291229",
+  "version": "0.1.202212071230",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -38,14 +38,15 @@
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/elements": "*",
     "polished": "^4.2.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-node-resolve": "^15.0.0",
-    "@rollup/plugin-typescript": "^8.5.0",
-    "rollup": "^2.79.1"
+    "@rollup/plugin-babel": "^6.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^9.0.2",
+    "rollup": "^3.2.3"
   },
   "scripts": {
     "migration": "node ./scripts/cli.js"

@@ -27,7 +27,7 @@ import storyPageToDataUrl from '../../utils/storyPageToDataUrl';
 import Context from './context';
 
 /**
- * @typedef {import('../../types.js').Page} Page
+ * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
 function PageDataUrlProvider({ children }) {

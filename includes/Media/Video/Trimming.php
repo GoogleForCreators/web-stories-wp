@@ -24,15 +24,18 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 
 /**
  * Class Trimming
  */
-class Trimming extends Service_Base implements HasMeta {
+class Trimming extends Service_Base implements HasMeta, PluginUninstallAware {
 
 	/**
 	 * The trim video post meta key.
@@ -99,8 +102,12 @@ class Trimming extends Service_Base implements HasMeta {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param array|mixed $response   Array of prepared attachment data.
-	 * @return array|mixed $response;
+	 * @param array|mixed $response Array of prepared attachment data.
+	 * @return array|mixed Response data.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
 		if ( ! \is_array( $response ) ) {
@@ -118,5 +125,14 @@ class Trimming extends Service_Base implements HasMeta {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::TRIM_POST_META_KEY );
 	}
 }

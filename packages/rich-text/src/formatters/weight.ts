@@ -17,25 +17,21 @@
 /**
  * External dependencies
  */
-import type { EditorState, DraftInlineStyle } from 'draft-js';
+import type { DraftInlineStyle, EditorState } from 'draft-js';
 
 /**
  * Internal dependencies
  */
-import { NONE, WEIGHT, MULTIPLE_VALUE } from '../customConstants';
+import { MULTIPLE_VALUE, NONE, WEIGHT } from '../customConstants';
 import {
-  togglePrefixStyle,
   getPrefixStylesInSelection,
+  togglePrefixStyle,
 } from '../styleManipulation';
-import { isStyle, numericToStyle, styleToNumeric } from './util';
+import { isStyle, styleToNumeric, weightToStyle } from './util';
 
 const NORMAL_WEIGHT = 400;
 const SMALLEST_BOLD = 600;
 const DEFAULT_BOLD = 700;
-
-export function weightToStyle(weight: number) {
-  return numericToStyle(WEIGHT, weight);
-}
 
 function styleToWeight(style: string) {
   return styleToNumeric(WEIGHT, style);
@@ -74,8 +70,7 @@ function getWeights(styles: string[]) {
 function isBold(editorState: EditorState) {
   const styles = getPrefixStylesInSelection(editorState, WEIGHT);
   const weights = getWeights(styles);
-  const allIsBold = weights.every((w) => w >= SMALLEST_BOLD);
-  return allIsBold;
+  return weights.every((w) => w >= SMALLEST_BOLD);
 }
 
 function toggleBold(editorState: EditorState, flag?: undefined | boolean) {
@@ -93,12 +88,12 @@ function toggleBold(editorState: EditorState, flag?: undefined | boolean) {
 
   // if any character has weight less than SMALLEST_BOLD,
   // everything should be bolded
-  const shouldSetBold = (styles: string[]) =>
+  const shouldSetBold = (styles: string[] = []) =>
     getWeights(styles).some((w) => w < SMALLEST_BOLD);
 
   // if setting a bold, it should be the boldest current weight,
   // though at least DEFAULT_BOLD
-  const getBoldToSet = (styles: string[]) =>
+  const getBoldToSet = (styles: string[] = []) =>
     weightToStyle(Math.max(...[DEFAULT_BOLD].concat(getWeights(styles))));
 
   return togglePrefixStyle(editorState, WEIGHT, shouldSetBold, getBoldToSet);

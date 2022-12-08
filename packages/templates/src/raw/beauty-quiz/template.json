@@ -1,5 +1,5 @@
 {
-  "version": 43,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -44,9 +44,6 @@
           "y": 295,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "id": "380bdeec-030d-4b2b-b5ad-b3c921e16e23"
         },
@@ -101,7 +98,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Beauty Quiz for Your Best Skin Ever</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -113,9 +109,6 @@
           "y": 367,
           "width": 263,
           "height": 132,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "marginOffset": -3.3062499999999986
         },
@@ -174,7 +167,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Ann Kv Atowich</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -184,9 +176,6 @@
           },
           "width": 138,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.421875
         }
       ],
@@ -257,9 +246,6 @@
           "y": 196,
           "width": 571,
           "height": 391,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizPinkBlob" },
           "id": "b7f2bc51-3992-4b74-9184-e4033f4adc3e"
         },
@@ -314,7 +300,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Trying to figure out the right set of products and building a beauty regimen can be confusing. Take our quiz for an easy serving of what steps to incorporate into your daily routine.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -326,9 +311,6 @@
           "y": 289,
           "width": 280,
           "height": 150,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "marginOffset": 0.6187499999999986
         }
@@ -446,9 +428,6 @@
           },
           "width": 70,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 8.896874999999994
         },
         {
@@ -502,7 +481,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Let's start with the basics. What is your age range?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -512,9 +490,6 @@
           },
           "width": 260,
           "height": 89,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "0313916c-44be-44b1-b5de-f8dd2d8014ab",
@@ -573,7 +548,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #1e0404; text-transform: uppercase\">QUESTION</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -583,9 +557,6 @@
           },
           "width": 80,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.84659090909091
         },
         {
@@ -599,9 +570,6 @@
           "y": 317,
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "borderRadius": {
@@ -625,9 +593,6 @@
           "type": "shape",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -650,9 +615,6 @@
           "type": "shape",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -714,7 +676,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">18-24</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -724,9 +685,6 @@
           },
           "width": 65,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986
         },
         {
@@ -781,7 +739,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">25-35</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -791,9 +748,6 @@
           },
           "width": 80,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986
         },
         {
@@ -848,7 +802,6 @@
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">36-45</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -858,9 +811,6 @@
           },
           "width": 72,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986
         }
       ],
@@ -978,9 +928,6 @@
           },
           "width": 49,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.421875,
           "type": "text"
         },
@@ -1034,7 +981,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Do you have any skin concerns?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1044,9 +990,6 @@
           },
           "width": 260,
           "height": 61,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "d74eb94c-1702-4dbb-8c41-cef2b6f52015",
@@ -1105,7 +1048,6 @@
           "id": "f6857a9d-ffd3-46c4-beb4-a9c3a4bbd33f",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"color: #1e0404; text-transform: uppercase\">QUESTION</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1115,9 +1057,6 @@
           },
           "width": 80,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.84659090909091,
           "type": "text"
         },
@@ -1131,9 +1070,6 @@
           "y": 317,
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "75a306cd-9cad-4b82-b2d2-ae630630aea9",
           "borderRadius": {
@@ -1157,9 +1093,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -1182,9 +1115,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -1246,7 +1176,6 @@
           "id": "0d872af9-68a4-4bf2-a625-ad57c3b5b12b",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Pregnant</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1256,9 +1185,6 @@
           },
           "width": 97,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -1313,7 +1239,6 @@
           "id": "964763e8-7cff-41f3-b2df-9b76625af59a",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Eczema</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1323,9 +1248,6 @@
           },
           "width": 84,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -1380,7 +1302,6 @@
           "id": "f586254a-907d-445a-a64f-99308d0b6e9f",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Seasonal allergies</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1390,9 +1311,6 @@
           },
           "width": 194,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         }
@@ -1427,9 +1345,6 @@
           "lockAspectRatio": true,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "basedOn": "380bdeec-030d-4b2b-b5ad-b3c921e16e23",
           "id": "b137c337-7cc4-4a44-b325-9dc823f87234",
@@ -1553,7 +1468,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">Great! Lets move onto your skin concerns</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1563,9 +1477,6 @@
           },
           "width": 282,
           "height": 109,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "id": "ed3fe49d-37e8-4f2b-be90-18efc60afb9b",
@@ -1660,9 +1571,6 @@
           },
           "width": 46,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.421875,
           "type": "text"
         },
@@ -1716,7 +1624,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">What's your ideal skin look like?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1726,9 +1633,6 @@
           },
           "width": 260,
           "height": 59,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "a2a31a1c-00a8-4044-adcb-6befe1910e31",
@@ -1787,7 +1691,6 @@
           "id": "a6e03012-b9f7-4f20-a56c-badc016a12be",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"color: #1e0404; text-transform: uppercase\">QUESTION</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1797,9 +1700,6 @@
           },
           "width": 80,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.84659090909091,
           "type": "text"
         },
@@ -1813,9 +1713,6 @@
           "y": 317,
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "a579951c-7207-46d4-b5d6-edab44005fe5",
           "borderRadius": {
@@ -1839,9 +1736,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -1864,9 +1758,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -1928,7 +1819,6 @@
           "id": "605e3181-c2e2-4af1-baae-e1f40e799f7a",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Bright</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -1938,9 +1828,6 @@
           },
           "width": 97,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -1995,7 +1882,6 @@
           "id": "896b41cf-0e4a-446f-abe5-88f9650ec21b",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Glowy, dewy</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2005,9 +1891,6 @@
           },
           "width": 135,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -2062,7 +1945,6 @@
           "id": "a48bd3a4-92fc-4a82-913d-9515874b9da3",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">Even, calm</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2072,9 +1954,6 @@
           },
           "width": 194,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         }
@@ -2109,9 +1988,6 @@
           "lockAspectRatio": true,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "basedOn": "380bdeec-030d-4b2b-b5ad-b3c921e16e23",
           "id": "ffda7a52-2471-40fb-a607-87e788cbec45",
@@ -2237,7 +2113,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">Almost Done!</span>\n<span style=\"font-weight: 300; color: #fff\">Only one final question.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2247,9 +2122,6 @@
           },
           "width": 282,
           "height": 109,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "id": "b55ba81b-0dcf-48f7-962d-3771adae861a",
@@ -2344,9 +2216,6 @@
           },
           "width": 45,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.421875,
           "type": "text"
         },
@@ -2400,7 +2269,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">How much time do you have each morning for skincare?</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2410,9 +2278,6 @@
           },
           "width": 266,
           "height": 92,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "aa1fdf83-461a-49ed-8726-2f4ceb944202",
@@ -2471,7 +2336,6 @@
           "id": "8c582e3a-6fd4-4f9f-9f9b-73c178b0e0b3",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"color: #1e0404; text-transform: uppercase\">QUESTION</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2481,9 +2345,6 @@
           },
           "width": 80,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.84659090909091,
           "type": "text"
         },
@@ -2497,9 +2358,6 @@
           "y": 317,
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "f25d1bcb-9462-4d94-b6ce-6e54b547bbc4",
           "borderRadius": {
@@ -2523,9 +2381,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -2548,9 +2403,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -2612,7 +2464,6 @@
           "id": "f3272c5d-c503-4dcf-8817-e22f6ed18c95",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">5 mins or less</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2622,9 +2473,6 @@
           },
           "width": 243,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -2679,7 +2527,6 @@
           "id": "d609d546-692e-4ba7-8cdd-a5f5dc35adca",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">30 mins</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2689,9 +2536,6 @@
           },
           "width": 135,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -2746,7 +2590,6 @@
           "id": "38933f56-29e5-4b64-a329-2373c73c456a",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 500; color: #1e0404\">1 hour</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2756,9 +2599,6 @@
           },
           "width": 194,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         }
@@ -2836,7 +2676,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">You need a brightening and clarifying regimen.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2846,9 +2685,6 @@
           },
           "width": 260,
           "height": 113,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "89054a81-950e-446e-8aca-6ddba66353a6",
@@ -2910,7 +2746,6 @@
           "id": "4ed6b780-7e96-4d6a-9532-a3f4dc985609",
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Evenness</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2920,9 +2755,6 @@
           },
           "width": 73,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.4670454545454543,
           "type": "text"
         },
@@ -2980,7 +2812,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Brightening dullness</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -2990,9 +2821,6 @@
           },
           "width": 98,
           "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.2261363636363605,
           "type": "text"
         },
@@ -3050,7 +2878,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Dewy</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3060,9 +2887,6 @@
           },
           "width": 98,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.2261363636363605,
           "type": "text"
         },
@@ -3117,7 +2941,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">10%</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3127,9 +2950,6 @@
           },
           "width": 90,
           "height": 66,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.3687500000000057,
           "type": "text"
         },
@@ -3184,7 +3004,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">38%</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3194,9 +3013,6 @@
           },
           "width": 90,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.3687500000000057,
           "type": "text"
         },
@@ -3251,7 +3067,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">40%</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3261,9 +3076,6 @@
           },
           "width": 90,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.3687500000000057,
           "type": "text"
         }
@@ -3364,9 +3176,6 @@
           "lockAspectRatio": true,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "basedOn": "380bdeec-030d-4b2b-b5ad-b3c921e16e23",
           "id": "20075941-d9c4-406b-b2e9-ec5b107f3e76",
@@ -3424,7 +3233,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">Kjaer Weis Beautiful Oil</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3434,9 +3242,6 @@
           },
           "width": 282,
           "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "id": "02657fa3-2a3a-4fd3-85d4-d882f0e15e75",
@@ -3498,7 +3303,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">It may sound counterintuitive to use an oil, but this one evens out skin tone and natural levels of hydration for an all over even skin tone.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3508,9 +3312,6 @@
           },
           "width": 282,
           "height": 82,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "type": "text"
         }
@@ -3604,9 +3405,6 @@
           "lockAspectRatio": true,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "basedOn": "380bdeec-030d-4b2b-b5ad-b3c921e16e23",
           "id": "edb4959a-aad7-428d-9b1d-e187c8520e97",
@@ -3664,7 +3462,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #fff\">La Mer's The Tonic</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3674,9 +3471,6 @@
           },
           "width": 282,
           "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "id": "d6748315-85fb-441e-8ed5-13b8e4e2069e",
@@ -3738,7 +3532,6 @@
           "id": "4d89d11f-ca6e-40ac-b2ae-2ccc3eb9f2fc",
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "content": "<span style=\"font-weight: 300; color: #fff\">A refreshing toner that balances and refreshes the complexion.</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3748,9 +3541,6 @@
           },
           "width": 282,
           "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "type": "text"
         }
@@ -3833,7 +3623,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">More beauty tips for your skin type</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3843,9 +3632,6 @@
           },
           "width": 282,
           "height": 75,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "type": "text",
           "basedOn": "d6748315-85fb-441e-8ed5-13b8e4e2069e",
@@ -3907,7 +3693,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">5 steps to a brighter complexion</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3917,9 +3702,6 @@
           },
           "width": 180,
           "height": 47,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.5625,
           "type": "text"
         },
@@ -3977,7 +3759,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">When to exfoliate and how to do it</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3987,9 +3768,6 @@
           },
           "width": 180,
           "height": 47,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.5625,
           "type": "text"
         },
@@ -4047,7 +3825,6 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #1e0404\">Serums and oils for your nighttime routine</span>",
-          "fontWeight": 400,
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -4057,9 +3834,6 @@
           },
           "width": 180,
           "height": 71,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.5625,
           "type": "text"
         },
@@ -4073,9 +3847,6 @@
           "y": 329,
           "width": 122,
           "height": 106,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizTiltedGreenBlob" },
           "id": "47cae18d-3068-4772-907e-a103a60b3e11"
         },
@@ -4091,9 +3862,6 @@
           "type": "sticker",
           "width": 122,
           "height": 106,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizTiltedGreenBlob" }
         },
         {
@@ -4108,9 +3876,6 @@
           "type": "sticker",
           "width": 122,
           "height": 106,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizTiltedGreenBlob" }
         },
         {

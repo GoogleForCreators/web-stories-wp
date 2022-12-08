@@ -25,14 +25,14 @@ describe('updateStory', () => {
 
     const result = updateStory({ properties: { a: 1, b: 2 } });
 
-    expect(result.story).toStrictEqual({ a: 1, b: 2 });
+    expect(result.story).toStrictEqual({ a: 1, b: 2, fonts: {} });
   });
 
   it('should update story with property updater function which will overwrite existing values', () => {
     const { updateStory } = setupReducer();
 
     const firstResult = updateStory({ properties: { a: 1, b: 2 } });
-    expect(firstResult.story).toStrictEqual({ a: 1, b: 2 });
+    expect(firstResult.story).toStrictEqual({ a: 1, b: 2, fonts: {} });
 
     const secondResult = updateStory({
       properties: (old) => ({ b: old.b + 2 }),
@@ -45,9 +45,9 @@ describe('updateStory', () => {
     const { updateStory } = setupReducer();
 
     const firstResult = updateStory({ properties: { a: 1, b: 2 } });
-    expect(firstResult.story).toStrictEqual({ a: 1, b: 2 });
+    expect(firstResult.story).toStrictEqual({ a: 1, b: 2, fonts: {} });
 
     const secondResult = updateStory({ properties: { b: 3, c: 4 } });
-    expect(secondResult.story).toStrictEqual({ a: 1, b: 3, c: 4 });
+    expect(secondResult.story).toStrictEqual({ a: 1, b: 3, c: 4, fonts: {} });
   });
 });

@@ -20,11 +20,11 @@
 import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 interface ResourceSizeParams {
-  width: number;
-  height: number;
-  posterGenerated: boolean;
-  posterWidth: number;
-  posterHeight: number;
+  width?: number;
+  height?: number;
+  posterGenerated?: boolean;
+  posterWidth?: number;
+  posterHeight?: number;
 }
 
 /**

@@ -1,8 +1,8 @@
 === Web Stories ===
 
 Contributors:      google
-Tested up to:      6.0
-Requires at least: 5.7
+Tested up to:      6.1
+Requires at least: 5.9
 Stable tag:        V.V.V
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
@@ -109,39 +109,33 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
-= 1.25.1 =
+= 1.28.0 =
 
-* Fixes an issue with an incorrectly shown compatibility warning in the checklist.
-* Fixes template insertion from the dashboard
-* Fixes a couple of edge case issues around media uploads & trimming.
-
-= 1.25.0 =
-
-* New feature: background blurring support for webcam recording.
-* Enhancement: change and lock placement of floating menu bar.
-* Enhancements: improved saving and revisions mechanism to prevent content loss.
+* New feature: support for changing page advancement settings per individual page.
+* New feature: support for toggling visibility of individual layers.
 * Bug fixes and performance improvements.
 
-= 1.24.0 =
+= 1.27.0 =
 
-* New feature: pause/resume and video trimming support for webcam recording.
-* New feature: multi-page canvas in the editor.
-* New feature: added stickers library to third-party media tab.
-* Enhancement: added category filter for videos in third-party media tab.
-* Enhancement: improved templates to make them easier to use.
-* Enhancement: improved media upload experience for pre-optimized videos.
+* New feature: support for changing page advancement defaults on the settings page.
+* Fixes issues with the carousel and grid layouts in the Web Stories block.
+* Bug fixes and performance improvements.
+
+= 1.26.0 =
+
+* New feature: support for taking over editing from another user.
 * Bug fixes and performance improvements.
 
 == Upgrade Notice ==
 
-= 1.25.1 =
+= 1.28.0 =
 
-This release addresses a few regressions regarding the checklist, templates, and media uploads.
+This release includes support for page-level page advancement settings and toggling layer visibility.
 
-= 1.25.0 =
+= 1.27.0 =
 
-This release adds improvements to webcam recording, saving, and the floating menu bar.
+This release adds support for changing page advancement defaults and fixes various bugs.
 
-= 1.24.0 =
+= 1.26.0 =
 
-This release introduces multi-page canvas and contains improvements to webcam recording, third-party media, and templates.
+This release includes improvements to autosaves and story locking, and fixes various bugs.

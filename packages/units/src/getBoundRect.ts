@@ -15,14 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import type { ElementBox } from '@googleforcreators/types';
-
-/**
  * Internal dependencies
  */
-import { dataPixels } from './dimensions';
+import calcRotatedObjectPositionAndSize from './calcRotatedObjectPositionAndSize';
+import type { ElementBox } from './types';
 
 /**
  * Get the outer frame values for all objects in `list`,
@@ -68,105 +64,6 @@ function getBoundRect(list: ElementBox[]) {
     width: endX - startX,
     height: endY - startY,
   };
-}
-
-export function calcRotatedObjectPositionAndSize(
-  angle: number,
-  x: number,
-  y: number,
-  width: number,
-  height: number
-) {
-  if (!angle || angle === 0) {
-    return { x, y, width, height };
-  }
-
-  const { topLeftPoint, topRightPoint, bottomRightPoint, bottomLeftPoint } =
-    getCorners(angle, x, y, width, height);
-  /// get bounding box
-  const boundTopLeftX = Math.min(
-    topLeftPoint.x,
-    topRightPoint.x,
-    bottomRightPoint.x,
-    bottomLeftPoint.x
-  );
-  const boundTopLeftY = Math.min(
-    topLeftPoint.y,
-    topRightPoint.y,
-    bottomRightPoint.y,
-    bottomLeftPoint.y
-  );
-  const boundBottomRightX = Math.max(
-    topLeftPoint.x,
-    topRightPoint.x,
-    bottomRightPoint.x,
-    bottomLeftPoint.x
-  );
-  const boundBottomRightY = Math.max(
-    topLeftPoint.y,
-    topRightPoint.y,
-    bottomRightPoint.y,
-    bottomLeftPoint.y
-  );
-
-  return {
-    x: boundTopLeftX,
-    y: boundTopLeftY,
-    width: boundBottomRightX - boundTopLeftX,
-    height: boundBottomRightY - boundTopLeftY,
-  };
-}
-
-export function getCorners(
-  angle: number,
-  x: number,
-  y: number,
-  width: number,
-  height: number
-) {
-  /// variables
-  const centerX = x + width * 0.5;
-  const centerY = y + height * 0.5;
-  const radian = (angle * Math.PI) / 180;
-  /// get corner coordinates
-  const topLeftPoint = getCorner(centerX, centerY, x, y, radian);
-  const topRightPoint = getCorner(centerX, centerY, x + width, y, radian);
-  const bottomRightPoint = getCorner(
-    centerX,
-    centerY,
-    x + width,
-    y + height,
-    radian
-  );
-  const bottomLeftPoint = getCorner(centerX, centerY, x, y + height, radian);
-  return {
-    topLeftPoint,
-    topRightPoint,
-    bottomRightPoint,
-    bottomLeftPoint,
-  };
-}
-
-function getCorner(
-  pivotX: number,
-  pivotY: number,
-  cornerX: number,
-  cornerY: number,
-  angle: number
-) {
-  /// get distance from center to point
-  const diffX = cornerX - pivotX;
-  const diffY = cornerY - pivotY;
-  const distance = Math.sqrt(diffX * diffX + diffY * diffY);
-
-  /// find angle from pivot to corner
-  angle += Math.atan2(diffY, diffX);
-
-  /// get new x and y and round it off to integer
-  const x = dataPixels(pivotX + distance * Math.cos(angle));
-  const y = dataPixels(pivotY + distance * Math.sin(angle));
-
-  return { x, y };
 }
 
 export default getBoundRect;
