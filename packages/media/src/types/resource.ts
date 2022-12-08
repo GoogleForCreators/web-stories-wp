@@ -83,7 +83,7 @@ export interface Resource {
   /** Resource creation date. */
   readonly creationDate?: string;
   /** Resource sizes */
-  sizes: { [key: string]: ResourceSize } | never[];
+  sizes?: { [key: string]: ResourceSize };
   /** Resource author attribution */
   attribution?: Attribution;
 

@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
+import { ReactElement, SVGProps } from 'react';
 
-export * from './components/keyboard';
-export * from './contexts/snackbar';
-export * from './theme/constants';
-export * from './utils/constants';
-export * from './utils/localStore';
-export * from './utils/sessionStore';
+declare module 'icons/*.svg' {
+  const Icon: (props: SVGProps<SVGElement>) => ReactElement;
+  export default Icon;
+}
 
-export {};
+declare module 'images/*.svg' {
+  const Image: (props: SVGProps<SVGElement>) => ReactElement;
+  export default Image;
+}
+
+declare module 'inline-icons/*.svg' {
+  const content: string;
+  export default content;
+}

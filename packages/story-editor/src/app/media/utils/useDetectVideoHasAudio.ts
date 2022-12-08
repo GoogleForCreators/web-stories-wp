@@ -21,6 +21,7 @@ import { useCallback } from '@googleforcreators/react';
 import {
   hasVideoGotAudio,
   preloadVideo,
+  ResourceId,
   seekVideo,
 } from '@googleforcreators/media';
 
@@ -31,7 +32,17 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 
-function useDetectVideoHasAudio({ updateMediaElement }) {
+function useDetectVideoHasAudio({
+  updateMediaElement,
+}: {
+  updateMediaElement: ({
+    id,
+    data,
+  }: {
+    id: string | number;
+    data: Record<string, unknown>;
+  }) => void;
+}) {
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -45,26 +56,24 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
   const updateVideoIsMuted = useCallback(
     /**
      *
-     * @param {number} id Video ID.
-     * @param {string} src Video URL.
-     * @return {Promise<void>}
+     * @param id Video ID.
+     * @param src Video URL.
      */
-    async (id, src) => {
-      if (!hasUploadMediaAction) {
-        return;
-      }
+    async (id: ResourceId, src: string) => {
       try {
         const video = await preloadVideo(src);
         await seekVideo(video);
         const hasAudio = hasVideoGotAudio(video);
 
-        const properties = ({ resource }) => ({
-          resource: {
-            ...resource,
-            isMuted: !hasAudio,
-          },
+        updateElementsByResourceId({
+          id,
+          properties: ({ resource }) => ({
+            resource: {
+              ...resource,
+              isMuted: !hasAudio,
+            },
+          }),
         });
-        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: {
@@ -72,9 +81,11 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
           },
         });
 
-        await updateMedia(id, {
-          isMuted: !hasAudio,
-        });
+        if (hasUploadMediaAction && updateMedia) {
+          await updateMedia(id, {
+            isMuted: !hasAudio,
+          });
+        }
       } catch (error) {
         // Do nothing for now.
       }

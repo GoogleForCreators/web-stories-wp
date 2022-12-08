@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
-import { MEDIA_POSTER_IMAGE_FILE_TYPE } from '../../../constants';
+import type { StoryProviderState } from '../../types';
+import Context from './context';
 
-const getPosterName = (fileName) => {
-  return fileName + '-poster.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
-};
-export default getPosterName;
+export function useStory(): StoryProviderState;
+export function useStory<T>(selector: (state: StoryProviderState) => T): T;
+export function useStory<T>(
+  selector: (state: StoryProviderState) => T | StoryProviderState = identity
+) {
+  return useContextSelector(Context, selector);
+}
+
+export default useStory;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { identity, useContextSelector } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import type { StoryProviderState } from '../../types/storyProvider';
-import Context from './context';
+declare module 'colorthief' {
+  type Color = [number, number, number];
 
-export function useStory(): StoryProviderState;
-export function useStory<T>(
-  selector: (state: StoryProviderState) => T | StoryProviderState = identity
-) {
-  return useContextSelector(Context, selector);
+  export default class ColorThief {
+    getColor: (img: HTMLImageElement | null) => Color;
+    getPalette: (img: HTMLImageElement | null) => Color[];
+  }
 }
-
-export default useStory;
