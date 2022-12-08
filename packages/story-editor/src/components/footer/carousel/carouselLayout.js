@@ -120,7 +120,7 @@ function CarouselLayout() {
 
   const isOpenOrOpening = [
     CarouselState.Open,
-    CarouselState.OpenING,
+    CarouselState.Opening,
   ].includes(carouselState);
 
   return (

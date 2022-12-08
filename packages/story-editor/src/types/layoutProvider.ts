@@ -17,16 +17,9 @@
 /**
  * Internal dependencies
  */
-import type { ZoomSetting } from '../constants';
+import type { CarouselState, ZoomSetting } from '../constants';
 
 export interface LayoutProviderState {
-  actions: {
-    closeCarousel: () => void;
-    openCarousel: () => void;
-    setScrollOffset: () => void;
-    setZoomLevel: () => void;
-    setZoomSetting: () => void;
-  };
   state: {
     pageWidth: number;
     pageHeight: number;
@@ -45,8 +38,14 @@ export interface LayoutProviderState {
     workspaceHeight: number;
     scrollLeft: number;
     scrollTop: number;
-    // @todo Use enum.
-    carouselState: string;
+    carouselState: CarouselState;
     isCarouselInTransition: boolean;
+  };
+  actions: {
+    closeCarousel: () => void;
+    openCarousel: () => void;
+    setScrollOffset: () => void;
+    setZoomLevel: () => void;
+    setZoomSetting: () => void;
   };
 }
