@@ -228,7 +228,7 @@ function getImageResourceFromMedia3p(m) {
 
 function getVideoResourceFromMedia3p(m) {
   const videoUrls = getVideoUrls(m);
-  const length = Number(m.videoMetadata.duration.replace(/s$/, ''));
+  const length = parseInt(m.videoMetadata.duration.replace(/s$/, ''));
   return createResource({
     id: m.name,
     baseColor: m.color,
