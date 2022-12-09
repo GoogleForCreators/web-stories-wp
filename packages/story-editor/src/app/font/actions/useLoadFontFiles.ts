@@ -24,15 +24,17 @@ import {
   ensureFontLoaded,
   loadInlineStylesheet,
 } from '@googleforcreators/dom';
+import type { FontData } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import cleanForSlug from '../../../utils/cleanForSlug';
+import type { FontConfig } from '../types';
 
 function useLoadFontFiles() {
-  const maybeLoadFont = useCallback(async (font) => {
-    const { family, service, variants, url } = font;
+  const maybeLoadFont = useCallback(async (font: FontData) => {
+    const { family, service, variants } = font;
 
     const handle = cleanForSlug(family);
     const elementId = `web-stories-${handle}-font-css`;
@@ -50,9 +52,14 @@ function useLoadFontFiles() {
           elementId
         );
         break;
-      case 'custom':
-        await loadInlineStylesheet(elementId, getFontCSS(family, url));
+      case 'custom': {
+        const fontCSS = getFontCSS(family, font.url);
+        if (!fontCSS) {
+          return;
+        }
+        loadInlineStylesheet(elementId, fontCSS);
         break;
+      }
       default:
         return;
     }
@@ -67,7 +74,7 @@ function useLoadFontFiles() {
    * @return {Promise<boolean>} Returns fonts loaded promise
    */
   const maybeEnqueueFontStyle = useCallback(
-    (fonts) => {
+    (fonts: FontConfig[]) => {
       return Promise.allSettled(
         fonts.map(async ({ font, fontWeight, fontStyle, content }) => {
           const { family, service } = font;

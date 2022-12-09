@@ -55,14 +55,14 @@ const FontPicker = forwardRef(function FontPicker(
     ensureMenuFontsLoaded,
     ensureCustomFontsLoaded,
     getFontsBySearch,
-    getCustomFonts,
-    getCuratedFonts,
+    loadCustomFonts,
+    loadCuratedFonts,
   } = useFont(({ actions, state }) => ({
     getFontsBySearch: actions.getFontsBySearch,
     ensureMenuFontsLoaded: actions.ensureMenuFontsLoaded,
     ensureCustomFontsLoaded: actions.ensureCustomFontsLoaded,
-    getCuratedFonts: actions.getCuratedFonts,
-    getCustomFonts: actions.getCustomFonts,
+    loadCuratedFonts: actions.loadCuratedFonts,
+    loadCustomFonts: actions.loadCustomFonts,
     recentFonts: state.recentFonts,
     curatedFonts: state.curatedFonts,
     fonts: state.fonts,
@@ -70,9 +70,9 @@ const FontPicker = forwardRef(function FontPicker(
   }));
 
   useEffect(() => {
-    getCustomFonts();
-    getCuratedFonts();
-  }, [getCustomFonts, getCuratedFonts]);
+    loadCustomFonts();
+    loadCuratedFonts();
+  }, [loadCustomFonts, loadCuratedFonts]);
 
   const fontMap = useMemo(() => {
     const map = new Map();
