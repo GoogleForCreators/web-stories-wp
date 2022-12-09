@@ -37,7 +37,7 @@ function FontProvider({ children }: PropsWithChildren<unknown>) {
   const [queriedFonts, setQueriedFonts] = useState<FontData[]>([]);
   const [curatedFonts, setCuratedFonts] = useState<FontData[]>([]);
   const [recentFonts, setRecentFonts] = useState<FontData[]>([]);
-  const [customFonts, setCustomFonts] = useState<FontData[]>([]);
+  const [customFonts, setCustomFonts] = useState<FontData[] | null>(null);
   const {
     actions: { getFonts },
   } = useAPI();

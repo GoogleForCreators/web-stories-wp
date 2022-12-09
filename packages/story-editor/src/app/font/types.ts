@@ -32,7 +32,7 @@ export interface FontProviderState {
   state: {
     fonts: FontData[];
     curatedFonts: FontData[];
-    customFonts: FontData[];
+    customFonts: FontData[] | null;
     recentFonts: FontData[];
   };
   actions: {
