@@ -37,6 +37,7 @@ import { usePresubmitHandler } from '../../../form';
 import PanelContent from '../../panel/shared/content';
 import Panel from '../../panel/panel';
 import Warning from '../warning';
+import { noop } from '../../utils/noop';
 import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
@@ -99,7 +100,7 @@ function StylePanel(props) {
         const elementIds = pages[0]?.result;
         setFailedElementIds(elementIds);
       })
-      .catch(() => {});
+      .catch(noop);
   }, [currentPage, pageSize]);
 
   return (

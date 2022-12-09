@@ -20,6 +20,10 @@
 import { useEffect } from '@googleforcreators/react';
 
 /**
+ * Internal dependencies
+ */
+import { noop } from './noop';
+/**
  * @callback IntersectionHandler
  * @param {IntersectionObserverEntry} entry
  */
@@ -39,7 +43,7 @@ function useIntersectionEffect(ref, options = {}, handler, deps = undefined) {
         options.root = options.root.current;
       }
       if (!node || (usingRoot && !options.root)) {
-        return () => {};
+        return noop;
       }
 
       const observer = new window.IntersectionObserver((entries) => {

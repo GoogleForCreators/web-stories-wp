@@ -26,6 +26,7 @@ import { createNewElement } from '@googleforcreators/elements';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
 import { ZoomSetting } from '../../constants';
+import { noop } from '../../utils/noop';
 import useFocusCanvas from './useFocusCanvas';
 import getElementProperties from './utils/getElementProperties';
 
@@ -79,7 +80,7 @@ function useInsertElement() {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${elementId}`);
           if (videoEl) {
-            videoEl.play().catch(() => {});
+            videoEl.play().catch(noop);
           }
         });
       }
