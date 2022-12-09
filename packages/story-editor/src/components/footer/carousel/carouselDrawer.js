@@ -31,7 +31,7 @@ import {
  * Internal dependencies
  */
 import { useStory, useLayout } from '../../../app';
-import { CAROUSEL_STATE } from '../../../constants';
+import { CarouselState } from '../../../constants';
 import CarouselDrawerIcon from './carouselDrawerIcon';
 
 const Wrapper = styled.div`
@@ -62,9 +62,9 @@ function CarouselDrawer() {
   const onClick = useCallback(() => {
     // Note that we only trigger a change of state if the carousel is in one of these
     // stable states, and not if it's in any of the transitioning states.
-    if (carouselState === CAROUSEL_STATE.OPEN) {
+    if (carouselState === CarouselState.Open) {
       closeCarousel();
-    } else if (carouselState === CAROUSEL_STATE.CLOSED) {
+    } else if (carouselState === CarouselState.Closed) {
       openCarousel();
     }
   }, [carouselState, openCarousel, closeCarousel]);

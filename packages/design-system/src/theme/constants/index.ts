@@ -23,11 +23,13 @@ import * as TYPOGRAPHY from './typography';
 const ICON_SIZE = 32;
 const LARGE_BUTTON_SIZE = 56;
 
+const SCROLLBAR_WIDTH = 11;
 export const THEME_CONSTANTS = {
   BREAKPOINTS,
   TYPOGRAPHY,
   ICON_SIZE,
   LARGE_BUTTON_SIZE,
+  SCROLLBAR_WIDTH,
 };
 
 export const BEZIER = {

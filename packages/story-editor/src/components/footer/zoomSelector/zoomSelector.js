@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import { ZOOM_SETTING } from '../../../constants';
+import { ZoomSetting } from '../../../constants';
 import { useLayout } from '../../../app/layout';
 
 // Styles updated so the Zoom selector matches the other footer buttons
@@ -71,8 +71,8 @@ const ZOOM_OPTIONS = [
     label: _x('200%', 'zoom level', 'web-stories'),
     value: 2,
   },
-  { label: _x('Fill', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FILL },
-  { label: _x('Fit', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FIT },
+  { label: _x('Fill', 'zoom level', 'web-stories'), value: ZoomSetting.Fill },
+  { label: _x('Fit', 'zoom level', 'web-stories'), value: ZoomSetting.Fit },
 ];
 
 function ZoomSelector() {
@@ -90,7 +90,7 @@ function ZoomSelector() {
 
   const placeholder = useMemo(() => {
     const option = ZOOM_OPTIONS.find(({ value }) => {
-      if (zoomSetting === ZOOM_SETTING.FIXED) {
+      if (zoomSetting === ZoomSetting.Fixed) {
         return value === zoomLevel;
       }
       return value === zoomSetting;
@@ -109,7 +109,7 @@ function ZoomSelector() {
 
   const handleSetZoom = useCallback(
     (_event, value) => {
-      if (Object.prototype.hasOwnProperty.call(ZOOM_SETTING, value)) {
+      if (Object.values(ZoomSetting).includes(value)) {
         setZoomSetting(value);
       } else {
         setZoomLevel(value);
