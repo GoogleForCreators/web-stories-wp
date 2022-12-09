@@ -33,10 +33,6 @@ import type { Resource } from '@googleforcreators/media';
 
 const RESIZE_WIDTH_DIRECTION: Direction = [1, 0];
 
-/**
- * @param The value.
- * @return  Whether the value has been set.
- */
 function isNum(value: unknown) {
   return typeof value === 'number';
 }

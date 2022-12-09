@@ -54,7 +54,7 @@ type ClickCallback = (evt: MouseEvent, target: Element) => void;
  *
  * @param onSingleClick  Handler to activate on single click.
  * @param onDoubleClick  Handler to activate on double click.
- * @param   ms             Timeout in ms to wait - defaults to 200.
+ * @param ms             Timeout in ms to wait - defaults to 200.
  * @return Handler retrieval function to get an onClick listener (invoke with unique value).
  */
 const useDoubleClick = (

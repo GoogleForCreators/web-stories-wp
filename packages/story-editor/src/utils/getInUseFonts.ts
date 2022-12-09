@@ -41,7 +41,7 @@ export function getInUseFontsForPages(pages: Page[]) {
   );
 }
 
-interface getTextSetsForFontsProps {
+interface GetTextSetsForFontsProps {
   fonts: string[];
   textSets: TextSet[];
 }
@@ -55,7 +55,7 @@ interface getTextSetsForFontsProps {
 export function getTextSetsForFonts({
   fonts,
   textSets,
-}: getTextSetsForFontsProps) {
+}: GetTextSetsForFontsProps) {
   return textSets
     .map((currentTextSet) => {
       const hasFontInUse = currentTextSet.elements.reduce(

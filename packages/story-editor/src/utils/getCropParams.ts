@@ -17,12 +17,12 @@
  * External dependencies
  */
 import type { MediaElement } from '@googleforcreators/elements';
-import type { CropParams } from '@googleforcreators/media';
+
 /**
  * Internal dependencies
  */
+import type { CropParams } from '../app/media';
 import { isOffCanvas } from './isOffCanvas';
-
 
 export function getCropParams(selectedElement: MediaElement): CropParams {
   const { offCanvasLeft, offCanvasRight, offCanvasTop, offCanvasBottom } =
