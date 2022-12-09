@@ -60,8 +60,6 @@ describe('getInUseFontsForPages', () => {
           elements: [
             { type: 'shape' },
             { type: 'text', font: { family: null } },
-            { type: 'text', font: undefined },
-            { type: 'text' },
             { type: 'text', font: { family: 'Google Sans' } },
           ],
         },

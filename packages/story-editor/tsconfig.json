@@ -16,6 +16,7 @@
     { "path": "../output" },
     { "path": "../patterns" },
     { "path": "../react" },
+    { "path": "../text-sets" },
     { "path": "../templates" },
     { "path": "../tracking" }
   ],
@@ -32,9 +33,10 @@
     "src/app/media/media3p/*.tsx",
     "src/app/media/utils/*.ts",
     "src/app/story",
-    "src/constants",
-    "src/types",
-    "src/typings",
-    "src/utils/*.ts"
+    "src/constants/*",
+    "src/utils/**/*.ts",
+    "src/utils/**/*.tsx",
+    "src/types/*",
+    "src/typings/*"
   ]
 }

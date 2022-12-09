@@ -17,8 +17,7 @@
 /* Source: https://github.com/behnammodi/polyfill/blob/master/window.polyfill.js */
 const requestIdleCallback =
   window.requestIdleCallback ||
-  function (callback, options) {
-    options = options || {};
+  function (callback: IdleRequestCallback, options: IdleRequestOptions = {}) {
     const relaxation = 1;
     const timeout = options.timeout || relaxation;
     const start = performance.now();
@@ -38,7 +37,7 @@ const requestIdleCallback =
 
 const cancelIdleCallback =
   window.cancelIdleCallback ||
-  function (id) {
+  function (id: number) {
     clearTimeout(id);
   };
 

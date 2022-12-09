@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
+class CustomError extends Error {
+  public file = '';
+  public isUserError = false;
+}
 /**
  * Helper function to get create a js error.
  *
- * @param {string} name Error name.
- * @param {string} fileName File name.
- * @param {string} message Message in error.
- * @return {Error} Error Object.
+ * @param name Error name.
+ * @param fileName File name.
+ * @param message Message in error.
+ * @return Error Object.
  */
-function createError(name, fileName, message) {
-  const validError = new Error();
+function createError(name: string, fileName: string, message: string) {
+  const validError = new CustomError();
 
   validError.name = name;
   validError.file = fileName;

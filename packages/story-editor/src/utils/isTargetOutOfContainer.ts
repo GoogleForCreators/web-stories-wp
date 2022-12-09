@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+function isTargetOutOfContainer(target: Element, container: Element) {
+  const { left, right, top, bottom } = target.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  return (
+    left > containerRect.right ||
+    right < containerRect.left ||
+    bottom < containerRect.top ||
+    top > containerRect.bottom
+  );
+}
 
-/**
- * External dependencies
- */
-import { css } from 'styled-components';
-
-const pointerEventsCss = css`
-  ${({ pointerEvents }) => {
-    if (pointerEvents && typeof pointerEvents === 'string') {
-      return `pointer-events: ${pointerEvents};`;
-    }
-    return '';
-  }}
-`;
-
-export default pointerEventsCss;
+export default isTargetOutOfContainer;

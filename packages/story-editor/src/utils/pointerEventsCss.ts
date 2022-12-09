@@ -17,25 +17,17 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback } from '@googleforcreators/react';
+import { css } from 'styled-components';
 
-function useFocusAndSelect(ref) {
-  const [focused, setFocused] = useState(false);
+type PointerEventsValue = 'none' | 'auto' | 'initial';
 
-  const handleFocus = useCallback(() => setFocused(true), []);
-  const handleBlur = useCallback(() => setFocused(false), []);
-
-  useEffect(() => {
-    if (focused && ref.current) {
-      ref.current.select();
-    }
-  }, [focused, ref]);
-
-  return {
-    focused,
-    handleFocus,
-    handleBlur,
-  };
+interface WrapperProps {
+  pointerEvents?: PointerEventsValue;
 }
 
-export default useFocusAndSelect;
+const pointerEventsCss = css<WrapperProps>`
+  ${({ pointerEvents }) =>
+    pointerEvents ? `pointer-events: ${pointerEvents};` : ''}
+`;
+
+export default pointerEventsCss;

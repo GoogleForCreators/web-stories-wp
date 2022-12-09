@@ -37,7 +37,7 @@ jest.mock('../../../utils/idleCallback', () => {
   };
 });
 
-jest.mock('../../../utils/storyPageToDataUrl', () => {
+jest.mock('../../pageCanvas/utils/storyPageToDataUrl', () => {
   return {
     __esModule: true,
     // make dataUrl generation predictable
@@ -60,19 +60,19 @@ describe('usePageDataUrls', () => {
     mockIdleCallbacks = [];
     runIdleCallbacks = () => {
       while (mockIdleCallbacks.length > 0) {
-        const [, callback] = mockIdleCallbacks.shift();
-        callback();
+        const { task } = mockIdleCallbacks.shift();
+        task();
       }
     };
 
     requestIdleCallback.mockImplementation((callback) => {
       const idleCallbackId = Symbol();
-      mockIdleCallbacks.push([idleCallbackId, callback]);
+      mockIdleCallbacks.push({ taskId: idleCallbackId, task: callback });
       return idleCallbackId;
     });
     cancelIdleCallback.mockImplementation((idleCallbackId) => {
       mockIdleCallbacks = mockIdleCallbacks.filter(
-        ([id]) => id !== idleCallbackId
+        ({ taskId }) => taskId !== idleCallbackId
       );
     });
   });

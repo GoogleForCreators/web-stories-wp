@@ -139,6 +139,7 @@ export type TextElementFont =
   | CustomTextElementFont;
 
 export interface TextElement extends Element {
+  backgroundColor: Solid;
   content: string;
   font: TextElementFont;
 }

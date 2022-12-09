@@ -13,6 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const inRange = (value, { MIN, MAX }) => value >= MIN && value <= MAX;
 
-export default inRange;
+/**
+ * External dependencies
+ */
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
+
+type HandleFn = () => void;
+
+function useHandlers() {
+  const handlersRef = useRef<HandleFn[]>([]);
+
+  const registerHandler = useCallback((handler: HandleFn) => {
+    const handlerList = handlersRef.current;
+    handlerList.push(handler);
+    return () => {
+      handlerList.splice(handlerList.indexOf(handler), 1);
+    };
+  }, []);
+
+  return useMemo(
+    () => [handlersRef.current, registerHandler],
+    [registerHandler]
+  );
+}
+
+export default useHandlers;

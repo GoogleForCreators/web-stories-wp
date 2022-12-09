@@ -61,6 +61,8 @@ export interface DisplayProps<E extends Element> {
   element: E;
 }
 
+export type Direction = [0 | 1, 0 | 1];
+
 export interface ElementDefinition<E extends Element = Element> {
   type: ElementType;
   name: string;
@@ -71,7 +73,7 @@ export interface ElementDefinition<E extends Element = Element> {
   Frame: React.VoidFunctionComponent<FrameProps<E>>;
   Output: React.VoidFunctionComponent<OutputProps<E>>;
   LayerIcon: React.VoidFunctionComponent<LayerIconProps<E>>;
-  TextContent: React.VoidFunctionComponent<TextContentProps<E>>;
+  TextContent: (element: E) => string;
   Display: React.VoidFunctionComponent<DisplayProps<E>>;
   canFlip: boolean;
   isMaskable: boolean;
@@ -90,6 +92,12 @@ export interface ElementDefinition<E extends Element = Element> {
     minHeight: number;
   };
   panels: string[];
+  updateForResizeEvent?: (
+    element: Element,
+    direction: Direction,
+    newWidth: number,
+    newHeight: number
+  ) => { height: number };
 }
 
 export type ElementTypes = Record<ElementType, ElementDefinition<Element>>;
