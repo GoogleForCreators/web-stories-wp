@@ -17,15 +17,14 @@
 /* Source: https://github.com/behnammodi/polyfill/blob/master/window.polyfill.js */
 const requestIdleCallback =
   window.requestIdleCallback ||
-  function (callback: IdleRequestCallback, options?: IdleRequestOptions) {
-    options = options || {};
+  function (callback: IdleRequestCallback, options: IdleRequestOptions = {}) {
     const relaxation = 1;
     const timeout = options.timeout || relaxation;
     const start = performance.now();
     return setTimeout(() => {
       callback({
         get didTimeout() {
-          return options?.timeout
+          return options.timeout
             ? false
             : performance.now() - start - relaxation > timeout;
         },
