@@ -29,10 +29,7 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { FULLBLEED_RATIO } from '@googleforcreators/units';
-import {
-  THEME_CONSTANTS,
-  themeHelpers,
-} from '@googleforcreators/design-system';
+import { THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -135,10 +132,10 @@ const PageAreaContainer = styled(Area).attrs({
     `
       overflow: ${showOverflow ? 'visible' : 'hidden'};
       width: calc(
-        100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
+        100% - ${hasVerticalOverflow ? THEME_CONSTANTS.SCROLLBAR_WIDTH : 0}px
       );
       height: calc(
-        100% - ${hasHorizontalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
+        100% - ${hasHorizontalOverflow ? THEME_CONSTANTS.SCROLLBAR_WIDTH : 0}px
       );
     `}
 `;
@@ -179,17 +176,17 @@ const PageClip = styled.div`
       width: ${
         hasHorizontalOverflow
           ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-          : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+          : `calc(var(--viewport-width-px) - ${THEME_CONSTANTS.SCROLLBAR_WIDTH}px)`
       };
       flex-basis: ${
         hasHorizontalOverflow
           ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-          : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+          : `calc(var(--viewport-width-px) - ${THEME_CONSTANTS.SCROLLBAR_WIDTH}px)`
       };
       height: ${
         hasVerticalOverflow
           ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
-          : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+          : `calc(var(--viewport-height-px) - ${THEME_CONSTANTS.SCROLLBAR_WIDTH}px)`
       };
       flex-shrink: 0;
       flex-grow: 0;

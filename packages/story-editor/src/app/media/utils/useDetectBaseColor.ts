@@ -18,7 +18,13 @@
  * External dependencies
  */
 import { useCallback, useReduction } from '@googleforcreators/react';
-import { getSmallestUrlForWidth } from '@googleforcreators/media';
+import {
+  getSmallestUrlForWidth,
+  Resource,
+  ResourceId,
+  VideoResource,
+} from '@googleforcreators/media';
+
 /**
  * Internal dependencies
  */
@@ -28,8 +34,16 @@ import { useConfig } from '../../config';
 import getMediaBaseColor from '../../../utils/getMediaBaseColor';
 import useCORSProxy from '../../../utils/useCORSProxy';
 
+interface BaseColorState {
+  processed: ResourceId[];
+  processing: ResourceId[];
+}
+
 const reducer = {
-  addProcessing: (state, { payload }) => {
+  addProcessing: (
+    state: BaseColorState,
+    { payload }: { payload: ResourceId }
+  ) => {
     if (!payload || state.processing.includes(payload)) {
       return state;
     }
@@ -38,7 +52,10 @@ const reducer = {
       processing: [...state.processing, payload],
     };
   },
-  removeProcessing: (state, { payload }) => {
+  removeProcessing: (
+    state: BaseColorState,
+    { payload }: { payload: ResourceId }
+  ) => {
     if (!payload || !state.processing.includes(payload)) {
       return state;
     }
@@ -53,12 +70,22 @@ const reducer = {
   },
 };
 
-const INITIAL_STATE = {
+const INITIAL_STATE: BaseColorState = {
   processed: [],
   processing: [],
 };
 
-function useDetectBaseColor({ updateMediaElement }) {
+function useDetectBaseColor({
+  updateMediaElement,
+}: {
+  updateMediaElement: ({
+    id,
+    data,
+  }: {
+    id: string | number;
+    data: Record<string, unknown>;
+  }) => void;
+}) {
   const {
     actions: { updateMedia, getPosterMediaById },
   } = useAPI();
@@ -77,25 +104,26 @@ function useDetectBaseColor({ updateMediaElement }) {
   const saveBaseColor = useCallback(
     /**
      *
-     * @param {import('@googleforcreators/media').Resource} resource Resource object.
-     * @param {string} baseColor Base Color.
-     * @return {Promise<void>}
+     * @param resource Resource object.
+     * @param baseColor Base Color.
      */
-    async ({ id, isExternal }, baseColor) => {
+    async ({ id, isExternal }: Resource, baseColor: string) => {
       try {
-        const properties = ({ resource }) => ({
-          resource: {
-            ...resource,
-            baseColor,
-          },
+        updateElementsByResourceId({
+          id,
+          properties: ({ resource }) => ({
+            resource: {
+              ...resource,
+              baseColor,
+            },
+          }),
         });
-        updateElementsByResourceId({ id, properties });
         if (!isExternal) {
           updateMediaElement({
             id,
             data: { baseColor },
           });
-          if (hasUploadMediaAction) {
+          if (hasUploadMediaAction && updateMedia) {
             await updateMedia(id, {
               baseColor,
             });
@@ -116,9 +144,13 @@ function useDetectBaseColor({ updateMediaElement }) {
   );
 
   const updateBaseColor = useCallback(
-    async (resource) => {
-      const { type, poster, id, isExternal } = resource;
-      let imageSrc = poster;
+    async (resource: Resource | VideoResource) => {
+      const { type, id, isExternal } = resource;
+      let imageSrc;
+
+      if ('poster' in resource) {
+        imageSrc = resource.poster;
+      }
 
       if (type === 'image') {
         imageSrc = getSmallestUrlForWidth(0, resource);
@@ -153,7 +185,7 @@ function useDetectBaseColor({ updateMediaElement }) {
   );
 
   const maybeUpdateBaseColor = useCallback(
-    async (resource) => {
+    async (resource: Resource) => {
       const { id } = resource;
 
       // Simple way to prevent double-uploading.

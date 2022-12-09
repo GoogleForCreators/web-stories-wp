@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 import FormContext from '../form/context';
 import useHandlers from '../../utils/useHandlers';
 import updateProperties from './updateProperties';

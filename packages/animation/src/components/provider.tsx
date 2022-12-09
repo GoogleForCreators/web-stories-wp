@@ -121,12 +121,15 @@ function Provider({
         areAnimationTargetElementsReferentiallyStable &&
         oldAnimationPartsMap !== null
       ) {
-        animation.targets.forEach((elementId) =>
-          _animationPartsMap.set(
-            elementId,
-            oldAnimationPartsMap.get(elementId) || []
-          )
-        );
+        animation.targets.forEach((elementId) => {
+          const element = elementsInstanceMap.get(elementId);
+          if (!element?.isHidden) {
+            _animationPartsMap.set(
+              elementId,
+              oldAnimationPartsMap.get(elementId) || []
+            );
+          }
+        });
       } else {
         // Generate new animationPart if input has changed.
         const { targets } = animation;
@@ -139,10 +142,12 @@ function Provider({
             throw new Error('Should not happen');
           }
 
-          _animationPartsMap.set(elementId, [
-            ...generatedParts,
-            createAnimationPart(animation, element),
-          ]);
+          if (!element.isHidden) {
+            _animationPartsMap.set(elementId, [
+              ...generatedParts,
+              createAnimationPart(animation, element),
+            ]);
+          }
         });
       }
     }

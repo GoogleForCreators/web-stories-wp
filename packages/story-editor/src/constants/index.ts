@@ -31,18 +31,18 @@ export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
 export const FLOATING_MENU_DISTANCE = 10;
 export const MAX_PRODUCTS_PER_PAGE = 6;
 
-export const ZOOM_SETTING = {
-  FILL: 'FILL',
-  FIT: 'FIT',
-  FIXED: 'FIXED',
-};
+export enum ZoomSetting {
+  Fill = 'FILL',
+  Fit = 'FIT',
+  Fixed = 'FIXED',
+}
 
-export const CAROUSEL_STATE = {
-  OPEN: 'OPEN',
-  OPENING: 'OPENING',
-  CLOSED: 'CLOSED',
-  CLOSING: 'CLOSING',
-};
+export enum CarouselState {
+  Open = 'OPEN',
+  Opening = 'OPENING',
+  Closed = 'CLOSED',
+  Closing = 'CLOSING',
+}
 
 export const CAROUSEL_TRANSITION_DURATION = 300;
 

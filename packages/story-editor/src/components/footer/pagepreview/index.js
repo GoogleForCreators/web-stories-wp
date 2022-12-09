@@ -37,7 +37,7 @@ import { TransformProvider } from '@googleforcreators/transform';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../types';
+import { StoryPropTypes } from '../../../propTypes';
 import { usePageCanvas } from '../../../app/pageCanvas';
 import DisplayElement from '../../canvas/displayElement';
 import usePerformanceTracking from '../../../utils/usePerformanceTracking';

@@ -41,7 +41,7 @@ import { getHTMLFormatters } from '@googleforcreators/rich-text';
  */
 import { useFont, useStory } from '../../../../app';
 import { useCalculateAccessibleTextColors } from '../../../../app/pageCanvas';
-import StoryPropTypes from '../../../../types';
+import { StoryPropTypes } from '../../../../propTypes';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';

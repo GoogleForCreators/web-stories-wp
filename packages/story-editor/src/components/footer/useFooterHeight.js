@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { useLayout } from '../../app';
-import { CAROUSEL_STATE } from '../../constants';
+import { CarouselState } from '../../constants';
 import {
   DRAWER_BUTTON_HEIGHT,
   DRAWER_BUTTON_GAP_EXPANDED,
@@ -33,7 +33,7 @@ function useFooterHeight() {
     carouselState,
   }));
 
-  if (carouselState === CAROUSEL_STATE.CLOSED) {
+  if (carouselState === CarouselState.Closed) {
     // Collapsed - height is only carousel button height + collapsed gap both top and bottom
     return (
       FOOTER_TOP_MARGIN + DRAWER_BUTTON_HEIGHT + DRAWER_BUTTON_GAP_COLLAPSED * 2
