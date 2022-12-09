@@ -13,13 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './apiProvider';
-export * from './configProvider';
-export * from './currentUserProvider';
-export * from './historyProvider';
-export * from './layoutProvider';
-export * from './story';
-export * from './storyEditor';
-export * from './storyProvider';
-export * from './storyTriggers';
-export * from './taxonomyProvider';
+
+export type TermId = number;
+
+export type TaxonomySlug = string;
+
+export type TermSlug = string;
+
+export type Taxonomy = {
+  name: string;
+  slug: TaxonomySlug;
+  capabilities: Record<string, string>;
+  description?: string;
+  labels: Record<string, string>;
+  types: string[];
+  showCloud?: boolean;
+  hierarchical: boolean;
+  restBase: string;
+  restNamespace: string;
+  visibility: Record<string, boolean>;
+  restPath?: string;
+};
+
+export type Term = {
+  id: TermId;
+  link: string;
+  name: string;
+  slug: TermSlug;
+  taxonomy: TaxonomySlug;
+  _links: Record<string, string>;
+};

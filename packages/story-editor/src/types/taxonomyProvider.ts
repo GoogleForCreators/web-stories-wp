@@ -14,58 +14,49 @@
  * limitations under the License.
  */
 
-export type Term = {
-  id: number;
-  link: string;
-  name: string;
-  slug: string;
-  taxonomy: string;
-  _links: Record<string, string>;
-};
+/**
+ * External dependencies
+ */
+import type {
+  Taxonomy,
+  TaxonomySlug,
+  Term,
+  TermId,
+  TermSlug,
+} from '@googleforcreators/elements';
 
-export type Taxonomy = {
-  restBase: string;
-  name: string;
-  restNamespace: string;
-  restPath: string;
-  showCloud?: boolean;
-  slug: string;
-  types: string[];
-  visibility: Record<string, string>;
-  description: string;
-  hierarchical: boolean;
-  labels: Record<string, string>;
-  capabilities: {
-    assign_terms: string;
-    delete_terms: string;
-    edit_terms: string;
-    manage_terms: string;
-  };
-};
+export type TaxonomiesBySlug = Record<TaxonomySlug, Taxonomy>;
 
-export type TaxonomiesBySlug = Record<string, Taxonomy>;
+export type EmbeddedTerms = Record<TaxonomySlug, Record<TermSlug, Term>>;
 
-export type EmbeddedTerms = Record<string, Record<string, Term>>;
-
-export type Terms = [Term[]];
-
-export type TermsIds = (ids: number[]) => number[] | [];
+export interface TaxonomySearchArgs {
+  search?: string;
+  per_page?: number;
+}
 
 export interface TaxonomyState {
-  state: { taxonomies: TaxonomiesBySlug; termCache: TermsIds; terms: Terms };
+  state: { taxonomies: TaxonomiesBySlug; termCache: TermId[]; terms: Term[] };
   actions: {
     createTerm: (
       taxonomy: Taxonomy,
       termName: string,
-      parent: { id?: number; slug: string; addToSelection: boolean },
+      parent: { id?: TermId; slug: string; addToSelection: boolean },
       addNameToSelection?: boolean
     ) => Promise<void>;
     addSearchResultsToCache: (
       taxonomy: Taxonomy,
-      args: { search?: string; per_page?: number },
+      args: TaxonomySearchArgs,
       addNameToSelection?: boolean
-    ) => void;
-    setTerms: (taxonomy: Taxonomy, ids: [] | TermsIds) => void;
+    ) => Promise<void>;
+    setTerms: (taxonomy: Taxonomy, ids: TermId[]) => void;
     addTermToSelection: (taxonomy: Taxonomy, selectedTerm: Term) => void;
   };
+}
+
+export interface TaxonomyRestError {
+  message?: string;
+  data?: {
+    status: 400 | 401 | 403 | 500;
+  };
+  code: string;
 }

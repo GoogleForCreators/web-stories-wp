@@ -24,21 +24,7 @@ import type { AudioResource } from '@googleforcreators/media';
  * Internal dependencies
  */
 import type { FontData } from './data';
-
-type Taxonomy = {
-  name: string;
-  slug: string;
-  capabilities: Record<string, string>;
-  description?: string;
-  labels: Record<string, string>;
-  types: string[];
-  showCloud?: boolean;
-  hierarchical: boolean;
-  restBase: string;
-  restNamespace: string;
-  visibility: Record<string, boolean>;
-  restPath: string;
-};
+import type { Taxonomy, TermId } from './taxonomies';
 
 interface FeaturedMedia {
   id: number;
@@ -98,7 +84,7 @@ export interface Story {
   backgroundAudio?: {
     resource: AudioResource;
   };
-  terms: Record<Taxonomy['slug'], number[]> | null;
+  terms: Record<Taxonomy['slug'], TermId[]> | null;
   fonts: Record<string, FontData>;
   autoAdvance?: boolean;
   defaultPageDuration?: number;

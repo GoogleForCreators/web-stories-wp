@@ -14,35 +14,26 @@
  * limitations under the License.
  */
 
-import type {
-  Terms,
-  Term,
-  EmbeddedTerms,
-} from '../../../types/taxonomyProvider';
 /**
- * Takes an array of key value tuples and
- * returns an object.
- *
- * @param {Array.<[string, any]>} entries an array of key value tuples
- * @return {Object} the created object
+ * External dependencies
  */
-export function objectFromEntries(entries = []) {
-  return entries.reduce((acc, [key, val]) => {
-    acc[key] = val;
-    return acc;
-  }, {});
-}
+import type { Term } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
+import type { EmbeddedTerms } from '../../../types';
 
 /**
  * Takes an object and maps over all values performing
  * an operation and returning a new object
  *
- * @param {Object} obj object to map over the values of
- * @param {Function} op operation to be performed on every value
- * @return {Object} new object with transformed values
+ * @param obj object to map over the values of
+ * @param op operation to be performed on every value
+ * @return new object with transformed values
  */
-export function mapObjectVals(obj = {}, op = (v) => v) {
-  return objectFromEntries(
+export function mapObjectVals(obj = {}, op = (v: unknown) => v) {
+  return Object.fromEntries(
     Object.entries(obj).map(([key, val]) => [key, op(val)])
   );
 }
@@ -51,12 +42,12 @@ export function mapObjectVals(obj = {}, op = (v) => v) {
  * Takes an object and maps over all keys performing
  * an operation and returning a new object
  *
- * @param {Object} obj object to map over the keys of
- * @param {Function} op operation to be performed on every key
- * @return {Object} new object with transformed keys
+ * @param obj object to map over the keys of
+ * @param op operation to be performed on every key
+ * @return new object with transformed keys
  */
-export function mapObjectKeys(obj = {}, op = (v) => v) {
-  return objectFromEntries(
+export function mapObjectKeys(obj = {}, op = (v: unknown) => v) {
+  return Object.fromEntries(
     Object.entries(obj).map(([key, val]) => [op(key), val])
   );
 }
@@ -69,9 +60,9 @@ export function mapObjectKeys(obj = {}, op = (v) => v) {
  * and a merge operation performed where both
  * object have a value for the same key
  *
- * @param {Object} dictA nested dictionary
- * @param {Object} dictB nested dictionary
- * @return {Object} new unified nested dictionary
+ * @param dictA nested dictionary
+ * @param dictB nested dictionary
+ * @return new unified nested dictionary
  */
 export function mergeNestedDictionaries(dictA = {}, dictB = {}) {
   return Object.entries(dictA).reduce(
@@ -88,9 +79,9 @@ export function mergeNestedDictionaries(dictA = {}, dictB = {}) {
  * and creates a dictionary keyed on the specified
  * property.
  *
- * @param {Array.<Object>} arr array of objects
- * @param {string} key key used to index property to be keyed on
- * @return {Object} new object
+ * @param arr array of objects
+ * @param key key used to index property to be keyed on
+ * @return new object
  */
 export function dictionaryOnKey(arr: [] = [], key: string) {
   return arr.reduce((map, item) => {
@@ -103,13 +94,12 @@ export function dictionaryOnKey(arr: [] = [], key: string) {
  * Takes embedded wp:terms from the story object and creates a
  * nested dictionary in the form of { [taxonomy.slug]: { [term.slug]: term } }
  *
- * @param {Array.<Object[]>} embeddedTerms embedded wp:terms
- * @return {Object} a nested dictionary of { [taxonomy.slug]: { [term.slug]: term } }
+ * @param embeddedTerms embedded wp:terms
+ * @return A nested dictionary of { [taxonomy.slug]: { [term.slug]: term } }
  */
-
-export function cacheFromEmbeddedTerms(embeddedTerms: Terms): EmbeddedTerms {
-  return embeddedTerms.reduce((cache: EmbeddedTerms, taxonomy) => {
-    (taxonomy || []).forEach((term: Term) => {
+export function cacheFromEmbeddedTerms(embeddedTerms: Term[][]): EmbeddedTerms {
+  return embeddedTerms.reduce((cache: EmbeddedTerms, terms = []) => {
+    terms.forEach((term: Term) => {
       cache[term.taxonomy] = cache[term.taxonomy] || {};
       cache[term.taxonomy][term.slug] = term;
     });

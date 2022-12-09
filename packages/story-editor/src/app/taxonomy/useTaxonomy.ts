@@ -18,13 +18,15 @@
  * External dependencies
  */
 import { identity, useContextSelector } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
+import type { TaxonomyState } from '../../types';
 import Context from './context';
-import type { TaxonomyState } from '../../types/taxonomyProvider';
 
 function useTaxonomy(): TaxonomyState;
+function useTaxonomy<T>(selector: (state: TaxonomyState) => T): T;
 function useTaxonomy<T>(
   selector: (state: TaxonomyState) => T | TaxonomyState = identity
 ) {

@@ -53,6 +53,6 @@ export default function cleanForSlug(string: string, isEditing = false) {
       .map((s) => (isEditing ? s : s.replace(/[^\p{L}\p{N}_-]+/gu, '')))
       .map((s) => (isEditing ? s : s.replace(/--+/g, '-')))
       .map((s) => s.toLowerCase())
-      .pop()
+      .pop() as string
   );
 }
