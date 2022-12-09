@@ -24,28 +24,27 @@ import {
   DEFAULT_DPR,
 } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import type {
+  Element,
+  ElementType,
+  Direction,
+} from '@googleforcreators/elements';
+import type { Resource } from '@googleforcreators/media';
 
-const RESIZE_WIDTH_DIRECTION = [1, 0];
+const RESIZE_WIDTH_DIRECTION: Direction = [1, 0];
 
-/**
- * @param {?number|undefined} value The value.
- * @return {boolean} Whether the value has been set.
- */
-function isNum(value) {
+function isNum(value: unknown): value is number {
   return typeof value === 'number';
 }
 
 function getInsertedElementSize(
-  type,
-  width,
-  height,
-  attrs,
+  type: ElementType,
+  width: number,
+  height: number,
+  attrs: object,
   ratio = 1,
-  resource = null
+  resource?: Resource
 ) {
-  const { updateForResizeEvent, defaultAttributes } =
-    getDefinitionForType(type);
-
   if (!isNum(width)) {
     if (isNum(height)) {
       // Height is known: use aspect ratio.
@@ -59,16 +58,27 @@ function getInsertedElementSize(
       width = PAGE_WIDTH / 2;
     }
   }
-  if (!isNum(height) && updateForResizeEvent) {
-    // Try resize API with width-only direction.
-    height = updateForResizeEvent(
-      {
-        ...defaultAttributes,
-        ...attrs,
-      },
-      RESIZE_WIDTH_DIRECTION,
-      width
-    ).height;
+  if (!isNum(height)) {
+    const elementType = getDefinitionForType(type);
+    if (
+      elementType &&
+      elementType.updateForResizeEvent &&
+      elementType.defaultAttributes
+    ) {
+      const { updateForResizeEvent, defaultAttributes } = elementType;
+
+      // Try resize API with width-only direction.
+      const { height: newHeight } = updateForResizeEvent(
+        {
+          ...defaultAttributes,
+          ...attrs,
+        } as Element,
+        RESIZE_WIDTH_DIRECTION,
+        width,
+        0
+      );
+      height = newHeight;
+    }
   }
   if (!isNum(height)) {
     // Fallback to simple ratio calculation.

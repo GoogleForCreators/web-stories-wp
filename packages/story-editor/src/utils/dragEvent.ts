@@ -17,6 +17,28 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import type { DragEvent } from 'react';
 
-export default createContext({ state: {}, actions: {} });
+/**
+ * Get Drag Type from event.
+ *
+ * @param  e The drag event.
+ * @param type The type of transfer payload to test against
+ * @return Whether the drag is of the specified type
+ */
+export function isDragType(e: DragEvent, type: string) {
+  if (!e?.dataTransfer?.types) {
+    return false;
+  }
+  return e.dataTransfer.types.includes(type);
+}
+
+/**
+ * Get Drag Type from event.
+ *
+ * @param e The drag event.
+ * @return Whether the drag event is relating to a file transfer
+ */
+export function isDraggingFile(e: DragEvent) {
+  return isDragType(e, 'Files');
+}

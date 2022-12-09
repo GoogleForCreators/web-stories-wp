@@ -114,11 +114,32 @@ export interface ProductElement extends Element {
   product: ProductData;
 }
 
+interface BaseTextElementFont {
+  service: string;
+  family: string;
+  fallbacks: string[];
+}
+
+export interface GoogleTextElementFont extends BaseTextElementFont {
+  service: 'fonts.google.com';
+}
+
+export interface SystemTextElementFont extends BaseTextElementFont {
+  service: 'system';
+}
+
+export interface CustomTextElementFont extends BaseTextElementFont {
+  service: 'custom';
+  url: string;
+}
+
+export type TextElementFont =
+  | GoogleTextElementFont
+  | SystemTextElementFont
+  | CustomTextElementFont;
+
 export interface TextElement extends Element {
+  backgroundColor: Solid;
   content: string;
-  font: {
-    service: string;
-    family: string;
-    fallbacks: string[];
-  };
+  font: TextElementFont;
 }

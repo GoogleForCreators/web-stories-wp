@@ -32,18 +32,21 @@ import removeAccents from 'remove-accents';
  * for octets, HTML entities, or other encoded characters.
  *
  * @see https://github.com/WordPress/gutenberg/blob/5ff5acd2815d5260db15ab155fcaf4b3b80d7c1b/packages/url/src/clean-for-slug.js
- * @param {string} string Title or slug to be processed.
- * @param {boolean} isEditing Flag the user is currently editing the input
+ * @param string Title or slug to be processed.
+ * @param isEditing Flag the user is currently editing the input
  allowing extra hyphens (default false)
- * @return {string} Processed string.
+ * @return Processed string.
  */
-export default function cleanForSlug(string, isEditing = false) {
+export default function cleanForSlug(string: string, isEditing = false) {
   if (!string) {
     return '';
   }
 
+  const pipe: [string] = [string];
+
   return (
-    [removeAccents(string)]
+    pipe
+      .map((s) => removeAccents(s))
       // Convert each group of whitespace, periods, and forward slashes to a hyphen.
       .map((s) => s.replace(/[\s./_]/g, '-'))
       // If not editing, remove hyphens from the beginning and ending.
@@ -53,6 +56,6 @@ export default function cleanForSlug(string, isEditing = false) {
       .map((s) => (isEditing ? s : s.replace(/[^\p{L}\p{N}_-]+/gu, '')))
       .map((s) => (isEditing ? s : s.replace(/--+/g, '-')))
       .map((s) => s.toLowerCase())
-      .pop()
+      .pop() as string
   );
 }
