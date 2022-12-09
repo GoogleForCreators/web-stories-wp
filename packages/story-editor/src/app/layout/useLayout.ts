@@ -21,10 +21,14 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { LayoutProviderState } from '../../types';
 import Context from './context';
 
-function useLayout(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useLayout(): LayoutProviderState;
+function useLayout<T>(
+  selector: (state: LayoutProviderState) => T | LayoutProviderState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
 export default useLayout;

@@ -25,7 +25,7 @@ import { createNewElement } from '@googleforcreators/elements';
  */
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
-import { ZOOM_SETTING } from '../../constants';
+import { ZoomSetting } from '../../constants';
 import useFocusCanvas from './useFocusCanvas';
 import getElementProperties from './utils/getElementProperties';
 
@@ -60,7 +60,7 @@ function useInsertElement() {
    */
   const insertElement = useCallback(
     (type, props, insertAsBackground = false) => {
-      setZoomSetting(ZOOM_SETTING.FIT);
+      setZoomSetting(ZoomSetting.Fit);
       const element = createElementForCanvas(type, props);
       const { id, resource, pageId } = element;
       addElement({ element, pageId });
