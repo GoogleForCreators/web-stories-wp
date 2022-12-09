@@ -43,7 +43,7 @@ function getInsertedElementSize(
   height: number,
   attrs: object,
   ratio = 1,
-  resource: Resource
+  resource?: Resource
 ) {
   if (!isNum(width)) {
     if (isNum(height)) {
