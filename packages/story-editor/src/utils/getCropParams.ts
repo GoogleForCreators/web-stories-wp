@@ -24,7 +24,14 @@ import type { MediaElement } from '@googleforcreators/elements';
 import type { CropParams } from '../app/media/types';
 import { isOffCanvas } from './isOffCanvas';
 
-export function getCropParams({ x, y, width, height, rotationAngle, resource }: MediaElement): CropParams {
+export function getCropParams({
+  x,
+  y,
+  width,
+  height,
+  rotationAngle,
+  resource,
+}: MediaElement): CropParams {
   const { offCanvasLeft, offCanvasRight, offCanvasTop, offCanvasBottom } =
     isOffCanvas({ x, y, width, height, rotationAngle });
   const percentage = width / resource.width;
