@@ -21,27 +21,28 @@ import type { MediaElement } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { CropParams } from '../app/media';
+import type { CropParams } from '../app/media/types';
 import { isOffCanvas } from './isOffCanvas';
 
 export function getCropParams(selectedElement: MediaElement): CropParams {
+  const { x, y, width, height, rotationAngle, resource } = selectedElement;
   const { offCanvasLeft, offCanvasRight, offCanvasTop, offCanvasBottom } =
-    isOffCanvas(selectedElement);
-  const percentage = selectedElement.width / selectedElement.resource.width;
+    isOffCanvas({ x, y, width, height, rotationAngle });
+  const percentage = width / resource.width;
   const multiplier = 100 / (percentage * 100);
   const offCanvasX = Math.floor((offCanvasLeft + offCanvasRight) * multiplier);
   const offCanvasY = Math.floor((offCanvasTop + offCanvasBottom) * multiplier);
-  const cropWidth = selectedElement.resource.width - offCanvasX;
-  const cropHeight = selectedElement.resource.height - offCanvasY;
+  const cropWidth = resource.width - offCanvasX;
+  const cropHeight = resource.height - offCanvasY;
   const cropX = Math.floor(offCanvasLeft * multiplier);
   const cropY = Math.floor(offCanvasTop * multiplier);
   return {
-    cropElement: selectedElement,
+    cropElement: { x, y },
     cropWidth,
     cropHeight,
     cropX,
     cropY,
-    newWidth: selectedElement.width - offCanvasLeft - offCanvasRight,
-    newHeight: selectedElement.height - offCanvasTop - offCanvasBottom,
+    newWidth: width - offCanvasLeft - offCanvasRight,
+    newHeight: height - offCanvasTop - offCanvasBottom,
   };
 }
