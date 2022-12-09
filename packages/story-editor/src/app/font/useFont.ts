@@ -17,6 +17,19 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import { identity, useContextSelector } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+import type { FontProviderState } from './types';
 
-export default createContext({ state: {}, actions: {} });
+function useFont(): FontProviderState;
+function useFont<T>(selector: (state: FontProviderState) => T): T;
+function useFont<T>(
+  selector: (state: FontProviderState) => T | FontProviderState = identity
+) {
+  return useContextSelector(Context, selector);
+}
+
+export default useFont;

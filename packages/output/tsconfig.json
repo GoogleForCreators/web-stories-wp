@@ -17,8 +17,5 @@
     { "path": "../units" },
     { "path": "../url" }
   ],
-  "include": [
-    "src/types.ts",
-    "src/utils/*.ts"
-  ]
+  "include": ["src/types.ts", "src/utils/*.ts"]
 }

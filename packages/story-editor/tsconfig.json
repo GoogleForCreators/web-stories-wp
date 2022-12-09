@@ -9,6 +9,7 @@
     { "path": "../design-system" },
     { "path": "../elements" },
     { "path": "../element-library" },
+    { "path": "../fonts" },
     { "path": "../i18n" },
     { "path": "../masks" },
     { "path": "../migration" },
@@ -19,20 +20,21 @@
     { "path": "../tracking" }
   ],
   "include": [
-    "src/app/api/*",
-    "src/app/config/*",
-    "src/app/currentUser/*",
-    "src/app/helpCenter/**/*",
+    "src/app/api",
+    "src/app/config",
+    "src/app/currentUser",
+    "src/app/helpCenter",
     "src/app/history",
-    "src/app/layout/*",
+    "src/app/font",
+    "src/app/layout",
     "src/app/media/*.ts",
     "src/app/media/media3p/*.ts",
     "src/app/media/media3p/*.tsx",
     "src/app/media/utils/*.ts",
     "src/app/story",
-    "src/constants/*",
-    "src/types/*",
-    "src/typings/*",
+    "src/constants",
+    "src/types",
+    "src/typings",
     "src/utils/*.ts"
   ]
 }
