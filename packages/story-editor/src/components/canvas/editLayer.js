@@ -34,7 +34,7 @@ import { getDefinitionForType } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 import { useStory, useCanvas } from '../../app';
 import { Z_INDEX_EDIT_LAYER } from '../../constants/zIndex';
 import useVideoTrim from '../videoTrim/useVideoTrim';

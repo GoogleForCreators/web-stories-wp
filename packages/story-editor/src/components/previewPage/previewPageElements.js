@@ -23,7 +23,7 @@ import { memo } from '@googleforcreators/react';
  * Internal dependencies
  */
 import DisplayElement from '../canvas/displayElement';
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 
 function PreviewPageElements({ page }) {
   return page.elements.map((element) => (

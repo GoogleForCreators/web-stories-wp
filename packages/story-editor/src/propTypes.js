@@ -68,7 +68,7 @@ StoryPropTypes.size = PropTypes.exact({
 
 export const AnimationPropType = PropTypes.shape(AnimationProps);
 
-export default StoryPropTypes;
+export { StoryPropTypes };
 
 /**
  * Page object.

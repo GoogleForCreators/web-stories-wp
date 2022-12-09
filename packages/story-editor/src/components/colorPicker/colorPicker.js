@@ -32,7 +32,7 @@ import { __ } from '@googleforcreators/i18n';
 import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
 import {
   useKeyDownEffect,
-  themeHelpers,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 
@@ -58,7 +58,7 @@ const Container = styled.div`
     maxHeight
       ? `
           height: ${maxHeight}px;
-          width: ${PICKER_WIDTH + themeHelpers.SCROLLBAR_WIDTH}px;
+          width: ${PICKER_WIDTH + THEME_CONSTANTS.SCROLLBAR_WIDTH}px;
         `
       : `
           width: ${PICKER_WIDTH}px;

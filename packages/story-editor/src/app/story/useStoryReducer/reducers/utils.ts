@@ -103,9 +103,9 @@ function isWithAnimation(
 ): props is AllowedProperties {
   return 'animation' in props;
 }
-export function updateElementWithUpdater(
-  element: Element,
-  properties: Partial<Element> | ElementUpdater
+export function updateElementWithUpdater<T extends Element = Element>(
+  element: T,
+  properties: Partial<T> | ElementUpdater<T>
 ): null | void | StoryAnimation {
   const updater =
     typeof properties === 'function' ? properties(element) : properties;

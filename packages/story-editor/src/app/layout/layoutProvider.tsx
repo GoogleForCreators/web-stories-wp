@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
@@ -26,7 +26,7 @@ import Context from './context';
 import useZoomSetting from './useZoomSetting';
 import useCarouselDrawer from './useCarouselDrawer';
 
-function LayoutProvider({ children }) {
+function LayoutProvider({ children }: PropsWithChildren<unknown>) {
   const zoomValue = useZoomSetting();
   const carouselDrawer = useCarouselDrawer();
 
@@ -43,9 +43,5 @@ function LayoutProvider({ children }) {
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-
-LayoutProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default LayoutProvider;

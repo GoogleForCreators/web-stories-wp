@@ -17,9 +17,20 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import { identity, useContextSelector } from '@googleforcreators/react';
 
-export default createContext({
-  actions: { setZoomSetting: () => {} },
-  state: {},
-});
+/**
+ * Internal dependencies
+ */
+import type { StoryProviderState } from '../../types';
+import Context from './context';
+
+export function useStory(): StoryProviderState;
+export function useStory<T>(selector: (state: StoryProviderState) => T): T;
+export function useStory<T>(
+  selector: (state: StoryProviderState) => T | StoryProviderState = identity
+) {
+  return useContextSelector(Context, selector);
+}
+
+export default useStory;
