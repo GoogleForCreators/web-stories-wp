@@ -24,4 +24,4 @@ index ac2e584..3aa03ed 100755
 +              | 'CUSTOM-UPPERCASE';
 
              /**
-              * Possible entity types, like 'LINK', 'IMAGE', or custom ones.
+              * Default entity types.
