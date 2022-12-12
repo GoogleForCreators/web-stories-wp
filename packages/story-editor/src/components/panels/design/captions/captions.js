@@ -37,6 +37,7 @@ import { usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import { FLASH } from '../../../../app/highlights/styles';
 import CaptionsPanelContent from '../../shared/media/captionsPanelContent';
 import { MULTIPLE_VALUE } from '../../../../constants';
 
@@ -133,7 +134,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={highlight?.showEffect && styles.FLASH}
+      css={highlight?.showEffect && FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="caption"
       title={__('Caption and Subtitles', 'web-stories')}

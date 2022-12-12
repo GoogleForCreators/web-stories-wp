@@ -19,7 +19,6 @@
  */
 import type { Element, ElementId } from '@googleforcreators/elements';
 
-
 export enum HighlightType {
   STORY_TITLE = 'STORY_TITLE',
   ELEMENT_TOOLBAR_TOGGLE = 'ELEMENT_TOOLBAR_TOGGLE',
@@ -57,15 +56,14 @@ export interface selectElementProps {
 }
 
 export interface setHighlightProps {
-  elements?:  Element[];
+  elements?: Element[];
   elementId?: ElementId;
   pageId?: string;
   highlight?: HighlightType;
 }
 
-
 export interface HighlightsState {
-  cancelEffect: (stateKey: HighlightType) => void
-  onFocusOut: () => void
-  setHighlights: (highlights: setHighlightProps) => void
+  cancelEffect: (stateKey: HighlightType) => void;
+  onFocusOut: () => void;
+  setHighlights: (highlights: setHighlightProps) => void;
 }

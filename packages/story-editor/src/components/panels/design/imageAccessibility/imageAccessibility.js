@@ -28,7 +28,8 @@ import styled from 'styled-components';
 import { Row, TextArea } from '../../../form';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
-import { useHighlights, states, styles } from '../../../../app/highlights';
+import { useHighlights, states } from '../../../../app/highlights';
+import { FLASH } from '../../../../app/highlights/styles';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 const StyledText = styled(Text)`
@@ -61,7 +62,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={highlight && styles.FLASH}
+      css={highlight && FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}

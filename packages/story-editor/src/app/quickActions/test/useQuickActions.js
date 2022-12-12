@@ -49,7 +49,7 @@ const {
   PictureSwap,
 } = Icons;
 
-jest.mock('../../../story', () => ({
+jest.mock('../story', () => ({
   useStory: jest.fn(),
   useStoryTriggersDispatch: jest.fn(),
   // Was getting a circular deps error or something

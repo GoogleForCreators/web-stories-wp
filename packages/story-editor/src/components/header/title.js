@@ -27,7 +27,8 @@ import { themeHelpers } from '@googleforcreators/design-system';
  */
 import { useStory } from '../../app/story';
 import { updateSlug } from '../../utils/storyUpdates';
-import { styles, states, useHighlights } from '../../app/highlights';
+import { states, useHighlights } from '../../app/highlights';
+import { OUTLINE, FLASH } from '../../app/highlights/styles';
 
 const Input = styled.input`
   color: ${({ theme }) => `${theme.colors.fg.primary} !important`};
@@ -49,8 +50,8 @@ const Input = styled.input`
   ${({ isHighlighted }) =>
     isHighlighted &&
     css`
-      ${styles.OUTLINE}
-      ${styles.FLASH}
+      ${OUTLINE}
+      ${FLASH}
     `}
 `;
 

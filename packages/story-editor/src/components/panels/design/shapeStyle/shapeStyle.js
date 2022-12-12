@@ -27,7 +27,8 @@ import { __ } from '@googleforcreators/i18n';
 import { Row, Color } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import { states, styles, useHighlights } from '../../../../app/highlights';
+import { states, useHighlights } from '../../../../app/highlights';
+import { FLASH } from '../../../../app/highlights/styles';
 
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
@@ -49,7 +50,7 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={highlight?.showEffect && styles.FLASH}
+      css={highlight?.showEffect && FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="shapeStyle"
       title={__('Color', 'web-stories')}

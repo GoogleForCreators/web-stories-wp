@@ -52,11 +52,11 @@ function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
       if (pageId) {
         setCurrentPage({ pageId });
       }
-      if (elements) {
-        const elementIds = elements.map(({ id }: Element) => id);
+      if (elements?.length) {
+        const elementIds = elements.map((element) => element.id);
         setSelectedElementsById({ elementIds });
       } else if (elementId) {
-        const elementIds = [elementId] as string[];
+        const elementIds = [elementId];
         setSelectedElementsById({ elementIds });
       }
     },

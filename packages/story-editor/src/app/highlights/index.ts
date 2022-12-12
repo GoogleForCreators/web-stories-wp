@@ -16,13 +16,6 @@
 /**
  * Internal dependencies
  */
-import { OUTLINE, FLASH } from './styles';
-
 export { default as useHighlights } from './useHighlights';
 export { default as HighlightsProvider } from './provider';
-export type { HighlightType as states } from '../../types/highlightsProvider';
-
-export const styles = {
-  OUTLINE,
-  FLASH,
-};
+export { HighlightType as states } from '../../types/highlightsProvider';

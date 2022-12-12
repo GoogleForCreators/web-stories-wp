@@ -16,7 +16,8 @@
 /**
  * Internal dependencies
  */
-import { styles, useHighlights } from '../../app/highlights';
+import { useHighlights } from '../../app/highlights';
+import { FLASH } from '../../app/highlights/styles';
 import { useAPI } from '../../app';
 import useLibrary from './useLibrary';
 import { Pane, getTabId } from './panes/shared';
@@ -67,7 +68,7 @@ function LibraryPanes() {
       case MEDIA.id:
         return showMediaPane ? (
           <MediaPane
-            css={mediaHighlights?.showEffect && styles.FLASH}
+            css={mediaHighlights?.showEffect && FLASH}
             {...paneProps}
           />
         ) : null;
@@ -75,17 +76,14 @@ function LibraryPanes() {
         return (
           <Media3pPane
             {...paneProps}
-            css={media3pHighlights?.showEffect && styles.FLASH}
+            css={media3pHighlights?.showEffect && FLASH}
           />
         );
       case SHAPES.id:
         return <ShapesPane {...paneProps} />;
       case TEXT.id:
         return (
-          <TextPane
-            css={textHighlights?.showEffect && styles.FLASH}
-            {...paneProps}
-          />
+          <TextPane css={textHighlights?.showEffect && FLASH} {...paneProps} />
         );
       case PAGE_TEMPLATES.id:
         return <PageTemplatesPane {...paneProps} />;

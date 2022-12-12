@@ -28,7 +28,8 @@ import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { useHighlights, states, styles } from '../../../../app/highlights';
+import { useHighlights, states } from '../../../../app/highlights';
+import { FLASH, OUTLINE } from '../../../../app/highlights/styles';
 
 // Margin -4px is making up for extra margin added by rows.
 const StyledText = styled(Text)`
@@ -67,7 +68,7 @@ function ExcerptPanel({ nameOverride }) {
 
   return (
     <SimplePanel
-      css={highlight?.showEffect && styles.FLASH}
+      css={highlight?.showEffect && FLASH}
       onAnimationEnd={() => resetHighlight()}
       name={nameOverride || 'excerpt'}
       title={__('Story Description', 'web-stories')}
@@ -89,7 +90,7 @@ function ExcerptPanel({ nameOverride }) {
           maxLength={EXCERPT_MAX_LENGTH}
           showCount
           rows={4}
-          css={highlight?.showEffect && styles.OUTLINE}
+          css={highlight?.showEffect && OUTLINE}
         />
       </Row>
       <Row>
