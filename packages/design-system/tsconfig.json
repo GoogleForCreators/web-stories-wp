@@ -17,9 +17,6 @@
     "src/theme/constants",
     "src/types/*",
     "src/types.ts",
-    "src/utils/*.ts",
-    "src/utils/constants.ts",
-    "src/utils/localStore.ts",
-    "src/utils/sessionStore.ts"
+    "src/utils/*.ts"
   ]
 }

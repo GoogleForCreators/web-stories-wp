@@ -27,7 +27,7 @@
     "src/app/helpCenter",
     "src/components/library/paneIds.ts",
     "src/components/sidebar/constants.ts",
-    "src/app/highlights",
+    "src/app/highlights/*.ts",
     "src/app/history",
     "src/app/font",
     "src/app/layout",

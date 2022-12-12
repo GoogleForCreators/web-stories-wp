@@ -18,15 +18,10 @@
  */
 import { rgba } from 'polished';
 import { css, keyframes } from 'styled-components';
-import type { DefaultTheme } from 'styled-components';
-import { theme, themeHelpers } from '@googleforcreators/design-system';
-
-interface themeHelpersProps {
-  focusCSS: () => string;
-}
-
-const { focusCSS } = themeHelpers as themeHelpersProps;
-const dsTheme: DefaultTheme = theme as DefaultTheme;
+import {
+  theme as dsTheme,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 
 const flash = keyframes`
   50% {
@@ -40,5 +35,5 @@ export const FLASH = css`
 `;
 
 export const OUTLINE = css`
-  ${focusCSS};
+  ${themeHelpers.focusCSS};
 `;
