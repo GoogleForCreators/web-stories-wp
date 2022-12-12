@@ -37,7 +37,7 @@ import { usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import { states, useHighlights } from '../../../../app/highlights';
-import { FLASH } from '../../../../app/highlights/styles';
+import { FLASH, OUTLINE } from '../../../../app/highlights/styles';
 import CaptionsPanelContent from '../../shared/media/captionsPanelContent';
 import { MULTIPLE_VALUE } from '../../../../constants';
 
@@ -114,7 +114,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   const renderUploadButton = useCallback(
     (open) => (
       <UploadButton
-        css={highlight?.showEffect && styles.OUTLINE}
+        css={highlight?.showEffect && OUTLINE}
         onAnimationEnd={() => resetHighlight()}
         ref={(node) => {
           if (node && highlight?.focus && highlight?.showEffect) {
