@@ -30,30 +30,6 @@ describe('duplicateElementsById', () => {
     elementTypes.forEach(registerElementType);
   });
 
-  it('should do nothing if not passed an array', () => {
-    const { restore, duplicateElementsById } = setupReducer();
-
-    // Set an initial state with a current page.
-    const initialState = restore({
-      pages: [
-        {
-          id: '111',
-          animations: [],
-          elements: [
-            { id: '123', isBackground: true, type: 'shape' },
-            { id: '456', x: 0, y: 0, type: 'shape' },
-            { id: '789', x: 0, y: 0, type: 'shape' },
-          ],
-        },
-      ],
-      current: '111',
-      selection: ['789', '456'],
-    });
-
-    const result = duplicateElementsById({ elementIds: '123' });
-    expect(result).toStrictEqual(initialState);
-  });
-
   it('duplicates an element at index after specified element', () => {
     const { restore, duplicateElementsById } = setupReducer();
 

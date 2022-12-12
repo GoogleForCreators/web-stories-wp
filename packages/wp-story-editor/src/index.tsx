@@ -57,6 +57,7 @@ import {
   FontCheck,
   PostLock,
   MediaUpload,
+  RevisionMessage,
 } from './components';
 import * as apiCallbacks from './api';
 import { transformStoryResponse } from './api/utils';
@@ -122,6 +123,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <PostReviewDialog />
         <StatusCheck />
         <CorsCheck />
+        <RevisionMessage />
         <FontCheck />
         <AutoSaveCheck />
         <PostLock />

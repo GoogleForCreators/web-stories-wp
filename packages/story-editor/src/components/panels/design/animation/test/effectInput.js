@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { FIELD_TYPES } from '@googleforcreators/animation';
+import { FieldType } from '@googleforcreators/animation';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
@@ -32,7 +32,7 @@ describe('<EffectInput />', () => {
   const defaultProps = {
     effectProps: {
       [testFieldKey]: {
-        type: FIELD_TYPES.NUMBER,
+        type: FieldType.Number,
         label: testFieldKey,
       },
     },

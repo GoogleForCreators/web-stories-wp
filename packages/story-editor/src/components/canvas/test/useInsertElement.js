@@ -25,7 +25,7 @@ import { elementTypes } from '@googleforcreators/element-library';
  * Internal dependencies
  */
 import useInsertElement from '../useInsertElement';
-import { ZOOM_SETTING } from '../../../constants';
+import { ZoomSetting } from '../../../constants';
 import { useStory } from '../../../app/story';
 import { useLocalMedia } from '../../../app/media';
 import { useLayout } from '../../../app/layout';
@@ -90,6 +90,6 @@ describe('useInsertElement', () => {
       result.current(IMAGE_TYPE, PROPS_LOCAL);
     });
 
-    expect(setZoomSetting).toHaveBeenCalledWith(ZOOM_SETTING.FIT);
+    expect(setZoomSetting).toHaveBeenCalledWith(ZoomSetting.Fit);
   });
 });

@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import type { Pattern } from '@googleforcreators/patterns';
+import type { AudioResource } from '@googleforcreators/media';
+
+/**
+ * Internal dependencies
+ */
+import type { Page } from './page';
+
 export type FontStyle = 'normal' | 'italic' | 'regular';
 export enum FontVariantStyle {
   Normal = 0,
@@ -42,15 +53,29 @@ export interface FontMetrics {
   lGap: number;
 }
 
-export interface FontData {
+export interface BaseFontData {
   family: string;
-  service?: string;
   weights?: FontWeight[];
   styles?: FontStyle[];
   variants?: FontVariant[];
   fallbacks?: string[];
   metrics?: FontMetrics;
 }
+
+export interface GoogleFontData extends BaseFontData {
+  service: 'fonts.google.com';
+}
+
+export interface SystemFontData extends BaseFontData {
+  service: 'system';
+}
+
+export interface CustomFontData extends BaseFontData {
+  service: 'custom';
+  url: string;
+}
+
+export type FontData = GoogleFontData | SystemFontData | CustomFontData;
 
 export interface ProductImage {
   alt: string;
@@ -66,4 +91,19 @@ export interface ProductData {
   productPriceCurrency: string;
   productTitle: string;
   productUrl: string;
+}
+
+// Data retrieved as part of the raw data from the backend, used for example in the templates, in migration.
+export interface StoryData {
+  version: number;
+  pages: Page[];
+  autoAdvance: boolean;
+  defaultPageDuration: number;
+  currentStoryStyles: {
+    colors: Pattern[];
+  };
+  backgroundAudio?: {
+    resource: AudioResource;
+  };
+  fonts?: Record<string, FontData>;
 }

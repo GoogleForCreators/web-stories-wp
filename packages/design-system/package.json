@@ -2,7 +2,7 @@
   "name": "@googleforcreators/design-system",
   "description": "Main UI components for the Web Stories editor and dashboard",
   "private": false,
-  "version": "0.1.202211151052",
+  "version": "0.1.202212071230",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -26,13 +26,13 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.ts"
+      "default": "./src/index.js"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "types": "dist-types/index.d.ts",
-  "source": "src/index.ts",
+  "types": "dist-types/types.d.ts",
+  "source": "src/index.js",
   "publishConfig": {
     "access": "public"
   },

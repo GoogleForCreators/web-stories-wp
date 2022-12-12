@@ -26,7 +26,7 @@ import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 import Tooltip from '../tooltip';
 import { getLinkFromElement } from '.';
 

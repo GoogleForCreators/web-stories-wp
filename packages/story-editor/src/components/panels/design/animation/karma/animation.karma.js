@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 import { waitFor } from '@testing-library/react';
 
 /**
@@ -179,7 +179,7 @@ describe('Animation Panel', () => {
       })
     );
 
-    expect(animationState).toBe(STORY_ANIMATION_STATE.PLAYING_SELECTED);
+    expect(animationState).toBe(StoryAnimationState.PlayingSelected);
   });
 
   it('should render the animation panel with warning if on the first page.', async () => {

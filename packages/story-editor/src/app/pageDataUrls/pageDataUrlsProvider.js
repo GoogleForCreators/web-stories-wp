@@ -23,11 +23,11 @@ import { useMemo, useCallback, useState } from '@googleforcreators/react';
  * Internal dependencies
  */
 import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
-import storyPageToDataUrl from '../../utils/storyPageToDataUrl';
+import storyPageToDataUrl from '../pageCanvas/utils/storyPageToDataUrl';
 import Context from './context';
 
 /**
- * @typedef {import('../../types.js').Page} Page
+ * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
 function PageDataUrlProvider({ children }) {
@@ -52,7 +52,10 @@ function PageDataUrlProvider({ children }) {
         }));
       };
 
-      const clearQueueOfPageTask = queueIdleTask([idleTaskUid, idleTask]);
+      const clearQueueOfPageTask = queueIdleTask({
+        taskId: idleTaskUid,
+        task: idleTask,
+      });
       return () => {
         clearQueueOfPageTask();
       };

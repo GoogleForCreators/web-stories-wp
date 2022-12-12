@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,38 +17,75 @@
 /**
  * External dependencies
  */
+import type { Pattern } from '@googleforcreators/patterns';
 import type { AudioResource } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
-import type { Page } from './page';
+import type { FontData } from './data';
 
+interface FeaturedMedia {
+  id: number;
+  height: number;
+  width: number;
+  url: string;
+  needsProxy: boolean;
+  isExternal: boolean;
+}
+interface PublisherLogo {
+  id: number;
+  height: number;
+  width: number;
+  url: string;
+}
+
+interface Author {
+  id: number;
+  name: string;
+}
+interface CurrentStyles {
+  colors: Pattern[];
+}
+interface GlobalStyles {
+  colors: Pattern[];
+  textStyles: Partial<Text>;
+}
+
+// General story post data as it is in the story state and history entry.
 export interface Story {
   storyId: number;
-  author: {
-    id: number;
-    name: string;
+  title: string;
+  author: Author;
+  date: null | string;
+  modified: string;
+  excerpt: string;
+  slug: string;
+  link: string;
+  extras: Record<string, unknown>;
+  featuredMedia: FeaturedMedia;
+  permalinkConfig: null | {
+    prefix: string;
+    suffix: string;
   };
-  content: string;
-  version: number;
-  pages: Page[];
-  featuredMedia?: {
-    isExternal?: boolean;
-    needsProxy?: boolean;
-    url: string;
-    width: number;
-    height: number;
+  publisherLogo: PublisherLogo;
+  previewLink: string;
+  editLink: string;
+  password: string;
+  embedPostLink: string;
+  revisions: {
+    count: number;
   };
-  publisherLogo?: {
-    id: number;
-    height: number;
-    width: number;
-    url: string;
-  };
+  currentStoryStyles: CurrentStyles;
+  globalStoryStyles: GlobalStyles;
+  taxonomies: string[];
+  terms: string[];
+  status: string;
+
   backgroundAudio?: {
     resource: AudioResource;
   };
+  fonts: Record<string, FontData>;
   autoAdvance?: boolean;
   defaultPageDuration?: number;
 }

@@ -27,10 +27,10 @@ import { getDefinitionForType } from '@googleforcreators/elements';
  */
 function getLongestMediaElement(elements, minDuration = 0) {
   return elements
-    .filter(({ type, loop }) => {
+    .filter(({ type, loop, isHidden }) => {
       const { isMedia } = getDefinitionForType(type);
       // Ensure looping media is not considered.
-      return isMedia && !loop;
+      return isMedia && !loop && !isHidden;
     })
     .reduce((longest, element) => {
       if (!element?.resource?.length) {

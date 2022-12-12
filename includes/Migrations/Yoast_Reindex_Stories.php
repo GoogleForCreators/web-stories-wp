@@ -66,7 +66,7 @@ class Yoast_Reindex_Stories extends Migrate_Base {
 
 		$indexable_before = $repository->find_for_post_type_archive( Story_Post_Type::POST_TYPE_SLUG, false );
 
-		if ( ! $indexable_before || false === strpos( $indexable_before->permalink, '/web-stories/' ) ) {
+		if ( ! $indexable_before || ! str_contains( $indexable_before->permalink, '/web-stories/' ) ) {
 			$builder->build_for_post_type_archive( Story_Post_Type::POST_TYPE_SLUG, $indexable_before );
 		}
 
@@ -85,7 +85,7 @@ class Yoast_Reindex_Stories extends Migrate_Base {
 		foreach ( $all_stories as $post_id ) {
 			$indexable_before = $repository->find_by_id_and_type( $post_id, 'post', false );
 
-			if ( ! $indexable_before || false === strpos( $indexable_before->permalink, '/web-stories/' ) ) {
+			if ( ! $indexable_before || ! str_contains( $indexable_before->permalink, '/web-stories/' ) ) {
 				$builder->build_for_id_and_type( $post_id, 'post', $indexable_before );
 			}
 		}

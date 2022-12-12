@@ -97,7 +97,8 @@ function reducePage({ backgroundColor, ...rest }: PageV8): PageV9 {
       backgroundElementId: element.id,
     };
   }
-  return rest;
+  // Casting since if it was set already, it was PageV9 already.
+  return rest as PageV9;
 }
 
 export default defaultBackground;

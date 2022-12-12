@@ -26,7 +26,7 @@ import {
 /**
  * Internal dependencies
  */
-import { TIPS } from '../../constants';
+import { TIPS } from '../../../../app/helpCenter/constants';
 import { QuickTip as HelpCenterQuickTip } from '..';
 
 export default {

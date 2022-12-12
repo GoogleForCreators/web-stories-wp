@@ -122,7 +122,7 @@ function Element({
   activeRef.current = active;
 
   useEffect(() => {
-    if (![ContentType.VIDEO, ContentType.GIF].includes(type)) {
+    if (![ContentType.Video, ContentType.Gif].includes(type)) {
       return undefined;
     }
     const resetHoverTime = () => {

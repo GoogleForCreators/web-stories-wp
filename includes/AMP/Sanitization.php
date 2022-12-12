@@ -40,7 +40,6 @@ use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
-use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Amp;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
@@ -142,7 +141,7 @@ class Sanitization {
 		foreach ( $head_scripts as $script ) {
 			$src = $script->getAttribute( Attribute::SRC );
 
-			if ( ! $src || 0 !== strpos( $src, 'https://cdn.ampproject.org/' ) ) {
+			if ( ! $src || ! str_starts_with( $src, 'https://cdn.ampproject.org/' ) ) {
 				continue;
 			}
 
@@ -404,8 +403,8 @@ class Sanitization {
 		}
 
 		$sanitizers = [
-			AMP_Script_Sanitizer::class            => [],
-			AMP_Style_Sanitizer::class             => [
+			AMP_Script_Sanitizer::class        => [],
+			AMP_Style_Sanitizer::class         => [
 
 				/*
 				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
@@ -417,12 +416,12 @@ class Sanitization {
 					'amp-story-captions',
 				],
 			],
-			Meta_Sanitizer::class                  => [],
-			AMP_Layout_Sanitizer::class            => [],
-			Canonical_Sanitizer::class             => [
+			Meta_Sanitizer::class              => [],
+			AMP_Layout_Sanitizer::class        => [],
+			Canonical_Sanitizer::class         => [
 				'canonical_url' => $canonical_url,
 			],
-			AMP_Tag_And_Attribute_Sanitizer::class => [],
+			Tag_And_Attribute_Sanitizer::class => [],
 		];
 
 		$post = get_queried_object();
@@ -442,6 +441,8 @@ class Sanitization {
 				'publisher'      => $story->get_publisher_name(),
 				'poster_images'  => array_filter( $poster_images ),
 				'video_cache'    => $video_cache_enabled,
+				'title_tag'      => wp_get_document_title(),
+				'description'    => wp_strip_all_tags( get_the_excerpt() ),
 			];
 		}
 
@@ -486,12 +487,12 @@ class Sanitization {
 
 		// Force certain sanitizers to be at end.
 		// AMP_Style_Sanitizer needs to catch any CSS changes from previous sanitizers.
-		// AMP_Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
+		// Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
 		foreach ( [
 			AMP_Layout_Sanitizer::class,
 			AMP_Style_Sanitizer::class,
 			Meta_Sanitizer::class,
-			AMP_Tag_And_Attribute_Sanitizer::class,
+			Tag_And_Attribute_Sanitizer::class,
 		] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];

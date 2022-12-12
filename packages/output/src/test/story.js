@@ -49,6 +49,7 @@ describe('Story output', () => {
           width: 640,
           height: 853,
         },
+        fonts: {},
         publisherLogo: {
           id: 1,
           url: 'https://example.com/logo.png',
@@ -175,7 +176,7 @@ describe('Story output', () => {
           id: '123',
           animations: [
             { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
-            { id: 'anim1', targets: ['124'], type: 'spin', duration: 500 },
+            { id: 'anim1', targets: ['123'], type: 'spin', duration: 500 },
           ],
           backgroundColor: {
             type: 'solid',
@@ -184,7 +185,27 @@ describe('Story output', () => {
           page: {
             id: '123',
           },
-          elements: [],
+          elements: [
+            {
+              type: 'text',
+              id: '123',
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              content: 'Hello World',
+              color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+              padding: {
+                horizontal: 0,
+                vertical: 0,
+              },
+              font: {
+                family: 'Roboto',
+                service: 'fonts.google.com',
+              },
+            },
+          ],
         },
       ],
       metadata: {
@@ -477,7 +498,27 @@ describe('Story output', () => {
             page: {
               id: '123',
             },
-            elements: [],
+            elements: [
+              {
+                type: 'text',
+                id: '123',
+                x: 50,
+                y: 100,
+                height: 1920,
+                width: 1080,
+                rotationAngle: 0,
+                content: 'Hello World',
+                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                padding: {
+                  horizontal: 0,
+                  vertical: 0,
+                },
+                font: {
+                  family: 'Roboto',
+                  service: 'fonts.google.com',
+                },
+              },
+            ],
           },
         ],
         metadata: {

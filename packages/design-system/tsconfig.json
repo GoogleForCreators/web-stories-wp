@@ -4,5 +4,22 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "include": ["src/**/*"]
+  "references": [
+    { "path": "../i18n" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../tracking" }
+  ],
+  "include": [
+    "src/components/keyboard/*",
+    "src/components/snackbar/constants.ts",
+    "src/contexts/snackbar/*",
+    "src/theme/constants",
+    "src/types/*",
+    "src/types.ts",
+    "src/utils/*.ts",
+    "src/utils/constants.ts",
+    "src/utils/localStore.ts",
+    "src/utils/sessionStore.ts"
+  ]
 }

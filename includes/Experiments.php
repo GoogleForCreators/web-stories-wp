@@ -258,18 +258,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #10339
-			 * Creation date: 2022-02-02
-			 */
-			[
-				'name'        => 'enablePostLockingTakeOver',
-				'label'       => __( 'Story locking take over', 'web-stories' ),
-				'description' => __( 'Allow locked stories to be taken over by another author', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @timarney
 			 * Issue: #12093
 			 * Creation date: 2022-08-18
@@ -301,6 +289,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Per-Page Page Advance', 'web-stories' ),
 				'description' => __( 'Enable detailed page advancement settings on a per-page basis', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @timarney
