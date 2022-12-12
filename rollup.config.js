@@ -27,7 +27,7 @@ import json from '@rollup/plugin-json';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import typescript from '@rollup/plugin-typescript';
 import svgr from '@svgr/rollup';
-import { terser } from '@rollup/plugin-terser';
+import terser from '@rollup/plugin-terser';
 import del from 'rollup-plugin-delete';
 import copy from 'rollup-plugin-copy';
 import webWorkerLoader from 'rollup-plugin-web-worker-loader';

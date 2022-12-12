@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-declare module 'colorthief' {
+declare module '@pioug/colorthief' {
   type Color = [number, number, number];
 
   export default class ColorThief {
