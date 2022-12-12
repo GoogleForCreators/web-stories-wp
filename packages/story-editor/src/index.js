@@ -17,6 +17,11 @@
 /**
  * Internal dependencies
  */
+
+import { OUTLINE, FLASH } from './app/highlights/styles';
+
+const highlightStyles = { OUTLINE, FLASH };
+
 export { default as Dialog } from './components/dialog';
 
 export { default as StoryEditor } from './storyEditor';
@@ -51,9 +56,6 @@ export { default as SidebarContext } from './components/sidebar/context';
 export { AutoSaveCheck } from './components/autoSaveCheck';
 export { default as useIsUploadingToStory } from './utils/useIsUploadingToStory';
 export { getInUseFontsForPages } from './utils/getInUseFonts';
-export {
-  styles as highlightStyles,
-  states as highlightStates,
-  useHighlights,
-} from './app/highlights';
+export { states as highlightStates, useHighlights } from './app/highlights';
+export { highlightStyles };
 export { ConfigProvider as EditorConfigProvider } from './app/config';

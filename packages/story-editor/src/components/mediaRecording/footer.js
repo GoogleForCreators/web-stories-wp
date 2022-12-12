@@ -53,8 +53,7 @@ import getResourceFromLocalFile from '../../app/media/utils/getResourceFromLocal
 import useUploadWithPreview from '../canvas/useUploadWithPreview';
 import { useUploader } from '../../app/uploader';
 import { useConfig, useStory } from '../../app';
-import useHighlights from '../../app/highlights/useHighlights';
-import states from '../../app/highlights/states';
+import { states, useHighlights } from '../../app/highlights';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 import objectPick from '../../utils/objectPick';
 import useMediaRecording from './useMediaRecording';

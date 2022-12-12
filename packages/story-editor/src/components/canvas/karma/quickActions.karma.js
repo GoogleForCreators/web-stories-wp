@@ -23,7 +23,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { ACTIONS } from '../../../app/highlights';
+import { ACTIONS } from '../../../app/quickActions';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
 
