@@ -57,7 +57,7 @@ const PresetsHeader = styled.div`
 const StylesWrapper = styled.div``;
 
 const NoStylesWrapper = styled(DefaultNoStylesWrapper)`
-  width: calc(100% + 16px);
+  width: calc(100% + 28px);
 `;
 
 const SubHeading = styled(Text)`
