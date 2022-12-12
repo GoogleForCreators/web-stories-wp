@@ -49,7 +49,7 @@ const {
   PictureSwap,
 } = Icons;
 
-jest.mock('../story', () => ({
+jest.mock('../../story', () => ({
   useStory: jest.fn(),
   useStoryTriggersDispatch: jest.fn(),
   // Was getting a circular deps error or something
@@ -71,15 +71,15 @@ jest.mock('../story', () => ({
   },
 }));
 
-jest.mock('../../useHighlights', () => ({
-  ...jest.requireActual('../../useHighlights'),
+jest.mock('../../highlights/useHighlights', () => ({
+  ...jest.requireActual('../../highlights/useHighlights'),
   __esModule: true,
   default: jest.fn(),
 }));
 
-jest.mock('../../../../utils/useApplyTextAutoStyle');
+jest.mock('../../../utils/useApplyTextAutoStyle');
 
-jest.mock('../../../../components/canvas/useInsertElement');
+jest.mock('../../../components/canvas/useInsertElement');
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),
@@ -97,13 +97,13 @@ jest.mock('@googleforcreators/media', () => ({
   },
 }));
 
-jest.mock('../../../media', () => ({
-  ...jest.requireActual('../../../media'),
+jest.mock('../../media', () => ({
+  ...jest.requireActual('../../media'),
   useLocalMedia: jest.fn(),
 }));
 
-jest.mock('../../../config');
-jest.mock('../../../media/utils/useFFmpeg');
+jest.mock('../../config');
+jest.mock('../../media/utils/useFFmpeg');
 
 const mockClickEvent = {
   preventDefault: jest.fn(),
