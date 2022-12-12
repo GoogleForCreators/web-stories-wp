@@ -155,9 +155,9 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @param int    $userid      User ID.
 	 * @param string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.
-	 * @return string Number of posts the user has written in this post type.
+	 * @return int Number of posts the user has written in this post type.
 	 */
-	protected function user_posts_count_public( int $userid, string $post_type = 'post' ): string {
+	protected function user_posts_count_public( int $userid, string $post_type = 'post' ): int {
 		$cache_key   = "count_user_{$post_type}_{$userid}";
 		$cache_group = 'user_posts_count';
 
@@ -173,6 +173,6 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 			wp_cache_add( $cache_key, $count, $cache_group );
 		}
 
-		return $count;
+		return (int) $count;
 	}
 }

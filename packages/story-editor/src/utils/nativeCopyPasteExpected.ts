@@ -18,24 +18,31 @@
  * Checks if the native copy paste should proceed,
  * either if text is selected or if there's focus on a text/number input.
  *
- * @return {boolean} If native handling is expected.
+ * @return If native handling is expected.
  */
 function nativeCopyPasteExpected() {
   const { activeElement } = document;
-  const { tagName, type, contentEditable } = activeElement;
 
-  // If it's an input in focus, do native handling.
-  if (
-    'true' === contentEditable ||
-    'textarea' === tagName.toLowerCase() ||
-    ('input' === tagName.toLowerCase() &&
-      ['text', 'number', 'search', 'email', 'tel', 'url'].includes(type))
-  ) {
-    return true;
+  if (activeElement) {
+    const { tagName, type, contentEditable } = activeElement as
+      | HTMLInputElement
+      | HTMLAnchorElement
+      | HTMLTextAreaElement;
+
+    // If it's an input in focus, do native handling.
+    if (
+      'true' === contentEditable ||
+      'textarea' === tagName.toLowerCase() ||
+      ('input' === tagName.toLowerCase() &&
+        typeof type === 'string' &&
+        ['text', 'number', 'search', 'email', 'tel', 'url'].includes(type))
+    ) {
+      return true;
+    }
   }
-
   const selection = window.getSelection();
-  const range = selection.rangeCount ? selection.getRangeAt(0) : null;
+  const range =
+    selection && selection.rangeCount ? selection.getRangeAt(0) : null;
 
   return Boolean(range && !range.collapsed);
 }

@@ -13,15 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function isTargetOutOfContainer(target, container) {
-  const { left, right, top, bottom } = target.getBoundingClientRect();
-  const containerRect = container.getBoundingClientRect();
-  return (
-    left > containerRect.right ||
-    right < containerRect.left ||
-    bottom < containerRect.top ||
-    top > containerRect.bottom
-  );
+
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+import type { FontProviderState } from './types';
+
+function useFont(): FontProviderState;
+function useFont<T>(selector: (state: FontProviderState) => T): T;
+function useFont<T>(
+  selector: (state: FontProviderState) => T | FontProviderState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
-export default isTargetOutOfContainer;
+export default useFont;

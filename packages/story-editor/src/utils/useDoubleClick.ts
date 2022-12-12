@@ -19,6 +19,8 @@
  */
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 
+type ClickCallback = (evt: MouseEvent, target: Element) => void;
+
 /**
  * This hook creates a handler to use for double click listening
  * on a node, where single clicks are also relevant. Default timeout
@@ -50,16 +52,20 @@ import { useCallback, useEffect, useState } from '@googleforcreators/react';
  * }
  * ```
  *
- * @param {Function} onSingleClick  Handler to activate on single click.
- * @param {Function} onDoubleClick  Handler to activate on double click.
- * @param {number}   ms             Timeout in ms to wait - defaults to 200.
- * @return {Function} Handler retrieval function to get an onClick listener (invoke with unique value).
+ * @param onSingleClick  Handler to activate on single click.
+ * @param onDoubleClick  Handler to activate on double click.
+ * @param ms             Timeout in ms to wait - defaults to 200.
+ * @return Handler retrieval function to get an onClick listener (invoke with unique value).
  */
-const useDoubleClick = (onSingleClick, onDoubleClick, ms = null) => {
-  const [target, setTarget] = useState(null);
-  const [lastEvent, setLastEvent] = useState(null);
+const useDoubleClick = (
+  onSingleClick: ClickCallback,
+  onDoubleClick: ClickCallback,
+  ms = 200
+) => {
+  const [target, setTarget] = useState<Element | null>(null);
+  const [lastEvent, setLastEvent] = useState<MouseEvent | null>(null);
   const getHandler = useCallback(
-    (newTarget) => (evt) => {
+    (newTarget: Element) => (evt: MouseEvent) => {
       evt.stopPropagation();
 
       if (target !== newTarget) {
@@ -82,8 +88,10 @@ const useDoubleClick = (onSingleClick, onDoubleClick, ms = null) => {
     }
     const int = setTimeout(() => {
       setTarget(null);
-      onSingleClick(lastEvent, target);
-    }, ms || DEFAULT_MS);
+      if (lastEvent && target) {
+        onSingleClick(lastEvent, target);
+      }
+    }, ms);
     return () => {
       clearTimeout(int);
     };
@@ -93,5 +101,3 @@ const useDoubleClick = (onSingleClick, onDoubleClick, ms = null) => {
 };
 
 export default useDoubleClick;
-
-const DEFAULT_MS = 200;

@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { PropsWithChildren } from 'react';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { loadStylesheet } from '@googleforcreators/dom';
+import type { FontData } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -30,19 +31,20 @@ import { useAPI } from '../api';
 import Context from './context';
 import useLoadFontFiles from './actions/useLoadFontFiles';
 import { GOOGLE_MENU_FONT_URL } from './constants';
+import type { FontWeightOption } from './types';
 
-function FontProvider({ children }) {
-  const [queriedFonts, setQueriedFonts] = useState([]);
-  const [curatedFonts, setCuratedFonts] = useState([]);
-  const [recentFonts, setRecentFonts] = useState([]);
-  const [customFonts, setCustomFonts] = useState(null);
+function FontProvider({ children }: PropsWithChildren<unknown>) {
+  const [queriedFonts, setQueriedFonts] = useState<FontData[]>([]);
+  const [curatedFonts, setCuratedFonts] = useState<FontData[]>([]);
+  const [recentFonts, setRecentFonts] = useState<FontData[]>([]);
+  const [customFonts, setCustomFonts] = useState<FontData[] | null>(null);
   const {
     actions: { getFonts },
   } = useAPI();
 
   const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
-  const getCustomFonts = useCallback(async () => {
+  const loadCustomFonts = useCallback(async () => {
     if (customFonts || !getFonts) {
       return;
     }
@@ -66,7 +68,7 @@ function FontProvider({ children }) {
     setCustomFonts(formattedFonts);
   }, [getFonts, customFonts]);
 
-  const getCuratedFonts = useCallback(async () => {
+  const loadCuratedFonts = useCallback(async () => {
     if (curatedFonts.length || !getFonts) {
       return;
     }
@@ -92,21 +94,21 @@ function FontProvider({ children }) {
   const { maybeEnqueueFontStyle, maybeLoadFont } = useLoadFontFiles();
 
   const getFontByName = useCallback(
-    (name) => {
+    (name: string) => {
       const foundFont = fonts.find((font) => font.family === name);
-      return foundFont ? foundFont : {};
+      return foundFont ? foundFont : null;
     },
     [fonts]
   );
 
   const getFontsBySearch = useCallback(
-    async (search) => {
+    async (search: string) => {
       if (search.length < 2) {
         setQueriedFonts([]);
         return [];
       }
 
-      const newFonts = await getFonts({ search });
+      const newFonts = (await getFonts?.({ search })) || [];
 
       const formattedFonts = newFonts.map((font) => ({
         ...font,
@@ -122,8 +124,10 @@ function FontProvider({ children }) {
   );
 
   const getFontWeight = useCallback(
-    (name) => {
-      const defaultFontWeights = [{ name: FONT_WEIGHT_NAMES[400], value: 400 }];
+    (name: string) => {
+      const defaultFontWeights: FontWeightOption[] = [
+        { name: FONT_WEIGHT_NAMES[400], value: 400 },
+      ];
 
       const currentFont = getFontByName(name);
       let fontWeights = defaultFontWeights;
@@ -142,7 +146,7 @@ function FontProvider({ children }) {
   );
 
   const getFontFallback = useCallback(
-    (name) => {
+    (name: string) => {
       const currentFont = getFontByName(name);
       return currentFont?.fallbacks ? currentFont.fallbacks : [];
     },
@@ -150,7 +154,7 @@ function FontProvider({ children }) {
   );
 
   const addRecentFont = useCallback(
-    (recentFont) => {
+    (recentFont: FontData) => {
       const newRecentFonts = [recentFont];
       recentFonts.forEach((font) => {
         if (recentFont.family === font.family) {
@@ -163,8 +167,8 @@ function FontProvider({ children }) {
     [recentFonts]
   );
 
-  const menuFonts = useRef([]);
-  const ensureMenuFontsLoaded = useCallback((fontsToLoad) => {
+  const menuFonts = useRef<string[]>([]);
+  const ensureMenuFontsLoaded = useCallback((fontsToLoad: string[]) => {
     const newMenuFonts = fontsToLoad.filter(
       (fontName) => !menuFonts.current.includes(fontName)
     );
@@ -187,13 +191,13 @@ function FontProvider({ children }) {
   const ensureCustomFontsLoaded = useCallback(
     (fontsToLoad) => {
       for (const font of fontsToLoad) {
-        const fontObj = customFonts.find(({ family }) => family === font);
+        const fontObj = customFonts?.find(({ family }) => family === font);
 
         if (!fontObj) {
           continue;
         }
 
-        maybeLoadFont(fontObj);
+        void maybeLoadFont(fontObj);
       }
     },
     [customFonts, maybeLoadFont]
@@ -215,16 +219,12 @@ function FontProvider({ children }) {
       ensureMenuFontsLoaded,
       ensureCustomFontsLoaded,
       addRecentFont,
-      getCustomFonts,
-      getCuratedFonts,
+      loadCustomFonts,
+      loadCuratedFonts,
     },
   };
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
-
-FontProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default FontProvider;

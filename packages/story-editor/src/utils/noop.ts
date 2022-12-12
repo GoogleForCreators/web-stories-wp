@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Helper function to get create a js error.
- *
- * @param {string} name Error name.
- * @param {string} fileName File name.
- * @param {string} message Message in error.
- * @return {Error} Error Object.
- */
-function createError(name, fileName, message) {
-  const validError = new Error();
-
-  validError.name = name;
-  validError.file = fileName;
-  validError.isUserError = true;
-  validError.message = message;
-
-  return validError;
+export function noop() {
+  return undefined;
 }
-
-export default createError;
