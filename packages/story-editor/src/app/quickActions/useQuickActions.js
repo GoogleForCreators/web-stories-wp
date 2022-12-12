@@ -37,8 +37,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import states from '../highlights/states';
-import useHighlights from '../highlights/useHighlights';
+import { states, useHighlights } from '../highlights';
 import updateProperties from '../../components/style/updateProperties';
 import { useHistory } from '../history';
 import { useConfig } from '../config';

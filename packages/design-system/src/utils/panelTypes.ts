@@ -33,7 +33,7 @@ enum PanelTypes {
   VIDEO_SEGMENT = 'videoSegment',
   VIDEO_ACCESSIBILITY = 'videoAccessibility',
   ELEMENT_ALIGNMENT = 'elementAlignment',
-  PRODUCT = 'product'
-};
+  PRODUCT = 'product',
+}
 
 export default PanelTypes;
