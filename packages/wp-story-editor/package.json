@@ -27,31 +27,8 @@
   "type": "module",
   "main": "./src/index.js",
   "dependencies": {
-    "@googleforcreators/date": "*",
-    "@googleforcreators/design-system": "*",
-    "@googleforcreators/element-library": "*",
-    "@googleforcreators/elements": "*",
-    "@googleforcreators/i18n": "*",
-    "@googleforcreators/media": "*",
-    "@googleforcreators/migration": "*",
-    "@googleforcreators/output": "*",
-    "@googleforcreators/react": "*",
-    "@googleforcreators/story-editor": "*",
-    "@googleforcreators/tracking": "*",
-    "@googleforcreators/url": "*",
-    "@web-stories-wp/wp-utils": "*",
-    "@wordpress/api-fetch": "^6.19.0",
-    "@wordpress/dom-ready": "^3.22.0",
-    "flagged": "^2.0.6",
-    "polished": "^4.2.2",
-    "react-calendar": "^4.0.0",
-    "styled-components": "^5.3.6"
+
   },
   "devDependencies": {
-    "@googleforcreators/test-utils": "*",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1",
-    "mockdate": "^3.0.5",
-    "prop-types": "^15.8.1"
   }
 }

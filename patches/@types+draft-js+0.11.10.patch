@@ -22,6 +22,6 @@ index ac2e584..3aa03ed 100755
 +              | 'CUSTOM-COLOR'
 +              | 'CUSTOM-LETTERSPACING'
 +              | 'CUSTOM-UPPERCASE';
- 
+
              /**
-              * Default entity types.
+              * Possible entity types, like 'LINK', 'IMAGE', or custom ones.
