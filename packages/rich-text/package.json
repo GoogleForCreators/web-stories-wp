@@ -42,6 +42,7 @@
     "@googleforcreators/react": "*",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "https://github.com/swissspidy/draft-js-export-html",
+    "draft-js-import-element": "https://github.com/swissspidy/draft-js-import-element",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^3.0.1",
     "immutable": "^4.1.0",
