@@ -17,15 +17,25 @@
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 
-const pointerEventsCss = css`
-  ${({ pointerEvents }) => {
-    if (pointerEvents && typeof pointerEvents === 'string') {
-      return `pointer-events: ${pointerEvents};`;
-    }
-    return '';
-  }}
-`;
+type HandleFn = () => void;
 
-export default pointerEventsCss;
+function useHandlers() {
+  const handlersRef = useRef<HandleFn[]>([]);
+
+  const registerHandler = useCallback((handler: HandleFn) => {
+    const handlerList = handlersRef.current;
+    handlerList.push(handler);
+    return () => {
+      handlerList.splice(handlerList.indexOf(handler), 1);
+    };
+  }, []);
+
+  return useMemo(
+    () => [handlersRef.current, registerHandler],
+    [registerHandler]
+  );
+}
+
+export default useHandlers;

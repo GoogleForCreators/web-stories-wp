@@ -13,6 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const inRange = (value, { MIN, MAX }) => value >= MIN && value <= MAX;
 
-export default inRange;
+class CustomError extends Error {
+  public file = '';
+  public isUserError = false;
+}
+/**
+ * Helper function to get create a js error.
+ *
+ * @param name Error name.
+ * @param fileName File name.
+ * @param message Message in error.
+ * @return Error Object.
+ */
+function createError(name: string, fileName: string, message: string) {
+  const validError = new CustomError();
+
+  validError.name = name;
+  validError.file = fileName;
+  validError.isUserError = true;
+  validError.message = message;
+
+  return validError;
+}
+
+export default createError;

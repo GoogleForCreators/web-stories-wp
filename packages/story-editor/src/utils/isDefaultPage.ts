@@ -18,19 +18,16 @@
  * External dependencies
  */
 import { shallowEqual } from '@googleforcreators/react';
-import { createPage } from '@googleforcreators/elements';
-
-/**
- * @typedef {import('@googleforcreators/elements').Page} Page
- */
+import { createPage, elementIs } from '@googleforcreators/elements';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Determine if a page has background or element changes different from the default page.
  *
- * @param {Page} page Page object.
- * @return {boolean} If the page is equivalent to the default page.
+ * @param page Page object.
+ * @return If the page is equivalent to the default page.
  */
-const isDefaultPage = (page) => {
+const isDefaultPage = (page: Page) => {
   // Check if page has more than just the single default background element
   if (page.elements.length > 1) {
     return false;
@@ -40,18 +37,24 @@ const isDefaultPage = (page) => {
 
   // Check if background color is different
   if (
-    !shallowEqual(
-      page.backgroundColor?.color,
-      defaultPage.backgroundColor?.color
-    )
+    'color' in page.backgroundColor &&
+    'color' in defaultPage.backgroundColor &&
+    !shallowEqual(page.backgroundColor.color, defaultPage.backgroundColor.color)
   ) {
     return false;
   }
 
   // Check if background element is not default
-  const backgroundElement = page.elements.find((e) => e.isBackground);
-  if (backgroundElement && !backgroundElement.isDefaultBackground) {
-    return false;
+  const backgroundElement = page.elements.find(
+    (e) => elementIs.backgroundable(e) && e.isBackground
+  );
+  if (backgroundElement) {
+    if (
+      !elementIs.defaultBackground(backgroundElement) ||
+      !backgroundElement.isDefaultBackground
+    ) {
+      return false;
+    }
   }
 
   return true;

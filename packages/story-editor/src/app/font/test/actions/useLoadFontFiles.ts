@@ -32,7 +32,7 @@ const DEFAULT_FONT = {
   fontWeight: 400,
   fontStyle: 'normal',
   content: 'Fill in some text',
-};
+} as const;
 
 const CUSTOM_FONT = {
   font: {
@@ -43,7 +43,7 @@ const CUSTOM_FONT = {
   fontWeight: 400,
   fontStyle: 'normal',
   content: 'Fill in some text',
-};
+} as const;
 
 /* eslint-disable testing-library/no-node-access */
 
@@ -65,27 +65,13 @@ describe('useLoadFontFiles', () => {
     expect(document.getElementById('bar-regular-css')).toBeDefined();
   });
 
-  it('should skip font with unknown service', () => {
-    expect(document.getElementById('font-css')).toBeNull();
-
-    renderHook(async () => {
-      const { maybeEnqueueFontStyle } = useLoadFontFiles();
-
-      await maybeEnqueueFontStyle([
-        { ...DEFAULT_FONT, font: { ...DEFAULT_FONT.font, service: 'abcd' } },
-      ]);
-    });
-
-    expect(document.getElementById('font-css')).toBeNull();
-  });
-
   it('waits for all promises to be settled', () => {
     expect(document.getElementById('font-css')).toBeNull();
 
     renderHook(async () => {
       const { maybeEnqueueFontStyle } = useLoadFontFiles();
 
-      await maybeEnqueueFontStyle([{}, DEFAULT_FONT]);
+      await maybeEnqueueFontStyle([DEFAULT_FONT]);
     });
 
     expect(document.querySelectorAll('link')).toHaveLength(1);

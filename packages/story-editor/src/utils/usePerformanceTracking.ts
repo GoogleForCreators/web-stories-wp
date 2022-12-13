@@ -20,12 +20,31 @@
 import { useEffect } from '@googleforcreators/react';
 import { trackTiming } from '@googleforcreators/tracking';
 
-const TRACES = {};
+interface TraceProps {
+  [key: string]: {
+    label: string;
+    category: string;
+    isReported?: boolean;
+    time?: number;
+  };
+}
+
+const TRACES: TraceProps = {};
 const OBSERVED_EVENTS = ['click', 'pointerdown', 'pointerup'];
 const OBSERVED_ENTRY_TYPE = 'event';
-let performanceObserver;
+let performanceObserver: PerformanceObserver;
 
-function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
+interface UsePerformanceTrackingProps {
+  node: Node;
+  eventData: { label: string; category: string };
+  eventType: string;
+}
+
+function usePerformanceTracking({
+  node,
+  eventData,
+  eventType = 'click',
+}: UsePerformanceTrackingProps) {
   const supportsPerformanceObserving =
     typeof PerformanceObserver !== 'undefined' &&
     PerformanceObserver.supportedEntryTypes.includes(OBSERVED_ENTRY_TYPE);
@@ -56,13 +75,10 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
     if (!node || !supportsPerformanceObserving) {
       return undefined;
     }
-    const { label, category } = eventData;
+    const { label = '', category } = eventData;
     const el = node;
-    const traceEvent = (e) => {
-      TRACES[e.timeStamp] = { category, time: e.timeStamp };
-      if (label) {
-        TRACES[e.timeStamp].label = label;
-      }
+    const traceEvent = (e: Event) => {
+      TRACES[e.timeStamp] = { category, label, time: e.timeStamp };
     };
     el.addEventListener(eventType, traceEvent);
 
