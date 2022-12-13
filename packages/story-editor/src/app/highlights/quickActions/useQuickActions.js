@@ -491,7 +491,6 @@ const useQuickActions = () => {
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
-      handleFocusStylePanel: handleFocusPanel(states.STYLE_PANE),
     }),
     [handleFocusPanel]
   );
