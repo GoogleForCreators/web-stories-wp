@@ -32,16 +32,19 @@ import type {
   SequenceMediaElement,
 } from '../types';
 
+function isMediaElement(e: Element): e is MediaElement;
 function isMediaElement(e: Draft<Element>): e is Draft<MediaElement>;
 function isMediaElement(e: Element): e is MediaElement {
   return 'resource' in e && Boolean(e.resource);
 }
 
+function isTextElement(e: Element): e is TextElement;
 function isTextElement(e: Draft<Element>): e is Draft<TextElement>;
 function isTextElement(e: Element): e is TextElement {
   return 'font' in e && Boolean(e.font);
 }
 
+function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement;
 function isDefaultBackgroundElement(
   e: Draft<Element>
 ): e is Draft<DefaultBackgroundElement>;
@@ -49,17 +52,20 @@ function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement {
   return 'isDefaultBackground' in e && Boolean(e.isDefaultBackground);
 }
 
+function isBackgroundable(e: Element): e is BackgroundableElement;
 function isBackgroundable(e: Draft<Element>): e is Draft<BackgroundableElement>;
 function isBackgroundable(e: Element): e is BackgroundableElement {
   // All media is backgroundable.
   return ('isBackground' in e && Boolean(e.isBackground)) || isMediaElement(e);
 }
 
+function isProduct(e: Element): e is ProductElement;
 function isProduct(e: Draft<Element>): e is Draft<ProductElement>;
 function isProduct(e: Element): e is ProductElement {
   return 'product' in e && Boolean(e.product);
 }
 
+function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement;
 function isSequenceMediaElement(
   e: Draft<MediaElement>
 ): e is Draft<SequenceMediaElement>;
