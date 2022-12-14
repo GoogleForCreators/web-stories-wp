@@ -22,7 +22,7 @@ import { canSupportMultiBorder } from '@googleforcreators/masks';
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '@googleforcreators/element-library';
 import { produce } from 'immer';
 import type { Element } from '@googleforcreators/elements';
-import { elementIs } from '@googleforcreators/elements';
+import { draftElementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -78,12 +78,12 @@ export const combineElements = (
   );
   const secondElement = page.elements[secondElementPosition];
 
-  if (!elementIs.media(element) || !secondElement) {
+  if (!draftElementIs.media(element) || !secondElement) {
     return;
   }
 
   if (
-    elementIs.defaultBackground(secondElement) &&
+    draftElementIs.defaultBackground(secondElement) &&
     secondElement.isDefaultBackground
   ) {
     page.defaultBackgroundElement = {
@@ -105,7 +105,10 @@ export const combineElements = (
   ];
 
   // If the element we're dropping into is not background, maintain link and border.
-  if (elementIs.backgroundable(secondElement) && secondElement.isBackground) {
+  if (
+    draftElementIs.backgroundable(secondElement) &&
+    secondElement.isBackground
+  ) {
     // If we're dropping into background, maintain the flip and overlay, too.
     // Only copy position properties for backgrounds, as they're ignored while being background
     // For non-backgrounds, elements should keep original positions from secondElement

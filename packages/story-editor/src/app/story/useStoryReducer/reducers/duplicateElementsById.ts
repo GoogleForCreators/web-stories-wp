@@ -20,7 +20,7 @@
 import {
   duplicateElement,
   ELEMENT_TYPES,
-  elementIs,
+  draftElementIs,
 } from '@googleforcreators/elements';
 import { produce } from 'immer';
 
@@ -59,7 +59,7 @@ export const duplicateElementsById = (
     const elementToDuplicate = page.elements[elementIndex];
 
     if (
-      elementIs.backgroundable(elementToDuplicate) &&
+      draftElementIs.backgroundable(elementToDuplicate) &&
       elementToDuplicate.isBackground
     ) {
       return;

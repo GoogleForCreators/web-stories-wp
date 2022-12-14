@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { duplicateElement, elementIs } from '@googleforcreators/elements';
+import { duplicateElement, draftElementIs } from '@googleforcreators/elements';
 import type { Element } from '@googleforcreators/elements';
 
 /**
@@ -59,7 +59,8 @@ export const duplicateGroup = (
   // Check that old group doesn't include background
   if (
     members.some(
-      (element) => elementIs.backgroundable(element) && element.isBackground
+      (element) =>
+        draftElementIs.backgroundable(element) && element.isBackground
     )
   ) {
     return;

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { elementIs } from '@googleforcreators/elements';
+import { draftElementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -48,7 +48,7 @@ export const deleteElementsByResourceId = (
 
   const hasElementWithResourceId = draft.pages.some((page) =>
     page.elements.some(
-      (element) => elementIs.media(element) && element.resource.id === id
+      (element) => draftElementIs.media(element) && element.resource.id === id
     )
   );
 
@@ -62,10 +62,10 @@ export const deleteElementsByResourceId = (
     const { elements, animations } = page;
 
     const isDeletingBackground =
-      elementIs.media(elements[0]) && elements[0].resource?.id === id;
+      draftElementIs.media(elements[0]) && elements[0].resource?.id === id;
 
     page.elements = elements.filter((element) => {
-      if (elementIs.media(element) && element.resource?.id === id) {
+      if (draftElementIs.media(element) && element.resource?.id === id) {
         deletedElementIds.push(element.id);
         return false;
       }

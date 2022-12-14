@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { StoryAnimationState } from '@googleforcreators/animation';
-import { elementIs } from '@googleforcreators/elements';
+import { draftElementIs } from '@googleforcreators/elements';
 import { produce, current } from 'immer';
 
 /**
@@ -100,7 +100,7 @@ export const setSelectedElements = (
   const isLockedElement = (id: string) => byId(id)?.isLocked;
   const isVideoPlaceholder = (id: string) => {
     const e = byId(id);
-    return e && elementIs.media(e) && e.resource?.isPlaceholder;
+    return e && draftElementIs.media(e) && e.resource?.isPlaceholder;
   };
   const newSelection =
     isMultiSelection && !isGroupSelection

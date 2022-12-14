@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { elementIs } from '@googleforcreators/elements';
+import { draftElementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -69,7 +69,7 @@ export const deleteElements = (
     (id) => id === backgroundElement.id
   );
   const backgroundIsDefault =
-    elementIs.defaultBackground(backgroundElement) &&
+    draftElementIs.defaultBackground(backgroundElement) &&
     backgroundElement.isDefaultBackground;
 
   const validDeletionIds =

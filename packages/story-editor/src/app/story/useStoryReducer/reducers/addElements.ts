@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { Element, elementIs, ElementType } from '@googleforcreators/elements';
+import {
+  Element,
+  draftElementIs,
+  ElementType,
+} from '@googleforcreators/elements';
 import { produce } from 'immer';
 
 /**
@@ -79,11 +83,12 @@ export const addElements = (
   if (newProducts.length) {
     const currentProducts = page.elements
       .filter(isProduct)
-      .map((e) => elementIs.product(e) && e.product?.productId);
+      .map((e) => draftElementIs.product(e) && e.product?.productId);
 
     const uniqueProducts = newProducts.filter(
       (e) =>
-        elementIs.product(e) && !currentProducts.includes(e.product?.productId)
+        draftElementIs.product(e) &&
+        !currentProducts.includes(e.product?.productId)
     );
 
     // Then, if the number of products after adding these would still be within

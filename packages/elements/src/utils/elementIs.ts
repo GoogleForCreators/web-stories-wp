@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type { Draft } from 'immer';
+
 /**
  * Internal dependencies
  */
@@ -51,7 +57,7 @@ function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement {
   return 'poster' in e.resource;
 }
 
-const elementIs = {
+export const elementIs = {
   media: isMediaElement,
   text: isTextElement,
   defaultBackground: isDefaultBackgroundElement,
@@ -60,4 +66,44 @@ const elementIs = {
   sequenceMedia: isSequenceMediaElement,
 };
 
-export default elementIs;
+function isDraftMediaElement(e: Draft<Element>): e is Draft<MediaElement> {
+  return 'resource' in e && Boolean(e.resource);
+}
+
+function isDraftTextElement(e: Draft<Element>): e is Draft<TextElement> {
+  return 'font' in e && Boolean(e.font);
+}
+
+function isDraftDefaultBackgroundElement(
+  e: Draft<Element>
+): e is Draft<DefaultBackgroundElement> {
+  return 'isDefaultBackground' in e && Boolean(e.isDefaultBackground);
+}
+
+function isDraftBackgroundable(
+  e: Draft<Element>
+): e is Draft<BackgroundableElement> {
+  // All media is backgroundable.
+  return (
+    ('isBackground' in e && Boolean(e.isBackground)) || isDraftMediaElement(e)
+  );
+}
+
+function isDraftProduct(e: Draft<Element>): e is Draft<ProductElement> {
+  return 'product' in e && Boolean(e.product);
+}
+
+function isDraftSequenceMediaElement(
+  e: Draft<MediaElement>
+): e is Draft<SequenceMediaElement> {
+  return 'poster' in e.resource && Boolean(e.resource.poster);
+}
+
+export const draftElementIs = {
+  media: isDraftMediaElement,
+  text: isDraftTextElement,
+  defaultBackground: isDraftDefaultBackgroundElement,
+  backgroundable: isDraftBackgroundable,
+  product: isDraftProduct,
+  sequenceMedia: isDraftSequenceMediaElement,
+};
