@@ -86,15 +86,13 @@ export const toggleElement = (
       draft.selection.includes(backgroundElementId);
     const getElementById = (byId: string) =>
       currentPage.elements.find(({ id }) => id === byId);
-    const olddraftElementIsLocked =
+    const oldElementIsLocked =
       draft.selection.length > 0
         ? getElementById(draft.selection[0])?.isLocked
         : false;
     const newElement = getElementById(elementId);
     const resultIsOnlyNewElement =
-      selectionWasOnlyBackground ||
-      olddraftElementIsLocked ||
-      newElement?.isLocked;
+      selectionWasOnlyBackground || oldElementIsLocked || newElement?.isLocked;
 
     // If either of those, return a selection with only the new element(s)
     if (resultIsOnlyNewElement) {

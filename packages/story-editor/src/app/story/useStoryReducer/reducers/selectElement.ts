@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { draftElementIs } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -50,7 +50,7 @@ export const selectElement = (
   const isBackgroundElement = currentPage.elements[0].id === elementId;
   const element = byId(elementId);
   const isVideoPlaceholder =
-    element && draftElementIs.media(element) && element.resource?.isPlaceholder;
+    element && elementIs.media(element) && element.resource?.isPlaceholder;
   const hasExistingSelection = draft.selection.length > 0;
 
   // The bg element can't be added to non-empty selection.

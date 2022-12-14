@@ -32,32 +32,42 @@ import type {
   SequenceMediaElement,
 } from '../types';
 
+function isMediaElement(e: Draft<Element>): e is Draft<MediaElement>;
 function isMediaElement(e: Element): e is MediaElement {
-  return 'resource' in e;
+  return 'resource' in e && Boolean(e.resource);
 }
 
+function isTextElement(e: Draft<Element>): e is Draft<TextElement>;
 function isTextElement(e: Element): e is TextElement {
-  return 'font' in e;
+  return 'font' in e && Boolean(e.font);
 }
 
+function isDefaultBackgroundElement(
+  e: Draft<Element>
+): e is Draft<DefaultBackgroundElement>;
 function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement {
-  return 'isDefaultBackground' in e;
+  return 'isDefaultBackground' in e && Boolean(e.isDefaultBackground);
 }
 
+function isBackgroundable(e: Draft<Element>): e is Draft<BackgroundableElement>;
 function isBackgroundable(e: Element): e is BackgroundableElement {
   // All media is backgroundable.
-  return 'isBackground' in e || 'resource' in e;
+  return ('isBackground' in e && Boolean(e.isBackground)) || isMediaElement(e);
 }
 
+function isProduct(e: Draft<Element>): e is Draft<ProductElement>;
 function isProduct(e: Element): e is ProductElement {
-  return 'product' in e;
+  return 'product' in e && Boolean(e.product);
 }
 
+function isSequenceMediaElement(
+  e: Draft<MediaElement>
+): e is Draft<SequenceMediaElement>;
 function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement {
-  return 'poster' in e.resource;
+  return 'poster' in e.resource && Boolean(e.resource.poster);
 }
 
-export const elementIs = {
+const elementIs = {
   media: isMediaElement,
   text: isTextElement,
   defaultBackground: isDefaultBackgroundElement,
@@ -66,44 +76,4 @@ export const elementIs = {
   sequenceMedia: isSequenceMediaElement,
 };
 
-function isDraftMediaElement(e: Draft<Element>): e is Draft<MediaElement> {
-  return 'resource' in e && Boolean(e.resource);
-}
-
-function isDraftTextElement(e: Draft<Element>): e is Draft<TextElement> {
-  return 'font' in e && Boolean(e.font);
-}
-
-function isDraftDefaultBackgroundElement(
-  e: Draft<Element>
-): e is Draft<DefaultBackgroundElement> {
-  return 'isDefaultBackground' in e && Boolean(e.isDefaultBackground);
-}
-
-function isDraftBackgroundable(
-  e: Draft<Element>
-): e is Draft<BackgroundableElement> {
-  // All media is backgroundable.
-  return (
-    ('isBackground' in e && Boolean(e.isBackground)) || isDraftMediaElement(e)
-  );
-}
-
-function isDraftProduct(e: Draft<Element>): e is Draft<ProductElement> {
-  return 'product' in e && Boolean(e.product);
-}
-
-function isDraftSequenceMediaElement(
-  e: Draft<MediaElement>
-): e is Draft<SequenceMediaElement> {
-  return 'poster' in e.resource && Boolean(e.resource.poster);
-}
-
-export const draftElementIs = {
-  media: isDraftMediaElement,
-  text: isDraftTextElement,
-  defaultBackground: isDraftDefaultBackgroundElement,
-  backgroundable: isDraftBackgroundable,
-  product: isDraftProduct,
-  sequenceMedia: isDraftSequenceMediaElement,
-};
+export default elementIs;

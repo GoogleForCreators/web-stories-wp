@@ -42,8 +42,10 @@
     "@googleforcreators/media": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/units": "*",
-    "immer": "^9.0.16",
     "prop-types": "^15.7.2",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "immer": "^9.0.16"
   }
 }

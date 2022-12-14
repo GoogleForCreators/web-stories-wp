@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { draftElementIs, Element } from '@googleforcreators/elements';
+import { elementIs, Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -55,7 +55,7 @@ export const setBackgroundElement = (
   // If new id is null, clear background attribute and proceed
   if (elementId === null) {
     if (
-      draftElementIs.defaultBackground(currentBackgroundElement) &&
+      elementIs.defaultBackground(currentBackgroundElement) &&
       currentBackgroundElement.isDefaultBackground
     ) {
       // Nothing to do here, we can't unset default background
@@ -63,10 +63,8 @@ export const setBackgroundElement = (
     }
 
     // Unset isBackground for the element, too.
-    page.elements.forEach((element) => {
-      if (draftElementIs.backgroundable(element)) {
-        delete element.isBackground;
-      }
+    page.elements.filter(elementIs.backgroundable).forEach((element) => {
+      delete element.isBackground;
     });
     if (page.defaultBackgroundElement) {
       page.elements.unshift(page.defaultBackgroundElement);
@@ -85,7 +83,7 @@ export const setBackgroundElement = (
 
     // If current bg is default, save it as such
     const wasDefault =
-      draftElementIs.defaultBackground(currentBackgroundElement) &&
+      elementIs.defaultBackground(currentBackgroundElement) &&
       currentBackgroundElement.isDefaultBackground;
     if (wasDefault) {
       page.defaultBackgroundElement = currentBackgroundElement;
@@ -111,7 +109,7 @@ export const setBackgroundElement = (
     ) as unknown as Element[];
     page.elements.forEach((element) => {
       // Set isBackground for the element.
-      if (element.id === elementId && draftElementIs.backgroundable(element)) {
+      if (element.id === elementId && elementIs.backgroundable(element)) {
         element.isBackground = true;
         if (Object.prototype.hasOwnProperty.call(element, 'opacity')) {
           element.opacity = 100;
@@ -128,7 +126,7 @@ export const setBackgroundElement = (
   // Remove any applied background animations
   // or exising element animations.
   const backgroundElement = page.elements.find(
-    (element) => draftElementIs.backgroundable(element) && element.isBackground
+    (element) => elementIs.backgroundable(element) && element.isBackground
   );
   if (backgroundElement) {
     page.animations = removeAnimationsWithElementIds(page.animations, [

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { draftElementIs, MediaElement } from '@googleforcreators/elements';
+import { elementIs, MediaElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -51,7 +51,7 @@ export const updateElementsByResourceId = (
 
   draft.pages.forEach((page) => {
     page.elements
-      .filter(draftElementIs.media)
+      .filter(elementIs.media)
       .filter((element) => element.resource.id === id)
       .forEach((element) =>
         updateElementWithUpdater<MediaElement>(

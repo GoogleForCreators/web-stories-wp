@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { draftElementIs } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -53,10 +53,8 @@ export const updateElementsByFontFamily = (
 
   draft.pages.forEach((page) => {
     page.elements
-      .filter(
-        (element) =>
-          draftElementIs.text(element) && element.font.family === family
-      )
+      .filter(elementIs.text)
+      .filter((element) => element.font.family === family)
       .forEach((element) =>
         updateElementWithUpdater(element, propertiesOrUpdater)
       );
