@@ -83,6 +83,7 @@ class Discovery extends Service_Base implements HasRequirements {
 
 		add_action( 'web_stories_story_head', [ $this, 'print_feed_link' ], 4 );
 		add_action( 'wp_head', [ $this, 'print_feed_link' ], 4 );
+		add_action( 'template_redirect', [ $this, 'skip_feed_links_extra' ] );
 
 		// @todo Check if there's something to skip in the new version.
 		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
@@ -476,12 +477,36 @@ class Discovery extends Service_Base implements HasRequirements {
 	}
 
 	/**
+	 * Remove the feed_links_extra action from wp_head if on post type archive.
+	 * Workaround to remove action, until 6.1 is min require and we
+	 * can use `feed_links_extra_show_post_type_archive_feed` filter.
+	 *
+	 * @since 1.29.0
+	 */
+	public function skip_feed_links_extra(): void {
+		if ( is_post_type_archive( $this->story_post_type->get_slug() ) ) {
+			remove_action( 'wp_head', 'feed_links_extra', 3 );
+		}
+	}
+
+	/**
 	 * Add RSS feed link for stories, if theme supports automatic-feed-links.
 	 *
 	 * @since 1.0.0
 	 */
 	public function print_feed_link(): void {
-		if ( ! current_theme_supports( 'automatic-feed-links' ) ) {
+		$enable_print_feed_link = current_theme_supports( 'automatic-feed-links' );
+
+		/**
+		 * Filters filter to enable / disable printing feed links.
+		 *
+		 * @since 1.29.0
+		 *
+		 * @param bool $enable_print_feed_link Enable / disable printing feed links. Default to if automatic-feed-links is enabled.
+		 */
+		$enable_print_feed_link = apply_filters( 'web_stories_enable_print_feed_link', $enable_print_feed_link );
+
+		if ( ! $enable_print_feed_link ) {
 			return;
 		}
 
