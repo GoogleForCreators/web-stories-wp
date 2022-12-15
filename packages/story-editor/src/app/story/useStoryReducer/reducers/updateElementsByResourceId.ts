@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { produce } from 'immer';
-import { elementIs, MediaElement } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -54,10 +54,7 @@ export const updateElementsByResourceId = (
       .filter(elementIs.media)
       .filter((element) => element.resource.id === id)
       .forEach((element) =>
-        updateElementWithUpdater<MediaElement>(
-          element as MediaElement,
-          propertiesOrUpdater
-        )
+        updateElementWithUpdater(element, propertiesOrUpdater)
       );
   });
 };
