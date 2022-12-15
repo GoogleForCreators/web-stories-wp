@@ -22,27 +22,19 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useCallback, useEffect, useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Button, Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
-import { useDebounce } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { BlockIcon as WebStoriesLogo } from '../../icons';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
-import StoriesLoading from '../../components/storiesLoading';
 import StoriesPreview from '../../components/storiesPreview';
-
-const {
-  config: {
-    api: { stories: storiesApi },
-  },
-} = window.webStoriesBlockSettings;
 
 /**
  * LatestStoriesEdit component
@@ -56,51 +48,41 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
   const { numOfStories, order, orderby, archiveLinkLabel, authors } =
     attributes;
 
-  const [fetchedStories, setFetchedStories] = useState([]);
-  const [isFetchingStories, setIsFetchingStories] = useState([]);
-
   /**
    * Fetch stories based on the query.
    *
    * @return {void}
    */
-  const fetchStories = useCallback(async (query) => {
-    try {
-      setIsFetchingStories(true);
-      const stories = await apiFetch({
-        path: addQueryArgs(storiesApi, {
-          per_page: 20,
-          _embed: 'author,wp:featuredmedia',
-          orderby: query.orderby || 'modified',
-          order: query.order || 'desc',
-          author: query.author || undefined,
-        }),
-      });
+  const { fetchedStories } = useSelect(
+    (select) => {
+      const { getEntityRecords } = select(coreStore);
+      const newQuery = {
+        per_page: 20,
+        _embed: 'author,wp:featuredmedia',
+        orderby: orderby || 'modified',
+        order: order || 'desc',
+        author: authors || undefined,
+      };
 
-      if (Array.isArray(stories)) {
-        setFetchedStories(stories);
-      }
-    } catch (err) {
-      setFetchedStories([]);
-    } finally {
-      setIsFetchingStories(false);
-    }
-  }, []);
-
-  const debouncedFetchStories = useDebounce(fetchStories, 1000);
-
-  useEffect(() => {
-    debouncedFetchStories({
-      order: order || 'desc',
-      orderby: orderby || 'date',
-      author: authors,
-    });
-  }, [authors, numOfStories, order, orderby, debouncedFetchStories]);
+      const fetchedStories = getEntityRecords(
+        'postType',
+        'web-story',
+        newQuery
+      );
+      return {
+        fetchedStories,
+      };
+    },
+    [order, orderby, authors]
+  );
 
   const viewAllLabel = archiveLinkLabel
     ? archiveLinkLabel
     : __('View All Stories', 'web-stories');
 
+  if (!fetchedStories) {
+    return null;
+  }
   const storiesToDisplay =
     fetchedStories.length > numOfStories
       ? fetchedStories.slice(0, numOfStories)
@@ -113,16 +95,14 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
         setAttributes={setAttributes}
       />
 
-      {isFetchingStories && <StoriesLoading />}
-
-      {!isFetchingStories && Boolean(storiesToDisplay?.length) && (
+      {Boolean(storiesToDisplay?.length) && (
         <StoriesPreview
           attributes={attributes}
           stories={storiesToDisplay}
           viewAllLabel={viewAllLabel}
         />
       )}
-      {!isFetchingStories && !storiesToDisplay?.length && (
+      {!storiesToDisplay?.length && (
         <Placeholder
           icon={<BlockIcon icon={<WebStoriesLogo />} showColors />}
           label={__('Latest Stories', 'web-stories')}

@@ -24,15 +24,12 @@ import PropTypes from 'prop-types';
 import { __, sprintf } from '@wordpress/i18n';
 import { Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
-import { useEffect } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import { useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
  */
+import { store as coreStore } from '@wordpress/core-data';
 import LoaderContainer from '../loaderContainer';
 
 const {
@@ -46,44 +43,27 @@ function FetchSelectedStories({
   label,
   selectedStoryIds = [],
   setSelectedStories,
-  setIsFetching,
 }) {
-  const { createErrorNotice } = useDispatch(noticesStore);
+  useSelect(
+    (select) => {
+      const { getEntityRecords } = select(coreStore);
+      const newQuery = {
+        _embed: 'author,wp:featuredmedia',
+        context: 'edit',
+        include: selectedStoryIds,
+        orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
+      };
 
-  const fetchStories = async () => {
-    try {
-      const response = await apiFetch({
-        path: addQueryArgs(storiesApi, {
-          _embed: 'author,wp:featuredmedia',
-          context: 'edit',
-          include: selectedStoryIds,
-          orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
-        }),
-      });
-
-      if (response.length) {
-        setSelectedStories(response);
-      }
-    } catch (error) {
-      createErrorNotice(
-        sprintf(
-          /* translators: %s: error message. */
-          __('Unable to load stories. %s', 'web-stories'),
-          error?.message || ''
-        ),
-        {
-          type: 'snackbar',
-        }
+      const fetchedStories = getEntityRecords(
+        'postType',
+        'web-story',
+        newQuery
       );
-    } finally {
-      setIsFetching(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchStories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run this once.
-  }, []);
+      console.log(fetchedStories);
+      setSelectedStories(fetchedStories);
+    },
+    [selectedStoryIds, setSelectedStories]
+  );
 
   return (
     <Placeholder
