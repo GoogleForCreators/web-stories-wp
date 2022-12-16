@@ -113,7 +113,6 @@ class Discovery extends DependencyInjectedTestCase {
 	 */
 	public function test_register(): void {
 		$this->instance->register();
-		$this->assertSame( 10, has_action( 'template_redirect', [ $this->instance, 'skip_feed_links_extra' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_document_title' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_schemaorg_metadata' ] ) );
