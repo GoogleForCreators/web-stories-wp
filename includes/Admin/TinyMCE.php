@@ -42,7 +42,7 @@ class TinyMCE extends Service_Base {
 	/**
 	 * Web Stories tinymce script handle.
 	 */
-	public const SCRIPT_HANDLE = 'tinymce-button';
+	public const SCRIPT_HANDLE = 'web-stories-tinymce-button';
 
 	/**
 	 * Assets instance.
@@ -147,7 +147,7 @@ class TinyMCE extends Service_Base {
 		if ( ! \is_array( $plugins ) ) {
 			return $plugins;
 		}
-		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
+		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/' . self::SCRIPT_HANDLE . '.js' );
 
 		return $plugins;
 	}
