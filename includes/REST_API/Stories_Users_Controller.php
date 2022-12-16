@@ -95,6 +95,28 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	}
 
 	/**
+	 * Permissions check for getting all users.
+	 *
+	 * Allows edit_posts capabilities queries for stories if the user has the same cap,
+	 * enabling them to see the users dropdown.
+	 *
+	 * @since 1.28.1
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has read access, otherwise WP_Error object.
+	 */
+	public function get_items_permissions_check( $request ) {
+		if (
+			! empty( $request['capabilities'] ) &&
+			[ $this->story_post_type->get_cap_name( 'edit_posts' ) ] === $request['capabilities']
+		) {
+			unset( $request['capabilities'] );
+		}
+
+		return parent::get_items_permissions_check( $request );
+	}
+
+	/**
 	 * Checks if a given request has access to read a user.
 	 *
 	 * Same as the parent function but with using a cached version of {@see count_user_posts()}.

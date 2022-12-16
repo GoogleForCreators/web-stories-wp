@@ -21,6 +21,8 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
+use WP_REST_Request;
+use WP_REST_Server;
 use WP_UnitTest_Factory;
 
 /**
@@ -71,6 +73,42 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertArrayHasKey( '/web-stories/v1/users', $routes );
 		$this->assertCount( 2, $routes['/web-stories/v1/users'] );
+	}
+
+	/**
+	 * @covers ::get_items_permissions_check
+	 */
+	public function test_get_items_permissions_check(): void {
+		$this->controller->register();
+
+		$post_type_object = get_post_type_object( \Google\Web_Stories\Font_Post_Type::POST_TYPE_SLUG );
+		$this->assertNotNull( $post_type_object );
+
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/users' );
+		$request->set_param( 'capabilities', [ $post_type_object->cap->edit_posts ] );
+
+		$this->assertWPError(
+			$this->controller->get_items_permissions_check( $request )
+		);
+	}
+
+	/**
+	 * @covers ::get_items_permissions_check
+	 */
+	public function test_get_items_permissions_check_can_edit_stories(): void {
+		wp_set_current_user( self::$user_id );
+
+		$this->controller->register();
+
+		$post_type_object = get_post_type_object( \Google\Web_Stories\Font_Post_Type::POST_TYPE_SLUG );
+		$this->assertNotNull( $post_type_object );
+
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/users' );
+		$request->set_param( 'capabilities', [ $post_type_object->cap->edit_posts ] );
+
+		$this->assertNotWPError(
+			$this->controller->get_items_permissions_check( $request )
+		);
 	}
 
 	/**
