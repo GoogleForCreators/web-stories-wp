@@ -34,6 +34,7 @@ import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { BlockIcon as WebStoriesLogo } from '../../icons';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
+import StoriesLoading from '../../components/storiesLoading';
 import StoriesPreview from '../../components/storiesPreview';
 
 /**
@@ -53,9 +54,9 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
    *
    * @return {void}
    */
-  const { fetchedStories } = useSelect(
+  const { fetchedStories, isFetchingStories } = useSelect(
     (select) => {
-      const { getEntityRecords } = select(coreStore);
+      const { getEntityRecords, isResolving } = select(coreStore);
       const newQuery = {
         per_page: 20,
         _embed: 'author,wp:featuredmedia',
@@ -64,13 +65,9 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
         author: authors || undefined,
       };
 
-      const fetchedStories = getEntityRecords(
-        'postType',
-        'web-story',
-        newQuery
-      );
       return {
-        fetchedStories,
+        fetchedStories: getEntityRecords('postType', 'web-story', newQuery),
+        isFetchingStories: isResolving('postType', 'web-story', newQuery),
       };
     },
     [order, orderby, authors]
@@ -94,15 +91,15 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
         attributes={attributes}
         setAttributes={setAttributes}
       />
-
-      {Boolean(storiesToDisplay?.length) && (
+      {isFetchingStories && <StoriesLoading />}
+      {!isFetchingStories && Boolean(storiesToDisplay?.length) && (
         <StoriesPreview
           attributes={attributes}
           stories={storiesToDisplay}
           viewAllLabel={viewAllLabel}
         />
       )}
-      {!storiesToDisplay?.length && (
+      {!isFetchingStories && !storiesToDisplay?.length && (
         <Placeholder
           icon={<BlockIcon icon={<WebStoriesLogo />} showColors />}
           label={__('Latest Stories', 'web-stories')}
