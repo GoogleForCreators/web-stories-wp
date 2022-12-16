@@ -97,7 +97,7 @@ export const PROVIDERS = {
     ),
   },
   [ProviderType.TenorStickers]: {
-    provider: ProviderType.TenorStickers,
+    provider: ProviderType.Tenor,
     displayName: __('Stickers', 'web-stories'),
     contentTypeFilter: ContentType.Sticker,
     supportsCategories: true,
