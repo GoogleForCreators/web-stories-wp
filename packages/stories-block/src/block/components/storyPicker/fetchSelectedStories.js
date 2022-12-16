@@ -21,7 +21,8 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
@@ -32,21 +33,16 @@ import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import LoaderContainer from '../loaderContainer';
 
-const {
-  config: {
-    api: { stories: storiesApi },
-  },
-} = window.webStoriesBlockSettings;
-
 function FetchSelectedStories({
   icon,
   label,
   selectedStoryIds = [],
   setSelectedStories,
+  setIsFetching,
 }) {
-  useSelect(
+  const { isFetchingStories = false } = useSelect(
     (select) => {
-      const { getEntityRecords } = select(coreStore);
+      const { getEntityRecords, isResolving } = select(coreStore);
       const newQuery = {
         _embed: 'author,wp:featuredmedia',
         context: 'edit',
@@ -59,11 +55,17 @@ function FetchSelectedStories({
         'web-story',
         newQuery
       );
-      console.log(fetchedStories);
       setSelectedStories(fetchedStories);
+      return {
+        isFetchingStories: isResolving('postType', 'web-story', newQuery),
+      };
     },
     [selectedStoryIds, setSelectedStories]
   );
+
+  useEffect(() => {
+    setIsFetching(isFetchingStories);
+  }, [isFetchingStories, setIsFetching]);
 
   return (
     <Placeholder
