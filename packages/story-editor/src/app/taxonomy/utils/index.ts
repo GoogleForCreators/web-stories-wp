@@ -46,7 +46,10 @@ export function mapObjectVals(obj = {}, op = (v: unknown) => v) {
  * @param op operation to be performed on every key
  * @return new object with transformed keys
  */
-export function mapObjectKeys(obj = {}, op = (v: unknown) => v) {
+export function mapObjectKeys(
+  obj: Record<string, object> = {},
+  op = (v: unknown) => v
+) {
   return Object.fromEntries(
     Object.entries(obj).map(([key, val]) => [op(key), val])
   );
@@ -64,7 +67,10 @@ export function mapObjectKeys(obj = {}, op = (v: unknown) => v) {
  * @param dictB nested dictionary
  * @return new unified nested dictionary
  */
-export function mergeNestedDictionaries(dictA = {}, dictB = {}) {
+export function mergeNestedDictionaries(
+  dictA: Record<string, object> = {},
+  dictB: Record<string, object> = {}
+) {
   return Object.entries(dictA).reduce(
     (merged, [key, val]) => {
       merged[key] = { ...val, ...merged[key] };
@@ -97,7 +103,9 @@ export function dictionaryOnKey(arr: [] = [], key: string) {
  * @param embeddedTerms embedded wp:terms
  * @return A nested dictionary of { [taxonomy.slug]: { [term.slug]: term } }
  */
-export function cacheFromEmbeddedTerms(embeddedTerms: Term[][]): EmbeddedTerms {
+export function cacheFromEmbeddedTerms(
+  embeddedTerms: Record<string, Term[]>
+): EmbeddedTerms {
   return embeddedTerms.reduce((cache: EmbeddedTerms, terms = []) => {
     terms.forEach((term: Term) => {
       cache[term.taxonomy] = cache[term.taxonomy] || {};

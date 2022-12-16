@@ -39,10 +39,11 @@ import type { PropsWithChildren } from 'react';
 import type {
   TaxonomiesBySlug,
   EmbeddedTerms,
-  TaxonomyState,
-  APIState,
-  TaxonomySearchArgs,
+  createTermProps,
+  setTermsProps,
   TaxonomyRestError,
+  addTermToSelectionProps,
+  addSearchResultsToCacheProps,
 } from '../../types';
 import cleanForSlug from '../../utils/cleanForSlug';
 import { useAPI } from '../api';
@@ -61,24 +62,23 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   const [taxonomies, setTaxonomies] = useState<Taxonomy[] | never>([]);
   const [termCache, setTermCache] = useState<EmbeddedTerms>({});
   // Should grab categories on mount
-  const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
+  const [shouldRefetchCategories, setShouldRefetchCategories] =
+    useState<boolean>(true);
   const {
     actions: { clearHistory },
   } = useHistory();
   const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
-    ({ state: { pages, story }, actions: { updateStory } }) => ({
-      updateStory,
-      isStoryLoaded: pages?.length > 0,
-      terms: story?.terms,
-      hasTaxonomies: story?.taxonomies?.length > 0,
+    (state) => ({
+      updateStory: state.actions.updateStory,
+      isStoryLoaded: state.state.pages?.length > 0,
+      terms: state.state.story?.terms || [],
+      hasTaxonomies: state.state.story?.taxonomies?.length > 0,
     })
   );
 
   const {
-    getTaxonomyTerm,
-    createTaxonomyTerm,
-    getTaxonomies,
-  }: APIState['actions'] = useAPI(({ actions }) => actions);
+    actions: { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies },
+  } = useAPI();
 
   // Get all registered `web-story` taxonomies.
   useEffect(() => {
@@ -121,18 +121,20 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         (slug: TaxonomySlug): string => taxonomiesBySlug[slug]?.restBase
       );
 
-      const initialSelectedTerms: TermId[] = mapObjectVals(
+      const initialSelectedTerms: Record<Taxonomy['slug'], TermId[]>  = mapObjectVals(
         initialCache,
         (val: EmbeddedTerms) => Object.values(val).map((term) => term.id)
       );
 
       setTermCache(initialCache);
       clearHistory();
-      updateStory({
-        properties: {
-          terms: initialSelectedTerms,
-        },
-      });
+      if (updateStory) {
+        updateStory({
+          properties: {
+            terms: initialSelectedTerms,
+          },
+        });
+      }
       hasHydrationRunOnce.current = true;
     }
   }, [
@@ -144,29 +146,33 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
     updateStory,
   ]);
 
-  const setTerms: TaxonomyState['actions']['setTerms'] = useCallback(
-    (taxonomy: Taxonomy, termIds: TermId[]) => {
-      updateStory({
-        properties: (story: Partial<Story>) => {
-          const newTerms =
-            typeof termIds === 'function'
-              ? termIds((story?.terms && story?.terms[taxonomy.restBase]) || [])
-              : termIds;
-          return {
-            ...story,
-            terms: {
-              ...story?.terms,
-              [taxonomy?.restBase]: newTerms,
-            },
-          };
-        },
-      });
+  const setTerms = useCallback(
+    ({ taxonomy, termIds }: setTermsProps) => {
+      if (updateStory) {
+        updateStory({
+          properties: (story: Partial<Story>) => {
+            const newTerms =
+              typeof termIds === 'function'
+                ? termIds(
+                    (story?.terms && story?.terms[taxonomy.restBase]) || []
+                  )
+                : termIds;
+            return {
+              ...story,
+              terms: {
+                ...story?.terms,
+                [taxonomy?.restBase]: newTerms,
+              },
+            };
+          },
+        });
+      }
     },
     [updateStory]
   );
 
   const addTermToSelection = useCallback(
-    (taxonomy: Taxonomy, term: Term) => {
+    ({ taxonomy, term }: addTermToSelectionProps) => {
       setTerms(taxonomy, (ids: TermId[] = []) =>
         ids.includes(term.id) ? ids : [...ids, term.id]
       );
@@ -175,11 +181,11 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   );
 
   const addSearchResultsToCache = useCallback(
-    async (
-      taxonomy: Taxonomy,
-      args: TaxonomySearchArgs,
-      addNameToSelection = false
-    ) => {
+    async ({
+      taxonomy,
+      args,
+      addNameToSelection = false,
+    }: addSearchResultsToCacheProps) => {
       let response: Term[] = [];
       const termsEndpoint = taxonomy?.restPath;
       if (!termsEndpoint || !getTaxonomyTerm) {
@@ -219,7 +225,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         );
 
         if (selectedTerm) {
-          addTermToSelection(taxonomy, selectedTerm);
+          addTermToSelection({ taxonomy, term: selectedTerm });
         }
       }
 
@@ -228,8 +234,13 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
     [getTaxonomyTerm, addTermToSelection]
   );
 
-  const createTerm: TaxonomyState['actions']['createTerm'] = useCallback(
-    async (taxonomy, termName, parent, addToSelection = false) => {
+  const createTerm = useCallback(
+    async ({
+      taxonomy,
+      termName,
+      parent,
+      addToSelection = false,
+    }: createTermProps) => {
       const data: { name: string; parent?: number; slug?: string } = {
         name: termName,
       };
@@ -243,7 +254,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       const cachedTerm = termCache[taxonomy?.restBase]?.[preEmptiveSlug];
       if (cachedTerm) {
         if (addToSelection) {
-          addTermToSelection(taxonomy, cachedTerm);
+          addTermToSelection({ taxonomy, term: cachedTerm });
         }
 
         return;
@@ -256,7 +267,10 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
 
       // create term and add to cache
       try {
-        const newTerm = await createTaxonomyTerm(termsEndpoint, data);
+        const newTerm: Term = (await createTaxonomyTerm(
+          termsEndpoint,
+          data
+        )) as Term;
         const incomingCache = {
           [taxonomy.restBase]: { [newTerm.slug]: newTerm },
         };
@@ -265,7 +279,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         );
 
         if (addToSelection) {
-          addTermToSelection(taxonomy, newTerm);
+          addTermToSelection({ taxonomy, term: newTerm });
         }
       } catch (e) {
         // If the backend says the term already exists
@@ -275,11 +289,11 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         // We could pull down only the exact term, but
         // we're modeling after Gutenberg.
         if ((e as TaxonomyRestError).code === 'term_exists') {
-          void addSearchResultsToCache(
+          void addSearchResultsToCache({
             taxonomy,
-            { search: termName },
-            addToSelection
-          );
+            args: { search: termName },
+            addToSelection,
+          });
         }
       }
     },
@@ -295,7 +309,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       );
       hierarchicalTaxonomies.forEach(
         (taxonomy: Taxonomy) =>
-          void addSearchResultsToCache(taxonomy, { per_page: -1 })
+          void addSearchResultsToCache({ taxonomy, args: { per_page: -1 } })
       );
 
       setShouldRefetchCategories(false);

@@ -97,7 +97,12 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
 
       // create new terms for ones that don't
       termNamesNotInCache.forEach((name) =>
-        createTerm(taxonomy, name, null, true)
+        createTerm({
+          taxonomy,
+          termName: name,
+          parent: null,
+          addToSelection: true,
+        })
       );
     },
     [canCreateTerms, terms, taxonomy, termCache, setTerms, createTerm]
@@ -112,10 +117,13 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     if (value.length < 3) {
       return;
     }
-    const results = await addSearchResultsToCache(taxonomy, {
-      search: value,
-      // This is the per_page value Gutenberg is using
-      per_page: 20,
+    const results = await addSearchResultsToCache({
+      taxonomy,
+      args: {
+        search: value,
+        // This is the per_page value Gutenberg is using
+        per_page: 20,
+      },
     });
     setSearchResults(results);
 
@@ -147,10 +155,13 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
 
   useEffect(() => {
     (async function () {
-      const results = await addSearchResultsToCache(taxonomy, {
-        orderby: 'count',
-        order: 'desc',
-        hide_empty: true,
+      const results = await addSearchResultsToCache({
+        taxonomy,
+        args: {
+          orderby: 'count',
+          order: 'desc',
+          hide_empty: true,
+        },
       });
       setMostUsed(results);
     })();
@@ -178,7 +189,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separateItemsWithCommas}
         </Tags.Description>
-        {mostUsed.length > 0 && (
+        {mostUsed && mostUsed.length > 0 && (
           <WordCloud.Wrapper data-testid={`${taxonomy.slug}-most-used`}>
             <WordCloud.Heading>{taxonomy.labels.mostUsed}</WordCloud.Heading>
             <WordCloud.List>
@@ -189,7 +200,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
                       if (terms[taxonomy.restBase]?.includes(term.id)) {
                         return;
                       }
-                      addTermToSelection(taxonomy, term);
+                      addTermToSelection({ taxonomy, term });
                     }}
                   >
                     {term.name}

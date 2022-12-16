@@ -188,7 +188,12 @@ function HierarchicalTermSelector({
         id: selectedParent === noParentId ? 0 : selectedParent,
         slug: selectedParentSlug,
       };
-      createTerm(taxonomy, newCategoryName, parentValue, true);
+      createTerm({
+        taxonomy,
+        termName: newCategoryName,
+        parent: parentValue,
+        addToSelection: true,
+      });
       speak(
         sprintf(
           /* Translators: %s: Taxonomy label name. */

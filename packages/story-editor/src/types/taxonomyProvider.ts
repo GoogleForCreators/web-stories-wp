@@ -34,22 +34,38 @@ export interface TaxonomySearchArgs {
   per_page?: number;
 }
 
+export interface createTermProps {
+  taxonomy: Taxonomy;
+  termName: string;
+  parent: { id?: TermId; slug: string; addToSelection: boolean };
+  addNameToSelection?: boolean;
+}
+
+export interface setTermsProps {
+  taxonomy: Taxonomy;
+  termIds: TermId[] | ((termIds: TermId[]) => void);
+}
+
+export interface addSearchResultsToCacheProps {
+  taxonomy: Taxonomy;
+  args: TaxonomySearchArgs;
+  addNameToSelection?: boolean;
+}
+
+export interface addTermToSelectionProps {
+  taxonomy: Taxonomy;
+  term: Term;
+}
+
 export interface TaxonomyState {
   state: { taxonomies: TaxonomiesBySlug; termCache: TermId[]; terms: Term[] };
   actions: {
-    createTerm: (
-      taxonomy: Taxonomy,
-      termName: string,
-      parent: { id?: TermId; slug: string; addToSelection: boolean },
-      addNameToSelection?: boolean
-    ) => Promise<void>;
+    createTerm: (props: createTermProps) => Promise<void>;
     addSearchResultsToCache: (
-      taxonomy: Taxonomy,
-      args: TaxonomySearchArgs,
-      addNameToSelection?: boolean
+      props: addSearchResultsToCacheProps
     ) => Promise<void>;
-    setTerms: (taxonomy: Taxonomy, ids: TermId[]) => void;
-    addTermToSelection: (taxonomy: Taxonomy, selectedTerm: Term) => void;
+    setTerms: (props: setTermsProps) => void;
+    addTermToSelection: (props: addTermToSelectionProps) => void;
   };
 }
 
