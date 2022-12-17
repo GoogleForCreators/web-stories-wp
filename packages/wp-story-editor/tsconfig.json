@@ -6,6 +6,8 @@
   },
   "references": [
     { "path": "../react" },
+    { "path": "../design-system" },
+    { "path": "../story-editor" },
     { "path": "../url" },
     { "path": "../migration" },
     { "path": "../i18n" },
