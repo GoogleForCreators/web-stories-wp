@@ -147,7 +147,7 @@ class TinyMCE extends Service_Base {
 		if ( ! \is_array( $plugins ) ) {
 			return $plugins;
 		}
-		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/' . self::SCRIPT_HANDLE . '.js' );
+		$plugins['web_stories'] = $this->assets->get_base_url( sprintf( 'assets/js/%s.js', self::SCRIPT_HANDLE ) );
 
 		return $plugins;
 	}
