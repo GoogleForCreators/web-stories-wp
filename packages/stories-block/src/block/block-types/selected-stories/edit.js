@@ -60,12 +60,7 @@ function SelectedStoriesEdit({
   }, [attributes.stories, setAttributes, selectedStoryIds]);
 
   useEffect(() => {
-    if (
-      selectedStoryIds &&
-      selectedStoryIds.length &&
-      !selectedStories &&
-      !selectedStories.length
-    ) {
+    if (selectedStoryIds.length && !selectedStories.length) {
       setIsFetching(true);
     }
   }, [selectedStoryIds, selectedStories, setIsFetching]);

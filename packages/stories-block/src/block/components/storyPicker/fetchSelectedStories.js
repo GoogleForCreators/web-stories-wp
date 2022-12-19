@@ -40,7 +40,7 @@ function FetchSelectedStories({
   setSelectedStories,
   setIsFetching,
 }) {
-  const { isFetchingStories = false } = useSelect(
+  const { isFetchingStories = false, fetchedStories = [] } = useSelect(
     (select) => {
       const { getEntityRecords, isResolving } = select(coreStore);
       const newQuery = {
@@ -50,22 +50,18 @@ function FetchSelectedStories({
         orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
       };
 
-      const fetchedStories = getEntityRecords(
-        'postType',
-        'web-story',
-        newQuery
-      );
-      setSelectedStories(fetchedStories);
       return {
+        fetchedStories: getEntityRecords('postType', 'web-story', newQuery),
         isFetchingStories: isResolving('postType', 'web-story', newQuery),
       };
     },
-    [selectedStoryIds, setSelectedStories]
+    [selectedStoryIds]
   );
 
   useEffect(() => {
     setIsFetching(isFetchingStories);
-  }, [isFetchingStories, setIsFetching]);
+    setSelectedStories(fetchedStories);
+  }, [fetchedStories, isFetchingStories, setIsFetching, setSelectedStories]);
 
   return (
     <Placeholder

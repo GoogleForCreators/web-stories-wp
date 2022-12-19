@@ -77,9 +77,6 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
     ? archiveLinkLabel
     : __('View All Stories', 'web-stories');
 
-  if (!fetchedStories) {
-    return null;
-  }
   const storiesToDisplay =
     fetchedStories.length > numOfStories
       ? fetchedStories.slice(0, numOfStories)

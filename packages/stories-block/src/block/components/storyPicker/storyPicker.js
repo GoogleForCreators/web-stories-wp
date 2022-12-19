@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Button, Modal } from '@wordpress/components';
-import { useState, useCallback } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
@@ -111,6 +111,12 @@ function StoryPicker({
     },
     [createErrorNotice]
   );
+
+  useEffect(() => {
+    if (isFetchingForFirstTime) {
+      fetchStories();
+    }
+  }, [isFetchingForFirstTime, fetchStories]);
 
   const title =
     maxNumOfStories === 1
