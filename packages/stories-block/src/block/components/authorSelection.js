@@ -41,6 +41,10 @@ import Autocomplete from './autocomplete';
  * @property {()=>void} setAttributes Callable function for saving attribute values.
  */
 
+const defaultQueryProps = {
+  per_page: 100,
+};
+
 /**
  * AuthorSelection component. Used for selecting authors of stories.
  *
@@ -55,7 +59,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
       const { getUsers } = select(coreStore);
 
       const query = {
-        per_page: 100,
+        ...defaultQueryProps,
         include: authorIds.join(','),
       };
       return {
@@ -70,7 +74,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
       const { getUsers } = select(coreStore);
 
       const query = {
-        per_page: 100,
+        ...defaultQueryProps,
         search: authorKeyword,
       };
       return {
