@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
+import { useState, useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useDebounce } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
@@ -63,7 +63,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
         include: authorIds.join(','),
       };
       return {
-        authorsList: getUsers(query),
+        authorsList: getUsers(query) || [],
       };
     },
     [authorIds]
@@ -78,7 +78,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
         search: authorKeyword,
       };
       return {
-        authorSuggestions: getUsers(query),
+        authorSuggestions: getUsers(query) || [],
       };
     },
     [authorKeyword]
@@ -92,21 +92,24 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
    * @param {Array} tokens Array of strings that were parsed from the text field.
    * @return {void}
    */
-  const onChange = (tokens) => {
-    if ('undefined' === typeof tokens || !Array.isArray(tokens)) {
-      return;
-    }
-
-    const authors = tokens
-      .map((token) =>
-        [...authorSuggestions, ...authorsList].find(
-          ({ value }) => value === token
+  const onChange = useCallback(
+    (tokens) => {
+      if ('undefined' === typeof tokens || !Array.isArray(tokens)) {
+        return;
+      }
+      const authors = tokens
+        .map((token) =>
+          [...authorSuggestions, ...authorsList].find(
+            ({ name }) => name === token
+          )
         )
-      )
-      .filter(Boolean);
+        .filter(Boolean)
+        .map(({ id }) => id);
 
-    setAttributes({ authors: authors.map(({ id }) => id) });
-  };
+      setAttributes({ authors });
+    },
+    [authorSuggestions, authorsList, setAttributes]
+  );
 
   /**
    * Callback function used when user types in the search query in the text field.
@@ -123,9 +126,9 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
   return (
     <Autocomplete
       label={__('Authors', 'web-stories')}
-      value={authorsList ? authorsList.map(({ value }) => value) : []}
+      value={authorsList ? authorsList.map(({ name }) => name) : []}
       options={
-        authorSuggestions ? authorSuggestions.map(({ value }) => value) : []
+        authorSuggestions ? authorSuggestions.map(({ name }) => name) : []
       }
       onChange={onChange}
       onInputChange={debouncedOnInputChange}

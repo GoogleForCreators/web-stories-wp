@@ -54,7 +54,7 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
    *
    * @return {void}
    */
-  const { fetchedStories, isFetchingStories } = useSelect(
+  const { isFetchingStories, fetchedStories } = useSelect(
     (select) => {
       const { getEntityRecords, isResolving } = select(coreStore);
       const newQuery = {
@@ -66,8 +66,10 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
       };
 
       return {
-        fetchedStories: getEntityRecords('postType', 'web-story', newQuery),
-        isFetchingStories: isResolving('postType', 'web-story', newQuery),
+        fetchedStories:
+          getEntityRecords('postType', 'web-story', newQuery) || [],
+        isFetchingStories:
+          isResolving('postType', 'web-story', newQuery) || false,
       };
     },
     [order, orderby, authors]

@@ -40,7 +40,7 @@ function FetchSelectedStories({
   setSelectedStories,
   setIsFetching,
 }) {
-  const { isFetchingStories = false, fetchedStories = [] } = useSelect(
+  const { isFetchingStories, fetchedStories } = useSelect(
     (select) => {
       const { getEntityRecords, isResolving } = select(coreStore);
       const newQuery = {
@@ -51,8 +51,10 @@ function FetchSelectedStories({
       };
 
       return {
-        fetchedStories: getEntityRecords('postType', 'web-story', newQuery),
-        isFetchingStories: isResolving('postType', 'web-story', newQuery),
+        fetchedStories:
+          getEntityRecords('postType', 'web-story', newQuery) || [],
+        isFetchingStories:
+          isResolving('postType', 'web-story', newQuery) || false,
       };
     },
     [selectedStoryIds]
