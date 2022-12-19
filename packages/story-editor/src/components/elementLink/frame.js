@@ -94,7 +94,7 @@ function WithLink({ element, active, children, anchorRef }) {
   return (
     <StyledTooltip
       forceAnchorRef={anchorRef}
-      placement={TOOLTIP_PLACEMENT.TOP_START}
+      placement={TOOLTIP_PLACEMENT.TOP}
       title={tooltipContent}
     >
       {children}
