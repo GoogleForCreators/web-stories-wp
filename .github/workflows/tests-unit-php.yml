@@ -73,6 +73,10 @@ jobs:
             random: true
             experimental: true
 
+          - php: '8.2'
+            wp: 'trunk'
+            experimental: true
+
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5

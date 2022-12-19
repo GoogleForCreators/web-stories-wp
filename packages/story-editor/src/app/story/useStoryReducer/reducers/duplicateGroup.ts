@@ -58,9 +58,9 @@ export const duplicateGroup = (
 
   // Check that old group doesn't include background
   if (
-    members.some(
-      (element) => elementIs.backgroundable(element) && element.isBackground
-    )
+    members
+      .filter(elementIs.backgroundable)
+      .some((element) => element.isBackground)
   ) {
     return;
   }

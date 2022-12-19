@@ -45,5 +45,7 @@
     "prop-types": "^15.7.2",
     "uuid": "^9.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "immer": "^9.0.16"
+  }
 }
