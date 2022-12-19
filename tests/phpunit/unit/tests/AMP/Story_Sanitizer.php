@@ -661,7 +661,7 @@ HTML;
 	<amp-story-page>
 		<amp-story-grid-layer>
 			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<h3 class="text-wrapper" style="font-size:.339805em">Title 3B</h3>
+			<p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
 			<p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
 			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
 			<p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
@@ -690,7 +690,7 @@ HTML;
 		$this->assertStringContainsString( 'Title 1B</p>', $actual );
 		$this->assertStringContainsString( 'Title 1B</p>', $actual );
 		$this->assertStringContainsString( 'Title 2B</p>', $actual );
-		$this->assertStringContainsString( 'Title 3B</h3>', $actual );
+		$this->assertStringContainsString( 'Title 3B</p>', $actual );
 		$this->assertStringContainsString( 'ParagraphB</p>', $actual );
 	}
 
