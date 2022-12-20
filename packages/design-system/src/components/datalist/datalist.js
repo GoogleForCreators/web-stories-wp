@@ -239,6 +239,7 @@ const Datalist = forwardRef(function Datalist(
         selectButtonStylesOverride={highlightStylesOverride || focusStyle}
         aria-label={dropdownButtonLabel}
         isOpen={isOpen}
+        disabled={disabled}
         {...rest}
       />
       {isOpen && !disabled && isInline && list}
