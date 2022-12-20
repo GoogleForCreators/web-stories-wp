@@ -113,8 +113,8 @@ function web_stories_get_compat_instance() {
 	$compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
 	$compatibility->set_required_files(
 		array(
-			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/wp-story-editor.js',
-			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/wp-dashboard.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-editor.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-dashboard.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-block.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',

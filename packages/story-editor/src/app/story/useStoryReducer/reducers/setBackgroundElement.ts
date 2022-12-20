@@ -63,10 +63,8 @@ export const setBackgroundElement = (
     }
 
     // Unset isBackground for the element, too.
-    page.elements.forEach((element) => {
-      if (elementIs.backgroundable(element)) {
-        delete element.isBackground;
-      }
+    page.elements.filter(elementIs.backgroundable).forEach((element) => {
+      delete element.isBackground;
     });
     if (page.defaultBackgroundElement) {
       page.elements.unshift(page.defaultBackgroundElement);

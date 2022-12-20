@@ -72,7 +72,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Web Stories stylesheet handle.
 	 */
-	public const LIGHTBOX_SCRIPT_HANDLE = 'lightbox';
+	public const LIGHTBOX_SCRIPT_HANDLE = 'web-stories-lightbox';
 
 	/**
 	 * Number of instances invoked. Kept it static to keep track.

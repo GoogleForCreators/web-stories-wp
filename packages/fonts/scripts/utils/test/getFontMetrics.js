@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 /*
  * Copyright 2020 Google LLC
  *
@@ -17,6 +20,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line header/header -- Needed because of the @jest-environment comment.
 import { join } from 'path';
 import { readFileSync } from 'fs';
 
