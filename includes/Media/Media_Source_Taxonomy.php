@@ -33,6 +33,7 @@ use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 use WP_Post;
 use WP_Query;
+use WP_Site;
 
 /**
  * Class Media_Source_Taxonomy
@@ -42,10 +43,13 @@ use WP_Query;
 class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**
 	 * Context instance.
-	 *
-	 * @var Context Context instance.
 	 */
 	private Context $context;
+
+	/**
+	 * Media_Source instance.
+	 */
+	private Media_Source $media_source;
 
 	/**
 	 * Media Source key.
@@ -55,10 +59,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**
 	 * Single constructor.
 	 *
-	 * @param Context $context Context instance.
+	 * @param Context      $context      Context instance.
+	 * @param Media_Source $media_source Media_Source instance.
 	 */
-	public function __construct( Context $context ) {
+	public function __construct( Context $context, Media_Source $media_source ) {
 		$this->context            = $context;
+		$this->media_source       = $media_source;
 		$this->taxonomy_slug      = 'web_story_media_source';
 		$this->taxonomy_post_type = 'attachment';
 	}
@@ -80,6 +86,47 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		add_action( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
 		add_filter( 'web_stories_rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ] );
+	}
+
+	/**
+	 * Act on site initialization.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 */
+	public function on_site_initialization( WP_Site $site ): void {
+		parent::on_site_initialization( $site );
+
+		$this->add_missing_terms();
+	}
+
+	/**
+	 * Act on plugin activation.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 */
+	public function on_plugin_activation( $network_wide ): void {
+		parent::on_plugin_activation( $network_wide );
+
+		$this->add_missing_terms();
+	}
+
+	/**
+	 * Adds missing terms to the taxonomy.
+	 *
+	 * @since 1.29.0
+	 */
+	private function add_missing_terms(): void {
+		foreach ( $this->media_source->get_all() as $term ) {
+			// See https://github.com/Automattic/VIP-Coding-Standards/issues/720.
+			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.term_exists_term_exists
+			if ( ! term_exists( $term, $this->get_taxonomy_slug() ) ) {
+				wp_insert_term( $term, $this->get_taxonomy_slug() );
+			}
+		}
 	}
 
 	/**
