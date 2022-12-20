@@ -30,7 +30,8 @@ function AutoSaveHandler() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const { autoSave, isAutoSaving } = useStory(({ actions }) => ({
+  const { autoSave, isSaving } = useStory(({ actions, state }) => ({
+    isSaving: state.meta.isSaving,
     autoSave: actions.autoSave,
   }));
   const isUploading = useIsUploadingToStory();
@@ -42,7 +43,7 @@ function AutoSaveHandler() {
   }, [autoSave]);
 
   useEffect(() => {
-    if (!hasNewChanges || !autoSaveInterval || isUploading || isAutoSaving) {
+    if (!hasNewChanges || !autoSaveInterval || isUploading || isSaving) {
       return undefined;
     }
     // This is only a timeout (and not an interval), as `hasNewChanges` will come
@@ -54,7 +55,7 @@ function AutoSaveHandler() {
     );
 
     return () => clearTimeout(timeout);
-  }, [autoSaveInterval, hasNewChanges, isUploading, isAutoSaving]);
+  }, [autoSaveInterval, hasNewChanges, isUploading, isSaving]);
 
   return null;
 }
