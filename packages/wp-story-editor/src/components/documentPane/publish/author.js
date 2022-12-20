@@ -32,7 +32,7 @@ function Author() {
     actions: { getAuthors },
   } = useAPI();
   const {
-    state: { users, isUsersLoading },
+    state: { users, usersLoadingState },
     actions: { loadUsers },
   } = useSidebar();
   const { isSaving, author, updateStory } = useStory(
@@ -60,13 +60,17 @@ function Author() {
 
   const getAuthorsBySearch = useCallback(
     (search) => {
-      return getAuthors(search).then((data) => {
-        const userData = data.map(({ id, name }) => ({
-          id,
-          name,
-        }));
-        setQueriedUsers(userData);
-      });
+      return getAuthors(search)
+        .then((data) => {
+          const userData = data.map(({ id, name }) => ({
+            id,
+            name,
+          }));
+          setQueriedUsers(userData);
+        })
+        .catch(() => {
+          // Do nothing for now.
+        });
     },
     [getAuthors]
   );
@@ -91,7 +95,9 @@ function Author() {
     [updateStory]
   );
 
-  const isLoading = isUsersLoading || !visibleOptions;
+  const hasError = usersLoadingState === 'errored';
+  const isLoadingUsers = usersLoadingState !== 'finished' && !hasError;
+  const isLoading = isLoadingUsers || !visibleOptions;
   const dropDownParams = {
     hasSearch: true,
     lightMode: true,
@@ -99,11 +105,16 @@ function Author() {
     getOptionsByQuery: getAuthorsBySearch,
     selectedId: author.id,
     dropDownLabel: __('Author', 'web-stories'),
-    placeholder: isLoading ? __('Loading…', 'web-stories') : '',
-    disabled: isLoading ? true : isSaving,
+    placeholder: hasError
+      ? __('Could not load users', 'web-stories')
+      : isLoading
+      ? __('Loading…', 'web-stories')
+      : '',
+    disabled: isLoading || hasError || isSaving,
     primaryOptions: isLoading ? [] : visibleOptions,
     zIndex: 10,
   };
+
   return (
     <Row>
       <Datalist.DropDown
