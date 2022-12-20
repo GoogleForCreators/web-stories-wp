@@ -48,11 +48,11 @@ const StyledButton = styled(Button)`
 `;
 
 function MenuItemWithRef(
-  { label, shortcut, icon, SuffixIcon, ...buttonProps },
+  { label, shortcut, icon, SuffixIcon, className, ...buttonProps },
   ref
 ) {
   return (
-    <StyledButton ref={ref} {...buttonProps}>
+    <StyledButton className={className} ref={ref} {...buttonProps}>
       {icon}
       {label}
       {shortcut && <Shortcut>{shortcut.display}</Shortcut>}

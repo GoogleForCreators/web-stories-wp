@@ -43,6 +43,13 @@ import { useCanvas } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
 import { IconButton } from './shared';
 
+const MenuItem = styled(ContextMenuComponents.MenuItem)`
+  span {
+    font-size: 14px;
+    font-weight: 400;
+  }
+`;
+
 const StyledIconButton = styled(IconButton)`
   svg {
     width: 24px;
@@ -171,7 +178,7 @@ function Settings() {
           parentMenuRef={buttonRef}
         >
           {subMenuItems.map(({ key, ...menuItemProps }) => (
-            <ContextMenuComponents.MenuItem key={key} {...menuItemProps} />
+            <MenuItem key={key} {...menuItemProps} />
           ))}
         </ContextMenu>
       </SubMenuContainer>

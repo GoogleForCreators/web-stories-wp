@@ -103,7 +103,7 @@ module.exports = function (config) {
       '/__static__/': '/base/__static__/',
     },
 
-    webpack: getWebpackConfig('wp-story-editor', config),
+    webpack: getWebpackConfig('web-stories-editor', config),
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration

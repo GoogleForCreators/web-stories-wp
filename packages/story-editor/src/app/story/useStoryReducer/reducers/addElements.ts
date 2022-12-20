@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Element, elementIs, ElementType } from '@googleforcreators/elements';
+import { Element, elementIs } from '@googleforcreators/elements';
 import { produce } from 'immer';
 
 /**
@@ -31,8 +31,7 @@ import type {
 } from '../../../../types';
 import { exclusion } from './utils';
 
-const isProduct = ({ type }: Element) => type === ElementType.Product;
-const isNotProduct = ({ type }: Element) => type !== ElementType.Product;
+const isNotProduct = (e: Element) => !elementIs.product(e);
 
 /**
  * Add elements to current page.
@@ -75,15 +74,14 @@ export const addElements = (
   }
 
   // For products, first filter out products that already exist on the page
-  const newProducts = newElements.filter(isProduct);
+  const newProducts = newElements.filter(elementIs.product);
   if (newProducts.length) {
     const currentProducts = page.elements
-      .filter(isProduct)
-      .map((e) => elementIs.product(e) && e.product?.productId);
+      .filter(elementIs.product)
+      .map((e) => e.product.productId);
 
     const uniqueProducts = newProducts.filter(
-      (e) =>
-        elementIs.product(e) && !currentProducts.includes(e.product?.productId)
+      (e) => !currentProducts.includes(e.product.productId)
     );
 
     // Then, if the number of products after adding these would still be within
