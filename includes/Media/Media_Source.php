@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Add_Media_Source_Recording
+ * Class Media_Source
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -26,20 +26,37 @@
 
 declare(strict_types = 1);
 
-namespace Google\Web_Stories\Migrations;
+namespace Google\Web_Stories\Media;
 
-use Google\Web_Stories\Media\Media_Source;
+use ReflectionClass;
 
 /**
- * Class Add_Media_Source_Recording
+ * Media source "enum" holding all possible term names for the media source taxonomy.
  */
-class Add_Media_Source_Recording extends Add_Media_Source {
+class Media_Source {
+	public const EDITOR             = 'editor';
+	public const SOURCE_VIDEO       = 'source-video';
+	public const SOURCE_IMAGE       = 'source-image';
+	public const VIDEO_OPTIMIZATION = 'video-optimization';
+	public const PAGE_TEMPLATE      = 'page-template';
+	public const GIF_CONVERSION     = 'gif-conversion';
+	public const RECORDING          = 'recording';
+
 	/**
-	 * Term name.
+	 * Returns all defined media source term names.
 	 *
-	 * @since 1.23.0
+	 * @since 1.29.0
+	 *
+	 * @return string[] Media sou
 	 */
-	protected function get_term(): string {
-		return Media_Source::RECORDING;
+	public function get_all(): array {
+		/**
+		 * Term names.
+		 *
+		 * @var string[] $terms
+		 */
+		$terms = array_values( ( new ReflectionClass( self::class ) )->getConstants() );
+
+		return $terms;
 	}
 }
