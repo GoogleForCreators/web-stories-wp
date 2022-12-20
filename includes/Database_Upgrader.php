@@ -103,6 +103,7 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 */
 	public function register(): void {
 		add_action( 'admin_init', [ $this, 'run_upgrades' ], 5 );
+		add_action( 'cli_init', [ $this, 'run_upgrades' ], 5 );
 	}
 
 	/**
