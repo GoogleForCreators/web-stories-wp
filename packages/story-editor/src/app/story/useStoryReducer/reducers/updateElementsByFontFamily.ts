@@ -53,9 +53,8 @@ export const updateElementsByFontFamily = (
 
   draft.pages.forEach((page) => {
     page.elements
-      .filter(
-        (element) => elementIs.text(element) && element.font.family === family
-      )
+      .filter(elementIs.text)
+      .filter((element) => element.font.family === family)
       .forEach((element) =>
         updateElementWithUpdater(element, propertiesOrUpdater)
       );

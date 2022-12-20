@@ -40,7 +40,7 @@ class Carousel_Renderer extends Renderer {
 	/**
 	 * Script handle.
 	 */
-	public const SCRIPT_HANDLE = 'carousel-view';
+	public const SCRIPT_HANDLE = 'web-stories-carousel';
 
 	/**
 	 * Perform initial setup for object.
