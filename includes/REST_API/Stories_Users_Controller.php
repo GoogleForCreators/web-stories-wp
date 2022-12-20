@@ -154,19 +154,30 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 			[ $edit_posts ] === $request['capabilities'] &&
 			current_user_can( $edit_posts )
 		) {
-			$filter_user_query_args = static function ( $prepared_args ) {
-				unset( $prepared_args['has_published_posts'] );
-				return $prepared_args;
-			};
-
-			add_filter( 'rest_user_query', $filter_user_query_args );
+			add_filter( 'rest_user_query', [ $this, 'filter_query_args' ] );
 			$response = parent::get_items( $request );
-			remove_filter( 'rest_user_query', $filter_user_query_args );
+			remove_filter( 'rest_user_query', [ $this, 'filter_query_args' ] );
 
 			return $response;
 		}
 
 		return parent::get_items( $request );
+	}
+
+	/**
+	 * Filters WP_User_Query arguments when querying users via the REST API.
+	 *
+	 * Removes 'has_published_posts' query argument.
+	 *
+	 * @since 1.28.1
+	 *
+	 * @param array<string,mixed> $prepared_args Array of arguments for WP_User_Query.
+	 * @return array<string,mixed> Filtered query args.
+	 */
+	public function filter_query_args( array $prepared_args ): array {
+		unset( $prepared_args['has_published_posts'] );
+
+		return $prepared_args;
 	}
 
 	/**
