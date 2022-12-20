@@ -436,7 +436,7 @@ describe('useQuickActions', () => {
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
-        highlight: states.TEXT_SET,
+        highlight: states.STYLE_PANE,
       });
     });
   });
@@ -483,7 +483,7 @@ describe('useQuickActions', () => {
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
-        highlight: states.TEXT_SET,
+        highlight: states.STYLE_PANE,
       });
     });
   });
