@@ -106,9 +106,17 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @return true|WP_Error True if the request has read access, otherwise WP_Error object.
 	 */
 	public function get_items_permissions_check( $request ) {
+		/**
+		 * The edit_posts capability.
+		 *
+		 * @var string $edit_posts
+		 */
+		$edit_posts = $this->story_post_type->get_cap_name( 'edit_posts' );
+
 		if (
 			! empty( $request['capabilities'] ) &&
-			[ $this->story_post_type->get_cap_name( 'edit_posts' ) ] === $request['capabilities']
+			[ $edit_posts ] === $request['capabilities'] &&
+			current_user_can( $edit_posts )
 		) {
 			unset( $request['capabilities'] );
 		}
