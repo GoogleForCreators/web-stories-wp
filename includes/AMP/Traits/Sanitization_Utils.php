@@ -135,13 +135,29 @@ trait Sanitization_Utils {
 	 * This logic here mirrors the getTextElementTagNames() function in the editor
 	 * in order to change simple <p> tags into <h1>, <h2> or <h3>, depending on font size.
 	 *
-	 * Only relevant for older stories that haven't been updated in a while.
+	 * It is only relevant for older stories that haven't been updated in a while,
+	 * so we bail early if we find any existing headings in the story.
+	 *
+	 * Caveat: if a user forces *all* text elements to be paragraphs,
+	 * this sanitizer would still run and thus turn some paragraphs into headings.
+	 * This seems rather unlikely though.
 	 *
 	 * @since 1.18.0
+	 *
+	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12850
 	 *
 	 * @param Document|AMP_Document $document   Document instance.
 	 */
 	private function use_semantic_heading_tags( $document ): void {
+		$h1 = $document->getElementsByTagName( 'h1' );
+		$h2 = $document->getElementsByTagName( 'h2' );
+		$h3 = $document->getElementsByTagName( 'h3' );
+
+		// When a story already contains any headings, we don't need to do anything further.
+		if ( $h1->count() || $h2->count() || $h3->count() ) {
+			return;
+		}
+
 		$pages = $document->getElementsByTagName( 'amp-story-page' );
 
 		/**
@@ -150,15 +166,6 @@ trait Sanitization_Utils {
 		 * @var DOMElement $page The <amp-story-page> element
 		 */
 		foreach ( $pages as $page ) {
-			$h1 = $page->getElementsByTagName( 'h1' );
-			$h2 = $page->getElementsByTagName( 'h2' );
-			$h3 = $page->getElementsByTagName( 'h3' );
-
-			// When a page already contains any headings, we don't need to do anything further.
-			if ( $h1->count() || $h2->count() || $h3->count() ) {
-				continue;
-			}
-
 			$text_elements = $document->xpath->query( './/p[ contains( @class, "text-wrapper" ) ]', $page );
 
 			if ( ! $text_elements ) {
