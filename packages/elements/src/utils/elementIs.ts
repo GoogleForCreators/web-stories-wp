@@ -56,7 +56,11 @@ function isBackgroundable(e: Element): e is BackgroundableElement;
 function isBackgroundable(e: Draft<Element>): e is Draft<BackgroundableElement>;
 function isBackgroundable(e: Element): e is BackgroundableElement {
   // All media is backgroundable.
-  return ('isBackground' in e && Boolean(e.isBackground)) || isMediaElement(e);
+  return (
+    // Property can be undefined if e is of type Draft<Element>.
+    ('isBackground' in e && typeof e.isBackground !== 'undefined') ||
+    isMediaElement(e)
+  );
 }
 
 function isProduct(e: Element): e is ProductElement;
