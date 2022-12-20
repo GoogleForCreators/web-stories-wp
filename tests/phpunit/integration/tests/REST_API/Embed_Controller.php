@@ -32,7 +32,6 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
 class Embed_Controller extends DependencyInjectedRestTestCase {
-
 	protected static int $story_id;
 	protected static int $subscriber;
 	protected static int $editor;
@@ -340,10 +339,17 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		add_user_to_blog( $blog_id, self::$admin, 'administrator' );
 		switch_to_blog( $blog_id );
 
+		// TODO: Figure out why this is needed.
+		$this->add_caps_to_roles();
+		wp_get_current_user()->for_site( $blog_id );
+
 		$this->set_permalink_structure( '/%postname%/' );
 
 		$response = $this->dispatch_request( $permalink );
-		$data     = $response->get_data();
+
+		$this->assertNotWPError( $response->as_error() );
+
+		$data = $response->get_data();
 
 		restore_current_blog();
 
