@@ -166,16 +166,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 				'schema'          => [
 					'description' => __( 'Media source.', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [
-						'editor',
-						'poster-generation',
-						'video-optimization',
-						'source-video',
-						'source-image',
-						'gif-conversion',
-						'page-template',
-						'recording',
-					],
+					'enum'        => $this->media_source->get_all(),
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],
@@ -273,7 +264,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		}
 
 		/**
-		 *  Merge with existing tax query if needed,
+		 * Merge with existing tax query if needed,
 		 * in a nested way so WordPress will run them
 		 * with an 'AND' relation. Example:
 		 *
@@ -289,7 +280,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 				[
 					'taxonomy' => $this->taxonomy_slug,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+					'terms'    => [
+						Media_Source::POSTER_GENERATION,
+						Media_Source::SOURCE_VIDEO,
+						Media_Source::SOURCE_IMAGE,
+						Media_Source::PAGE_TEMPLATE,
+					],
 					'operator' => 'NOT IN',
 				],
 			]

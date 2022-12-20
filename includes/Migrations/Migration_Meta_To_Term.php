@@ -28,6 +28,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Migrations;
 
+use Google\Web_Stories\Media\Media_Source;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 
 /**
@@ -97,6 +98,6 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 * @since 1.7.2
 	 */
 	protected function get_term_name(): string {
-		return 'poster-generation';
+		return Media_Source::POSTER_GENERATION;
 	}
 }

@@ -35,6 +35,7 @@ use ReflectionClass;
  */
 class Media_Source {
 	public const EDITOR             = 'editor';
+	public const POSTER_GENERATION  = 'poster-generation';
 	public const SOURCE_VIDEO       = 'source-video';
 	public const SOURCE_IMAGE       = 'source-image';
 	public const VIDEO_OPTIMIZATION = 'video-optimization';
