@@ -50,7 +50,7 @@ const IconButton = memo(
 IconButton.propTypes = {
   Icon: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
-  hideTooltip: PropTypes.bool,
+  hasTooltip: PropTypes.bool,
   title: PropTypes.string,
 };
 
