@@ -34,6 +34,7 @@ use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_REST_Request;
+use WP_REST_Response;
 use WP_REST_Users_Controller;
 
 /**
@@ -122,6 +123,50 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 		}
 
 		return parent::get_items_permissions_check( $request );
+	}
+
+	/**
+	 * Retrieves all users.
+	 *
+	 * Includes a workaround for a shortcoming in WordPress core where
+	 * only users with published posts are returned if not an admin
+	 * and not using a 'who' -> 'authors' query, since we're using
+	 * the recommended capabilities queries instead.
+	 *
+	 * @since 1.28.1
+	 *
+	 * @link https://github.com/WordPress/wordpress-develop/blob/008277583be15ee1738fba51ad235af5bbc5d721/src/wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php#L308-L312
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function get_items( $request ) {
+		/**
+		 * The edit_posts capability.
+		 *
+		 * @var string $edit_posts
+		 */
+		$edit_posts = $this->story_post_type->get_cap_name( 'edit_posts' );
+
+		if (
+			! isset( $request['has_published_posts'] ) &&
+			! empty( $request['capabilities'] ) &&
+			[ $edit_posts ] === $request['capabilities'] &&
+			current_user_can( $edit_posts )
+		) {
+			$filter_user_query_args = static function ( $prepared_args ) {
+				unset( $prepared_args['has_published_posts'] );
+				return $prepared_args;
+			};
+
+			add_filter( 'rest_user_query', $filter_user_query_args );
+			$response = parent::get_items( $request );
+			remove_filter( 'rest_user_query', $filter_user_query_args );
+
+			return $response;
+		}
+
+		return parent::get_items( $request );
 	}
 
 	/**
