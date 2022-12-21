@@ -18,6 +18,7 @@
  * External dependencies
  */
 import type { EditorState } from 'draft-js';
+import type { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
@@ -33,9 +34,7 @@ import { getSelectAllStateFromHTML } from './htmlManipulation';
  * @param styles Set of styles.
  * @return Array of found styles for the character.
  */
-function getFontStylesForCharacter(
-  styles: Immutable.OrderedSet<string>
-): string[] {
+function getFontStylesForCharacter(styles: OrderedSet<string>): string[] {
   return styles
     .toArray()
     .filter((style) => style === ITALIC || style.startsWith(WEIGHT));

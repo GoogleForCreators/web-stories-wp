@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import MediaInfoFactory from 'mediainfo.js';
+import { default as MediaInfoFactory } from 'mediainfo.js';
 
 declare global {
   var WEB_STORIES_ENV: string;
