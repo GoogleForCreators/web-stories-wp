@@ -28,7 +28,7 @@
     "src/components/library/paneIds.ts",
     "src/components/sidebar/constants.ts",
     "src/app/highlights/*.ts",
-    "src/app/highlights/provider.tsx",
+    "src/app/highlights/*.tsx",
     "src/app/history",
     "src/app/font",
     "src/app/layout",

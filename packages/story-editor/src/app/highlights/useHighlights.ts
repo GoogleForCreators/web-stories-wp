@@ -28,6 +28,6 @@ function useHighlights<T>(selector: (state: HighlightsState) => T): T;
 function useHighlights<T>(
   selector: (state: HighlightsState) => T | HighlightsState = identity
 ) {
-  return useContextSelector(Context, selector ?? identity);
+  return useContextSelector(Context, selector);
 }
 export default useHighlights;

@@ -26,23 +26,13 @@ import type {
   setHighlightProps,
   selectElementProps,
   HighlightType,
+  HighlightState,
 } from '../../types/highlightsProvider';
 import Context from './context';
 import { STATES } from './states';
 
-type HighlightState = {
-  [k in HighlightType]: {
-    focus: boolean;
-    showEffect?: boolean;
-    tab: string;
-    section: string;
-  };
-};
-
 function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
-  const [highlighted, setHighlighted] = useState<
-    HighlightState | Record<never, never>
-  >({});
+  const [highlighted, setHighlighted] = useState<HighlightState>({});
   const {
     actions: { setSelectedElementsById, setCurrentPage },
   } = useStory();
