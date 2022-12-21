@@ -231,6 +231,23 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	}
 
 	/**
+	 * Returns all capabilities for the post type.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @return string[] The post type capabilities.
+	 */
+	public function get_caps(): array {
+		$post_type_obj = $this->get_object();
+
+		if ( ! $post_type_obj instanceof WP_Post_Type ) {
+			return [];
+		}
+
+		return (array) $post_type_obj->cap;
+	}
+
+	/**
 	 * Determines whether the current user has a specific capability for this post type.
 	 *
 	 * @since 1.14.0
