@@ -37,9 +37,9 @@ const KEYBOARD_SHORTCUTS_WIDTH =
 const LARGE_BUTTON_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 2 * BORDER_WIDTH;
 
 // What's the max space required for either menu? The widest possible menu is
-// the secondary one with two large buttons + shortcuts button + 2 gaps + right margin:
+// the secondary one with three large buttons + shortcuts button + 2 gaps + right margin:
 export const MAX_MENU_WIDTH =
-  2 * LARGE_BUTTON_WIDTH +
+  3 * LARGE_BUTTON_WIDTH +
   KEYBOARD_SHORTCUTS_WIDTH +
   2 * FOOTER_MENU_GAP +
   FOOTER_MARGIN;
