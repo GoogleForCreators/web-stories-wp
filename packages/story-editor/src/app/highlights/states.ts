@@ -28,9 +28,9 @@ import {
   STYLE as STYLE_SIDEBAR,
 } from '../../components/sidebar/constants';
 import { PANE_IDS } from '../../components/library/paneIds';
-import { HighlightType } from '../../types/highlightsProvider';
+import {HighlightState, HighlightType} from '../../types/highlightsProvider';
 
-export const STATES = {
+export const STATES: HighlightState = {
   [HighlightType.STORY_TITLE]: {
     focus: true,
   },

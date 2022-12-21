@@ -62,16 +62,22 @@ export interface setHighlightProps {
   highlight?: HighlightType;
 }
 
+export type Highlight = {
+  focus: boolean;
+  showEffect?: boolean;
+  tab?: string;
+  section?: string;
+};
 export type HighlightState = {
-  [k in HighlightType]?: {
-    focus: boolean;
-    showEffect?: boolean;
-    tab: string;
-    section: string;
-  };
+  [k in HighlightType]?: Highlight;
 };
 
-export interface HighlightsState {
+export interface HighlightsState extends HighlightState {
+  tab?: string;
+  section?: string;
+}
+
+export interface HighlightProviderState {
   cancelEffect: (stateKey: HighlightType) => void;
   onFocusOut: () => void;
   setHighlights: (highlights: setHighlightProps) => void;

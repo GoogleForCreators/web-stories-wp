@@ -27,12 +27,14 @@ import type {
   selectElementProps,
   HighlightType,
   HighlightState,
+  Highlight,
+  HighlightsState,
 } from '../../types/highlightsProvider';
 import Context from './context';
 import { STATES } from './states';
 
 function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
-  const [highlighted, setHighlighted] = useState<HighlightState>({});
+  const [highlighted, setHighlighted] = useState<HighlightsState>({});
   const {
     actions: { setSelectedElementsById, setCurrentPage },
   } = useStory();
@@ -60,9 +62,13 @@ function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
       }
 
       if (highlight && STATES[highlight]) {
-        const highlightState = STATES[highlight];
+        const { tab, section, ...highlightState }: Highlight = STATES[
+          highlight
+        ] as Highlight;
         setHighlighted({
           [highlight]: { ...highlightState, showEffect: true },
+          tab,
+          section,
         });
       }
     },
@@ -74,6 +80,7 @@ function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
   const cancelEffect = useCallback(
     (highlight: HighlightType) =>
       setHighlighted((state: HighlightState) => ({
+        ...state,
         [highlight]: { ...state[highlight], showEffect: false },
       })),
     []
