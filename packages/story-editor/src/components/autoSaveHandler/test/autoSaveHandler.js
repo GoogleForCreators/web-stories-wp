@@ -44,6 +44,7 @@ function setup({
   const storyContextValue = {
     state: {
       story: { status },
+      meta: { isSaving: false },
     },
     actions: { autoSave },
   };
