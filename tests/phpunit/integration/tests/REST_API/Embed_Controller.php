@@ -322,13 +322,6 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		$this->set_permalink_structure( '/%postname%/' );
 
-		// Without (re-)registering the post type here there won't be any rewrite rules for it
-		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
-		// instead of "http://example.org/web-stories/embed-controller-test-story/".
-		// @todo Investigate why this is  needed (leakage between tests?).
-		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$story_post_type->register();
-
 		flush_rewrite_rules( false );
 
 		wp_set_current_user( self::$admin );
@@ -338,10 +331,6 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$blog_id = self::factory()->blog->create();
 		add_user_to_blog( $blog_id, self::$admin, 'administrator' );
 		switch_to_blog( $blog_id );
-
-		// TODO: Figure out why this is needed.
-		$this->add_caps_to_roles();
-		wp_get_current_user()->for_site( $blog_id );
 
 		$this->set_permalink_structure( '/%postname%/' );
 
