@@ -33,11 +33,6 @@ class Capabilities extends DependencyInjectedTestCase {
 		$this->instance = $this->injector->make( \Google\Web_Stories\User\Capabilities::class );
 	}
 
-	public function tear_down(): void {
-
-		parent::tear_down();
-	}
-
 	/**
 	 * @covers ::add_caps_to_roles
 	 */
