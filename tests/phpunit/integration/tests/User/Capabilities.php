@@ -20,22 +20,20 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\User;
 
-use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Capabilities
  */
-class Capabilities extends TestCase {
-	use Capabilities_Setup;
+class Capabilities extends DependencyInjectedTestCase {
+	private \Google\Web_Stories\User\Capabilities $instance;
 
 	public function set_up(): void {
 		parent::set_up();
-		$this->add_caps_to_roles();
+		$this->instance = $this->injector->make( \Google\Web_Stories\User\Capabilities::class );
 	}
 
 	public function tear_down(): void {
-		$this->remove_caps_from_roles();
 
 		parent::tear_down();
 	}
@@ -50,8 +48,7 @@ class Capabilities extends TestCase {
 
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
-		$capability = new \Google\Web_Stories\User\Capabilities();
-		$capability->add_caps_to_roles();
+		$this->instance->add_caps_to_roles();
 
 		$administrator = get_role( 'administrator' );
 		$editor        = get_role( 'editor' );
@@ -69,8 +66,7 @@ class Capabilities extends TestCase {
 	 * @covers ::remove_caps_from_roles
 	 */
 	public function test_remove_caps_from_roles(): void {
-		$capability = new \Google\Web_Stories\User\Capabilities();
-		$capability->remove_caps_from_roles();
+		$this->instance->remove_caps_from_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$this->assertNotNull( $post_type_object );
@@ -98,8 +94,7 @@ class Capabilities extends TestCase {
 		$blog_id = self::factory()->blog->create();
 		switch_to_blog( $blog_id );
 
-		$capability = new \Google\Web_Stories\User\Capabilities();
-		$capability->add_caps_to_roles();
+		$this->instance->add_caps_to_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$this->assertNotNull( $post_type_object );

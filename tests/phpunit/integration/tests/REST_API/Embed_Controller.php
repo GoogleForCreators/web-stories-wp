@@ -144,13 +144,6 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
-
-		$route = $routes['/web-stories/v1/embed'];
-		$this->assertCount( 1, $route );
-		$this->assertArrayHasKey( 'callback', $route[0] );
-		$this->assertArrayHasKey( 'permission_callback', $route[0] );
-		$this->assertArrayHasKey( 'methods', $route[0] );
-		$this->assertArrayHasKey( 'args', $route[0] );
 	}
 
 	protected function dispatch_request( ?string $url = null ): WP_REST_Response {
