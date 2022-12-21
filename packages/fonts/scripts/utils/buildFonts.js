@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { writeFileSync } from 'fs';
-import got from 'got';
 
 /**
  * Internal dependencies
@@ -41,13 +40,14 @@ async function buildFonts(targetFile) {
   url.searchParams.append('prettyPrint', 'false');
   url.searchParams.append('key', process.env.GOOGLE_FONTS_API_KEY);
 
-  const response = await got(url.toString());
+  const response = await fetch(url.toString());
 
-  if (!response.body) {
+  if (!response.ok) {
     return;
   }
 
-  const rawFonts = JSON.parse(response.body);
+  const rawFonts = await response.json();
+
   if (!Object.prototype.hasOwnProperty.call(rawFonts, 'items')) {
     return;
   }
