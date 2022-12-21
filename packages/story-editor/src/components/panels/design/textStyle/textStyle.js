@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
  */
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { useHighlights, states } from '../../../../app/highlights';
-import { FLASH, OUTLINE } from '../../../../app/highlights/styles';
+import styles from '../../../../app/highlights/styles';
 import { useStory, useLayout } from '../../../../app';
 import {
   getPagesWithFailedContrast,
@@ -107,7 +107,8 @@ function StylePanel(props) {
     <Panel
       name="textStyle"
       css={
-        (dropdownHighlight?.showEffect || colorHighlight?.showEffect) && FLASH
+        (dropdownHighlight?.showEffect || colorHighlight?.showEffect) &&
+        styles.FLASH
       }
       onAnimationEnd={() => resetHighlight()}
       isPersistable={false}
@@ -126,7 +127,7 @@ function StylePanel(props) {
               setFontsFocused(true);
             }
           }}
-          highlightStylesOverride={fontsFocused ? OUTLINE : []}
+          highlightStylesOverride={fontsFocused ? styles.OUTLINE : []}
         />
         <StyleControls {...props} />
         <ColorControls

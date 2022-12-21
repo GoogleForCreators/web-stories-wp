@@ -31,7 +31,7 @@ import { SimplePanel } from '../../panel';
 import BackgroundAudioPanelContent from '../../shared/media/backgroundAudioPanelContent';
 import useHighlights from '../../../../app/highlights/useHighlights';
 import { states } from '../../../../app/highlights';
-import { FLASH } from '../../../../app/highlights/styles';
+import styles from '../../../../app/highlights/styles';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -50,7 +50,7 @@ const HighlightRow = styled(Row).attrs({
     bottom: -10px;
     left: -20px;
     right: -10px;
-    ${({ isHighlighted }) => isHighlighted && FLASH}
+    ${({ isHighlighted }) => isHighlighted && styles.FLASH}
     pointer-events: none;
   }
 `;

@@ -53,7 +53,7 @@ import Warning from '../warning';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { states, useHighlights } from '../../../../app/highlights';
-import { FLASH, OUTLINE } from '../../../../app/highlights/styles';
+import styles from '../../../../app/highlights/styles';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import { EffectChooserDropdown } from './effectChooserDropdown';
 
@@ -246,7 +246,7 @@ function AnimationPanel({
     <SimplePanel
       name="animation"
       title={__('Animation', 'web-stories')}
-      css={highlight?.showEffect && FLASH}
+      css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
       isPersistable={!highlight}
     >
@@ -264,7 +264,7 @@ function AnimationPanel({
             disabledTypeOptionsMap={disabledTypeOptionsMap}
             direction={getEffectDirection(updatedAnimations[0])}
             selectedEffectType={updatedAnimations[0]?.type}
-            selectButtonStylesOverride={highlight?.focus && OUTLINE}
+            selectButtonStylesOverride={highlight?.focus && styles.OUTLINE}
             disabled={isFirstPage}
           />
         </StyledRow>

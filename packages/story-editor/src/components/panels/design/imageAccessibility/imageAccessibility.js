@@ -29,7 +29,7 @@ import { Row, TextArea } from '../../../form';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { useHighlights, states } from '../../../../app/highlights';
-import { FLASH } from '../../../../app/highlights/styles';
+import styles from '../../../../app/highlights/styles';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 const StyledText = styled(Text)`
@@ -62,7 +62,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={highlight && FLASH}
+      css={highlight && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}

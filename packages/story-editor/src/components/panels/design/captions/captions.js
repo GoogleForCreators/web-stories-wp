@@ -37,7 +37,7 @@ import { usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import { states, useHighlights } from '../../../../app/highlights';
-import { FLASH, OUTLINE } from '../../../../app/highlights/styles';
+import styles from '../../../../app/highlights/styles';
 import CaptionsPanelContent from '../../shared/media/captionsPanelContent';
 import { MULTIPLE_VALUE } from '../../../../constants';
 
@@ -114,7 +114,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   const renderUploadButton = useCallback(
     (open) => (
       <UploadButton
-        css={highlight?.showEffect && OUTLINE}
+        css={highlight?.showEffect && styles.OUTLINE}
         onAnimationEnd={() => resetHighlight()}
         ref={(node) => {
           if (node && highlight?.focus && highlight?.showEffect) {
@@ -134,7 +134,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={highlight?.showEffect && FLASH}
+      css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="caption"
       title={__('Caption and Subtitles', 'web-stories')}

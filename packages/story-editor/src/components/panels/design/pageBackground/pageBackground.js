@@ -48,7 +48,7 @@ import {
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
 import { states, useHighlights } from '../../../../app/highlights';
-import { FLASH } from '../../../../app/highlights/styles';
+import styles from '../../../../app/highlights/styles';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
 import Warning from '../warning';
 import useCORSProxy from '../../../../utils/useCORSProxy';
@@ -213,7 +213,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={highlight?.showEffect && FLASH}
+      css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="pageBackground"
       title={__('Page Background', 'web-stories')}

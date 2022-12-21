@@ -47,7 +47,7 @@ import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared/styles';
 import { LinkRelations, useCommonObjectValue } from '../../shared';
 import { states, useHighlights } from '../../../../app/highlights';
-import { FLASH } from '../../../../app/highlights/styles';
+import styles from '../../../../app/highlights/styles';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const IconInfo = styled.div`
@@ -236,7 +236,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     <SimplePanel
       name="link"
       title={__('Link', 'web-stories')}
-      css={highlight?.showEffect && FLASH}
+      css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
       isPersistable={!highlight}
     >

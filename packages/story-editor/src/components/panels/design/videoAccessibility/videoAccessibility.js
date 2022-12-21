@@ -32,7 +32,7 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { useConfig } from '../../../../app/config';
 import { states, useHighlights } from '../../../../app/highlights';
-import { FLASH } from '../../../../app/highlights/styles';
+import styles from '../../../../app/highlights/styles';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 const DEFAULT_RESOURCE = {
@@ -150,7 +150,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={(highlightInput || highlightMediaPicker) && FLASH}
+      css={(highlightInput || highlightMediaPicker) && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="videoAccessibility"
       title={__('Accessibility', 'web-stories')}

@@ -37,7 +37,7 @@ import styled, { css } from 'styled-components';
 import Tooltip from '../tooltip';
 import { useCanvas } from '../../app';
 import { states, useHighlights } from '../../app/highlights';
-import { OUTLINE, FLASH } from '../../app/highlights/styles';
+import styles from '../../app/highlights/styles';
 
 const StyledButton = styled(Button)`
   ${themeHelpers.focusableOutlineCSS};
@@ -45,8 +45,8 @@ const StyledButton = styled(Button)`
   ${({ isHighlighted }) =>
     isHighlighted &&
     css`
-      ${OUTLINE}
-      ${FLASH}
+      ${styles.OUTLINE}
+      ${styles.FLASH}
     `}
 `;
 
