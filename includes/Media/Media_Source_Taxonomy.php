@@ -120,12 +120,22 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.29.0
 	 */
 	private function add_missing_terms(): void {
-		foreach ( $this->media_source->get_all() as $term ) {
-			// See https://github.com/Automattic/VIP-Coding-Standards/issues/720.
-			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.term_exists_term_exists
-			if ( ! term_exists( $term, $this->get_taxonomy_slug() ) ) {
-				wp_insert_term( $term, $this->get_taxonomy_slug() );
-			}
+		$existing_terms = get_terms(
+			[
+				'taxonomy'   => $this->get_taxonomy_slug(),
+				'hide_empty' => false,
+				'fields'     => 'slugs',
+			]
+		);
+
+		if ( is_wp_error( $existing_terms ) ) {
+			return;
+		}
+
+		$missing_terms = array_diff( $this->media_source->get_all(), $existing_terms );
+
+		foreach ( $missing_terms as $term ) {
+			wp_insert_term( $term, $this->get_taxonomy_slug() );
 		}
 	}
 
