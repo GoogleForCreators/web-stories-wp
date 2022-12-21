@@ -123,7 +123,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_plugin_activation( $network_wide ): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( (string) $id );
+
 			if ( $service instanceof PluginActivationAware ) {
 				$service->on_plugin_activation( $network_wide );
 			}
@@ -144,7 +147,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_plugin_deactivation( $network_wide ): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( (string) $id );
+
 			if ( $service instanceof PluginDeactivationAware ) {
 				$service->on_plugin_deactivation( $network_wide );
 			}
@@ -170,7 +176,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 		switch_to_blog( $site_id );
 
-		foreach ( $this->service_container as $service ) {
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( (string) $id );
+
 			if ( $service instanceof SiteInitializationAware ) {
 				$service->on_site_initialization( $site );
 			}
@@ -198,7 +207,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 		switch_to_blog( $site_id );
 
-		foreach ( $this->service_container as $service ) {
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( (string) $id );
+
 			if ( $service instanceof SiteRemovalAware ) {
 				$service->on_site_removal( $site );
 			}
@@ -215,7 +227,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_site_uninstall(): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( (string) $id );
+
 			if ( $service instanceof PluginUninstallAware ) {
 				$service->on_plugin_uninstall();
 			}
