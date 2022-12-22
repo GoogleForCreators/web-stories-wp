@@ -107,7 +107,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**
 	 * Act on plugin activation.
 	 *
-	 * @since 1.12.0
+	 * @since 1.29.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
