@@ -28,8 +28,6 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media_Source;
-
 /**
  * Class Add_Media_Source_Page_Template
  */
@@ -40,6 +38,6 @@ class Add_Media_Source_Page_Template extends Add_Media_Source {
 	 * @since 1.14.0
 	 */
 	protected function get_term(): string {
-		return Media_Source::PAGE_TEMPLATE;
+		return $this->media_source_taxonomy::TERM_PAGE_TEMPLATE;
 	}
 }

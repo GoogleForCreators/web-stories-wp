@@ -30,7 +30,6 @@ namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Infrastructure\PluginUninstallAware;
-use Google\Web_Stories\Media\Media_Source;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use WP_Post;
@@ -262,7 +261,7 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 		if ( \is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 
-			return \in_array( Media_Source::POSTER_GENERATION, $slugs, true );
+			return \in_array( $this->media_source_taxonomy::TERM_POSTER_GENERATION, $slugs, true );
 		}
 
 		return false;

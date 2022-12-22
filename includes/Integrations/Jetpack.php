@@ -29,7 +29,6 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Context;
-use Google\Web_Stories\Media\Media_Source;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
@@ -377,7 +376,7 @@ class Jetpack extends Service_Base {
 			return;
 		}
 
-		wp_set_object_terms( (int) $object_id, Media_Source::POSTER_GENERATION, $this->media_source_taxonomy->get_taxonomy_slug() );
+		wp_set_object_terms( (int) $object_id, $this->media_source_taxonomy::TERM_POSTER_GENERATION, $this->media_source_taxonomy->get_taxonomy_slug() );
 	}
 
 	/**
