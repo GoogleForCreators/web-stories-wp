@@ -22,8 +22,9 @@ import { useCallback } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import { noop } from '../../utils/noop';
 
-function useDeleteColor({ onEmpty = () => {} }) {
+function useDeleteColor({ onEmpty = noop }) {
   const { currentStoryStyles, globalStoryStyles, updateStory } = useStory(
     ({
       state: {

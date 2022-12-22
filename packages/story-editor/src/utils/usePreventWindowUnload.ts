@@ -23,6 +23,11 @@ import {
   useContext,
 } from '@googleforcreators/react';
 
+/**
+ * Internal dependencies
+ */
+import { noop } from './noop';
+
 type EventListener = (event: BeforeUnloadEvent) => void;
 interface PreventUnloadContextState {
   listeners: Map<string, EventListener>;
@@ -71,6 +76,4 @@ declare const WEB_STORIES_DISABLE_PREVENT: string;
 const shouldDisablePrevent =
   typeof WEB_STORIES_DISABLE_PREVENT !== 'undefined' &&
   WEB_STORIES_DISABLE_PREVENT === 'true';
-export default shouldDisablePrevent
-  ? () => () => undefined
-  : usePreventWindowUnload;
+export default shouldDisablePrevent ? () => noop : usePreventWindowUnload;

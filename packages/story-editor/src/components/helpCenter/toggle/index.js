@@ -24,11 +24,12 @@ import { Icons } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { ToggleButton } from '../../toggleButton';
+import { noop } from '../../../utils/noop';
 
 function Toggle({
   isOpen = false,
   popupId = '',
-  onClick = () => {},
+  onClick = noop,
   notificationCount = 0,
 }) {
   return (

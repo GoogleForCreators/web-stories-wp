@@ -22,6 +22,7 @@ import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { noop } from '../../utils/noop';
 import type { FontProviderState } from './types';
 
 export default createContext<FontProviderState>({
@@ -37,9 +38,9 @@ export default createContext<FontProviderState>({
     maybeEnqueueFontStyle: () => Promise.resolve(),
     getFontWeight: (name: string) => [{ name, value: 400 }],
     getFontFallback: () => [''],
-    ensureMenuFontsLoaded: () => undefined,
-    ensureCustomFontsLoaded: () => undefined,
-    addRecentFont: () => undefined,
+    ensureMenuFontsLoaded: noop,
+    ensureCustomFontsLoaded: noop,
+    addRecentFont: noop,
     loadCustomFonts: () => Promise.resolve(),
     loadCuratedFonts: () => Promise.resolve(),
   },

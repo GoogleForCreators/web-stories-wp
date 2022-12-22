@@ -30,6 +30,7 @@ import {
 import { useConfig } from '../../../app/config';
 import { forceFocusCompanion } from '../utils';
 import { useHelpCenter } from '../../../app';
+import { noop } from '../../../utils/noop';
 
 const Panel = styled.div`
   padding: 24px 0;
@@ -90,7 +91,7 @@ Tip.propTypes = {
   unread: PropTypes.bool,
 };
 
-export function Tips({ onTipSelect = () => {}, readTips }) {
+export function Tips({ onTipSelect = noop, readTips }) {
   const {
     state: { tips },
   } = useHelpCenter();

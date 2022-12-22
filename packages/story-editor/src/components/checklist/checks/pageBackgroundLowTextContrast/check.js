@@ -38,6 +38,7 @@ import {
 } from '../../../../utils/contrastUtils';
 import { getSpansFromContent } from '../../utils';
 import getMediaBaseColor from '../../../../utils/getMediaBaseColor';
+import { noop } from '../../../../utils/noop';
 
 /**
  * @typedef {import('@googleforcreators/elements').Page} Page
@@ -335,7 +336,7 @@ function getBackgroundColorByType(element) {
     case 'shape':
       return getTextShapeBackgroundColor;
     default:
-      return () => undefined;
+      return noop;
   }
 }
 /**

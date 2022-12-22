@@ -484,14 +484,12 @@ const useQuickActions = () => {
     handleFocusAnimationPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
-    handleFocusTextSetsPanel,
     handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
-      handleFocusTextSetsPanel: handleFocusPanel(states.TEXT_SET),
       handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
     }),
     [handleFocusPanel]
@@ -540,8 +538,10 @@ const useQuickActions = () => {
       {
         Icon: LetterTPlus,
         label: ACTIONS.INSERT_TEXT.text,
-        onClick: (evt) => {
-          handleFocusTextSetsPanel()(evt);
+        onClick: () => {
+          setHighlights({
+            highlight: states.STYLE_PANE,
+          });
           insertElement('text', DEFAULT_PRESET);
           trackEvent('quick_action', {
             name: ACTIONS.INSERT_TEXT.trackingEventName,
@@ -556,7 +556,7 @@ const useQuickActions = () => {
     backgroundElement,
     handleFocusMediaPanel,
     handleFocusPageBackground,
-    handleFocusTextSetsPanel,
+    setHighlights,
     insertElement,
   ]);
 

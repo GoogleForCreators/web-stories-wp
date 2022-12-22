@@ -20,15 +20,14 @@
 import { stateToHTML } from 'draft-js-export-html';
 import type { EditorState } from 'draft-js';
 import type { RenderConfig } from 'draft-js-export-html';
+import type { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
  */
 import formatters from './formatters';
 
-function inlineStyleFn(
-  styles: Immutable.OrderedSet<string>
-): RenderConfig | null {
+function inlineStyleFn(styles: OrderedSet<string>): RenderConfig | null {
   const inlineCSS = formatters.reduce(
     (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
     {}
