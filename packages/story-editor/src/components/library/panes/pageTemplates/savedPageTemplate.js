@@ -142,7 +142,9 @@ function SavedPageTemplate(
     if (!shouldPostBlob) {
       return;
     }
-
+    console.log(page);
+    console.log(pageDataUrl);
+    console.log(page.image);
     (async () => {
       try {
         const blob = await fetchRemoteBlob(pageDataUrl);
