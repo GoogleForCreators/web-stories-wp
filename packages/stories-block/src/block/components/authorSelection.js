@@ -126,10 +126,8 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
   return (
     <Autocomplete
       label={__('Authors', 'web-stories')}
-      value={authorsList ? authorsList.map(({ name }) => name) : []}
-      options={
-        authorSuggestions ? authorSuggestions.map(({ name }) => name) : []
-      }
+      value={authorsList.map(({ name }) => name)}
+      options={authorSuggestions.map(({ name }) => name)}
       onChange={onChange}
       onInputChange={debouncedOnInputChange}
     />
