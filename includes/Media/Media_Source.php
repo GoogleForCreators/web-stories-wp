@@ -56,7 +56,7 @@ class Media_Source {
 		 *
 		 * @var string[] $terms
 		 */
-		$terms = array_values( ( new ReflectionClass( self::class ) )->getConstants() );
+		$terms = array_values( ( new ReflectionClass( $this ) )->getConstants() );
 
 		return $terms;
 	}
