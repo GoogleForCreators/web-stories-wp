@@ -122,7 +122,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.29.0
 	 *
-	 * @return string[] Media sou
+	 * @return string[] Media sources
 	 */
 	public function get_all_terms(): array {
 		$consts = ( new ReflectionClass( $this ) )->getConstants();
