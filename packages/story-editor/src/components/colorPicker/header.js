@@ -33,6 +33,7 @@ import {
  * Internal dependencies
  */
 import { focusStyle } from '../panels/shared/styles';
+import { noop } from '../../utils/noop';
 
 const HEADER_HEIGHT = 44;
 
@@ -60,7 +61,7 @@ function Header({
   children,
   handleClose,
   isEditMode = false,
-  setIsEditMode = () => {},
+  setIsEditMode = noop,
   hasPresets = false,
 }) {
   const ref = useRef();

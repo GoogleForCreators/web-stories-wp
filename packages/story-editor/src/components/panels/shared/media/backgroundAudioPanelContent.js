@@ -52,6 +52,7 @@ import { useConfig } from '../../../../app/config';
 import { Row } from '../../../form';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import HotlinkModal from '../../../hotlinkModal';
+import { noop } from '../../../../utils/noop';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
 import AudioPlayer from './audioPlayer';
@@ -254,7 +255,7 @@ function BackgroundAudioPanelContent({
     hasUploadMediaAction && {
       label: __('Upload a file', 'web-stories'),
       value: 'upload',
-      onClick: () => {},
+      onClick: noop,
       mediaPickerProps: {
         onSelect,
         onSelectErrorMessage: __(

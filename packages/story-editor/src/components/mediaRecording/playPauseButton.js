@@ -28,6 +28,7 @@ import { Icons, useKeyDownEffect } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
+import { noop } from '../../utils/noop';
 
 const PLAY_BUTTON_SIZE = 82;
 const ICON_SVG_SIZE = 72;
@@ -119,7 +120,7 @@ function PlayPauseButton({ videoRef }) {
       videoNode.pause();
       setShowControls(true);
     } else {
-      videoNode.play().catch(() => {});
+      videoNode.play().catch(noop);
     }
   };
 
