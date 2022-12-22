@@ -21,6 +21,11 @@ import { useEffect, useRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
+import { noop } from '../../utils/noop';
+
 const AudioWrapper = styled.div`
   background: ${({ theme }) => theme.colors.bg.secondary};
   border-radius: 5px;
@@ -54,7 +59,7 @@ const AudioAnalyser = ({ source }) => {
 
   useEffect(() => {
     if (source.getAudioTracks().length === 0) {
-      return () => {};
+      return noop;
     }
 
     const audioNode = audioContextRef.current.createMediaStreamSource(source);

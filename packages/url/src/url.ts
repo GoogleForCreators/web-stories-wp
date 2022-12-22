@@ -47,3 +47,7 @@ export function withProtocol(
     ? url
     : `${protocol}://${url}`;
 }
+
+export function withoutProtocol(url: string): string {
+  return url.replace(/^(http:\/\/|https:\/\/|tel:|mailto:)/, '');
+}

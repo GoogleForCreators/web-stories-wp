@@ -254,7 +254,7 @@ function TabView({
   useKeyDownEffect(ref, 'right', () => handleNavigation(1), [handleNavigation]);
 
   // Empty up/down handlers for consistency with left/right.
-  useKeyDownEffect(ref, ['up', 'down'], () => {}, []);
+  useKeyDownEffect(ref, ['up', 'down'], noop, []);
 
   // Home/end keys navigate to first/last tab regardless of direction
   useKeyDownEffect(ref, 'home', () => focusTabByIndex(0), [focusTabByIndex]);
