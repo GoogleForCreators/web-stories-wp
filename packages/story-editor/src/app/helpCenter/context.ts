@@ -22,6 +22,7 @@ import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { noop } from '../../utils/noop';
 import type { HelpCenterContext } from './types';
 
 export default createContext<HelpCenterContext>({
@@ -42,14 +43,14 @@ export default createContext<HelpCenterContext>({
     tipKeys: [],
   },
   actions: {
-    goToNext: () => undefined,
-    goToPrev: () => undefined,
-    goToMenu: () => undefined,
-    goToTip: () => undefined,
-    openToUnreadTip: () => undefined,
-    toggle: () => undefined,
-    close: () => undefined,
-    hydrateReadTipsSuccess: () => undefined,
-    persistingReadTipsError: () => undefined,
+    goToNext: noop,
+    goToPrev: noop,
+    goToMenu: noop,
+    goToTip: noop,
+    openToUnreadTip: noop,
+    toggle: noop,
+    close: noop,
+    hydrateReadTipsSuccess: noop,
+    persistingReadTipsError: noop,
   },
 });

@@ -26,6 +26,7 @@ import { useCallback, useRef, useEffect } from '@googleforcreators/react';
  * Internal dependencies
  */
 import useVideoTrim from '../videoTrim/useVideoTrim';
+import { noop } from '../../utils/noop';
 import useMediaRecording from './useMediaRecording';
 import VideoMode from './videoMode';
 import PlayPauseButton from './playPauseButton';
@@ -80,7 +81,7 @@ function PlaybackMedia() {
   const onToggleVideoMode = useCallback(() => {
     toggleIsGif();
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
+      videoRef.current.play().catch(noop);
     }
   }, [toggleIsGif]);
 
