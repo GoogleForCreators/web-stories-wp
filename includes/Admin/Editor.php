@@ -52,7 +52,7 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Web Stories editor script handle.
 	 */
-	public const SCRIPT_HANDLE = 'wp-story-editor';
+	public const SCRIPT_HANDLE = 'web-stories-editor';
 
 	/**
 	 * AMP validator script handle.

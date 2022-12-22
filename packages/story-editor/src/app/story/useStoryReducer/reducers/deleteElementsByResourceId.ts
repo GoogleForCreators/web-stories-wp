@@ -47,9 +47,9 @@ export const deleteElementsByResourceId = (
   }
 
   const hasElementWithResourceId = draft.pages.some((page) =>
-    page.elements.some(
-      (element) => elementIs.media(element) && element.resource.id === id
-    )
+    page.elements
+      .filter(elementIs.media)
+      .some((element) => element.resource.id === id)
   );
 
   if (!hasElementWithResourceId) {
@@ -64,8 +64,8 @@ export const deleteElementsByResourceId = (
     const isDeletingBackground =
       elementIs.media(elements[0]) && elements[0].resource?.id === id;
 
-    page.elements = elements.filter((element) => {
-      if (elementIs.media(element) && element.resource?.id === id) {
+    page.elements = elements.filter(elementIs.media).filter((element) => {
+      if (element.resource.id === id) {
         deletedElementIds.push(element.id);
         return false;
       }
