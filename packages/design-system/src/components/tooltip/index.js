@@ -148,6 +148,11 @@ function BaseTooltip({
     [placement]
   );
 
+  const getAnchor = useCallback(
+    () => forceAnchorRef || anchorRef,
+    [forceAnchorRef]
+  );
+
   const positionPopup = useCallback(() => {
     if (!isPopupMounted.current || !anchorRef?.current) {
       return;
@@ -157,14 +162,14 @@ function BaseTooltip({
         ? getOffset({
             placement: dynamicPlacement,
             spacing,
-            anchor: forceAnchorRef || anchorRef,
+            anchor: getAnchor(),
             popup,
             isRTL,
             ignoreMaxOffsetY: true,
           })
         : {},
     });
-  }, [dynamicPlacement, spacing, forceAnchorRef, isRTL]);
+  }, [dynamicPlacement, spacing, getAnchor, isRTL]);
 
   // When near the edge of the viewport we want to force the tooltip to a new placement as to not
   // cutoff the contents of the tooltip.
@@ -210,7 +215,8 @@ function BaseTooltip({
   );
 
   const positionArrow = useCallback(() => {
-    const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
+    const anchor = getAnchor();
+    const anchorElBoundingBox = anchor.current?.getBoundingClientRect();
     const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
     if (!tooltipElBoundingBox || !anchorElBoundingBox) {
       return;
@@ -222,7 +228,7 @@ function BaseTooltip({
       getBoundingBoxCenter(tooltipElBoundingBox);
 
     setArrowDelta(delta);
-  }, [positionPlacement, popupState]);
+  }, [positionPlacement, popupState, getAnchor]);
 
   const resetPlacement = useDebouncedCallback(() => {
     setDynamicPlacement(placementRef.current);

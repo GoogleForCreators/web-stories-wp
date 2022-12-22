@@ -52,6 +52,7 @@ import getElementProperties from '../../../canvas/utils/getElementProperties';
 import Warning from '../warning';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import Tooltip from '../../../tooltip';
+import { noop } from '../../../../utils/noop';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -195,7 +196,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         );
         setFailedContrast(Boolean(isBackgroundElement));
       })
-      .catch(() => {});
+      .catch(noop);
   }, [currentPage, pageSize]);
 
   const backgroundEl = selectedElements[0];
