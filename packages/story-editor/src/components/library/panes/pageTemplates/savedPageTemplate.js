@@ -142,9 +142,7 @@ function SavedPageTemplate(
     if (!shouldPostBlob) {
       return;
     }
-    console.log(page);
-    console.log(pageDataUrl);
-    console.log(page.image);
+
     (async () => {
       try {
         const blob = await fetchRemoteBlob(pageDataUrl);
@@ -158,7 +156,7 @@ function SavedPageTemplate(
           mediaSource: 'page-template',
         });
 
-        updatePageTemplate(page.templateId, {
+        await updatePageTemplate(page.templateId, {
           featured_media: resource.id,
         });
         updateSavedTemplate({
