@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-declare module '*.worker.ts' {
-  class WebpackWorker extends Worker {}
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
 
-<<<<<<<< HEAD:packages/story-editor/src/app/canvas/context.ts
 /**
  * Internal dependencies
  */
 import type { CanvasProviderState } from '../../types/canvasProvider';
 
 export default createContext<CanvasProviderState>({ actions: {}, state: {} });
-========
-  export default WebpackWorker;
-}
->>>>>>>> origin/main:packages/story-editor/src/typings/worker-loader.d.ts

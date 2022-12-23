@@ -17,14 +17,5 @@
 declare module '*.worker.ts' {
   class WebpackWorker extends Worker {}
 
-<<<<<<<< HEAD:packages/story-editor/src/app/canvas/context.ts
-/**
- * Internal dependencies
- */
-import type { CanvasProviderState } from '../../types/canvasProvider';
-
-export default createContext<CanvasProviderState>({ actions: {}, state: {} });
-========
   export default WebpackWorker;
 }
->>>>>>>> origin/main:packages/story-editor/src/typings/worker-loader.d.ts
