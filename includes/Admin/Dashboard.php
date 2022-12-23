@@ -365,7 +365,7 @@ class Dashboard extends Service_Base {
 								'link',
 								'preview_link',
 								'edit_link',
-								'_links', // Needed for WP 6.1+
+								'_links', // Needed for WP 6.1+.
 								'_embedded',
 								// _web_stories_envelope will add these fields, we need them too.
 								'body',
