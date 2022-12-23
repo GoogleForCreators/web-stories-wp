@@ -158,6 +158,7 @@ function SavedPageTemplate(
           mediaSource: 'page-template',
         });
 
+        console.log(resource);
         await updatePageTemplate(page.templateId, {
           featured_media: resource.id,
         });
