@@ -26,12 +26,12 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Button, Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
  */
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { BlockIcon as WebStoriesLogo } from '../../icons';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesLoading from '../../components/storiesLoading';
