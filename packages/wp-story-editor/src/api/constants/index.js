@@ -33,6 +33,7 @@ export const STORY_FIELDS = [
   'style_presets',
   'password',
   '_links',
+  '_embedded',
 ].join(',');
 
 export const STORY_EMBED = 'wp:lock,author,wp:publisherlogo,wp:term';
