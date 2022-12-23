@@ -38,6 +38,7 @@ import { ResourcePropTypes } from '@googleforcreators/media';
 import { Z_INDEX_STORY_DETAILS } from '../../../../constants/zIndex';
 import Tooltip from '../../../tooltip';
 import useCORSProxy from '../../../../utils/useCORSProxy';
+import { noop } from '../../../../utils/noop';
 
 const Play = styled(Icons.PlayFilled)`
   width: 30px !important;
@@ -94,7 +95,7 @@ function AudioPlayer({ src, mimeType, tracks = [], audioId, loop, playerRef }) {
     if (isPlaying) {
       player.pause();
     } else {
-      player.play().catch(() => {});
+      player.play().catch(noop);
     }
   }, [isPlaying, playerRef]);
 

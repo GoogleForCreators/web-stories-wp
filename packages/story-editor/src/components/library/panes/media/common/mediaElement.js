@@ -37,6 +37,7 @@ import { Blurhash } from 'react-blurhash';
 import DropDownMenu from '../local/dropDownMenu';
 import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
+import { noop } from '../../../../../utils/noop';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 import InsertionMenu from './insertionMenu';
@@ -122,7 +123,7 @@ function Element({
   activeRef.current = active;
 
   useEffect(() => {
-    if (![ContentType.VIDEO, ContentType.GIF].includes(type)) {
+    if (![ContentType.Video, ContentType.Gif].includes(type)) {
       return undefined;
     }
     const resetHoverTime = () => {
@@ -137,7 +138,7 @@ function Element({
         if (mediaElement.current && hoverTimer === null) {
           const timer = setTimeout(() => {
             if (activeRef.current && src) {
-              mediaElement.current.play().catch(() => {});
+              mediaElement.current.play().catch(noop);
             }
           }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
           setHoverTimer(timer);

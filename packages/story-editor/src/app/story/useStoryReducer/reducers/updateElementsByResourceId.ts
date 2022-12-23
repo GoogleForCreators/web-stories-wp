@@ -37,8 +37,6 @@ import { updateElementWithUpdater } from './utils';
  *
  * If an empty id or a no matches with id, state is unchanged.
  *
- * If no element with the given resource id is found, state is changed.
- *
  * If given set of properties is empty, state is unchanged.
  *
  * Current selection and page is unchanged.
@@ -53,9 +51,8 @@ export const updateElementsByResourceId = (
 
   draft.pages.forEach((page) => {
     page.elements
-      .filter(
-        (element) => elementIs.media(element) && element.resource.id === id
-      )
+      .filter(elementIs.media)
+      .filter((element) => element.resource.id === id)
       .forEach((element) =>
         updateElementWithUpdater(element, propertiesOrUpdater)
       );

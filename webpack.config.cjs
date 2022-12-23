@@ -270,8 +270,8 @@ const sharedConfig = {
   },
 };
 
-const EDITOR_CHUNK = 'wp-story-editor';
-const DASHBOARD_CHUNK = 'wp-dashboard';
+const EDITOR_CHUNK = 'web-stories-editor';
+const DASHBOARD_CHUNK = 'web-stories-dashboard';
 
 // Template for html-webpack-plugin to generate JS/CSS chunk manifests in PHP.
 const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
@@ -384,8 +384,8 @@ const editorAndDashboard = {
 const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    lightbox: './packages/stories-lightbox/src/index.js',
-    'carousel-view': './packages/stories-carousel/src/index.js',
+    'web-stories-lightbox': './packages/stories-lightbox/src/index.js',
+    'web-stories-carousel': './packages/stories-carousel/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -467,7 +467,7 @@ const widgetScript = {
 const storiesMCEButton = {
   ...sharedConfig,
   entry: {
-    'tinymce-button': './packages/tinymce-button/src/index.js',
+    'web-stories-tinymce-button': './packages/tinymce-button/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,

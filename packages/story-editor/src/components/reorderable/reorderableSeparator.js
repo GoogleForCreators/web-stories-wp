@@ -25,6 +25,7 @@ import { useCallback, useRef, useState } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { NESTED_PX } from '../panels/layer/constants';
+import { noop } from '../../utils/noop';
 import useReorderable from './useReorderable';
 
 const Wrapper = styled.div`
@@ -53,7 +54,7 @@ function ReorderableSeparator({
   groupId = null,
   isNested = false,
   nestedOffset = false,
-  nestedOffsetCalcFunc = () => {},
+  nestedOffsetCalcFunc = noop,
   children = null,
   ...props
 }) {

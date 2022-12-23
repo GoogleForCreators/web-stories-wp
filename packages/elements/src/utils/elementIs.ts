@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type { Draft } from 'immer';
+
 /**
  * Internal dependencies
  */
@@ -26,29 +32,49 @@ import type {
   SequenceMediaElement,
 } from '../types';
 
+function isMediaElement(e: Element): e is MediaElement;
+function isMediaElement(e: Draft<Element>): e is Draft<MediaElement>;
 function isMediaElement(e: Element): e is MediaElement {
-  return 'resource' in e;
+  return 'resource' in e && Boolean(e.resource);
 }
 
+function isTextElement(e: Element): e is TextElement;
+function isTextElement(e: Draft<Element>): e is Draft<TextElement>;
 function isTextElement(e: Element): e is TextElement {
-  return 'font' in e;
+  return 'font' in e && Boolean(e.font);
 }
 
+function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement;
+function isDefaultBackgroundElement(
+  e: Draft<Element>
+): e is Draft<DefaultBackgroundElement>;
 function isDefaultBackgroundElement(e: Element): e is DefaultBackgroundElement {
-  return 'isDefaultBackground' in e;
+  return 'isDefaultBackground' in e && Boolean(e.isDefaultBackground);
 }
 
+function isBackgroundable(e: Element): e is BackgroundableElement;
+function isBackgroundable(e: Draft<Element>): e is Draft<BackgroundableElement>;
 function isBackgroundable(e: Element): e is BackgroundableElement {
   // All media is backgroundable.
-  return 'isBackground' in e || 'resource' in e;
+  return (
+    // Property can be undefined if e is of type Draft<Element>.
+    ('isBackground' in e && typeof e.isBackground !== 'undefined') ||
+    isMediaElement(e)
+  );
 }
 
+function isProduct(e: Element): e is ProductElement;
+function isProduct(e: Draft<Element>): e is Draft<ProductElement>;
 function isProduct(e: Element): e is ProductElement {
-  return 'product' in e;
+  return 'product' in e && Boolean(e.product);
 }
 
+function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement;
+function isSequenceMediaElement(
+  e: Draft<MediaElement>
+): e is Draft<SequenceMediaElement>;
 function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement {
-  return 'poster' in e.resource;
+  return 'poster' in e.resource && Boolean(e.resource.poster);
 }
 
 const elementIs = {

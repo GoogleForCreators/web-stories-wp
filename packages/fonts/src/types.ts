@@ -16,5 +16,5 @@
 
 export interface Font {
   family: string;
-  variants: Array<[number, number]>;
+  variants?: Array<[number, number]>;
 }

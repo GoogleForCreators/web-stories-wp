@@ -41,6 +41,7 @@ import { useTransform } from '@googleforcreators/transform';
  */
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import useStory from '../../app/story/useStory';
+import { noop } from '../../utils/noop';
 import CustomColorPicker from './customColorPicker';
 import BasicColorPicker from './basicColorPicker';
 
@@ -87,9 +88,9 @@ function ColorPicker({
   allowsSavedColors = false,
   hasEyedropper = true,
   maxHeight = null,
-  onClose = () => {},
+  onClose = noop,
   changedStyle = 'background',
-  onDimensionChange = () => {},
+  onDimensionChange = noop,
   allowsSavedColorDeletion = true,
   shouldCloseOnSelection = false,
 }) {

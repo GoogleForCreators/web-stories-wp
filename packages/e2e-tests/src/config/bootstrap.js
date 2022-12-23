@@ -118,6 +118,9 @@ const ALLOWED_ERROR_MESSAGES = [
   'still waiting on run dependencies',
   'dependency: wasm-instantiate',
   '(end of list)',
+
+  // Customizer preview iframe.
+  'An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing',
 ];
 
 export function addAllowedErrorMessage(message) {

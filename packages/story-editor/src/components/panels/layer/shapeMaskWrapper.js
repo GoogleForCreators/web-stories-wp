@@ -23,7 +23,7 @@ import { generateMaskId } from '@googleforcreators/masks';
  * Internal dependencies
  */
 import useShapeMask from '../../../utils/useShapeMask';
-import StoryPropTypes from '../../../types';
+import { StoryPropTypes } from '../../../propTypes';
 
 const MaskedIconWrapper = styled.div`
   position: relative;

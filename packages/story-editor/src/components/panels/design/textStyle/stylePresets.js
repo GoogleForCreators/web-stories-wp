@@ -43,7 +43,7 @@ import useAddPreset from '../../../../utils/useAddPreset';
 import useSidebar from '../../../sidebar/useSidebar';
 import StyleGroup from '../../../styleManager/styleGroup';
 import StyleManager, {
-  NoStylesWrapper,
+  NoStylesWrapper as DefaultNoStylesWrapper,
   MoreButton,
 } from '../../../styleManager';
 import useApplyStyle from '../../../styleManager/useApplyStyle';
@@ -55,6 +55,10 @@ const PresetsHeader = styled.div`
 `;
 
 const StylesWrapper = styled.div``;
+
+const NoStylesWrapper = styled(DefaultNoStylesWrapper)`
+  width: calc(100% + 28px);
+`;
 
 const SubHeading = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};

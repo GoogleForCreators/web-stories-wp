@@ -1124,7 +1124,7 @@ class APIProviderFixture {
             if ('builtin' === params.service) {
               return 'fonts.google.com' === params.service;
             }
-            return [];
+            return false;
           });
         }
 

@@ -118,10 +118,9 @@ function CarouselLayout() {
 
   const isCollapsed = carouselState === CarouselState.Closed;
 
-  const isOpenOrOpening = [
-    CarouselState.Open,
-    CarouselState.OpenING,
-  ].includes(carouselState);
+  const isOpenOrOpening = [CarouselState.Open, CarouselState.Opening].includes(
+    carouselState
+  );
 
   return (
     <CSSTransition

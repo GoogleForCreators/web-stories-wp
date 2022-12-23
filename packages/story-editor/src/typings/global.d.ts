@@ -13,7 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export {};
+
+import { default as MediaInfoFactory } from 'mediainfo.js';
+
+declare global {
+  var WEB_STORIES_ENV: string;
+}
 
 declare global {
   interface Array<T> {
@@ -22,4 +27,11 @@ declare global {
       thisArg?: any
     ): number;
   }
+
+  interface Window {
+    // Made available by useMediaInfo()
+    MediaInfo?: typeof MediaInfoFactory;
+  }
 }
+
+export {};

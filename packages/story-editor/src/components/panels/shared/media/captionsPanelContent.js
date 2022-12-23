@@ -42,6 +42,7 @@ import { Row } from '../../../form';
 import { useConfig } from '../../../../app/config';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import HotlinkModal from '../../../hotlinkModal';
+import { noop } from '../../../../utils/noop';
 import FileRow from './fileRow';
 
 const ButtonRow = styled(Row)`
@@ -113,7 +114,7 @@ function CaptionsPanelContent({
     hasUploadMediaAction && {
       label: __('Upload a file', 'web-stories'),
       value: 'upload',
-      onClick: () => {},
+      onClick: noop,
       mediaPickerProps: {
         onSelect: handleChangeTrack,
         onSelectErrorMessage: __(

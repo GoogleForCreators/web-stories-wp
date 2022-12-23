@@ -21,8 +21,8 @@ import { unlinkSync, writeFileSync } from 'fs';
 import Crypto from 'crypto';
 import { tmpdir } from 'os';
 import Path from 'path';
-import got from 'got';
 import { loadSync } from 'opentype.js';
+import { fetch, setGlobalDispatcher, Agent, Pool } from 'undici';
 
 /**
  * @typedef {Object} FontMetrics font metrics.
@@ -43,6 +43,11 @@ import { loadSync } from 'opentype.js';
  * @property {number} lGap line gap.
  */
 
+// See https://github.com/nodejs/undici/issues/1531#issuecomment-1318120321
+setGlobalDispatcher(
+  new Agent({ factory: (origin) => new Pool(origin, { connections: 128 }) })
+);
+
 /**
  * Returns a pseudo-random temporary file name.
  *
@@ -62,10 +67,10 @@ function getTmpFileName() {
  * @return {Promise<FontMetrics>} Font metrics.
  */
 async function getFontMetrics(fontFileURL) {
-  const response = await got(fontFileURL);
+  const response = await fetch(fontFileURL);
 
   const tempFile = getTmpFileName();
-  writeFileSync(tempFile, response.rawBody);
+  writeFileSync(tempFile, Buffer.from(await response.arrayBuffer()));
   const fontInfo = loadSync(tempFile);
   unlinkSync(tempFile);
 

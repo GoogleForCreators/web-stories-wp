@@ -39,19 +39,19 @@ describe('useIdleTaskQueue', () => {
     mockIdleCallbacks = [];
     runIdleCallbacks = () => {
       while (mockIdleCallbacks.length > 0) {
-        const [, callback] = mockIdleCallbacks.shift();
-        callback();
+        const { task } = mockIdleCallbacks.shift();
+        task();
       }
     };
 
     requestIdleCallback.mockImplementation((callback) => {
       const idleCallbackId = Symbol();
-      mockIdleCallbacks.push([idleCallbackId, callback]);
+      mockIdleCallbacks.push({ taskId: idleCallbackId, task: callback });
       return idleCallbackId;
     });
     cancelIdleCallback.mockImplementation((idleCallbackId) => {
       mockIdleCallbacks = mockIdleCallbacks.filter(
-        ([id]) => id !== idleCallbackId
+        ({ taskId }) => taskId !== idleCallbackId
       );
     });
   });
@@ -68,9 +68,9 @@ describe('useIdleTaskQueue', () => {
       const {
         result: { current: queueIdleTask },
       } = renderHook(() => useIdleTaskQueue());
-      const task1Tuple = [1, jest.fn(() => Promise.resolve())];
-      const task2Tuple = [2, jest.fn(() => Promise.resolve())];
-      const task3Tuple = [3, jest.fn(() => Promise.resolve())];
+      const task1Tuple = { taskId: 1, task: jest.fn(() => Promise.resolve()) };
+      const task2Tuple = { taskId: 2, task: jest.fn(() => Promise.resolve()) };
+      const task3Tuple = { taskId: 3, task: jest.fn(() => Promise.resolve()) };
 
       // queue all tasks
       queueIdleTask(task1Tuple);
@@ -78,25 +78,25 @@ describe('useIdleTaskQueue', () => {
       queueIdleTask(task3Tuple);
 
       // see that no tasks have been run
-      expect(task1Tuple[1]).toHaveBeenCalledTimes(0);
-      expect(task2Tuple[1]).toHaveBeenCalledTimes(0);
-      expect(task3Tuple[1]).toHaveBeenCalledTimes(0);
+      expect(task1Tuple.task).toHaveBeenCalledTimes(0);
+      expect(task2Tuple.task).toHaveBeenCalledTimes(0);
+      expect(task3Tuple.task).toHaveBeenCalledTimes(0);
 
       // See that task queue exhibits first out (FIFO) behavior.
       await runAllIdleCallbacks();
-      expect(task1Tuple[1]).toHaveBeenCalledOnce();
-      expect(task2Tuple[1]).toHaveBeenCalledTimes(0);
-      expect(task3Tuple[1]).toHaveBeenCalledTimes(0);
+      expect(task1Tuple.task).toHaveBeenCalledOnce();
+      expect(task2Tuple.task).toHaveBeenCalledTimes(0);
+      expect(task3Tuple.task).toHaveBeenCalledTimes(0);
 
       await runAllIdleCallbacks();
-      expect(task1Tuple[1]).toHaveBeenCalledOnce();
-      expect(task2Tuple[1]).toHaveBeenCalledOnce();
-      expect(task3Tuple[1]).toHaveBeenCalledTimes(0);
+      expect(task1Tuple.task).toHaveBeenCalledOnce();
+      expect(task2Tuple.task).toHaveBeenCalledOnce();
+      expect(task3Tuple.task).toHaveBeenCalledTimes(0);
 
       await runAllIdleCallbacks();
-      expect(task1Tuple[1]).toHaveBeenCalledOnce();
-      expect(task2Tuple[1]).toHaveBeenCalledOnce();
-      expect(task3Tuple[1]).toHaveBeenCalledOnce();
+      expect(task1Tuple.task).toHaveBeenCalledOnce();
+      expect(task2Tuple.task).toHaveBeenCalledOnce();
+      expect(task3Tuple.task).toHaveBeenCalledOnce();
     });
   });
 });

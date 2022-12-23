@@ -22,11 +22,11 @@ import { useCallback, useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import storyPageToCanvas from '../../utils/storyPageToCanvas';
 import { getAccessibleTextColorsFromPixels } from '../../utils/contrastUtils';
 import useIdleQueue from '../../utils/useIdleTaskQueue';
 import { useStory } from '../story';
 import { STABLE_ARRAY } from '../../constants';
+import storyPageToCanvas from './utils/storyPageToCanvas';
 import Context from './context';
 import getPixelDataFromCanvas from './getPixelDataFromCanvas';
 import usePageCanvasMap from './usePageCanvasMap';
@@ -35,7 +35,7 @@ import PageCanvasCacheValidator from './pageCanvasCacheValidator';
 import getPageWithoutSelection from './getPageWithoutSelection';
 
 /**
- * @typedef {import('../../../types').Page} Page
+ * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
 function PageCanvasProvider({ children }) {

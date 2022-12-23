@@ -21,7 +21,7 @@ import { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { SCROLLBAR_WIDTH } from '../constants';
+import { THEME_CONSTANTS } from '../constants';
 
 /*
  * CSS for custom gray scrollbars for Chromium, Safari, Edge, & Opera.
@@ -36,8 +36,8 @@ export const scrollbarCSS = () => css`
   /* end Firefox compatible css */
 
   ::-webkit-scrollbar {
-    width: ${SCROLLBAR_WIDTH}px;
-    height: ${SCROLLBAR_WIDTH}px;
+    width: ${THEME_CONSTANTS.SCROLLBAR_WIDTH}px;
+    height: ${THEME_CONSTANTS.SCROLLBAR_WIDTH}px;
   }
 
   ::-webkit-scrollbar-track {
