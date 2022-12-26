@@ -85,7 +85,7 @@
     "@types/estree": "^1.0.0",
     "@types/jest": "^29.2.4",
     "@types/jsdom": "^20.0.1",
-    "@types/node": "^18.11.13",
+    "@types/node": "^18.11.18",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
