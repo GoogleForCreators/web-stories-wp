@@ -207,6 +207,9 @@ function useCanvasGlobalKeys() {
           }
         }
 
+        if (!clipboardData) {
+          return;
+        }
         const { items } = clipboardData;
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.

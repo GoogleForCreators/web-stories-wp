@@ -35,6 +35,7 @@
     "src/app/media/media3p/*.tsx",
     "src/app/media/utils/*.ts",
     "src/app/story",
+    "src/components/library/panes/text/textPresets.ts",
     "src/constants/*",
     "src/utils/**/*.ts",
     "src/utils/**/*.tsx",
