@@ -18,13 +18,19 @@
  * External dependencies
  */
 import { identity, useContextSelector } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
+import type { CanvasProviderState } from '../../types/canvasProvider';
 import Context from './context';
 
-function useCanvas(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useCanvas(): CanvasProviderState;
+function useCanvas<T>(selector: (state: CanvasProviderState) => T): T;
+function useCanvas<T>(
+  selector: (state: CanvasProviderState) => T | CanvasProviderState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
 export default useCanvas;
