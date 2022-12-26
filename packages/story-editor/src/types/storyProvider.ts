@@ -61,6 +61,9 @@ export type UpdatePageProps = {
   pageId: string | null;
   properties: Partial<Page>;
 };
+export type UpdateCurrentPageProps = {
+  properties: Partial<Page>;
+}
 export type UpdatePageAction = {
   type: ActionTypes.UpdatePage;
   payload: UpdatePageProps;
@@ -85,8 +88,8 @@ export type SetCurrentPagePageAction = {
 
 export type AddElementsProps = {
   elements: Element[];
-  pageId: string;
-  updateSelection: boolean;
+  pageId?: string;
+  updateSelection?: boolean;
 };
 
 export type AddElementsAction = {
@@ -375,7 +378,7 @@ export type ExternalActions = {
   deletePage: (props: DeletePageProps) => ReducerState;
   deleteCurrentPage: () => ReducerState;
   updatePageProperties: (props: UpdatePageProps) => ReducerState;
-  updateCurrentPageProperties: (props: UpdatePageProps) => ReducerState;
+  updateCurrentPageProperties: (props: UpdateCurrentPageProps) => ReducerState;
   arrangePage: (props: ArrangePageProps) => ReducerState;
   setCurrentPage: (props: SetCurrentPageProps) => ReducerState;
   addElements: (props: AddElementsProps) => ReducerState;
