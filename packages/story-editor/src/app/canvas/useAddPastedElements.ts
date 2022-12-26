@@ -63,7 +63,11 @@ function useAddPastedElements() {
     }
   );
 
-  const addPastedElements = useBatchingCallback(
+  const addPastedElements = useBatchingCallback<
+    Element[],
+    StoryAnimation[] | undefined,
+    Groups | undefined
+  >(
     (
       elements: Element[],
       animations: StoryAnimation[] = [],

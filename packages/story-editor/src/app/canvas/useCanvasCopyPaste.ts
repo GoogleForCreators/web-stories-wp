@@ -21,7 +21,7 @@ import { useCallback, useBatchingCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
-import { ELEMENT_TYPES, elementIs } from '@googleforcreators/elements';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -69,8 +69,8 @@ function useCanvasGlobalKeys() {
         selectedElementAnimations,
         selectedElementsGroups,
         currentPageProductIds: currentPage?.elements
-          ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
-          .map(({ product }) => product?.productId),
+          ?.filter(elementIs.product)
+          .map(({ product }) => product.productId),
       };
     }
   );
@@ -79,12 +79,15 @@ function useCanvasGlobalKeys() {
 
   const uploadWithPreview = useUploadWithPreview();
   const insertElement = useInsertElement();
-  const pasteInserter = (content) =>
+  const pasteInserter = (content: string) =>
     insertElement('text', { ...DEFAULT_PRESET, content });
   const pasteTextContent = usePasteTextContent(pasteInserter);
 
   const copyCutHandler = useCallback(
-    (evt) => {
+    (evt: ClipboardEvent) => {
+      if (!currentPage) {
+        return;
+      }
       const { type: eventType } = evt;
       if (selectedElements.length === 0) {
         return;
@@ -113,7 +116,10 @@ function useCanvasGlobalKeys() {
   );
 
   const elementPasteHandler = useBatchingCallback(
-    (content: DocumentFragment) => {
+    (content: DocumentFragment): boolean => {
+      if (!currentPage) {
+        return false;
+      }
       const { elements, animations, groups } = processPastedElements(
         content,
         currentPage
@@ -155,10 +161,12 @@ function useCanvasGlobalKeys() {
                     ),
                     productTitle
                   ),
-                  thumbnail: productImages?.[0]?.url && {
-                    src: productImages[0].url,
-                    alt: productImages[0].alt,
-                  },
+                  thumbnail: productImages?.[0]?.url
+                    ? {
+                        src: productImages[0].url,
+                        alt: productImages[0].alt,
+                      }
+                    : undefined,
                 });
               }
             }
