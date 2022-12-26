@@ -51,7 +51,11 @@ interface CanvasActions {
   setFloatingMenuPosition: Dispatch<SetStateAction<string>>;
   setDisplayFloatingMenu: BoolSetter;
 }
-interface CanvasState {
+export interface BoundingBox {
+  canvasContainer?: DOMRectReadOnly;
+  pageContainer?: DOMRectReadOnly;
+}
+export interface CanvasState {
   pageContainer: Node | null;
   canvasContainer: Node | null;
   fullbleedContainer: Node | null;
@@ -68,10 +72,7 @@ interface CanvasState {
   eyedropperCallback: null | EyedropperCallback;
   eyedropperImg: string | null;
   eyedropperPixelData: ImageData | null;
-  boundingBoxes: {
-    canvasContainer?: DOMRectReadOnly;
-    pageContainer?: DOMRectReadOnly;
-  };
+  boundingBoxes: Record<string, BoundingBox>;
   clientRectObserver: IntersectionObserver | null;
   onMoveableMount: VoidFuncWithNoProps | null;
   renamableLayer: RenamableLayer;
