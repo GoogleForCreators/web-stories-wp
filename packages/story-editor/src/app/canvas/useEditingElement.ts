@@ -25,34 +25,50 @@ import {
   useState,
 } from '@googleforcreators/react';
 
+interface State {
+  isTrimMode?: boolean;
+  showOverflow?: boolean;
+}
+interface EditingElementReducerState {
+  editingElement?: string | null;
+  editingElementState?: State;
+}
+type NodesById = Record<string, Node>;
 function useEditingElement() {
   const [state, dispatch] = useReducer(reducer, {
     editingElement: null,
     editingElementState: {},
   });
-  const [nodesById, setNodesById] = useState({});
+  const [nodesById, setNodesById] = useState<NodesById>({});
 
   const clearEditing = useCallback(() => {
     dispatch({ editingElement: null });
   }, []);
 
-  const setEditingElementWithoutState = useCallback((id) => {
+  const setEditingElementWithoutState = useCallback((id: string) => {
     dispatch({ editingElement: id });
   }, []);
 
-  const setEditingElementWithState = useCallback((id, editingState) => {
-    dispatch({ editingElement: id, editingElementState: editingState });
-  }, []);
+  const setEditingElementWithState = useCallback(
+    (id: string, editingState: State) => {
+      dispatch({ editingElement: id, editingElementState: editingState });
+    },
+    []
+  );
 
   const setNodeForElement = useCallback(
-    (id, ref) => setNodesById((oldNodes) => ({ ...oldNodes, [id]: ref })),
+    (id: string, ref: Node) =>
+      setNodesById((oldNodes) => ({ ...oldNodes, [id]: ref })),
     [setNodesById]
   );
 
   // Immutable frame lookup for imperative actions.
-  const nodesByIdRef = useRef(null);
+  const nodesByIdRef = useRef<NodesById | null>(null);
   nodesByIdRef.current = nodesById;
-  const getNodeForElement = useCallback((id) => nodesByIdRef.current[id], []);
+  const getNodeForElement = useCallback(
+    (id: string) => nodesByIdRef.current?.[id],
+    []
+  );
 
   const { editingElement, editingElementState } = state;
   return useMemo(
@@ -79,7 +95,10 @@ function useEditingElement() {
   );
 }
 
-function reducer(state, { editingElement, editingElementState = {} }) {
+function reducer(
+  state: EditingElementReducerState,
+  { editingElement, editingElementState = {} }: EditingElementReducerState
+) {
   return {
     ...state,
     editingElement,

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { PropsWithChildren } from 'react';
 import {
   useCallback,
   useEffect,
@@ -43,7 +43,11 @@ import useEditingElement from './useEditingElement';
 import Context from './context';
 import { RECT_OBSERVATION_KEY } from './constants';
 
-function CanvasProvider({ children }) {
+interface Local {
+  position: string;
+  isDisplayed: boolean;
+}
+function CanvasProvider({ children }: PropsWithChildren<unknown>) {
   const [boundingBoxes, setBoundingBoxes] = useState({});
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
@@ -61,13 +65,13 @@ function CanvasProvider({ children }) {
   const [floatingMenuPosition, setFloatingMenuPosition] = useState(() => {
     const local = localStore.getItemByKey(
       LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
-    );
+    ) as Local | undefined;
     return local?.position;
   });
   const [displayFloatingMenu, setDisplayFloatingMenu] = useState(() => {
     const local = localStore.getItemByKey(
       LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
-    );
+    ) as Local | undefined;
     return local?.isDisplayed;
   });
 
@@ -129,7 +133,7 @@ function CanvasProvider({ children }) {
   );
 
   const handleSelectElement = useCallback(
-    (elId, evt) => {
+    (elId, evt: MouseEvent) => {
       if (editingElement && editingElement !== elId) {
         clearEditing();
       }
@@ -281,9 +285,5 @@ function CanvasProvider({ children }) {
     </Context.Provider>
   );
 }
-
-CanvasProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default CanvasProvider;
