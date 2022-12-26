@@ -21,7 +21,10 @@ import { renderToStaticMarkup } from '@googleforcreators/react';
 import {
   getDefinitionForType,
   duplicateElement,
+  elementIs,
 } from '@googleforcreators/elements';
+import type { Groups, Element, Page } from '@googleforcreators/elements';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -30,16 +33,30 @@ import generateGroupName from './generateGroupName';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
+interface ProcessPastedElementsReturn {
+  animations: StoryAnimation[];
+  elements: Element[];
+  groups?: Groups;
+}
+
+interface Payload {
+  sentinel?: string;
+  items?: Element[];
+  groups?: Groups;
+  animations?: StoryAnimation[];
+}
 /**
  * Processes pasted content to find story elements.
- *
- * @param {DocumentFragment} content NodeList representation of the content.
- * @param {Object}           currentPage Current page.
- * @return {Object} Object containing found elements and animations arrays.
  */
-export function processPastedElements(content, currentPage) {
-  let foundElementsAndAnimations = { animations: [], elements: [] };
-  for (let n = content.firstChild; n; n = n.nextSibling) {
+export function processPastedElements(
+  content: DocumentFragment,
+  currentPage: Page
+): ProcessPastedElementsReturn {
+  let foundElementsAndAnimations: ProcessPastedElementsReturn = {
+    animations: [],
+    elements: [],
+  };
+  for (let n = content.firstChild; n; n = (n as ChildNode).nextSibling) {
     if (
       n.nodeType !== /* COMMENT */ 8 ||
       n.nodeValue?.indexOf('Fragment') !== -1
@@ -48,17 +65,23 @@ export function processPastedElements(content, currentPage) {
     }
     const payload = JSON.parse(
       n.nodeValue.replace(new RegExp(DOUBLE_DASH_ESCAPE, 'g'), '--')
-    );
-    if (payload.sentinel !== 'story-elements') {
+    ) as Payload;
+    if (payload.sentinel !== 'story-elements' || !payload.items) {
       continue;
     }
 
     const processedPayload = payload.items.reduce(
-      ({ elements, animations }, payloadElement) => {
+      (
+        {
+          elements,
+          animations,
+        }: { elements: Element[]; animations: StoryAnimation[] },
+        payloadElement: Element
+      ) => {
         const { element, elementAnimations } = duplicateElement({
           element: {
             ...payloadElement,
-            id: payloadElement.basedOn,
+            id: payloadElement.basedOn as string,
           },
           animations: payload.animations,
           existingElements: currentPage.elements,
@@ -95,24 +118,21 @@ export function processPastedElements(content, currentPage) {
 
 /**
  * Processes copied/cut content for preparing elements to add to clipboard.
- *
- * @param {Object} page Page which all the elements belong to.
- * @param {Array} elements Array of story elements.
- * @param {Array} animations Array of story animations.
- * @param {Array} groups Array of page groups used in the elements.
- * @param {Object} evt Copy/cut event object.
  */
 export function addElementsToClipboard(
-  page,
-  elements,
-  animations,
-  groups,
-  evt
+  page: Page,
+  elements: Element[],
+  animations: StoryAnimation[],
+  groups: Groups,
+  evt: ClipboardEvent
 ) {
   if (!elements.length || !evt) {
     return;
   }
   const { clipboardData } = evt;
+  if (!clipboardData) {
+    return;
+  }
   const payload = {
     sentinel: 'story-elements',
     // @todo: Ensure that there's no unserializable data here. The easiest
@@ -120,7 +140,7 @@ export function addElementsToClipboard(
     // in a separate property.
     items: elements.map((element) => ({
       ...element,
-      ...(element.isDefaultBackground
+      ...(elementIs.defaultBackground(element)
         ? { backgroundColor: page.backgroundColor }
         : null),
       basedOn: element.id,
@@ -137,9 +157,9 @@ export function addElementsToClipboard(
   const textContent = elements
     .map((el) => {
       const { type } = el;
-      const { TextContent } = getDefinitionForType(type);
-      if (TextContent) {
-        return TextContent(el);
+      const typeDefinition = getDefinitionForType(type);
+      if (typeDefinition?.TextContent) {
+        return typeDefinition.TextContent(el);
       }
       return type;
     })
@@ -148,11 +168,16 @@ export function addElementsToClipboard(
   const htmlContent = elements
     .map((el) => {
       const { type, x, y, rotationAngle } = el;
-      const { Output } = getDefinitionForType(type);
+      const typeDefinition = getDefinitionForType(type);
+      if (!typeDefinition?.Output) {
+        return '';
+      }
+      const { Output } = typeDefinition;
       return renderToStaticMarkup(
         <Output
           element={el}
           box={{ width: 100, height: 100, x, y, rotationAngle }}
+          flags={{}}
         />
       );
     })
