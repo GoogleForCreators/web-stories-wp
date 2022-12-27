@@ -18,4 +18,21 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-export default createContext({ actions: {}, state: {} });
+/**
+ * Internal dependencies
+ */
+import type { PageCanvasProviderState } from '../../types';
+import { noop } from '../../utils/noop';
+
+export default createContext<PageCanvasProviderState>({
+  actions: {
+    calculateAccessibleTextColors: async () => {
+      return Promise.resolve({});
+    },
+    generateDeferredPageCanvas: () => noop,
+    generateDeferredCurrentPageCanvas: noop,
+  },
+  state: {
+    pageCanvasMap: {},
+  },
+});

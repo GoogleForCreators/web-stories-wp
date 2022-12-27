@@ -96,9 +96,6 @@ function useIdleTaskQueue() {
    * Returns a cleanup function to cancel the task.
    *
    * Idle Task Queue is a FIFO queue (first in first out)
-   *
-   * @param {[string, Function]} taskTuple uid for task and said task.
-   * @return {Function} function to cancel image generation request
    */
   const queueIdleTask = useCallback(
     ({ taskId, task }: Task) => {

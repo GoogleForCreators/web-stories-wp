@@ -13,16 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import type { Page } from '@googleforcreators/elements';
+import type { TextElement, Page } from '@googleforcreators/elements';
+import type { Hex } from '@googleforcreators/patterns';
 
-function pageWithoutSelection(page: Page, selection: string[]): Page {
-  return {
-    ...page,
-    elements: page.elements.filter(({ id }) => !selection.includes(id)),
+export type PageCanvasMap = Record<string, HTMLCanvasElement>;
+export interface PageCanvasProviderState {
+  state: {
+    pageCanvasMap: PageCanvasMap;
+  };
+  actions: {
+    calculateAccessibleTextColors: (el: TextElement) => Promise<{
+      color?: Hex;
+      backgroundColor?: Hex;
+    }>;
+    generateDeferredPageCanvas: (props: [string, Page]) => () => void;
+    generateDeferredCurrentPageCanvas: () => void;
   };
 }
-
-export default pageWithoutSelection;
