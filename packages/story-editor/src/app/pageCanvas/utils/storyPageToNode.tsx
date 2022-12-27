@@ -31,6 +31,7 @@ import {
 import styled, { ThemeProvider } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { TransformProvider } from '@googleforcreators/transform';
+import type { Page} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -67,8 +68,21 @@ const FullHeight = styled.div`
   left: 0;
 `;
 
+interface PageWithDepsProps {
+  page: Page;
+  width: number;
+  height: number;
+  renderFullHeightThumb?: boolean;
+  containerHeight: number;
+}
 const PageWithDependencies = forwardRef(function PageWithDependencies(
-  { page, width, height, renderFullHeightThumb = false, containerHeight },
+  {
+    page,
+    width,
+    height,
+    renderFullHeightThumb = false,
+    containerHeight,
+  }: PageWithDepsProps,
   ref
 ) {
   return (
@@ -113,6 +127,9 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
  * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
+interface Options {
+  renderFullHeightThumb?: boolean;
+}
 /**
  * Takes a story page and generates a DOM node containing the rendered
  * page. Returns a tuple containing the page DOM node and a cleanup
@@ -120,13 +137,12 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
  *
  * **IMPORTANT:** Not calling the returned `cleanup()` method after use of
  * page DOM node will result in memory leak.
- *
- * @param {Page} page Page object.
- * @param {number} width desired width of image. Dictates height and container height
- * @param {{ renderFullHeightThumb: boolean }} opts - options to alter the rendered node.
- * @return {[HTMLElement, Function]} tuple containing DOM node and cleanup method
  */
-async function storyPageToNode(page, width, opts = {}) {
+async function storyPageToNode(
+  page: Page,
+  width: number,
+  opts: Options = {}
+): Promise<[HTMLElement, () => void]> {
   const { renderFullHeightThumb = false } = opts;
   const height = width * (1 / PAGE_RATIO);
   const containerHeight = width * (1 / FULLBLEED_RATIO);
@@ -144,8 +160,8 @@ async function storyPageToNode(page, width, opts = {}) {
      pointer-events: none;
    `;
 
-  const node = await new Promise((resolve) => {
-    const resolverRef = (htmlNode) => {
+  const node: HTMLElement = await new Promise((resolve) => {
+    const resolverRef = (htmlNode: HTMLElement) => {
       if (!htmlNode) {
         return;
       }
