@@ -30,11 +30,6 @@ import storyPageToNode from './storyPageToNode';
 
 /**
  * Async method to generate a dataUrl from a story page.
- *
- * @param {Page} page Page object.
- * @param {Object} options options to pass to htmlToImage.toJpeg
- * @param {number} options.width desired width of image. Dictates height and container height
- * @return {Promise<string>} jpeg dataUrl
  */
 async function storyPageToCanvas(page: Page, { width = 400, ...options }) {
   const htmlToImage = await import(
@@ -45,9 +40,10 @@ async function storyPageToCanvas(page: Page, { width = 400, ...options }) {
     renderFullHeightThumb: true,
   });
 
+  // @todo Check why was it fontEmbedCss before -- did it work?
   const canvas = await htmlToImage.toCanvas(node, {
     ...options,
-    fontEmbedCss: '',
+    fontEmbedCSS: '',
   });
 
   cleanup();

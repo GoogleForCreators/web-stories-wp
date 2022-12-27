@@ -36,8 +36,6 @@ interface SnapShot {
 }
 /**
  * Cache that holds 1 generated canvas for a page partial.
- *
- * @return {Object} getter and setter for page snapshot canvas
  */
 function usePageSnapshot() {
   // limit exclusion canvas cache to 1 entry so that our memory doesn't

@@ -29,7 +29,7 @@ import {
   UnitsProvider,
 } from '@googleforcreators/units';
 import styled, { ThemeProvider } from 'styled-components';
-import { generatePatternStyles } from '@googleforcreators/patterns';
+import {generatePatternStyles, Pattern} from '@googleforcreators/patterns';
 import { TransformProvider } from '@googleforcreators/transform';
 import type { Page} from '@googleforcreators/elements';
 
@@ -39,7 +39,7 @@ import type { Page} from '@googleforcreators/elements';
 import { FontProvider } from '../../font';
 import DisplayElement from '../../../components/canvas/displayElement';
 
-const Page = styled.div`
+const Page = styled.div<{ height: number; width: number }>`
   display: block;
   position: relative;
   padding: 0;
@@ -51,7 +51,7 @@ const Page = styled.div`
   outline: 0;
 `;
 
-const PreviewWrapper = styled.div`
+const PreviewWrapper = styled.div<{ background: Pattern }>`
   height: 100%;
   position: relative;
   overflow: hidden;
@@ -60,7 +60,7 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-const FullHeight = styled.div`
+const FullHeight = styled.div<{ yOffset: number }>`
   position: absolute;
   top: ${({ yOffset }) => yOffset}px;
   bottom: ${({ yOffset }) => yOffset}px;
