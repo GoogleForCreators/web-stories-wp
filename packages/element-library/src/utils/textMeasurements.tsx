@@ -19,7 +19,7 @@
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { dataPixels, PAGE_HEIGHT } from '@googleforcreators/units';
-import type { Element } from '@googleforcreators/elements';
+import type { Element, TextElement } from '@googleforcreators/elements';
 import type { CSSProperties } from 'react';
 
 /**
@@ -58,20 +58,28 @@ const MEASURER_PROPS = {
 const MEASURER_NODE = '__WEB_STORIES_MEASURER__';
 const LAST_ELEMENT = '__WEB_STORIES_LASTEL__';
 
-export function calculateTextHeight(element, width) {
+export function calculateTextHeight(element: TextElement, width: number) {
   const measurer = getOrCreateMeasurer(element);
-  setStyles(measurer, { width: `${width}px`, height: null });
-  return measurer.parentNode.offsetHeight;
+  setStyles(measurer, { width: `${width}px`, height: undefined });
+  return (measurer.parentNode as HTMLElement).offsetHeight;
 }
 
-export function calculateFitTextFontSize(element, width, height) {
+export function calculateFitTextFontSize(
+  element: TextElement,
+  width: number,
+  height: number
+) {
   const measurer = getOrCreateMeasurer(element);
-  setStyles(measurer, { width: `${width}px`, height: null, fontSize: null });
+  setStyles(measurer, {
+    width: `${width}px`,
+    height: undefined,
+    fontSize: undefined,
+  });
 
   // Binomial search for the best font size.
   let minFontSize = 1;
   let maxFontSize = PAGE_HEIGHT;
-  let margin;
+  let margin = 0;
   while (maxFontSize - minFontSize > 1) {
     const mid = dataPixels((minFontSize + maxFontSize) / 2);
     const { marginOffset } = calcFontMetrics({ ...element, fontSize: mid });
@@ -98,7 +106,7 @@ export function calculateFitTextFontSize(element, width, height) {
 interface ExtendedBody extends HTMLElement {
   __WEB_STORIES_MEASURER__?: HTMLElement;
 }
-function getOrCreateMeasurer(element: Element) {
+function getOrCreateMeasurer(element: TextElement): HTMLElement {
   let measurerNode = (document.body as ExtendedBody)[MEASURER_NODE];
   if (!measurerNode) {
     measurerNode = document.createElement('div');
@@ -113,11 +121,10 @@ function getOrCreateMeasurer(element: Element) {
   // diffing.
   if (changed(measurerNode, element)) {
     measurerNode.innerHTML = renderToStaticMarkup(
-      <TextOutputWithUnits element={element} {...MEASURER_PROPS} />,
-      measurerNode
+      <TextOutputWithUnits element={element} {...MEASURER_PROPS} />
     );
   }
-  return measurerNode.firstElementChild;
+  return measurerNode.firstElementChild as HTMLElement;
 }
 
 function setStyles(node: HTMLElement, styles: CSSProperties) {
@@ -125,8 +132,12 @@ function setStyles(node: HTMLElement, styles: CSSProperties) {
     if (Object.prototype.hasOwnProperty.call(styles, k)) {
       const v = styles[k as keyof typeof styles];
       if (v === null) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- k can be a string, too.
+        // @ts-ignore
         node.style[k] = '';
       } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- k can be a string, too.
+        // @ts-ignore
         node.style[k] = v;
       }
     }

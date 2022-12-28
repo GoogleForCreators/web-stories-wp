@@ -70,7 +70,7 @@ const getHTMLFormatter =
     updateAndReturnHTML(html, setter, ...args);
 
 export const getHTMLFormatters = (): {
-  [p: string]: (html: string, args: AllowedSetterArgs) => null | string;
+  [p: string]: (html: string, args: AllowedSetterArgs) => string;
 } => {
   return formatters.reduce(
     (aggr, { setters }) => ({

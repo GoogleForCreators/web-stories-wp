@@ -17,9 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  BACKGROUND_TEXT_MODE,
-} from '@googleforcreators/elements';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/elements';
 import {
   createSolid,
   generatePatternStyles,
@@ -27,7 +25,8 @@ import {
 import { useMemo } from '@googleforcreators/react';
 import { getHTMLFormatters } from '@googleforcreators/rich-text';
 import classnames from 'classnames';
-import type { TextElement } from '@googleforcreators/element-library';
+import type { TextElement } from '@googleforcreators/elements';
+import type { CSSProperties } from 'react';
 
 /**
  * Internal dependencies
@@ -37,7 +36,6 @@ import {
   getHighlightLineheight,
   calcFontMetrics,
 } from './util';
-import type {CSSProperties} from "react";
 
 type DataToStyle = (prop: number) => string;
 interface TextOutputWithUnitsProps {
@@ -47,7 +45,7 @@ interface TextOutputWithUnitsProps {
   dataToFontSizeY?: DataToStyle;
   dataToPaddingX?: DataToStyle;
   dataToPaddingY?: DataToStyle;
-  className: string;
+  className?: string;
 }
 
 /**
@@ -133,7 +131,7 @@ function TextOutputWithUnits({
     background: 'none',
     lineHeight,
     overflowWrap: 'break-word',
-  };
+  } as CSSProperties;
 
   const highlightCloneStyle = {
     ...highlightStyle,
@@ -141,7 +139,7 @@ function TextOutputWithUnits({
     top: 0,
     left: 0,
     right: 0,
-  };
+  } as CSSProperties;
 
   const marginStyle = (el: TextElement): CSSProperties => {
     const { marginOffset } = calcFontMetrics(el);
@@ -150,7 +148,7 @@ function TextOutputWithUnits({
       position: 'relative',
       left: 0,
       top: '0',
-      margin: `${dataToPaddingY?.(-marginOffset / 2)} 0`,
+      margin: `${dataToPaddingY ? dataToPaddingY(-marginOffset / 2) : 0} 0`,
       /* stylelint-disable-next-line */
       WebkitBoxDecorationBreak: 'clone',
       boxDecorationBreak: 'clone',
@@ -198,7 +196,7 @@ function TextOutputWithUnits({
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: contentWithoutColor || '',
+                __html: contentWithoutColor,
               }}
             />
           </span>

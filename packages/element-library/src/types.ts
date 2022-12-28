@@ -19,6 +19,5 @@
 // delete this file once complete.
 
 export * from './constants';
-export * from './types';
 
 export {};
