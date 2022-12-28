@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-export * from './theme';
-import { light as lightMode } from './colors';
-import { THEME_CONSTANTS, BEZIER } from './constants';
-import * as ThemeGlobals from './global';
-import * as themeHelpers from './helpers';
-
-export { lightMode, THEME_CONSTANTS, themeHelpers, ThemeGlobals, BEZIER };
+import { dark as darkMode } from './colors';
+import { typography } from './typography';
+import { borders } from './borders';
+import { breakpoint, raw } from './breakpoint';
+export const theme = {
+  borders,
+  typography,
+  colors: { ...darkMode },
+  breakpoint: {
+    ...breakpoint,
+    raw,
+  },
+};

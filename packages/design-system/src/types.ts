@@ -25,5 +25,6 @@ export * from './types/keyboard';
 export * from './utils/constants';
 export * from './utils/localStore';
 export * from './utils/sessionStore';
+export * from './theme/theme';
 
 export {};
