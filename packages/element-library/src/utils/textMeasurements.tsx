@@ -39,15 +39,15 @@ const MEASURER_STYLES: CSSProperties = {
   overflowWrap: 'break-word',
   // eslint-disable-next-line no-constant-condition -- For debugging purposes.
   ...(false
-    ? null
-    : {
+    ? {
         // For debugging purposes - this will show the output render on screen
         background: 'red',
         visibility: 'visible',
         top: '99px',
         left: '99px',
         zIndex: 10000,
-      }),
+      }
+    : null),
 };
 
 const MEASURER_PROPS = {
