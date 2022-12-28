@@ -50,13 +50,14 @@ const StoryPage = styled.div<{ height: number; width: number }>`
   outline: 0;
 `;
 
+// @todo This casting below is incorrect. Not sure what's the correct way here since it works as-is but TS claims that it shouldn't.
 const PreviewWrapper = styled.div<{ background: Pattern }>`
   height: 100%;
   position: relative;
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors.fg.white};
   border-radius: 4px;
-  ${({ background }) => generatePatternStyles(background)}
+  ${({ background }) => generatePatternStyles(background) as string}
 `;
 
 const FullHeight = styled.div<{ yOffset: number }>`
@@ -74,53 +75,55 @@ interface PageWithDepsProps {
   renderFullHeightThumb?: boolean;
   containerHeight: number;
 }
-const PageWithDependencies = forwardRef(function PageWithDependencies(
-  {
-    page,
-    width,
-    height,
-    renderFullHeightThumb = false,
-    containerHeight,
-  }: PageWithDepsProps,
-  ref
-) {
-  return (
-    <ThemeProvider theme={ds_theme}>
-      <FontProvider>
-        <TransformProvider>
-          <UnitsProvider
-            pageSize={{
-              width,
-              height,
-            }}
-          >
-            <StoryPage
-              ref={ref}
-              height={renderFullHeightThumb ? containerHeight : height}
-              width={width}
+const PageWithDependencies = forwardRef<HTMLDivElement, PageWithDepsProps>(
+  function PageWithDependencies(
+    {
+      page,
+      width,
+      height,
+      renderFullHeightThumb = false,
+      containerHeight,
+    }: PageWithDepsProps,
+    ref
+  ) {
+    return (
+      <ThemeProvider theme={ds_theme}>
+        <FontProvider>
+          <TransformProvider>
+            <UnitsProvider
+              pageSize={{
+                width,
+                height,
+              }}
             >
-              <PreviewWrapper background={page.backgroundColor}>
-                <FullHeight
-                  yOffset={
-                    renderFullHeightThumb ? (containerHeight - height) / 2 : 0
-                  }
-                >
-                  {page.elements.map((element) => (
-                    <DisplayElement
-                      key={element.id}
-                      previewMode
-                      element={element}
-                    />
-                  ))}
-                </FullHeight>
-              </PreviewWrapper>
-            </StoryPage>
-          </UnitsProvider>
-        </TransformProvider>
-      </FontProvider>
-    </ThemeProvider>
-  );
-});
+              <StoryPage
+                ref={ref}
+                height={renderFullHeightThumb ? containerHeight : height}
+                width={width}
+              >
+                <PreviewWrapper background={page.backgroundColor}>
+                  <FullHeight
+                    yOffset={
+                      renderFullHeightThumb ? (containerHeight - height) / 2 : 0
+                    }
+                  >
+                    {page.elements.map((element) => (
+                      <DisplayElement
+                        key={element.id}
+                        previewMode
+                        element={element}
+                      />
+                    ))}
+                  </FullHeight>
+                </PreviewWrapper>
+              </StoryPage>
+            </UnitsProvider>
+          </TransformProvider>
+        </FontProvider>
+      </ThemeProvider>
+    );
+  }
+);
 
 /**
  * @typedef {import('@googleforcreators/elements').Page} Page
@@ -160,7 +163,7 @@ async function storyPageToNode(
    `;
 
   const node: HTMLElement = await new Promise((resolve) => {
-    const resolverRef = (htmlNode: HTMLElement) => {
+    const resolverRef = (htmlNode: HTMLDivElement) => {
       if (!htmlNode) {
         return;
       }
