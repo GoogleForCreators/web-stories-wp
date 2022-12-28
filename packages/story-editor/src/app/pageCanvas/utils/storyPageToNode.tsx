@@ -31,7 +31,7 @@ import {
 import styled, { ThemeProvider } from 'styled-components';
 import {generatePatternStyles, Pattern} from '@googleforcreators/patterns';
 import { TransformProvider } from '@googleforcreators/transform';
-import type { Page} from '@googleforcreators/elements';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -39,7 +39,7 @@ import type { Page} from '@googleforcreators/elements';
 import { FontProvider } from '../../font';
 import DisplayElement from '../../../components/canvas/displayElement';
 
-const Page = styled.div<{ height: number; width: number }>`
+const StoryPage = styled.div<{ height: number; width: number }>`
   display: block;
   position: relative;
   padding: 0;
@@ -95,7 +95,7 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
               height,
             }}
           >
-            <Page
+            <StoryPage
               ref={ref}
               height={renderFullHeightThumb ? containerHeight : height}
               width={width}
@@ -115,7 +115,7 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
                   ))}
                 </FullHeight>
               </PreviewWrapper>
-            </Page>
+            </StoryPage>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>
