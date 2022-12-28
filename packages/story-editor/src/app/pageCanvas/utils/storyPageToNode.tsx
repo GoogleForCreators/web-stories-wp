@@ -28,7 +28,7 @@ import {
   UnitsProvider,
 } from '@googleforcreators/units';
 import styled, { ThemeProvider } from 'styled-components';
-import {generatePatternStyles, Pattern} from '@googleforcreators/patterns';
+import { generatePatternStyles, Pattern } from '@googleforcreators/patterns';
 import { TransformProvider } from '@googleforcreators/transform';
 import type { Page } from '@googleforcreators/elements';
 
