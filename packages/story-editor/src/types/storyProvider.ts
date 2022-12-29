@@ -110,7 +110,7 @@ export type DeleteElementsAction = {
 
 export type ElementUpdater<T = Element> = (prevProps: T) => T | Partial<T>;
 export type UpdateElementsProps = {
-  elementIds: string[] | null;
+  elementIds?: string[] | null;
   properties: Partial<Element> | ElementUpdater;
 };
 export type UpdateElementsAction = {
@@ -154,9 +154,9 @@ export type SetBackgroundElementAction = {
 };
 
 export type ArrangeElementProps = {
-  elementId: string | null;
+  elementId?: string | null;
   position: number | LayerDirection;
-  groupId?: string | false;
+  groupId?: string | false | null;
 };
 export type ArrangeElementAction = {
   type: ActionTypes.ArrangeElement;
@@ -399,7 +399,7 @@ export type ExternalActions = {
   updateElementById: <T extends Element = Element>(
     props: UpdateElementProps<T>
   ) => ReducerState;
-  duplicateElementsById: (props: DuplicateElementsByIdAction) => ReducerState;
+  duplicateElementsById: (props: DuplicateElementsByIdProps) => ReducerState;
   updateSelectedElements: (props: UpdateElementsProps) => ReducerState;
   combineElements: (props: CombineElementsProps) => ReducerState;
   setBackgroundElement: (props: SetBackgroundElementProps) => ReducerState;
