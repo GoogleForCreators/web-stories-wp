@@ -25,11 +25,9 @@ import {
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { StoryAnimationState } from '@googleforcreators/animation';
-import {
-  getDefinitionForType,
-  elementIs,
-} from '@googleforcreators/elements';
+import { getDefinitionForType, elementIs } from '@googleforcreators/elements';
 import { __, sprintf } from '@googleforcreators/i18n';
+import type { RefObject } from 'react';
 
 /**
  * Internal dependencies
@@ -39,7 +37,6 @@ import useHighlights from '../highlights/useHighlights';
 import { useStory } from '../story';
 import getLayerArrangementProps from './utils/getLayerArrangementProps';
 import { useCanvas } from '.';
-import type {RefObject} from "react";
 
 function useCanvasKeys(ref: RefObject<Node>) {
   const {
@@ -122,7 +119,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
 
     const doc = container.ownerDocument;
     if (!doc) {
-      return;
+      return undefined;
     }
 
     const handler = () => {
@@ -187,7 +184,11 @@ function useCanvasKeys(ref: RefObject<Node>) {
         return;
       }
       const { isLocked } = selectedElements?.[0] || {};
-      if ((elementIs.backgroundable(selectedElements?.[0]) && selectedElements[0].isBackground) || isLocked) {
+      if (
+        (elementIs.backgroundable(selectedElements?.[0]) &&
+          selectedElements[0].isBackground) ||
+        isLocked
+      ) {
         return;
       }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
@@ -261,20 +262,19 @@ function useCanvasKeys(ref: RefObject<Node>) {
       if (elementIs.product(el)) {
         const { product } = el;
         const { productId, productTitle, productImages } = product || {};
-        if (
-          productId &&
-          currentPageProductIds?.includes(productId)
-        ) {
+        if (productId && currentPageProductIds?.includes(productId)) {
           showSnackbar({
             message: sprintf(
               /* translators: %s: product title. */
               __('Product "%s" already exists on the page.', 'web-stories'),
               productTitle
             ),
-            thumbnail: productImages?.[0]?.url ? {
-              src: productImages[0].url,
-              alt: productImages[0].alt,
-            } : undefined,
+            thumbnail: productImages?.[0]?.url
+              ? {
+                  src: productImages[0].url,
+                  alt: productImages[0].alt,
+                }
+              : undefined,
           });
         }
       }
@@ -320,7 +320,11 @@ function useCanvasKeys(ref: RefObject<Node>) {
     { key: ['mod+k'] },
     (evt) => {
       evt.preventDefault();
-      if (!selectedElements.length || (elementIs.backgroundable(selectedElements[0]) && selectedElements[0].isBackground)) {
+      if (
+        !selectedElements.length ||
+        (elementIs.backgroundable(selectedElements[0]) &&
+          selectedElements[0].isBackground)
+      ) {
         return;
       }
       setHighlights({
