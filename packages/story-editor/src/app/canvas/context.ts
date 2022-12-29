@@ -23,5 +23,52 @@ import { createContext } from '@googleforcreators/react';
  * Internal dependencies
  */
 import type { CanvasProviderState } from '../../types';
+import { noop } from '../../utils/noop';
 
-export default createContext<CanvasProviderState>({ actions: {}, state: {} });
+export default createContext<CanvasProviderState>({
+  state: {
+    pageContainer: null,
+    canvasContainer: null,
+    fullbleedContainer: null,
+    nodesById: {},
+    editingElement: null,
+    editingElementState: {},
+    isEditing: false,
+    lastSelectionEvent: null,
+    displayLinkGuidelines: false,
+    pageAttachmentContainer: null,
+    designSpaceGuideline: null,
+    isEyedropperActive: false,
+    eyedropperCallback: null,
+    eyedropperImg: null,
+    eyedropperPixelData: null,
+    boundingBoxes: {},
+    clientRectObserver: null,
+    onMoveableMount: null,
+    renamableLayer: null,
+    floatingMenuPosition: undefined,
+    displayFloatingMenu: undefined,
+  },
+  actions: {
+    setPageContainer: noop,
+    setFullbleedContainer: noop,
+    getNodeForElement: noop,
+    setNodeForElement: noop,
+    setEditingElement: noop,
+    setEditingElementWithState: noop,
+    clearEditing: noop,
+    handleSelectElement: noop,
+    setDisplayLinkGuidelines: noop,
+    setPageAttachmentContainer: noop,
+    setCanvasContainer: noop,
+    setDesignSpaceGuideline: noop,
+    setIsEyedropperActive: noop,
+    setEyedropperCallback: noop,
+    setEyedropperImg: noop,
+    setEyedropperPixelData: noop,
+    setMoveableMount: noop,
+    setRenamableLayer: noop,
+    setFloatingMenuPosition: noop,
+    setDisplayFloatingMenu: noop,
+  },
+});
