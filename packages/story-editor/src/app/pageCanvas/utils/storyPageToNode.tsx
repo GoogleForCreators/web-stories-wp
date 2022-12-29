@@ -50,14 +50,13 @@ const StoryPage = styled.div<{ height: number; width: number }>`
   outline: 0;
 `;
 
-// @todo This casting below is incorrect. Not sure what's the correct way here since it works as-is but TS claims that it shouldn't.
 const PreviewWrapper = styled.div<{ background: Pattern }>`
   height: 100%;
   position: relative;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => (theme as typeof ds_theme).colors.standard.white};
   border-radius: 4px;
-  ${({ background }) => generatePatternStyles(background) as string}
+  ${({ background }) => generatePatternStyles(background)}
 `;
 
 const FullHeight = styled.div<{ yOffset: number }>`
