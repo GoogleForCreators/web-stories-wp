@@ -30,7 +30,7 @@ interface State {
   showOverflow?: boolean;
 }
 interface EditingElementReducerState {
-  editingElement?: string | null;
+  editingElement: string | null;
   editingElementState?: State;
 }
 type NodesById = Record<string, Node>;

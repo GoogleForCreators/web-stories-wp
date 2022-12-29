@@ -23,19 +23,19 @@ import type { Dispatch, SetStateAction } from 'react';
 
 type NodeSetter = Dispatch<SetStateAction<Node | null>>;
 type BoolSetter = Dispatch<SetStateAction<boolean>>;
-type EyedropperCallback = (rgb: Hex) => void;
-type RenamableLayer = null | {
+export type EyedropperCallback = (rgb: Hex) => void;
+export type RenamableLayer = null | {
   elementId: string;
 };
-type VoidFuncWithNoProps = () => void;
+export type VoidFuncWithNoProps = () => void;
 
 interface CanvasActions {
   setPageContainer: NodeSetter;
   setFullbleedContainer: NodeSetter;
-  getNodeForElement: (id: string) => Node;
+  getNodeForElement: (id: string) => Node | undefined;
   setNodeForElement: (id: string, ref: Node) => void;
   setEditingElement: (element: string) => void;
-  setEditingElementWithState: (state: EditingState) => void;
+  setEditingElementWithState: (id: string, state: EditingState) => void;
   clearEditing: VoidFuncWithNoProps;
   handleSelectElement: (id: string, evt: MouseEvent) => void;
   setDisplayLinkGuidelines: BoolSetter;
@@ -45,11 +45,11 @@ interface CanvasActions {
   setIsEyedropperActive: BoolSetter;
   setEyedropperCallback: Dispatch<SetStateAction<EyedropperCallback | null>>;
   setEyedropperImg: Dispatch<SetStateAction<string | null>>;
-  setEyedropperPixelData: Dispatch<SetStateAction<ImageData | null>>;
-  setMoveableMount: Dispatch<SetStateAction<() => void | null>>;
+  setEyedropperPixelData: Dispatch<SetStateAction<Uint8ClampedArray | null>>;
+  setMoveableMount: Dispatch<SetStateAction<VoidFuncWithNoProps | null>>;
   setRenamableLayer: Dispatch<SetStateAction<RenamableLayer>>;
-  setFloatingMenuPosition: Dispatch<SetStateAction<string>>;
-  setDisplayFloatingMenu: BoolSetter;
+  setFloatingMenuPosition: Dispatch<SetStateAction<string | undefined>>;
+  setDisplayFloatingMenu: Dispatch<SetStateAction<boolean | undefined>>;
 }
 export interface BoundingBox {
   canvasContainer?: DOMRectReadOnly;
@@ -71,13 +71,13 @@ export interface CanvasState {
   isEyedropperActive: boolean;
   eyedropperCallback: null | EyedropperCallback;
   eyedropperImg: string | null;
-  eyedropperPixelData: ImageData | null;
+  eyedropperPixelData: Uint8ClampedArray | null;
   boundingBoxes: Record<string, BoundingBox>;
   clientRectObserver: IntersectionObserver | null;
   onMoveableMount: VoidFuncWithNoProps | null;
   renamableLayer: RenamableLayer;
-  floatingMenuPosition: string;
-  displayFloatingMenu: boolean;
+  floatingMenuPosition: string | undefined;
+  displayFloatingMenu: boolean | undefined;
 }
 export interface CanvasProviderState {
   state: CanvasState;

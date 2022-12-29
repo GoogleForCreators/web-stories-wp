@@ -36,7 +36,12 @@ import {
  */
 import { useLayout } from '../layout';
 import { useStory } from '../story';
-
+import type {
+  BoundingBox,
+  EyedropperCallback,
+  RenamableLayer,
+  VoidFuncWithNoProps,
+} from '../../types';
 import useCanvasCopyPaste from './useCanvasCopyPaste';
 import useEditingElement from './useEditingElement';
 
@@ -48,24 +53,35 @@ interface Local {
   isDisplayed: boolean;
 }
 function CanvasProvider({ children }: PropsWithChildren<unknown>) {
-  const [boundingBoxes, setBoundingBoxes] = useState({});
-  const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
-  const lastSelectedElementId = useRef(null);
-  const [canvasContainer, setCanvasContainer] = useState(null);
-  const [pageContainer, setPageContainer] = useState(null);
-  const [fullbleedContainer, setFullbleedContainer] = useState(null);
-  const [designSpaceGuideline, setDesignSpaceGuideline] = useState(null);
-  const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
-  const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
-  const [eyedropperImg, setEyedropperImg] = useState(null);
-  const [eyedropperPixelData, setEyedropperPixelData] = useState(null);
-  const [isEyedropperActive, setIsEyedropperActive] = useState(false);
-  const [eyedropperCallback, setEyedropperCallback] = useState(null);
-  const [renamableLayer, setRenamableLayer] = useState(null);
+  const [boundingBoxes, setBoundingBoxes] = useState<
+    Record<string, BoundingBox>
+  >({});
+  const [lastSelectionEvent, setLastSelectionEvent] =
+    useState<MouseEvent | null>(null);
+  const lastSelectedElementId = useRef<string | null>(null);
+  const [canvasContainer, setCanvasContainer] = useState<Node | null>(null);
+  const [pageContainer, setPageContainer] = useState<Node | null>(null);
+  const [fullbleedContainer, setFullbleedContainer] = useState<Node | null>(
+    null
+  );
+  const [designSpaceGuideline, setDesignSpaceGuideline] = useState<Node | null>(
+    null
+  );
+  const [pageAttachmentContainer, setPageAttachmentContainer] =
+    useState<Node | null>(null);
+  const [displayLinkGuidelines, setDisplayLinkGuidelines] =
+    useState<boolean>(false);
+  const [eyedropperImg, setEyedropperImg] = useState<string | null>(null);
+  const [eyedropperPixelData, setEyedropperPixelData] =
+    useState<Uint8ClampedArray | null>(null);
+  const [isEyedropperActive, setIsEyedropperActive] = useState<boolean>(false);
+  const [eyedropperCallback, setEyedropperCallback] =
+    useState<EyedropperCallback | null>(null);
+  const [renamableLayer, setRenamableLayer] = useState<RenamableLayer>(null);
   const [floatingMenuPosition, setFloatingMenuPosition] = useState(() => {
     const local = localStore.getItemByKey(
       LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
-    ) as Local | undefined;
+    ) as Local | null;
     return local?.position;
   });
   const [displayFloatingMenu, setDisplayFloatingMenu] = useState(() => {
@@ -133,7 +149,7 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
   );
 
   const handleSelectElement = useCallback(
-    (elId, evt: MouseEvent) => {
+    (elId: string, evt: MouseEvent) => {
       if (editingElement && editingElement !== elId) {
         clearEditing();
       }
@@ -198,7 +214,8 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
 
   useCanvasCopyPaste();
 
-  const [onMoveableMount, setMoveableMount] = useState(null);
+  const [onMoveableMount, setMoveableMount] =
+    useState<VoidFuncWithNoProps | null>(null);
 
   const state = useMemo(
     () => ({
