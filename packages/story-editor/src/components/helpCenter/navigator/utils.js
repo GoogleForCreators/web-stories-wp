@@ -23,6 +23,7 @@ import { BEZIER } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { TRANSITION_DURATION } from '../../../app/helpCenter/constants';
+import { noop } from '../../../utils/noop';
 
 /**
  * Removes inner Element from the layout flow without disrupting
@@ -35,7 +36,7 @@ import { TRANSITION_DURATION } from '../../../app/helpCenter/constants';
  */
 export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
   if (!innerEl || !outerEl) {
-    return () => {};
+    return noop;
   }
 
   // Explicitly set height of outer container to not
