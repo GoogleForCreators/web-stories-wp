@@ -91,10 +91,7 @@ function Settings() {
     []
   );
 
-  const handleCloseMenu = () => {
-    setIsMenuOpen(false);
-    buttonRef.current.focus();
-  };
+  const handleCloseMenu = () => setIsMenuOpen(false);
 
   const local = useMemo(
     () => localStore.getItemByKey(LOCAL_STORAGE_KEY) || {},
@@ -166,6 +163,8 @@ function Settings() {
         onClick={() => setIsMenuOpen((value) => !value)}
         aria-haspopup="menu"
         aria-expanded={isMenuOpen}
+        // Hide tooltip if menu is open to avoid overlapping overlays
+        hasTooltip={!isMenuOpen}
       />
       <SubMenuContainer ref={subMenuRef} style={{ left: `${offsetLeft}px` }}>
         <ContextMenu

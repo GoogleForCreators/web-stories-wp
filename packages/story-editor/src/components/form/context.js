@@ -18,8 +18,12 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import { noop } from '../../utils/noop';
 
 export default createContext({
   isMultiple: false,
-  registerPresubmitHandler: () => {},
+  registerPresubmitHandler: noop,
 });

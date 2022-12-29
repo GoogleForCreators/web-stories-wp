@@ -26,6 +26,11 @@ import {
 } from '@googleforcreators/react';
 import { useLiveRegion } from '@googleforcreators/design-system';
 
+/**
+ * Internal dependencies
+ */
+import { noop } from '../../utils/noop';
+
 function useReordering(onPositionChange, numChildren) {
   const [isReordering, setIsReordering] = useState(false);
   const [currentSeparator, setCurrentSeparator] = useState(null);
@@ -34,7 +39,7 @@ function useReordering(onPositionChange, numChildren) {
 
   const speak = useLiveRegion('assertive');
   const handleStartReordering = useCallback(
-    ({ position: currentPos, data = {}, onStartReordering = () => {} }) =>
+    ({ position: currentPos, data = {}, onStartReordering = noop }) =>
       (evt) => {
         // Only allow reordering with non-modified left-click.
         // Modified (shift, meta, alt, ctrl) clicks are for selection.
