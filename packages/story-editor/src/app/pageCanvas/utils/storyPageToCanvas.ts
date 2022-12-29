@@ -40,7 +40,6 @@ async function storyPageToCanvas(page: Page, { width = 400, ...options }) {
     renderFullHeightThumb: true,
   });
 
-  // @todo Check why was it fontEmbedCss before -- did it work?
   const canvas = await htmlToImage.toCanvas(node, {
     ...options,
     fontEmbedCSS: '',
