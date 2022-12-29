@@ -21,7 +21,11 @@ import { useCallback, useBatchingCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
-import { elementIs, ElementType } from '@googleforcreators/elements';
+import {
+  elementIs,
+  ElementType,
+  TextElement,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -80,7 +84,10 @@ function useCanvasGlobalKeys() {
   const uploadWithPreview = useUploadWithPreview();
   const insertElement = useInsertElement();
   const pasteInserter = (content: string) =>
-    insertElement(ElementType.Text, { ...DEFAULT_PRESET, content });
+    insertElement(ElementType.Text, {
+      ...DEFAULT_PRESET,
+      content,
+    } as unknown as TextElement);
   const pasteTextContent = usePasteTextContent(pasteInserter);
 
   const copyCutHandler = useCallback(
@@ -145,7 +152,7 @@ function useCanvasGlobalKeys() {
                 MAX_PRODUCTS_PER_PAGE,
                 'web-stories'
               ),
-              MAX_PRODUCTS_PER_PAGE
+              MAX_PRODUCTS_PER_PAGE.toString()
             ),
           });
         } else {

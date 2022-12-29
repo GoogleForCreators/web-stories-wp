@@ -66,7 +66,8 @@ function useAddPastedElements() {
   const addPastedElements = useBatchingCallback<
     Element[],
     StoryAnimation[] | undefined,
-    Groups | undefined
+    Groups | undefined,
+    boolean
   >(
     (
       elements: Element[],
