@@ -16,7 +16,11 @@
 
 const MOVE_COARSE_STEP = 10;
 
-function getKeyboardMovement(key, shiftKey, coarseDistance = MOVE_COARSE_STEP) {
+function getKeyboardMovement(
+  key: string,
+  shiftKey: boolean,
+  coarseDistance = MOVE_COARSE_STEP
+) {
   const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
   const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
   const delta = shiftKey ? 1 : coarseDistance;
@@ -26,7 +30,7 @@ function getKeyboardMovement(key, shiftKey, coarseDistance = MOVE_COARSE_STEP) {
   };
 }
 
-function getArrowDir(key, pos, neg) {
+function getArrowDir(key: string, pos: string, neg: string) {
   if (key === pos) {
     return 1;
   }

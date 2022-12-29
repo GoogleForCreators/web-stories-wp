@@ -17,6 +17,10 @@
 // Temporary workaround while this package is not fully converted yet.
 // Adjust tsconfig.json and "types" field in package.json and then
 // delete this file once complete.
+/**
+ * Internal dependencies
+ */
+import getKeyboardMovement from './utils/getKeyboardMovement';
 
 export * from './components/keyboard';
 export * from './contexts/snackbar';
@@ -26,4 +30,4 @@ export * from './utils/constants';
 export * from './utils/localStore';
 export * from './utils/sessionStore';
 
-export {};
+export { getKeyboardMovement };
