@@ -54,7 +54,8 @@ const PreviewWrapper = styled.div<{ background: Pattern }>`
   height: 100%;
   position: relative;
   overflow: hidden;
-  background-color: ${({ theme }) => (theme as typeof ds_theme).colors.standard.white};
+  background-color: ${({ theme }) =>
+    (theme as typeof ds_theme).colors.standard.white};
   border-radius: 4px;
   ${({ background }) => generatePatternStyles(background)}
 `;
