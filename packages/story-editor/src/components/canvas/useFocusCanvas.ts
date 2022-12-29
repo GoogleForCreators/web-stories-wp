@@ -29,7 +29,7 @@ function useFocusCanvas() {
     setTimeout(() => {
       const doc = window.document;
       if (force && doc.activeElement && doc.activeElement !== doc.body) {
-        doc.activeElement.blur();
+        (doc.activeElement as HTMLInputElement).blur();
       }
       const evt = new window.FocusEvent('focusout');
       doc.dispatchEvent(evt);

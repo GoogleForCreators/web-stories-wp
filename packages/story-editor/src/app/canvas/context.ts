@@ -22,6 +22,6 @@ import { createContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import type { CanvasProviderState } from '../../types/canvasProvider';
+import type { CanvasProviderState } from '../../types';
 
 export default createContext<CanvasProviderState>({ actions: {}, state: {} });

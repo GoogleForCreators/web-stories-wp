@@ -114,6 +114,13 @@ export interface ProductElement extends Element {
   product: ProductData;
 }
 
+export interface StickerElement extends Element {
+  type: ElementType.Sticker;
+  sticker: {
+    type: string;
+  };
+}
+
 interface BaseTextElementFont {
   service: string;
   family: string;

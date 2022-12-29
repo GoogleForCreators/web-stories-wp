@@ -36,6 +36,8 @@
     "src/app/media/utils/*.ts",
     "src/app/story",
     "src/components/library/panes/text/textPresets.ts",
+    "src/components/canvas/*.ts",
+    "src/components/canvas/utils/*.ts",
     "src/constants/*",
     "src/utils/**/*.ts",
     "src/utils/**/*.tsx",

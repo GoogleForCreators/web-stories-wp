@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-import { createNewElement } from '@googleforcreators/elements';
+import {
+  createNewElement,
+  ElementType,
+  Element,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -30,12 +34,7 @@ import { noop } from '../../utils/noop';
 import useFocusCanvas from './useFocusCanvas';
 import getElementProperties from './utils/getElementProperties';
 
-/**
- * @param {string} type Element type.
- * @param {!Object} props The element's properties.
- * @return {Object} The new element.
- */
-function createElementForCanvas(type, props) {
+function createElementForCanvas(type: ElementType, props: Element) {
   return createNewElement(type, getElementProperties(type, props));
 }
 

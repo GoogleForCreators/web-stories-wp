@@ -30,6 +30,7 @@ import type {
   TextElement,
   ProductElement,
   SequenceMediaElement,
+  StickerElement,
 } from '../types';
 
 function isMediaElement(e: Element): e is MediaElement;
@@ -77,6 +78,10 @@ function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement {
   return 'poster' in e.resource && Boolean(e.resource.poster);
 }
 
+function isSticker(e: Element): e is StickerElement {
+  return 'sticker' in e && Boolean(e.sticker);
+}
+
 const elementIs = {
   media: isMediaElement,
   text: isTextElement,
@@ -84,6 +89,7 @@ const elementIs = {
   backgroundable: isBackgroundable,
   product: isProduct,
   sequenceMedia: isSequenceMediaElement,
+  sticker: isSticker,
 };
 
 export default elementIs;
