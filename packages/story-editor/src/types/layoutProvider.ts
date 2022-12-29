@@ -15,10 +15,19 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Dispatch, SetStateAction } from 'react';
+
+/**
  * Internal dependencies
  */
 import type { CarouselState, ZoomSetting } from '../constants';
 
+interface ScrollOffset {
+  left: number;
+  top: number;
+}
 export interface LayoutProviderState {
   state: {
     pageWidth: number;
@@ -44,8 +53,8 @@ export interface LayoutProviderState {
   actions: {
     closeCarousel: () => void;
     openCarousel: () => void;
-    setScrollOffset: () => void;
-    setZoomLevel: () => void;
-    setZoomSetting: () => void;
+    setScrollOffset: Dispatch<SetStateAction<ScrollOffset>>;
+    setZoomLevel: Dispatch<SetStateAction<number>>;
+    setZoomSetting: Dispatch<SetStateAction<ZoomSetting>>;
   };
 }

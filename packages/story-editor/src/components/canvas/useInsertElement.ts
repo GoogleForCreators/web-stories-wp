@@ -22,6 +22,7 @@ import {
   createNewElement,
   ElementType,
   Element,
+  elementIs,
 } from '@googleforcreators/elements';
 
 /**
@@ -38,6 +39,9 @@ function createElementForCanvas(type: ElementType, props: Element) {
   return createNewElement(type, getElementProperties(type, props));
 }
 
+interface ElementWithPageId extends Element {
+  pageId?: string;
+}
 function useInsertElement() {
   const { addElement, combineElements, backgroundElementId } = useStory(
     ({ state, actions }) => ({
@@ -59,13 +63,17 @@ function useInsertElement() {
    * @param {boolean} insertAsBackground Whether to insert the element as a background element.
    */
   const insertElement = useCallback(
-    (type, props, insertAsBackground = false) => {
+    (
+      type: ElementType,
+      props: ElementWithPageId,
+      insertAsBackground = false
+    ) => {
       setZoomSetting(ZoomSetting.Fit);
-      const element = createElementForCanvas(type, props);
-      const { id, resource, pageId } = element;
+      const element = createElementForCanvas(type, props) as ElementWithPageId;
+      const { id, pageId } = element;
       addElement({ element, pageId });
 
-      if (insertAsBackground) {
+      if (insertAsBackground && backgroundElementId) {
         combineElements({
           firstElement: element,
           secondId: backgroundElementId,
@@ -75,9 +83,18 @@ function useInsertElement() {
       const elementId = insertAsBackground ? backgroundElementId : id;
 
       // Auto-play on insert.
-      if (type === 'video' && resource?.src && !resource.isPlaceholder) {
+      if (
+        elementId &&
+        elementIs.media(element) &&
+        elementIs.sequenceMedia(element) &&
+        type === 'video' &&
+        element.resource.src &&
+        !element.resource.isPlaceholder
+      ) {
         setTimeout(() => {
-          const videoEl = document.getElementById(`video-${elementId}`);
+          const videoEl = document.getElementById(
+            `video-${elementId}`
+          ) as HTMLVideoElement | null;
           if (videoEl) {
             videoEl.play().catch(noop);
           }

@@ -63,7 +63,7 @@ export type UpdatePageProps = {
 };
 export type UpdateCurrentPageProps = {
   properties: Partial<Page>;
-}
+};
 export type UpdatePageAction = {
   type: ActionTypes.UpdatePage;
   payload: UpdatePageProps;
@@ -91,6 +91,9 @@ export type AddElementsProps = {
   pageId?: string;
   updateSelection?: boolean;
 };
+export interface AddElementProps extends Omit<AddElementsProps, 'elements'> {
+  element: Element;
+}
 
 export type AddElementsAction = {
   type: ActionTypes.AddElements;
@@ -135,7 +138,7 @@ export type DeleteElementsByResourceIdAction = {
 export type CombineElementsProps = {
   firstElement: Element;
   secondId: string;
-  shouldRetainAnimations: boolean;
+  shouldRetainAnimations?: boolean;
 };
 export type CombineElementsAction = {
   type: ActionTypes.CombineElements;
@@ -382,7 +385,7 @@ export type ExternalActions = {
   arrangePage: (props: ArrangePageProps) => ReducerState;
   setCurrentPage: (props: SetCurrentPageProps) => ReducerState;
   addElements: (props: AddElementsProps) => ReducerState;
-  addElement: (props: AddElementsProps) => ReducerState;
+  addElement: (props: AddElementProps) => ReducerState;
   deleteElementsById: (props: DeleteElementsProps) => ReducerState;
   deleteElementById: (props: DeleteElementProps) => ReducerState;
   deleteSelectedElements: () => ReducerState;

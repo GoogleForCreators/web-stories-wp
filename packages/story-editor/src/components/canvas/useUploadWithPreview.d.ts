@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 declare function useUploadWithPreview(): (
-  files: FileList,
+  files: File[],
   insertAsBackground?: boolean,
   args?: object
 ) => void;

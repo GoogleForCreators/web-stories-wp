@@ -21,7 +21,7 @@ import { useCallback, useBatchingCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
-import { elementIs } from '@googleforcreators/elements';
+import { elementIs, ElementType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -80,7 +80,7 @@ function useCanvasGlobalKeys() {
   const uploadWithPreview = useUploadWithPreview();
   const insertElement = useInsertElement();
   const pasteInserter = (content: string) =>
-    insertElement('text', { ...DEFAULT_PRESET, content });
+    insertElement(ElementType.Text, { ...DEFAULT_PRESET, content });
   const pasteTextContent = usePasteTextContent(pasteInserter);
 
   const copyCutHandler = useCallback(
