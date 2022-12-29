@@ -25,7 +25,7 @@ import type { ElementBox } from '@googleforcreators/units';
  * Internal dependencies
  */
 import type { ElementType } from './elementType';
-import type { ProductData } from './data';
+import type { FontMetrics, ProductData } from './data';
 
 export interface Link {
   url: string;
@@ -118,7 +118,7 @@ interface BaseTextElementFont {
   service: string;
   family: string;
   fallbacks: string[];
-  metrics: Record<string, number>;
+  metrics: FontMetrics;
 }
 
 export interface GoogleTextElementFont extends BaseTextElementFont {

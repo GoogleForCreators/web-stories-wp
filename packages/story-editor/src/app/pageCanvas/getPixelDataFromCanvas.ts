@@ -16,13 +16,13 @@
 /**
  * External dependencies
  */
-import { FULLBLEED_RATIO, getBox, PAGE_RATIO} from '@googleforcreators/units';
-import type { DimensionableElement } from '@googleforcreators/units';
+import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@googleforcreators/units';
 import { calculateTextHeight } from '@googleforcreators/element-library';
+import type { TextElement } from '@googleforcreators/elements';
 
 function getPixelDataFromCanvas(
   canvas: HTMLCanvasElement,
-  attrs: DimensionableElement
+  attrs: TextElement
 ): Uint8ClampedArray {
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
