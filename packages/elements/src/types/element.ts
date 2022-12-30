@@ -25,7 +25,7 @@ import type { ElementBox } from '@googleforcreators/units';
  * Internal dependencies
  */
 import type { ElementType } from './elementType';
-import type { ProductData } from './data';
+import type { FontMetrics, ProductData } from './data';
 
 export interface Link {
   url: string;
@@ -118,6 +118,7 @@ interface BaseTextElementFont {
   service: string;
   family: string;
   fallbacks: string[];
+  metrics?: FontMetrics;
 }
 
 export interface GoogleTextElementFont extends BaseTextElementFont {
@@ -138,8 +139,24 @@ export type TextElementFont =
   | SystemTextElementFont
   | CustomTextElementFont;
 
+export interface Padding {
+  horizontal: number;
+  vertical: number;
+  locked: boolean;
+  hasHiddenPadding?: boolean;
+}
+
+export type TextAlign = 'center' | 'justify' | 'left' | 'right';
 export interface TextElement extends Element {
   backgroundColor: Solid;
   content: string;
   font: TextElementFont;
+  fontSize: number;
+
+  backgroundTextMode?: string;
+  tagName?: 'h1' | 'h2' | 'h3' | 'p';
+  padding: Padding;
+  marginOffset: number;
+  lineHeight: number;
+  textAlign: TextAlign;
 }
