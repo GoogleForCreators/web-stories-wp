@@ -118,7 +118,7 @@ interface BaseTextElementFont {
   service: string;
   family: string;
   fallbacks: string[];
-  metrics: FontMetrics;
+  metrics?: FontMetrics;
 }
 
 export interface GoogleTextElementFont extends BaseTextElementFont {
@@ -154,7 +154,7 @@ export interface TextElement extends Element {
   fontSize: number;
 
   backgroundTextMode?: string;
-  tagName: 'h1' | 'h2' | 'h3' | 'p';
+  tagName?: 'h1' | 'h2' | 'h3' | 'p';
   padding: Padding;
   marginOffset: number;
   lineHeight: number;

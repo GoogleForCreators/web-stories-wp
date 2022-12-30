@@ -20,7 +20,6 @@
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { dataPixels, PAGE_HEIGHT } from '@googleforcreators/units';
 import type { Element, TextElement } from '@googleforcreators/elements';
-import type { CSSProperties } from 'react';
 
 /**
  * Internal dependencies
@@ -28,6 +27,8 @@ import type { CSSProperties } from 'react';
 import TextOutputWithUnits from '../text/outputWithUnits';
 import { calcFontMetrics } from '../text/util';
 
+type CSSProperty = string | number | null | undefined;
+type CSSProperties = Record<string, CSSProperty>;
 const MEASURER_STYLES: CSSProperties = {
   boxSizing: 'border-box',
   visibility: 'hidden',
@@ -127,20 +128,19 @@ function getOrCreateMeasurer(element: TextElement): HTMLElement {
   return measurerNode.firstElementChild as HTMLElement;
 }
 
+function getValue(v: CSSProperty): string | null {
+  if (v === null) {
+    return '';
+  }
+  if (v === undefined) {
+    return null;
+  }
+  return String(v);
+}
+
 function setStyles(node: HTMLElement, styles: CSSProperties) {
-  for (const k in styles) {
-    if (Object.prototype.hasOwnProperty.call(styles, k)) {
-      const v = styles[k as keyof typeof styles];
-      if (v === null) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- k can be a string, too.
-        // @ts-ignore
-        node.style[k] = '';
-      } else {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- k can be a string, too.
-        // @ts-ignore
-        node.style[k] = v;
-      }
-    }
+  for (const [k, v] of Object.entries(styles)) {
+    node.style.setProperty(k, getValue(v));
   }
 }
 

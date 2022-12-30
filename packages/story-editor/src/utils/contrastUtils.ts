@@ -19,17 +19,12 @@
  */
 
 import * as hues from '@ap.cx/hues';
+import type { Hex } from '@googleforcreators/patterns';
 
-interface Rgba {
-  r: number;
-  g: number;
-  b: number;
-  a?: number;
-}
 /**
  * Calculate luminance from RGB Object
  */
-export function calculateLuminanceFromRGB(rgb: Rgba) {
+export function calculateLuminanceFromRGB(rgb: Hex) {
   const { r, g, b, a = 1.0 } = rgb;
   const luminance = hues.relativeLuminance({
     r: r / 255.0,
@@ -99,7 +94,7 @@ export function getAccessibleTextColorsFromPixels(
 ) {
   const white: RgbArray = [255, 255, 255, 255];
   const black: RgbArray = [0, 0, 0, 255];
-  const colors = [];
+  const colors: RgbArray[] = [];
 
   const whiteRgb = {
     r: 255,
@@ -120,7 +115,7 @@ export function getAccessibleTextColorsFromPixels(
       pixelData[i + 1],
       pixelData[i + 2],
       pixelData[i + 3],
-    ] as RgbArray);
+    ]);
   }
 
   const contrasts = colors.map((c) => calculateContrast(black, c, fontSize));

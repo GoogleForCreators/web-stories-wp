@@ -16,9 +16,9 @@
 /**
  * External dependencies
  */
-import type { Page } from '@googleforcreators/elements';
+import type { ElementId, Page } from '@googleforcreators/elements';
 
-function pageWithoutSelection(page: Page, selection: string[]): Page {
+function pageWithoutSelection(page: Page, selection: ElementId[]): Page {
   return {
     ...page,
     elements: page.elements.filter(({ id }) => !selection.includes(id)),

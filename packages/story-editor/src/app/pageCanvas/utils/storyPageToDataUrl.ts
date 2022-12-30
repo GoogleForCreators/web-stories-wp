@@ -19,6 +19,7 @@
  */
 import { PAGE_RATIO } from '@googleforcreators/units';
 import type { Page } from '@googleforcreators/elements';
+import type { Options } from 'html-to-image/lib/types';
 
 /**
  * Internal dependencies
@@ -29,10 +30,16 @@ import storyPageToNode from './storyPageToNode';
  * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
+interface StoryPageToCanvasOptions extends Options {
+  width?: number;
+}
 /**
  * Async method to generate a dataUrl from a story page.
  */
-async function storyPageToDataUrl(page: Page, { width = 400, ...options }) {
+async function storyPageToDataUrl(
+  page: Page,
+  { width = 400, ...options }: StoryPageToCanvasOptions
+) {
   const htmlToImage = await import(
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );

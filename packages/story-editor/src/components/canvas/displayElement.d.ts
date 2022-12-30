@@ -18,7 +18,7 @@ import type { Element } from '@googleforcreators/elements';
 
 export interface DisplayElementProps {
   element: Element;
-  previewMode: boolean;
+  previewMode?: boolean;
   isAnimatable?: boolean;
   siblingCount?: number;
 }
