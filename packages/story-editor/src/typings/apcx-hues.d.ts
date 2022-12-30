@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
-
-export * from './constants';
-export * from './utils/textMeasurements';
-
-export {};
+declare module '@ap.cx/hues' {
+  interface Rgba {
+    r: number;
+    g: number;
+    b: number;
+    a?: number;
+  }
+  export function relativeLuminance(rgba: Rgba): number;
+  export function str2rgba(str: string): Rgba;
+  export function contrast(l1: number, l2: number): number;
+  export function aa(ratio: number, font: number): boolean;
+}

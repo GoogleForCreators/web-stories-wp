@@ -17,22 +17,10 @@
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
+export * from './theme';
+import { light as lightMode } from './colors';
 import { THEME_CONSTANTS, BEZIER } from './constants';
 import * as ThemeGlobals from './global';
 import * as themeHelpers from './helpers';
-import { typography } from './typography';
-import { borders } from './borders';
-import { breakpoint, raw } from './breakpoint';
-
-export const theme = {
-  borders,
-  typography,
-  colors: { ...darkMode },
-  breakpoint: {
-    ...breakpoint,
-    raw,
-  },
-};
 
 export { lightMode, THEME_CONSTANTS, themeHelpers, ThemeGlobals, BEZIER };

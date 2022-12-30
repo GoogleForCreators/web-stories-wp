@@ -13,12 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
 
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
+/**
+ * Internal dependencies
+ */
+import type { PageCanvasProviderState } from '../../types';
+import { noop } from '../../utils/noop';
 
-export * from './constants';
-export * from './utils/textMeasurements';
-
-export {};
+export default createContext<PageCanvasProviderState>({
+  actions: {
+    calculateAccessibleTextColors: async () => {
+      return Promise.resolve({});
+    },
+    generateDeferredPageCanvas: () => noop,
+    generateDeferredCurrentPageCanvas: noop,
+  },
+  state: {
+    pageCanvasMap: {},
+  },
+});

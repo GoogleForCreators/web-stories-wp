@@ -15,25 +15,38 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { CSSProperties } from 'react';
+import type {
+  Padding,
+  TextAlign,
+  TextElement,
+  TextElementFont,
+} from '@googleforcreators/elements';
+
+type DataToStyle = (prop: number) => string;
+interface Props {
+  font: TextElementFont;
+  fontSize: number;
+  lineHeight: number;
+  padding?: Padding;
+  textAlign: TextAlign;
+}
+/**
  * Generates paragraph text style for a text element.
- *
- * @param {Object} props Props.
- * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
- * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
- * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
- * y-unit CSS.
- * @param {Object<*>} element Text element properties.
- * @param {function(number):any} dataToPaddingY Falls back to dataToStyleX if not provided.
- * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
-  props,
-  dataToStyleX,
-  dataToStyleY,
+  props: Props,
+  dataToStyleX: DataToStyle,
+  dataToStyleY: DataToStyle,
   dataToFontSizeY = dataToStyleY,
-  element,
+  element: TextElement,
   dataToPaddingY = dataToStyleY
-) {
+): Omit<CSSProperties, 'font'> & {
+  dataToEditorY: DataToStyle;
+  font: TextElementFont;
+} {
   const { font, fontSize, lineHeight, padding, textAlign } = props;
   const { marginOffset } = calcFontMetrics(element);
 
@@ -59,7 +72,14 @@ export function generateParagraphTextStyle(
   };
 }
 
-export const generateFontFamily = ({ family, fallbacks } = {}) => {
+interface GenerateFontFamilyProps {
+  family?: string;
+  fallbacks?: string[];
+}
+export const generateFontFamily = ({
+  family,
+  fallbacks,
+}: GenerateFontFamilyProps = {}) => {
   const genericFamilyKeywords = [
     'cursive',
     'fantasy',
@@ -80,11 +100,11 @@ export const generateFontFamily = ({ family, fallbacks } = {}) => {
   return fontFamilyDisplay;
 };
 
-export const getHighlightLineheight = function (
-  lineHeight,
+export const getHighlightLineheight = (
+  lineHeight: number,
   verticalPadding = 0,
   unit = 'px'
-) {
+) => {
   if (verticalPadding === 0) {
     return `${lineHeight}em`;
   }
@@ -93,7 +113,7 @@ export const getHighlightLineheight = function (
   }${unit})`;
 };
 
-export function calcFontMetrics(element) {
+export function calcFontMetrics(element: TextElement) {
   if (!element.font?.metrics) {
     return {
       contentAreaPx: 0,

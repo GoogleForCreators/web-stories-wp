@@ -15,6 +15,7 @@
     "src/components/snackbar/constants.ts",
     "src/contexts/snackbar/*",
     "src/theme/constants",
+    "src/theme/*.ts",
     "src/types/*",
     "src/types.ts",
     "src/utils/*.ts",
