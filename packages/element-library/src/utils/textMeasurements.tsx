@@ -128,19 +128,18 @@ function getOrCreateMeasurer(element: TextElement): HTMLElement {
   return measurerNode.firstElementChild as HTMLElement;
 }
 
-function getValue(v: CSSProperty): string | null {
-  if (v === null) {
-    return '';
-  }
-  if (v === undefined) {
-    return null;
-  }
-  return String(v);
-}
-
 function setStyles(node: HTMLElement, styles: CSSProperties) {
-  for (const [k, v] of Object.entries(styles)) {
-    node.style.setProperty(k, getValue(v));
+  for (const k in styles) {
+    if (Object.prototype.hasOwnProperty.call(styles, k)) {
+      const v = styles[k];
+      if (v === null) {
+        node.style.setProperty(k, '');
+      } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- k can be a string, too.
+        // @ts-ignore
+        node.style[k] = v;
+      }
+    }
   }
 }
 
