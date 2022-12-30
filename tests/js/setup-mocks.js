@@ -28,4 +28,3 @@ jest.mock('react', () => ({
 }));
 
 jest.mock('@googleforcreators/story-editor/src/utils/getBlurHashFromImage');
-jest.mock('@mediapipe/selfie_segmentation');

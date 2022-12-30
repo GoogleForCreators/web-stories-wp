@@ -69,7 +69,9 @@ const getHTMLFormatter =
   (html: string, ...args: [AllowedSetterArgs]) =>
     updateAndReturnHTML(html, setter, ...args);
 
-export const getHTMLFormatters = () => {
+export const getHTMLFormatters = (): {
+  [p: string]: (html: string, args: AllowedSetterArgs) => string;
+} => {
   return formatters.reduce(
     (aggr, { setters }) => ({
       ...aggr,

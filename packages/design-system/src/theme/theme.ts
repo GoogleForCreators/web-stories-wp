@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
-
-export * from './constants';
-export * from './utils/textMeasurements';
-
-export {};
+/**
+ * Internal dependencies
+ */
+import { dark as darkMode } from './colors';
+import { typography } from './typography';
+import { borders } from './borders';
+import { breakpoint, raw } from './breakpoint';
+export const theme = {
+  borders,
+  typography,
+  colors: { ...darkMode },
+  breakpoint: {
+    ...breakpoint,
+    raw,
+  },
+};

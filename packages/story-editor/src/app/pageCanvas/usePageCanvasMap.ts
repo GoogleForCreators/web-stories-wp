@@ -22,20 +22,27 @@ import { useReduction } from '@googleforcreators/react';
  * Internal dependencies
  */
 import objectWithout from '../../utils/objectWithout';
+import type { PageCanvasMap } from '../../types';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE: PageCanvasMap = {};
 
+interface Action {
+  payload: {
+    pageId: string;
+    canvas?: HTMLCanvasElement;
+  };
+}
 const reducer = {
-  setPageCanvas: (map, action) => {
+  setPageCanvas: (map: PageCanvasMap, action: Action): PageCanvasMap => {
     const { pageId, canvas } = action.payload;
     return {
       ...map,
       [pageId]: canvas,
-    };
+    } as PageCanvasMap;
   },
-  clearPageCanvas: (map, action) => {
+  clearPageCanvas: (map: PageCanvasMap, action: Action): PageCanvasMap => {
     const { pageId } = action.payload;
-    return objectWithout(map, [pageId]);
+    return objectWithout(map, [pageId]) as PageCanvasMap;
   },
 };
 
@@ -44,8 +51,6 @@ const reducer = {
  *
  * Small state abstraction to hold a map of pageIds to a generated canvas
  * for the relevant page.
- *
- * @return {[Object, Object]} returns useReduction return tuple [state, actions]
  */
 function usePageCanvasMap() {
   return useReduction(INITIAL_STATE, reducer);

@@ -22,20 +22,25 @@ import {
   useRef,
   shallowEqual,
 } from '@googleforcreators/react';
+import type { Element, Page } from '@googleforcreators/elements';
+import type { Pattern } from '@googleforcreators/patterns';
 
 /**
  * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
+interface SnapShot {
+  elements: Element[];
+  backgroundColor: Pattern;
+  canvas: HTMLCanvasElement;
+}
 /**
  * Cache that holds 1 generated canvas for a page partial.
- *
- * @return {Object} getter and setter for page snapshot canvas
  */
 function usePageSnapshot() {
   // limit exclusion canvas cache to 1 entry so that our memory doesn't
   // explode from all possible element exclusion combinations
-  const [snapShot, _setSnapshot] = useState(null);
+  const [snapShot, _setSnapshot] = useState<SnapShot | null>(null);
   const snapshotRef = useRef(snapShot);
   snapshotRef.current = snapShot;
 
@@ -49,7 +54,7 @@ function usePageSnapshot() {
    * @param {Page} page - requested page
    * @return {HTMLCanvasElement | null}
    */
-  const getSnapshotCanvas = useCallback((page) => {
+  const getSnapshotCanvas = useCallback((page: Page) => {
     if (
       page.backgroundColor === snapshotRef.current?.backgroundColor &&
       shallowEqual(page.elements, snapshotRef.current?.elements)
@@ -70,13 +75,16 @@ function usePageSnapshot() {
    * @param {HTMLCanvasElement} args.canvas - generated canvas from the story page
    * @return {void}
    */
-  const setSnapshot = useCallback(({ page, canvas }) => {
-    _setSnapshot({
-      elements: page.elements,
-      backgroundColor: page.backgroundColor,
-      canvas,
-    });
-  }, []);
+  const setSnapshot = useCallback(
+    ({ page, canvas }: { page: Page; canvas: HTMLCanvasElement }) => {
+      _setSnapshot({
+        elements: page.elements,
+        backgroundColor: page.backgroundColor,
+        canvas,
+      });
+    },
+    []
+  );
 
   return {
     setSnapshot,

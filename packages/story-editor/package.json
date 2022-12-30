@@ -63,7 +63,7 @@
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
     "@googleforcreators/url": "*",
-    "@mediapipe/selfie_segmentation": "^0.1.1632777926",
+    "@mediapipe/selfie_segmentation": "^0.1.1671057942",
     "@pioug/colorthief": "^3.0.1",
     "@wmik/use-media-recorder": "^1.6.5-beta.0",
     "blurhash": "^2.0.4",
