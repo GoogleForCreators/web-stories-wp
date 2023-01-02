@@ -21,6 +21,9 @@
   "include": [
     "src/constants.ts",
     "src/types.ts",
-    "src/types"
+    "src/types",
+    "src/utils/textMeasurements.tsx",
+    "src/text/*.ts",
+    "src/text/*.tsx"
   ]
 }

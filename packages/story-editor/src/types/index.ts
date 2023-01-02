@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './story';
-export * from './storyProvider';
-export * from './configProvider';
 export * from './apiProvider';
-export * from './storyEditor';
-export * from './storyTriggers';
+export * from './configProvider';
+export * from './currentUserProvider';
 export * from './historyProvider';
+export * from './layoutProvider';
+export * from './pageCanvas';
+export * from './story';
+export * from './storyEditor';
+export * from './storyProvider';
+export * from './storyTriggers';

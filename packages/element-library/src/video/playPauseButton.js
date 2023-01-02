@@ -20,7 +20,6 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
-  useCallback,
   useEffect,
   useState,
   useDebouncedCallback,
@@ -126,15 +125,17 @@ function PlayPauseButton({
   const [hovering, setHovering] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [videoNode, setVideoNode] = useState(null);
   const { id } = element;
-  const getVideoNode = useCallback(
+  useEffect(
     () =>
-      videoRef ? videoRef.current : document.getElementById(`video-${id}`),
+      setVideoNode(
+        videoRef ? videoRef.current : document.getElementById(`video-${id}`)
+      ),
     [videoRef, id]
   );
 
   useEffect(() => {
-    const videoNode = getVideoNode();
     if (!isActive) {
       if (videoNode) {
         videoNode.pause();
@@ -142,17 +143,15 @@ function PlayPauseButton({
       }
       setShowControls(false);
     }
-  }, [getVideoNode, isActive]);
+  }, [videoNode, isActive]);
 
   useEffect(() => {
-    const videoNode = getVideoNode();
     if (videoNode && !videoNode.paused && !isTransforming) {
       videoNode.pause();
     }
-  }, [getVideoNode, isTransforming]);
+  }, [videoNode, isTransforming]);
 
   useEffect(() => {
-    const videoNode = getVideoNode();
     if (!videoNode || !shouldResetOnEnd) {
       return undefined;
     }
@@ -164,10 +163,9 @@ function PlayPauseButton({
 
     videoNode.addEventListener('ended', onVideoEnd);
     return () => videoNode.removeEventListener('ended', onVideoEnd);
-  }, [shouldResetOnEnd, getVideoNode, id]);
+  }, [shouldResetOnEnd, videoNode, id]);
 
   useEffect(() => {
-    const videoNode = getVideoNode();
     if (!videoNode) {
       return undefined;
     }
@@ -181,7 +179,7 @@ function PlayPauseButton({
       videoNode.removeEventListener('play', onVideoPlay);
       videoNode.removeEventListener('pause', onVideoPause);
     };
-  }, [getVideoNode, id]);
+  }, [videoNode, id]);
 
   const checkShowControls = useDebouncedCallback(() => {
     if (!isPlayAbove) {
@@ -212,7 +210,6 @@ function PlayPauseButton({
   }, [checkMouseInBBox]);
   const handlePlayPause = (evt) => {
     evt.stopPropagation();
-    const videoNode = getVideoNode();
     if (!videoNode) {
       return;
     }

@@ -23,15 +23,20 @@ import { useRef, useCallback } from '@googleforcreators/react';
  */
 import { requestIdleCallback, cancelIdleCallback } from './idleCallback';
 
+interface Task {
+  taskId: string | null;
+  task: number | null | (() => Promise<void>);
+}
+
 /**
  * Creates a FIFO idle task queue
  *
- * @return {Function} queueIdleTask
+ * @return queueIdleTask
  */
 function useIdleTaskQueue() {
-  const taskQueue = useRef([]);
+  const taskQueue = useRef<Task[]>([]);
   const isTaskQueueRunning = useRef(false);
-  const currentTask = useRef([null, null]);
+  const currentTask = useRef<Task>({ taskId: null, task: null });
 
   /**
    * Recursively runs idle task queue sequentially
@@ -47,33 +52,38 @@ function useIdleTaskQueue() {
       return;
     }
 
-    const [taskId, task] = taskQueue.current.shift();
-    const idleCallbackId = requestIdleCallback(async () => {
-      await task();
-      currentTask.current = [null, null];
-      runTaskQueue();
+    const { taskId, task } = taskQueue.current.shift() as Task;
+    const idleCallbackId = requestIdleCallback(() => {
+      if (typeof task === 'function') {
+        void task().then(() => {
+          currentTask.current = { taskId: null, task: null };
+          runTaskQueue();
+        });
+      }
     });
-    currentTask.current = [taskId, idleCallbackId];
+    currentTask.current = { taskId, task: idleCallbackId };
   }, []);
 
   /**
    * Clears queue of any tasks associated with the
    * given task id.
    *
-   * @param {string} id id of a task
+   * @param id id of a task
    * @return {void}
    */
   const clearQueuedTask = useCallback(
-    (id) => {
+    (id: string) => {
       // Remove any queued tasks associated with this task Id
-      taskQueue.current = taskQueue.current.filter(([taskId]) => taskId !== id);
+      taskQueue.current = taskQueue.current.filter(
+        ({ taskId }: Task) => taskId !== id
+      );
 
       // If the current requested task hasn't fired, clear it
       // and restart the queue on the next task
-      const [taskId, idleCallbackId] = currentTask.current;
-      if (id === taskId) {
-        cancelIdleCallback(idleCallbackId);
-        currentTask.current = [null, null];
+      const { taskId, task }: Task = currentTask.current;
+      if (id === taskId && typeof task === 'number') {
+        cancelIdleCallback(task);
+        currentTask.current = { taskId: null, task: null };
         runTaskQueue();
       }
     },
@@ -86,17 +96,15 @@ function useIdleTaskQueue() {
    * Returns a cleanup function to cancel the task.
    *
    * Idle Task Queue is a FIFO queue (first in first out)
-   *
-   * @param {[string, Function]} taskTuple uid for task and said task.
-   * @return {Function} function to cancel image generation request
    */
   const queueIdleTask = useCallback(
-    ([id, task]) => {
-      // Clear queue of any stale tasks
-      clearQueuedTask(id);
-
+    ({ taskId, task }: Task) => {
+      if (taskId) {
+        // Clear queue of any stale tasks
+        clearQueuedTask(taskId);
+      }
       // Add request to generate page image generation queue
-      taskQueue.current.push([id, task]);
+      taskQueue.current.push({ taskId, task });
 
       // If the queue has stopped processing because
       // it ran out of entries, restart it
@@ -105,7 +113,9 @@ function useIdleTaskQueue() {
       }
 
       return () => {
-        clearQueuedTask(id);
+        if (taskId) {
+          clearQueuedTask(taskId);
+        }
       };
     },
     [runTaskQueue, clearQueuedTask]

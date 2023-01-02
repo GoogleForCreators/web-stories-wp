@@ -15,3 +15,4 @@
  */
 
 export { default as loadTextSets } from './loadTextSets';
+export * from './types';

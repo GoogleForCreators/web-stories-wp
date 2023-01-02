@@ -53,7 +53,7 @@ class Dashboard extends Service_Base {
 	/**
 	 * Script handle.
 	 */
-	public const SCRIPT_HANDLE = 'wp-dashboard';
+	public const SCRIPT_HANDLE = 'web-stories-dashboard';
 
 	/**
 	 * Admin page hook suffixes.

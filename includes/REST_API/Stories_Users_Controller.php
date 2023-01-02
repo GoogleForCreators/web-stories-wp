@@ -34,6 +34,7 @@ use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_REST_Request;
+use WP_REST_Response;
 use WP_REST_Users_Controller;
 
 /**
@@ -92,6 +93,91 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 */
 	public static function get_registration_action_priority(): int {
 		return 100;
+	}
+
+	/**
+	 * Permissions check for getting all users.
+	 *
+	 * Allows edit_posts capabilities queries for stories if the user has the same cap,
+	 * enabling them to see the users dropdown.
+	 *
+	 * @since 1.28.1
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has read access, otherwise WP_Error object.
+	 */
+	public function get_items_permissions_check( $request ) {
+		/**
+		 * The edit_posts capability.
+		 *
+		 * @var string $edit_posts
+		 */
+		$edit_posts = $this->story_post_type->get_cap_name( 'edit_posts' );
+
+		if (
+			! empty( $request['capabilities'] ) &&
+			[ $edit_posts ] === $request['capabilities'] &&
+			current_user_can( $edit_posts )
+		) {
+			unset( $request['capabilities'] );
+		}
+
+		return parent::get_items_permissions_check( $request );
+	}
+
+	/**
+	 * Retrieves all users.
+	 *
+	 * Includes a workaround for a shortcoming in WordPress core where
+	 * only users with published posts are returned if not an admin
+	 * and not using a 'who' -> 'authors' query, since we're using
+	 * the recommended capabilities queries instead.
+	 *
+	 * @since 1.28.1
+	 *
+	 * @link https://github.com/WordPress/wordpress-develop/blob/008277583be15ee1738fba51ad235af5bbc5d721/src/wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php#L308-L312
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function get_items( $request ) {
+		/**
+		 * The edit_posts capability.
+		 *
+		 * @var string $edit_posts
+		 */
+		$edit_posts = $this->story_post_type->get_cap_name( 'edit_posts' );
+
+		if (
+			! isset( $request['has_published_posts'] ) &&
+			! empty( $request['capabilities'] ) &&
+			[ $edit_posts ] === $request['capabilities'] &&
+			current_user_can( $edit_posts )
+		) {
+			add_filter( 'rest_user_query', [ $this, 'filter_query_args' ] );
+			$response = parent::get_items( $request );
+			remove_filter( 'rest_user_query', [ $this, 'filter_query_args' ] );
+
+			return $response;
+		}
+
+		return parent::get_items( $request );
+	}
+
+	/**
+	 * Filters WP_User_Query arguments when querying users via the REST API.
+	 *
+	 * Removes 'has_published_posts' query argument.
+	 *
+	 * @since 1.28.1
+	 *
+	 * @param array<string,mixed> $prepared_args Array of arguments for WP_User_Query.
+	 * @return array<string,mixed> Filtered query args.
+	 */
+	public function filter_query_args( array $prepared_args ): array {
+		unset( $prepared_args['has_published_posts'] );
+
+		return $prepared_args;
 	}
 
 	/**
@@ -155,9 +241,9 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @param int    $userid      User ID.
 	 * @param string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.
-	 * @return string Number of posts the user has written in this post type.
+	 * @return int Number of posts the user has written in this post type.
 	 */
-	protected function user_posts_count_public( int $userid, string $post_type = 'post' ): string {
+	protected function user_posts_count_public( int $userid, string $post_type = 'post' ): int {
 		$cache_key   = "count_user_{$post_type}_{$userid}";
 		$cache_group = 'user_posts_count';
 
@@ -173,6 +259,6 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 			wp_cache_add( $cache_key, $count, $cache_group );
 		}
 
-		return $count;
+		return (int) $count;
 	}
 }

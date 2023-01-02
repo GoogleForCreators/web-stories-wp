@@ -53,15 +53,29 @@ export interface FontMetrics {
   lGap: number;
 }
 
-export interface FontData {
+export interface BaseFontData {
   family: string;
-  service?: string;
   weights?: FontWeight[];
   styles?: FontStyle[];
   variants?: FontVariant[];
   fallbacks?: string[];
   metrics?: FontMetrics;
 }
+
+export interface GoogleFontData extends BaseFontData {
+  service: 'fonts.google.com';
+}
+
+export interface SystemFontData extends BaseFontData {
+  service: 'system';
+}
+
+export interface CustomFontData extends BaseFontData {
+  service: 'custom';
+  url: string;
+}
+
+export type FontData = GoogleFontData | SystemFontData | CustomFontData;
 
 export interface ProductImage {
   alt: string;

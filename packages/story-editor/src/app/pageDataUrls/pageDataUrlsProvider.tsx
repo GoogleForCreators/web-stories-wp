@@ -24,7 +24,7 @@ import type { PropsWithChildren } from 'react';
  * Internal dependencies
  */
 import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
-import storyPageToDataUrl from '../../utils/storyPageToDataUrl';
+import storyPageToDataUrl from '../pageCanvas/utils/storyPageToDataUrl';
 import Context from './context';
 import type { PageDataUrlsState, PageDataUrlsActions } from './types';
 
@@ -52,15 +52,16 @@ function PageDataUrlProvider({
           }));
         };
 
-        const clearQueueOfPageTask = queueIdleTask([idleTaskUid, idleTask]);
-        return (): void => {
-          if (typeof clearQueueOfPageTask === 'function') {
-            clearQueueOfPageTask();
-          }
-        };
-      },
-      [queueIdleTask]
-    );
+      const clearQueueOfPageTask = queueIdleTask({
+        taskId: idleTaskUid,
+        task: idleTask,
+      });
+      return () => {
+        clearQueueOfPageTask();
+      };
+    },
+    [queueIdleTask]
+  );
 
   const value = useMemo(
     () => ({

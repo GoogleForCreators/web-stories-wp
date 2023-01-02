@@ -219,8 +219,8 @@ export const _default = () => {
   const fontsValue = {
     actions: {
       maybeEnqueueFontStyle: () => {},
-      getCustomFonts: () => {},
-      getCuratedFonts: () => {},
+      loadCustomFonts: () => {},
+      loadCuratedFonts: () => {},
     },
   };
   const apiValue = {

@@ -83,8 +83,8 @@ function Wrapper({ children }) {
           actions: {
             maybeEnqueueFontStyle: () => Promise.resolve(),
             getFontByName: jest.fn(),
-            getCustomFonts: jest.fn(),
-            getCuratedFonts: jest.fn(),
+            loadCustomFonts: jest.fn(),
+            loadCuratedFonts: jest.fn(),
           },
         }}
       >

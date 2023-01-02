@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import type { CSSObject } from 'styled-components';
 import { rgba } from 'polished';
 
 /**
@@ -107,7 +106,7 @@ function getStopList(stops: Array<ColorStop>, alpha: number) {
 function generatePatternStyles(
   pattern: Pattern | null = null,
   property = 'background'
-): CSSObject {
+): Record<string, string> {
   if (pattern === null) {
     return { [property]: 'transparent' };
   }
