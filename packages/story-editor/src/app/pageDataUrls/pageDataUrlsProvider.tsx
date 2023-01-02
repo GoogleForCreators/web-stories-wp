@@ -25,14 +25,10 @@ import type { PropsWithChildren } from 'react';
  */
 import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../pageCanvas/utils/storyPageToDataUrl';
-import Context from './context';
 import type { PageDataUrlsState, PageDataUrlsActions } from '../../types';
+import Context from './context';
 
-function PageDataUrlProvider({
-  children,
-}: {
-  children: PropsWithChildren<unknown>;
-}) {
+function PageDataUrlProvider({ children }: PropsWithChildren<unknown>) {
   const [dataUrls, setDataUrls] = useState<PageDataUrlsState['dataUrls']>({});
   const queueIdleTask = useIdleTaskQueue();
 
@@ -52,16 +48,16 @@ function PageDataUrlProvider({
           }));
         };
 
-      const clearQueueOfPageTask = queueIdleTask({
-        taskId: idleTaskUid,
-        task: idleTask,
-      });
-      return () => {
-        clearQueueOfPageTask();
-      };
-    },
-    [queueIdleTask]
-  );
+        const clearQueueOfPageTask = queueIdleTask({
+          taskId: idleTaskUid,
+          task: idleTask,
+        });
+        return () => {
+          clearQueueOfPageTask();
+        };
+      },
+      [queueIdleTask]
+    );
 
   const value = useMemo(
     () => ({
