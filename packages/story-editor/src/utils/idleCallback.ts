@@ -32,7 +32,7 @@ const requestIdleCallback =
           return Math.max(0, relaxation + (performance.now() - start));
         },
       });
-    }, relaxation) as unknown as number;
+    }, relaxation);
   };
 
 const cancelIdleCallback =
