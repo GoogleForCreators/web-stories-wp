@@ -29,6 +29,6 @@ export default createContext<PageDataUrlsContext>({
     dataUrls: {},
   },
   actions: {
-    queuePageImageGeneration: noop
+    queuePageImageGeneration: noop,
   },
 });

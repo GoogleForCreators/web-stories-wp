@@ -21,8 +21,8 @@ import { useContextSelector, identity } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import Context from './context';
 import type { PageDataUrlsContext } from '../../types';
+import Context from './context';
 
 function usePageDataUrls(): PageDataUrlsContext;
 function usePageDataUrls<T>(
