@@ -26,7 +26,7 @@ import type { PropsWithChildren } from 'react';
 import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../pageCanvas/utils/storyPageToDataUrl';
 import Context from './context';
-import type { PageDataUrlsState, PageDataUrlsActions } from './types';
+import type { PageDataUrlsState, PageDataUrlsActions } from '../../types';
 
 function PageDataUrlProvider({
   children,

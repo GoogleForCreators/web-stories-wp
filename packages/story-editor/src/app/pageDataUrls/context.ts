@@ -17,14 +17,18 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
-import type { PageDataUrlsContext } from './types';
+import type { PageDataUrlsContext } from '../../types';
+import { noop } from '../../utils/noop';
 
 export default createContext<PageDataUrlsContext>({
   state: {
     dataUrls: {},
   },
-  actions: {},
+  actions: {
+    queuePageImageGeneration: noop
+  },
 });
