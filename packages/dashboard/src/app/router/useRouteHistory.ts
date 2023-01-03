@@ -26,6 +26,7 @@ import type { RouterProviderState } from '../../types';
 import Context from './context';
 
 function useRouteHistory(): RouterProviderState;
+function useRouteHistory<T>(selector: (state: RouterProviderState) => T): T;
 function useRouteHistory<T>(
   selector: (state: RouterProviderState) => T | RouterProviderState = identity
 ) {
