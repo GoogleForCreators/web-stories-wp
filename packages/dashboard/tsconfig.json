@@ -18,7 +18,6 @@
     "src/app/config",
     "src/app/router",
     "src/constants",
-    "src/icons",
     "src/types"
   ]
 }

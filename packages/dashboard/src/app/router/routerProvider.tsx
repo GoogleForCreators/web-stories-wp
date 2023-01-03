@@ -17,39 +17,43 @@
 /**
  * External dependencies
  */
-import {
-  useRef,
-  useMemo,
-  useEffect,
-  useState,
-  createContext,
-} from '@googleforcreators/react';
-import PropTypes from 'prop-types';
+import { useRef, useMemo, useEffect, useState } from '@googleforcreators/react';
 import { createHashHistory } from 'history';
+import type { History } from 'history';
+import type { PropsWithChildren } from 'react';
+
 /**
  * Internal dependencies
  */
 import { APP_ROUTES } from '../../constants';
+import Context from './context';
 
-export const RouterContext = createContext({ state: {}, actions: {} });
-
+interface ActiveRouteProps {
+  availableRoutes: string[];
+  currentPath: string;
+  defaultRoute: string;
+}
 export const getActiveRoute = ({
   availableRoutes,
   currentPath,
   defaultRoute,
-}) => {
+}: ActiveRouteProps) => {
   const matchingRoutes = availableRoutes.filter((route) =>
     currentPath.startsWith(route)
   );
   // this assumes that we have a route that's just the root path (/)
   return matchingRoutes.length <= 1 ? defaultRoute : currentPath;
 };
-function RouterProvider({ children, ...props }) {
-  const history = useRef(props.history || createHashHistory());
+
+function RouterProvider({
+  children,
+  ...props
+}: PropsWithChildren<{ history: History }>) {
+  const history = useRef<History>(props.history || createHashHistory());
   const [currentPath, setCurrentPath] = useState(
     history.current.location.pathname
   );
-  const [availableRoutes, setAvailableRoutes] = useState([]);
+  const [availableRoutes, setAvailableRoutes] = useState<string[]>([]);
   const defaultRoute = APP_ROUTES.DASHBOARD;
 
   const activeRoute = useMemo(
@@ -57,7 +61,7 @@ function RouterProvider({ children, ...props }) {
     [availableRoutes, currentPath, defaultRoute]
   );
 
-  const parse = (search) => {
+  const parse = (search: string) => {
     const params = new URLSearchParams(search);
     return Object.fromEntries(params);
   };
@@ -83,22 +87,15 @@ function RouterProvider({ children, ...props }) {
         defaultRoute,
       },
       actions: {
-        push: history.current.push,
-        replace: history.current.replace,
+        push: (path: string) => history.current.push(path),
+        replace: (path: string) => history.current.replace(path),
         setAvailableRoutes,
       },
     }),
     [activeRoute, availableRoutes, currentPath, defaultRoute, queryParams]
   );
 
-  return (
-    <RouterContext.Provider value={value}>{children}</RouterContext.Provider>
-  );
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-
-RouterProvider.propTypes = {
-  children: PropTypes.node,
-  history: PropTypes.object,
-};
 
 export default RouterProvider;

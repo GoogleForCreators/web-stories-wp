@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,24 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
+import type { Dispatch, SetStateAction } from 'react';
+import type { History } from 'history';
 
-export { default as RouterProvider } from './routerProvider';
-export { default as useRouteHistory } from './useRouteHistory';
-export { default as Route, matchPath, resolveRoute } from './route';
+interface State {
+  activeRoute: string;
+  currentPath: string;
+  queryParams: Record<string, string>;
+  availableRoutes: string[];
+  defaultRoute: string;
+}
+interface Actions {
+  push: History['push'];
+  replace: History['replace'];
+  setAvailableRoutes: Dispatch<SetStateAction<string[]>>;
+}
+export interface RouterProviderState {
+  state: State;
+  actions: Actions;
+}

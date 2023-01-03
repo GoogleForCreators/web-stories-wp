@@ -15,9 +15,26 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createContext } from '@googleforcreators/react';
+
+/**
  * Internal dependencies
  */
+import type { RouterProviderState } from '../../types';
 
-export { default as RouterProvider } from './routerProvider';
-export { default as useRouteHistory } from './useRouteHistory';
-export { default as Route, matchPath, resolveRoute } from './route';
+export default createContext<RouterProviderState>({
+  state: {
+    activeRoute: '',
+    currentPath: '',
+    queryParams: {},
+    availableRoutes: [],
+    defaultRoute: '',
+  },
+  actions: {
+    push: () => undefined,
+    replace: () => undefined,
+    setAvailableRoutes: () => [],
+  },
+});
