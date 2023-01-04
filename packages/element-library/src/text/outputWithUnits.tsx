@@ -17,10 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  BACKGROUND_TEXT_MODE,
-  StoryPropTypes,
-} from '@googleforcreators/elements';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/elements';
 import {
   createSolid,
   generatePatternStyles,
@@ -28,7 +25,8 @@ import {
 import { useMemo } from '@googleforcreators/react';
 import { getHTMLFormatters } from '@googleforcreators/rich-text';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import type { TextElement } from '@googleforcreators/elements';
+import type { CSSProperties } from 'react';
 
 /**
  * Internal dependencies
@@ -39,18 +37,19 @@ import {
   calcFontMetrics,
 } from './util';
 
+type DataToStyle = (prop: number) => string;
+interface TextOutputWithUnitsProps {
+  element: TextElement;
+  dataToStyleX: DataToStyle;
+  dataToStyleY: DataToStyle;
+  dataToFontSizeY?: DataToStyle;
+  dataToPaddingX?: DataToStyle;
+  dataToPaddingY?: DataToStyle;
+  className?: string;
+}
+
 /**
  * Renders DOM for the text output based on the provided unit converters.
- *
- * @param {Object<*>} props Component props.
- * @param {Object<*>} props.element Story element.
- * @param {Function} props.dataToStyleX dataToStyleX function.
- * @param {Function} props.dataToStyleY dataToStyleY function.
- * @param {Function} props.dataToFontSizeY dataToFontSizeY function. Falls back to dataToStyleY if not provided.
- * @param {Function} props.dataToPaddingX dataToPaddingX function. Falls back to dataToStyleX if not provided.
- * @param {Function} props.dataToPaddingY dataToPaddingY function. Falls back to dataToStyleX if not provided.
- * @param {string} props.className Class name.
- * @return {*} Rendered component.
  */
 function TextOutputWithUnits({
   element,
@@ -60,7 +59,7 @@ function TextOutputWithUnits({
   dataToPaddingX,
   dataToPaddingY,
   className,
-}) {
+}: TextOutputWithUnitsProps) {
   const {
     content: rawContent,
     backgroundColor,
@@ -132,7 +131,7 @@ function TextOutputWithUnits({
     background: 'none',
     lineHeight,
     overflowWrap: 'break-word',
-  };
+  } as CSSProperties;
 
   const highlightCloneStyle = {
     ...highlightStyle,
@@ -140,16 +139,16 @@ function TextOutputWithUnits({
     top: 0,
     left: 0,
     right: 0,
-  };
+  } as CSSProperties;
 
-  const marginStyle = (el) => {
+  const marginStyle = (el: TextElement): CSSProperties => {
     const { marginOffset } = calcFontMetrics(el);
     return {
       display: 'block',
       position: 'relative',
       left: 0,
       top: '0',
-      margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
+      margin: `${dataToPaddingY ? dataToPaddingY(-marginOffset / 2) : 0} 0`,
       /* stylelint-disable-next-line */
       WebkitBoxDecorationBreak: 'clone',
       boxDecorationBreak: 'clone',
@@ -167,7 +166,7 @@ function TextOutputWithUnits({
     borderRadius: `${borderRadius?.topLeft || 0}px ${
       borderRadius?.topRight || 0
     }px ${borderRadius?.bottomRight || 0}px ${borderRadius?.bottomLeft || 0}px`,
-  };
+  } as CSSProperties;
 
   const backgroundTextStyle = {
     ...textStyle,
@@ -225,15 +224,5 @@ function TextOutputWithUnits({
     </TagName>
   );
 }
-
-TextOutputWithUnits.propTypes = {
-  element: StoryPropTypes.textContent.isRequired,
-  dataToStyleX: PropTypes.func.isRequired,
-  dataToStyleY: PropTypes.func.isRequired,
-  dataToFontSizeY: PropTypes.func,
-  dataToPaddingX: PropTypes.func,
-  dataToPaddingY: PropTypes.func,
-  className: PropTypes.string,
-};
 
 export default TextOutputWithUnits;

@@ -49,12 +49,11 @@ function useAuthorFilter() {
    * Query all the authors.
    * Initializes the primaryOptions and used to search and set queriedOptions.
    *
-   * @param {Object} filter author filter data
-   * @param {string} search string use to query author by name
+   * @param {string} search Search term for author names.
    * @return {Array} author data
    */
   const queryAuthors = useCallback(
-    async (filter, search) => {
+    async (search) => {
       const data = await getAuthors(search);
       return data.map(({ id, name }) => ({
         id,

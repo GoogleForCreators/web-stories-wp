@@ -114,7 +114,7 @@ export interface APICallbacks {
   ) => Promise<Term>;
   deleteMedia?: (id: number) => Promise<boolean>;
   deletePageTemplate?: (id: number) => Promise<boolean>;
-  getAuthors?: () => Promise<Author[]>;
+  getAuthors?: (search_term: string) => Promise<Author[]>;
   getCurrentUser?: () => Promise<User>;
   getCustomPageTemplates?: (page: number | boolean) => Promise<{
     hasMore: boolean;

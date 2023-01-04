@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useEffect, memo } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -25,17 +25,26 @@ import PropTypes from 'prop-types';
 import objectWithout from '../../utils/objectWithout';
 import { useStory } from '../story';
 
-function PageCanvasCacheValidator({ pageId, clearPageCanvasCache }) {
+interface PageCanvasCacheValidatorProps {
+  pageId: string;
+  clearPageCanvasCache: (props: {
+    pageId: string;
+    canvas?: HTMLCanvasElement;
+  }) => void;
+}
+function PageCanvasCacheValidator({
+  pageId,
+  clearPageCanvasCache,
+}: PageCanvasCacheValidatorProps) {
   const page = useStory(({ state }) =>
-    objectWithout(
-      state.pages.find(({ id }) => id === pageId),
-      ['animations']
-    )
+    objectWithout(state.pages.find(({ id }) => id === pageId) as Page, [
+      'animations',
+    ])
   );
 
   // clear pageCanvas whenever a page is updated.
   useEffect(() => {
-    clearPageCanvasCache({ pageId: page.id });
+    clearPageCanvasCache({ pageId: page.id as string });
   }, [page, clearPageCanvasCache]);
 
   // clear pageCanvas if the page gets deleted
@@ -45,10 +54,5 @@ function PageCanvasCacheValidator({ pageId, clearPageCanvasCache }) {
 
   return null;
 }
-
-PageCanvasCacheValidator.propTypes = {
-  pageId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  clearPageCanvasCache: PropTypes.func,
-};
 
 export default memo(PageCanvasCacheValidator);

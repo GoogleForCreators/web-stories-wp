@@ -34,6 +34,7 @@ import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import { noop } from '../../../../../utils/noop';
 import MediaGallery from './mediaGallery';
 import {
   MediaGalleryContainer,
@@ -75,7 +76,7 @@ function PaginatedMediaGallery({
     ) {
       return setNextPage();
     }
-    return () => {};
+    return noop;
   }, [setNextPage]);
 
   const debouncedSetNextPage = useDebouncedCallback(isNextPageNeeded, 500);

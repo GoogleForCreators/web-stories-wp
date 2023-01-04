@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import type { ElementId, Page } from '@googleforcreators/elements';
 
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
+function pageWithoutSelection(page: Page, selection: ElementId[]): Page {
+  return {
+    ...page,
+    elements: page.elements.filter(({ id }) => !selection.includes(id)),
+  };
+}
 
-export * from './constants';
-export * from './utils/textMeasurements';
-
-export {};
+export default pageWithoutSelection;

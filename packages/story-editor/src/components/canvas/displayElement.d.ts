@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { createContext } from '@googleforcreators/react';
 
-export default createContext({ actions: {}, state: {} });
+import type { Element } from '@googleforcreators/elements';
+
+export interface DisplayElementProps {
+  element: Element;
+  previewMode?: boolean;
+  isAnimatable?: boolean;
+  siblingCount?: number;
+}
+declare function DisplayElement(props: DisplayElementProps): JSX.Element;
+export default DisplayElement;

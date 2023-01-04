@@ -24,14 +24,15 @@ import { createContext } from '@googleforcreators/react';
  */
 import type { LayoutProviderState } from '../../types';
 import { CarouselState, ZoomSetting } from '../../constants';
+import { noop } from '../../utils/noop';
 
 export default createContext<LayoutProviderState>({
   actions: {
-    setZoomSetting: () => undefined,
-    closeCarousel: () => undefined,
-    openCarousel: () => undefined,
-    setScrollOffset: () => undefined,
-    setZoomLevel: () => undefined,
+    setZoomSetting: noop,
+    closeCarousel: noop,
+    openCarousel: noop,
+    setScrollOffset: noop,
+    setZoomLevel: noop,
   },
   state: {
     pageWidth: 0,

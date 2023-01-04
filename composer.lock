@@ -200,16 +200,16 @@
         },
         {
             "name": "cweagans/composer-patches",
-            "version": "1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweagans/composer-patches.git",
-                "reference": "e9969cfc0796e6dea9b4e52f77f18e1065212871"
+                "reference": "e190d4466fe2b103a55467dfa83fc2fecfcaf2db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/e9969cfc0796e6dea9b4e52f77f18e1065212871",
-                "reference": "e9969cfc0796e6dea9b4e52f77f18e1065212871",
+                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/e190d4466fe2b103a55467dfa83fc2fecfcaf2db",
+                "reference": "e190d4466fe2b103a55467dfa83fc2fecfcaf2db",
                 "shasum": ""
             },
             "require": {
@@ -242,9 +242,9 @@
             "description": "Provides a way to patch Composer packages.",
             "support": {
                 "issues": "https://github.com/cweagans/composer-patches/issues",
-                "source": "https://github.com/cweagans/composer-patches/tree/1.7.2"
+                "source": "https://github.com/cweagans/composer-patches/tree/1.7.3"
             },
-            "time": "2022-01-25T19:21:20+00:00"
+            "time": "2022-12-20T22:53:13+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -2130,16 +2130,16 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v7.1.1",
+            "version": "v7.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "1b70c49977748ef57d7c6e06e30dc7621a3f007a"
+                "reference": "6300fa0be7ace8a62fc26ba25c67fd7d4c2ac755"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/1b70c49977748ef57d7c6e06e30dc7621a3f007a",
-                "reference": "1b70c49977748ef57d7c6e06e30dc7621a3f007a",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/6300fa0be7ace8a62fc26ba25c67fd7d4c2ac755",
+                "reference": "6300fa0be7ace8a62fc26ba25c67fd7d4c2ac755",
                 "shasum": ""
             },
             "require": {
@@ -2168,9 +2168,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/woocommerce-stubs/issues",
-                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v7.1.1"
+                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v7.2.1"
             },
-            "time": "2022-12-07T19:35:53+00:00"
+            "time": "2022-12-20T16:58:03+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -2562,16 +2562,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.13.1",
+            "version": "1.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "aac44118344d197e6d5f7c6cee91885f0a89acdd"
+                "reference": "5941477f100993652218928039d530b75a13a9ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/aac44118344d197e6d5f7c6cee91885f0a89acdd",
-                "reference": "aac44118344d197e6d5f7c6cee91885f0a89acdd",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/5941477f100993652218928039d530b75a13a9ca",
+                "reference": "5941477f100993652218928039d530b75a13a9ca",
                 "shasum": ""
             },
             "require": {
@@ -2601,22 +2601,22 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.13.1"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.2"
             },
-            "time": "2022-11-20T08:52:26+00:00"
+            "time": "2022-12-16T06:42:48+00:00"
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.3",
+            "version": "1.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "709999b91448d4f2bb07daffffedc889b33e461c"
+                "reference": "d03bccee595e2146b7c9d174486b84f4dc61b0f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/709999b91448d4f2bb07daffffedc889b33e461c",
-                "reference": "709999b91448d4f2bb07daffffedc889b33e461c",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d03bccee595e2146b7c9d174486b84f4dc61b0f2",
+                "reference": "d03bccee595e2146b7c9d174486b84f4dc61b0f2",
                 "shasum": ""
             },
             "require": {
@@ -2646,7 +2646,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.3"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.4"
             },
             "funding": [
                 {
@@ -2662,20 +2662,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-13T10:28:10+00:00"
+            "time": "2022-12-17T13:33:52+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "cd9c6938f8bbfcb6da3ed5a3c7ea60873825d088"
+                "reference": "54a24bd23e9e80ee918cdc24f909d376c2e273f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/cd9c6938f8bbfcb6da3ed5a3c7ea60873825d088",
-                "reference": "cd9c6938f8bbfcb6da3ed5a3c7ea60873825d088",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/54a24bd23e9e80ee918cdc24f909d376c2e273f7",
+                "reference": "54a24bd23e9e80ee918cdc24f909d376c2e273f7",
                 "shasum": ""
             },
             "require": {
@@ -2712,9 +2712,9 @@
             "description": "PHPUnit extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-phpunit/issues",
-                "source": "https://github.com/phpstan/phpstan-phpunit/tree/1.3.2"
+                "source": "https://github.com/phpstan/phpstan-phpunit/tree/1.3.3"
             },
-            "time": "2022-12-13T15:08:22+00:00"
+            "time": "2022-12-21T15:25:00+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4853,32 +4853,32 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "8.6.4",
+            "version": "8.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "8a02c83e59c3230a2a4367b29956a2f2b56e3a24"
+                "reference": "c51edb898bebd36aac70a190c6a41a7c056bb5b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/8a02c83e59c3230a2a4367b29956a2f2b56e3a24",
-                "reference": "8a02c83e59c3230a2a4367b29956a2f2b56e3a24",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/c51edb898bebd36aac70a190c6a41a7c056bb5b9",
+                "reference": "c51edb898bebd36aac70a190c6a41a7c056bb5b9",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7",
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpdoc-parser": ">=1.11.0 <1.14.0",
+                "phpstan/phpdoc-parser": ">=1.15.0 <1.16.0",
                 "squizlabs/php_codesniffer": "^3.7.1"
             },
             "require-dev": {
                 "phing/phing": "2.17.4",
                 "php-parallel-lint/php-parallel-lint": "1.3.2",
-                "phpstan/phpstan": "1.4.10|1.9.2",
-                "phpstan/phpstan-deprecation-rules": "1.0.0",
-                "phpstan/phpstan-phpunit": "1.0.0|1.2.2",
+                "phpstan/phpstan": "1.4.10|1.9.3",
+                "phpstan/phpstan-deprecation-rules": "1.1.0",
+                "phpstan/phpstan-phpunit": "1.0.0|1.3.1",
                 "phpstan/phpstan-strict-rules": "1.4.4",
-                "phpunit/phpunit": "7.5.20|8.5.21|9.5.26"
+                "phpunit/phpunit": "7.5.20|8.5.21|9.5.27"
             },
             "type": "phpcodesniffer-standard",
             "extra": {
@@ -4902,7 +4902,7 @@
             ],
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/8.6.4"
+                "source": "https://github.com/slevomat/coding-standard/tree/8.7.1"
             },
             "funding": [
                 {
@@ -4914,7 +4914,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-14T09:26:24+00:00"
+            "time": "2022-12-14T08:49:18+00:00"
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",

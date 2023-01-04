@@ -19,6 +19,7 @@
  */
 import type { ContentState } from 'draft-js';
 import { EditorState, Modifier } from 'draft-js';
+import type { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
@@ -36,7 +37,7 @@ import type { SetStyleCallback, StyleGetter } from './types';
  * @return First match or NONE
  */
 export function getPrefixStyleForCharacter(
-  styles: Immutable.OrderedSet<string>,
+  styles: OrderedSet<string>,
   prefix: string | typeof NONE
 ): string {
   const list = styles.toArray();
