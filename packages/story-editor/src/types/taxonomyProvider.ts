@@ -22,12 +22,9 @@ import type {
   TaxonomySlug,
   Term,
   TermId,
-  TermSlug,
 } from '@googleforcreators/elements';
 
 export type TaxonomiesBySlug = Record<TaxonomySlug, Taxonomy>;
-
-export type EmbeddedTerms = Record<TaxonomySlug, Record<TermSlug, Term>>;
 
 export interface TaxonomySearchArgs {
   search?: string;
@@ -38,12 +35,15 @@ export interface createTermProps {
   taxonomy: Taxonomy;
   termName: string;
   parent: { id?: TermId; slug: string; addToSelection: boolean };
-  addNameToSelection?: boolean;
+  addToSelection?: boolean;
 }
 
 export interface setTermsProps {
-  taxonomy: Taxonomy;
-  termIds: TermId[] | ((termIds: TermId[]) => void);
+  newTerms: Term[];
+}
+
+export interface removeTermsProps {
+  removeTerms: Term[];
 }
 
 export interface addSearchResultsToCacheProps {
@@ -53,12 +53,11 @@ export interface addSearchResultsToCacheProps {
 }
 
 export interface addTermToSelectionProps {
-  taxonomy: Taxonomy;
-  term: Term;
+  newTerms: Term[];
 }
 
 export interface TaxonomyState {
-  state: { taxonomies: TaxonomiesBySlug; termCache: TermId[]; terms: Term[] };
+  state: { taxonomies: TaxonomiesBySlug; termCache: Term[]; terms: Term[] };
   actions: {
     createTerm: (props: createTermProps) => Promise<void>;
     addSearchResultsToCache: (

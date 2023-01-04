@@ -96,25 +96,33 @@ function HierarchicalTermSelector({
   taxonomy,
   canCreateTerms,
 }) {
-  const { createTerm, termCache, terms, setTerms } = useTaxonomy(
-    ({ state: { termCache, terms }, actions: { createTerm, setTerms } }) => ({
+  const { createTerm, termCache, terms, setTerms, removeTerms } = useTaxonomy(
+    ({
+      state: { termCache, terms },
+      actions: { createTerm, setTerms, removeTerms },
+    }) => ({
       createTerm,
       setTerms,
+      removeTerms,
       termCache,
       terms,
     })
   );
 
   const categories = useMemo(() => {
-    if (termCache?.[taxonomy.restBase]) {
-      return Object.values(termCache[taxonomy.restBase]).map((category) => ({
-        id: category.id,
-        parent: category.parent,
-        value: category.id,
-        label: category.name,
-        checked: terms[taxonomy.restBase]?.includes(category.id),
-        slug: category.slug,
-      }));
+    if (termCache) {
+      return termCache
+        .filter((term) => term.taxonomy === taxonomy.slug)
+        .map((category) => ({
+          id: category.id,
+          parent: category.parent,
+          value: category.id,
+          label: category.name,
+          checked: terms
+            ? terms.map(({ id }) => id).includes(category.id)
+            : false,
+          slug: category.slug,
+        }));
     }
 
     return [];
@@ -140,28 +148,15 @@ function HierarchicalTermSelector({
 
   const handleClickCategory = useCallback(
     (_evt, { id, checked }) => {
-      const term = categories.find((category) => category.id === id);
-
-      // find the already selected slugs + update those.
-      setTerms(taxonomy, (currentTerms = []) => {
-        const index = currentTerms.findIndex((termId) => termId === term.id);
-        // add if term doesn't exist
-        if (checked && index === -1) {
-          return [...currentTerms, term.id];
-        }
-
-        // remove if term exists
-        if (!checked && index > -1) {
-          return [
-            ...currentTerms.slice(0, index),
-            ...currentTerms.slice(index + 1),
-          ];
-        }
-
-        return currentTerms;
-      });
+      const term = termCache.find((category) => category.id === id);
+      if (checked) {
+        // find the already selected slugs + update those.
+        setTerms({ newTerms: [term] });
+      } else {
+        removeTerms({ removeTerms: [term] });
+      }
     },
-    [categories, setTerms, taxonomy]
+    [termCache, setTerms, removeTerms]
   );
 
   const handleToggleNewCategory = useCallback(() => {

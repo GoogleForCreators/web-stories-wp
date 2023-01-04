@@ -23,6 +23,7 @@ import type {
   StoryData,
   Story,
   TextElement,
+  Term,
 } from '@googleforcreators/elements';
 import type { Pattern } from '@googleforcreators/patterns';
 
@@ -129,5 +130,5 @@ export interface RawStory {
   revisions: {
     count: number;
   };
-  terms: string[];
+  terms: Term[] | null;
 }

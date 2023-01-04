@@ -30,7 +30,7 @@ import { useLiveRegion } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import Tags, { deepEquals } from '../../../form/tags';
+import Tags from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { useHistory } from '../../../../app';
@@ -44,6 +44,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     addSearchResultsToCache,
     terms = [],
     setTerms,
+    removeTerms,
     addTermToSelection,
   } = useTaxonomy(
     ({
@@ -52,6 +53,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
         createTerm,
         addSearchResultsToCache,
         setTerms,
+        removeTerms,
         addTermToSelection,
       },
     }) => ({
@@ -60,6 +62,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       addSearchResultsToCache,
       terms,
       setTerms,
+      removeTerms,
       addTermToSelection,
     })
   );
@@ -70,29 +73,31 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
-      // set terms that exist in the cache
-      const termNameSlugTuples = termNames.map((name) => [
-        cleanForSlug(name),
-        name,
-      ]);
-      const termsInCache = termNameSlugTuples
-        .map(([slug]) => slug)
-        .map((slug) => termCache[taxonomy.restBase]?.[slug])
-        .filter((v) => v)
-        .map((term) => term.id);
-
-      // We don't want to cause a redundant history entry
-      if (!deepEquals(terms[taxonomy.restBase], termsInCache)) {
-        setTerms(taxonomy, termsInCache);
-      }
+      const newTerms = termCache.filter((term) =>
+        termNames.includes(term.name)
+      );
+      const removeToTerms = terms.filter(
+        (term) => term.taxonomy === taxonomy.slug
+      );
+      removeTerms({ removeTerms: removeToTerms });
+      setTerms({ newTerms });
 
       // Return early if user doesn't have capability to create new terms
       if (!canCreateTerms) {
         return;
       }
 
+      // set terms that exist in the cache
+      const termNameSlugTuples = termNames.map((name) => [
+        cleanForSlug(name),
+        name,
+      ]);
+
       const termNamesNotInCache = termNameSlugTuples
-        .filter(([slug]) => !termCache[taxonomy.restBase]?.[slug])
+        .filter(
+          ([slug]) =>
+            !termCache.map(({ slug: thisSlug }) => thisSlug).includes(slug)
+        )
         .map(([, name]) => name);
 
       // create new terms for ones that don't
@@ -105,7 +110,15 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
         })
       );
     },
-    [canCreateTerms, terms, taxonomy, termCache, setTerms, createTerm]
+    [
+      termCache,
+      removeTerms,
+      terms,
+      setTerms,
+      canCreateTerms,
+      createTerm,
+      taxonomy,
+    ]
   );
 
   const handleFreeformInputChange = useDebouncedCallback(async (value) => {
@@ -137,20 +150,15 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   }, 300);
 
   const tokens = useMemo(() => {
-    return (terms[taxonomy.restBase] || [])
-      .map((id) => {
-        const term = Object.values(termCache[taxonomy.restBase] || {}).find(
-          (term) => term.id === id
-        );
-        return term;
-      })
+    return terms
+      .filter((term) => term.taxonomy === taxonomy.slug)
       .filter((term) => term !== undefined)
       .map((term) => term.name);
-  }, [taxonomy, terms, termCache]);
+  }, [terms, taxonomy]);
 
   const termDisplayTransformer = useCallback(
-    (tagName) => termCache[taxonomy.restBase]?.[cleanForSlug(tagName)]?.name,
-    [taxonomy, termCache]
+    (tagName) => termCache.filter((term) => term.name === tagName)?.[0]?.name,
+    [termCache]
   );
 
   useEffect(() => {
@@ -197,10 +205,10 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
                 <WordCloud.ListItem key={term.id}>
                   <WordCloud.Word
                     onClick={() => {
-                      if (terms[taxonomy.restBase]?.includes(term.id)) {
+                      if (terms.map(({ id }) => id).includes(term.id)) {
                         return;
                       }
-                      addTermToSelection({ taxonomy, term });
+                      addTermToSelection({ newTerms: [term] });
                     }}
                   >
                     {term.name}

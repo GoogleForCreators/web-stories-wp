@@ -41,5 +41,6 @@ export type Term = {
   name: string;
   slug: TermSlug;
   taxonomy: TaxonomySlug;
+  parent?: number;
   _links: Record<string, string>;
 };

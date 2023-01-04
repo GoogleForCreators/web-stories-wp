@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import type { FontData, ProductData } from '@googleforcreators/elements';
+import type {
+  Taxonomy,
+  Term,
+  FontData,
+  ProductData,
+} from '@googleforcreators/elements';
 import type {
   Resource,
   ResourceId,
@@ -29,7 +34,6 @@ import type { Template } from '@googleforcreators/templates';
 /**
  * Internal dependencies
  */
-import type { Taxonomy, Term } from './taxonomyProvider';
 import type { RawStory, StoryReturnData, StorySaveData } from './story';
 import type { PageTemplate } from './configProvider';
 import type { User } from './storyEditor';
