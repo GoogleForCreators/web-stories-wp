@@ -27,5 +27,6 @@ export * from './utils/localStore';
 export * from './utils/sessionStore';
 export * from './utils/panelTypes';
 export * from './utils/panelSections';
+export * from './theme/theme';
 
 export {};

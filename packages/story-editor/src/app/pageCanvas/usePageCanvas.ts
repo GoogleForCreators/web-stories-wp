@@ -21,10 +21,19 @@ import { useContextSelector, identity } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { PageCanvasProviderState } from '../../types';
 import Context from './context';
 
-function usePageCanvas(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export function usePageCanvas(): PageCanvasProviderState;
+export function usePageCanvas<T>(
+  selector: (state: PageCanvasProviderState) => T
+): T;
+export function usePageCanvas<T>(
+  selector: (
+    state: PageCanvasProviderState
+  ) => T | PageCanvasProviderState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
 export default usePageCanvas;

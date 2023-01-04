@@ -19,14 +19,12 @@
  */
 
 import * as hues from '@ap.cx/hues';
+import type { Hex } from '@googleforcreators/patterns';
 
 /**
  * Calculate luminance from RGB Object
- *
- * @param  {Object} rgb RGB Object. Example: { r, g, b }
- * @return {number} Luminance
  */
-export function calculateLuminanceFromRGB(rgb) {
+export function calculateLuminanceFromRGB(rgb: Hex) {
   const { r, g, b, a = 1.0 } = rgb;
   const luminance = hues.relativeLuminance({
     r: r / 255.0,
@@ -39,41 +37,41 @@ export function calculateLuminanceFromRGB(rgb) {
 
 /**
  * Calculate luminance from style color string
- *
- * @param  {string} styleColor Color from html element style.color. Example: "rgb(000, 000, 000)"
- * @return {number} Luminance
  */
-export function calculateLuminanceFromStyleColor(styleColor) {
+export function calculateLuminanceFromStyleColor(styleColor: string) {
   const rgb = hues.str2rgba(styleColor);
   return hues.relativeLuminance(rgb);
 }
 
+interface ContrastReturn {
+  ratio: number;
+  WCAG_AA: boolean;
+}
 /**
  * 18 point text or 14 point bold text is judged to be large enough to require a lower contrast ratio.
  * https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html
  */
 /**
  * Check contrast ratios from luminances for WCAG guidelines
- *
- * @param  {number} luminanceA Luminance A
- * @param  {number} luminanceB Luminance B
- * @param  {number} fontSize Font size
- * @return {Object} WCAG contrast ratio checks
  */
-export function checkContrastFromLuminances(luminanceA, luminanceB, fontSize) {
+export function checkContrastFromLuminances(
+  luminanceA: number,
+  luminanceB: number,
+  fontSize: number
+): ContrastReturn {
   const ratio = hues.contrast(luminanceA, luminanceB);
   return { ratio, WCAG_AA: hues.aa(ratio, fontSize) };
 }
 
+type RgbArray = [number, number, number, number?];
 /**
  * Calculates contrast between two rgb colors, considering font size.
- *
- * @param {Object} rgb1 First color.
- * @param {Object} rgb2 Second color.
- * @param {number} fontSize Font size.
- * @return {{WCAG_AA: boolean, ratio: *}} Object including contrast ratio and true/false if the contrast has WCAG AA rating.
  */
-function calculateContrast(rgb1, rgb2, fontSize) {
+function calculateContrast(
+  rgb1: RgbArray,
+  rgb2: RgbArray,
+  fontSize: number
+): ContrastReturn {
   const lum1 = calculateLuminanceFromRGB({
     r: rgb1[0],
     g: rgb1[1],
@@ -89,15 +87,14 @@ function calculateContrast(rgb1, rgb2, fontSize) {
 
 /**
  * Gets accessible colors from pixel data. Returns the text color and background color.
- *
- * @param {Array} pixelData Array of pixel data.
- * @param {number} fontSize Font size, influences the contrast rating.
- * @return {Object} Returns object consisting of color and backgroundColor in case relevant.
  */
-export function getAccessibleTextColorsFromPixels(pixelData, fontSize) {
-  const white = [255, 255, 255, 255];
-  const black = [0, 0, 0, 255];
-  const colors = [];
+export function getAccessibleTextColorsFromPixels(
+  pixelData: Uint8ClampedArray,
+  fontSize: number
+) {
+  const white: RgbArray = [255, 255, 255, 255];
+  const black: RgbArray = [0, 0, 0, 255];
+  const colors: RgbArray[] = [];
 
   const whiteRgb = {
     r: 255,

@@ -130,7 +130,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@1a18b2267f80291a81ca1d33e7c851fe09e7dfc4
+        uses: shivammathur/setup-php@8e2ac35f639d3e794c1da1f28999385ab6fdf0fc
         with:
           php-version: '8.0'
           coverage: none
@@ -184,7 +184,7 @@ jobs:
 
       - name: Check if a comment was already made
         id: find-comment
-        uses: peter-evans/find-comment@f4499a714d59013c74a08789b48abe4b704364a0
+        uses: peter-evans/find-comment@81e2da3af01c92f83cb927cf3ace0e085617c556
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: googleforcreators-bot
