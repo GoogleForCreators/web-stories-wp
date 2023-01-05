@@ -66,13 +66,12 @@ function useInsertElement() {
     (
       type: ElementType,
       props: ElementWithPageId,
-      insertAsBackground = false,
-      pageId?: string
+      insertAsBackground = false
     ) => {
       setZoomSetting(ZoomSetting.Fit);
       const element = createElementForCanvas(type, props);
       const { id } = element;
-      addElement({ element, pageId });
+      addElement({ element });
 
       if (insertAsBackground && backgroundElementId) {
         combineElements({
