@@ -37,7 +37,7 @@ import {
 import { useLayout } from '../layout';
 import { useStory } from '../story';
 import type {
-  BoundingBox,
+  BoundingBoxes,
   EyedropperCallback,
   RenamableLayer,
   VoidFuncWithNoProps,
@@ -53,9 +53,7 @@ interface Local {
   isDisplayed: boolean;
 }
 function CanvasProvider({ children }: PropsWithChildren<unknown>) {
-  const [boundingBoxes, setBoundingBoxes] = useState<
-    Record<string, BoundingBox>
-  >({});
+  const [boundingBoxes, setBoundingBoxes] = useState<BoundingBoxes>({});
   const [lastSelectionEvent, setLastSelectionEvent] =
     useState<MouseEvent | null>(null);
   const lastSelectedElementId = useRef<string | null>(null);
@@ -104,10 +102,10 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
           if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {
             return;
           }
+          const index = entry.target.dataset[RECT_OBSERVATION_KEY];
           setBoundingBoxes((boxes) => ({
             ...boxes,
-            [entry.target.dataset[RECT_OBSERVATION_KEY]]:
-              entry.boundingClientRect,
+            [index]: entry.boundingClientRect,
           }));
         }
       }),

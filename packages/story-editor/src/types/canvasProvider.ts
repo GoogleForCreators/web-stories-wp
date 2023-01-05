@@ -51,7 +51,7 @@ interface CanvasActions {
   setFloatingMenuPosition: Dispatch<SetStateAction<string | undefined>>;
   setDisplayFloatingMenu: Dispatch<SetStateAction<boolean | undefined>>;
 }
-export interface BoundingBox {
+export interface BoundingBoxes {
   canvasContainer?: DOMRectReadOnly;
   pageContainer?: DOMRectReadOnly;
 }
@@ -72,7 +72,7 @@ export interface CanvasState {
   eyedropperCallback: null | EyedropperCallback;
   eyedropperImg: string | null;
   eyedropperPixelData: Uint8ClampedArray | null;
-  boundingBoxes: Record<string, BoundingBox>;
+  boundingBoxes: BoundingBoxes;
   clientRectObserver: IntersectionObserver | null;
   onMoveableMount: VoidFuncWithNoProps | null;
   renamableLayer: RenamableLayer;
