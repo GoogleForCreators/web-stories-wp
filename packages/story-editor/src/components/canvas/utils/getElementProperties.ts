@@ -43,7 +43,7 @@ function getElementProperties(type: ElementType, element: Element) {
     type
   ) as ElementDefinition;
 
-  const attrs = rest;
+  const attrs = { ...rest, type };
   let ratio = 1;
   let resource, scale, focalX, focalY, sticker;
   if (elementIs.sticker(element)) {
