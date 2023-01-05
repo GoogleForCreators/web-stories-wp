@@ -154,7 +154,7 @@ export type SetBackgroundElementAction = {
 };
 
 export type ArrangeElementProps = {
-  elementId?: string | null;
+  elementId?: string;
   position: number | LayerDirection;
   groupId?: string | false | null;
 };

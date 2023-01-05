@@ -39,9 +39,6 @@ function createElementForCanvas(type: ElementType, props: Element) {
   return createNewElement(type, getElementProperties(type, props));
 }
 
-interface ElementWithPageId extends Element {
-  pageId?: string;
-}
 function useInsertElement() {
   const { addElement, combineElements, backgroundElementId } = useStory(
     ({ state, actions }) => ({
@@ -65,12 +62,13 @@ function useInsertElement() {
   const insertElement = useCallback(
     (
       type: ElementType,
-      props: ElementWithPageId,
-      insertAsBackground = false
+      props: Element,
+      insertAsBackground = false,
+      pageId?: string
     ) => {
       setZoomSetting(ZoomSetting.Fit);
-      const element = createElementForCanvas(type, props) as ElementWithPageId;
-      const { id, pageId } = element;
+      const element = createElementForCanvas(type, props);
+      const { id } = element;
       addElement({ element, pageId });
 
       if (insertAsBackground && backgroundElementId) {
