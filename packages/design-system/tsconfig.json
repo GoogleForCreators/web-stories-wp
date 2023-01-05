@@ -13,7 +13,7 @@
   "include": [
     "src/components/keyboard/*",
     "src/components/snackbar/constants.ts",
-    "src/contexts/snackbar/*",
+    "src/contexts",
     "src/theme/constants",
     "src/theme/*.ts",
     "src/types/*",
