@@ -98,6 +98,9 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
     () =>
       new window.IntersectionObserver((entries) => {
         for (const entry of entries) {
+          if (!(entry.target instanceof HTMLElement)) {
+            return;
+          }
           if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {
             return;
           }
@@ -169,7 +172,9 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
           withLinked: !evt.altKey,
         });
       }
-      evt.currentTarget.focus({ preventScroll: true });
+      if (evt.currentTarget instanceof HTMLElement) {
+        evt.currentTarget.focus({ preventScroll: true });
+      }
       if (backgroundElementId !== elId) {
         evt.stopPropagation();
       }
@@ -179,11 +184,13 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
 
         // Clear this selection event as soon as mouse is released
         // `setTimeout` is currently required to not break functionality.
-        evt.target.ownerDocument.addEventListener(
-          'mouseup',
-          () => window.setTimeout(setLastSelectionEvent, 0, null),
-          { once: true, capture: true }
-        );
+        if (evt.target instanceof HTMLElement) {
+          evt.target.ownerDocument.addEventListener(
+            'mouseup',
+            () => window.setTimeout(setLastSelectionEvent, 0, null),
+            { once: true, capture: true }
+          );
+        }
       }
     },
     [
