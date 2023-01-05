@@ -139,7 +139,7 @@ describe('TaxonomyProvider', () => {
 
     const { termCache, taxonomies } = result.current.state;
     expect(taxonomies).toHaveLength(2);
-    console.log(termCache);
+
     expect(termCache).toStrictEqual(embeddedTerms);
     expect(updateStoryMock).toHaveBeenCalledWith({
       properties: {
