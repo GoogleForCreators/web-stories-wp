@@ -33,6 +33,7 @@
     "src/app/media/media3p/*.tsx",
     "src/app/media/utils/*.ts",
     "src/app/pageCanvas",
+    "src/app/pageDataUrls",
     "src/app/story",
     "src/app/taxonomy/**/*",
     "src/constants/*",

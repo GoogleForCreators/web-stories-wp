@@ -16,15 +16,19 @@
 /**
  * External dependencies
  */
-import { useContextSelector, identity } from '@googleforcreators/react';
+import { createContext } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import Context from './context';
+import type { PageDataUrlsContext } from '../../types';
+import { noop } from '../../utils/noop';
 
-function usePageDataUrls(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default usePageDataUrls;
+export default createContext<PageDataUrlsContext>({
+  state: {
+    dataUrls: {},
+  },
+  actions: {
+    queuePageImageGeneration: noop,
+  },
+});
