@@ -18,4 +18,17 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-export default createContext({ actions: {}, state: {} });
+/**
+ * Internal dependencies
+ */
+import type { PageDataUrlsContext } from '../../types';
+import { noop } from '../../utils/noop';
+
+export default createContext<PageDataUrlsContext>({
+  state: {
+    dataUrls: {},
+  },
+  actions: {
+    queuePageImageGeneration: noop,
+  },
+});
