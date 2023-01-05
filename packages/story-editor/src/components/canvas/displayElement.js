@@ -163,7 +163,7 @@ function DisplayElement({
       }
     : null;
 
-  let Replacement = undefined;
+  let Replacement;
   if (replacement?.resource.type) {
     const definition = getDefinitionForType(replacement.resource.type);
     Replacement = definition.Display;
