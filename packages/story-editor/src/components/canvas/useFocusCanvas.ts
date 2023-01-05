@@ -28,8 +28,8 @@ function useFocusCanvas() {
   const focusCanvas = useCallback((force = true) => {
     setTimeout(() => {
       const doc = window.document;
-      if (force && doc.activeElement && doc.activeElement !== doc.body) {
-        (doc.activeElement as HTMLInputElement).blur();
+      if (force && doc.activeElement instanceof HTMLElement && doc.activeElement !== doc.body) {
+        doc.activeElement.blur();
       }
       const evt = new window.FocusEvent('focusout');
       doc.dispatchEvent(evt);

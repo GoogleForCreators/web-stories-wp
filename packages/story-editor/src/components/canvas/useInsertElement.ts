@@ -20,9 +20,9 @@
 import { useCallback } from '@googleforcreators/react';
 import {
   createNewElement,
-  ElementType,
   Element,
   elementIs,
+  ElementType,
 } from '@googleforcreators/elements';
 
 /**
@@ -87,7 +87,7 @@ function useInsertElement() {
         elementId &&
         elementIs.media(element) &&
         elementIs.sequenceMedia(element) &&
-        type === 'video' &&
+        type === ElementType.Video &&
         element.resource.src &&
         !element.resource.isPlaceholder
       ) {

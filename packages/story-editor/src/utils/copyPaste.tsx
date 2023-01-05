@@ -157,9 +157,9 @@ export function addElementsToClipboard(
   const textContent = elements
     .map((el) => {
       const { type } = el;
-      const typeDefinition = getDefinitionForType(type);
-      if (typeDefinition?.TextContent) {
-        return typeDefinition.TextContent(el);
+      const { TextContent } = getDefinitionForType(type);
+      if (TextContent) {
+        return TextContent(el);
       }
       return type;
     })
@@ -168,11 +168,7 @@ export function addElementsToClipboard(
   const htmlContent = elements
     .map((el) => {
       const { type, x, y, rotationAngle } = el;
-      const typeDefinition = getDefinitionForType(type);
-      if (!typeDefinition?.Output) {
-        return '';
-      }
-      const { Output } = typeDefinition;
+      const { Output } = getDefinitionForType(type);
       return renderToStaticMarkup(
         <Output
           element={el}

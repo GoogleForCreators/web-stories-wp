@@ -127,7 +127,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
       // at this time. We have to check all "focusout" events here because
       // after DOM removal, the "focusout" events are all over the place.
       setTimeout(() => {
-        if (doc && doc.activeElement === doc.body) {
+        if (doc.activeElement === doc.body) {
           // For a single selection, select the frame of this element.
           // If none or multiple selection, select the container.
           const currentSelectedIds = selectedElementIdsRef.current;
@@ -238,11 +238,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
       }
 
       const { type, id, isLocked } = selectedElements[0];
-      const elDefinition = getDefinitionForType(type);
-      if (!elDefinition) {
-        return;
-      }
-      const { hasEditMode, hasEditModeIfLocked } = elDefinition;
+      const { hasEditMode, hasEditModeIfLocked } = getDefinitionForType(type);
       // Only handle Enter key for editable elements
       if (!hasEditMode || (!hasEditModeIfLocked && isLocked)) {
         return;
@@ -261,7 +257,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
     for (const el of selectedElements) {
       if (elementIs.product(el)) {
         const { product } = el;
-        const { productId, productTitle, productImages } = product || {};
+        const { productId, productTitle, productImages } = product;
         if (productId && currentPageProductIds?.includes(productId)) {
           showSnackbar({
             message: sprintf(

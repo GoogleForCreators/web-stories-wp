@@ -79,9 +79,9 @@ function useAddPastedElements() {
       }
 
       // If a bg element is pasted, handle that first
-      const newBackgroundElement = elements.find(
-        (element) => elementIs.backgroundable(element) && element.isBackground
-      );
+      const newBackgroundElement = elements
+        .filter(elementIs.backgroundable)
+        .find(({ isBackground }) => isBackground);
       let newAnimations = animations;
       if (newBackgroundElement) {
         const existingBgElement = currentPage.elements[0];
