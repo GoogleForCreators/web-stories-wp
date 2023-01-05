@@ -19,15 +19,15 @@
  */
 import type { Page } from '@googleforcreators/elements';
 
-export interface PageDataUrlsState {
-  dataUrls: Record<string, string>;
-}
-
 export interface PageDataUrlsActions {
   queuePageImageGeneration: (Page: Page) => void;
 }
 
+export type PageDataUrls = Record<string, string>;
+
+export type QueuePageImageGeneration = (page: Page) => void;
+
 export interface PageDataUrlsContext {
-  state: PageDataUrlsState;
-  actions: PageDataUrlsActions;
+  state: { dataUrls: PageDataUrls };
+  actions: { queuePageImageGeneration: QueuePageImageGeneration };
 }

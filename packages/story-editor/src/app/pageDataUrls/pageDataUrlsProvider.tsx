@@ -25,39 +25,37 @@ import type { PropsWithChildren } from 'react';
  */
 import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../pageCanvas/utils/storyPageToDataUrl';
-import type { PageDataUrlsState, PageDataUrlsActions } from '../../types';
+import type { PageDataUrls, QueuePageImageGeneration } from '../../types';
 import Context from './context';
-
 function PageDataUrlProvider({ children }: PropsWithChildren<unknown>) {
-  const [dataUrls, setDataUrls] = useState<PageDataUrlsState['dataUrls']>({});
+  const [dataUrls, setDataUrls] = useState<PageDataUrls>({});
   const queueIdleTask = useIdleTaskQueue();
 
   /**
    * Add page image generation task to a idle task
    * queue.
    */
-  const queuePageImageGeneration: PageDataUrlsActions['queuePageImageGeneration'] =
-    useCallback(
-      (storyPage: Page) => {
-        const idleTaskUid: string = storyPage.id;
-        const idleTask: () => Promise<void> = async () => {
-          const dataUrl = await storyPageToDataUrl(storyPage, {});
-          setDataUrls((state) => ({
-            ...state,
-            [storyPage?.id]: dataUrl,
-          }));
-        };
+  const queuePageImageGeneration: QueuePageImageGeneration = useCallback(
+    (storyPage: Page) => {
+      const idleTaskUid: string = storyPage.id;
+      const idleTask: () => Promise<void> = async () => {
+        const dataUrl = await storyPageToDataUrl(storyPage, {});
+        setDataUrls((state) => ({
+          ...state,
+          [storyPage?.id]: dataUrl,
+        }));
+      };
 
-        const clearQueueOfPageTask = queueIdleTask({
-          taskId: idleTaskUid,
-          task: idleTask,
-        });
-        return () => {
-          clearQueueOfPageTask();
-        };
-      },
-      [queueIdleTask]
-    );
+      const clearQueueOfPageTask = queueIdleTask({
+        taskId: idleTaskUid,
+        task: idleTask,
+      });
+      return () => {
+        clearQueueOfPageTask();
+      };
+    },
+    [queueIdleTask]
+  );
 
   const value = useMemo(
     () => ({
