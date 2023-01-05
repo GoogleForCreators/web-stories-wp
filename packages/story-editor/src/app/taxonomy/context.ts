@@ -24,13 +24,13 @@ import type { TaxonomyState } from '../../types';
 
 export default createContext<TaxonomyState>({
   state: {
-    taxonomies: {},
+    taxonomies: [],
     termCache: [],
     terms: [],
   },
   actions: {
     createTerm: () => Promise.resolve(undefined),
-    addSearchResultsToCache: () => undefined,
+    addSearchResultsToCache: () => Promise.resolve(undefined),
     setTerms: () => undefined,
     addTermToSelection: () => undefined,
   },

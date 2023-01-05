@@ -17,14 +17,7 @@
 /**
  * External dependencies
  */
-import type {
-  Taxonomy,
-  TaxonomySlug,
-  Term,
-  TermId,
-} from '@googleforcreators/elements';
-
-export type TaxonomiesBySlug = Record<TaxonomySlug, Taxonomy>;
+import type { Taxonomy, Term, TermId } from '@googleforcreators/elements';
 
 export interface TaxonomySearchArgs {
   search?: string;
@@ -57,12 +50,12 @@ export interface addTermToSelectionProps {
 }
 
 export interface TaxonomyState {
-  state: { taxonomies: TaxonomiesBySlug; termCache: Term[]; terms: Term[] };
+  state: { taxonomies: Taxonomy[]; termCache: Term[]; terms: Term[] };
   actions: {
     createTerm: (props: createTermProps) => Promise<void>;
     addSearchResultsToCache: (
       props: addSearchResultsToCacheProps
-    ) => Promise<void>;
+    ) => Promise<Term[] | void>;
     setTerms: (props: setTermsProps) => void;
     addTermToSelection: (props: addTermToSelectionProps) => void;
   };

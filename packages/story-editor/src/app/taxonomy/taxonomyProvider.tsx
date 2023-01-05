@@ -40,6 +40,7 @@ import type {
   addTermToSelectionProps,
   addSearchResultsToCacheProps,
   removeTermsProps,
+  UpdateStoryProps,
 } from '../../types';
 import cleanForSlug from '../../utils/cleanForSlug';
 import { useAPI } from '../api';
@@ -86,18 +87,15 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   const setTerms = useCallback(
     ({ newTerms }: setTermsProps) => {
       if (updateStory) {
-        updateStory({
-          properties: (story: Partial<Story>) => {
-            const currentTerms = story?.terms || [];
-            const newAssignedTerms = [
-              ...new Set([...currentTerms, ...newTerms]),
-            ];
-            return {
-              ...story,
-              terms: newAssignedTerms,
-            };
-          },
-        });
+        const properties = (story: Story) => {
+          const currentTerms = story?.terms || [];
+          const newAssignedTerms = [...new Set([...currentTerms, ...newTerms])];
+          return {
+            ...story,
+            terms: newAssignedTerms,
+          };
+        };
+        updateStory({ properties } as UpdateStoryProps);
       }
     },
     [updateStory]
@@ -107,16 +105,17 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
     ({ removeTerms }: removeTermsProps) => {
       if (updateStory) {
         const removeTermsID = removeTerms.map(({ id }) => id);
-        updateStory({
-          properties: (story: Partial<Story>) => {
-            const currentTerms = story?.terms || [];
-            const newAssignedTerms = currentTerms.filter(({ id }) => !removeTermsID.includes(id));
-            return {
-              ...story,
-              terms: newAssignedTerms,
-            };
-          },
-        });
+        const properties = (story: Story) => {
+          const currentTerms = story?.terms || [];
+          const newAssignedTerms = currentTerms.filter(
+            ({ id }) => !removeTermsID.includes(id)
+          );
+          return {
+            ...story,
+            terms: newAssignedTerms,
+          };
+        };
+        updateStory({ properties } as UpdateStoryProps);
       }
     },
     [updateStory]
@@ -191,8 +190,9 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
 
       // make sure the term doesn't already exist locally
       const preEmptiveSlug = data?.slug || cleanForSlug(termName) || '';
-      const cachedTerm : Term | undefined = termCache.find(
-        (term: Term) => term.slug === preEmptiveSlug && term.taxonomy === taxonomy.slug
+      const cachedTerm: Term | undefined = termCache.find(
+        (term: Term) =>
+          term.slug === preEmptiveSlug && term.taxonomy === taxonomy.slug
       );
       if (cachedTerm) {
         if (addToSelection) {
