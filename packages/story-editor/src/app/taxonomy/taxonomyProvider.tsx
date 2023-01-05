@@ -155,7 +155,9 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         return termResults;
       }
 
-      setTermCache((cache: Term[]) => [...cache, ...termResults]);
+      setTermCache((cache: Term[]) => {
+        return cache ? [...cache, ...termResults] : termResults;
+      });
 
       if (addNameToSelection && args.search) {
         const selectedTermSlug: TermSlug = cleanForSlug(args.search);

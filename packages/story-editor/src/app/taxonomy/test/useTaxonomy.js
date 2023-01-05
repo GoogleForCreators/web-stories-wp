@@ -75,21 +75,21 @@ function createTermFromName(taxonomy, name, overrides) {
 
 async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
   useAPI.mockImplementation(() => ({
-    getTaxonomyTerm: () => mockResponse([]),
-    createTaxonomyTerm: (_taxonomyEndpoint, { name, parent }) =>
-      mockResponse(
-        createTermFromName(createTaxonomy('fake restpoint response'), name, {
-          parent,
-        })
-      ),
-    getTaxonomies: () => mockResponse({}),
-    ...useAPIPartial,
+    actions: {
+      getTaxonomyTerm: () => mockResponse([]),
+      createTaxonomyTerm: (_taxonomyEndpoint, { name, parent }) =>
+        mockResponse(
+          createTermFromName(createTaxonomy('fake restpoint response'), name, {
+            parent,
+          })
+        ),
+      getTaxonomies: () => mockResponse({}),
+      ...useAPIPartial,
+    },
   }));
   useStory.mockImplementation(() => ({
-    updateStory: () => {},
-    isStoryLoaded: true,
-    terms: [],
-    hasTaxonomies: true,
+    actions: { updateStory: () => {} },
+    state: { story: { terms: [] } },
     ...useStoryPartial,
   }));
 
@@ -125,30 +125,22 @@ describe('TaxonomyProvider', () => {
     const taxonomy1Term1 = createTermFromName(taxonomy1, 'term1');
     const taxonomy1Term2 = createTermFromName(taxonomy1, 'term2');
     const taxonomy2Term1 = createTermFromName(taxonomy2, 'term1');
-    const embeddedTerms = [[taxonomy1Term1, taxonomy1Term2], [taxonomy2Term1]];
+    const embeddedTerms = [taxonomy1Term1, taxonomy1Term2];
 
     const { result } = await setup({
       useAPIPartial: {
         getTaxonomies: () => mockResponse(taxonomiesResponse),
       },
       useStoryPartial: {
-        terms: embeddedTerms,
-        isStoryLoaded: true,
-        updateStory: updateStoryMock,
+        state: { story: { terms: embeddedTerms } },
+        actions: { updateStory: updateStoryMock },
       },
     });
 
     const { termCache, taxonomies } = result.current.state;
     expect(taxonomies).toHaveLength(2);
-    expect(termCache).toStrictEqual({
-      [taxonomy1.restBase]: {
-        [taxonomy1Term1.slug]: taxonomy1Term1,
-        [taxonomy1Term2.slug]: taxonomy1Term2,
-      },
-      [taxonomy2.restBase]: {
-        [taxonomy2Term1.slug]: taxonomy2Term1,
-      },
-    });
+    console.log(termCache);
+    expect(termCache).toStrictEqual(embeddedTerms);
     expect(updateStoryMock).toHaveBeenCalledWith({
       properties: {
         terms: {
@@ -187,17 +179,12 @@ describe('TaxonomyProvider', () => {
     });
 
     expect(getTaxonomyTermMock).toHaveBeenCalledWith('someUrl', {
-      per_page: 20,
       search: 'term',
+      per_page: 20,
     });
 
     await receiveQueuedMockedResponses();
 
-    expect(result.current.state.termCache).toStrictEqual({
-      [sampleTaxonomy.restBase]: {
-        [term1.slug]: term1,
-        [term2.slug]: term2,
-      },
-    });
+    expect(result.current.state.termCache).toStrictEqual([term1, term2]);
   });
 });

@@ -75,9 +75,11 @@ function getStoryPropsToSave({
   );
 
   const termData: Record<TaxonomySlug, number[]> = {};
-  if(terms) {
-    terms.forEach(({taxonomy, id}) => {
-      const termIds = Array.isArray(termData[taxonomy]) ? termData[taxonomy] : [];
+  if (terms) {
+    terms.forEach(({ taxonomy, id }) => {
+      const termIds = Array.isArray(termData[taxonomy])
+        ? termData[taxonomy]
+        : [];
       termIds.push(id);
       termData[taxonomy] = termIds;
     });
