@@ -19,7 +19,7 @@
 // delete this file once complete.
 
 export * from './components/keyboard';
-export * from './contexts/snackbar';
+export * from './contexts';
 export * from './theme/constants';
 export * from './types/keyboard';
 export * from './utils/constants';

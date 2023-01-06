@@ -13,14 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './apiProvider';
-export * from './configProvider';
-export * from './currentUserProvider';
-export * from './historyProvider';
-export * from './layoutProvider';
-export * from './pageCanvas';
-export * from './pageDataUrls';
-export * from './story';
-export * from './storyEditor';
-export * from './storyProvider';
-export * from './storyTriggers';
+
+/**
+ * External dependencies
+ */
+import type { Page } from '@googleforcreators/elements';
+
+export interface PageDataUrlsActions {
+  queuePageImageGeneration: (Page: Page) => void;
+}
+
+export type PageDataUrls = Record<string, string>;
+
+export type QueuePageImageGeneration = (page: Page) => void;
+
+export interface PageDataUrlsContext {
+  state: { dataUrls: PageDataUrls };
+  actions: { queuePageImageGeneration: QueuePageImageGeneration };
+}
