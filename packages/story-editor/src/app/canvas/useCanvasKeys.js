@@ -315,7 +315,7 @@ function useCanvasKeys(ref) {
       }
       setHighlights({
         elements: selectedElements,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     },
     [setHighlights, selectedElements]

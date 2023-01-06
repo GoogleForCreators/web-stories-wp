@@ -42,7 +42,7 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.STYLE],
+      highlight: state[states.Style],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

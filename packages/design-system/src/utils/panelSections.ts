@@ -20,15 +20,15 @@
 import PanelTypes from './panelTypes';
 
 export enum STYLE_PANE_IDS {
-  SELECTION = 'selection',
-  LINK = 'link',
-  ANIMATION = 'animation',
+  Selection = 'selection',
+  Link = 'link',
+  Animation = 'animation',
 }
 
-const { LINK, ANIMATION, ...panelsExcludingLinkAndAnimation } = PanelTypes;
+const { Link, Animation, ...panelsExcludingLinkAndAnimation } = PanelTypes;
 
 export const PanelSections = {
-  [STYLE_PANE_IDS.SELECTION]: Object.values(panelsExcludingLinkAndAnimation),
-  [STYLE_PANE_IDS.LINK]: [LINK],
-  [STYLE_PANE_IDS.ANIMATION]: [ANIMATION],
+  [STYLE_PANE_IDS.Selection]: Object.values(panelsExcludingLinkAndAnimation),
+  [STYLE_PANE_IDS.Link]: [Link],
+  [STYLE_PANE_IDS.Animation]: [Animation],
 };

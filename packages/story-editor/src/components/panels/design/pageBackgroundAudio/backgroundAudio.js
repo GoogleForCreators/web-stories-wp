@@ -65,7 +65,7 @@ function PageBackgroundAudioPanel() {
 
   const { highlightBackgroundAudio, resetHighlight } = useHighlights(
     (state) => ({
-      highlightBackgroundAudio: state[states.PAGE_BACKGROUND_AUDIO],
+      highlightBackgroundAudio: state[states.PageBackgroundAudio],
       resetHighlight: state.onFocusOut,
     })
   );

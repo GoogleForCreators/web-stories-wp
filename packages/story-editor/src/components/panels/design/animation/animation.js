@@ -90,7 +90,7 @@ function AnimationPanel({
   const playUpdatedAnimation = useRef(false);
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.ANIMATION],
+    highlight: state[states.Animation],
     resetHighlight: state.onFocusOut,
     cancelHighlight: state.cancelEffect,
   }));

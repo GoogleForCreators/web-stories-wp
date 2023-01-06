@@ -179,7 +179,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.PAGE_BACKGROUND],
+      highlight: state[states.PageBackground],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

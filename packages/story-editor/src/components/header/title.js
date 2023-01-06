@@ -67,7 +67,7 @@ function HeaderTitle() {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.STORY_TITLE],
+      highlight: state[states.StoryTitle],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

@@ -76,7 +76,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.LINK],
+      highlight: state[states.Link],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

@@ -61,7 +61,7 @@ function ToolbarToggle() {
   );
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.ELEMENT_TOOLBAR_TOGGLE],
+    highlight: state[states.ElementToolbarToggle],
     resetHighlight: state.onFocusOut,
   }));
 

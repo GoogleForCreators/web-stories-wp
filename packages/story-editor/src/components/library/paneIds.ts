@@ -15,11 +15,11 @@
  */
 
 export enum PANE_IDS {
-  MEDIA = 'media',
-  MEDIA_3P = 'media3p',
-  TEXT = 'text',
-  SHAPES = 'shapes',
-  ELEMENTS = 'elements',
-  PAGE_TEMPLATES = 'pageTemplates',
-  SHOPPING = 'shopping',
+  Media = 'media',
+  Media3p = 'media3p',
+  Text = 'text',
+  Shapes = 'shapes',
+  Elements = 'elements',
+  PageTemplates = 'pageTemplates',
+  Shopping = 'shopping',
 }

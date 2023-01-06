@@ -31,132 +31,133 @@ import { PANE_IDS } from '../../components/library/paneIds';
 import type { HighlightState } from '../../types/highlightsProvider';
 
 export enum HighlightType {
-  STORY_TITLE = 'STORY_TITLE',
-  ELEMENT_TOOLBAR_TOGGLE = 'ELEMENT_TOOLBAR_TOGGLE',
+  StoryTitle = 'STORY_TITLE',
+  ElementToolbarToggle = 'ELEMENT_TOOLBAR_TOGGLE',
 
   // Sidebar tabs
-  STYLE_PANE = 'STYLE_PANE',
+  StylePane = 'STYLE_PANE',
 
-  ANIMATION = 'ANIMATION',
-  ASSISTIVE_TEXT = 'ASSISTIVE_TEXT',
-  CAPTIONS = 'CAPTIONS',
-  EXCERPT = 'EXCERPT',
-  LINK = 'LINK',
-  PAGE_BACKGROUND = 'PAGE_BACKGROUND',
-  POSTER = 'POSTER',
-  PUBLISHER_LOGO = 'PUBLISHER_LOGO',
-  VIDEO_A11Y_POSTER = 'VIDEO_A11Y_POSTER',
-  STYLE = 'STYLE',
-  FONT = 'FONT',
-  TEXT_COLOR = 'TEXT_COLOR',
+  // STYLE
+  Animation = 'ANIMATION',
+  AssistiveText = 'ASSISTIVE_TEXT',
+  Captions = 'Captions',
+  Excerpt = 'EXCERPT',
+  Link = 'LINK',
+  PageBackground = 'PAGE_BACKGROUND',
+  Poster = 'POSTER',
+  PublisherLogo = 'PUBLISHER_LOGO',
+  VideoA11yPoster = 'VIDEO_A11Y_POSTER',
+  Style = 'STYLE',
+  Font = 'FONT',
+  TextColor = 'TEXT_COLOR',
 
   // LIBRARY
-  MEDIA = 'MEDIA',
-  MEDIA3P = 'MEDIA3P',
-  TEXT_SET = 'TEXT',
-  PAGE_TEMPLATES = 'PAGE_TEMPLATES',
+  Media = 'MEDIA',
+  Media3p = 'MEDIA3P',
+  TextSet = 'TEXT',
+  PageTemplates = 'PAGE_TEMPLATES',
 
   // DOCUMENT
-  PAGE_BACKGROUND_AUDIO = 'PAGE_BACKGROUND_AUDIO',
+  PageBackgroundAudio = 'PAGE_BACKGROUND_AUDIO',
 }
 
 export const STATES: HighlightState = {
-  [HighlightType.STORY_TITLE]: {
+  [HighlightType.StoryTitle]: {
     focus: true,
   },
 
-  [HighlightType.ELEMENT_TOOLBAR_TOGGLE]: {
+  [HighlightType.ElementToolbarToggle]: {
     focus: true,
   },
 
   // Sidebar tabs
-  [HighlightType.STYLE_PANE]: {
+  [HighlightType.StylePane]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: STYLE_PANE_IDS.Selection,
   },
 
-  [HighlightType.POSTER]: {
+  [HighlightType.Poster]: {
     focus: true,
     tab: DOCUMENT,
   },
-  [HighlightType.PUBLISHER_LOGO]: {
+  [HighlightType.PublisherLogo]: {
     focus: true,
     tab: DOCUMENT,
   },
-  [HighlightType.EXCERPT]: {
+  [HighlightType.Excerpt]: {
     focus: true,
     tab: DOCUMENT,
   },
-  [HighlightType.PAGE_BACKGROUND_AUDIO]: {
+  [HighlightType.PageBackgroundAudio]: {
     focus: true,
     tab: STYLE_SIDEBAR,
   },
-  [HighlightType.CAPTIONS]: {
+  [HighlightType.Captions]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: STYLE_PANE_IDS.Selection,
   },
-  [HighlightType.ASSISTIVE_TEXT]: {
+  [HighlightType.AssistiveText]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: STYLE_PANE_IDS.Selection,
   },
-  [HighlightType.PAGE_BACKGROUND]: {
+  [HighlightType.PageBackground]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: STYLE_PANE_IDS.Selection,
   },
-  [HighlightType.ANIMATION]: {
+  [HighlightType.Animation]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.ANIMATION,
+    section: STYLE_PANE_IDS.Animation,
   },
-  [HighlightType.FONT]: {
+  [HighlightType.Font]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: STYLE_PANE_IDS.Selection,
   },
-  [HighlightType.LINK]: {
+  [HighlightType.Link]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.LINK,
+    section: STYLE_PANE_IDS.Link,
   },
-  [HighlightType.VIDEO_A11Y_POSTER]: {
+  [HighlightType.VideoA11yPoster]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: STYLE_PANE_IDS.Selection,
   },
-  [HighlightType.STYLE]: {
+  [HighlightType.Style]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: STYLE_PANE_IDS.Selection,
   },
-  [HighlightType.TEXT_COLOR]: {
+  [HighlightType.TextColor]: {
     focus: true,
     tab: STYLE_SIDEBAR,
-    section: STYLE_PANE_IDS.SELECTION,
+    section: STYLE_PANE_IDS.Selection,
   },
 
   // Library
-  [HighlightType.MEDIA]: {
+  [HighlightType.Media]: {
     focus: true,
     tab: INSERT,
-    section: PANE_IDS.MEDIA,
+    section: PANE_IDS.Media,
   },
-  [HighlightType.MEDIA3P]: {
+  [HighlightType.Media3p]: {
     focus: true,
     tab: INSERT,
-    section: PANE_IDS.MEDIA_3P,
+    section: PANE_IDS.Media3p,
   },
-  [HighlightType.TEXT_SET]: {
+  [HighlightType.TextSet]: {
     focus: true,
     tab: INSERT,
-    section: PANE_IDS.TEXT,
+    section: PANE_IDS.Text,
   },
-  [HighlightType.PAGE_TEMPLATES]: {
+  [HighlightType.PageTemplates]: {
     focus: true,
     tab: INSERT,
-    section: PANE_IDS.PAGE_TEMPLATES,
+    section: PANE_IDS.PageTemplates,
   },
 };

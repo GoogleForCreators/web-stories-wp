@@ -67,54 +67,54 @@ function getDesignPanelsForSelection(
     const isBackgroundMedia = !elements[0].isDefaultBackground;
     if (isBackgroundMedia) {
       panels.push({
-        type: PanelTypes.PAGE_BACKGROUND,
+        type: PanelTypes.PageBackground,
         Panel: PageBackgroundPanel,
       });
       panels.push({
-        type: PanelTypes.FILTER,
+        type: PanelTypes.Filter,
         Panel: FilterPanel,
       });
-      panels.push({ type: PanelTypes.ANIMATION, Panel: AnimationPanel });
+      panels.push({ type: PanelTypes.Animation, Panel: AnimationPanel });
     }
 
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
-      panels.push({ type: PanelTypes.VIDEO_OPTIONS, Panel: VideoOptionsPanel });
-      panels.push({ type: PanelTypes.VIDEO_SEGMENT, Panel: VideoSegmentPanel });
+      panels.push({ type: PanelTypes.VideoOptions, Panel: VideoOptionsPanel });
+      panels.push({ type: PanelTypes.VideoSegment, Panel: VideoSegmentPanel });
       panels.push({
-        type: PanelTypes.CAPTIONS,
+        type: PanelTypes.Captions,
         Panel: CaptionsPanel,
       });
       panels.push({
-        type: PanelTypes.VIDEO_ACCESSIBILITY,
+        type: PanelTypes.VideoAcessibility,
         Panel: VideoAccessibilityPanel,
       });
     } else if (['gif', 'image'].includes(elements[0].type)) {
       panels.push({
-        type: PanelTypes.IMAGE_ACCESSIBILITY,
+        type: PanelTypes.ImageAccessibility,
         Panel: ImageAccessibilityPanel,
       });
       // In case of default background without media:
     } else {
       panels.unshift({
-        type: PanelTypes.PAGE_BACKGROUND,
+        type: PanelTypes.PageBackground,
         Panel: PageBackgroundPanel,
       });
     }
 
     panels.push({
-      type: PanelTypes.PAGE_ATTACHMENT,
+      type: PanelTypes.PageAttachment,
       Panel: PageAttachmentPanel,
     });
 
     panels.push({
-      type: PanelTypes.PAGE_BACKGROUND_AUDIO,
+      type: PanelTypes.PageBackgroundAudio,
       Panel: PageBackgroundAudioPanel,
     });
 
     if (hasCustomPageAdvancement) {
       panels.push({
-        type: PanelTypes.PAGE_ADVANCEMENT,
+        type: PanelTypes.PageAdvancement,
         Panel: PageAdvancementPanel,
       });
     }
@@ -128,38 +128,38 @@ function getDesignPanelsForSelection(
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
     .map((type) => {
       switch (type) {
-        case PanelTypes.ANIMATION:
+        case PanelTypes.Animation:
           return { type, Panel: AnimationPanel };
-        case PanelTypes.PAGE_BACKGROUND:
+        case PanelTypes.PageBackground:
           // Only display when isBackground.
           return null;
-        case PanelTypes.FILTER:
+        case PanelTypes.Filter:
           return { type, Panel: FilterPanel };
-        case PanelTypes.SIZE_POSITION:
+        case PanelTypes.SizePosition:
           return { type, Panel: SizePositionPanel };
-        case PanelTypes.LINK:
+        case PanelTypes.Link:
           return { type, Panel: LinkPanel };
-        case PanelTypes.TEXT_STYLE:
+        case PanelTypes.TextStyle:
           return { type, Panel: TextStylePanel };
-        case PanelTypes.TEXT_ACCESSIBILITY:
+        case PanelTypes.TextAccessibility:
           return { type, Panel: TextAccessibilityPanel };
-        case PanelTypes.SHAPE_STYLE:
+        case PanelTypes.ShapeStyle:
           return { type, Panel: ShapeStylePanel };
-        case PanelTypes.BORDER:
+        case PanelTypes.Border:
           return { type, Panel: BorderStylePanel };
-        case PanelTypes.VIDEO_OPTIONS:
+        case PanelTypes.VideoOptions:
           return { type, Panel: VideoOptionsPanel };
-        case PanelTypes.VIDEO_SEGMENT:
+        case PanelTypes.VideoSegment:
           return { type, Panel: VideoSegmentPanel };
-        case PanelTypes.CAPTIONS:
+        case PanelTypes.Captions:
           return { type, Panel: CaptionsPanel };
-        case PanelTypes.VIDEO_ACCESSIBILITY:
+        case PanelTypes.VideoAcessibility:
           return { type, Panel: VideoAccessibilityPanel };
-        case PanelTypes.IMAGE_ACCESSIBILITY:
+        case PanelTypes.ImageAccessibility:
           return { type, Panel: ImageAccessibilityPanel };
-        case PanelTypes.ELEMENT_ALIGNMENT:
+        case PanelTypes.ElementAlignment:
           return { type, Panel: ElementAlignmentPanel };
-        case PanelTypes.PRODUCT: {
+        case PanelTypes.Product: {
           return { type, Panel: ProductPanel };
         }
         default:

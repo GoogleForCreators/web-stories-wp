@@ -106,7 +106,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   );
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.CAPTIONS],
+    highlight: state[states.Captions],
     resetHighlight: state.onFocusOut,
     cancelHighlight: state.cancelEffect,
   }));

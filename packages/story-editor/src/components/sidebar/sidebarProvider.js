@@ -64,7 +64,7 @@ function SidebarProvider({ sidebarTabs, children }) {
 
   const { tab: highlightedTab, highlight } = useHighlights((state) => ({
     tab: state.tab,
-    highlight: state[states.STYLE_PANE],
+    highlight: state[states.StylePane],
   }));
 
   // set tab when content is highlighted

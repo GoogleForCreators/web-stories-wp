@@ -60,7 +60,7 @@ function ExcerptPanel({ nameOverride }) {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.EXCERPT],
+      highlight: state[states.Excerpt],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

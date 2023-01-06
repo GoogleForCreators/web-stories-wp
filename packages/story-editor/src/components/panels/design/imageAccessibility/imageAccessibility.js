@@ -54,7 +54,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.ASSISTIVE_TEXT],
+      highlight: state[states.AssistiveText],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

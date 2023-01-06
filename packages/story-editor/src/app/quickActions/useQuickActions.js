@@ -474,7 +474,7 @@ const useQuickActions = () => {
   const handleFocusMediaPanel = useMemo(() => {
     const resourceId = selectedElements?.[0]?.resource?.id?.toString() || '';
     const is3PMedia = resourceId.startsWith('media/');
-    const panelToFocus = is3PMedia ? states.MEDIA3P : states.MEDIA;
+    const panelToFocus = is3PMedia ? states.Media3p : states.Media;
 
     return handleFocusPanel(panelToFocus);
   }, [handleFocusPanel, selectedElements]);
@@ -486,10 +486,10 @@ const useQuickActions = () => {
     handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
-      handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
-      handleFocusLinkPanel: handleFocusPanel(states.LINK),
-      handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
-      handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
+      handleFocusAnimationPanel: handleFocusPanel(states.Animation),
+      handleFocusLinkPanel: handleFocusPanel(states.Link),
+      handleFocusPageBackground: handleFocusPanel(states.PageBackground),
+      handleFocusCaptionsPanel: handleFocusPanel(states.Captions),
     }),
     [handleFocusPanel]
   );
@@ -539,7 +539,7 @@ const useQuickActions = () => {
         label: ACTIONS.INSERT_TEXT.text,
         onClick: () => {
           setHighlights({
-            highlight: states.STYLE_PANE,
+            highlight: states.StylePane,
           });
           insertElement('text', DEFAULT_PRESET);
           trackEvent('quick_action', {

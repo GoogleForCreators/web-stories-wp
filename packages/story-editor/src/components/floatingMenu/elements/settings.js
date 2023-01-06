@@ -116,7 +116,7 @@ function Settings() {
       isDisplayed: false,
     });
     setHighlights({
-      highlight: states.ELEMENT_TOOLBAR_TOGGLE,
+      highlight: states.ElementToolbarToggle,
     });
     trackEvent('floating_menu', {
       name: 'persistent_menu_hide',

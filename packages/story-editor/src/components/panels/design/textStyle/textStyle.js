@@ -66,8 +66,8 @@ function StylePanel(props) {
   // will be wrong.
   const { dropdownHighlight, colorHighlight, resetHighlight, cancelHighlight } =
     useHighlights((state) => ({
-      dropdownHighlight: state[states.FONT],
-      colorHighlight: state[states.TEXT_COLOR],
+      dropdownHighlight: state[states.Font],
+      colorHighlight: state[states.TextColor],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     }));

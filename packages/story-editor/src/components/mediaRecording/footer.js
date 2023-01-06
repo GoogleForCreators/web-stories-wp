@@ -442,7 +442,7 @@ function Footer() {
 
     setSelectedElementsById({ elementIds: [backgroundElementId] });
     setHighlights({
-      highlight: states.PAGE_BACKGROUND_AUDIO,
+      highlight: states.PageBackgroundAudio,
     });
 
     updateCurrentPageProperties({

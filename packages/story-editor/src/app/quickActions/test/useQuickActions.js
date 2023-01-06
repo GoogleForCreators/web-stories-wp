@@ -424,18 +424,18 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
-        highlight: states.PAGE_BACKGROUND,
+        highlight: states.PageBackground,
       });
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
-        highlight: states.MEDIA,
+        highlight: states.Media,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        highlight: states.STYLE_PANE,
+        highlight: states.StylePane,
       });
     });
   });
@@ -470,18 +470,18 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
-        highlight: states.PAGE_BACKGROUND,
+        highlight: states.PageBackground,
       });
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
-        highlight: states.MEDIA,
+        highlight: states.Media,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        highlight: states.STYLE_PANE,
+        highlight: states.StylePane,
       });
     });
   });
@@ -516,7 +516,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_IMAGE_ELEMENT.id,
-        highlight: states.ANIMATION,
+        highlight: states.Animation,
       });
     });
 
@@ -561,7 +561,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_IMAGE_MEDIA3P_ELEMENT.id,
-        highlight: states.ANIMATION,
+        highlight: states.Animation,
       });
     });
   });
@@ -602,7 +602,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_VIDEO_ELEMENT.id,
-        highlight: states.ANIMATION,
+        highlight: states.Animation,
       });
     });
 
@@ -646,7 +646,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: IMAGE_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     });
 
@@ -713,7 +713,7 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: SHAPE_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     });
 
@@ -765,7 +765,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     });
 
@@ -836,13 +836,13 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: VIDEO_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: VIDEO_ELEMENT.id,
-        highlight: states.CAPTIONS,
+        highlight: states.Captions,
       });
     });
 
@@ -900,7 +900,7 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: STICKER_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     });
 

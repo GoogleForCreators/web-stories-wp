@@ -129,8 +129,8 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     resetHighlight,
     cancelHighlight,
   } = useHighlights((state) => ({
-    highlightInput: state[states.ASSISTIVE_TEXT],
-    highlightMediaPicker: state[states.VIDEO_A11Y_POSTER],
+    highlightInput: state[states.AssistiveText],
+    highlightMediaPicker: state[states.VideoA11yPoster],
     resetHighlight: state.onFocusOut,
     cancelHighlight: state.cancelEffect,
   }));
