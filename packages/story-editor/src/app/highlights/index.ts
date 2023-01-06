@@ -18,4 +18,4 @@
  */
 export { default as useHighlights } from './useHighlights';
 export { default as HighlightsProvider } from './provider';
-export { HighlightType as states } from '../../types/highlightsProvider';
+export { HighlightType as states } from './states';

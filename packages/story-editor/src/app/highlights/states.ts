@@ -28,7 +28,37 @@ import {
   STYLE as STYLE_SIDEBAR,
 } from '../../components/sidebar/constants';
 import { PANE_IDS } from '../../components/library/paneIds';
-import { HighlightState, HighlightType } from '../../types/highlightsProvider';
+import type { HighlightState } from '../../types/highlightsProvider';
+
+export enum HighlightType {
+  STORY_TITLE = 'STORY_TITLE',
+  ELEMENT_TOOLBAR_TOGGLE = 'ELEMENT_TOOLBAR_TOGGLE',
+
+  // Sidebar tabs
+  STYLE_PANE = 'STYLE_PANE',
+
+  ANIMATION = 'ANIMATION',
+  ASSISTIVE_TEXT = 'ASSISTIVE_TEXT',
+  CAPTIONS = 'CAPTIONS',
+  EXCERPT = 'EXCERPT',
+  LINK = 'LINK',
+  PAGE_BACKGROUND = 'PAGE_BACKGROUND',
+  POSTER = 'POSTER',
+  PUBLISHER_LOGO = 'PUBLISHER_LOGO',
+  VIDEO_A11Y_POSTER = 'VIDEO_A11Y_POSTER',
+  STYLE = 'STYLE',
+  FONT = 'FONT',
+  TEXT_COLOR = 'TEXT_COLOR',
+
+  // LIBRARY
+  MEDIA = 'MEDIA',
+  MEDIA3P = 'MEDIA3P',
+  TEXT_SET = 'TEXT',
+  PAGE_TEMPLATES = 'PAGE_TEMPLATES',
+
+  // DOCUMENT
+  PAGE_BACKGROUND_AUDIO = 'PAGE_BACKGROUND_AUDIO',
+}
 
 export const STATES: HighlightState = {
   [HighlightType.STORY_TITLE]: {

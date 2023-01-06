@@ -25,13 +25,12 @@ import { useStory } from '../story/useStory';
 import type {
   setHighlightProps,
   selectElementProps,
-  HighlightType,
   HighlightState,
   Highlight,
   HighlightsState,
 } from '../../types/highlightsProvider';
 import Context from './context';
-import { STATES } from './states';
+import { HighlightType, STATES } from './states';
 
 function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
   const [highlighted, setHighlighted] = useState<HighlightsState>({});
