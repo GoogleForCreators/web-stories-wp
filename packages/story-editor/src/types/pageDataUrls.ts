@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
+/**
+ * External dependencies
+ */
+import type { Page } from '@googleforcreators/elements';
 
-export * from './components/keyboard';
-export * from './contexts';
-export * from './theme/constants';
-export * from './types/keyboard';
-export * from './utils/constants';
-export * from './utils/localStore';
-export * from './utils/sessionStore';
-export * from './theme/theme';
+export interface PageDataUrlsActions {
+  queuePageImageGeneration: (Page: Page) => void;
+}
 
-export {};
+export type PageDataUrls = Record<string, string>;
+
+export type QueuePageImageGeneration = (page: Page) => void;
+
+export interface PageDataUrlsContext {
+  state: { dataUrls: PageDataUrls };
+  actions: { queuePageImageGeneration: QueuePageImageGeneration };
+}
