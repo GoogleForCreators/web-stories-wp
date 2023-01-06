@@ -109,6 +109,10 @@ export interface SequenceMediaElement extends MediaElement {
   resource: SequenceResource;
 }
 
+export interface VideoElement extends SequenceMediaElement {
+  type: ElementType.Video;
+}
+
 export interface ProductElement extends Element {
   type: ElementType.Product;
   product: ProductData;

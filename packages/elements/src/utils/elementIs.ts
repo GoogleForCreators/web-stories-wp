@@ -27,11 +27,13 @@ import type {
   DefaultBackgroundElement,
   Element,
   MediaElement,
-  TextElement,
   ProductElement,
   SequenceMediaElement,
   StickerElement,
+  TextElement,
+  VideoElement,
 } from '../types';
+import { ElementType } from '../types';
 
 function isMediaElement(e: Element): e is MediaElement;
 function isMediaElement(e: Draft<Element>): e is Draft<MediaElement>;
@@ -82,6 +84,15 @@ function isSticker(e: Element): e is StickerElement {
   return 'sticker' in e && Boolean(e.sticker);
 }
 
+function isVideo(e: Draft<Element>): e is Draft<VideoElement>;
+function isVideo(e: Element): e is VideoElement {
+  return (
+    isMediaElement(e) &&
+    isSequenceMediaElement(e) &&
+    e.type === ElementType.Video
+  );
+}
+
 const elementIs = {
   media: isMediaElement,
   text: isTextElement,
@@ -90,6 +101,7 @@ const elementIs = {
   product: isProduct,
   sequenceMedia: isSequenceMediaElement,
   sticker: isSticker,
+  video: isVideo,
 };
 
 export default elementIs;

@@ -85,9 +85,7 @@ function useInsertElement() {
       // Auto-play on insert.
       if (
         elementId &&
-        elementIs.media(element) &&
-        elementIs.sequenceMedia(element) &&
-        type === ElementType.Video &&
+        elementIs.video(element) &&
         element.resource.src &&
         !element.resource.isPlaceholder
       ) {
