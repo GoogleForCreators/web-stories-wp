@@ -30,6 +30,7 @@ const TEMPLATE_FIELDS = [
   // _web_stories_envelope will add these fields, we need them too.
   'body',
   'headers',
+  '_embedded',
 ];
 
 const TEMPLATE_EMBED = 'wp:featuredmedia';

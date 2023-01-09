@@ -16,39 +16,33 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { Page } from '@googleforcreators/elements';
 import { useMemo, useCallback, useState } from '@googleforcreators/react';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
  */
 import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../pageCanvas/utils/storyPageToDataUrl';
+import type { PageDataUrls, QueuePageImageGeneration } from '../../types';
 import Context from './context';
-
-/**
- * @typedef {import('@googleforcreators/elements').Page} Page
- */
-
-function PageDataUrlProvider({ children }) {
-  const [dataUrls, setDataUrls] = useState({});
+function PageDataUrlProvider({ children }: PropsWithChildren<unknown>) {
+  const [dataUrls, setDataUrls] = useState<PageDataUrls>({});
   const queueIdleTask = useIdleTaskQueue();
 
   /**
    * Add page image generation task to a idle task
    * queue.
-   *
-   * @param {Page} storyPage Page object.
-   * @return {Function} function to cancel image generation request
    */
-  const queuePageImageGeneration = useCallback(
-    (storyPage) => {
-      const idleTaskUid = storyPage.id;
-      const idleTask = async () => {
+  const queuePageImageGeneration: QueuePageImageGeneration = useCallback(
+    (storyPage: Page) => {
+      const idleTaskUid: string = storyPage.id;
+      const idleTask: () => Promise<void> = async () => {
         const dataUrl = await storyPageToDataUrl(storyPage, {});
         setDataUrls((state) => ({
           ...state,
-          [storyPage.id]: dataUrl,
+          [storyPage?.id]: dataUrl,
         }));
       };
 
@@ -77,8 +71,5 @@ function PageDataUrlProvider({ children }) {
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-PageDataUrlProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default PageDataUrlProvider;

@@ -25,6 +25,8 @@ export * from './types/keyboard';
 export * from './utils/constants';
 export * from './utils/localStore';
 export * from './utils/sessionStore';
+export * from './utils/panelTypes';
+export * from './utils/panelSections';
 export * from './theme/theme';
 
 export { default as getKeyboardMovement } from './utils/getKeyboardMovement';

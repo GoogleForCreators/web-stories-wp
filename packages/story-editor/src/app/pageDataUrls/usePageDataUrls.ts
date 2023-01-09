@@ -21,10 +21,14 @@ import { useContextSelector, identity } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { PageDataUrlsContext } from '../../types';
 import Context from './context';
 
-function usePageDataUrls(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function usePageDataUrls(): PageDataUrlsContext;
+function usePageDataUrls<T>(
+  selector: (state: PageDataUrlsContext) => T | PageDataUrlsContext = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
 export default usePageDataUrls;

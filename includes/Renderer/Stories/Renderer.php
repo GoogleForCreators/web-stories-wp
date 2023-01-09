@@ -51,20 +51,6 @@ use WP_Post;
  */
 abstract class Renderer implements RenderingInterface, Iterator {
 	/**
-	 * Assets instance.
-	 *
-	 * @var Assets Assets instance.
-	 */
-	protected Assets $assets;
-
-	/**
-	 * Context instance.
-	 *
-	 * @var Context Context instance.
-	 */
-	protected Context $context;
-
-	/**
 	 * Web Stories stylesheet handle.
 	 */
 	public const STYLE_HANDLE = 'web-stories-list-styles';
@@ -78,6 +64,20 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * Number of instances invoked. Kept it static to keep track.
 	 */
 	protected static int $instances = 0;
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	protected Assets $assets;
+
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	protected Context $context;
 
 	/**
 	 * Object ID for the Renderer class.
@@ -341,6 +341,122 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	}
 
 	/**
+	 * Render story markup.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return void
+	 */
+	public function render_single_story_content(): void {
+		/**
+		 * Story object.
+		 *
+		 * @var Story $story
+		 */
+		$story = $this->current();
+
+		$single_story_classes = $this->get_single_story_classes();
+		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
+		// No need to load these styles on admin as editor styles are being loaded by the block.
+		if ( ! is_admin() || ( \defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
+			// Web Stories Styles for AMP and non-AMP pages.
+			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
+		}
+
+		if ( $this->context->is_amp() ) {
+			?>
+			<div
+				class="<?php echo esc_attr( $single_story_classes ); ?>"
+				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
+				tabindex="0"
+				role="button"
+			>
+				<?php $this->render_story_with_poster(); ?>
+			</div>
+			<?php
+		} else {
+			$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
+			?>
+			<div class="<?php echo esc_attr( $single_story_classes ); ?>">
+				<?php $this->render_story_with_poster(); ?>
+			</div>
+			<?php
+		}
+	}
+
+	/**
+	 * Renders the lightbox markup for non-amp pages.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return void
+	 */
+	public function render_stories_with_lightbox(): void {
+		$data = [
+			'controls' => [
+				[
+					'name'     => 'close',
+					'position' => 'start',
+				],
+				[
+					'name' => 'skip-next',
+				],
+			],
+			'behavior' => [
+				'autoplay' => false,
+			],
+		];
+		?>
+		<div class="web-stories-list__lightbox">
+			<amp-story-player width="3.6" height="6" layout="responsive">
+				<script type="application/json">
+					<?php echo wp_json_encode( $data ); ?>
+				</script>
+				<?php echo wp_kses_post( $this->lightbox_html ); ?>
+			</amp-story-player>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Renders the lightbox markup for non-amp pages.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return void
+	 */
+	public function render_stories_with_lightbox_amp(): void {
+		// Have to ignore this as the escaping functions are stripping off 'amp-bind' custom attribute '[class]'.
+		echo $this->lightbox_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated with properly escaped data.
+
+	}
+
+	/**
+	 * Renders stories lightbox on 'wp_footer'.
+	 *
+	 * @return void
+	 */
+	public function render_stories_lightbox(): void {
+		// Return if we don't have anything to render.
+		if ( empty( $this->lightbox_html ) ) {
+			return;
+		}
+		?>
+		<div class="web-stories-list__lightbox-wrapper <?php echo esc_attr( 'ws-lightbox-' . $this->instance_id ); ?>">
+			<?php
+			if ( $this->context->is_amp() ) {
+				$this->render_stories_with_lightbox_amp();
+			} else {
+				$this->render_stories_with_lightbox();
+			}
+			?>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Verifies the current view type.
 	 *
 	 * @since 1.5.0
@@ -503,52 +619,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 * @param string $class Single story classes.
 		 */
 		return apply_filters( 'web_stories_renderer_container_styles', $story_styles );
-	}
-
-	/**
-	 * Render story markup.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return void
-	 */
-	public function render_single_story_content(): void {
-		/**
-		 * Story object.
-		 *
-		 * @var Story $story
-		 */
-		$story = $this->current();
-
-		$single_story_classes = $this->get_single_story_classes();
-		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
-		// No need to load these styles on admin as editor styles are being loaded by the block.
-		if ( ! is_admin() || ( \defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
-			// Web Stories Styles for AMP and non-AMP pages.
-			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
-		}
-
-		if ( $this->context->is_amp() ) {
-			?>
-			<div
-				class="<?php echo esc_attr( $single_story_classes ); ?>"
-				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
-				tabindex="0"
-				role="button"
-			>
-				<?php $this->render_story_with_poster(); ?>
-			</div>
-			<?php
-		} else {
-			$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
-			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
-			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
-			?>
-			<div class="<?php echo esc_attr( $single_story_classes ); ?>">
-				<?php $this->render_story_with_poster(); ?>
-			</div>
-			<?php
-		}
 	}
 
 	/**
@@ -771,75 +841,5 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		</amp-lightbox>
 		<?php
 		$this->lightbox_html .= ob_get_clean();
-	}
-
-	/**
-	 * Renders the lightbox markup for non-amp pages.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return void
-	 */
-	public function render_stories_with_lightbox(): void {
-		$data = [
-			'controls' => [
-				[
-					'name'     => 'close',
-					'position' => 'start',
-				],
-				[
-					'name' => 'skip-next',
-				],
-			],
-			'behavior' => [
-				'autoplay' => false,
-			],
-		];
-		?>
-		<div class="web-stories-list__lightbox">
-			<amp-story-player width="3.6" height="6" layout="responsive">
-				<script type="application/json">
-					<?php echo wp_json_encode( $data ); ?>
-				</script>
-				<?php echo wp_kses_post( $this->lightbox_html ); ?>
-			</amp-story-player>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Renders the lightbox markup for non-amp pages.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return void
-	 */
-	public function render_stories_with_lightbox_amp(): void {
-		// Have to ignore this as the escaping functions are stripping off 'amp-bind' custom attribute '[class]'.
-		echo $this->lightbox_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated with properly escaped data.
-
-	}
-
-	/**
-	 * Renders stories lightbox on 'wp_footer'.
-	 *
-	 * @return void
-	 */
-	public function render_stories_lightbox(): void {
-		// Return if we don't have anything to render.
-		if ( empty( $this->lightbox_html ) ) {
-			return;
-		}
-		?>
-		<div class="web-stories-list__lightbox-wrapper <?php echo esc_attr( 'ws-lightbox-' . $this->instance_id ); ?>">
-			<?php
-			if ( $this->context->is_amp() ) {
-				$this->render_stories_with_lightbox_amp();
-			} else {
-				$this->render_stories_with_lightbox();
-			}
-			?>
-		</div>
-		<?php
 	}
 }

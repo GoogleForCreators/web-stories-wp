@@ -28,6 +28,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\User;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Infrastructure\Service;
@@ -41,7 +42,38 @@ use WP_Site;
 /**
  * Class Capabilities
  */
-class Capabilities implements Service, PluginActivationAware, SiteInitializationAware, SiteRemovalAware, PluginUninstallAware {
+class Capabilities implements Service, PluginActivationAware, SiteInitializationAware, SiteRemovalAware, PluginUninstallAware, HasRequirements {
+	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private Story_Post_Type $story_post_type;
+
+	/**
+	 * Font_Post_Type constructor.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
+	}
+
 	/**
 	 * Act on plugin activation.
 	 *
@@ -179,15 +211,12 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return string[]
+	 * @return array<string,string> Capabilities.
 	 */
 	protected function get_all_capabilities(): array {
-		$all_capabilities = Taxonomy_Base::DEFAULT_CAPABILITIES;
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		if ( $post_type_object ) {
-			$all_capabilities = array_merge( $all_capabilities, (array) $post_type_object->cap );
-		}
-
-		return $all_capabilities;
+		return array_merge(
+			Taxonomy_Base::DEFAULT_CAPABILITIES,
+			$this->story_post_type->get_caps(),
+		);
 	}
 }

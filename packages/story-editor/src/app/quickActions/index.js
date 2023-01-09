@@ -1,14 +1,4 @@
-<?php
-/**
- * Class Add_Media_Source_Editor
- *
- * @link      https://github.com/googleforcreators/web-stories-wp
- *
- * @copyright 2021 Google LLC
- * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- */
-
-/**
+/*
  * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,21 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-declare(strict_types = 1);
-
-namespace Google\Web_Stories\Migrations;
-
-/**
- * Class Add_Media_Source_Editor
- */
-class Add_Media_Source_Editor extends Add_Media_Source {
-	/**
-	 * Term name.
-	 *
-	 * @since 1.9.0
-	 */
-	protected function get_term(): string {
-		return $this->media_source_taxonomy::TERM_EDITOR;
-	}
-}
+export { default as useQuickActions, MediaPicker } from './useQuickActions';
+export * from './constants';

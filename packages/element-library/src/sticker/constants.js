@@ -48,8 +48,8 @@ export const resizeRules = {
 export const defaultAttributes = SHARED_DEFAULT_ATTRIBUTES;
 
 export const panels = [
-  PanelTypes.ELEMENT_ALIGNMENT,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.ANIMATION,
-  PanelTypes.LINK,
+  PanelTypes.ElementAlignment,
+  PanelTypes.SizePosition,
+  PanelTypes.Animation,
+  PanelTypes.Link,
 ];

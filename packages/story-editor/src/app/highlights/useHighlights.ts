@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { useContextSelector, identity } from '@googleforcreators/react';
+/**
  * Internal dependencies
  */
-import { OUTLINE, FLASH } from './styles';
+import type { HighlightProviderState } from '../../types/highlightsProvider';
+import Context from './context';
 
-export { default as useHighlights } from './useHighlights';
-export { default as HighlightsProvider } from './provider';
-export { default as states } from './states';
-export { ACTIONS } from './quickActions/constants';
-export { MediaPicker, useQuickActions } from './quickActions';
-
-export const styles = {
-  OUTLINE,
-  FLASH,
-};
+function useHighlights(): HighlightProviderState;
+function useHighlights<T>(selector: (state: HighlightProviderState) => T): T;
+function useHighlights<T>(
+  selector: (
+    state: HighlightProviderState
+  ) => T | HighlightProviderState = identity
+) {
+  return useContextSelector(Context, selector);
+}
+export default useHighlights;

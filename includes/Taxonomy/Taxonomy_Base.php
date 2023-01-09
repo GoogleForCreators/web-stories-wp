@@ -129,15 +129,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	}
 
 	/**
-	 * Taxonomy args.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return TaxonomyArgs Taxonomy args.
-	 */
-	abstract protected function taxonomy_args(): array;
-
-	/**
 	 * Act on site initialization.
 	 *
 	 * @since 1.12.0
@@ -206,4 +197,13 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 			}
 		}
 	}
+
+	/**
+	 * Taxonomy args.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return TaxonomyArgs Taxonomy args.
+	 */
+	abstract protected function taxonomy_args(): array;
 }

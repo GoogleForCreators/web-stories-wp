@@ -32,7 +32,7 @@ import type { RefObject } from 'react';
 /**
  * Internal dependencies
  */
-import states from '../highlights/states';
+import { states } from '../highlights';
 import useHighlights from '../highlights/useHighlights';
 import { useStory } from '../story';
 import getLayerArrangementProps from './utils/getLayerArrangementProps';
@@ -325,7 +325,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
       }
       setHighlights({
         elements: selectedElements,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     },
     [setHighlights, selectedElements]
