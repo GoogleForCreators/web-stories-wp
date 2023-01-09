@@ -31,8 +31,10 @@ namespace Google\Web_Stories\Media;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Taxonomy\Taxonomy_Base;
+use ReflectionClass;
 use WP_Post;
 use WP_Query;
+use WP_Site;
 
 /**
  * Class Media_Source_Taxonomy
@@ -40,12 +42,14 @@ use WP_Query;
  * @phpstan-import-type TaxonomyArgs from \Google\Web_Stories\Taxonomy\Taxonomy_Base
  */
 class Media_Source_Taxonomy extends Taxonomy_Base {
-	/**
-	 * Context instance.
-	 *
-	 * @var Context Context instance.
-	 */
-	private Context $context;
+	public const TERM_EDITOR             = 'editor';
+	public const TERM_POSTER_GENERATION  = 'poster-generation';
+	public const TERM_SOURCE_VIDEO       = 'source-video';
+	public const TERM_SOURCE_IMAGE       = 'source-image';
+	public const TERM_VIDEO_OPTIMIZATION = 'video-optimization';
+	public const TERM_PAGE_TEMPLATE      = 'page-template';
+	public const TERM_GIF_CONVERSION     = 'gif-conversion';
+	public const TERM_RECORDING          = 'recording';
 
 	/**
 	 * Media Source key.
@@ -53,9 +57,14 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	public const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
+	 * Context instance.
+	 */
+	private Context $context;
+
+	/**
 	 * Single constructor.
 	 *
-	 * @param Context $context Context instance.
+	 * @param Context $context      Context instance.
 	 */
 	public function __construct( Context $context ) {
 		$this->context            = $context;
@@ -80,6 +89,83 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		add_action( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
 		add_filter( 'web_stories_rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ] );
+	}
+
+	/**
+	 * Act on site initialization.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 */
+	public function on_site_initialization( WP_Site $site ): void {
+		parent::on_site_initialization( $site );
+
+		$this->add_missing_terms();
+	}
+
+	/**
+	 * Act on plugin activation.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 */
+	public function on_plugin_activation( $network_wide ): void {
+		parent::on_plugin_activation( $network_wide );
+
+		$this->add_missing_terms();
+	}
+
+	/**
+	 * Returns all defined media source term names.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @return string[] Media sources
+	 */
+	public function get_all_terms(): array {
+		$consts = ( new ReflectionClass( $this ) )->getConstants();
+
+		/**
+		 * List of terms.
+		 *
+		 * @var string[] $terms
+		 */
+		$terms = array_values(
+			array_filter(
+				$consts,
+				static fn( $key ) => str_starts_with( $key, 'TERM_' ),
+				ARRAY_FILTER_USE_KEY
+			)
+		);
+
+		return $terms;
+	}
+
+	/**
+	 * Adds missing terms to the taxonomy.
+	 *
+	 * @since 1.29.0
+	 */
+	private function add_missing_terms(): void {
+		$existing_terms = get_terms(
+			[
+				'taxonomy'   => $this->get_taxonomy_slug(),
+				'hide_empty' => false,
+				'fields'     => 'slugs',
+			]
+		);
+
+		if ( is_wp_error( $existing_terms ) ) {
+			return;
+		}
+
+		$missing_terms = array_diff( $this->get_all_terms(), $existing_terms );
+
+		foreach ( $missing_terms as $term ) {
+			wp_insert_term( $term, $this->get_taxonomy_slug() );
+		}
 	}
 
 	/**
@@ -119,16 +205,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 				'schema'          => [
 					'description' => __( 'Media source.', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [
-						'editor',
-						'poster-generation',
-						'video-optimization',
-						'source-video',
-						'source-image',
-						'gif-conversion',
-						'page-template',
-						'recording',
-					],
+					'enum'        => $this->get_all_terms(),
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],
@@ -226,7 +303,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		}
 
 		/**
-		 *  Merge with existing tax query if needed,
+		 * Merge with existing tax query if needed,
 		 * in a nested way so WordPress will run them
 		 * with an 'AND' relation. Example:
 		 *
@@ -242,7 +319,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 				[
 					'taxonomy' => $this->taxonomy_slug,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+					'terms'    => [
+						self::TERM_POSTER_GENERATION,
+						self::TERM_SOURCE_VIDEO,
+						self::TERM_SOURCE_IMAGE,
+						self::TERM_PAGE_TEMPLATE,
+					],
 					'operator' => 'NOT IN',
 				],
 			]

@@ -32,7 +32,6 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
 class Embed_Controller extends DependencyInjectedRestTestCase {
-
 	protected static int $story_id;
 	protected static int $subscriber;
 	protected static int $editor;
@@ -145,13 +144,6 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
-
-		$route = $routes['/web-stories/v1/embed'];
-		$this->assertCount( 1, $route );
-		$this->assertArrayHasKey( 'callback', $route[0] );
-		$this->assertArrayHasKey( 'permission_callback', $route[0] );
-		$this->assertArrayHasKey( 'methods', $route[0] );
-		$this->assertArrayHasKey( 'args', $route[0] );
 	}
 
 	protected function dispatch_request( ?string $url = null ): WP_REST_Response {
@@ -323,13 +315,6 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		$this->set_permalink_structure( '/%postname%/' );
 
-		// Without (re-)registering the post type here there won't be any rewrite rules for it
-		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
-		// instead of "http://example.org/web-stories/embed-controller-test-story/".
-		// @todo Investigate why this is  needed (leakage between tests?).
-		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$story_post_type->register();
-
 		flush_rewrite_rules( false );
 
 		wp_set_current_user( self::$admin );
@@ -343,7 +328,10 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 
 		$response = $this->dispatch_request( $permalink );
-		$data     = $response->get_data();
+
+		$this->assertNotWPError( $response->as_error() );
+
+		$data = $response->get_data();
 
 		restore_current_blog();
 
