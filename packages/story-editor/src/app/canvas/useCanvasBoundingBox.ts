@@ -24,6 +24,7 @@ import {
 /**
  * Internal dependencies
  */
+import type { BoundingBoxes } from '../../types';
 import Context from './context';
 import { RECT_OBSERVATION_KEY } from './constants';
 
@@ -66,6 +67,6 @@ export function useCanvasBoundingBoxRef(boundingBoxId: string) {
 export function useCanvasBoundingBox(boundingBoxId: string) {
   return useContextSelector(
     Context,
-    ({ state }) => state.boundingBoxes?.[boundingBoxId]
+    ({ state }) => state.boundingBoxes?.[boundingBoxId as keyof BoundingBoxes]
   );
 }

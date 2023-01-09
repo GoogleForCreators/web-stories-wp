@@ -53,8 +53,8 @@ export interface LayoutProviderState {
   actions: {
     closeCarousel: () => void;
     openCarousel: () => void;
-    setScrollOffset: Dispatch<SetStateAction<ScrollOffset>>;
-    setZoomLevel: Dispatch<SetStateAction<number>>;
-    setZoomSetting: Dispatch<SetStateAction<ZoomSetting>>;
+    setScrollOffset: (payload?: ScrollOffset) => void;
+    setZoomLevel: (prevState: number) => void;
+    setZoomSetting: (prevState: ZoomSetting) => void;
   };
 }
