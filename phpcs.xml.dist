@@ -138,14 +138,21 @@
   <!-- Reports useless @var annotation for constants because the type of constant is always clear. -->
   <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint" />
 
-  <!-- Enforces correct space usage in array functions. -->
-  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
-    <properties>
-      <property name="spacesCountAfterKeyword" value="0" />
-      <property name="spacesCountBeforeArrow" value="1" />
-      <property name="spacesCountAfterArrow" value="1" />
-      <property name="allowMultiLine" value="true" />
-    </properties>
+  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+      <exclude-pattern>web-stories.php</exclude-pattern>
+      <exclude-pattern>includes/compat/*</exclude-pattern>
+      <exclude-pattern>includes/templates/*</exclude-pattern>
+  </rule>
+
+  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+      <exclude-pattern>web-stories.php</exclude-pattern>
+      <exclude-pattern>includes/compat/*</exclude-pattern>
+       <properties>
+        <property name="enableMixedTypeHint" value="false" />
+        <property name="enableUnionTypeHint" value="false" />
+        <property name="enableIntersectionTypeHint" value="false" />
+        <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
+      </properties>
   </rule>
 
   <!-- Disallows grouped use declarations. -->
@@ -200,12 +207,7 @@
       <property name="allowMultiLine" value="true"/>
     </properties>
   </rule>
-
-  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
-        <exclude-pattern>web-stories.php</exclude-pattern>
-        <exclude-pattern>includes/compat/*</exclude-pattern>
-        <exclude-pattern>includes/templates/*</exclude-pattern>
-    </rule>
+  <rule ref="SlevomatCodingStandard.Functions.StaticClosure" />
 
   <!-- Class names should be referenced via ::class constant when possible. -->
   <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
@@ -213,6 +215,9 @@
       <property name="enableOnObjects" value="false" />
     </properties>
   </rule>
+
+  <!-- Requires declaring visibility for class constants. -->
+  <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
 
   <rule ref="SlevomatCodingStandard.PHP">
     <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
@@ -254,17 +259,6 @@
   <rule
     ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"
   />
-
-  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
-      <exclude-pattern>web-stories.php</exclude-pattern>
-      <exclude-pattern>includes/compat/*</exclude-pattern>
-       <properties>
-        <property name="enableMixedTypeHint" value="false" />
-        <property name="enableUnionTypeHint" value="false" />
-        <property name="enableIntersectionTypeHint" value="false" />
-        <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
-      </properties>
-  </rule>
 
   <!-- Reports forbidden annotations. -->
   <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
