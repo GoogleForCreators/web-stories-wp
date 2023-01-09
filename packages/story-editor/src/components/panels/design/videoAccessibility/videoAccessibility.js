@@ -31,7 +31,8 @@ import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { useConfig } from '../../../../app/config';
-import { styles, states, useHighlights } from '../../../../app/highlights';
+import { states, useHighlights } from '../../../../app/highlights';
+import styles from '../../../../app/highlights/styles';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 const DEFAULT_RESOURCE = {
@@ -128,8 +129,8 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     resetHighlight,
     cancelHighlight,
   } = useHighlights((state) => ({
-    highlightInput: state[states.ASSISTIVE_TEXT],
-    highlightMediaPicker: state[states.VIDEO_A11Y_POSTER],
+    highlightInput: state[states.AssistiveText],
+    highlightMediaPicker: state[states.VideoA11yPoster],
     resetHighlight: state.onFocusOut,
     cancelHighlight: state.cancelEffect,
   }));

@@ -53,20 +53,20 @@ use WP_REST_Response;
 class Stories_Controller extends Stories_Base_Controller {
 
 	/**
-	 * Query args.
-	 *
-	 * @var array<string,mixed>
-	 * @phpstan-var QueryArgs
-	 */
-	private array $args = [];
-
-	/**
 	 * Default style presets to pass if not set.
 	 */
 	public const EMPTY_STYLE_PRESETS = [
 		'colors'     => [],
 		'textStyles' => [],
 	];
+
+	/**
+	 * Query args.
+	 *
+	 * @var array<string,mixed>
+	 * @phpstan-var QueryArgs
+	 */
+	private array $args = [];
 
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
@@ -334,36 +334,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	}
 
 	/**
-	 * Get an array of attached post objects.
-	 *
-	 * @since 1.22.0
-	 *
-	 * @param WP_Post[] $posts Array of post objects.
-	 * @return int[] Array of post ids.
-	 */
-	protected function get_attached_user_ids( array $posts ): array {
-		$author_ids = wp_list_pluck( $posts, 'post_author' );
-		$author_ids = array_map( 'absint', $author_ids );
-
-		return array_unique( array_filter( $author_ids ) );
-	}
-
-	/**
-	 * Get an array of attached post objects.
-	 *
-	 * @since 1.22.0
-	 *
-	 * @param WP_Post[] $posts Array of post objects.
-	 * @return int[] Array of post ids.
-	 */
-	protected function get_attached_post_ids( array $posts ): array {
-		$thumb_ids     = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
-		$publisher_ids = array_filter( array_map( [ $this, 'get_publisher_logo_id' ], $posts ) );
-
-		return array_unique( [ ...$thumb_ids, ...$publisher_ids ] );
-	}
-
-	/**
 	 * Filter the query to cache the value to a class property.
 	 *
 	 * @param array<string, mixed> $args    WP_Query arguments.
@@ -418,6 +388,65 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Retrieves the query params for the posts collection.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array<string, array<string, mixed>> Collection parameters.
+	 */
+	public function get_collection_params(): array {
+		$query_params = parent::get_collection_params();
+
+		$query_params['_web_stories_envelope'] = [
+			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
+		];
+
+		$query_params['web_stories_demo'] = [
+			'description' => __( 'Load demo data.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
+		];
+
+		if ( ! empty( $query_params['orderby'] ) ) {
+			$query_params['orderby']['enum'][] = 'story_author';
+		}
+
+		return $query_params;
+	}
+
+	/**
+	 * Get an array of attached post objects.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param WP_Post[] $posts Array of post objects.
+	 * @return int[] Array of post ids.
+	 */
+	protected function get_attached_user_ids( array $posts ): array {
+		$author_ids = wp_list_pluck( $posts, 'post_author' );
+		$author_ids = array_map( 'absint', $author_ids );
+
+		return array_unique( array_filter( $author_ids ) );
+	}
+
+	/**
+	 * Get an array of attached post objects.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param WP_Post[] $posts Array of post objects.
+	 * @return int[] Array of post ids.
+	 */
+	protected function get_attached_post_ids( array $posts ): array {
+		$thumb_ids     = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
+		$publisher_ids = array_filter( array_map( [ $this, 'get_publisher_logo_id' ], $posts ) );
+
+		return array_unique( [ ...$thumb_ids, ...$publisher_ids ] );
 	}
 
 	/**
@@ -523,35 +552,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		$links = $this->add_publisher_logo_link( $links, $post );
 
 		return $links;
-	}
-
-	/**
-	 * Retrieves the query params for the posts collection.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return array<string, array<string, mixed>> Collection parameters.
-	 */
-	public function get_collection_params(): array {
-		$query_params = parent::get_collection_params();
-
-		$query_params['_web_stories_envelope'] = [
-			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
-			'type'        => 'boolean',
-			'default'     => false,
-		];
-
-		$query_params['web_stories_demo'] = [
-			'description' => __( 'Load demo data.', 'web-stories' ),
-			'type'        => 'boolean',
-			'default'     => false,
-		];
-
-		if ( ! empty( $query_params['orderby'] ) ) {
-			$query_params['orderby']['enum'][] = 'story_author';
-		}
-
-		return $query_params;
 	}
 
 	/**

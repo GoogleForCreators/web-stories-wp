@@ -41,14 +41,6 @@ class Mock_Product {
 	 * handle calls for methods that haven't been mocked
 	 */
 	/**
-	 * @param mixed $method_name
-	 * @param mixed $method_args
-	 */
-	public function __call( $method_name, $method_args ): void {
-		// no-op
-	}
-
-	/**
 	 * Pulls a prop from the data array if it exists
 	 *
 	 * @param string $prop
@@ -102,5 +94,13 @@ class Mock_Product {
 		$gallery_image_ids = $this->get_prop( 'gallery_image_ids' );
 
 		return $gallery_image_ids;
+	}
+
+	/**
+	 * @param mixed $method_name
+	 * @param mixed $method_args
+	 */
+	public function __call( $method_name, $method_args ): void {
+		// no-op
 	}
 }

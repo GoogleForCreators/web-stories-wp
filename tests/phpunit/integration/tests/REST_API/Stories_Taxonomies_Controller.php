@@ -20,14 +20,14 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 	protected static Taxonomy_Base $taxonomy_object;
 
 	/**
-	 * Test instance.
-	 */
-	private \Google\Web_Stories\REST_API\Stories_Taxonomies_Controller $controller;
-
-	/**
 	 * Admin user for test.
 	 */
 	protected static int $admin_id;
+
+	/**
+	 * Test instance.
+	 */
+	private \Google\Web_Stories\REST_API\Stories_Taxonomies_Controller $controller;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(

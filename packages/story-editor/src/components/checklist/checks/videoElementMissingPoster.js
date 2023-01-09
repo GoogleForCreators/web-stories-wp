@@ -50,7 +50,7 @@ const VideoElementMissingPoster = () => {
       setHighlights({
         pageId,
         elementId,
-        highlight: states.VIDEO_A11Y_POSTER,
+        highlight: states.VideoA11yPoster,
       }),
     [setHighlights]
   );

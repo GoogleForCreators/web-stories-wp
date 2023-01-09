@@ -40,6 +40,11 @@ class Story_Archive extends DependencyInjectedTestCase {
 	protected static int $story_id;
 
 	/**
+	 * Archive page ID.
+	 */
+	protected static int $archive_page_id;
+
+	/**
 	 * Test instance.
 	 */
 	protected Testee $instance;
@@ -47,11 +52,6 @@ class Story_Archive extends DependencyInjectedTestCase {
 	private Settings $settings;
 
 	private Story_Post_Type $story_post_type;
-
-	/**
-	 * Archive page ID.
-	 */
-	protected static int $archive_page_id;
 
 	protected string $redirect_location = '';
 

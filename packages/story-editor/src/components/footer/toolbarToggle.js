@@ -36,7 +36,8 @@ import styled, { css } from 'styled-components';
  */
 import Tooltip from '../tooltip';
 import { useCanvas } from '../../app';
-import { states, useHighlights, styles } from '../../app/highlights';
+import { states, useHighlights } from '../../app/highlights';
+import styles from '../../app/highlights/styles';
 
 const StyledButton = styled(Button)`
   ${themeHelpers.focusableOutlineCSS};
@@ -60,7 +61,7 @@ function ToolbarToggle() {
   );
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.ELEMENT_TOOLBAR_TOGGLE],
+    highlight: state[states.ElementToolbarToggle],
     resetHighlight: state.onFocusOut,
   }));
 
