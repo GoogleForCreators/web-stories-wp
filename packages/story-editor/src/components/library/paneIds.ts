@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,4 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as useQuickActions, MediaPicker } from './useQuickActions';
+
+export enum PANE_IDS {
+  Media = 'media',
+  Media3p = 'media3p',
+  Text = 'text',
+  Shapes = 'shapes',
+  Elements = 'elements',
+  PageTemplates = 'pageTemplates',
+  Shopping = 'shopping',
+}

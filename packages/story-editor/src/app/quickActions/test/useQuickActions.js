@@ -25,17 +25,17 @@ import { Icons, useSnackbar } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { useQuickActions } from '..';
-import { states } from '../..';
-import useHighlights from '../../useHighlights';
-import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
-import { useStory, useStoryTriggersDispatch } from '../../../story';
+import { states } from '../../highlights';
+import useHighlights from '../../highlights/useHighlights';
+import { STORY_EVENTS } from '../../story/storyTriggers/storyEvents';
+import { useStory, useStoryTriggersDispatch } from '../../story';
 import { ACTIONS } from '../constants';
-import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
-import { useConfig, useLocalMedia } from '../../..';
-import useFFmpeg from '../../../media/utils/useFFmpeg';
+import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
+import { useConfig, useLocalMedia } from '../..';
+import useFFmpeg from '../../media/utils/useFFmpeg';
 import { MediaPicker } from '../useQuickActions';
-import { noop } from '../../../../utils/noop';
-import useInsertElement from '../../../../components/canvas/useInsertElement';
+import { noop } from '../../../utils/noop';
+import useInsertElement from '../../../components/canvas/useInsertElement';
 
 const {
   Bucket,
@@ -49,7 +49,7 @@ const {
   PictureSwap,
 } = Icons;
 
-jest.mock('../../../story', () => ({
+jest.mock('../../story', () => ({
   useStory: jest.fn(),
   useStoryTriggersDispatch: jest.fn(),
   // Was getting a circular deps error or something
@@ -71,15 +71,15 @@ jest.mock('../../../story', () => ({
   },
 }));
 
-jest.mock('../../useHighlights', () => ({
-  ...jest.requireActual('../../useHighlights'),
+jest.mock('../../highlights/useHighlights', () => ({
+  ...jest.requireActual('../../highlights/useHighlights'),
   __esModule: true,
   default: jest.fn(),
 }));
 
-jest.mock('../../../../utils/useApplyTextAutoStyle');
+jest.mock('../../../utils/useApplyTextAutoStyle');
 
-jest.mock('../../../../components/canvas/useInsertElement');
+jest.mock('../../../components/canvas/useInsertElement');
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),
@@ -97,13 +97,13 @@ jest.mock('@googleforcreators/media', () => ({
   },
 }));
 
-jest.mock('../../../media', () => ({
-  ...jest.requireActual('../../../media'),
+jest.mock('../../media', () => ({
+  ...jest.requireActual('../../media'),
   useLocalMedia: jest.fn(),
 }));
 
-jest.mock('../../../config');
-jest.mock('../../../media/utils/useFFmpeg');
+jest.mock('../../config');
+jest.mock('../../media/utils/useFFmpeg');
 
 const mockClickEvent = {
   preventDefault: jest.fn(),
@@ -424,18 +424,18 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
-        highlight: states.PAGE_BACKGROUND,
+        highlight: states.PageBackground,
       });
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
-        highlight: states.MEDIA,
+        highlight: states.Media,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        highlight: states.STYLE_PANE,
+        highlight: states.StylePane,
       });
     });
   });
@@ -470,18 +470,18 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
-        highlight: states.PAGE_BACKGROUND,
+        highlight: states.PageBackground,
       });
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_ELEMENT.id,
-        highlight: states.MEDIA,
+        highlight: states.Media,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        highlight: states.STYLE_PANE,
+        highlight: states.StylePane,
       });
     });
   });
@@ -516,7 +516,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_IMAGE_ELEMENT.id,
-        highlight: states.ANIMATION,
+        highlight: states.Animation,
       });
     });
 
@@ -561,7 +561,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_IMAGE_MEDIA3P_ELEMENT.id,
-        highlight: states.ANIMATION,
+        highlight: states.Animation,
       });
     });
   });
@@ -602,7 +602,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_VIDEO_ELEMENT.id,
-        highlight: states.ANIMATION,
+        highlight: states.Animation,
       });
     });
 
@@ -646,7 +646,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: IMAGE_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     });
 
@@ -713,7 +713,7 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: SHAPE_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     });
 
@@ -765,7 +765,7 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     });
 
@@ -836,13 +836,13 @@ describe('useQuickActions', () => {
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: VIDEO_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: VIDEO_ELEMENT.id,
-        highlight: states.CAPTIONS,
+        highlight: states.Captions,
       });
     });
 
@@ -900,7 +900,7 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: STICKER_ELEMENT.id,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     });
 

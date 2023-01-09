@@ -60,10 +60,10 @@ export const defaultAttributes = {
 };
 
 export const panels = [
-  PanelTypes.ELEMENT_ALIGNMENT,
+  PanelTypes.ElementAlignment,
   ...MEDIA_PANELS,
-  PanelTypes.VIDEO_OPTIONS,
-  PanelTypes.VIDEO_SEGMENT,
-  PanelTypes.VIDEO_ACCESSIBILITY,
-  PanelTypes.CAPTIONS,
+  PanelTypes.VideoOptions,
+  PanelTypes.VideoSegment,
+  PanelTypes.VideoAcessibility,
+  PanelTypes.Captions,
 ];

@@ -37,22 +37,21 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import states from '../states';
-import useHighlights from '../useHighlights';
-import updateProperties from '../../../components/style/updateProperties';
-import { useHistory } from '../../history';
-import { useConfig } from '../../config';
-import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../../media';
-import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../../story';
-import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
-import useFFmpeg from '../../media/utils/useFFmpeg';
-import useInsertElement from '../../../components/canvas/useInsertElement';
-import { DEFAULT_PRESET } from '../../../components/library/panes/text/textPresets';
-import { useMediaRecording } from '../../../components/mediaRecording';
+import { states, useHighlights } from '../highlights';
+import updateProperties from '../../components/style/updateProperties';
+import { useHistory } from '../history';
+import { useConfig } from '../config';
+import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../media';
+import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../story';
+import useApplyTextAutoStyle from '../../utils/useApplyTextAutoStyle';
+import useFFmpeg from '../media/utils/useFFmpeg';
+import useInsertElement from '../../components/canvas/useInsertElement';
+import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
+import { useMediaRecording } from '../../components/mediaRecording';
 import {
   BACKGROUND_BLUR_PX,
   VIDEO_EFFECTS,
-} from '../../../components/mediaRecording/constants';
+} from '../../components/mediaRecording/constants';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
@@ -475,7 +474,7 @@ const useQuickActions = () => {
   const handleFocusMediaPanel = useMemo(() => {
     const resourceId = selectedElements?.[0]?.resource?.id?.toString() || '';
     const is3PMedia = resourceId.startsWith('media/');
-    const panelToFocus = is3PMedia ? states.MEDIA3P : states.MEDIA;
+    const panelToFocus = is3PMedia ? states.Media3p : states.Media;
 
     return handleFocusPanel(panelToFocus);
   }, [handleFocusPanel, selectedElements]);
@@ -487,10 +486,10 @@ const useQuickActions = () => {
     handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
-      handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
-      handleFocusLinkPanel: handleFocusPanel(states.LINK),
-      handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
-      handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
+      handleFocusAnimationPanel: handleFocusPanel(states.Animation),
+      handleFocusLinkPanel: handleFocusPanel(states.Link),
+      handleFocusPageBackground: handleFocusPanel(states.PageBackground),
+      handleFocusCaptionsPanel: handleFocusPanel(states.Captions),
     }),
     [handleFocusPanel]
   );
@@ -540,7 +539,7 @@ const useQuickActions = () => {
         label: ACTIONS.INSERT_TEXT.text,
         onClick: () => {
           setHighlights({
-            highlight: states.STYLE_PANE,
+            highlight: states.StylePane,
           });
           insertElement('text', DEFAULT_PRESET);
           trackEvent('quick_action', {

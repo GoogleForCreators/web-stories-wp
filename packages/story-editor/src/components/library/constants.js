@@ -36,35 +36,35 @@ export const MEDIA = {
   tooltip: __('Media', 'web-stories'),
   placement: TOOLTIP_PLACEMENT.BOTTOM_START,
   Pane: MediaPane,
-  id: PANE_IDS.MEDIA,
+  id: PANE_IDS.Media,
 };
 export const MEDIA3P = {
   icon: Media3pIcon,
   tooltip: __('Third-party media', 'web-stories'),
   Pane: Media3pPane,
-  id: PANE_IDS.MEDIA_3P,
+  id: PANE_IDS.Media3p,
 };
 export const TEXT = {
   icon: TextIcon,
   tooltip: __('Text', 'web-stories'),
   Pane: TextPane,
-  id: PANE_IDS.TEXT,
+  id: PANE_IDS.Text,
 };
 export const SHAPES = {
   icon: ShapesIcon,
   tooltip: __('Shapes & Stickers', 'web-stories'),
   Pane: ShapesPane,
-  id: PANE_IDS.SHAPES,
+  id: PANE_IDS.Shapes,
 };
 export const PAGE_TEMPLATES = {
   icon: PageTemplatesIcon,
   tooltip: __('Page Templates', 'web-stories'),
   Pane: PageTemplatesPane,
-  id: PANE_IDS.PAGE_TEMPLATES,
+  id: PANE_IDS.PageTemplates,
 };
 export const SHOPPING = {
   icon: ShoppingIcon,
   tooltip: __('Shopping', 'web-stories'),
   Pane: ShoppingPane,
-  id: PANE_IDS.SHOPPING,
+  id: PANE_IDS.Shopping,
 };

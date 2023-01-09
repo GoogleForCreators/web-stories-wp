@@ -17,48 +17,53 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
-
+import type { PropsWithChildren } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../story';
+import { useStory } from '../story/useStory';
+import type {
+  setHighlightProps,
+  selectElementProps,
+  HighlightState,
+  Highlight,
+  HighlightsState,
+} from '../../types/highlightsProvider';
 import Context from './context';
-import { STATES } from './states';
+import { HighlightType, STATES } from './states';
 
-function HighlightsProvider({ children }) {
-  const [highlighted, setHighlighted] = useState({});
-  const { setSelectedElementsById, setCurrentPage } = useStory(
-    ({ actions }) => ({
-      setSelectedElementsById: actions.setSelectedElementsById,
-      setCurrentPage: actions.setCurrentPage,
-    })
-  );
+function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
+  const [highlighted, setHighlighted] = useState<HighlightsState>({});
+  const {
+    actions: { setSelectedElementsById, setCurrentPage },
+  } = useStory();
 
   const selectElement = useCallback(
-    ({ elementId, elements, pageId }) => {
+    ({ elementId, elements, pageId }: selectElementProps) => {
       if (pageId) {
         setCurrentPage({ pageId });
       }
-      if (Array.isArray(elements)) {
-        setSelectedElementsById({
-          elementIds: elements.map(({ id }) => id),
-        });
+      if (elements?.length) {
+        const elementIds = elements.map((element) => element.id);
+        setSelectedElementsById({ elementIds });
       } else if (elementId) {
-        setSelectedElementsById({ elementIds: [elementId] });
+        const elementIds = [elementId];
+        setSelectedElementsById({ elementIds });
       }
     },
     [setCurrentPage, setSelectedElementsById]
   );
 
   const setHighlights = useCallback(
-    ({ elements, elementId, pageId, highlight }) => {
+    ({ elements, elementId, pageId, highlight }: setHighlightProps) => {
       if (elements || elementId || pageId) {
         selectElement({ elements, elementId, pageId });
       }
 
-      if (highlight) {
-        const { tab, section, ...highlightState } = STATES[highlight];
+      if (highlight && STATES[highlight]) {
+        const { tab, section, ...highlightState }: Highlight = STATES[
+          highlight
+        ] as Highlight;
         setHighlighted({
           [highlight]: { ...highlightState, showEffect: true },
           tab,
@@ -72,9 +77,10 @@ function HighlightsProvider({ children }) {
   const onFocusOut = useCallback(() => setHighlighted({}), [setHighlighted]);
 
   const cancelEffect = useCallback(
-    (stateKey) =>
-      setHighlighted((state) => ({
-        [stateKey]: { ...state[stateKey], showEffect: false },
+    (highlight: HighlightType) =>
+      setHighlighted((state: HighlightState) => ({
+        ...state,
+        [highlight]: { ...state[highlight], showEffect: false },
       })),
     []
   );
@@ -91,9 +97,5 @@ function HighlightsProvider({ children }) {
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
-
-HighlightsProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default HighlightsProvider;
