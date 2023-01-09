@@ -209,19 +209,16 @@
   </rule>
   <rule ref="SlevomatCodingStandard.Functions.StaticClosure" />
 
+  <rule ref="SlevomatCodingStandard.PHP">
+    <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
+    <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
+  </rule>
+
   <!-- Class names should be referenced via ::class constant when possible. -->
   <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
     <properties>
       <property name="enableOnObjects" value="false" />
     </properties>
-  </rule>
-
-  <!-- Requires declaring visibility for class constants. -->
-  <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
-
-  <rule ref="SlevomatCodingStandard.PHP">
-    <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
-    <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
   </rule>
 
   <!-- Requires declaring visibility for class constants. -->
