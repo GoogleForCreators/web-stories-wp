@@ -125,6 +125,7 @@
   <rule
     ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"
   />
+  <rule ref="SlevomatCodingStandard.Functions.StaticClosure" />
   <!-- Enforce no space between closing brace and colon of return typehint. -->
   <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing">
     <properties>
