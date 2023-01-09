@@ -63,7 +63,7 @@ export const arrangeElement = (
   draft: ReducerStateDraft,
   { elementId, position, groupId = false }: ArrangeElementProps
 ) => {
-  if (elementId === null && draft.selection.length !== 1) {
+  if (!elementId && draft.selection.length !== 1) {
     return;
   }
 
