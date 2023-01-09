@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,19 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import { useContextSelector, identity } from '@googleforcreators/react';
 
-export default createContext({ actions: {}, state: {} });
+/**
+ * Internal dependencies
+ */
+import type { PageDataUrlsContext } from '../../types';
+import Context from './context';
+
+function usePageDataUrls(): PageDataUrlsContext;
+function usePageDataUrls<T>(
+  selector: (state: PageDataUrlsContext) => T | PageDataUrlsContext = identity
+) {
+  return useContextSelector(Context, selector);
+}
+
+export default usePageDataUrls;

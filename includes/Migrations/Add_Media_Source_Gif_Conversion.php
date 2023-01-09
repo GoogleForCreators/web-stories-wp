@@ -38,6 +38,6 @@ class Add_Media_Source_Gif_Conversion extends Add_Media_Source {
 	 * @since 1.9.0
 	 */
 	protected function get_term(): string {
-		return 'gif-conversion';
+		return $this->media_source_taxonomy::TERM_GIF_CONVERSION;
 	}
 }

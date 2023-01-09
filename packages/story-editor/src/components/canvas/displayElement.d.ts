@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { useContextSelector, identity } from '@googleforcreators/react';
 
-/**
- * Internal dependencies
- */
-import Context from './context';
+import type { Element } from '@googleforcreators/elements';
 
-function usePageDataUrls(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export interface DisplayElementProps {
+  element: Element;
+  previewMode?: boolean;
+  isAnimatable?: boolean;
+  siblingCount?: number;
 }
-
-export default usePageDataUrls;
+declare function DisplayElement(props: DisplayElementProps): JSX.Element;
+export default DisplayElement;

@@ -30,6 +30,7 @@ import {
  * Internal dependencies
  */
 import { StoryPropTypes, PageSizePropType } from '../../propTypes';
+import { noop } from '../../utils/noop';
 import PagePreviewElements from './previewPageElements';
 
 /*
@@ -72,16 +73,16 @@ function PreviewPageAnimationController({ animationState }) {
     switch (animationState) {
       case StoryAnimationState.Playing:
         WAAPIAnimationMethods.play();
-        return () => {};
+        return noop;
       case StoryAnimationState.Reset:
         WAAPIAnimationMethods.reset();
-        return () => {};
+        return noop;
       case StoryAnimationState.Scrubbing:
       case StoryAnimationState.Paused:
         WAAPIAnimationMethods.pause();
-        return () => {};
+        return noop;
       default:
-        return () => {};
+        return noop;
     }
   }, [animationState, WAAPIAnimationMethods]);
 

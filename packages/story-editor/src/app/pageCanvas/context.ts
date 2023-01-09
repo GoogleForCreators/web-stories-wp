@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,4 +18,21 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-export default createContext({ actions: {}, state: {} });
+/**
+ * Internal dependencies
+ */
+import type { PageCanvasProviderState } from '../../types';
+import { noop } from '../../utils/noop';
+
+export default createContext<PageCanvasProviderState>({
+  actions: {
+    calculateAccessibleTextColors: async () => {
+      return Promise.resolve({});
+    },
+    generateDeferredPageCanvas: () => noop,
+    generateDeferredCurrentPageCanvas: noop,
+  },
+  state: {
+    pageCanvasMap: {},
+  },
+});

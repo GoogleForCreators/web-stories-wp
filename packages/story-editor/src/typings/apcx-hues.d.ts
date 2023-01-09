@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function pageWithoutSelection(page, selection) {
-  return {
-    ...page,
-    elements: page.elements.filter(({ id }) => !selection.includes(id)),
-  };
+declare module '@ap.cx/hues' {
+  interface Rgba {
+    r: number;
+    g: number;
+    b: number;
+    a?: number;
+  }
+  export function relativeLuminance(rgba: Rgba): number;
+  export function str2rgba(str: string): Rgba;
+  export function contrast(l1: number, l2: number): number;
+  export function aa(ratio: number, font: number): boolean;
 }
-
-export default pageWithoutSelection;

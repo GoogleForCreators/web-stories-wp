@@ -22,6 +22,11 @@ import PropTypes from 'prop-types';
 import { useRef, useCallback } from '@googleforcreators/react';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 
+/**
+ * Internal dependencies
+ */
+import { noop } from '../../utils/noop';
+
 const Thumb = styled.button`
   position: absolute;
   padding: 0;
@@ -38,10 +43,10 @@ function Slider({
   step,
   minorStep = null,
   value = 0,
-  onChange = () => {},
+  onChange = noop,
   getValueText = null,
-  onPointerDown = () => {},
-  onNudge = () => {},
+  onPointerDown = noop,
+  onNudge = noop,
   ...rest
 }) {
   const ref = useRef();

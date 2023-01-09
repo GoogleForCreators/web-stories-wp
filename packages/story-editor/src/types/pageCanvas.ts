@@ -13,18 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { useContextSelector, identity } from '@googleforcreators/react';
+import type { TextElement, Page } from '@googleforcreators/elements';
+import type { Hex } from '@googleforcreators/patterns';
 
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function usePageCanvas(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export type PageCanvasMap = Record<string, HTMLCanvasElement>;
+export interface PageCanvasProviderState {
+  state: {
+    pageCanvasMap: PageCanvasMap;
+  };
+  actions: {
+    calculateAccessibleTextColors: (el: TextElement) => Promise<{
+      color?: Hex;
+      backgroundColor?: Hex;
+    }>;
+    generateDeferredPageCanvas: (props: [string, Page]) => () => void;
+    generateDeferredCurrentPageCanvas: () => void;
+  };
 }
-
-export default usePageCanvas;

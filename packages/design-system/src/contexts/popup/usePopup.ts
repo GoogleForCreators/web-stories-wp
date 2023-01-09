@@ -17,6 +17,16 @@
 /**
  * External dependencies
  */
-import { createContext } from '@googleforcreators/react';
+import { identity, useContextSelector } from '@googleforcreators/react';
 
-export default createContext({});
+/**
+ * Internal dependencies
+ */
+import Context, { PopupContext } from './context';
+
+export function usePopup(): PopupContext;
+export function usePopup<T>(
+  selector: (state: PopupContext) => T | PopupContext = identity
+) {
+  return useContextSelector(Context, selector);
+}

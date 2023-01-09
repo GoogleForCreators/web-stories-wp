@@ -156,7 +156,7 @@ function SavedPageTemplate(
           mediaSource: 'page-template',
         });
 
-        updatePageTemplate(page.templateId, {
+        await updatePageTemplate(page.templateId, {
           featured_media: resource.id,
         });
         updateSavedTemplate({

@@ -19,6 +19,7 @@
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { dataPixels, PAGE_HEIGHT } from '@googleforcreators/units';
+import type { Element, TextElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -26,7 +27,9 @@ import { dataPixels, PAGE_HEIGHT } from '@googleforcreators/units';
 import TextOutputWithUnits from '../text/outputWithUnits';
 import { calcFontMetrics } from '../text/util';
 
-const MEASURER_STYLES = {
+type CSSProperty = string | number | null | undefined;
+type CSSProperties = Record<string, CSSProperty>;
+const MEASURER_STYLES: CSSProperties = {
   boxSizing: 'border-box',
   visibility: 'hidden',
   position: 'fixed',
@@ -35,39 +38,49 @@ const MEASURER_STYLES = {
   left: '-9999px',
   zIndex: -1,
   overflowWrap: 'break-word',
-  // eslint-disable-next-line no-constant-binary-expression -- For debugging purposes.
-  ...(false && {
-    // For debugging purposes - this will show the output render on screen
-    background: 'red',
-    visibility: 'visible',
-    top: '99px',
-    left: '99px',
-    zIndex: 10000,
-  }),
+  // eslint-disable-next-line no-constant-condition -- For debugging purposes.
+  ...(false
+    ? {
+        // For debugging purposes - this will show the output render on screen
+        background: 'red',
+        visibility: 'visible',
+        top: '99px',
+        left: '99px',
+        zIndex: 10000,
+      }
+    : null),
 };
 
 const MEASURER_PROPS = {
-  dataToStyleX: (x) => `${x}px`,
-  dataToStyleY: (y) => `${y}px`,
+  dataToStyleX: (x: number) => `${x}px`,
+  dataToStyleY: (y: number) => `${y}px`,
 };
 
 const MEASURER_NODE = '__WEB_STORIES_MEASURER__';
 const LAST_ELEMENT = '__WEB_STORIES_LASTEL__';
 
-export function calculateTextHeight(element, width) {
+export function calculateTextHeight(element: TextElement, width: number) {
   const measurer = getOrCreateMeasurer(element);
-  setStyles(measurer, { width: `${width}px`, height: null });
-  return measurer.parentNode.offsetHeight;
+  setStyles(measurer, { width: `${width}px`, height: undefined });
+  return (measurer.parentNode as HTMLElement).offsetHeight;
 }
 
-export function calculateFitTextFontSize(element, width, height) {
+export function calculateFitTextFontSize(
+  element: TextElement,
+  width: number,
+  height: number
+) {
   const measurer = getOrCreateMeasurer(element);
-  setStyles(measurer, { width: `${width}px`, height: null, fontSize: null });
+  setStyles(measurer, {
+    width: `${width}px`,
+    height: undefined,
+    fontSize: undefined,
+  });
 
   // Binomial search for the best font size.
   let minFontSize = 1;
   let maxFontSize = PAGE_HEIGHT;
-  let margin;
+  let margin = 0;
   while (maxFontSize - minFontSize > 1) {
     const mid = dataPixels((minFontSize + maxFontSize) / 2);
     const { marginOffset } = calcFontMetrics({ ...element, fontSize: mid });
@@ -91,42 +104,49 @@ export function calculateFitTextFontSize(element, width, height) {
   return { fontSize: minFontSize, marginOffset: margin };
 }
 
-function getOrCreateMeasurer(element) {
-  let measurerNode = document.body[MEASURER_NODE];
+interface ExtendedBody extends HTMLElement {
+  __WEB_STORIES_MEASURER__?: HTMLElement;
+}
+function getOrCreateMeasurer(element: TextElement): HTMLElement {
+  let measurerNode = (document.body as ExtendedBody)[MEASURER_NODE];
   if (!measurerNode) {
     measurerNode = document.createElement('div');
     measurerNode.id = '__web-stories-text-measurer';
     measurerNode.className = 'web-stories-content';
     setStyles(measurerNode, MEASURER_STYLES);
     document.body.appendChild(measurerNode);
-    document.body[MEASURER_NODE] = measurerNode;
+    (document.body as ExtendedBody)[MEASURER_NODE] = measurerNode;
   }
   // Very unfortunately `ReactDOM.render()` is not synchoronous. Thus, we
   // have to use `renderToStaticMarkup()` markup instead and do manual
   // diffing.
   if (changed(measurerNode, element)) {
     measurerNode.innerHTML = renderToStaticMarkup(
-      <TextOutputWithUnits element={element} {...MEASURER_PROPS} />,
-      measurerNode
+      <TextOutputWithUnits element={element} {...MEASURER_PROPS} />
     );
   }
-  return measurerNode.firstElementChild;
+  return measurerNode.firstElementChild as HTMLElement;
 }
 
-function setStyles(node, styles) {
+function setStyles(node: HTMLElement, styles: CSSProperties) {
   for (const k in styles) {
     if (Object.prototype.hasOwnProperty.call(styles, k)) {
       const v = styles[k];
       if (v === null) {
-        node.style[k] = '';
+        node.style.setProperty(k, '');
       } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- k can be a string, too.
+        // @ts-ignore
         node.style[k] = v;
       }
     }
   }
 }
 
-function changed(node, element) {
+interface CustomHTMLElement extends HTMLElement {
+  __WEB_STORIES_LASTEL__?: Element;
+}
+function changed(node: CustomHTMLElement, element: Element) {
   const lastElement = node[LAST_ELEMENT];
   node[LAST_ELEMENT] = element;
   if (!node.firstElementChild || !lastElement) {

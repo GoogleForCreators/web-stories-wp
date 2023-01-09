@@ -18,9 +18,14 @@
  */
 import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@googleforcreators/units';
 import { calculateTextHeight } from '@googleforcreators/element-library';
+import type { TextElement } from '@googleforcreators/elements';
 
-function getPixelDataFromCanvas(canvas, attrs) {
-  const ctx = canvas.getContext('2d');
+function getPixelDataFromCanvas(
+  canvas: HTMLCanvasElement,
+  attrs: TextElement
+): Uint8ClampedArray {
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
   // The canvas does not consider danger zone as y = 0, so we need to adjust that.
   const safeZoneDiff =
     (canvas.width / FULLBLEED_RATIO - canvas.width / PAGE_RATIO) / 2;

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
@@ -29,8 +28,9 @@ import {
   UnitsProvider,
 } from '@googleforcreators/units';
 import styled, { ThemeProvider } from 'styled-components';
-import { generatePatternStyles } from '@googleforcreators/patterns';
+import { generatePatternStyles, Pattern } from '@googleforcreators/patterns';
 import { TransformProvider } from '@googleforcreators/transform';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -38,7 +38,7 @@ import { TransformProvider } from '@googleforcreators/transform';
 import { FontProvider } from '../../font';
 import DisplayElement from '../../../components/canvas/displayElement';
 
-const Page = styled.div`
+const StoryPage = styled.div<{ height: number; width: number }>`
   display: block;
   position: relative;
   padding: 0;
@@ -50,16 +50,17 @@ const Page = styled.div`
   outline: 0;
 `;
 
-const PreviewWrapper = styled.div`
+const PreviewWrapper = styled.div<{ background: Pattern }>`
   height: 100%;
   position: relative;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) =>
+    (theme as typeof ds_theme).colors.standard.white};
   border-radius: 4px;
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-const FullHeight = styled.div`
+const FullHeight = styled.div<{ yOffset: number }>`
   position: absolute;
   top: ${({ yOffset }) => yOffset}px;
   bottom: ${({ yOffset }) => yOffset}px;
@@ -67,52 +68,70 @@ const FullHeight = styled.div`
   left: 0;
 `;
 
-const PageWithDependencies = forwardRef(function PageWithDependencies(
-  { page, width, height, renderFullHeightThumb = false, containerHeight },
-  ref
-) {
-  return (
-    <ThemeProvider theme={ds_theme}>
-      <FontProvider>
-        <TransformProvider>
-          <UnitsProvider
-            pageSize={{
-              width,
-              height,
-            }}
-          >
-            <Page
-              ref={ref}
-              height={renderFullHeightThumb ? containerHeight : height}
-              width={width}
+interface PageWithDepsProps {
+  page: Page;
+  width: number;
+  height: number;
+  renderFullHeightThumb?: boolean;
+  containerHeight: number;
+}
+const PageWithDependencies = forwardRef<HTMLDivElement, PageWithDepsProps>(
+  function PageWithDependencies(
+    {
+      page,
+      width,
+      height,
+      renderFullHeightThumb = false,
+      containerHeight,
+    }: PageWithDepsProps,
+    ref
+  ) {
+    return (
+      <ThemeProvider theme={ds_theme}>
+        <FontProvider>
+          <TransformProvider>
+            <UnitsProvider
+              pageSize={{
+                width,
+                height,
+              }}
             >
-              <PreviewWrapper background={page.backgroundColor}>
-                <FullHeight
-                  yOffset={
-                    renderFullHeightThumb ? (containerHeight - height) / 2 : 0
-                  }
-                >
-                  {page.elements.map((element) => (
-                    <DisplayElement
-                      key={element.id}
-                      previewMode
-                      element={element}
-                    />
-                  ))}
-                </FullHeight>
-              </PreviewWrapper>
-            </Page>
-          </UnitsProvider>
-        </TransformProvider>
-      </FontProvider>
-    </ThemeProvider>
-  );
-});
+              <StoryPage
+                ref={ref}
+                height={renderFullHeightThumb ? containerHeight : height}
+                width={width}
+              >
+                <PreviewWrapper background={page.backgroundColor}>
+                  <FullHeight
+                    yOffset={
+                      renderFullHeightThumb ? (containerHeight - height) / 2 : 0
+                    }
+                  >
+                    {page.elements.map((element) => (
+                      <DisplayElement
+                        key={element.id}
+                        previewMode
+                        element={element}
+                      />
+                    ))}
+                  </FullHeight>
+                </PreviewWrapper>
+              </StoryPage>
+            </UnitsProvider>
+          </TransformProvider>
+        </FontProvider>
+      </ThemeProvider>
+    );
+  }
+);
 
 /**
  * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
+interface Options {
+  renderFullHeightThumb?: boolean;
+}
 /**
  * Takes a story page and generates a DOM node containing the rendered
  * page. Returns a tuple containing the page DOM node and a cleanup
@@ -120,13 +139,12 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
  *
  * **IMPORTANT:** Not calling the returned `cleanup()` method after use of
  * page DOM node will result in memory leak.
- *
- * @param {Page} page Page object.
- * @param {number} width desired width of image. Dictates height and container height
- * @param {{ renderFullHeightThumb: boolean }} opts - options to alter the rendered node.
- * @return {[HTMLElement, Function]} tuple containing DOM node and cleanup method
  */
-async function storyPageToNode(page, width, opts = {}) {
+async function storyPageToNode(
+  page: Page,
+  width: number,
+  opts: Options = {}
+): Promise<[HTMLElement, () => void]> {
   const { renderFullHeightThumb = false } = opts;
   const height = width * (1 / PAGE_RATIO);
   const containerHeight = width * (1 / FULLBLEED_RATIO);
@@ -144,8 +162,8 @@ async function storyPageToNode(page, width, opts = {}) {
      pointer-events: none;
    `;
 
-  const node = await new Promise((resolve) => {
-    const resolverRef = (htmlNode) => {
+  const node: HTMLElement = await new Promise((resolve) => {
+    const resolverRef = (htmlNode: HTMLDivElement) => {
       if (!htmlNode) {
         return;
       }

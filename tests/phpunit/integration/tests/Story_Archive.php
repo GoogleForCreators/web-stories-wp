@@ -29,8 +29,6 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\Story_Archive
  */
 class Story_Archive extends DependencyInjectedTestCase {
-	use Capabilities_Setup;
-
 	/**
 	 * Admin user for test.
 	 */
@@ -99,15 +97,10 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$this->story_post_type = new Story_Post_Type( $this->settings );
 		$this->instance        = new Testee( $this->settings, $this->story_post_type );
 
-
-		$this->add_caps_to_roles();
-
 		add_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 	}
 
 	public function tear_down(): void {
-		$this->remove_caps_from_roles();
-
 		$this->redirect_location = '';
 		remove_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 

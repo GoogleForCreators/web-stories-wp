@@ -29,6 +29,7 @@ import {
  * Internal dependencies
  */
 import { MEDIA_VIDEO_MINIMUM_DURATION } from '../../constants';
+import { noop } from '../../utils/noop';
 
 function useVideoNode(videoData) {
   const [currentTime, setCurrentTime] = useState(null);
@@ -54,7 +55,7 @@ function useVideoNode(videoData) {
       videoNode.pause();
     } else {
       videoNode.currentTime = startOffset / 1000;
-      videoNode.play().catch(() => {});
+      videoNode.play().catch(noop);
     }
   }, [videoNode, isDraggingHandles, startOffset]);
 
@@ -87,7 +88,7 @@ function useVideoNode(videoData) {
 
     function restart(at) {
       videoNode.currentTime = at / 1000;
-      videoNode.play().catch(() => {});
+      videoNode.play().catch(noop);
     }
 
     function onLoadedMetadata(evt) {

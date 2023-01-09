@@ -16,8 +16,9 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useRef } from '@googleforcreators/react';
+import type { PropsWithChildren } from 'react';
+import type { Page, TextElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -38,7 +39,7 @@ import getPageWithoutSelection from './getPageWithoutSelection';
  * @typedef {import('@googleforcreators/elements').Page} Page
  */
 
-function PageCanvasProvider({ children }) {
+function PageCanvasProvider({ children }: PropsWithChildren<unknown>) {
   const queueIdleTask = useIdleQueue();
   // This is our cache to hold generated canvases for
   // full story pages within the story we're viewing
@@ -58,7 +59,7 @@ function PageCanvasProvider({ children }) {
   // sync values to a ref so callbacks don't cause re-renders
   // on consuming components
   const values = {
-    currentPageValue: currentPage,
+    currentPageValue: currentPage as Page,
     pageCanvasMapValue: pageCanvasMap,
     singleElementSelectionValue: singleElementSelection,
   };
@@ -73,14 +74,14 @@ function PageCanvasProvider({ children }) {
    * @return {Function} a cleanup function to clear the requested canvas generation
    */
   const generateDeferredPageCanvas = useCallback(
-    ([taskId, page]) => {
-      const cancelIdleTask = queueIdleTask([
+    ([taskId, page]: [string, Page]) => {
+      const cancelIdleTask = queueIdleTask({
         taskId,
-        async () => {
+        task: async () => {
           const canvas = await storyPageToCanvas(page, {});
           actions.setPageCanvas({ pageId: page.id, canvas });
         },
-      ]);
+      });
       return cancelIdleTask;
     },
     [queueIdleTask, actions]
@@ -107,7 +108,7 @@ function PageCanvasProvider({ children }) {
    * @return {HTMLCanvasElement} generated canvas
    */
   const getSelectionExclusionCanvas = useCallback(
-    async (page, selection) => {
+    async (page: Page, selection: string[]) => {
       const pageWithoutSelection = getPageWithoutSelection(page, selection);
       let canvas = getSnapshotCanvas(pageWithoutSelection);
       if (!canvas) {
@@ -130,7 +131,7 @@ function PageCanvasProvider({ children }) {
    * @return {HTMLCanvasElement} generated canvas
    */
   const getCanvas = useCallback(
-    async (page) => {
+    async (page: Page) => {
       const { pageCanvasMapValue } = valuesRef.current;
 
       let canvas = pageCanvasMapValue[page.id];
@@ -151,11 +152,11 @@ function PageCanvasProvider({ children }) {
    * @return {Object} Returns object consisting of color and backgroundColor in case relevant.
    */
   const calculateAccessibleTextColors = useCallback(
-    async (element) => {
+    async (element: TextElement) => {
       const { currentPageValue, singleElementSelectionValue } =
         valuesRef.current;
 
-      let canvas;
+      let canvas: HTMLCanvasElement;
       if (singleElementSelectionValue.includes(element.id)) {
         canvas = await getSelectionExclusionCanvas(
           currentPageValue,
@@ -201,9 +202,5 @@ function PageCanvasProvider({ children }) {
     </Context.Provider>
   );
 }
-
-PageCanvasProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default PageCanvasProvider;

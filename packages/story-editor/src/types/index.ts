@@ -18,6 +18,8 @@ export * from './configProvider';
 export * from './currentUserProvider';
 export * from './historyProvider';
 export * from './layoutProvider';
+export * from './pageCanvas';
+export * from './pageDataUrls';
 export * from './story';
 export * from './storyEditor';
 export * from './storyProvider';
