@@ -24,7 +24,7 @@ import {
   ElementType,
   getDefinitionForType,
 } from '@googleforcreators/elements';
-import type { Element, ElementDefinition } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
 import { DEFAULT_MASK } from '@googleforcreators/masks';
 
 /**

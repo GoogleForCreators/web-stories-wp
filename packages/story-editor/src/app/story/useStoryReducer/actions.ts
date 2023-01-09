@@ -238,7 +238,7 @@ const arrangeSelection =
   ({ position, groupId }: ArrangeElementProps) =>
     dispatch({
       type: ActionTypes.ArrangeElement,
-      payload: { position, groupId },
+      payload: { elementId: null, position, groupId },
     });
 
 const setSelectedElementsById =
