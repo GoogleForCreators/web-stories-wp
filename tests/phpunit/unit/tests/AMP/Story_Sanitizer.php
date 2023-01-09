@@ -53,29 +53,6 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
-	 * Helper method for tests.
-	 *
-	 * @param string $source
-	 * @param array<string, array<string, mixed>|string|bool> $sanitizer_args
-	 * @return string Sanitized HTML.
-	 */
-	protected function sanitize_and_get( $source, $sanitizer_args ): string {
-		/**
-		 * Document.
-		 *
-		 * @var Document $dom Document.
-		 */
-		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
-		if ( $dom->documentElement ) {
-			$dom->documentElement->setAttribute( 'amp', '' );
-		}
-		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom, $sanitizer_args );
-		$sanitizer->sanitize();
-
-		return $dom->saveHTML( $dom->documentElement );
-	}
-
-	/**
 	 * @return array<string, string[]>
 	 */
 	public function get_publisher_logo_data(): array {
@@ -598,24 +575,24 @@ class Story_Sanitizer extends TestCase {
 	public function test_use_semantic_heading_tags_no_headings(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3</p>
-			<p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1</p>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1</p>
+            <p class="text-wrapper" style="font-size:.436893em">Title 2</p>
+            <p class="text-wrapper" style="font-size:.339805em">Title 3</p>
+            <p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
+            <p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
+            <p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
+            <p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
 </amp-story></body></html>
 HTML;
 
@@ -649,24 +626,24 @@ HTML;
 	public function test_use_semantic_heading_tags_existing_headings(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<h2 class="text-wrapper" style="font-size:.436893em">Title 2</h2>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3</p>
-			<p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1</p>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1</p>
+            <h2 class="text-wrapper" style="font-size:.436893em">Title 2</h2>
+            <p class="text-wrapper" style="font-size:.339805em">Title 3</p>
+            <p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
+            <p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
+            <p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
+            <p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
 </amp-story></body></html>
 HTML;
 
@@ -700,24 +677,24 @@ HTML;
 	public function test_use_semantic_heading_tags_short_content(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">T 1</p>
-			<p class="text-wrapper" style="font-size:.582524em">T 1</p>
-			<p class="text-wrapper" style="font-size:.436893em">T 2</p>
-			<p class="text-wrapper" style="font-size:.339805em">T 3</p>
-			<p class="text-wrapper" style="font-size:.291262em">P</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">T1B</p>
-			<p class="text-wrapper" style="font-size:.339805em">T3B</p>
-			<p class="text-wrapper" style="font-size:.436893em">T2B</p>
-			<p class="text-wrapper" style="font-size:.582524em">T1B</p>
-			<p class="text-wrapper" style="font-size:.291262em">PB</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">T 1</p>
+            <p class="text-wrapper" style="font-size:.582524em">T 1</p>
+            <p class="text-wrapper" style="font-size:.436893em">T 2</p>
+            <p class="text-wrapper" style="font-size:.339805em">T 3</p>
+            <p class="text-wrapper" style="font-size:.291262em">P</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">T1B</p>
+            <p class="text-wrapper" style="font-size:.339805em">T3B</p>
+            <p class="text-wrapper" style="font-size:.436893em">T2B</p>
+            <p class="text-wrapper" style="font-size:.582524em">T1B</p>
+            <p class="text-wrapper" style="font-size:.291262em">PB</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
 </amp-story></body></html>
 HTML;
 
@@ -752,19 +729,19 @@ HTML;
 	public function test_use_semantic_heading_tags_with_newlines_and_nested_spans(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="fill text-wrapper" style="font-size:.582524em">
-				<span>
-				<span style="font-weight: 700; color: #fff">Title 1</span>
-				</span>
-			</p>
-			<p class="text-wrapper" style="font-size:.582524em"><span><span>Title 1</span></span></p>
-			<p class="text-wrapper" style="font-size:.436893em"><span><span>Title 2</span></span></p>
-			<p class="text-wrapper" style="font-size:.339805em"><span><span>Title 3</span></span></p>
-			<p class="text-wrapper" style="font-size:.291262em"><span><span>Paragraph</span></span></p>
-		</amp-story-grid-layer>
-	</amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="fill text-wrapper" style="font-size:.582524em">
+                <span>
+                <span style="font-weight: 700; color: #fff">Title 1</span>
+                </span>
+            </p>
+            <p class="text-wrapper" style="font-size:.582524em"><span><span>Title 1</span></span></p>
+            <p class="text-wrapper" style="font-size:.436893em"><span><span>Title 2</span></span></p>
+            <p class="text-wrapper" style="font-size:.339805em"><span><span>Title 3</span></span></p>
+            <p class="text-wrapper" style="font-size:.291262em"><span><span>Paragraph</span></span></p>
+        </amp-story-grid-layer>
+    </amp-story-page>
 </amp-story></body></html>
 HTML;
 
@@ -839,5 +816,28 @@ HTML;
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="Existing description"></head><body></body></html>',
 			],
 		];
+	}
+
+	/**
+	 * Helper method for tests.
+	 *
+	 * @param string $source
+	 * @param array<string, array<string, mixed>|string|bool> $sanitizer_args
+	 * @return string Sanitized HTML.
+	 */
+	protected function sanitize_and_get( $source, $sanitizer_args ): string {
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
+		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
+		if ( $dom->documentElement ) {
+			$dom->documentElement->setAttribute( 'amp', '' );
+		}
+		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom, $sanitizer_args );
+		$sanitizer->sanitize();
+
+		return $dom->saveHTML( $dom->documentElement );
 	}
 }

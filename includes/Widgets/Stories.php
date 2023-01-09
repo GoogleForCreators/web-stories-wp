@@ -441,6 +441,26 @@ class Stories extends WP_Widget {
 	}
 
 	/**
+	 * Enqueue widget script.
+	 *
+	 * @since 1.5.0
+	 */
+	public function enqueue_scripts(): void {
+		if ( wp_script_is( self::SCRIPT_HANDLE ) ) {
+			return;
+		}
+
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ 'jquery' ] );
+
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesData',
+			$this->stories_script_data->get_script_data()
+		);
+	}
+
+	/**
 	 * Default values of an instance.
 	 *
 	 * @since 1.5.0
@@ -465,26 +485,6 @@ class Stories extends WP_Widget {
 			'orderby'            => 'post_date',
 			'order'              => 'DESC',
 		];
-	}
-
-	/**
-	 * Enqueue widget script.
-	 *
-	 * @since 1.5.0
-	 */
-	public function enqueue_scripts(): void {
-		if ( wp_script_is( self::SCRIPT_HANDLE ) ) {
-			return;
-		}
-
-		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ 'jquery' ] );
-
-		wp_localize_script(
-			self::SCRIPT_HANDLE,
-			'webStoriesData',
-			$this->stories_script_data->get_script_data()
-		);
 	}
 
 	/**

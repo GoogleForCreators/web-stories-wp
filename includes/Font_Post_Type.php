@@ -71,6 +71,19 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
+	}
+
+	/**
 	 * Registers the post type for fonts.
 	 *
 	 * @since 1.16.0
@@ -119,18 +132,5 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 			'rest_base'             => 'fonts',
 			'rest_controller_class' => Font_Controller::class,
 		];
-	}
-
-	/**
-	 * Get the list of service IDs required for this service to be registered.
-	 *
-	 * Needed because the story post type needs to be registered first.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @return string[] List of required services.
-	 */
-	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
 	}
 }
