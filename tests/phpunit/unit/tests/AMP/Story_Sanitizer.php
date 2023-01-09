@@ -729,19 +729,19 @@ HTML;
 	public function test_use_semantic_heading_tags_with_newlines_and_nested_spans(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
-    <amp-story-page>
-        <amp-story-grid-layer>
-            <p class="fill text-wrapper" style="font-size:.582524em">
-                <span>
-                <span style="font-weight: 700; color: #fff">Title 1</span>
-                </span>
-            </p>
-            <p class="text-wrapper" style="font-size:.582524em"><span><span>Title 1</span></span></p>
-            <p class="text-wrapper" style="font-size:.436893em"><span><span>Title 2</span></span></p>
-            <p class="text-wrapper" style="font-size:.339805em"><span><span>Title 3</span></span></p>
-            <p class="text-wrapper" style="font-size:.291262em"><span><span>Paragraph</span></span></p>
-        </amp-story-grid-layer>
-    </amp-story-page>
+	<amp-story-page>
+		<amp-story-grid-layer>
+			<p class="fill text-wrapper" style="font-size:.582524em">
+				<span>
+				<span style="font-weight: 700; color: #fff">Title 1</span>
+				</span>
+			</p>
+			<p class="text-wrapper" style="font-size:.582524em"><span><span>Title 1</span></span></p>
+			<p class="text-wrapper" style="font-size:.436893em"><span><span>Title 2</span></span></p>
+			<p class="text-wrapper" style="font-size:.339805em"><span><span>Title 3</span></span></p>
+			<p class="text-wrapper" style="font-size:.291262em"><span><span>Paragraph</span></span></p>
+		</amp-story-grid-layer>
+	</amp-story-page>
 </amp-story></body></html>
 HTML;
 
