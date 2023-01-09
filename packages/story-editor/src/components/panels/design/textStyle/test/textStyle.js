@@ -182,8 +182,8 @@ function Wrapper({ selectedElements, children }) {
                 fallbacks: ['fallback1'],
               }),
               addRecentFont: jest.fn(),
-              getCustomFonts: jest.fn(),
-              getCuratedFonts: jest.fn(),
+              loadCustomFonts: jest.fn(),
+              loadCuratedFonts: jest.fn(),
             },
           }}
         >

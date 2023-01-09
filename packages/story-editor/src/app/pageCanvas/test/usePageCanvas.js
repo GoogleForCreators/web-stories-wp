@@ -22,13 +22,13 @@ import { act, renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import { PageCanvasProvider, usePageCanvas } from '..';
-import storyPageToCanvas from '../../../utils/storyPageToCanvas';
+import storyPageToCanvas from '../utils/storyPageToCanvas';
 import useStory from '../../story/useStory';
 import createMockPage from '../testUtils/createMockPage';
 import { MockStoryProvider, useStoryMock } from '../testUtils/useStoryMock';
 
 jest.mock('../../story/useStory');
-jest.mock('../../../utils/storyPageToCanvas');
+jest.mock('../utils/storyPageToCanvas');
 
 jest.mock('../../../utils/contrastUtils', () => {
   return {

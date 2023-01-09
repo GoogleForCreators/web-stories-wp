@@ -46,7 +46,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
 
       - name: Verify semver compatibility
         run: |
@@ -127,7 +127,7 @@ jobs:
 
       # Grab current assets version from `web-stories.php` and pass on to next steps.
       # - name: Checkout
-      #   uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+      #   uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
       #   with:
       #     ref:
 
@@ -143,7 +143,7 @@ jobs:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
       - name: Checkout wp.stories.google
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
         with:
           repository: GoogleForCreators/wp.stories.google
           lfs: true
@@ -250,7 +250,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
@@ -275,7 +275,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@1a18b2267f80291a81ca1d33e7c851fe09e7dfc4
+        uses: shivammathur/setup-php@8e2ac35f639d3e794c1da1f28999385ab6fdf0fc
         with:
           php-version: '8.0'
           coverage: none
@@ -408,7 +408,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
 
       - name: Download release artifacts
         uses: actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7
@@ -418,7 +418,7 @@ jobs:
 
       - name: Publish Release
         id: create_release
-        uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: ${{ env.release_name }}
@@ -444,7 +444,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
         with:
           ref: main
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}

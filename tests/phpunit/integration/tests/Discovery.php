@@ -215,6 +215,16 @@ class Discovery extends DependencyInjectedTestCase {
 		$this->assertStringContainsString( get_bloginfo( 'name' ), $output );
 	}
 
+	/**
+	 * @covers ::print_feed_link
+	 */
+	public function test_print_feed_link_filter(): void {
+		add_filter( 'web_stories_enable_print_feed_link', '__return_false' );
+		$output = get_echo( [ $this->instance, 'print_feed_link' ] );
+		$this->assertEmpty( $output );
+		remove_filter( 'web_stories_enable_print_feed_link', '__return_false' );
+	}
+
 
 	/**
 	 * @covers ::print_twitter_metadata

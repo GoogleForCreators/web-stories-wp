@@ -53,7 +53,7 @@ class Dashboard extends Service_Base {
 	/**
 	 * Script handle.
 	 */
-	public const SCRIPT_HANDLE = 'wp-dashboard';
+	public const SCRIPT_HANDLE = 'web-stories-dashboard';
 
 	/**
 	 * Admin page hook suffixes.
@@ -365,7 +365,8 @@ class Dashboard extends Service_Base {
 								'link',
 								'preview_link',
 								'edit_link',
-								'_links', // Needed for WP 6.1+
+								'_links', // Needed for WP 6.1+.
+								'_embedded',
 								// _web_stories_envelope will add these fields, we need them too.
 								'body',
 								'status',

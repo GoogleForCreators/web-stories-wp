@@ -22,12 +22,12 @@ import { __, sprintf } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import { ContentType, ProviderType } from '../types';
 import {
   CoverrAttribution,
   TenorAttribution,
   UnsplashAttribution,
 } from './attribution';
-import { ContentType, ProviderType } from './constants';
 
 /** @typedef {import('react').React.Component} ReactComponent */
 
@@ -53,8 +53,8 @@ import { ContentType, ProviderType } from './constants';
  * @type {Object.<string, ProviderConfiguration>}
  */
 export const PROVIDERS = {
-  [ProviderType.UNSPLASH]: {
-    provider: ProviderType.UNSPLASH,
+  [ProviderType.Unsplash]: {
+    provider: ProviderType.Unsplash,
     displayName: __('Images', 'web-stories'),
     supportsCategories: true,
     requiresAuthorAttribution: true,
@@ -70,8 +70,8 @@ export const PROVIDERS = {
       'Unsplash'
     ),
   },
-  [ProviderType.COVERR]: {
-    provider: ProviderType.COVERR,
+  [ProviderType.Coverr]: {
+    provider: ProviderType.Coverr,
     displayName: __('Video', 'web-stories'),
     supportsCategories: true,
     requiresAuthorAttribution: false,
@@ -83,10 +83,10 @@ export const PROVIDERS = {
     ),
     defaultPreviewWidth: 640,
   },
-  [ProviderType.TENOR]: {
-    provider: ProviderType.TENOR,
+  [ProviderType.Tenor]: {
+    provider: ProviderType.Tenor,
     displayName: __('GIFs', 'web-stories'),
-    contentTypeFilter: ContentType.GIF,
+    contentTypeFilter: ContentType.Gif,
     supportsCategories: true,
     requiresAuthorAttribution: false,
     attributionComponent: TenorAttribution,
@@ -96,10 +96,10 @@ export const PROVIDERS = {
       'Tenor'
     ),
   },
-  [ProviderType.TENOR_STICKERS]: {
-    provider: ProviderType.TENOR,
+  [ProviderType.TenorStickers]: {
+    provider: ProviderType.Tenor,
     displayName: __('Stickers', 'web-stories'),
-    contentTypeFilter: ContentType.STICKER,
+    contentTypeFilter: ContentType.Sticker,
     supportsCategories: true,
     requiresAuthorAttribution: false,
     attributionComponent: TenorAttribution,

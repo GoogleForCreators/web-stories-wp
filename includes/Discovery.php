@@ -481,7 +481,18 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 */
 	public function print_feed_link(): void {
-		if ( ! current_theme_supports( 'automatic-feed-links' ) ) {
+		$enable_print_feed_link = current_theme_supports( 'automatic-feed-links' ) && ! is_post_type_archive( $this->story_post_type->get_slug() );
+
+		/**
+		 * Filters filter to enable / disable printing feed links.
+		 *
+		 * @since 1.29.0
+		 *
+		 * @param bool $enable_print_feed_link Enable / disable printing feed links. Default to if automatic-feed-links is enabled.
+		 */
+		$enable_print_feed_link = apply_filters( 'web_stories_enable_print_feed_link', $enable_print_feed_link );
+
+		if ( ! $enable_print_feed_link ) {
 			return;
 		}
 

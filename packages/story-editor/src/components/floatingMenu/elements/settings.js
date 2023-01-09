@@ -43,6 +43,13 @@ import { useCanvas } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
 import { IconButton } from './shared';
 
+const MenuItem = styled(ContextMenuComponents.MenuItem)`
+  span {
+    font-size: 14px;
+    font-weight: 400;
+  }
+`;
+
 const StyledIconButton = styled(IconButton)`
   svg {
     width: 24px;
@@ -84,10 +91,7 @@ function Settings() {
     []
   );
 
-  const handleCloseMenu = () => {
-    setIsMenuOpen(false);
-    buttonRef.current.focus();
-  };
+  const handleCloseMenu = () => setIsMenuOpen(false);
 
   const local = useMemo(
     () => localStore.getItemByKey(LOCAL_STORAGE_KEY) || {},
@@ -159,6 +163,8 @@ function Settings() {
         onClick={() => setIsMenuOpen((value) => !value)}
         aria-haspopup="menu"
         aria-expanded={isMenuOpen}
+        // Hide tooltip if menu is open to avoid overlapping overlays
+        hasTooltip={!isMenuOpen}
       />
       <SubMenuContainer ref={subMenuRef} style={{ left: `${offsetLeft}px` }}>
         <ContextMenu
@@ -171,7 +177,7 @@ function Settings() {
           parentMenuRef={buttonRef}
         >
           {subMenuItems.map(({ key, ...menuItemProps }) => (
-            <ContextMenuComponents.MenuItem key={key} {...menuItemProps} />
+            <MenuItem key={key} {...menuItemProps} />
           ))}
         </ContextMenu>
       </SubMenuContainer>

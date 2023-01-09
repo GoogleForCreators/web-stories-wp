@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.shared.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "dist-types"
+  },
+  "references": [
+    { "path": "../design-system" },
+    { "path": "../elements" },
+    { "path": "../fonts" },
+    { "path": "../i18n" },
+    { "path": "../masks" },
+    { "path": "../media" },
+    { "path": "../patterns" },
+    { "path": "../react" },
+    { "path": "../rich-text" },
+    { "path": "../units" },
+    { "path": "../url" }
+  ],
+  "include": ["src/types.ts", "src/utils/*.ts"]
+}

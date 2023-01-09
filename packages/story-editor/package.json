@@ -2,7 +2,7 @@
   "name": "@googleforcreators/story-editor",
   "description": "The core Web Stories editor web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202211151052",
+  "version": "0.1.202212191259",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -21,7 +21,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18",
     "npm": ">= 7.3"
   },
   "customExports": {
@@ -63,20 +63,16 @@
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
     "@googleforcreators/url": "*",
-    "@mediapipe/selfie_segmentation": "^0.1.1632777926",
+    "@mediapipe/selfie_segmentation": "^0.1.1671057942",
+    "@pioug/colorthief": "^3.0.1",
     "@wmik/use-media-recorder": "^1.6.5-beta.0",
     "blurhash": "^2.0.4",
     "classnames": "^2.3.2",
-    "colorthief": "^2.3.2",
-    "draft-js": "^0.11.7",
-    "draft-js-export-html": "https://github.com/swissspidy/draft-js-export-html",
-    "draft-js-import-element": "https://github.com/swissspidy/draft-js-import-element",
-    "draft-js-import-html": "^1.4.1",
-    "draftjs-filters": "^3.0.1",
     "flagged": "^2.0.6",
     "history": "^5.3.0",
     "html-to-image": "1.10.8",
-    "immer": "^9.0.16",
+    "immer": "^9.0.17",
+    "mediainfo.js": "^0.1.9",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "react-blurhash": "^0.2.0",
@@ -95,7 +91,7 @@
     "@googleforcreators/karma-fixture": "*",
     "@googleforcreators/test-utils": "*",
     "@storybook/addon-essentials": "^6.5.12",
-    "@testing-library/dom": "^8.19.0",
+    "@testing-library/dom": "^8.19.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",

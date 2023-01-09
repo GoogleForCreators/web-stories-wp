@@ -28,8 +28,6 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
 class Story_Post_Type extends DependencyInjectedTestCase {
-	use Capabilities_Setup;
-
 	/**
 	 * Admin user for test.
 	 */
@@ -96,13 +94,9 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 		$this->settings = $this->injector->make( Settings::class );
 		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings );
-
-		$this->add_caps_to_roles();
 	}
 
 	public function tear_down(): void {
-		$this->remove_caps_from_roles();
-
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 

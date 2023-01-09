@@ -19,10 +19,11 @@
  */
 import type { DimensionableElement } from '@googleforcreators/units';
 
-export type ElementId = string | number;
+export type ElementId = string;
 
 export interface Element extends DimensionableElement {
   id: ElementId;
+  isHidden?: boolean;
 }
 
 export interface ScaledElement extends Element {

@@ -2,7 +2,7 @@
   "name": "@googleforcreators/dashboard",
   "description": "The core Web Stories dashboard web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202211151052",
+  "version": "0.1.202212191259",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -21,7 +21,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18",
     "npm": ">= 7.3"
   },
   "customExports": {
@@ -52,7 +52,6 @@
     "flagged": "^2.0.6",
     "history": "^5.3.0",
     "prop-types": "^15.8.1",
-    "query-string": "^7.1.1",
     "styled-components": "^5.3.6",
     "stylis-plugin-rtl": "^1.0.0"
   },

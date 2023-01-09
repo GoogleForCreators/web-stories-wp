@@ -40,7 +40,7 @@ describe('trackEvent', () => {
 
     await trackEvent('name', { name: 'abc', value: 'def', event_label: 'ghi' });
     expect(gtag).toHaveBeenCalledWith('event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       name: 'abc',
       value: 'def',
       event_label: 'ghi',
@@ -77,42 +77,42 @@ describe('trackEvent', () => {
       unread_count: 123,
     });
     expect(gtag).toHaveBeenNthCalledWith(1, 'event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       event_label: 'abc',
       send_to: config.trackingId,
     });
     expect(gtag).toHaveBeenNthCalledWith(2, 'event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       search_type: 'abc',
       send_to: config.trackingIdGA4,
     });
     expect(gtag).toHaveBeenNthCalledWith(3, 'event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       value: 123,
       send_to: config.trackingId,
     });
     expect(gtag).toHaveBeenNthCalledWith(4, 'event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       duration: 123,
       send_to: config.trackingIdGA4,
     });
     expect(gtag).toHaveBeenNthCalledWith(5, 'event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       value: 123,
       send_to: config.trackingId,
     });
     expect(gtag).toHaveBeenNthCalledWith(6, 'event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       title_length: 123,
       send_to: config.trackingIdGA4,
     });
     expect(gtag).toHaveBeenNthCalledWith(7, 'event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       value: 123,
       send_to: config.trackingId,
     });
     expect(gtag).toHaveBeenNthCalledWith(8, 'event', 'name', {
-      event_callback: expect.any(Function),
+      event_callback: expect.any(Function) as () => void,
       unread_count: 123,
       send_to: config.trackingIdGA4,
     });
