@@ -39,9 +39,7 @@ function isNum(value: number | undefined) {
 function getElementProperties(type: ElementType, element: Element) {
   let { x, y, width, height } = element;
   const { mask, rotationAngle = 0, ...rest } = element;
-  const { isMaskable, isMedia } = getDefinitionForType(
-    type
-  ) as ElementDefinition;
+  const { isMaskable, isMedia } = getDefinitionForType(type);
 
   const attrs = { ...rest, type };
   let ratio = 1;

@@ -305,7 +305,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
           : StoryAnimationState.Playing,
       });
 
-      trackEvent('canvas_play_animations', {
+      void trackEvent('canvas_play_animations', {
         status: isPlaying ? 'stop' : 'play',
       });
     },
