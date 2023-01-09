@@ -376,7 +376,7 @@ class Jetpack extends Service_Base {
 			return;
 		}
 
-		wp_set_object_terms( (int) $object_id, 'poster-generation', $this->media_source_taxonomy->get_taxonomy_slug() );
+		wp_set_object_terms( (int) $object_id, $this->media_source_taxonomy::TERM_POSTER_GENERATION, $this->media_source_taxonomy->get_taxonomy_slug() );
 	}
 
 	/**
