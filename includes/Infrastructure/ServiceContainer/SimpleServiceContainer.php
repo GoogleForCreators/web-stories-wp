@@ -48,7 +48,7 @@ final class SimpleServiceContainer
 	 * @param string $id Identifier of the service to look for.
 	 * @return Service Service that was requested.
 	 */
-	public function get( $id ): Service {
+	public function get( string $id ): Service {
 		if ( ! $this->has( $id ) ) {
 			throw InvalidService::from_service_id( $id );
 		}
@@ -77,7 +77,7 @@ final class SimpleServiceContainer
 	 *
 	 * @param string $id Identifier of the service to look for.
 	 */
-	public function has( $id ): bool {
+	public function has( string $id ): bool {
 		return $this->offsetExists( $id );
 	}
 
@@ -90,7 +90,7 @@ final class SimpleServiceContainer
 	 *                         container.
 	 * @param Service $service Service to put into the container.
 	 */
-	public function put( $id, Service $service ): void {
+	public function put( string $id, Service $service ): void {
 		$this->offsetSet( $id, $service );
 	}
 }

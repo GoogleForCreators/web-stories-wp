@@ -261,7 +261,7 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 		if ( \is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 
-			return \in_array( 'poster-generation', $slugs, true );
+			return \in_array( $this->media_source_taxonomy::TERM_POSTER_GENERATION, $slugs, true );
 		}
 
 		return false;
