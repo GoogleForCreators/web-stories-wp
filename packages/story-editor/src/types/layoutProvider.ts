@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import type { Dispatch, SetStateAction } from 'react';
-
-/**
  * Internal dependencies
  */
 import type { CarouselState, ZoomSetting } from '../constants';
