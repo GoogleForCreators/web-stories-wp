@@ -57,7 +57,7 @@ const ImageElementMissingAlt = () => {
       setHighlights({
         pageId,
         elementId,
-        highlight: states.ASSISTIVE_TEXT,
+        highlight: states.AssistiveText,
       }),
     [setHighlights]
   );

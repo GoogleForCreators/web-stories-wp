@@ -38,6 +38,6 @@ class Add_Media_Source_Page_Template extends Add_Media_Source {
 	 * @since 1.14.0
 	 */
 	protected function get_term(): string {
-		return 'page-template';
+		return $this->media_source_taxonomy::TERM_PAGE_TEMPLATE;
 	}
 }

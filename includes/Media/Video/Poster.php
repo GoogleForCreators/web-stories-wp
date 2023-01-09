@@ -250,6 +250,16 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	}
 
 	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::POSTER_ID_POST_META_KEY );
+		delete_post_meta_by_key( self::POSTER_POST_META_KEY );
+	}
+
+	/**
 	 * Helper util to check if attachment is a poster.
 	 *
 	 * @since 1.2.1
@@ -261,19 +271,9 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 		if ( \is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 
-			return \in_array( 'poster-generation', $slugs, true );
+			return \in_array( $this->media_source_taxonomy::TERM_POSTER_GENERATION, $slugs, true );
 		}
 
 		return false;
-	}
-
-	/**
-	 * Act on plugin uninstall.
-	 *
-	 * @since 1.26.0
-	 */
-	public function on_plugin_uninstall(): void {
-		delete_post_meta_by_key( self::POSTER_ID_POST_META_KEY );
-		delete_post_meta_by_key( self::POSTER_POST_META_KEY );
 	}
 }

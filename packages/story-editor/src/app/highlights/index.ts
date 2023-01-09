@@ -13,22 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import PanelTypes from './panelTypes';
-
-export const STYLE_PANE_IDS = {
-  SELECTION: 'selection',
-  LINK: 'link',
-  ANIMATION: 'animation',
-};
-
-const { LINK, ANIMATION, ...panelsExcludingLinkAndAnimation } = PanelTypes;
-
-export const PanelSections = {
-  [STYLE_PANE_IDS.SELECTION]: Object.values(panelsExcludingLinkAndAnimation),
-  [STYLE_PANE_IDS.LINK]: [LINK],
-  [STYLE_PANE_IDS.ANIMATION]: [ANIMATION],
-};
+export { default as useHighlights } from './useHighlights';
+export { default as HighlightsProvider } from './provider';
+export { HighlightType as states } from './states';

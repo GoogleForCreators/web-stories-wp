@@ -123,7 +123,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_plugin_activation( $network_wide ): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof PluginActivationAware ) {
 				$service->on_plugin_activation( $network_wide );
 			}
@@ -144,7 +152,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_plugin_deactivation( $network_wide ): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof PluginDeactivationAware ) {
 				$service->on_plugin_deactivation( $network_wide );
 			}
@@ -170,7 +186,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 		switch_to_blog( $site_id );
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof SiteInitializationAware ) {
 				$service->on_site_initialization( $site );
 			}
@@ -198,7 +222,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 		switch_to_blog( $site_id );
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof SiteRemovalAware ) {
 				$service->on_site_removal( $site );
 			}
@@ -215,7 +247,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_site_uninstall(): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof PluginUninstallAware ) {
 				$service->on_plugin_uninstall();
 			}
@@ -278,7 +318,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 				$services
 			);
 
-			$services = $this->validate_services( $filtered_services, $services );
+			$services = $this->validate_services( $filtered_services );
 		}
 
 		while ( null !== key( $services ) ) {
@@ -302,6 +342,18 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
+	 * Get the service container that contains the services that make up the
+	 * plugin.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return ServiceContainer<Service> Service container of the plugin.
+	 */
+	public function get_container(): ServiceContainer {
+		return $this->service_container;
+	}
+
+	/**
 	 * Returns the priority for a given service based on its requirements.
 	 *
 	 * @since 1.13.0
@@ -314,7 +366,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @phpstan-param class-string<S> $class Service FQCN of the service with requirements.
 	 */
-	protected function get_registration_action_priority( $class, array &$services ): int {
+	protected function get_registration_action_priority( string $class, array &$services ): int {
 		$priority = 10;
 
 		if ( is_a( $class, Delayed::class, true ) ) {
@@ -370,7 +422,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @phpstan-param class-string<H&S> $class Service FQCN of the service with requirements.
 	 */
-	protected function requirements_are_met( string $id, $class, array &$services ): bool {
+	protected function requirements_are_met( string $id, string $class, array &$services ): bool {
 		$missing_requirements = $this->collect_missing_requirements( $class, $services );
 
 		if ( empty( $missing_requirements ) ) {
@@ -455,7 +507,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @phpstan-param class-string<H&S> $class Service FQCN of the service with requirements.
 	 */
-	protected function collect_missing_requirements( $class, $services ): array {
+	protected function collect_missing_requirements( string $class, array $services ): array {
 		/**
 		 * Requirements.
 		 *
@@ -495,16 +547,9 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @param array<int|string, string|class-string> $services Services to validate.
-	 * @param string[]                               $fallback Fallback value to use if $services is not salvageable.
 	 * @return string[] Validated array of service mappings.
 	 */
-	protected function validate_services( $services, $fallback ): array {
-		// If we don't have an array, something went wrong with filtering.
-		// Just use the fallback value in this case.
-		if ( ! \is_array( $services ) ) {
-			return $fallback;
-		}
-
+	protected function validate_services( array $services ): array {
 		// Make a copy so we can safely mutate while iterating.
 		$services_to_check = $services;
 
@@ -532,10 +577,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $fqcn FQCN to use as base to generate an identifer.
+	 * @param string $fqcn FQCN to use as base to generate an identifier.
 	 * @return string Identifier to use for the provided FQCN.
 	 */
-	protected function get_identifier_from_fqcn( $fqcn ): string {
+	protected function get_identifier_from_fqcn( string $fqcn ): string {
 		// Retrieve the short name from the FQCN first.
 		$short_name = substr( $fqcn, strrpos( $fqcn, '\\' ) + 1 );
 
@@ -560,7 +605,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @phpstan-param class-string<(D&S)|S> $class Class of the service to register.
 	 */
-	protected function schedule_potential_service_registration( $id, $class ): void {
+	protected function schedule_potential_service_registration( string $id, string $class ): void {
 		if ( is_a( $class, Delayed::class, true ) ) {
 			$action   = $class::get_registration_action();
 			$priority = $class::get_registration_action_priority();
@@ -586,10 +631,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string          $id    ID of the service to register.
-	 * @param class-string<S> $class Class of the service to register.
+	 * @param string $id    ID of the service to register.
+	 * @param string $class Class of the service to register.
+	 *
+	 * @phpstan-param class-string<S> $class Class of the service to register.
 	 */
-	protected function maybe_register_service( string $id, $class ): void {
+	protected function maybe_register_service( string $id, string $class ): void {
 		// Ensure we don't register the same service more than once.
 		if ( $this->service_container->has( $id ) ) {
 			return;
@@ -608,18 +655,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 		if ( $service instanceof Registerable ) {
 			$service->register();
 		}
-	}
-
-	/**
-	 * Get the service container that contains the services that make up the
-	 * plugin.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return ServiceContainer<Service> Service container of the plugin.
-	 */
-	public function get_container(): ServiceContainer {
-		return $this->service_container;
 	}
 
 	/**
@@ -875,7 +910,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @phpstan-return class-string<C&D&H&R&S> Resolved or unchanged value.
 	 */
 	protected function maybe_resolve( $value ): string {
-		if ( is_callable( $value ) && ! ( \is_string( $value ) && function_exists( $value ) ) ) {
+		if ( \is_callable( $value ) && ! ( \is_string( $value ) && \function_exists( $value ) ) ) {
 			$value = $value( $this->injector, $this->service_container );
 		}
 

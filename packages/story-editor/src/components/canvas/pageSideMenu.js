@@ -31,7 +31,7 @@ import { Fragment } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { useLayout } from '../../app';
-import { MediaPicker, useQuickActions } from '../../app/highlights';
+import { MediaPicker, useQuickActions } from '../../app/quickActions';
 import { ZoomSetting } from '../../constants';
 import {
   Z_INDEX_CANVAS_SIDE_MENU,

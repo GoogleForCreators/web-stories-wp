@@ -22,11 +22,11 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
+import { useState, useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useDebounce } from '@wordpress/compose';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -41,6 +41,10 @@ import Autocomplete from './autocomplete';
  * @property {()=>void} setAttributes Callable function for saving attribute values.
  */
 
+const defaultQueryProps = {
+  per_page: 100,
+};
+
 /**
  * AuthorSelection component. Used for selecting authors of stories.
  *
@@ -48,31 +52,37 @@ import Autocomplete from './autocomplete';
  * @return {*} JSX markup.
  */
 const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [authorsList, setAuthorsList] = useState([]);
-  const [authorSuggestions, setAuthorSuggestions] = useState([]);
+  const [authorKeyword, setAuthorKeyword] = useState('');
 
-  useEffect(() => {
-    if (isInitialized || !authorIds?.length) {
-      return;
-    }
+  const { authorsList } = useSelect(
+    (select) => {
+      const { getUsers } = select(coreStore);
 
-    apiFetch({
-      path: addQueryArgs('/wp/v2/users', {
-        per_page: 100,
+      const query = {
+        ...defaultQueryProps,
         include: authorIds.join(','),
-      }),
-    })
-      .then((users) => {
-        if ('undefined' !== typeof users && Array.isArray(users)) {
-          setAuthorsList(users.map(({ id, name }) => ({ id, value: name })));
-        }
-      })
-      .catch(() => {
-        setAuthorsList([]);
-      })
-      .finally(() => setIsInitialized(true));
-  }, [isInitialized, authorIds]);
+      };
+      return {
+        authorsList: getUsers(query) || [],
+      };
+    },
+    [authorIds]
+  );
+
+  const { authorSuggestions } = useSelect(
+    (select) => {
+      const { getUsers } = select(coreStore);
+
+      const query = {
+        ...defaultQueryProps,
+        search: authorKeyword,
+      };
+      return {
+        authorSuggestions: getUsers(query) || [],
+      };
+    },
+    [authorKeyword]
+  );
 
   /**
    * Callback function called when user selects an author from the suggestions.
@@ -82,22 +92,24 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
    * @param {Array} tokens Array of strings that were parsed from the text field.
    * @return {void}
    */
-  const onChange = (tokens) => {
-    if ('undefined' === typeof tokens || !Array.isArray(tokens)) {
-      return;
-    }
-
-    const authors = tokens
-      .map((token) =>
-        [...authorSuggestions, ...authorsList].find(
-          ({ value }) => value === token
+  const onChange = useCallback(
+    (tokens) => {
+      if ('undefined' === typeof tokens || !Array.isArray(tokens)) {
+        return;
+      }
+      const authors = tokens
+        .map((token) =>
+          [...authorSuggestions, ...authorsList].find(
+            ({ name }) => name === token
+          )
         )
-      )
-      .filter(Boolean);
+        .filter(Boolean)
+        .map(({ id }) => id);
 
-    setAuthorsList(authors);
-    setAttributes({ authors: authors.map(({ id }) => id) });
-  };
+      setAttributes({ authors });
+    },
+    [authorSuggestions, authorsList, setAttributes]
+  );
 
   /**
    * Callback function used when user types in the search query in the text field.
@@ -107,29 +119,15 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
    * @param {string} search Search query to look for authors.
    * @return {void}
    */
-  const onInputChange = (search) => {
-    apiFetch({
-      path: addQueryArgs('/wp/v2/users', { per_page: 100, search }),
-    })
-      .then((users) => {
-        if ('undefined' !== typeof users && Array.isArray(users)) {
-          setAuthorSuggestions(
-            users.map(({ id, name }) => ({ id, value: name }))
-          );
-        }
-      })
-      .catch(() => {
-        setAuthorSuggestions([]);
-      });
-  };
+  const onInputChange = (search) => setAuthorKeyword(search);
 
   const debouncedOnInputChange = useDebounce(onInputChange, 500);
 
   return (
     <Autocomplete
       label={__('Authors', 'web-stories')}
-      value={authorsList.map(({ value }) => value)}
-      options={authorSuggestions.map(({ value }) => value)}
+      value={authorsList.map(({ name }) => name)}
+      options={authorSuggestions.map(({ name }) => name)}
       onChange={onChange}
       onInputChange={debouncedOnInputChange}
     />

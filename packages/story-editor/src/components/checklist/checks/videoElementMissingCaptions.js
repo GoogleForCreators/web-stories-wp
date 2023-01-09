@@ -51,7 +51,7 @@ const VideoElementMissingCaptions = () => {
       setHighlights({
         pageId,
         elementId,
-        highlight: states.CAPTIONS,
+        highlight: states.Captions,
       }),
     [setHighlights]
   );

@@ -34,7 +34,7 @@ import { __, sprintf } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import states from '../highlights/states';
+import { states } from '../highlights';
 import useHighlights from '../highlights/useHighlights';
 import { useStory } from '../story';
 import getLayerArrangementProps from './utils/getLayerArrangementProps';
@@ -315,7 +315,7 @@ function useCanvasKeys(ref) {
       }
       setHighlights({
         elements: selectedElements,
-        highlight: states.LINK,
+        highlight: states.Link,
       });
     },
     [setHighlights, selectedElements]
