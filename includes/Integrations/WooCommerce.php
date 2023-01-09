@@ -38,17 +38,6 @@ class WooCommerce {
 	protected const PLUGIN = 'woocommerce/woocommerce.php';
 
 	/**
-	 * Determines whether WooCommerce is active.
-	 *
-	 * @since 1.21.0
-	 *
-	 * @return bool Whether WooCommerce is active.
-	 */
-	protected function is_plugin_active(): bool {
-		return class_exists( 'WooCommerce', false );
-	}
-
-	/**
 	 * Returns the WooCommerce plugin status.
 	 *
 	 * @since 1.21.0
@@ -94,5 +83,16 @@ class WooCommerce {
 			'canManage' => $can_manage,
 			'link'      => $link,
 		];
+	}
+
+	/**
+	 * Determines whether WooCommerce is active.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @return bool Whether WooCommerce is active.
+	 */
+	protected function is_plugin_active(): bool {
+		return class_exists( 'WooCommerce', false );
 	}
 }

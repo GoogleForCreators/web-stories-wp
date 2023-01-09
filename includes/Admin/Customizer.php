@@ -506,50 +506,6 @@ class Customizer extends Service_Base implements Conditional {
 	}
 
 	/**
-	 * Gets the view type choices.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param array<string,mixed> $view_type View type to check.
-	 * @return array<string,mixed> An array of view type choices.
-	 */
-	private function get_view_type_choices( array $view_type ): array {
-		$view_type_choices = $this->stories_script_data->get_layouts();
-
-		if ( empty( $view_type ) ) {
-			return $view_type_choices;
-		}
-
-		return array_intersect_key( $view_type_choices, array_fill_keys( $view_type, true ) );
-	}
-
-	/**
-	 * Checks whether the given option is enabled or not.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $option_name The name of the option to check.
-	 * @return bool Returns true if the given option is enabled otherwise false.
-	 */
-	private function is_option_enabled( string $option_name ): bool {
-		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
-		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
-	}
-
-	/**
-	 * Verifies the current view type.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $view_type View type to check.
-	 * @return bool Whether or not current view type matches the one passed.
-	 */
-	private function is_view_type( string $view_type ): bool {
-		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
-		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
-	}
-
-	/**
 	 * Validates the number of story setting value.
 	 *
 	 * @since 1.5.0
@@ -628,39 +584,6 @@ class Customizer extends Service_Base implements Conditional {
 		];
 
 		return ( new Story_Query( $story_attributes, $query_arguments ) )->render();
-	}
-
-	/**
-	 * Merges user defined arguments into defaults array.
-	 *
-	 * Like wp_parse_args(), but recursive.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @see wp_parse_args()
-	 *
-	 * @param array<string, mixed>                                                           $args     Value to merge with $defaults.
-	 * @param array<string, array<string, array<string, array<int,string>|bool|int|string>>> $defaults Optional. Array that serves as the defaults. Default empty array.
-	 * @return array<string, mixed> Merged user defined values with defaults.
-	 */
-	private function parse_args( array $args, array $defaults = [] ): array {
-		$parsed_args = $defaults;
-
-		foreach ( $args as $key => $value ) {
-			if ( \is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
-				/**
-				 * Default value.
-				 *
-				 * @var array<string, array<string, array<string, array<int,string>|bool|int|string>>> $def
-				 */
-				$def                 = $parsed_args[ $key ];
-				$parsed_args[ $key ] = $this->parse_args( $value, $def );
-			} else {
-				$parsed_args[ $key ] = $value;
-			}
-		}
-
-		return $parsed_args;
 	}
 
 	/**
@@ -743,5 +666,82 @@ class Customizer extends Service_Base implements Conditional {
 		$support = $this->parse_args( $support, $default_support );
 
 		return $support;
+	}
+
+	/**
+	 * Gets the view type choices.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array<string,mixed> $view_type View type to check.
+	 * @return array<string,mixed> An array of view type choices.
+	 */
+	private function get_view_type_choices( array $view_type ): array {
+		$view_type_choices = $this->stories_script_data->get_layouts();
+
+		if ( empty( $view_type ) ) {
+			return $view_type_choices;
+		}
+
+		return array_intersect_key( $view_type_choices, array_fill_keys( $view_type, true ) );
+	}
+
+	/**
+	 * Checks whether the given option is enabled or not.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $option_name The name of the option to check.
+	 * @return bool Returns true if the given option is enabled otherwise false.
+	 */
+	private function is_option_enabled( string $option_name ): bool {
+		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
+		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
+	}
+
+	/**
+	 * Verifies the current view type.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $view_type View type to check.
+	 * @return bool Whether or not current view type matches the one passed.
+	 */
+	private function is_view_type( string $view_type ): bool {
+		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
+		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
+	}
+
+	/**
+	 * Merges user defined arguments into defaults array.
+	 *
+	 * Like wp_parse_args(), but recursive.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @see wp_parse_args()
+	 *
+	 * @param array<string, mixed>                                                           $args     Value to merge with $defaults.
+	 * @param array<string, array<string, array<string, array<int,string>|bool|int|string>>> $defaults Optional. Array that serves as the defaults. Default empty array.
+	 * @return array<string, mixed> Merged user defined values with defaults.
+	 */
+	private function parse_args( array $args, array $defaults = [] ): array {
+		$parsed_args = $defaults;
+
+		foreach ( $args as $key => $value ) {
+			if ( \is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
+				/**
+				 * Default value.
+				 *
+				 * @var array<string, array<string, array<string, array<int,string>|bool|int|string>>> $def
+				 */
+				$def                 = $parsed_args[ $key ];
+				$parsed_args[ $key ] = $this->parse_args( $value, $def );
+			} else {
+				$parsed_args[ $key ] = $value;
+			}
+		}
+
+		return $parsed_args;
 	}
 }

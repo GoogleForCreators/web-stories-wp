@@ -183,6 +183,101 @@ class Discovery extends Service_Base implements HasRequirements {
 	}
 
 	/**
+	 * Prints Open Graph metadata.
+	 *
+	 * @since 1.0.0
+	 */
+	public function print_open_graph_metadata(): void {
+		/**
+		 * Filters filter to enable / disable open graph metadata.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $enable_open_graph_metadata Enable / disable open graph metadata. Default to true.
+		 */
+		$enable_open_graph_metadata = apply_filters( 'web_stories_enable_open_graph_metadata', true );
+		if ( ! $enable_open_graph_metadata ) {
+			return;
+		}
+
+		$metadata = $this->get_open_graph_metadata();
+
+		foreach ( $metadata as $name => $value ) {
+			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( (string) $value ) );
+		}
+	}
+
+	/**
+	 * Prints Twitter card metadata.
+	 *
+	 * @since 1.0.0
+	 */
+	public function print_twitter_metadata(): void {
+		/**
+		 * Filters filter to enable / disable twitter metadata.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $enable_twitter_metadata Enable / disable twitter metadata. Default to true.
+		 */
+		$enable_twitter_metadata = apply_filters( 'web_stories_enable_twitter_metadata', true );
+		if ( ! $enable_twitter_metadata ) {
+			return;
+		}
+		$metadata = $this->get_twitter_metadata();
+
+		foreach ( $metadata as $name => $value ) {
+			printf( '<meta name="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
+		}
+	}
+
+	/**
+	 * Add RSS feed link for stories, if theme supports automatic-feed-links.
+	 *
+	 * @since 1.0.0
+	 */
+	public function print_feed_link(): void {
+		$enable_print_feed_link = current_theme_supports( 'automatic-feed-links' ) && ! is_post_type_archive( $this->story_post_type->get_slug() );
+
+		/**
+		 * Filters filter to enable / disable printing feed links.
+		 *
+		 * @since 1.29.0
+		 *
+		 * @param bool $enable_print_feed_link Enable / disable printing feed links. Default to if automatic-feed-links is enabled.
+		 */
+		$enable_print_feed_link = apply_filters( 'web_stories_enable_print_feed_link', $enable_print_feed_link );
+
+		if ( ! $enable_print_feed_link ) {
+			return;
+		}
+
+		$name = $this->story_post_type->get_label( 'name' );
+		if ( ! $name ) {
+			return;
+		}
+
+		$feed = get_post_type_archive_feed_link( $this->story_post_type->get_slug() );
+		if ( ! $feed ) {
+			return;
+		}
+
+		/* translators: Separator between blog name and feed type in feed links. */
+		$separator = _x( '&raquo;', 'feed link', 'web-stories' );
+		/* translators: 1: Blog name, 2: Separator (raquo), 3: Post type name. */
+		$post_type_title = esc_html__( '%1$s %2$s %3$s Feed', 'web-stories' );
+
+		$title = sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $name );
+
+		printf(
+			'<link rel="alternate" type="%s" title="%s" href="%s">',
+			esc_attr( feed_content_type() ),
+			esc_attr( $title ),
+			esc_url( $feed )
+		);
+	}
+
+	/**
 	 * Get schema.org metadata for the current query.
 	 *
 	 * @since 1.0.0
@@ -335,31 +430,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Prints Open Graph metadata.
-	 *
-	 * @since 1.0.0
-	 */
-	public function print_open_graph_metadata(): void {
-		/**
-		 * Filters filter to enable / disable open graph metadata.
-		 *
-		 * @since 1.2.0
-		 *
-		 * @param bool $enable_open_graph_metadata Enable / disable open graph metadata. Default to true.
-		 */
-		$enable_open_graph_metadata = apply_filters( 'web_stories_enable_open_graph_metadata', true );
-		if ( ! $enable_open_graph_metadata ) {
-			return;
-		}
-
-		$metadata = $this->get_open_graph_metadata();
-
-		foreach ( $metadata as $name => $value ) {
-			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( (string) $value ) );
-		}
-	}
-
-	/**
 	 * Get Open Graph metadata.
 	 *
 	 * @since 1.3.0
@@ -412,30 +482,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Prints Twitter card metadata.
-	 *
-	 * @since 1.0.0
-	 */
-	public function print_twitter_metadata(): void {
-		/**
-		 * Filters filter to enable / disable twitter metadata.
-		 *
-		 * @since 1.2.0
-		 *
-		 * @param bool $enable_twitter_metadata Enable / disable twitter metadata. Default to true.
-		 */
-		$enable_twitter_metadata = apply_filters( 'web_stories_enable_twitter_metadata', true );
-		if ( ! $enable_twitter_metadata ) {
-			return;
-		}
-		$metadata = $this->get_twitter_metadata();
-
-		foreach ( $metadata as $name => $value ) {
-			printf( '<meta name="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
-		}
-	}
-
-	/**
 	 * Get Twitter card metadata.
 	 *
 	 * @since 1.3.0
@@ -473,51 +519,5 @@ class Discovery extends Service_Base implements HasRequirements {
 		 * @param WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_twitter_metadata', $metadata, $post );
-	}
-
-	/**
-	 * Add RSS feed link for stories, if theme supports automatic-feed-links.
-	 *
-	 * @since 1.0.0
-	 */
-	public function print_feed_link(): void {
-		$enable_print_feed_link = current_theme_supports( 'automatic-feed-links' ) && ! is_post_type_archive( $this->story_post_type->get_slug() );
-
-		/**
-		 * Filters filter to enable / disable printing feed links.
-		 *
-		 * @since 1.29.0
-		 *
-		 * @param bool $enable_print_feed_link Enable / disable printing feed links. Default to if automatic-feed-links is enabled.
-		 */
-		$enable_print_feed_link = apply_filters( 'web_stories_enable_print_feed_link', $enable_print_feed_link );
-
-		if ( ! $enable_print_feed_link ) {
-			return;
-		}
-
-		$name = $this->story_post_type->get_label( 'name' );
-		if ( ! $name ) {
-			return;
-		}
-
-		$feed = get_post_type_archive_feed_link( $this->story_post_type->get_slug() );
-		if ( ! $feed ) {
-			return;
-		}
-
-		/* translators: Separator between blog name and feed type in feed links. */
-		$separator = _x( '&raquo;', 'feed link', 'web-stories' );
-		/* translators: 1: Blog name, 2: Separator (raquo), 3: Post type name. */
-		$post_type_title = esc_html__( '%1$s %2$s %3$s Feed', 'web-stories' );
-
-		$title = sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $name );
-
-		printf(
-			'<link rel="alternate" type="%s" title="%s" href="%s">',
-			esc_attr( feed_content_type() ),
-			esc_attr( $title ),
-			esc_url( $feed )
-		);
 	}
 }

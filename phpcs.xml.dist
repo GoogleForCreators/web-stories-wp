@@ -209,6 +209,11 @@
   </rule>
   <rule ref="SlevomatCodingStandard.Functions.StaticClosure" />
 
+  <rule ref="SlevomatCodingStandard.PHP">
+    <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
+    <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
+  </rule>
+
   <!-- Class names should be referenced via ::class constant when possible. -->
   <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
     <properties>
@@ -219,9 +224,28 @@
   <!-- Requires declaring visibility for class constants. -->
   <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
 
-  <rule ref="SlevomatCodingStandard.PHP">
-    <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
-    <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
+  <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
+    <properties>
+      <property name="groups" type="array">
+        <element value="uses"/>
+
+        <element value="enum cases"/>
+
+        <!-- Public constants are first but you don't care about the order of protected or private constants -->
+        <element value="public constants"/>
+        <element value="constants"/>
+
+        <!-- You don't care about the order among the properties. The same can be done with "properties" shortcut -->
+        <element value="public static properties, protected static properties, private static properties"/>
+        <element value="public properties, protected properties, private properties"/>
+
+        <!-- Constructor is first, then all public methods, then protected/private methods and magic methods are last -->
+        <element value="constructor"/>
+        <element value="all public methods"/>
+        <element value="methods"/>
+        <element value="magic methods"/>
+      </property>
+    </properties>
   </rule>
 
   <rule ref="SlevomatCodingStandard.Variables">
