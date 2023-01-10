@@ -150,7 +150,7 @@ module.exports = {
             include: [/inline-icons\/.*\.svg$/],
           },
           {
-            issuer: /\.js?$/,
+            issuer: /\.[jt]s?$/,
             include: [/\/icons\/.*\.svg$/],
             use: [
               {
@@ -180,7 +180,7 @@ module.exports = {
             ],
           },
           {
-            issuer: /\.js?$/,
+            issuer: /\.[jt]s?$/,
             include: [/images\/.*\.svg$/],
             use: [
               {
