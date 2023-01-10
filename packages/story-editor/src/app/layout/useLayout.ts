@@ -25,6 +25,7 @@ import type { LayoutProviderState } from '../../types';
 import Context from './context';
 
 function useLayout(): LayoutProviderState;
+function useLayout<T>(selector: (state: LayoutProviderState) => T): T;
 function useLayout<T>(
   selector: (state: LayoutProviderState) => T | LayoutProviderState = identity
 ) {

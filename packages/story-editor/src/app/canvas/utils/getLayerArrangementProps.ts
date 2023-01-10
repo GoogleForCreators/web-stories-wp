@@ -15,11 +15,21 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Element } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import { LayerDirection } from '../../../constants';
 
-function getLayerArrangementProps(key, shift, selectedElements, elements) {
+function getLayerArrangementProps(
+  key: string,
+  shift: boolean,
+  selectedElements: Element[],
+  elements: Element[]
+) {
   // This only supports moving single layer.
   if (!selectedElements || selectedElements.length > 1) {
     return {};

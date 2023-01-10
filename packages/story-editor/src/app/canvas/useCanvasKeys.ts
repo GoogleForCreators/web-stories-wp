@@ -25,11 +25,9 @@ import {
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { StoryAnimationState } from '@googleforcreators/animation';
-import {
-  getDefinitionForType,
-  ELEMENT_TYPES,
-} from '@googleforcreators/elements';
+import { getDefinitionForType, elementIs } from '@googleforcreators/elements';
 import { __, sprintf } from '@googleforcreators/i18n';
+import type { RefObject } from 'react';
 
 /**
  * Internal dependencies
@@ -40,10 +38,7 @@ import { useStory } from '../story';
 import getLayerArrangementProps from './utils/getLayerArrangementProps';
 import { useCanvas } from '.';
 
-/**
- * @param {{current: Node}} ref Reference.
- */
-function useCanvasKeys(ref) {
+function useCanvasKeys(ref: RefObject<Node>) {
   const {
     selectedElementIds,
     selectedElements,
@@ -89,7 +84,7 @@ function useCanvasKeys(ref) {
         animationState,
         updateAnimationState,
         currentPageProductIds: currentPage?.elements
-          ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
+          ?.filter(elementIs.product)
           .map(({ product }) => product?.productId),
         pageElements: currentPage?.elements,
       };
@@ -112,7 +107,7 @@ function useCanvasKeys(ref) {
       setEditingElement,
     })
   );
-  const selectedElementIdsRef = useRef(null);
+  const selectedElementIdsRef = useRef<string[] | null>(null);
   selectedElementIdsRef.current = selectedElementIds;
 
   // Return focus back to the canvas when another section loses the focus.
@@ -123,6 +118,9 @@ function useCanvasKeys(ref) {
     }
 
     const doc = container.ownerDocument;
+    if (!doc) {
+      return undefined;
+    }
 
     const handler = () => {
       // Make sure that no other component is trying to get the focus
@@ -142,16 +140,16 @@ function useCanvasKeys(ref) {
           // If there is any text selection, we should not add the preventScroll setting,
           // so that the user can select the text properly.
           const sel = window.getSelection();
-          if (sel.toString() !== '') {
+          if (sel?.toString() !== '') {
             return;
           }
 
           // If there is a multi-selection happening inside the canvas
           // container, we should prevent the first element from scrolling.
           if (selectedFrame) {
-            selectedFrame.focus({ preventScroll: true });
+            (selectedFrame as HTMLElement).focus({ preventScroll: true });
           } else {
-            container.focus({ preventScroll: true });
+            (container as HTMLElement).focus({ preventScroll: true });
           }
         }
       }, 300);
@@ -169,6 +167,9 @@ function useCanvasKeys(ref) {
   useGlobalKeyDownEffect(
     { key: ['mod+a'] },
     () => {
+      if (!currentPage) {
+        return;
+      }
       const elementIds = currentPage.elements.map(({ id }) => id);
       setSelectedElementsById({ elementIds });
     },
@@ -182,8 +183,12 @@ function useCanvasKeys(ref) {
       if (isEditing) {
         return;
       }
-      const { isBackground, isLocked } = selectedElements?.[0] || {};
-      if (isBackground || isLocked) {
+      const { isLocked } = selectedElements?.[0] || {};
+      if (
+        (elementIs.backgroundable(selectedElements?.[0]) &&
+          selectedElements[0].isBackground) ||
+        isLocked
+      ) {
         return;
       }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
@@ -208,7 +213,7 @@ function useCanvasKeys(ref) {
       evt.preventDefault();
 
       // The shortcut doesn't support moving multiple elements currently.
-      if (selectedElements?.length === 1) {
+      if (selectedElements?.length === 1 && pageElements) {
         const { position, groupId } = getLayerArrangementProps(
           key,
           shiftKey,
@@ -249,24 +254,25 @@ function useCanvasKeys(ref) {
       return;
     }
 
-    for (const { type, product } of selectedElements) {
-      const { productId, productTitle, productImages } = product || {};
-      if (
-        type === ELEMENT_TYPES.PRODUCT &&
-        productId &&
-        currentPageProductIds.includes(productId)
-      ) {
-        showSnackbar({
-          message: sprintf(
-            /* translators: %s: product title. */
-            __('Product "%s" already exists on the page.', 'web-stories'),
-            productTitle
-          ),
-          thumbnail: productImages?.[0]?.url && {
-            src: productImages[0].url,
-            alt: productImages[0].alt,
-          },
-        });
+    for (const el of selectedElements) {
+      if (elementIs.product(el)) {
+        const { product } = el;
+        const { productId, productTitle, productImages } = product;
+        if (productId && currentPageProductIds?.includes(productId)) {
+          showSnackbar({
+            message: sprintf(
+              /* translators: %s: product title. */
+              __('Product "%s" already exists on the page.', 'web-stories'),
+              productTitle
+            ),
+            thumbnail: productImages?.[0]?.url
+              ? {
+                  src: productImages[0].url,
+                  alt: productImages[0].alt,
+                }
+              : undefined,
+          });
+        }
       }
     }
 
@@ -299,7 +305,7 @@ function useCanvasKeys(ref) {
           : StoryAnimationState.Playing,
       });
 
-      trackEvent('canvas_play_animations', {
+      void trackEvent('canvas_play_animations', {
         status: isPlaying ? 'stop' : 'play',
       });
     },
@@ -310,7 +316,11 @@ function useCanvasKeys(ref) {
     { key: ['mod+k'] },
     (evt) => {
       evt.preventDefault();
-      if (!selectedElements.length || selectedElements?.[0]?.isBackground) {
+      if (
+        !selectedElements.length ||
+        (elementIs.backgroundable(selectedElements[0]) &&
+          selectedElements[0].isBackground)
+      ) {
         return;
       }
       setHighlights({

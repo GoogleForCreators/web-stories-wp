@@ -61,7 +61,9 @@ describe('Element', () => {
 
     it('should throw if trying to create unknown element type', () => {
       const unknownElementCreator = () => createNewElement('puppy');
-      expect(unknownElementCreator).toThrow(/unknown element type: puppy/i);
+      expect(unknownElementCreator).toThrow(
+        /No element definition found for 'puppy'/i
+      );
     });
   });
 

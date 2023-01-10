@@ -109,9 +109,20 @@ export interface SequenceMediaElement extends MediaElement {
   resource: SequenceResource;
 }
 
+export interface VideoElement extends SequenceMediaElement {
+  type: ElementType.Video;
+}
+
 export interface ProductElement extends Element {
   type: ElementType.Product;
   product: ProductData;
+}
+
+export interface StickerElement extends Element {
+  type: ElementType.Sticker;
+  sticker: {
+    type: string;
+  };
 }
 
 interface BaseTextElementFont {
