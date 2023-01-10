@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { PropsWithChildren } from 'react';
 import {
   useCallback,
   useEffect,
@@ -36,38 +36,56 @@ import {
  */
 import { useLayout } from '../layout';
 import { useStory } from '../story';
-
+import type {
+  BoundingBoxes,
+  EyedropperCallback,
+  RenamableLayer,
+  VoidFuncWithNoProps,
+} from '../../types';
 import useCanvasCopyPaste from './useCanvasCopyPaste';
 import useEditingElement from './useEditingElement';
 
 import Context from './context';
 import { RECT_OBSERVATION_KEY } from './constants';
 
-function CanvasProvider({ children }) {
-  const [boundingBoxes, setBoundingBoxes] = useState({});
-  const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
-  const lastSelectedElementId = useRef(null);
-  const [canvasContainer, setCanvasContainer] = useState(null);
-  const [pageContainer, setPageContainer] = useState(null);
-  const [fullbleedContainer, setFullbleedContainer] = useState(null);
-  const [designSpaceGuideline, setDesignSpaceGuideline] = useState(null);
-  const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
-  const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
-  const [eyedropperImg, setEyedropperImg] = useState(null);
-  const [eyedropperPixelData, setEyedropperPixelData] = useState(null);
-  const [isEyedropperActive, setIsEyedropperActive] = useState(null);
-  const [eyedropperCallback, setEyedropperCallback] = useState(null);
-  const [renamableLayer, setRenamableLayer] = useState(null);
+interface Local {
+  position: string;
+  isDisplayed: boolean;
+}
+function CanvasProvider({ children }: PropsWithChildren<unknown>) {
+  const [boundingBoxes, setBoundingBoxes] = useState<BoundingBoxes>({});
+  const [lastSelectionEvent, setLastSelectionEvent] =
+    useState<MouseEvent | null>(null);
+  const lastSelectedElementId = useRef<string | null>(null);
+  const [canvasContainer, setCanvasContainer] = useState<Node | null>(null);
+  const [pageContainer, setPageContainer] = useState<Node | null>(null);
+  const [fullbleedContainer, setFullbleedContainer] = useState<Node | null>(
+    null
+  );
+  const [designSpaceGuideline, setDesignSpaceGuideline] = useState<Node | null>(
+    null
+  );
+  const [pageAttachmentContainer, setPageAttachmentContainer] =
+    useState<Node | null>(null);
+  const [displayLinkGuidelines, setDisplayLinkGuidelines] =
+    useState<boolean>(false);
+  const [eyedropperImg, setEyedropperImg] = useState<string | null>(null);
+  const [eyedropperPixelData, setEyedropperPixelData] =
+    useState<Uint8ClampedArray | null>(null);
+  const [isEyedropperActive, setIsEyedropperActive] = useState<boolean>(false);
+  const [eyedropperCallback, setEyedropperCallback] =
+    useState<EyedropperCallback | null>(null);
+  const [renamableLayer, setRenamableLayer] = useState<RenamableLayer>(null);
   const [floatingMenuPosition, setFloatingMenuPosition] = useState(() => {
     const local = localStore.getItemByKey(
       LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
-    );
+    ) as Local | null;
     return local?.position;
   });
   const [displayFloatingMenu, setDisplayFloatingMenu] = useState(() => {
     const local = localStore.getItemByKey(
       LOCAL_STORAGE_PREFIX.ELEMENT_TOOLBAR_SETTINGS
-    );
+    ) as Local | undefined;
     return local?.isDisplayed;
   });
 
@@ -78,13 +96,16 @@ function CanvasProvider({ children }) {
     () =>
       new window.IntersectionObserver((entries) => {
         for (const entry of entries) {
+          if (!(entry.target instanceof HTMLElement)) {
+            return;
+          }
           if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {
             return;
           }
+          const index = entry.target.dataset[RECT_OBSERVATION_KEY];
           setBoundingBoxes((boxes) => ({
             ...boxes,
-            [entry.target.dataset[RECT_OBSERVATION_KEY]]:
-              entry.boundingClientRect,
+            [index]: entry.boundingClientRect,
           }));
         }
       }),
@@ -129,7 +150,7 @@ function CanvasProvider({ children }) {
   );
 
   const handleSelectElement = useCallback(
-    (elId, evt) => {
+    (elId: string, evt: MouseEvent) => {
       if (editingElement && editingElement !== elId) {
         clearEditing();
       }
@@ -149,7 +170,9 @@ function CanvasProvider({ children }) {
           withLinked: !evt.altKey,
         });
       }
-      evt.currentTarget.focus({ preventScroll: true });
+      if (evt.currentTarget instanceof HTMLElement) {
+        evt.currentTarget.focus({ preventScroll: true });
+      }
       if (backgroundElementId !== elId) {
         evt.stopPropagation();
       }
@@ -159,11 +182,13 @@ function CanvasProvider({ children }) {
 
         // Clear this selection event as soon as mouse is released
         // `setTimeout` is currently required to not break functionality.
-        evt.target.ownerDocument.addEventListener(
-          'mouseup',
-          () => window.setTimeout(setLastSelectionEvent, 0, null),
-          { once: true, capture: true }
-        );
+        if (evt.target instanceof HTMLElement) {
+          evt.target.ownerDocument.addEventListener(
+            'mouseup',
+            () => window.setTimeout(setLastSelectionEvent, 0, null),
+            { once: true, capture: true }
+          );
+        }
       }
     },
     [
@@ -194,7 +219,8 @@ function CanvasProvider({ children }) {
 
   useCanvasCopyPaste();
 
-  const [onMoveableMount, setMoveableMount] = useState(null);
+  const [onMoveableMount, setMoveableMount] =
+    useState<VoidFuncWithNoProps | null>(null);
 
   const state = useMemo(
     () => ({
@@ -281,9 +307,5 @@ function CanvasProvider({ children }) {
     </Context.Provider>
   );
 }
-
-CanvasProvider.propTypes = {
-  children: PropTypes.node,
-};
 
 export default CanvasProvider;

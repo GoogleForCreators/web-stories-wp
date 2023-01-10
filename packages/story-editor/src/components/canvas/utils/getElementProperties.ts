@@ -19,7 +19,12 @@
  */
 import STICKERS from '@googleforcreators/stickers';
 import { dataPixels } from '@googleforcreators/units';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  elementIs,
+  ElementType,
+  getDefinitionForType,
+} from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
 import { DEFAULT_MASK } from '@googleforcreators/masks';
 
 /**
@@ -27,56 +32,39 @@ import { DEFAULT_MASK } from '@googleforcreators/masks';
  */
 import getInsertedElementSize from '../../../utils/getInsertedElementSize';
 
-/**
- * @param {?number|undefined} value The value.
- * @return {boolean} Whether the value has been set.
- */
-function isNum(value) {
+function isNum(value: number | undefined) {
   return typeof value === 'number';
 }
 
-/**
- * @param {string} type Element type.
- * @param {!Object} props The element's properties.
- * @param {number} props.width The element's width.
- * @param {number} props.height The element's height.
- * @param {?Object} props.mask The element's mask.
- * @return {Object} The element properties.
- */
-function getElementProperties(
-  type,
-  {
-    resource,
-    x,
-    y,
-    width,
-    height,
-    mask,
-    rotationAngle = 0,
-    scale = 100,
-    focalX = 50,
-    focalY = 50,
-    sticker,
-    ...rest
-  }
-) {
+function getElementProperties(type: ElementType, element: Element) {
+  let { x, y, width, height } = element;
+  const { mask, rotationAngle = 0, ...rest } = element;
   const { isMaskable, isMedia } = getDefinitionForType(type);
 
-  const attrs = { type, ...rest };
-
-  const stickerRatio = sticker && STICKERS?.[sticker?.type]?.aspectRatio;
+  const attrs = { ...rest, type };
+  let ratio = 1;
+  let resource, scale, focalX, focalY, sticker;
+  if (elementIs.sticker(element)) {
+    sticker = element.sticker;
+    ratio = STICKERS?.[sticker.type as keyof typeof STICKERS]?.aspectRatio;
+  } else if (elementIs.media(element)) {
+    resource = element.resource;
+    ratio =
+      isNum(resource.width) && isNum(resource.height)
+        ? resource.width / resource.height
+        : 1;
+    scale = element.scale || 100;
+    focalX = element.focalX || 50;
+    focalY = element.focalY || 50;
+  }
 
   // Width and height defaults. Width takes precedence.
-  const ratio =
-    resource && isNum(resource.width) && isNum(resource.height)
-      ? resource.width / resource.height
-      : 1;
   const size = getInsertedElementSize(
     type,
     width,
     height,
     attrs,
-    stickerRatio || ratio,
+    ratio,
     resource
   );
   width = size.width;
@@ -96,12 +84,12 @@ function getElementProperties(
   const mediaProps = {
     focalX,
     focalY,
+    resource,
     scale,
   };
 
   return {
     ...attrs,
-    resource,
     x,
     y,
     width,

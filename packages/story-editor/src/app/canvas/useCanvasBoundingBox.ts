@@ -24,6 +24,7 @@ import {
 /**
  * Internal dependencies
  */
+import type { BoundingBoxes } from '../../types';
 import Context from './context';
 import { RECT_OBSERVATION_KEY } from './constants';
 
@@ -33,18 +34,18 @@ import { RECT_OBSERVATION_KEY } from './constants';
  * ```js
  * const boundingBox = useCanvasBoundingBox(CANVAS_BOUNDING_BOX_IDS[<some_bounding_box_id>])
  * ```
- *
- * @param {string} boundingBoxId a value from CANVAS_BOUNDING_BOX_IDS
- * @return {Function} a callback ref
  */
-export function useCanvasBoundingBoxRef(boundingBoxId) {
+export function useCanvasBoundingBoxRef(boundingBoxId: string) {
   const clientRectObserver = useContextSelector(
     Context,
     ({ state }) => state.clientRectObserver
   );
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement | null>(null);
   return useCallback(
-    (node) => {
+    (node: HTMLElement) => {
+      if (!clientRectObserver) {
+        return;
+      }
       if (ref.current) {
         clientRectObserver.unobserve?.(ref.current);
       }
@@ -62,13 +63,10 @@ export function useCanvasBoundingBoxRef(boundingBoxId) {
 
 /**
  * Returns the bounding box associated with the relative CANVAS_BOUNDING_BOX_IDS
- *
- * @param {string} boundingBoxId a value from CANVAS_BOUNDING_BOX_IDS
- * @return {Object} bounding box associated with `boundingBoxId`
  */
-export function useCanvasBoundingBox(boundingBoxId) {
+export function useCanvasBoundingBox(boundingBoxId: string) {
   return useContextSelector(
     Context,
-    ({ state }) => state.boundingBoxes?.[boundingBoxId]
+    ({ state }) => state.boundingBoxes?.[boundingBoxId as keyof BoundingBoxes]
   );
 }
