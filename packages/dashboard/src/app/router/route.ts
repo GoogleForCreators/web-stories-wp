@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-
-import PropTypes from 'prop-types';
-/**
  * Internal dependencies
  */
 import useRouteHistory from './useRouteHistory';
@@ -36,7 +31,7 @@ export function parentRoute() {
   }
 }
 
-export function resolveRoute(route) {
+export function resolveRoute(route: string) {
   if (
     route.toLowerCase().startsWith('http://') ||
     route.toLowerCase().startsWith('https://')
@@ -67,6 +62,14 @@ export function resolveRoute(route) {
   }
 }
 
+interface MatchPathProps {
+  currentPath: string;
+  path: string;
+  availableRoutes: string[];
+  defaultRoute: string;
+  isDefault?: boolean;
+  exact?: boolean;
+}
 export function matchPath({
   currentPath,
   path,
@@ -74,7 +77,7 @@ export function matchPath({
   defaultRoute,
   isDefault = false,
   exact = false,
-}) {
+}: MatchPathProps) {
   const match = new RegExp(`^${path}`).exec(currentPath);
 
   // allow paths through that don't match if they are default, not narrowed out yet.
@@ -105,7 +108,18 @@ export function matchPath({
   return matchUrl;
 }
 
-function Route({ component, path, exact = false, isDefault = false }) {
+interface RouteProps {
+  component: React.Component;
+  path: string;
+  exact?: boolean;
+  isDefault?: boolean;
+}
+function Route({
+  component,
+  path,
+  exact = false,
+  isDefault = false,
+}: RouteProps) {
   const { availableRoutes, currentPath, defaultRoute } = useRouteHistory(
     ({ state }) => state
   );
@@ -124,12 +138,5 @@ function Route({ component, path, exact = false, isDefault = false }) {
   }
   return component;
 }
-
-Route.propTypes = {
-  component: PropTypes.node.isRequired,
-  path: PropTypes.string.isRequired,
-  exact: PropTypes.bool,
-  isDefault: PropTypes.bool,
-};
 
 export default Route;
