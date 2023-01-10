@@ -19,6 +19,9 @@
  */
 import { useBatchingCallback } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
+import type { Element, Group, Groups } from '@googleforcreators/elements';
+import type { StoryAnimation } from '@googleforcreators/animation';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -60,24 +63,33 @@ function useAddPastedElements() {
     }
   );
 
-  const addPastedElements = useBatchingCallback(
-    (elements, animations = [], groups = {}) => {
-      if (elements.length === 0) {
+  const addPastedElements = useBatchingCallback<
+    Element[],
+    StoryAnimation[] | undefined,
+    Groups | undefined,
+    boolean
+  >(
+    (
+      elements: Element[],
+      animations: StoryAnimation[] = [],
+      groups: Groups = {}
+    ) => {
+      if (elements.length === 0 || !currentPage) {
         return false;
       }
 
       // If a bg element is pasted, handle that first
-      const newBackgroundElement = elements.find(
-        ({ isBackground }) => isBackground
-      );
+      const newBackgroundElement = elements
+        .filter(elementIs.backgroundable)
+        .find(({ isBackground }) => isBackground);
       let newAnimations = animations;
       if (newBackgroundElement) {
         const existingBgElement = currentPage.elements[0];
-        if (newBackgroundElement.isDefaultBackground) {
+        if (elementIs.defaultBackground(newBackgroundElement)) {
           // The user has pasted a non-media background from another page:
           // Delete existing background (if any) and then update page
           // with this default element background color
-          if (!existingBgElement.isDefaultBackground) {
+          if (!elementIs.defaultBackground(existingBgElement)) {
             deleteElementById({ elementId: existingBgElement.id });
           }
           updateCurrentPageProperties({
@@ -105,13 +117,15 @@ function useAddPastedElements() {
 
       // Then add all regular elements if any exist
       const nonBackgroundElements = elements.filter(
-        ({ isBackground }) => !isBackground
+        (element) => !elementIs.backgroundable(element) || !element.isBackground
       );
       const groupsEntries = Object.entries(groups);
-      const newGroups = groupsEntries.map(([oldGroupId, group]) => {
-        const newGroupId = uuidv4();
-        return [[oldGroupId, newGroupId], group];
-      });
+      const newGroups: [[string, string], Group][] = groupsEntries.map(
+        ([oldGroupId, group]) => {
+          const newGroupId = uuidv4();
+          return [[oldGroupId, newGroupId], group];
+        }
+      );
       const nonBackgroundElementsWithNewGroups = nonBackgroundElements.map(
         (el) => {
           if (!el.groupId) {
@@ -120,6 +134,9 @@ function useAddPastedElements() {
           const newGroup = newGroups.find(
             ([[oldGroupId]]) => oldGroupId === el.groupId
           );
+          if (!newGroup) {
+            return el;
+          }
           const [[, newGroupId]] = newGroup;
           return {
             ...el,

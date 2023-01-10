@@ -21,7 +21,11 @@ import { useCallback, useBatchingCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
-import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import {
+  elementIs,
+  ElementType,
+  TextElement,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -69,8 +73,8 @@ function useCanvasGlobalKeys() {
         selectedElementAnimations,
         selectedElementsGroups,
         currentPageProductIds: currentPage?.elements
-          ?.filter(({ type }) => type === ELEMENT_TYPES.PRODUCT)
-          .map(({ product }) => product?.productId),
+          ?.filter(elementIs.product)
+          .map(({ product }) => product.productId),
       };
     }
   );
@@ -79,12 +83,18 @@ function useCanvasGlobalKeys() {
 
   const uploadWithPreview = useUploadWithPreview();
   const insertElement = useInsertElement();
-  const pasteInserter = (content) =>
-    insertElement('text', { ...DEFAULT_PRESET, content });
+  const pasteInserter = (content: string) =>
+    insertElement(ElementType.Text, {
+      ...DEFAULT_PRESET,
+      content,
+    } as unknown as TextElement);
   const pasteTextContent = usePasteTextContent(pasteInserter);
 
   const copyCutHandler = useCallback(
-    (evt) => {
+    (evt: ClipboardEvent) => {
+      if (!currentPage) {
+        return;
+      }
       const { type: eventType } = evt;
       if (selectedElements.length === 0) {
         return;
@@ -113,54 +123,62 @@ function useCanvasGlobalKeys() {
   );
 
   const elementPasteHandler = useBatchingCallback(
-    (content) => {
+    (content: DocumentFragment): boolean => {
+      if (!currentPage) {
+        return false;
+      }
       const { elements, animations, groups } = processPastedElements(
         content,
         currentPage
       );
 
       const newProductsFromElements = elements
-        .filter(
-          ({ type, product }) =>
-            type === ELEMENT_TYPES.PRODUCT && product?.productId
-        )
+        .filter(elementIs.product)
+        .filter(({ product }) => product.productId)
         .map(({ product }) => product);
 
-      if (
-        currentPageProductIds.length >= MAX_PRODUCTS_PER_PAGE ||
-        newProductsFromElements.length + currentPageProductIds.length >
-          MAX_PRODUCTS_PER_PAGE
-      ) {
-        showSnackbar({
-          message: sprintf(
-            /* translators: %d: max number of products. */
-            _n(
-              'Only %d item can be added per page.',
-              'Only %d items can be added per page.',
-              MAX_PRODUCTS_PER_PAGE,
-              'web-stories'
-            ),
+      if (currentPageProductIds) {
+        if (
+          currentPageProductIds.length >= MAX_PRODUCTS_PER_PAGE ||
+          newProductsFromElements.length + currentPageProductIds.length >
             MAX_PRODUCTS_PER_PAGE
-          ),
-        });
-      } else {
-        newProductsFromElements.forEach(
-          ({ productId, productTitle, productImages }) => {
-            if (currentPageProductIds.includes(productId)) {
-              showSnackbar({
-                message: sprintf(
-                  /* translators: %s: product title. */
-                  __('Product "%s" already exists on the page.', 'web-stories'),
-                  productTitle
-                ),
-                thumbnail: productImages?.[0]?.url && {
-                  src: productImages[0].url,
-                  alt: productImages[0].alt,
-                },
-              });
+        ) {
+          showSnackbar({
+            message: sprintf(
+              /* translators: %d: max number of products. */
+              _n(
+                'Only %d item can be added per page.',
+                'Only %d items can be added per page.',
+                MAX_PRODUCTS_PER_PAGE,
+                'web-stories'
+              ),
+              MAX_PRODUCTS_PER_PAGE.toString()
+            ),
+          });
+        } else {
+          newProductsFromElements.forEach(
+            ({ productId, productTitle, productImages }) => {
+              if (currentPageProductIds.includes(productId)) {
+                showSnackbar({
+                  message: sprintf(
+                    /* translators: %s: product title. */
+                    __(
+                      'Product "%s" already exists on the page.',
+                      'web-stories'
+                    ),
+                    productTitle
+                  ),
+                  thumbnail: productImages?.[0]?.url
+                    ? {
+                        src: productImages[0].url,
+                        alt: productImages[0].alt,
+                      }
+                    : undefined,
+                });
+              }
             }
-          }
-        );
+          );
+        }
       }
 
       return addPastedElements(elements, animations, groups);
@@ -169,15 +187,15 @@ function useCanvasGlobalKeys() {
   );
 
   const pasteHandler = useCallback(
-    (evt) => {
+    (evt: ClipboardEvent) => {
       const { clipboardData } = evt;
 
       try {
         // Get the html text and plain text but only if it's not a file being copied.
         const content =
-          !clipboardData.files?.length &&
-          (clipboardData.getData('text/html') ||
-            clipboardData.getData('text/plain'));
+          !clipboardData?.files?.length &&
+          (clipboardData?.getData('text/html') ||
+            clipboardData?.getData('text/plain'));
         if (content) {
           const template = document.createElement('template');
           // Remove meta tag.
@@ -196,6 +214,9 @@ function useCanvasGlobalKeys() {
           }
         }
 
+        if (!clipboardData) {
+          return;
+        }
         const { items } = clipboardData;
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.

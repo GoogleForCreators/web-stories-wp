@@ -29,4 +29,4 @@ export * from './utils/panelTypes';
 export * from './utils/panelSections';
 export * from './theme/theme';
 
-export {};
+export { default as getKeyboardMovement } from './utils/getKeyboardMovement';

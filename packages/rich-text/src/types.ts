@@ -79,3 +79,10 @@ export interface Formatter {
   autoFocus: boolean;
   setters: Record<string, unknown>;
 }
+
+export interface EditingState {
+  hasEditMenu?: boolean;
+  showOverflow?: boolean;
+  selectAll?: boolean;
+  offset?: number;
+}
