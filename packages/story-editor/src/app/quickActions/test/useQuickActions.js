@@ -33,7 +33,7 @@ import { ACTIONS } from '../constants';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import { useConfig, useLocalMedia } from '../..';
 import useFFmpeg from '../../media/utils/useFFmpeg';
-import { MediaPicker } from '../useQuickActions';
+import MediaPicker from '../mediaPicker';
 import { noop } from '../../../utils/noop';
 import useInsertElement from '../../../components/canvas/useInsertElement';
 

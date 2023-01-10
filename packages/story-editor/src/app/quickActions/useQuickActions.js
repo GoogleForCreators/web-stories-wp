@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from '@googleforcreators/react';
-import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Icons,
   PLACEMENT,
@@ -28,10 +27,6 @@ import {
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
-import {
-  getExtensionsFromMimeType,
-  resourceList,
-} from '@googleforcreators/media';
 import styled from 'styled-components';
 
 /**
@@ -41,10 +36,8 @@ import { states, useHighlights } from '../highlights';
 import updateProperties from '../../components/style/updateProperties';
 import { useHistory } from '../history';
 import { useConfig } from '../config';
-import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../media';
 import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../story';
 import useApplyTextAutoStyle from '../../utils/useApplyTextAutoStyle';
-import useFFmpeg from '../media/utils/useFFmpeg';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../components/mediaRecording';
@@ -91,172 +84,6 @@ const BackgroundBlur = styled(Icons.BackgroundBlur).attrs(
 const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
   quickActionIconAttrs
 )``;
-
-export const MediaPicker = ({ render, ...props }) => {
-  const {
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      vector: allowedVectorMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
-    MediaUpload,
-  } = useConfig();
-
-  const { selectedElements, updateElementsById } = useStory(
-    ({ state: { selectedElements }, actions: { updateElementsById } }) => ({
-      selectedElements,
-      updateElementsById,
-    })
-  );
-  const {
-    resetWithFetch,
-    postProcessingResource,
-    optimizeVideo,
-    optimizeGif,
-    canTranscodeResource,
-  } = useLocalMedia(
-    ({
-      state: { canTranscodeResource },
-      actions: {
-        resetWithFetch,
-        postProcessingResource,
-        optimizeVideo,
-        optimizeGif,
-      },
-    }) => ({
-      canTranscodeResource,
-      resetWithFetch,
-      postProcessingResource,
-      optimizeVideo,
-      optimizeGif,
-    })
-  );
-
-  const { isTranscodingEnabled } = useFFmpeg();
-  const { showSnackbar } = useSnackbar();
-
-  // Media Upload Props
-  let allowedMimeTypes = useMemo(
-    () => [
-      ...allowedImageMimeTypes,
-      ...allowedVectorMimeTypes,
-      ...allowedVideoMimeTypes,
-    ],
-    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
-  );
-  const allowedFileTypes = useMemo(
-    () =>
-      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
-    [allowedMimeTypes]
-  );
-  if (isTranscodingEnabled) {
-    allowedMimeTypes = allowedMimeTypes.concat(TRANSCODABLE_MIME_TYPES);
-  }
-
-  const transcodableMimeTypes = TRANSCODABLE_MIME_TYPES.filter(
-    (x) => !allowedVideoMimeTypes.includes(x)
-  );
-
-  let onSelectErrorMessage = __(
-    'No file types are currently supported.',
-    'web-stories'
-  );
-  if (allowedFileTypes.length) {
-    onSelectErrorMessage = sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s to insert into page.', 'web-stories'),
-      translateToExclusiveList(allowedFileTypes)
-    );
-  }
-
-  /**
-   * Insert element such image, video and audio into the editor.
-   *
-   * @param {Object} resource Resource object
-   * @param {string} thumbnailURL The thumbnail's url
-   * @return {null|*} Return onInsert or null.
-   */
-  const insertMediaElement = useCallback(
-    (resource, thumbnailURL) => {
-      resourceList.set(resource.id, {
-        url: thumbnailURL,
-        type: 'cached',
-      });
-      updateElementsById({
-        elementIds: [selectedElements?.[0]?.id],
-        properties: { type: resource.type, resource },
-      });
-    },
-    [selectedElements, updateElementsById]
-  );
-
-  const handleMediaSelect = useCallback(
-    (resource) => {
-      try {
-        if (isTranscodingEnabled && canTranscodeResource(resource)) {
-          if (transcodableMimeTypes.includes(resource.mimeType)) {
-            optimizeVideo({ resource });
-          }
-
-          if (resource.mimeType === 'image/gif') {
-            optimizeGif({ resource });
-          }
-        }
-        // WordPress media picker event, sizes.medium.sourceUrl is the smallest image
-        insertMediaElement(
-          resource,
-          resource.sizes?.medium?.sourceUrl || resource.src
-        );
-
-        postProcessingResource(resource);
-      } catch (e) {
-        showSnackbar({
-          message: e.message,
-          dismissable: true,
-        });
-      }
-    },
-    [
-      isTranscodingEnabled,
-      canTranscodeResource,
-      insertMediaElement,
-      postProcessingResource,
-      transcodableMimeTypes,
-      optimizeVideo,
-      optimizeGif,
-      showSnackbar,
-    ]
-  );
-  return (
-    <MediaUpload
-      title={__('Replace media', 'web-stories')}
-      buttonInsertText={__('Replace media', 'web-stories')}
-      onSelect={handleMediaSelect}
-      onClose={resetWithFetch}
-      type={allowedMimeTypes}
-      onSelectErrorMessage={onSelectErrorMessage}
-      // Only way to access the open function is to dive
-      // into the MediaUpload component in the render prop.
-      render={(open) => render({ onClick: open })}
-      {...props}
-    />
-  );
-};
-MediaPicker.propTypes = {
-  buttonInsertText: PropTypes.string,
-  cropParams: PropTypes.bool,
-  multiple: PropTypes.bool,
-  onClose: PropTypes.func,
-  onPermissionError: PropTypes.func,
-  onSelect: PropTypes.func,
-  onSelectErrorMessage: PropTypes.string,
-  render: PropTypes.func.isRequired,
-  title: PropTypes.string,
-  type: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-};
 
 /**
  * Determines the quick actions to display in the quick
