@@ -82,7 +82,7 @@ export const _default = () => {
     () => (isDarkTheme ? dark : light),
     [isDarkTheme]
   );
-  const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES;
+  const { SMALL } = TextSize;
   return (
     <div>
       <FixedButton

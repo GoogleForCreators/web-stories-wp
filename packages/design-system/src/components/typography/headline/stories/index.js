@@ -21,7 +21,7 @@ import { THEME_CONSTANTS } from '../../../..';
 import { Text } from '../..';
 import { Headline } from '..';
 
-const headlinePresetSizes = THEME_CONSTANTS.TYPOGRAPHY.HEADLINE_SIZES;
+const headlineTextSizes = THEME_CONSTANTS.TYPOGRAPHY.HEADLINE_SIZES;
 const headlineRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 export default {
@@ -41,7 +41,7 @@ export default {
 
 export const _default = (args) => (
   <>
-    {headlinePresetSizes.map((presetSize) => (
+    {headlineTextSizes.map((presetSize) => (
       <div key={`${presetSize}_headline`}>
         <Text size={'small'}>{presetSize}</Text>
         <Headline size={presetSize} {...args}>

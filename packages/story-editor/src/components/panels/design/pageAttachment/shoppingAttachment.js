@@ -28,7 +28,7 @@ import { Row } from '../../../form';
 import { CallToActionText, Theme } from './shared';
 
 const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;

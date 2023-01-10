@@ -37,7 +37,7 @@ import useLocalMedia from '../../../../../app/media/local/useLocalMedia';
 
 const MediaSubheading = styled(Headline).attrs(() => ({
   as: 'h2',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+  size: TextSize.XXSmall,
 }))`
   margin-top: 24px;
   padding: 0 24px;

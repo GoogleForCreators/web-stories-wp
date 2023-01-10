@@ -144,7 +144,7 @@ function StylePanel(props) {
           <Warning message={ACCESSIBILITY_COPY.lowContrast.textPanel} />
         )}
         <SubSection>
-          <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <SubHeading size={TextSize.Small}>
             {__('Text Box', 'web-stories')}
           </SubHeading>
           <BackgroundColorControls {...props} />

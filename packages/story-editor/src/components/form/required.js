@@ -30,7 +30,7 @@ const RequiredWrapper = styled.div`
 
 const StyledText = styled(Text).attrs({
   as: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  size: TextSize.X_SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   font-size: 12px;

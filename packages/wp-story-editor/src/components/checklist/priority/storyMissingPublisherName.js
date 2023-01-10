@@ -55,7 +55,7 @@ const StoryMissingPublisherName = () => {
                     href={generalSettingsLink}
                     rel="noreferrer"
                     target="_blank"
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                    size={TextSize.X_SMALL}
                   />
                 ),
               }}

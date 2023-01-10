@@ -93,7 +93,7 @@ function ExcerptPanel({ nameOverride }) {
         />
       </Row>
       <Row>
-        <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+        <StyledText size={TextSize.X_SMALL}>
           {__(
             'Stories with a description tend to do better on search and have a wider reach',
             'web-stories'

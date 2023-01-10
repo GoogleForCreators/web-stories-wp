@@ -56,7 +56,7 @@ const LoadingContainer = styled.div`
 `;
 
 const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;

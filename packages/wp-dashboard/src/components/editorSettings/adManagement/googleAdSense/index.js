@@ -193,7 +193,7 @@ function GoogleAdSenseSettings({
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -202,7 +202,7 @@ function GoogleAdSenseSettings({
                 rel="noreferrer"
                 target="_blank"
                 onClick={handleClick}
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
               />
             ),
           }}
@@ -237,7 +237,7 @@ function GoogleAdSenseSettings({
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -245,7 +245,7 @@ function GoogleAdSenseSettings({
                 href={TEXT.SLOT_ID_CONTEXT_LINK}
                 rel="noreferrer"
                 target="_blank"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
               />
             ),
           }}

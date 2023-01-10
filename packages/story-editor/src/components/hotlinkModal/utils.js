@@ -85,7 +85,7 @@ export function CORSMessage() {
       mapping={{
         a: (
           <Link
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+            size={TextSize.Medium}
             href={DOCS_URL}
             target="_blank"
             rel="noopener noreferrer"

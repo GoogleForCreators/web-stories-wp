@@ -55,10 +55,7 @@ const ContentArea = styled.div`
   * > label {
     ${({ theme }) =>
       themeHelpers.expandPresetStyles({
-        preset:
-          theme.typography.presets.label[
-            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-          ],
+        preset: theme.typography.presets.label[TextSize.Small],
         theme,
       })};
 
@@ -77,7 +74,7 @@ const ButtonContainer = styled.div`
 
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   display: inline-block;
   margin: 12px 0;

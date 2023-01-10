@@ -98,7 +98,7 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
           >
             <DefaultListItemLabelDisplayText
               forwardedAs="span"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              size={TextSize.Small}
             >
               {option.label}
             </DefaultListItemLabelDisplayText>
@@ -124,10 +124,7 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
           height={32}
         />
       )}
-      <DefaultListItemLabelDisplayText
-        forwardedAs="span"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      >
+      <DefaultListItemLabelDisplayText forwardedAs="span" size={TextSize.Small}>
         {option.label}
       </DefaultListItemLabelDisplayText>
     </DefaultListItemInner>

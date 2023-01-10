@@ -120,13 +120,13 @@ export const TelemetryOptInBanner = forwardRef(
           <LabelText
             forwardedAs="span"
             aria-checked={checked}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+            size={TextSize.X_SMALL}
           >
             <TranslateWithMarkup
               mapping={{
                 a: (
                   <NavLink
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                    size={TextSize.X_SMALL}
                     href={__(
                       'https://policies.google.com/privacy',
                       'web-stories'
@@ -148,15 +148,12 @@ export const TelemetryOptInBanner = forwardRef(
             </TranslateWithMarkup>
           </LabelText>
         </Label>
-        <VisitSettingsText
-          forwardedAs="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-        >
+        <VisitSettingsText forwardedAs="span" size={TextSize.X_SMALL}>
           <TranslateWithMarkup
             mapping={{
               a: (
                 <NavLink
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                  size={TextSize.X_SMALL}
                   href={resolveRoute(EDITOR_SETTINGS_ROUTE)}
                   aria-label={__('Settings', 'web-stories')}
                 />

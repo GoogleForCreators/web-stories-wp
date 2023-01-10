@@ -61,7 +61,7 @@ const StyledSlider = styled(Slider)`
 `;
 
 const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  size: TextSize.X_SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;

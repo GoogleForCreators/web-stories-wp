@@ -112,10 +112,7 @@ function EmptyStateLayer() {
             <Icons.Media />
           </StyledButton>
           <ThemeProvider theme={{ ...theme, colors: lightMode }}>
-            <Text
-              id="emptystate-message"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <Text id="emptystate-message" size={TextSize.Small}>
               {__(
                 'Add an image, video or template to get started',
                 'web-stories'

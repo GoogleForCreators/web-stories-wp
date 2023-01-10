@@ -24,7 +24,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   Headline,
-  THEME_CONSTANTS,
+  TextSize,
   InfiniteScroller,
 } from '@googleforcreators/design-system';
 
@@ -97,10 +97,7 @@ function Content({
         ) : (
           !loading?.isLoading && (
             <EmptyContentMessage>
-              <Headline
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                as="h3"
-              >
+              <Headline size={TextSize.Small} as="h3">
                 <NoAvailableContent filtersObject={filtersObject} />
               </Headline>
               {Object.keys(filtersObject).length === 0 &&

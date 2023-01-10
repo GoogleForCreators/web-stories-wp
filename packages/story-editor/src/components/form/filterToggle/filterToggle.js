@@ -106,7 +106,7 @@ const Wrapper = styled.div`
 
 const StyledText = styled(Text).attrs({
   forwardedAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.border.defaultActive};
   margin-top: 8px;

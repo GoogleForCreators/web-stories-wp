@@ -65,10 +65,7 @@ const Heading = styled.span`
   align-items: space-between;
   ${({ theme }) =>
     themeHelpers.expandPresetStyles({
-      preset:
-        theme.typography.presets.headline[
-          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL
-        ],
+      preset: theme.typography.presets.headline[TextSize.XXSmall],
       theme,
     })};
 `;
@@ -260,7 +257,7 @@ function Title({
         <Heading
           isCollapsed={isCollapsed}
           id={panelTitleId}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+          size={TextSize.XXSmall}
         >
           {children}
         </Heading>

@@ -76,10 +76,7 @@ const PageHeading = ({
 }) => {
   return (
     <HeadingContainer>
-      <StyledHeadline
-        as="h2"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      >
+      <StyledHeadline as="h2" size={TextSize.Small}>
         <NavMenuButton showOnlyOnSmallViewport />
         {heading}
       </StyledHeadline>

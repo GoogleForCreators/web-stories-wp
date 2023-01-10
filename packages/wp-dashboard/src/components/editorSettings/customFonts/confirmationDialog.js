@@ -55,7 +55,7 @@ function ConfirmationDialog({ onClose, onPrimary }) {
           </>
         }
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text size={TextSize.Small}>
           {__(
             'Deleting a font will delete it from every previous story it’s in. Would you like to proceed?',
             'web-stories'

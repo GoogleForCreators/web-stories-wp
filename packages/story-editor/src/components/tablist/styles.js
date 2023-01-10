@@ -46,7 +46,7 @@ Tablist.propTypes = {
 
 export const PanelText = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
+  size: TextSize.XXXSmall,
 })`
   transition: background-color 300ms ease-in;
 `;

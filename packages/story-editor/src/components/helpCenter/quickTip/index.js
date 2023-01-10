@@ -144,13 +144,13 @@ export function QuickTip({
             <Paragraph
               // eslint-disable-next-line react/no-array-index-key -- Should be OK due to also using the title.
               key={`${title}-${i}`}
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              size={TextSize.Small}
             >
               <TranslateWithMarkup
                 mapping={{
                   a: (
                     <Link
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      size={TextSize.Small}
                       rel="noreferrer noopener"
                       target="_blank"
                       href={href}

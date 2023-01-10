@@ -21,7 +21,7 @@ import { Text } from '..';
 import { Headline } from '../..';
 import { THEME_CONSTANTS, theme } from '../../../..';
 
-const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
+const textTextSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 const textRenderAsOptions = ['p', 'a', 'span'];
 
 export default {
@@ -46,7 +46,7 @@ export default {
 
 export const _default = (args) => (
   <>
-    {textPresetSizes.map((presetSize) => (
+    {textTextSizes.map((presetSize) => (
       <Text key={`${presetSize}_text`} size={presetSize} {...args}>
         {presetSize} <br />
         {
@@ -59,7 +59,7 @@ export const _default = (args) => (
 
 export const Bold = (args) => (
   <>
-    {textPresetSizes.map((presetSize) => (
+    {textTextSizes.map((presetSize) => (
       <Text key={`${presetSize}_text_bold`} size={presetSize} isBold {...args}>
         {presetSize} <br />
         {'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'}
@@ -71,7 +71,7 @@ export const Bold = (args) => (
 export const Label = (args) => (
   <>
     <Headline as="h1">{'Label'}</Headline>
-    {textPresetSizes.map((presetSize) => {
+    {textTextSizes.map((presetSize) => {
       return (
         theme.typography.presets.label[presetSize] && (
           <Text
@@ -88,7 +88,7 @@ export const Label = (args) => (
     })}
     <br />
     <Headline as="h1">{'Label - Disabled'}</Headline>
-    {textPresetSizes.map((presetSize) => {
+    {textTextSizes.map((presetSize) => {
       return (
         theme.typography.presets.label[presetSize] && (
           <Text

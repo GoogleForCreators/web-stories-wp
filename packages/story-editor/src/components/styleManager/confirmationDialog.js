@@ -63,9 +63,7 @@ function ConfirmationDialog({ onClose, onPrimary }) {
       onPrimary={onPrimary}
       primaryText={__('Delete', 'web-stories')}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {dialogText}
-      </Text>
+      <Text size={TextSize.Small}>{dialogText}</Text>
       <CheckboxWrapper>
         <Checkbox
           id={cbId}
@@ -79,7 +77,7 @@ function ConfirmationDialog({ onClose, onPrimary }) {
           }}
         />
         <Label htmlFor={cbId}>
-          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text as="span" size={TextSize.Small}>
             {__("Don't ask for confirmation again.", 'web-stories')}
           </Text>
         </Label>

@@ -516,7 +516,7 @@ export const PRIORITY_COPY = {
               rel="noreferrer"
               target="_blank"
               onClick={onAmpErrorClick}
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              size={TextSize.X_SMALL}
             />
           ),
         }}

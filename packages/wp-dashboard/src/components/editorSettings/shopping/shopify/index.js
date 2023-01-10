@@ -248,7 +248,7 @@ function ShopifySettings({
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -257,7 +257,7 @@ function ShopifySettings({
                 rel="noreferrer"
                 target="_blank"
                 onClick={handleClick}
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
               />
             ),
           }}
@@ -292,7 +292,7 @@ function ShopifySettings({
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -300,7 +300,7 @@ function ShopifySettings({
                 href={TEXT.ACCESS_TOKEN_CONTEXT_LINK}
                 rel="noreferrer"
                 target="_blank"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
               />
             ),
           }}
@@ -333,7 +333,7 @@ function ShopifySettings({
           data-testid="api-status"
           aria-label={__('API connection status', 'web-stories')}
           hasError={hasConnectionError}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          size={TextSize.Small}
         >
           {testConnectionStatus}
         </ConnectionHelperText>

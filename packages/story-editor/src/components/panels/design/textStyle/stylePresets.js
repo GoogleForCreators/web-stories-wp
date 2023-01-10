@@ -98,7 +98,7 @@ function PresetPanel({ pushUpdate }) {
   return (
     <>
       <PresetsHeader>
-        <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SubHeading size={TextSize.Small}>
           {__('Recently Saved Styles', 'web-stories')}
         </SubHeading>
         <StyledButton
@@ -146,7 +146,7 @@ function PresetPanel({ pushUpdate }) {
       )}
       {!hasPresets && (
         <NoStylesWrapper>
-          <NoStylesText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <NoStylesText size={TextSize.Small}>
             {__('No Styles Saved', 'web-stories')}
           </NoStylesText>
         </NoStylesWrapper>

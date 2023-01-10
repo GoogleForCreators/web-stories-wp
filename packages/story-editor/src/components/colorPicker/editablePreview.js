@@ -124,9 +124,7 @@ function EditablePreview({ label, value, width, format, onChange }) {
         onClick={enableEditing}
         onFocus={enableEditing}
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {format(value)}
-        </Text>
+        <Text size={TextSize.Small}>{format(value)}</Text>
       </Preview>
     );
   }

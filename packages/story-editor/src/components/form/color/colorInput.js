@@ -304,19 +304,14 @@ const ColorInput = forwardRef(function ColorInput(
             </ColorPreview>
             {hasInputs ? (
               <TextualPreview>
-                <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-                  {previewText}
-                </Text>
+                <Text size={TextSize.Small}>{previewText}</Text>
               </TextualPreview>
             ) : (
               <>
                 {/* We display Mixed value even without inputs */}
                 {isMixed && (
                   <MixedLabel>
-                    <Text
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                      as="span"
-                    >
+                    <Text size={TextSize.Small} as="span">
                       {MULTIPLE_DISPLAY_VALUE}
                     </Text>
                   </MixedLabel>

@@ -53,7 +53,7 @@ const Container = styled.div`
 
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   margin: 0 12px;
 `;
@@ -339,10 +339,7 @@ const HierarchicalInput = ({
                   />
                 ))
               ) : (
-                <NoResultsText
-                  role="treeitem"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                >
+                <NoResultsText role="treeitem" size={TextSize.Small}>
                   {noOptionsText}
                 </NoResultsText>
               )}

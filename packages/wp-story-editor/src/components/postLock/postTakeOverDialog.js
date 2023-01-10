@@ -99,7 +99,7 @@ function PostTakeOverDialog({
         )}
 
         <DialogContent>
-          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <DialogText size={TextSize.Small}>
             {sprintf(
               /* translators: %s: owner's name */
               __('%s now has editing control of this story.', 'web-stories'),
@@ -107,7 +107,7 @@ function PostTakeOverDialog({
             )}
           </DialogText>
 
-          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <DialogText size={TextSize.Small}>
             {__(
               "Don't worry, your changes up to this moment have been saved",
               'web-stories'

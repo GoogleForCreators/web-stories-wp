@@ -143,10 +143,7 @@ function DefaultTemplates({ pageSize }) {
       {/* tabIndex is required for FireFox bug when using keyboard to navigate from Chips to Template */}
       <PageTemplatesParentContainer ref={pageTemplatesParentRef} tabIndex={-1}>
         <ActionRow>
-          <Headline
-            as="h2"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-          >
+          <Headline as="h2" size={TextSize.XXXSmall}>
             {__('Templates', 'web-stories')}
           </Headline>
         </ActionRow>

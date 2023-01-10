@@ -43,12 +43,12 @@ function StatusCheckFailed({ isOpen, onClose }) {
       onPrimary={onClose}
       primaryText={__('Dismiss', 'web-stories')}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
               <Link
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 href={SUPPORT_URL}
                 target="_blank"
                 rel="noopener noreferrer"

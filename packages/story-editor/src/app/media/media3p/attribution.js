@@ -101,10 +101,7 @@ export function UnsplashAttribution() {
       aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
     >
       <AttributionPill aria-hidden>
-        <Text
-          forwardedAs="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-        >
+        <Text forwardedAs="span" size={TextSize.X_SMALL}>
           {__('Powered by', 'web-stories')}
         </Text>
         <UnsplashLogo />
@@ -122,10 +119,7 @@ export function CoverrAttribution() {
       aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
     >
       <AttributionPill aria-hidden>
-        <Text
-          forwardedAs="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-        >
+        <Text forwardedAs="span" size={TextSize.X_SMALL}>
           {__('Powered by', 'web-stories')}
         </Text>
         <CoverrLogo />

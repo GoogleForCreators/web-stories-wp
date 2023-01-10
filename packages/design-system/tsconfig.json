@@ -11,11 +11,12 @@
     { "path": "../tracking" }
   ],
   "include": [
-    "src/components/keyboard/*",
-    "src/components/snackbar/constants.ts",
-    "src/contexts/snackbar/*",
-    "src/theme/constants",
-    "src/types/*",
+    "src/components",
+    "src/contexts",
+    "src/theme",
+    "src/icons",
+    "src/types",
+    "src/typings",
     "src/types.ts",
     "src/utils/*.ts",
     "src/utils/constants.ts",

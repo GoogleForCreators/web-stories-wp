@@ -106,7 +106,7 @@ function StyleLayout() {
   if (selectedElementIds.length === 0) {
     return (
       <NoSelection>
-        <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+        <Note size={TextSize.Medium}>
           {__('Nothing selected', 'web-stories')}
         </Note>
       </NoSelection>

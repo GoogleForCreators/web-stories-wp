@@ -30,7 +30,7 @@ import {
   BUTTON_TYPES,
   LogoWithTypeCircleColor,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
@@ -150,7 +150,7 @@ function LeftRail() {
                   <NavLink
                     active={activeRoute === path.value}
                     href={resolveRoute(path.value)}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    size={TextSize.Small}
                     isBold
                     isIconLink={Boolean(Icon)}
                     aria-label={
@@ -188,7 +188,7 @@ function LeftRail() {
                 <NavLink
                   active={activeRoute === path.value}
                   href={resolveRoute(path.value)}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  size={TextSize.Small}
                   aria-label={
                     activeRoute === path.value
                       ? sprintf(
@@ -204,11 +204,7 @@ function LeftRail() {
                     onClick: (evt) => onExternalLinkClick(evt, path),
                   })}
                 >
-                  <Text
-                    as="span"
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    isBold
-                  >
+                  <Text as="span" size={TextSize.Small} isBold>
                     {path.label}
                   </Text>
                 </NavLink>
@@ -216,7 +212,7 @@ function LeftRail() {
             ))}
           </NavList>
         )}
-        <AppInfo size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+        <AppInfo size={TextSize.XSmall}>
           {sprintf(
             /* translators: 1: Current Year, 2: App Version */
             __('\u00A9 %1$s Google Version %2$s', 'web-stories'),

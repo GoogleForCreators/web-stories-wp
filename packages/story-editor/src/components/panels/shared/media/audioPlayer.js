@@ -64,9 +64,7 @@ const Wrapper = styled.div(
 
     ${themeHelpers.expandPresetStyles({
       preset: {
-        ...theme.typography.presets.paragraph[
-          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-        ],
+        ...theme.typography.presets.paragraph[TextSize.Small],
       },
       theme,
     })};

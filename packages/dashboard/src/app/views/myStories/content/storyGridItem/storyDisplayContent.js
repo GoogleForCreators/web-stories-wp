@@ -20,7 +20,7 @@
 import { useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
+import { Placement } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -87,7 +87,7 @@ const StoryDisplayContent = ({
   const storyLockedTitle = isLocked && avatar && (
     <LockedRow>
       <Tooltip
-        position={TOOLTIP_PLACEMENT.BOTTOM_START}
+        position={Placement.BottomStart}
         title={
           name &&
           sprintf(

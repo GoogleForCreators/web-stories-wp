@@ -32,7 +32,7 @@ import ShortcutLabel from './shortcutLabel';
 
 const Header = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+  size: TextSize.XXSmall,
 })`
   margin-top: 24px;
   color: ${({ theme }) => theme.colors.fg.primary};
@@ -64,7 +64,7 @@ const ListRow = styled.div`
 `;
 
 const Label = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
   forwardedAs: 'span',
 })`
   display: inline-block;

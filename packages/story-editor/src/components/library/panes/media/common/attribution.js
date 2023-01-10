@@ -60,10 +60,7 @@ const Attribution = ({ author, url }) => {
       target="_blank"
       rel="noreferrer"
     >
-      <StyledText
-        forwardedAs="span"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-      >
+      <StyledText forwardedAs="span" size={TextSize.X_SMALL}>
         {author}
       </StyledText>
     </Link>

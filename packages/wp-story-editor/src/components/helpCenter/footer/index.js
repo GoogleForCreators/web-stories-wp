@@ -56,7 +56,7 @@ const ListItem = styled.li`
 function Link({ children, ...props }) {
   return (
     <ListItem>
-      <DsLink {...props} size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <DsLink {...props} size={TextSize.X_SMALL}>
         {children}
       </DsLink>
     </ListItem>
@@ -94,7 +94,7 @@ export default function Footer() {
 
   return (
     <Panel>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <Text size={TextSize.X_SMALL}>
         {__(
           'Discover more resources to get the most out of Web Stories. Read our start guide or visit our support forum to get answers to your questions.',
           'web-stories'

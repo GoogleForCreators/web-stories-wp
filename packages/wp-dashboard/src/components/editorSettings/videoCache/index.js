@@ -58,7 +58,7 @@ export default function VideoCacheSettings({
             checked={Boolean(isEnabled)}
           />
           <CheckboxLabelText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            size={TextSize.Small}
             aria-checked={Boolean(isEnabled)}
             forwardedAs="span"
           >

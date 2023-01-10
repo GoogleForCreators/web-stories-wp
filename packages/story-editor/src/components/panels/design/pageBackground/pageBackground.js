@@ -250,9 +250,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
                 currentPageBackgroundColor={currentPageBackgroundColor}
               />
             </MediaWrapper>
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-              {__('Media', 'web-stories')}
-            </Text>
+            <Text size={TextSize.Small}>{__('Media', 'web-stories')}</Text>
             <RemoveButton
               aria-label={__('Detach background', 'web-stories')}
               onClick={removeAsBackground}

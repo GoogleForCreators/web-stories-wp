@@ -79,9 +79,7 @@ function VideoOptimizationDialog() {
       onPrimary={onClose}
       primaryText={__('Sounds good', 'web-stories')}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {dialogDescription}
-      </Text>
+      <Text size={TextSize.Small}>{dialogDescription}</Text>
     </Dialog>
   );
 }

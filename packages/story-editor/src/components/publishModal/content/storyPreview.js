@@ -155,7 +155,7 @@ const ScrimBottom = styled.div`
 // the lines that have stylelint disabled.
 const Title = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  size: TextSize.X_SMALL,
 })`
   max-height: calc(1.2em * 3);
   /* stylelint-disable-next-line */
@@ -172,7 +172,7 @@ const Title = styled(Headline).attrs({
 
 const Publisher = styled(Text).attrs({
   forwardAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+  size: TextSize.Medium,
 })`
   display: block;
   margin: 0;
@@ -256,10 +256,7 @@ const StoryPreview = () => {
 
   return (
     <>
-      <Headline
-        as="label"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
-      >
+      <Headline as="label" size={TextSize.XXSmall}>
         {__('Cover Preview', 'web-stories')}
       </Headline>
       <PreviewWrapper width={mediaWidth} height={mediaHeight}>

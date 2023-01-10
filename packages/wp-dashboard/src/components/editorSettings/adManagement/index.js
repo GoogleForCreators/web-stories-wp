@@ -122,7 +122,7 @@ function AdManagement({
               href={adsenseLink}
               rel="noreferrer"
               target="_blank"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              size={TextSize.Small}
               onClick={onSiteKitClick}
             />
           ),
@@ -138,9 +138,7 @@ function AdManagement({
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
 
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <TextInputHelperText size={TextSize.Small}>
           <TranslateWithMarkup
             mapping={{
               a: (
@@ -149,7 +147,7 @@ function AdManagement({
                   rel="noreferrer"
                   target="_blank"
                   onClick={handleMonetizationClick}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  size={TextSize.Small}
                 />
               ),
             }}
@@ -157,16 +155,14 @@ function AdManagement({
             {TEXT.HELPER_MESSAGE_NONE}
           </TranslateWithMarkup>
         </TextInputHelperText>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {siteKitDisplayText}
         </SettingSubheading>
       </div>
 
       {adsenseActive ? (
         <div>
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <TextInputHelperText size={TextSize.Small}>
             {TEXT.SITE_KIT_IN_USE}
           </TextInputHelperText>
         </div>

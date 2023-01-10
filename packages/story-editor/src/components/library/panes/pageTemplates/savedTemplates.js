@@ -145,7 +145,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
           onPrimary={handleDelete}
           primaryText={__('Delete', 'web-stories')}
         >
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text size={TextSize.Small}>
             {__(
               'Are you sure you want to delete this template? This action cannot be undone.',
               'web-stories'

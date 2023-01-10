@@ -64,9 +64,7 @@ const PublisherLogoSize = () => {
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-              {footer}
-            </List>
+            <List size={TextSize.X_SMALL}>{footer}</List>
           </ChecklistCardStyles.CardListWrapper>
         }
       />

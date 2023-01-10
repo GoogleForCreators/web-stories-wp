@@ -170,10 +170,7 @@ function PresetPanel() {
   return (
     <SectionContainer>
       <TitleBar>
-        <Headline
-          as="h2"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-        >
+        <Headline as="h2" size={TextSize.XXXSmall}>
           {__('Saved Styles', 'web-stories')}
         </Headline>
         <StyledButton
@@ -225,7 +222,7 @@ function PresetPanel() {
       )}
       {!hasPresets && (
         <NoStylesWrapper>
-          <NoStylesText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <NoStylesText size={TextSize.Small}>
             {__('No Styles Saved', 'web-stories')}
           </NoStylesText>
         </NoStylesWrapper>

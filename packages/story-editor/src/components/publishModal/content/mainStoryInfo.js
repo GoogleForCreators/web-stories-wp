@@ -106,11 +106,7 @@ const MainStoryInfo = () => {
   return (
     <>
       <FormSection>
-        <Headline
-          as="label"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
-          htmlFor={INPUT_KEYS.TITLE}
-        >
+        <Headline as="label" size={TextSize.XXSmall} htmlFor={INPUT_KEYS.TITLE}>
           {__('Story Title', 'web-stories')}
         </Headline>
         <_TextArea
@@ -127,7 +123,7 @@ const MainStoryInfo = () => {
       <FormSection>
         <Headline
           as="label"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+          size={TextSize.XXSmall}
           htmlFor={INPUT_KEYS.EXCERPT}
         >
           {__('Story Description', 'web-stories')}

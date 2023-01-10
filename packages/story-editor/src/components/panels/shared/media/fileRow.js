@@ -89,7 +89,7 @@ const StyledButton = styled(Button)`
 `;
 
 const FileName = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
   text-overflow: ellipsis;

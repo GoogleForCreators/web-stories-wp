@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
+import { Placement } from '@googleforcreators/design-system';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import { useEffect } from '@googleforcreators/react';
 
@@ -128,7 +128,7 @@ function WithProductPill({ element, active, children, anchorRef }) {
   return (
     <StyledTooltip
       forceAnchorRef={anchorRef}
-      placement={TOOLTIP_PLACEMENT.RIGHT}
+      placement={Placement.Right}
       hasTail={false}
       title={active ? <TooltipTitle productTagText={productTagText} /> : null}
     >

@@ -74,7 +74,7 @@ const Body = styled.div`
 `;
 
 const StyledText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   margin: 0 0 0 8px;
   color: ${({ theme }) => theme.colors.fg.primary};

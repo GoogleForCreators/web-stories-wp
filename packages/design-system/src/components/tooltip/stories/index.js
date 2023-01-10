@@ -31,14 +31,14 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../button';
-import { BaseTooltip as Tooltip, TOOLTIP_PLACEMENT } from '..';
+import { BaseTooltip as Tooltip, Placement } from '..';
 import { Text } from '../../typography';
 
 export default {
   title: 'DesignSystem/Components/Tooltip',
   args: {
     hasTail: true,
-    placement: TOOLTIP_PLACEMENT.BOTTOM,
+    placement: Placement.Bottom,
     colorShortcut: 'mod+z',
     colorTitle: 'Page background colors cannot have opacity',
     iconShortcut: 'Shortcut for icon',
@@ -48,7 +48,7 @@ export default {
   },
   argTypes: {
     placement: {
-      options: Object.values(TOOLTIP_PLACEMENT),
+      options: Object.values(Placement),
       control: 'select',
     },
     colorShortcut: {

@@ -42,7 +42,7 @@ export const TaxonomyPropType = PropTypes.shape({
 
 export const ContentHeading = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
+  size: TextSize.XXXSmall,
 })`
   margin: 4px 0 16px;
   font-weight: ${({ theme }) => theme.typography.weight.regular};

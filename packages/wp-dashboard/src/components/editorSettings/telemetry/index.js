@@ -57,7 +57,7 @@ export default function TelemetrySettings({
             checked={Boolean(selected)}
           />
           <CheckboxLabelText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            size={TextSize.Small}
             aria-checked={Boolean(selected)}
             forwardedAs="span"
           >

@@ -114,7 +114,7 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         {TEXT.SLOT_ID_CONTEXT}
       </TextInputHelperText>
     </>

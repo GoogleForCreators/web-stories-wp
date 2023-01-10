@@ -74,7 +74,7 @@ export const MediaGalleryLoadingPill = styled.div`
 `;
 
 export const MediaGalleryMessage = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+  size: TextSize.Medium,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   padding: 1em;

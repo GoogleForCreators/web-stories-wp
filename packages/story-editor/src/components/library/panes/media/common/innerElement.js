@@ -79,7 +79,7 @@ const MuteWrapper = styled.div`
 `;
 const Duration = styled(Text).attrs({
   forwardedAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  size: TextSize.X_SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
   display: block;

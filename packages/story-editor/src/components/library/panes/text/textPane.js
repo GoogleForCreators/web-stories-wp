@@ -106,11 +106,7 @@ function TextPane(props) {
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
       <SmartColorToggle>
-        <Text
-          as="label"
-          htmlFor={toggleId}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <Text as="label" htmlFor={toggleId} size={TextSize.Small}>
           {__('Adaptive text colors', 'web-stories')}
         </Text>
         <Tooltip

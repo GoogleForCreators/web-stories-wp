@@ -40,7 +40,7 @@ const Landmark = styled.div`
 `;
 
 const Label = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  size: TextSize.X_SMALL,
   forwardedAs: 'span',
 })`
   text-align: center;

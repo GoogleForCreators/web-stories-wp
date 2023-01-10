@@ -20,12 +20,12 @@
 import {
   BaseTooltip,
   TooltipPropTypes,
-  TOOLTIP_PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 
 export default function Tooltip({
   hasTail = true,
-  placement = TOOLTIP_PLACEMENT.BOTTOM,
+  placement = Placement.Bottom,
   ...props
 }) {
   // The <BaseTooltip> component will handle proper placement for RTL layout

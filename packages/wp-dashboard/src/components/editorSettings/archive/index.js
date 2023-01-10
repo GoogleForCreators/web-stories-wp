@@ -155,14 +155,10 @@ export default function ArchiveSettings({
     <SettingForm>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <TextInputHelperText size={TextSize.Small}>
           {TEXT.ARCHIVE_CONTENT}
         </TextInputHelperText>
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <TextInputHelperText size={TextSize.Small}>
           {TEXT.ARCHIVE_CONTENT_2}
         </TextInputHelperText>
       </div>
@@ -175,9 +171,7 @@ export default function ArchiveSettings({
           fillWidth
         />
         {ARCHIVE_TYPE.DISABLED === archive && (
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <TextInputHelperText size={TextSize.Small}>
             <TranslateWithMarkup
               mapping={{
                 code: <code />,
@@ -195,9 +189,7 @@ export default function ArchiveSettings({
           </TextInputHelperText>
         )}
         {ARCHIVE_TYPE.CUSTOM === archive && (
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <TextInputHelperText size={TextSize.Small}>
             {TEXT.SUB_TEXT_CUSTOM}
           </TextInputHelperText>
         )}
@@ -214,9 +206,7 @@ export default function ArchiveSettings({
           </SearchWrapper>
         )}
         {ARCHIVE_TYPE.DISABLED !== archive && (
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <TextInputHelperText size={TextSize.Small}>
             <TranslateWithMarkup
               mapping={{
                 a: (
@@ -224,7 +214,7 @@ export default function ArchiveSettings({
                     href={archiveURL}
                     rel="noreferrer"
                     target="_blank"
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    size={TextSize.Small}
                     as="a"
                   />
                 ),

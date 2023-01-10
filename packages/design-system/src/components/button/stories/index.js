@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
+import { TextSize } from '../../../theme';
 import { Headline, Text } from '../../typography';
 import { Cross } from '../../../icons';
 import { Button } from '../button';
@@ -116,7 +116,7 @@ const ButtonCombosToDisplay = (args) => (
         </Row>
       ));
     })}
-    <Headline as="h3" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+    <Headline as="h3" size={TextSize.Small}>
       {'Button Demos'}
     </Headline>
     <Row>

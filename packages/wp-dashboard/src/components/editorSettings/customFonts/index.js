@@ -321,10 +321,10 @@ function CustomFontsSettings({
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading as="h3">{TEXT.SECTION_HEADING}</SettingHeading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {TEXT.ADD_CONTEXT}
         </SettingSubheading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {TEXT.REMOVAL}
         </SettingSubheading>
       </div>
@@ -347,9 +347,7 @@ function CustomFontsSettings({
             {TEXT.SUBMIT_BUTTON}
           </AddButton>
         </InlineForm>
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <TextInputHelperText size={TextSize.Small}>
           {TEXT.INPUT_CONTEXT}
         </TextInputHelperText>
         {customFonts?.length > 0 && (
@@ -407,9 +405,7 @@ function CustomFontsSettings({
                 </FontRow>
               ))}
             </FontsList>
-            <TextInputHelperText
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <TextInputHelperText size={TextSize.Small}>
               {TEXT.FONTS_CONTEXT}
             </TextInputHelperText>
           </FontsWrapper>

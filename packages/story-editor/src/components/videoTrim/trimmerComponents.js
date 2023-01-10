@@ -53,7 +53,7 @@ export const Rail = styled.div`
 
 export function Duration({ children }) {
   return (
-    <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+    <Text as="span" size={TextSize.X_SMALL}>
       {children}
     </Text>
   );

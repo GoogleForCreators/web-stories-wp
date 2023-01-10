@@ -196,7 +196,7 @@ function LocalAutoSave() {
         </>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={TextSize.Small}>
         {__(
           'The backup of this story in your browser is different from the current version.',
           'web-stories'

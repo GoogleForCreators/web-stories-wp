@@ -145,7 +145,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
           dropDownLabel={__('Heading Level', 'web-stories')}
         />
       </Row>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <Text size={TextSize.X_SMALL}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -154,7 +154,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
                 rel="noreferrer"
                 target="_blank"
                 onClick={onLinkClick}
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                size={TextSize.X_SMALL}
               />
             ),
           }}

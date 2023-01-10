@@ -26,7 +26,7 @@ import {
   BUTTON_TYPES,
   Headline,
   LoadingSpinner,
-  THEME_CONSTANTS,
+  TextSize,
   InfiniteScroller,
 } from '@googleforcreators/design-system';
 
@@ -88,7 +88,7 @@ function Content({
       </>
     ) : (
       <EmptyContentMessage>
-        <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
+        <Headline size={TextSize.Small} as="h3">
           {search
             ? sprintf(
                 /* translators: %s: search term. */

@@ -22,7 +22,7 @@ import { Text } from '../..';
 import { Display } from '..';
 
 const displayRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-const displayPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.DISPLAY_SIZES;
+const displayTextSizes = THEME_CONSTANTS.TYPOGRAPHY.DISPLAY_SIZES;
 
 export default {
   title: 'DesignSystem/Components/Typography/Display',
@@ -41,7 +41,7 @@ export default {
 
 export const _default = (args) => (
   <>
-    {displayPresetSizes.map((presetSize) => (
+    {displayTextSizes.map((presetSize) => (
       <div key={`${presetSize}_display`}>
         <Text size={'small'}>{presetSize}</Text>
 

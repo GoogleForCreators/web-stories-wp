@@ -177,7 +177,7 @@ export const LayerDescription = styled.div`
 
 export const LayerText = styled(Text).attrs({
   forwardedAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: inherit;
   white-space: nowrap;

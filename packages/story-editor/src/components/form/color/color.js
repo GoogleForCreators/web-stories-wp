@@ -29,7 +29,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   PLACEMENT,
-  TOOLTIP_PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -134,9 +134,7 @@ const Color = forwardRef(function Color(
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
   const tooltipPlacement =
-    isInDesignMenu || hasEyedropper
-      ? TOOLTIP_PLACEMENT.BOTTOM
-      : TOOLTIP_PLACEMENT.BOTTOM_START;
+    isInDesignMenu || hasEyedropper ? Placement.Bottom : Placement.BottomStart;
 
   // Sometimes there's more than 1 color to an element.
   // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
@@ -153,11 +151,7 @@ const Color = forwardRef(function Color(
         <Tooltip
           title={tooltip}
           hasTail
-          placement={
-            isInDesignMenu
-              ? TOOLTIP_PLACEMENT.BOTTOM
-              : TOOLTIP_PLACEMENT.BOTTOM_START
-          }
+          placement={isInDesignMenu ? Placement.Bottom : Placement.BottomStart}
         >
           <EyeDropperButton
             id={uuidv4()}

@@ -47,7 +47,7 @@ function PostReviewDialog() {
       primaryText={__('Dismiss', 'web-stories')}
       onPrimary={onClose}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={TextSize.Small}>
         {__(
           'Your Story has been successfully submitted for review.',
           'web-stories'

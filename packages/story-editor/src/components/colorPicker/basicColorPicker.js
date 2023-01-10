@@ -68,7 +68,7 @@ const SavedColors = styled.div`
 const DefaultColors = styled.div``;
 
 const Label = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin: 12px 0 10px;
@@ -195,7 +195,7 @@ function BasicColorPicker({
             >
               <Icons.Pipette />
             </Button>
-            <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            <StyledText size={TextSize.Small}>
               {__('Sample color', 'web-stories')}
             </StyledText>
           </EyedropperWrapper>

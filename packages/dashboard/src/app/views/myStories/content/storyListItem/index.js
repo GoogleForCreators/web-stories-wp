@@ -21,11 +21,7 @@ import PropTypes from 'prop-types';
 import { useMemo } from '@googleforcreators/react';
 import { getRelativeDisplayDate } from '@googleforcreators/date';
 import { __, sprintf } from '@googleforcreators/i18n';
-import {
-  Headline,
-  Text,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { Headline, Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -157,7 +153,7 @@ export const StoryListItem = ({
                 tabIndex={0}
                 onFocus={onFocusSelectAll}
                 onBlur={onBlurDeselectAll}
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
+                size={TextSize.XXXSmall}
                 as="h3"
                 aria-label={
                   isLocked
@@ -178,23 +174,23 @@ export const StoryListItem = ({
         </TitleTableCellContainer>
       </TableCell>
       <TableCell>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text as="span" size={TextSize.Small}>
           {story.author?.name || '—'}
         </Text>
       </TableCell>
       <TableCell>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text as="span" size={TextSize.Small}>
           {getRelativeDisplayDate(story.createdGmt)}
         </Text>
       </TableCell>
       <TableCell>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text as="span" size={TextSize.Small}>
           {getRelativeDisplayDate(story.modifiedGmt)}
         </Text>
       </TableCell>
       {storyStatus !== STORY_STATUS.DRAFT && (
         <TableStatusCell>
-          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text as="span" size={TextSize.Small}>
             {DISPLAY_STATUS[story?.status]}
           </Text>
         </TableStatusCell>

@@ -75,7 +75,7 @@ const ButtonRow = styled(Row)`
 `;
 
 const SectionHeading = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   font-weight: bold;
   margin-bottom: 12px;

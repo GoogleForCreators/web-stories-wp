@@ -305,7 +305,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               disabled={fetchingMetadata}
             />
             <IconInfo>
-              <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              <IconText size={TextSize.Small}>
                 {__('Optional brand icon', 'web-stories')}
               </IconText>
             </IconInfo>

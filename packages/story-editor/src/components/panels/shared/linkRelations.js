@@ -71,7 +71,7 @@ function LinkRelations({ rel, onChangeRel }) {
   return (
     <Row>
       <div>
-        <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <StyledText size={TextSize.Small}>
           {__('Qualify outbound links', 'web-stories')}
         </StyledText>
         {LinkTypes.map(({ key, title }) => (
@@ -83,10 +83,7 @@ function LinkRelations({ rel, onChangeRel }) {
               onChange={() => onChange(key)}
             />
             <Label htmlFor={key}>
-              <Text
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                as="span"
-              >
+              <Text size={TextSize.Small} as="span">
                 {title}
               </Text>
             </Label>
@@ -96,7 +93,7 @@ function LinkRelations({ rel, onChangeRel }) {
           rel="noopener noreferrer"
           target="_blank"
           href={relHelpLink}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          size={TextSize.X_SMALL}
         >
           {__('Learn more', 'web-stories')}
         </Link>

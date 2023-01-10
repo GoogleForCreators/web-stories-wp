@@ -103,7 +103,7 @@ function PostLockDialog({
           </DialogImageWrapper>
         )}
         <DialogContent>
-          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <DialogText size={TextSize.Small}>
             <>
               {sprintf(
                 /* translators: %s: owner's name */
@@ -115,7 +115,7 @@ function PostLockDialog({
               )}
             </>
           </DialogText>
-          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <DialogText size={TextSize.Small}>
             {sprintf(
               /* translators: %s: owner's name */ __(
                 'If you take over, %s will lose editing control to the story, but their changes will be saved.',

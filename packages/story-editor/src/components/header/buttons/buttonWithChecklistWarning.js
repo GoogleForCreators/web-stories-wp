@@ -25,7 +25,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  TOOLTIP_PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 import { forwardRef, useMemo } from '@googleforcreators/react';
 
@@ -152,7 +152,7 @@ const ButtonWithChecklistWarning = forwardRef(
         title={toolTip}
         popupZIndexOverride={Z_INDEX_STORY_DETAILS}
         hasTail
-        placement={TOOLTIP_PLACEMENT.BOTTOM_END}
+        placement={Placement.BottomEnd}
       >
         <InnerButton
           ref={ref}

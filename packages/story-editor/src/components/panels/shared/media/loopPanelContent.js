@@ -53,11 +53,7 @@ function LoopPanelContent({ loop, className = '', onChange, ...props }) {
         onChange={onChange}
         {...props}
       />
-      <Text
-        as="label"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        htmlFor={checkboxId}
-      >
+      <Text as="label" size={TextSize.Small} htmlFor={checkboxId}>
         {__('Loop', 'web-stories')}
       </Text>
     </Wrapper>

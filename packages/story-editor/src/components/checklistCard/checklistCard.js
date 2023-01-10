@@ -64,10 +64,7 @@ const ChecklistCard = ({
     <Wrapper className={className}>
       <Container gridVariant={gridVariant}>
         <Title as={titleProps?.onClick ? 'button' : 'div'} {...titleProps}>
-          <Headline
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-            as="h2"
-          >
+          <Headline size={TextSize.XXXSmall} as="h2">
             {title}
           </Headline>
         </Title>

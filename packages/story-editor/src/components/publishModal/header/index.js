@@ -70,10 +70,7 @@ const Header = ({
       >
         <Icons.Cross />
       </CloseButton>
-      <Headline
-        as="h2"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-      >
+      <Headline as="h2" size={TextSize.XXXSmall}>
         {__('Story Details', 'web-stories')}
       </Headline>
       <PublishButtonWrapper>

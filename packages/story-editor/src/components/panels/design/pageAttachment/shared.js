@@ -137,7 +137,7 @@ export function Theme({ theme, onChange }) {
         onChange={handleChangeTheme}
       />
       <Label htmlFor={checkboxId}>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text as="span" size={TextSize.Small}>
           {__('Use dark theme', 'web-stories')}
         </Text>
       </Label>
@@ -176,7 +176,7 @@ export function Icon({ icon, onChange, isFetching, needsProxy }) {
         disabled={isFetching}
       />
       <Space />
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text as="span" size={TextSize.Small}>
         {__('Link icon', 'web-stories')}
       </Text>
     </StyledRow>

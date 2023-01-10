@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { DependencyList, MutableRefObject, useLayoutEffect } from 'react';
+import { DependencyList, RefObject, useLayoutEffect } from 'react';
 
 function useFocusOut(
-  ref: MutableRefObject<HTMLElement>,
+  ref: RefObject<HTMLElement>,
   callback: (evt: FocusEvent | MouseEvent) => void | undefined,
   deps: DependencyList
 ) {

@@ -94,9 +94,7 @@ export const GridItem = forwardRef(
           <Logo src={publisherLogo.url} alt={publisherLogo.title} />
         </GridItemButton>
         {publisherLogo.active && (
-          <CenterMutedText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          >
+          <CenterMutedText size={TextSize.X_SMALL}>
             {__('Default', 'web-stories')}
           </CenterMutedText>
         )}

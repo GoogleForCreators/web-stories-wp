@@ -72,7 +72,7 @@ const VolumeWrapper = styled.div`
 `;
 
 const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  size: TextSize.X_SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
@@ -154,11 +154,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       </Row>
       {showVolumeControl && (
         <VolumeWrapper>
-          <Text
-            as="label"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            htmlFor={slideId}
-          >
+          <Text as="label" size={TextSize.Small} htmlFor={slideId}>
             {__('Volume', 'web-stories')}
           </Text>
           <StyledSlider

@@ -36,7 +36,7 @@ function PreviewErrorDialog({ isOpen, onClose, onRetry }) {
       onPrimary={onRetry}
       primaryText={__('Try again', 'web-stories')}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={TextSize.Small}>
         {__('The preview window failed to open.', 'web-stories')}
       </Text>
     </Dialog>

@@ -21,7 +21,7 @@ import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 export default styled(Text).attrs({
   forwardedAs: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   display: inline-block;
   color: ${({ theme }) => theme.colors.fg.secondary};

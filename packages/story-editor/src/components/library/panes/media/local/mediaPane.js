@@ -71,7 +71,7 @@ const FilterArea = styled.div`
 `;
 
 const SearchCount = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+  size: TextSize.Medium,
 })`
   display: flex;
   align-items: center;

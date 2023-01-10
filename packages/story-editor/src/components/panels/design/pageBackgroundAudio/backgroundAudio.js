@@ -34,7 +34,7 @@ import states from '../../../../app/highlights/states';
 import { styles } from '../../../../app/highlights';
 
 const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;

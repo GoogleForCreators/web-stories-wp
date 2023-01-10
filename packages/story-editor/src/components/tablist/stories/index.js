@@ -92,10 +92,7 @@ export const _default = () => {
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -117,10 +114,7 @@ export const _default = () => {
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -166,10 +160,7 @@ export const _default = () => {
             footer={
               <DefaultFooterText>
                 {'Unoptimized video may cause playback issues. '}
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -244,10 +235,7 @@ export const _default = () => {
             footer={
               <DefaultFooterText>
                 {'Unoptimized video may cause playback issues. '}
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -311,10 +299,7 @@ export const _default = () => {
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -336,10 +321,7 @@ export const _default = () => {
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -385,10 +367,7 @@ export const _default = () => {
             footer={
               <DefaultFooterText>
                 {'Unoptimized video may cause playback issues. '}
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -445,10 +424,7 @@ export const _default = () => {
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -470,10 +446,7 @@ export const _default = () => {
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -519,10 +492,7 @@ export const _default = () => {
             footer={
               <DefaultFooterText>
                 {'Unoptimized video may cause playback issues. '}
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -579,10 +549,7 @@ export const _default = () => {
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -605,10 +572,7 @@ export const _default = () => {
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>
@@ -654,10 +618,7 @@ export const _default = () => {
             footer={
               <DefaultFooterText>
                 {'Unoptimized video may cause playback issues. '}
-                <Link
-                  href="/demo"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
+                <Link href="/demo" size={TextSize.X_SMALL}>
                   {'Learn more'}
                 </Link>
               </DefaultFooterText>

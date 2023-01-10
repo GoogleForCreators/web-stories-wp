@@ -20,11 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
-import {
-  Text,
-  THEME_CONSTANTS,
-  Datalist,
-} from '@googleforcreators/design-system';
+import { Text, TextSize, Datalist } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -83,7 +79,7 @@ export default function BodyViewOptions({
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
       <DisplayFormatContainer>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text as="span" size={TextSize.Small}>
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
         </Text>
         <ControlsContainer>

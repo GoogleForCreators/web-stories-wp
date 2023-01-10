@@ -212,18 +212,11 @@ function TextSetsPane({ paneRef }) {
   return (
     <SectionContainer id={sectionId}>
       <TitleBar>
-        <Headline
-          as="h2"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-        >
+        <Headline as="h2" size={TextSize.XXXSmall}>
           {PANE_TEXT.TITLE}
         </Headline>
         <TextSetsToggle>
-          <Text
-            as="label"
-            htmlFor={toggleId}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <Text as="label" htmlFor={toggleId} size={TextSize.Small}>
             {PANE_TEXT.SWITCH_LABEL}
           </Text>
           <Toggle

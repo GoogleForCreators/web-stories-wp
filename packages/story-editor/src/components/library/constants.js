@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
+import { Placement } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -34,7 +34,7 @@ import { PANE_IDS } from './paneIds';
 export const MEDIA = {
   icon: MediaIcon,
   tooltip: __('Media', 'web-stories'),
-  placement: TOOLTIP_PLACEMENT.BOTTOM_START,
+  placement: Placement.BottomStart,
   Pane: MediaPane,
   id: PANE_IDS.MEDIA,
 };

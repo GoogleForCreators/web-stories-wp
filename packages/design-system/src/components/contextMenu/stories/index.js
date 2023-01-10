@@ -46,7 +46,7 @@ import {
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
-import { TOOLTIP_PLACEMENT } from '../../tooltip';
+import { Placement } from '../../tooltip';
 import * as MenuItems from '../components';
 
 export default {
@@ -378,44 +378,29 @@ export const HorizontalMenu = ({ onClick, ...args }) => {
         <Text>{'Dummy horizontal menu'}</Text>
         <ContextMenu isHorizontal isInline isSecondary {...args}>
           <MenuItems.MenuButton onClick={() => onClick('Clicked on bucket')}>
-            <MenuItems.MenuIcon
-              title="Bucket"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Bucket" placement={Placement.Bottom}>
               <Bucket />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuButton onClick={() => onClick('Clicked on link')}>
-            <MenuItems.MenuIcon
-              title="Link"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Link" placement={Placement.Bottom}>
               <IconLink />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuButton onClick={() => onClick('Clicked on captions')}>
-            <MenuItems.MenuIcon
-              title="Captions"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Captions" placement={Placement.Bottom}>
               <Captions />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuSeparator />
           <MenuItems.MenuButton onClick={() => onClick('Clicked on animation')}>
-            <MenuItems.MenuIcon
-              title="Animation"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Animation" placement={Placement.BOTTOM}>
               <CircleSpeed />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuSeparator />
           <MenuItems.MenuButton onClick={() => onClick('Clicked on cross')}>
-            <MenuItems.MenuIcon
-              title="Cross"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Cross" placement={Placement.Bottom}>
               <Cross />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>

@@ -68,7 +68,7 @@ const LabelWrapper = styled.div`
 
 const Label = styled(Text).attrs({
   as: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
   font-size: 14px;
@@ -303,7 +303,7 @@ function PublishPanel({ nameOverride }) {
         crossOrigin="anonymous"
       />
     ) : (
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text as="span" size={TextSize.Small}>
         {displayText}
       </Text>
     );
@@ -312,7 +312,7 @@ function PublishPanel({ nameOverride }) {
   const renderUploadButton = (open) => (
     <Datalist.Option onClick={open} aria-label={__('Add new', 'web-stories')}>
       <Icons.ArrowCloud height={32} width={32} />
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <Text as="span" size={TextSize.X_SMALL}>
         {__('Add new', 'web-stories')}
       </Text>
     </Datalist.Option>
@@ -436,7 +436,7 @@ function PublishPanel({ nameOverride }) {
                     rel="noopener noreferrer"
                     target="_blank"
                     href={dashboardSettingsLink}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                    size={TextSize.X_SMALL}
                   >
                     {__('Manage', 'web-stories')}
                   </Link>
@@ -468,7 +468,7 @@ function PublishPanel({ nameOverride }) {
                   rel="noopener noreferrer"
                   target="_blank"
                   href={addQueryArgs(revisionLink, { revision: revisionId })}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                  size={TextSize.X_SMALL}
                 >
                   {__('Browse', 'web-stories')}
                 </Link>

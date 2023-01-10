@@ -40,7 +40,7 @@ export function Header() {
   return (
     <Panel>
       <Heading as="h2">{__('Web Stories Help Center', 'web-stories')}</Heading>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <Text size={TextSize.X_SMALL}>
         {__(
           'Discover tips & resources to help you get the most out of your Web Stories.',
           'web-stories'

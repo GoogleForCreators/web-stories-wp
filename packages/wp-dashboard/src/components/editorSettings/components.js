@@ -61,9 +61,7 @@ export const SettingHeading = styled(Headline).attrs({
   ${({ theme }) =>
     themeHelpers.expandPresetStyles({
       preset: {
-        ...theme.typography.presets.label[
-          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.LARGE
-        ],
+        ...theme.typography.presets.label[TextSize.Large],
       },
       theme,
     })};

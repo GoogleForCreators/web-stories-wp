@@ -138,7 +138,7 @@ function SlugPanel({ nameOverride }) {
           rel="noopener noreferrer"
           target="_blank"
           href={link}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          size={TextSize.Small}
         >
           {displayLink}
         </Link>

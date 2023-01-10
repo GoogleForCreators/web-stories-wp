@@ -30,7 +30,7 @@ import {
   LoadingSpinner,
   useSnackbar,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -276,7 +276,7 @@ function StoriesView({ loading, storyActions, stories, view }) {
             ),
           }}
         >
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text size={TextSize.Small}>
             {sprintf(
               /* translators: %s: story title. */
               __('Are you sure you want to delete "%s"?', 'web-stories'),

@@ -25,7 +25,7 @@ import {
   BUTTON_SIZES,
   Disclosure,
   Text,
-  TOOLTIP_PLACEMENT,
+  Placement,
   themeHelpers,
   THEME_CONSTANTS,
   theme as dsTheme,
@@ -64,9 +64,7 @@ const Button = styled(dsButton)`
       css`
         ${themeHelpers.expandPresetStyles({
           preset: {
-            ...theme.typography.presets.paragraph[
-              THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-            ],
+            ...theme.typography.presets.paragraph[TextSize.Small],
           },
           theme,
         })};
@@ -99,10 +97,7 @@ Button.propTypes = {
 const badgeSize = 22;
 
 // Defaults for badge come from typography.presets.label.small
-const badgeText =
-  dsTheme.typography.presets.label[
-    THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-  ];
+const badgeText = dsTheme.typography.presets.label[TextSize.Small];
 
 // TODO: Extract `CountBadge` to its own component?
 const CountBadge = styled(Text).attrs({ as: 'span' })`
@@ -148,7 +143,7 @@ export const ToggleButton = forwardRef(
       <Tooltip
         hasTail
         title={label}
-        placement={TOOLTIP_PLACEMENT.TOP}
+        placement={TOP}
         shortcut={shortcut}
         popupZIndexOverride={popupZIndexOverride}
       >

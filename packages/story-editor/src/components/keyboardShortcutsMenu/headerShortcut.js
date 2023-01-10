@@ -42,11 +42,7 @@ function HeaderShortcut(props) {
   return (
     <List>
       <Item>
-        <Headline
-          as="h2"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          {...props}
-        >
+        <Headline as="h2" size={TextSize.X_SMALL} {...props}>
           {label}
         </Headline>
       </Item>

@@ -151,13 +151,13 @@ export const FontCheckDialog = ({
       }
     >
       <DialogContent>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text size={TextSize.Small}>
           {__(
             'This story contains the following font that is no longer available:',
             'web-stories'
           )}
         </Text>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} isBold>
+        <Text size={TextSize.Small} isBold>
           {missingFont}
         </Text>
         <div>
@@ -165,7 +165,7 @@ export const FontCheckDialog = ({
             mapping={{
               a: (
                 <Link
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  size={TextSize.Small}
                   onClick={onSettingsClick}
                   href={dashboardSettingsLink}
                   isBold
@@ -179,7 +179,7 @@ export const FontCheckDialog = ({
             )}
           </TranslateWithMarkup>
         </div>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text size={TextSize.Small}>
           {__('Or, choose replacement font below:', 'web-stories')}
         </Text>
         <FontPicker

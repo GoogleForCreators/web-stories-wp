@@ -47,7 +47,7 @@ const WarningIcon = styled(Icons.ExclamationTriangle)`
 `;
 
 const Message = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   max-width: calc(100% - 40px);
 `;

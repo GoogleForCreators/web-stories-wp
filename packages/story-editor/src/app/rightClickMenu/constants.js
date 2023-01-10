@@ -91,7 +91,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
 
 const StyledKbd = styled(Text).attrs({
   forwardedAs: 'kbd',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: inherit;
 

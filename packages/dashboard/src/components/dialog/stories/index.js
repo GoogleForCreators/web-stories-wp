@@ -22,7 +22,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -57,7 +57,7 @@ export default {
 export const _default = (args) => {
   return (
     <Dialog {...args}>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={TextSize.Small}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }
@@ -91,7 +91,7 @@ export const WithCustomAction = ({ onClickButton, onConfirmed, ...args }) => {
       }
       {...args}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={TextSize.Small}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }

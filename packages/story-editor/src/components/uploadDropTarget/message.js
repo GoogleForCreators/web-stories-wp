@@ -99,12 +99,10 @@ function UploadDropTargetMessage({ message, ...rest }) {
     <Container {...rest}>
       <Box>
         <Icon />
-        <Text isBold size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+        <Text isBold size={TextSize.Medium}>
           {message}
         </Text>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {description}
-        </Text>
+        <Text size={TextSize.Small}>{description}</Text>
       </Box>
     </Container>
   );

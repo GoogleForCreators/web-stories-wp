@@ -21,7 +21,7 @@ import {
   Text,
   themeHelpers,
   THEME_CONSTANTS,
-  TOOLTIP_PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useMemo } from '@googleforcreators/react';
@@ -70,7 +70,7 @@ const Token = styled.span`
 
 const TokenText = styled(Text).attrs({
   forwardedAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   padding-left: 10px;
   white-space: nowrap;
@@ -85,7 +85,7 @@ function Tag({ children, onDismiss }) {
       <TokenText id={id}>{children}</TokenText>
       <Tooltip
         title={__('Remove Tag', 'web-stories')}
-        placement={TOOLTIP_PLACEMENT.BOTTOM}
+        placement={Placement.Bottom}
         hasTail
         popupZIndexOverride={Z_INDEX_STORY_DETAILS}
       >

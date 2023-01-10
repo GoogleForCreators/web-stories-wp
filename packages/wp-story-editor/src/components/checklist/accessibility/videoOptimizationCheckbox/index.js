@@ -60,7 +60,7 @@ const BoldText = styled(Text).attrs({ as: 'span', isBold: true })`
 `;
 
 const DescriptionText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin-bottom: 16px;
@@ -156,7 +156,7 @@ function VideoOptimizationCheckbox() {
                 mapping={{
                   a: (
                     <Link
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      size={TextSize.Small}
                       onClick={(evt) =>
                         trackClick(evt, 'click_video_optimization_settings')
                       }

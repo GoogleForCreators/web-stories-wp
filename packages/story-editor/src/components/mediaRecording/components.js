@@ -33,13 +33,13 @@ export const MessageWrap = styled.div`
 `;
 
 export const MessageHeading = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE,
+  size: TextSize.XLarge,
 })`
   margin: 0 0 14px;
 `;
 
 export const MessageText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   margin: 0 0 14px;
 `;

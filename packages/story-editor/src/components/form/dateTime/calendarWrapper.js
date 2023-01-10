@@ -32,10 +32,7 @@ const CalendarWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.bg.primary};
     ${({ theme }) =>
       themeHelpers.expandPresetStyles({
-        preset:
-          theme.typography.presets.label[
-            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-          ],
+        preset: theme.typography.presets.label[TextSize.Small],
         theme,
       })}
     color: ${({ theme }) => theme.colors.fg.primary};
@@ -56,10 +53,7 @@ const CalendarWrapper = styled.div`
     outline: none;
     ${({ theme }) =>
       themeHelpers.expandPresetStyles({
-        preset:
-          theme.typography.presets.label[
-            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-          ],
+        preset: theme.typography.presets.label[TextSize.Small],
         theme,
       })}
     color: ${({ theme }) => theme.colors.fg.primary};

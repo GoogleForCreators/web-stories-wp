@@ -166,10 +166,7 @@ function MediaEditDialog({ resource, onClose }) {
         )}
         <MetadataTextContainer>
           {isValid(parsedDate) && (
-            <DateText
-              forwardedAs="span"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-            >
+            <DateText forwardedAs="span" size={TextSize.X_SMALL}>
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
@@ -177,7 +174,7 @@ function MediaEditDialog({ resource, onClose }) {
               )}
             </DateText>
           )}
-          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text as="span" size={TextSize.Small}>
             {sprintf(
               /* translators: 1: image width. 2: image height. */
               __('%1$d x %2$d pixels', 'web-stories'),
@@ -192,7 +189,7 @@ function MediaEditDialog({ resource, onClose }) {
             placeholder={isImage ? imageInputTitle : videoInputTitle}
             onChange={handleAltTextChange}
           />
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text size={TextSize.Small}>
             {isImage ? imageDialogDescription : videoDialogDescription}
           </Text>
         </MetadataTextContainer>

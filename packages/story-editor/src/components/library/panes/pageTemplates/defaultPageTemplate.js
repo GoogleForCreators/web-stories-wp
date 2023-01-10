@@ -111,10 +111,7 @@ const DefaultPageTemplate = forwardRef(
           {isFocused && <InsertionOverlay />}
           {page.title && (
             <TemplateTitleContainer>
-              <Text
-                as="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              >
+              <Text as="span" size={TextSize.Small}>
                 {templateTitle}
               </Text>
             </TemplateTitleContainer>

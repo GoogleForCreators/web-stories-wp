@@ -67,12 +67,12 @@ function PostPublishDialog() {
       onPrimary={onAddToPostClick}
       primaryRest={{ href: confirmURL }}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
               <Link
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 href={storyURL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -88,7 +88,7 @@ function PostPublishDialog() {
         </TranslateWithMarkup>
       </Text>
       {confirmURL && (
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text size={TextSize.Small}>
           {
             /* translators: 'it' refers to a web story. */
             __('Would you like to include it on a new post?', 'web-stories')

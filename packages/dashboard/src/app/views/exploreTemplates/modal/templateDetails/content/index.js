@@ -29,7 +29,7 @@ import {
   Display,
   Icons,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -195,18 +195,14 @@ function DetailsContent({
           <TemplateDetails>
             <DetailContainer>
               <Display
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 as="h3"
                 data-testid="template-details-title"
               >
                 {title}
               </Display>
-              <ByLineText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
-                {byLine}
-              </ByLineText>
-              <DescriptionText
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
-              >
+              <ByLineText size={TextSize.Medium}>{byLine}</ByLineText>
+              <DescriptionText size={TextSize.Medium}>
                 {description}
               </DescriptionText>
 

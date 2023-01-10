@@ -58,7 +58,7 @@ export const EmptyContent = () => {
       <IconContainer>
         <Icons.CheckmarkCircle />
       </IconContainer>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={TextSize.Small}>
         {__(
           'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.',
           'web-stories'

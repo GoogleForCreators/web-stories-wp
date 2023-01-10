@@ -202,10 +202,7 @@ function PaginatedMediaGallery({
       </MediaGalleryContainer>
       {showLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
-          <StyledText
-            forwardedAs="span"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <StyledText forwardedAs="span" size={TextSize.Small}>
             {__('Loading…', 'web-stories')}
           </StyledText>
         </MediaGalleryLoadingPill>

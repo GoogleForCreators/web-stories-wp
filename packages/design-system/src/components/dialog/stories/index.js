@@ -86,9 +86,7 @@ export const _default = ({ message, onClick, ...args }) => {
         actions={ActionsNode}
         {...args}
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {message}
-        </Text>
+        <Text size={TextSize.Small}>{message}</Text>
       </Dialog>
     </InvertedWrapper>
   );
@@ -140,9 +138,7 @@ export const With2Actions = ({ message, onClick, ...args }) => {
         actions={ActionsNode}
         {...args}
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {message}
-        </Text>
+        <Text size={TextSize.Small}>{message}</Text>
       </Dialog>
     </InvertedWrapper>
   );
@@ -195,9 +191,7 @@ export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
           actions={ActionsNode}
           {...args}
         >
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {message}
-          </Text>
+          <Text size={TextSize.Small}>{message}</Text>
         </Dialog>
       </InvertedWrapper>
     </DarkThemeProvider>

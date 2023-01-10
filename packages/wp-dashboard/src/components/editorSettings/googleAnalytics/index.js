@@ -165,7 +165,7 @@ function GoogleAnalyticsSettings({
               href={analyticsLink}
               rel="noreferrer"
               target="_blank"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              size={TextSize.Small}
               onClick={onSiteKitClick}
             />
           ),
@@ -185,14 +185,12 @@ function GoogleAnalyticsSettings({
             <StyledNotificationBubble notificationCount={1} isSmall />
           )}
         </SettingHeading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {siteKitDisplayText}
         </SettingSubheading>
         {usingLegacyAnalytics && (
           <>
-            <SettingSubheading
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <SettingSubheading size={TextSize.Small}>
               <TranslateWithMarkup
                 mapping={{
                   a: (
@@ -200,7 +198,7 @@ function GoogleAnalyticsSettings({
                       href="https://wp.stories.google/docs/seo/"
                       rel="noreferrer"
                       target="_blank"
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      size={TextSize.Small}
                       onClick={onAutoAnalyticsClick}
                     />
                   ),
@@ -212,9 +210,7 @@ function GoogleAnalyticsSettings({
                 )}
               </TranslateWithMarkup>
             </SettingSubheading>
-            <SettingSubheading
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <SettingSubheading size={TextSize.Small}>
               <SaveButton
                 type={BUTTON_TYPES.SECONDARY}
                 size={BUTTON_SIZES.SMALL}
@@ -228,9 +224,7 @@ function GoogleAnalyticsSettings({
       </div>
       {analyticsActive ? (
         <div>
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <TextInputHelperText size={TextSize.Small}>
             {TEXT.SITE_KIT_IN_USE}
           </TextInputHelperText>
         </div>
@@ -260,9 +254,7 @@ function GoogleAnalyticsSettings({
               {TEXT.SUBMIT_BUTTON}
             </SaveButton>
           </InlineForm>
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <TextInputHelperText size={TextSize.Small}>
             <TranslateWithMarkup
               mapping={{
                 a: (
@@ -270,7 +262,7 @@ function GoogleAnalyticsSettings({
                     href={TEXT.CONTEXT_LINK}
                     rel="noreferrer"
                     target="_blank"
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    size={TextSize.Small}
                     as="a"
                     onClick={onContextClick}
                   />

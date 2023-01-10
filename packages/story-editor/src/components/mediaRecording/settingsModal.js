@@ -42,7 +42,7 @@ const Row = styled.div`
 
 const Label = styled(Text).attrs({
   as: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   display: inline-block;
   margin-bottom: 8px;

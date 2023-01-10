@@ -63,10 +63,7 @@ const Tab = styled.button`
 function ProviderTab({ name, isActive, ...rest }) {
   return (
     <Tab $isActive={isActive} {...rest}>
-      <StyledText
-        forwardedAs="span"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      >
+      <StyledText forwardedAs="span" size={TextSize.Small}>
         {name}
       </StyledText>
     </Tab>

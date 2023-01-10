@@ -67,7 +67,7 @@ const mediaProps = {
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
-      <Headline as="h3" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Headline as="h3" size={TextSize.Small}>
         {'Media Input demos'}
       </Headline>
       <Row>

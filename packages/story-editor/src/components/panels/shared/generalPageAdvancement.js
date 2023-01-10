@@ -58,7 +58,7 @@ const JustifyEndRow = styled(Row)`
 `;
 
 const MutedText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
@@ -178,7 +178,7 @@ function GeneralPageAdvancementPanel({
               containerStyleOverride={inputContainerStyleOverride}
             />
           </Row>
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text size={TextSize.Small}>
             {sprintf(
               /* translators: 1: minimum duration. 2: maximum duration. */
               _n(

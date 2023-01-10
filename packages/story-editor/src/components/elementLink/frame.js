@@ -22,7 +22,7 @@ import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { withoutProtocol } from '@googleforcreators/url';
-import { TOOLTIP_PLACEMENT, Icons } from '@googleforcreators/design-system';
+import { Placement, Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -94,7 +94,7 @@ function WithLink({ element, active, children, anchorRef }) {
   return (
     <StyledTooltip
       forceAnchorRef={anchorRef}
-      placement={TOOLTIP_PLACEMENT.TOP}
+      placement={Placement.Top}
       title={tooltipContent}
     >
       {children}

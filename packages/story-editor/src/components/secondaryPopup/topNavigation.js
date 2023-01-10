@@ -41,7 +41,7 @@ const TopNavButtons = styled.div`
 
 const Label = styled(Headline).attrs({
   as: 'h2',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+  size: TextSize.XXSmall,
 })`
   padding-left: 24px;
   font-weight: ${({ theme }) => theme.typography.weight.regular};

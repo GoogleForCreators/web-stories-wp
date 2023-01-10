@@ -33,7 +33,7 @@ export const Container = styled.div`
 
 export const Title = styled(Headline).attrs({
   as: 'h2',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
+  size: TextSize.XXXSmall,
 })`
   flex: 1 1 auto;
   color: ${({ theme }) => theme.colors.fg.primary};
