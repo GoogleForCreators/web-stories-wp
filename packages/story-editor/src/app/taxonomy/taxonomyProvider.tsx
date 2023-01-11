@@ -27,6 +27,7 @@ import {
   useEffect,
   useMemo,
   useState,
+  useRef,
 } from '@googleforcreators/react';
 import type { PropsWithChildren } from 'react';
 
@@ -47,10 +48,13 @@ import Context from './context';
 function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   // Should grab categories on mount
   const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
-  const { updateStory, terms } = useStory((state) => ({
-    updateStory: state.actions.updateStory,
-    terms: state.state.story?.terms || [],
-  }));
+  const { updateStory, isStoryLoaded, terms } = useStory(
+    ({ state: { pages, story }, actions: { updateStory } }) => ({
+      updateStory,
+      isStoryLoaded: pages.length > 0,
+      terms: story.terms || [],
+    })
+  );
   const [hasTaxonomies, setHasTaxonomies] = useState(false);
   const [taxonomies, setTaxonomies] = useState<Taxonomy[]>([]);
   const [termCache, setTermCache] = useState<Term[]>(terms);
@@ -79,6 +83,17 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       }
     })();
   }, [hasTaxonomies, getTaxonomies]);
+
+  // Reference embedded terms in the story and taxonomies
+  // to get the initial selected terms as well as populate
+  // the taxonomy term cache
+  const hasHydrationRunOnce = useRef(false);
+  useEffect(() => {
+    if (terms?.length > 0 && isStoryLoaded && !hasHydrationRunOnce.current) {
+      setTermCache(terms);
+      hasHydrationRunOnce.current = true;
+    }
+  }, [terms, isStoryLoaded, setTermCache]);
 
   const addTerms = useCallback(
     (newTerms: Term[]) => {

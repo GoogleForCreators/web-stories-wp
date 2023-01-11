@@ -88,8 +88,9 @@ async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
     },
   }));
   useStory.mockImplementation(() => ({
-    actions: { updateStory: () => {} },
-    state: { story: { terms: [] } },
+    updateStory: () => {},
+    isStoryLoaded: true,
+    terms: [],
     ...useStoryPartial,
   }));
 
@@ -109,7 +110,6 @@ describe('TaxonomyProvider', () => {
 
     const { result } = await setup({
       useAPIPartial: { getTaxonomies: getTaxonomiesMock },
-      useStoryPartial: { hasTaxonomies: true },
     });
 
     expect(getTaxonomiesMock).toHaveBeenCalledOnce();
@@ -117,38 +117,23 @@ describe('TaxonomyProvider', () => {
   });
 
   it('populates initial termCache and selected slugs with story terms', async () => {
-    const updateStoryMock = jest.fn();
     const taxonomy1 = createTaxonomy('taxonomy_1');
     const taxonomy2 = createTaxonomy('taxonomy_2');
-    const taxonomiesResponse = [taxonomy1, taxonomy2];
 
     const taxonomy1Term1 = createTermFromName(taxonomy1, 'term1');
     const taxonomy1Term2 = createTermFromName(taxonomy1, 'term2');
     const taxonomy2Term1 = createTermFromName(taxonomy2, 'term1');
-    const embeddedTerms = [taxonomy1Term1, taxonomy1Term2];
+    const embeddedTerms = [taxonomy1Term1, taxonomy1Term2, taxonomy2Term1];
 
     const { result } = await setup({
-      useAPIPartial: {
-        getTaxonomies: () => mockResponse(taxonomiesResponse),
-      },
       useStoryPartial: {
-        state: { story: { terms: embeddedTerms } },
-        actions: { updateStory: updateStoryMock },
+        terms: embeddedTerms,
       },
     });
 
-    const { termCache, taxonomies } = result.current.state;
-    expect(taxonomies).toHaveLength(2);
+    const { termCache } = result.current.state;
 
     expect(termCache).toStrictEqual(embeddedTerms);
-    expect(updateStoryMock).toHaveBeenCalledWith({
-      properties: {
-        terms: {
-          [taxonomy1.restBase]: [taxonomy1Term1.id, taxonomy1Term2.id],
-          [taxonomy2.restBase]: [taxonomy2Term1.id],
-        },
-      },
-    });
   });
 
   it('populates the terms cache when addSearchResultsToCache(..args) called', async () => {
@@ -162,9 +147,6 @@ describe('TaxonomyProvider', () => {
       useAPIPartial: {
         getTaxonomies: () => mockResponse(taxonomiesResponse),
         getTaxonomyTerm: getTaxonomyTermMock,
-      },
-      useStoryPartial: {
-        isStoryLoaded: true,
       },
     });
 
