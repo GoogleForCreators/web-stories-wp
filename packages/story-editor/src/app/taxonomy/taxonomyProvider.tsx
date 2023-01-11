@@ -46,13 +46,12 @@ import Context from './context';
 
 function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   // Should grab categories on mount
-  const [shouldRefetchCategories, setShouldRefetchCategories] =
-    useState<boolean>(true);
+  const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
   const { updateStory, terms } = useStory((state) => ({
     updateStory: state.actions.updateStory,
     terms: state.state.story?.terms || [],
   }));
-  const [hasTaxonomies, setHasTaxonomies] = useState<boolean>(false);
+  const [hasTaxonomies, setHasTaxonomies] = useState(false);
   const [taxonomies, setTaxonomies] = useState<Taxonomy[]>([]);
   const [termCache, setTermCache] = useState<Term[]>(terms);
 
