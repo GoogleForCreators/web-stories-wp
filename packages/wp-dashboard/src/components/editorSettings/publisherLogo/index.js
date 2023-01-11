@@ -26,10 +26,7 @@ import {
   useFocusOut,
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import {
-  useGridViewKeys,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { useGridViewKeys, TextSize } from '@googleforcreators/design-system';
 import { FileUpload, useConfig } from '@googleforcreators/dashboard';
 
 /**

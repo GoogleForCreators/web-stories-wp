@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { _x } from '@googleforcreators/i18n';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 const RequiredWrapper = styled.div`
   display: flex;
@@ -28,9 +28,9 @@ const RequiredWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledText = styled(Text).attrs({
+const StyledText = styled(Text.Paragraph).attrs({
   as: 'span',
-  size: TextSize.X_SMALL,
+  size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   font-size: 12px;

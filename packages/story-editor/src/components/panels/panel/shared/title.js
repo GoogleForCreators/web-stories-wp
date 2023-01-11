@@ -23,7 +23,7 @@ import { useCallback, useEffect, useContext } from '@googleforcreators/react';
 import {
   BUTTON_TRANSITION_TIMING,
   Icons,
-  THEME_CONSTANTS,
+  TextSize,
   Headline,
   themeHelpers,
   NotificationBubble,

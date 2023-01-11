@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Headline,
-  Text,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { Headline, Text, TextSize } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -63,7 +59,7 @@ const ListRow = styled.div`
   }
 `;
 
-const Label = styled(Text).attrs({
+const Label = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
   forwardedAs: 'span',
 })`

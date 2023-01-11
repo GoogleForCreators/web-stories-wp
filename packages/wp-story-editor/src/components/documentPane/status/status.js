@@ -58,14 +58,14 @@ const StyledListItem = styled.li`
     background-color: ${theme.colors.border.defaultNormal};
   }
 `;
-const LabelText = styled(Text).attrs({
+const LabelText = styled(Text.Paragraph).attrs({
   as: 'span',
 })`
   font-size: 14px;
   color: ${theme.colors.fg.primary};
 `;
 
-const HelperText = styled(Text).attrs({
+const HelperText = styled(Text.Paragraph).attrs({
   as: 'span',
 })`
   color: ${theme.colors.fg.tertiary};

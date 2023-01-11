@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import {
   Headline,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   MEDIA_VARIANTS,
 } from '@googleforcreators/design-system';
 import { useCallback, useMemo } from '@googleforcreators/react';
@@ -155,7 +155,7 @@ const ScrimBottom = styled.div`
 // the lines that have stylelint disabled.
 const Title = styled(Headline).attrs({
   as: 'h3',
-  size: TextSize.X_SMALL,
+  size: TextSize.XSmall,
 })`
   max-height: calc(1.2em * 3);
   /* stylelint-disable-next-line */
@@ -170,8 +170,7 @@ const Title = styled(Headline).attrs({
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-const Publisher = styled(Text).attrs({
-  forwardAs: 'span',
+const Publisher = styled(Text.Span).attrs({
   size: TextSize.Medium,
 })`
   display: block;

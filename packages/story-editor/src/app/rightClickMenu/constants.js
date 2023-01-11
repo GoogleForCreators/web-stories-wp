@@ -20,7 +20,7 @@ import {
   createShortcutAriaLabel,
   Shortcut,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { __, _n } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -89,7 +89,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   HEADING_LEVEL: __('Heading Level', 'web-stories'),
 };
 
-const StyledKbd = styled(Text).attrs({
+const StyledKbd = styled(Text.Paragraph).attrs({
   forwardedAs: 'kbd',
   size: TextSize.Small,
 })`

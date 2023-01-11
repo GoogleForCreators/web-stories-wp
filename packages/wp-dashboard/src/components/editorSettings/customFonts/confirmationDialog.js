@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import {
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Dialog,
   BUTTON_TYPES,
   BUTTON_SIZES,
@@ -55,12 +55,12 @@ function ConfirmationDialog({ onClose, onPrimary }) {
           </>
         }
       >
-        <Text size={TextSize.Small}>
+        <Text.Paragraph size={TextSize.Small}>
           {__(
             'Deleting a font will delete it from every previous story it’s in. Would you like to proceed?',
             'web-stories'
           )}
-        </Text>
+        </Text.Paragraph>
       </Dialog>
     </ThemeProvider>
   );

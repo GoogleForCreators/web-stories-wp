@@ -22,7 +22,7 @@ import {
   Button,
   BUTTON_TYPES,
   BUTTON_SIZES,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   sessionStore,
 } from '@googleforcreators/design-system';
@@ -196,12 +196,12 @@ function LocalAutoSave() {
         </>
       }
     >
-      <Text size={TextSize.Small}>
+      <Text.Paragraph size={TextSize.Small}>
         {__(
           'The backup of this story in your browser is different from the current version.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 }

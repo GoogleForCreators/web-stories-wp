@@ -26,7 +26,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Icons,
   Link,
 } from '@googleforcreators/design-system';
@@ -151,15 +151,15 @@ export const FontCheckDialog = ({
       }
     >
       <DialogContent>
-        <Text size={TextSize.Small}>
+        <Text.Paragraph size={TextSize.Small}>
           {__(
             'This story contains the following font that is no longer available:',
             'web-stories'
           )}
-        </Text>
-        <Text size={TextSize.Small} isBold>
+        </Text.Paragraph>
+        <Text.Paragraph size={TextSize.Small} isBold>
           {missingFont}
-        </Text>
+        </Text.Paragraph>
         <div>
           <TranslateWithMarkup
             mapping={{
@@ -179,9 +179,9 @@ export const FontCheckDialog = ({
             )}
           </TranslateWithMarkup>
         </div>
-        <Text size={TextSize.Small}>
+        <Text.Paragraph size={TextSize.Small}>
           {__('Or, choose replacement font below:', 'web-stories')}
-        </Text>
+        </Text.Paragraph>
         <FontPicker
           zIndex={10}
           currentValue={suggestedFont.family}

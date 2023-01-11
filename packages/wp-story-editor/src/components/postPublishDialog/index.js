@@ -20,7 +20,7 @@
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
-import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Link, Text, TextSize } from '@googleforcreators/design-system';
 import { Dialog, useStory } from '@googleforcreators/story-editor';
 
 function PostPublishDialog() {
@@ -67,7 +67,7 @@ function PostPublishDialog() {
       onPrimary={onAddToPostClick}
       primaryRest={{ href: confirmURL }}
     >
-      <Text size={TextSize.Small}>
+      <Text.Paragraph size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -86,14 +86,14 @@ function PostPublishDialog() {
             'web-stories'
           )}
         </TranslateWithMarkup>
-      </Text>
+      </Text.Paragraph>
       {confirmURL && (
-        <Text size={TextSize.Small}>
+        <Text.Paragraph size={TextSize.Small}>
           {
             /* translators: 'it' refers to a web story. */
             __('Would you like to include it on a new post?', 'web-stories')
           }
-        </Text>
+        </Text.Paragraph>
       )}
     </Dialog>
   );

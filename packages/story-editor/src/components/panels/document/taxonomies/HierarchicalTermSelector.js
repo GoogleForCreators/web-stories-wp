@@ -26,7 +26,7 @@ import {
   DropDown,
   Input,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   useLiveRegion,
 } from '@googleforcreators/design-system';
@@ -72,7 +72,7 @@ const ButtonContainer = styled.div`
   gap: 8px;
 `;
 
-const Label = styled(Text).attrs({
+const Label = styled(Text.Paragraph).attrs({
   forwardedAs: 'label',
   size: TextSize.Small,
 })`

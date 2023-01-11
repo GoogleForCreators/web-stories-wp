@@ -26,7 +26,7 @@ import {
   BUTTON_VARIANTS,
   Headline,
   Icons,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**

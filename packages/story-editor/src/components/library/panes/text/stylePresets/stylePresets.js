@@ -19,7 +19,7 @@
  */
 import {
   Headline,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   BUTTON_TYPES,
   BUTTON_SIZES,
@@ -75,7 +75,7 @@ const StyledButton = styled(Button)`
   margin-left: auto;
 `;
 
-const NoStylesText = styled(Text)`
+const NoStylesText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 

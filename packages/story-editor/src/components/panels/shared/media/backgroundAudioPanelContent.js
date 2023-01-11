@@ -25,7 +25,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
@@ -74,7 +74,7 @@ const ButtonRow = styled(Row)`
   gap: 12px;
 `;
 
-const SectionHeading = styled(Text).attrs({
+const SectionHeading = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   font-weight: bold;

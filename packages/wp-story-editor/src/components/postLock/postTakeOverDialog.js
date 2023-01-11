@@ -24,7 +24,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
 

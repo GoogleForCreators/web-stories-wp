@@ -28,7 +28,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Text as DefaultText,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
@@ -250,7 +250,9 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
                 currentPageBackgroundColor={currentPageBackgroundColor}
               />
             </MediaWrapper>
-            <Text size={TextSize.Small}>{__('Media', 'web-stories')}</Text>
+            <Text.Paragraph size={TextSize.Small}>
+              {__('Media', 'web-stories')}
+            </Text.Paragraph>
             <RemoveButton
               aria-label={__('Detach background', 'web-stories')}
               onClick={removeAsBackground}

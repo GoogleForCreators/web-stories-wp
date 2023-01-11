@@ -261,9 +261,9 @@ export default function StoryListView({
             </TableDateHeaderCell>
             {statusFilterValue !== STORY_STATUS.DRAFT && (
               <TableStatusHeaderCell>
-                <Text as="span" isBold size={TextSize.Small}>
+                <Text.Span isBold size={TextSize.Small}>
                   {__('Publish State', 'web-stories')}
-                </Text>
+                </Text.Span>
               </TableStatusHeaderCell>
             )}
           </TableRow>

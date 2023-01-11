@@ -24,7 +24,7 @@ import { trackClick } from '@googleforcreators/tracking';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**

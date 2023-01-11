@@ -33,7 +33,7 @@ import {
   Checkbox,
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import {
   resolveRoute,
@@ -53,13 +53,13 @@ const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
   cursor: pointer;
 `;
 
-const LabelText = styled(Text)`
+const LabelText = styled(Text.Span)`
   margin-bottom: 16px;
   margin-left: 8px;
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-const VisitSettingsText = styled(Text)`
+const VisitSettingsText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
@@ -117,16 +117,12 @@ export const TelemetryOptInBanner = forwardRef(
             }}
             ref={checkboxRef}
           />
-          <LabelText
-            forwardedAs="span"
-            aria-checked={checked}
-            size={TextSize.X_SMALL}
-          >
+          <LabelText aria-checked={checked} size={TextSize.XSmall}>
             <TranslateWithMarkup
               mapping={{
                 a: (
                   <NavLink
-                    size={TextSize.X_SMALL}
+                    size={TextSize.XSmall}
                     href={__(
                       'https://policies.google.com/privacy',
                       'web-stories'
@@ -148,12 +144,12 @@ export const TelemetryOptInBanner = forwardRef(
             </TranslateWithMarkup>
           </LabelText>
         </Label>
-        <VisitSettingsText forwardedAs="span" size={TextSize.X_SMALL}>
+        <VisitSettingsText size={TextSize.XSmall}>
           <TranslateWithMarkup
             mapping={{
               a: (
                 <NavLink
-                  size={TextSize.X_SMALL}
+                  size={TextSize.XSmall}
                   href={resolveRoute(EDITOR_SETTINGS_ROUTE)}
                   aria-label={__('Settings', 'web-stories')}
                 />

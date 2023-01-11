@@ -23,7 +23,7 @@ import { useCallback, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import {
   BUTTON_TRANSITION_TIMING,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   useSnackbar,
 } from '@googleforcreators/design-system';
@@ -41,7 +41,7 @@ import isDefaultPage from '../../../../utils/isDefaultPage';
 import createThumbnailCanvasFromFullbleedCanvas from '../../../../utils/createThumbnailCanvasFromFullbleedCanvas';
 import Icon from './images/illustration.svg';
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 

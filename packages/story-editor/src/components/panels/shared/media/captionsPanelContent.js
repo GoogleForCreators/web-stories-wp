@@ -25,7 +25,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useState, useMemo, useCallback } from '@googleforcreators/react';
@@ -49,7 +49,7 @@ const ButtonRow = styled(Row)`
   gap: 12px;
 `;
 
-const FileName = styled(Text).attrs({
+const FileName = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};

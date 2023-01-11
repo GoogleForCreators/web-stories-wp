@@ -21,11 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackError } from '@googleforcreators/tracking';
-import {
-  Text,
-  THEME_CONSTANTS,
-  useSnackbar,
-} from '@googleforcreators/design-system';
+import { Text, TextSize, useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -102,12 +98,12 @@ function DeleteDialog({ mediaId, type, onClose }) {
       primaryText={__('Delete', 'web-stories')}
       maxWidth={512}
     >
-      <Text size={TextSize.Small}>
+      <Text.Paragraph size={TextSize.Small}>
         {type === 'image' ? imageDialogDescription : videoDialogDescription}
-      </Text>
-      <Text size={TextSize.Small} isBold>
+      </Text.Paragraph>
+      <Text.Paragraph size={TextSize.Small} isBold>
         {__('This action can not be undone.', 'web-stories')}
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 }

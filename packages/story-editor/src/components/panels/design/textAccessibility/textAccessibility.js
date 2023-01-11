@@ -22,7 +22,7 @@ import { __, sprintf, TranslateWithMarkup } from '@googleforcreators/i18n';
 import {
   DropDown,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Link,
 } from '@googleforcreators/design-system';
 import { trackClick } from '@googleforcreators/tracking';
@@ -145,7 +145,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
           dropDownLabel={__('Heading Level', 'web-stories')}
         />
       </Row>
-      <Text size={TextSize.X_SMALL}>
+      <Text.Paragraph size={TextSize.XSmall}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -154,7 +154,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
                 rel="noreferrer"
                 target="_blank"
                 onClick={onLinkClick}
-                size={TextSize.X_SMALL}
+                size={TextSize.XSmall}
               />
             ),
           }}
@@ -164,7 +164,7 @@ function TextAccessibilityPanel({ selectedElements, pushUpdate }) {
             'web-stories'
           )}
         </TranslateWithMarkup>
-      </Text>
+      </Text.Paragraph>
     </SimplePanel>
   );
 }

@@ -81,11 +81,11 @@ export const NavLink = styled(Link)(
   `
 );
 
-export const PathName = styled(Text)`
+export const PathName = styled(Text.Paragraph)`
   grid-area: link;
 `;
 
-export const AppInfo = styled(Text)(
+export const AppInfo = styled(Text.Paragraph)(
   ({ theme }) => css`
     color: ${theme.colors.fg.secondary};
   `

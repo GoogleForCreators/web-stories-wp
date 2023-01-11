@@ -20,7 +20,7 @@ import {
   Icons,
   Text,
   themeHelpers,
-  THEME_CONSTANTS,
+  TextSize,
   Placement,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
@@ -68,7 +68,7 @@ const Token = styled.span`
   height: 32px;
 `;
 
-const TokenText = styled(Text).attrs({
+const TokenText = styled(Text.Paragraph).attrs({
   forwardedAs: 'span',
   size: TextSize.Small,
 })`

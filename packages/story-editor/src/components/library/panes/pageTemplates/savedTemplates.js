@@ -20,7 +20,7 @@
 import {
   LoadingSpinner,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
@@ -145,12 +145,12 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
           onPrimary={handleDelete}
           primaryText={__('Delete', 'web-stories')}
         >
-          <Text size={TextSize.Small}>
+          <Text.Paragraph size={TextSize.Small}>
             {__(
               'Are you sure you want to delete this template? This action cannot be undone.',
               'web-stories'
             )}
-          </Text>
+          </Text.Paragraph>
         </Dialog>
       )}
     </Wrapper>

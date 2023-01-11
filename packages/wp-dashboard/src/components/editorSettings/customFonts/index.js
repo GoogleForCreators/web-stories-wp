@@ -32,7 +32,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   useSnackbar,
   useLiveRegion,
@@ -96,7 +96,7 @@ const FontsWrapper = styled.div`
   margin-top: 34px;
 `;
 
-const ListHeading = styled(Text)`
+const ListHeading = styled(Text.Paragraph)`
   margin-bottom: 10px;
   display: inline-block;
 `;
@@ -147,7 +147,7 @@ const FontData = styled.div`
   max-width: calc(100% - 32px);
 `;
 
-const StyledText = styled(Text).attrs({
+const StyledText = styled(Text.Paragraph).attrs({
   as: 'span',
 })``;
 

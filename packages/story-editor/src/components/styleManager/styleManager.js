@@ -30,7 +30,7 @@ import {
   LOCAL_STORAGE_PREFIX,
   localStore,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
@@ -73,7 +73,7 @@ const Body = styled.div`
   margin: 8px 12px 16px;
 `;
 
-const StyledText = styled(Text).attrs({
+const StyledText = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   margin: 0 0 0 8px;

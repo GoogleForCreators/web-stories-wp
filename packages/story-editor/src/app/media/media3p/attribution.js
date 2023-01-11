@@ -21,7 +21,7 @@ import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import {
   Text as DefaultText,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -101,9 +101,9 @@ export function UnsplashAttribution() {
       aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
     >
       <AttributionPill aria-hidden>
-        <Text forwardedAs="span" size={TextSize.X_SMALL}>
+        <Text.Span size={TextSize.XSmall}>
           {__('Powered by', 'web-stories')}
-        </Text>
+        </Text.Span>
         <UnsplashLogo />
       </AttributionPill>
     </a>
@@ -119,9 +119,9 @@ export function CoverrAttribution() {
       aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
     >
       <AttributionPill aria-hidden>
-        <Text forwardedAs="span" size={TextSize.X_SMALL}>
+        <Text.Span size={TextSize.XSmall}>
           {__('Powered by', 'web-stories')}
-        </Text>
+        </Text.Span>
         <CoverrLogo />
       </AttributionPill>
     </a>

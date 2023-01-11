@@ -29,7 +29,7 @@ import {
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
-  THEME_CONSTANTS,
+  TextSize,
   CircularProgress,
   useLiveRegion,
 } from '@googleforcreators/design-system';

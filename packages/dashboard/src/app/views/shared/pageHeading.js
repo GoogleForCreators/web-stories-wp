@@ -22,7 +22,7 @@ import { __ } from '@googleforcreators/i18n';
 import {
   Display,
   Search,
-  THEME_CONSTANTS,
+  TextSize,
   noop,
 } from '@googleforcreators/design-system';
 

@@ -21,7 +21,7 @@ import { useCallback, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   LOCAL_STORAGE_PREFIX,
   localStore,
 } from '@googleforcreators/design-system';
@@ -79,7 +79,7 @@ function VideoOptimizationDialog() {
       onPrimary={onClose}
       primaryText={__('Sounds good', 'web-stories')}
     >
-      <Text size={TextSize.Small}>{dialogDescription}</Text>
+      <Text.Paragraph size={TextSize.Small}>{dialogDescription}</Text.Paragraph>
     </Dialog>
   );
 }

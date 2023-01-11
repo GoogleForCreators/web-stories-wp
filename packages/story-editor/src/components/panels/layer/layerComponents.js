@@ -24,7 +24,7 @@ import {
   BUTTON_TYPES,
   Input,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -175,7 +175,7 @@ export const LayerDescription = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-export const LayerText = styled(Text).attrs({
+export const LayerText = styled(Text.Paragraph).attrs({
   forwardedAs: 'span',
   size: TextSize.Small,
 })`

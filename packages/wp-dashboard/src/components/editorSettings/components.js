@@ -27,7 +27,7 @@ import {
   Input,
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { StandardViewContentGutter } from '@googleforcreators/dashboard';
@@ -72,17 +72,17 @@ export const InlineLink = styled(Link)`
   display: inline-block;
 `;
 
-export const HelperText = styled(Text)`
+export const HelperText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
-export const ConnectionHelperText = styled(Text)`
+export const ConnectionHelperText = styled(Text.Paragraph)`
   padding-top: 12px;
   color: ${({ hasError, theme }) =>
     hasError ? theme.colors.fg.negative : theme.colors.fg.tertiary};
 `;
 
-export const CenterMutedText = styled(Text)`
+export const CenterMutedText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   text-align: center;
 `;
@@ -95,7 +95,7 @@ export const TextInputHelperText = styled(HelperText)`
   padding-top: 12px;
 `;
 
-export const CheckboxLabel = styled(Text)`
+export const CheckboxLabel = styled(Text.Label)`
   display: flex;
   justify-content: flex-start;
   margin-top: 8px;

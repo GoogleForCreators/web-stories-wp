@@ -24,7 +24,7 @@ import { _x, sprintf, __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -111,9 +111,7 @@ const DefaultPageTemplate = forwardRef(
           {isFocused && <InsertionOverlay />}
           {page.title && (
             <TemplateTitleContainer>
-              <Text as="span" size={TextSize.Small}>
-                {templateTitle}
-              </Text>
+              <Text.Span size={TextSize.Small}>{templateTitle}</Text.Span>
             </TemplateTitleContainer>
           )}
         </PageTemplateButton>

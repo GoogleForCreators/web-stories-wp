@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Icons,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -84,7 +84,7 @@ export const Cta = styled.div`
   margin: 0;
 `;
 
-export const CheckboxCtaLabel = styled(Text).attrs({
+export const CheckboxCtaLabel = styled(Text.Paragraph).attrs({
   forwardedAs: 'label',
   size: TextSize.Small,
 })`

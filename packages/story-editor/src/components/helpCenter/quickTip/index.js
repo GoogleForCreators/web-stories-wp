@@ -23,7 +23,7 @@ import {
   Link,
   themeHelpers,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   VisuallyHidden,
 } from '@googleforcreators/design-system';
 
@@ -69,7 +69,7 @@ const Title = styled.h1`
   margin: 0 0 8px 0;
 `;
 
-const Paragraph = styled(Text)`
+const Paragraph = styled(Text.Paragraph)`
   & + & {
     margin-top: 8px;
   }

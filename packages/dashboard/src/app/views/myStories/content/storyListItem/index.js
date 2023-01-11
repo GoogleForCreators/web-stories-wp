@@ -174,25 +174,23 @@ export const StoryListItem = ({
         </TitleTableCellContainer>
       </TableCell>
       <TableCell>
-        <Text as="span" size={TextSize.Small}>
-          {story.author?.name || '—'}
-        </Text>
+        <Text.Span size={TextSize.Small}>{story.author?.name || '—'}</Text.Span>
       </TableCell>
       <TableCell>
-        <Text as="span" size={TextSize.Small}>
+        <Text.Span size={TextSize.Small}>
           {getRelativeDisplayDate(story.createdGmt)}
-        </Text>
+        </Text.Span>
       </TableCell>
       <TableCell>
-        <Text as="span" size={TextSize.Small}>
+        <Text.Span size={TextSize.Small}>
           {getRelativeDisplayDate(story.modifiedGmt)}
-        </Text>
+        </Text.Span>
       </TableCell>
       {storyStatus !== STORY_STATUS.DRAFT && (
         <TableStatusCell>
-          <Text as="span" size={TextSize.Small}>
+          <Text.Span size={TextSize.Small}>
             {DISPLAY_STATUS[story?.status]}
-          </Text>
+          </Text.Span>
         </TableStatusCell>
       )}
     </StyledTableRow>

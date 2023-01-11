@@ -100,7 +100,7 @@ export const _default = ({ handleOnChange, ...args }) => {
       <br />
       <Container>
         <Row>
-          <Text isBold>
+          <Text.Paragraph isBold>
             {'Normal'}
             <Input
               aria-label="input-one"
@@ -111,8 +111,8 @@ export const _default = ({ handleOnChange, ...args }) => {
               unit="ms"
               {...args}
             />
-          </Text>
-          <Text isBold>
+          </Text.Paragraph>
+          <Text.Paragraph isBold>
             {'Suffix Icon'}
             <Input
               aria-label="input-two"
@@ -127,8 +127,8 @@ export const _default = ({ handleOnChange, ...args }) => {
                 </IconContainer>
               }
             />
-          </Text>
-          <Text isBold>
+          </Text.Paragraph>
+          <Text.Paragraph isBold>
             {'Error'}
             <Input
               aria-label="input-three"
@@ -139,8 +139,8 @@ export const _default = ({ handleOnChange, ...args }) => {
               {...args}
               hasError
             />
-          </Text>
-          <Text isBold>
+          </Text.Paragraph>
+          <Text.Paragraph isBold>
             {'Disabled'}
             <Input
               aria-label="disabled-input-one"
@@ -151,7 +151,7 @@ export const _default = ({ handleOnChange, ...args }) => {
               {...args}
               disabled
             />
-          </Text>
+          </Text.Paragraph>
         </Row>
       </Container>
       <DarkThemeProvider>
@@ -230,7 +230,7 @@ export const Numeric = ({ handleOnChange, ...args }) => {
       <br />
       <Container>
         <Row>
-          <Text isBold>
+          <Text.Paragraph isBold>
             {'Normal'}
             <NumericInput
               aria-label="input-one"
@@ -240,8 +240,8 @@ export const Numeric = ({ handleOnChange, ...args }) => {
               onChange={handleChange}
               {...args}
             />
-          </Text>
-          <Text isBold>
+          </Text.Paragraph>
+          <Text.Paragraph isBold>
             {'Unit and Suffix'}
             <NumericInput
               aria-label="input-two"
@@ -253,8 +253,8 @@ export const Numeric = ({ handleOnChange, ...args }) => {
               unit="ms"
               suffix="Duration"
             />
-          </Text>
-          <Text isBold>
+          </Text.Paragraph>
+          <Text.Paragraph isBold>
             {'Disabled'}
             <NumericInput
               aria-label="disabled-input-one"
@@ -265,7 +265,7 @@ export const Numeric = ({ handleOnChange, ...args }) => {
               {...args}
               disabled
             />
-          </Text>
+          </Text.Paragraph>
         </Row>
       </Container>
       <DarkThemeProvider>

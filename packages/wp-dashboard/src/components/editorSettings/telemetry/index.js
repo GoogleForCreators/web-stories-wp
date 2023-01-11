@@ -21,7 +21,7 @@ import propTypes from 'prop-types';
 import { useMemo } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
-import { Checkbox, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Checkbox, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -48,7 +48,7 @@ export default function TelemetrySettings({
         </SettingHeading>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor={telemetryOptInId}>
+        <CheckboxLabel htmlFor={telemetryOptInId}>
           <Checkbox
             id={telemetryOptInId}
             data-testid="telemetry-settings-checkbox"
@@ -59,7 +59,6 @@ export default function TelemetrySettings({
           <CheckboxLabelText
             size={TextSize.Small}
             aria-checked={Boolean(selected)}
-            forwardedAs="span"
           >
             <TranslateWithMarkup
               mapping={{

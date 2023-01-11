@@ -18,15 +18,15 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../../../app/config';
 
-const StyledPrice = styled(Text).attrs({
-  size: TextSize.X_SMALL,
+const StyledPrice = styled(Text.Paragraph).attrs({
+  size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;

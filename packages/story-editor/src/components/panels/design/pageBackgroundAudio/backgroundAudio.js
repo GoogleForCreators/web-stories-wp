@@ -19,7 +19,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
 /**
@@ -33,7 +33,7 @@ import useHighlights from '../../../../app/highlights/useHighlights';
 import states from '../../../../app/highlights/states';
 import { styles } from '../../../../app/highlights';
 
-const HelperText = styled(Text).attrs({
+const HelperText = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};

@@ -18,7 +18,7 @@
  */
 import styled from 'styled-components';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   Link,
   BaseTooltip,
   Text,
@@ -76,7 +76,9 @@ export const _default = () => {
 
   return (
     <Container>
-      <Text>{'Scroll Down or collapse actions bar to see the tabs'}</Text>
+      <Text.Paragraph>
+        {'Scroll Down or collapse actions bar to see the tabs'}
+      </Text.Paragraph>
       <Tablist aria-label={'Pre publish checklist example'}>
         <TablistPanel
           title={'High Priority'}
@@ -88,14 +90,14 @@ export const _default = () => {
           <ChecklistCard
             title="Add video captions"
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
             thumbnailCount={1}
@@ -110,14 +112,14 @@ export const _default = () => {
           <ChecklistCard
             title="Add video captions"
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={3}
@@ -158,12 +160,12 @@ export const _default = () => {
               </>
             }
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={6}
@@ -233,12 +235,12 @@ export const _default = () => {
               </>
             }
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={6}
@@ -295,14 +297,14 @@ export const _default = () => {
           <ChecklistCard
             title="Add video captions"
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
             thumbnailCount={1}
@@ -317,14 +319,14 @@ export const _default = () => {
           <ChecklistCard
             title="Add video captions"
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={3}
@@ -365,12 +367,12 @@ export const _default = () => {
               </>
             }
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={6}
@@ -420,14 +422,14 @@ export const _default = () => {
           <ChecklistCard
             title="Add video captions"
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
             thumbnailCount={1}
@@ -442,14 +444,14 @@ export const _default = () => {
           <ChecklistCard
             title="Add video captions"
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={3}
@@ -490,12 +492,12 @@ export const _default = () => {
               </>
             }
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={6}
@@ -545,14 +547,14 @@ export const _default = () => {
           <ChecklistCard
             title="Add video captions"
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
             thumbnailCount={1}
@@ -568,14 +570,14 @@ export const _default = () => {
           <ChecklistCard
             title="Add video captions"
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {
                   'Keep the audience engaged even when they can’t listen to the audio. '
                 }
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={3}
@@ -616,12 +618,12 @@ export const _default = () => {
               </>
             }
             footer={
-              <DefaultFooterText>
+              <DefaultFooterText.Paragraph>
                 {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.X_SMALL}>
+                <Link href="/demo" size={TextSize.XSmall}>
                   {'Learn more'}
                 </Link>
-              </DefaultFooterText>
+              </DefaultFooterText.Paragraph>
             }
             cardType={CARD_TYPE.MULTIPLE_ISSUE}
             thumbnailCount={6}

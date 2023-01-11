@@ -20,7 +20,7 @@
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   NumericInput,
   Switch,
 } from '@googleforcreators/design-system';

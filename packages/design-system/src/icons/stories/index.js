@@ -72,14 +72,14 @@ function IconDisplay({ getStyle = () => {} }) {
 
   return (
     <Page>
-      <Text as="label">
+      <Text.Label>
         <span>{'Filter: '}</span>
         <input
           type="search"
           value={query}
           onChange={(evt) => setQuery(evt.target.value)}
         />
-      </Text>
+      </Text.Label>
       <Text>{`Matching: ${matchingIcons.length}`}</Text>
 
       <IconsList>
@@ -87,9 +87,7 @@ function IconDisplay({ getStyle = () => {} }) {
           return (
             <li key={key}>
               <Icon style={getStyle(index, key)} />
-              <Text as="span" isBold>
-                {key}
-              </Text>
+              <Text.Span isBold>{key}</Text.Span>
             </li>
           );
         })}

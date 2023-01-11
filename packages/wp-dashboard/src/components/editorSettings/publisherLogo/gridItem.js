@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -94,7 +94,7 @@ export const GridItem = forwardRef(
           <Logo src={publisherLogo.url} alt={publisherLogo.title} />
         </GridItemButton>
         {publisherLogo.active && (
-          <CenterMutedText size={TextSize.X_SMALL}>
+          <CenterMutedText size={TextSize.XSmall}>
             {__('Default', 'web-stories')}
           </CenterMutedText>
         )}

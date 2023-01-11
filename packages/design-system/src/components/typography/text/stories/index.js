@@ -47,12 +47,12 @@ export default {
 export const _default = (args) => (
   <>
     {textTextSizes.map((presetSize) => (
-      <Text key={`${presetSize}_text`} size={presetSize} {...args}>
+      <Text.Paragraph key={`${presetSize}_text`} size={presetSize} {...args}>
         {presetSize} <br />
         {
           'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
         }
-      </Text>
+      </Text.Paragraph>
     ))}
   </>
 );
@@ -60,10 +60,15 @@ export const _default = (args) => (
 export const Bold = (args) => (
   <>
     {textTextSizes.map((presetSize) => (
-      <Text key={`${presetSize}_text_bold`} size={presetSize} isBold {...args}>
+      <Text.Paragraph
+        key={`${presetSize}_text_bold`}
+        size={presetSize}
+        isBold
+        {...args}
+      >
         {presetSize} <br />
         {'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'}
-      </Text>
+      </Text.Paragraph>
     ))}
   </>
 );
@@ -74,15 +79,14 @@ export const Label = (args) => (
     {textTextSizes.map((presetSize) => {
       return (
         theme.typography.presets.label[presetSize] && (
-          <Text
+          <Text.Label
             key={`${presetSize}_text_link`}
             size={presetSize}
-            as="label"
             {...args}
           >
             {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
             <br />
-          </Text>
+          </Text.Label>
         )
       );
     })}

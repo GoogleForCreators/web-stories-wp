@@ -24,7 +24,7 @@ import { trackClick } from '@googleforcreators/tracking';
 import {
   themeHelpers,
   Link as DsLink,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
 } from '@googleforcreators/design-system';
 
@@ -56,7 +56,7 @@ const ListItem = styled.li`
 function Link({ children, ...props }) {
   return (
     <ListItem>
-      <DsLink {...props} size={TextSize.X_SMALL}>
+      <DsLink {...props} size={TextSize.XSmall}>
         {children}
       </DsLink>
     </ListItem>
@@ -94,12 +94,12 @@ export default function Footer() {
 
   return (
     <Panel>
-      <Text size={TextSize.X_SMALL}>
+      <Text.Paragraph size={TextSize.XSmall}>
         {__(
           'Discover more resources to get the most out of Web Stories. Read our start guide or visit our support forum to get answers to your questions.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
       <Links>
         <Link
           href={DOCS_URL}

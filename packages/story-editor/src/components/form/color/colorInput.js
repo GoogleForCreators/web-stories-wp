@@ -35,7 +35,7 @@ import {
 import {
   HexInput,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Swatch,
   Popup,
   Disclosure,
@@ -304,16 +304,18 @@ const ColorInput = forwardRef(function ColorInput(
             </ColorPreview>
             {hasInputs ? (
               <TextualPreview>
-                <Text size={TextSize.Small}>{previewText}</Text>
+                <Text.Paragraph size={TextSize.Small}>
+                  {previewText}
+                </Text.Paragraph>
               </TextualPreview>
             ) : (
               <>
                 {/* We display Mixed value even without inputs */}
                 {isMixed && (
                   <MixedLabel>
-                    <Text size={TextSize.Small} as="span">
+                    <Text.Span size={TextSize.Small}>
                       {MULTIPLE_DISPLAY_VALUE}
-                    </Text>
+                    </Text.Span>
                   </MixedLabel>
                 )}
                 <DisclosureContainer isSmall={isMixed}>

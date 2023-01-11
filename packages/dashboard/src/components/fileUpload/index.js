@@ -66,7 +66,7 @@ const UploadFormArea = styled.div`
   transition: border-color 300ms ease-in;
 `;
 
-const UploadHelperText = styled(Text)`
+const UploadHelperText = styled(Text.Paragraph)`
   margin: 0 auto 16px;
   padding: 0 20%;
   text-align: center;

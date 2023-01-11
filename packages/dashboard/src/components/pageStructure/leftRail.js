@@ -204,9 +204,9 @@ function LeftRail() {
                     onClick: (evt) => onExternalLinkClick(evt, path),
                   })}
                 >
-                  <Text as="span" size={TextSize.Small} isBold>
+                  <Text.Span size={TextSize.Small} isBold>
                     {path.label}
-                  </Text>
+                  </Text.Span>
                 </NavLink>
               </NavListItem>
             ))}

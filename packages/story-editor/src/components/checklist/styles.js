@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -53,7 +53,7 @@ export const StyledTablistPanel = styled(TablistPanel)`
   }
 `;
 
-export const PanelText = styled(Text).attrs({
+export const PanelText = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};

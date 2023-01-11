@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { PatternPropType } from '@googleforcreators/patterns';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   Button,
   Icons,
   Text,
@@ -67,7 +67,7 @@ const SavedColors = styled.div`
 
 const DefaultColors = styled.div``;
 
-const Label = styled(Text).attrs({
+const Label = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
@@ -86,7 +86,7 @@ const StyledButton = styled(Button)`
   flex-basis: 100%;
 `;
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   padding: 5px 10px;
 `;
 

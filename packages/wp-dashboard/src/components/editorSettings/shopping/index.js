@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
-import { THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { TextSize } from '@googleforcreators/design-system';
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
 
 /**

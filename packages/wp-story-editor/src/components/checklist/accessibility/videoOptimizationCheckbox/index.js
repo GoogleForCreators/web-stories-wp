@@ -29,7 +29,7 @@ import {
   Checkbox,
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
@@ -55,11 +55,11 @@ const ButtonContainer = styled.div`
   margin-top: 16px;
 `;
 
-const BoldText = styled(Text).attrs({ as: 'span', isBold: true })`
+const BoldText = styled(Text.Span).attrs({ isBold: true })`
   color: ${({ theme }) => theme.colors.standard.white};
 `;
 
-const DescriptionText = styled(Text).attrs({
+const DescriptionText = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};

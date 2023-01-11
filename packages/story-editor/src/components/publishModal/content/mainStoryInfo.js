@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from '@googleforcreators/react';
-import {
-  Headline,
-  TextArea,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { Headline, TextArea, TextSize } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 

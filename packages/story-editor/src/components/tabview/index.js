@@ -24,7 +24,7 @@ import {
   useKeyDownEffect,
   useGlobalKeyDownEffect,
   Headline,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
 } from '@googleforcreators/design-system';
 

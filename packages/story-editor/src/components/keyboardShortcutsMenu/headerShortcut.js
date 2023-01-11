@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Headline, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -42,7 +42,7 @@ function HeaderShortcut(props) {
   return (
     <List>
       <Item>
-        <Headline as="h2" size={TextSize.X_SMALL} {...props}>
+        <Headline as="h2" size={TextSize.XSmall} {...props}>
           {label}
         </Headline>
       </Item>

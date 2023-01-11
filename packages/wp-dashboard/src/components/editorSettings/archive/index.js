@@ -25,11 +25,7 @@ import {
   useState,
 } from '@googleforcreators/react';
 import { __, _x, TranslateWithMarkup, sprintf } from '@googleforcreators/i18n';
-import {
-  DropDown,
-  Search,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { DropDown, Search, TextSize } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import { TEXT_INPUT_DEBOUNCE } from '@googleforcreators/dashboard';

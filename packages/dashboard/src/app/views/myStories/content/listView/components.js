@@ -59,7 +59,7 @@ export const ArrowIconWithTitle = styled(ArrowIcon)`
   }
 `;
 
-export const SelectableTitle = styled(Text).attrs({
+export const SelectableTitle = styled(Text.Paragraph).attrs({
   tabIndex: 0,
   isBold: true,
 })`

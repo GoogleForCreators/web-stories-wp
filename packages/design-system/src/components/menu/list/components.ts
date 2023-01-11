@@ -83,7 +83,7 @@ export const ListItemDisplayText = styled(Text.Span)(
   `
 );
 
-export const ListItemLabelDisplayText = styled(Text.Paragraph)(
+export const ListItemLabelDisplayText = styled(Text.Span)(
   ({ theme }) => css`
     color: ${theme.colors.form.dropDownSubtitle};
   `

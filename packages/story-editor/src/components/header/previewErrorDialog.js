@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -36,9 +36,9 @@ function PreviewErrorDialog({ isOpen, onClose, onRetry }) {
       onPrimary={onRetry}
       primaryText={__('Try again', 'web-stories')}
     >
-      <Text size={TextSize.Small}>
+      <Text.Paragraph size={TextSize.Small}>
         {__('The preview window failed to open.', 'web-stories')}
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 }

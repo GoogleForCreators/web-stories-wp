@@ -37,7 +37,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-  THEME_CONSTANTS,
+  TextSize,
   DROP_DOWN_ITEM,
   DefaultListItemInner,
   DefaultListItemLabelDisplayText,
@@ -96,10 +96,7 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
               open(evt);
             }}
           >
-            <DefaultListItemLabelDisplayText
-              forwardedAs="span"
-              size={TextSize.Small}
-            >
+            <DefaultListItemLabelDisplayText size={TextSize.Small}>
               {option.label}
             </DefaultListItemLabelDisplayText>
           </DefaultListItemInner>

@@ -79,9 +79,9 @@ export default function BodyViewOptions({
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
       <DisplayFormatContainer>
-        <Text as="span" size={TextSize.Small}>
+        <Text.Span size={TextSize.Small}>
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
-        </Text>
+        </Text.Span>
         <ControlsContainer>
           {filters?.length
             ? filters.map((filter) => (

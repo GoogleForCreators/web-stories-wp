@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   Headline,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   Button,
   BUTTON_VARIANTS,

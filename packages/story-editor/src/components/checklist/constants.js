@@ -19,7 +19,7 @@
  */
 import { __, sprintf, _n, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
-import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Link, TextSize } from '@googleforcreators/design-system';
 
 export const THUMBNAIL_MAX = 4;
 export const THUMBNAIL_COUNT_FOR_OVERFLOW = 3;
@@ -516,7 +516,7 @@ export const PRIORITY_COPY = {
               rel="noreferrer"
               target="_blank"
               onClick={onAmpErrorClick}
-              size={TextSize.X_SMALL}
+              size={TextSize.XSmall}
             />
           ),
         }}

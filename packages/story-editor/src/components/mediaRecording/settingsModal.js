@@ -23,7 +23,7 @@ import {
   DropDown,
   localStore,
   LOCAL_STORAGE_PREFIX,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
@@ -40,7 +40,7 @@ const Row = styled.div`
   margin-bottom: 16px;
 `;
 
-const Label = styled(Text).attrs({
+const Label = styled(Text.Paragraph).attrs({
   as: 'label',
   size: TextSize.Small,
 })`

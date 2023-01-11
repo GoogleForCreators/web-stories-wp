@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import {
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
@@ -57,12 +57,12 @@ export const AutoSaveDialog = ({ onClose, isOpen, autoSaveLink }) => {
         </>
       }
     >
-      <Text size={TextSize.Small}>
+      <Text.Paragraph size={TextSize.Small}>
         {__(
           'There is an autosave of this story that is more recent than the version you are editing.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 };

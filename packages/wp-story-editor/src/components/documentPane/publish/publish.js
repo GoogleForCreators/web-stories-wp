@@ -36,7 +36,7 @@ import {
 import {
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Icons,
   Datalist,
 } from '@googleforcreators/design-system';
@@ -66,7 +66,7 @@ const LabelWrapper = styled.div`
   height: 40px;
 `;
 
-const Label = styled(Text).attrs({
+const Label = styled(Text.Paragraph).attrs({
   as: 'label',
   size: TextSize.Small,
 })`
@@ -303,18 +303,16 @@ function PublishPanel({ nameOverride }) {
         crossOrigin="anonymous"
       />
     ) : (
-      <Text as="span" size={TextSize.Small}>
-        {displayText}
-      </Text>
+      <Text.Span size={TextSize.Small}>{displayText}</Text.Span>
     );
   };
 
   const renderUploadButton = (open) => (
     <Datalist.Option onClick={open} aria-label={__('Add new', 'web-stories')}>
       <Icons.ArrowCloud height={32} width={32} />
-      <Text as="span" size={TextSize.X_SMALL}>
+      <Text.Span size={TextSize.XSmall}>
         {__('Add new', 'web-stories')}
-      </Text>
+      </Text.Span>
     </Datalist.Option>
   );
   const publisherLogosWithUploadOption = [...publisherLogos];
@@ -436,7 +434,7 @@ function PublishPanel({ nameOverride }) {
                     rel="noopener noreferrer"
                     target="_blank"
                     href={dashboardSettingsLink}
-                    size={TextSize.X_SMALL}
+                    size={TextSize.XSmall}
                   >
                     {__('Manage', 'web-stories')}
                   </Link>
@@ -468,7 +466,7 @@ function PublishPanel({ nameOverride }) {
                   rel="noopener noreferrer"
                   target="_blank"
                   href={addQueryArgs(revisionLink, { revision: revisionId })}
-                  size={TextSize.X_SMALL}
+                  size={TextSize.XSmall}
                 >
                   {__('Browse', 'web-stories')}
                 </Link>

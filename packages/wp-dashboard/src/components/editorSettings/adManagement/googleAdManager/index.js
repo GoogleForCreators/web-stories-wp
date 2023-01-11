@@ -23,7 +23,7 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**

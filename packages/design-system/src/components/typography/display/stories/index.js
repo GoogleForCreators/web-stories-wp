@@ -43,7 +43,7 @@ export const _default = (args) => (
   <>
     {displayTextSizes.map((presetSize) => (
       <div key={`${presetSize}_display`}>
-        <Text size={'small'}>{presetSize}</Text>
+        <Text.Paragraph size={'small'}>{presetSize}</Text.Paragraph>
 
         <Display size={presetSize} {...args}>
           {'The Quick Brown Fox Jumps Over the Lazy Dog'} <br />

@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import {
   Text,
   Button,
-  THEME_CONSTANTS,
+  TextSize,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
@@ -60,8 +60,8 @@ const StyledSlider = styled(Slider)`
   width: 100%;
 `;
 
-const HelperText = styled(Text).attrs({
-  size: TextSize.X_SMALL,
+const HelperText = styled(Text.Paragraph).attrs({
+  size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;

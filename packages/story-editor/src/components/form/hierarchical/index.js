@@ -24,7 +24,7 @@ import {
   KEYS,
   Text,
   themeHelpers,
-  THEME_CONSTANTS,
+  TextSize,
   useKeyDownEffect,
   useLiveRegion,
 } from '@googleforcreators/design-system';
@@ -51,7 +51,7 @@ const Container = styled.div`
   display: block;
 `;
 
-const Label = styled(Text).attrs({
+const Label = styled(Text.Paragraph).attrs({
   forwardedAs: 'label',
   size: TextSize.Small,
 })`
@@ -92,7 +92,7 @@ const CheckboxContainer = styled.li`
   margin-left: ${({ $level }) => 20 * $level}px;
 `;
 
-const NoResultsText = styled(Text)`
+const NoResultsText = styled(Text.Paragraph)`
   margin-bottom: 12px;
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;

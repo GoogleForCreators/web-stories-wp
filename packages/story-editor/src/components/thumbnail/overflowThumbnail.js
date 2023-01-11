@@ -19,7 +19,7 @@
  */
 import { sprintf, __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { THEME_CONSTANTS, Text } from '@googleforcreators/design-system';
+import { TextSize, Text } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -34,13 +34,13 @@ import { Container } from './styles';
  */
 const OverflowThumbnail = ({ overflowCount, ...rest }) => (
   <Container $isOverflow as="div" {...rest}>
-    <Text size={TextSize.Medium}>
+    <Text.Paragraph size={TextSize.Medium}>
       {sprintf(
         /* translators: %s: number of thumbnails in overflow */
         __('+ %s', 'web-stories'),
         overflowCount
       )}
-    </Text>
+    </Text.Paragraph>
   </Container>
 );
 

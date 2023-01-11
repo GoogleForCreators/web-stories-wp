@@ -18,11 +18,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import {
-  themeHelpers,
-  Text,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { themeHelpers, Text, TextSize } from '@googleforcreators/design-system';
 
 const Panel = styled.div`
   padding: 24px 0 16px 0;
@@ -40,12 +36,12 @@ export function Header() {
   return (
     <Panel>
       <Heading as="h2">{__('Web Stories Help Center', 'web-stories')}</Heading>
-      <Text size={TextSize.X_SMALL}>
+      <Text.Paragraph size={TextSize.XSmall}>
         {__(
           'Discover tips & resources to help you get the most out of your Web Stories.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Panel>
   );
 }

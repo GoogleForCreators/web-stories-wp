@@ -49,12 +49,12 @@ const StyledPanel = styled(Panel)`
   padding: 0 0 48px 0;
 `;
 
-const ByLineText = styled(Text)`
+const ByLineText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   margin: 8px 0 24px;
 `;
 
-const DescriptionText = styled(Text)`
+const DescriptionText = styled(Text.Paragraph)`
   margin-bottom: 24px;
 `;
 

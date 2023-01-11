@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   Icons,
   Button,

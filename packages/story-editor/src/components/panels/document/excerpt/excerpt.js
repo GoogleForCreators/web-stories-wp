@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -31,7 +31,7 @@ import { SimplePanel } from '../../panel';
 import { useHighlights, states, styles } from '../../../../app/highlights';
 
 // Margin -4px is making up for extra margin added by rows.
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   margin-top: -4px;
 `;
@@ -93,7 +93,7 @@ function ExcerptPanel({ nameOverride }) {
         />
       </Row>
       <Row>
-        <StyledText size={TextSize.X_SMALL}>
+        <StyledText size={TextSize.XSmall}>
           {__(
             'Stories with a description tend to do better on search and have a wider reach',
             'web-stories'

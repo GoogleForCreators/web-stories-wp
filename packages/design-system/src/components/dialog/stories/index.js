@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
+import { TextSize } from '../../../theme';
 import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../button';
 import { Text } from '../../typography';
 import { Dialog } from '..';
@@ -86,7 +86,7 @@ export const _default = ({ message, onClick, ...args }) => {
         actions={ActionsNode}
         {...args}
       >
-        <Text size={TextSize.Small}>{message}</Text>
+        <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
       </Dialog>
     </InvertedWrapper>
   );
@@ -138,7 +138,7 @@ export const With2Actions = ({ message, onClick, ...args }) => {
         actions={ActionsNode}
         {...args}
       >
-        <Text size={TextSize.Small}>{message}</Text>
+        <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
       </Dialog>
     </InvertedWrapper>
   );
@@ -191,7 +191,7 @@ export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
           actions={ActionsNode}
           {...args}
         >
-          <Text size={TextSize.Small}>{message}</Text>
+          <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
         </Dialog>
       </InvertedWrapper>
     </DarkThemeProvider>

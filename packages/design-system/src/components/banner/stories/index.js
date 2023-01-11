@@ -44,7 +44,7 @@ export const _default = ({ message, ...args }) => {
       backgroundUrl={demoBgUrl}
       {...args}
     >
-      <Text size={TextSize.XSmall}>{message}</Text>
+      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
     </Banner>
   );
 };
@@ -57,7 +57,7 @@ export const EditorBanner = ({ message, ...args }) => {
       backgroundUrl={demoBgUrl}
       {...args}
     >
-      <Text size={TextSize.XSmall}>{message}</Text>
+      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
     </Banner>
   );
 };
@@ -76,12 +76,12 @@ export const DashboardBanner = ({ message, ...args }) => {
       backgroundUrl={demoBgUrl}
       {...args}
     >
-      <Text size={TextSize.XSmall}>
+      <Text.Paragraph size={TextSize.XSmall}>
         {message}
         <Link size={TextSize.XSmall} href="https://policies.google.com/privacy">
           {'Google Privacy Policy'}
         </Link>
-      </Text>
+      </Text.Paragraph>
     </Banner>
   );
 };
@@ -99,7 +99,7 @@ export const BannerNoBackgroundImage = ({ message, ...args }) => {
       onClose={(e) => args.onClose(e)}
       {...args}
     >
-      <Text size={TextSize.XSmall}>{message}</Text>
+      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
     </Banner>
   );
 };

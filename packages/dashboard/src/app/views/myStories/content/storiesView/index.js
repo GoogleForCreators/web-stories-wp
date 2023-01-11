@@ -276,13 +276,13 @@ function StoriesView({ loading, storyActions, stories, view }) {
             ),
           }}
         >
-          <Text size={TextSize.Small}>
+          <Text.Paragraph size={TextSize.Small}>
             {sprintf(
               /* translators: %s: story title. */
               __('Are you sure you want to delete "%s"?', 'web-stories'),
               titleFormatted(activeStory.title)
             )}
-          </Text>
+          </Text.Paragraph>
         </Dialog>
       )}
     </>

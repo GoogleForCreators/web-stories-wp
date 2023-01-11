@@ -36,7 +36,7 @@ import {
   translateToInclusiveList,
 } from '@googleforcreators/i18n';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   LOCAL_STORAGE_PREFIX,
   Text,
   Toggle,
@@ -216,9 +216,9 @@ function TextSetsPane({ paneRef }) {
           {PANE_TEXT.TITLE}
         </Headline>
         <TextSetsToggle>
-          <Text as="label" htmlFor={toggleId} size={TextSize.Small}>
+          <Text.Label htmlFor={toggleId} size={TextSize.Small}>
             {PANE_TEXT.SWITCH_LABEL}
-          </Text>
+          </Text.Label>
           <Toggle
             id={toggleId}
             aria-label={PANE_TEXT.SWITCH_LABEL}

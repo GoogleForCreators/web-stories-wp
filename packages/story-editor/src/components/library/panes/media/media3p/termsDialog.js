@@ -22,7 +22,7 @@ import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import {
   Text,
   Link,
-  THEME_CONSTANTS,
+  TextSize,
   LOCAL_STORAGE_PREFIX,
   localStore,
 } from '@googleforcreators/design-system';
@@ -67,7 +67,7 @@ function TermsDialog() {
       onPrimary={acknowledgeTerms}
       primaryText={__('Dismiss', 'web-stories')}
     >
-      <Text size={TextSize.Small}>
+      <Text.Paragraph size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -90,7 +90,7 @@ function TermsDialog() {
             'web-stories'
           )}
         </TranslateWithMarkup>
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 }

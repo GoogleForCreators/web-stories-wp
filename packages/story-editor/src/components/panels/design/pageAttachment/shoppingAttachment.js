@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -27,7 +27,7 @@ import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Row } from '../../../form';
 import { CallToActionText, Theme } from './shared';
 
-const HelperText = styled(Text).attrs({
+const HelperText = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};

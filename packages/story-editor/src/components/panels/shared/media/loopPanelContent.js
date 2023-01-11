@@ -19,11 +19,7 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@googleforcreators/i18n';
-import {
-  Checkbox,
-  Text,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { Checkbox, Text, TextSize } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useInitializedValue } from '@googleforcreators/react';
@@ -53,9 +49,9 @@ function LoopPanelContent({ loop, className = '', onChange, ...props }) {
         onChange={onChange}
         {...props}
       />
-      <Text as="label" size={TextSize.Small} htmlFor={checkboxId}>
+      <Text.Label size={TextSize.Small} htmlFor={checkboxId}>
         {__('Loop', 'web-stories')}
-      </Text>
+      </Text.Label>
     </Wrapper>
   );
 }

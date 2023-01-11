@@ -27,7 +27,7 @@ import {
   Text,
   Placement,
   themeHelpers,
-  THEME_CONSTANTS,
+  TextSize,
   theme as dsTheme,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
@@ -80,7 +80,7 @@ const Button = styled(dsButton)`
   // Margin is set to -8px to compensate for empty space
   // around the actual icon graphic in the svg
   .main-icon {
-    height: ${THEME_CONSTANTS.ICON_SIZE}px;
+    height: ${TextSize.ICON_SIZE}px;
     width: auto;
     margin: -8px;
     display: block;
@@ -100,7 +100,7 @@ const badgeSize = 22;
 const badgeText = dsTheme.typography.presets.label[TextSize.Small];
 
 // TODO: Extract `CountBadge` to its own component?
-const CountBadge = styled(Text).attrs({ as: 'span' })`
+const CountBadge = styled(Text.Paragraph).attrs({ as: 'span' })`
   ${({ size = badgeSize, fontSize = badgeText.size, theme }) => css`
     min-width: ${size}px;
     width: auto;
@@ -143,7 +143,7 @@ export const ToggleButton = forwardRef(
       <Tooltip
         hasTail
         title={label}
-        placement={TOP}
+        placement={Placement.Top}
         shortcut={shortcut}
         popupZIndexOverride={popupZIndexOverride}
       >

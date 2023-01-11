@@ -17,10 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import {
-  themeHelpers,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { themeHelpers, TextSize } from '@googleforcreators/design-system';
 
 // Modified from react-calendar/dist/Calendar.css
 const CalendarWrapper = styled.div`

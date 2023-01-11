@@ -119,7 +119,7 @@ export const Title = styled(Headline).attrs({
 `;
 
 // All body text
-export const DetailCopy = styled(Text).attrs({
+export const DetailCopy = styled(Text.Paragraph).attrs({
   forwardedAs: 'span',
   size: TextSize.XSmall,
 })`

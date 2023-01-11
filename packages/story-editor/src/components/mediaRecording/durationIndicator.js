@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import {
-  Text,
-  THEME_CONSTANTS,
-  Placement,
-} from '@googleforcreators/design-system';
+import { Text, TextSize, Placement } from '@googleforcreators/design-system';
 import { _n, sprintf } from '@googleforcreators/i18n';
 import { getVideoLengthDisplay } from '@googleforcreators/media';
 
@@ -33,7 +29,7 @@ import Tooltip from '../tooltip';
 import useMediaRecording from './useMediaRecording';
 import { MAX_RECORDING_DURATION_IN_MINUTES } from './constants';
 
-const Wrapper = styled(Text).attrs({
+const Wrapper = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   font-variant-numeric: tabular-nums;

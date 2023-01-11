@@ -21,7 +21,7 @@ import propTypes from 'prop-types';
 import { useMemo } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@googleforcreators/i18n';
-import { Checkbox, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Checkbox, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -51,7 +51,7 @@ export default function MediaOptimizationSettings({
         </SettingHeading>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor={mediaOptimizationId}>
+        <CheckboxLabel htmlFor={mediaOptimizationId}>
           <Checkbox
             id={mediaOptimizationId}
             data-testid="media-optimization-settings-checkbox"
@@ -62,7 +62,6 @@ export default function MediaOptimizationSettings({
           <CheckboxLabelText
             size={TextSize.Small}
             aria-checked={Boolean(selected)}
-            forwardedAs="span"
           >
             {__(
               'Automatically optimize videos used in Web Stories. We recommend enabling this feature. Video files that are too large or have an unsupported format (like .mov) will otherwise not display properly.',

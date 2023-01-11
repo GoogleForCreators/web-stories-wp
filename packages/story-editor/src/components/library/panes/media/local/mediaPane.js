@@ -27,7 +27,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Icons,
   PLACEMENT,
 } from '@googleforcreators/design-system';
@@ -70,7 +70,7 @@ const FilterArea = styled.div`
   padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
 `;
 
-const SearchCount = styled(Text).attrs({
+const SearchCount = styled(Text.Paragraph).attrs({
   size: TextSize.Medium,
 })`
   display: flex;

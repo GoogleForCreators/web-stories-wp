@@ -22,7 +22,7 @@ import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -57,7 +57,7 @@ const InputsWrapper = styled.div`
   margin-left: 16px;
 `;
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin-bottom: 10px;
 `;

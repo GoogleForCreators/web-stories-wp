@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { resourceList } from '@googleforcreators/media';
-import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Headline, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -21,7 +21,7 @@ import {
   Checkbox,
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
@@ -47,7 +47,7 @@ const Label = styled.label`
   margin-left: 12px;
 `;
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   padding: 8px 0;
 `;
@@ -83,9 +83,7 @@ function LinkRelations({ rel, onChangeRel }) {
               onChange={() => onChange(key)}
             />
             <Label htmlFor={key}>
-              <Text size={TextSize.Small} as="span">
-                {title}
-              </Text>
+              <Text.Span size={TextSize.Small}>{title}</Text.Span>
             </Label>
           </CheckboxWrapper>
         ))}
@@ -93,7 +91,7 @@ function LinkRelations({ rel, onChangeRel }) {
           rel="noopener noreferrer"
           target="_blank"
           href={relHelpLink}
-          size={TextSize.X_SMALL}
+          size={TextSize.XSmall}
         >
           {__('Learn more', 'web-stories')}
         </Link>

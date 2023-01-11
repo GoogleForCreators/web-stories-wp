@@ -43,7 +43,7 @@ export const _default = (args) => (
   <>
     {headlineTextSizes.map((presetSize) => (
       <div key={`${presetSize}_headline`}>
-        <Text size={'small'}>{presetSize}</Text>
+        <Text.Paragraph size={'small'}>{presetSize}</Text.Paragraph>
         <Headline size={presetSize} {...args}>
           {'The Quick Brown Fox Jumps Over the Lazy Dog'}
         </Headline>

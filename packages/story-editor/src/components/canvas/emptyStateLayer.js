@@ -24,7 +24,7 @@ import {
   Button,
   Icons,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   theme,
   lightMode,
   CONTEXT_MENU_MIN_WIDTH,
@@ -112,12 +112,12 @@ function EmptyStateLayer() {
             <Icons.Media />
           </StyledButton>
           <ThemeProvider theme={{ ...theme, colors: lightMode }}>
-            <Text id="emptystate-message" size={TextSize.Small}>
+            <Text.Paragraph id="emptystate-message" size={TextSize.Small}>
               {__(
                 'Add an image, video or template to get started',
                 'web-stories'
               )}
-            </Text>
+            </Text.Paragraph>
           </ThemeProvider>
         </EmptyStateMessage>
       </DisplayPageArea>

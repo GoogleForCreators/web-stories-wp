@@ -19,7 +19,7 @@
  */
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 import { Dialog, useStory } from '@googleforcreators/story-editor';
 
 function PostReviewDialog() {
@@ -47,12 +47,12 @@ function PostReviewDialog() {
       primaryText={__('Dismiss', 'web-stories')}
       onPrimary={onClose}
     >
-      <Text size={TextSize.Small}>
+      <Text.Paragraph size={TextSize.Small}>
         {__(
           'Your Story has been successfully submitted for review.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 }

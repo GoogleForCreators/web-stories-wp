@@ -24,7 +24,7 @@ import styled from 'styled-components';
 import {
   Text,
   Checkbox,
-  THEME_CONSTANTS,
+  TextSize,
   LOCAL_STORAGE_PREFIX,
   localStore,
 } from '@googleforcreators/design-system';
@@ -63,7 +63,7 @@ function ConfirmationDialog({ onClose, onPrimary }) {
       onPrimary={onPrimary}
       primaryText={__('Delete', 'web-stories')}
     >
-      <Text size={TextSize.Small}>{dialogText}</Text>
+      <Text.Paragraph size={TextSize.Small}>{dialogText}</Text.Paragraph>
       <CheckboxWrapper>
         <Checkbox
           id={cbId}
@@ -77,9 +77,9 @@ function ConfirmationDialog({ onClose, onPrimary }) {
           }}
         />
         <Label htmlFor={cbId}>
-          <Text as="span" size={TextSize.Small}>
+          <Text.Span size={TextSize.Small}>
             {__("Don't ask for confirmation again.", 'web-stories')}
-          </Text>
+          </Text.Span>
         </Label>
       </CheckboxWrapper>
     </Dialog>

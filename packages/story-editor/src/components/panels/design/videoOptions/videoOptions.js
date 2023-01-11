@@ -23,7 +23,7 @@ import styled from 'styled-components';
 import {
   Text,
   CircularProgress,
-  THEME_CONSTANTS,
+  TextSize,
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
@@ -71,8 +71,8 @@ const VolumeWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const HelperText = styled(Text).attrs({
-  size: TextSize.X_SMALL,
+const HelperText = styled(Text.Paragraph).attrs({
+  size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
@@ -154,9 +154,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       </Row>
       {showVolumeControl && (
         <VolumeWrapper>
-          <Text as="label" size={TextSize.Small} htmlFor={slideId}>
+          <Text.Label size={TextSize.Small} htmlFor={slideId}>
             {__('Volume', 'web-stories')}
-          </Text>
+          </Text.Label>
           <StyledSlider
             value={Math.round(volume * 100)}
             handleChange={onChangeVolume}

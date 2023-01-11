@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Headline, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

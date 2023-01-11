@@ -18,14 +18,14 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { focusStyle } from '../../../../panels/shared/styles';
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   color: inherit;
 `;
 

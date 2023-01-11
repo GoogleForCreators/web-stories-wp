@@ -31,7 +31,7 @@ import PropTypes from 'prop-types';
 import {
   Headline,
   LoadingSpinner,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**

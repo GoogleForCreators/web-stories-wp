@@ -26,7 +26,7 @@ import {
 import PropTypes from 'prop-types';
 import { __, _x, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
-import { THEME_CONSTANTS, DropDown } from '@googleforcreators/design-system';
+import { TextSize, DropDown } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

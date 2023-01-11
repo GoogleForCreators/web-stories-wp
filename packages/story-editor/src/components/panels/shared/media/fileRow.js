@@ -26,7 +26,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   useLiveRegion,
 } from '@googleforcreators/design-system';
@@ -88,7 +88,7 @@ const StyledButton = styled(Button)`
     )};
 `;
 
-const FileName = styled(Text).attrs({
+const FileName = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};

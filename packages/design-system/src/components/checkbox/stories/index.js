@@ -102,7 +102,7 @@ export const _default = (args) => {
         <Row>
           <div>
             <label htmlFor="one">
-              <Text as="span">{args.checkboxLabel1}</Text>
+              <Text.Span>{args.checkboxLabel1}</Text.Span>
             </label>
             <Checkbox
               id="one"
@@ -113,7 +113,7 @@ export const _default = (args) => {
           </div>
           <div>
             <label htmlFor="disabledOne">
-              <Text as="span">{args.checkboxLabel2}</Text>
+              <Text.Span>{args.checkboxLabel2}</Text.Span>
             </label>
             <Checkbox
               id="disabledOne"
@@ -127,7 +127,7 @@ export const _default = (args) => {
         <Row>
           <div>
             <label htmlFor="two">
-              <Text as="span">{args.checkboxLabel3}</Text>
+              <Text.Span>{args.checkboxLabel3}</Text.Span>
             </label>
             <Checkbox
               id="two"
@@ -138,7 +138,7 @@ export const _default = (args) => {
           </div>
           <div>
             <label htmlFor="disabledTwo">
-              <Text as="span">{args.checkboxLabel4}</Text>
+              <Text.Span>{args.checkboxLabel4}</Text.Span>
             </label>
             <Checkbox
               id="disabledTwo"
@@ -155,7 +155,7 @@ export const _default = (args) => {
           <Row>
             <div>
               <label htmlFor="three">
-                <Text as="span">{args.checkboxLabel1}</Text>
+                <Text.Span>{args.checkboxLabel1}</Text.Span>
               </label>
               <Checkbox
                 id="three"
@@ -166,7 +166,7 @@ export const _default = (args) => {
             </div>
             <div>
               <label htmlFor="disabledThree">
-                <Text as="span">{args.checkboxLabel2}</Text>
+                <Text.Span>{args.checkboxLabel2}</Text.Span>
               </label>
               <Checkbox
                 id="disabledThree"
@@ -180,7 +180,7 @@ export const _default = (args) => {
           <Row>
             <div>
               <label htmlFor="four">
-                <Text as="span">{args.checkboxLabel3}</Text>
+                <Text.Span>{args.checkboxLabel3}</Text.Span>
               </label>
               <Checkbox
                 id="four"
@@ -191,7 +191,7 @@ export const _default = (args) => {
             </div>
             <div>
               <label htmlFor="disabledFour">
-                <Text as="span">{args.checkboxLabel4}</Text>
+                <Text.Span>{args.checkboxLabel4}</Text.Span>
               </label>
               <Checkbox
                 id="disabledFour"

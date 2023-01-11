@@ -29,7 +29,7 @@ import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
-  THEME_CONSTANTS,
+  TextSize,
   NotificationBubble,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';

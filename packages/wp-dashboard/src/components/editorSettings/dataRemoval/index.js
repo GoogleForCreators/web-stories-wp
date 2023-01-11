@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { Checkbox, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Checkbox, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -46,7 +46,7 @@ export default function DataRemovalSettings({
         <SettingHeading>{__('Plugin Uninstall', 'web-stories')}</SettingHeading>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor="data-removal-settings">
+        <CheckboxLabel htmlFor="data-removal-settings">
           <Checkbox
             id="data-removal-settings"
             data-testid="data-removal-settings-checkbox"
@@ -56,7 +56,6 @@ export default function DataRemovalSettings({
           <CheckboxLabelText
             size={TextSize.Small}
             aria-checked={Boolean(isEnabled)}
-            forwardedAs="span"
           >
             {__(
               'Remove all data including stories and saved templates when uninstalling the Web Stories plugin.',

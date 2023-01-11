@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   BUTTON_TYPES,
   BUTTON_SIZES,
@@ -60,7 +60,7 @@ const NoStylesWrapper = styled(DefaultNoStylesWrapper)`
   width: calc(100% + 28px);
 `;
 
-const SubHeading = styled(Text)`
+const SubHeading = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin: 6px 0;
   font-weight: ${({ theme }) => theme.typography.weight.bold};
@@ -70,7 +70,7 @@ const StyledButton = styled(Button)`
   margin-left: auto;
 `;
 
-const NoStylesText = styled(Text)`
+const NoStylesText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
