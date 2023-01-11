@@ -18,8 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
+import type {
+  ComponentPropsWithoutRef,
+  ForwardedRef,
+  ReactNode,
+  VoidFunctionComponent,
+} from 'react';
 
 /**
  * Internal dependencies
@@ -28,7 +33,7 @@ import Button from './button';
 import Shortcut from './shortcut';
 import Suffix from './suffix';
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button)<{ supportsIcon?: boolean }>`
   ${({ supportsIcon }) =>
     supportsIcon &&
     `
@@ -47,9 +52,25 @@ const StyledButton = styled(Button)`
   `}
 `;
 
-function MenuItemWithRef(
-  { label, shortcut, icon, SuffixIcon, className, ...buttonProps },
-  ref
+export interface MenuItemProps
+  extends ComponentPropsWithoutRef<typeof StyledButton> {
+  label: ReactNode;
+  shortcut?: { display: string };
+  icon?: ReactNode;
+  SuffixIcon?: VoidFunctionComponent;
+  className?: string;
+}
+
+const MenuItem = forwardRef(function MenuItem(
+  {
+    label,
+    shortcut,
+    icon,
+    SuffixIcon,
+    className,
+    ...buttonProps
+  }: MenuItemProps,
+  ref: ForwardedRef<HTMLButtonElement>
 ) {
   return (
     <StyledButton className={className} ref={ref} {...buttonProps}>
@@ -63,20 +84,6 @@ function MenuItemWithRef(
       )}
     </StyledButton>
   );
-}
-
-const MenuItem = forwardRef(MenuItemWithRef);
-
-MenuItem.propTypes = {
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  shortcut: PropTypes.shape({
-    display: PropTypes.object.isRequired,
-    title: PropTypes.string,
-  }),
-  icon: PropTypes.node,
-  SuffixIcon: PropTypes.object,
-};
-
-MenuItemWithRef.propTypes = MenuItem.propTypes;
+});
 
 export default MenuItem;

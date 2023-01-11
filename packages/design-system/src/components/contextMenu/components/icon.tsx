@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
@@ -35,17 +37,19 @@ const IconWrapper = styled.div`
   }
 `;
 
+export interface MenuIconProps extends ComponentPropsWithoutRef<'div'> {
+  title: string;
+}
 /**
  * A styled icon for use in the context menu. To be used within
  * the styled Button for the context menu.
- *
- * @param {Object} props Attributes to pass to the link.
- * @param {Node} props.children Children to render.
- * @param {string} props.title The text to display in the tooltip.
- * @param {string} props.className Optional class name to add to icon wrapper.
- * @return {Node} The react node
  */
-function Icon({ children, title, className = '', ...props }) {
+function Icon({
+  children,
+  title,
+  className = '',
+  ...props
+}: PropsWithChildren<MenuIconProps>) {
   return (
     <>
       <VisuallyHidden>{title}</VisuallyHidden>
@@ -55,10 +59,5 @@ function Icon({ children, title, className = '', ...props }) {
     </>
   );
 }
-Icon.propTypes = {
-  children: PropTypes.node,
-  title: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
 
 export default Icon;

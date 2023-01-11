@@ -113,7 +113,7 @@ export type DataListPropsOptions<O> =
 
 export type DataListProps<O extends AbstractOption> =
   DataListPropsOptions<O> & {
-    onChange: SearchInputProps['onChange'];
+    onChange: (value: O) => void;
     disabled?: boolean;
     selectedId?: O['id'];
     hasSearch?: boolean;

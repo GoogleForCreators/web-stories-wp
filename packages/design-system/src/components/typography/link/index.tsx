@@ -80,8 +80,8 @@ function ConditionalSpanWrapper({
   return isWrapped ? <span>{children}</span> : <>{children}</>;
 }
 
-interface LinkProps extends ComponentPropsWithoutRef<'a'> {
-  size: LinkTextSize;
+export interface LinkProps extends ComponentPropsWithoutRef<'a'> {
+  size?: LinkTextSize;
 }
 
 const Link = forwardRef(function Link(

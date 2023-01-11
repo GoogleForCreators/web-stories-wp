@@ -23,8 +23,7 @@ import { css } from 'styled-components';
  * Internal dependencies
  */
 import type { Preset } from '../../types/typography';
-import type { Theme, theme } from '..';
-import { TextSize } from '../constants/typography';
+import type { Theme, theme, TextSize } from '..';
 
 interface ExpandPresetStylesProps {
   preset: Preset;

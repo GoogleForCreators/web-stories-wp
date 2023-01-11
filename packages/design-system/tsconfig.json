@@ -10,17 +10,5 @@
     { "path": "../react" },
     { "path": "../tracking" }
   ],
-  "include": [
-    "src/components",
-    "src/contexts",
-    "src/theme",
-    "src/icons",
-    "src/types",
-    "src/typings",
-    "src/types.ts",
-    "src/utils/*.ts",
-    "src/utils/constants.ts",
-    "src/utils/localStore.ts",
-    "src/utils/sessionStore.ts"
-  ]
+  "include": ["src"]
 }

@@ -17,23 +17,29 @@
  * External dependencies
  */
 
-import PropTypes from 'prop-types';
 import { useCallback, useState } from '@googleforcreators/react';
+import type { PropsWithChildren, SyntheticEvent } from 'react';
 /**
  * Internal dependencies
  */
 import ContextMenuContext from './context';
+
+interface ContextMenuProviderProps {
+  isIconMenu?: boolean;
+  isHorizontal?: boolean;
+  onDismiss: (evt?: SyntheticEvent) => void;
+}
 
 export default function ContextMenuProvider({
   children,
   isIconMenu = false,
   isHorizontal = false,
   onDismiss,
-}) {
-  const [focusedId, setFocusedId] = useState(-1);
+}: PropsWithChildren<ContextMenuProviderProps>) {
+  const [focusedId, setFocusedId] = useState<string | null>(null);
 
-  const handleBlur = useCallback((id) => setFocusedId(id), []);
-  const handleFocus = useCallback(() => setFocusedId(-1), []);
+  const handleFocus = useCallback((id: string) => setFocusedId(id), []);
+  const handleBlur = useCallback(() => setFocusedId(null), []);
 
   const value = {
     state: {
@@ -55,9 +61,3 @@ export default function ContextMenuProvider({
     </ContextMenuContext.Provider>
   );
 }
-ContextMenuProvider.propTypes = {
-  children: PropTypes.node,
-  isIconMenu: PropTypes.bool,
-  isHorizontal: PropTypes.bool,
-  onDismiss: PropTypes.func,
-};

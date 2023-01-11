@@ -18,14 +18,12 @@
  * Custom propTypes validator used to check if either `label`
  * or `aria-label` have been passed to the component.
  * This also checks that they are of the correct type.
- *
- * @param {Object} props the props supplied to the component.
- * @param {string} _ the name of the prop.
- * @param {string} componentName the name of the component.
- * @return {Error|null} Returns an error if the conditions have not been met.
- * Otherwise, returns null.
  */
-function labelAccessibilityValidator(props, _, componentName) {
+function labelAccessibilityValidator(
+  props: Record<string, unknown>,
+  _: string,
+  componentName: string
+) {
   if (!props.label && !props['aria-label']) {
     return new Error(
       `\`label\` or \`aria-label\` must be supplied to \`${componentName}\`. Validation failed.`

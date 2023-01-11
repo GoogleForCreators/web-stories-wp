@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export { default as DropDownSelect } from './dropdown';
+export { default as DropDown } from './dropdown';
+export { default as DropDownSelect } from './select';

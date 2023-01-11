@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type { ComponentPropsWithoutRef } from 'react';
+
+export interface MenuGroupProps extends ComponentPropsWithoutRef<'div'> {
+  label: string;
+}
+
 /**
  * A wrapping div with `role="group"` for use in the context menu.
- *
- * @param {Object} props Attributes to pass to the div.
- * @param {string} props.label Accessible label for the group.
- * @return {Node} The react node
  */
-function Group({ label, ...props }) {
+function Group({ label, ...props }: MenuGroupProps) {
   return <div role="group" aria-label={label} {...props} />;
 }
-Group.propTypes = {
-  label: PropTypes.string.isRequired,
-};
 
 export default Group;

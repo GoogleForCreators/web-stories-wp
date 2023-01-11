@@ -26,18 +26,17 @@ import { useCallback, useEffect, useRef } from '@googleforcreators/react';
  * if the ARIA live region is too large.
  *
  * Please only provide users with just a simple, concise message.
- *
- * @param {?string} politeness Optional. Politeness. Either 'polite', or 'assertive'. Default 'polite'.
- * @return {Function} Function to speak a message.
  */
-function useLiveRegion(politeness = 'polite') {
-  const elementRef = useRef();
+function useLiveRegion(politeness: 'polite' | 'assertive' = 'polite') {
+  const elementRef = useRef<HTMLElement | null>(null);
 
   const ensureContainerExists = useCallback(() => {
     if (elementRef.current) {
       return () => {
-        document.body.removeChild(elementRef.current);
-        elementRef.current = null;
+        if (elementRef.current) {
+          document.body.removeChild(elementRef.current);
+          elementRef.current = null;
+        }
       };
     }
 
@@ -90,7 +89,10 @@ function useLiveRegion(politeness = 'polite') {
    * a screen reader.
    */
   const speak = useCallback(
-    (message) => {
+    (message: string) => {
+      if (!elementRef.current) {
+        return;
+      }
       ensureContainerExists();
 
       // Clear any existing messages.

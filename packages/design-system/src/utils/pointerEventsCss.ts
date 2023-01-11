@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const DIRECTIONS = {
-  TOP: 'top',
-  RIGHT: 'right',
-  BOTTOM: 'bottom',
-  LEFT: 'left',
-};
 
-export const CORNER_DIRECTIONS = {
-  [`${DIRECTIONS.TOP}_${DIRECTIONS.LEFT}`]: `${DIRECTIONS.TOP}_${DIRECTIONS.LEFT}`,
-  [`${DIRECTIONS.TOP}_${DIRECTIONS.RIGHT}`]: `${DIRECTIONS.TOP}_${DIRECTIONS.RIGHT}`,
-  [`${DIRECTIONS.BOTTOM}_${DIRECTIONS.RIGHT}`]: `${DIRECTIONS.BOTTOM}_${DIRECTIONS.RIGHT}`,
-  [`${DIRECTIONS.BOTTOM}_${DIRECTIONS.LEFT}`]: `${DIRECTIONS.BOTTOM}_${DIRECTIONS.LEFT}`,
-};
+/**
+ * External dependencies
+ */
+import { css } from 'styled-components';
+
+const pointerEventsCss = css<{ pointerEvents?: string }>`
+  ${({ pointerEvents }) => {
+    if (pointerEvents && typeof pointerEvents === 'string') {
+      return `pointer-events: ${pointerEvents};`;
+    }
+    return '';
+  }}
+`;
+
+export default pointerEventsCss;

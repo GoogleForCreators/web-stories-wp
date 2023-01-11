@@ -13,17 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { identity, useContextSelector } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
+import type { ContextMenuProvider } from '../types';
 import Context from './context';
 
-function useContextMenu(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useContextMenu(): ContextMenuProvider;
+function useContextMenu<T>(selector: (state: ContextMenuProvider) => T): T;
+function useContextMenu<T>(
+  selector: (state: ContextMenuProvider) => T | ContextMenuProvider = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
 export default useContextMenu;

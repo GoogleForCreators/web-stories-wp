@@ -26,18 +26,18 @@ import {
   useEffect,
 } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
+import type { ForwardedRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { themeHelpers } from '../../theme';
+import useForwardedRef from '../../utils/useForwardedRef';
 import { DropDownSelect } from '../dropDown';
 import { Popup } from '../popup';
 import OptionsContainer from './container';
 import OptionList from './list';
 import type { AbstractOption, DataListProps } from './types';
-import useForwardedRef from '../../utils/useForwardedRef';
-import type { ForwardedRef } from 'react';
 
 const focusStyle = css`
   ${({ theme }) =>
@@ -117,7 +117,7 @@ const Datalist = forwardRef(function Datalist<O extends AbstractOption>(
   const debouncedCloseDropDown = useDebouncedCallback(closeDropDown, 100);
 
   const handleSelect = useCallback(
-    (option) => {
+    (option: O) => {
       onChange(option);
       setIsOpen(false);
       ref.current?.focus();
@@ -175,7 +175,7 @@ const Datalist = forwardRef(function Datalist<O extends AbstractOption>(
   // Logic for fetching primaryOptions
   useEffect(() => {
     if (getPrimaryOptions) {
-      getPrimaryOptions().then((res) => {
+      void getPrimaryOptions().then((res) => {
         _setPrimaryOptions(res);
       });
     } else if (primaryOptions) {

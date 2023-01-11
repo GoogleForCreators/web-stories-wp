@@ -13,11 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
 
-const ContextMenuContext = createContext();
+/**
+ * Internal dependencies
+ */
+import type { ContextMenuProvider } from '../types';
+
+const ContextMenuContext = createContext<ContextMenuProvider>({
+  state: {
+    focusedId: null,
+    isIconMenu: false,
+    isHorizontal: false,
+  },
+  actions: {
+    onDismiss: () => undefined,
+    onMenuItemBlur: () => undefined,
+    onMenuItemFocus: () => undefined,
+    setFocusedId: () => undefined,
+  },
+});
 
 export default ContextMenuContext;

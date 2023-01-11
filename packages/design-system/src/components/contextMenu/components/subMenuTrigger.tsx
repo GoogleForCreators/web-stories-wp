@@ -23,7 +23,7 @@ import {
   useEffect,
   useRef,
 } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
+import type { RefObject } from 'react';
 
 /**
  * Internal dependencies
@@ -31,13 +31,24 @@ import PropTypes from 'prop-types';
 import { useKeyDownEffect } from '../../keyboard';
 import { FOCUSABLE_SELECTORS, KEYS } from '../../../utils';
 import { useContextMenu } from '../contextMenuProvider';
-import MenuItem from './item';
+import MenuItem, { MenuItemProps } from './item';
 
 /**
  * Extracts all focusable children from an html tree.
  */
 function getFocusableChildren(parent: Element) {
-  return Array.from(parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', ')));
+  return Array.from(
+    parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', '))
+  ).filter((e): e is HTMLElement => e instanceof HTMLElement);
+}
+
+export interface SubMenuTriggerProps extends MenuItemProps {
+  openSubMenu: () => void;
+  closeSubMenu: () => void;
+  isSubMenuOpen: boolean;
+  isRTL?: boolean;
+  subMenuRef: RefObject<HTMLElement>;
+  parentMenuRef: RefObject<HTMLElement>;
 }
 
 function SubMenuTrigger({
@@ -48,15 +59,15 @@ function SubMenuTrigger({
   subMenuRef,
   parentMenuRef,
   ...buttonProps
-}) {
-  const ref = useRef();
-  const pointerTracker = useRef({});
+}: SubMenuTriggerProps) {
+  const ref = useRef<HTMLButtonElement | null>(null);
+  const pointerTracker = useRef<{ x?: number; y?: number }>({});
 
   const { setFocusedId } = useContextMenu(({ actions }) => ({
     setFocusedId: actions.setFocusedId,
   }));
 
-  const pointerIsOutside = (node) => {
+  const pointerIsOutside = (node: Element) => {
     const { x, y, width, height } = node.getBoundingClientRect();
     const { x: pointerX, y: pointerY } = pointerTracker.current;
     if (pointerX === undefined || pointerY === undefined) {
@@ -72,7 +83,11 @@ function SubMenuTrigger({
   };
 
   const maybeCloseSubMenu = useDebouncedCallback(() => {
-    if (!ref.current || !subMenuRef.current?.firstChild) {
+    if (
+      !ref.current ||
+      !subMenuRef.current?.firstChild ||
+      !(subMenuRef.current.firstChild instanceof Element)
+    ) {
       return;
     }
     // If after 200ms the cursor is not in the submenu and not in itself, leave.
@@ -97,20 +112,20 @@ function SubMenuTrigger({
     if (!isSubMenuOpen || !node) {
       return undefined;
     }
-    const onPointerMove = (e) => {
-      // Track the pointer when moving inside the menu while the submenu is open.
-      pointerTracker.current.x = e.clientX;
-      pointerTracker.current.y = e.clientY;
-      maybeCloseSubMenu();
+    const onPointerMove = (e: Event) => {
+      if (e instanceof PointerEvent) {
+        // Track the pointer when moving inside the menu while the submenu is open.
+        pointerTracker.current.x = e.clientX;
+        pointerTracker.current.y = e.clientY;
+        maybeCloseSubMenu();
+      }
     };
     node.addEventListener('pointermove', onPointerMove);
-    return () => {
-      node.removeEventListener('pointermove', onPointerMove);
-    };
+    return () => node.removeEventListener('pointermove', onPointerMove);
   }, [isSubMenuOpen, parentMenuRef, maybeCloseSubMenu]);
 
   const handleKeyboardEvents = useCallback(
-    (evt) => {
+    (evt: KeyboardEvent) => {
       const { code } = evt;
       if ([KEYS.SPACE, KEYS.ENTER].includes(code)) {
         if (!isSubMenuOpen) {
@@ -147,21 +162,12 @@ function SubMenuTrigger({
         pointerTracker.current = {};
         maybeCloseSubMenu();
       }}
-      onClick={(e) => e.preventDefault()}
+      onClick={(e: MouseEvent) => e.preventDefault()}
       aria-haspopup
       aria-expanded={isSubMenuOpen}
       dismissOnClick={false}
     />
   );
 }
-
-SubMenuTrigger.propTypes = {
-  openSubMenu: PropTypes.func.isRequired,
-  closeSubMenu: PropTypes.func.isRequired,
-  isSubMenuOpen: PropTypes.bool.isRequired,
-  isRTL: PropTypes.bool,
-  subMenuRef: PropTypes.object.isRequired,
-  parentMenuRef: PropTypes.object.isRequired,
-};
 
 export default SubMenuTrigger;
