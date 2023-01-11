@@ -195,7 +195,7 @@ const useQuickActions = () => {
         onAction: () => {
           undoRef.current();
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: `undo_${ACTIONS.RESET_ELEMENT.trackingEventName}`,
             element: elementType,
             isBackground: true,
@@ -221,7 +221,7 @@ const useQuickActions = () => {
    * @param {Event} ev The triggering event.
    */
   const handleFocusPanel = useCallback(
-    (highlight) => (elementId) => (ev) => {
+    (highlight) => (elementId: ElementId) => (ev: MouseEvent) => {
       ev.preventDefault();
       setHighlights({
         elementId: elementId || selectedElement?.id,
@@ -274,10 +274,10 @@ const useQuickActions = () => {
       {
         Icon: Bucket,
         label: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent) => {
           handleFocusPageBackground(backgroundElement?.id)(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.CHANGE_BACKGROUND_COLOR.trackingEventName,
             element: 'none',
           });
@@ -287,10 +287,10 @@ const useQuickActions = () => {
       {
         Icon: Media,
         label: ACTIONS.INSERT_BACKGROUND_MEDIA.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent) => {
           handleFocusMediaPanel()(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.INSERT_BACKGROUND_MEDIA.trackingEventName,
             element: 'none',
           });
@@ -305,8 +305,8 @@ const useQuickActions = () => {
           setHighlights({
             highlight: states.StylePane,
           });
-          insertElement('text', DEFAULT_PRESET);
-          trackEvent('quick_action', {
+          insertElement(ElementType.Text, DEFAULT_PRESET as unknown as Element);
+          void trackEvent('quick_action', {
             name: ACTIONS.INSERT_TEXT.trackingEventName,
             element: 'none',
           });
@@ -372,7 +372,7 @@ const useQuickActions = () => {
             elementType: selectedElement?.type,
           });
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.RESET_ELEMENT.trackingEventName,
             element: selectedElement?.type,
           });
@@ -424,11 +424,13 @@ const useQuickActions = () => {
   }
 
   const isBackgroundElementMedia = Boolean(
-    backgroundElement && backgroundElement?.resource
+    backgroundElement && elementIs.media(backgroundElement)
   );
 
   const noElementsSelected = selectedElements.length === 0;
-  const isBackgroundSelected = selectedElements?.[0]?.isBackground;
+  const isBackgroundSelected =
+    elementIs.backgroundable(selectedElements[0]) &&
+    selectedElements[0].isBackground;
 
   // Return the base state if:
   //  1. no element is selected

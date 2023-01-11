@@ -45,6 +45,8 @@ export interface EventParameters {
   duration?: number;
   title_length?: number;
   unread_count?: number;
+  /** Element type */
+  element?: string;
   event_label?: string;
   event_category?: string;
   status?: string;
@@ -57,6 +59,7 @@ export interface EventParameters {
   file_type?: string;
   width?: number;
   height?: number;
+  isBackground?: boolean;
 }
 
 interface Gtag {
