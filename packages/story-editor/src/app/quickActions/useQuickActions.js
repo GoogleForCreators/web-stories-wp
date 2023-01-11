@@ -27,7 +27,6 @@ import {
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -35,18 +34,14 @@ import styled from 'styled-components';
 import { states, useHighlights } from '../highlights';
 import updateProperties from '../../components/style/updateProperties';
 import { useHistory } from '../history';
-import { useConfig } from '../config';
-import { STORY_EVENTS, useStory, useStoryTriggersDispatch } from '../story';
-import useApplyTextAutoStyle from '../../utils/useApplyTextAutoStyle';
+import { useStory } from '../story';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../components/mediaRecording';
-import {
-  BACKGROUND_BLUR_PX,
-  VIDEO_EFFECTS,
-} from '../../components/mediaRecording/constants';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
+import useTextActions from './useTextActions';
+import useMediaActions from './useMediaActions';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
@@ -54,36 +49,7 @@ const UNDO_HELP_TEXT = sprintf(
   prettifyShortcut('mod+z')
 );
 
-const {
-  Bucket,
-  ColorBucket,
-  CircleSpeed,
-  Eraser,
-  LetterTPlus,
-  Link,
-  Media,
-  PictureSwap,
-  Captions,
-  Cross,
-  Settings,
-  Scissors,
-} = Icons;
-
-const quickActionIconAttrs = {
-  width: 24,
-  height: 24,
-};
-const StyledSettings = styled(Settings).attrs(quickActionIconAttrs)``;
-const Mic = styled(Icons.Mic).attrs(quickActionIconAttrs)``;
-const MicOff = styled(Icons.MicOff).attrs(quickActionIconAttrs)``;
-const Video = styled(Icons.Camera).attrs(quickActionIconAttrs)``;
-const VideoOff = styled(Icons.CameraOff).attrs(quickActionIconAttrs)``;
-const BackgroundBlur = styled(Icons.BackgroundBlur).attrs(
-  quickActionIconAttrs
-)``;
-const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
-  quickActionIconAttrs
-)``;
+const { Bucket, CircleSpeed, Eraser, LetterTPlus, Link, Media } = Icons;
 
 /**
  * Determines the quick actions to display in the quick
@@ -94,10 +60,6 @@ const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
  * @return {Array.<{ Icon: Node, label: string, onClick: Function, separator: string, tooltipPlacement: string, wrapWithMediaPicker: boolean }>} an array of quick action objects
  */
 const useQuickActions = () => {
-  const {
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
-  const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
     backgroundElement,
     currentPageNumber,
@@ -131,46 +93,8 @@ const useQuickActions = () => {
     setHighlights,
   }));
 
-  const {
-    isInRecordingMode,
-    toggleRecordingMode,
-    toggleVideo,
-    toggleAudio,
-    hasVideo,
-    hasAudio,
-    videoEffect,
-    setVideoEffect,
-    toggleSettings,
-    audioInput,
-    videoInput,
-    isReady,
-    isProcessing,
-    isAdjustingTrim,
-    isProcessingTrim,
-    startTrim,
-  } = useMediaRecording(({ state, actions }) => ({
+  const { isInRecordingMode } = useMediaRecording(({ state }) => ({
     isInRecordingMode: state.isInRecordingMode,
-    hasAudio: state.hasAudio,
-    hasVideo: state.hasVideo,
-    videoEffect: state.videoEffect,
-    audioInput: state.audioInput,
-    videoInput: state.videoInput,
-    isReady:
-      state.inputStatus === 'ready' &&
-      !state.file?.type?.startsWith('image') &&
-      !state.isCountingDown &&
-      (state.status === 'ready' || state.status === 'idle'),
-    isProcessing: state.isProcessing,
-    isAdjustingTrim: state.isAdjustingTrim,
-    isProcessingTrim: state.isProcessingTrim,
-    toggleRecordingMode: actions.toggleRecordingMode,
-    toggleVideo: actions.toggleVideo,
-    toggleAudio: actions.toggleAudio,
-    toggleSettings: actions.toggleSettings,
-    muteAudio: actions.muteAudio,
-    unMuteAudio: actions.unMuteAudio,
-    startTrim: actions.startTrim,
-    setVideoEffect: actions.setVideoEffect,
   }));
 
   const undoRef = useRef(undo);
@@ -298,6 +222,12 @@ const useQuickActions = () => {
     [setHighlights, selectedElement]
   );
 
+  const resetProperties = useMemo(
+    () => getResetProperties(selectedElement, selectedElementAnimations),
+    [selectedElement, selectedElementAnimations]
+  );
+
+  const showClearAction = resetProperties.length > 0;
   const handleFocusMediaPanel = useMemo(() => {
     const resourceId = selectedElements?.[0]?.resource?.id?.toString() || '';
     const is3PMedia = resourceId.startsWith('media/');
@@ -310,13 +240,11 @@ const useQuickActions = () => {
     handleFocusAnimationPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
-    handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.Animation),
       handleFocusLinkPanel: handleFocusPanel(states.Link),
       handleFocusPageBackground: handleFocusPanel(states.PageBackground),
-      handleFocusCaptionsPanel: handleFocusPanel(states.Captions),
     }),
     [handleFocusPanel]
   );
@@ -385,13 +313,6 @@ const useQuickActions = () => {
     setHighlights,
     insertElement,
   ]);
-
-  const resetProperties = useMemo(
-    () => getResetProperties(selectedElement, selectedElementAnimations),
-    [selectedElement, selectedElementAnimations]
-  );
-
-  const showClearAction = resetProperties.length > 0;
 
   const foregroundCommonActions = useMemo(() => {
     const commonActions = [];
@@ -465,274 +386,23 @@ const useQuickActions = () => {
     resetProperties,
   ]);
 
-  const foregroundImageActions = useMemo(() => {
-    const actions = [];
-
-    if (hasUploadMediaAction) {
-      actions.push({
-        Icon: PictureSwap,
-        label: ACTIONS.REPLACE_MEDIA.text,
-        onClick: () => {
-          dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.REPLACE_MEDIA.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        wrapWithMediaPicker: true,
-        ...actionMenuProps,
-      });
-    }
-
-    return [...actions, ...foregroundCommonActions];
-  }, [
-    actionMenuProps,
-    foregroundCommonActions,
-    hasUploadMediaAction,
-    dispatchStoryEvent,
-    selectedElement?.type,
-  ]);
-
-  const shapeActions = foregroundCommonActions;
-
-  const applyTextAutoStyle = useApplyTextAutoStyle(
+  const textActions = useTextActions({
     selectedElement,
-    (properties) =>
-      updateElementsById({
-        elementIds: [selectedElement?.id],
-        properties,
-      })
-  );
-  const textActions = useMemo(
-    () => [
-      {
-        Icon: ColorBucket,
-        label: ACTIONS.AUTO_STYLE_TEXT.text,
-        onClick: () => {
-          applyTextAutoStyle();
-          trackEvent('quick_action', {
-            name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-      ...foregroundCommonActions,
-    ],
-    [
-      applyTextAutoStyle,
-      foregroundCommonActions,
-      actionMenuProps,
-      selectedElement?.type,
-    ]
-  );
-
-  const videoActions = useMemo(() => {
-    const [baseActions, clearActions] = showClearAction
-      ? [
-          foregroundImageActions.slice(0, foregroundImageActions.length - 1),
-          foregroundImageActions.slice(-1),
-        ]
-      : [foregroundImageActions, []];
-
-    return [
-      ...baseActions,
-      {
-        Icon: Captions,
-        label: ACTIONS.ADD_CAPTIONS.text,
-        onClick: (evt) => {
-          handleFocusCaptionsPanel()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.ADD_CAPTIONS.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-      ...clearActions,
-    ];
-  }, [
-    actionMenuProps,
+    updater: updateElementsById,
+    commonActions: foregroundCommonActions,
+    actionProps: actionMenuProps,
+  });
+  const {
+    backgroundElementMediaActions,
     foregroundImageActions,
-    handleFocusCaptionsPanel,
-    selectedElement?.type,
-    showClearAction,
-  ]);
-
-  const backgroundElementMediaActions = useMemo(() => {
-    const baseActions = [
-      {
-        Icon: CircleSpeed,
-        label: ACTIONS.ADD_ANIMATION.text,
-        onClick: (evt) => {
-          handleFocusAnimationPanel()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.ADD_ANIMATION.trackingEventName,
-            element: selectedElement?.type,
-            isBackground: true,
-          });
-        },
-        ...actionMenuProps,
-      },
-    ];
-
-    if (hasUploadMediaAction) {
-      baseActions.unshift({
-        Icon: PictureSwap,
-        label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
-        onClick: () => {
-          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
-            element: selectedElement?.type,
-            isBackground: true,
-          });
-        },
-        wrapWithMediaPicker: true,
-        ...actionMenuProps,
-      });
-    }
-
-    const clearAction = {
-      Icon: Eraser,
-      label: ACTIONS.RESET_ELEMENT.text,
-      onClick: () => {
-        handleElementReset({
-          elementId: selectedElement?.id,
-          resetProperties,
-          elementType: ELEMENT_TYPES.IMAGE,
-        });
-
-        trackEvent('quick_action', {
-          name: ACTIONS.RESET_ELEMENT.trackingEventName,
-          element: selectedElement?.type,
-          isBackground: true,
-        });
-      },
-      separator: 'top',
-      ...actionMenuProps,
-    };
-
-    return showClearAction ? [...baseActions, clearAction] : baseActions;
-  }, [
-    actionMenuProps,
-    dispatchStoryEvent,
-    handleElementReset,
-    handleFocusAnimationPanel,
-    hasUploadMediaAction,
-    resetProperties,
+    mediaRecordingActions,
+    videoActions,
+  } = useMediaActions({
     selectedElement,
-    showClearAction,
-  ]);
-
-  const mediaRecordingActions = useMemo(() => {
-    return [
-      {
-        Icon: Cross,
-        label: __('Close', 'web-stories'),
-        onClick: () => {
-          trackEvent('media_recording_mode_toggled', {
-            status: 'closed',
-          });
-          toggleRecordingMode();
-        },
-        ...actionMenuProps,
-      },
-      {
-        Icon: StyledSettings,
-        label: __('Options', 'web-stories'),
-        onClick: () => {
-          trackEvent('media_recording_open_settings');
-          toggleSettings();
-        },
-        disabled: !isReady,
-        separator: 'top',
-        ...actionMenuProps,
-      },
-      audioInput && {
-        Icon: hasAudio ? Mic : MicOff,
-        label: hasAudio
-          ? __('Disable Audio', 'web-stories')
-          : __('Enable Audio', 'web-stories'),
-        onClick: () => {
-          trackEvent('media_recording_audio_toggled', {
-            status: hasAudio ? 'muted' : 'unmuted',
-          });
-          toggleAudio();
-        },
-        disabled: !isReady || !hasVideo,
-        ...actionMenuProps,
-      },
-      videoInput && {
-        Icon: hasVideo ? Video : VideoOff,
-        label: hasVideo
-          ? __('Disable Video', 'web-stories')
-          : __('Enable Video', 'web-stories'),
-        onClick: () => {
-          trackEvent('media_recording_video_toggled', {
-            status: hasVideo ? 'off' : 'on',
-          });
-          toggleVideo();
-        },
-        disabled: !isReady || !hasAudio,
-        ...actionMenuProps,
-      },
-      videoInput && {
-        Icon:
-          videoEffect === VIDEO_EFFECTS.BLUR
-            ? BackgroundBlur
-            : BackgroundBlurOff,
-        label:
-          videoEffect === VIDEO_EFFECTS.BLUR
-            ? __('Disable Background Blur', 'web-stories')
-            : __('Enable Background Blur', 'web-stories'),
-        onClick: () => {
-          trackEvent('media_recording_background_blur_px', {
-            value: videoEffect === VIDEO_EFFECTS.BLUR ? 0 : BACKGROUND_BLUR_PX,
-          });
-          const newVideoEffect =
-            videoEffect === VIDEO_EFFECTS.BLUR
-              ? VIDEO_EFFECTS.NONE
-              : VIDEO_EFFECTS.BLUR;
-          setVideoEffect(newVideoEffect);
-        },
-        disabled: !isReady || !hasVideo,
-        ...actionMenuProps,
-      },
-      {
-        Icon: Scissors,
-        label: __('Trim Video', 'web-stories'),
-        onClick: () => {
-          trackEvent('media_recording_trim_start');
-          startTrim();
-        },
-        disabled:
-          !isProcessing || isAdjustingTrim || !hasVideo || isProcessingTrim,
-        ...actionMenuProps,
-      },
-    ].filter(Boolean);
-  }, [
-    actionMenuProps,
-    isReady,
-    audioInput,
-    videoInput,
-    hasVideo,
-    hasAudio,
-    isProcessing,
-    isAdjustingTrim,
-    isProcessingTrim,
-    toggleAudio,
-    toggleVideo,
-    toggleRecordingMode,
-    toggleSettings,
-    startTrim,
-    videoEffect,
-    setVideoEffect,
-  ]);
+    handleFocusPanel,
+    resetProperties,
+    commonActions: foregroundCommonActions,
+  });
 
   // Return special actions for media recording mode.
   if (isInRecordingMode) {
@@ -765,12 +435,7 @@ const useQuickActions = () => {
   // 1. the background is selected
   // 2. and, the background is media
   if (isBackgroundSelected && isBackgroundElementMedia) {
-    const isVideo = selectedElement.type === 'video';
-    // In case of video, we're also adding actions that are common for video regardless of bg/not.
-    if (isVideo) {
-      return [...backgroundElementMediaActions];
-    }
-    return backgroundElementMediaActions;
+    return backgroundElementMediaActions(handleResetProperties);
   }
 
   // switch quick actions based on non-background element type
@@ -779,7 +444,7 @@ const useQuickActions = () => {
     case ELEMENT_TYPES.GIF:
       return foregroundImageActions;
     case ELEMENT_TYPES.SHAPE:
-      return shapeActions;
+      return foregroundCommonActions;
     case ELEMENT_TYPES.TEXT:
       return textActions;
     case ELEMENT_TYPES.VIDEO:
