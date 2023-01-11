@@ -26,7 +26,7 @@ import {
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { ElementType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -148,7 +148,7 @@ const useQuickActions = () => {
         newProperties.borderRadius = null;
       }
 
-      if (elementType === ELEMENT_TYPES.TEXT) {
+      if (elementType === ElementType.Text) {
         newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
       }
 
@@ -435,22 +435,21 @@ const useQuickActions = () => {
   // 1. the background is selected
   // 2. and, the background is media
   if (isBackgroundSelected && isBackgroundElementMedia) {
-    return backgroundElementMediaActions(handleResetProperties);
+    return backgroundElementMediaActions;
   }
 
   // switch quick actions based on non-background element type
   switch (selectedElements?.[0]?.type) {
-    case ELEMENT_TYPES.IMAGE:
-    case ELEMENT_TYPES.GIF:
+    case ElementType.Image:
+    case ElementType.Gif:
       return foregroundImageActions;
-    case ELEMENT_TYPES.SHAPE:
+    case ElementType.Shape:
+    case ElementType.Sticker:
       return foregroundCommonActions;
-    case ELEMENT_TYPES.TEXT:
+    case ElementType.Text:
       return textActions;
-    case ELEMENT_TYPES.VIDEO:
+    case ElementType.Video:
       return videoActions;
-    case ELEMENT_TYPES.STICKER:
-      return foregroundCommonActions;
     default:
       return [];
   }
