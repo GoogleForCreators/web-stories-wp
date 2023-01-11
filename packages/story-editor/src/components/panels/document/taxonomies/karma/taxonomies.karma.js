@@ -453,7 +453,7 @@ describe('Taxonomies Panel', () => {
       );
     });
 
-    fit('can add tags with input', async () => {
+    it('can add tags with input', async () => {
       await openTaxonomiesPanel();
       const tag1Name = 'new tag';
       const tag2Name = 'another tag';
@@ -481,7 +481,6 @@ describe('Taxonomies Panel', () => {
       // enter in a second tag
       await fixture.events.keyboard.type(tag2Name);
       await fixture.events.keyboard.press('Enter');
-      await karmaPause();
       tags = await fixture.screen.findAllByTestId(/^flat-term-token/);
 
       await expect(tags.length).toBe(initialTagsLength + 2);

@@ -65,14 +65,16 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
-      const newTerms = termCache.filter((term) =>
-        termNames.includes(term.name)
+      const currentTerms = termCache.filter(
+        (term) =>
+          term.taxonomy === taxonomy.slug && termNames.includes(term.name)
       );
       const removeToTerms = terms.filter(
-        (term) => term.taxonomy === taxonomy.slug
+        (term) =>
+          term.taxonomy === taxonomy.slug && !termNames.includes(term.name)
       );
       removeTerms(removeToTerms);
-      addTerms(newTerms);
+      addTerms(currentTerms);
 
       // Return early if user doesn't have capability to create new terms
       if (!canCreateTerms) {

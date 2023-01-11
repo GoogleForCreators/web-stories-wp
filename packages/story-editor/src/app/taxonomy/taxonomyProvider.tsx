@@ -27,7 +27,6 @@ import {
   useEffect,
   useMemo,
   useState,
-  useRef,
 } from '@googleforcreators/react';
 import type { PropsWithChildren } from 'react';
 
@@ -87,13 +86,11 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   // Reference embedded terms in the story and taxonomies
   // to get the initial selected terms as well as populate
   // the taxonomy term cache
-  const hasHydrationRunOnce = useRef(false);
   useEffect(() => {
-    if (terms?.length > 0 && isStoryLoaded && !hasHydrationRunOnce.current) {
+    if (terms?.length > 0 && isStoryLoaded) {
       setTermCache((cache: Term[]) => {
         return cache ? [...new Set([...cache, ...terms])] : terms;
       });
-      hasHydrationRunOnce.current = true;
     }
   }, [terms, isStoryLoaded, setTermCache]);
 
@@ -160,10 +157,6 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         return termResults;
       }
 
-      setTermCache((cache: Term[]) => {
-        return cache ? [...cache, ...termResults] : termResults;
-      });
-
       if (addNameToSelection && args.search) {
         const selectedTermSlug: TermSlug = cleanForSlug(args.search);
         const selectedTerm = termResults.find(
@@ -217,7 +210,6 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       // create term and add to cache
       try {
         const newTerm: Term = await createTaxonomyTerm(termsEndpoint, data);
-        setTermCache((cache: Term[]) => [...cache, newTerm]);
 
         if (addToSelection) {
           addTerms([newTerm]);
