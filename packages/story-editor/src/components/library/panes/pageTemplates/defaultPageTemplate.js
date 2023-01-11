@@ -23,7 +23,7 @@ import styled from 'styled-components';
 import { _x, sprintf, __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_TYPES,
+  ButtonType,
   TextSize,
   Text,
   themeHelpers,
@@ -38,7 +38,7 @@ import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled.div``;
 
-const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
+const PageTemplateButton = styled(Button).attrs({ type: ButtonType.Plain })`
   position: relative;
   display: block;
   padding: 0;

@@ -25,7 +25,7 @@ import styled from 'styled-components';
  */
 import { dark, light } from '../theme/colors';
 import { Headline, Text, TextSize } from '..';
-import { Button, BUTTON_TYPES } from '../components';
+import { Button, ButtonType } from '../components';
 
 export default {
   title: 'DesignSystem/Colors',
@@ -86,7 +86,7 @@ export const _default = () => {
   return (
     <div>
       <FixedButton
-        type={BUTTON_TYPES.PRIMARY}
+        type={ButtonType.Primary}
         onClick={() => setIsDarkTheme(!isDarkTheme)}
       >{`Toggle to ${isDarkTheme ? 'light' : 'dark'} theme`}</FixedButton>
       {Object.keys(activeTheme).map((themeSection) => (

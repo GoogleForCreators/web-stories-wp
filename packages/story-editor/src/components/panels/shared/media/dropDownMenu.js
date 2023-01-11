@@ -34,9 +34,9 @@ import {
   PLACEMENT,
   Icons,
   Button,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  ButtonVariant,
+  ButtonType,
+  ButtonSize,
   TextSize,
   DROP_DOWN_ITEM,
   DefaultListItemInner,
@@ -186,9 +186,9 @@ function DropDownMenu({
         <DropDownKeyEvents target={MenuButtonRef.current} />
       )}
       <MenuButton
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Tertiary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         ref={MenuButtonRef}
         onClick={onMenuOpen}
         aria-label={ariaLabel}

@@ -20,9 +20,9 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Button as dsButton,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  BUTTON_SIZES,
+  ButtonType,
+  ButtonVariant,
+  ButtonSize,
   Disclosure,
   Text,
   Placement,
@@ -155,9 +155,9 @@ export const ToggleButton = forwardRef(
           hasText={Boolean(copy)}
           isOpen={isOpen}
           isSquare={!hasNotifications}
-          type={BUTTON_TYPES.TERTIARY}
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          size={BUTTON_SIZES.MEDIUM}
+          type={ButtonType.Tertiary}
+          variant={ButtonVariant.Rectangle}
+          size={ButtonSize.Medium}
           {...rest}
         >
           {MainIcon && <MainIcon className="main-icon" />}

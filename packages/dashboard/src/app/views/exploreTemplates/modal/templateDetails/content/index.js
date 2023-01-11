@@ -22,9 +22,9 @@ import { sprintf, __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Chip,
   Display,
   Icons,
@@ -128,9 +128,9 @@ function DetailsContent({
 
     const Previous = (
       <Button
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Tertiary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => {
           switchToTemplateByOffset(previousIndex);
@@ -144,9 +144,9 @@ function DetailsContent({
 
     const Next = (
       <Button
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Tertiary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         aria-label={__('View next template', 'web-stories')}
         onClick={() => {
           switchToTemplateByOffset(nextIndex);

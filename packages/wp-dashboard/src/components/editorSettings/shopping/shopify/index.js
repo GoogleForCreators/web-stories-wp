@@ -27,8 +27,8 @@ import {
   trackEvent,
 } from '@googleforcreators/tracking';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   TextSize,
   CircularProgress,
   useLiveRegion,
@@ -239,8 +239,8 @@ function ShopifySettings({
           hint={hostInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disableHostSaveButton}
           onClick={onSaveHost}
           data-testid="shopifyHostButton"
@@ -283,8 +283,8 @@ function ShopifySettings({
           hint={accessTokenInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disableAccessTokenSaveButton}
           onClick={onSaveAccessToken}
           data-testid="shopifyAccessTokenButton"
@@ -311,8 +311,8 @@ function ShopifySettings({
 
       <TestConnectionButton
         onFocus={() => setTestConnectionStatus('')}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
         disabled={!canTestConnection}
         onClick={onTestConnection}
       >

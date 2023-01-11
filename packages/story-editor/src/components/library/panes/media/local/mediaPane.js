@@ -23,9 +23,9 @@ import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   Button as DefaultButton,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Text,
   TextSize,
   Icons,
@@ -177,9 +177,9 @@ function MediaPane(props) {
   const renderUploadButtonIcon = useCallback(
     (open) => (
       <Button
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
         onClick={open}
         aria-label={__('Upload', 'web-stories')}
       >

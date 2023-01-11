@@ -20,9 +20,9 @@
 import styled, { css } from 'styled-components';
 import {
   Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
   Headline,
   Input,
   Link,
@@ -168,9 +168,9 @@ export const MenuContainer = styled.div`
 `;
 
 export const LogoMenuButton = styled(Button).attrs({
-  size: BUTTON_SIZES.SMALL,
-  type: BUTTON_TYPES.SECONDARY,
-  variant: BUTTON_VARIANTS.CIRCLE,
+  size: ButtonSize.Small,
+  type: ButtonType.Secondary,
+  variant: ButtonVariant.Circle,
 })`
   opacity: ${({ isActive, menuOpen }) => (menuOpen || isActive ? 1 : 0)};
   position: absolute;

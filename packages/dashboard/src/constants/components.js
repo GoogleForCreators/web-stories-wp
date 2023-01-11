@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export const BUTTON_TYPES = {
+export const ButtonType = {
   CTA: 'cta',
   DEFAULT: 'default',
   PRIMARY: 'primary',

@@ -23,8 +23,8 @@ import {
   Text,
   TextSize,
   Dialog,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  ButtonType,
+  ButtonSize,
   Button,
   theme,
 } from '@googleforcreators/design-system';
@@ -39,15 +39,15 @@ function ConfirmationDialog({ onClose, onPrimary }) {
         actions={
           <>
             <Button
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
+              type={ButtonType.Tertiary}
+              size={ButtonSize.Small}
               onClick={() => onClose()}
             >
               {__('Cancel', 'web-stories')}
             </Button>
             <Button
-              type={BUTTON_TYPES.PRIMARY}
-              size={BUTTON_SIZES.SMALL}
+              type={ButtonType.Primary}
+              size={ButtonSize.Small}
               onClick={() => onPrimary()}
             >
               {__('Delete Font', 'web-stories')}

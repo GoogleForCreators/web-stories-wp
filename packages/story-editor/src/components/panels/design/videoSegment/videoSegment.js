@@ -23,9 +23,9 @@ import {
   Text,
   Button,
   TextSize,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   useSnackbar,
   Slider,
 } from '@googleforcreators/design-system';
@@ -234,9 +234,9 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
         </SliderWrapper>
         <StyledButton
           disabled={isSegmenting}
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Rectangle}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           onClick={onClick}
         >
           {segmentButtonText}

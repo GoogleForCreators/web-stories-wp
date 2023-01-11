@@ -21,9 +21,9 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   TextSize,
 } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
@@ -65,8 +65,8 @@ function PostTakeOverDialog({
       actions={
         <>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             href={previewLink}
             target="_blank"
             rel="noreferrer"
@@ -74,9 +74,9 @@ function PostTakeOverDialog({
             {__('Preview', 'web-stories')}
           </Button>
           <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.RECTANGLE}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
+            variant={ButtonVariant.Rectangle}
             href={dashboardLink}
           >
             {__('Back to dashboard', 'web-stories')}

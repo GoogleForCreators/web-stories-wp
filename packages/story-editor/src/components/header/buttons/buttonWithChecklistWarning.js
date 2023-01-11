@@ -22,9 +22,9 @@ import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Button as DefaultButton,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Placement,
 } from '@googleforcreators/design-system';
 import { forwardRef, useMemo } from '@googleforcreators/react';
@@ -67,9 +67,9 @@ const InnerButton = forwardRef(function InnerButton(
   return (
     <Button
       ref={ref}
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      type={BUTTON_TYPES.PRIMARY}
-      size={BUTTON_SIZES.SMALL}
+      variant={ButtonVariant.Rectangle}
+      type={ButtonType.Primary}
+      size={ButtonSize.Small}
       onClick={handleClick}
       {...buttonProps}
     >

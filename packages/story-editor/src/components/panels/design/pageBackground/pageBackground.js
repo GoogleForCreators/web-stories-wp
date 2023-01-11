@@ -23,9 +23,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   Text as DefaultText,
   TextSize,
@@ -89,9 +89,9 @@ const RemoveButton = styled(Button)`
 `;
 
 const ReplaceButton = styled(Button).attrs({
-  size: BUTTON_SIZES.SMALL,
-  variant: BUTTON_VARIANTS.SQUARE,
-  type: BUTTON_TYPES.TERTIARY,
+  size: ButtonSize.Small,
+  variant: ButtonVariant.Square,
+  type: ButtonType.Tertiary,
 })`
   margin-right: 8px;
 `;
@@ -256,9 +256,9 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
             <RemoveButton
               aria-label={__('Detach background', 'web-stories')}
               onClick={removeAsBackground}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.SQUARE}
-              type={BUTTON_TYPES.TERTIARY}
+              size={ButtonSize.Small}
+              variant={ButtonVariant.Square}
+              type={ButtonType.Tertiary}
             >
               <Icons.Cross />
             </RemoveButton>

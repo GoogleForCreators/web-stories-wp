@@ -25,9 +25,9 @@ import {
   Button,
   Icons,
   Text,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   localStore,
   LOCAL_STORAGE_PREFIX,
   themeHelpers,
@@ -186,9 +186,9 @@ function BasicColorPicker({
         {hasEyedropper && (
           <EyedropperWrapper>
             <Button
-              variant={BUTTON_VARIANTS.SQUARE}
-              type={BUTTON_TYPES.QUATERNARY}
-              size={BUTTON_SIZES.SMALL}
+              variant={ButtonVariant.Square}
+              type={ButtonType.Quaternary}
+              size={ButtonSize.Small}
               aria-label={__('Pick a color from canvas', 'web-stories')}
               onClick={initEyedropper()}
               onPointerEnter={initEyedropper(false)}
@@ -255,9 +255,9 @@ function BasicColorPicker({
       <Footer>
         <StyledButton
           onClick={showCustomPicker}
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Rectangle}
         >
           {__('Custom', 'web-stories')}
           <StyledPlus />

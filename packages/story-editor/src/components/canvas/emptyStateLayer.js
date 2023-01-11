@@ -19,8 +19,8 @@
  */
 import styled, { ThemeProvider } from 'styled-components';
 import {
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonVariant,
   Button,
   Icons,
   Text,
@@ -101,8 +101,8 @@ function EmptyStateLayer() {
       <DisplayPageArea withSafezone={false}>
         <EmptyStateMessage>
           <StyledButton
-            type={BUTTON_TYPES.SECONDARY}
-            variant={BUTTON_VARIANTS.CIRCLE}
+            type={ButtonType.Secondary}
+            variant={ButtonVariant.Circle}
             onClick={onButtonClick}
             aria-haspopup="true"
             aria-label={__('Add content', 'web-stories')}

@@ -19,9 +19,9 @@
  */
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   LOCAL_STORAGE_PREFIX,
   localStore,
@@ -89,9 +89,9 @@ function ToolbarToggle() {
             node.focus();
           }
         }}
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Tertiary}
+        size={ButtonSize.Small}
         onClick={handleToolbarVisibility}
         aria-label={__('Show element toolbar', 'web-stories')}
         isHighlighted={highlight?.showEffect}

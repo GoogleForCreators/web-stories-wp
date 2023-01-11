@@ -25,9 +25,9 @@ import {
   useKeyDownEffect,
   Icons,
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   themeHelpers,
 } from '@googleforcreators/design-system';
 
@@ -61,9 +61,9 @@ const alignmentButtonIds = [
 ];
 
 const AlignmentButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.SQUARE,
-  type: BUTTON_TYPES.TERTIARY,
-  size: BUTTON_SIZES.SMALL,
+  variant: ButtonVariant.Square,
+  type: ButtonType.Tertiary,
+  size: ButtonSize.Small,
 })`
   position: relative;
 

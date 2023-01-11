@@ -22,9 +22,9 @@ import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 
 /**
@@ -84,18 +84,18 @@ function ErrorActions({ error, errorInfo }) {
       </P>
       <Wrapper>
         <Button
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          type={BUTTON_TYPES.QUATERNARY}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Rectangle}
+          type={ButtonType.Quaternary}
+          size={ButtonSize.Small}
           onClick={reload}
         >
           {__('Reload', 'web-stories')}
         </Button>
         <CopyStoryDataToClipboard />
         <Button
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Rectangle}
+          type={ButtonType.Primary}
+          size={ButtonSize.Small}
           href={reportUrl}
           target="_blank"
           rel="noreferrer"

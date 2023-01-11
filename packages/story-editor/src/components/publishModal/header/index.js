@@ -21,9 +21,9 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Headline,
   Icons,
   TextSize,
@@ -62,9 +62,9 @@ const Header = ({
   return (
     <_Header>
       <CloseButton
-        variant={BUTTON_VARIANTS.SQUARE}
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.TERTIARY}
+        variant={ButtonVariant.Square}
+        size={ButtonSize.Small}
+        type={ButtonType.Tertiary}
         onClick={onClose}
         aria-label={__('Close', 'web-stories')}
       >

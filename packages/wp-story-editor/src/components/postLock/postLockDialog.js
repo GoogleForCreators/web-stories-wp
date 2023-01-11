@@ -21,8 +21,8 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   TextSize,
 } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
@@ -64,8 +64,8 @@ function PostLockDialog({
       actions={
         <>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             href={previewLink}
             target="_blank"
             rel="noreferrer"
@@ -73,15 +73,15 @@ function PostLockDialog({
             {__('Preview', 'web-stories')}
           </Button>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             onClick={onClose}
           >
             {__('Take over', 'web-stories')}
           </Button>
           <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             href={dashboardLink}
           >
             {__('Back to dashboard', 'web-stories')}

@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { Button, BUTTON_TYPES } from '@googleforcreators/design-system';
+import { Button, ButtonType } from '@googleforcreators/design-system';
 
 const pictureCss = css`
   picture {
@@ -75,7 +75,7 @@ export const Thumbnails = styled.div`
 `;
 
 export const ThumbnailButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PLAIN,
+  type: ButtonType.Plain,
 })`
   display: block;
   height: 100%;

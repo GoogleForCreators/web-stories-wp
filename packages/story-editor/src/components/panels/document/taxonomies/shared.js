@@ -24,7 +24,7 @@ import {
   TextSize,
   themeHelpers,
   Button,
-  BUTTON_VARIANTS,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 
 export const TaxonomyPropType = PropTypes.shape({
@@ -49,7 +49,7 @@ export const ContentHeading = styled(Headline).attrs({
 `;
 
 export const LinkButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.LINK,
+  variant: ButtonVariant.Link,
 })`
   ${themeHelpers.expandTextPreset(({ link }, { X_SMALL }) => link[X_SMALL])}
   margin-bottom: 16px;

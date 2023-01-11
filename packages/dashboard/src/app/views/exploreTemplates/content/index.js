@@ -22,8 +22,8 @@ import { useMemo } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Headline,
   LoadingSpinner,
   TextSize,
@@ -102,8 +102,8 @@ function Content({
         </Headline>
         {!search && (
           <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.MEDIUM}
+            type={ButtonType.Primary}
+            size={ButtonSize.Medium}
             as="a"
             href={newStoryURL}
           >

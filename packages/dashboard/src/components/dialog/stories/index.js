@@ -19,8 +19,8 @@
  */
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Text,
   TextSize,
 } from '@googleforcreators/design-system';
@@ -73,15 +73,15 @@ export const WithCustomAction = ({ onClickButton, onConfirmed, ...args }) => {
       actions={
         <>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             onClick={onClickButton}
           >
             {'Dismiss'}
           </Button>
           <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             href={args.href}
             onClick={onConfirmed}
           >

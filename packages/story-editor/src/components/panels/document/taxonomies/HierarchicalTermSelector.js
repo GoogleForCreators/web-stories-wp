@@ -20,9 +20,9 @@
 import { __, _x, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   DropDown,
   Input,
   Text,
@@ -81,9 +81,9 @@ const Label = styled(Text.Paragraph).attrs({
 `;
 
 const AddNewCategoryButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.RECTANGLE,
-  size: BUTTON_SIZES.SMALL,
-  type: BUTTON_TYPES.SECONDARY,
+  variant: ButtonVariant.Rectangle,
+  size: ButtonSize.Small,
+  type: ButtonType.Secondary,
 })`
   margin-top: 20px;
 `;

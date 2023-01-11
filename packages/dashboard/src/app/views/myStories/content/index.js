@@ -21,8 +21,8 @@ import PropTypes from 'prop-types';
 import { sprintf, __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Headline,
   TextSize,
   InfiniteScroller,
@@ -103,8 +103,8 @@ function Content({
               {Object.keys(filtersObject).length === 0 &&
                 canViewDefaultTemplates && (
                   <Button
-                    type={BUTTON_TYPES.PRIMARY}
-                    size={BUTTON_SIZES.MEDIUM}
+                    type={ButtonType.Primary}
+                    size={ButtonSize.Medium}
                     as="a"
                     href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
                   >

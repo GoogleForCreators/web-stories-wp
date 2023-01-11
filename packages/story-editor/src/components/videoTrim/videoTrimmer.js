@@ -25,9 +25,9 @@ import {
 } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 import { getVideoLengthDisplay } from '@googleforcreators/media';
 
@@ -144,9 +144,9 @@ function VideoTrimmer() {
     <Menu {...menuProps}>
       <ButtonWrapper isStart>
         <Button
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Rectangle}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           onClick={toggleTrimMode}
           ref={setCancelRef}
         >
@@ -186,9 +186,9 @@ function VideoTrimmer() {
       </RailWrapper>
       <ButtonWrapper>
         <Button
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Rectangle}
+          type={ButtonType.Primary}
+          size={ButtonSize.Small}
           onClick={performTrim}
           disabled={!hasChanged}
         >

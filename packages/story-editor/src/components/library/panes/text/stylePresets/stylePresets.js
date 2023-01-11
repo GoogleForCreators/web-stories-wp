@@ -21,9 +21,9 @@ import {
   Headline,
   TextSize,
   Text,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
   Icons,
   Button,
   PLACEMENT,
@@ -174,9 +174,9 @@ function PresetPanel() {
           {__('Saved Styles', 'web-stories')}
         </Headline>
         <StyledButton
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
           onClick={addGlobalPreset}
           aria-label={__('Add style', 'web-stories')}
           disabled={!isText}

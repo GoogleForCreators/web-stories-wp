@@ -24,9 +24,9 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import { getPreviewText, PatternPropType } from '@googleforcreators/patterns';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   PLACEMENT,
   Placement,
@@ -78,9 +78,9 @@ const InputWrapper = styled.div`
 `;
 
 const EyeDropperButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.SQUARE,
-  type: BUTTON_TYPES.TERTIARY,
-  size: BUTTON_SIZES.SMALL,
+  variant: ButtonVariant.Square,
+  type: ButtonType.Tertiary,
+  size: ButtonSize.Small,
 })`
   ${focusStyle};
 `;

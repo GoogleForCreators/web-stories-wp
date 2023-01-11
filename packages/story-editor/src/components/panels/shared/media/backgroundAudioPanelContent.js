@@ -21,9 +21,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Text,
   TextSize,
   themeHelpers,
@@ -220,9 +220,9 @@ function BackgroundAudioPanelContent({
     (open) => (
       <UploadButton
         onClick={open}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.RECTANGLE}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Rectangle}
       >
         {__('Upload an audio file', 'web-stories')}
       </UploadButton>
@@ -234,9 +234,9 @@ function BackgroundAudioPanelContent({
     (open) => (
       <UploadButton
         onClick={open}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.RECTANGLE}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Rectangle}
       >
         {__('Upload audio captions', 'web-stories')}
       </UploadButton>
@@ -291,9 +291,9 @@ function BackgroundAudioPanelContent({
             />
           )}
           <UploadButton
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
+            variant={ButtonVariant.Rectangle}
+            type={ButtonType.Secondary}
+            size={ButtonSize.Small}
             onClick={() => setIsOpen(true)}
           >
             {__('Link to audio file', 'web-stories')}

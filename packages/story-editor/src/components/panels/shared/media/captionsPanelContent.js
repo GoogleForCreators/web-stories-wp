@@ -21,9 +21,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Text,
   TextSize,
 } from '@googleforcreators/design-system';
@@ -170,9 +170,9 @@ function CaptionsPanelContent({
             />
           )}
           <HotlinkButton
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
+            variant={ButtonVariant.Rectangle}
+            type={ButtonType.Secondary}
+            size={ButtonSize.Small}
             onClick={() => setIsOpen(true)}
           >
             {__('Link to caption file', 'web-stories')}

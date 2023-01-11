@@ -21,7 +21,7 @@ import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import {
   Button,
-  BUTTON_TYPES,
+  ButtonType,
   Input,
   Text,
   TextSize,
@@ -84,7 +84,7 @@ export const LayerContainer = styled.div.attrs({
 `;
 
 export const LayerButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PLAIN,
+  type: ButtonType.Plain,
   tabIndex: -1,
   role: 'option',
 })`

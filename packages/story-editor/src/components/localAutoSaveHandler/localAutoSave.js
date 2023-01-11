@@ -20,8 +20,8 @@
 import { useEffect, useState, useRef } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  ButtonType,
+  ButtonSize,
   TextSize,
   Text,
   sessionStore,
@@ -180,15 +180,15 @@ function LocalAutoSave() {
       actions={
         <>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             onClick={onClose}
           >
             {__('Dismiss', 'web-stories')}
           </Button>
           <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             onClick={restoreBackup}
           >
             {__('Restore Backup', 'web-stories')}

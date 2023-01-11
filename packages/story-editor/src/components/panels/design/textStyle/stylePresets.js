@@ -21,9 +21,9 @@ import PropTypes from 'prop-types';
 import {
   TextSize,
   Text,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
   Icons,
   Button,
   PLACEMENT,
@@ -102,9 +102,9 @@ function PresetPanel({ pushUpdate }) {
           {__('Recently Saved Styles', 'web-stories')}
         </SubHeading>
         <StyledButton
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
           onClick={addGlobalPreset}
           aria-label={__('Add style', 'web-stories')}
         >

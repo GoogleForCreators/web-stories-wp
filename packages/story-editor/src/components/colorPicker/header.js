@@ -24,9 +24,9 @@ import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   Icons,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 
 /**
@@ -70,9 +70,9 @@ function Header({
   }, []);
 
   const buttonProps = {
-    type: BUTTON_TYPES.TERTIARY,
-    size: BUTTON_SIZES.SMALL,
-    variant: BUTTON_VARIANTS.SQUARE,
+    type: ButtonType.Tertiary,
+    size: ButtonSize.Small,
+    variant: ButtonVariant.Square,
     onClick: (evt) => {
       evt.stopPropagation();
       setIsEditMode(!isEditMode);
@@ -99,9 +99,9 @@ function Header({
         <StyledButton
           aria-label={__('Close', 'web-stories')}
           onClick={handleClose}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
           ref={ref}
         >
           <Icons.Cross />

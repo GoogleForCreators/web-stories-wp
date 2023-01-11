@@ -22,8 +22,8 @@ import PropTypes from 'prop-types';
 import { __, sprintf, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   TextSize,
 } from '@googleforcreators/design-system';
 
@@ -184,8 +184,8 @@ function GoogleAdSenseSettings({
           hint={publisherIdInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disablePublisherIdSaveButton}
           onClick={onSavePublisherId}
           data-testid="adSensePublisherIdButton"
@@ -228,8 +228,8 @@ function GoogleAdSenseSettings({
           hint={slotIdInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disableSlotIdSaveButton}
           onClick={onSaveSlotId}
           data-testid="adSenseSlotIdButton"

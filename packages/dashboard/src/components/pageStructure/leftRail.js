@@ -26,8 +26,8 @@ import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   LogoWithTypeCircleColor,
   Text,
   TextSize,
@@ -126,8 +126,8 @@ function LeftRail() {
         </Header>
         <Content>
           <Button
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Quaternary}
+            size={ButtonSize.Small}
             href={newStoryURL}
             onClick={onCreateNewStoryClick}
           >

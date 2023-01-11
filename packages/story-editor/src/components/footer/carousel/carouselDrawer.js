@@ -22,9 +22,9 @@ import { __, _n, sprintf } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  ButtonVariant,
+  ButtonType,
+  ButtonSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -74,9 +74,9 @@ function CarouselDrawer() {
       <StyledButton
         aria-label={__('Toggle page carousel', 'web-stories')}
         onClick={onClick}
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.TERTIARY}
+        variant={ButtonVariant.Rectangle}
+        size={ButtonSize.Small}
+        type={ButtonType.Tertiary}
       >
         {sprintf(
           /* translators: 1: current page number. 2: total page count. */

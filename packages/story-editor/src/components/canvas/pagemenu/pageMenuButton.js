@@ -21,9 +21,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  ButtonVariant,
+  ButtonType,
+  ButtonSize,
   PLACEMENT,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
@@ -49,9 +49,9 @@ function PageMenuButtonWithRef(
       hasTail
     >
       <StyledButton
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
         ref={forwardedRef}
         {...rest}
       >

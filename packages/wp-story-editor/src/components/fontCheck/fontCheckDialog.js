@@ -23,8 +23,8 @@ import styled from 'styled-components';
 import { useState, useCallback } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Text,
   TextSize,
   Icons,
@@ -134,15 +134,15 @@ export const FontCheckDialog = ({
             {__('Back to dashboard', 'web-stories')}
           </StyledLink>
           <StyledButton
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Secondary}
+            size={ButtonSize.Small}
             onClick={updateMissingFontWithDefault}
           >
             {__('Open anyway', 'web-stories')}
           </StyledButton>
           <StyledButton
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             onClick={updateMissingFontWithSelected}
           >
             {__('Replace font', 'web-stories')}

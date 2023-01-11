@@ -24,8 +24,8 @@ import {
 } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Checkbox,
   Link,
   Text,
@@ -131,8 +131,8 @@ function VideoOptimizationCheckbox() {
             </DefaultFooterText>
             <ButtonContainer>
               <Button
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
+                type={ButtonType.Secondary}
+                size={ButtonSize.Small}
                 onClick={handleSave}
                 disabled={isSaving}
                 ref={saveButtonRef}

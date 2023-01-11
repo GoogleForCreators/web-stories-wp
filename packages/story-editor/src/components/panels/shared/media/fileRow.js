@@ -21,9 +21,9 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   Text,
   TextSize,
@@ -166,9 +166,9 @@ function FileRow({
       <Tooltip hasTail title={removeItemLabel}>
         <StyledButton
           aria-label={removeItemLabel}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
           onClick={onItemRemove}
         >
           <Icons.Trash />

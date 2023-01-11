@@ -25,9 +25,9 @@ import {
   CircularProgress,
   TextSize,
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   useLiveRegion,
   Slider,
 } from '@googleforcreators/design-system';
@@ -141,9 +141,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           <TrimWrapper>
             <TrimButton
               disabled={isDisabled}
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
+              variant={ButtonVariant.Rectangle}
+              type={ButtonType.Secondary}
+              size={ButtonSize.Small}
               onClick={handleTrim}
             >
               {trimButtonText}
@@ -174,9 +174,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           <Row spaceBetween={false}>
             <StyledButton
               disabled={isDisabled}
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
+              variant={ButtonVariant.Rectangle}
+              type={ButtonType.Secondary}
+              size={ButtonSize.Small}
               onClick={handleMute}
             >
               {muteButtonText}

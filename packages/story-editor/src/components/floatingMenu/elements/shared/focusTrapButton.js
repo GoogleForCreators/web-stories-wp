@@ -20,12 +20,12 @@
 
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Button, BUTTON_TYPES } from '@googleforcreators/design-system';
+import { Button, ButtonType } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 
-const _FocusTrapButton = styled(Button).attrs({ type: BUTTON_TYPES.DEFAULT })`
+const _FocusTrapButton = styled(Button).attrs({ type: ButtonType.Primary })`
   background-color: transparent;
   display: flex;
   align-items: center;

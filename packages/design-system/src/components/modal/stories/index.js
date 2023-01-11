@@ -22,7 +22,7 @@ import { useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../button';
+import { Button, ButtonSize, ButtonType } from '../../button';
 import { Text, Headline } from '../../typography';
 import { Modal } from '..';
 
@@ -49,8 +49,8 @@ export const _default = ({ onClose }) => {
         }
       </Text>
       <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
+        size={ButtonSize.Small}
+        type={ButtonType.Primary}
         onClick={() => setToggleModal(!toggleModal)}
       >
         {'Toggle Modal'}
@@ -95,8 +95,8 @@ export const OverriddenStyles = ({ onClose }) => {
         }
       </Text>
       <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
+        size={ButtonSize.Small}
+        type={ButtonType.Primary}
         onClick={() => setToggleModal(!toggleModal)}
       >
         {'Toggle Modal'}

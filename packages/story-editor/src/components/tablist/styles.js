@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Button,
-  BUTTON_VARIANTS,
+  ButtonVariant,
   Headline,
   themeHelpers,
   TextSize,
@@ -66,7 +66,7 @@ export const TabButtonWrapper = styled.div`
 `;
 
 export const TabButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.PLAIN,
+  variant: ButtonVariant.PLAIN,
 })`
   position: absolute;
   display: flex;

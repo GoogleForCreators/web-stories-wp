@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import STICKERS from '@googleforcreators/stickers';
 import {
   Button,
-  BUTTON_SIZES,
+  ButtonSize,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { useUnits } from '@googleforcreators/units';
@@ -36,7 +36,7 @@ import InsertionOverlay from '../shared/insertionOverlay';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 
 const StickerButton = styled(Button).attrs({
-  size: BUTTON_SIZES.SMALL,
+  size: ButtonSize.Small,
 })`
   position: relative;
   padding: 0 0 95.5% 0;

@@ -27,8 +27,8 @@ import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   TextSize,
   NotificationBubble,
 } from '@googleforcreators/design-system';
@@ -212,8 +212,8 @@ function GoogleAnalyticsSettings({
             </SettingSubheading>
             <SettingSubheading size={TextSize.Small}>
               <SaveButton
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
+                type={ButtonType.Secondary}
+                size={ButtonSize.Small}
                 onClick={handleAnalyticsMigration}
               >
                 {__('Migrate', 'web-stories')}
@@ -246,8 +246,8 @@ function GoogleAnalyticsSettings({
               disabled={analyticsActive}
             />
             <SaveButton
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
+              type={ButtonType.Secondary}
+              size={ButtonSize.Small}
               disabled={disableSaveButton}
               onClick={handleOnSave}
             >

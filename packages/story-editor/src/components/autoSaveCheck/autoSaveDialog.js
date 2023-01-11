@@ -22,8 +22,8 @@ import {
   Text,
   TextSize,
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
 } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -41,15 +41,15 @@ export const AutoSaveDialog = ({ onClose, isOpen, autoSaveLink }) => {
       actions={
         <>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             onClick={onClose}
           >
             {__('Dismiss', 'web-stories')}
           </Button>
           <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             href={autoSaveLink}
           >
             {__('View the autosave', 'web-stories')}

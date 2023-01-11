@@ -21,9 +21,9 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { forwardRef } from '@googleforcreators/react';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Headline,
   Icons,
   TextSize,
@@ -62,9 +62,9 @@ export const TopNavigation = forwardRef(function TopNavigation(
             forceFocusCompanionToggle(popupId);
             onClose();
           }}
-          type={BUTTON_TYPES.PLAIN}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.CIRCLE}
+          type={ButtonType.Plain}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Circle}
         >
           <Icons.Cross />
         </NavButton>
