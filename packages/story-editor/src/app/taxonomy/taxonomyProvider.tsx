@@ -57,7 +57,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   );
   const [hasTaxonomies, setHasTaxonomies] = useState(false);
   const [taxonomies, setTaxonomies] = useState<Taxonomy[]>([]);
-  const [termCache, setTermCache] = useState<Term[]>(terms);
+  const [termCache, setTermCache] = useState<Term[]>([]);
 
   const {
     actions: { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies },
@@ -90,7 +90,9 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   const hasHydrationRunOnce = useRef(false);
   useEffect(() => {
     if (terms?.length > 0 && isStoryLoaded && !hasHydrationRunOnce.current) {
-      setTermCache(terms);
+      setTermCache((cache: Term[]) => {
+        return cache ? [...new Set([...cache, ...terms])] : terms;
+      });
       hasHydrationRunOnce.current = true;
     }
   }, [terms, isStoryLoaded, setTermCache]);
@@ -140,14 +142,11 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
     }: addSearchResultsToCacheProps) => {
       let termResults: Term[] = [];
       const termsEndpoint = taxonomy?.restPath;
-      if (!termsEndpoint || !getTaxonomyTerm) {
+      if (!termsEndpoint) {
         return [];
       }
       try {
-        termResults = await getTaxonomyTerm(termsEndpoint, {
-          search: args?.search,
-          per_page: args?.per_page,
-        });
+        termResults = await getTaxonomyTerm(termsEndpoint, args);
       } catch (e) {
         // Log error
         if (e instanceof Error) {

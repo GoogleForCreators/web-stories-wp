@@ -120,5 +120,5 @@ export default {
       href: 'http://localhost:8899/wp-json/web-stories/v1/web_story_category?post=1014',
     },
   ],
-  terms: [storyTags, storyColors, storyCategories, storyVerticals],
+  terms: [...storyTags, ...storyColors, ...storyCategories, ...storyVerticals],
 };

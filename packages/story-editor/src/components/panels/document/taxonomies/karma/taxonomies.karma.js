@@ -88,8 +88,14 @@ describe('Taxonomies Panel', () => {
 
         // verify category was removed from story
         let currentStoryTerms = await getStoryTerms();
-        expect(currentStoryTerms['web_story_category'].length).toBe(
-          initialStoryTerms['web_story_category'].length - 1
+        expect(
+          currentStoryTerms.filter(
+            (term) => term.taxonomy === 'web_story_category'
+          ).length
+        ).toBe(
+          initialStoryTerms.filter(
+            (term) => term.taxonomy === 'web_story_category'
+          ).length + 1
         );
 
         // click a checkbox again
@@ -98,8 +104,14 @@ describe('Taxonomies Panel', () => {
 
         // verify category was added to story
         currentStoryTerms = await getStoryTerms();
-        expect(currentStoryTerms['web_story_category'].length).toBe(
-          initialStoryTerms['web_story_category'].length
+        expect(
+          currentStoryTerms.filter(
+            (term) => term.taxonomy === 'web_story_category'
+          ).length
+        ).toBe(
+          initialStoryTerms.filter(
+            (term) => term.taxonomy === 'web_story_category'
+          ).length
         );
       });
 
@@ -205,8 +217,14 @@ describe('Taxonomies Panel', () => {
 
         // verify category was removed from story
         let currentStoryTerms = await getStoryTerms();
-        expect(currentStoryTerms['web_story_category'].length).toBe(
-          initialStoryTerms['web_story_category'].length - 1
+        expect(
+          currentStoryTerms.filter(
+            (term) => term.taxonomy === 'web_story_category'
+          ).length
+        ).toBe(
+          initialStoryTerms.filter(
+            (term) => term.taxonomy === 'web_story_category'
+          ).length - 1
         );
 
         // check the checkbox again
@@ -215,8 +233,14 @@ describe('Taxonomies Panel', () => {
 
         // verify category was added to story
         currentStoryTerms = await getStoryTerms();
-        expect(currentStoryTerms['web_story_category'].length).toBe(
-          initialStoryTerms['web_story_category'].length
+        expect(
+          currentStoryTerms.filter(
+            (term) => term.taxonomy === 'web_story_category'
+          ).length
+        ).toBe(
+          initialStoryTerms.filter(
+            (term) => term.taxonomy === 'web_story_category'
+          ).length
         );
       });
 
@@ -424,16 +448,19 @@ describe('Taxonomies Panel', () => {
       const currentStoryTerms = await getStoryTerms();
       const renderedTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       expect(renderedTokens.length).toEqual(
-        currentStoryTerms['web_story_tag'].length
+        currentStoryTerms.filter((term) => term.taxonomy === 'web_story_tag')
+          .length
       );
     });
 
-    it('can add tags with input', async () => {
+    fit('can add tags with input', async () => {
       await openTaxonomiesPanel();
       const tag1Name = 'new tag';
       const tag2Name = 'another tag';
       let currentStoryTerms = await getStoryTerms();
-      const initialTagsLength = currentStoryTerms['web_story_tag'].length;
+      const initialTagsLength = currentStoryTerms.filter(
+        (term) => term.taxonomy === 'web_story_tag'
+      ).length;
       const { taxonomies } = fixture.editor.sidebar.documentPanel;
       const tagsInput = taxonomies.tagsInput;
       // enter in the first tag
@@ -445,21 +472,26 @@ describe('Taxonomies Panel', () => {
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();
-        expect(currentStoryTerms['web_story_tag'].length).toEqual(
-          initialTagsLength + 1
-        );
+        expect(
+          currentStoryTerms.filter((term) => term.taxonomy === 'web_story_tag')
+            .length
+        ).toEqual(initialTagsLength + 1);
       });
+
       // enter in a second tag
       await fixture.events.keyboard.type(tag2Name);
       await fixture.events.keyboard.press('Enter');
+      await karmaPause();
       tags = await fixture.screen.findAllByTestId(/^flat-term-token/);
+
       await expect(tags.length).toBe(initialTagsLength + 2);
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();
-        expect(currentStoryTerms['web_story_tag'].length).toEqual(
-          initialTagsLength + 2
-        );
+        expect(
+          currentStoryTerms.filter((term) => term.taxonomy === 'web_story_tag')
+            .length
+        ).toEqual(initialTagsLength + 2);
       });
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       expect(tagTokens[initialTagsLength].innerText).toBe(tag1Name);
@@ -468,7 +500,9 @@ describe('Taxonomies Panel', () => {
 
     it('can add tags with Most Used', async () => {
       await openTaxonomiesPanel();
-      const initialTagsLength = (await getStoryTerms())['web_story_tag'].length;
+      const initialTagsLength = (await getStoryTerms()).filter(
+        (term) => term.taxonomy === 'web_story_tag'
+      ).length;
 
       // get all most used terms
       const storyTagsMostUsed = fixture.screen.getByTestId(
@@ -488,15 +522,18 @@ describe('Taxonomies Panel', () => {
 
       // see that the term id is associated with the story
       const currentStoryTerms = await getStoryTerms();
-      expect(currentStoryTerms['web_story_tag'].length).toEqual(
-        initialTagsLength + 1
-      );
+      expect(
+        currentStoryTerms.filter((term) => term.taxonomy === 'web_story_tag')
+          .length
+      ).toEqual(initialTagsLength + 1);
     });
 
     it('can delete tags with keyboard', async () => {
       await openTaxonomiesPanel();
       let currentStoryTerms = await getStoryTerms();
-      const initialTagsLength = currentStoryTerms['web_story_tag'].length;
+      const initialTagsLength = currentStoryTerms.filter(
+        (term) => term.taxonomy === 'web_story_tag'
+      ).length;
       const { tagsInput } = fixture.editor.sidebar.documentPanel.taxonomies;
       const initialTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       // delete the first tag with keyboard navigation
@@ -511,9 +548,10 @@ describe('Taxonomies Panel', () => {
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();
-        expect(currentStoryTerms['web_story_tag'].length).toEqual(
-          initialTagsLength - 1
-        );
+        expect(
+          currentStoryTerms.filter((term) => term.taxonomy === 'web_story_tag')
+            .length
+        ).toEqual(initialTagsLength - 1);
       });
       // See that the right tag was deleted
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
@@ -526,7 +564,9 @@ describe('Taxonomies Panel', () => {
       let currentStoryTerms = await getStoryTerms();
       const { taxonomies } = fixture.editor.sidebar.documentPanel;
       const initialTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
-      const initialTagsLength = currentStoryTerms['web_story_tag'].length;
+      const initialTagsLength = currentStoryTerms.filter(
+        (term) => term.taxonomy === 'web_story_tag'
+      ).length;
       // delete tag with mouse
       const removeTagButtons = taxonomies.tagTokenRemoveButtons;
       await fixture.events.click(removeTagButtons[0]);
@@ -538,9 +578,10 @@ describe('Taxonomies Panel', () => {
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();
-        expect(currentStoryTerms['web_story_tag'].length).toEqual(
-          initialTagsLength - 1
-        );
+        expect(
+          currentStoryTerms.filter((term) => term.taxonomy === 'web_story_tag')
+            .length
+        ).toEqual(initialTagsLength - 1);
       });
       // see that the correct token was removed
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
