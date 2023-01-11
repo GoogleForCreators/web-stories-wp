@@ -26,7 +26,12 @@ import {
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import { ElementType } from '@googleforcreators/elements';
+import {
+  ElementType,
+  elementIs,
+  ElementId,
+  Element,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -57,7 +62,7 @@ const { Bucket, CircleSpeed, Eraser, LetterTPlus, Link, Media } = Icons;
  *
  * Quick actions should follow the `quickActionPropType` definition.
  *
- * @return {Array.<{ Icon: Node, label: string, onClick: Function, separator: string, tooltipPlacement: string, wrapWithMediaPicker: boolean }>} an array of quick action objects
+ * @return an array of quick action objects
  */
 const useQuickActions = () => {
   const {
@@ -77,7 +82,7 @@ const useQuickActions = () => {
       actions: { updateElementsById },
     }) => ({
       backgroundElement: currentPage?.elements.find(
-        (element) => element.isBackground
+        (element) => elementIs.backgroundable(element) && element.isBackground
       ),
       currentPageNumber,
       selectedElementAnimations,
@@ -105,7 +110,7 @@ const useQuickActions = () => {
   /**
    * Prevent quick actions menu from removing focus from the canvas.
    */
-  const handleMouseDown = useCallback((ev) => {
+  const handleMouseDown = useCallback((ev: MouseEvent) => {
     ev.stopPropagation();
   }, []);
 
@@ -118,8 +123,12 @@ const useQuickActions = () => {
    * @return {void}
    */
   const handleResetProperties = useCallback(
-    (elementType, elementId, properties) => {
-      const newProperties = {};
+    (
+      elementType: ElementType,
+      elementId: ElementId,
+      properties: string[]
+    ) => {
+      const newProperties: Partial<Element> = {};
       // Choose properties to clear
       if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
         newProperties.overlay = null;

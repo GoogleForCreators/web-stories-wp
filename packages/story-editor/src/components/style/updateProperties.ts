@@ -13,24 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import type { Element } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
 import { MULTIPLE_VALUE } from '../../constants';
+import type { ElementUpdater } from '../../types';
 
-/**
- * @param {Object} currentProperties The existing element properties.
- * @param {Object|function(Object):Object} newPropertiesOrUpdater Either a map
- * of the updated properties or a function that will return a map of the updated
- * properties.
- * @param {boolean} commitValues Commit values.
- * @return {Object} The updated properties.
- */
 function updateProperties(
-  currentProperties,
-  newPropertiesOrUpdater,
-  commitValues
-) {
+  currentProperties: Element,
+  newPropertiesOrUpdater: Partial<Element> | ElementUpdater,
+  commitValues: boolean
+): Partial<Element> {
   const newProperties =
     typeof newPropertiesOrUpdater === 'function'
       ? newPropertiesOrUpdater(currentProperties)
@@ -43,19 +42,24 @@ function updateProperties(
   // Always filter out "multi" values since they can be easily recalculated at
   // any time.
   updatedKeys = updatedKeys.filter(
-    (key) => newProperties[key] !== MULTIPLE_VALUE
+    (key) => newProperties[key as keyof typeof newProperties] !== MULTIPLE_VALUE
   );
   // Only filter out the empty values at the commit time since an empty value
   // is a valid intermediary value.
   if (commitValues) {
-    updatedKeys = updatedKeys.filter((key) => newProperties[key] !== '');
+    updatedKeys = updatedKeys.filter(
+      (key) => newProperties[key as keyof typeof newProperties] !== ''
+    );
   }
   if (updatedKeys.length === 0) {
     // Of course abort if no keys have a value
     return {};
   }
   return Object.fromEntries(
-    updatedKeys.map((key) => [key, newProperties[key]])
+    updatedKeys.map((key) => [
+      key,
+      newProperties[key as keyof typeof newProperties],
+    ])
   );
 }
 

@@ -25,6 +25,7 @@ import type { HistoryProviderState } from '../../types';
 import Context from './context';
 
 function useHistory(): HistoryProviderState;
+function useHistory<T>(selector: (state: HistoryProviderState) => T): T;
 function useHistory<T>(
   selector: (state: HistoryProviderState) => T | HistoryProviderState = identity
 ) {

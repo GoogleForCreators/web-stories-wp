@@ -25,6 +25,9 @@ export interface Notification {
     src: string;
     alt: string;
   };
+  actionLabel?: string;
+  onAction?: () => void;
+  actionHelpText?: string;
 }
 export interface SnackbarState {
   showSnackbar: (snackbar: Omit<Notification, 'id'>) => void;
