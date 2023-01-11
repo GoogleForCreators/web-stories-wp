@@ -31,7 +31,7 @@ export default createContext<TaxonomyState>({
   actions: {
     createTerm: () => Promise.resolve(undefined),
     addSearchResultsToCache: () => Promise.resolve(undefined),
-    setTerms: () => undefined,
-    addTermToSelection: () => undefined,
+    addTerms: () => undefined,
+    removeTerms: () => undefined,
   },
 });

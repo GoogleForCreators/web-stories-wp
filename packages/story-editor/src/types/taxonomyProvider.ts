@@ -31,22 +31,10 @@ export interface createTermProps {
   addToSelection?: boolean;
 }
 
-export interface setTermsProps {
-  newTerms: Term[];
-}
-
-export interface removeTermsProps {
-  removeTerms: Term[];
-}
-
 export interface addSearchResultsToCacheProps {
   taxonomy: Taxonomy;
   args: TaxonomySearchArgs;
   addNameToSelection?: boolean;
-}
-
-export interface addTermToSelectionProps {
-  newTerms: Term[];
 }
 
 export interface TaxonomyState {
@@ -56,8 +44,8 @@ export interface TaxonomyState {
     addSearchResultsToCache: (
       props: addSearchResultsToCacheProps
     ) => Promise<Term[] | void>;
-    setTerms: (props: setTermsProps) => void;
-    addTermToSelection: (props: addTermToSelectionProps) => void;
+    addTerms: (newTerms: Term[]) => void;
+    removeTerms: (deleteTerms: Term[]) => void;
   };
 }
 

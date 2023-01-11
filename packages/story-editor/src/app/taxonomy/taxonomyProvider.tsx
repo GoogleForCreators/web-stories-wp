@@ -35,11 +35,8 @@ import type { PropsWithChildren } from 'react';
  */
 import type {
   createTermProps,
-  setTermsProps,
   TaxonomyRestError,
-  addTermToSelectionProps,
   addSearchResultsToCacheProps,
-  removeTermsProps,
   UpdateStoryProps,
 } from '../../types';
 import cleanForSlug from '../../utils/cleanForSlug';
@@ -84,8 +81,8 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
     })();
   }, [hasTaxonomies, getTaxonomies]);
 
-  const setTerms = useCallback(
-    ({ newTerms }: setTermsProps) => {
+  const addTerms = useCallback(
+    (newTerms: Term[]) => {
       if (updateStory) {
         const properties = (story: Story) => {
           const currentTerms = story?.terms || [];
@@ -102,9 +99,9 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   );
 
   const removeTerms = useCallback(
-    ({ removeTerms }: removeTermsProps) => {
+    (deleteTerms: Term[]) => {
       if (updateStory) {
-        const removeTermsID = removeTerms.map(({ id }) => id);
+        const removeTermsID = deleteTerms.map(({ id }) => id);
         const properties = (story: Story) => {
           const currentTerms = story?.terms || [];
           const newAssignedTerms = currentTerms.filter(
@@ -119,11 +116,6 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       }
     },
     [updateStory]
-  );
-
-  const addTermToSelection = useCallback(
-    ({ newTerms }: addTermToSelectionProps) => setTerms({ newTerms }),
-    [setTerms]
   );
 
   const addSearchResultsToCache = useCallback(
@@ -166,13 +158,13 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         );
 
         if (selectedTerm) {
-          addTermToSelection({ newTerms: [selectedTerm] });
+          addTerms([selectedTerm]);
         }
       }
 
       return termResults;
     },
-    [getTaxonomyTerm, addTermToSelection]
+    [getTaxonomyTerm, addTerms]
   );
 
   const createTerm = useCallback(
@@ -198,7 +190,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       );
       if (cachedTerm) {
         if (addToSelection) {
-          addTermToSelection({ newTerms: [cachedTerm] });
+          addTerms([cachedTerm]);
         }
 
         return;
@@ -215,7 +207,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         setTermCache((cache: Term[]) => [...cache, newTerm]);
 
         if (addToSelection) {
-          addTermToSelection({ newTerms: [newTerm] });
+          addTerms([newTerm]);
         }
       } catch (e) {
         // If the backend says the term already exists
@@ -233,7 +225,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         }
       }
     },
-    [createTaxonomyTerm, termCache, addSearchResultsToCache, addTermToSelection]
+    [createTaxonomyTerm, termCache, addSearchResultsToCache, addTerms]
   );
 
   // Fetch hierarchical taxonomies on mount
@@ -262,9 +254,8 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       actions: {
         createTerm,
         addSearchResultsToCache,
-        setTerms,
+        addTerms,
         removeTerms,
-        addTermToSelection,
       },
     }),
     [
@@ -273,9 +264,8 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       taxonomies,
       createTerm,
       addSearchResultsToCache,
-      setTerms,
+      addTerms,
       removeTerms,
-      addTermToSelection,
     ]
   );
 

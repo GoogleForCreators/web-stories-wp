@@ -43,27 +43,19 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     termCache,
     addSearchResultsToCache,
     terms = [],
-    setTerms,
+    addTerms,
     removeTerms,
-    addTermToSelection,
   } = useTaxonomy(
     ({
       state: { termCache, terms },
-      actions: {
-        createTerm,
-        addSearchResultsToCache,
-        setTerms,
-        removeTerms,
-        addTermToSelection,
-      },
+      actions: { createTerm, addSearchResultsToCache, addTerms, removeTerms },
     }) => ({
       termCache,
       createTerm,
       addSearchResultsToCache,
       terms,
-      setTerms,
+      addTerms,
       removeTerms,
-      addTermToSelection,
     })
   );
 
@@ -79,8 +71,8 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       const removeToTerms = terms.filter(
         (term) => term.taxonomy === taxonomy.slug
       );
-      removeTerms({ removeTerms: removeToTerms });
-      setTerms({ newTerms });
+      removeTerms(removeToTerms);
+      addTerms(newTerms);
 
       // Return early if user doesn't have capability to create new terms
       if (!canCreateTerms) {
@@ -114,7 +106,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       termCache,
       removeTerms,
       terms,
-      setTerms,
+      addTerms,
       canCreateTerms,
       createTerm,
       taxonomy,
@@ -208,7 +200,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
                       if (terms.map(({ id }) => id).includes(term.id)) {
                         return;
                       }
-                      addTermToSelection({ newTerms: [term] });
+                      addTerms([term]);
                     }}
                   >
                     {term.name}

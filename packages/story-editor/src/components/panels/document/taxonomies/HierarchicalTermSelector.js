@@ -96,13 +96,13 @@ function HierarchicalTermSelector({
   taxonomy,
   canCreateTerms,
 }) {
-  const { createTerm, termCache, terms, setTerms, removeTerms } = useTaxonomy(
+  const { createTerm, termCache, terms, addTerms, removeTerms } = useTaxonomy(
     ({
       state: { termCache, terms },
-      actions: { createTerm, setTerms, removeTerms },
+      actions: { createTerm, addTerms, removeTerms },
     }) => ({
       createTerm,
-      setTerms,
+      addTerms,
       removeTerms,
       termCache,
       terms,
@@ -151,12 +151,12 @@ function HierarchicalTermSelector({
       const term = termCache.find((category) => category.id === id);
       if (checked) {
         // find the already selected slugs + update those.
-        setTerms({ newTerms: [term] });
+        addTerms([term]);
       } else {
-        removeTerms({ removeTerms: [term] });
+        removeTerms([term]);
       }
     },
-    [termCache, setTerms, removeTerms]
+    [termCache, addTerms, removeTerms]
   );
 
   const handleToggleNewCategory = useCallback(() => {
