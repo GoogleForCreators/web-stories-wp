@@ -23,11 +23,11 @@ import { css } from 'styled-components';
  * Internal dependencies
  */
 import type { Preset } from '../../types/typography';
-import type { Theme, theme, TextSize } from '..';
+import { type Theme, TextSize } from '..';
 
 interface ExpandPresetStylesProps {
   preset: Preset;
-  theme: typeof theme;
+  theme: Theme;
 }
 
 export const expandPresetStyles = ({
@@ -42,7 +42,7 @@ export const expandPresetStyles = ({
   text-decoration: none;
 `;
 
-type PresetChoices = typeof theme.typography.presets;
+type PresetChoices = Theme['typography']['presets'];
 type PresetSelector = (
   choices: PresetChoices,
   sizes: typeof TextSize
