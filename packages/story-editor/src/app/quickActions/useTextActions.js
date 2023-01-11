@@ -57,7 +57,7 @@ function useTextActions({
       },
       ...commonActions,
     ],
-    [applyTextAutoStyle]
+    [actionProps, applyTextAutoStyle, commonActions]
   );
   return textActions;
 }
