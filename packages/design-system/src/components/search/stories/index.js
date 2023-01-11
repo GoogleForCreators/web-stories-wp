@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { PLACEMENT } from '../../popup';
+import { Placement } from '../../popup';
 import { Search } from '../search';
 import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
 
@@ -40,12 +40,12 @@ export default {
     label: 'Find an image',
     isRTL: false,
     placeholder: 'search',
-    placement: PLACEMENT.BOTTOM,
+    placement: Placement.Bottom,
     popupZIndex: 1,
   },
   argTypes: {
     placement: {
-      options: Object.values(PLACEMENT),
+      options: Object.values(Placement),
       control: 'select',
     },
     onChange: { action: 'handleSearchValueChange' },

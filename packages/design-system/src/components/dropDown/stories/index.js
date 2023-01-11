@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { PLACEMENT } from '../../popup';
+import { Placement } from '../../popup';
 import { Text } from '../../typography';
 import { DROP_DOWN_ITEM } from '../../menu';
 import { DropDown } from '..';
@@ -47,12 +47,12 @@ export default {
     isKeepMenuOpenOnSelection: true,
     isRTL: false,
     disabled: false,
-    placement: PLACEMENT.TOP,
+    placement: Placement.Top,
     popupZIndex: 1,
   },
   argTypes: {
     placement: {
-      options: Object.values(PLACEMENT),
+      options: Object.values(Placement),
       control: 'select',
     },
     onMenuItemClick: { action: 'onMenuItemClick' },
