@@ -139,7 +139,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
     }: addSearchResultsToCacheProps) => {
       let termResults: Term[] = [];
       const termsEndpoint = taxonomy?.restPath;
-      if (!termsEndpoint) {
+      if (!termsEndpoint || !getTaxonomyTerm) {
         return [];
       }
       try {
