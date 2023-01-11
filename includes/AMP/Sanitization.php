@@ -91,6 +91,41 @@ class Sanitization {
 	}
 
 	/**
+	 * Validation error callback.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @see AMP_Validation_Error_Taxonomy::get_validation_error_sanitization
+	 *
+	 * @param array{code: string}              $error Error info, especially code.
+	 * @param array{node?: DOMElement|DOMNode} $data Additional data, including the node.
+	 * @return bool Whether the validation error should be sanitized.
+	 */
+	public function validation_error_callback( array $error, array $data = [] ): bool {
+		/**
+		 * Filters whether the validation error should be sanitized.
+		 *
+		 * Returning true this indicates that the validation error is acceptable
+		 * and should not be considered a blocker to render AMP. Returning null
+		 * means that the default status should be used.
+		 *
+		 * Note that the $node is not passed here to ensure that the filter can be
+		 * applied on validation errors that have been stored. Likewise, the $sources
+		 * are also omitted because these are only available during an explicit
+		 * validation request and so they are not suitable for plugins to vary
+		 * sanitization by.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @see AMP_Validation_Manager::is_sanitization_auto_accepted() Which controls whether an error is initially accepted or rejected for sanitization.
+		 *
+		 * @param bool $sanitized Whether the validation error should be sanitized.
+		 * @param array $error Validation error being sanitized.
+		 */
+		return apply_filters( 'web_stories_amp_validation_error_sanitized', true, $error );
+	}
+
+	/**
 	 * Adds missing scripts.
 	 *
 	 * @SuppressWarnings(PHPMD)
@@ -508,40 +543,5 @@ class Sanitization {
 		unset( $sanitizer );
 
 		return $sanitizers;
-	}
-
-	/**
-	 * Validation error callback.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @see AMP_Validation_Error_Taxonomy::get_validation_error_sanitization
-	 *
-	 * @param array{code: string}              $error Error info, especially code.
-	 * @param array{node?: DOMElement|DOMNode} $data Additional data, including the node.
-	 * @return bool Whether the validation error should be sanitized.
-	 */
-	public function validation_error_callback( array $error, array $data = [] ): bool {
-		/**
-		 * Filters whether the validation error should be sanitized.
-		 *
-		 * Returning true this indicates that the validation error is acceptable
-		 * and should not be considered a blocker to render AMP. Returning null
-		 * means that the default status should be used.
-		 *
-		 * Note that the $node is not passed here to ensure that the filter can be
-		 * applied on validation errors that have been stored. Likewise, the $sources
-		 * are also omitted because these are only available during an explicit
-		 * validation request and so they are not suitable for plugins to vary
-		 * sanitization by.
-		 *
-		 * @since 1.1.0
-		 *
-		 * @see AMP_Validation_Manager::is_sanitization_auto_accepted() Which controls whether an error is initially accepted or rejected for sanitization.
-		 *
-		 * @param bool $sanitized Whether the validation error should be sanitized.
-		 * @param array $error Validation error being sanitized.
-		 */
-		return apply_filters( 'web_stories_amp_validation_error_sanitized', true, $error );
 	}
 }

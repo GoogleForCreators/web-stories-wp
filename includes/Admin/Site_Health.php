@@ -170,17 +170,6 @@ class Site_Health extends Service_Base implements Conditional {
 	}
 
 	/**
-	 * Format the value as enabled or disabled.
-	 *
-	 * @since 1.8.0
-	 *
-	 * @param mixed $value Value to formatted.
-	 */
-	protected function get_formatted_output( $value ): string {
-		return $value ? __( 'Enabled', 'web-stories' ) : __( 'Disabled', 'web-stories' );
-	}
-
-	/**
 	 * Adds suggested PHP extensions to those that Core depends on.
 	 *
 	 * @since 1.8.0
@@ -255,5 +244,16 @@ class Site_Health extends Service_Base implements Conditional {
 		}
 
 		return $test_result;
+	}
+
+	/**
+	 * Format the value as enabled or disabled.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param mixed $value Value to formatted.
+	 */
+	protected function get_formatted_output( $value ): string {
+		return $value ? __( 'Enabled', 'web-stories' ) : __( 'Disabled', 'web-stories' );
 	}
 }

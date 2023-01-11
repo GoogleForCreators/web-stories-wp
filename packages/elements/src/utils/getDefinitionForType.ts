@@ -21,7 +21,11 @@ import { elementTypes } from '../elementType';
 import type { ElementType } from '../types';
 
 function getDefinitionForType(type: ElementType) {
-  return elementTypes[type];
+  const definition = elementTypes[type];
+  if (!definition) {
+    throw new Error(`No element definition found for '${type}'`);
+  }
+  return definition;
 }
 
 export default getDefinitionForType;

@@ -99,54 +99,6 @@ class KSES extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Checks whether the post type is correct and user has capability to edit it.
-	 *
-	 * @since 1.22.0
-	 *
-	 * @param string   $post_type   Post type slug.
-	 * @param int|null $post_parent Parent post ID.
-	 * @return bool Whether the user can edit the provided post type.
-	 */
-	private function is_allowed_post_type( string $post_type, ?int $post_parent ): bool {
-		if ( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return true;
-		}
-
-		if ( $this->page_template_post_type->get_slug() === $post_type && $this->page_template_post_type->has_cap( 'edit_posts' ) ) {
-			return true;
-		}
-
-		// For story autosaves.
-		if (
-			(
-				'revision' === $post_type &&
-				! empty( $post_parent ) &&
-				get_post_type( $post_parent ) === $this->story_post_type->get_slug()
-			) &&
-			$this->story_post_type->has_cap( 'edit_posts' )
-		) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Filters story data.
-	 *
-	 * Provides simple sanity check to ensure story data is valid JSON.
-	 *
-	 * @since 1.22.0
-	 *
-	 * @param string $story_data JSON-encoded story data.
-	 * @return string Sanitized & slashed story data.
-	 */
-	private function filter_story_data( string $story_data ): string {
-		$decoded = json_decode( (string) wp_unslash( $story_data ), true );
-		return null === $decoded ? '' : wp_slash( (string) wp_json_encode( $decoded ) );
-	}
-
-	/**
 	 * Filters slashed post data just before it is inserted into the database.
 	 *
 	 * Used to run story HTML markup through KSES on our own, but with some filters applied
@@ -789,6 +741,89 @@ class KSES extends Service_Base implements HasRequirements {
 	}
 
 	/**
+	 * Temporarily renames the style attribute to data-temp-style in full story markup.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $post_content Post content.
+	 * @return string Filtered post content.
+	 */
+	public function filter_content_save_pre_before_kses( $post_content ): string {
+		return (string) preg_replace_callback(
+			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
+			static fn( $matches ) => $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'],
+			$post_content
+		);
+	}
+
+	/**
+	 * Renames data-temp-style back to style in full story markup.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $post_content Post content.
+	 * @return string Filtered post content.
+	 */
+	public function filter_content_save_pre_after_kses( $post_content ): string {
+		return (string) preg_replace_callback(
+			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
+			function ( $matches ) {
+				$styles = str_replace( '&quot;', '\"', $matches['styles'] );
+				return sprintf( ' style="%s"', esc_attr( $this->safecss_filter_attr( wp_kses_stripslashes( $styles ) ) ) );
+			},
+			$post_content
+		);
+	}
+
+	/**
+	 * Checks whether the post type is correct and user has capability to edit it.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string   $post_type   Post type slug.
+	 * @param int|null $post_parent Parent post ID.
+	 * @return bool Whether the user can edit the provided post type.
+	 */
+	private function is_allowed_post_type( string $post_type, ?int $post_parent ): bool {
+		if ( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) {
+			return true;
+		}
+
+		if ( $this->page_template_post_type->get_slug() === $post_type && $this->page_template_post_type->has_cap( 'edit_posts' ) ) {
+			return true;
+		}
+
+		// For story autosaves.
+		if (
+			(
+				'revision' === $post_type &&
+				! empty( $post_parent ) &&
+				get_post_type( $post_parent ) === $this->story_post_type->get_slug()
+			) &&
+			$this->story_post_type->has_cap( 'edit_posts' )
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Filters story data.
+	 *
+	 * Provides simple sanity check to ensure story data is valid JSON.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string $story_data JSON-encoded story data.
+	 * @return string Sanitized & slashed story data.
+	 */
+	private function filter_story_data( string $story_data ): string {
+		$decoded = json_decode( (string) wp_unslash( $story_data ), true );
+		return null === $decoded ? '' : wp_slash( (string) wp_json_encode( $decoded ) );
+	}
+
+	/**
 	 * Recursively merge multiple arrays and ensure values are distinct.
 	 *
 	 * Based on information found in http://www.php.net/manual/en/function.array-merge-recursive.php
@@ -854,40 +889,5 @@ class KSES extends Service_Base implements HasRequirements {
 		];
 
 		return array_merge( $value, $global_attributes );
-	}
-
-	/**
-	 * Temporarily renames the style attribute to data-temp-style in full story markup.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $post_content Post content.
-	 * @return string Filtered post content.
-	 */
-	public function filter_content_save_pre_before_kses( $post_content ): string {
-		return (string) preg_replace_callback(
-			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
-			static fn( $matches ) => $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'],
-			$post_content
-		);
-	}
-
-	/**
-	 * Renames data-temp-style back to style in full story markup.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $post_content Post content.
-	 * @return string Filtered post content.
-	 */
-	public function filter_content_save_pre_after_kses( $post_content ): string {
-		return (string) preg_replace_callback(
-			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
-			function ( $matches ) {
-				$styles = str_replace( '&quot;', '\"', $matches['styles'] );
-				return sprintf( ' style="%s"', esc_attr( $this->safecss_filter_attr( wp_kses_stripslashes( $styles ) ) ) );
-			},
-			$post_content
-		);
 	}
 }

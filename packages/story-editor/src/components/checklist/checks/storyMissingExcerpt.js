@@ -39,7 +39,7 @@ const StoryMissingExcerpt = () => {
   const handleClick = useCallback(
     () =>
       setHighlights({
-        highlight: states.EXCERPT,
+        highlight: states.Excerpt,
       }),
     [setHighlights]
   );

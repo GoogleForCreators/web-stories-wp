@@ -342,6 +342,18 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
+	 * Get the service container that contains the services that make up the
+	 * plugin.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return ServiceContainer<Service> Service container of the plugin.
+	 */
+	public function get_container(): ServiceContainer {
+		return $this->service_container;
+	}
+
+	/**
 	 * Returns the priority for a given service based on its requirements.
 	 *
 	 * @since 1.13.0
@@ -643,18 +655,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 		if ( $service instanceof Registerable ) {
 			$service->register();
 		}
-	}
-
-	/**
-	 * Get the service container that contains the services that make up the
-	 * plugin.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return ServiceContainer<Service> Service container of the plugin.
-	 */
-	public function get_container(): ServiceContainer {
-		return $this->service_container;
 	}
 
 	/**

@@ -61,6 +61,9 @@ export type UpdatePageProps = {
   pageId: string | null;
   properties: Partial<Page>;
 };
+export type UpdateCurrentPageProps = {
+  properties: Partial<Page>;
+};
 export type UpdatePageAction = {
   type: ActionTypes.UpdatePage;
   payload: UpdatePageProps;
@@ -85,9 +88,12 @@ export type SetCurrentPagePageAction = {
 
 export type AddElementsProps = {
   elements: Element[];
-  pageId: string;
-  updateSelection: boolean;
+  pageId?: string;
+  updateSelection?: boolean;
 };
+export interface AddElementProps extends Omit<AddElementsProps, 'elements'> {
+  element: Element;
+}
 
 export type AddElementsAction = {
   type: ActionTypes.AddElements;
@@ -104,7 +110,7 @@ export type DeleteElementsAction = {
 
 export type ElementUpdater<T = Element> = (prevProps: T) => T | Partial<T>;
 export type UpdateElementsProps = {
-  elementIds: string[] | null;
+  elementIds?: string[] | null;
   properties: Partial<Element> | ElementUpdater;
 };
 export type UpdateElementsAction = {
@@ -132,7 +138,7 @@ export type DeleteElementsByResourceIdAction = {
 export type CombineElementsProps = {
   firstElement: Element;
   secondId: string;
-  shouldRetainAnimations: boolean;
+  shouldRetainAnimations?: boolean;
 };
 export type CombineElementsAction = {
   type: ActionTypes.CombineElements;
@@ -148,9 +154,9 @@ export type SetBackgroundElementAction = {
 };
 
 export type ArrangeElementProps = {
-  elementId: string | null;
+  elementId?: string | null;
   position: number | LayerDirection;
-  groupId?: string | false;
+  groupId?: string | false | null;
 };
 export type ArrangeElementAction = {
   type: ActionTypes.ArrangeElement;
@@ -375,11 +381,11 @@ export type ExternalActions = {
   deletePage: (props: DeletePageProps) => ReducerState;
   deleteCurrentPage: () => ReducerState;
   updatePageProperties: (props: UpdatePageProps) => ReducerState;
-  updateCurrentPageProperties: (props: UpdatePageProps) => ReducerState;
+  updateCurrentPageProperties: (props: UpdateCurrentPageProps) => ReducerState;
   arrangePage: (props: ArrangePageProps) => ReducerState;
   setCurrentPage: (props: SetCurrentPageProps) => ReducerState;
   addElements: (props: AddElementsProps) => ReducerState;
-  addElement: (props: AddElementsProps) => ReducerState;
+  addElement: (props: AddElementProps) => ReducerState;
   deleteElementsById: (props: DeleteElementsProps) => ReducerState;
   deleteElementById: (props: DeleteElementProps) => ReducerState;
   deleteSelectedElements: () => ReducerState;
@@ -393,7 +399,7 @@ export type ExternalActions = {
   updateElementById: <T extends Element = Element>(
     props: UpdateElementProps<T>
   ) => ReducerState;
-  duplicateElementsById: (props: DuplicateElementsByIdAction) => ReducerState;
+  duplicateElementsById: (props: DuplicateElementsByIdProps) => ReducerState;
   updateSelectedElements: (props: UpdateElementsProps) => ReducerState;
   combineElements: (props: CombineElementsProps) => ReducerState;
   setBackgroundElement: (props: SetBackgroundElementProps) => ReducerState;

@@ -31,18 +31,18 @@ import type { DependencyList } from 'react';
  * @param [deps] The optional callback dependencies.
  * @return The memoized batching function.
  */
-function useBatchingCallback<T>(
-  callback: (arg: T) => void,
+function useBatchingCallback<T, S = void>(
+  callback: (arg: T) => S,
   deps: DependencyList
-): (arg: T) => void;
+): (arg: T) => S;
 function useBatchingCallback<T, U>(
   callback: (arg1: T, arg2: U) => void,
   deps: DependencyList
 ): (arg1: T, arg2: U) => void;
-function useBatchingCallback<T, U, V>(
-  callback: (arg1: T, arg2: U, arg3: V) => void,
+function useBatchingCallback<T, U, V, S = void>(
+  callback: (arg1: T, arg2: U, arg3: V) => S,
   deps: DependencyList
-): (arg1: T, arg2: U, arg3: V) => void;
+): (arg1: T, arg2: U, arg3: V) => S;
 function useBatchingCallback<T extends (...args: unknown[]) => void>(
   callback: T,
   deps: DependencyList

@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { ACTIONS } from '../../../app/highlights';
+import { ACTIONS } from '../../../app/quickActions';
 import { Container } from './container';
 
 export class QuickActionMenu extends Container {

@@ -36,7 +36,8 @@ import {
 import { usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import { states, styles, useHighlights } from '../../../../app/highlights';
+import { states, useHighlights } from '../../../../app/highlights';
+import styles from '../../../../app/highlights/styles';
 import CaptionsPanelContent from '../../shared/media/captionsPanelContent';
 import { MULTIPLE_VALUE } from '../../../../constants';
 
@@ -105,7 +106,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   );
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.CAPTIONS],
+    highlight: state[states.Captions],
     resetHighlight: state.onFocusOut,
     cancelHighlight: state.cancelEffect,
   }));

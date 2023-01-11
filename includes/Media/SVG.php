@@ -113,18 +113,6 @@ class SVG extends Service_Base {
 	}
 
 	/**
-	 * Helper function to check if svg uploads are already enabled.
-	 *
-	 * @since 1.3.0
-	 */
-	private function svg_already_enabled(): bool {
-		$allowed_mime_types = get_allowed_mime_types();
-		$mime_types         = array_values( $allowed_mime_types );
-
-		return \in_array( self::MIME_TYPE, $mime_types, true );
-	}
-
-	/**
 	 * Enable SVG upload.
 	 *
 	 * @since 1.3.0
@@ -264,6 +252,52 @@ class SVG extends Service_Base {
 		return $upload;
 	}
 
+	/**
+	 * Work around for incorrect mime type.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array       $wp_check_filetype_and_ext {
+	 *                                               Values for the extension, mime type, and corrected filename.
+	 *
+	 * @type string|false $ext                       File extension, or false if the file doesn't match a mime type.
+	 * @type string|false $type                      File mime type, or false if the file doesn't match a mime type.
+	 * @type string|false $proper_filename           File name with its correct extension, or false if it cannot be
+	 *       determined.
+	 * }
+	 * @param string      $file                      Full path to the file.
+	 * @param string      $filename                  The name of the file (may differ from $file due to
+	 *                                               $file being in a tmp directory).
+	 * @param string[]    $mimes                     Array of mime types keyed by their file extension regex.
+	 * @param string|bool $real_mime                 The actual mime type or false if the type cannot be determined.
+	 * @return array{ext?: string, type?: string, proper_filename?: bool}
+	 *
+	 * @phpstan-param array{ext?: string, type?: string, proper_filename?: bool} $wp_check_filetype_and_ext
+	 */
+	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ): array {
+		if ( 'image/svg' === $real_mime ) {
+			$wp_check_filetype_and_ext = [
+				'ext'             => self::EXT,
+				'type'            => self::MIME_TYPE,
+				'proper_filename' => false,
+			];
+		}
+
+		return $wp_check_filetype_and_ext;
+	}
+
+	/**
+	 * Helper function to check if svg uploads are already enabled.
+	 *
+	 * @since 1.3.0
+	 */
+	private function svg_already_enabled(): bool {
+		$allowed_mime_types = get_allowed_mime_types();
+		$mime_types         = array_values( $allowed_mime_types );
+
+		return \in_array( self::MIME_TYPE, $mime_types, true );
+	}
+
 
 	/**
 	 * Get SVG image size.
@@ -330,40 +364,6 @@ class SVG extends Service_Base {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Work around for incorrect mime type.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @param array       $wp_check_filetype_and_ext {
-	 *                                               Values for the extension, mime type, and corrected filename.
-	 *
-	 * @type string|false $ext                       File extension, or false if the file doesn't match a mime type.
-	 * @type string|false $type                      File mime type, or false if the file doesn't match a mime type.
-	 * @type string|false $proper_filename           File name with its correct extension, or false if it cannot be
-	 *       determined.
-	 * }
-	 * @param string      $file                      Full path to the file.
-	 * @param string      $filename                  The name of the file (may differ from $file due to
-	 *                                               $file being in a tmp directory).
-	 * @param string[]    $mimes                     Array of mime types keyed by their file extension regex.
-	 * @param string|bool $real_mime                 The actual mime type or false if the type cannot be determined.
-	 * @return array{ext?: string, type?: string, proper_filename?: bool}
-	 *
-	 * @phpstan-param array{ext?: string, type?: string, proper_filename?: bool} $wp_check_filetype_and_ext
-	 */
-	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ): array {
-		if ( 'image/svg' === $real_mime ) {
-			$wp_check_filetype_and_ext = [
-				'ext'             => self::EXT,
-				'type'            => self::MIME_TYPE,
-				'proper_filename' => false,
-			];
-		}
-
-		return $wp_check_filetype_and_ext;
 	}
 
 	/**

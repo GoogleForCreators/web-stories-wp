@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export * from './apiProvider';
+export * from './canvasProvider';
 export * from './configProvider';
 export * from './currentUserProvider';
 export * from './historyProvider';

@@ -339,27 +339,6 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
-	 * Format milliseconds into seconds.
-	 *
-	 * @since 1.7.2
-	 *
-	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
-	 */
-	protected function format_milliseconds( $milliseconds ): string {
-		$seconds = floor( $milliseconds / 1000 );
-
-		if ( $seconds >= 1 ) {
-			$minutes  = floor( $seconds / 60 );
-			$seconds %= 60;
-		} else {
-			$seconds = 0;
-			$minutes = 0;
-		}
-
-		return sprintf( '%d:%02u', $minutes, $seconds );
-	}
-
-	/**
 	 * Hook into added_post_meta.
 	 *
 	 * @since 1.7.2
@@ -392,5 +371,26 @@ class Jetpack extends Service_Base {
 			return (bool) $is_amp_request;
 		}
 		return true;
+	}
+
+	/**
+	 * Format milliseconds into seconds.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
+	 */
+	protected function format_milliseconds( $milliseconds ): string {
+		$seconds = floor( $milliseconds / 1000 );
+
+		if ( $seconds >= 1 ) {
+			$minutes  = floor( $seconds / 60 );
+			$seconds %= 60;
+		} else {
+			$seconds = 0;
+			$minutes = 0;
+		}
+
+		return sprintf( '%d:%02u', $minutes, $seconds );
 	}
 }

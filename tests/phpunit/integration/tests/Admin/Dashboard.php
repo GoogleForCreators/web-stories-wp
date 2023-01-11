@@ -30,12 +30,12 @@ use WP_UnitTest_Factory;
 class Dashboard extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
 
-	private \Google\Web_Stories\Admin\Dashboard $instance;
-
 	protected static int $user_id;
 
 	protected static string $cpt_has_archive = 'cpt_has_archive';
 	protected static string $cpt_no_archive  = 'cpt_no_archive';
+
+	private \Google\Web_Stories\Admin\Dashboard $instance;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
