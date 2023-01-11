@@ -6,6 +6,7 @@
   },
   "references": [
     { "path": "../date" },
+    { "path": "../design-system" },
     { "path": "../element-library" },
     { "path": "../patterns" },
     { "path": "../react" },
