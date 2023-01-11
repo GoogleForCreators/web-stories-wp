@@ -16,30 +16,30 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
+import type { ComponentPropsWithoutRef } from 'react';
 
 // z-index needs to be higher than the wordpress toolbar z-index: 9989.
 // Leaves room for mask to be higher than the wordpress toolbar z-index.
 export const POPOVER_Z_INDEX = 9991;
 
-export const Popover = styled.div`
+export const Popover = styled.div<{
+  isOpen?: boolean;
+  isInline?: boolean;
+  popoverZIndex?: number;
+}>`
   --translate-x: calc(var(--delta-x, 0) * 1px);
   --translate-y: calc(var(--delta-y, 0) * 1px);
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: ${({ isInline }) => (isInline ? 'relative' : 'absolute')};
-  z-index: ${({ popoverZIndex }) => popoverZIndex};
+  z-index: ${({ popoverZIndex = POPOVER_Z_INDEX }) => popoverZIndex};
   transform: translate(var(--translate-x), var(--translate-y));
 `;
-Popover.defaultProps = {
-  popoverZIndex: POPOVER_Z_INDEX,
-};
-Popover.propTypes = {
-  popoverZIndex: PropTypes.number,
-};
 
-export const Shadow = styled.div`
+export const Shadow = styled.div<{
+  $isHorizontal?: boolean;
+}>`
   position: absolute;
   top: 0;
   right: 0;
@@ -51,9 +51,14 @@ export const Shadow = styled.div`
   pointer-events: none;
 `;
 
-export function SmartPopover(props) {
+export interface SmartPopoverProps
+  extends ComponentPropsWithoutRef<typeof Popover> {
+  isRTL?: boolean;
+}
+
+export function SmartPopover({ isRTL, ...props }: SmartPopoverProps) {
   const setRef = useCallback(
-    (node) => {
+    (node: HTMLElement | null) => {
       if (!node) {
         return;
       }
@@ -67,26 +72,21 @@ export function SmartPopover(props) {
       // This is modeling the behavior of chrome:
       // - menu becomes right justified if not enough space horizontally
       // - menu sticks to bottom if not enough space vertically
-      const horizontalEdgeCondition = props.isRTL
+      const horizontalEdgeCondition = isRTL
         ? boundingBox.x < 0
         : max.x < boundingBox.x;
-      const horizontalEdgeTransform = props.isRTL
+      const horizontalEdgeTransform = isRTL
         ? boundingBox.width
         : -boundingBox.width;
       const delta = {
         x: horizontalEdgeCondition ? horizontalEdgeTransform : 0,
         y: Math.min(0, max.y - boundingBox.y),
       };
-      node.style.setProperty('--delta-x', delta.x);
-      node.style.setProperty('--delta-y', delta.y);
+      node.style.setProperty('--delta-x', String(delta.x));
+      node.style.setProperty('--delta-y', String(delta.y));
     },
-    [props.isRTL]
+    [isRTL]
   );
 
   return props.isOpen ? <Popover ref={setRef} {...props} /> : null;
 }
-
-SmartPopover.propTypes = {
-  isOpen: PropTypes.bool,
-  isRTL: PropTypes.bool,
-};

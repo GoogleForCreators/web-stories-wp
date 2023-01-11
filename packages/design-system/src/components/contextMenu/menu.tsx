@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useCombinedRefs,
   forwardRef,
 } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
+import type { FocusEvent, ForwardedRef, PropsWithChildren } from 'react';
+
 /**
  * Internal dependencies
  */
@@ -35,15 +36,24 @@ import {
   noop,
   useMouseDownOutsideRef,
 } from '../../utils';
+import useForwardedRef from '../../utils/useForwardedRef';
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 import { CONTEXT_MENU_MIN_WIDTH, CONTEXT_MENU_SKIP_ELEMENT } from './constants';
-import { MenuPropTypes } from './types';
+import type { InnerContextMenuProps } from './types';
 
 const CONTEXT_MENU_MAX_WIDTH = 300;
 
-const MenuWrapper = styled.div(
-  ({ theme }) => css`
+const MenuWrapper = styled.div<{
+  isIconMenu?: boolean;
+  isHorizontal?: boolean;
+  isSecondary?: boolean;
+}>(
+  ({ theme }) => css<{
+    isIconMenu?: boolean;
+    isHorizontal?: boolean;
+    isSecondary?: boolean;
+  }>`
     background-color: ${({ isSecondary }) =>
       isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
     border-radius: ${({ isHorizontal }) =>
@@ -78,23 +88,14 @@ const MenuWrapper = styled.div(
     }
   `
 );
-MenuWrapper.propTypes = {
-  isIconMenu: PropTypes.bool,
-  isHorizontal: PropTypes.bool,
-  isSecondary: PropTypes.bool,
-};
 
 /**
  * Extracts all focusable children from an html tree, optionally ignoring items from submenu.
- *
- * @param {HTMLElement} parent The parent to search
- * @param {boolean} isSubMenu If we're searching from submenu.
- * @return {Array.<HTMLElement>} List of focusable elements
  */
-function getFocusableChildren(parent, isSubMenu) {
+function getFocusableChildren(parent: HTMLElement, isSubMenu?: boolean) {
   const allButtons = Array.from(
     parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', '))
-  );
+  ).filter((e): e is HTMLElement => e instanceof HTMLElement);
   if (isSubMenu) {
     return allButtons;
   }
@@ -106,7 +107,10 @@ function getFocusableChildren(parent, isSubMenu) {
   });
 }
 
-const Menu = forwardRef(
+const Menu = forwardRef<
+  HTMLDivElement,
+  PropsWithChildren<InnerContextMenuProps>
+>(
   (
     {
       children,
@@ -119,8 +123,8 @@ const Menu = forwardRef(
       onCloseSubMenu = noop,
       dismissOnEscape = true,
       ...props
-    },
-    ref
+    }: PropsWithChildren<InnerContextMenuProps>,
+    forwardedRef: ForwardedRef<HTMLDivElement>
   ) => {
     const { isRTL } = props;
     const { focusedId, isIconMenu, isHorizontal, onDismiss, setFocusedId } =
@@ -131,11 +135,11 @@ const Menu = forwardRef(
         onDismiss: actions.onDismiss,
         setFocusedId: actions.setFocusedId,
       }));
-    const mouseDownOutsideRef = useMouseDownOutsideRef(() => {
-      isOpen && !isSubMenu && onDismiss();
-    });
-    const menuRef = useRef(null);
-    const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef, ref);
+    const mouseDownOutsideRef = useMouseDownOutsideRef<HTMLDivElement>(
+      () => isOpen && !isSubMenu && onDismiss()
+    );
+    const ref = useForwardedRef(forwardedRef);
+    const composedListRef = useCombinedRefs(mouseDownOutsideRef, ref);
     /**
      * Focus the first element when the user focuses the wrapper
      * with their keyboard.
@@ -144,32 +148,40 @@ const Menu = forwardRef(
      * focusable element.
      */
     const handleFocus = useCallback(
-      (evt) => {
+      (evt: FocusEvent<HTMLDivElement>) => {
         onFocus(evt);
-        const menuChildren = menuRef.current.children || [];
+        if (!ref.current) {
+          return;
+        }
+        const menuChildren = [...ref.current.children];
         const isFocusOutsideMenu =
           menuChildren.length &&
           ![...menuChildren].some((child) => child.contains(evt.target));
 
-        if (menuRef.current === evt.target && isFocusOutsideMenu) {
-          const focusableChildren = getFocusableChildren(menuRef.current);
+        if (ref.current === evt.target && isFocusOutsideMenu) {
+          const focusableChildren = getFocusableChildren(ref.current);
           // used to shift focus outline correctly
           document.dispatchEvent(new KeyboardEvent('keydown', { key: 'tab' }));
-          focusableChildren?.[0]?.focus();
+          if (
+            focusableChildren.length > 0 &&
+            focusableChildren[0] instanceof HTMLElement
+          ) {
+            focusableChildren[0].focus();
+          }
         }
       },
-      [onFocus]
+      [onFocus, ref]
     );
 
     const getPrevIndex = useCallback(
-      (focusableChildren) => {
+      (focusableChildren: Element[]) => {
         let prevIndex = focusableChildren.findIndex(
           (element) => element.id === focusedId
         );
         // There are cases where the active element is in the present menu but the focusedId has been reset because of a popup interaction, in those cases we should double check the true focused id by looking at the active element id and comparing.
         if (prevIndex === -1) {
           prevIndex = focusableChildren.findIndex(
-            (element) => element.id === document.activeElement.id
+            (element) => element.id === document.activeElement?.id
           );
         }
         return prevIndex;
@@ -185,17 +197,17 @@ const Menu = forwardRef(
      * @return {void} void
      */
     const handleKeyboardNav = useCallback(
-      (evt) => {
+      (evt: KeyboardEvent) => {
         const { key } = evt;
         if (key === 'Escape') {
           onDismiss(evt);
           return;
         }
 
-        const focusableChildren = getFocusableChildren(
-          menuRef.current,
-          isSubMenu
-        );
+        if (!ref.current) {
+          return;
+        }
+        const focusableChildren = getFocusableChildren(ref.current, isSubMenu);
 
         let prevIndex = getPrevIndex(focusableChildren);
 
@@ -220,7 +232,7 @@ const Menu = forwardRef(
             focusableChildren[newIndex % focusableChildren.length];
           newSelectedElement?.focus();
 
-          setFocusedId(newSelectedElement?.id || -1);
+          setFocusedId(newSelectedElement.id || null);
           return;
         }
 
@@ -228,9 +240,9 @@ const Menu = forwardRef(
         const keyOut = isHorizontal ? KEYS.UP : isRTL ? KEYS.RIGHT : KEYS.LEFT;
 
         // Maybe move from submenu to parent menu.
-        if (isSubMenu && keyOut === key) {
+        if (isSubMenu && keyOut === key && parentMenuRef.current) {
           // Get the button with expanded popup.
-          const parentButton = parentMenuRef.current.querySelector(
+          const parentButton = parentMenuRef.current.querySelector<HTMLElement>(
             'button[aria-expanded="true"]'
           );
           parentButton?.focus();
@@ -238,27 +250,31 @@ const Menu = forwardRef(
         }
       },
       [
+        ref,
         isSubMenu,
         getPrevIndex,
         isHorizontal,
         isRTL,
+        parentMenuRef,
         onDismiss,
         setFocusedId,
-        parentMenuRef,
         onCloseSubMenu,
       ]
     );
 
     // focus first focusable element on open
     useEffect(() => {
-      if (isOpen) {
-        const focusableChildren = getFocusableChildren(menuRef.current);
-        if (focusableChildren.length) {
-          focusableChildren?.[0]?.focus();
-          setFocusedId(focusableChildren?.[0]?.id);
+      if (isOpen && ref.current) {
+        const focusableChildren = getFocusableChildren(ref.current);
+        if (
+          focusableChildren.length &&
+          focusableChildren[0] instanceof HTMLElement
+        ) {
+          focusableChildren[0].focus();
+          setFocusedId(focusableChildren[0].id);
         }
       }
-    }, [isOpen, setFocusedId]);
+    }, [isOpen, ref, setFocusedId]);
 
     const keySpec = useMemo(
       () =>
@@ -269,7 +285,7 @@ const Menu = forwardRef(
     );
 
     useKeyDownEffect(
-      menuRef,
+      ref,
       {
         key: dismissOnEscape
           ? ['esc', 'down', 'up', 'left', 'right']
@@ -279,7 +295,7 @@ const Menu = forwardRef(
       [handleKeyboardNav, dismissOnEscape]
     );
 
-    useKeyDownEffect(menuRef, keySpec, onDismiss, [keySpec, onDismiss]);
+    useKeyDownEffect(ref, keySpec, onDismiss, [keySpec, onDismiss]);
 
     return (
       <MenuWrapper
@@ -292,7 +308,7 @@ const Menu = forwardRef(
         // Tabbing out from the list while using 'shift' would
         // focus the list element. Should just travel back to the previous
         // focusable element in the DOM
-        tabIndex={menuRef.current?.contains(document.activeElement) ? -1 : 0}
+        tabIndex={ref.current?.contains(document.activeElement) ? -1 : 0}
         onFocus={handleFocus}
         {...props}
       >
@@ -301,7 +317,5 @@ const Menu = forwardRef(
     );
   }
 );
-
-Menu.propTypes = MenuPropTypes;
 
 export default Menu;

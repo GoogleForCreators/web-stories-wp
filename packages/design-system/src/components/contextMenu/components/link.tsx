@@ -92,7 +92,7 @@ function Link({
 
   const handleClick = (evt: SyntheticEvent<HTMLAnchorElement>) => {
     onClick?.(evt);
-    onDismiss(evt);
+    onDismiss(evt.nativeEvent);
   };
 
   const handleFocus = (evt: SyntheticEvent<HTMLAnchorElement>) => {

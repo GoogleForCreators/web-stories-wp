@@ -13,29 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import MenuButton from './button';
-import MenuGroup from './group';
-import MenuIcon from './icon';
-import MenuItem from './item';
-import MenuItemSuffix from './suffix';
-import MenuLabel from './label';
-import MenuLink from './link';
-import MenuSeparator from './separator';
-import MenuShortcut from './shortcut';
-import SubMenuTrigger from './subMenuTrigger';
 
-export {
-  MenuButton,
-  MenuGroup,
-  MenuIcon,
-  MenuItem,
-  MenuItemSuffix,
-  MenuLabel,
-  MenuLink,
-  MenuSeparator,
-  MenuShortcut,
-  SubMenuTrigger,
-};
+export { default as MenuButton } from './button';
+export { default as MenuGroup } from './group';
+export { default as MenuIcon } from './icon';
+export { default as MenuItem } from './item';
+export { default as MenuItemSuffix } from './suffix';
+export { default as MenuLabel } from './label';
+export { default as MenuLink } from './link';
+export { default as MenuSeparator } from './separator';
+export { default as MenuShortcut } from './shortcut';
+export { default as SubMenuTrigger } from './subMenuTrigger';

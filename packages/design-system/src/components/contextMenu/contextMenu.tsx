@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useMemo, forwardRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
+import type { ForwardedRef, PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
@@ -28,7 +29,7 @@ import { SmartPopover, Shadow } from './styled';
 import Menu from './menu';
 import AnimationContainer from './animationContainer';
 import { ContextMenuProvider } from './contextMenuProvider';
-import { MenuPropTypes } from './types';
+import type { ContextMenuProps } from './types';
 
 const ContextMenu = forwardRef(
   (
@@ -44,8 +45,8 @@ const ContextMenu = forwardRef(
       onDismiss = noop,
       popoverZIndex,
       ...props
-    },
-    ref
+    }: PropsWithChildren<ContextMenuProps>,
+    ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { isRTL } = props;
     const Wrapper = useMemo(
@@ -82,19 +83,5 @@ const ContextMenu = forwardRef(
     );
   }
 );
-ContextMenu.propTypes = {
-  ...MenuPropTypes,
-  animate: PropTypes.bool,
-  'aria-label': PropTypes.string,
-  children: PropTypes.node,
-  id: PropTypes.string,
-  isOpen: PropTypes.bool,
-  onDismiss: PropTypes.func,
-  isAlwaysVisible: PropTypes.bool,
-  isRTL: PropTypes.bool,
-  isInline: PropTypes.bool,
-  isHorizontal: PropTypes.bool,
-  popoverZIndex: PropTypes.number,
-};
 
 export default ContextMenu;

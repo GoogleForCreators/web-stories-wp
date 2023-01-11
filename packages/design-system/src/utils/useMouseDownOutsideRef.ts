@@ -27,7 +27,7 @@ import { noop } from './noop';
  * to attach to the desired element you want to detect outside
  * mouse down events
  */
-function useMouseDownOutsideRef(
+function useMouseDownOutsideRef<E extends HTMLElement>(
   onMouseDownOutside: (evt: Event) => void = noop
 ) {
   const targetRef = useRef<Node | null>(null);
@@ -37,7 +37,7 @@ function useMouseDownOutsideRef(
   const onMouseDownOutsideRef = useRef(onMouseDownOutside);
   onMouseDownOutsideRef.current = onMouseDownOutside;
 
-  return useCallback((node: HTMLElement) => {
+  return useCallback((node: E) => {
     // clean up listeners associated with the previous node
     if (targetRef.current) {
       document.removeEventListener(

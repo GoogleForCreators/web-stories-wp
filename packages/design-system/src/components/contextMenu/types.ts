@@ -19,16 +19,30 @@
  */
 import type { RefObject, SyntheticEvent } from 'react';
 
-export interface MenuProps {
-  onFocus?: () => void;
+export interface InnerContextMenuProps {
+  onFocus?: (e: SyntheticEvent) => void;
   disableControlledTabNavigation?: boolean;
   isOpen?: boolean;
   onCloseSubMenu?: () => void;
+  isIconMenu?: boolean;
   isSubMenu?: boolean;
   isSecondary?: boolean;
   isRTL?: boolean;
-  parentMenuRef?: RefObject<HTMLElement>;
+  parentMenuRef: RefObject<HTMLElement>;
   dismissOnEscape?: boolean;
+}
+
+export interface ContextMenuProps extends InnerContextMenuProps {
+  animate?: boolean;
+  'aria-label'?: string;
+  id?: string;
+  isOpen?: boolean;
+  onDismiss?: (evt?: Event) => void;
+  isAlwaysVisible?: boolean;
+  isRTL?: boolean;
+  isInline?: boolean;
+  isHorizontal?: boolean;
+  popoverZIndex?: number;
 }
 
 export interface ContextMenuState {
@@ -38,10 +52,10 @@ export interface ContextMenuState {
 }
 
 export interface ContextMenuActions {
-  onDismiss: (evt?: SyntheticEvent) => void;
+  onDismiss: (evt?: Event) => void;
   onMenuItemBlur: () => void;
   onMenuItemFocus: (id: string) => void;
-  setFocusedId: (id: string) => void;
+  setFocusedId: (id: string | null) => void;
 }
 
 export interface ContextMenuProvider {

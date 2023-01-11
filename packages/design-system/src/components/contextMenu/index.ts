@@ -15,5 +15,5 @@
  */
 export { default as ContextMenu } from './contextMenu';
 export * as ContextMenuComponents from './components';
-export { MenuPropTypes } from './types';
+export * from './types';
 export { CONTEXT_MENU_SKIP_ELEMENT, CONTEXT_MENU_MIN_WIDTH } from './constants';

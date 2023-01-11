@@ -18,7 +18,7 @@
  */
 
 import { useCallback, useState } from '@googleforcreators/react';
-import type { PropsWithChildren, SyntheticEvent } from 'react';
+import type { PropsWithChildren } from 'react';
 /**
  * Internal dependencies
  */
@@ -27,7 +27,7 @@ import ContextMenuContext from './context';
 interface ContextMenuProviderProps {
   isIconMenu?: boolean;
   isHorizontal?: boolean;
-  onDismiss: (evt?: SyntheticEvent) => void;
+  onDismiss: (evt?: Event) => void;
 }
 
 export default function ContextMenuProvider({

@@ -16,26 +16,26 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import {
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from '@googleforcreators/react';
+import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../theme/constants';
-import { CORNER_DIRECTIONS, DIRECTIONS } from '../../utils/directions';
+import { CORNER_DIRECTIONS, Direction } from '../../utils/directions';
 import { Popover, Shadow } from './styled';
 
 const PERCENTAGE_OFFSET = {
-  [DIRECTIONS.TOP]: 100,
-  [DIRECTIONS.RIGHT]: 0,
-  [DIRECTIONS.BOTTOM]: -100,
-  [DIRECTIONS.LEFT]: -50,
+  [Direction.Top]: 100,
+  [Direction.Right]: 0,
+  [Direction.Bottom]: -100,
+  [Direction.Left]: -50,
 };
 
 const animationTimeSeconds = 0.175;
@@ -52,7 +52,9 @@ const MenuWrapper = styled.div`
   position: absolute;
 `;
 
-const MenuRevealer = styled.div`
+const MenuRevealer = styled.div<{
+  animationFinished?: boolean;
+}>`
   overflow: ${({ animationFinished }) =>
     animationFinished ? 'normal' : 'hidden'};
   border-radius: ${({ theme }) => theme.borders.radius.small};
@@ -63,27 +65,30 @@ const MenuCounterRevealer = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
-const ButtonInner = styled(Popover)`
+const ButtonInner = styled(Popover)<{
+  align: keyof typeof CORNER_DIRECTIONS | null;
+  isReady?: boolean;
+}>`
   ${fullSize}
   ${({ isInline }) => isInline && `position: relative`};
-  transform: ${(props) => {
-    switch (props.align) {
+  transform: ${({ align }) => {
+    switch (align) {
       case CORNER_DIRECTIONS.top_left:
-        return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.LEFT]}%, ${
-          PERCENTAGE_OFFSET[DIRECTIONS.TOP]
+        return `translate(${PERCENTAGE_OFFSET[Direction.Left]}%, ${
+          PERCENTAGE_OFFSET[Direction.Top]
         }%)`;
       case CORNER_DIRECTIONS.top_right:
-        return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.RIGHT]}%, ${
-          PERCENTAGE_OFFSET[DIRECTIONS.TOP]
+        return `translate(${PERCENTAGE_OFFSET[Direction.Right]}%, ${
+          PERCENTAGE_OFFSET[Direction.Top]
         }%)`;
       case CORNER_DIRECTIONS.bottom_right:
-        return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.RIGHT]}%, ${
-          PERCENTAGE_OFFSET[DIRECTIONS.BOTTOM]
+        return `translate(${PERCENTAGE_OFFSET[Direction.Right]}%, ${
+          PERCENTAGE_OFFSET[Direction.Bottom]
         }%)`;
       case CORNER_DIRECTIONS.bottom_left:
       default:
-        return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.LEFT]}%, ${
-          PERCENTAGE_OFFSET[DIRECTIONS.BOTTOM]
+        return `translate(${PERCENTAGE_OFFSET[Direction.Left]}%, ${
+          PERCENTAGE_OFFSET[Direction.Bottom]
         }%)`;
     }
   }};
@@ -203,17 +208,24 @@ const ButtonInner = styled(Popover)`
     }};
   }
 `;
-ButtonInner.propTypes = {
-  align: PropTypes.oneOf(Object.values(CORNER_DIRECTIONS)),
-  isReady: PropTypes.bool,
-};
 
-function AnimationContainer({ children, isOpen, ...props }) {
-  const [align, setAlign] = useState(null);
+export interface AnimationContainerProps
+  extends ComponentPropsWithoutRef<typeof ButtonInner> {
+  isOpen?: boolean;
+}
+
+function AnimationContainer({
+  children,
+  isOpen,
+  ...props
+}: PropsWithChildren<AnimationContainerProps>) {
+  const [align, setAlign] = useState<keyof typeof CORNER_DIRECTIONS | null>(
+    null
+  );
   const [isReady, setIsReady] = useState(false);
   const [animationFinished, setAnimationFinished] = useState(true);
-  const menuPositionRef = useRef(null);
-  const menuTogglePositionRef = useRef(null);
+  const menuPositionRef = useRef<HTMLDivElement | null>(null);
+  const menuTogglePositionRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     if (!isOpen) {
@@ -231,19 +243,19 @@ function AnimationContainer({ children, isOpen, ...props }) {
 
     const menuLeft =
       toggleBoundingBox.left +
-      toggleBoundingBox.width * (PERCENTAGE_OFFSET[DIRECTIONS.LEFT] / 100);
+      toggleBoundingBox.width * (PERCENTAGE_OFFSET[Direction.Left] / 100);
     const menuBottom =
       toggleBoundingBox.bottom +
-      toggleBoundingBox.height * (PERCENTAGE_OFFSET[DIRECTIONS.BOTTOM] / 100);
+      toggleBoundingBox.height * (PERCENTAGE_OFFSET[Direction.Bottom] / 100);
 
     const alignHorizontal =
       menuLeft + menuWrapperBoundingBox.width > window.innerWidth
-        ? DIRECTIONS.RIGHT
-        : DIRECTIONS.LEFT;
+        ? Direction.Right
+        : Direction.Left;
     const alignVertical =
       0 > menuBottom - menuWrapperBoundingBox.height
-        ? DIRECTIONS.TOP
-        : DIRECTIONS.BOTTOM;
+        ? Direction.Top
+        : Direction.Bottom;
 
     setAlign(CORNER_DIRECTIONS[`${alignVertical}_${alignHorizontal}`]);
   }, [isOpen]);
@@ -251,15 +263,14 @@ function AnimationContainer({ children, isOpen, ...props }) {
   useEffect(() => {
     // some styles depend on the animation being finished. Set a timeout to set this variable
     // once the animation has finished.
-    let timeoutId;
-    if (isOpen) {
-      setAnimationFinished(false);
-      timeoutId = setTimeout(
-        () => setAnimationFinished(true),
-        animationTimeSeconds * 1000
-      );
+    if (!isOpen) {
+      return undefined;
     }
-
+    setAnimationFinished(false);
+    const timeoutId = setTimeout(
+      () => setAnimationFinished(true),
+      animationTimeSeconds * 1000
+    );
     return () => clearTimeout(timeoutId);
   }, [isOpen]);
 
@@ -293,9 +304,5 @@ function AnimationContainer({ children, isOpen, ...props }) {
     </ButtonInner>
   );
 }
-AnimationContainer.propTypes = {
-  isOpen: PropTypes.bool,
-  children: PropTypes.node,
-};
 
 export default AnimationContainer;
