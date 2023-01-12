@@ -28,8 +28,6 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { themeHelpers, BEZIER } from '../../theme';
 
-export const LOADING_MESSAGE = __('Loading', 'web-stories');
-
 const ANIMATION_DURATION = 0.85;
 const TAU = Math.PI * 2;
 
@@ -103,7 +101,7 @@ interface LoadingSpinnerProps extends ComponentPropsWithoutRef<'div'> {
 function LoadingSpinner({
   animationSize = 95,
   circleSize = 12,
-  loadingMessage = LOADING_MESSAGE,
+  loadingMessage = __('Loading', 'web-stories'),
   numCircles = 11,
   ...props
 }: LoadingSpinnerProps) {

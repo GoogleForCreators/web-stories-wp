@@ -22,7 +22,7 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { LOADING_MESSAGE, LoadingSpinner } from '..';
+import LoadingSpinner from '../loadingSpinner';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('loadingSpinner', () => {
@@ -30,6 +30,6 @@ describe('loadingSpinner', () => {
     renderWithProviders(<LoadingSpinner />);
 
     expect(screen.getByRole('status')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toHaveTextContent(LOADING_MESSAGE);
+    expect(screen.getByRole('status')).toHaveTextContent('Loading');
   });
 });
