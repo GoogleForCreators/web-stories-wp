@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import type { ReactElement, SVGProps } from 'react';
 
 declare module 'icons/*.svg' {
