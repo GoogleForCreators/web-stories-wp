@@ -38,6 +38,6 @@ class Add_Media_Source_Editor extends Add_Media_Source {
 	 * @since 1.9.0
 	 */
 	protected function get_term(): string {
-		return 'editor';
+		return $this->media_source_taxonomy::TERM_EDITOR;
 	}
 }

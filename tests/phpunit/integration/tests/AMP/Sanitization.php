@@ -505,7 +505,7 @@ class Sanitization extends DependencyInjectedTestCase {
 		$validation_error_callback = [ $this->instance, 'validation_error_callback' ];
 		add_filter(
 			'web_stories_amp_dev_mode_element_xpaths',
-			fn( $xpaths ) => array_merge( $xpaths, $element_xpaths )
+			static fn( $xpaths ) => array_merge( $xpaths, $element_xpaths )
 		);
 
 		// Check that AMP_Dev_Mode_Sanitizer is not registered if not in dev mode.

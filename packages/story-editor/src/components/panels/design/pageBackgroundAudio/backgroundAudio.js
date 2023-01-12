@@ -30,8 +30,8 @@ import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import BackgroundAudioPanelContent from '../../shared/media/backgroundAudioPanelContent';
 import useHighlights from '../../../../app/highlights/useHighlights';
-import states from '../../../../app/highlights/states';
-import { styles } from '../../../../app/highlights';
+import { states } from '../../../../app/highlights';
+import styles from '../../../../app/highlights/styles';
 
 const HelperText = styled(Text.Paragraph).attrs({
   size: TextSize.Small,
@@ -65,7 +65,7 @@ function PageBackgroundAudioPanel() {
 
   const { highlightBackgroundAudio, resetHighlight } = useHighlights(
     (state) => ({
-      highlightBackgroundAudio: state[states.PAGE_BACKGROUND_AUDIO],
+      highlightBackgroundAudio: state[states.PageBackgroundAudio],
       resetHighlight: state.onFocusOut,
     })
   );

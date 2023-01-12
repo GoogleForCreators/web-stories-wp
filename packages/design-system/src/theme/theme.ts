@@ -31,5 +31,4 @@ export const theme = {
     raw,
   },
 };
-
 export type Theme = typeof theme;

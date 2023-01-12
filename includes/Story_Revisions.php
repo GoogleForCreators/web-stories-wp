@@ -135,27 +135,6 @@ class Story_Revisions extends Service_Base {
 	}
 
 	/**
-	 * Returns the story player markup for a given post.
-	 *
-	 * @since 1.25.0
-	 *
-	 * @param WP_Post $post Post instance.
-	 * @return string Story player markup.
-	 */
-	protected function get_story_player( WP_Post $post ): string {
-		$url   = esc_url(
-			wp_nonce_url(
-				add_query_arg( 'rev_id', $post->ID, get_permalink( $post->post_parent ) ),
-				'web_stories_revision_for_' . $post->post_parent
-			)
-		);
-		$title = esc_html( get_the_title( $post ) );
-		return <<<Player
-				<amp-story-player style="width: 300px; height: 500px; display: flex;"><a href="$url">$title</a></amp-story-player>
-				Player;
-	}
-
-	/**
 	 * Filters the fields displayed in the post revision diff UI.
 	 *
 	 * @since 1.25.0
@@ -262,5 +241,26 @@ class Story_Revisions extends Service_Base {
 				});
 			JS
 		);
+	}
+
+	/**
+	 * Returns the story player markup for a given post.
+	 *
+	 * @since 1.25.0
+	 *
+	 * @param WP_Post $post Post instance.
+	 * @return string Story player markup.
+	 */
+	protected function get_story_player( WP_Post $post ): string {
+		$url   = esc_url(
+			wp_nonce_url(
+				add_query_arg( 'rev_id', $post->ID, get_permalink( $post->post_parent ) ),
+				'web_stories_revision_for_' . $post->post_parent
+			)
+		);
+		$title = esc_html( get_the_title( $post ) );
+		return <<<Player
+				<amp-story-player style="width: 300px; height: 500px; display: flex;"><a href="$url">$title</a></amp-story-player>
+				Player;
 	}
 }

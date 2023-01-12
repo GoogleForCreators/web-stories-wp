@@ -60,7 +60,7 @@ function EmptyStateMenu() {
       <ContextMenuComponents.MenuButton
         onClick={() => {
           setHighlights({
-            highlight: states.MEDIA,
+            highlight: states.Media,
           });
         }}
       >
@@ -78,7 +78,7 @@ function EmptyStateMenu() {
       <ContextMenuComponents.MenuButton
         onClick={() => {
           setHighlights({
-            highlight: states.PAGE_TEMPLATES,
+            highlight: states.PageTemplates,
           });
         }}
       >
@@ -87,7 +87,7 @@ function EmptyStateMenu() {
       <ContextMenuComponents.MenuButton
         onClick={() => {
           setHighlights({
-            highlight: states.MEDIA3P,
+            highlight: states.Media3p,
           });
         }}
       >

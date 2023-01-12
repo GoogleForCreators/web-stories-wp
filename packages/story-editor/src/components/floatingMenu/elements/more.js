@@ -35,7 +35,7 @@ function More() {
 
   const handleHighlightDesignPanel = () => {
     setHighlights({
-      highlight: states.STYLE_PANE,
+      highlight: states.StylePane,
     });
 
     trackEvent('floating_menu', {

@@ -18,5 +18,12 @@
     { "path": "../transform" },
     { "path": "../units" }
   ],
-  "include": ["src/constants.ts", "src/types.ts", "src/types"]
+  "include": [
+    "src/constants.ts",
+    "src/types.ts",
+    "src/types",
+    "src/utils/textMeasurements.tsx",
+    "src/text/*.ts",
+    "src/text/*.tsx"
+  ]
 }

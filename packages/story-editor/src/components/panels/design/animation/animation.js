@@ -52,7 +52,8 @@ import { DESIGN_COPY } from '../../../checklist';
 import Warning from '../warning';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { states, styles, useHighlights } from '../../../../app/highlights';
+import { states, useHighlights } from '../../../../app/highlights';
+import styles from '../../../../app/highlights/styles';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import { EffectChooserDropdown } from './effectChooserDropdown';
 
@@ -89,7 +90,7 @@ function AnimationPanel({
   const playUpdatedAnimation = useRef(false);
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.ANIMATION],
+    highlight: state[states.Animation],
     resetHighlight: state.onFocusOut,
     cancelHighlight: state.cancelEffect,
   }));

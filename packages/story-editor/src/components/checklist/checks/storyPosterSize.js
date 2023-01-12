@@ -62,7 +62,7 @@ const StoryPosterSize = () => {
   const handleClick = useCallback(
     () =>
       setHighlights({
-        highlight: states.POSTER,
+        highlight: states.Poster,
       }),
     [setHighlights]
   );

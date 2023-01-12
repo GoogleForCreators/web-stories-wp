@@ -45,7 +45,7 @@ const PublisherLogoSize = () => {
   const handleClick = useCallback(
     () =>
       setHighlights({
-        highlight: states.PUBLISHER_LOGO,
+        highlight: states.PublisherLogo,
       }),
     [setHighlights]
   );

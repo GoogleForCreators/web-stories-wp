@@ -28,7 +28,8 @@ import { Text, TextSize } from '@googleforcreators/design-system';
 import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { useHighlights, states, styles } from '../../../../app/highlights';
+import { useHighlights, states } from '../../../../app/highlights';
+import styles from '../../../../app/highlights/styles';
 
 // Margin -4px is making up for extra margin added by rows.
 const StyledText = styled(Text.Paragraph)`
@@ -59,7 +60,7 @@ function ExcerptPanel({ nameOverride }) {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.EXCERPT],
+      highlight: state[states.Excerpt],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

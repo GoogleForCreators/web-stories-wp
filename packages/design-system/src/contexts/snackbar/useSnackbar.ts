@@ -26,6 +26,7 @@ import type { SnackbarState } from '../../types/snackbar';
 import Context from './context';
 
 export function useSnackbar(): SnackbarState;
+export function useSnackbar<T>(selector: (state: SnackbarState) => T): T;
 export function useSnackbar<T>(
   selector: (state: SnackbarState) => T | SnackbarState = identity
 ) {

@@ -46,7 +46,8 @@ import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared/styles';
 import { LinkRelations, useCommonObjectValue } from '../../shared';
-import { states, styles, useHighlights } from '../../../../app/highlights';
+import { states, useHighlights } from '../../../../app/highlights';
+import styles from '../../../../app/highlights/styles';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const IconInfo = styled.div`
@@ -75,7 +76,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.LINK],
+      highlight: state[states.Link],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

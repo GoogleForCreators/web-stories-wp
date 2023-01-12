@@ -30,20 +30,6 @@ use Google\Web_Stories\Tests\Integration\Shopping\Mock_Vendor_Invalid;
 trait Mock_Vendor_Setup {
 
 	/**
-	 * Add filter to add vendor.
-	 */
-	protected function setup_vendors(): void {
-		add_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
-	}
-
-	/**
-	 * Remove filter to remove vendor.
-	 */
-	protected function remove_vendors(): void {
-		remove_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
-	}
-
-	/**
 	 * Add mock vendor to array with filter.
 	 *
 	 * @param array<string, array<string,string>> $unused
@@ -67,5 +53,19 @@ trait Mock_Vendor_Setup {
 				'class' => Mock_Vendor_Invalid::class,
 			],
 		];
+	}
+
+	/**
+	 * Add filter to add vendor.
+	 */
+	protected function setup_vendors(): void {
+		add_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
+	}
+
+	/**
+	 * Remove filter to remove vendor.
+	 */
+	protected function remove_vendors(): void {
+		remove_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
 	}
 }

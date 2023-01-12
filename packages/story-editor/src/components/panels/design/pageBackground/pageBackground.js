@@ -47,7 +47,8 @@ import {
 } from '../../../checklist';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
-import { states, styles, useHighlights } from '../../../../app/highlights';
+import { states, useHighlights } from '../../../../app/highlights';
+import styles from '../../../../app/highlights/styles';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
 import Warning from '../warning';
 import useCORSProxy from '../../../../utils/useCORSProxy';
@@ -178,7 +179,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.PAGE_BACKGROUND],
+      highlight: state[states.PageBackground],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

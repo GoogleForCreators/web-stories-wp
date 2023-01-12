@@ -24,6 +24,7 @@ export const MaskTypes = {
   HEART: 'heart',
   STAR: 'star',
   CIRCLE: 'circle',
+  CIRCLE_2: 'circle-2',
   RECTANGLE: 'rectangle',
   TRIANGLE: 'triangle',
   ROUNDED: 'rounded-rectangle',
@@ -97,6 +98,7 @@ const CLIP_PATHS = {
   [MaskTypes.RECTANGLE]: 'M 0,0 1,0 1,1 0,1 0,0 Z',
   [MaskTypes.CIRCLE]:
     'M 0.972222 , 0.500000 c 0.000000 , 0.261111 -0.211111 , 0.472222 -0.472222 , 0.472222 S 0.027778 , 0.761111 , 0.027778 , 0.500000 S 0.238889 , 0.027778 , 0.500000 , 0.027778 S 0.972222 , 0.238889 , 0.972222 , 0.500000 z',
+  [MaskTypes.CIRCLE_2]: 'M 0,0.5 a 0.5,0.5 0 1,0 1,0 a 0.5,0.5 0 1,0 -1,0 Z',
   [MaskTypes.TRIANGLE]: 'M 0.5 0 L 1 1 L 0 1 Z',
   [MaskTypes.HEART]:
     'M.99834689.27724859C.98374997.1165844.87003101.00001922.7277144.00001922c-.0948137 0-.18162681.05102248-.23047608.13279699C.44883142.04998394.36557613 0 .27228183 0 .12998435 0 .01624632.1165652.00166847.27722932c-.00115382.007097-.00588463.0444451.00850059.10535296.0207321.0878518.06861968.1677608.13845102.23103404l.34838744.31615494.35436847-.31613565c.0698315-.0632926.1177191-.14318227.13845114-.23105333.0143856-.0608885.009655-.0982371.00852-.10533369 Z',
@@ -186,9 +188,20 @@ export const MASKS: Mask[] = [
   },
   {
     type: MaskTypes.CIRCLE,
-    showInLibrary: true,
+    // This circle was retired in #12869 but kept to keep old stories
+    // and templates looking the same
+    // @see https://github.com/GoogleForCreators/web-stories-wp/pull/12869
+    showInLibrary: false,
     name: _x('Circle', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.CIRCLE],
+    ratio: 1,
+    supportsBorder: true,
+  },
+  {
+    type: MaskTypes.CIRCLE_2,
+    showInLibrary: true,
+    name: _x('Circle', 'shape/mask name', 'web-stories'),
+    path: CLIP_PATHS[MaskTypes.CIRCLE_2],
     ratio: 1,
     supportsBorder: true,
   },

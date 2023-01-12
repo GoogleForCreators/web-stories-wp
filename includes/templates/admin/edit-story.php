@@ -115,6 +115,7 @@ $story_query_params = [
 				'style_presets',
 				'password',
 				'_links',
+				'_embedded',
 			]
 		)
 	),

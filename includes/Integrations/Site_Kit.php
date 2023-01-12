@@ -82,50 +82,6 @@ class Site_Kit extends Service_Base {
 	}
 
 	/**
-	 * Determines whether Site Kit is active.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @return bool Whether Site Kit is active.
-	 */
-	protected function is_plugin_active(): bool {
-		return \defined( 'GOOGLESITEKIT_VERSION' );
-	}
-
-
-	/**
-	 * Determines whether the built-in adsense module in Site Kit is active.
-	 *
-	 * @since 1.8.0
-	 *
-	 * @return bool Whether Site Kit's analytics module is active.
-	 */
-	protected function is_adsense_module_active(): bool {
-		$adsense_module_active       = \in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
-		$adsense_options             = (array) get_option( 'googlesitekit_adsense_settings' );
-		$adsense_options_client_id   = ! empty( $adsense_options['clientID'] );
-		$adsense_options_use_snippet = ! empty( $adsense_options['useSnippet'] );
-		$adsense_web_stories_ad_unit = ! empty( $adsense_options['webStoriesAdUnit'] );
-
-		return $adsense_module_active && $adsense_options_use_snippet && $adsense_web_stories_ad_unit && $adsense_options_client_id;
-	}
-
-	/**
-	 * Determines whether the built-in Analytics module in Site Kit is active.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @return bool Whether Site Kit's analytics module is active.
-	 */
-	protected function is_analytics_module_active(): bool {
-		$analytics_module_active = \in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
-		$analytics_options       = (array) get_option( 'googlesitekit_analytics_settings' );
-		$analytics_use_snippet   = ! empty( $analytics_options['useSnippet'] );
-
-		return $analytics_module_active && $analytics_use_snippet;
-	}
-
-	/**
 	 * Filters Site Kit's Google Analytics configuration.
 	 *
 	 * @since 1.2.0
@@ -151,49 +107,6 @@ class Site_Kit extends Service_Base {
 		$gtag_opt['triggers']   = array_merge( $default_config['triggers'], $gtag_opt['triggers'] );
 
 		return $gtag_opt;
-	}
-
-	/**
-	 * Gets the option containing the active Site Kit modules.
-	 *
-	 * Checks two options as it was renamed at some point in Site Kit.
-	 *
-	 * Bails early if the Site Kit plugin itself is not active.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @see \Google\Site_Kit\Core\Modules\Modules::get_active_modules_option
-	 *
-	 * @return string[] List of active module slugs.
-	 */
-	protected function get_site_kit_active_modules_option(): array {
-		if ( ! $this->is_plugin_active() ) {
-			return [];
-		}
-
-		/**
-		 * Option value.
-		 *
-		 * @var string[]|false $option
-		 */
-		$option = get_option( 'googlesitekit_active_modules' );
-
-		if ( \is_array( $option ) ) {
-			return $option;
-		}
-
-		/**
-		 * Legacy option value.
-		 *
-		 * @var string[]|false $legacy_option
-		 */
-		$legacy_option = get_option( 'googlesitekit-active-modules' );
-
-		if ( \is_array( $legacy_option ) ) {
-			return $legacy_option;
-		}
-
-		return [];
 	}
 
 	/**
@@ -265,5 +178,92 @@ class Site_Kit extends Service_Base {
 			'analyticsLink'   => $analytics_link,
 			'adsenseLink'     => $adsense_link,
 		];
+	}
+
+	/**
+	 * Determines whether Site Kit is active.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return bool Whether Site Kit is active.
+	 */
+	protected function is_plugin_active(): bool {
+		return \defined( 'GOOGLESITEKIT_VERSION' );
+	}
+
+
+	/**
+	 * Determines whether the built-in adsense module in Site Kit is active.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return bool Whether Site Kit's analytics module is active.
+	 */
+	protected function is_adsense_module_active(): bool {
+		$adsense_module_active       = \in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
+		$adsense_options             = (array) get_option( 'googlesitekit_adsense_settings' );
+		$adsense_options_client_id   = ! empty( $adsense_options['clientID'] );
+		$adsense_options_use_snippet = ! empty( $adsense_options['useSnippet'] );
+		$adsense_web_stories_ad_unit = ! empty( $adsense_options['webStoriesAdUnit'] );
+
+		return $adsense_module_active && $adsense_options_use_snippet && $adsense_web_stories_ad_unit && $adsense_options_client_id;
+	}
+
+	/**
+	 * Determines whether the built-in Analytics module in Site Kit is active.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return bool Whether Site Kit's analytics module is active.
+	 */
+	protected function is_analytics_module_active(): bool {
+		$analytics_module_active = \in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
+		$analytics_options       = (array) get_option( 'googlesitekit_analytics_settings' );
+		$analytics_use_snippet   = ! empty( $analytics_options['useSnippet'] );
+
+		return $analytics_module_active && $analytics_use_snippet;
+	}
+
+	/**
+	 * Gets the option containing the active Site Kit modules.
+	 *
+	 * Checks two options as it was renamed at some point in Site Kit.
+	 *
+	 * Bails early if the Site Kit plugin itself is not active.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @see \Google\Site_Kit\Core\Modules\Modules::get_active_modules_option
+	 *
+	 * @return string[] List of active module slugs.
+	 */
+	protected function get_site_kit_active_modules_option(): array {
+		if ( ! $this->is_plugin_active() ) {
+			return [];
+		}
+
+		/**
+		 * Option value.
+		 *
+		 * @var string[]|false $option
+		 */
+		$option = get_option( 'googlesitekit_active_modules' );
+
+		if ( \is_array( $option ) ) {
+			return $option;
+		}
+
+		/**
+		 * Legacy option value.
+		 *
+		 * @var string[]|false $legacy_option
+		 */
+		$legacy_option = get_option( 'googlesitekit-active-modules' );
+
+		if ( \is_array( $legacy_option ) ) {
+			return $legacy_option;
+		}
+
+		return [];
 	}
 }

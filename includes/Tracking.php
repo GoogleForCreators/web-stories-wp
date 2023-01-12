@@ -179,6 +179,15 @@ class Tracking extends Service_Base {
 	}
 
 	/**
+	 * Is tracking active for the current user?
+	 *
+	 * @return bool True if tracking enabled, and False if not.
+	 */
+	public function is_active(): bool {
+		return (bool) $this->preferences->get_preference( get_current_user_id(), Preferences::OPTIN_META_KEY );
+	}
+
+	/**
 	 * Returns a list of user properties.
 	 *
 	 * @since 1.4.0
@@ -229,14 +238,5 @@ class Tracking extends Service_Base {
 			'analytics'          => $analytics,
 			'activePlugins'      => implode( ',', $active_plugins ),
 		];
-	}
-
-	/**
-	 * Is tracking active for the current user?
-	 *
-	 * @return bool True if tracking enabled, and False if not.
-	 */
-	public function is_active(): bool {
-		return (bool) $this->preferences->get_preference( get_current_user_id(), Preferences::OPTIN_META_KEY );
 	}
 }

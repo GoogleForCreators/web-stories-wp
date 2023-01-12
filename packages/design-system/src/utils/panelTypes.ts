@@ -14,46 +14,26 @@
  * limitations under the License.
  */
 
-const ANIMATION = 'animation';
-const BORDER = 'borderStyle';
-const CAPTIONS = 'captions';
-const FILTER = 'filter';
-const IMAGE_ACCESSIBILITY = 'imageAccessibility';
-const LINK = 'link';
-const PAGE_ADVANCEMENT = 'pageAdvancement';
-const PAGE_ATTACHMENT = 'pageAttachment';
-const PAGE_BACKGROUND = 'pageBackground';
-const PAGE_BACKGROUND_AUDIO = 'pageBackgroundAudio';
-const SIZE_POSITION = 'sizePosition';
-const SHAPE_STYLE = 'shapeStyle';
-const TEXT_ACCESSIBILITY = 'textAccessibility';
-const TEXT_STYLE = 'textStyle';
-const VIDEO_OPTIONS = 'videoOptions';
-const VIDEO_SEGMENT = 'videoSegment';
-const VIDEO_ACCESSIBILITY = 'videoAccessibility';
-const ELEMENT_ALIGNMENT = 'elementAlignment';
-const PRODUCT = 'product';
-
-const PanelTypes = {
-  ELEMENT_ALIGNMENT,
-  PAGE_BACKGROUND,
-  PAGE_ADVANCEMENT,
-  PAGE_ATTACHMENT,
-  PAGE_BACKGROUND_AUDIO,
-  SIZE_POSITION,
-  TEXT_STYLE,
-  TEXT_ACCESSIBILITY,
-  FILTER,
-  SHAPE_STYLE,
-  BORDER,
-  ANIMATION,
-  VIDEO_OPTIONS,
-  VIDEO_SEGMENT,
-  CAPTIONS,
-  LINK,
-  IMAGE_ACCESSIBILITY,
-  VIDEO_ACCESSIBILITY,
-  PRODUCT,
-};
+enum PanelTypes {
+  ElementAlignment = 'elementAlignment',
+  PageBackground = 'pageBackground',
+  PageAdvancement = 'pageAdvancement',
+  PageAttachment = 'pageAttachment',
+  PageBackgroundAudio = 'pageBackgroundAudio',
+  SizePosition = 'sizePosition',
+  TextStyle = 'textStyle',
+  TextAccessibility = 'textAccessibility',
+  Filter = 'filter',
+  ShapeStyle = 'shapeStyle',
+  Border = 'borderStyle',
+  Animation = 'animation',
+  VideoOptions = 'videoOptions',
+  VideoSegment = 'videoSegment',
+  Captions = 'captions',
+  Link = 'link',
+  ImageAccessibility = 'imageAccessibility',
+  VideoAcessibility = 'videoAccessibility',
+  Product = 'product',
+}
 
 export default PanelTypes;
