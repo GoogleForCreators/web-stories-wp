@@ -15,6 +15,7 @@
  */
 
 type Mergeable = Record<string, unknown>;
+
 /**
  * Deep merge objects.
  */
@@ -22,7 +23,7 @@ export default function deepMerge(object: Mergeable, source: Mergeable = {}) {
   Object.entries(source).forEach(([key, value]) => {
     if (value !== undefined) {
       if (value && 'object' === typeof value && !Array.isArray(value)) {
-        if (!('key' in object)) {
+        if (!('key' in object) && !object[key]) {
           Object.assign(object, { [key]: {} });
         }
         deepMerge(object[key] as Mergeable, value as Mergeable);
