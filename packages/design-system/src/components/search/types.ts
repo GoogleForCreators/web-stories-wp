@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { DropdownItem, DropdownValue, NestedDropdownItem } from '../menu';
+import type { DropdownItem, NestedDropdownItem } from '../menu';
 import type { Placement } from '../popup';
 
 export interface UseSearchProps {
@@ -35,7 +35,7 @@ export interface SearchProps extends Omit<UseSearchProps, 'options'> {
   hasError?: boolean;
   hint?: string;
   label?: string;
-  onMenuItemClick?: (evt: Event, value: DropdownValue) => void;
+  onMenuItemClick?: (evt: Event, option: DropdownItem) => void;
   onClear?: () => void;
   placeholder?: string;
   placement?: Placement;

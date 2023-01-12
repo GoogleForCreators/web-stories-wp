@@ -32,7 +32,7 @@ import type { ChangeEvent, KeyboardEvent, UIEvent } from 'react';
  * Internal dependencies
  */
 import { TextSize } from '../../theme';
-import { DropdownValue, Menu } from '../menu';
+import { DropdownItem, DropdownValue, Menu } from '../menu';
 import { Popup, Placement } from '../popup';
 import { DropDownContainer, Hint, Label } from './components';
 import {
@@ -133,12 +133,12 @@ function Search({
   const handleMenuItemClick = useCallback(
     (event: Event, menuItem: DropdownValue) => {
       setIsOpen(false);
-      const newOption = getActiveOption(menuItem) || {
-        label: menuItem,
+      const newOption: DropdownItem = getActiveOption(menuItem) || {
+        label: String(menuItem),
         value: menuItem,
       };
       setInputState(String(newOption.label));
-      onMenuItemClick?.(event, newOption.value);
+      onMenuItemClick?.(event, newOption);
     },
     [getActiveOption, setInputState, setIsOpen, onMenuItemClick]
   );

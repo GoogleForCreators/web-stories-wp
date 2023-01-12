@@ -23,7 +23,7 @@ import { screen } from '@testing-library/react';
  * Internal dependencies
  */
 import { noop } from '../../../utils';
-import { Radio } from '../radio';
+import Radio from '../radio';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Radio', () => {

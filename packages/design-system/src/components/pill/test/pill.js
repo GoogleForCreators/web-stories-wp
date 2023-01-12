@@ -22,11 +22,11 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Pill } from '..';
+import Pill from '../pill';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Pill', () => {
-  const pillText = 'Some pil text';
+  const pillText = 'Some pill text';
   const onClickMock = jest.fn();
 
   it('should render the default button as a pill', () => {

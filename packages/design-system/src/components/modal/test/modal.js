@@ -24,7 +24,7 @@ import { screen } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Modal } from '..';
+import Modal from '../modal';
 
 describe('DesignSystem/Components/Modal', () => {
   it('should not render a modal by default', () => {
