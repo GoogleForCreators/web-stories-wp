@@ -22,7 +22,7 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { TextArea } from '..';
+import TextArea from '../textArea';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('TextArea', () => {

@@ -22,7 +22,7 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Switch } from '..';
+import Switch from '../switch';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop } from '../../../utils';
 

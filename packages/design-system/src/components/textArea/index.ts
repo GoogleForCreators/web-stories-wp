@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { default as TextArea } from './textarea';
+export { default as TextArea } from './textArea';
