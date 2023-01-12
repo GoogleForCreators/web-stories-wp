@@ -20,12 +20,12 @@
 import PropTypes from 'prop-types';
 import { sprintf, __ } from '@googleforcreators/i18n';
 import {
-  Button,
   ButtonSize,
   ButtonType,
   Headline,
   TextSize,
   InfiniteScroller,
+  ButtonAsLink,
 } from '@googleforcreators/design-system';
 
 /**
@@ -102,14 +102,13 @@ function Content({
               </Headline>
               {Object.keys(filtersObject).length === 0 &&
                 canViewDefaultTemplates && (
-                  <Button
+                  <ButtonAsLink
                     type={ButtonType.Primary}
                     size={ButtonSize.Medium}
-                    as="a"
                     href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
                   >
                     {__('Explore Templates', 'web-stories')}
-                  </Button>
+                  </ButtonAsLink>
                 )}
             </EmptyContentMessage>
           )

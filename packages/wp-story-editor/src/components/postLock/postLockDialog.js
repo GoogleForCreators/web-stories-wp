@@ -21,6 +21,7 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
+  ButtonAsLink,
   ButtonSize,
   ButtonType,
   TextSize,
@@ -63,7 +64,7 @@ function PostLockDialog({
       title={__('This story is already being edited', 'web-stories')}
       actions={
         <>
-          <Button
+          <ButtonAsLink
             type={ButtonType.Tertiary}
             size={ButtonSize.Small}
             href={previewLink}
@@ -71,7 +72,7 @@ function PostLockDialog({
             rel="noreferrer"
           >
             {__('Preview', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
           <Button
             type={ButtonType.Tertiary}
             size={ButtonSize.Small}
@@ -79,13 +80,13 @@ function PostLockDialog({
           >
             {__('Take over', 'web-stories')}
           </Button>
-          <Button
+          <ButtonAsLink
             type={ButtonType.Primary}
             size={ButtonSize.Small}
             href={dashboardLink}
           >
             {__('Back to dashboard', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         </>
       }
     >

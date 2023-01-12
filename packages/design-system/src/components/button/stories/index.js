@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import { TextSize } from '../../../theme';
 import { Headline, Text } from '../../typography';
 import { Cross } from '../../../icons';
-import { Button } from '../button';
+import { Button, ButtonAsLink } from '../button';
 import { ButtonSize, ButtonType, ButtonVariant } from '../constants';
 import { ToggleButton, LockToggle } from '../toggleButton';
 import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
@@ -121,9 +121,9 @@ const ButtonCombosToDisplay = (args) => (
     </Headline>
     <Row>
       <div>
-        <Button href="" {...args}>
+        <ButtonAsLink href="" {...args}>
           {'Link as Button'}
-        </Button>
+        </ButtonAsLink>
         <Text>{'Link as Button'}</Text>
       </div>
       <div>

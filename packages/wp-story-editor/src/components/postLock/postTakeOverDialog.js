@@ -20,7 +20,7 @@
 import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
-  Button,
+  ButtonAsLink,
   ButtonSize,
   ButtonType,
   ButtonVariant,
@@ -64,7 +64,7 @@ function PostTakeOverDialog({
       shouldCloseOnOverlayClick={false}
       actions={
         <>
-          <Button
+          <ButtonAsLink
             type={ButtonType.Tertiary}
             size={ButtonSize.Small}
             href={previewLink}
@@ -72,15 +72,15 @@ function PostTakeOverDialog({
             rel="noreferrer"
           >
             {__('Preview', 'web-stories')}
-          </Button>
-          <Button
+          </ButtonAsLink>
+          <ButtonAsLink
             type={ButtonType.Primary}
             size={ButtonSize.Small}
             variant={ButtonVariant.Rectangle}
             href={dashboardLink}
           >
             {__('Back to dashboard', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         </>
       }
     >

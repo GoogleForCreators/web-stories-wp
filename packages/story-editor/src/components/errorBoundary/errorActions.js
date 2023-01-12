@@ -22,6 +22,7 @@ import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
+  ButtonAsLink,
   ButtonSize,
   ButtonType,
   ButtonVariant,
@@ -92,7 +93,7 @@ function ErrorActions({ error, errorInfo }) {
           {__('Reload', 'web-stories')}
         </Button>
         <CopyStoryDataToClipboard />
-        <Button
+        <ButtonAsLink
           variant={ButtonVariant.Rectangle}
           type={ButtonType.Primary}
           size={ButtonSize.Small}
@@ -101,7 +102,7 @@ function ErrorActions({ error, errorInfo }) {
           rel="noreferrer"
         >
           {__('Report Error', 'web-stories')}
-        </Button>
+        </ButtonAsLink>
       </Wrapper>
     </Message>
   );

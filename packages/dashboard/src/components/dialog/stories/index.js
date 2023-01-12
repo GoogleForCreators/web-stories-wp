@@ -19,6 +19,7 @@
  */
 import {
   Button,
+  ButtonAsLink,
   ButtonSize,
   ButtonType,
   Text,
@@ -79,14 +80,14 @@ export const WithCustomAction = ({ onClickButton, onConfirmed, ...args }) => {
           >
             {'Dismiss'}
           </Button>
-          <Button
+          <ButtonAsLink
             type={ButtonType.Primary}
             size={ButtonSize.Small}
             href={args.href}
             onClick={onConfirmed}
           >
             {'Add to new post'}
-          </Button>
+          </ButtonAsLink>
         </>
       }
       {...args}

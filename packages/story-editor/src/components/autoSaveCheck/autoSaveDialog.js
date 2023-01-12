@@ -24,6 +24,7 @@ import {
   Button,
   ButtonSize,
   ButtonType,
+  ButtonAsLink,
 } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -47,13 +48,13 @@ export const AutoSaveDialog = ({ onClose, isOpen, autoSaveLink }) => {
           >
             {__('Dismiss', 'web-stories')}
           </Button>
-          <Button
+          <ButtonAsLink
             type={ButtonType.Primary}
             size={ButtonSize.Small}
             href={autoSaveLink}
           >
             {__('View the autosave', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         </>
       }
     >
