@@ -208,33 +208,6 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	}
 
 	/**
-	 * Get the lock, if the ID is valid.
-	 *
-	 * @param int $post_id Supplied ID.
-	 * @return array{time?: int, user?: int}|false Lock data or false.
-	 */
-	protected function get_lock( int $post_id ) {
-		/**
-		 * Lock data.
-		 *
-		 * @var string|false $lock
-		 */
-		$lock = get_post_meta( $post_id, '_edit_lock', true );
-
-		if ( ! empty( $lock ) ) {
-			[ $time, $user ] = explode( ':', $lock );
-			if ( $time && $user ) {
-				return [
-					'time' => (int) $time,
-					'user' => (int) $user,
-				];
-			}
-		}
-
-		return false;
-	}
-
-	/**
 	 * Checks if a given request has access to read a lock.
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
@@ -390,36 +363,6 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	}
 
 	/**
-	 * Prepares links for the request.
-	 *
-	 * @param array{time?: int, user?: int}|false $lock Lock state.
-	 * @param int                                 $post_id Post object ID.
-	 * @return array{self: array{href?: string}, author?: array{href: string, embeddable: true}} Links for the given term.
-	 */
-	protected function prepare_links( $lock, int $post_id ): array {
-		$base  = $this->namespace . '/' . $this->rest_base;
-		$links = [
-			'self' => [
-				'href' => rest_url( trailingslashit( $base ) . $post_id . '/lock' ),
-			],
-		];
-
-		if ( ! empty( $lock ) ) {
-			/** This filter is documented in wp-admin/includes/ajax-actions.php */
-			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
-
-			if ( $lock['time'] && $lock['time'] > time() - $time_window && isset( $lock['user'] ) ) {
-				$links['author'] = [
-					'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'users', $lock['user'] ) ),
-					'embeddable' => true,
-				];
-			}
-		}
-
-		return $links;
-	}
-
-	/**
 	 * Retrieves the post's schema, conforming to JSON Schema.
 	 *
 	 * @since 1.6.0
@@ -499,5 +442,62 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$this->schema = $schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
+	}
+
+	/**
+	 * Get the lock, if the ID is valid.
+	 *
+	 * @param int $post_id Supplied ID.
+	 * @return array{time?: int, user?: int}|false Lock data or false.
+	 */
+	protected function get_lock( int $post_id ) {
+		/**
+		 * Lock data.
+		 *
+		 * @var string|false $lock
+		 */
+		$lock = get_post_meta( $post_id, '_edit_lock', true );
+
+		if ( ! empty( $lock ) ) {
+			[ $time, $user ] = explode( ':', $lock );
+			if ( $time && $user ) {
+				return [
+					'time' => (int) $time,
+					'user' => (int) $user,
+				];
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Prepares links for the request.
+	 *
+	 * @param array{time?: int, user?: int}|false $lock Lock state.
+	 * @param int                                 $post_id Post object ID.
+	 * @return array{self: array{href?: string}, author?: array{href: string, embeddable: true}} Links for the given term.
+	 */
+	protected function prepare_links( $lock, int $post_id ): array {
+		$base  = $this->namespace . '/' . $this->rest_base;
+		$links = [
+			'self' => [
+				'href' => rest_url( trailingslashit( $base ) . $post_id . '/lock' ),
+			],
+		];
+
+		if ( ! empty( $lock ) ) {
+			/** This filter is documented in wp-admin/includes/ajax-actions.php */
+			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
+			if ( $lock['time'] && $lock['time'] > time() - $time_window && isset( $lock['user'] ) ) {
+				$links['author'] = [
+					'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'users', $lock['user'] ) ),
+					'embeddable' => true,
+				];
+			}
+		}
+
+		return $links;
 	}
 }

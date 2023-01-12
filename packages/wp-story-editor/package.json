@@ -44,7 +44,7 @@
     "@web-stories-wp/wp-utils": "*",
     "@wordpress/api-fetch": "^6.14.0",
     "@wordpress/dom-ready": "^3.17.0",
-    "flagged": "^2.0.6",
+    "flagged": "^2.0.7",
     "polished": "^4.2.2",
     "react-calendar": "^4.0.0",
     "styled-components": "^5.3.6"

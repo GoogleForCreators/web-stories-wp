@@ -19,6 +19,10 @@
  */
 import type { CarouselState, ZoomSetting } from '../constants';
 
+interface ScrollOffset {
+  left: number;
+  top: number;
+}
 export interface LayoutProviderState {
   state: {
     pageWidth: number;
@@ -44,8 +48,8 @@ export interface LayoutProviderState {
   actions: {
     closeCarousel: () => void;
     openCarousel: () => void;
-    setScrollOffset: () => void;
-    setZoomLevel: () => void;
-    setZoomSetting: () => void;
+    setScrollOffset: (payload?: ScrollOffset) => void;
+    setZoomLevel: (prevState: number) => void;
+    setZoomSetting: (prevState: ZoomSetting) => void;
   };
 }

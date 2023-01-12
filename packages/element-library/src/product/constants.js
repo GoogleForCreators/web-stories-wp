@@ -58,4 +58,4 @@ export const resizeRules = {
   minHeight: 20,
 };
 
-export const panels = [PanelTypes.PRODUCT];
+export const panels = [PanelTypes.Product];

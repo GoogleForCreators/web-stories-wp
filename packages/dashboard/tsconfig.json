@@ -14,5 +14,11 @@
     { "path": "../units" },
     { "path": "../i18n" }
   ],
-  "include": ["src/app/config/*", "src/types"]
+  "include": [
+    "src/app/config",
+    "src/app/router",
+    "src/constants",
+    "src/icons",
+    "src/types"
+  ]
 }

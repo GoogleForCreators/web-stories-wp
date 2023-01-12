@@ -177,8 +177,8 @@ function PublishPanel({ nameOverride }: PublishPanelProps) {
 
   const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
     (state) => ({
-      highlightPoster: state[states.POSTER],
-      highlightLogo: state[states.PUBLISHER_LOGO],
+      highlightPoster: state[states.Poster],
+      highlightLogo: state[states.PublisherLogo],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

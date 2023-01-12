@@ -17,9 +17,6 @@ use WP_UnitTest_Factory;
  */
 class Link_Controller extends DependencyInjectedRestTestCase {
 
-	protected static int $editor;
-	protected static int $subscriber;
-
 	public const URL_INVALID             = 'https://https://invalid.commmm';
 	public const URL_404                 = 'https://example.com/404';
 	public const URL_500                 = 'https://example.com/500';
@@ -30,6 +27,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	public const URL_INSTAGRAM           = 'https://www.instagram.com/googleforcreators';
 	public const URL_INSTAGRAM_SINGLE    = 'https://www.instagram.com/p/CZwz48cFoQM';
 	public const URL_INSTAGRAM_SUBDOMAIN = 'https://about.instagram.com/about-us';
+
+	protected static int $editor;
+	protected static int $subscriber;
 
 	/**
 	 * Count of the number of requests attempted.
