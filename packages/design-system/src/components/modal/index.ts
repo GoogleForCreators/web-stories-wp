@@ -19,4 +19,5 @@ export {
   BODY_CLASS,
   CONTENT_CLASS,
   OVERLAY_CLASS,
+  ModalGlobalStyle,
 } from './modal';
