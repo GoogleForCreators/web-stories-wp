@@ -63,7 +63,7 @@ describe('useDropDown()', () => {
       useDropDown({ selectedValue: null, options: [] })
     );
 
-    expect(result.current.normalizedOptions).toStrictEqual([]);
+    expect(result.current.groups).toStrictEqual([]);
   });
 
   it('should return an empty array when only bad options are present', () => {
@@ -78,7 +78,7 @@ describe('useDropDown()', () => {
       })
     );
 
-    expect(result.current.normalizedOptions).toStrictEqual([]);
+    expect(result.current.groups).toStrictEqual([]);
   });
 
   it('should return only sanitized options that meet requirements', () => {
@@ -86,9 +86,9 @@ describe('useDropDown()', () => {
       useDropDown({ selectedValue: null, options: nestedDropDownOptions })
     );
 
-    expect(result.current.normalizedOptions).toStrictEqual([
+    expect(result.current.groups).toStrictEqual([
       {
-        group: [
+        options: [
           { label: 'ET', value: 'alien-1' },
           { label: 'Stitch', value: 'alien-2' },
           { label: 'Groot', value: 'alien-3' },
@@ -101,7 +101,7 @@ describe('useDropDown()', () => {
         label: 'aliens',
       },
       {
-        group: [
+        options: [
           { label: 'Smaug', value: 'dragon-1' },
           { label: 'Mushu', value: 'dragon-2' },
           { label: 'Toothless', value: 'dragon-3' },
@@ -112,7 +112,7 @@ describe('useDropDown()', () => {
         label: 'dragons',
       },
       {
-        group: [
+        options: [
           { label: 'Snoopy', value: 'dog-1' },
           { label: 'Scooby', value: 'dog-2' },
         ],

@@ -20,7 +20,7 @@
 import type { DropdownItem, NestedDropdownItem } from './types';
 
 function isValid(opt: DropdownItem) {
-  return typeof opt === 'object' && String(opt.value);
+  return typeof opt === 'object' && typeof opt.value !== 'undefined';
 }
 
 export function getGroups(
@@ -29,7 +29,9 @@ export function getGroups(
   if (source.length === 0) {
     return [];
   }
-  const isNested = source.some((opt) => 'options' in opt);
+  const isNested = source.some(
+    (opt) => typeof opt === 'object' && 'options' in opt
+  );
   if (isNested) {
     const nestedOptions = source as NestedDropdownItem[];
     return nestedOptions

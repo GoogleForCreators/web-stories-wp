@@ -110,13 +110,7 @@ interface ChipProps extends ComponentPropsWithoutRef<'button'> {
 
 const Chip = forwardRef(
   (
-    {
-      children,
-      prefix,
-      suffix,
-      onClick,
-      ...props
-    }: PropsWithChildren<ChipProps>,
+    { children, prefix, suffix, ...props }: PropsWithChildren<ChipProps>,
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
     return (
