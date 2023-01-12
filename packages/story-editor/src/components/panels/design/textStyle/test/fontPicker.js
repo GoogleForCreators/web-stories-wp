@@ -66,7 +66,7 @@ function arrange(options) {
 
   return renderWithTheme(
     <FontContext.Provider value={fontContextValues}>
-      <Datalist.DropDown {...props} />
+      <Datalist {...props} />
     </FontContext.Provider>
   );
 }

@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useMemo } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
-  Button,
+  ButtonAsLink,
   ButtonSize,
   ButtonType,
   Headline,
@@ -101,14 +101,13 @@ function Content({
             : __('No templates currently available.', 'web-stories')}
         </Headline>
         {!search && (
-          <Button
+          <ButtonAsLink
             type={ButtonType.Primary}
             size={ButtonSize.Medium}
-            as="a"
             href={newStoryURL}
           >
             {__('Create New Story', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         )}
       </EmptyContentMessage>
     );

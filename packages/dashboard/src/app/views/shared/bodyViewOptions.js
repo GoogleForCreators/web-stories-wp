@@ -55,7 +55,7 @@ const ControlsContainer = styled.div`
 `;
 
 const BodyViewOptionsHeader = styled.div``;
-const StyledDatalist = styled(Datalist.DropDown)`
+const StyledDatalist = styled(Datalist)`
   max-width: ${FILTER_MAX_WIDTH}px;
 `;
 

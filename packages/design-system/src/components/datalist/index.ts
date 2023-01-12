@@ -15,3 +15,7 @@
  */
 
 export { default as Datalist } from './datalist';
+export {
+  ListElement as DatalistOption,
+  Selected as DatalistSelected,
+} from './list/styled';

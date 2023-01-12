@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { default as infiniteScroller } from './infiniteScroller';
+export { default as InfiniteScroller } from './infiniteScroller';

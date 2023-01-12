@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,22 @@
  * limitations under the License.
  */
 
-export {
-  default as Modal,
-  BODY_CLASS,
-  CONTENT_CLASS,
-  OVERLAY_CLASS,
-} from './modal';
+/**
+ * Internal dependencies
+ */
+import { dark as darkMode } from './colors';
+import { typography } from './typography';
+import { borders } from './borders';
+import { breakpoint, raw } from './breakpoint';
+
+export const theme = {
+  borders,
+  typography,
+  colors: { ...darkMode },
+  breakpoint: {
+    ...breakpoint,
+    raw,
+  },
+};
+
+export type Theme = typeof theme;

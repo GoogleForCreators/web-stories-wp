@@ -106,7 +106,7 @@ function ProductDropdown({ product, setProduct, ...rest }) {
   };
 
   return (
-    <Datalist.DropDown
+    <Datalist
       options={initialOptions}
       searchResultsLabel={__('Search results', 'web-stories')}
       aria-label={__('Product', 'web-stories')}

@@ -23,24 +23,28 @@ import { css } from 'styled-components';
  * Internal dependencies
  */
 import type { Preset } from '../../types/typography';
-import { type Theme, TextSize } from '..';
+import type { Theme } from '../theme';
+import { TextSize } from '../types';
 
 interface ExpandPresetStylesProps {
-  preset: Preset;
+  preset?: Preset;
   theme: Theme;
 }
 
 export const expandPresetStyles = ({
   preset,
   theme,
-}: ExpandPresetStylesProps) => css`
-  font-family: ${theme.typography.family.primary};
-  font-size: ${preset.size}px;
-  font-weight: ${preset.weight};
-  letter-spacing: ${preset.letterSpacing}px;
-  line-height: ${preset.lineHeight}px;
-  text-decoration: none;
-`;
+}: ExpandPresetStylesProps) =>
+  preset
+    ? css`
+        font-family: ${theme.typography.family.primary};
+        font-size: ${preset.size}px;
+        font-weight: ${preset.weight};
+        letter-spacing: ${preset.letterSpacing}px;
+        line-height: ${preset.lineHeight}px;
+        text-decoration: none;
+      `
+    : css``;
 
 type PresetChoices = Theme['typography']['presets'];
 type PresetSelector = (

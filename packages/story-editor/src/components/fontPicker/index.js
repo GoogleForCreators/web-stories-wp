@@ -25,7 +25,11 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { Datalist } from '@googleforcreators/design-system';
+import {
+  Datalist,
+  DatalistOption,
+  DatalistSelected,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -110,7 +114,7 @@ const FontPicker = forwardRef(function FontPicker(
   const renderer = useCallback(
     ({ option, ...rest }, _ref) => {
       return (
-        <Datalist.Option
+        <DatalistOption
           ref={_ref}
           {...rest}
           fontFamily={
@@ -120,10 +124,10 @@ const FontPicker = forwardRef(function FontPicker(
           }
         >
           {currentValue === option.id && (
-            <Datalist.Selected aria-label={__('Selected', 'web-stories')} />
+            <DatalistSelected aria-label={__('Selected', 'web-stories')} />
           )}
           {option.name}
-        </Datalist.Option>
+        </DatalistOption>
       );
     },
     [currentValue]
@@ -152,7 +156,7 @@ const FontPicker = forwardRef(function FontPicker(
   }, [customFonts, recentFonts]);
 
   return (
-    <Datalist.DropDown
+    <Datalist
       ref={ref}
       zIndex={zIndex}
       tabIndex={tabIndex}

@@ -39,6 +39,7 @@ import {
   TextSize,
   Icons,
   Datalist,
+  DatalistOption,
 } from '@googleforcreators/design-system';
 import {
   highlightStates as states,
@@ -280,14 +281,14 @@ function PublishPanel({ nameOverride }) {
         return option;
       }
       return (
-        <Datalist.Option value={option.id} ref={ref} {...rest}>
+        <DatalistOption value={option.id} ref={ref} {...rest}>
           <LogoImg
             src={option.url}
             alt=""
             decoding="async"
             crossOrigin="anonymous"
           />
-        </Datalist.Option>
+        </DatalistOption>
       );
     }
   );
@@ -308,12 +309,12 @@ function PublishPanel({ nameOverride }) {
   };
 
   const renderUploadButton = (open) => (
-    <Datalist.Option onClick={open} aria-label={__('Add new', 'web-stories')}>
+    <DatalistOption onClick={open} aria-label={__('Add new', 'web-stories')}>
       <Icons.ArrowCloud height={32} width={32} />
       <Text.Span size={TextSize.XSmall}>
         {__('Add new', 'web-stories')}
       </Text.Span>
-    </Datalist.Option>
+    </DatalistOption>
   );
   const publisherLogosWithUploadOption = [...publisherLogos];
   if (hasUploadMediaAction) {
@@ -403,7 +404,7 @@ function PublishPanel({ nameOverride }) {
           </MediaInputWrapper>
           <DropdownWrapper>
             <MediaWrapper>
-              <Datalist.DropDown
+              <Datalist
                 options={publisherLogosWithUploadOption}
                 primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}

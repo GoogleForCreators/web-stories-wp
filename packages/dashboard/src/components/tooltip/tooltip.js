@@ -18,8 +18,8 @@
  * External dependencies
  */
 import {
-  TOOLTIP_RTL_PLACEMENT,
-  BaseTooltip,
+  RTL_PLACEMENT,
+  Tooltip as BaseTooltip,
   TooltipPropTypes,
   Placement,
 } from '@googleforcreators/design-system';
@@ -31,7 +31,7 @@ import { useConfig } from '../../app/config';
 
 export default function Tooltip({ placement = Placement.Bottom, ...props }) {
   const { isRTL } = useConfig();
-  const derivedPlacement = isRTL ? TOOLTIP_RTL_PLACEMENT[placement] : placement;
+  const derivedPlacement = isRTL ? RTL_PLACEMENT[placement] : placement;
 
   return <BaseTooltip placement={derivedPlacement} {...props} />;
 }

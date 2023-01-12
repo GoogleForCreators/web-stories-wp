@@ -117,7 +117,7 @@ function Author() {
 
   return (
     <Row>
-      <Datalist.DropDown
+      <Datalist
         options={queriedUsers}
         searchResultsLabel={__('Search results', 'web-stories')}
         dropdownButtonLabel={__('Author', 'web-stories')}
