@@ -14,14 +14,7 @@
  * limitations under the License.
  */
 
-<<<<<<<< HEAD:packages/design-system/src/contexts/popup/types.ts
-export interface PopupState {
-  isRTL: boolean;
-  leftOffset: number;
-  topOffset: number;
-========
 declare module '*.svg' {
   const content: string;
   export default content;
->>>>>>>> main:packages/dashboard/src/icons/svg-imports.d.ts
 }
