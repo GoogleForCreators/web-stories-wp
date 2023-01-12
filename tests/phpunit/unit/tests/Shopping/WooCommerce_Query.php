@@ -23,7 +23,7 @@ namespace Google\Web_Stories\Tests\Unit\Shopping;
 use Brain\Monkey;
 use Google\Web_Stories\Tests\Shared\Private_Access;
 use Google\Web_Stories\Tests\Unit\TestCase;
-use Mockery\Mock;
+use Mockery;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\WooCommerce_Query
@@ -68,49 +68,58 @@ class WooCommerce_Query extends TestCase {
 				'wc_get_products'             => static function () {
 					$object   = new \stdClass();
 					$products = [
-						\Mockery::mock(\WC_Product::class, [
-							'get_id' => 1,
-							'get_title' => '',
-							'get_price' => 0,
-							'get_average_rating' => 0.0,
-							'get_rating_count' => 0,
-							'get_permalink' => '',
-							'get_short_description' => '',
-							'get_image_id' => 50,
-							'get_gallery_image_ids' => [
-								51,
-								59,
-								60,
-							],
-						]),
+						Mockery::mock(
+							\WC_Product::class,
+							[
+								'get_id'                => 1,
+								'get_title'             => '',
+								'get_price'             => 0,
+								'get_average_rating'    => 0.0,
+								'get_rating_count'      => 0,
+								'get_permalink'         => '',
+								'get_short_description' => '',
+								'get_image_id'          => 50,
+								'get_gallery_image_ids' => [
+									51,
+									59,
+									60,
+								],
+							]
+						),
 
-						\Mockery::mock(\WC_Product::class, [
-							'get_id' => 2,
-							'get_title' => '',
-							'get_price' => 0,
-							'get_average_rating' => 0.0,
-							'get_rating_count' => 0,
-							'get_permalink' => '',
-							'get_short_description' => '',
-							'get_image_id' => null,
-							'get_gallery_image_ids' => [],
-						]),
+						Mockery::mock(
+							\WC_Product::class,
+							[
+								'get_id'                => 2,
+								'get_title'             => '',
+								'get_price'             => 0,
+								'get_average_rating'    => 0.0,
+								'get_rating_count'      => 0,
+								'get_permalink'         => '',
+								'get_short_description' => '',
+								'get_image_id'          => null,
+								'get_gallery_image_ids' => [],
+							]
+						),
 
-						\Mockery::mock(\WC_Product::class, [
-							'get_id' => 3,
-							'get_title' => '',
-							'get_price' => 0,
-							'get_average_rating' => 0.0,
-							'get_rating_count' => 0,
-							'get_permalink' => '',
-							'get_short_description' => '',
-							'get_image_id' => null,
-							'get_gallery_image_ids' => [
-								72,
-								null,
-								76,
-							],
-						]),
+						Mockery::mock(
+							\WC_Product::class,
+							[
+								'get_id'                => 3,
+								'get_title'             => '',
+								'get_price'             => 0,
+								'get_average_rating'    => 0.0,
+								'get_rating_count'      => 0,
+								'get_permalink'         => '',
+								'get_short_description' => '',
+								'get_image_id'          => null,
+								'get_gallery_image_ids' => [
+									72,
+									null,
+									76,
+								],
+							]
+						),
 					];
 					$object->products      = $products;
 					$object->max_num_pages = 1;
@@ -141,20 +150,23 @@ class WooCommerce_Query extends TestCase {
 	 * @covers ::get_product_image_ids
 	 */
 	public function test_get_product_image_ids(): void {
-		$product = \Mockery::mock(\WC_Product::class, [
-			'get_id' => 1,
-			'get_title' => '',
-			'get_price' => 0,
-			'get_average_rating' => 0.0,
-			'get_rating_count' => 0,
-			'get_permalink' => '',
-			'get_short_description' => '',
-			'get_image_id' => 50,
-			'get_gallery_image_ids' => [
-				51,
-				59,
-			],
-		]);
+		$product = Mockery::mock(
+			\WC_Product::class,
+			[
+				'get_id'                => 1,
+				'get_title'             => '',
+				'get_price'             => 0,
+				'get_average_rating'    => 0.0,
+				'get_rating_count'      => 0,
+				'get_permalink'         => '',
+				'get_short_description' => '',
+				'get_image_id'          => 50,
+				'get_gallery_image_ids' => [
+					51,
+					59,
+				],
+			]
+		);
 
 		$ids = $this->call_private_method( [ $this->instance, 'get_product_image_ids' ], [ $product ] );
 
@@ -165,20 +177,23 @@ class WooCommerce_Query extends TestCase {
 	 * @covers ::get_product_image_ids
 	 */
 	public function test_get_product_image_ids_invalid(): void {
-		$product = \Mockery::mock(\WC_Product::class, [
-			'get_id' => 1,
-			'get_title' => '',
-			'get_price' => 0,
-			'get_average_rating' => 0.0,
-			'get_rating_count' => 0,
-			'get_permalink' => '',
-			'get_short_description' => '',
-			'get_image_id' => null,
-			'get_gallery_image_ids' => [
-				null,
-				27,
-			],
-		]);
+		$product = Mockery::mock(
+			\WC_Product::class,
+			[
+				'get_id'                => 1,
+				'get_title'             => '',
+				'get_price'             => 0,
+				'get_average_rating'    => 0.0,
+				'get_rating_count'      => 0,
+				'get_permalink'         => '',
+				'get_short_description' => '',
+				'get_image_id'          => null,
+				'get_gallery_image_ids' => [
+					null,
+					27,
+				],
+			]
+		);
 
 		$ids = $this->call_private_method( [ $this->instance, 'get_product_image_ids' ], [ $product ] );
 
