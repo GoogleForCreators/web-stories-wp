@@ -357,7 +357,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @param string $url Permalink to check.
 	 * @return WP_Post|null Post object on success, null otherwise.
 	 */
-	private function url_to_post( $url ): ?WP_Post {
+	private function url_to_post( $url ): ?WP_Post { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$post          = null;
 		$switched_blog = false;
 

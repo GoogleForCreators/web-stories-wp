@@ -255,7 +255,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * @param string $html HTML document as string.
 	 * @return string Processed HTML document.
 	 */
-	protected function replace_in_dom( string $html ): string {
+	protected function replace_in_dom( string $html ): string { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$site_url = site_url();
 
 		// See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin.
