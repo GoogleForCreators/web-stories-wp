@@ -119,8 +119,7 @@ export const Title = styled(Headline).attrs({
 `;
 
 // All body text
-export const DetailCopy = styled(Text.Paragraph).attrs({
-  forwardedAs: 'span',
+export const DetailCopy = styled(Text.Span).attrs({
   size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.inverted.fg.primary};

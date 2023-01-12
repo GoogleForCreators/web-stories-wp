@@ -72,8 +72,7 @@ const ButtonContainer = styled.div`
   gap: 8px;
 `;
 
-const Label = styled(Text.Paragraph).attrs({
-  forwardedAs: 'label',
+const Label = styled(Text.Label).attrs({
   size: TextSize.Small,
 })`
   display: inline-block;

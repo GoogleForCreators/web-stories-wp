@@ -68,8 +68,7 @@ const Token = styled.span`
   height: 32px;
 `;
 
-const TokenText = styled(Text.Paragraph).attrs({
-  forwardedAs: 'span',
+const TokenText = styled(Text.Span).attrs({
   size: TextSize.Small,
 })`
   padding-left: 10px;

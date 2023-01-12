@@ -175,8 +175,7 @@ export const LayerDescription = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-export const LayerText = styled(Text.Paragraph).attrs({
-  forwardedAs: 'span',
+export const LayerText = styled(Text.Span).attrs({
   size: TextSize.Small,
 })`
   color: inherit;

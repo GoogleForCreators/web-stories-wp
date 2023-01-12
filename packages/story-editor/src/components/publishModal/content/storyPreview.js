@@ -22,7 +22,7 @@ import {
   Headline,
   Text,
   TextSize,
-  MEDIA_VARIANTS,
+  MediaVariant,
 } from '@googleforcreators/design-system';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
@@ -307,7 +307,7 @@ const StoryPreview = () => {
                   ariaLabel={__('Poster image', 'web-stories')}
                   onChangeErrorText={posterErrorMessage}
                   imgProps={featuredMedia}
-                  variant={MEDIA_VARIANTS.NONE}
+                  variant={MediaVariant.None}
                   menuOptions={menuOptions}
                   cropParams={{
                     width: 640,

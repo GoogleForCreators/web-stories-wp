@@ -25,7 +25,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { theme, TextSize } from '../../../theme';
 import { MediaInput as DefaultMediaInput } from '..';
 import { shortDropDownOptions } from '../../../storybookUtils/sampleData';
-import { MEDIA_VARIANTS } from '../constants';
+import { MediaVariant } from '../types';
 import { Headline } from '../../typography/headline';
 import { Text } from '../../typography/text';
 import image from './image.jpg';
@@ -78,7 +78,7 @@ export const _default = () => (
           </Text>
           <MediaInput
             value={image}
-            variant={MEDIA_VARIANTS.RECTANGLE}
+            variant={MediaVariant.Rectangle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -90,7 +90,7 @@ export const _default = () => (
           </Text>
           <CircleMedia
             value={image}
-            variant={MEDIA_VARIANTS.CIRCLE}
+            variant={MediaVariant.Circle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -105,7 +105,7 @@ export const _default = () => (
           <MediaInput
             value={image}
             canUpload={false}
-            variant={MEDIA_VARIANTS.RECTANGLE}
+            variant={MediaVariant.Rectangle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -118,7 +118,7 @@ export const _default = () => (
           <CircleMedia
             value={image}
             canUpload={false}
-            variant={MEDIA_VARIANTS.CIRCLE}
+            variant={MediaVariant.Circle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -132,7 +132,7 @@ export const _default = () => (
           </Text>
           <MediaInput
             value={null}
-            variant={MEDIA_VARIANTS.RECTANGLE}
+            variant={MediaVariant.Rectangle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -144,7 +144,7 @@ export const _default = () => (
           </Text>
           <CircleMedia
             value={null}
-            variant={MEDIA_VARIANTS.CIRCLE}
+            variant={MediaVariant.Circle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -158,7 +158,7 @@ export const _default = () => (
           </Text>
           <MediaInput
             value={image}
-            variant={MEDIA_VARIANTS.RECTANGLE}
+            variant={MediaVariant.Rectangle}
             {...mediaProps}
           />
         </div>
@@ -169,7 +169,7 @@ export const _default = () => (
           </Text>
           <CircleMedia
             value={image}
-            variant={MEDIA_VARIANTS.CIRCLE}
+            variant={MediaVariant.Circle}
             {...mediaProps}
           />
         </div>

@@ -89,8 +89,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   HEADING_LEVEL: __('Heading Level', 'web-stories'),
 };
 
-const StyledKbd = styled(Text.Paragraph).attrs({
-  forwardedAs: 'kbd',
+const StyledKbd = styled(Text.Kbd).attrs({
   size: TextSize.Small,
 })`
   color: inherit;

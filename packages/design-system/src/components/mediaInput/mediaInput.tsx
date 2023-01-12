@@ -39,7 +39,7 @@ import { Placement, Popup } from '../popup';
 import type { Theme } from '../../theme';
 import useForwardedRef from '../../utils/useForwardedRef';
 import Landscape from './icons/landscape.svg';
-import { MediaVariant } from './constants';
+import { MediaVariant } from './types';
 
 const MediaRectangle = styled.section`
   width: 100%;

@@ -84,8 +84,7 @@ export const Cta = styled.div`
   margin: 0;
 `;
 
-export const CheckboxCtaLabel = styled(Text.Paragraph).attrs({
-  forwardedAs: 'label',
+export const CheckboxCtaLabel = styled(Text.Label).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.linkNormal};

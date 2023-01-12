@@ -104,8 +104,7 @@ const Wrapper = styled.div`
   width: 60px;
 `;
 
-const StyledText = styled(Text.Paragraph).attrs({
-  forwardedAs: 'span',
+const StyledText = styled(Text.Span).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.border.defaultActive};

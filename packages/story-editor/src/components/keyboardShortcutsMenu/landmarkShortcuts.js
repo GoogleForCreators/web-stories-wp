@@ -39,9 +39,8 @@ const Landmark = styled.div`
   flex-direction: column;
 `;
 
-const Label = styled(Text.Paragraph).attrs({
+const Label = styled(Text.Span).attrs({
   size: TextSize.XSmall,
-  forwardedAs: 'span',
 })`
   text-align: center;
   margin-top: 8px;

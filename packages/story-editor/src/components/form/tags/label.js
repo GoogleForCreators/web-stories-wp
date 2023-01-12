@@ -19,8 +19,7 @@
 import styled from 'styled-components';
 import { Text, TextSize } from '@googleforcreators/design-system';
 
-export default styled(Text.Paragraph).attrs({
-  forwardedAs: 'label',
+export default styled(Text.Label).attrs({
   size: TextSize.Small,
 })`
   display: inline-block;

@@ -51,8 +51,7 @@ const Container = styled.div`
   display: block;
 `;
 
-const Label = styled(Text.Paragraph).attrs({
-  forwardedAs: 'label',
+const Label = styled(Text.Label).attrs({
   size: TextSize.Small,
 })`
   margin: 0 12px;

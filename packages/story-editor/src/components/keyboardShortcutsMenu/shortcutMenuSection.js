@@ -59,9 +59,8 @@ const ListRow = styled.div`
   }
 `;
 
-const Label = styled(Text.Paragraph).attrs({
+const Label = styled(Text.Span).attrs({
   size: TextSize.Small,
-  forwardedAs: 'span',
 })`
   display: inline-block;
   color: ${({ theme }) => theme.colors.fg.secondary};

@@ -72,8 +72,7 @@ const MuteWrapper = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 100px;
 `;
-const Duration = styled(Text.Paragraph).attrs({
-  forwardedAs: 'span',
+const Duration = styled(Text.Span).attrs({
   size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};

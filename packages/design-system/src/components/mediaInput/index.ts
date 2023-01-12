@@ -15,4 +15,4 @@
  */
 
 export { default as MediaInput } from './mediaInput';
-export * from './constants';
+export * from './types';
