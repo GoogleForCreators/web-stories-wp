@@ -17,9 +17,11 @@
 /**
  * External dependencies
  */
+import { __ } from '@googleforcreators/i18n';
 import { forwardRef } from '@googleforcreators/react';
 import type { ComponentPropsWithoutRef, ForwardedRef } from 'react';
 import styled, { css } from 'styled-components';
+
 /**
  * Internal dependencies
  */
@@ -40,7 +42,7 @@ const Border = styled.div(
   `
 );
 
-const StyledCheckmark = styled(Checkmark)`
+const StyledCheckmark = styled(Checkmark).attrs({ role: 'img' })`
   height: auto;
   width: 32px;
   color: ${({ theme }) => theme.colors.fg.primary};
@@ -105,7 +107,7 @@ const Checkbox = forwardRef(
         aria-checked={checked}
         {...props}
       />
-      {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
+      {checked && <StyledCheckmark aria-label={__('Checked', 'web-stories')} />}
       <Border />
     </CheckboxContainer>
   )
