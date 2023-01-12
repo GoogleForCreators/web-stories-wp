@@ -28,12 +28,12 @@ import { noop } from './noop';
  * mouse down events
  */
 function useMouseDownOutsideRef<E extends HTMLElement>(
-  onMouseDownOutside: (evt: Event) => void = noop
+  onMouseDownOutside: (evt: MouseEvent) => void = noop
 ) {
   const targetRef = useRef<Node | null>(null);
   // store handler outside of useCallback so we have the
   // proper references when removing listeners
-  const handleDocumentClickCaptureRef = useRef<(evt: Event) => void>(noop);
+  const handleDocumentClickCaptureRef = useRef<(evt: MouseEvent) => void>(noop);
   const onMouseDownOutsideRef = useRef(onMouseDownOutside);
   onMouseDownOutsideRef.current = onMouseDownOutside;
 
@@ -49,7 +49,7 @@ function useMouseDownOutsideRef<E extends HTMLElement>(
 
     // create and attach listeners with new node
     if (node) {
-      handleDocumentClickCaptureRef.current = (evt: Event) => {
+      handleDocumentClickCaptureRef.current = (evt: MouseEvent) => {
         if (
           node === evt.target ||
           (evt.target instanceof Node && node.contains(evt.target))
