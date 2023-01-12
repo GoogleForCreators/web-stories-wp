@@ -18,8 +18,11 @@
  * Takes an array of entries and returns an array of unique
  * entries based on the supplied key value for each entry
  */
-function uniqueEntriesByKey(entries: Record<string, unknown>[], key: string) {
-  const map = new Map<unknown, Record<string, unknown>>();
+function uniqueEntriesByKey<
+  O extends Record<string, unknown>,
+  K extends keyof O
+>(entries: O[], key: K) {
+  const map = new Map<unknown, O>();
   entries.forEach((entry) => {
     map.set(entry[key], entry);
   });
