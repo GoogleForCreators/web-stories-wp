@@ -18,7 +18,6 @@
  * External dependencies
  */
 import type { Dispatch } from 'react';
-import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -26,6 +25,7 @@ import type { Element } from '@googleforcreators/elements';
 import type {
   AddAnimationsProps,
   AddElementsAcrossPagesProps,
+  AddElementProps,
   AddElementsProps,
   AddGroupProps,
   AddPageProps,
@@ -116,9 +116,6 @@ const addElements =
       payload: { elements, pageId, updateSelection },
     });
 
-interface AddElementProps extends Omit<AddElementsProps, 'elements'> {
-  element: Element;
-}
 const addElement =
   (dispatch: DispatchType) =>
   ({ element, pageId, updateSelection }: AddElementProps) =>

@@ -30,8 +30,6 @@ use WP_UnitTest_Factory;
  */
 class Discovery extends DependencyInjectedTestCase {
 
-	private \Google\Web_Stories\Discovery $instance;
-
 	/**
 	 * User ID.
 	 */
@@ -51,6 +49,8 @@ class Discovery extends DependencyInjectedTestCase {
 	 * Archive page ID.
 	 */
 	protected static int $archive_page_id;
+
+	private \Google\Web_Stories\Discovery $instance;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(

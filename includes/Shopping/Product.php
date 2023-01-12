@@ -116,6 +116,124 @@ class Product implements JsonSerializable {
 	}
 
 	/**
+	 * Get id.
+	 *
+	 * @since 1.21.0
+	 */
+	public function get_id(): string {
+		return $this->id;
+	}
+
+	/**
+	 * Get title.
+	 *
+	 * @since 1.21.0
+	 */
+	public function get_title(): string {
+		return $this->title;
+	}
+
+	/**
+	 * Get brand.
+	 *
+	 * @since 1.21.0
+	 */
+	public function get_brand(): string {
+		return $this->brand;
+	}
+
+	/**
+	 * Get price.
+	 *
+	 * @since 1.21.0
+	 */
+	public function get_price(): float {
+		return $this->price;
+	}
+
+	/**
+	 * Get currency.
+	 *
+	 * @since 1.21.0
+	 */
+	public function get_price_currency(): string {
+		return $this->price_currency;
+	}
+
+	/**
+	 * Get images property.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @return array{url: string, alt: string}[]
+	 */
+	public function get_images(): array {
+		return $this->images;
+	}
+
+	/**
+	 * Get details.
+	 *
+	 * @since 1.21.0
+	 */
+	public function get_details(): string {
+		return $this->details;
+	}
+
+	/**
+	 * Get url.
+	 *
+	 * @since 1.21.0
+	 */
+	public function get_url(): string {
+		return $this->url;
+	}
+
+	/**
+	 * Get rating.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @return array{rating_value?: float, review_count?: int, review_url?: string}
+	 */
+	public function get_aggregate_rating(): ?array {
+		return $this->aggregate_rating;
+	}
+
+	/**
+	 * Retrieves the response data for JSON serialization.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @return mixed Any JSON-serializable value.
+	 */
+	#[\ReturnTypeWillChange]
+	public function jsonSerialize() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
+		$rating = $this->get_aggregate_rating();
+
+		$data = [
+			'productId'            => $this->get_id(),
+			'productTitle'         => $this->get_title(),
+			'productDetails'       => $this->get_details(),
+			'productBrand'         => $this->get_brand(),
+			'productUrl'           => $this->get_url(),
+			'productImages'        => $this->get_images(),
+			'productPrice'         => $this->get_price(),
+			'productPriceCurrency' => $this->get_price_currency(),
+		];
+
+		if ( $rating ) {
+			$data['aggregateRating'] = [
+				'ratingValue' => $rating['rating_value'],
+				'reviewCount' => $rating['review_count'],
+				'reviewUrl'   => $rating['review_url'],
+			];
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Convert array to object properties.
 	 *
 	 * @since 1.26.0
@@ -247,123 +365,5 @@ class Product implements JsonSerializable {
 	 */
 	protected function set_aggregate_rating( array $aggregate_rating ): void {
 		$this->aggregate_rating = $aggregate_rating;
-	}
-
-	/**
-	 * Get id.
-	 *
-	 * @since 1.21.0
-	 */
-	public function get_id(): string {
-		return $this->id;
-	}
-
-	/**
-	 * Get title.
-	 *
-	 * @since 1.21.0
-	 */
-	public function get_title(): string {
-		return $this->title;
-	}
-
-	/**
-	 * Get brand.
-	 *
-	 * @since 1.21.0
-	 */
-	public function get_brand(): string {
-		return $this->brand;
-	}
-
-	/**
-	 * Get price.
-	 *
-	 * @since 1.21.0
-	 */
-	public function get_price(): float {
-		return $this->price;
-	}
-
-	/**
-	 * Get currency.
-	 *
-	 * @since 1.21.0
-	 */
-	public function get_price_currency(): string {
-		return $this->price_currency;
-	}
-
-	/**
-	 * Get images property.
-	 *
-	 * @since 1.21.0
-	 *
-	 * @return array{url: string, alt: string}[]
-	 */
-	public function get_images(): array {
-		return $this->images;
-	}
-
-	/**
-	 * Get details.
-	 *
-	 * @since 1.21.0
-	 */
-	public function get_details(): string {
-		return $this->details;
-	}
-
-	/**
-	 * Get url.
-	 *
-	 * @since 1.21.0
-	 */
-	public function get_url(): string {
-		return $this->url;
-	}
-
-	/**
-	 * Get rating.
-	 *
-	 * @since 1.21.0
-	 *
-	 * @return array{rating_value?: float, review_count?: int, review_url?: string}
-	 */
-	public function get_aggregate_rating(): ?array {
-		return $this->aggregate_rating;
-	}
-
-	/**
-	 * Retrieves the response data for JSON serialization.
-	 *
-	 * @since 1.21.0
-	 *
-	 * @return mixed Any JSON-serializable value.
-	 */
-	#[\ReturnTypeWillChange]
-	public function jsonSerialize() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
-		$rating = $this->get_aggregate_rating();
-
-		$data = [
-			'productId'            => $this->get_id(),
-			'productTitle'         => $this->get_title(),
-			'productDetails'       => $this->get_details(),
-			'productBrand'         => $this->get_brand(),
-			'productUrl'           => $this->get_url(),
-			'productImages'        => $this->get_images(),
-			'productPrice'         => $this->get_price(),
-			'productPriceCurrency' => $this->get_price_currency(),
-		];
-
-		if ( $rating ) {
-			$data['aggregateRating'] = [
-				'ratingValue' => $rating['rating_value'],
-				'reviewCount' => $rating['review_count'],
-				'reviewUrl'   => $rating['review_url'],
-			];
-		}
-
-		return $data;
 	}
 }

@@ -33,14 +33,14 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
 class Embed_Controller extends DependencyInjectedRestTestCase {
+	public const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
+	public const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
+	public const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
+
 	protected static int $story_id;
 	protected static int $subscriber;
 	protected static int $editor;
 	protected static int $admin;
-
-	public const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
-	public const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
-	public const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -145,14 +145,6 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
-	}
-
-	protected function dispatch_request( ?string $url = null ): WP_REST_Response {
-		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
-		if ( null !== $url ) {
-			$request->set_param( 'url', $url );
-		}
-		return rest_get_server()->dispatch( $request );
 	}
 
 	public function test_missing_param(): void {
@@ -352,5 +344,13 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	protected function dispatch_request( ?string $url = null ): WP_REST_Response {
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
+		if ( null !== $url ) {
+			$request->set_param( 'url', $url );
+		}
+		return rest_get_server()->dispatch( $request );
 	}
 }

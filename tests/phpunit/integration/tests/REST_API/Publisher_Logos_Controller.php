@@ -16,8 +16,6 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Publisher_Logos_Controller
  */
 class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
-	protected WP_REST_Server $server;
-
 	protected static int $admin;
 
 	protected static int $editor;
@@ -25,6 +23,8 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	protected static int $attachment_id_1;
 
 	protected static int $attachment_id_2;
+
+	protected WP_REST_Server $server;
 
 	/**
 	 * Test instance.

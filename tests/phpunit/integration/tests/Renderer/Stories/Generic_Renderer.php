@@ -34,16 +34,16 @@ use WP_UnitTest_Factory;
 class Generic_Renderer extends TestCase {
 
 	/**
+	 * Story post ID.
+	 */
+	private static int $story_id;
+
+	/**
 	 * Stories mock object.
 	 *
 	 * @var Story_Query & MockObject
 	 */
 	private $story_query;
-
-	/**
-	 * Story post ID.
-	 */
-	private static int $story_id;
 
 	/**
 	 * Runs once before any test in the class run.

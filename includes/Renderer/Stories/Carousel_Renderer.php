@@ -77,21 +77,6 @@ class Carousel_Renderer extends Renderer {
 	}
 
 	/**
-	 * Get Carousel settings.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return array<string,array<string,bool>> Carousel settings.
-	 */
-	protected function get_carousel_settings(): array {
-		return [
-			'config' => [
-				'isRTL' => is_rtl(),
-			],
-		];
-	}
-
-	/**
 	 * Renders the stories output for given attributes.
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
@@ -170,6 +155,21 @@ class Carousel_Renderer extends Renderer {
 		 * @param string $content Stories content.
 		 */
 		return apply_filters( 'web_stories_carousel_renderer_stories_content', $content );
+	}
+
+	/**
+	 * Get Carousel settings.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array<string,array<string,bool>> Carousel settings.
+	 */
+	protected function get_carousel_settings(): array {
+		return [
+			'config' => [
+				'isRTL' => is_rtl(),
+			],
+		];
 	}
 
 }

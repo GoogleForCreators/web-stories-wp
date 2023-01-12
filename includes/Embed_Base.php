@@ -139,33 +139,6 @@ abstract class Embed_Base extends Service_Base {
 	}
 
 	/**
-	 * Return an array of default attributes.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return array<string, string|int> Default attributes.
-	 */
-	protected function default_attrs(): array {
-		$attrs = [
-			'align'  => 'none',
-			'height' => 600,
-			'poster' => '',
-			'url'    => '',
-			'title'  => '',
-			'width'  => 360,
-		];
-
-		/**
-		 * Filters settings passed to the web stories embed.
-		 *
-		 * @since 1.1.0
-		 *
-		 * @param array $attrs Array of settings passed to web stories embed.
-		 */
-		return apply_filters( 'web_stories_embed_default_attributes', $attrs );
-	}
-
-	/**
 	 * Renders an embed with given attributes.
 	 *
 	 * @since 1.1.0
@@ -198,6 +171,33 @@ abstract class Embed_Base extends Service_Base {
 		}
 
 		return $renderer->render( $attributes );
+	}
+
+	/**
+	 * Return an array of default attributes.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return array<string, string|int> Default attributes.
+	 */
+	protected function default_attrs(): array {
+		$attrs = [
+			'align'  => 'none',
+			'height' => 600,
+			'poster' => '',
+			'url'    => '',
+			'title'  => '',
+			'width'  => 360,
+		];
+
+		/**
+		 * Filters settings passed to the web stories embed.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param array $attrs Array of settings passed to web stories embed.
+		 */
+		return apply_filters( 'web_stories_embed_default_attributes', $attrs );
 	}
 
 }

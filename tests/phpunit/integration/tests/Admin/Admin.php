@@ -33,11 +33,6 @@ use WP_UnitTest_Factory;
 class Admin extends DependencyInjectedTestCase {
 
 	/**
-	 * Settings for test.
-	 */
-	private Settings $settings;
-
-	/**
 	 * Admin user for test.
 	 */
 	protected static int $admin_id;
@@ -51,6 +46,16 @@ class Admin extends DependencyInjectedTestCase {
 	 * Post ID.
 	 */
 	protected static int $post_id;
+
+	/**
+	 * Settings for test.
+	 */
+	private Settings $settings;
+
+	/**
+	 * Test instance.
+	 */
+	private \Google\Web_Stories\Admin\Admin $instance;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 
@@ -83,11 +88,6 @@ class Admin extends DependencyInjectedTestCase {
 
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
-
-	/**
-	 * Test instance.
-	 */
-	private \Google\Web_Stories\Admin\Admin $instance;
 
 	public function set_up(): void {
 		parent::set_up();
