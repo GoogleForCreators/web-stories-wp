@@ -269,7 +269,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param array{node_type?: int, node_name?: string, parent_name?: string} $error     Validation error being sanitized.
 	 * @return null|bool Whether sanitized.
 	 */
-	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
+	public function filter_amp_validation_error_sanitized( ?bool $sanitized, array $error ): ?bool {
 		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
 			isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) &&
@@ -308,7 +308,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
 	 * @return bool|mixed Whether AMP-to-AMP is excluded.
 	 */
-	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
+	public function filter_amp_to_amp_linking_element_excluded( $excluded, string $url, array $rel, DOMElement $element ) {
 		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
 			return true;
 		}
@@ -331,7 +331,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param int        $post    Post ID.
 	 * @return bool|mixed Whether post should be skipped from AMP.
 	 */
-	public function filter_amp_skip_post( $skipped, $post ) {
+	public function filter_amp_skip_post( $skipped, int $post ) {
 		// This is the opposite to the `AMP__VERSION >= WEBSTORIES_AMP_VERSION` check in the HTML renderer.
 		if (
 			$this->story_post_type->get_slug() === get_post_type( $post )
@@ -418,7 +418,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param int $post_id Post ID for Validated URL Post.
 	 * @return string|null Post type or null if validated URL is not for a singular post.
 	 */
-	protected function get_validated_url_post_type( $post_id ): ?string {
+	protected function get_validated_url_post_type( int $post_id ): ?string {
 		if ( empty( $post_id ) ) {
 			return null;
 		}

@@ -43,10 +43,9 @@ class Mock_Product {
 	/**
 	 * Pulls a prop from the data array if it exists
 	 *
-	 * @param string $prop
 	 * @return mixed
 	 */
-	public function get_prop( $prop ) {
+	public function get_prop( string $prop ) {
 		$value = null;
 
 		if ( \array_key_exists( $prop, $this->data ) ) {
@@ -56,8 +55,6 @@ class Mock_Product {
 		return $value;
 	}
 
-	/**
-	 */
 	public function get_id(): ?int {
 		/**
 		 * ID
@@ -69,8 +66,6 @@ class Mock_Product {
 		return $id;
 	}
 
-	/**
-	 */
 	public function get_image_id(): ?int {
 		/**
 		 * Image id.

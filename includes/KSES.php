@@ -122,7 +122,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @phpstan-return ($data is array<T> ? array<T> : mixed)
 	 */
-	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
+	public function filter_insert_post_data( $data, array $postarr, array $unsanitized_postarr ) {
 		if ( ! \is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
 			return $data;
 		}
@@ -206,7 +206,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param string $css A string of CSS rules.
 	 * @return string Filtered string of CSS rules.
 	 */
-	public function safecss_filter_attr( $css ): string {
+	public function safecss_filter_attr( string $css ): string {
 		$css = wp_kses_no_null( $css );
 		$css = str_replace( [ "\n", "\r", "\t" ], '', $css );
 
@@ -748,9 +748,9 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param string $post_content Post content.
 	 * @return string Filtered post content.
 	 */
-	public function filter_content_save_pre_before_kses( $post_content ): string {
+	public function filter_content_save_pre_before_kses( string $post_content ): string {
 		return (string) preg_replace_callback(
-			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
+			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style="(?P<styles>[^"]*)"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
 			static fn( $matches ) => $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'],
 			$post_content
 		);
@@ -764,9 +764,9 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param string $post_content Post content.
 	 * @return string Filtered post content.
 	 */
-	public function filter_content_save_pre_after_kses( $post_content ): string {
+	public function filter_content_save_pre_after_kses( string $post_content ): string {
 		return (string) preg_replace_callback(
-			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
+			'/ data-temp-style="(?P<styles>[^"]*)"/',
 			function ( $matches ) {
 				$styles = str_replace( '&quot;', '\"', $matches['styles'] );
 				return sprintf( ' style="%s"', esc_attr( $this->safecss_filter_attr( wp_kses_stripslashes( $styles ) ) ) );
@@ -867,7 +867,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param array<string,bool> $value An array of attributes.
 	 * @return array<string,bool> The array of attributes with global attributes added.
 	 */
-	protected function add_global_attributes( $value ): array {
+	protected function add_global_attributes( array $value ): array {
 		$global_attributes = [
 			'aria-describedby'    => true,
 			'aria-details'        => true,

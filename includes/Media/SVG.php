@@ -166,7 +166,7 @@ class SVG extends Service_Base {
 	 * @param string $value List of allowed file types.
 	 * @return string List of allowed file types.
 	 */
-	public function filter_list_of_allowed_filetypes( $value ): string {
+	public function filter_list_of_allowed_filetypes( string $value ): string {
 		$filetypes = explode( ' ', $value );
 		if ( ! \in_array( self::EXT, $filetypes, true ) ) {
 			$filetypes[] = self::EXT;
@@ -274,7 +274,7 @@ class SVG extends Service_Base {
 	 *
 	 * @phpstan-param array{ext?: string, type?: string, proper_filename?: bool} $wp_check_filetype_and_ext
 	 */
-	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ): array {
+	public function wp_check_filetype_and_ext( array $wp_check_filetype_and_ext, string $file, string $filename, array $mimes, $real_mime ): array {
 		if ( 'image/svg' === $real_mime ) {
 			$wp_check_filetype_and_ext = [
 				'ext'             => self::EXT,

@@ -160,7 +160,7 @@ class WooCommerce_Query implements Product_Query {
 	 * @param \WC_Product $product Product.
 	 * @return int[]
 	 */
-	protected function get_product_image_ids( $product ): array {
+	protected function get_product_image_ids( \WC_Product $product ): array {
 		$product_image_ids = $product->get_gallery_image_ids();
 		array_unshift( $product_image_ids, $product->get_image_id() );
 		$product_image_ids = array_map( 'absint', $product_image_ids );

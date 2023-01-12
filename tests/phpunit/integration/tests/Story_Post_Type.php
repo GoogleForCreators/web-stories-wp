@@ -48,9 +48,6 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 	private \Google\Web_Stories\Settings $settings;
 
-	/**
-	 * @param WP_UnitTest_Factory $factory
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
