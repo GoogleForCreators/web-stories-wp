@@ -302,13 +302,13 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param bool|mixed $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
-	 * @param string     $url      URL considered for exclusion.
-	 * @param string[]   $rel      Link relations.
-	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
+	 * @param bool|mixed      $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
+	 * @param string          $url      URL considered for exclusion.
+	 * @param string[]        $rel      Link relations.
+	 * @param DOMElement|null $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
 	 * @return bool|mixed Whether AMP-to-AMP is excluded.
 	 */
-	public function filter_amp_to_amp_linking_element_excluded( $excluded, string $url, array $rel, DOMElement $element ) {
+	public function filter_amp_to_amp_linking_element_excluded( $excluded, string $url, array $rel, ?DOMElement $element ) {
 		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
 			return true;
 		}

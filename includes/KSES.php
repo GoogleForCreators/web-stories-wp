@@ -750,7 +750,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 */
 	public function filter_content_save_pre_before_kses( string $post_content ): string {
 		return (string) preg_replace_callback(
-			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style="(?P<styles>[^"]*)"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
+			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
 			static fn( $matches ) => $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'],
 			$post_content
 		);
@@ -766,7 +766,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 */
 	public function filter_content_save_pre_after_kses( string $post_content ): string {
 		return (string) preg_replace_callback(
-			'/ data-temp-style="(?P<styles>[^"]*)"/',
+			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
 			function ( $matches ) {
 				$styles = str_replace( '&quot;', '\"', $matches['styles'] );
 				return sprintf( ' style="%s"', esc_attr( $this->safecss_filter_attr( wp_kses_stripslashes( $styles ) ) ) );
