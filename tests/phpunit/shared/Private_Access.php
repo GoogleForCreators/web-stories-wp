@@ -37,8 +37,8 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 *
-	 * @param callable $callable Object instance or class string to call the method of.
-	 * @param array    $args     Optional. Array of arguments to pass to the method.
+	 * @param callable|array $callable Object instance or class string to call the method of.
+	 * @param array          $args     Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
 	 *
 	 * @template C
@@ -48,7 +48,7 @@ trait Private_Access {
 	 * @phpstan-param array<A> $args
 	 * @phpstan-return C
 	 */
-	protected function call_private_method( callable $callable, array $args = [] ) {
+	protected function call_private_method( $callable, array $args = [] ) {
 		$method = ( new ReflectionClass( $callable[0] ) )->getMethod( $callable[1] );
 		$method->setAccessible( true );
 		return $method->invokeArgs( $callable[0], $args );
@@ -59,8 +59,8 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the class could not be reflected upon.
 	 *
-	 * @param callable $callable Object instance or class string to call the method of.
-	 * @param array    $args     Optional. Array of arguments to pass to the method.
+	 * @param callable|array $callable Object instance or class string to call the method of.
+	 * @param array          $args     Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
 	 *
 	 * @template C
@@ -70,7 +70,7 @@ trait Private_Access {
 	 * @phpstan-param callable(A): C $callable
 	 * @phpstan-return C
 	 */
-	protected function call_private_static_method( callable $callable, array $args = [] ) {
+	protected function call_private_static_method( $callable, array $args = [] ) {
 		$method = ( new ReflectionClass( $callable[0] ) )->getMethod( $callable[1] );
 		$method->setAccessible( true );
 		return $method->invokeArgs( null, $args );
