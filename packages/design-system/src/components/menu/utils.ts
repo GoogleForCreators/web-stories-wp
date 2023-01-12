@@ -37,7 +37,7 @@ export function getGroups(
     return nestedOptions
       .map((group) => ({
         ...group,
-        options: group.options.filter(isValid),
+        options: (group.options || []).filter(isValid),
       }))
       .filter(({ options }) => options.length > 0);
   }

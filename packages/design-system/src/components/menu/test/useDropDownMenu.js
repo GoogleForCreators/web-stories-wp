@@ -28,14 +28,14 @@ import {
   nestedDropDownOptions,
 } from '../../../testUtils/sampleData';
 import useDropDownMenu from '../useDropDownMenu';
-import { getOptions } from '../utils';
+import { getGroups } from '../utils';
 
 describe('useDropDownMenu()', () => {
   it('should have the default options initially selected', () => {
     const { result } = renderHook(() =>
       useDropDownMenu({
         handleMenuItemSelect: () => {},
-        options: getOptions(basicDropDownOptions),
+        groups: getGroups(basicDropDownOptions),
         listRef: { current: null },
         onDismissMenu: () => {},
       })
@@ -50,7 +50,7 @@ describe('useDropDownMenu()', () => {
       useDropDownMenu({
         activeValue: basicDropDownOptions[2].value,
         handleMenuItemSelect: () => {},
-        options: getOptions(basicDropDownOptions),
+        groups: getGroups(basicDropDownOptions),
         listRef: { current: null },
         onDismissMenu: () => {},
       })
@@ -65,7 +65,7 @@ describe('useDropDownMenu()', () => {
       useDropDownMenu({
         activeValue: 'dog-2',
         handleMenuItemSelect: () => {},
-        options: getOptions(nestedDropDownOptions),
+        groups: getGroups(nestedDropDownOptions),
         listRef: { current: null },
         onDismissMenu: () => {},
       })
