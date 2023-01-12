@@ -17,14 +17,9 @@
 /**
  * External dependencies
  */
-import type { ReactElement, SVGProps } from 'react';
+import type { ReactElement, SVGAttributes } from 'react';
 
-declare module 'icons/*.svg' {
-  const Icon: (props: SVGProps<SVGElement>) => ReactElement;
+declare module '*.svg' {
+  const Icon: (props: SVGAttributes<SVGElement>) => ReactElement;
   export default Icon;
-}
-
-declare module 'images/*.svg' {
-  const Image: (props: SVGProps<SVGElement>) => ReactElement;
-  export default Image;
 }
