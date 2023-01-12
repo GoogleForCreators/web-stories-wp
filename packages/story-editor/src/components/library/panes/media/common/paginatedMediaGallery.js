@@ -47,7 +47,7 @@ const ROOT_MARGIN = 300;
 
 const SHOW_LOADING_PILL_DELAY_MS = 1000;
 
-const StyledText = styled(Text.Paragraph)`
+const StyledText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
@@ -202,7 +202,7 @@ function PaginatedMediaGallery({
       </MediaGalleryContainer>
       {showLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
-          <StyledText forwardedAs="span" size={TextSize.Small}>
+          <StyledText size={TextSize.Small}>
             {__('Loading…', 'web-stories')}
           </StyledText>
         </MediaGalleryLoadingPill>

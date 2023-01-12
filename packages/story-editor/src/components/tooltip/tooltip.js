@@ -18,7 +18,7 @@
  * External dependencies
  */
 import {
-  BaseTooltip,
+  Tooltip as BaseTooltip,
   TooltipPropTypes,
   Placement,
 } from '@googleforcreators/design-system';

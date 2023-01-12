@@ -24,42 +24,10 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Text } from '../typography';
-import { themeHelpers, TextSize } from '../../theme';
+import { TextSize } from '../../theme';
 import { focusCSS } from '../../theme/helpers';
 import type { InputProps } from './types';
-
-const Container = styled.div`
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  min-width: 40px;
-`;
-
-const Label = styled(Text.Label)`
-  margin-bottom: 12px;
-  display: inline-block;
-`;
-
-const Hint = styled(Text.Paragraph)<{ hasError?: boolean }>`
-  display: inline-block;
-  margin-top: 12px;
-  color: ${({ hasError, theme }) =>
-    theme.colors.fg[hasError ? 'negative' : 'tertiary']};
-`;
-
-const Suffix = styled(Text.Span)`
-  background: transparent;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
-  white-space: nowrap;
-
-  svg {
-    width: 32px;
-    height: 32px;
-    margin: 2px -10px;
-    display: block;
-  }
-`;
+import { Container, Label, Suffix, BaseInput, Hint } from './styled';
 
 const InputContainer = styled.div<{
   focused: boolean;
@@ -95,49 +63,6 @@ const InputContainer = styled.div<{
     }
 
     ${styleOverride};
-  `
-);
-
-const BaseInput = styled.input<{ hasSuffix: boolean }>(
-  ({ hasSuffix, theme }) => css`
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    ${hasSuffix &&
-    css`
-      padding-right: 8px;
-    `}
-    background-color: inherit;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    color: ${theme.colors.fg.primary};
-
-    ${themeHelpers.expandPresetStyles({
-      preset: {
-        ...theme.typography.presets.paragraph[TextSize.Small],
-      },
-      theme,
-    })};
-
-    ::placeholder {
-      color: ${theme.colors.fg.tertiary};
-    }
-
-    :disabled {
-      color: ${theme.colors.fg.disable};
-      border-color: ${theme.colors.border.disable};
-
-      & ~ ${Suffix} {
-        color: ${theme.colors.fg.disable};
-      }
-    }
-    :focus {
-      box-shadow: none;
-    }
-    :active:enabled {
-      color: ${theme.colors.fg.primary};
-    }
   `
 );
 

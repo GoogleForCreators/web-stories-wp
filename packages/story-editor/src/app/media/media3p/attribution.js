@@ -45,7 +45,7 @@ const AttributionPill = styled.div`
   z-index: 9999;
 `;
 
-const Text = styled(DefaultText)`
+const Text = styled(DefaultText.Span)`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
@@ -119,9 +119,7 @@ export function CoverrAttribution() {
       aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
     >
       <AttributionPill aria-hidden>
-        <Text.Span size={TextSize.XSmall}>
-          {__('Powered by', 'web-stories')}
-        </Text.Span>
+        <Text size={TextSize.XSmall}>{__('Powered by', 'web-stories')}</Text>
         <CoverrLogo />
       </AttributionPill>
     </a>

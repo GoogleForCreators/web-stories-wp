@@ -28,7 +28,6 @@ import {
   ButtonType,
   ButtonVariant,
   Icons,
-  PLACEMENT,
   Placement,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
@@ -102,7 +101,7 @@ const Color = forwardRef(function Color(
     maxHeight = null,
     shouldCloseOnSelection = false,
     allowsSavedColorDeletion = true,
-    pickerPlacement = PLACEMENT.RIGHT_START,
+    pickerPlacement = Placement.Right_START,
     isInDesignMenu = false,
     hasInputs = true,
     width,

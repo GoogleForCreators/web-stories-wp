@@ -39,7 +39,7 @@ import {
   Swatch,
   Popup,
   Disclosure,
-  PLACEMENT,
+  Placement,
   CONTEXT_MENU_SKIP_ELEMENT,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
@@ -155,7 +155,7 @@ const ColorInput = forwardRef(function ColorInput(
     value = null,
     label = null,
     changedStyle,
-    pickerPlacement = PLACEMENT.RIGHT_START,
+    pickerPlacement = Placement.Right_START,
     isInDesignMenu = false,
     hasInputs = true,
     pickerProps,

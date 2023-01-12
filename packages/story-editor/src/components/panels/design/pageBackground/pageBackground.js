@@ -96,7 +96,7 @@ const ReplaceButton = styled(Button).attrs({
   margin-right: 8px;
 `;
 
-const Text = styled(DefaultText)`
+const Text = styled(DefaultText.Paragraph)`
   align-self: center;
   width: 55px;
 `;
@@ -250,9 +250,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
                 currentPageBackgroundColor={currentPageBackgroundColor}
               />
             </MediaWrapper>
-            <Text.Paragraph size={TextSize.Small}>
-              {__('Media', 'web-stories')}
-            </Text.Paragraph>
+            <Text size={TextSize.Small}>{__('Media', 'web-stories')}</Text>
             <RemoveButton
               aria-label={__('Detach background', 'web-stories')}
               onClick={removeAsBackground}

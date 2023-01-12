@@ -29,7 +29,7 @@ import {
   Text,
   TextSize,
   Icons,
-  PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 
 /**
@@ -205,7 +205,7 @@ function MediaPane(props) {
               selectedValue={mediaType?.toString() || FILTER_NONE}
               onMenuItemClick={onFilter}
               options={FILTERS}
-              placement={PLACEMENT.BOTTOM_START}
+              placement={Placement.Bottom_START}
             />
             {isSearching && media.length > 0 && (
               <SearchCount>

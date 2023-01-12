@@ -31,7 +31,7 @@ import {
   Menu,
   Popup,
   noop,
-  PLACEMENT,
+  Placement,
   Icons,
   Button,
   ButtonVariant,
@@ -121,7 +121,7 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
           height={32}
         />
       )}
-      <DefaultListItemLabelDisplayText forwardedAs="span" size={TextSize.Small}>
+      <DefaultListItemLabelDisplayText size={TextSize.Small}>
         {option.label}
       </DefaultListItemLabelDisplayText>
     </DefaultListItemInner>
@@ -205,7 +205,7 @@ function DropDownMenu({
       {(display || isMenuOpen) && (
         <Popup
           anchor={MenuButtonRef}
-          placement={PLACEMENT.BOTTOM_START}
+          placement={Placement.Bottom_START}
           isOpen={isMenuOpen}
         >
           <DropDownContainer>

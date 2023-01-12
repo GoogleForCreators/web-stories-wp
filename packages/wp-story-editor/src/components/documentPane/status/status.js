@@ -31,6 +31,7 @@ import {
   DropDown,
   themeHelpers,
   theme,
+  Text,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
@@ -58,16 +59,12 @@ const StyledListItem = styled.li`
     background-color: ${theme.colors.border.defaultNormal};
   }
 `;
-const LabelText = styled(Text.Paragraph).attrs({
-  as: 'span',
-})`
+const LabelText = styled(Text.Span)`
   font-size: 14px;
   color: ${theme.colors.fg.primary};
 `;
 
-const HelperText = styled(Text.Paragraph).attrs({
-  as: 'span',
-})`
+const HelperText = styled(Text.Span)`
   color: ${theme.colors.fg.tertiary};
 `;
 

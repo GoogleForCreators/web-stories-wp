@@ -147,7 +147,6 @@ export default function StoryListView({
                   'Title, select to sort table by story title',
                   'web-stories'
                 )}
-                forwardedAs="span"
                 size={TextSize.Small}
                 isBold
               >
@@ -161,7 +160,6 @@ export default function StoryListView({
               <SelectableTitle
                 aria-hidden
                 active={storySort === STORY_SORT_OPTIONS.NAME}
-                forwardedAs="span"
                 size={TextSize.Small}
                 isBold
               >
@@ -187,7 +185,6 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.CREATED_BY)
                 }
                 active={storySort === STORY_SORT_OPTIONS.CREATED_BY}
-                forwardedAs="span"
                 size={TextSize.Small}
                 isBold
               >
@@ -218,7 +215,6 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.DATE_CREATED)
                 }
                 active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                forwardedAs="span"
                 size={TextSize.Small}
                 isBold
               >
@@ -245,7 +241,6 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
                 active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                forwardedAs="span"
                 size={TextSize.Small}
                 isBold
               >

@@ -30,7 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   Icons,
   Menu,
-  PLACEMENT,
+  Placement,
   Popup,
   useKeyDownEffect,
   noop,
@@ -185,7 +185,7 @@ function InsertionMenu({
       {isMenuOpen && (
         <Popup
           anchor={insertButtonRef}
-          placement={PLACEMENT.BOTTOM_START}
+          placement={Placement.Bottom_START}
           isOpen={isMenuOpen}
         >
           <DropDownContainer>

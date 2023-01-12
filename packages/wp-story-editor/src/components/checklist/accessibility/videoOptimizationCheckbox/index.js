@@ -59,14 +59,11 @@ const BoldText = styled(Text.Span).attrs({ isBold: true })`
   color: ${({ theme }) => theme.colors.standard.white};
 `;
 
-const DescriptionText = styled(Text.Paragraph).attrs({
+const CheckboxLabel = styled(Text.Label).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin-bottom: 16px;
-`;
-
-const CheckboxLabel = styled(DescriptionText)`
   margin-left: 8px;
   margin-bottom: 0;
   line-height: 20px;
@@ -148,10 +145,7 @@ function VideoOptimizationCheckbox() {
               checked={currentUser?.mediaOptimization}
               onChange={handleToggle}
             />
-            <CheckboxLabel
-              forwardedAs="label"
-              htmlFor="automatic-video-optimization-toggle"
-            >
+            <CheckboxLabel htmlFor="automatic-video-optimization-toggle">
               <TranslateWithMarkup
                 mapping={{
                   a: (

@@ -50,7 +50,7 @@ export default function VideoCacheSettings({
         <SettingHeading>{__('Video Cache', 'web-stories')}</SettingHeading>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor={videoCacheId}>
+        <CheckboxLabel htmlFor={videoCacheId}>
           <Checkbox
             id={videoCacheId}
             data-testid="video-cache-settings-checkbox"

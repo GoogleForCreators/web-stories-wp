@@ -20,7 +20,7 @@
 import { getSettings } from '@googleforcreators/date';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { PLACEMENT, Text, TextSize } from '@googleforcreators/design-system';
+import { Placement, Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   white-space: nowrap;
 `;
 
-const StyledText = styled(Text.Paragraph)`
+const StyledText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   line-height: 30px;
 `;
@@ -65,12 +65,10 @@ function TimeZone() {
       <Tooltip
         hasTail
         title={tooltip}
-        placement={PLACEMENT.TOP}
+        placement={Placement.Top}
         popupZIndexOverride={Z_INDEX_TIME_PICKER_TOOLTIP}
       >
-        <StyledText forwardedAs="span" size={TextSize.XSmall}>
-          {zoneAbbr}
-        </StyledText>
+        <StyledText size={TextSize.XSmall}>{zoneAbbr}</StyledText>
       </Tooltip>
     </Wrapper>
   );

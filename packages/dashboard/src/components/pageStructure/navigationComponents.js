@@ -81,7 +81,7 @@ export const NavLink = styled(Link)(
   `
 );
 
-export const PathName = styled(Text.Paragraph)`
+export const PathName = styled(Text.Span)`
   grid-area: link;
 `;
 

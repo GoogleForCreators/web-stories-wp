@@ -21,7 +21,7 @@ import { forwardRef, useCallback, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
 import { css } from 'styled-components';
-import { DropDown, PLACEMENT } from '@googleforcreators/design-system';
+import { DropDown, Placement } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -73,8 +73,8 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
 
   // Set up dropdown options by effect type (background vs foreground)
   const expandedPlacement = isBackgroundEffects
-    ? PLACEMENT.BOTTOM
-    : PLACEMENT.TOP;
+    ? Placement.Bottom
+    : Placement.Top;
   const animationOptionsObject = isBackgroundEffects
     ? backgroundEffectOptions
     : foregroundEffectOptions;

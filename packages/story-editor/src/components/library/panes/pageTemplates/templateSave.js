@@ -41,7 +41,7 @@ import isDefaultPage from '../../../../utils/isDefaultPage';
 import createThumbnailCanvasFromFullbleedCanvas from '../../../../utils/createThumbnailCanvasFromFullbleedCanvas';
 import Icon from './images/illustration.svg';
 
-const StyledText = styled(Text.Paragraph)`
+const StyledText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
@@ -186,7 +186,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       <IconWrapper>
         <Icon aria-hidden />
       </IconWrapper>
-      <StyledText size={TextSize.Small} forwardedAs="span">
+      <StyledText size={TextSize.Small}>
         {__('Save current page as template', 'web-stories')}
       </StyledText>
     </SaveButton>

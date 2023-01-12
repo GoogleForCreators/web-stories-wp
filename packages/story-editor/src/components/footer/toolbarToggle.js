@@ -25,7 +25,7 @@ import {
   Icons,
   LOCAL_STORAGE_PREFIX,
   localStore,
-  PLACEMENT,
+  Placement,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
@@ -80,7 +80,7 @@ function ToolbarToggle() {
   return (
     <Tooltip
       title={__('Show element toolbar', 'web-stories')}
-      placement={PLACEMENT.TOP}
+      placement={Placement.Top}
       hasTail
     >
       <StyledButton

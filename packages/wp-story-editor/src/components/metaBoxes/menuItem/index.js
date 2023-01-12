@@ -26,7 +26,7 @@ import {
   ButtonType,
   ButtonVariant,
   Icons,
-  PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
@@ -69,7 +69,7 @@ function MenuItem() {
       <Box>
         <Tooltip
           title={__('Third-Party Meta Boxes', 'web-stories')}
-          placement={PLACEMENT.TOP}
+          placement={Placement.Top}
           hasTail
         >
           <Button

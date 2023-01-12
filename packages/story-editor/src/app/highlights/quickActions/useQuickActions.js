@@ -22,7 +22,7 @@ import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Icons,
-  PLACEMENT,
+  Placement,
   prettifyShortcut,
   useSnackbar,
 } from '@googleforcreators/design-system';
@@ -500,7 +500,7 @@ const useQuickActions = () => {
   const actionMenuProps = useMemo(
     () => ({
       // The <BaseTooltip> component will handle proper placement for RTL layout
-      tooltipPlacement: PLACEMENT.RIGHT,
+      tooltipPlacement: Placement.Right,
       onMouseDown: handleMouseDown,
     }),
     [handleMouseDown]

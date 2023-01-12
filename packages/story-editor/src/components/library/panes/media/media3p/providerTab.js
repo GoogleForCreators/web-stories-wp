@@ -25,7 +25,7 @@ import { Text, TextSize } from '@googleforcreators/design-system';
  */
 import { focusStyle } from '../../../../panels/shared/styles';
 
-const StyledText = styled(Text.Paragraph)`
+const StyledText = styled(Text.Span)`
   color: inherit;
 `;
 
@@ -63,9 +63,7 @@ const Tab = styled.button`
 function ProviderTab({ name, isActive, ...rest }) {
   return (
     <Tab $isActive={isActive} {...rest}>
-      <StyledText forwardedAs="span" size={TextSize.Small}>
-        {name}
-      </StyledText>
+      <StyledText size={TextSize.Small}>{name}</StyledText>
     </Tab>
   );
 }

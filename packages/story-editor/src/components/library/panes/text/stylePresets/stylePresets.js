@@ -26,7 +26,7 @@ import {
   ButtonVariant,
   Icons,
   Button,
-  PLACEMENT,
+  Placement,
   Popup,
   Disclosure,
 } from '@googleforcreators/design-system';
@@ -207,7 +207,7 @@ function PresetPanel() {
           <Popup
             anchor={buttonRef}
             isOpen={isPopupOpen}
-            placement={PLACEMENT.RIGHT_START}
+            placement={Placement.Right_START}
             spacing={SPACING}
             renderContents={() => (
               <StyleManager

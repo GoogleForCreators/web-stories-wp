@@ -215,12 +215,7 @@ function Search({
   return (
     <DropDownContainer>
       {label && (
-        <Label
-          size={TextSize.Small}
-          disabled={disabled}
-          forwardedAs="span"
-          isBold
-        >
+        <Label size={TextSize.Small} disabled={disabled} isBold>
           {label}
         </Label>
       )}

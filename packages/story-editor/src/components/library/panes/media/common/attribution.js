@@ -23,7 +23,7 @@ import { rgba } from 'polished';
 import { useState } from '@googleforcreators/react';
 import { Text, TextSize } from '@googleforcreators/design-system';
 
-const StyledText = styled(Text.Paragraph)`
+const StyledText = styled(Text.Span)`
   color: ${({ theme, active }) =>
     rgba(theme.colors.standard.white, active ? 1.0 : 0.6)};
 `;
@@ -60,9 +60,7 @@ const Attribution = ({ author, url }) => {
       target="_blank"
       rel="noreferrer"
     >
-      <StyledText forwardedAs="span" size={TextSize.XSmall}>
-        {author}
-      </StyledText>
+      <StyledText size={TextSize.XSmall}>{author}</StyledText>
     </Link>
   );
 };

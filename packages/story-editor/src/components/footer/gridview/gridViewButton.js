@@ -25,7 +25,7 @@ import {
   ButtonVariant,
   Icons,
   Modal,
-  PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 import { useCallback, useState } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
@@ -65,7 +65,7 @@ function GridViewButton() {
       <Box>
         <Tooltip
           title={__('Grid View', 'web-stories')}
-          placement={PLACEMENT.TOP}
+          placement={Placement.Top}
           hasTail
         >
           <Button

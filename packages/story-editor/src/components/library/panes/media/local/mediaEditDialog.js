@@ -69,7 +69,7 @@ const MetadataTextContainer = styled.div`
   margin: 0 4px;
 `;
 
-const DateText = styled(Text.Paragraph)`
+const DateText = styled(Text.Span)`
   margin-bottom: 8px;
 `;
 
@@ -166,7 +166,7 @@ function MediaEditDialog({ resource, onClose }) {
         )}
         <MetadataTextContainer>
           {isValid(parsedDate) && (
-            <DateText forwardedAs="span" size={TextSize.XSmall}>
+            <DateText size={TextSize.XSmall}>
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),

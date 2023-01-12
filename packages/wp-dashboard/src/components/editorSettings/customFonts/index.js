@@ -96,7 +96,7 @@ const FontsWrapper = styled.div`
   margin-top: 34px;
 `;
 
-const ListHeading = styled(Text.Paragraph)`
+const ListHeading = styled(Text.Span)`
   margin-bottom: 10px;
   display: inline-block;
 `;
@@ -352,7 +352,7 @@ function CustomFontsSettings({
         </TextInputHelperText>
         {customFonts?.length > 0 && (
           <FontsWrapper>
-            <ListHeading forwardedAs="span">{TEXT.FONTS_HEADING}</ListHeading>
+            <ListHeading>{TEXT.FONTS_HEADING}</ListHeading>
             <FontsList
               ref={currentFontsContainerRef}
               role="listbox"

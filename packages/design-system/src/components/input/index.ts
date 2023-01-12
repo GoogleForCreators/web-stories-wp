@@ -15,6 +15,7 @@
  */
 
 export { default as Input } from './input';
+export { BaseInput } from './styled';
 export { default as NumericInput } from './numericInput';
 export { default as useNumericInput } from './useNumericInput';
 export * from './validation';
