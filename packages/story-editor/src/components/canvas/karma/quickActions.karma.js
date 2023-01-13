@@ -23,7 +23,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { ACTIONS } from '../../../app/highlights';
+import { ACTIONS } from '../../../app/quickActions';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
 
@@ -129,7 +129,9 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.insertTextButton
       );
       expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
-      expect(fixture.editor.library.text).not.toBeNull();
+      expect(
+        fixture.editor.sidebar.designPanel.selectionSection
+      ).not.toBeNull();
       expect(document.activeElement).toEqual(
         fixture.editor.canvas.framesLayer.frames[1].node
       );
@@ -150,7 +152,9 @@ describe('Quick Actions integration', () => {
         fixture.editor.canvas.quickActionMenu.insertTextButton
       );
 
-      expect(fixture.editor.library.text).not.toBeNull();
+      expect(
+        fixture.editor.sidebar.designPanel.selectionSection
+      ).not.toBeNull();
     });
   });
 

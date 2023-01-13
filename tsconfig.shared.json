@@ -28,7 +28,7 @@
     "pretty": true,
     "sourceMap": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
-    "types": []
+    "types": ["jest", "jest-extended", "node"]
   },
   "exclude": [
     "packages/*/dist-*/**",
@@ -36,7 +36,8 @@
     "packages/*/node_modules/**",
     "**/karma/**",
     "**/stories/**",
-    "**/test/**",
-    "**/testUtils/**"
+    "**/storybookUtils/**",
+    "**/test/**/*.js",
+    "**/testUtils/**/*.js"
   ]
 }

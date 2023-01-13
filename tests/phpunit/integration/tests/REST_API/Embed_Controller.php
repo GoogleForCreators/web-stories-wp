@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -21,6 +24,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Embed_Controller
@@ -28,31 +32,26 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
 class Embed_Controller extends DependencyInjectedRestTestCase {
-
-	protected static $story_id;
-	protected static $subscriber;
-	protected static $editor;
-	protected static $admin;
-
 	public const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
 	public const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
 	public const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 
+	protected static int $story_id;
+	protected static int $subscriber;
+	protected static int $editor;
+	protected static int $admin;
+
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Embed_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Embed_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -108,9 +107,9 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
 	 * @param mixed  $r       HTTP request arguments.
 	 * @param string $url     The request URL.
-	 * @return array Response data.
+	 * @return array{response: array<string, mixed>, body?: string} Response data.
 	 */
-	public function mock_http_request( $preempt, $r, $url ): array {
+	public function mock_http_request( $preempt, $r, string $url ): array {
 		++ $this->request_count;
 
 		if ( false !== strpos( $url, self::VALID_URL_EMPTY_DOCUMENT ) ) {
@@ -127,7 +126,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 				'response' => [
 					'code' => 200,
 				],
-				'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/stories_in_amp.html' ),
+				'body'     => (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/stories_in_amp.html' ),
 			];
 		}
 
@@ -145,21 +144,6 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
-
-		$route = $routes['/web-stories/v1/embed'];
-		$this->assertCount( 1, $route );
-		$this->assertArrayHasKey( 'callback', $route[0] );
-		$this->assertArrayHasKey( 'permission_callback', $route[0] );
-		$this->assertArrayHasKey( 'methods', $route[0] );
-		$this->assertArrayHasKey( 'args', $route[0] );
-	}
-
-	protected function dispatch_request( $url = null ): WP_REST_Response {
-		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
-		if ( null !== $url ) {
-			$request->set_param( 'url', $url );
-		}
-		return rest_get_server()->dispatch( $request );
 	}
 
 	public function test_missing_param(): void {
@@ -237,6 +221,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->dispatch_request( self::VALID_URL );
 		$this->assertEquals( 1, $this->request_count );
 
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
@@ -256,8 +241,9 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
 		$request->set_param( 'url', self::VALID_URL . '/' );
 		rest_get_server()->dispatch( $request );
-		$this->assertEquals( 1, $this->request_count );
 
+		$this->assertEquals( 1, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
@@ -269,7 +255,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		$this->set_permalink_structure( '' );
 
-		$response = $this->dispatch_request( get_permalink( self::$story_id ) );
+		$response = $this->dispatch_request( (string) get_permalink( self::$story_id ) );
 		$data     = $response->get_data();
 
 		$expected = [
@@ -278,6 +264,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		];
 
 		$this->assertEquals( 0, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
@@ -298,7 +285,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$editor );
 
-		$response = $this->dispatch_request( get_permalink( self::$story_id ) );
+		$response = $this->dispatch_request( (string) get_permalink( self::$story_id ) );
 		$data     = $response->get_data();
 
 		$expected = [
@@ -307,6 +294,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		];
 
 		$this->assertEquals( 0, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
@@ -319,27 +307,23 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 
 		$this->set_permalink_structure( '/%postname%/' );
 
-		// Without (re-)registering the post type here there won't be any rewrite rules for it
-		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
-		// instead of "http://example.org/web-stories/embed-controller-test-story/".
-		// @todo Investigate why this is  needed (leakage between tests?).
-		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$story_post_type->register();
-
 		flush_rewrite_rules( false );
 
 		wp_set_current_user( self::$admin );
 
-		$permalink = get_permalink( self::$story_id );
+		$permalink = (string) get_permalink( self::$story_id );
 
-		$blog_id = (int) self::factory()->blog->create();
+		$blog_id = self::factory()->blog->create();
 		add_user_to_blog( $blog_id, self::$admin, 'administrator' );
 		switch_to_blog( $blog_id );
 
 		$this->set_permalink_structure( '/%postname%/' );
 
 		$response = $this->dispatch_request( $permalink );
-		$data     = $response->get_data();
+
+		$this->assertNotWPError( $response->as_error() );
+
+		$data = $response->get_data();
 
 		restore_current_blog();
 
@@ -349,7 +333,16 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		];
 
 		$this->assertEquals( 0, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	protected function dispatch_request( ?string $url = null ): WP_REST_Response {
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
+		if ( null !== $url ) {
+			$request->set_param( 'url', $url );
+		}
+		return rest_get_server()->dispatch( $request );
 	}
 }

@@ -24,7 +24,7 @@ export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement/AdNetwork',
   component: AdNetwork,
   args: {
-    adNetwork: AdNetworkType.NONE,
+    adNetwork: AdNetworkType.None,
   },
   argTypes: {
     adNetwork: {

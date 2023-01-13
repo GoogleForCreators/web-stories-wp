@@ -99,7 +99,6 @@ function MediaUpload({ render: _render, onSelect }) {
 
 export const FIXTURE_DEFAULT_CONFIG = {
   storyId: 1,
-  api: {},
   allowedMimeTypes: {
     audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
     image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
@@ -1125,7 +1124,7 @@ class APIProviderFixture {
             if ('builtin' === params.service) {
               return 'fonts.google.com' === params.service;
             }
-            return [];
+            return false;
           });
         }
 

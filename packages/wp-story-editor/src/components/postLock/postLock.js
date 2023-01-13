@@ -24,7 +24,6 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
-import { useFeatures } from 'flagged';
 import { trackError } from '@googleforcreators/tracking';
 import {
   useStory,
@@ -72,8 +71,6 @@ function PostLock() {
       autoSave,
     })
   );
-
-  const { enablePostLockingTakeOver } = useFeatures();
   const [currentOwner, setCurrentOwner] = useState(null);
   const [initialOwner, setInitialOwner] = useState(null);
   const [autoSaveDoneWhenTakenOver, setAutoSaveDoneWhenTakenOver] =
@@ -82,27 +79,28 @@ function PostLock() {
 
   // When dialog is closed, then set current user to lock owner.
   const closeDialog = useCallback(() => {
-    if (!enablePostLockingTakeOver) {
-      return;
-    }
     setCurrentOwner(null);
     setStoryLockById(storyId, stories);
-  }, [enablePostLockingTakeOver, storyId, stories]);
+  }, [storyId, stories]);
 
   const currentUserLoaded = useMemo(
-    () => Boolean(Object.keys(currentUser).length),
+    () => currentUser && Boolean(Object.keys(currentUser).length),
     [currentUser]
   );
 
   // When async call only if dialog is true, current user is loaded and post locking is enabled.
   const doGetStoryLock = useCallback(() => {
-    if (showLockedDialog && currentUserLoaded) {
-      getStoryLockById(storyId, stories)
-        .then(({ locked, nonce: newNonce, _embedded }) => {
+    (async () => {
+      if (showLockedDialog && currentUserLoaded) {
+        try {
+          const {
+            locked,
+            nonce: newNonce,
+            user,
+          } = await getStoryLockById(storyId, stories);
           const lockAuthor = {
-            id: _embedded?.author?.[0]?.id || 0,
-            name: _embedded?.author?.[0]?.name || '',
-            avatar: _embedded?.author?.[0]?.avatar_urls?.['96'] || '',
+            ...user,
+            avatar: user?.avatar?.['96'] || '',
           };
           if (locked && initialOwner === null) {
             setInitialOwner(lockAuthor);
@@ -114,11 +112,11 @@ function PostLock() {
           }
           // Refresh nonce on every request.
           setNonce(newNonce);
-        })
-        .catch((err) => {
+        } catch (err) {
           trackError('post_lock', err.message);
-        });
-    }
+        }
+      }
+    })();
   }, [
     setCurrentOwner,
     storyId,
@@ -175,7 +173,6 @@ function PostLock() {
 
   useEffect(() => {
     if (
-      enablePostLockingTakeOver &&
       showLockedDialog &&
       hasNewChanges &&
       currentUser?.id === initialOwner?.id &&
@@ -187,7 +184,6 @@ function PostLock() {
       setAutoSaveDoneWhenTakenOver(true);
     }
   }, [
-    enablePostLockingTakeOver,
     hasNewChanges,
     showLockedDialog,
     currentOwner,
@@ -211,14 +207,12 @@ function PostLock() {
         onClose={closeDialog}
         previewLink={previewLink}
         dashboardLink={dashboardLink}
-        showTakeOver={enablePostLockingTakeOver}
       />
     );
   }
 
   // Second time around, show message that story was taken over.
   if (
-    enablePostLockingTakeOver &&
     currentUser?.id === initialOwner?.id &&
     currentOwner?.id !== currentUser?.id
   ) {

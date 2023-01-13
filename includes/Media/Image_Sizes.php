@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Service_Base;
@@ -74,40 +76,6 @@ class Image_Sizes extends Service_Base {
 	}
 
 	/**
-	 * Add image sizes.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
-	 */
-	protected function add_image_sizes(): void {
-		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
-		add_image_size(
-			self::POSTER_PORTRAIT_IMAGE_SIZE,
-			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0],
-			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1],
-			true
-		);
-
-		// As per https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines.
-		add_image_size(
-			self::PUBLISHER_LOGO_IMAGE_SIZE,
-			self::PUBLISHER_LOGO_IMAGE_DIMENSIONS[0],
-			self::PUBLISHER_LOGO_IMAGE_DIMENSIONS[1],
-			true
-		);
-
-		// Used in the editor.
-		add_image_size(
-			self::STORY_THUMBNAIL_IMAGE_SIZE,
-			self::STORY_THUMBNAIL_IMAGE_DIMENSIONS[0],
-			self::STORY_THUMBNAIL_IMAGE_DIMENSIONS[1],
-			false
-		);
-	}
-
-
-	/**
 	 * Filters the attachment data prepared for JavaScript.
 	 *
 	 * @since 1.0.0
@@ -115,6 +83,10 @@ class Image_Sizes extends Service_Base {
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 * @param WP_Post     $attachment Attachment object.
 	 * @return array|mixed $response;
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response, $attachment ) {
 		if ( ! \is_array( $response ) ) {
@@ -163,5 +135,39 @@ class Image_Sizes extends Service_Base {
 
 
 		return $response;
+	}
+
+
+	/**
+	 * Add image sizes.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
+	 */
+	protected function add_image_sizes(): void {
+		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
+		add_image_size(
+			self::POSTER_PORTRAIT_IMAGE_SIZE,
+			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0],
+			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1],
+			true
+		);
+
+		// As per https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines.
+		add_image_size(
+			self::PUBLISHER_LOGO_IMAGE_SIZE,
+			self::PUBLISHER_LOGO_IMAGE_DIMENSIONS[0],
+			self::PUBLISHER_LOGO_IMAGE_DIMENSIONS[1],
+			true
+		);
+
+		// Used in the editor.
+		add_image_size(
+			self::STORY_THUMBNAIL_IMAGE_SIZE,
+			self::STORY_THUMBNAIL_IMAGE_DIMENSIONS[0],
+			self::STORY_THUMBNAIL_IMAGE_DIMENSIONS[1],
+			false
+		);
 	}
 }

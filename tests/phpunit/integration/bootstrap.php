@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /*
  * Copyright 2021 Google LLC
  *
@@ -23,10 +26,6 @@
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
-
-use DG\BypassFinals;
-
-BypassFinals::enable();
 
 require_once dirname( __DIR__, 3 ) . '/vendor/yoast/wp-test-utils/src/WPIntegration/bootstrap-functions.php';
 

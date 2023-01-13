@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -47,7 +49,7 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Page_Template_Post_Type constructor.
@@ -76,6 +78,41 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 */
 	public function get_slug(): string {
 		return self::POST_TYPE_SLUG;
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
+	}
+
+	/**
+	 * Deletes the associated featured image when a page template is deleted.
+	 *
+	 * This prevents the featured image from becoming an orphan because it is not
+	 * displayed anywhere in WordPress or the story editor.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	public function delete_poster_image( int $post_id ): void {
+		if ( get_post_type( $post_id ) !== $this->get_slug() ) {
+			return;
+		}
+
+		$thumbnail_id = get_post_thumbnail_id( $post_id );
+
+		if ( $thumbnail_id ) {
+			wp_delete_attachment( $thumbnail_id, true );
+		}
 	}
 
 	/**
@@ -166,40 +203,5 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 			'rest_namespace'        => self::REST_NAMESPACE,
 			'rest_controller_class' => Page_Template_Controller::class,
 		];
-	}
-
-	/**
-	 * Get the list of service IDs required for this service to be registered.
-	 *
-	 * Needed because the story post type needs to be registered first.
-	 *
-	 * @since 1.13.0
-	 *
-	 * @return string[] List of required services.
-	 */
-	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
-	}
-
-	/**
-	 * Deletes the associated featured image when a page template is deleted.
-	 *
-	 * This prevents the featured image from becoming an orphan because it is not
-	 * displayed anywhere in WordPress or the story editor.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @param int $post_id Post ID.
-	 */
-	public function delete_poster_image( int $post_id ): void {
-		if ( get_post_type( $post_id ) !== $this->get_slug() ) {
-			return;
-		}
-
-		$thumbnail_id = get_post_thumbnail_id( $post_id );
-
-		if ( $thumbnail_id ) {
-			wp_delete_attachment( $thumbnail_id, true );
-		}
 	}
 }

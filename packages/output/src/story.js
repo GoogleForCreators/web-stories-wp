@@ -18,10 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  BackgroundAudioPropType,
-  StoryPropTypes,
-} from '@googleforcreators/elements';
+import { BackgroundAudioPropType } from '@googleforcreators/media';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -32,12 +30,14 @@ import CustomCSS from './utils/styles';
 import FontDeclarations from './utils/fontDeclarations';
 import OutputPage from './page';
 import getPreloadResources from './utils/getPreloadResources';
+import { populateElementFontData } from './utils/populateElementFontData';
 
 function OutputStory({
   story: {
     featuredMedia,
     link,
     title,
+    fonts,
     autoAdvance,
     defaultPageDuration,
     backgroundAudio,
@@ -52,6 +52,11 @@ function OutputStory({
 
   const featuredMediaUrl = featuredMedia?.url || '';
   const publisherLogoUrl = publisherLogo?.url || '';
+
+  if (fonts && Object.keys(fonts).length >= 1) {
+    // if fonts are stored at the story level, populate the font data to the elements
+    pages = populateElementFontData(pages, fonts);
+  }
 
   return (
     <html amp="" lang="en">
@@ -102,6 +107,7 @@ function OutputStory({
 
 OutputStory.propTypes = {
   story: PropTypes.shape({
+    fonts: PropTypes.object,
     link: PropTypes.string,
     title: PropTypes.string.isRequired,
     autoAdvance: PropTypes.bool,

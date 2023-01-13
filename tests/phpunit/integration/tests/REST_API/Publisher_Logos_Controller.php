@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Publisher_Logos_Controller
@@ -13,46 +16,27 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Publisher_Logos_Controller
  */
 class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
-	/**
-	 * @var WP_REST_Server
-	 */
-	protected $server;
+	protected static int $admin;
 
-	/**
-	 * @var int
-	 */
-	protected static $admin;
+	protected static int $editor;
 
-	/**
-	 * @var int
-	 */
-	protected static $editor;
+	protected static int $attachment_id_1;
 
-	/**
-	 * @var int
-	 */
-	protected static $attachment_id_1;
+	protected static int $attachment_id_2;
 
-	/**
-	 * @var int
-	 */
-	protected static $attachment_id_2;
+	protected WP_REST_Server $server;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Publisher_Logos_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Publisher_Logos_Controller $controller;
 
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -66,7 +50,10 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$attachment_id_1 = self::factory()->attachment->create_object(
+		/**
+		 * @var int $attachment_id_1
+		 */
+		$attachment_id_1 = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -75,7 +62,12 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		self::$attachment_id_2 = self::factory()->attachment->create_object(
+		self::$attachment_id_1 = $attachment_id_1;
+
+		/**
+		 * @var int $attachment_id_2
+		 */
+		$attachment_id_2 = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -83,6 +75,8 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		self::$attachment_id_2 = $attachment_id_2;
 	}
 
 	public function set_up(): void {
@@ -126,6 +120,8 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$data = $this->controller->get_item_schema();
 
 		$properties = $data['properties'];
+
+		$this->assertIsArray( $properties );
 		$this->assertArrayHasKey( 'id', $properties );
 		$this->assertArrayHasKey( 'title', $properties );
 		$this->assertArrayHasKey( 'url', $properties );
@@ -187,7 +183,10 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/publisher-logos' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertCount( 2, $data );
+		$this->assertIsArray( $data[0] );
+		$this->assertIsArray( $data[1] );
 		$this->assertSame( self::$attachment_id_1, $data[0]['id'] );
 		$this->assertSame( get_the_title( self::$attachment_id_1 ), $data[0]['title'] );
 		$this->assertSame( wp_get_attachment_url( self::$attachment_id_1 ), $data[0]['url'] );
@@ -231,6 +230,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_1,
@@ -259,10 +259,18 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_1,
@@ -296,10 +304,18 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_2,
@@ -330,10 +346,18 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				[
@@ -419,10 +443,18 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_2,
@@ -462,6 +494,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_2 );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'deleted'  => true,
@@ -491,10 +524,18 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_1 );
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'deleted'  => true,
@@ -526,10 +567,18 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_1 );
 		$response = rest_get_server()->dispatch( $request );
 
-		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'deleted'  => true,
@@ -595,7 +644,10 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$this->assertErrorResponse( 'rest_forbidden', $response, 403 );
 		$this->assertSame( self::$attachment_id_1, $active_publisher_logo_id );
@@ -621,9 +673,13 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 		$response = rest_get_server()->dispatch( $request );
 
-		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var int $active_publisher_logo_id
+		 */
+		$active_publisher_logo_id = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSetsWithIndex(
 			[
 				'id'     => self::$attachment_id_2,

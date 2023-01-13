@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Infrastructure\Conditional;
@@ -102,28 +104,28 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @var WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 */
-	private $wp_customize;
+	private WP_Customize_Manager $wp_customize;
 
 	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Analytics constructor.
@@ -181,9 +183,7 @@ class Customizer extends Service_Base implements Conditional {
 
 		$theme_support = $this->get_stories_theme_support()['customizer'];
 
-		$active_callback = function() {
-			return $this->is_option_enabled( 'show_stories' );
-		};
+		$active_callback = fn() => $this->is_option_enabled( 'show_stories' );
 
 		$wp_customize->add_section(
 			self::SECTION_SLUG,
@@ -271,9 +271,7 @@ class Customizer extends Service_Base implements Conditional {
 					'min' => 1,
 					'max' => 4,
 				],
-				'active_callback' => function() {
-					return ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'grid' ) );
-				},
+				'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'grid' ) ),
 			]
 		);
 
@@ -340,9 +338,7 @@ class Customizer extends Service_Base implements Conditional {
 					'max'  => 200,
 					'step' => 5,
 				],
-				'active_callback' => function() {
-					return $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'circles' );
-				},
+				'active_callback' => fn() => $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'circles' ),
 			]
 		);
 
@@ -364,9 +360,7 @@ class Customizer extends Service_Base implements Conditional {
 					'left'  => __( 'Left', 'web-stories' ),
 					'right' => __( 'Right', 'web-stories' ),
 				],
-				'active_callback' => function() {
-					return ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' ) );
-				},
+				'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' ) ),
 			]
 		);
 
@@ -407,9 +401,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Display Excerpt', 'web-stories' ),
-					'active_callback' => function() {
-						return $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' );
-					},
+					'active_callback' => fn() => $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' ),
 				]
 			);
 		}
@@ -429,9 +421,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Display Author', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
-					},
+					'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) ),
 				]
 			);
 		}
@@ -451,9 +441,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Display Date', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
-					},
+					'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) ),
 				]
 			);
 		}
@@ -473,9 +461,7 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Sharp Corners', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
-					},
+					'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) ),
 				]
 			);
 		}
@@ -513,56 +499,10 @@ class Customizer extends Service_Base implements Conditional {
 					'type'            => 'text',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Archive Link Label', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && $this->is_option_enabled( 'show_archive_link' ) );
-					},
+					'active_callback' => fn() => ( $this->is_option_enabled( 'show_stories' ) && $this->is_option_enabled( 'show_archive_link' ) ),
 				]
 			);
 		}
-	}
-
-	/**
-	 * Gets the view type choices.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param array<string,mixed> $view_type View type to check.
-	 * @return array<string,mixed> An array of view type choices.
-	 */
-	private function get_view_type_choices( array $view_type ): array {
-		$view_type_choices = $this->stories_script_data->get_layouts();
-
-		if ( empty( $view_type ) ) {
-			return $view_type_choices;
-		}
-
-		return array_intersect_key( $view_type_choices, array_fill_keys( $view_type, true ) );
-	}
-
-	/**
-	 * Checks whether the given option is enabled or not.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $option_name The name of the option to check.
-	 * @return bool Returns true if the given option is enabled otherwise false.
-	 */
-	private function is_option_enabled( string $option_name ): bool {
-		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
-		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
-	}
-
-	/**
-	 * Verifies the current view type.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $view_type View type to check.
-	 * @return bool Whether or not current view type matches the one passed.
-	 */
-	private function is_view_type( string $view_type ): bool {
-		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
-		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
 	}
 
 	/**
@@ -647,39 +587,6 @@ class Customizer extends Service_Base implements Conditional {
 	}
 
 	/**
-	 * Merges user defined arguments into defaults array.
-	 *
-	 * Like wp_parse_args(), but recursive.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @see wp_parse_args()
-	 *
-	 * @param array<string, mixed>                                                           $args     Value to merge with $defaults.
-	 * @param array<string, array<string, array<string, array<int,string>|bool|int|string>>> $defaults Optional. Array that serves as the defaults. Default empty array.
-	 * @return array<string, mixed> Merged user defined values with defaults.
-	 */
-	private function parse_args( array $args, array $defaults = [] ): array {
-		$parsed_args = $defaults;
-
-		foreach ( $args as $key => $value ) {
-			if ( \is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
-				/**
-				 * Default value.
-				 *
-				 * @var array<string, array<string, array<string, array<int,string>|bool|int|string>>> $def
-				 */
-				$def                 = $parsed_args[ $key ];
-				$parsed_args[ $key ] = $this->parse_args( $value, $def );
-			} else {
-				$parsed_args[ $key ] = $value;
-			}
-		}
-
-		return $parsed_args;
-	}
-
-	/**
 	 * Get theme support configuration.
 	 *
 	 * @since 1.14.0
@@ -759,5 +666,82 @@ class Customizer extends Service_Base implements Conditional {
 		$support = $this->parse_args( $support, $default_support );
 
 		return $support;
+	}
+
+	/**
+	 * Gets the view type choices.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array<string,mixed> $view_type View type to check.
+	 * @return array<string,mixed> An array of view type choices.
+	 */
+	private function get_view_type_choices( array $view_type ): array {
+		$view_type_choices = $this->stories_script_data->get_layouts();
+
+		if ( empty( $view_type ) ) {
+			return $view_type_choices;
+		}
+
+		return array_intersect_key( $view_type_choices, array_fill_keys( $view_type, true ) );
+	}
+
+	/**
+	 * Checks whether the given option is enabled or not.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $option_name The name of the option to check.
+	 * @return bool Returns true if the given option is enabled otherwise false.
+	 */
+	private function is_option_enabled( string $option_name ): bool {
+		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
+		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
+	}
+
+	/**
+	 * Verifies the current view type.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $view_type View type to check.
+	 * @return bool Whether or not current view type matches the one passed.
+	 */
+	private function is_view_type( string $view_type ): bool {
+		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
+		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
+	}
+
+	/**
+	 * Merges user defined arguments into defaults array.
+	 *
+	 * Like wp_parse_args(), but recursive.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @see wp_parse_args()
+	 *
+	 * @param array<string, mixed>                                                           $args     Value to merge with $defaults.
+	 * @param array<string, array<string, array<string, array<int,string>|bool|int|string>>> $defaults Optional. Array that serves as the defaults. Default empty array.
+	 * @return array<string, mixed> Merged user defined values with defaults.
+	 */
+	private function parse_args( array $args, array $defaults = [] ): array {
+		$parsed_args = $defaults;
+
+		foreach ( $args as $key => $value ) {
+			if ( \is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
+				/**
+				 * Default value.
+				 *
+				 * @var array<string, array<string, array<string, array<int,string>|bool|int|string>>> $def
+				 */
+				$def                 = $parsed_args[ $key ];
+				$parsed_args[ $key ] = $this->parse_args( $value, $def );
+			} else {
+				$parsed_args[ $key ] = $value;
+			}
+		}
+
+		return $parsed_args;
 	}
 }

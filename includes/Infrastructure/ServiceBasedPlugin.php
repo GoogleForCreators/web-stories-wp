@@ -15,6 +15,8 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Infrastructure;
 
 use Google\Web_Stories\Exception\InvalidService;
@@ -30,6 +32,12 @@ use const WPCOM_IS_VIP_ENV;
  * the dependency injector and the service container.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @template C of Conditional
+ * @template D of Delayed
+ * @template H of HasRequirements
+ * @template R of Registerable
+ * @template S of Service
  */
 abstract class ServiceBasedPlugin implements Plugin {
 
@@ -59,24 +67,20 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 	/**
 	 * Enable filters.
-	 *
-	 * @var bool
 	 */
-	protected $enable_filters;
+	protected bool $enable_filters;
 
 	/**
 	 * Injector.
-	 *
-	 * @var Injector
 	 */
-	protected $injector;
+	protected Injector $injector;
 
 	/**
 	 * ServiceContainer.
 	 *
 	 * @var ServiceContainer<Service>
 	 */
-	protected $service_container;
+	protected ServiceContainer $service_container;
 
 	/**
 	 * Instantiate a Theme object.
@@ -119,7 +123,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_plugin_activation( $network_wide ): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof PluginActivationAware ) {
 				$service->on_plugin_activation( $network_wide );
 			}
@@ -140,7 +152,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_plugin_deactivation( $network_wide ): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof PluginDeactivationAware ) {
 				$service->on_plugin_deactivation( $network_wide );
 			}
@@ -166,7 +186,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 		switch_to_blog( $site_id );
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof SiteInitializationAware ) {
 				$service->on_site_initialization( $site );
 			}
@@ -194,7 +222,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 		switch_to_blog( $site_id );
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof SiteRemovalAware ) {
 				$service->on_site_removal( $site );
 			}
@@ -211,7 +247,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 	public function on_site_uninstall(): void {
 		$this->register_services();
 
-		foreach ( $this->service_container as $service ) {
+		/**
+		 * Service ID.
+		 *
+		 * @var string $id
+		 */
+		foreach ( $this->service_container as $id => $service ) {
+			// Using ->get() here to instantiate LazilyInstantiatedService too.
+			$service = $this->service_container->get( $id );
+
 			if ( $service instanceof PluginUninstallAware ) {
 				$service->on_plugin_uninstall();
 			}
@@ -274,26 +318,21 @@ abstract class ServiceBasedPlugin implements Plugin {
 				$services
 			);
 
-			$services = $this->validate_services( $filtered_services, $services );
+			$services = $this->validate_services( $filtered_services );
 		}
 
 		while ( null !== key( $services ) ) {
 			$id = $this->maybe_resolve( key( $services ) );
 
-			/**
-			 * Class name.
-			 *
-			 * @var class-string $class
-			 */
 			$class = $this->maybe_resolve( current( $services ) );
 
 			// Delay registering the service until all requirements are met.
 			if (
 				is_a( $class, HasRequirements::class, true )
-				&&
-				! $this->requirements_are_met( $id, $class, $services )
 			) {
-				continue;
+				if ( ! $this->requirements_are_met( $id, $class, $services ) ) {
+					continue;
+				}
 			}
 
 			$this->schedule_potential_service_registration( $id, $class );
@@ -303,17 +342,31 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
+	 * Get the service container that contains the services that make up the
+	 * plugin.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return ServiceContainer<Service> Service container of the plugin.
+	 */
+	public function get_container(): ServiceContainer {
+		return $this->service_container;
+	}
+
+	/**
 	 * Returns the priority for a given service based on its requirements.
 	 *
 	 * @since 1.13.0
 	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
-	 * @param HasRequirements|Delayed|class-string $class    Service FQCN of the service with requirements.
-	 * @param string[]                             $services List of services to be registered.
+	 * @param class-string                   $class    Service FQCN of the service with requirements.
+	 * @param array<string, class-string<S>> $services List of services to be registered.
 	 * @return int The registration action priority for the service.
+	 *
+	 * @phpstan-param class-string<S> $class Service FQCN of the service with requirements.
 	 */
-	protected function get_registration_action_priority( $class, array &$services ): int {
+	protected function get_registration_action_priority( string $class, array &$services ): int {
 		$priority = 10;
 
 		if ( is_a( $class, Delayed::class, true ) ) {
@@ -324,6 +377,11 @@ abstract class ServiceBasedPlugin implements Plugin {
 			return $priority;
 		}
 
+		/**
+		 * Service class.
+		 *
+		 * @phpstan-var class-string<H&S> $class
+		 */
 		$missing_requirements = $this->collect_missing_requirements( $class, $services );
 
 		foreach ( $missing_requirements as $missing_requirement ) {
@@ -334,6 +392,11 @@ abstract class ServiceBasedPlugin implements Plugin {
 					continue;
 				}
 
+				/**
+				 * Missing requirement.
+				 *
+				 * @phpstan-var class-string<S> $missing_requirement
+				 */
 				$requirement_priority = $this->get_registration_action_priority( $missing_requirement, $services );
 
 				$priority = max( $priority, $requirement_priority + 1 );
@@ -352,12 +415,14 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
-	 * @param string                       $id       Service ID of the service with requirements.
-	 * @param HasRequirements|class-string $class    Service FQCN of the service with requirements.
-	 * @param string[]                     $services List of services to be registered.
+	 * @param string                         $id       Service ID of the service with requirements.
+	 * @param class-string                   $class    Service FQCN of the service with requirements.
+	 * @param array<string, class-string<S>> $services List of services to be registered.
 	 * @return bool Whether the requirements for the service has been met.
+	 *
+	 * @phpstan-param class-string<H&S> $class Service FQCN of the service with requirements.
 	 */
-	protected function requirements_are_met( string $id, $class, array &$services ): bool {
+	protected function requirements_are_met( string $id, string $class, array &$services ): bool {
 		$missing_requirements = $this->collect_missing_requirements( $class, $services );
 
 		if ( empty( $missing_requirements ) ) {
@@ -436,13 +501,25 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
-	 * @param HasRequirements|class-string $class    Service FQCN of the service with requirements.
-	 * @param string[]                     $services List of services to register.
-	 * @return string[] List of missing requirements as a $service_id => $service_class mapping.
+	 * @param class-string                   $class    Service FQCN of the service with requirements.
+	 * @param array<string, class-string<S>> $services List of services to register.
+	 * @return array<string, class-string<S>> List of missing requirements as a $service_id => $service_class mapping.
+	 *
+	 * @phpstan-param class-string<H&S> $class Service FQCN of the service with requirements.
 	 */
-	protected function collect_missing_requirements( $class, $services ): array {
+	protected function collect_missing_requirements( string $class, array $services ): array {
+		/**
+		 * Requirements.
+		 *
+		 * @var string[] $requirements
+		 */
 		$requirements = $class::get_requirements();
 
+		/**
+		 * Missing requirements.
+		 *
+		 * @var array<string, class-string<S>>
+		 */
 		$missing = [];
 
 		foreach ( $requirements as $requirement ) {
@@ -470,16 +547,9 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @param array<int|string, string|class-string> $services Services to validate.
-	 * @param string[]                               $fallback Fallback value to use if $services is not salvageable.
 	 * @return string[] Validated array of service mappings.
 	 */
-	protected function validate_services( $services, $fallback ): array {
-		// If we don't have an array, something went wrong with filtering.
-		// Just use the fallback value in this case.
-		if ( ! \is_array( $services ) ) {
-			return $fallback;
-		}
-
+	protected function validate_services( array $services ): array {
 		// Make a copy so we can safely mutate while iterating.
 		$services_to_check = $services;
 
@@ -507,22 +577,20 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $fqcn FQCN to use as base to generate an identifer.
+	 * @param string $fqcn FQCN to use as base to generate an identifier.
 	 * @return string Identifier to use for the provided FQCN.
 	 */
-	protected function get_identifier_from_fqcn( $fqcn ): string {
+	protected function get_identifier_from_fqcn( string $fqcn ): string {
 		// Retrieve the short name from the FQCN first.
 		$short_name = substr( $fqcn, strrpos( $fqcn, '\\' ) + 1 );
 
 		// Turn camelCase or PascalCase into snake_case.
-		$snake_case = strtolower(
+		return strtolower(
 			trim(
 				(string) preg_replace( self::DETECT_CAPITALS_REGEX_PATTERN, '_$0', $short_name ),
 				'_'
 			)
 		);
-
-		return $snake_case;
 	}
 
 	/**
@@ -532,10 +600,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param string                       $id ID of the service to register.
-	 * @param HasRequirements|class-string $class Class of the service to register.
+	 * @param string       $id ID of the service to register.
+	 * @param class-string $class Class of the service to register.
+	 *
+	 * @phpstan-param class-string<(D&S)|S> $class Class of the service to register.
 	 */
-	protected function schedule_potential_service_registration( $id, $class ): void {
+	protected function schedule_potential_service_registration( string $id, string $class ): void {
 		if ( is_a( $class, Delayed::class, true ) ) {
 			$action   = $class::get_registration_action();
 			$priority = $class::get_registration_action_priority();
@@ -561,10 +631,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string                       $id    ID of the service to register.
-	 * @param HasRequirements|class-string $class Class of the service to register.
+	 * @param string $id    ID of the service to register.
+	 * @param string $class Class of the service to register.
+	 *
+	 * @phpstan-param class-string<S> $class Class of the service to register.
 	 */
-	protected function maybe_register_service( string $id, $class ): void {
+	protected function maybe_register_service( string $id, string $class ): void {
 		// Ensure we don't register the same service more than once.
 		if ( $this->service_container->has( $id ) ) {
 			return;
@@ -586,18 +658,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
-	 * Get the service container that contains the services that make up the
-	 * plugin.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return ServiceContainer<Service> Service container of the plugin.
-	 */
-	public function get_container(): ServiceContainer {
-		return $this->service_container;
-	}
-
-	/**
 	 * Instantiate a single service.
 	 *
 	 * @since 1.6.0
@@ -606,6 +666,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @param class-string|object $class Service class to instantiate.
 	 * @return Service Instantiated service.
+	 *
+	 * @phpstan-param class-string<S> $class Service class to instantiate.
 	 */
 	protected function instantiate_service( $class ): Service {
 		/*
@@ -617,9 +679,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		 */
 		if ( ! is_a( $class, Registerable::class, true ) ) {
 			return new LazilyInstantiatedService(
-				function () use ( $class ) {
-					return $this->injector->make( $class );
-				}
+				fn() => $this->injector->make( $class )
 			);
 		}
 
@@ -767,8 +827,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return array<string> Associative array of identifiers mapped to fully
-	 *                       qualified class names.
+	 * @return array<string, class-string<S>> Associative array of identifiers mapped to fully
+	 *                                        qualified class names.
 	 */
 	protected function get_service_classes(): array {
 		return [];
@@ -782,7 +842,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return array<string> Associative array of fully qualified class names.
+	 * @return array<string, class-string<S>> Associative array of fully qualified class names.
 	 */
 	protected function get_bindings(): array {
 		return [];
@@ -829,6 +889,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @return array<callable> Associative array of callables.
+	 *
+	 * @phpstan-return array<class-string<S|H|C>, callable> Associative array of callables.
 	 */
 	protected function get_delegations(): array {
 		return [];
@@ -844,9 +906,11 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @param string|callable|class-string $value Value to potentially resolve.
 	 * @return string|class-string Resolved or unchanged value.
+	 *
+	 * @phpstan-return class-string<C&D&H&R&S> Resolved or unchanged value.
 	 */
 	protected function maybe_resolve( $value ): string {
-		if ( is_callable( $value ) && ! ( \is_string( $value ) && function_exists( $value ) ) ) {
+		if ( \is_callable( $value ) && ! ( \is_string( $value ) && \function_exists( $value ) ) ) {
 			$value = $value( $this->injector, $this->service_container );
 		}
 

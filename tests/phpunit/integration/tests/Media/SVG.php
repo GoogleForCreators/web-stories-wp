@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,10 +28,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class SVG extends TestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\SVG
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\SVG $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -86,7 +87,7 @@ class SVG extends TestCase {
 	 * @covers ::svg_already_enabled
 	 */
 	public function test_svg_already_enabled(): void {
-		$_results = $this->call_private_method( $this->instance, 'svg_already_enabled' );
+		$_results = $this->call_private_method( [ $this->instance, 'svg_already_enabled' ] );
 
 		$this->assertFalse( $_results );
 	}
@@ -137,9 +138,11 @@ class SVG extends TestCase {
 	 */
 	public function test_filter_list_of_allowed_filetypes(): void {
 		$this->instance->register();
-
-		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
-		$this->assertContains( 'svg', $site_exts );
+		/**
+		 * @var string $upload_filetypes
+		 */
+		$upload_filetypes = get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
+		$this->assertStringContainsString( 'svg', $upload_filetypes );
 	}
 
 	/**
@@ -156,9 +159,11 @@ class SVG extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$this->instance->register();
 
-		$attachment_metadata = wp_generate_attachment_metadata( $attachment_id, get_attached_file( $attachment_id ) );
+		$attachment_metadata = wp_generate_attachment_metadata( $attachment_id, (string) get_attached_file( $attachment_id ) );
 		$this->assertArrayHasKey( 'width', $attachment_metadata );
 		$this->assertArrayHasKey( 'height', $attachment_metadata );
 		$this->assertArrayHasKey( 'file', $attachment_metadata );
@@ -182,6 +187,8 @@ class SVG extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$result = $this->instance->wp_generate_attachment_metadata( [], $attachment_id, 'update' );
 		$this->assertEqualSets( [], $result );
 	}
@@ -200,6 +207,8 @@ class SVG extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$result = $this->instance->wp_generate_attachment_metadata( [], $attachment_id, 'create' );
 		$this->assertEqualSets( [], $result );
 	}
@@ -208,7 +217,7 @@ class SVG extends TestCase {
 	 * @covers ::sanitize
 	 */
 	public function test_sanitize(): void {
-		$_results = $this->call_private_method( $this->instance, 'sanitize', [ WEB_STORIES_TEST_DATA_DIR . '/video-play.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'sanitize' ], [ WEB_STORIES_TEST_DATA_DIR . '/video-play.svg' ] );
 
 		$this->assertTrue( $_results );
 	}
@@ -217,7 +226,7 @@ class SVG extends TestCase {
 	 * @covers ::sanitize
 	 */
 	public function test_sanitize_fail(): void {
-		$_results = $this->call_private_method( $this->instance, 'sanitize', [ WEB_STORIES_TEST_DATA_DIR . '/animated.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'sanitize' ], [ WEB_STORIES_TEST_DATA_DIR . '/animated.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'insecure_svg_file', $_results->get_error_code() );
@@ -230,7 +239,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_from_viewbox(): void {
-		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/why.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'get_svg_size' ], [ WEB_STORIES_TEST_DATA_DIR . '/why.svg' ] );
 
 		$this->assertEqualSetsWithIndex(
 			[
@@ -249,7 +258,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_invalid_size(): void {
-		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/add.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'get_svg_size' ], [ WEB_STORIES_TEST_DATA_DIR . '/add.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
@@ -262,7 +271,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_invalid_viewbox(): void {
-		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/add-invalid.svg' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'get_svg_size' ], [ WEB_STORIES_TEST_DATA_DIR . '/add-invalid.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
@@ -273,7 +282,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_xml_invalid_file(): void {
-		$_results = $this->call_private_method( $this->instance, 'get_xml', [ '<invalid' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'get_xml' ], [ '<invalid' ] );
 
 		$this->assertFalse( $_results );
 	}
@@ -283,7 +292,7 @@ class SVG extends TestCase {
 	 * @covers ::get_svg_data
 	 */
 	public function test_sanitize_invalid_file(): void {
-		$_results = $this->call_private_method( $this->instance, 'sanitize', [ '' ] );
+		$_results = $this->call_private_method( [ $this->instance, 'sanitize' ], [ '' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_xml_svg', $_results->get_error_code() );
@@ -324,6 +333,8 @@ class SVG extends TestCase {
 	public function test_wp_handle_upload(): void {
 		$upload = [
 			'tmp_name' => WEB_STORIES_TEST_DATA_DIR . '/video-play.svg',
+			'file'     => WEB_STORIES_TEST_DATA_DIR . '/video-play.svg',
+			'url'      => 'http://www.example.com/video-play.svg',
 			'type'     => 'image/svg+xml',
 		];
 		$data   = $this->instance->wp_handle_upload( $upload );
@@ -337,6 +348,8 @@ class SVG extends TestCase {
 		$upload = [
 			'tmp_name' => WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg',
 			'type'     => 'image/jpeg',
+			'file'     => WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg',
+			'url'      => 'http://www.example.com/attachment.jpg',
 		];
 		$data   = $this->instance->wp_handle_upload( $upload );
 		$this->assertSame( $data, $upload );

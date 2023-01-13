@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\Renderer\Story;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
@@ -9,15 +11,9 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  */
 class Embed extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Context
-	 */
-	private $context;
+	private \Google\Web_Stories\Context $context;
 
-	/**
-	 * @var \Google\Web_Stories\Assets
-	 */
-	private $assets;
+	private \Google\Web_Stories\Assets $assets;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -72,7 +68,11 @@ class Embed extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		wp_maybe_generate_attachment_metadata( get_post( $poster_attachment_id ) );
+		$this->assertNotWPError( $poster_attachment_id );
+		$poster_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $poster_attachment );
+
+		wp_maybe_generate_attachment_metadata( $poster_attachment );
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 
 		$story = new \Google\Web_Stories\Model\Story();
@@ -117,6 +117,7 @@ class Embed extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 

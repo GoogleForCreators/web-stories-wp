@@ -85,9 +85,9 @@ function StyleLayout() {
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: {
-      [SELECTION.id]: state[states.STYLE],
-      [LINK.id]: state[states.STYLE],
-      [ANIMATION.id]: state[states.STYLE],
+      [SELECTION.id]: state[states.Style],
+      [LINK.id]: state[states.Style],
+      [ANIMATION.id]: state[states.Style],
     },
     resetHighlight: state.onFocusOut,
   }));

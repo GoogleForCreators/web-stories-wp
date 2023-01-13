@@ -230,6 +230,9 @@
     ],
     "jsdoc/check-indentation": "error",
     "jsdoc/check-syntax": "error",
+    "jsdoc/check-tag-names": ["error", {
+      "definedTags": [ "jest-environment" ]
+    }],
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
@@ -391,7 +394,9 @@
       "files": [
         "__mocks__/**/*.js",
         "**/test/**/*.js",
+        "**/test/**/*.ts",
         "**/testUtils/**/*.js",
+        "**/testUtils/**/*.ts",
         "tests/js/**/*.js"
       ],
       "excludedFiles": [
@@ -433,6 +438,16 @@
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
+      }
+    },
+    {
+      "files": [
+        "**/test/**/*.ts",
+        "**/testUtils/**/*.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/unbound-method": "off",
+        "jest/unbound-method": "error"
       }
     },
     {

@@ -5,11 +5,11 @@
     "declarationDir": "dist-types"
   },
   "references": [
+    { "path": "../animation" },
     { "path": "../i18n" },
     { "path": "../media" },
     { "path": "../patterns" },
     { "path": "../units" }
   ],
-  "include": ["src/**/*"],
-  "exclude": ["src/**/test/**/*"]
+  "include": ["src/**/*"]
 }

@@ -36,12 +36,12 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
   };
 
   beforeEach(() => {
-    adNetwork = AdNetworkType.NONE;
+    adNetwork = AdNetworkType.None;
     mockUpdate = jest.fn();
   });
 
   afterEach(() => {
-    adNetwork = AdNetworkType.NONE;
+    adNetwork = AdNetworkType.None;
   });
 
   it('should render ad management settings area with ad network dropdown button and helper text by default', () => {
@@ -74,7 +74,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
   it('should render ad network settings and link adsense', () => {
     renderWithProviders(
       <AdManagement
-        adNetwork={AdNetworkType.ADSENSE}
+        adNetwork={AdNetworkType.Adsense}
         updateSettings={mockUpdate}
         publisherId=""
         adSenseSlotId=""
@@ -98,7 +98,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
   it('should render ad network settings and link Ad Manager', () => {
     renderWithProviders(
       <AdManagement
-        adNetwork={AdNetworkType.ADMANAGER}
+        adNetwork={AdNetworkType.Admanager}
         updateSettings={mockUpdate}
         publisherId=""
         adSenseSlotId=""
@@ -123,7 +123,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
   it('should render adsense message when site kit is installed', () => {
     renderWithProviders(
       <AdManagement
-        adNetwork={AdNetworkType.ADMANAGER}
+        adNetwork={AdNetworkType.Admanager}
         updateSettings={mockUpdate}
         publisherId=""
         adSenseSlotId=""

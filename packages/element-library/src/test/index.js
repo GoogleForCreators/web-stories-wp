@@ -61,7 +61,9 @@ describe('Element', () => {
 
     it('should throw if trying to create unknown element type', () => {
       const unknownElementCreator = () => createNewElement('puppy');
-      expect(unknownElementCreator).toThrow(/unknown element type: puppy/i);
+      expect(unknownElementCreator).toThrow(
+        /No element definition found for 'puppy'/i
+      );
     });
   });
 
@@ -162,18 +164,16 @@ describe('Element', () => {
       ];
       const oldPage = {
         id: 'abc000',
-        type: 'page',
         elements: oldElements,
-        otherProperty: '45',
+        backgroundColor: { color: { r: 255, g: 0, b: 0 } },
       };
       const newPage = duplicatePage(oldPage);
 
       // Expect same structure but new id's!
       expect(newPage).toStrictEqual({
         id: expect.not.stringMatching(new RegExp(`/^${oldPage.id}$/`)),
-        type: 'page',
-        otherProperty: '45',
         animations: [],
+        backgroundColor: { color: { r: 255, g: 0, b: 0 } },
         elements: [
           expect.objectContaining({
             id: expect.not.stringMatching(

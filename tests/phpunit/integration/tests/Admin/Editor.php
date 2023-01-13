@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,8 +20,21 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
+use Google\Web_Stories\Admin\Google_Fonts;
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
+use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Font_Post_Type;
+use Google\Web_Stories\Locale;
+use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Page_Template_Post_Type;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Editor
@@ -28,94 +44,37 @@ class Editor extends DependencyInjectedTestCase {
 
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Subscriber user for test.
-	 *
-	 * @var int
 	 */
-	protected static $subscriber_id;
+	protected static int $subscriber_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
-	 * @var \Google\Web_Stories\Experiments
+	 * @var Experiments & MockObject
 	 */
 	private $experiments;
 
 	/**
-	 * @var \Google\Web_Stories\Assets
+	 * @var Assets & MockObject
 	 */
 	private $assets;
 
-	/**
-	 * @var \Google\Web_Stories\Admin\Meta_Boxes
-	 */
-	private $meta_boxes;
+	private Story_Post_Type $story_post_type;
+
+	private \Google\Web_Stories\Admin\Editor $instance;
 
 	/**
-	 * @var \Google\Web_Stories\Admin\Google_Fonts
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	private $google_fonts;
-
-	/**
-	 * @var \Google\Web_Stories\Decoder
-	 */
-	private $decoder;
-
-	/**
-	 * @var \Google\Web_Stories\Locale
-	 */
-	private $locale;
-
-	/**
-	 * @var \Google\Web_Stories\Story_Post_Type
-	 */
-	private $story_post_type;
-
-	/**
-	 * @var \Google\Web_Stories\Page_Template_Post_Type
-	 */
-	private $page_template_post_type;
-
-	/**
-	 * @var \Google\Web_Stories\Font_Post_Type
-	 */
-	private $fonts_post_type;
-
-	/**
-	 * @var \Google\Web_Stories\Media\Types
-	 */
-	private $types;
-
-	/**
-	 * @var \Google\Web_Stories\Admin\Editor
-	 */
-	private $instance;
-
-	/**
-	 * @var \Google\Web_Stories\Context
-	 */
-	private $context;
-
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $settings;
-
-	/**
-	 * @param \WP_UnitTest_Factory $factory
-	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id      = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -125,7 +84,7 @@ class Editor extends DependencyInjectedTestCase {
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -133,7 +92,10 @@ class Editor extends DependencyInjectedTestCase {
 			]
 		);
 
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -147,32 +109,32 @@ class Editor extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->experiments             = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$this->meta_boxes              = $this->injector->make( \Google\Web_Stories\Admin\Meta_Boxes::class );
-		$this->decoder                 = $this->injector->make( \Google\Web_Stories\Decoder::class );
-		$this->locale                  = $this->injector->make( \Google\Web_Stories\Locale::class );
-		$this->google_fonts            = $this->injector->make( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$this->assets                  = $this->createMock( \Google\Web_Stories\Assets::class );
-		$this->story_post_type         = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$this->page_template_post_type = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
-		$this->fonts_post_type         = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
-		$this->context                 = $this->injector->make( \Google\Web_Stories\Context::class );
-		$this->types                   = $this->injector->make( \Google\Web_Stories\Media\Types::class );
-		$this->settings                = $this->injector->make( \Google\Web_Stories\Settings::class );
+		$this->experiments       = $this->createMock( Experiments::class );
+		$meta_boxes              = $this->injector->make( \Google\Web_Stories\Admin\Meta_Boxes::class );
+		$decoder                 = $this->injector->make( Decoder::class );
+		$locale                  = $this->injector->make( Locale::class );
+		$google_fonts            = $this->injector->make( Google_Fonts::class );
+		$this->assets            = $this->createMock( Assets::class );
+		$this->story_post_type   = $this->injector->make( Story_Post_Type::class );
+		$page_template_post_type = $this->injector->make( Page_Template_Post_Type::class );
+		$fonts_post_type         = $this->injector->make( Font_Post_Type::class );
+		$context                 = $this->injector->make( Context::class );
+		$types                   = $this->injector->make( Types::class );
+		$settings                = $this->injector->make( Settings::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Editor(
 			$this->experiments,
-			$this->meta_boxes,
-			$this->decoder,
-			$this->locale,
-			$this->google_fonts,
+			$meta_boxes,
+			$decoder,
+			$locale,
+			$google_fonts,
 			$this->assets,
 			$this->story_post_type,
-			$this->page_template_post_type,
-			$this->fonts_post_type,
-			$this->context,
-			$this->types,
-			$this->settings
+			$page_template_post_type,
+			$fonts_post_type,
+			$context,
+			$types,
+			$settings
 		);
 
 		$this->add_caps_to_roles();
@@ -204,8 +166,10 @@ class Editor extends DependencyInjectedTestCase {
 		$this->assets->expects( $this->once() )->method( 'register_script_asset' )->with(
 			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
 		);
+		$current_post = get_post( self::$story_id );
+		$this->assertNotNull( $current_post );
 
-		$this->instance->replace_editor( true, get_post( self::$story_id ) );
+		$this->instance->replace_editor( true, $current_post );
 	}
 
 	/**
@@ -217,6 +181,10 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
+		$this->assertIsArray( $results );
+		$this->assertArrayHasKey( 'capabilities', $results );
+		$this->assertIsArray( $results['capabilities'] );
+		$this->assertArrayHasKey( 'hasUploadMediaAction', $results['capabilities'] );
 		$this->assertTrue( $results['capabilities']['hasUploadMediaAction'] );
 	}
 
@@ -229,6 +197,10 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
+		$this->assertIsArray( $results );
+		$this->assertArrayHasKey( 'capabilities', $results );
+		$this->assertIsArray( $results['capabilities'] );
+		$this->assertArrayHasKey( 'hasUploadMediaAction', $results['capabilities'] );
 		$this->assertFalse( $results['capabilities']['hasUploadMediaAction'] );
 	}
 
@@ -240,10 +212,25 @@ class Editor extends DependencyInjectedTestCase {
 		update_option( 'blogname', "S'mores" );
 
 		$results = $this->instance->get_editor_settings();
+		$this->assertIsArray( $results );
+		$this->assertArrayHasKey( 'metadata', $results );
+		$this->assertIsArray( $results['metadata'] );
+		$this->assertArrayHasKey( 'publisher', $results['metadata'] );
 
 		update_option( 'blogname', $blogname );
 
 		$this->assertSame( "S'mores", $results['metadata']['publisher'] );
+	}
+
+	/**
+	 * @link https://github.com/GoogleForCreators/web-stories-wp/issues/12601
+	 *
+	 * @covers ::get_editor_settings
+	 */
+	public function test_get_editor_settings_uses_correct_default_value(): void {
+		$results = $this->instance->get_editor_settings();
+
+		$this->assertTrue( $results['globalAutoAdvance'] );
 	}
 
 	/**
@@ -255,7 +242,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 		$this->experiments->method( 'is_experiment_enabled' )->willReturn( true );
 
-		$this->call_private_method( $this->instance, 'setup_lock', [ self::$story_id ] );
+		$this->call_private_method( [ $this->instance, 'setup_lock' ], [ self::$story_id ] );
 
 		$value = get_post_meta( self::$story_id, '_edit_lock', true );
 
@@ -271,7 +258,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 		$this->experiments->method( 'is_experiment_enabled' )->willReturn( true );
 
-		$this->call_private_method( $this->instance, 'setup_lock', [ self::$story_id ] );
+		$this->call_private_method( [ $this->instance, 'setup_lock' ], [ self::$story_id ] );
 
 		$value = get_post_meta( self::$story_id, '_edit_lock', true );
 

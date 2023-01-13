@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -20,6 +23,7 @@ namespace Google\Web_Stories\Tests\Unit\AMP;
 use AMP_DOM_Utils;
 use Brain\Monkey;
 use Google\Web_Stories\Tests\Unit\TestCase;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
@@ -49,22 +53,8 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
-	 * Helper method for tests.
-	 *
-	 * @param string $source
-	 * @param array $sanitizer_args
-	 * @return string Sanitized HTML.
+	 * @return array<string, string[]>
 	 */
-	protected function sanitize_and_get( $source, $sanitizer_args ): string {
-		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
-		$dom->documentElement->setAttribute( 'amp', '' );
-
-		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom, $sanitizer_args );
-		$sanitizer->sanitize();
-
-		return $dom->saveHTML( $dom->documentElement );
-	}
-
 	public function get_publisher_logo_data(): array {
 		return [
 			'publisher_logo_exists'  => [
@@ -96,6 +86,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher_logo' => 'https://example.com/publisher_logo.png',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -103,6 +95,9 @@ class Story_Sanitizer extends TestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	/**
+	 * @return array<string, array<string|array<string, mixed>>>
+	 */
 	public function get_poster_image_data(): array {
 		return [
 			'Poster image already exists' => [
@@ -113,6 +108,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'Poster image is missing'     => [
@@ -123,6 +120,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'Poster image is empty'       => [
@@ -133,6 +132,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'Poster image is overridden'  => [
@@ -146,6 +147,8 @@ class Story_Sanitizer extends TestCase {
 						'poster-landscape-src' => 'https://example.com/landscape.png',
 					],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 		];
@@ -154,7 +157,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
-	 * @param array  $args     Args.
+	 * @param array<string, array<string, mixed>|string|bool>  $args     Args.
 	 *
 	 * @dataProvider get_poster_image_data
 	 * @covers ::sanitize
@@ -166,6 +169,9 @@ class Story_Sanitizer extends TestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	/**
+	 * @return array<string, array<string|array<string, mixed>>>
+	 */
 	public function get_publisher_data(): array {
 		return [
 			'publisher_exists'        => [
@@ -176,6 +182,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => 'New publisher',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'no_publisher'            => [
@@ -186,6 +194,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => 'New publisher',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'missing_publisher'       => [
@@ -196,6 +206,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'empty_publisher'         => [
@@ -206,6 +218,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'double_quotes_publisher' => [
@@ -216,6 +230,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => '"double quotes"',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'single_quotes_publisher' => [
@@ -226,6 +242,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => "'single quotes'",
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'not_english_publisher'   => [
@@ -236,6 +254,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => 'PRÓXIMA',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 			'html_publisher'          => [
@@ -246,6 +266,8 @@ class Story_Sanitizer extends TestCase {
 					'publisher'      => 'this > that < that <randomhtml />',
 					'poster_images'  => [],
 					'video_cache'    => false,
+					'title_tag'      => '',
+					'description'    => '',
 				],
 			],
 		];
@@ -254,7 +276,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
-	 * @param array  $args   Args
+	 * @param array<string, array<string|array<string, mixed>>>  $args   Args
 	 *
 	 * @dataProvider get_publisher_data
 	 * @covers ::sanitize
@@ -277,6 +299,9 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
+
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -284,6 +309,9 @@ class Story_Sanitizer extends TestCase {
 		$this->assertStringContainsString( ' lang="en-US"', $actual );
 	}
 
+	/**
+	 * @return array<string, array<int, string>>
+	 */
 	public function data_test_transform_a_tags(): array {
 		return [
 			'Link without rel or target attribute' => [
@@ -314,6 +342,10 @@ class Story_Sanitizer extends TestCase {
 				'<html><head></head><body><a href="https://www.google.com" data-tooltip-icon="" data-tooltip-text="">Google</a></body></html>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" target="_blank" rel="noreferrer">Google</a></body></html>',
 			],
+			'Link without protocol'                => [
+				'<html><head></head><body><a href="www.google.com">Google</a></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" target="_blank" rel="noreferrer">Google</a></body></html>',
+			],
 		];
 	}
 
@@ -321,12 +353,14 @@ class Story_Sanitizer extends TestCase {
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_a_tags
 	 * @dataProvider data_test_transform_a_tags
 	 */
-	public function test_transform_a_tags( $source, $expected ): void {
+	public function test_transform_a_tags( string $source, string $expected ): void {
 		$args = [
 			'publisher_logo' => '',
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -345,6 +379,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -364,6 +400,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -382,6 +420,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => true,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -400,6 +440,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -418,6 +460,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -436,6 +480,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -454,6 +500,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -472,6 +520,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -490,6 +540,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -508,6 +560,8 @@ class Story_Sanitizer extends TestCase {
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -521,24 +575,24 @@ class Story_Sanitizer extends TestCase {
 	public function test_use_semantic_heading_tags_no_headings(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3</p>
-			<p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1</p>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1</p>
+            <p class="text-wrapper" style="font-size:.436893em">Title 2</p>
+            <p class="text-wrapper" style="font-size:.339805em">Title 3</p>
+            <p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
+            <p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
+            <p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
+            <p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
 </amp-story></body></html>
 HTML;
 
@@ -547,6 +601,8 @@ HTML;
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -570,24 +626,24 @@ HTML;
 	public function test_use_semantic_heading_tags_existing_headings(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<h2 class="text-wrapper" style="font-size:.436893em">Title 2</h2>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3</p>
-			<p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<h3 class="text-wrapper" style="font-size:.339805em">Title 3B</h3>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1</p>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1</p>
+            <h2 class="text-wrapper" style="font-size:.436893em">Title 2</h2>
+            <p class="text-wrapper" style="font-size:.339805em">Title 3</p>
+            <p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
+            <p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
+            <p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
+            <p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
+            <p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
 </amp-story></body></html>
 HTML;
 
@@ -596,6 +652,8 @@ HTML;
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -609,7 +667,7 @@ HTML;
 		$this->assertStringContainsString( 'Title 1B</p>', $actual );
 		$this->assertStringContainsString( 'Title 1B</p>', $actual );
 		$this->assertStringContainsString( 'Title 2B</p>', $actual );
-		$this->assertStringContainsString( 'Title 3B</h3>', $actual );
+		$this->assertStringContainsString( 'Title 3B</p>', $actual );
 		$this->assertStringContainsString( 'ParagraphB</p>', $actual );
 	}
 
@@ -619,33 +677,34 @@ HTML;
 	public function test_use_semantic_heading_tags_short_content(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">T 1</p>
-			<p class="text-wrapper" style="font-size:.582524em">T 1</p>
-			<p class="text-wrapper" style="font-size:.436893em">T 2</p>
-			<p class="text-wrapper" style="font-size:.339805em">T 3</p>
-			<p class="text-wrapper" style="font-size:.291262em">P</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">T1B</p>
-			<p class="text-wrapper" style="font-size:.339805em">T3B</p>
-			<p class="text-wrapper" style="font-size:.436893em">T2B</p>
-			<p class="text-wrapper" style="font-size:.582524em">T1B</p>
-			<p class="text-wrapper" style="font-size:.291262em">PB</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">T 1</p>
+            <p class="text-wrapper" style="font-size:.582524em">T 1</p>
+            <p class="text-wrapper" style="font-size:.436893em">T 2</p>
+            <p class="text-wrapper" style="font-size:.339805em">T 3</p>
+            <p class="text-wrapper" style="font-size:.291262em">P</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
+    <amp-story-page>
+        <amp-story-grid-layer>
+            <p class="text-wrapper" style="font-size:.582524em">T1B</p>
+            <p class="text-wrapper" style="font-size:.339805em">T3B</p>
+            <p class="text-wrapper" style="font-size:.436893em">T2B</p>
+            <p class="text-wrapper" style="font-size:.582524em">T1B</p>
+            <p class="text-wrapper" style="font-size:.291262em">PB</p>
+        </amp-story-grid-layer>
+    </amp-story-page>
 </amp-story></body></html>
 HTML;
 
 		$args = [
-			'publisher_logo'    => '',
-			'publisher'         => '',
-			'poster_images'     => [],
-			'video_cache'       => false,
-			'semantic_headings' => true,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -691,6 +750,8 @@ HTML;
 			'publisher'      => '',
 			'poster_images'  => [],
 			'video_cache'    => false,
+			'title_tag'      => '',
+			'description'    => '',
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -702,4 +763,81 @@ HTML;
 		$this->assertStringContainsString( 'Paragraph</span></span></p>', $actual );
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_title_and_meta_description
+	 * @dataProvider data_test_sanitize_title_and_meta_description
+	 */
+	public function test_sanitize_title_and_meta_description( string $source, string $expected ): void {
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+			'title_tag'      => 'New title tag',
+			'description'    => 'New description',
+		];
+
+		/**
+		 * @var Document $dom
+		 */
+		$dom = Document::fromHtml( $source );
+
+		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom, $args );
+		$sanitizer->sanitize();
+
+		$actual = $dom->saveHTML( $dom->documentElement );
+
+		$this->assertSame( $expected, $actual );
+	}
+
+	/**
+	 * @return array<string, array<int, string>>
+	 */
+	public function data_test_sanitize_title_and_meta_description(): array {
+		return [
+			'Both title tag and description present'      => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="Existing description"></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="Existing description"></head><body></body></html>',
+			],
+			'Missing title tag and description'           => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>New title tag</title><meta name="description" content="New description"></head><body></body></html>',
+			],
+			'Missing title tag'                           => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><meta name="description" content="Existing description"></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><meta name="description" content="Existing description"><title>New title tag</title></head><body></body></html>',
+			],
+			'Missing description'                         => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="New description"></head><body></body></html>',
+			],
+			'Duplicate title tag and description present' => [
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><title>Another title</title><meta name="description" content="Existing description"><meta name="description" content="Another description"></head><body></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="Existing description"></head><body></body></html>',
+			],
+		];
+	}
+
+	/**
+	 * Helper method for tests.
+	 *
+	 * @param string $source
+	 * @param array<string, array<string, mixed>|string|bool> $sanitizer_args
+	 * @return string Sanitized HTML.
+	 */
+	protected function sanitize_and_get( $source, $sanitizer_args ): string {
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
+		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
+		if ( $dom->documentElement ) {
+			$dom->documentElement->setAttribute( 'amp', '' );
+		}
+		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom, $sanitizer_args );
+		$sanitizer->sanitize();
+
+		return $dom->saveHTML( $dom->documentElement );
+	}
 }

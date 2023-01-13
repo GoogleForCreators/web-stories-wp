@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\AMP;
 
 use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\CachedRemoteGetRequest;
@@ -63,7 +65,6 @@ class Optimization {
 	public function optimize_document( Document $document ): void {
 		$errors = new ErrorCollection();
 		$this->get_optimizer()->optimizeDom( $document, $errors );
-
 		if ( \count( $errors ) > 0 ) {
 			/**
 			 * Error list.

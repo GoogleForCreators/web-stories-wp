@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use stdClass;
@@ -70,24 +72,6 @@ use WP_REST_Server;
  * }
  */
 class Font_Controller extends WP_REST_Posts_Controller {
-	/**
-	 * Constructor.
-	 *
-	 * Overrides the namespace.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @param string $post_type Post type.
-	 */
-	public function __construct( $post_type ) {
-		parent::__construct( $post_type );
-
-		$post_type_object = get_post_type_object( $post_type );
-		$this->namespace  = isset( $post_type_object, $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ?
-			$post_type_object->rest_namespace :
-			'web-stories/v1';
-	}
-
 	/**
 	 * Registers the routes for posts.
 	 *
@@ -137,112 +121,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
-	 * Returns a list of Google fonts.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @return array<int, mixed> List of Google fonts.
-	 *
-	 * @phpstan-return Font[]
-	 */
-	protected function get_builtin_fonts(): array {
-		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/fonts/fonts.json';
-
-		if ( ! is_readable( $file ) ) {
-			return [];
-		}
-
-		$content = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-
-		if ( ! $content ) {
-			return [];
-		}
-
-		/**
-		 * List of Google Fonts.
-		 *
-		 * @var array|null $fonts
-		 * @phpstan-var Font[]|null $fonts
-		 */
-		$fonts = json_decode( $content, true );
-
-		if ( ! $fonts ) {
-			return [];
-		}
-
-		return $fonts;
-	}
-
-	/**
-	 * Returns a list of custom fonts.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return array<int, mixed> List of custom fonts.
-	 */
-	protected function get_custom_fonts( $request ): array {
-		// Retrieve the list of registered collection query parameters.
-		$registered = $this->get_collection_params();
-		$args       = [
-			'orderby' => 'title',
-			'order'   => 'ASC',
-		];
-
-		/*
-		 * This array defines mappings between public API query parameters whose
-		 * values are accepted as-passed, and their internal WP_Query parameter
-		 * name equivalents (some are the same). Only values which are also
-		 * present in $registered will be set.
-		 */
-		$parameter_mappings = [
-			'search' => 's',
-		];
-
-		/*
-		 * For each known parameter which is both registered and present in the request,
-		 * set the parameter's value on the query $args.
-		 */
-		foreach ( $parameter_mappings as $api_param => $wp_param ) {
-			if ( isset( $registered[ $api_param ], $request[ $api_param ] ) ) {
-				$args[ $wp_param ] = $request[ $api_param ];
-			}
-		}
-
-		// Force sarch to be case-insensitive.
-
-		// Force the post_type argument, since it's not a user input variable.
-		$args['post_type'] = $this->post_type;
-		$query_args        = $this->prepare_items_query( $args, $request );
-
-		$posts_query  = new WP_Query();
-		$query_result = $posts_query->query( $query_args );
-
-		$posts = [];
-
-		/**
-		 * We're expecting a post object.
-		 *
-		 * @var WP_Post $post
-		 */
-		foreach ( $query_result as $post ) {
-			if ( ! $this->check_read_permission( $post ) ) {
-				continue;
-			}
-
-			$data    = $this->prepare_item_for_response( $post, $request );
-			$posts[] = $this->prepare_response_for_collection( $data );
-		}
-
-		// Reset filter.
-		if ( 'edit' === $request['context'] ) {
-			remove_filter( 'post_password_required', [ $this, 'check_password_required' ] );
-		}
-
-		return $posts;
-	}
-
-	/**
 	 * Retrieves a collection of fonts.
 	 *
 	 * @since 1.16.0
@@ -267,22 +145,22 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 				// For custom fonts the searching will be done in WP_Query already.
 				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) ) {
-					$fonts = array_values(
+					/**
+					 * Requested URL.
+					 *
+					 * @var string $search
+					 */
+					$search = $request['search'];
+					$fonts  = array_values(
 						array_filter(
 							$fonts,
-							static function( $font ) use ( $request ) {
-								/**
-								 * Font data.
-								 *
-								 * @var array{family: string} $font
-								 */
-								/**
-								 * Request data.
-								 *
-								 * @var array{search: string} $request
-								 */
-								return false !== stripos( $font['family'], $request['search'] );
-							}
+							/**
+							 * Font data.
+							 *
+							 * @param array{family: string} $font
+							 * @return bool
+							 */
+							static fn( array $font ) => false !== stripos( $font['family'], $search )
 						)
 					);
 				}
@@ -305,14 +183,13 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$fonts = array_values(
 					array_filter(
 						$fonts,
-						static function( $font ) use ( $include_list ) {
-							/**
-							 * Font data.
-							 *
-							 * @var array{family: string} $font
-							 */
-							return \in_array( strtolower( $font['family'] ), $include_list, true );
-						}
+						/**
+						 * Font data.
+						 *
+						 * @param array{family: string} $font
+						 * @return bool
+						 */
+						static fn( array $font ): bool => \in_array( strtolower( $font['family'] ), $include_list, true )
 					)
 				);
 			}
@@ -322,15 +199,14 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				// we only need to sort when including both.
 				usort(
 					$fonts,
-					static function( $a, $b ) {
-						/**
-						 * Font A and Font B.
-						 *
-						 * @phpstan-var Font $a
-						 * @phpstan-var Font $b
-						 */
-						return strnatcasecmp( $a['family'], $b['family'] );
-					}
+					/**
+					 * Font A and Font B.
+					 *
+					 * @param Font $a
+					 * @param Font $b
+					 * @return int
+					 */
+					static fn( array $a, array $b ): int => strnatcasecmp( $a['family'], $b['family'] )
 				);
 			}
 		}
@@ -451,91 +327,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		}
 
 		return $response;
-	}
-
-	/**
-	 * Prepares a single post for create.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 * @return stdClass|WP_Error Post object or WP_Error.
-	 */
-	protected function prepare_item_for_database( $request ) {
-		$prepared_post              = new stdClass();
-		$prepared_post->post_status = 'publish';
-
-		$font_data = [];
-
-		$fields = [
-			'family',
-			'fallbacks',
-			'weights',
-			'styles',
-			'variants',
-			'metrics',
-			'url',
-		];
-
-		$schema = $this->get_item_schema();
-
-		foreach ( $fields as $field ) {
-			if ( ! empty( $schema['properties'][ $field ] ) && ! empty( $request[ $field ] ) ) {
-				$font_data[ $field ] = $request[ $field ];
-
-				if ( 'family' === $field ) {
-					/**
-					 * Request data.
-					 *
-					 * @var array{family: string} $request
-					 */
-					$font_family = trim( $request['family'] );
-
-					$prepared_post->post_title = $font_family;
-
-					if ( $this->font_exists( $font_family ) ) {
-						return new \WP_Error(
-							'rest_invalid_field',
-							__( 'A font with this name already exists', 'web-stories' ),
-							[ 'status' => 400 ]
-						);
-					}
-				}
-			}
-		}
-
-		$prepared_post->post_content = wp_json_encode( $font_data );
-
-		return $prepared_post;
-	}
-
-	/**
-	 * Determines whether a font with the same name already exists.
-	 *
-	 * Performs a case-insensitive comparison.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @param string $font_family Font family.
-	 * @return bool Whether a font with this exact name already exists.
-	 */
-	private function font_exists( string $font_family ): bool {
-		$request = new WP_REST_Request(
-			WP_REST_Server::READABLE,
-			$this->namespace .
-			'/' . $this->rest_base
-		);
-		$request->set_param( 'include', [ $font_family ] );
-		$request->set_param( 'service', 'all' );
-
-		/**
-		 * Response object.
-		 *
-		 * @var WP_REST_Response $response
-		 */
-		$response = $this->get_items( $request );
-
-		return ! empty( $response->get_data() );
 	}
 
 	/**
@@ -700,5 +491,204 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		 */
 		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;
+	}
+
+	/**
+	 * Returns a list of Google fonts.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @return array<int, mixed> List of Google fonts.
+	 *
+	 * @phpstan-return Font[]
+	 */
+	protected function get_builtin_fonts(): array {
+		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/fonts/fonts.json';
+
+		if ( ! is_readable( $file ) ) {
+			return [];
+		}
+
+		$content = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+
+		if ( ! $content ) {
+			return [];
+		}
+
+		/**
+		 * List of Google Fonts.
+		 *
+		 * @var array|null $fonts
+		 * @phpstan-var Font[]|null $fonts
+		 */
+		$fonts = json_decode( $content, true );
+
+		if ( ! $fonts ) {
+			return [];
+		}
+
+		return $fonts;
+	}
+
+	/**
+	 * Returns a list of custom fonts.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return array<int, mixed> List of custom fonts.
+	 *
+	 * @phpstan-return Font[]
+	 */
+	protected function get_custom_fonts( $request ): array {
+		// Retrieve the list of registered collection query parameters.
+		$registered = $this->get_collection_params();
+		$args       = [
+			'orderby' => 'title',
+			'order'   => 'ASC',
+		];
+
+		/*
+		 * This array defines mappings between public API query parameters whose
+		 * values are accepted as-passed, and their internal WP_Query parameter
+		 * name equivalents (some are the same). Only values which are also
+		 * present in $registered will be set.
+		 */
+		$parameter_mappings = [
+			'search' => 's',
+		];
+
+		/*
+		 * For each known parameter which is both registered and present in the request,
+		 * set the parameter's value on the query $args.
+		 */
+		foreach ( $parameter_mappings as $api_param => $wp_param ) {
+			if ( isset( $registered[ $api_param ], $request[ $api_param ] ) ) {
+				$args[ $wp_param ] = $request[ $api_param ];
+			}
+		}
+
+		// Force search to be case-insensitive.
+
+		// Force the post_type argument, since it's not a user input variable.
+		$args['post_type'] = $this->post_type;
+		$query_args        = $this->prepare_items_query( $args, $request );
+
+		$posts_query  = new WP_Query();
+		$query_result = $posts_query->query( $query_args );
+
+		/**
+		 * List of custom fonts.
+		 *
+		 * @var array $posts
+		 * @phpstan-var Font[] $posts
+		 */
+		$posts = [];
+
+		/**
+		 * We're expecting a post object.
+		 *
+		 * @var WP_Post $post
+		 */
+		foreach ( $query_result as $post ) {
+			if ( ! $this->check_read_permission( $post ) ) {
+				continue;
+			}
+
+			$data    = $this->prepare_item_for_response( $post, $request );
+			$posts[] = $this->prepare_response_for_collection( $data );
+		}
+
+		// Reset filter.
+		if ( 'edit' === $request['context'] ) {
+			remove_filter( 'post_password_required', [ $this, 'check_password_required' ] );
+		}
+
+		return $posts;
+	}
+
+	/**
+	 * Prepares a single post for create.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return stdClass|WP_Error Post object or WP_Error.
+	 */
+	protected function prepare_item_for_database( $request ) {
+		$prepared_post              = new stdClass();
+		$prepared_post->post_status = 'publish';
+
+		$font_data = [];
+
+		$fields = [
+			'family',
+			'fallbacks',
+			'weights',
+			'styles',
+			'variants',
+			'metrics',
+			'url',
+		];
+
+		$schema = $this->get_item_schema();
+
+		foreach ( $fields as $field ) {
+			if ( ! empty( $schema['properties'][ $field ] ) && ! empty( $request[ $field ] ) ) {
+				$font_data[ $field ] = $request[ $field ];
+
+				if ( 'family' === $field ) {
+					/**
+					 * Request data.
+					 *
+					 * @var array{family: string} $request
+					 */
+					$font_family = trim( $request['family'] );
+
+					$prepared_post->post_title = $font_family;
+
+					if ( $this->font_exists( $font_family ) ) {
+						return new \WP_Error(
+							'rest_invalid_field',
+							__( 'A font with this name already exists', 'web-stories' ),
+							[ 'status' => 400 ]
+						);
+					}
+				}
+			}
+		}
+
+		$prepared_post->post_content = wp_json_encode( $font_data );
+
+		return $prepared_post;
+	}
+
+	/**
+	 * Determines whether a font with the same name already exists.
+	 *
+	 * Performs a case-insensitive comparison.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param string $font_family Font family.
+	 * @return bool Whether a font with this exact name already exists.
+	 */
+	private function font_exists( string $font_family ): bool {
+		$request = new WP_REST_Request(
+			WP_REST_Server::READABLE,
+			$this->namespace .
+			'/' . $this->rest_base
+		);
+		$request->set_param( 'include', [ $font_family ] );
+		$request->set_param( 'service', 'all' );
+
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
+		$response = $this->get_items( $request );
+
+		return ! empty( $response->get_data() );
 	}
 }

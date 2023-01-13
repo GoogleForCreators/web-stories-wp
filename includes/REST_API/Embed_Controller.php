@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use DOMElement;
@@ -64,7 +66,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Constructor.
@@ -216,6 +218,108 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Prepares a single embed output for response.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param array<string, mixed>|false $embed Embed value, default to false is not set.
+	 * @param WP_REST_Request            $request Request object.
+	 * @return WP_REST_Response|WP_Error Response object.
+	 */
+	public function prepare_item_for_response( $embed, $request ) {
+		$fields = $this->get_fields_for_response( $request );
+		$schema = $this->get_item_schema();
+
+		$data = [];
+
+		if ( \is_array( $embed ) ) {
+			$check_fields = array_keys( $embed );
+			foreach ( $check_fields as $check_field ) {
+				if ( ! empty( $schema['properties'][ $check_field ] ) && rest_is_field_included( $check_field, $fields ) ) {
+					$data[ $check_field ] = rest_sanitize_value_from_schema( $embed[ $check_field ], $schema['properties'][ $check_field ] );
+				}
+			}
+		}
+
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
+		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$data    = $this->add_additional_fields_to_object( $data, $request );
+		$data    = $this->filter_response_by_context( $data, $context );
+
+		return rest_ensure_response( $data );
+	}
+
+
+	/**
+	 * Retrieves the link's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return array Item schema data.
+	 *
+	 * @phpstan-return Schema
+	 */
+	public function get_item_schema(): array {
+		if ( $this->schema ) {
+			/**
+			 * Schema.
+			 *
+			 * @phpstan-var Schema $schema
+			 */
+			$schema = $this->add_additional_fields_schema( $this->schema );
+			return $schema;
+		}
+
+		$schema = [
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'title'      => 'embed',
+			'type'       => 'object',
+			'properties' => [
+				'title'  => [
+					'description' => __( 'Embed\'s title', 'web-stories' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'poster' => [
+					'description' => __( 'Embed\'s image', 'web-stories' ),
+					'type'        => 'string',
+					'format'      => 'uri',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+			],
+		];
+
+		$this->schema = $schema;
+
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->add_additional_fields_schema( $this->schema );
+		return $schema;
+	}
+
+	/**
+	 * Checks if current user can process links.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+	 */
+	public function get_proxy_item_permissions_check() {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
+			return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to make proxied embed requests.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+		}
+
+		return true;
 	}
 
 	/**
@@ -441,107 +545,5 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		return $node->getAttribute( $attribute );
-	}
-
-	/**
-	 * Prepares a single embed output for response.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param array<string, mixed>|false $embed Embed value, default to false is not set.
-	 * @param WP_REST_Request            $request Request object.
-	 * @return WP_REST_Response|WP_Error Response object.
-	 */
-	public function prepare_item_for_response( $embed, $request ) {
-		$fields = $this->get_fields_for_response( $request );
-		$schema = $this->get_item_schema();
-
-		$data = [];
-
-		if ( \is_array( $embed ) ) {
-			$check_fields = array_keys( $embed );
-			foreach ( $check_fields as $check_field ) {
-				if ( ! empty( $schema['properties'][ $check_field ] ) && rest_is_field_included( $check_field, $fields ) ) {
-					$data[ $check_field ] = rest_sanitize_value_from_schema( $embed[ $check_field ], $schema['properties'][ $check_field ] );
-				}
-			}
-		}
-
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
-		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
-		$data    = $this->add_additional_fields_to_object( $data, $request );
-		$data    = $this->filter_response_by_context( $data, $context );
-
-		return rest_ensure_response( $data );
-	}
-
-
-	/**
-	 * Retrieves the link's schema, conforming to JSON Schema.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @return array Item schema data.
-	 *
-	 * @phpstan-return Schema
-	 */
-	public function get_item_schema(): array {
-		if ( $this->schema ) {
-			/**
-			 * Schema.
-			 *
-			 * @phpstan-var Schema $schema
-			 */
-			$schema = $this->add_additional_fields_schema( $this->schema );
-			return $schema;
-		}
-
-		$schema = [
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'embed',
-			'type'       => 'object',
-			'properties' => [
-				'title'  => [
-					'description' => __( 'Embed\'s title', 'web-stories' ),
-					'type'        => 'string',
-					'context'     => [ 'view', 'edit', 'embed' ],
-				],
-				'poster' => [
-					'description' => __( 'Embed\'s image', 'web-stories' ),
-					'type'        => 'string',
-					'format'      => 'uri',
-					'context'     => [ 'view', 'edit', 'embed' ],
-				],
-			],
-		];
-
-		$this->schema = $schema;
-
-		/**
-		 * Schema.
-		 *
-		 * @phpstan-var Schema $schema
-		 */
-		$schema = $this->add_additional_fields_schema( $this->schema );
-		return $schema;
-	}
-
-	/**
-	 * Checks if current user can process links.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
-	 */
-	public function get_proxy_item_permissions_check() {
-		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to make proxied embed requests.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
-		}
-
-		return true;
 	}
 }

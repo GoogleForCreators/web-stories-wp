@@ -130,7 +130,7 @@ const sharedConfig = {
             include: [/inline-icons\/.*\.svg$/],
           },
           {
-            issuer: /\.js?$/,
+            issuer: /\.[jt]s?$/,
             include: [/\/icons\/.*\.svg$/],
             use: [
               {
@@ -160,7 +160,7 @@ const sharedConfig = {
             ],
           },
           {
-            issuer: /\.js?$/,
+            issuer: /\.[jt]s?$/,
             include: [/images\/.*\.svg$/],
             use: [
               {
@@ -270,8 +270,8 @@ const sharedConfig = {
   },
 };
 
-const EDITOR_CHUNK = 'wp-story-editor';
-const DASHBOARD_CHUNK = 'wp-dashboard';
+const EDITOR_CHUNK = 'web-stories-editor';
+const DASHBOARD_CHUNK = 'web-stories-dashboard';
 
 // Template for html-webpack-plugin to generate JS/CSS chunk manifests in PHP.
 const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
@@ -282,6 +282,7 @@ const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
 
   const chunkName = htmlWebpackPlugin.options.chunks[0];
   const omitPrimaryChunk = (f) => f !== chunkName;
+  const omitRightToLeftChunk = (f) => !f.endsWith('-rtl');
 
   const js = htmlWebpackPlugin.files.js
     .map((pathname) => {
@@ -295,7 +296,8 @@ const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
       const f = filenameOf(pathname);
       return f.split('.css')[0];
     })
-    .filter(omitPrimaryChunk);
+    .filter(omitPrimaryChunk)
+    .filter(omitRightToLeftChunk);
 
   // We're only interested in chunks from dynamic imports;
   // ones that are not already in `js` and not primaries.
@@ -382,8 +384,8 @@ const editorAndDashboard = {
 const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    lightbox: './packages/stories-lightbox/src/index.js',
-    'carousel-view': './packages/stories-carousel/src/index.js',
+    'web-stories-lightbox': './packages/stories-lightbox/src/index.js',
+    'web-stories-carousel': './packages/stories-carousel/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -465,7 +467,7 @@ const widgetScript = {
 const storiesMCEButton = {
   ...sharedConfig,
   entry: {
-    'tinymce-button': './packages/tinymce-button/src/index.js',
+    'web-stories-tinymce-button': './packages/tinymce-button/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,

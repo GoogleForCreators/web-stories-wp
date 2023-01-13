@@ -48,6 +48,8 @@ export const defaultSettingsState: SettingsState = {
   shoppingProvider: ShoppingProviderType.None,
   shopifyHost: '',
   shopifyAccessToken: '',
+  autoAdvance: true,
+  defaultPageDuration: 7,
 };
 
 interface SettingsBaseAction {
@@ -133,6 +135,8 @@ function settingsReducer(
         shoppingProvider: action.payload.shoppingProvider,
         shopifyHost: action.payload.shopifyHost,
         shopifyAccessToken: action.payload.shopifyAccessToken,
+        autoAdvance: action.payload.autoAdvance,
+        defaultPageDuration: action.payload.defaultPageDuration,
       };
     }
 

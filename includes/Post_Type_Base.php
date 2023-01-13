@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
@@ -163,26 +165,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	abstract public function get_slug(): string;
 
 	/**
-	 * Post type args.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @return array<string, mixed> Post type args.
-	 *
-	 * @phpstan-return PostTypeArgs
-	 */
-	abstract protected function get_args(): array;
-
-	/**
-	 * Get post type object.
-	 *
-	 * @since 1.14.0
-	 */
-	protected function get_object(): ?WP_Post_Type {
-		return get_post_type_object( $this->get_slug() );
-	}
-
-	/**
 	 * Get REST base name based on the post type.
 	 *
 	 * @since 1.14.0
@@ -225,7 +207,24 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_url(): string {
-		return sprintf( '/%s/%s', $this->get_rest_namespace(), $this->get_rest_base() );
+		return rest_get_route_for_post_type_items( $this->get_slug() );
+	}
+
+	/**
+	 * Returns all capabilities for the post type.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @return string[] The post type capabilities.
+	 */
+	public function get_caps(): array {
+		$post_type_obj = $this->get_object();
+
+		if ( ! $post_type_obj instanceof WP_Post_Type ) {
+			return [];
+		}
+
+		return (array) $post_type_obj->cap;
 	}
 
 	/**
@@ -337,7 +336,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		if ( get_option( 'permalink_structure' ) && \is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $post_type_obj->has_archive || $ignore_has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+			$struct = true === $post_type_obj->has_archive || $ignore_has_archive ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {
@@ -358,7 +357,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.26.0
 	 */
 	public function on_plugin_uninstall(): void {
-		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
+        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
 		$cpt_posts = get_posts(
 			[
 				'fields'           => 'ids',
@@ -372,5 +371,25 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		foreach ( $cpt_posts as $post_id ) {
 			wp_delete_post( (int) $post_id, true );
 		}
+	}
+
+	/**
+	 * Post type args.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return array<string, mixed> Post type args.
+	 *
+	 * @phpstan-return PostTypeArgs
+	 */
+	abstract protected function get_args(): array;
+
+	/**
+	 * Get post type object.
+	 *
+	 * @since 1.14.0
+	 */
+	protected function get_object(): ?WP_Post_Type {
+		return get_post_type_object( $this->get_slug() );
 	}
 }

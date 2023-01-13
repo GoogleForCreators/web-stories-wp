@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\AMP;
 
 use DOMElement;
@@ -38,7 +40,6 @@ use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
-use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Amp;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
@@ -60,7 +61,7 @@ class Sanitization {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Analytics constructor.
@@ -87,6 +88,41 @@ class Sanitization {
 		$result = AMP_Content_Sanitizer::sanitize_document( $document, $sanitizers, [] );
 
 		$this->ensure_required_markup( $document, $result['scripts'] );
+	}
+
+	/**
+	 * Validation error callback.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @see AMP_Validation_Error_Taxonomy::get_validation_error_sanitization
+	 *
+	 * @param array{code: string}              $error Error info, especially code.
+	 * @param array{node?: DOMElement|DOMNode} $data Additional data, including the node.
+	 * @return bool Whether the validation error should be sanitized.
+	 */
+	public function validation_error_callback( array $error, array $data = [] ): bool {
+		/**
+		 * Filters whether the validation error should be sanitized.
+		 *
+		 * Returning true this indicates that the validation error is acceptable
+		 * and should not be considered a blocker to render AMP. Returning null
+		 * means that the default status should be used.
+		 *
+		 * Note that the $node is not passed here to ensure that the filter can be
+		 * applied on validation errors that have been stored. Likewise, the $sources
+		 * are also omitted because these are only available during an explicit
+		 * validation request and so they are not suitable for plugins to vary
+		 * sanitization by.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @see AMP_Validation_Manager::is_sanitization_auto_accepted() Which controls whether an error is initially accepted or rejected for sanitization.
+		 *
+		 * @param bool $sanitized Whether the validation error should be sanitized.
+		 * @param array $error Validation error being sanitized.
+		 */
+		return apply_filters( 'web_stories_amp_validation_error_sanitized', true, $error );
 	}
 
 	/**
@@ -140,7 +176,7 @@ class Sanitization {
 		foreach ( $head_scripts as $script ) {
 			$src = $script->getAttribute( Attribute::SRC );
 
-			if ( ! $src || 0 !== strpos( $src, 'https://cdn.ampproject.org/' ) ) {
+			if ( ! $src || ! str_starts_with( $src, 'https://cdn.ampproject.org/' ) ) {
 				continue;
 			}
 
@@ -177,7 +213,7 @@ class Sanitization {
 		$extension_specs            = AMP_Allowed_Tags_Generated::get_extension_specs();
 		$superfluous_script_handles = array_diff(
 			array_keys( $amp_scripts ),
-			array_merge( array_keys( $scripts ), [ Amp::RUNTIME ] )
+			[ ...array_keys( $scripts ), Amp::RUNTIME ]
 		);
 
 		foreach ( $superfluous_script_handles as $superfluous_script_handle ) {
@@ -402,8 +438,8 @@ class Sanitization {
 		}
 
 		$sanitizers = [
-			AMP_Script_Sanitizer::class            => [],
-			AMP_Style_Sanitizer::class             => [
+			AMP_Script_Sanitizer::class        => [],
+			AMP_Style_Sanitizer::class         => [
 
 				/*
 				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
@@ -415,12 +451,12 @@ class Sanitization {
 					'amp-story-captions',
 				],
 			],
-			Meta_Sanitizer::class                  => [],
-			AMP_Layout_Sanitizer::class            => [],
-			Canonical_Sanitizer::class             => [
+			Meta_Sanitizer::class              => [],
+			AMP_Layout_Sanitizer::class        => [],
+			Canonical_Sanitizer::class         => [
 				'canonical_url' => $canonical_url,
 			],
-			AMP_Tag_And_Attribute_Sanitizer::class => [],
+			Tag_And_Attribute_Sanitizer::class => [],
 		];
 
 		$post = get_queried_object();
@@ -436,10 +472,12 @@ class Sanitization {
 			];
 
 			$sanitizers[ Story_Sanitizer::class ] = [
-				'publisher_logo' => $story->get_publisher_logo_url(),
+				'publisher_logo' => (string) $story->get_publisher_logo_url(),
 				'publisher'      => $story->get_publisher_name(),
 				'poster_images'  => array_filter( $poster_images ),
 				'video_cache'    => $video_cache_enabled,
+				'title_tag'      => wp_get_document_title(),
+				'description'    => wp_strip_all_tags( get_the_excerpt() ),
 			];
 		}
 
@@ -484,12 +522,12 @@ class Sanitization {
 
 		// Force certain sanitizers to be at end.
 		// AMP_Style_Sanitizer needs to catch any CSS changes from previous sanitizers.
-		// AMP_Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
+		// Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
 		foreach ( [
 			AMP_Layout_Sanitizer::class,
 			AMP_Style_Sanitizer::class,
 			Meta_Sanitizer::class,
-			AMP_Tag_And_Attribute_Sanitizer::class,
+			Tag_And_Attribute_Sanitizer::class,
 		] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];
@@ -505,40 +543,5 @@ class Sanitization {
 		unset( $sanitizer );
 
 		return $sanitizers;
-	}
-
-	/**
-	 * Validation error callback.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @see AMP_Validation_Error_Taxonomy::get_validation_error_sanitization
-	 *
-	 * @param array{code: string}              $error Error info, especially code.
-	 * @param array{node?: DOMElement|DOMNode} $data Additional data, including the node.
-	 * @return bool Whether the validation error should be sanitized.
-	 */
-	public function validation_error_callback( array $error, array $data = [] ): bool {
-		/**
-		 * Filters whether the validation error should be sanitized.
-		 *
-		 * Returning true this indicates that the validation error is acceptable
-		 * and should not be considered a blocker to render AMP. Returning null
-		 * means that the default status should be used.
-		 *
-		 * Note that the $node is not passed here to ensure that the filter can be
-		 * applied on validation errors that have been stored. Likewise, the $sources
-		 * are also omitted because these are only available during an explicit
-		 * validation request and so they are not suitable for plugins to vary
-		 * sanitization by.
-		 *
-		 * @since 1.1.0
-		 *
-		 * @see AMP_Validation_Manager::is_sanitization_auto_accepted() Which controls whether an error is initially accepted or rejected for sanitization.
-		 *
-		 * @param bool $sanitized Whether the validation error should be sanitized.
-		 * @param array $error Validation error being sanitized.
-		 */
-		return apply_filters( 'web_stories_amp_validation_error_sanitized', true, $error );
 	}
 }

@@ -25,7 +25,7 @@ import {
   isPatternEqual,
   createSolidFromString,
 } from '@googleforcreators/patterns';
-import type { Pattern, Solid } from '@googleforcreators/types';
+import type { Pattern, Solid } from '@googleforcreators/patterns';
 import type { EditorState, DraftInlineStyle } from 'draft-js';
 import type { CSSProperties } from 'react';
 

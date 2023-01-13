@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Renderer;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
@@ -45,21 +47,21 @@ class Archives extends Service_Base {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	protected $assets;
+	protected Assets $assets;
 
 	/**
 	 * AMP_Story_Player_Assets instance.
 	 *
 	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
 	 */
-	protected $amp_story_player_assets;
+	protected AMP_Story_Player_Assets $amp_story_player_assets;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	protected $context;
+	protected Context $context;
 
 	/**
 	 * Archives constructor.

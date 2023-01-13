@@ -151,7 +151,7 @@ export const TEMPLATES_GALLERY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      n.toString()
+      String(n)
     ),
 };
 

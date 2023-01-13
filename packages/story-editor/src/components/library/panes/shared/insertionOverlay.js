@@ -49,12 +49,12 @@ const Scrim = styled.div`
   pointer-events: none;
 `;
 
-function InsertionOverlay({ showIcon = true }) {
+function InsertionOverlay({ showIcon = true, className = '' }) {
   // The icon looks like a button but is just representational.
   // The real interactive element is the containing element.
   // If the showIcon is `false`, we still display the scrim for shade.
   return (
-    <Scrim>
+    <Scrim className={className}>
       {showIcon && (
         <IconContainer role="presentation">
           <Icons.PlusFilledSmall />
@@ -66,6 +66,7 @@ function InsertionOverlay({ showIcon = true }) {
 
 InsertionOverlay.propTypes = {
   showIcon: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default InsertionOverlay;

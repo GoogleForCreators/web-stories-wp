@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Model\Story;
@@ -37,7 +39,7 @@ class Image {
 	 *
 	 * @var Story Post object.
 	 */
-	protected $story;
+	protected Story $story;
 
 
 	/**

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Interfaces\Product_Query;
@@ -85,7 +87,7 @@ class Shopify_Query implements Product_Query {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Constructor.
@@ -94,6 +96,68 @@ class Shopify_Query implements Product_Query {
 	 */
 	public function __construct( Settings $settings ) {
 		$this->settings = $settings;
+	}
+
+	/**
+	 * Get products by search term.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param string $search_term Search term.
+	 * @param int    $page        Number of page for paginated requests.
+	 * @param int    $per_page    Number of products to be fetched.
+	 * @param string $orderby     Sort retrieved products by parameter. Default 'date'.
+	 * @param string $order       Whether to order products in ascending or descending order.
+	 *                            Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
+	 * @return array{products: array<Product>, has_next_page: bool}|WP_Error
+	 */
+	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
+		$result = $this->fetch_remote_products( $search_term, $page, $per_page, $orderby, $order );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		$products = [];
+
+		$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'];
+
+		foreach ( $result['data']['products']['edges'] as $edge ) {
+			$product = $edge['node'];
+
+			$images = [];
+
+			foreach ( $product['images']['edges'] as $image_edge ) {
+				$image    = $image_edge['node'];
+				$images[] = [
+					'url' => $image['url'],
+					'alt' => $image['altText'] ?? '',
+				];
+			}
+
+			// URL is null if the resource is currently not published to the Online Store sales channel,
+			// or if the shop is password-protected.
+			// In this case, we can fall back to a manually constructed product URL.
+			$product_url = $product['onlineStoreUrl'] ?? sprintf( 'https://%1$s/products/%2$s/', $this->get_host(), $product['handle'] );
+
+			$products[] = new Product(
+				[
+					'id'             => $product['id'],
+					'title'          => $product['title'],
+					'brand'          => $product['vendor'],
+					// TODO: Maybe eventually provide full price range.
+					// See https://github.com/ampproject/amphtml/issues/37957.
+					'price'          => (float) $product['priceRange']['minVariantPrice']['amount'],
+					'price_currency' => $product['priceRange']['minVariantPrice']['currencyCode'],
+					'images'         => $images,
+					'details'        => $product['description'],
+					// URL is null if the resource is currently not published to the Online Store sales channel,
+					// or if the shop is password-protected.
+					'url'            => $product_url,
+				]
+			);
+		}
+
+		return compact( 'products', 'has_next_page' );
 	}
 
 	/**
@@ -373,67 +437,5 @@ QUERY;
 		}
 
 		return $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
-	}
-
-	/**
-	 * Get products by search term.
-	 *
-	 * @since 1.21.0
-	 *
-	 * @param string $search_term Search term.
-	 * @param int    $page        Number of page for paginated requests.
-	 * @param int    $per_page    Number of products to be fetched.
-	 * @param string $orderby     Sort retrieved products by parameter. Default 'date'.
-	 * @param string $order       Whether to order products in ascending or descending order.
-	 *                            Accepts 'asc' (ascending) or 'desc' (descending). Default 'desc'.
-	 * @return array{products: array<Product>, has_next_page: bool}|WP_Error
-	 */
-	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
-		$result = $this->fetch_remote_products( $search_term, $page, $per_page, $orderby, $order );
-		if ( is_wp_error( $result ) ) {
-			return $result;
-		}
-
-		$products = [];
-
-		$has_next_page = $result['data']['products']['pageInfo']['hasNextPage'];
-
-		foreach ( $result['data']['products']['edges'] as $edge ) {
-			$product = $edge['node'];
-
-			$images = [];
-
-			foreach ( $product['images']['edges'] as $image_edge ) {
-				$image    = $image_edge['node'];
-				$images[] = [
-					'url' => $image['url'],
-					'alt' => $image['altText'] ?? '',
-				];
-			}
-
-			// URL is null if the resource is currently not published to the Online Store sales channel,
-			// or if the shop is password-protected.
-			// In this case, we can fall back to a manually constructed product URL.
-			$product_url = $product['onlineStoreUrl'] ?? sprintf( 'https://%1$s/products/%2$s/', $this->get_host(), $product['handle'] );
-
-			$products[] = new Product(
-				[
-					'id'             => $product['id'],
-					'title'          => $product['title'],
-					'brand'          => $product['vendor'],
-					// TODO: Maybe eventually provide full price range.
-					// See https://github.com/ampproject/amphtml/issues/37957.
-					'price'          => (float) $product['priceRange']['minVariantPrice']['amount'],
-					'price_currency' => $product['priceRange']['minVariantPrice']['currencyCode'],
-					'images'         => $images,
-					'details'        => $product['description'],
-					// URL is null if the resource is currently not published to the Online Store sales channel,
-					// or if the shop is password-protected.
-					'url'            => $product_url,
-				]
-			);
-		}
-
-		return compact( 'products', 'has_next_page' );
 	}
 }

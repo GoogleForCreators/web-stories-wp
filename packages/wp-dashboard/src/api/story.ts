@@ -20,11 +20,13 @@
 import { addQueryArgs } from '@googleforcreators/url';
 import {
   STORIES_PER_REQUEST,
-  DEFAULT_FILTERS, DashboardStory
-} from "@googleforcreators/dashboard";
+  DEFAULT_FILTERS,
+  DashboardStory,
+} from '@googleforcreators/dashboard';
 import { createSolidFromString } from '@googleforcreators/patterns';
 import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
-import type { TemplateData } from '@googleforcreators/templates';
+import type { Story } from '@googleforcreators/elements';
+import type { Template } from '@googleforcreators/templates';
 
 /**
  * WordPress dependencies
@@ -34,7 +36,6 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import type { Story } from '@googleforcreators/types';
 import type {
   WPDashboardConfig,
   EnvelopedWordPressStories,
@@ -42,7 +43,6 @@ import type {
 } from '../types';
 import { STORY_FIELDS, STORY_EMBED } from './constants';
 import { reshapeStoryObject } from './utils';
-import { Template } from "@googleforcreators/templates";
 
 /**
  * Fetch stories ( When dashboard link is clicked. )
@@ -129,7 +129,10 @@ export function trashStory(config: WPDashboardConfig, storyId: number) {
  * @param story Story object.
  * @return Request promise.
  */
-export function updateStory(config: WPDashboardConfig, story: Pick<DashboardStory, 'id' | 'author' | 'title'>) {
+export function updateStory(
+  config: WPDashboardConfig,
+  story: Pick<DashboardStory, 'id' | 'author' | 'title'>
+) {
   const path = addQueryArgs(`${config.api.stories}${story.id}/`, {
     _embed: STORY_EMBED,
   });
@@ -178,11 +181,13 @@ export function createStoryFromTemplate(
     createSolidFromString(color)
   );
 
+  // If available, take the global values.
+  const { globalPageDuration = 7, globalAutoAdvance = true } = config;
   const storyData = {
     pages,
     version,
-    autoAdvance: true,
-    defaultPageDuration: 7,
+    autoAdvance: globalAutoAdvance,
+    defaultPageDuration: globalPageDuration,
     currentStoryStyles: {
       colors: convertedColors,
     },

@@ -22,16 +22,18 @@ import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { Input, Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { safeDecodeURIComponent } from '@googleforcreators/url';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import cleanForSlug from '../../../../utils/cleanForSlug';
-import inRange from '../../../../utils/inRange';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared/styles';
+
+const inRange = (value, { MIN, MAX }) => value >= MIN && value <= MAX;
 
 export const MIN_MAX = {
   PERMALINK: {
@@ -70,7 +72,12 @@ function SlugPanel({ nameOverride }) {
         story: { slug = '', link, permalinkConfig },
       },
       actions: { updateStory },
-    }) => ({ slug, link, permalinkConfig, updateStory })
+    }) => ({
+      slug: safeDecodeURIComponent(slug),
+      link,
+      permalinkConfig,
+      updateStory,
+    })
   );
   const [slug, setSlug] = useState(savedSlug);
 

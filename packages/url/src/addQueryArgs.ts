@@ -27,7 +27,7 @@
  */
 export default function addQueryArgs(
   url: string,
-  args: Record<string, string | number | string[] | boolean>
+  args: Record<string, string | number | string[] | boolean | null>
 ): string {
   let isRelativeUrl = false;
   let parsedURL;

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -17,14 +20,17 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
+
 trait Capabilities_Setup {
 	public function add_caps_to_roles(): void {
-		$capability = new \Google\Web_Stories\User\Capabilities();
+		$capability = new \Google\Web_Stories\User\Capabilities( new \Google\Web_Stories\Story_Post_Type( new \Google\Web_Stories\Settings( new Shopping_Vendors( new SimpleInjector() ) ) ) );
 		$capability->add_caps_to_roles();
 	}
 
 	public function remove_caps_from_roles(): void {
-		$capability = new \Google\Web_Stories\User\Capabilities();
+		$capability = new \Google\Web_Stories\User\Capabilities( new \Google\Web_Stories\Story_Post_Type( new \Google\Web_Stories\Settings( new Shopping_Vendors( new SimpleInjector() ) ) ) );
 		$capability->remove_caps_from_roles();
 	}
 }

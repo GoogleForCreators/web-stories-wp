@@ -4,7 +4,7 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "references": [{ "path": "../react" }, { "path": "../types" }],
+  "references": [{ "path": "../elements" }, { "path": "../migration" }],
   /* Excludes the raw JSON files */
   "include": ["src/*"]
 }

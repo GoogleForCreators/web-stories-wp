@@ -176,7 +176,7 @@ function AdManagement({
             handleUpdate={handleUpdateAdNetwork}
             adNetwork={adNetwork}
           />
-          {AdNetworkType.ADSENSE === adNetwork && (
+          {AdNetworkType.Adsense === adNetwork && (
             <GoogleAdSenseSettings
               handleUpdatePublisherId={handleUpdateAdSensePublisherId}
               handleUpdateSlotId={handleUpdateAdSenseSlotId}
@@ -185,7 +185,7 @@ function AdManagement({
               siteKitStatus={siteKitStatus}
             />
           )}
-          {AdNetworkType.ADMANAGER === adNetwork && (
+          {AdNetworkType.Admanager === adNetwork && (
             <GoogleAdManagerSettings
               handleUpdate={handleUpdateAdManagerSlotId}
               slotId={adManagerSlotId}

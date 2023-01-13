@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Decoder;
@@ -76,7 +78,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @var Decoder Decoder instance.
 	 */
-	private $decoder;
+	private Decoder $decoder;
 
 	/**
 	 * Constructor.
@@ -89,74 +91,16 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
-		$post_type_object = get_post_type_object( $post_type );
-		$this->namespace  = isset( $post_type_object, $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ?
-			$post_type_object->rest_namespace :
-			'web-stories/v1';
 
 		$injector = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return;
-		}
-		$this->decoder = $injector->make( Decoder::class );
-	}
-
-	/**
-	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 * @return stdClass|WP_Error Post object or WP_Error.
-	 */
-	protected function prepare_item_for_database( $request ) {
-		$prepared_post = parent::prepare_item_for_database( $request );
-
-		if ( is_wp_error( $prepared_post ) ) {
-			return $prepared_post;
-		}
-
 		/**
-		 * Schema.
+		 * Decoder instance.
 		 *
-		 * @phpstan-var Schema $schema
+		 * @var Decoder $decoder Decoder instance.
 		 */
-		$schema = $this->get_item_schema();
+		$decoder = $injector->make( Decoder::class );
 
-		// Post content.
-		if ( ! empty( $schema['properties']['content'] ) ) {
-
-			// Ensure that content and story_data are updated together.
-			// Exception: new auto-draft created from a template.
-			if (
-				(
-				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
-				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
-				) && ( 'auto-draft' !== $prepared_post->post_status )
-			) {
-				return new \WP_Error(
-					'rest_empty_content',
-					sprintf(
-						/* translators: 1: content, 2: story_data */
-						__( '%1$s and %2$s should always be updated together.', 'web-stories' ),
-						'content',
-						'story_data'
-					),
-					[ 'status' => 412 ]
-				);
-			}
-
-			if ( isset( $request['content'] ) ) {
-				$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
-			}
-		}
-
-		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
-		if ( ! empty( $schema['properties']['story_data'] ) && isset( $request['story_data'] ) ) {
-			$prepared_post->post_content_filtered = wp_json_encode( $request['story_data'] );
-		}
-
-		return $prepared_post;
+		$this->decoder = $decoder;
 	}
 
 	/**
@@ -277,32 +221,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
-	 * Get registered post meta.
-	 *
-	 * @since 1.23.0
-	 *
-	 * @param WP_Post $original_post Post Object.
-	 * @return array<string, mixed> $meta
-	 */
-	protected function get_registered_meta( WP_Post $original_post ): array {
-		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
-		$meta      = [];
-		/**
-		 * Meta key settings.
-		 *
-		 * @var array $settings
-		 * @phpstan-var RegisteredMetadata $settings
-		 */
-		foreach ( $meta_keys as $key => $settings ) {
-			if ( $settings['show_in_rest'] ) {
-				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
-			}
-		}
-
-		return $meta;
-	}
-
-	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
 	 *
 	 * @since 1.0.0
@@ -349,6 +267,90 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
+	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return stdClass|WP_Error Post object or WP_Error.
+	 */
+	protected function prepare_item_for_database( $request ) {
+		$prepared_post = parent::prepare_item_for_database( $request );
+
+		if ( is_wp_error( $prepared_post ) ) {
+			return $prepared_post;
+		}
+
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->get_item_schema();
+
+		// Post content.
+		if ( ! empty( $schema['properties']['content'] ) ) {
+
+			// Ensure that content and story_data are updated together.
+			// Exception: new auto-draft created from a template.
+			if (
+				(
+				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
+				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
+				) && ( 'auto-draft' !== $prepared_post->post_status )
+			) {
+				return new \WP_Error(
+					'rest_empty_content',
+					sprintf(
+						/* translators: 1: content, 2: story_data */
+						__( '%1$s and %2$s should always be updated together.', 'web-stories' ),
+						'content',
+						'story_data'
+					),
+					[ 'status' => 412 ]
+				);
+			}
+
+			if ( isset( $request['content'] ) ) {
+				$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
+			}
+		}
+
+		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
+		if ( ! empty( $schema['properties']['story_data'] ) && isset( $request['story_data'] ) ) {
+			$prepared_post->post_content_filtered = wp_json_encode( $request['story_data'] );
+		}
+
+		return $prepared_post;
+	}
+
+	/**
+	 * Get registered post meta.
+	 *
+	 * @since 1.23.0
+	 *
+	 * @param WP_Post $original_post Post Object.
+	 * @return array<string, mixed> $meta
+	 */
+	protected function get_registered_meta( WP_Post $original_post ): array {
+		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
+		$meta      = [];
+		/**
+		 * Meta key settings.
+		 *
+		 * @var array $settings
+		 * @phpstan-var RegisteredMetadata $settings
+		 */
+		foreach ( $meta_keys as $key => $settings ) {
+			if ( $settings['show_in_rest'] ) {
+				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
+			}
+		}
+
+		return $meta;
+	}
+
+	/**
 	 * Prepares links for the request.
 	 *
 	 * Ensures that {@see Stories_Users_Controller} is used for author embeds.
@@ -390,65 +392,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			];
 		}
 
-		$links = $this->add_taxonomy_links( $links, $post );
-
-		return $links;
-	}
-
-	/**
-	 * Adds a REST API links for the taxonomies.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post  Post object.
-	 * @return array Modified list of links.
-	 *
-	 * @phpstan-param Links $links
-	 * @phpstan-return Links
-	 */
-	private function add_taxonomy_links( array $links, WP_Post $post ): array {
-		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
-
-		if ( empty( $taxonomies ) ) {
-			return $links;
-		}
-
-		$links['https://api.w.org/term'] = [];
-
-		foreach ( $taxonomies as $taxonomy_obj ) {
-			// Skip taxonomies that are not public.
-			if ( empty( $taxonomy_obj->show_in_rest ) ) {
-				continue;
-			}
-
-			$controller = $taxonomy_obj->get_rest_controller();
-
-			if ( ! $controller ) {
-				continue;
-			}
-
-			$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
-			$tax       = $taxonomy_obj->name;
-			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
-
-			$query_params = [
-				'post'     => $post->ID,
-				'per_page' => 100,
-			];
-
-			$terms_url = add_query_arg(
-				$query_params,
-				rest_url( sprintf( '%s/%s', $namespace, $tax_base ) )
-			);
-
-			$links['https://api.w.org/term'][] = [
-				'href'       => $terms_url,
-				'taxonomy'   => $tax,
-				'embeddable' => true,
-			];
-		}
-
 		return $links;
 	}
 
@@ -473,14 +416,5 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		return $rels;
-	}
-
-	/**
-	 * Return namespace.
-	 *
-	 * @since 1.12.0
-	 */
-	public function get_namespace(): string {
-		return $this->namespace;
 	}
 }

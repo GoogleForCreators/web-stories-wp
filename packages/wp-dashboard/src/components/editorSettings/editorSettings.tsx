@@ -45,6 +45,7 @@ import { Wrapper, Main } from './components';
 import useEditorSettings from './useEditorSettings';
 import CustomFontsSettings from './customFonts';
 import Shopping from './shopping';
+import PageAdvancement from './pageAdvancement';
 
 function EditorSettings() {
   const {
@@ -77,6 +78,8 @@ function EditorSettings() {
     shoppingProvider,
     shopifyHost,
     shopifyAccessToken,
+    autoAdvance,
+    defaultPageDuration,
   } = useEditorSettings(
     ({
       actions: {
@@ -106,6 +109,8 @@ function EditorSettings() {
           shoppingProvider,
           shopifyHost,
           shopifyAccessToken,
+          autoAdvance,
+          defaultPageDuration,
         },
         media: { isLoading: isMediaLoading, newlyCreatedMediaIds },
         publisherLogos: { publisherLogos },
@@ -141,6 +146,8 @@ function EditorSettings() {
       shoppingProvider,
       shopifyHost,
       shopifyAccessToken,
+      autoAdvance,
+      defaultPageDuration,
     })
   );
 
@@ -400,6 +407,11 @@ function EditorSettings() {
                   shopifyAccessToken={shopifyAccessToken}
                   vendors={vendors}
                   woocommerce={woocommerce}
+                />
+                <PageAdvancement
+                  updateSettings={updateSettings}
+                  autoAdvance={autoAdvance}
+                  defaultPageDuration={defaultPageDuration}
                 />
               </>
             )}

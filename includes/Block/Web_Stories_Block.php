@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Block;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
@@ -68,14 +70,14 @@ use Google\Web_Stories\Tracking;
  *   height?: int,
  *   align: string,
  *   stories?: int[],
- *   viewType: string,
+ *   viewType?: string,
  *   numOfStories?: int,
- *   numOfColumns: int,
- *   circleSize: int,
- *   imageAlignment: string,
- *   orderby: string,
- *   order: string,
- *   archiveLinkLabel: string,
+ *   numOfColumns?: int,
+ *   circleSize?: int,
+ *   imageAlignment?: string,
+ *   orderby?: string,
+ *   order?: string,
+ *   archiveLinkLabel?: string,
  *   authors?: int[],
  *   fieldState?: array<string, mixed>
  * }
@@ -88,31 +90,31 @@ class Web_Stories_Block extends Embed_Base {
 	public const SCRIPT_HANDLE = 'web-stories-block';
 
 	/**
-	 * Current block's block attributes.
-	 *
-	 * @var array Block Attributes.
-	 * @phpstan-var BlockAttributes
-	 */
-	protected $block_attributes;
-
-	/**
 	 * Maximum number of stories users can select
 	 */
 	public const MAX_NUM_OF_STORIES = 20;
+
+	/**
+	 * Current block's block attributes.
+	 *
+	 * @var array<string, mixed> Block Attributes.
+	 * @phpstan-var BlockAttributes
+	 */
+	protected array $block_attributes;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	protected $story_post_type;
+	protected Story_Post_Type $story_post_type;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Embed Base constructor.
@@ -153,6 +155,79 @@ class Web_Stories_Block extends Embed_Base {
 		);
 
 		$this->register_block_type();
+	}
+
+	/**
+	 * Renders the block type output for given attributes.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array<string, mixed> $attributes Block attributes.
+	 * @return string Rendered block type output.
+	 *
+	 * @phpstan-param BlockAttributesWithDefaults $attributes
+	 */
+	public function render_block( array $attributes ): string {
+		if ( false === $this->initialize_block_attributes( $attributes ) ) {
+			return '';
+		}
+
+		if ( ! empty( $attributes['blockType'] )
+			&& ( 'latest-stories' === $attributes['blockType'] || 'selected-stories' === $attributes['blockType'] ) ) {
+
+			$story_attributes = [
+				'align'              => $attributes['align'],
+				'view_type'          => $attributes['viewType']         ??= '',
+				'archive_link_label' => $attributes['archiveLinkLabel'] ??= __( 'View all stories', 'web-stories' ),
+				'circle_size'        => $attributes['circleSize']       ??= 96,
+				'image_alignment'    => $attributes['imageAlignment']   ??= 96,
+				'number_of_columns'  => $attributes['numOfColumns']     ??= 2,
+			];
+
+			/**
+			 * Story Attributes.
+			 *
+			 * @phpstan-var StoryAttributes $story_attributes
+			 */
+			$story_attributes = array_merge( $story_attributes, $this->get_mapped_field_states() );
+
+			return ( new Story_Query( $story_attributes, $this->get_query_args() ) )->render();
+		}
+
+		// Embedding a single story by URL.
+		$attributes = wp_parse_args( $attributes, $this->default_attrs() );
+
+		$attributes['class'] = 'wp-block-web-stories-embed';
+
+		return $this->render( $attributes );
+	}
+
+	/**
+	 * Maps fields to the story params.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function get_mapped_field_states(): array {
+		$controls = [
+			'show_title'        => 'title',
+			'show_author'       => 'author',
+			'show_excerpt'      => 'excerpt',
+			'show_date'         => 'date',
+			'show_archive_link' => 'archive_link',
+			'sharp_corners'     => 'sharp_corners',
+		];
+
+		$controls_state = [];
+
+		foreach ( $controls as $control => $field ) {
+			$key = 'show_' . $field;
+
+			$controls_state[ $control ] = $this->block_attributes['fieldState'][ $key ] ?? false;
+		}
+
+		return $controls_state;
 	}
 
 	/**
@@ -290,79 +365,6 @@ class Web_Stories_Block extends Embed_Base {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Renders the block type output for given attributes.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param array<string, mixed> $attributes Block attributes.
-	 * @return string Rendered block type output.
-	 *
-	 * @phpstan-param BlockAttributesWithDefaults $attributes
-	 */
-	public function render_block( array $attributes ): string {
-		if ( false === $this->initialize_block_attributes( $attributes ) ) {
-			return '';
-		}
-
-		if ( ! empty( $attributes['blockType'] )
-			&& ( 'latest-stories' === $attributes['blockType'] || 'selected-stories' === $attributes['blockType'] ) ) {
-
-			$story_attributes = [
-				'align'              => $attributes['align'],
-				'view_type'          => $attributes['viewType'],
-				'archive_link_label' => $attributes['archiveLinkLabel'],
-				'circle_size'        => $attributes['circleSize'],
-				'image_alignment'    => $attributes['imageAlignment'],
-				'number_of_columns'  => $attributes['numOfColumns'],
-			];
-
-			/**
-			 * Story Attributes.
-			 *
-			 * @phpstan-var StoryAttributes $story_attributes
-			 */
-			$story_attributes = array_merge( $story_attributes, $this->get_mapped_field_states() );
-
-			return ( new Story_Query( $story_attributes, $this->get_query_args() ) )->render();
-		}
-
-		// Embedding a single story by URL.
-		$attributes = wp_parse_args( $attributes, $this->default_attrs() );
-
-		$attributes['class'] = 'wp-block-web-stories-embed';
-
-		return $this->render( $attributes );
-	}
-
-	/**
-	 * Maps fields to the story params.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function get_mapped_field_states(): array {
-		$controls = [
-			'show_title'        => 'title',
-			'show_author'       => 'author',
-			'show_excerpt'      => 'excerpt',
-			'show_date'         => 'date',
-			'show_archive_link' => 'archive_link',
-			'sharp_corners'     => 'sharp_corners',
-		];
-
-		$controls_state = [];
-
-		foreach ( $controls as $control => $field ) {
-			$key = 'show_' . $field;
-
-			$controls_state[ $control ] = $this->block_attributes['fieldState'][ $key ] ?? false;
-		}
-
-		return $controls_state;
 	}
 
 	/**

@@ -15,22 +15,17 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
 import {
+  ResourceInput,
   GifResource,
   Resource,
   ResourceType,
   VideoResource,
   AudioResource,
-} from '@googleforcreators/types';
-
-/**
- * Internal dependencies
- */
+} from './types';
 import getTypeFromMime from './getTypeFromMime';
-import normalizeResourceSizes from './normalizeResourceSizes';
-import type { ResourceInput } from './types';
 
 /**
  * Creates a resource object.
@@ -45,7 +40,7 @@ function createResource({
   posterId,
   length,
   lengthFormatted,
-  sizes,
+  sizes = {},
   output,
   width = 0,
   height = 0,
@@ -63,7 +58,7 @@ function createResource({
     mimeType,
     width,
     height,
-    sizes: normalizeResourceSizes(sizes),
+    sizes,
     isPlaceholder,
     isExternal,
     needsProxy,

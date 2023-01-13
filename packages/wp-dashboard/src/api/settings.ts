@@ -99,6 +99,8 @@ export function updateSettings(
     shoppingProvider,
     shopifyHost,
     shopifyAccessToken,
+    autoAdvance,
+    defaultPageDuration,
   } = queryParams;
 
   const query: Partial<WordPressStoriesSettings> = {};
@@ -153,6 +155,14 @@ export function updateSettings(
 
   if (shopifyAccessToken !== undefined) {
     query.web_stories_shopify_access_token = shopifyAccessToken;
+  }
+
+  if (autoAdvance !== undefined) {
+    query.web_stories_auto_advance = Boolean(autoAdvance);
+  }
+
+  if (defaultPageDuration !== undefined) {
+    query.web_stories_default_page_duration = defaultPageDuration;
   }
 
   const path = addQueryArgs(apiPath, query);

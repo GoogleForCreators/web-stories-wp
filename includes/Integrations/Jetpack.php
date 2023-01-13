@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Context;
@@ -90,14 +92,14 @@ class Jetpack extends Service_Base {
 	 *
 	 * @var Media_Source_Taxonomy Experiments instance.
 	 */
-	protected $media_source_taxonomy;
+	protected Media_Source_Taxonomy $media_source_taxonomy;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Jetpack constructor.
@@ -141,6 +143,10 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array|mixed $post_types Array of post types.
 	 * @return array|mixed Modified list of post types.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($post_types is array<T> ? array<T> : mixed)
 	 */
 	public function add_to_jetpack_sitemap( $post_types ) {
 		if ( ! \is_array( $post_types ) ) {
@@ -160,6 +166,10 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array{video?: string[]}|mixed $mime_types Associative array of allowed mime types per media type (image, audio, video).
 	 * @return array{video?: string[]}|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($mime_types is array<T> ? array<T> : mixed)
 	 */
 	public function add_videopress( $mime_types ) {
 		if ( ! \is_array( $mime_types ) ) {
@@ -186,6 +196,10 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array|mixed $args Query args.
 	 * @return array|mixed Filtered query args.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($args is array<T> ? array<T> : mixed)
 	 */
 	public function filter_ajax_query_attachments_args( $args ) {
 		if ( ! \is_array( $args ) || ! isset( $args['post_mime_type'] ) || ! \is_array( $args['post_mime_type'] ) ) {
@@ -213,6 +227,10 @@ class Jetpack extends Service_Base {
 	 *
 	 * @phpstan-param AttachmentData $data
 	 * @phpstan-return AttachmentData|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($data is array<T> ? array<T> : mixed)
 	 */
 	public function filter_admin_ajax_response( $data, $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
@@ -321,6 +339,41 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
+	 * Hook into added_post_meta.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @param int    $mid         The meta ID after successful update.
+	 * @param int    $object_id   ID of the object metadata is for.
+	 * @param string $meta_key    Metadata key.
+	 */
+	public function add_term( $mid, $object_id, $meta_key ): void {
+		if ( self::VIDEOPRESS_POSTER_META_KEY !== $meta_key ) {
+			return;
+		}
+		if ( 'attachment' !== get_post_type( $object_id ) ) {
+			return;
+		}
+
+		wp_set_object_terms( (int) $object_id, $this->media_source_taxonomy::TERM_POSTER_GENERATION, $this->media_source_taxonomy->get_taxonomy_slug() );
+	}
+
+	/**
+	 * Force Jetpack to see Web Stories as AMP.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param bool $is_amp_request Is the request supposed to return valid AMP content.
+	 * @return bool Whether the current request is an AMP request.
+	 */
+	public function force_amp_request( $is_amp_request ): bool {
+		if ( ! $this->context->is_web_story() ) {
+			return (bool) $is_amp_request;
+		}
+		return true;
+	}
+
+	/**
 	 * Format milliseconds into seconds.
 	 *
 	 * @since 1.7.2
@@ -339,40 +392,5 @@ class Jetpack extends Service_Base {
 		}
 
 		return sprintf( '%d:%02u', $minutes, $seconds );
-	}
-
-	/**
-	 * Hook into added_post_meta.
-	 *
-	 * @since 1.7.2
-	 *
-	 * @param int    $mid         The meta ID after successful update.
-	 * @param int    $object_id   ID of the object metadata is for.
-	 * @param string $meta_key    Metadata key.
-	 */
-	public function add_term( $mid, $object_id, $meta_key ): void {
-		if ( self::VIDEOPRESS_POSTER_META_KEY !== $meta_key ) {
-			return;
-		}
-		if ( 'attachment' !== get_post_type( $object_id ) ) {
-			return;
-		}
-
-		wp_set_object_terms( (int) $object_id, 'poster-generation', $this->media_source_taxonomy->get_taxonomy_slug() );
-	}
-
-	/**
-	 * Force Jetpack to see Web Stories as AMP.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param bool $is_amp_request Is the request supposed to return valid AMP content.
-	 * @return bool Whether the current request is an AMP request.
-	 */
-	public function force_amp_request( $is_amp_request ): bool {
-		if ( ! $this->context->is_web_story() ) {
-			return (bool) $is_amp_request;
-		}
-		return true;
 	}
 }

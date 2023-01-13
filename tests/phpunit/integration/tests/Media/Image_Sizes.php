@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -39,7 +42,7 @@ class Image_Sizes extends TestCase {
 	 */
 	public function test_add_image_sizes(): void {
 		$media = new \Google\Web_Stories\Media\Image_Sizes();
-		$this->call_private_method( $media, 'add_image_sizes' );
+		$this->call_private_method( [ $media, 'add_image_sizes' ] );
 
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Image_Sizes::STORY_THUMBNAIL_IMAGE_SIZE ) );
@@ -59,6 +62,8 @@ class Image_Sizes extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -68,27 +73,36 @@ class Image_Sizes extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		$media = new \Google\Web_Stories\Media\Image_Sizes();
-		$image = $media->wp_prepare_attachment_for_js(
+		$media            = new \Google\Web_Stories\Media\Image_Sizes();
+		$image_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $image_attachment );
+
+		$image            = $media->wp_prepare_attachment_for_js(
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
 				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			],
-			get_post( $poster_attachment_id )
+			$image_attachment
 		);
+		$video_attachment = get_post( $video_attachment_id );
+		$this->assertNotNull( $video_attachment );
 		$video = $media->wp_prepare_attachment_for_js(
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
 				'url'  => wp_get_attachment_url( $video_attachment_id ),
 			],
-			get_post( $video_attachment_id )
+			$video_attachment
 		);
 
+		$this->assertIsArray( $video );
+		$this->assertIsArray( $image );
 		$this->assertArrayHasKey( 'media_details', $video );
-		$this->assertArrayHasKey( 'media_details', $video );
+		$this->assertArrayHasKey( 'media_details', $image );
 	}
 }

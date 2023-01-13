@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -18,6 +21,7 @@
 namespace Google\Web_Stories\Tests\Integration\Taxonomy;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Term;
 use WP_Term_Query;
 
 /**
@@ -25,10 +29,7 @@ use WP_Term_Query;
  */
 class Taxonomy_Base extends DependencyInjectedTestCase {
 
-	/**
-	 * @var  \Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy
-	 */
-	private $instance;
+	private \Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -44,7 +45,7 @@ class Taxonomy_Base extends DependencyInjectedTestCase {
 	 */
 	public function test_register_taxonomy(): void {
 		$this->instance->register_taxonomy();
-		$slug = $this->get_private_property( $this->instance, 'taxonomy_slug' );
+		$slug = $this->instance->get_taxonomy_slug();
 		$this->assertTrue( taxonomy_exists( $slug ) );
 	}
 
@@ -53,7 +54,7 @@ class Taxonomy_Base extends DependencyInjectedTestCase {
 	 */
 	public function test_unregister_taxonomy(): void {
 		$this->instance->register();
-		$slug = $this->get_private_property( $this->instance, 'taxonomy_slug' );
+		$slug = $this->instance->get_taxonomy_slug();
 		$this->assertTrue( taxonomy_exists( $slug ) );
 		$this->instance->unregister_taxonomy();
 		$this->assertFalse( taxonomy_exists( $slug ) );
@@ -65,7 +66,11 @@ class Taxonomy_Base extends DependencyInjectedTestCase {
 	public function test_on_plugin_uninstall(): void {
 		$this->instance->register();
 		$term_query = new WP_Term_Query();
-		$terms      = $term_query->query(
+
+		/**
+		 * @var WP_Term[] $terms
+		 */
+		$terms = $term_query->query(
 			[
 				'taxonomy'   => $this->instance->get_taxonomy_slug(),
 				'hide_empty' => false,
@@ -75,7 +80,11 @@ class Taxonomy_Base extends DependencyInjectedTestCase {
 		$this->assertCount( 5, $terms );
 		$this->instance->on_plugin_uninstall();
 		$term_query = new WP_Term_Query();
-		$terms      = $term_query->query(
+
+		/**
+		 * @var WP_Term[] $terms
+		 */
+		$terms = $term_query->query(
 			[
 				'taxonomy'   => $this->instance->get_taxonomy_slug(),
 				'hide_empty' => false,

@@ -64,7 +64,7 @@ function SidebarProvider({ sidebarTabs, children }) {
 
   const { tab: highlightedTab, highlight } = useHighlights((state) => ({
     tab: state.tab,
-    highlight: state[states.STYLE_PANE],
+    highlight: state[states.StylePane],
   }));
 
   // set tab when content is highlighted
@@ -98,7 +98,7 @@ function SidebarProvider({ sidebarTabs, children }) {
     []
   );
 
-  const [isUsersLoading, setIsUsersLoading] = useState(false);
+  const [usersLoadingState, setUsersLoadingState] = useState('idle');
 
   const setSidebarContentNode = useCallback((node) => {
     sidebarContentRef.current = node;
@@ -131,8 +131,12 @@ function SidebarProvider({ sidebarTabs, children }) {
   }, [highlight]);
 
   const loadUsers = useCallback(() => {
-    if (!isUsersLoading && users.length === 0) {
-      setIsUsersLoading(true);
+    if (
+      usersLoadingState !== 'finished' &&
+      usersLoadingState !== 'errored' &&
+      users.length === 0
+    ) {
+      setUsersLoadingState('loading');
       getAuthors()
         .then((data) => {
           const saveData = data.map(({ id, name }) => ({
@@ -140,12 +144,14 @@ function SidebarProvider({ sidebarTabs, children }) {
             name,
           }));
           setUsers(saveData);
+          setUsersLoadingState('finished');
         })
-        .finally(() => {
-          setIsUsersLoading(false);
+        .catch(() => {
+          // Do nothing for now.
+          setUsersLoadingState('errored');
         });
     }
-  }, [isUsersLoading, users.length, getAuthors]);
+  }, [usersLoadingState, users.length, getAuthors]);
 
   const tabs = useMemo(
     () =>
@@ -176,7 +182,7 @@ function SidebarProvider({ sidebarTabs, children }) {
       tabRefs,
       users,
       sidebarContentHeight,
-      isUsersLoading,
+      usersLoadingState,
     },
     refs: {
       sidebar: sidebarRef,

@@ -6,6 +6,7 @@
   },
   "references": [
     { "path": "../date" },
+    { "path": "../element-library" },
     { "path": "../i18n" },
     { "path": "../media" },
     { "path": "../patterns" },
@@ -13,19 +14,12 @@
     { "path": "../templates" },
     { "path": "../tracking" },
     { "path": "../units" },
-    { "path": "../wp-utils" }
   ],
   "include": [
-    "src/constants/**/*",
-    "src/icons/**/*",
-    "src/index.d.ts",
-    "src/types.ts"
-  ],
-  "exclude": [
-    "**/karma/**/*",
-    "**/stories/**/*",
-    "**/storybookUtils/**/*",
-    "**/testUtils/**/*",
-    "**/test/**/*"
+    "src/app/config",
+    "src/app/router",
+    "src/constants",
+    "src/icons",
+    "src/types"
   ]
 }

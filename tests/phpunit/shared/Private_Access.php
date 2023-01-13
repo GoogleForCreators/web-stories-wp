@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -34,15 +37,21 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 *
-	 * @param object|string $object      Object instance or class string to call the method of.
-	 * @param string        $method_name Name of the method to call.
+	 * @param array{object|string, string} $callable      Object instance or class string to call the method of.
 	 * @param array         $args        Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
+	 *
+	 * @template C
+	 * @template A
+	 *
+	 * @phpstan-param array<A> $args
+	 * @phpstan-param callable(A): C $callable
+	 * @phpstan-return C
 	 */
-	protected function call_private_method( $object, $method_name, $args = [] ) {
-		$method = ( new ReflectionClass( $object ) )->getMethod( $method_name );
+	protected function call_private_method( $callable, array $args = [] ) {
+		$method = ( new ReflectionClass( $callable[0] ) )->getMethod( $callable[1] );
 		$method->setAccessible( true );
-		return $method->invokeArgs( $object, $args );
+		return $method->invokeArgs( $callable[0], $args );
 	}
 
 	/**
@@ -54,9 +63,16 @@ trait Private_Access {
 	 * @param string $method_name Name of the method to call.
 	 * @param array  $args        Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
+	 *
+	 * @template C
+	 * @template A
+	 *
+	 * @phpstan-param array<A> $args
+	 * @phpstan-param callable(A): C $callable
+	 * @phpstan-return C
 	 */
-	protected function call_private_static_method( $class, $method_name, $args = [] ) {
-		$method = ( new ReflectionClass( $class ) )->getMethod( $method_name );
+	protected function call_private_static_method( $callable, array $args = [] ) {
+		$method = ( new ReflectionClass( $callable[0] ) )->getMethod( $callable[1] );
 		$method->setAccessible( true );
 		return $method->invokeArgs( null, $args );
 	}

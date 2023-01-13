@@ -19,8 +19,8 @@
  */
 import {
   BACKGROUND_ANIMATION_EFFECTS,
-  DIRECTION,
-  SCALE_DIRECTION,
+  AnimationDirection,
+  ScaleDirection,
 } from '@googleforcreators/animation';
 
 const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
@@ -28,7 +28,7 @@ const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
   const panDirection =
     animation.panDirection && !disabledOptions.includes(animation.panDirection)
       ? animation.panDirection
-      : Object.values(DIRECTION).filter(
+      : Object.values(AnimationDirection).filter(
           (direction) => !disabledOptions.includes(direction)
         )?.[0] || undefined;
 
@@ -37,9 +37,9 @@ const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
       return {
         ...animation,
         // Defautl zoomDirection to scale in unless disabled
-        zoomDirection: disabledOptions.includes(SCALE_DIRECTION.SCALE_IN)
-          ? SCALE_DIRECTION.SCALE_OUT
-          : SCALE_DIRECTION.SCALE_IN,
+        zoomDirection: disabledOptions.includes(ScaleDirection.ScaleIn)
+          ? ScaleDirection.ScaleOut
+          : ScaleDirection.ScaleIn,
         panDirection,
       };
     default:

@@ -143,7 +143,7 @@ function SortStories({ selectedStories, setSelectedStories }) {
                       data-order={index}
                       draggable
                     >
-                      <StoryPreview story={story} />
+                      <StoryPreview story={story} isSelectable={false} />
                     </div>
                   );
                 }}

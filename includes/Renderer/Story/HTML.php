@@ -24,10 +24,11 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * Class HTML
@@ -38,14 +39,7 @@ class HTML {
 	 *
 	 * @var Story Post object.
 	 */
-	protected $story;
-
-	/**
-	 * Document instance.
-	 *
-	 * @var Document Document instance.
-	 */
-	protected $document;
+	protected Story $story;
 
 	/**
 	 * HTML constructor.
@@ -67,6 +61,7 @@ class HTML {
 	 */
 	public function render(): string {
 		$markup = $this->story->get_markup();
+		$markup = $this->fix_incorrect_charset( $markup );
 		$markup = $this->fix_malformed_script_link_tags( $markup );
 		$markup = $this->replace_html_head( $markup );
 		$markup = wp_replace_insecure_home_url( $markup );
@@ -74,6 +69,21 @@ class HTML {
 		$markup = $this->print_social_share( $markup );
 
 		return $markup;
+	}
+
+	/**
+	 * Fix incorrect <meta charset> tags.
+	 *
+	 * React/JSX outputs the charset attribute name as "charSet",
+	 * but libdom and the AMP toolbox only recognize lowercase "charset"
+	 *
+	 * @since 1.28.0
+	 *
+	 * @param string $content Story markup.
+	 * @return string Filtered content
+	 */
+	public function fix_incorrect_charset( string $content ): string {
+		return (string) preg_replace( '/<meta charSet="utf-8"\s?\/>/i', '<meta charset="utf-8"/>', $content );
 	}
 
 	/**
@@ -106,7 +116,7 @@ class HTML {
 		$replaced_content = preg_replace_callback(
 			'/<a[^>]+href="(?P<href>[^"]+)"[^>]*>\1<\/a>/m',
 			static function( $matches ) {
-				if ( 0 === strpos( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
+				if ( str_starts_with( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
 					$script_url = $matches['href'];
 
 					// Turns `<a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a>`

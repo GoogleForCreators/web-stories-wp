@@ -1,0 +1,27 @@
+diff --git a/node_modules/@types/draft-js/index.d.ts b/node_modules/@types/draft-js/index.d.ts
+index ac2e584..3aa03ed 100755
+--- a/node_modules/@types/draft-js/index.d.ts
++++ b/node_modules/@types/draft-js/index.d.ts
+@@ -419,7 +419,21 @@ declare namespace Draft {
+             /**
+              * Valid inline styles.
+              */
+-            type DraftInlineStyleType = 'BOLD' | 'CODE' | 'ITALIC' | 'STRIKETHROUGH' | 'UNDERLINE';
++            type DraftInlineStyleType =
++              | 'BOLD'
++              | 'CODE'
++              | 'ITALIC'
++              | 'STRIKETHROUGH'
++              | 'UNDERLINE'
++              | 'NONE'
++              | 'CUSTOM-ITALIC'
++              | 'CUSTOM-UNDERLINE'
++              | 'CUSTOM-WEIGHT'
++              | 'CUSTOM-WEIGHT-700'
++              | 'CUSTOM-WEIGHT-900'
++              | 'CUSTOM-COLOR'
++              | 'CUSTOM-LETTERSPACING'
++              | 'CUSTOM-UPPERCASE';
+
+             /**
+              * Default entity types.

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,66 +20,52 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Archive as Testee;
+use Google\Web_Stories\Story_Post_Type;
+use WP_UnitTest_Factory;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Archive
  */
 class Story_Archive extends DependencyInjectedTestCase {
-	use Capabilities_Setup;
-
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
-
-	/**
-	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Story_Post_Type
-	 */
-	protected $instance;
-
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $settings;
-
-	/**
-	 * @var \Google\Web_Stories\Story_Post_Type
-	 */
-	private $story_post_type;
+	protected static int $story_id;
 
 	/**
 	 * Archive page ID.
-	 *
-	 * @var int
 	 */
-	protected static $archive_page_id;
+	protected static int $archive_page_id;
 
 	/**
-	 * @var string
+	 * Test instance.
 	 */
-	protected $redirect_location;
+	protected Testee $instance;
+
+	private Settings $settings;
+
+	private Story_Post_Type $story_post_type;
+
+	protected string $redirect_location = '';
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -84,7 +73,10 @@ class Story_Archive extends DependencyInjectedTestCase {
 			]
 		);
 
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -101,23 +93,15 @@ class Story_Archive extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
-
-		$this->settings        = $this->injector->make( \Google\Web_Stories\Settings::class );
-		$this->story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
-		$this->instance        = new \Google\Web_Stories\Story_Archive( $this->settings, $this->story_post_type );
-
-		$this->add_caps_to_roles();
+		$this->settings        = $this->injector->make( Settings::class );
+		$this->story_post_type = new Story_Post_Type( $this->settings );
+		$this->instance        = new Testee( $this->settings, $this->story_post_type );
 
 		add_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 	}
 
 	public function tear_down(): void {
-		$this->remove_caps_from_roles();
-
-		$this->redirect_location = null;
+		$this->redirect_location = '';
 		remove_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
@@ -126,7 +110,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		parent::tear_down();
 	}
 
-	public function filter_wp_redirect( $location ): bool {
+	public function filter_wp_redirect( string $location ): bool {
 		$this->redirect_location = $location;
 
 		return false;
@@ -159,7 +143,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	public function test_pre_get_posts_default_archive(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
 
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -179,7 +163,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		$this->story_post_type->register_post_type();
 
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -200,10 +184,15 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		wp_delete_post( $archive_page_id );
 
-		$archive         = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		$archive = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		/**
+		 * @var int $archive_page_id
+		 */
 		$archive_page_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
+		$this->assertIsString( $archive );
 		$this->assertSame( 'default', $archive );
+		$this->assertIsInt( $archive_page_id );
 		$this->assertSame( 0, $archive_page_id );
 	}
 
@@ -218,10 +207,15 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		wp_delete_post( $archive_page_id, true );
 
-		$archive         = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		$archive = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		/**
+		 * @var int $archive_page_id
+		 */
 		$archive_page_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
+		$this->assertIsString( $archive );
 		$this->assertSame( 'default', $archive );
+		$this->assertIsInt( $archive_page_id );
 		$this->assertSame( 0, $archive_page_id );
 	}
 
@@ -239,7 +233,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 			]
 		);
 
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -260,14 +254,10 @@ class Story_Archive extends DependencyInjectedTestCase {
 	 * @covers ::filter_display_post_states
 	 */
 	public function test_filter_display_post_states(): void {
-		$actual = $this->call_private_method(
-			$this->instance,
-			'filter_display_post_states',
-			[
-				[],
-				get_post( self::$archive_page_id ),
-			]
-		);
+		$archive_page = get_post( self::$archive_page_id );
+		$this->assertNotNull( $archive_page );
+
+		$actual = $this->instance->filter_display_post_states( [], $archive_page );
 
 		$this->assertSame( [], $actual );
 	}
@@ -279,18 +269,15 @@ class Story_Archive extends DependencyInjectedTestCase {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
-		$actual = $this->call_private_method(
-			$this->instance,
-			'filter_display_post_states',
-			[
-				[],
-				get_post( self::$archive_page_id ),
-			]
-		);
+		$archive_page = get_post( self::$archive_page_id );
+		$this->assertNotNull( $archive_page );
+
+		$actual = $this->instance->filter_display_post_states( [], $archive_page );
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
+		$this->assertIsArray( $actual );
 		$this->assertEqualSetsWithIndex(
 			[
 				'web_stories_archive_page' => __( 'Web Stories Archive Page', 'web-stories' ),
@@ -313,14 +300,10 @@ class Story_Archive extends DependencyInjectedTestCase {
 			]
 		);
 
-		$actual = $this->call_private_method(
-			$this->instance,
-			'filter_display_post_states',
-			[
-				[],
-				get_post( self::$archive_page_id ),
-			]
-		);
+		$archive_page = get_post( self::$archive_page_id );
+		$this->assertNotNull( $archive_page );
+
+		$actual = $this->instance->filter_display_post_states( [], $archive_page );
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
@@ -346,7 +329,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$result = $this->instance->redirect_post_type_archive_urls( true, $query );
 
 		$this->assertTrue( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -360,7 +343,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$result = $this->instance->redirect_post_type_archive_urls( true, $query );
 
 		$this->assertTrue( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -377,7 +360,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
 
 		$this->assertFalse( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -396,7 +379,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
 
 		$this->assertFalse( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -423,7 +406,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		remove_filter( 'post_type_archive_link', '__return_false' );
 
 		$this->assertFalse( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**
@@ -447,7 +430,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		remove_filter( 'post_type_archive_link', '__return_false' );
 
 		$this->assertFalse( $result );
-		$this->assertNull( $this->redirect_location );
+		$this->assertEmpty( $this->redirect_location );
 	}
 
 	/**

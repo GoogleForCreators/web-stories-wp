@@ -40,9 +40,9 @@ import {
   getExtensionsFromMimeType,
   preloadVideo,
   getVideoLength,
+  BackgroundAudioPropType,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
-import { BackgroundAudioPropType } from '@googleforcreators/elements';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -52,6 +52,7 @@ import { useConfig } from '../../../../app/config';
 import { Row } from '../../../form';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import HotlinkModal from '../../../hotlinkModal';
+import { noop } from '../../../../utils/noop';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
 import AudioPlayer from './audioPlayer';
@@ -117,7 +118,7 @@ function BackgroundAudioPanelContent({
 
   const onSelect = useCallback(
     /**
-     * @param {import('@googleforcreators/types').AudioResource} resource Audio resource.
+     * @param {import('@googleforcreators/media').AudioResource} resource Audio resource.
      */
     ({ src, id, mimeType, needsProxy, length, lengthFormatted }) => {
       const updatedBackgroundAudio = {
@@ -254,7 +255,7 @@ function BackgroundAudioPanelContent({
     hasUploadMediaAction && {
       label: __('Upload a file', 'web-stories'),
       value: 'upload',
-      onClick: () => {},
+      onClick: noop,
       mediaPickerProps: {
         onSelect,
         onSelectErrorMessage: __(

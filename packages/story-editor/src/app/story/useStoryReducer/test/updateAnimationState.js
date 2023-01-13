@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -35,16 +35,16 @@ describe('updateAnimationState', () => {
       ],
       current: '111',
       selection: ['123', '456'],
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
     });
 
     const result = updateAnimationState({
-      animationState: STORY_ANIMATION_STATE.PLAYING,
+      animationState: StoryAnimationState.Playing,
     });
 
     expect(result).toStrictEqual({
       ...initialState,
-      animationState: STORY_ANIMATION_STATE.PLAYING,
+      animationState: StoryAnimationState.Playing,
     });
   });
 
@@ -58,16 +58,16 @@ describe('updateAnimationState', () => {
       ],
       current: '111',
       selection: [],
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
     });
 
     const result = updateAnimationState({
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
     });
 
     expect(result).toStrictEqual({
       ...initialState,
-      animationState: STORY_ANIMATION_STATE.RESET,
+      animationState: StoryAnimationState.Reset,
     });
 
     expect(result).toBe(initialState);

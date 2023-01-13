@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -37,7 +39,7 @@ class AdSense extends Service_Base implements HasRequirements {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Analytics constructor.
@@ -74,6 +76,34 @@ class AdSense extends Service_Base implements HasRequirements {
 	}
 
 	/**
+	 * Prints the <amp-story-auto-ads> tag for single stories.
+	 *
+	 * @since 1.3.0
+	 */
+	public function print_adsense_tag(): void {
+		$publisher = $this->get_publisher_id();
+		$slot      = $this->get_slot_id();
+		$enabled   = $this->is_enabled();
+
+		if ( ! $enabled || ! $publisher || ! $slot ) {
+			return;
+		}
+		?>
+		<amp-story-auto-ads>
+			<script type="application/json">
+				{
+					"ad-attributes": {
+						"type": "adsense",
+						"data-ad-client": "<?php echo esc_js( $publisher ); ?>",
+						"data-ad-slot": "<?php echo esc_js( $slot ); ?>"
+					}
+				}
+			</script>
+		</amp-story-auto-ads>
+		<?php
+	}
+
+	/**
 	 * Returns the Google AdSense publisher ID.
 	 *
 	 * @since 1.3.0
@@ -103,8 +133,7 @@ class AdSense extends Service_Base implements HasRequirements {
 		 *
 		 * @var string
 		 */
-		$slot_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ADSENSE_SLOT_ID );
-		return $slot_id;
+		return $this->settings->get_setting( $this->settings::SETTING_NAME_ADSENSE_SLOT_ID );
 	}
 
 	/**
@@ -114,33 +143,5 @@ class AdSense extends Service_Base implements HasRequirements {
 	 */
 	private function is_enabled(): bool {
 		return ( 'adsense' === $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ) );
-	}
-
-	/**
-	 * Prints the <amp-story-auto-ads> tag for single stories.
-	 *
-	 * @since 1.3.0
-	 */
-	public function print_adsense_tag(): void {
-		$publisher = $this->get_publisher_id();
-		$slot      = $this->get_slot_id();
-		$enabled   = $this->is_enabled();
-
-		if ( ! $enabled || ! $publisher || ! $slot ) {
-			return;
-		}
-		?>
-		<amp-story-auto-ads>
-			<script type="application/json">
-				{
-					"ad-attributes": {
-						"type": "adsense",
-						"data-ad-client": "<?php echo esc_js( $publisher ); ?>",
-						"data-ad-slot": "<?php echo esc_js( $slot ); ?>"
-					}
-				}
-			</script>
-		</amp-story-auto-ads>
-		<?php
 	}
 }

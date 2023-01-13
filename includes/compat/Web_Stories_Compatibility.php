@@ -63,7 +63,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @var array<string, array{functions: string[], classes: string[]}>
+	 * @var array<string, array{functions?: string[], classes?: string[]}>
 	 */
 	protected $extensions = array();
 
@@ -305,20 +305,6 @@ class Web_Stories_Compatibility {
 	}
 
 	/**
-	 * Helper to add error code to WP_Error object.
-	 *
-	 * @param string|int $code    Error code.
-	 * @param string     $message Error message.
-	 * @param mixed      $data    Optional. Error data.
-	 * @return void
-	 */
-	protected function add_to_error( $code, $message, $data = '' ) {
-		if ( ! in_array( $code, $this->error->get_error_codes(), true ) ) {
-			$this->error->add( $code, $message, $data );
-		}
-	}
-
-	/**
 	 * Get min WP version.
 	 *
 	 * @codeCoverageIgnore
@@ -349,7 +335,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @return array<string, array{functions: string[], classes: string[]}>
+	 * @return array<string, array{functions?: string[], classes?: string[]}>
 	 */
 	public function get_extensions() {
 		return $this->extensions;
@@ -416,7 +402,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array<string, array{functions: string[], classes: string[]}> $extensions Array of extensions.
+	 * @param array<string, array{functions?: string[], classes?: string[]}> $extensions Array of extensions.
 	 * @return void
 	 */
 	public function set_extensions( array $extensions ) {
@@ -435,5 +421,19 @@ class Web_Stories_Compatibility {
 	 */
 	public function set_required_files( array $required_files ) {
 		$this->required_files = $required_files;
+	}
+
+	/**
+	 * Helper to add error code to WP_Error object.
+	 *
+	 * @param string|int $code    Error code.
+	 * @param string     $message Error message.
+	 * @param mixed      $data    Optional. Error data.
+	 * @return void
+	 */
+	protected function add_to_error( $code, $message, $data = '' ) {
+		if ( ! in_array( $code, $this->error->get_error_codes(), true ) ) {
+			$this->error->add( $code, $message, $data );
+		}
 	}
 }

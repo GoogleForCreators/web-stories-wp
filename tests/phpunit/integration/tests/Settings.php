@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -22,10 +25,7 @@ namespace Google\Web_Stories\Tests\Integration;
  */
 class Settings extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $instance;
+	private \Google\Web_Stories\Settings $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -53,6 +53,8 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( $this->instance::SETTING_NAME_VIDEO_CACHE, $options );
 		$this->assertArrayHasKey( $this->instance::SETTING_NAME_DATA_REMOVAL, $options );
 		$this->assertArrayHasKey( $this->instance::SETTING_NAME_ARCHIVE, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_AUTO_ADVANCE, $options );
+		$this->assertArrayHasKey( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION, $options );
 	}
 
 	/**
@@ -72,6 +74,8 @@ class Settings extends DependencyInjectedTestCase {
 		add_option( $this->instance::SETTING_NAME_VIDEO_CACHE, true );
 		add_option( $this->instance::SETTING_NAME_DATA_REMOVAL, true );
 		add_option( $this->instance::SETTING_NAME_ARCHIVE, 'none' );
+		add_option( $this->instance::SETTING_NAME_AUTO_ADVANCE, true );
+		add_option( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION, 7 );
 
 		$this->instance->on_plugin_uninstall();
 
@@ -88,5 +92,140 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertFalse( get_option( $this->instance::SETTING_NAME_VIDEO_CACHE ) );
 		$this->assertFalse( get_option( $this->instance::SETTING_NAME_DATA_REMOVAL ) );
 		$this->assertSame( 'default', get_option( $this->instance::SETTING_NAME_ARCHIVE ) );
+		$this->assertTrue( get_option( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
+		$this->assertSame( 7, get_option( $this->instance::SETTING_NAME_DEFAULT_PAGE_DURATION ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_saved_option(): void {
+		add_option( $this->instance::SETTING_NAME_AUTO_ADVANCE, false );
+		$this->assertFalse( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, true ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_saved_option_type(): void {
+		add_option( $this->instance::SETTING_NAME_AUTO_ADVANCE, 'no-boolean' );
+		$this->assertTrue( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
+	}
+
+	/**
+	 * @param string $name
+	 * @param array{type?: string, description?: string, sanitize_callback?: callable, show_in_rest?: bool|array<mixed>, default?: mixed} $args
+	 * @param mixed $value
+	 * @param mixed $expected
+	 *
+	 * @covers ::get_setting
+	 * @dataProvider data_test_types
+	 */
+	public function test_get_setting_uses_type( string $name, array $args, $value, $expected ): void {
+		register_setting( 'test_group', $name, $args );
+		add_option( $name, $value );
+		$this->assertSame( $expected, $this->instance->get_setting( $name ) );
+	}
+
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
+	public function data_test_types(): array {
+		return [
+			'array from string' => [
+				'name'     => 'array_type',
+				'args'     => [
+					'type' => 'array',
+				],
+				'value'    => 'string',
+				'expected' => [ 'string' ],
+			],
+			'array key value'   => [
+				'name'     => 'array_key',
+				'args'     => [
+					'type' => 'array',
+				],
+				'value'    => [ 'key' => 'value' ],
+				'expected' => [ 'value' ],
+			],
+			'array of ints'     => [
+				'name'     => 'array_ints',
+				'args'     => [
+					'type'         => 'array',
+					'default'      => [],
+					'show_in_rest' => [
+						'schema' => [
+							'items' => [
+								'type' => 'integer',
+							],
+						],
+					],
+				],
+				'value'    => [ '1', '2', '3' ],
+				'expected' => [ 1, 2, 3 ],
+			],
+
+			'array from object' => [
+				'name'     => 'array_type',
+				'args'     => [
+					'type'         => 'object',
+					'show_in_rest' => [
+						'schema' => [
+							'properties'           => [],
+							'additionalProperties' => true,
+						],
+					],
+				],
+				'value'    => [ 'key' => 'value' ],
+				'expected' => [ 'key' => 'value' ],
+			],
+			'string to int'     => [
+				'name'     => 'array_int',
+				'args'     => [
+					'type' => 'integer',
+				],
+				'value'    => '3',
+				'expected' => 3,
+			],
+			'int to string'     => [
+				'name'     => 'array_int',
+				'args'     => [
+					'type' => 'string',
+				],
+				'value'    => 3,
+				'expected' => '3',
+			],
+			'int to boolean'    => [
+				'name'     => 'array_boolean',
+				'args'     => [
+					'type' => 'boolean',
+				],
+				'value'    => 1,
+				'expected' => true,
+			],
+			'string to boolean' => [
+				'name'     => 'array_boolean',
+				'args'     => [
+					'type' => 'boolean',
+				],
+				'value'    => 'string',
+				'expected' => true,
+			],
+		];
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_registered_default(): void {
+		$this->assertTrue( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE ) );
+	}
+
+	/**
+	 * @covers ::get_setting
+	 */
+	public function test_get_setting_uses_explicit_default(): void {
+		$this->assertFalse( $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, false ) );
+		$this->assertSame( 'foo', $this->instance->get_setting( $this->instance::SETTING_NAME_AUTO_ADVANCE, 'foo' ) );
 	}
 }

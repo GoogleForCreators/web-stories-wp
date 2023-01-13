@@ -18,7 +18,14 @@
  * Internal dependencies
  */
 import { elementTypes } from '../elementType';
+import type { ElementType } from '../types';
 
-const getDefinitionForType = (type: string) => elementTypes[type];
+function getDefinitionForType(type: ElementType) {
+  const definition = elementTypes[type];
+  if (!definition) {
+    throw new Error(`No element definition found for '${type}'`);
+  }
+  return definition;
+}
 
 export default getDefinitionForType;

@@ -24,9 +24,12 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\AMP;
 
 use Google\Web_Stories\Context;
+use Google\Web_Stories\Exception\SanitizationException;
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
@@ -45,31 +48,29 @@ class Output_Buffer extends Service_Base implements Conditional {
 
 	/**
 	 * Whether output buffering has started.
-	 *
-	 * @var bool
 	 */
-	protected $is_output_buffering = false;
+	protected bool $is_output_buffering = false;
 
 	/**
 	 * Sanitization instance.
 	 *
 	 * @var Sanitization Sanitization instance.
 	 */
-	private $sanitization;
+	private Sanitization $sanitization;
 
 	/**
 	 * Optimization instance.
 	 *
 	 * @var Optimization Optimization instance.
 	 */
-	private $optimization;
+	private Optimization $optimization;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Output_Buffer constructor.
@@ -221,7 +222,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 		$dom = Document::fromHtml( $response );
 
 		if ( ! $dom instanceof Document ) {
-			return $this->render_error_page( \Google\Web_Stories\Exception\SanitizationException::from_document_parse_error() );
+			return $this->render_error_page( SanitizationException::from_document_parse_error() );
 		}
 
 		$this->sanitization->sanitize_document( $dom );
@@ -237,10 +238,12 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 *
 	 * @param Throwable $throwable Exception or (as of PHP7) Error.
 	 * @return string Error page.
-	 *
-	 * @todo Improve error message.
 	 */
 	private function render_error_page( Throwable $throwable ): string {
-		return esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' );
+		return esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ) .
+			"\n" .
+			"\n" .
+			// translators: 1: error message. 2: location.
+			sprintf( esc_html__( 'Error message: %1$s (%2$s)', 'web-stories' ), $throwable->getMessage(), $throwable->getFile() . ':' . $throwable->getLine() );
 	}
 }

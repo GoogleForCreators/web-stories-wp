@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -46,6 +49,9 @@ class Remove_Unneeded_Attachment_Meta extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $video_attachment_id );
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, 'true' );

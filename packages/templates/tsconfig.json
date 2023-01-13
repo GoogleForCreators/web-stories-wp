@@ -6,8 +6,7 @@
   },
   "references": [
     { "path": "../i18n" },
-    { "path": "../tracking" },
-    { "path": "../types" }
+    { "path": "../tracking" }
   ],
   "include": ["src/**/*"],
   "exclude": [

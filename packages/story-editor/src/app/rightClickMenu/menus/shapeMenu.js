@@ -37,7 +37,7 @@ import {
   usePresetActions,
 } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
-import { LayerLock, LayerName, LayerUngroup } from '../items';
+import { LayerHide, LayerLock, LayerName, LayerUngroup } from '../items';
 import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import {
@@ -158,6 +158,7 @@ function ShapeMenu({ parentMenuRef }) {
 
       <LayerName />
       <LayerLock />
+      <LayerHide />
       <LayerUngroup />
 
       <ContextMenuComponents.MenuSeparator />

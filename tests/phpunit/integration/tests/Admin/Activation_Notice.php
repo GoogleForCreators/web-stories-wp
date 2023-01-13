@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,20 +28,18 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Activation_Notice extends DependencyInjectedTestCase {
 	/**
 	 * Activation_Notice for test.
-	 *
-	 * @var \Google\Web_Stories\Admin\Activation_Notice
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Admin\Activation_Notice $instance;
 
 	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\Activation_Notice::class );
-		$this->call_private_method( $this->instance, 'set_activation_flag' );
+		$this->call_private_method( [ $this->instance, 'set_activation_flag' ] );
 	}
 
 	public function tear_down(): void {
-		$this->call_private_method( $this->instance, 'delete_activation_flag' );
+		$this->call_private_method( [ $this->instance, 'delete_activation_flag' ] );
 
 		parent::tear_down();
 	}
@@ -60,9 +61,9 @@ class Activation_Notice extends DependencyInjectedTestCase {
 	public function test_render_notice(): void {
 		$GLOBALS['hook_suffix'] = 'plugins.php';
 
-		$flag_before = $this->call_private_method( $this->instance, 'get_activation_flag' );
+		$flag_before = $this->call_private_method( [ $this->instance, 'get_activation_flag' ] );
 		$output      = get_echo( [ $this->instance, 'render_notice' ] );
-		$flag_after  = $this->call_private_method( $this->instance, 'get_activation_flag' );
+		$flag_after  = $this->call_private_method( [ $this->instance, 'get_activation_flag' ] );
 		$this->assertStringContainsString( 'web-stories-plugin-activation-notice', $output );
 		$this->assertTrue( $flag_before );
 		$this->assertFalse( $flag_after );
@@ -72,7 +73,7 @@ class Activation_Notice extends DependencyInjectedTestCase {
 	 * @covers ::is_plugins_page
 	 */
 	public function test_is_plugins_page(): void {
-		$result = $this->call_private_method( $this->instance, 'is_plugins_page', [ 'themes.php' ] );
+		$result = $this->call_private_method( [ $this->instance, 'is_plugins_page' ], [ 'themes.php' ] );
 		$this->assertFalse( $result );
 	}
 
@@ -81,8 +82,8 @@ class Activation_Notice extends DependencyInjectedTestCase {
 	 * @covers ::get_activation_flag
 	 */
 	public function test_set_activation_flag(): void {
-		$this->call_private_method( $this->instance, 'set_activation_flag', [ true ] );
-		$flag = $this->call_private_method( $this->instance, 'get_activation_flag', [ true ] );
+		$this->call_private_method( [ $this->instance, 'set_activation_flag' ], [ true ] );
+		$flag = $this->call_private_method( [ $this->instance, 'get_activation_flag' ], [ true ] );
 		$this->assertTrue( $flag );
 	}
 
@@ -91,8 +92,8 @@ class Activation_Notice extends DependencyInjectedTestCase {
 	 * @covers ::get_activation_flag
 	 */
 	public function test_delete_activation_flag(): void {
-		$this->call_private_method( $this->instance, 'delete_activation_flag', [ true ] );
-		$flag = $this->call_private_method( $this->instance, 'get_activation_flag', [ true ] );
+		$this->call_private_method( [ $this->instance, 'delete_activation_flag' ], [ true ] );
+		$flag = $this->call_private_method( [ $this->instance, 'get_activation_flag' ], [ true ] );
 		$this->assertFalse( $flag );
 	}
 

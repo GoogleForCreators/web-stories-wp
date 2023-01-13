@@ -17,11 +17,8 @@
 /**
  * Internal dependencies
  */
-// export { default as Compass } from './compass.svg';
-// export { default as FloppyDisk } from './floppyDisk.svg';
-// export { default as HomeWithHeart } from './homeWithHeart.svg';
-// export { default as Menu } from './menu.svg';
-// export { default as MoreVertical } from './moreVertical.svg';
-
-export function Compass() { return null; }
-export function HomeWithHeart() { return null; }
+export { default as Compass } from './compass.svg';
+export { default as FloppyDisk } from './floppyDisk.svg';
+export { default as HomeWithHeart } from './homeWithHeart.svg';
+export { default as Menu } from './menu.svg';
+export { default as MoreVertical } from './moreVertical.svg';

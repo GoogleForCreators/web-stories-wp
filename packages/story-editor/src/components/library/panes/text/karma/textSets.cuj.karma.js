@@ -265,7 +265,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       );
       const selection = await getSelection();
       // Text color should be changed to white, since it's placed on a dark background.
-      expect(selection[1].content).toEqual(
+      expect(selection[0].content).toEqual(
         '<span style="font-weight: 600; color: #fff; letter-spacing: 0.05em; text-transform: uppercase">Category</span>'
       );
     });

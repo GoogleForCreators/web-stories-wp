@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Link_Controller
@@ -13,9 +16,6 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Link_Controller
  */
 class Link_Controller extends DependencyInjectedRestTestCase {
-
-	protected static $editor;
-	protected static $subscriber;
 
 	public const URL_INVALID             = 'https://https://invalid.commmm';
 	public const URL_404                 = 'https://example.com/404';
@@ -28,21 +28,20 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	public const URL_INSTAGRAM_SINGLE    = 'https://www.instagram.com/p/CZwz48cFoQM';
 	public const URL_INSTAGRAM_SUBDOMAIN = 'https://about.instagram.com/about-us';
 
+	protected static int $editor;
+	protected static int $subscriber;
+
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Link_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Link_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -77,9 +76,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
 	 * @param mixed  $r       HTTP request arguments.
 	 * @param string $url     The request URL.
-	 * @return array|WP_Error Response data.
+	 * @return array{response: array<string, mixed>, body?: string}|WP_Error|mixed Response data.
 	 */
-	public function mock_http_request( $preempt, $r, $url ) {
+	public function mock_http_request( $preempt, $r, string $url ) {
 		++ $this->request_count;
 
 		if ( false !== strpos( $url, self::URL_INVALID ) ) {
@@ -187,6 +186,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertEquals( 403, $response->get_status() );
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEquals( $data['code'], 'rest_forbidden' );
 	}
 
@@ -231,6 +231,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertEquals( 200, $response->get_status() );
 		$this->assertEqualSetsWithIndex(
 			[
@@ -279,15 +280,18 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		rest_get_server()->dispatch( $request );
 
 		$this->assertEquals( 1, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
 	/**
+	 * @param array{title: string, image: string, description: string} $expected
+	 *
 	 * @covers ::parse_link
 	 * @dataProvider data_instagram_urls
 	 */
-	public function test_instagram_urls( $url, $expected, $request_count ): void {
+	public function test_instagram_urls( string $url, array $expected, int $request_count ): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -300,10 +304,14 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		rest_get_server()->dispatch( $request );
 
 		$this->assertEquals( $request_count, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
+	/**
+	 * @return array<string,array{url: string, expected: array<string, string>, request_count: int}>
+	 */
 	public function data_instagram_urls(): array {
 		return [
 			'Instagram profile url'                   => [
@@ -392,8 +400,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 
 		// Subsequent requests is cached and so it should not cause a request.
 		rest_get_server()->dispatch( $request );
-		$this->assertEquals( 1, $this->request_count );
 
+		$this->assertEquals( 1, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
@@ -418,8 +427,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 
 		// Subsequent requests is cached and so it should not cause a request.
 		rest_get_server()->dispatch( $request );
-		$this->assertEquals( 1, $this->request_count );
 
+		$this->assertEquals( 1, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
@@ -444,8 +454,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 
 		// Subsequent requests is cached and so it should not cause a request.
 		rest_get_server()->dispatch( $request );
-		$this->assertEquals( 1, $this->request_count );
 
+		$this->assertEquals( 1, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
@@ -470,9 +481,11 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_VALID_TITLE_ONLY . '/' );
-		rest_get_server()->dispatch( $request );
-		$this->assertEquals( 1, $this->request_count );
 
+		rest_get_server()->dispatch( $request );
+
+		$this->assertEquals( 1, $this->request_count );
+		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}

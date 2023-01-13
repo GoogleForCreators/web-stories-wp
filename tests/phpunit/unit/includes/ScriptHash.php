@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -38,7 +41,7 @@ trait ScriptHash {
 	 */
 	public function generate_script_hash( $script ): ?string {
 		$sha384 = hash( 'sha384', $script, true );
-		if ( false === $sha384 ) {
+		if ( ! $sha384 ) {
 			return null;
 		}
 		$hash = str_replace(

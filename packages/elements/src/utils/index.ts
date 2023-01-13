@@ -15,17 +15,10 @@
  */
 export { default as getDefinitionForType } from './getDefinitionForType';
 export { default as createNewElement } from './createNewElement';
-export {
-  default as createPage,
-  DEFAULT_PAGE_BACKGROUND_COLOR,
-} from './createPage';
+export { default as createPage } from './createPage';
 export { default as duplicatePage } from './duplicatePage';
 export { default as isElementBelowLimit } from './isElementBelowLimit';
 export { default as getTransformFlip } from './getTransformFlip';
 export { default as getLayerName } from './getLayerName';
-export {
-  default as duplicateElement,
-  getOffsetCoordinates,
-} from './duplicateElement';
-export * from './getElementOffsets';
-export { default as getElementOrigin } from './getElementOrigin';
+export { default as duplicateElement } from './duplicateElement';
+export { default as elementIs } from './elementIs';

@@ -18,11 +18,12 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
-import type { Element, Animation } from '@googleforcreators/types';
+import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
  */
+import type { Element } from '../types';
 import createNewElement from './createNewElement';
 
 /**
@@ -32,7 +33,7 @@ import createNewElement from './createNewElement';
  * @param originY Original Y.
  * @return Coordinates.
  */
-export function getOffsetCoordinates(originX: number, originY: number) {
+function getOffsetCoordinates(originX: number, originY: number) {
   const placementDiff = 30;
   const allowedBorderDistance = 20;
   const x = originX + placementDiff;
@@ -43,33 +44,33 @@ export function getOffsetCoordinates(originX: number, originY: number) {
   };
 }
 
-interface DuplicateElementArgs {
-  element: Element;
-  animations?: Animation[];
-  existingElements?: Element[];
-}
-
 /**
  * returns a copy of element and element's animations as well
  * as offsetting the elements position if the new element is based
  * on any existing element on the page.
  *
- * @param args Named arguments
- * @param args.element Story element to be copied
- * @param args.animations Set of existing animations
- * @param args.existingElements Set of existing story elements
+ * @param args - named arguments
+ * @param args.element - story element to be coppied
+ * @param args.animations - set of existing animations
+ * @param args.existingElements - set of existing story elements
  * @return cloned story element and associated cloned animations
  */
+interface DuplicateElementArgs {
+  element: Element;
+  animations?: StoryAnimation[];
+  existingElements?: Element[];
+}
+interface DuplicateElementReturn {
+  element: Element;
+  elementAnimations: StoryAnimation[];
+}
 function duplicateElement({
   element,
   animations = [],
   existingElements = [],
-}: DuplicateElementArgs) {
+}: DuplicateElementArgs): DuplicateElementReturn {
   const { type, ...attrs } = element;
-  const duplicatedElement = {
-    ...element,
-    ...createNewElement(type, attrs),
-  };
+  const duplicatedElement = createNewElement(type, attrs);
   duplicatedElement.basedOn = element.id;
 
   existingElements.forEach((existingElement) => {
@@ -96,8 +97,8 @@ function duplicateElement({
     .filter((animation) => animation.targets.length > 0);
 
   return {
-    element: duplicatedElement as Element,
-    elementAnimations: duplicatedAnimations as Animation[],
+    element: duplicatedElement,
+    elementAnimations: duplicatedAnimations,
   };
 }
 

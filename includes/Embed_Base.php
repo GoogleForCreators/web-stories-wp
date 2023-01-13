@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Model\Story;
@@ -44,14 +46,14 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	protected $assets;
+	protected Assets $assets;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	protected $context;
+	protected Context $context;
 
 	/**
 	 * Embed Base constructor.
@@ -82,7 +84,7 @@ abstract class Embed_Base extends Service_Base {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
 
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 	}
 
 	/**
@@ -117,6 +119,10 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @param array<string, array<string,bool>>|mixed $allowed_tags Allowed tags.
 	 * @return array<string, array<string,bool>>|mixed Allowed tags.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($allowed_tags is array<T> ? array<T> : mixed)
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! \is_array( $allowed_tags ) ) {
@@ -130,33 +136,6 @@ abstract class Embed_Base extends Service_Base {
 		$allowed_tags = array_merge( $allowed_tags, $story_player_components );
 
 		return $allowed_tags;
-	}
-
-	/**
-	 * Return an array of default attributes.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return array<string, string|int> Default attributes.
-	 */
-	protected function default_attrs(): array {
-		$attrs = [
-			'align'  => 'none',
-			'height' => 600,
-			'poster' => '',
-			'url'    => '',
-			'title'  => '',
-			'width'  => 360,
-		];
-
-		/**
-		 * Filters settings passed to the web stories embed.
-		 *
-		 * @since 1.1.0
-		 *
-		 * @param array $attrs Array of settings passed to web stories embed.
-		 */
-		return apply_filters( 'web_stories_embed_default_attributes', $attrs );
 	}
 
 	/**
@@ -192,6 +171,33 @@ abstract class Embed_Base extends Service_Base {
 		}
 
 		return $renderer->render( $attributes );
+	}
+
+	/**
+	 * Return an array of default attributes.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return array<string, string|int> Default attributes.
+	 */
+	protected function default_attrs(): array {
+		$attrs = [
+			'align'  => 'none',
+			'height' => 600,
+			'poster' => '',
+			'url'    => '',
+			'title'  => '',
+			'width'  => 360,
+		];
+
+		/**
+		 * Filters settings passed to the web stories embed.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param array $attrs Array of settings passed to web stories embed.
+		 */
+		return apply_filters( 'web_stories_embed_default_attributes', $attrs );
 	}
 
 }

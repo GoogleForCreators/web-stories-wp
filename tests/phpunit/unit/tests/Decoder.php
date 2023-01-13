@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -44,6 +47,9 @@ class Decoder extends TestCase {
 		$this->assertTrue( $decoder->supports_decoding() );
 	}
 
+	/**
+	 * @return array<string, array<int, string>>
+	 */
 	public function get_encoded_data(): array {
 		return [
 			'converts UTF 16'             => [

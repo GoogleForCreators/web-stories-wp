@@ -44,7 +44,7 @@ export function StoryPosterAttached() {
   const handleClick = useCallback(
     () =>
       setHighlights({
-        highlight: states.POSTER,
+        highlight: states.Poster,
       }),
     [setHighlights]
   );

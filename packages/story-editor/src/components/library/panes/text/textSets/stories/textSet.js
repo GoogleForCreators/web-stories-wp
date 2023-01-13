@@ -214,14 +214,13 @@ export const _default = () => {
     },
   };
   const configValue = {
-    api: { stories: [] },
     cdnURL: 'https://wp.stories.google/static/main/',
   };
   const fontsValue = {
     actions: {
       maybeEnqueueFontStyle: () => {},
-      getCustomFonts: () => {},
-      getCuratedFonts: () => {},
+      loadCustomFonts: () => {},
+      loadCuratedFonts: () => {},
     },
   };
   const apiValue = {

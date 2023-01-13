@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -31,10 +34,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class ImgAreaSelect_Patch extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Admin\ImgAreaSelect_Patch
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Admin\ImgAreaSelect_Patch $instance;
 
 	public function set_up(): void {
 		parent::set_up();

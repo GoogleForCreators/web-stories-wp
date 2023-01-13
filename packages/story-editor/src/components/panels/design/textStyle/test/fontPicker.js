@@ -45,8 +45,8 @@ function arrange(options) {
     actions: {
       ensureMenuFontsLoaded: () => {},
       ensureCustomFontsLoaded: () => {},
-      getCustomFonts: jest.fn(),
-      getCuratedFonts: jest.fn(),
+      loadCustomFonts: jest.fn(),
+      loadCuratedFonts: jest.fn(),
     },
   };
   const props = {

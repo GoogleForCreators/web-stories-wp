@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -85,8 +88,15 @@ class Replace_Conic_Style_Presets extends TestCase {
 		$object->migrate();
 
 		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+		$this->assertIsArray( $style_presets );
+		$this->assertArrayHasKey( 'textStyles', $style_presets );
+		$this->assertIsArray( $style_presets['textStyles'] );
 		$this->assertSame( $style_presets['textStyles'][1], $radial_preset );
+		$this->assertArrayHasKey( 'backgroundColor', $style_presets['textStyles'][0] );
+		$this->assertIsArray( $style_presets['textStyles'][0]['backgroundColor'] );
+		$this->assertArrayHasKey( 'type', $style_presets['textStyles'][0]['backgroundColor'] );
 		$this->assertSame( $style_presets['textStyles'][0]['backgroundColor']['type'], 'linear' );
+
 		$this->assertSame( $style_presets['fillColors'][0]['type'], 'linear' );
 		$this->assertSame(
 			$style_presets['textColors'],

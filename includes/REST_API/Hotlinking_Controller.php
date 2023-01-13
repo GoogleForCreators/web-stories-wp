@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -90,14 +92,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * File pointer resource.
@@ -267,7 +269,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 		$headers   = wp_remote_retrieve_headers( $response );
 		$mime_type = $headers['content-type'];
-		if ( $mime_type && false !== strpos( $mime_type, ';' ) ) {
+		if ( $mime_type && str_contains( $mime_type, ';' ) ) {
 			$pieces    = explode( ';', $mime_type );
 			$mime_type = array_shift( $pieces );
 		}
@@ -390,57 +392,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$this->proxy_url_fallback( $raw_url, $args );
 
 		exit;
-	}
-
-	/**
-	 * Proxy a given URL via a PHP read-write stream.
-	 *
-	 * @since 1.15.0
-	 *
-	 * @param string               $url  Request URL.
-	 * @param array<string, mixed> $args Request args.
-	 */
-	private function proxy_url_curl( string $url, array $args ): void {
-		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-		wp_safe_remote_get( $url, $args );
-		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-
-		rewind( $this->stream_handle );
-		while ( ! feof( $this->stream_handle ) ) {
-			echo fread( $this->stream_handle, 1024 * 1024 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_system_read_fread
-		}
-
-		fclose( $this->stream_handle );
-	}
-
-	/**
-	 * Proxy a given URL by storing in memory.
-	 *
-	 * @since 1.15.0
-	 *
-	 * @param string               $url  Request URL.
-	 * @param array<string, mixed> $args Request args.
-	 */
-	private function proxy_url_fallback( string $url, array $args ): void {
-		$response = wp_safe_remote_get( $url, $args );
-		$status   = wp_remote_retrieve_response_code( $response );
-
-		if ( ! $status ) {
-			http_response_code( 404 );
-			return;
-		}
-
-		http_response_code( (int) $status );
-
-		$headers = wp_remote_retrieve_headers( $response );
-
-		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
-			if ( isset( $headers[ $_header ] ) ) {
-				header( $_header . ': ' . $headers[ $_header ] );
-			}
-		}
-
-		echo wp_remote_retrieve_body( $response ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -606,6 +557,157 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	}
 
 	/**
+	 * Returns a callback to modify the cURL configuration before the request is executed.
+	 *
+	 * @since 1.22.1
+	 *
+	 * @param string $url       URL.
+	 * @param string $url_or_ip URL or IP address.
+	 */
+	public function get_curl_resolve_callback( string $url, string $url_or_ip ): callable {
+		/**
+		 * CURL configuration callback.
+		 *
+		 * @param resource $handle The cURL handle returned by curl_init() (passed by reference).
+		 */
+		return static function( $handle ) use ( $url, $url_or_ip ): void {
+			// Just some safeguard in case cURL is not really available,
+			// despite this method being run in the context of WP_Http_Curl.
+			if ( ! function_exists( 'curl_setopt' ) ) {
+				return;
+			}
+
+			if ( $url === $url_or_ip ) {
+				return;
+			}
+
+			$host   = wp_parse_url( $url, PHP_URL_HOST );
+			$scheme = wp_parse_url( $url, PHP_URL_SCHEME ) ?? 'http';
+			$port   = wp_parse_url( $url, PHP_URL_PORT ) ?? 'http' === $scheme ? 80 : 443;
+
+            // phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+
+			curl_setopt(
+				$handle,
+				CURLOPT_RESOLVE,
+				[
+					"$host:$port:$url_or_ip",
+				]
+			);
+
+            // phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+		};
+	}
+
+	/**
+	 * Modifies the cURL configuration before the request is executed.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param resource $handle The cURL handle returned by {@see curl_init()} (passed by reference).
+	 */
+	public function modify_curl_configuration( $handle ): void {
+		// Just some safeguard in case cURL is not really available,
+		// despite this method being run in the context of WP_Http_Curl.
+		if ( ! function_exists( 'curl_setopt' ) ) {
+			return;
+		}
+
+        // phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+
+		curl_setopt(
+			$handle,
+			CURLOPT_FILE,
+			$this->stream_handle
+		);
+
+		curl_setopt( $handle, CURLOPT_HEADERFUNCTION, [ $this, 'stream_headers' ] );
+
+        // phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+	}
+
+	/**
+	 * Grabs the headers of the cURL request.
+	 *
+	 * Each header is sent individually to this callback,
+	 * so we take a look at each one to see if we should "forward" it.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param resource $handle  cURL handle.
+	 * @param string   $header cURL header.
+	 * @return int Header length.
+	 */
+	public function stream_headers( $handle, $header ): int {
+		// Parse Status-Line, the first component in the HTTP response, e.g. HTTP/1.1 200 OK.
+		// Extract the status code to re-send that here.
+		if ( str_starts_with( $header, 'HTTP/' ) ) {
+			$status = explode( ' ', $header );
+			http_response_code( (int) $status[1] );
+			return \strlen( $header );
+		}
+
+		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
+			if ( str_starts_with( strtolower( $header ), strtolower( $_header ) . ': ' ) ) {
+				header( $header, true );
+			}
+		}
+
+		return \strlen( $header );
+	}
+
+	/**
+	 * Proxy a given URL via a PHP read-write stream.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param string               $url  Request URL.
+	 * @param array<string, mixed> $args Request args.
+	 */
+	private function proxy_url_curl( string $url, array $args ): void {
+		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+		wp_safe_remote_get( $url, $args );
+		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+
+		rewind( $this->stream_handle );
+		while ( ! feof( $this->stream_handle ) ) {
+			echo fread( $this->stream_handle, 1024 * 1024 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_system_read_fread
+		}
+
+		fclose( $this->stream_handle );
+	}
+
+	/**
+	 * Proxy a given URL by storing in memory.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param string               $url  Request URL.
+	 * @param array<string, mixed> $args Request args.
+	 */
+	private function proxy_url_fallback( string $url, array $args ): void {
+		$response = wp_safe_remote_get( $url, $args );
+		$status   = wp_remote_retrieve_response_code( $response );
+
+		if ( ! $status ) {
+			http_response_code( 404 );
+			return;
+		}
+
+		http_response_code( (int) $status );
+
+		$headers = wp_remote_retrieve_headers( $response );
+
+		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
+			if ( isset( $headers[ $_header ] ) ) {
+				header( $_header . ': ' . $headers[ $_header ] );
+			}
+		}
+
+		echo wp_remote_retrieve_body( $response ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
 	 * Validate a URL for safe use in the HTTP API.
 	 *
 	 * Like {@see wp_http_validate_url} in core, but with extra hardening
@@ -710,106 +812,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Returns a callback to modify the cURL configuration before the request is executed.
-	 *
-	 * @since 1.22.1
-	 *
-	 * @param string $url       URL.
-	 * @param string $url_or_ip URL or IP address.
-	 */
-	public function get_curl_resolve_callback( string $url, string $url_or_ip ): callable {
-		/**
-		 * CURL configuration callback.
-		 *
-		 * @param resource $handle The cURL handle returned by curl_init() (passed by reference).
-		 */
-		return static function( $handle ) use ( $url, $url_or_ip ): void {
-			// Just some safeguard in case cURL is not really available,
-			// despite this method being run in the context of WP_Http_Curl.
-			if ( ! function_exists( 'curl_setopt' ) ) {
-				return;
-			}
-
-			if ( $url === $url_or_ip ) {
-				return;
-			}
-
-			$host   = wp_parse_url( $url, PHP_URL_HOST );
-			$scheme = wp_parse_url( $url, PHP_URL_SCHEME ) ?? 'http';
-			$port   = wp_parse_url( $url, PHP_URL_PORT ) ?? 'http' === $scheme ? 80 : 443;
-
-			// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_setopt
-
-			curl_setopt(
-				$handle,
-				CURLOPT_RESOLVE,
-				[
-					"$host:$port:$url_or_ip",
-				]
-			);
-
-			// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_setopt
-		};
-	}
-
-	/**
-	 * Modifies the cURL configuration before the request is executed.
-	 *
-	 * @since 1.15.0
-	 *
-	 * @param resource $handle The cURL handle returned by {@see curl_init()} (passed by reference).
-	 */
-	public function modify_curl_configuration( $handle ): void {
-		// Just some safeguard in case cURL is not really available,
-		// despite this method being run in the context of WP_Http_Curl.
-		if ( ! function_exists( 'curl_setopt' ) ) {
-			return;
-		}
-
-		// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_setopt
-
-		curl_setopt(
-			$handle,
-			CURLOPT_FILE,
-			$this->stream_handle
-		);
-
-		curl_setopt( $handle, CURLOPT_HEADERFUNCTION, [ $this, 'stream_headers' ] );
-
-		// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_setopt
-	}
-
-	/**
-	 * Grabs the headers of the cURL request.
-	 *
-	 * Each header is sent individually to this callback,
-	 * so we take a look at each one to see if we should "forward" it.
-	 *
-	 * @since 1.15.0
-	 *
-	 * @param resource $handle  cURL handle.
-	 * @param string   $header cURL header.
-	 * @return int Header length.
-	 */
-	public function stream_headers( $handle, $header ): int {
-		// Parse Status-Line, the first component in the HTTP response, e.g. HTTP/1.1 200 OK.
-		// Extract the status code to re-send that here.
-		if ( 0 === strpos( $header, 'HTTP/' ) ) {
-			$status = explode( ' ', $header );
-			http_response_code( (int) $status[1] );
-			return \strlen( $header );
-		}
-
-		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
-			if ( 0 === stripos( $header, strtolower( $_header ) . ': ' ) ) {
-				header( $header, true );
-			}
-		}
-
-		return \strlen( $header );
 	}
 
 	/**

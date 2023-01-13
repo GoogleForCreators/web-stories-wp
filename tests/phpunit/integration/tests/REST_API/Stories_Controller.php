@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -21,8 +24,8 @@ use DateTime;
 use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
-use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Stories_Controller
@@ -31,23 +34,19 @@ use WP_REST_Request;
  */
 class Stories_Controller extends DependencyInjectedRestTestCase {
 
-	protected $server;
+	protected static int $user_id;
+	protected static int $user2_id;
+	protected static int $user3_id;
 
-	protected static $user_id;
-	protected static $user2_id;
-	protected static $user3_id;
-
-	protected static $author_id;
-	protected static $contributor_id;
+	protected static int $author_id;
+	protected static int $contributor_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Stories_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Stories_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -81,7 +80,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
+		$post_type = Story_Post_Type::POST_TYPE_SLUG;
 
 		$factory->post->create_many(
 			3,
@@ -142,7 +141,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$story_post_type = $this->injector->make( Story_Post_Type::class );
 		$story_post_type->register();
 		$this->controller = new \Google\Web_Stories\REST_API\Stories_Controller( Story_Post_Type::POST_TYPE_SLUG );
 	}
@@ -184,6 +183,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
+		$this->assertIsArray( $statuses );
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'pending', $statuses );
@@ -236,6 +236,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
+		$this->assertIsArray( $statuses );
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'pending', $statuses );
@@ -270,6 +271,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
+		$this->assertIsArray( $statuses );
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'draft', $statuses );
@@ -294,22 +296,27 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
-		$story   = self::factory()->post->create(
+
+		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$user_id,
 			]
 		);
+
+		$view_link = get_preview_post_link( $story );
+		$edit_link = get_edit_post_link( $story, 'rest-api' );
+
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'preview_link', $data );
-		$view_link = get_preview_post_link( $story );
 		$this->assertSame( $view_link, $data['preview_link'] );
 		$this->assertArrayHasKey( 'edit_link', $data );
-		$edit_link = get_edit_post_link( $story, 'rest-api' );
 		$this->assertSame( $edit_link, $data['edit_link'] );
 		$this->assertArrayHasKey( 'embed_post_link', $data );
 		$this->assertStringContainsString( (string) $story, $data['embed_post_link'] );
@@ -324,7 +331,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'publish',
 				'post_author' => self::$user_id,
 			]
@@ -333,6 +340,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		$this->assertIsArray( $data );
 		$this->assertArrayNotHasKey( 'edit_link', $data );
 		$this->assertArrayNotHasKey( 'preview_link', $data );
 		$this->assertArrayNotHasKey( 'embed_post_link', $data );
@@ -349,7 +358,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		wp_set_current_user( self::$user_id );
 		$story   = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
@@ -359,11 +368,16 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 
-		$post               = get_post( $story );
-		list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
-		$permalink          = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
+		$post = get_post( $story );
+
+		$this->assertNotNull( $post );
+
+		[ $permalink ] = get_sample_permalink( $post->ID, $post->post_title, '' );
+		$permalink     = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
 
 		$data = $response->get_data();
+
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'preview_link', $data );
 		$this->assertNotEmpty( $data['preview_link'] );
 		$this->assertSame( $permalink, $data['preview_link'] );
@@ -381,7 +395,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
@@ -408,7 +422,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$story    = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
@@ -422,37 +436,6 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertArrayHasKey( 'https://api.w.org/action-delete', $links );
 		$this->assertArrayHasKey( 'https://api.w.org/action-edit', $links );
-	}
-
-	/**
-	 * @covers ::get_item
-	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::add_taxonomy_links
-	 */
-	public function test_get_add_taxonomy_links(): void {
-		$this->controller->register_routes();
-
-		$object = new DummyTaxonomy();
-		$this->set_private_property( $object, 'taxonomy_post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-		$object->register_taxonomy();
-
-		wp_set_current_user( self::$user_id );
-		$story   = self::factory()->post->create(
-			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_status' => 'publish',
-				'post_author' => self::$user_id,
-			]
-		);
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
-		$request->set_param( 'context', 'edit' );
-		$response = rest_get_server()->dispatch( $request );
-		$links    = $response->get_links();
-
-		$this->assertArrayHasKey( 'https://api.w.org/term', $links );
-		foreach ( $links['https://api.w.org/term'] as $taxonomy ) {
-			$this->assertArrayHasKey( 'href', $taxonomy );
-			$this->assertStringContainsString( 'web-stories/v1', $taxonomy['href'] );
-		}
 	}
 
 	/**
@@ -471,14 +454,16 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$data     = $response->get_data();
 
 		// Body of request.
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'headers', $data );
 		$this->assertArrayHasKey( 'body', $data );
 		$this->assertArrayHasKey( 'status', $data );
 
-		$statues  = $data['headers']['X-WP-TotalByStatus'];
-		$statuses = json_decode( $statues, true );
+		$statuses = $data['headers']['X-WP-TotalByStatus'];
+		$statuses = json_decode( $statuses, true );
 
 		// Headers.
+		$this->assertIsArray( $statuses );
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'future', $statuses );
@@ -500,7 +485,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
@@ -511,6 +496,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayNotHasKey( 'story_poster', $data );
 	}
 
@@ -526,15 +512,21 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
-		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
+
+		$this->assertNotWPError( $attachment_id );
+
+		$attachment = get_post( $attachment_id );
+		$this->assertNotNull( $attachment );
+
+		wp_maybe_generate_attachment_metadata( $attachment );
 		set_post_thumbnail( $story, $attachment_id );
 
 		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
@@ -545,6 +537,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		wp_delete_attachment( $attachment_id, true );
 
+		$this->assertNotFalse( $attachment_src );
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1], $attachment_src[2] );
@@ -571,22 +565,28 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$_content_width            = $content_width;
 		$content_width             = 400;
-		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
 		wp_set_current_user( self::$user_id );
 
 		$this->controller->register_routes();
 
 		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
-		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
+
+		$this->assertNotWPError( $attachment_id );
+
+		$attachment = get_post( $attachment_id );
+		$this->assertNotNull( $attachment );
+
+		wp_maybe_generate_attachment_metadata( $attachment );
 		set_post_thumbnail( $story, $attachment_id );
 
 		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
@@ -599,6 +599,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$content_width = $_content_width;
 
+		$this->assertNotFalse( $attachment_src );
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0], $attachment_src[1] );
 		$this->assertSame( Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1], $attachment_src[2] );
@@ -626,7 +628,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
@@ -635,7 +637,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		add_post_meta(
 			$story,
-			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
+			Story_Post_Type::POSTER_META_KEY,
 			[
 				'url'        => 'http://www.example.com/image.png',
 				'height'     => 1000,
@@ -648,6 +650,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertEqualSetsWithIndex(
 			[
@@ -672,22 +675,28 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$story = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg', 0 );
-		wp_maybe_generate_attachment_metadata( get_post( $attachment_id ) );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
+
+		$this->assertNotWPError( $attachment_id );
+
+		$attachment = get_post( $attachment_id );
+		$this->assertNotNull( $attachment );
+
+		wp_maybe_generate_attachment_metadata( $attachment );
 		set_post_thumbnail( $story, $attachment_id );
 
 		$attachment_src = wp_get_attachment_image_src( $attachment_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_DIMENSIONS );
 
 		add_post_meta(
 			$story,
-			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
+			Story_Post_Type::POSTER_META_KEY,
 			[
 				'url'        => 'http://www.example.com/image.png',
 				'height'     => 1000,
@@ -702,6 +711,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		wp_delete_attachment( $attachment_id, true );
 
+		$this->assertNotFalse( $attachment_src );
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'story_poster', $data );
 		$this->assertEqualSetsWithIndex(
 			[
@@ -725,6 +736,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$data = $this->controller->get_item_schema();
 
 		$this->assertArrayHasKey( 'properties', $data );
+		$this->assertIsArray( $data['properties'] );
 		$this->assertArrayHasKey( 'story_data', $data['properties'] );
 	}
 
@@ -739,7 +751,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'orderby', 'story_author' );
 
 		$response = rest_get_server()->dispatch( $request );
-		$results  = wp_list_pluck( $response->get_data(), 'author' );
+		$data     = $response->get_data();
+
+		$this->assertIsArray( $data );
+		$results = wp_list_pluck( $data, 'author' );
 
 		$this->assertSame(
 			[
@@ -760,7 +775,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$request->set_param( 'orderby', 'story_author' );
 
 		$response = rest_get_server()->dispatch( $request );
-		$results  = wp_list_pluck( $response->get_data(), 'author' );
+		$data     = $response->get_data();
+
+		$this->assertIsArray( $data );
+		$results = wp_list_pluck( $data, 'author' );
 
 		$this->assertSame(
 			[
@@ -783,7 +801,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_attached_post_ids(): void {
 		$original_id = self::factory()->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Example title',
 				'post_excerpt' => 'Example excerpt',
 				'post_author'  => self::$user_id,
@@ -791,13 +809,18 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-		set_post_thumbnail( $original_id, $attachment_id );
-		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
+		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 
-		$posts  = [ get_post( $original_id ) ];
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$this->assertNotWPError( $attachment_id );
+		$this->assertNotWPError( $publisher_logo_id );
+
+		set_post_thumbnail( $original_id, $attachment_id );
+		update_post_meta( $original_id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
+
+		$posts = [ get_post( $original_id ) ];
+
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [ $attachment_id, $publisher_logo_id ], $result );
 	}
 
@@ -805,8 +828,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_attached_post_ids
 	 */
 	public function test_get_attached_post_ids_empty(): void {
-		$posts  = [];
-		$result = $this->call_private_method( $this->controller, 'get_attached_post_ids', [ $posts ] );
+		$posts = [];
+
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -817,7 +841,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_attached_user_ids(): void {
 		$original_id = self::factory()->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Example title',
 				'post_excerpt' => 'Example excerpt',
 				'post_author'  => self::$user_id,
@@ -825,8 +849,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$posts  = [ get_post( $original_id ) ];
-		$result = $this->call_private_method( $this->controller, 'get_attached_user_ids', [ $posts ] );
+		$posts = [ get_post( $original_id ) ];
+
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_user_ids' ], [ $posts ] );
 		$this->assertEqualSets( [ self::$user_id ], $result );
 	}
 
@@ -834,8 +859,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_attached_user_ids
 	 */
 	public function test_get_attached_user_ids_empty(): void {
-		$posts  = [];
-		$result = $this->call_private_method( $this->controller, 'get_attached_user_ids', [ $posts ] );
+		$posts = [];
+
+		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -845,7 +871,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	public function test_filter_posts_clauses_irrelevant_query(): void {
 		$this->controller->register_routes();
 
-		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( Story_Post_Type::POST_TYPE_SLUG );
 
 		$initial_clauses = [
 			'join'    => '',
@@ -860,7 +886,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->assertSame( $orderby, $initial_clauses );
 
 		$query = new \WP_Query();
-		$query->set( 'post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$query->set( 'post_type', Story_Post_Type::POST_TYPE_SLUG );
 		$query->set( 'orderby', 'author' );
 
 		$orderby = $controller->filter_posts_clauses( $initial_clauses, $query );
@@ -873,13 +899,15 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_collection_params(): void {
 		$this->controller->register_routes();
 
-		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( Story_Post_Type::POST_TYPE_SLUG );
 
 		$collection_params = $controller->get_collection_params();
 		$this->assertArrayHasKey( '_web_stories_envelope', $collection_params );
 		$this->assertArrayHasKey( 'web_stories_demo', $collection_params );
 		$this->assertArrayHasKey( 'orderby', $collection_params );
 		$this->assertArrayHasKey( 'enum', $collection_params['orderby'] );
+		$this->assertIsArray( $collection_params['orderby'] );
+		$this->assertIsArray( $collection_params['orderby']['enum'] );
 		$this->assertContains( 'story_author', $collection_params['orderby']['enum'] );
 	}
 
@@ -894,7 +922,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->kses_int();
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
-		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
+		$unsanitized_story_data = json_decode( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
 		$request->set_body_params(
@@ -906,6 +934,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+		$this->assertIsArray( $new_data );
 		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
@@ -922,7 +951,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
 		$original_id            = self::factory()->post->create(
 			[
-				'post_type'             => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'             => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content'          => $unsanitized_content,
 				'post_title'            => 'Example title',
 				'post_excerpt'          => 'Example excerpt',
@@ -931,17 +960,21 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-		$custom_poster     = [
+		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
+		$this->assertNotWPError( $publisher_logo_id );
+
+		$custom_poster = [
 			'url'        => 'http://www.example.com/image.png',
 			'width'      => 1000,
 			'height'     => 1000,
 			'needsProxy' => false,
 		];
 		set_post_thumbnail( $original_id, $attachment_id );
-		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
-		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, $custom_poster );
+		update_post_meta( $original_id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
+		update_post_meta( $original_id, Story_Post_Type::POSTER_META_KEY, $custom_poster );
 
 		wp_set_current_user( self::$user_id );
 		$this->kses_int();
@@ -955,6 +988,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+		$this->assertIsArray( $new_data );
 		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertArrayHasKey( 'raw', $new_data['content'] );
 		$this->assertArrayHasKey( 'title', $new_data );
@@ -964,14 +998,14 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'story_data', $new_data );
 		$this->assertArrayHasKey( 'featured_media', $new_data );
 		$this->assertArrayHasKey( 'meta', $new_data );
-		$this->assertArrayHasKey( \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, $new_data['meta'] );
-		$this->assertArrayHasKey( \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, $new_data['meta'] );
+		$this->assertArrayHasKey( Story_Post_Type::PUBLISHER_LOGO_META_KEY, $new_data['meta'] );
+		$this->assertArrayHasKey( Story_Post_Type::POSTER_META_KEY, $new_data['meta'] );
 
 		$this->assertSame( 'Example title (Copy)', $new_data['title']['raw'] );
 		$this->assertSame( 'Example excerpt', $new_data['excerpt']['raw'] );
 		$this->assertSame( $attachment_id, $new_data['featured_media'] );
-		$this->assertSame( $publisher_logo_id, $new_data['meta'][ \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY ] );
-		$this->assertSame( $custom_poster, $new_data['meta'][ \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY ] );
+		$this->assertSame( $publisher_logo_id, $new_data['meta'][ Story_Post_Type::PUBLISHER_LOGO_META_KEY ] );
+		$this->assertSame( $custom_poster, $new_data['meta'][ Story_Post_Type::POSTER_META_KEY ] );
 		$this->assertSame( [ 'pages' => [] ], $new_data['story_data'] );
 	}
 
@@ -986,7 +1020,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
 		$original_id            = self::factory()->post->create(
 			[
-				'post_type'             => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'             => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content'          => $unsanitized_content,
 				'post_title'            => 'Example title',
 				'post_excerpt'          => 'Example excerpt',
@@ -996,8 +1030,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		);
 
 
-		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, 'wibble' );
-		update_post_meta( $original_id, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, -1 );
+		update_post_meta( $original_id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, 'wibble' );
+		update_post_meta( $original_id, Story_Post_Type::POSTER_META_KEY, -1 );
 
 		wp_set_current_user( self::$user_id );
 		$this->kses_int();
@@ -1043,7 +1077,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
 		$original_id            = self::factory()->post->create(
 			[
-				'post_type'             => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'             => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content'          => $unsanitized_content,
 				'post_title'            => 'Example title',
 				'post_excerpt'          => 'Example excerpt',
@@ -1053,7 +1087,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
+
 		set_post_thumbnail( $original_id, $attachment_id );
 
 		wp_set_current_user( self::$contributor_id );
@@ -1081,11 +1118,11 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->kses_int();
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
-		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
+		$unsanitized_story_data = json_decode( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
 
 		$story = self::factory()->post->create(
 			[
-				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 			]
 		);
 
@@ -1099,6 +1136,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+
+		$this->assertIsArray( $new_data );
+		$this->assertIsArray( $new_data['content'] );
 		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}

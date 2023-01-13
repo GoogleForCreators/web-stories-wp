@@ -17,17 +17,7 @@
 /**
  * External dependencies
  */
-import type {
-  Story,
-  GifElement,
-  ImageElement,
-  Page,
-  ProductElement,
-  ShapeElement,
-  TextElement,
-  VideoElement,
-  StickerElement,
-} from '@googleforcreators/types';
+import type { StoryData, Page, Element } from '@googleforcreators/elements';
 
 export interface Color {
   label: string;
@@ -47,16 +37,7 @@ export interface MetaData {
   modified?: string;
 }
 
-type UnionElement =
-  | TextElement
-  | GifElement
-  | ProductElement
-  | VideoElement
-  | ImageElement
-  | ShapeElement
-  | StickerElement;
-
-export interface TemplateData extends Omit<Story, 'pages'> {
+export interface TemplateData extends Omit<StoryData, 'pages'> {
   current: null;
   selection: never[];
   story: Record<string, never>;
@@ -67,7 +48,7 @@ export interface TemplateData extends Omit<Story, 'pages'> {
 interface TemplatePage
   extends Omit<Page, 'autoAdvance' | 'defaultPageDuration' | 'elements'> {
   pageTemplateType: string | null;
-  elements: UnionElement[];
+  elements: Element[];
 }
 
 export type RawTemplate = MetaData & TemplateData;

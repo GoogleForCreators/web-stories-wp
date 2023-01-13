@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,36 +20,37 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use _WP_Dependency;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Integrations\WooCommerce;
+use Google\Web_Stories\User\Preferences;
+use PHPUnit\Framework\MockObject\MockObject;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Tracking
  */
 class Tracking extends DependencyInjectedTestCase {
-	protected static $user_id;
+	protected static int $user_id;
 
 	/**
-	 * @var Site_Kit
+	 * @var Site_Kit & MockObject
 	 */
 	private $site_kit;
 
 	/**
-	 * @var WooCommerce
+	 * @var WooCommerce & MockObject
 	 */
 	private $woocommerce;
 
 	/**
-	 * @var \Google\Web_Stories\Experiments
+	 * @var \Google\Web_Stories\Experiments & MockObject
 	 */
 	private $experiments;
 
-	/**
-	 * @var \Google\Web_Stories\Tracking
-	 */
-	private $instance;
+	private \Google\Web_Stories\Tracking $instance;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -58,11 +62,11 @@ class Tracking extends DependencyInjectedTestCase {
 		parent::set_up();
 
 		$this->experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$this->site_kit    = $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class );
+		$this->site_kit    = $this->createMock( Site_Kit::class );
 		$assets            = $this->injector->make( \Google\Web_Stories\Assets::class );
 		$settings          = $this->injector->make( \Google\Web_Stories\Settings::class );
-		$preferences       = $this->injector->make( \Google\Web_Stories\User\Preferences::class );
-		$this->woocommerce = $this->createMock( \Google\Web_Stories\Integrations\WooCommerce::class );
+		$preferences       = $this->injector->make( Preferences::class );
+		$this->woocommerce = $this->createMock( WooCommerce::class );
 		$this->instance    = new \Google\Web_Stories\Tracking(
 			$this->experiments,
 			$this->site_kit,
@@ -98,8 +102,19 @@ class Tracking extends DependencyInjectedTestCase {
 
 		$this->instance->register();
 
+		/**
+		 * An array of all registered dependencies keyed by handle.
+		 *
+		 * @var _WP_Dependency[] $registered
+		 */
+		$registered = wp_scripts()->registered;
+
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'registered' ) );
-		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ]->src );
+		$this->assertArrayHasKey( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, $registered );
+		$handle = $registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ];
+		$this->assertInstanceOf( '_WP_Dependency', $handle );
+
+		$this->assertEmpty( $handle->src );
 		$after = wp_scripts()->get_data( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'after' );
 		$this->assertNotEmpty( $after );
 	}
@@ -141,6 +156,7 @@ class Tracking extends DependencyInjectedTestCase {
 		$this->assertSame( \Google\Web_Stories\Tracking::TRACKING_ID_GA4, $settings['trackingIdGA4'] );
 		$this->assertSame( WEBSTORIES_VERSION, $settings['appVersion'] );
 
+		$this->assertIsArray( $settings['userProperties'] );
 		$this->assertArrayHasKey( 'siteLocale', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'userLocale', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'userRole', $settings['userProperties'] );
@@ -173,7 +189,7 @@ class Tracking extends DependencyInjectedTestCase {
 	 */
 	public function test_get_settings_with_optin(): void {
 		wp_set_current_user( self::$user_id );
-		add_user_meta( get_current_user_id(), \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
+		add_user_meta( get_current_user_id(), Preferences::OPTIN_META_KEY, true );
 
 		$this->site_kit->method( 'get_plugin_status' )->willReturn(
 			[
@@ -197,7 +213,7 @@ class Tracking extends DependencyInjectedTestCase {
 		$settings         = $this->instance->get_settings();
 		$tracking_allowed = $settings['trackingAllowed'];
 
-		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
+		delete_user_meta( get_current_user_id(), Preferences::OPTIN_META_KEY );
 
 		$this->assertTrue( $tracking_allowed );
 	}
@@ -229,7 +245,7 @@ class Tracking extends DependencyInjectedTestCase {
 
 		$settings = $this->instance->get_settings();
 
-
+		$this->assertIsArray( $settings['userProperties'] );
 		$this->assertArrayHasKey( 'activePlugins', $settings['userProperties'] );
 		$this->assertIsString( $settings['userProperties']['activePlugins'] );
 		$this->assertStringContainsString( 'woocommerce', $settings['userProperties']['activePlugins'] );
@@ -271,6 +287,7 @@ class Tracking extends DependencyInjectedTestCase {
 
 		$settings = $this->instance->get_settings();
 
+		$this->assertIsArray( $settings['userProperties'] );
 		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
 	}
 }

@@ -39,51 +39,10 @@ import { PROVIDERS } from '../media3p/providerConfiguration';
  */
 
 /**
- * ImageUrl object.
- *
- * @typedef {Object} ImageUrl image url object.
- * @property {string} mimeType The mime type of the image.
- * @property {number} width The width of the image.
- * @property {number} height The height of the image.
- * @property {?string} url The url.
- */
-
-/**
- * VideoUrl object.
- *
- * @typedef {Object} VideoUrl video url object.
- * @property {string} mimeType The mime type of the video.
- * @property {number} width The width of the image.
- * @property {number} height The height of the image.
- * @property {?string} url The url.
- */
-
-/**
- * Media3pMedia object.
- *
- * @typedef {Object} Media3pMedia Media3p media object.
- * @property {string} name The name of the media object. Format is
- * 'media/{provider}:{id}.
- * @property {string} provider The provider.
- * @property {string} type The type of media, currently 'IMAGE' or 'VIDEO'.
- * @property {Author} author The metadata about the author of the media object.
- * @property {?string} description A description of the media item.
- * @property {string} createTime The creation time of the media element.
- * @property {string} updateTime The last update time of the media element.
- * @property {?string} registerUsageUrl The optional URL to call when the media
- * element is added to a story.
- * @property {ImageUrl[]|undefined} imageUrls If the media element is an
- * image, an array of urls with different size assets. If the media element is
- * a video, then poster / thumbnail images.
- * @property {VideoUrl[]|undefined} videoUrls If the media element is a
- * video, an array of urls with different fidelity, eg. full or preview.
- */
-
-/**
  * Converts the image urls in a Media3P Media object to the "sizes"
  * object required for a Resource.
  *
- * @param {Media3pMedia} m The Media3P Media object.
+ * @param {import('../../../types').Media3pMedia} m The Media3P Media object.
  * @return {Object} The array of "sizes"-type objects.
  */
 function getImageUrls(m) {
@@ -113,10 +72,9 @@ function getImageUrls(m) {
  * Converts the gif urls in a Media3P Media object to the "sizes"
  * object required for a resource
  *
- * @param {Media3pMedia} m The Media3P Media object
+ * @param {import('../../../types').Media3pMedia} m The Media3P Media object
  * @return {Object} The array of "sizes"-type objects.
  */
-
 function getGifUrls(m) {
   // The rest of the application expects 3 named "sizes": "full", "large" and
   // "web_stories_thumbnail". We use the biggest as "full", the next biggest
@@ -177,7 +135,7 @@ function getGifUrls(m) {
  * Converts the video urls in a Media3P Media object to the "sizes"
  * object required for a Resource.
  *
- * @param {Media3pMedia} m The Media3P Media object.
+ * @param {import('../../../types').Media3pMedia} m The Media3P Media object.
  * @return {Object} The array of "sizes"-type objects.
  */
 function getVideoUrls(m) {
@@ -270,7 +228,7 @@ function getImageResourceFromMedia3p(m) {
 
 function getVideoResourceFromMedia3p(m) {
   const videoUrls = getVideoUrls(m);
-  const length = parseInt(m.videoMetadata.duration.trimEnd('s'));
+  const length = parseInt(m.videoMetadata.duration.replace(/s$/, ''));
   return createResource({
     id: m.name,
     baseColor: m.color,
@@ -352,7 +310,7 @@ function getStickerResourceFromMedia3p(m) {
 /**
  * Generates a resource object from a Media3P object from the API.
  *
- * @param {Media3pMedia} m A Media3P Media object.
+ * @param {import('../../../types').Media3pMedia} m A Media3P Media object.
  * @return {import('@googleforcreators/media').Resource} Resource object.
  */
 export default function getResourceFromMedia3p(m) {

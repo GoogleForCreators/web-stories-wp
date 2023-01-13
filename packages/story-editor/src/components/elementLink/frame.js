@@ -21,12 +21,13 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
+import { withoutProtocol } from '@googleforcreators/url';
+import { TOOLTIP_PLACEMENT, Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 import Tooltip from '../tooltip';
 import { getLinkFromElement } from '.';
 
@@ -40,11 +41,12 @@ const StyledTooltip = styled(Tooltip)`
   }
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.span`
   background-color: ${({ theme }) => theme.colors.fg.secondary};
   width: 24px;
   height: 24px;
   border-radius: 50%;
+  overflow: hidden;
   margin-right: 8px;
   display: inline-block;
 `;
@@ -64,30 +66,35 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
+const ExternalLink = styled(Icons.ExternalLink)`
+  width: 24px;
+`;
+
 function WithLink({ element, active, children, anchorRef }) {
   const link = getLinkFromElement(element);
 
   const tooltipContent =
     link?.url && active ? (
       <>
-        <IconWrapper>
-          {link?.icon && (
+        {link?.icon && (
+          <IconWrapper>
             <BrandIcon
               src={link.icon}
               alt={__('Site Icon', 'web-stories')}
               decoding="async"
               crossOrigin="anonymous"
             />
-          )}
-        </IconWrapper>
-        <LinkDesc>{link.desc || link.url}</LinkDesc>
+          </IconWrapper>
+        )}
+        <LinkDesc>{link.desc || withoutProtocol(link.url)}</LinkDesc>
+        <ExternalLink />
       </>
     ) : null;
 
   return (
     <StyledTooltip
       forceAnchorRef={anchorRef}
-      placement={TOOLTIP_PLACEMENT.TOP_START}
+      placement={TOOLTIP_PLACEMENT.TOP}
       title={tooltipContent}
     >
       {children}

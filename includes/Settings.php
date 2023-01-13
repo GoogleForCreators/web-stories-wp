@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\PluginUninstallAware;
@@ -128,11 +130,21 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	public const SETTING_NAME_SHOPIFY_ACCESS_TOKEN = 'web_stories_shopify_access_token';
 
 	/**
+	 * Auto-advance setting, `true` means advancing automatically.
+	 */
+	public const SETTING_NAME_AUTO_ADVANCE = 'web_stories_auto_advance';
+
+	/**
+	 * Default Page Duration in seconds.
+	 */
+	public const SETTING_NAME_DEFAULT_PAGE_DURATION = 'web_stories_default_page_duration';
+
+	/**
 	 * Shopping_Vendors instance.
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
 	 */
-	private $shopping_vendors;
+	private Shopping_Vendors $shopping_vendors;
 
 	/**
 	 * Constructor.
@@ -308,7 +320,8 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 				'default'         => [],
 				'show_in_rest'    => [
 					'schema' => [
-						'properties' => [],
+						'properties'           => [],
+						'additionalProperties' => true,
 					],
 				],
 				// WPGraphQL errors when encountering array or object types.
@@ -352,6 +365,28 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 				'show_in_rest' => true,
 			]
 		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_AUTO_ADVANCE,
+			[
+				'description'  => __( 'Auto-advance', 'web-stories' ),
+				'type'         => 'boolean',
+				'default'      => true,
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_DEFAULT_PAGE_DURATION,
+			[
+				'description'  => __( 'Default Page Duration', 'web-stories' ),
+				'type'         => 'number',
+				'default'      => 7,
+				'show_in_rest' => true,
+			]
+		);
 	}
 
 	/**
@@ -366,12 +401,43 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * @return string|array<int|string,mixed>|bool Setting value.
 	 */
 	public function get_setting( string $key, $default = false ) {
-		/**
-		 * Setting value.
-		 *
-		 * @var string|array<int|string,mixed>|bool
-		 */
-		return get_option( $key, $default );
+		// Distinguish between `false` as a default, and not passing one, just like WordPress.
+		$passed_default = \func_num_args() > 1;
+
+		if ( $passed_default ) {
+			/**
+			 * Setting value.
+			 *
+			 * @var string|array<int|string,mixed>|bool
+			 */
+			$option = get_option( $key, $default );
+			if ( $option === $default ) {
+				return $option;
+			}
+		} else {
+			/**
+			 * Setting value.
+			 *
+			 * @var string|array<int|string,mixed>|bool
+			 */
+			$option = get_option( $key );
+		}
+
+		$settings = $this->get_registered_options();
+		if ( isset( $settings[ $key ] ) ) {
+			$value = rest_sanitize_value_from_schema( $option, $settings[ $key ] );
+			if ( is_wp_error( $value ) ) {
+				return $option;
+			}
+			/**
+			 * Setting value.
+			 *
+			 * @var string|array<int|string,mixed>|bool
+			 */
+			$option = $value;
+		}
+
+		return $option;
 	}
 
 	/**
@@ -410,5 +476,49 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 		delete_option( self::SETTING_NAME_SHOPPING_PROVIDER );
 		delete_option( self::SETTING_NAME_SHOPIFY_HOST );
 		delete_option( self::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+		delete_option( self::SETTING_NAME_DEFAULT_PAGE_DURATION );
+		delete_option( self::SETTING_NAME_AUTO_ADVANCE );
+	}
+
+	/**
+	 * Retrieves all of the registered options for the Settings API.
+	 * Inspired by get_registered_options method found in WordPress. But also get settings that are registered without `show_in_rest` property.
+	 *
+	 * @since 1.28.0
+	 *
+	 * @link https://github.com/WordPress/wordpress-develop/blob/trunk/src/wp-includes/rest-api/endpoints/class-wp-rest-settings-controller.php#L211-L267
+	 *
+	 * @return array<string, array<string,string>> Array of registered options.
+	 */
+	protected function get_registered_options(): array {
+		$rest_options = [];
+
+		foreach ( get_registered_settings() as $name => $args ) {
+			$rest_args = [];
+
+			if ( ! empty( $args['show_in_rest'] ) && \is_array( $args['show_in_rest'] ) ) {
+				$rest_args = $args['show_in_rest'];
+			}
+
+			$defaults = [
+				'name'   => ! empty( $rest_args['name'] ) ? $rest_args['name'] : $name,
+				'schema' => [],
+			];
+
+			$rest_args = array_merge( $defaults, $rest_args );
+
+			$default_schema = [
+				'type'        => empty( $args['type'] ) ? null : $args['type'],
+				'description' => empty( $args['description'] ) ? '' : $args['description'],
+				'default'     => $args['default'] ?? null,
+			];
+
+			$schema = array_merge( $default_schema, $rest_args['schema'] );
+			$schema = rest_default_additional_properties_to_false( $schema );
+
+			$rest_options[ $name ] = $schema;
+		}
+
+		return $rest_options;
 	}
 }

@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\Delayed;
@@ -48,7 +50,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * Constructor.
@@ -187,6 +189,105 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	}
 
 	/**
+	 * Prime post caches for attachments and parents.
+	 *
+	 * @since 1.20.0
+	 *
+	 * @param WP_Post[] $posts Array of post objects.
+	 * @return mixed Array of posts.
+	 */
+	public function prime_post_caches( $posts ) {
+		$post_ids = $this->get_attached_post_ids( $posts );
+		if ( ! empty( $post_ids ) ) {
+			_prime_post_caches( $post_ids );
+		}
+
+		return $posts;
+	}
+
+	/**
+	 * Retrieves the query params for the posts collection.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array<string, array<string, mixed>> Collection parameters.
+	 */
+	public function get_collection_params(): array {
+		$query_params = parent::get_collection_params();
+
+		$query_params['_web_stories_envelope'] = [
+			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * Prepares a single attachment output for response.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @param WP_Post         $post    Attachment object.
+	 * @param WP_REST_Request $request Request object.
+	 * @return WP_REST_Response Response object.
+	 */
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
+		$response = parent::prepare_item_for_response( $post, $request );
+
+		/**
+		 * Filters an attachment returned from the REST API.
+		 *
+		 * Allows modification of the attachment right before it is returned.
+		 *
+		 * Note the filter is run after rest_prepare_attachment is run. This filter is designed to only target web stories rest api requests.
+		 *
+		 * @since 1.7.2
+		 *
+		 * @param WP_REST_Response $response The response object.
+		 * @param WP_Post          $post     The original attachment post.
+		 * @param WP_REST_Request  $request  Request used to generate the response.
+		 */
+		return apply_filters( 'web_stories_rest_prepare_attachment', $response, $post, $request );
+	}
+
+	/**
+	 * Retrieves the attachment's schema, conforming to JSON Schema.
+	 *
+	 * Removes some unneeded fields to improve performance by
+	 * avoiding some expensive database queries.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return array<string, string|array<string, array<string,string|string[]>>> Item schema data.
+	 */
+	public function get_item_schema(): array {
+		if ( $this->schema ) {
+			return $this->add_additional_fields_schema( $this->schema );
+		}
+
+		$schema = parent::get_item_schema();
+
+		unset(
+			$schema['properties']['permalink_template'],
+			$schema['properties']['generated_slug'],
+			$schema['properties']['description']
+		);
+
+		$schema['properties']['original_id'] = [
+			'description' => __( 'Unique identifier for original attachment id.', 'web-stories' ),
+			'type'        => 'integer',
+			'context'     => [ 'view', 'edit', 'embed' ],
+		];
+
+		$this->schema = $schema;
+
+		return $this->add_additional_fields_schema( $this->schema );
+	}
+
+
+	/**
 	 * Process post to update attribute.
 	 *
 	 * @since 1.11.0
@@ -243,23 +344,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	}
 
 	/**
-	 * Prime post caches for attachments and parents.
-	 *
-	 * @since 1.20.0
-	 *
-	 * @param WP_Post[] $posts Array of post objects.
-	 * @return mixed Array of posts.
-	 */
-	public function prime_post_caches( $posts ) {
-		$post_ids = $this->get_attached_post_ids( $posts );
-		if ( ! empty( $post_ids ) ) {
-			_prime_post_caches( $post_ids );
-		}
-
-		return $posts;
-	}
-
-	/**
 	 * Get an array of attached post objects.
 	 *
 	 * @since 1.20.0
@@ -271,26 +355,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
 		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
 
-		return array_unique( array_merge( $thumb_ids, $parent_ids ) );
-	}
-
-	/**
-	 * Retrieves the query params for the posts collection.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return array<string, array<string, mixed>> Collection parameters.
-	 */
-	public function get_collection_params(): array {
-		$query_params = parent::get_collection_params();
-
-		$query_params['_web_stories_envelope'] = [
-			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
-			'type'        => 'boolean',
-			'default'     => false,
-		];
-
-		return $query_params;
+		return array_unique( [ ...$thumb_ids, ...$parent_ids ] );
 	}
 
 	/**
@@ -325,137 +390,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		 * @param WP_REST_Request|null $request The REST API request.
 		 */
 		return apply_filters( 'web_stories_rest_attachment_query', $query_args, $request );
-	}
-
-
-	/**
-	 * Prepares a single attachment output for response.
-	 *
-	 * @since 1.7.2
-	 *
-	 * @param WP_Post         $post    Attachment object.
-	 * @param WP_REST_Request $request Request object.
-	 * @return WP_REST_Response Response object.
-	 */
-	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
-		$response = parent::prepare_item_for_response( $post, $request );
-
-		/**
-		 * Filters an attachment returned from the REST API.
-		 *
-		 * Allows modification of the attachment right before it is returned.
-		 *
-		 * Note the filter is run after rest_prepare_attachment is run. This filter is designed to only target web stories rest api requests.
-		 *
-		 * @since 1.7.2
-		 *
-		 * @param WP_REST_Response $response The response object.
-		 * @param WP_Post          $post     The original attachment post.
-		 * @param WP_REST_Request  $request  Request used to generate the response.
-		 */
-		return apply_filters( 'web_stories_rest_prepare_attachment', $response, $post, $request );
-	}
-
-	/**
-	 * Prepares links for the request.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param WP_Post $post Post object.
-	 * @return array Links for the given post.
-	 *
-	 * @phpstan-return Links
-	 */
-	protected function prepare_links( $post ): array {
-		$links = parent::prepare_links( $post );
-		$links = $this->add_taxonomy_links( $links, $post );
-
-		return $links;
-	}
-
-	/**
-	 * Adds a REST API links for the taxonomies.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param array   $links Links for the given post.
-	 * @param WP_Post $post  Post object.
-	 * @return array Modified list of links.
-	 *
-	 * @phpstan-param Links $links
-	 * @phpstan-return Links
-	 */
-	private function add_taxonomy_links( array $links, WP_Post $post ): array {
-		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
-
-		if ( empty( $taxonomies ) ) {
-			return $links;
-		}
-		$links['https://api.w.org/term'] = [];
-
-		foreach ( $taxonomies as $taxonomy_obj ) {
-			// Skip taxonomies that are not public.
-			if ( empty( $taxonomy_obj->show_in_rest ) ) {
-				continue;
-			}
-
-			$controller = $taxonomy_obj->get_rest_controller();
-
-			if ( ! $controller ) {
-				continue;
-			}
-
-			$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
-			$tax       = $taxonomy_obj->name;
-			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
-
-			$terms_url = add_query_arg(
-				'post',
-				$post->ID,
-				rest_url( sprintf( '%s/%s', $namespace, $tax_base ) )
-			);
-
-			$links['https://api.w.org/term'][] = [
-				'href'       => $terms_url,
-				'taxonomy'   => $tax,
-				'embeddable' => true,
-			];
-		}
-		return $links;
-	}
-
-	/**
-	 * Retrieves the attachment's schema, conforming to JSON Schema.
-	 *
-	 * Removes some unneeded fields to improve performance by
-	 * avoiding some expensive database queries.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @return array<string, string|array<string, array<string,string|string[]>>> Item schema data.
-	 */
-	public function get_item_schema(): array {
-		if ( $this->schema ) {
-			return $this->add_additional_fields_schema( $this->schema );
-		}
-
-		$schema = parent::get_item_schema();
-
-		unset(
-			$schema['properties']['permalink_template'],
-			$schema['properties']['generated_slug'],
-			$schema['properties']['description']
-		);
-
-		$schema['properties']['original_id'] = [
-			'description' => __( 'Unique identifier for original attachment id.', 'web-stories' ),
-			'type'        => 'integer',
-			'context'     => [ 'view', 'edit', 'embed' ],
-		];
-
-		$this->schema = $schema;
-
-		return $this->add_additional_fields_schema( $this->schema );
 	}
 
 	/**

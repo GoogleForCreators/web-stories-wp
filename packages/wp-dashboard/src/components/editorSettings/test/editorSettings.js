@@ -102,7 +102,7 @@ function createProviderValues({
   adSensePublisherId = '',
   adSenseSlotId = '',
   adManagerSlotId = '',
-  adNetwork = AdNetworkType.NONE,
+  adNetwork = AdNetworkType.None,
   publisherLogos,
 }) {
   return {
@@ -306,7 +306,7 @@ describe('Editor Settings: <Editor Settings />', () => {
       adSensePublisherId: '123',
       adSenseSlotId: '456',
       adManagerSlotId: '',
-      adNetwork: AdNetworkType.ADSENSE,
+      adNetwork: AdNetworkType.Adsense,
       publisherLogos: [],
     });
 

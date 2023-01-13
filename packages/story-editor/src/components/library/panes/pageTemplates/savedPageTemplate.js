@@ -45,7 +45,7 @@ import { useAPI } from '../../../../app/api';
 import { useConfig } from '../../../../app/config';
 import { usePageDataUrls } from '../../../../app/pageDataUrls';
 import { useUploader } from '../../../../app/uploader';
-import { PageSizePropType } from '../../../../types';
+import { PageSizePropType } from '../../../../propTypes';
 import { focusStyle } from '../../../panels/shared/styles';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
@@ -83,6 +83,14 @@ const PreviewPageWrapper = styled.div`
 PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
+
+const ElementsWrapper = styled.div`
+  z-index: 10;
+`;
+
+const TemplateInsertionOverlay = styled(InsertionOverlay)`
+  z-index: 11;
+`;
 
 const DeleteButton = styled(ActionButton)`
   top: 4px;
@@ -148,7 +156,7 @@ function SavedPageTemplate(
           mediaSource: 'page-template',
         });
 
-        updatePageTemplate(page.templateId, {
+        await updatePageTemplate(page.templateId, {
           featured_media: resource.id,
         });
         updateSavedTemplate({
@@ -218,18 +226,24 @@ function SavedPageTemplate(
             draggable={false}
           />
         ) : (
-          <UnitsProvider
-            pageSize={{
-              height: pageSize.height,
-              width: pageSize.width,
-            }}
-          >
-            {page.elements.map((element) => (
-              <DisplayElement key={element.id} previewMode element={element} />
-            ))}
-          </UnitsProvider>
+          <ElementsWrapper>
+            <UnitsProvider
+              pageSize={{
+                height: pageSize.height,
+                width: pageSize.width,
+              }}
+            >
+              {page.elements.map((element) => (
+                <DisplayElement
+                  key={element.id}
+                  previewMode
+                  element={element}
+                />
+              ))}
+            </UnitsProvider>
+          </ElementsWrapper>
         )}
-        {isActive && <InsertionOverlay showIcon={false} />}
+        {isActive && <TemplateInsertionOverlay showIcon={false} />}
         <ActionButton
           ref={insertButtonRef}
           onClick={(e) => {

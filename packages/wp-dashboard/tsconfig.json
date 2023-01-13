@@ -6,11 +6,13 @@
   },
   "references": [
     { "path": "../date" },
+    { "path": "../elements" },
     { "path": "../fonts" },
     { "path": "../i18n" },
     { "path": "../media" },
     { "path": "../patterns" },
     { "path": "../react" },
+    { "path": "../templates" },
     { "path": "../tracking" },
     { "path": "../url" },
     { "path": "../wp-utils" }

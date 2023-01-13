@@ -16,9 +16,9 @@
 /**
  * External dependencies
  */
-import type { Page, Story, Element } from '@googleforcreators/types';
+import type { Page, StoryData, Element } from '@googleforcreators/elements';
 
-export interface TextSetData extends Omit<Story, 'pages'> {
+export interface TextSetData extends Omit<StoryData, 'pages'> {
   current: null;
   selection: never[];
   story: Record<string, never>;

@@ -62,6 +62,7 @@ import WithProductPill from '../shopping/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants';
+import { noop } from '../../utils/noop';
 import {
   FOCUS_GROUPS,
   useFocusGroupRef,
@@ -102,8 +103,6 @@ const EmptyFrame = styled.div`
   height: 100%;
   pointer-events: none;
 `;
-
-const NOOP = () => {};
 
 const FRAME_ELEMENT_MESSAGE = sprintf(
   /* translators: %s: Ctrl+Alt+P keyboard shortcut. */
@@ -153,11 +152,12 @@ function FrameElement({ id }) {
         isActive,
       };
     });
-  const { type, flip, isLocked } = element;
+  const { type, flip, isLocked, isHidden } = element;
 
   // Unlocked elements are always clickable,
-  // locked elements are only clickable if selected
-  const isClickable = !isLocked || isSelected;
+  // locked elements are only clickable if selected,
+  // hidden elements are never clickable.
+  const isClickable = (!isLocked || isSelected) && !isHidden;
 
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
@@ -218,7 +218,7 @@ function FrameElement({ id }) {
     },
     [id, setEditingElement, handleSelectElement, isSelected]
   );
-  const handleMediaClick = useDoubleClick(NOOP, handleMediaDoubleClick);
+  const handleMediaClick = useDoubleClick(noop, handleMediaDoubleClick);
 
   /**
    * Announce keyboard options on element.

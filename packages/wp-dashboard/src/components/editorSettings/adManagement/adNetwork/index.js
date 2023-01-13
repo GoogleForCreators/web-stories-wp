@@ -62,15 +62,15 @@ export const TEXT = {
 const OPTIONS = [
   {
     label: _x('None', 'ad network', 'web-stories'),
-    value: AdNetworkType.NONE,
+    value: AdNetworkType.None,
   },
   {
     label: __('Google AdSense', 'web-stories'),
-    value: AdNetworkType.ADSENSE,
+    value: AdNetworkType.Adsense,
   },
   {
     label: __('Google Ad Manager', 'web-stories'),
-    value: AdNetworkType.ADMANAGER,
+    value: AdNetworkType.Admanager,
   },
 ];
 
@@ -80,11 +80,11 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   useEffect(() => setAdNetwork(adNetworkRaw), [adNetworkRaw]);
 
   const message = useMemo(() => {
-    if (AdNetworkType.ADMANAGER === adNetwork) {
+    if (AdNetworkType.Admanager === adNetwork) {
       return TEXT.HELPER_MESSAGE_ADMANAGER;
     }
 
-    if (AdNetworkType.ADSENSE === adNetwork) {
+    if (AdNetworkType.Adsense === adNetwork) {
       return TEXT.HELPER_MESSAGE_ADSENSE;
     }
 
@@ -92,11 +92,11 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   }, [adNetwork]);
 
   const link = useMemo(() => {
-    if (AdNetworkType.ADMANAGER === adNetwork) {
+    if (AdNetworkType.Admanager === adNetwork) {
       return TEXT.HELPER_LINK_ADMANAGER;
     }
 
-    if (AdNetworkType.ADSENSE === adNetwork) {
+    if (AdNetworkType.Adsense === adNetwork) {
       return TEXT.HELPER_LINK_ADSENSE;
     }
 

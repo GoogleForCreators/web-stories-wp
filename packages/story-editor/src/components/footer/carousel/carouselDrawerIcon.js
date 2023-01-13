@@ -24,7 +24,7 @@ import { Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { CAROUSEL_STATE } from '../../../constants';
+import { CarouselState } from '../../../constants';
 
 const iconCss = css`
   width: 32px;
@@ -41,7 +41,7 @@ const IconUp = styled(Icons.ChevronUpSmall)`
 
 function CarouselDrawerIcon({ state }) {
   // If open or going from open to closed, show down arrow
-  if ([CAROUSEL_STATE.OPEN, CAROUSEL_STATE.CLOSING].includes(state)) {
+  if ([CarouselState.Open, CarouselState.Closing].includes(state)) {
     return <IconDown />;
   }
   // Otherwise if closed or going from closed to open, show up arrow

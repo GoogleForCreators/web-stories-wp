@@ -25,7 +25,8 @@ import {
   forwardRef,
 } from '@googleforcreators/react';
 import { getTransformFlip } from '@googleforcreators/elements';
-import type { Flip, MediaElement, Resource } from '@googleforcreators/types';
+import type { Flip, MediaElement } from '@googleforcreators/elements';
+import type { Resource } from '@googleforcreators/media';
 import type { CSSProperties, SVGAttributes, ForwardedRef } from 'react';
 
 /**
@@ -133,7 +134,7 @@ function WithDropTarget({
 }: WithDropTargetProps): JSX.Element {
   const pathRef = useRef<SVGPathElement>(null);
 
-  const { id, resource, isBackground, isLocked } = element;
+  const { id, resource, isBackground, isLocked, isHidden } = element;
   const mask = getElementMask(element);
 
   useEffect(() => {
@@ -158,7 +159,7 @@ function WithDropTarget({
       isDropSource(draggingResource.type) &&
       draggingResource !== resource);
 
-  const hasOutline = !isLocked && canHasOutline;
+  const hasOutline = !isLocked && !isHidden && canHasOutline;
 
   const hasThinOutline = hasOutline && !isBackground;
   const hasBackgroundOutline = Boolean(hasOutline && isBackground);
@@ -229,11 +230,11 @@ const WithMask = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const [hover, setHover] = useState(false);
-    const { isBackground, isLocked } = element;
+    const { isBackground, isLocked, isHidden } = element;
 
     // Unlocked elements are always clickable,
     // locked elements are only clickable if selected
-    const isClickable = !isLocked || isSelected;
+    const isClickable = (!isLocked || isSelected) && !isHidden;
 
     const dropTargets = {
       draggingResource,

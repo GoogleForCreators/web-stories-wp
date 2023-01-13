@@ -54,28 +54,23 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        php: ['8.0']
+        php: ['8.1', '8.2']
         wp: ['latest']
         coverage: [false]
         experimental: [false]
         include:
-          # Using PHP 7.4 for code coverage run as 8.0 throws errors.
-          - php: '7.4'
+          - php: '8.0'
             wp: 'latest'
             coverage: true
             experimental: false
 
-          - php: '7.2'
-            wp: '5.7'
+          - php: '7.4'
+            wp: '5.9'
             experimental: false
 
           - php: '8.0'
             wp: 'latest'
             random: true
-            experimental: true
-
-          - php: '8.1'
-            wp: 'trunk'
             experimental: true
 
           - php: '8.2'
@@ -84,25 +79,25 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
 
       # PHP-Scoper only works on PHP 7.4+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
       - name: Setup PHP 8.0
-        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
+        uses: shivammathur/setup-php@8e2ac35f639d3e794c1da1f28999385ab6fdf0fc
         with:
           php-version: '8.0'
           tools: composer
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
+        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -110,7 +105,7 @@ jobs:
         run: rm -rf vendor/*
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
+        uses: shivammathur/setup-php@8e2ac35f639d3e794c1da1f28999385ab6fdf0fc
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql
@@ -118,32 +113,14 @@ jobs:
           tools: composer, cs2pr
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@f680dac46551dffb2234a240d65ae806c2999dd6
+        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
-      # Installs a different PHPUnit version depending on the WP/PHP version combo we're testing against.
-      #
-      # | WP  / PHP | PHPUnit |
-      # |-----------|---------|
-      # | 5.7 / 7.2 | 7       |
-      # | 5.9 / 7.2 | 8       |
-      # | 5.9 / 7.4 | 9       |
-      # | *   / 8   | 9       |
-      #
-      # See https://make.wordpress.org/core/handbook/references/phpunit-compatibility-and-wordpress-versions/
       - name: Update PHPUnit
         run: |
-          if [[ $WP_VERSION == "5.7" && $PHP_VERSION == "7.2" ]]; then
-            echo "Installing PHPUnit 7.5.x"
-            composer require --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
-          elif [[ $WP_VERSION == "latest" || $WP_VERSION == "trunk" || $PHP_VERSION == "7.4" ]]; then
-            echo "Installing latest version of PHPUnit"
-            composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
-          fi
-        env:
-          WP_VERSION: ${{ matrix.wp }}
-          PHP_VERSION: ${{ matrix.php }}
+          echo "Installing latest version of PHPUnit"
+          composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
 
       - name: Composer dump autoload
         run: composer dump-autoload --no-interaction

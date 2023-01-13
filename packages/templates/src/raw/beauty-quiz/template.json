@@ -1,5 +1,5 @@
 {
-  "version": 44,
+  "version": 46,
   "pages": [
     {
       "elements": [
@@ -44,9 +44,6 @@
           "y": 295,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "id": "380bdeec-030d-4b2b-b5ad-b3c921e16e23"
         },
@@ -112,9 +109,6 @@
           "y": 367,
           "width": 263,
           "height": 132,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "marginOffset": -3.3062499999999986
         },
@@ -182,9 +176,6 @@
           },
           "width": 138,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.421875
         }
       ],
@@ -255,9 +246,6 @@
           "y": 196,
           "width": 571,
           "height": 391,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizPinkBlob" },
           "id": "b7f2bc51-3992-4b74-9184-e4033f4adc3e"
         },
@@ -323,9 +311,6 @@
           "y": 289,
           "width": 280,
           "height": 150,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "id": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "marginOffset": 0.6187499999999986
         }
@@ -443,9 +428,6 @@
           },
           "width": 70,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 8.896874999999994
         },
         {
@@ -508,9 +490,6 @@
           },
           "width": 260,
           "height": 89,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "0313916c-44be-44b1-b5de-f8dd2d8014ab",
@@ -578,9 +557,6 @@
           },
           "width": 80,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.84659090909091
         },
         {
@@ -594,9 +570,6 @@
           "y": 317,
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "borderRadius": {
@@ -620,9 +593,6 @@
           "type": "shape",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -645,9 +615,6 @@
           "type": "shape",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -718,9 +685,6 @@
           },
           "width": 65,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986
         },
         {
@@ -784,9 +748,6 @@
           },
           "width": 80,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986
         },
         {
@@ -850,9 +811,6 @@
           },
           "width": 72,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986
         }
       ],
@@ -970,9 +928,6 @@
           },
           "width": 49,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.421875,
           "type": "text"
         },
@@ -1035,9 +990,6 @@
           },
           "width": 260,
           "height": 61,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "d74eb94c-1702-4dbb-8c41-cef2b6f52015",
@@ -1105,9 +1057,6 @@
           },
           "width": 80,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.84659090909091,
           "type": "text"
         },
@@ -1121,9 +1070,6 @@
           "y": 317,
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "75a306cd-9cad-4b82-b2d2-ae630630aea9",
           "borderRadius": {
@@ -1147,9 +1093,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -1172,9 +1115,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -1245,9 +1185,6 @@
           },
           "width": 97,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -1311,9 +1248,6 @@
           },
           "width": 84,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -1377,9 +1311,6 @@
           },
           "width": 194,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         }
@@ -1414,9 +1345,6 @@
           "lockAspectRatio": true,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "basedOn": "380bdeec-030d-4b2b-b5ad-b3c921e16e23",
           "id": "b137c337-7cc4-4a44-b325-9dc823f87234",
@@ -1549,9 +1477,6 @@
           },
           "width": 282,
           "height": 109,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "id": "ed3fe49d-37e8-4f2b-be90-18efc60afb9b",
@@ -1646,9 +1571,6 @@
           },
           "width": 46,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.421875,
           "type": "text"
         },
@@ -1711,9 +1633,6 @@
           },
           "width": 260,
           "height": 59,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "a2a31a1c-00a8-4044-adcb-6befe1910e31",
@@ -1781,9 +1700,6 @@
           },
           "width": 80,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.84659090909091,
           "type": "text"
         },
@@ -1797,9 +1713,6 @@
           "y": 317,
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "a579951c-7207-46d4-b5d6-edab44005fe5",
           "borderRadius": {
@@ -1823,9 +1736,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -1848,9 +1758,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -1921,9 +1828,6 @@
           },
           "width": 97,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -1987,9 +1891,6 @@
           },
           "width": 135,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -2053,9 +1954,6 @@
           },
           "width": 194,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         }
@@ -2090,9 +1988,6 @@
           "lockAspectRatio": true,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "basedOn": "380bdeec-030d-4b2b-b5ad-b3c921e16e23",
           "id": "ffda7a52-2471-40fb-a607-87e788cbec45",
@@ -2227,9 +2122,6 @@
           },
           "width": 282,
           "height": 109,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "id": "b55ba81b-0dcf-48f7-962d-3771adae861a",
@@ -2324,9 +2216,6 @@
           },
           "width": 45,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.421875,
           "type": "text"
         },
@@ -2389,9 +2278,6 @@
           },
           "width": 266,
           "height": 92,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "aa1fdf83-461a-49ed-8726-2f4ceb944202",
@@ -2459,9 +2345,6 @@
           },
           "width": 80,
           "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.84659090909091,
           "type": "text"
         },
@@ -2475,9 +2358,6 @@
           "y": 317,
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "id": "f25d1bcb-9462-4d94-b6ce-6e54b547bbc4",
           "borderRadius": {
@@ -2501,9 +2381,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -2526,9 +2403,6 @@
           "basedOn": "d87e7fe2-868f-4602-84d0-907bdebea91a",
           "width": 317,
           "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": { "type": "rectangle" },
           "borderRadius": {
             "topLeft": 80,
@@ -2599,9 +2473,6 @@
           },
           "width": 243,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -2665,9 +2536,6 @@
           },
           "width": 135,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         },
@@ -2731,9 +2599,6 @@
           },
           "width": 194,
           "height": 26,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.3374999999999986,
           "type": "text"
         }
@@ -2820,9 +2685,6 @@
           },
           "width": 260,
           "height": 113,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.703125,
           "basedOn": "0f8418e7-2885-42c5-a2c9-b7fece4613b6",
           "id": "89054a81-950e-446e-8aca-6ddba66353a6",
@@ -2893,9 +2755,6 @@
           },
           "width": 73,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 2.4670454545454543,
           "type": "text"
         },
@@ -2962,9 +2821,6 @@
           },
           "width": 98,
           "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.2261363636363605,
           "type": "text"
         },
@@ -3031,9 +2887,6 @@
           },
           "width": 98,
           "height": 18,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 3.2261363636363605,
           "type": "text"
         },
@@ -3097,9 +2950,6 @@
           },
           "width": 90,
           "height": 66,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.3687500000000057,
           "type": "text"
         },
@@ -3163,9 +3013,6 @@
           },
           "width": 90,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.3687500000000057,
           "type": "text"
         },
@@ -3229,9 +3076,6 @@
           },
           "width": 90,
           "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -3.3687500000000057,
           "type": "text"
         }
@@ -3332,9 +3176,6 @@
           "lockAspectRatio": true,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "basedOn": "380bdeec-030d-4b2b-b5ad-b3c921e16e23",
           "id": "20075941-d9c4-406b-b2e9-ec5b107f3e76",
@@ -3401,9 +3242,6 @@
           },
           "width": 282,
           "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "id": "02657fa3-2a3a-4fd3-85d4-d882f0e15e75",
@@ -3474,9 +3312,6 @@
           },
           "width": 282,
           "height": 82,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "type": "text"
         }
@@ -3570,9 +3405,6 @@
           "lockAspectRatio": true,
           "width": 571,
           "height": 409,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizGreenBlob" },
           "basedOn": "380bdeec-030d-4b2b-b5ad-b3c921e16e23",
           "id": "edb4959a-aad7-428d-9b1d-e187c8520e97",
@@ -3639,9 +3471,6 @@
           },
           "width": 282,
           "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "basedOn": "45c9b8e5-68bc-4682-92c8-f45b1051296e",
           "id": "d6748315-85fb-441e-8ed5-13b8e4e2069e",
@@ -3712,9 +3541,6 @@
           },
           "width": 282,
           "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "type": "text"
         }
@@ -3806,9 +3632,6 @@
           },
           "width": 282,
           "height": 75,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": -2.9468749999999986,
           "type": "text",
           "basedOn": "d6748315-85fb-441e-8ed5-13b8e4e2069e",
@@ -3879,9 +3702,6 @@
           },
           "width": 180,
           "height": 47,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.5625,
           "type": "text"
         },
@@ -3948,9 +3768,6 @@
           },
           "width": 180,
           "height": 47,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.5625,
           "type": "text"
         },
@@ -4017,9 +3834,6 @@
           },
           "width": 180,
           "height": 71,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "marginOffset": 0.5625,
           "type": "text"
         },
@@ -4033,9 +3847,6 @@
           "y": 329,
           "width": 122,
           "height": 106,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizTiltedGreenBlob" },
           "id": "47cae18d-3068-4772-907e-a103a60b3e11"
         },
@@ -4051,9 +3862,6 @@
           "type": "sticker",
           "width": 122,
           "height": 106,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizTiltedGreenBlob" }
         },
         {
@@ -4068,9 +3876,6 @@
           "type": "sticker",
           "width": 122,
           "height": 106,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "sticker": { "type": "beautyQuizTiltedGreenBlob" }
         },
         {

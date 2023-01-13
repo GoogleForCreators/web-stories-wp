@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories;
 
 /**
@@ -59,7 +61,7 @@ class Decoder {
 	 * @return string Decoded string.
 	 */
 	public function base64_decode( string $string ): string {
-		if ( 0 === strpos( $string, '__WEB_STORIES_ENCODED__' ) ) {
+		if ( str_starts_with( $string, '__WEB_STORIES_ENCODED__' ) ) {
 			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
 
 			return urldecode( base64_decode( $string ) );

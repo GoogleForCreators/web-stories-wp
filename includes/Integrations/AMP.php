@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
@@ -64,21 +66,21 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Analytics constructor.
@@ -139,6 +141,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @return array|mixed Filtered options.
 	 *
 	 * @phpstan-param AMPOptions $options
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($options is array<T> ? array<T> : mixed)
 	 */
 	public function filter_amp_options( $options ) {
 		if ( ! \is_array( $options ) ) {
@@ -162,6 +168,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @param string[]|mixed $post_types Supportable post types.
 	 * @return array|mixed Supportable post types.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($post_types is array<T> ? array<T> : mixed)
 	 */
 	public function filter_supportable_post_types( $post_types ) {
 		if ( ! \is_array( $post_types ) ) {
@@ -173,7 +183,7 @@ class AMP extends Service_Base implements HasRequirements {
 		$post_types = array_diff( $post_types, [ $story_post_type ] );
 
 		if ( $this->get_request_post_type() === $story_post_type ) {
-			$post_types = array_merge( $post_types, [ $story_post_type ] );
+			$post_types = [ ...$post_types, $story_post_type ];
 		}
 
 		return array_unique( array_values( $post_types ) );
@@ -228,10 +238,12 @@ class AMP extends Service_Base implements HasRequirements {
 		}
 
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
-			'publisher_logo' => $story->get_publisher_logo_url(),
+			'publisher_logo' => (string) $story->get_publisher_logo_url(),
 			'publisher'      => $story->get_publisher_name(),
 			'poster_images'  => array_filter( $poster_images ),
 			'video_cache'    => $video_cache_enabled,
+			'title_tag'      => wp_get_document_title(),
+			'description'    => wp_strip_all_tags( get_the_excerpt() ),
 		];
 
 		return $sanitizers;
@@ -260,7 +272,7 @@ class AMP extends Service_Base implements HasRequirements {
 	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
 		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
-			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
+			isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) &&
 			(
 				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
 				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] ) ||
@@ -388,7 +400,7 @@ class AMP extends Service_Base implements HasRequirements {
 			 * @var string $request_uri
 			 */
 			$request_uri = $_SERVER['REQUEST_URI'];
-			if ( false !== strpos( (string) wp_unslash( $request_uri ), $this->story_post_type->get_rest_url() ) ) {
+			if ( str_contains( (string) wp_unslash( $request_uri ), $this->story_post_type->get_rest_url() ) ) {
 				return $this->story_post_type->get_slug();
 			}
 		}

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -24,10 +27,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  */
 class ShortPixel extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Integrations\ShortPixel
-	 */
-	private $instance;
+	private \Google\Web_Stories\Integrations\ShortPixel $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -46,18 +46,18 @@ class ShortPixel extends DependencyInjectedTestCase {
 	 * @covers ::image_urls
 	 */
 	public function test_image_urls(): void {
-		$urls   = [ 
+		$urls   = [
 			'http://localhost:8899/wp-content/uploads/2022/03/example.jpg',
 			'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-768.jpg',
 			'http://localhost:8899/wp-content/uploads/2022/03/example-01.jpg',
 		];
-		$result = $this->instance->image_urls( $urls, 10 );
+		$result = $this->instance->image_urls( $urls );
 		$this->assertEqualSets(
-			[ 
+			[
 				'http://localhost:8899/wp-content/uploads/2022/03/example.jpg',
 				'http://localhost:8899/wp-content/uploads/2022/03/example-01.jpg',
 			],
-			$result 
+			$result
 		);
 	}
 
@@ -65,12 +65,12 @@ class ShortPixel extends DependencyInjectedTestCase {
 	 * @covers ::image_urls
 	 */
 	public function test_image_urls_only_web_stories_urls(): void {
-		$urls   = [ 
+		$urls   = [
 			'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-768.jpg',
 			'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-769.jpg',
 			'http://localhost:8899/wp-content/uploads/2022/03/web-stories-page-template-770.jpg',
 		];
-		$result = $this->instance->image_urls( $urls, 10 );
+		$result = $this->instance->image_urls( $urls );
 		$this->assertSame( [], $result );
 	}
 
@@ -79,7 +79,7 @@ class ShortPixel extends DependencyInjectedTestCase {
 	 */
 	public function test_image_urls_empty(): void {
 		$urls   = [];
-		$result = $this->instance->image_urls( $urls, 10 );
+		$result = $this->instance->image_urls( $urls );
 		$this->assertSame( [], $result );
 	}
 
@@ -89,7 +89,7 @@ class ShortPixel extends DependencyInjectedTestCase {
 	public function test_image_urls_non_page_template_image(): void {
 		/* given a non "page-template" image the urls should pass thru */
 		$urls   = [ 'http://localhost:8899/wp-content/uploads/2022/03/example-750.jpg' ];
-		$result = $this->instance->image_urls( $urls, 10 );
+		$result = $this->instance->image_urls( $urls );
 		$this->assertEqualSets( $urls, $result );
 	}
 }

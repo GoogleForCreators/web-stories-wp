@@ -19,6 +19,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Widgets;
 
 use Google\Web_Stories\Assets;
@@ -53,7 +55,7 @@ class Stories extends WP_Widget {
 	 *
 	 * @var array<string,string>
 	 */
-	public $args = [
+	public array $args = [
 		'before_title'  => '<h4 class="widgettitle web-stories-widget-title">',
 		'after_title'   => '</h4>',
 		'before_widget' => '<div class="widget-wrap web-stories-widget-wrapper">',
@@ -65,21 +67,21 @@ class Stories extends WP_Widget {
 	 *
 	 * @var Assets Assets instance.
 	 */
-	protected $assets;
+	protected Assets $assets;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Stories constructor.
@@ -439,6 +441,26 @@ class Stories extends WP_Widget {
 	}
 
 	/**
+	 * Enqueue widget script.
+	 *
+	 * @since 1.5.0
+	 */
+	public function enqueue_scripts(): void {
+		if ( wp_script_is( self::SCRIPT_HANDLE ) ) {
+			return;
+		}
+
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ 'jquery' ] );
+
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesData',
+			$this->stories_script_data->get_script_data()
+		);
+	}
+
+	/**
 	 * Default values of an instance.
 	 *
 	 * @since 1.5.0
@@ -463,26 +485,6 @@ class Stories extends WP_Widget {
 			'orderby'            => 'post_date',
 			'order'              => 'DESC',
 		];
-	}
-
-	/**
-	 * Enqueue widget script.
-	 *
-	 * @since 1.5.0
-	 */
-	public function enqueue_scripts(): void {
-		if ( wp_script_is( self::SCRIPT_HANDLE ) ) {
-			return;
-		}
-
-		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ 'jquery' ] );
-
-		wp_localize_script(
-			self::SCRIPT_HANDLE,
-			'webStoriesData',
-			$this->stories_script_data->get_script_data()
-		);
 	}
 
 	/**
@@ -630,7 +632,7 @@ class Stories extends WP_Widget {
 				type="<?php echo esc_attr( (string) $args['type'] ); ?>"
 				id="<?php echo $this->get_field_id( $args['id'] ); ?>"
 				name="<?php echo $this->get_field_name( $args['name'] ); ?>"
-				value="<?php echo ( 'checkbox' === $args['type'] ) ? 1 : $args['value']; ?>"
+				value="<?php echo 'checkbox' === $args['type'] ? 1 : $args['value']; ?>"
 				<?php
 				if ( 'checkbox' === $args['type'] ) {
 					checked( 1, $args['value'], true );

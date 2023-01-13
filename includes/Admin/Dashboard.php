@@ -26,6 +26,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
@@ -38,6 +40,7 @@ use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Shopping\Shopping_Vendors;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
@@ -50,98 +53,105 @@ class Dashboard extends Service_Base {
 	/**
 	 * Script handle.
 	 */
-	public const SCRIPT_HANDLE = 'wp-dashboard';
+	public const SCRIPT_HANDLE = 'web-stories-dashboard';
 
 	/**
 	 * Admin page hook suffixes.
 	 *
 	 * @var array<string,string|bool> List of the admin pages' hook_suffix values.
 	 */
-	private $hook_suffix = [];
+	private array $hook_suffix = [];
 
 	/**
 	 * Experiments instance.
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * Site_Kit instance.
 	 *
 	 * @var Site_Kit Site_Kit instance.
 	 */
-	private $site_kit;
+	private Site_Kit $site_kit;
 
 	/**
 	 * Decoder instance.
 	 *
 	 * @var Decoder Decoder instance.
 	 */
-	private $decoder;
+	private Decoder $decoder;
 
 	/**
 	 * Locale instance.
 	 *
 	 * @var Locale Locale instance.
 	 */
-	private $locale;
+	private Locale $locale;
 
 	/**
 	 * Google_Fonts instance.
 	 *
 	 * @var Google_Fonts Google_Fonts instance.
 	 */
-	private $google_fonts;
+	private Google_Fonts $google_fonts;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Font_Post_Type instance.
 	 *
 	 * @var Font_Post_Type Font_Post_Type instance.
 	 */
-	private $font_post_type;
+	private Font_Post_Type $font_post_type;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * Shopping_Vendors instance.
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
 	 */
-	private $shopping_vendors;
+	private Shopping_Vendors $shopping_vendors;
 
 	/**
 	 * WooCommerce instance.
 	 *
 	 * @var WooCommerce WooCommerce instance.
 	 */
-	private $woocommerce;
+	private WooCommerce $woocommerce;
+
+	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private Settings $settings;
 
 	/**
 	 * Dashboard constructor.
@@ -162,6 +172,7 @@ class Dashboard extends Service_Base {
 	 * @param Types            $types            Types instance.
 	 * @param Shopping_Vendors $shopping_vendors Shopping_Vendors instance.
 	 * @param WooCommerce      $woocommerce      WooCommerce instance.
+	 * @param Settings         $settings         Settings instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -175,7 +186,8 @@ class Dashboard extends Service_Base {
 		Context $context,
 		Types $types,
 		Shopping_Vendors $shopping_vendors,
-		WooCommerce $woocommerce
+		WooCommerce $woocommerce,
+		Settings $settings
 	) {
 		$this->experiments      = $experiments;
 		$this->decoder          = $decoder;
@@ -189,6 +201,7 @@ class Dashboard extends Service_Base {
 		$this->types            = $types;
 		$this->shopping_vendors = $shopping_vendors;
 		$this->woocommerce      = $woocommerce;
+		$this->settings         = $settings;
 	}
 
 	/**
@@ -322,7 +335,7 @@ class Dashboard extends Service_Base {
 					'_embed'                => rawurlencode(
 						implode(
 							',',
-							[ 'wp:lock', 'wp:lockuser', 'author' ]
+							[ 'wp:lock', 'author' ]
 						)
 					),
 					'context'               => 'edit',
@@ -352,7 +365,8 @@ class Dashboard extends Service_Base {
 								'link',
 								'preview_link',
 								'edit_link',
-								'_links', // Needed for WP 6.1+
+								'_links', // Needed for WP 6.1+.
+								'_embedded',
 								// _web_stories_envelope will add these fields, we need them too.
 								'body',
 								'status',
@@ -452,6 +466,9 @@ class Dashboard extends Service_Base {
 		$allowed_image_mime_types = $mime_types['image'];
 		$vendors                  = wp_list_pluck( $this->shopping_vendors->get_vendors(), 'label' );
 
+		$auto_advance  = $this->settings->get_setting( $this->settings::SETTING_NAME_AUTO_ADVANCE );
+		$page_duration = $this->settings->get_setting( $this->settings::SETTING_NAME_DEFAULT_PAGE_DURATION );
+
 		$settings = [
 			'isRTL'                   => is_rtl(),
 			'userId'                  => get_current_user_id(),
@@ -478,6 +495,7 @@ class Dashboard extends Service_Base {
 			'vendors'                 => $vendors,
 			'maxUpload'               => $max_upload_size,
 			'maxUploadFormatted'      => size_format( $max_upload_size ),
+			'editPostsCapabilityName' => $this->story_post_type->get_cap_name( 'edit_posts' ),
 			'capabilities'            => [
 				'canManageSettings' => current_user_can( 'manage_options' ),
 				'canUploadFiles'    => current_user_can( 'upload_files' ),
@@ -489,8 +507,10 @@ class Dashboard extends Service_Base {
 			],
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
-				$this->experiments->get_experiment_statuses( 'dashboard' )
+				$this->experiments->get_experiment_statuses( 'dashboard' ),
 			),
+			'globalAutoAdvance'       => (bool) $auto_advance,
+			'globalPageDuration'      => (float) $page_duration,
 		];
 
 		/**

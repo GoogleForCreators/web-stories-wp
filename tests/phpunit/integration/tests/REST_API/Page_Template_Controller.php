@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -20,6 +23,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 use DateTime;
 use Google\Web_Stories\Tests\Integration\RestTestCase;
 use WP_REST_Request;
+use WP_UnitTest_Factory;
 
 /**
  * Class Page_Template_Controller
@@ -27,23 +31,18 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Page_Template_Controller
  */
 class Page_Template_Controller extends RestTestCase {
+	protected static int $user_id;
+	protected static int $user2_id;
+	protected static int $user3_id;
 
-	protected $server;
-
-	protected static $user_id;
-	protected static $user2_id;
-	protected static $user3_id;
-
-	protected static $author_id;
+	protected static int $author_id;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Page_Template_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Page_Template_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -154,9 +153,11 @@ class Page_Template_Controller extends RestTestCase {
 
 		$response = $this->controller->get_items( $request );
 
+		$this->assertNotWPError( $response );
+
 		$data = $response->get_data();
 
-		// Body of request.
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'headers', $data );
 		$this->assertArrayHasKey( 'body', $data );
 		$this->assertArrayHasKey( 'status', $data );
@@ -174,7 +175,7 @@ class Page_Template_Controller extends RestTestCase {
 
 		$this->kses_int();
 
-		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
+		$unsanitized_story_data = json_decode( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story-page' );
 		$request->set_body_params(
@@ -185,6 +186,8 @@ class Page_Template_Controller extends RestTestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+
+		$this->assertIsArray( $new_data );
 		$this->assertArrayHasKey( 'story_data', $new_data );
 		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}

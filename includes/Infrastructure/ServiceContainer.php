@@ -15,6 +15,8 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Infrastructure;
 
 use ArrayAccess;
@@ -47,7 +49,7 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 * @param string $id Identifier of the service to look for.
 	 * @return Service Service that was requested.
 	 */
-	public function get( $id ): Service;
+	public function get( string $id ): Service;
 
 	/**
 	 * Check whether the container can return a service for the given
@@ -57,7 +59,7 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 *
 	 * @param string $id Identifier of the service to look for.
 	 */
-	public function has( $id ): bool;
+	public function has( string $id ): bool;
 
 	/**
 	 * Put a service into the container for later retrieval.
@@ -68,5 +70,5 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 *                         container.
 	 * @param Service $service Service to put into the container.
 	 */
-	public function put( $id, Service $service ): void;
+	public function put( string $id, Service $service ): void;
 }

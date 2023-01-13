@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
@@ -50,7 +52,7 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Web Stories editor script handle.
 	 */
-	public const SCRIPT_HANDLE = 'wp-story-editor';
+	public const SCRIPT_HANDLE = 'web-stories-editor';
 
 	/**
 	 * AMP validator script handle.
@@ -62,84 +64,84 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * Decoder instance.
 	 *
 	 * @var Decoder Decoder instance.
 	 */
-	private $decoder;
+	private Decoder $decoder;
 
 	/**
 	 * Meta boxes instance.
 	 *
-	 * @var Meta_Boxes
+	 * @var Meta_Boxes Meta_Boxes instance.
 	 */
-	private $meta_boxes;
+	private Meta_Boxes $meta_boxes;
 
 	/**
 	 * Locale instance.
 	 *
 	 * @var Locale Locale instance.
 	 */
-	private $locale;
+	private Locale $locale;
 
 	/**
 	 * Google_Fonts instance.
 	 *
 	 * @var Google_Fonts Google_Fonts instance.
 	 */
-	private $google_fonts;
+	private Google_Fonts $google_fonts;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Page_Template_Post_Type instance.
 	 *
 	 * @var Page_Template_Post_Type Page_Template_Post_Type instance.
 	 */
-	private $page_template_post_type;
+	private Page_Template_Post_Type $page_template_post_type;
 
 	/**
 	 * Font_Post_Type instance.
 	 *
 	 * @var Font_Post_Type Font_Post_Type instance.
 	 */
-	private $font_post_type;
+	private Font_Post_Type $font_post_type;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Dashboard constructor.
@@ -333,7 +335,6 @@ class Editor extends Service_Base implements HasRequirements {
 			$max_upload_size = 0;
 		}
 
-		$is_demo       = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$dashboard_url = add_query_arg(
 			[
 				'post_type' => $this->story_post_type->get_slug(),
@@ -368,6 +369,10 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$shopping_provider = $this->settings->get_setting( $this->settings::SETTING_NAME_SHOPPING_PROVIDER );
 
+		$auto_advance = $this->settings->get_setting( $this->settings::SETTING_NAME_AUTO_ADVANCE );
+
+		$page_duration = $this->settings->get_setting( $this->settings::SETTING_NAME_DEFAULT_PAGE_DURATION );
+
 		$auto_save_link = '';
 
 		if ( isset( $story_id ) ) {
@@ -382,6 +387,20 @@ class Editor extends Service_Base implements HasRequirements {
 				}
 			}
 		}
+		/**
+		 * Revision.
+		 *
+		 * @var int $revision
+		 */
+		$revision = isset( $_GET['revision'] ) ? absint( $_GET['revision'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		$revision_message = ! empty( $revision ) ?
+			sprintf(
+				/* translators: %s: Date and time of the revision. */
+				__( 'Story restored to revision from %s.', 'web-stories' ),
+				wp_post_revision_title( $revision, false )
+			)
+			: false;
 
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
@@ -394,11 +413,12 @@ class Editor extends Service_Base implements HasRequirements {
 			'storyId'                 => $story_id,
 			'dashboardLink'           => $dashboard_url,
 			'revisionLink'            => $revision_url,
+			'revisionMessage'         => $revision_message,
 			'dashboardSettingsLink'   => $dashboard_settings_url,
 			'generalSettingsLink'     => $general_settings_url,
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
 			'maxUpload'               => $max_upload_size,
-			'isDemo'                  => $is_demo,
+			'editPostsCapabilityName' => $this->story_post_type->get_cap_name( 'edit_posts' ),
 			'capabilities'            => [
 				'hasUploadMediaAction' => current_user_can( 'upload_files' ),
 				'canManageSettings'    => current_user_can( 'manage_options' ),
@@ -431,6 +451,8 @@ class Editor extends Service_Base implements HasRequirements {
 			'version'                 => WEBSTORIES_VERSION,
 			'nonce'                   => $nonce,
 			'showMedia3p'             => true,
+			'globalAutoAdvance'       => (bool) $auto_advance,
+			'globalPageDuration'      => (float) $page_duration,
 			'shoppingProvider'        => $shopping_provider,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),
@@ -438,7 +460,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'mediainfoUrl'            => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/mediainfo.js@0.1.7/dist/mediainfo.min.js',
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
-				$this->experiments->get_experiment_statuses( 'editor' )
+				$this->experiments->get_experiment_statuses( 'editor' ),
 			),
 		];
 

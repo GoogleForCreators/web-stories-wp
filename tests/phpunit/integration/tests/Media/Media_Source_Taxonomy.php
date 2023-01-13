@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -27,10 +30,8 @@ use WP_REST_Request;
 class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Media_Source_Taxonomy
 	 */
-	private $instance;
+	private \Google\Web_Stories\Media\Media_Source_Taxonomy $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -82,7 +83,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	 * @covers ::register_taxonomy
 	 */
 	public function test_register_taxonomy(): void {
-		$this->call_private_method( $this->instance, 'register_taxonomy' );
+		$this->call_private_method( [ $this->instance, 'register_taxonomy' ] );
 
 		$this->assertTrue( taxonomy_exists( $this->instance->get_taxonomy_slug() ) );
 	}
@@ -101,7 +102,10 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$video_attachment_id  = self::factory()->attachment->create_object(
+
+		$this->assertNotWPError( $poster_attachment_id );
+
+		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -110,6 +114,8 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 		wp_set_object_terms( $video_attachment_id, 'editor', $this->instance->get_taxonomy_slug() );
 
@@ -117,6 +123,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( $this->instance::MEDIA_SOURCE_KEY, $data );
 		$this->assertEquals( 'editor', $data[ $this->instance::MEDIA_SOURCE_KEY ] );
 	}
@@ -134,6 +141,8 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -143,6 +152,8 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $poster_attachment_id );
+
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
 		$image = $this->instance->wp_prepare_attachment_for_js(
@@ -151,7 +162,6 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				'type' => 'image',
 				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			],
-			get_post( $poster_attachment_id )
 		);
 		$video = $this->instance->wp_prepare_attachment_for_js(
 			[
@@ -159,7 +169,6 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				'type' => 'video',
 				'url'  => wp_get_attachment_url( $video_attachment_id ),
 			],
-			get_post( $video_attachment_id )
 		);
 
 		$this->assertEqualSets(
@@ -192,7 +201,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$args      = [
 			'tax_query' => $tax_query,
 		];
-		$results   = $this->call_private_method( $this->instance, 'get_exclude_tax_query', [ $args ] );
+		$results   = $this->call_private_method( [ $this->instance, 'get_exclude_tax_query' ], [ $args ] );
 		remove_filter( 'web_stories_hide_auto_generated_attachments', '__return_false' );
 		$this->assertSame( $tax_query, $results );
 	}
@@ -349,6 +358,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$this->instance->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
+		$this->assertIsArray( $actual );
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
 

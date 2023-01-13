@@ -31,14 +31,14 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', () => {
   let mockUpdate;
 
   beforeEach(() => {
-    adNetwork = AdNetworkType.NONE;
+    adNetwork = AdNetworkType.None;
     mockUpdate = jest.fn((id) => {
       adNetwork = id;
     });
   });
 
   afterEach(() => {
-    adNetwork = AdNetworkType.NONE;
+    adNetwork = AdNetworkType.None;
   });
 
   it('should render ad network settings dropdown button', () => {

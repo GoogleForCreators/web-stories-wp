@@ -24,7 +24,7 @@ import { UnitsProvider, PAGE_WIDTH } from '@googleforcreators/units';
  * Internal dependencies
  */
 
-import StoryPropTypes from '../../../../../types';
+import { StoryPropTypes } from '../../../../../propTypes';
 import DisplayElement from '../../../../canvas/displayElement';
 
 function getElementContent(content, isForDisplay) {

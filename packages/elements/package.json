@@ -2,7 +2,7 @@
   "name": "@googleforcreators/elements",
   "description": "Provides various APIs to register & retrieve element types.",
   "private": false,
-  "version": "0.1.202208291229",
+  "version": "0.1.202212191259",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -37,13 +37,15 @@
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/animation": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/patterns": "*",
-    "@googleforcreators/types": "*",
     "@googleforcreators/units": "*",
     "prop-types": "^15.7.2",
     "uuid": "^9.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "immer": "^9.0.17"
+  }
 }

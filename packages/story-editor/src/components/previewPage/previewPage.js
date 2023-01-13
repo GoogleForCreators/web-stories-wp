@@ -21,15 +21,16 @@ import { useEffect, memo, forwardRef } from '@googleforcreators/react';
 import styled, { StyleSheetManager } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import {
-  StoryAnimation,
+  AnimationProvider,
   useStoryAnimationContext,
-  STORY_ANIMATION_STATE,
+  StoryAnimationState,
 } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes, { PageSizePropType } from '../../types';
+import { StoryPropTypes, PageSizePropType } from '../../propTypes';
+import { noop } from '../../utils/noop';
 import PagePreviewElements from './previewPageElements';
 
 /*
@@ -70,18 +71,18 @@ function PreviewPageAnimationController({ animationState }) {
 
   useEffect(() => {
     switch (animationState) {
-      case STORY_ANIMATION_STATE.PLAYING:
+      case StoryAnimationState.Playing:
         WAAPIAnimationMethods.play();
-        return () => {};
-      case STORY_ANIMATION_STATE.RESET:
+        return noop;
+      case StoryAnimationState.Reset:
         WAAPIAnimationMethods.reset();
-        return () => {};
-      case STORY_ANIMATION_STATE.SCRUBBING:
-      case STORY_ANIMATION_STATE.PAUSED:
+        return noop;
+      case StoryAnimationState.Scrubbing:
+      case StoryAnimationState.Paused:
         WAAPIAnimationMethods.pause();
-        return () => {};
+        return noop;
       default:
-        return () => {};
+        return noop;
     }
   }, [animationState, WAAPIAnimationMethods]);
 
@@ -113,7 +114,7 @@ const PreviewPage = forwardRef(function PreviewPage(
   {
     page,
     pageSize,
-    animationState = STORY_ANIMATION_STATE.RESET,
+    animationState = StoryAnimationState.Reset,
     onAnimationComplete,
   },
   ref
@@ -122,14 +123,14 @@ const PreviewPage = forwardRef(function PreviewPage(
   // elements from shifting when in RTL mode since these aren't relevant for story previews
   return (
     <StyleSheetManager stylisPlugins={[]}>
-      <StoryAnimation.Provider
+      <AnimationProvider
         animations={page.animations}
         elements={page.elements}
         onWAAPIFinish={onAnimationComplete}
       >
         <PreviewPageDisplay ref={ref} page={page} pageSize={pageSize} />
         <PreviewPageAnimationController animationState={animationState} />
-      </StoryAnimation.Provider>
+      </AnimationProvider>
     </StyleSheetManager>
   );
 });
@@ -137,7 +138,7 @@ const PreviewPage = forwardRef(function PreviewPage(
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   pageSize: PageSizePropType.isRequired,
-  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
+  animationState: PropTypes.oneOf(Object.values(StoryAnimationState)),
   onAnimationComplete: PropTypes.func,
 };
 
@@ -147,7 +148,7 @@ PreviewPageDisplay.propTypes = {
 };
 
 PreviewPageAnimationController.propTypes = {
-  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
+  animationState: PropTypes.oneOf(Object.values(StoryAnimationState)),
 };
 
 export default PreviewPage;

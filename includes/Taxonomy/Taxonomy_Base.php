@@ -24,6 +24,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Taxonomy;
 
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
@@ -91,17 +93,13 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
-	 *
-	 * @var string
 	 */
-	protected $taxonomy_slug;
+	protected string $taxonomy_slug;
 
 	/**
-	 * Object type or array of object types with which the taxonomy should be associated.
-	 *
-	 * @var string[]|string
+	 * Object type which the taxonomy should be associated.
 	 */
-	protected $taxonomy_post_type;
+	protected string $taxonomy_post_type;
 
 	/**
 	 * Register taxonomy on register service.
@@ -129,15 +127,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	public function unregister_taxonomy(): void {
 		unregister_taxonomy( $this->taxonomy_slug );
 	}
-
-	/**
-	 * Taxonomy args.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return TaxonomyArgs Taxonomy args.
-	 */
-	abstract protected function taxonomy_args(): array;
 
 	/**
 	 * Act on site initialization.
@@ -208,4 +197,13 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 			}
 		}
 	}
+
+	/**
+	 * Taxonomy args.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return TaxonomyArgs Taxonomy args.
+	 */
+	abstract protected function taxonomy_args(): array;
 }

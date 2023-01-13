@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,7 +20,9 @@
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use WP_UnitTest_Factory;
 
 /**
  * Class Feed
@@ -28,29 +33,25 @@ class Feed extends TestCase {
 
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
+	protected static int $story_id;
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * @param WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Story_Post_Type Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -58,7 +59,10 @@ class Feed extends TestCase {
 			]
 		);
 
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -75,7 +79,7 @@ class Feed extends TestCase {
 	 * @covers ::embed_image
 	 */
 	public function test_the_content_feed(): void {
-		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$this->go_to( '/?feed=rss2&post_type=' . Story_Post_Type::POST_TYPE_SLUG );
 		$feed = $this->do_rss2();
 
 		$this->assertStringContainsString( '<img', $feed );
@@ -94,10 +98,9 @@ class Feed extends TestCase {
 		try {
 			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 			@require ABSPATH . 'wp-includes/feed-rss2.php';
-			$out = ob_get_clean();
-		} catch ( \Google\Web_Stories\Tests\Integration\Renderer\Exception $e ) {
-			$out = ob_get_clean();
-			throw($e);
+			$out = (string) ob_get_clean();
+		} catch ( \Exception $e ) {
+			throw $e;
 		}
 		return $out;
 	}

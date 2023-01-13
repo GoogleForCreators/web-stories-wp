@@ -20,11 +20,16 @@
 import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 interface ResourceSizeParams {
+  width?: number;
+  height?: number;
+  posterGenerated?: boolean;
+  posterWidth?: number;
+  posterHeight?: number;
+}
+
+interface ResourceSize {
   width: number;
   height: number;
-  posterGenerated: boolean;
-  posterWidth: number;
-  posterHeight: number;
 }
 
 /**
@@ -32,7 +37,7 @@ interface ResourceSizeParams {
  * override the resource's size because the poster generation has a more
  * accurate data.
  *
- * @param obj - An object with height/width params.
+ * @param obj An object with height/width params.
  * @param obj.width Width.
  * @param obj.height Height.
  * @param [obj.posterGenerated] Whether a poster has been generated.
@@ -41,12 +46,12 @@ interface ResourceSizeParams {
  * @return The resource's size (width and height).
  */
 function getResourceSize({
-  width,
-  height,
+  width = 0,
+  height = 0,
   posterGenerated,
-  posterWidth,
-  posterHeight,
-}: ResourceSizeParams) {
+  posterWidth = 0,
+  posterHeight = 0,
+}: ResourceSizeParams): ResourceSize {
   // Use poster image size, if poster is generated.
   if (posterGenerated && posterWidth && posterHeight) {
     return { width: posterWidth, height: posterHeight };

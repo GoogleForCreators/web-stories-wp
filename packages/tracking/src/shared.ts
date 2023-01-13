@@ -30,7 +30,7 @@ interface ConfigParams {
   custom_map?: Record<string, string | number>;
 }
 
-interface ControlParams {
+export interface ControlParams {
   groups?: string | string[] | undefined;
   send_to?: string | string[] | undefined;
   event_callback?: (() => void) | undefined;
@@ -48,6 +48,15 @@ export interface EventParameters {
   event_label?: string;
   event_category?: string;
   status?: 'off' | 'on';
+  original_length?: number;
+  new_length?: number;
+  start_offset?: number | null;
+  end_offset?: number | null;
+  result?: boolean;
+  file_size?: number;
+  file_type?: string;
+  width?: number;
+  height?: number;
 }
 
 interface Gtag {

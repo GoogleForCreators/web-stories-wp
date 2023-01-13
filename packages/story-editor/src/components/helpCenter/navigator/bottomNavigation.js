@@ -30,7 +30,7 @@ import {
  * Internal dependencies
  */
 import { useConfig } from '../../../app/config';
-import { TRANSITION_DURATION } from '../constants';
+import { TRANSITION_DURATION } from '../../../app/helpCenter/constants';
 import { forceFocusCompanion } from '../utils';
 import { NavBar, NavButton } from '../../secondaryPopup';
 
