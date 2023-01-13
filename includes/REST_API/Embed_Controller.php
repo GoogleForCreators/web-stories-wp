@@ -435,7 +435,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @param string $url Permalink to check.
 	 */
 	private function maybe_switch_site( $url ): bool {
-		if ( !is_multisite() ) {
+		if ( ! is_multisite() ) {
 			return false;
 		}
 		$switched_blog = false;
