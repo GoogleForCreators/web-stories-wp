@@ -36,12 +36,18 @@ import updateProperties from '../../components/style/updateProperties';
 import { useHistory } from '../history';
 import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
+interface CommonActionsProps {
+  selectedElement: Element;
+  actionProps: Partial<QuickAction>;
+  handleFocusPanel: (props: string) => void;
+  resetProperties: string[];
+}
 function useCommonActions({
   actionProps,
   selectedElement,
   handleFocusPanel,
   resetProperties,
-}): QuickAction[] {
+}: CommonActionsProps): QuickAction[] {
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
   const { currentPageNumber, selectedElementAnimations, updateElementsById } =
     useStory(
@@ -127,7 +133,13 @@ function useCommonActions({
    * @return {void}
    */
   const handleElementReset = useCallback(
-    ({ elementId, resetProperties, elementType }) => {
+    ({
+      elementId,
+      elementType,
+    }: {
+      elementId: ElementId;
+      elementType: ElementType;
+    }) => {
       handleResetProperties(elementType, elementId, resetProperties);
 
       showSnackbar({
