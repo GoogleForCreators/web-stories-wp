@@ -20,22 +20,30 @@
 import { useMemo } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { Icons } from '@googleforcreators/design-system';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import useApplyTextAutoStyle from '../../utils/useApplyTextAutoStyle';
+import type { QuickAction, UpdateElementsProps } from '../../types';
 import { ACTIONS } from './constants';
 
+interface TextActionsProps {
+  selectedElement: Element;
+  updater: (props: UpdateElementsProps) => void;
+  commonActions: QuickAction[];
+  actionProps: Partial<QuickAction>;
+}
 function useTextActions({
   selectedElement,
   updater,
   commonActions,
   actionProps,
-}) {
+}: TextActionsProps) {
   const applyTextAutoStyle = useApplyTextAutoStyle(
     selectedElement,
-    (properties) =>
+    (properties: Partial<Element>) =>
       updater({
         elementIds: [selectedElement?.id],
         properties,
@@ -47,8 +55,8 @@ function useTextActions({
         Icon: Icons.ColorBucket,
         label: ACTIONS.AUTO_STYLE_TEXT.text,
         onClick: () => {
-          applyTextAutoStyle();
-          trackEvent('quick_action', {
+          void applyTextAutoStyle();
+          void trackEvent('quick_action', {
             name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
             element: 'text',
           });

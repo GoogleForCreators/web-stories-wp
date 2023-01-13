@@ -165,7 +165,7 @@ function useMediaActions({
         onClick: (evt) => {
           handleFocusCaptionsPanel()(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.ADD_CAPTIONS.trackingEventName,
             element: selectedElement?.type,
           });
@@ -191,7 +191,7 @@ function useMediaActions({
           onClick: (evt) => {
             handleFocusAnimationPanel()(evt);
 
-            trackEvent('quick_action', {
+            void trackEvent('quick_action', {
               name: ACTIONS.ADD_ANIMATION.trackingEventName,
               element: selectedElement?.type,
               isBackground: true,
@@ -208,7 +208,7 @@ function useMediaActions({
           onClick: () => {
             dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
 
-            trackEvent('quick_action', {
+            void trackEvent('quick_action', {
               name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
               element: selectedElement?.type,
               isBackground: true,
@@ -229,7 +229,7 @@ function useMediaActions({
             elementType: ELEMENT_TYPES.IMAGE,
           });
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.RESET_ELEMENT.trackingEventName,
             element: selectedElement?.type,
             isBackground: true,
@@ -259,7 +259,7 @@ function useMediaActions({
         Icon: Icons.Cross,
         label: __('Close', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_mode_toggled', {
+          void trackEvent('media_recording_mode_toggled', {
             status: 'closed',
           });
           toggleRecordingMode();
@@ -270,7 +270,7 @@ function useMediaActions({
         Icon: StyledSettings,
         label: __('Options', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_open_settings');
+          void trackEvent('media_recording_open_settings');
           toggleSettings();
         },
         disabled: !isReady,
@@ -283,7 +283,7 @@ function useMediaActions({
           ? __('Disable Audio', 'web-stories')
           : __('Enable Audio', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_audio_toggled', {
+          void trackEvent('media_recording_audio_toggled', {
             status: hasAudio ? 'muted' : 'unmuted',
           });
           toggleAudio();
@@ -297,7 +297,7 @@ function useMediaActions({
           ? __('Disable Video', 'web-stories')
           : __('Enable Video', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_video_toggled', {
+          void trackEvent('media_recording_video_toggled', {
             status: hasVideo ? 'off' : 'on',
           });
           toggleVideo();
@@ -315,7 +315,7 @@ function useMediaActions({
             ? __('Disable Background Blur', 'web-stories')
             : __('Enable Background Blur', 'web-stories'),
         onClick: () => {
-          trackEvent('media_recording_background_blur_px', {
+          void trackEvent('media_recording_background_blur_px', {
             value: videoEffect === VIDEO_EFFECTS.BLUR ? 0 : BACKGROUND_BLUR_PX,
           });
           const newVideoEffect =
