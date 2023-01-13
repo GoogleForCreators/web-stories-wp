@@ -148,7 +148,9 @@ function HierarchicalTermSelector({
 
   const handleClickCategory = useCallback(
     (_evt, { id, checked }) => {
-      const term = termCache.find((category) => category.id === id);
+      const term = termCache.find(
+        (category) => category.id === id && category.taxonomy === taxonomy.slug
+      );
       if (checked) {
         // find the already selected slugs + update those.
         addTerms([term]);
@@ -156,7 +158,7 @@ function HierarchicalTermSelector({
         removeTerms([term]);
       }
     },
-    [termCache, addTerms, removeTerms]
+    [termCache, taxonomy.slug, addTerms, removeTerms]
   );
 
   const handleToggleNewCategory = useCallback(() => {

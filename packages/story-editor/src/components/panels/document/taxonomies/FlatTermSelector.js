@@ -90,7 +90,10 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       const termNamesNotInCache = termNameSlugTuples
         .filter(
           ([slug]) =>
-            !termCache.map(({ slug: thisSlug }) => thisSlug).includes(slug)
+            !termCache
+              .filter((term) => term.taxonomy === taxonomy.slug)
+              .map(({ slug: thisSlug }) => thisSlug.toLowerCase())
+              .includes(slug)
         )
         .map(([, name]) => name);
 

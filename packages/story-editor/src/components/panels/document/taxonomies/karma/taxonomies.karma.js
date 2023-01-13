@@ -95,7 +95,7 @@ describe('Taxonomies Panel', () => {
         ).toBe(
           initialStoryTerms.filter(
             (term) => term.taxonomy === 'web_story_category'
-          ).length + 1
+          ).length - 1
         );
 
         // click a checkbox again
