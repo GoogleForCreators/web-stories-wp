@@ -36,4 +36,5 @@ export interface QuickAction {
   onClick: (evt: MouseEvent) => void;
   tooltipPlacement: string;
   onMouseDown: (evt: MouseEvent) => void;
+  wrapWithMediaPicker?: boolean;
 }

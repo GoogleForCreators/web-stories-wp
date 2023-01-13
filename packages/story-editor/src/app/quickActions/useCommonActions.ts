@@ -41,7 +41,7 @@ function useCommonActions({
   selectedElement,
   handleFocusPanel,
   resetProperties,
-}) {
+}): QuickAction[] {
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
   const { currentPageNumber, selectedElementAnimations, updateElementsById } =
     useStory(

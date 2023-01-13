@@ -20,7 +20,7 @@
 import { useMemo } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { Icons } from '@googleforcreators/design-system';
-import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { ELEMENT_TYPES, Element } from '@googleforcreators/elements';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
@@ -35,6 +35,7 @@ import {
 import { useMediaRecording } from '../../components/mediaRecording';
 import { STORY_EVENTS, useStoryTriggersDispatch } from '../story';
 import { useConfig } from '../config';
+import type { QuickAction } from '../../types';
 import { ACTIONS } from './constants';
 
 const quickActionIconAttrs = {
@@ -53,13 +54,20 @@ const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
   quickActionIconAttrs
 )``;
 
+interface UseMediaActionsProps {
+  actionProps: Partial<QuickAction>;
+  selectedElement: Element;
+  handleFocusPanel: (state: string) => void;
+  resetProperties: string[];
+  commonActions: QuickAction[];
+}
 function useMediaActions({
   actionProps,
   selectedElement,
   handleFocusPanel,
   resetProperties,
   commonActions,
-}) {
+}: UseMediaActionsProps) {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -105,8 +113,8 @@ function useMediaActions({
   }));
   const showClearAction = resetProperties.length > 0;
 
-  const foregroundImageActions = useMemo(() => {
-    const actions = [];
+  const foregroundImageActions: QuickAction[] = useMemo(() => {
+    const actions: QuickAction[] = [];
 
     if (hasUploadMediaAction) {
       actions.push({
