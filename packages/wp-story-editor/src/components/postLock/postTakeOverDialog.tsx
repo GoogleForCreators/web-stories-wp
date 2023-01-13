@@ -40,13 +40,13 @@ import {
 } from './shared';
 
 /**
- * @param {Object} props Component props.
- * @param {boolean} props.isOpen If open or not.
- * @param {Object} props.owner Lock owner's user data as a object.
- * @param {string} props.dashboardLink Link to dashboard.
- * @param {string} props.previewLink Preview link.
- * @param {Function} props.onClose Function when dialog is closed.
- * @return {*} Render.
+ * @param props Component props.
+ * @param props.isOpen If open or not.
+ * @param props.owner Lock owner's user data as a object.
+ * @param props.dashboardLink Link to dashboard.
+ * @param props.previewLink Preview link.
+ * @param props.onClose Function when dialog is closed.
+ * @return Render.
  */
 function PostTakeOverDialog({
   isOpen,
