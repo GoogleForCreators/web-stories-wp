@@ -821,7 +821,7 @@ class APIProviderFixture {
           name: 'random name',
           slug:
             data?.name?.toLowerCase().replace(/[\s./_]/, '-') || 'random-slug',
-          taxonomy: _endpoint.explode('/')[0],
+          taxonomy: _endpoint.split('/').pop(),
           parent: 0,
           meta: [],
           ...data,
