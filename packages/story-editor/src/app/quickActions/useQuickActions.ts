@@ -17,14 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef } from '@googleforcreators/react';
-import { __, sprintf } from '@googleforcreators/i18n';
-import {
-  Icons,
-  PLACEMENT,
-  prettifyShortcut,
-  useSnackbar,
-} from '@googleforcreators/design-system';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import { Icons, PLACEMENT } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   ElementType,
@@ -37,24 +31,18 @@ import {
  * Internal dependencies
  */
 import { states, useHighlights } from '../highlights';
-import updateProperties from '../../components/style/updateProperties';
-import { useHistory } from '../history';
 import { useStory } from '../story';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../components/mediaRecording';
+import type { QuickAction } from '../../types';
 import { getResetProperties } from './utils';
-import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
+import { ACTIONS } from './constants';
 import useTextActions from './useTextActions';
 import useMediaActions from './useMediaActions';
+import useCommonActions from './useCommonActions';
 
-const UNDO_HELP_TEXT = sprintf(
-  /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
-  __('Press %s to undo the last change', 'web-stories'),
-  prettifyShortcut('mod+z')
-);
-
-const { Bucket, CircleSpeed, Eraser, LetterTPlus, Link, Media } = Icons;
+const { Bucket, LetterTPlus, Media } = Icons;
 
 /**
  * Determines the quick actions to display in the quick
@@ -64,36 +52,25 @@ const { Bucket, CircleSpeed, Eraser, LetterTPlus, Link, Media } = Icons;
  *
  * @return an array of quick action objects
  */
-const useQuickActions = () => {
+const useQuickActions = (): QuickAction[] => {
   const {
     backgroundElement,
-    currentPageNumber,
     selectedElementAnimations,
     selectedElements,
     updateElementsById,
   } = useStory(
     ({
-      state: {
-        currentPage,
-        currentPageNumber,
-        selectedElementAnimations,
-        selectedElements,
-      },
+      state: { currentPage, selectedElementAnimations, selectedElements },
       actions: { updateElementsById },
     }) => ({
       backgroundElement: currentPage?.elements.find(
         (element) => elementIs.backgroundable(element) && element.isBackground
       ),
-      currentPageNumber,
       selectedElementAnimations,
       selectedElements,
       updateElementsById,
     })
   );
-  const { undo } = useHistory(({ actions: { undo } }) => ({
-    undo,
-  }));
-  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -101,9 +78,6 @@ const useQuickActions = () => {
   const { isInRecordingMode } = useMediaRecording(({ state }) => ({
     isInRecordingMode: state.isInRecordingMode,
   }));
-
-  const undoRef = useRef(undo);
-  undoRef.current = undo;
 
   const selectedElement = selectedElements?.[0];
 
@@ -113,99 +87,6 @@ const useQuickActions = () => {
   const handleMouseDown = useCallback((ev: MouseEvent) => {
     ev.stopPropagation();
   }, []);
-
-  /**
-   * Reset properties on an element. Shows a snackbar once the properties
-   * have been reset.
-   *
-   * @param {string} elementId the id of the element
-   * @param {Array.<string>} properties The properties of the element to update
-   * @return {void}
-   */
-  const handleResetProperties = useCallback(
-    (
-      elementType: ElementType,
-      elementId: ElementId,
-      properties: string[]
-    ) => {
-      const newProperties: Partial<Element> = {};
-      // Choose properties to clear
-      if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
-        newProperties.overlay = null;
-      }
-
-      if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
-        // this is the only place where we're updating both animations and other
-        // properties on an element. updateElementsById only accepts if you upate
-        // one or the other, so we're upating animations if needed here separately
-        updateElementsById({
-          elementIds: [elementId],
-          properties: (currentProperties) =>
-            updateProperties(
-              currentProperties,
-              {
-                animation: { ...selectedElementAnimations?.[0], delete: true },
-              },
-              /* commitValues */ true
-            ),
-        });
-      }
-
-      if (properties.includes(RESET_PROPERTIES.STYLES)) {
-        newProperties.opacity = 100;
-        newProperties.border = null;
-        newProperties.borderRadius = null;
-      }
-
-      if (elementType === ElementType.Text) {
-        newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
-      }
-
-      updateElementsById({
-        elementIds: [elementId],
-        properties: (currentProperties) =>
-          updateProperties(
-            currentProperties,
-            newProperties,
-            /* commitValues */ true
-          ),
-      });
-    },
-    [selectedElementAnimations, updateElementsById]
-  );
-
-  /**
-   * Reset element styles and show a confirmation snackbar. Clicking
-   * the action in the snackbar adds the animations back to the element.
-   *
-   * @param {string} elementId the id of the element
-   * @param {Array} resetProperties the properties that are to be reset ('animations', 'overlay')
-   * @param {string} elementType the type of element being adjusted
-   * @return {void}
-   */
-  const handleElementReset = useCallback(
-    ({ elementId, resetProperties, elementType }) => {
-      handleResetProperties(elementType, elementId, resetProperties);
-
-      showSnackbar({
-        actionLabel: __('Undo', 'web-stories'),
-        dismissible: false,
-        message: __('Element properties have been reset', 'web-stories'),
-        // Don't pass a stale version of `undo`
-        onAction: () => {
-          undoRef.current();
-
-          void trackEvent('quick_action', {
-            name: `undo_${ACTIONS.RESET_ELEMENT.trackingEventName}`,
-            element: elementType,
-            isBackground: true,
-          });
-        },
-        actionHelpText: UNDO_HELP_TEXT,
-      });
-    },
-    [handleResetProperties, showSnackbar]
-  );
 
   /**
    * Highlights a panel in the editor. Triggers a tracking event
@@ -236,7 +117,6 @@ const useQuickActions = () => {
     [selectedElement, selectedElementAnimations]
   );
 
-  const showClearAction = resetProperties.length > 0;
   const handleFocusMediaPanel = useMemo(() => {
     const resourceId = selectedElements?.[0]?.resource?.id?.toString() || '';
     const is3PMedia = resourceId.startsWith('media/');
@@ -245,18 +125,7 @@ const useQuickActions = () => {
     return handleFocusPanel(panelToFocus);
   }, [handleFocusPanel, selectedElements]);
 
-  const {
-    handleFocusAnimationPanel,
-    handleFocusLinkPanel,
-    handleFocusPageBackground,
-  } = useMemo(
-    () => ({
-      handleFocusAnimationPanel: handleFocusPanel(states.Animation),
-      handleFocusLinkPanel: handleFocusPanel(states.Link),
-      handleFocusPageBackground: handleFocusPanel(states.PageBackground),
-    }),
-    [handleFocusPanel]
-  );
+  const handleFocusPageBackground = handleFocusPanel(states.PageBackground);
 
   const insertElement = useInsertElement();
 
@@ -269,7 +138,7 @@ const useQuickActions = () => {
     [handleMouseDown]
   );
 
-  const noElementSelectedActions = useMemo(() => {
+  const noElementSelectedActions: QuickAction[] = useMemo(() => {
     return [
       {
         Icon: Bucket,
@@ -323,78 +192,12 @@ const useQuickActions = () => {
     insertElement,
   ]);
 
-  const foregroundCommonActions = useMemo(() => {
-    const commonActions = [];
-
-    // Don't show the 'Add animation' button on the first page
-    if (currentPageNumber > 1) {
-      // 'Add animation' button
-      commonActions.push({
-        Icon: CircleSpeed,
-        label: ACTIONS.ADD_ANIMATION.text,
-        onClick: (evt) => {
-          handleFocusAnimationPanel()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.ADD_ANIMATION.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      });
-    }
-
-    // 'Add link' button is always rendered
-    commonActions.push({
-      Icon: Link,
-      label: ACTIONS.ADD_LINK.text,
-      onClick: (evt) => {
-        handleFocusLinkPanel()(evt);
-
-        trackEvent('quick_action', {
-          name: ACTIONS.ADD_LINK.trackingEventName,
-          element: selectedElement?.type,
-        });
-      },
-      ...actionMenuProps,
-    });
-
-    // Only show 'Reset element' button for modified elements
-    if (showClearAction) {
-      // 'Reset element' button
-      commonActions.push({
-        Icon: Eraser,
-        label: ACTIONS.RESET_ELEMENT.text,
-        onClick: () => {
-          handleElementReset({
-            elementId: selectedElement?.id,
-            resetProperties,
-            elementType: selectedElement?.type,
-          });
-
-          void trackEvent('quick_action', {
-            name: ACTIONS.RESET_ELEMENT.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        separator: 'top',
-        ...actionMenuProps,
-      });
-    }
-
-    return commonActions;
-  }, [
-    currentPageNumber,
-    handleFocusAnimationPanel,
-    selectedElement?.id,
-    selectedElement?.type,
-    actionMenuProps,
-    handleFocusLinkPanel,
-    showClearAction,
-    handleElementReset,
+  const foregroundCommonActions = useCommonActions({
+    actionProps: actionMenuProps,
+    selectedElement,
+    handleFocusPanel,
     resetProperties,
-  ]);
-
+  });
   const textActions = useTextActions({
     selectedElement,
     updater: updateElementsById,
@@ -428,17 +231,15 @@ const useQuickActions = () => {
   );
 
   const noElementsSelected = selectedElements.length === 0;
+  if (noElementsSelected) {
+    return noElementSelectedActions;
+  }
   const isBackgroundSelected =
     elementIs.backgroundable(selectedElements[0]) &&
     selectedElements[0].isBackground;
 
-  // Return the base state if:
-  //  1. no element is selected
-  //  2. or, the selected element is the background element and it's not media
-  if (
-    noElementsSelected ||
-    (isBackgroundSelected && !isBackgroundElementMedia)
-  ) {
+  // Return the base state if the selected element is the background element and it's not media
+  if (isBackgroundSelected && !isBackgroundElementMedia) {
     return noElementSelectedActions;
   }
 

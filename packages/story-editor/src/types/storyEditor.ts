@@ -29,3 +29,11 @@ export type User = {
   onboarding: Record<string, boolean>;
   trackingOptin: boolean;
 };
+
+export interface QuickAction {
+  Icon: SVGElement;
+  label: string;
+  onClick: (evt: MouseEvent) => void;
+  tooltipPlacement: string;
+  onMouseDown: (evt: MouseEvent) => void;
+}
