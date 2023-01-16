@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export * from './apiProvider';
+export * from './canvasProvider';
 export * from './configProvider';
 export * from './currentUserProvider';
 export * from './historyProvider';
@@ -24,3 +25,4 @@ export * from './story';
 export * from './storyEditor';
 export * from './storyProvider';
 export * from './storyTriggers';
+export * from './taxonomyProvider';

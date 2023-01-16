@@ -25,3 +25,5 @@ export { default as usePasteTextContent } from './usePasteTextContent';
 export { default as getFontVariants } from './getFontVariants';
 export { default as getCaretCharacterOffsetWithin } from './utils/getCaretCharacterOffsetWithin';
 export * from './htmlManipulation';
+
+export * from './types';

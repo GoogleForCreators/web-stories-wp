@@ -142,7 +142,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		$this->register_post_type();
 	}
 
@@ -153,7 +153,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 */
-	public function on_plugin_deactivation( $network_wide ): void {
+	public function on_plugin_deactivation( bool $network_wide ): void {
 		$this->unregister_post_type();
 	}
 
@@ -163,26 +163,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.14.0
 	 */
 	abstract public function get_slug(): string;
-
-	/**
-	 * Post type args.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @return array<string, mixed> Post type args.
-	 *
-	 * @phpstan-return PostTypeArgs
-	 */
-	abstract protected function get_args(): array;
-
-	/**
-	 * Get post type object.
-	 *
-	 * @since 1.14.0
-	 */
-	protected function get_object(): ?WP_Post_Type {
-		return get_post_type_object( $this->get_slug() );
-	}
 
 	/**
 	 * Get REST base name based on the post type.
@@ -377,7 +357,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.26.0
 	 */
 	public function on_plugin_uninstall(): void {
-		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
+        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
 		$cpt_posts = get_posts(
 			[
 				'fields'           => 'ids',
@@ -391,5 +371,25 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		foreach ( $cpt_posts as $post_id ) {
 			wp_delete_post( (int) $post_id, true );
 		}
+	}
+
+	/**
+	 * Post type args.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return array<string, mixed> Post type args.
+	 *
+	 * @phpstan-return PostTypeArgs
+	 */
+	abstract protected function get_args(): array;
+
+	/**
+	 * Get post type object.
+	 *
+	 * @since 1.14.0
+	 */
+	protected function get_object(): ?WP_Post_Type {
+		return get_post_type_object( $this->get_slug() );
 	}
 }

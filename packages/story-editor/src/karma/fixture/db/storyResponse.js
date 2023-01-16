@@ -45,7 +45,7 @@ const storyVerticals = [];
 const storyColors = [];
 const storyCategories = [
   {
-    id: 1,
+    id: 11,
     link: 'http://localhost:8899/web_story_category/booger',
     name: 'Booger',
     slug: 'booger',
@@ -53,7 +53,7 @@ const storyCategories = [
     parent: 0,
   },
   {
-    id: 2,
+    id: 12,
     link: 'http://localhost:8899/web_story_category/multiple-words',
     name: 'Multiple words',
     slug: 'multiple-words',
@@ -61,7 +61,7 @@ const storyCategories = [
     parent: 0,
   },
   {
-    id: 3,
+    id: 13,
     link: 'http://localhost:8899/web_story_category/gold',
     name: 'gold',
     slug: 'gold',
@@ -120,5 +120,5 @@ export default {
       href: 'http://localhost:8899/wp-json/web-stories/v1/web_story_category?post=1014',
     },
   ],
-  terms: [storyTags, storyColors, storyCategories, storyVerticals],
+  terms: [...storyTags, ...storyColors, ...storyCategories, ...storyVerticals],
 };

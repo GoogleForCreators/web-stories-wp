@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { getStoryMarkup } from '@googleforcreators/output';
-import type { Page, Story } from '@googleforcreators/elements';
+import type { Page, Story, TaxonomySlug } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -74,12 +74,22 @@ function getStoryPropsToSave({
     flags
   );
 
+  const termData: Record<TaxonomySlug, number[]> = {};
+  if (terms) {
+    terms.forEach(({ taxonomy, id }) => {
+      const termIds = Array.isArray(termData[taxonomy])
+        ? termData[taxonomy]
+        : [];
+      termIds.push(id);
+      termData[taxonomy] = termIds;
+    });
+  }
   return {
     content,
     pages: cleanedPages,
     ...propsFromStory,
     fonts: cleandFonts,
-    ...terms,
+    ...termData,
     products,
   } as StorySaveData;
 }

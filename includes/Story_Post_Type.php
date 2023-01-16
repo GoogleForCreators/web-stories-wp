@@ -125,79 +125,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	}
 
 	/**
-	 * Register post type.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return array<string, mixed> Post type args.
-	 *
-	 * @phpstan-return PostTypeArgs
-	 */
-	protected function get_args(): array {
-		return [
-			'labels'                => [
-				'name'                     => _x( 'Stories', 'post type general name', 'web-stories' ),
-				'singular_name'            => _x( 'Story', 'post type singular name', 'web-stories' ),
-				'add_new'                  => _x( 'Add New', 'story', 'web-stories' ),
-				'add_new_item'             => __( 'Add New Story', 'web-stories' ),
-				'edit_item'                => __( 'Edit Story', 'web-stories' ),
-				'new_item'                 => __( 'New Story', 'web-stories' ),
-				'view_item'                => __( 'View Story', 'web-stories' ),
-				'view_items'               => __( 'View Stories', 'web-stories' ),
-				'search_items'             => __( 'Search Stories', 'web-stories' ),
-				'not_found'                => __( 'No stories found.', 'web-stories' ),
-				'not_found_in_trash'       => __( 'No stories found in Trash.', 'web-stories' ),
-				'all_items'                => __( 'All Stories', 'web-stories' ),
-				'archives'                 => __( 'Story Archives', 'web-stories' ),
-				'attributes'               => __( 'Story Attributes', 'web-stories' ),
-				'insert_into_item'         => __( 'Insert into story', 'web-stories' ),
-				'uploaded_to_this_item'    => __( 'Uploaded to this story', 'web-stories' ),
-				'featured_image'           => _x( 'Featured Image', 'story', 'web-stories' ),
-				'set_featured_image'       => _x( 'Set featured image', 'story', 'web-stories' ),
-				'remove_featured_image'    => _x( 'Remove featured image', 'story', 'web-stories' ),
-				'use_featured_image'       => _x( 'Use as featured image', 'story', 'web-stories' ),
-				'filter_items_list'        => __( 'Filter stories list', 'web-stories' ),
-				'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
-				'items_list_navigation'    => __( 'Stories list navigation', 'web-stories' ),
-				'items_list'               => __( 'Stories list', 'web-stories' ),
-				'item_published'           => __( 'Story published.', 'web-stories' ),
-				'item_published_privately' => __( 'Story published privately.', 'web-stories' ),
-				'item_reverted_to_draft'   => __( 'Story reverted to draft.', 'web-stories' ),
-				'item_scheduled'           => __( 'Story scheduled', 'web-stories' ),
-				'item_updated'             => __( 'Story updated.', 'web-stories' ),
-				'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
-				'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
-				'item_link'                => _x( 'Story Link', 'navigation link block title', 'web-stories' ),
-				'item_link_description'    => _x( 'A link to a story.', 'navigation link block description', 'web-stories' ),
-			],
-			'menu_icon'             => $this->get_post_type_icon(),
-			'supports'              => [
-				'title', // Used for amp-story[title].
-				'author',
-				'editor',
-				'excerpt',
-				'thumbnail', // Used for poster images.
-				'revisions', // Without this, the REST API will return 404 for an autosave request.
-				'custom-fields',
-			],
-			'rewrite'               => [
-				'slug'       => self::REWRITE_SLUG,
-				'with_front' => false,
-				'feeds'      => true,
-			],
-			'public'                => true,
-			'has_archive'           => $this->get_has_archive(),
-			'exclude_from_search'   => true,
-			'show_ui'               => true,
-			'show_in_rest'          => true,
-			'rest_namespace'        => self::REST_NAMESPACE,
-			'rest_controller_class' => Stories_Controller::class,
-			'capability_type'       => [ 'web-story', 'web-stories' ],
-			'map_meta_cap'          => true,
-		];
-	}
-
-	/**
 	 * Register post meta.
 	 *
 	 * @since 1.12.0
@@ -252,17 +179,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'single'       => true,
 			]
 		);
-	}
-
-	/**
-	 * Base64 encoded svg icon.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string Base64-encoded SVG icon.
-	 */
-	protected function get_post_type_icon(): string {
-		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
 	}
 
 	/**
@@ -353,7 +269,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post    Post object.
 	 */
-	public function clear_user_posts_count( $post_id, $post ): void {
+	public function clear_user_posts_count( int $post_id, WP_Post $post ): void {
 		if ( ! $post instanceof WP_Post || $this->get_slug() !== $post->post_type ) {
 			return;
 		}
@@ -402,5 +318,89 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 
 		delete_option( self::STYLE_PRESETS_OPTION );
 		parent::on_plugin_uninstall();
+	}
+
+	/**
+	 * Register post type.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return array<string, mixed> Post type args.
+	 *
+	 * @phpstan-return PostTypeArgs
+	 */
+	protected function get_args(): array {
+		return [
+			'labels'                => [
+				'name'                     => _x( 'Stories', 'post type general name', 'web-stories' ),
+				'singular_name'            => _x( 'Story', 'post type singular name', 'web-stories' ),
+				'add_new'                  => _x( 'Add New', 'story', 'web-stories' ),
+				'add_new_item'             => __( 'Add New Story', 'web-stories' ),
+				'edit_item'                => __( 'Edit Story', 'web-stories' ),
+				'new_item'                 => __( 'New Story', 'web-stories' ),
+				'view_item'                => __( 'View Story', 'web-stories' ),
+				'view_items'               => __( 'View Stories', 'web-stories' ),
+				'search_items'             => __( 'Search Stories', 'web-stories' ),
+				'not_found'                => __( 'No stories found.', 'web-stories' ),
+				'not_found_in_trash'       => __( 'No stories found in Trash.', 'web-stories' ),
+				'all_items'                => __( 'All Stories', 'web-stories' ),
+				'archives'                 => __( 'Story Archives', 'web-stories' ),
+				'attributes'               => __( 'Story Attributes', 'web-stories' ),
+				'insert_into_item'         => __( 'Insert into story', 'web-stories' ),
+				'uploaded_to_this_item'    => __( 'Uploaded to this story', 'web-stories' ),
+				'featured_image'           => _x( 'Featured Image', 'story', 'web-stories' ),
+				'set_featured_image'       => _x( 'Set featured image', 'story', 'web-stories' ),
+				'remove_featured_image'    => _x( 'Remove featured image', 'story', 'web-stories' ),
+				'use_featured_image'       => _x( 'Use as featured image', 'story', 'web-stories' ),
+				'filter_items_list'        => __( 'Filter stories list', 'web-stories' ),
+				'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
+				'items_list_navigation'    => __( 'Stories list navigation', 'web-stories' ),
+				'items_list'               => __( 'Stories list', 'web-stories' ),
+				'item_published'           => __( 'Story published.', 'web-stories' ),
+				'item_published_privately' => __( 'Story published privately.', 'web-stories' ),
+				'item_reverted_to_draft'   => __( 'Story reverted to draft.', 'web-stories' ),
+				'item_scheduled'           => __( 'Story scheduled', 'web-stories' ),
+				'item_updated'             => __( 'Story updated.', 'web-stories' ),
+				'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
+				'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
+				'item_link'                => _x( 'Story Link', 'navigation link block title', 'web-stories' ),
+				'item_link_description'    => _x( 'A link to a story.', 'navigation link block description', 'web-stories' ),
+			],
+			'menu_icon'             => $this->get_post_type_icon(),
+			'supports'              => [
+				'title', // Used for amp-story[title].
+				'author',
+				'editor',
+				'excerpt',
+				'thumbnail', // Used for poster images.
+				'revisions', // Without this, the REST API will return 404 for an autosave request.
+				'custom-fields',
+			],
+			'rewrite'               => [
+				'slug'       => self::REWRITE_SLUG,
+				'with_front' => false,
+				'feeds'      => true,
+			],
+			'public'                => true,
+			'has_archive'           => $this->get_has_archive(),
+			'exclude_from_search'   => true,
+			'show_ui'               => true,
+			'show_in_rest'          => true,
+			'rest_namespace'        => self::REST_NAMESPACE,
+			'rest_controller_class' => Stories_Controller::class,
+			'capability_type'       => [ 'web-story', 'web-stories' ],
+			'map_meta_cap'          => true,
+		];
+	}
+
+	/**
+	 * Base64 encoded svg icon.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string Base64-encoded SVG icon.
+	 */
+	protected function get_post_type_icon(): string {
+		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
 	}
 }

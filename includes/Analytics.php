@@ -253,7 +253,7 @@ class Analytics extends Service_Base {
 	 *
 	 * @param string $tracking_id Tracking ID.
 	 */
-	private function print_amp_analytics_tag( $tracking_id ): void {
+	private function print_amp_analytics_tag( string $tracking_id ): void {
 		?>
 		<amp-analytics type="gtag" data-credentials="include">
 			<script type="application/json">
@@ -270,7 +270,7 @@ class Analytics extends Service_Base {
 	 *
 	 * @param string $tracking_id Tracking ID.
 	 */
-	private function print_amp_story_auto_analytics_tag( $tracking_id ): void {
+	private function print_amp_story_auto_analytics_tag( string $tracking_id ): void {
 		?>
 		<amp-story-auto-analytics gtag-id="<?php echo esc_attr( $tracking_id ); ?>"></amp-story-auto-analytics>
 		<?php

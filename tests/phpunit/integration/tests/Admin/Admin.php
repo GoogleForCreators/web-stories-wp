@@ -32,11 +32,6 @@ use WP_UnitTest_Factory;
 class Admin extends DependencyInjectedTestCase {
 
 	/**
-	 * Settings for test.
-	 */
-	private Settings $settings;
-
-	/**
 	 * Admin user for test.
 	 */
 	protected static int $admin_id;
@@ -50,6 +45,16 @@ class Admin extends DependencyInjectedTestCase {
 	 * Post ID.
 	 */
 	protected static int $post_id;
+
+	/**
+	 * Settings for test.
+	 */
+	private Settings $settings;
+
+	/**
+	 * Test instance.
+	 */
+	private \Google\Web_Stories\Admin\Admin $instance;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 
@@ -82,11 +87,6 @@ class Admin extends DependencyInjectedTestCase {
 
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
-
-	/**
-	 * Test instance.
-	 */
-	private \Google\Web_Stories\Admin\Admin $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -259,6 +259,7 @@ class Admin extends DependencyInjectedTestCase {
 	public function test_media_states_no_active_logo(): void {
 		$post   = self::factory()->post->create_and_get( [] );
 		$result = $this->instance->media_states( [], $post );
+		$this->assertIsArray( $result );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -269,6 +270,7 @@ class Admin extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get( [] );
 		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
 		$result = $this->instance->media_states( [], $post );
+		$this->assertIsArray( $result );
 		$this->assertEqualSets( [ 'Web Stories Publisher Logo' ], $result );
 	}
 }

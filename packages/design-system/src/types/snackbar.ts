@@ -21,6 +21,10 @@ export interface Notification {
   message: string;
   onDismiss?: () => void;
   dismissible?: boolean;
+  thumbnail?: {
+    src: string;
+    alt: string;
+  };
 }
 export interface SnackbarState {
   showSnackbar: (snackbar: Omit<Notification, 'id'>) => void;

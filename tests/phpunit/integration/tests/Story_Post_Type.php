@@ -37,20 +37,17 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	protected static int $story_id;
 
 	/**
+	 * Archive page ID.
+	 */
+	protected static int $archive_page_id;
+
+	/**
 	 * Test instance.
 	 */
 	protected \Google\Web_Stories\Story_Post_Type $instance;
 
 	private \Google\Web_Stories\Settings $settings;
 
-	/**
-	 * Archive page ID.
-	 */
-	protected static int $archive_page_id;
-
-	/**
-	 * @param WP_UnitTest_Factory $factory
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]

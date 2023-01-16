@@ -441,6 +441,46 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	}
 
 	/**
+	 * Updates the given setting with a new value.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $key Setting key.
+	 * @param mixed  $value Setting value.
+	 * @return mixed Setting value.
+	 */
+	public function update_setting( string $key, $value ) {
+		return update_option( $key, $value );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_option( self::SETTING_NAME_ARCHIVE );
+		delete_option( self::SETTING_NAME_EXPERIMENTS );
+		delete_option( self::SETTING_NAME_TRACKING_ID );
+		delete_option( self::SETTING_NAME_USING_LEGACY_ANALYTICS );
+		delete_option( self::SETTING_NAME_AD_NETWORK );
+		delete_option( self::SETTING_NAME_ADSENSE_PUBLISHER_ID );
+		delete_option( self::SETTING_NAME_ADSENSE_SLOT_ID );
+		delete_option( self::SETTING_NAME_AD_MANAGER_SLOT_ID );
+		delete_option( self::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		delete_option( self::SETTING_NAME_PUBLISHER_LOGOS );
+		delete_option( self::SETTING_NAME_VIDEO_CACHE );
+		delete_option( self::SETTING_NAME_DATA_REMOVAL );
+		delete_option( self::SETTING_NAME_ARCHIVE );
+		delete_option( self::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( self::SETTING_NAME_SHOPPING_PROVIDER );
+		delete_option( self::SETTING_NAME_SHOPIFY_HOST );
+		delete_option( self::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
+		delete_option( self::SETTING_NAME_DEFAULT_PAGE_DURATION );
+		delete_option( self::SETTING_NAME_AUTO_ADVANCE );
+	}
+
+	/**
 	 * Retrieves all of the registered options for the Settings API.
 	 * Inspired by get_registered_options method found in WordPress. But also get settings that are registered without `show_in_rest` property.
 	 *
@@ -480,45 +520,5 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 		}
 
 		return $rest_options;
-	}
-
-	/**
-	 * Updates the given setting with a new value.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param string $key Setting key.
-	 * @param mixed  $value Setting value.
-	 * @return mixed Setting value.
-	 */
-	public function update_setting( string $key, $value ) {
-		return update_option( $key, $value );
-	}
-
-	/**
-	 * Act on plugin uninstall.
-	 *
-	 * @since 1.26.0
-	 */
-	public function on_plugin_uninstall(): void {
-		delete_option( self::SETTING_NAME_ARCHIVE );
-		delete_option( self::SETTING_NAME_EXPERIMENTS );
-		delete_option( self::SETTING_NAME_TRACKING_ID );
-		delete_option( self::SETTING_NAME_USING_LEGACY_ANALYTICS );
-		delete_option( self::SETTING_NAME_AD_NETWORK );
-		delete_option( self::SETTING_NAME_ADSENSE_PUBLISHER_ID );
-		delete_option( self::SETTING_NAME_ADSENSE_SLOT_ID );
-		delete_option( self::SETTING_NAME_AD_MANAGER_SLOT_ID );
-		delete_option( self::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
-		delete_option( self::SETTING_NAME_PUBLISHER_LOGOS );
-		delete_option( self::SETTING_NAME_VIDEO_CACHE );
-		delete_option( self::SETTING_NAME_DATA_REMOVAL );
-		delete_option( self::SETTING_NAME_ARCHIVE );
-		delete_option( self::SETTING_NAME_ARCHIVE_PAGE_ID );
-		delete_option( self::SETTING_NAME_SHOPPING_PROVIDER );
-		delete_option( self::SETTING_NAME_SHOPIFY_HOST );
-		delete_option( self::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
-		delete_option( self::SETTING_NAME_DEFAULT_PAGE_DURATION );
-		delete_option( self::SETTING_NAME_AUTO_ADVANCE );
 	}
 }

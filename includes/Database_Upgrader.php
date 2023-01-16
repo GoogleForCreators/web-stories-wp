@@ -111,7 +111,7 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		$this->run_upgrades();
 	}
 
@@ -154,6 +154,16 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	}
 
 	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_option( self::PREVIOUS_OPTION );
+		delete_option( self::OPTION );
+	}
+
+	/**
 	 * Runs the upgrade routine.
 	 *
 	 * @since 1.0.0
@@ -184,15 +194,5 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	protected function finish_up( string $previous_version ): void {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
 		update_option( self::OPTION, WEBSTORIES_DB_VERSION );
-	}
-
-	/**
-	 * Act on plugin uninstall.
-	 *
-	 * @since 1.26.0
-	 */
-	public function on_plugin_uninstall(): void {
-		delete_option( self::PREVIOUS_OPTION );
-		delete_option( self::OPTION );
 	}
 }

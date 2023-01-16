@@ -163,8 +163,11 @@ function DisplayElement({
       }
     : null;
 
-  const { Display: Replacement } =
-    getDefinitionForType(replacement?.resource.type) || {};
+  let Replacement;
+  if (replacement?.resource.type) {
+    const definition = getDefinitionForType(replacement.resource.type);
+    Replacement = definition.Display;
+  }
 
   const wrapperRef = useRef(null);
 
