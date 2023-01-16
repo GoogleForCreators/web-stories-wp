@@ -178,7 +178,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		$args = [
-			'limit_response_size' => 153600, // 150 KB.
+			'limit_response_size' => 153_600, // 150 KB.
 			'timeout'             => 7, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 		];
 
