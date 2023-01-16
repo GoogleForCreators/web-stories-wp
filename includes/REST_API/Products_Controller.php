@@ -267,7 +267,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $item, $request ): WP_REST_Response {
+	public function prepare_item_for_response( $item, $request ): WP_REST_Response { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$product = $item;
 		$fields  = $this->get_fields_for_response( $request );
 

@@ -721,7 +721,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @param string $url Request URL.
 	 * @return string|false Original URL, resolved IP address, or false on failure.
 	 */
-	private function validate_url( string $url ) {
+	private function validate_url( string $url ) { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		if ( '' === $url || is_numeric( $url ) ) {
 			return false;
 		}

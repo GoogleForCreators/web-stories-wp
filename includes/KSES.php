@@ -206,7 +206,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param string $css A string of CSS rules.
 	 * @return string Filtered string of CSS rules.
 	 */
-	public function safecss_filter_attr( $css ): string {
+	public function safecss_filter_attr( $css ): string { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$css = wp_kses_no_null( $css );
 		$css = str_replace( [ "\n", "\r", "\t" ], '', $css );
 
