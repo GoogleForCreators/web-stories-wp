@@ -134,12 +134,12 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $tag    The link tag for the enqueued style.
+	 * @param mixed  $tag    The link tag for the enqueued style.
 	 * @param string $handle The style's registered handle.
 	 * @param string $href   The stylesheet's source URL.
 	 * @return string|mixed
 	 */
-	public function style_loader_tag( $tag, $handle, $href ) {
+	public function style_loader_tag( $tag, string $handle, string $href ) {
 		return $this->add_attribute( $tag, 'href', $href );
 	}
 
@@ -148,12 +148,12 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string|mixed $tag The `<script>` tag for the enqueued script.
-	 * @param string       $handle    The script's registered handle.
-	 * @param string       $src       The script's source URL.
+	 * @param mixed  $tag    The `<script>` tag for the enqueued script.
+	 * @param string $handle The script's registered handle.
+	 * @param string $src    The script's source URL.
 	 * @return string|mixed The filtered script tag.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ) {
+	public function script_loader_tag( $tag, string $handle, string $src ) {
 		return $this->add_attribute( $tag, 'src', $src );
 	}
 
@@ -174,7 +174,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * @param array<string,mixed> $args        Arguments passed to get_avatar_data(), after processing.
 	 * @return string|mixed Filtered avatar tag.
 	 */
-	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ) {
+	public function get_avatar( $avatar, $id_or_email, int $size, string $default, string $alt, array $args ) {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
 	}
 

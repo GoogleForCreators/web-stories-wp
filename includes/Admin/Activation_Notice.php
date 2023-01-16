@@ -88,7 +88,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		$this->set_activation_flag( $network_wide );
 	}
 
@@ -99,7 +99,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 */
-	public function on_plugin_deactivation( $network_wide ): void {
+	public function on_plugin_deactivation( bool $network_wide ): void {
 		$this->delete_activation_flag( $network_wide );
 	}
 
@@ -225,7 +225,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $hook_suffix Current hook_suffix.
+	 * @param mixed $hook_suffix Current hook_suffix.
 	 * @return bool Whether we're on the Plugins page.
 	 */
 	protected function is_plugins_page( $hook_suffix ): bool {

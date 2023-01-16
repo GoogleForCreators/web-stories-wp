@@ -250,7 +250,7 @@ class Meta_Sanitizer extends TestCase {
 	 * @dataProvider get_data_for_sanitize
 	 * @covers ::sanitize
 	 */
-	public function test_sanitize( $source_content, $expected_content ): void {
+	public function test_sanitize( string $source_content, string $expected_content ): void {
 		/**
 		 * Document.
 		 *
