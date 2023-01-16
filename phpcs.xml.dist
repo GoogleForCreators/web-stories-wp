@@ -292,6 +292,13 @@
     />
   </rule>
 
+  <!-- Enforces maximum cognitive complexity for functions.. -->
+  <rule ref="SlevomatCodingStandard.Complexity.Cognitive">
+    <properties>
+      <property name="maxComplexity" value="25" />
+    </properties>
+  </rule>
+
   <!-- Requires use of null coalesce operator (??) when possible. -->
   <rule
     ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"

@@ -26,6 +26,7 @@ import type { APIState } from '../../types';
 import Context from './context';
 
 function useAPI(): APIState;
+function useAPI<T>(selector: (state: APIState) => T): T;
 function useAPI<T>(selector: (state: APIState) => T | APIState = identity) {
   return useContextSelector(Context, selector ?? identity);
 }
