@@ -121,6 +121,7 @@ export const FIXTURE_DEFAULT_CONFIG = {
     timezone: 'America/New_York',
     weekStartsOn: 0,
   },
+  shoppingProvider: 'karma',
   flags: {},
   MediaUpload,
 };

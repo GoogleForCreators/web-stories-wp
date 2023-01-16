@@ -397,7 +397,9 @@ const webStoriesScripts = {
 };
 
 // Collect all core themes style sheet paths.
-const coreThemesBlockStylesPaths = readdirSync('./packages/stories-block/src/css/core-themes');
+const coreThemesBlockStylesPaths = readdirSync(
+  './packages/stories-block/src/css/core-themes'
+);
 
 // Build entry object for the Core Themes Styles.
 const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
