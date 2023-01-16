@@ -164,7 +164,7 @@ echo -e $(status_message "Activating Twenty Twenty theme...")
 wp theme install twentytwenty --activate --force --quiet
 
 echo -e $(status_message "Disable block directory and remote patterns...")
-wp plugin activate e2e-tests-disable-block-directory --quiet
+wp plugin activate web-stories-test-plugins/disable-block-directory --quiet
 
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")
