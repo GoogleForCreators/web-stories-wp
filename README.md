@@ -12,11 +12,11 @@ Visual storytelling for WordPress.
 Build Status
 </summary>
 
-[![Build](https://img.shields.io/github/workflow/status/googleforcreators/web-stories-wp/Build%20plugin?label=Build)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
-[![Integration Tests](https://img.shields.io/github/workflow/status/googleforcreators/web-stories-wp/Integration%20Tests?label=integration%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
-[![E2E Tests](https://img.shields.io/github/workflow/status/googleforcreators/web-stories-wp/E2E%20Tests?label=e2e%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
-[![JS Tests](https://img.shields.io/github/workflow/status/googleforcreators/web-stories-wp/JavaScript%20Unit%20Tests?label=js%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
-[![PHP Tests](https://img.shields.io/github/workflow/status/googleforcreators/web-stories-wp/PHP%20Unit%20Tests?label=php%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
+[![Build](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/build-and-deploy.yml?branch=main&label=Build)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
+[![Integration Tests](https://img.shields.io/actions/github/workflow/status/googleforcreators/web-stories-wp/tests-karma-editor.yml?branch=main&label=integration%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
+[![E2E Tests](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/tests-e2e.yml?branch=main&label=e2e%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
+[![JS Tests](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/tests-unit-js.yml?branch=main&label=js%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
+[![PHP Tests](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/tests-unit-php.yml?branch=main&label=php%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
 
 </details>
 
@@ -31,8 +31,3 @@ If you find any issues, please reach out by visiting the [support forum](https:/
 ## Contributing
 
 We'd love to accept your patches and contributions to this project. There are just a few small guidelines you need to follow. Please check out our [Contributing documentation](./CONTRIBUTING.md) and the [Getting Started](./docs/getting-started.md) guide.
-
-## Product Spec
-
-* [Product spec](https://docs.google.com/document/d/18gjAOvAf2TCWpFy_9mr1V9a2VZrM4Ty7Mfry5zdL31k/view)
-* [Roadmap](https://docs.google.com/spreadsheets/d/10DZZrWJdkjcJXD1vL0VG0PqRhsIqaHkacF_ujOdEwJc/view)
