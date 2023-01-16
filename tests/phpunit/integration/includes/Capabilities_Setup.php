@@ -27,15 +27,15 @@ use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\User\Capabilities;
 
 trait Capabilities_Setup {
-	protected function get_capabilities(): Capabilities {
-		return new Capabilities( new Story_Post_Type( new Settings( new Shopping_Vendors( new SimpleInjector() ) ) ) );
-	}
-
 	public function add_caps_to_roles(): void {
 		$this->get_capabilities()->add_caps_to_roles();
 	}
 
 	public function remove_caps_from_roles(): void {
 		$this->get_capabilities()->remove_caps_from_roles();
+	}
+
+	protected function get_capabilities(): Capabilities {
+		return new Capabilities( new Story_Post_Type( new Settings( new Shopping_Vendors( new SimpleInjector() ) ) ) );
 	}
 }
