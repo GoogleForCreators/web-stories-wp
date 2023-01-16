@@ -24,7 +24,7 @@ import {
   PAGE_WIDTH,
 } from '@googleforcreators/units';
 import { getHTMLFormatters } from '@googleforcreators/rich-text';
-import { ELEMENT_TYPES } from '@googleforcreators/elements';
+import { ELEMENT_TYPES, elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -85,7 +85,7 @@ function useInsertTextSet(shouldUseSmartColor = false) {
       if (applySmartColor && !hasPredefinedColor) {
         textElementsContrasts = await Promise.all(
           toAdd.map((element) =>
-            element.type === 'text'
+            elementIs.text(element) && element.type === ELEMENT_TYPES.TEXT
               ? calculateAccessibleTextColors(element)
               : null
           )
@@ -157,10 +157,18 @@ function useInsertTextSet(shouldUseSmartColor = false) {
             : textElementsContrasts[index];
 
           // Only apply the colors if a better color was detected.
-          if (element.type === 'text' && autoColor.color) {
+          if (
+            elementIs.text(element) &&
+            element.type === ELEMENT_TYPES.TEXT &&
+            autoColor.color
+          ) {
             toInsert.content = setColor(toInsert.content, autoColor);
           }
-          if (element.type === 'shape' && firstValidColor.color) {
+          if (
+            elementIs.shape(element) &&
+            element.type === ELEMENT_TYPES.SHAPE &&
+            firstValidColor.color
+          ) {
             // So far we only use borders (no fill) or shapes with fill (no borders).
             if (element.border) {
               toInsert.border.color = firstValidColor;

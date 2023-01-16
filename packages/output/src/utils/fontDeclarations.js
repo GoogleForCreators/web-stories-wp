@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
 import { getFontVariants } from '@googleforcreators/rich-text';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import { StoryPropTypes, elementIs } from '@googleforcreators/elements';
 
 const hasTuple = (tuples, tuple) =>
   tuples.some((val) => val[0] === tuple[0] && val[1] === tuple[1]);
@@ -42,7 +42,7 @@ function FontDeclarations({ pages }) {
   const map = new Map();
 
   for (const { elements } of pages) {
-    const textElements = elements.filter(({ type }) => type === 'text');
+    const textElements = elements.filter(elementIs.text);
     // Prepare font objects for later use.
     for (const { font, content } of textElements) {
       const { service, family, variants = [], url } = font;

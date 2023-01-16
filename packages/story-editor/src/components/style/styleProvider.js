@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from '@googleforcreators/react';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -70,19 +71,22 @@ function StyleProvider({ children }) {
   let selectionIcon = MultiSelectionIcon;
   const icons = [...new Set(selectedElements.map(({ type }) => type))];
   if (icons.length === 1) {
-    if (icons[0] === 'text') {
+    if (icons[0] === ELEMENT_TYPES.TEXT) {
       selectionIcon = TextSelectionIcon;
     }
-    if (icons[0] === 'image' || selectedElements[0].isBackground) {
+    if (icons[0] === ELEMENT_TYPES.IMAGE || selectedElements[0].isBackground) {
       selectionIcon = ImageSelectionIcon;
     }
-    if (icons[0] === 'video') {
+    if (icons[0] === ELEMENT_TYPES.VIDEO) {
       selectionIcon = VideoSelectionIcon;
     }
-    if (icons[0] === 'shape' || icons[0] === 'sticker') {
+    if (
+      icons[0] === ELEMENT_TYPES.SHAPE ||
+      icons[0] === ELEMENT_TYPES.STICKER
+    ) {
       selectionIcon = ShapeSelectionIcon;
     }
-    if (icons[0] === 'product') {
+    if (icons[0] === ELEMENT_TYPES.PRODUCT) {
       selectionIcon = ProductSelectionIcon;
     }
   } else {
@@ -110,7 +114,7 @@ function StyleProvider({ children }) {
     selectedElements[0]?.isDefaultBackground;
 
   const hasProductsSelected = selectedElements.some(
-    ({ type }) => type === 'product'
+    ({ type }) => type === ELEMENT_TYPES.PRODUCT
   );
 
   if (!isBackgroundSelected && !hasProductsSelected) {

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
-
+import { elementIs } from '@web-stories-wp/elements';
 /**
  * Internal dependencies
  */
@@ -32,7 +32,7 @@ import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementLength(element) {
   return (
-    element.type === 'video' &&
+    elementIs.video(element) &&
     element.resource?.length > MAX_VIDEO_LENGTH_SECONDS
   );
 }

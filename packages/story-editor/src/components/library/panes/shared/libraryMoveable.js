@@ -28,6 +28,7 @@ import {
   areEventsDragging,
 } from '@googleforcreators/moveable';
 import { useTransform } from '@googleforcreators/transform';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -266,7 +267,7 @@ function LibraryMoveable({
           offsetX: editorToDataX(x - pageX, pageSize.width),
           offsetY: editorToDataY(y - pageY, pageSize.height),
         });
-      } else if (type === 'product') {
+      } else if (type === ELEMENT_TYPES.PRODUCT) {
         insertElement(type, {
           ...elementProps,
           width: PRODUCT_WIDTH,

@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { pageTooMuchText } from '../pageTooMuchText';
@@ -23,13 +27,13 @@ describe('pageTooMuchText', () => {
     const testElements = [
       {
         id: '25b6f99b-3f69-4351-9e18-31b8ef1d1a61',
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         content:
           '<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">FRESH</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">&amp;&nbsp;</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">BRIGHT</span>',
       },
       {
         id: 'd886c844-5b5c-4b27-a9c3-332df2aed3f3',
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         content:
           "<span style=\"color: #28292b\">this is a lot of text that should</span>&nbsp;not pass the test because it's too much text. not pass the test because it's too much text. not pass the test because it's too much text. a little more.",
       },
@@ -47,13 +51,13 @@ describe('pageTooMuchText', () => {
       elements: [
         {
           id: '25b6f99b-3f69-4351-9e18-31b8ef1d1a61',
-          type: 'text',
+          type: ELEMENT_TYPES.TEXT,
           content:
             '<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">FRESH</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">&amp;&nbsp;</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">BRIGHT</span>',
         },
         {
           id: 'd886c844-5b5c-4b27-a9c3-332df2aed3f3',
-          type: 'text',
+          type: ELEMENT_TYPES.TEXT,
           content:
             '<span style="color: #28292b">this is not a lot of text</span>',
         },

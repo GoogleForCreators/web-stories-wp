@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useMemo } from '@googleforcreators/react';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -31,7 +32,11 @@ function useIsUploadingToStory() {
         ...curr.elements
           .filter(
             ({ type, isExternal }) =>
-              ['image', 'video', 'gif'].includes(type) && !isExternal
+              [
+                ELEMENT_TYPES.IMAGE,
+                ELEMENT_TYPES.VIDEO,
+                ELEMENT_TYPES.GIF,
+              ].includes(type) && !isExternal
           )
           .map(({ resource }) => resource.id)
       );

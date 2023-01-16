@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
-
+import { elementIs } from '@web-stories-wp/elements';
 /**
  * Internal dependencies
  */
@@ -32,7 +32,7 @@ import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementMissingPoster(element) {
   return (
-    element.type === 'video' && !element.resource?.poster && !element.poster
+    elementIs.video(element) && !element.resource?.poster && !element.poster
   );
 }
 

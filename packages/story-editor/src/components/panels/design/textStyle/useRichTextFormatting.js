@@ -30,6 +30,7 @@ import {
   getHTMLFormatters,
   getHTMLInfo,
 } from '@googleforcreators/rich-text';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -179,7 +180,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
   }, [hasCurrentEditor, selectionActions, push, clearEditing, queuePush]);
 
   const hasText = useCallback(() => {
-    const texts = selectedElements.filter(({ type }) => type === 'text');
+    const texts = selectedElements.filter(elementIs.text);
     return texts.length > 0;
   }, [selectedElements]);
 

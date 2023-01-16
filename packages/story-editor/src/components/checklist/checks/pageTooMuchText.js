@@ -19,6 +19,7 @@
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { List, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { elementIs } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -81,7 +82,7 @@ const PageTooMuchText = () => {
       onClick={() =>
         handleClick({
           pageId: page.id,
-          elements: page.elements.filter(({ type }) => type === 'text'),
+          elements: page.elements.filter(elementIs.text),
         })
       }
       type={THUMBNAIL_TYPES.PAGE}

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
-
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -28,7 +28,7 @@ describe('pageBackgroundTextLowContrast', () => {
     id: 'bgEl-id',
     x: 1,
     y: 1,
-    type: 'shape',
+    type: ELEMENT_TYPES.SHAPE,
     isBackground: true,
     height: PAGE_HEIGHT,
     width: PAGE_WIDTH,
@@ -42,7 +42,7 @@ describe('pageBackgroundTextLowContrast', () => {
   };
   const textEl = {
     id: 'textEl -id',
-    type: 'text',
+    type: ELEMENT_TYPES.TEXT,
     backgroundTextMode: 'NONE',
     content: 'Fill with text',
     x: 1,

@@ -19,6 +19,7 @@
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -38,7 +39,7 @@ import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function imageElementMissingAlt(element) {
   return (
-    ['gif', 'image'].includes(element.type) &&
+    [ELEMENT_TYPES.GIF, ELEMENT_TYPES.IMAGE].includes(element.type) &&
     !element.alt?.length &&
     !element.resource?.alt?.length
   );

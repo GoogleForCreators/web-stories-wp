@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -23,7 +26,7 @@ describe('imageElementResolution', () => {
   it("should return true if an image element's resolution is too low (<2x pixel density)", () => {
     const tooLowResolutionImageElement = {
       id: 910,
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       height: 1000,
       width: 1000,
       resource: {
@@ -39,7 +42,7 @@ describe('imageElementResolution', () => {
   it("should return true if a gif element's resolution is too low (<2x pixel density)", () => {
     const tooLowResolutionImageElement = {
       id: 911,
-      type: 'gif',
+      type: ELEMENT_TYPES.GIF,
       height: 1000,
       width: 1000,
       resource: {
@@ -55,7 +58,7 @@ describe('imageElementResolution', () => {
   it("should return true if an image element's resolution is too low (<2x pixel density) accounting for scale", () => {
     const tooLowResolutionImageElement = {
       id: 910,
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       height: 200,
       width: 200,
       scale: 400,

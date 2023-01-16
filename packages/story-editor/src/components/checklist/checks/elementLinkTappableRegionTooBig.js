@@ -19,6 +19,7 @@
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -40,7 +41,13 @@ const MAX_LINK_SCREEN_PERCENT = 80;
 
 export function isElementLinkTappableRegionTooBig(element, pageSize) {
   if (
-    !['text', 'image', 'shape', 'gif', 'video'].includes(element.type) ||
+    ![
+      ELEMENT_TYPES.TEXT,
+      ELEMENT_TYPES.IMAGE,
+      ELEMENT_TYPES.SHAPE,
+      ELEMENT_TYPES.GIF,
+      ELEMENT_TYPES.VIDEO,
+    ].includes(element.type) ||
     !element.link?.url?.length
   ) {
     return false;

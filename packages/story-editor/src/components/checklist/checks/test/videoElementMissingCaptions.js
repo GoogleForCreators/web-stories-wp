@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { videoElementMissingCaptions } from '../videoElementMissingCaptions';
@@ -22,7 +26,7 @@ describe('videoElementMissingCaptions', () => {
   it('should return a warning if video element missing captions', () => {
     const element = {
       id: 'elementid',
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
     };
 
     const test = videoElementMissingCaptions(element);
@@ -32,7 +36,7 @@ describe('videoElementMissingCaptions', () => {
   it('should return a warning if video element has empty captions', () => {
     const element = {
       id: 'elementid',
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       tracks: [],
     };
     const test = videoElementMissingCaptions(element);
@@ -42,7 +46,7 @@ describe('videoElementMissingCaptions', () => {
   it('should return undefined if video element has captions', () => {
     const element = {
       id: 'elementid',
-      type: 'text',
+      type: ELEMENT_TYPES.TEXT,
       tracks: [{ id: 'trackid' }],
     };
     expect(videoElementMissingCaptions(element)).toBeFalse();

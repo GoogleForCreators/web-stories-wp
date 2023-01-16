@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { elementLinkTappableRegionTooSmall } from '../elementLinkTappableRegionTooSmall';
@@ -22,7 +26,7 @@ describe('elementLinkTappableRegionTooSmall', () => {
   it('should return true if element tappable region is too small', () => {
     const element = {
       id: 'elementid',
-      type: 'text',
+      type: ELEMENT_TYPES.TEXT,
       link: {
         url: 'https://google.com',
       },
@@ -36,7 +40,7 @@ describe('elementLinkTappableRegionTooSmall', () => {
   it('should return false if element has large enough tappable region', () => {
     const element = {
       id: 'elementid',
-      type: 'text',
+      type: ELEMENT_TYPES.TEXT,
       link: {
         url: 'https://google.com',
       },
@@ -50,7 +54,7 @@ describe('elementLinkTappableRegionTooSmall', () => {
   it('should return false if not an element with link', () => {
     const element = {
       id: 'elementid',
-      type: 'text',
+      type: ELEMENT_TYPES.TEXT,
       content: 'G',
       width: 40,
       height: 40,

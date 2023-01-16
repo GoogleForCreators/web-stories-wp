@@ -19,7 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useMemo } from '@googleforcreators/react';
-
+import { elementIs } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -38,7 +38,7 @@ import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function textElementFontSizeTooSmall(element) {
   return (
-    element.type === 'text' &&
+    elementIs.text(element) &&
     element.fontSize &&
     element.fontSize < MIN_FONT_SIZE
   );

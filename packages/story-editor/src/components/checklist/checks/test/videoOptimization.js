@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { videoElementsNotOptimized } from '../videoOptimization';
@@ -23,7 +27,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return true if the video element is currently being transcoded', () => {
     const largeUnoptimizedVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isOptimized: false,
         height: 2160,
@@ -38,7 +42,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return true if the video element is larger than 1080x1920 and not optimized', () => {
     const largeUnoptimizedVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isOptimized: false,
         height: 2160,
@@ -53,7 +57,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return false if the video element is larger than 1080x1920 and is optimizing', () => {
     const largeUnoptimizedVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isOptimized: false,
         height: 2160,
@@ -68,7 +72,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return false if the video element is larger than 1080x1920 and Optimized', () => {
     const largeUnoptimizedVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isOptimized: true,
         height: 2160,
@@ -83,7 +87,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return false if the video element is larger than 1080x1920 and isExternal', () => {
     const largeUnoptimizedVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isExternal: true,
         isOptimized: true,
@@ -99,7 +103,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return false if the video element is smaller than 1080x1920', () => {
     const smallUnoptimizedVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isOptimized: false,
         height: 300,
@@ -108,7 +112,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     };
     const smallOptimizedVideo = {
       id: 203,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isOptimized: true,
         height: 300,
@@ -123,7 +127,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return false if the video element is exactly 1280x720', () => {
     const landscapeVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isOptimized: false,
         height: 720,
@@ -132,7 +136,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     };
     const portraitVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         isOptimized: false,
         height: 1280,

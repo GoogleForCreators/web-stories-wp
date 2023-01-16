@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { videoElementMissingDescription } from '../videoElementMissingDescription';
@@ -22,7 +26,7 @@ describe('videoElementMissingDescription', () => {
   it('should return a warning if video element missing title', () => {
     const element = {
       id: 'elementid',
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {},
     };
     const test = videoElementMissingDescription(element);
@@ -32,7 +36,7 @@ describe('videoElementMissingDescription', () => {
   it('should return a warning if video element has empty description', () => {
     const element = {
       id: 'elementid',
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       alt: '',
       resource: {
         alt: '',
@@ -45,7 +49,7 @@ describe('videoElementMissingDescription', () => {
   it('should return undefined if video element has title', () => {
     const element = {
       id: 'elementid',
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       alt: 'Video description',
       resource: {},
     };
@@ -55,7 +59,7 @@ describe('videoElementMissingDescription', () => {
   it('should return undefined if video resource has title', () => {
     const element = {
       id: 'elementid',
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         alt: 'Video description',
       },

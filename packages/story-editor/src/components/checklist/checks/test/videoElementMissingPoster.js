@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -23,7 +26,7 @@ describe('videoElementMissingPoster', () => {
   it("should return true if the video element and resource don't have a poster image", () => {
     const posterlessVideo = {
       id: 303,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         height: 800,
         width: 500,
@@ -37,7 +40,7 @@ describe('videoElementMissingPoster', () => {
   it('should not return true if the video resource has a poster image', () => {
     const posterlessVideo = {
       id: 303,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         height: 800,
         width: 500,
@@ -52,7 +55,7 @@ describe('videoElementMissingPoster', () => {
   it('should not return true if the video element has a poster image', () => {
     const posterlessVideo = {
       id: 303,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         height: 800,
         width: 500,

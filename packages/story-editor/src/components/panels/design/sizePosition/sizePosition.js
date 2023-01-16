@@ -35,7 +35,7 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import { getDefinitionForType, elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -303,7 +303,7 @@ function SizePositionPanel(props) {
               pushUpdate((element) => {
                 // For stickers, we maintain aspect ratio of the sticker
                 // regardless of input and selected elements.
-                if (element?.type === 'sticker') {
+                if (elementIs.sticker(element)) {
                   const aspectRatio = getStickerAspectRatio(element);
                   return getUpdateObject(
                     newWidth,
@@ -341,7 +341,7 @@ function SizePositionPanel(props) {
               pushUpdate((element) => {
                 // For stickers, we maintain aspect ratio of the sticker
                 // regardless of input and selected elements.
-                if (element?.type === 'sticker') {
+                if (elementIs.sticker(element)) {
                   const aspectRatio = getStickerAspectRatio(element);
                   return getUpdateObject(
                     Math.floor(newHeight * aspectRatio),

@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * AMP Extension
  *
  * @typedef {Extension} Extension
@@ -62,16 +66,16 @@ const getUsedAmpExtensions = (pages) => {
     }
     for (const { type, tracks } of elements) {
       switch (type) {
-        case 'video':
+        case ELEMENT_TYPES.VIDEO:
           extensions.push(ampVideo);
           if (tracks?.length > 0) {
             extensions.push(ampStoryCaptions);
           }
           break;
-        case 'gif':
+        case ELEMENT_TYPES.GIF:
           extensions.push(ampVideo);
           break;
-        case 'product':
+        case ELEMENT_TYPES.PRODUCT:
           extensions.push(ampStoryShopping);
           break;
         default:

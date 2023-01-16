@@ -17,11 +17,12 @@
  * External dependencies
  */
 import { stripHTML } from '@googleforcreators/dom';
+import { elementIs } from '@googleforcreators/elements';
 
 export function characterCountForPage(page) {
   let characterCount = 0;
   page.elements.forEach((element) => {
-    if (element.type === 'text') {
+    if (elementIs.text(element)) {
       characterCount += stripHTML(element.content).length;
     }
   });

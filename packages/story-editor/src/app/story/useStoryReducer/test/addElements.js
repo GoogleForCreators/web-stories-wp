@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { setupReducer } from './_utils';
@@ -105,7 +109,11 @@ describe('addElements', () => {
           id: '111',
           elements: [
             { id: '000' },
-            { id: '123', product: { productId: 1 }, type: 'product' },
+            {
+              id: '123',
+              product: { productId: 1 },
+              type: ELEMENT_TYPES.PRODUCT,
+            },
           ],
         },
       ],
@@ -114,8 +122,8 @@ describe('addElements', () => {
 
     const result = addElements({
       elements: [
-        { id: '123', product: { productId: 1 }, type: 'product' },
-        { id: '124', product: { productId: 2 }, type: 'product' },
+        { id: '123', product: { productId: 1 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '124', product: { productId: 2 }, type: ELEMENT_TYPES.PRODUCT },
       ],
     });
 
@@ -123,8 +131,8 @@ describe('addElements', () => {
       id: '111',
       elements: [
         { id: '000' },
-        { id: '123', product: { productId: 1 }, type: 'product' },
-        { id: '124', product: { productId: 2 }, type: 'product' },
+        { id: '123', product: { productId: 1 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '124', product: { productId: 2 }, type: ELEMENT_TYPES.PRODUCT },
       ],
     });
     expect(result.selection).toStrictEqual(['124']);
@@ -140,7 +148,11 @@ describe('addElements', () => {
           id: '111',
           elements: [
             { id: '000' },
-            { id: '122', product: { productId: 0 }, type: 'product' },
+            {
+              id: '122',
+              product: { productId: 0 },
+              type: ELEMENT_TYPES.PRODUCT,
+            },
           ],
         },
       ],
@@ -149,11 +161,11 @@ describe('addElements', () => {
 
     const result = addElements({
       elements: [
-        { id: '123', product: { productId: 1 }, type: 'product' },
-        { id: '124', product: { productId: 2 }, type: 'product' },
-        { id: '125', product: { productId: 3 }, type: 'product' },
-        { id: '126', product: { productId: 4 }, type: 'product' },
-        { id: '127', product: { productId: 5 }, type: 'product' },
+        { id: '123', product: { productId: 1 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '124', product: { productId: 2 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '125', product: { productId: 3 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '126', product: { productId: 4 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '127', product: { productId: 5 }, type: ELEMENT_TYPES.PRODUCT },
         { id: '130', type: 'image' },
       ],
     });
@@ -162,13 +174,13 @@ describe('addElements', () => {
       id: '111',
       elements: [
         { id: '000' },
-        { id: '122', product: { productId: 0 }, type: 'product' },
+        { id: '122', product: { productId: 0 }, type: ELEMENT_TYPES.PRODUCT },
         { id: '130', type: 'image' },
-        { id: '123', product: { productId: 1 }, type: 'product' },
-        { id: '124', product: { productId: 2 }, type: 'product' },
-        { id: '125', product: { productId: 3 }, type: 'product' },
-        { id: '126', product: { productId: 4 }, type: 'product' },
-        { id: '127', product: { productId: 5 }, type: 'product' },
+        { id: '123', product: { productId: 1 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '124', product: { productId: 2 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '125', product: { productId: 3 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '126', product: { productId: 4 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '127', product: { productId: 5 }, type: ELEMENT_TYPES.PRODUCT },
       ],
     });
     expect(result.selection).toStrictEqual([
@@ -191,7 +203,11 @@ describe('addElements', () => {
           id: '111',
           elements: [
             { id: '000' },
-            { id: '122', product: { productId: 0 }, type: 'product' },
+            {
+              id: '122',
+              product: { productId: 0 },
+              type: ELEMENT_TYPES.PRODUCT,
+            },
           ],
         },
       ],
@@ -200,13 +216,13 @@ describe('addElements', () => {
 
     const result = addElements({
       elements: [
-        { id: '123', product: { productId: 1 }, type: 'product' },
-        { id: '124', product: { productId: 2 }, type: 'product' },
-        { id: '125', product: { productId: 3 }, type: 'product' },
-        { id: '126', product: { productId: 4 }, type: 'product' },
-        { id: '127', product: { productId: 5 }, type: 'product' },
-        { id: '128', product: { productId: 6 }, type: 'product' },
-        { id: '129', product: { productId: 7 }, type: 'product' },
+        { id: '123', product: { productId: 1 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '124', product: { productId: 2 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '125', product: { productId: 3 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '126', product: { productId: 4 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '127', product: { productId: 5 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '128', product: { productId: 6 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '129', product: { productId: 7 }, type: ELEMENT_TYPES.PRODUCT },
         { id: '130', type: 'image' },
       ],
     });
@@ -215,7 +231,7 @@ describe('addElements', () => {
       id: '111',
       elements: [
         { id: '000' },
-        { id: '122', product: { productId: 0 }, type: 'product' },
+        { id: '122', product: { productId: 0 }, type: ELEMENT_TYPES.PRODUCT },
         { id: '130', type: 'image' },
       ],
     });
@@ -232,8 +248,16 @@ describe('addElements', () => {
           id: '111',
           elements: [
             { id: '000' },
-            { id: '123', product: { productId: 1 }, type: 'product' },
-            { id: '124', product: { productId: 2 }, type: 'product' },
+            {
+              id: '123',
+              product: { productId: 1 },
+              type: ELEMENT_TYPES.PRODUCT,
+            },
+            {
+              id: '124',
+              product: { productId: 2 },
+              type: ELEMENT_TYPES.PRODUCT,
+            },
           ],
         },
       ],
@@ -242,12 +266,12 @@ describe('addElements', () => {
 
     const result = addElements({
       elements: [
-        { id: '123', product: { productId: 1 }, type: 'product' },
-        { id: '124', product: { productId: 2 }, type: 'product' },
-        { id: '125', product: { productId: 3 }, type: 'product' },
-        { id: '126', product: { productId: 4 }, type: 'product' },
-        { id: '127', product: { productId: 5 }, type: 'product' },
-        { id: '128', product: { productId: 6 }, type: 'product' },
+        { id: '123', product: { productId: 1 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '124', product: { productId: 2 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '125', product: { productId: 3 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '126', product: { productId: 4 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '127', product: { productId: 5 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '128', product: { productId: 6 }, type: ELEMENT_TYPES.PRODUCT },
         { id: '130', type: 'image' },
       ],
     });
@@ -256,13 +280,13 @@ describe('addElements', () => {
       id: '111',
       elements: [
         { id: '000' },
-        { id: '123', product: { productId: 1 }, type: 'product' },
-        { id: '124', product: { productId: 2 }, type: 'product' },
+        { id: '123', product: { productId: 1 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '124', product: { productId: 2 }, type: ELEMENT_TYPES.PRODUCT },
         { id: '130', type: 'image' },
-        { id: '125', product: { productId: 3 }, type: 'product' },
-        { id: '126', product: { productId: 4 }, type: 'product' },
-        { id: '127', product: { productId: 5 }, type: 'product' },
-        { id: '128', product: { productId: 6 }, type: 'product' },
+        { id: '125', product: { productId: 3 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '126', product: { productId: 4 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '127', product: { productId: 5 }, type: ELEMENT_TYPES.PRODUCT },
+        { id: '128', product: { productId: 6 }, type: ELEMENT_TYPES.PRODUCT },
       ],
     });
     expect(result.selection).toStrictEqual(['130', '125', '126', '127', '128']);

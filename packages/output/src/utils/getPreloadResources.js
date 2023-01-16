@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * AMP Extension
  *
  * @typedef {Object} PreloadResource
@@ -38,7 +42,11 @@ function getPreloadResources(pages) {
   }
 
   for (const { type, resource, isBackground } of pages[0].elements) {
-    if (!['image', 'video', 'gif'].includes(type)) {
+    if (
+      ![ELEMENT_TYPES.IMAGE, ELEMENT_TYPES.VIDEO, ELEMENT_TYPES.GIF].includes(
+        type
+      )
+    ) {
       continue;
     }
 

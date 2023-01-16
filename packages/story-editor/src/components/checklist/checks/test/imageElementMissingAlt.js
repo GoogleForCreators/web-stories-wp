@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { imageElementMissingAlt } from '../imageElementMissingAlt';
@@ -22,7 +26,7 @@ describe('imageElementMissingAlt', () => {
   it('should return true if image element missing alt', () => {
     const element = {
       id: 'elementid',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       resource: {},
     };
     const test = imageElementMissingAlt(element);
@@ -32,7 +36,7 @@ describe('imageElementMissingAlt', () => {
   it('should return true if image element has empty alt', () => {
     const element = {
       id: 'elementid',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       alt: '',
       resource: {
         alt: '',
@@ -45,7 +49,7 @@ describe('imageElementMissingAlt', () => {
   it('should return false if image element has alt', () => {
     const element = {
       id: 'elementid',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       alt: 'Image is about things',
       resource: {},
     };
@@ -55,7 +59,7 @@ describe('imageElementMissingAlt', () => {
   it('should return false if image element has a resource alt', () => {
     const element = {
       id: 'elementid',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       resource: { alt: 'Image is about things' },
     };
     expect(imageElementMissingAlt(element)).toBeFalse();
@@ -63,7 +67,7 @@ describe('imageElementMissingAlt', () => {
 
   it(`should return false if it's not an image element`, () => {
     const element = {
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       id: 'elementid',
       resource: { alt: '' },
     };

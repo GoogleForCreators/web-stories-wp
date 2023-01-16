@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { pageTooManyLinks } from '../pageTooManyLinks';
@@ -22,25 +26,25 @@ describe('pageTooManyLinks', () => {
   it('should return true if page has too many links', () => {
     const linkElements = [
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         link: {
           url: 'https://google.com',
         },
       },
       {
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         link: {
           url: 'https://google.com',
         },
       },
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         link: {
           url: 'https://google.com',
         },
       },
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         link: {
           url: 'https://google.com',
         },
@@ -50,10 +54,10 @@ describe('pageTooManyLinks', () => {
     const page = {
       id: 'pageid',
       elements: [
-        { type: 'text' },
-        { type: 'video' },
+        { type: ELEMENT_TYPES.TEXT },
+        { type: ELEMENT_TYPES.VIDEO },
         {
-          type: 'text',
+          type: ELEMENT_TYPES.TEXT,
           link: {
             url: '',
           },
@@ -67,28 +71,28 @@ describe('pageTooManyLinks', () => {
   it('should return undefined if page has a reasonable number of links', () => {
     const page = {
       elements: [
-        { type: 'text' },
-        { type: 'video' },
+        { type: ELEMENT_TYPES.TEXT },
+        { type: ELEMENT_TYPES.VIDEO },
         {
-          type: 'text',
+          type: ELEMENT_TYPES.TEXT,
           link: {
             url: 'https://google.com',
           },
         },
         {
-          type: 'image',
+          type: ELEMENT_TYPES.IMAGE,
           link: {
             url: 'https://google.com',
           },
         },
         {
-          type: 'text',
+          type: ELEMENT_TYPES.TEXT,
           link: {
             url: '',
           },
         },
         {
-          type: 'text',
+          type: ELEMENT_TYPES.TEXT,
           link: {
             url: 'https://google.com',
           },

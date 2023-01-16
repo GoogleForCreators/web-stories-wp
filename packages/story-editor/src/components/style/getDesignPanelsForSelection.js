@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
-import { elementTypes } from '@googleforcreators/elements';
+import { elementTypes, ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -78,7 +78,7 @@ function getDesignPanelsForSelection(
     }
 
     // If the selected element's type is video / image , display accessibility panel, too.
-    if ('video' === elements[0].type) {
+    if (ELEMENT_TYPES.VIDEO === elements[0].type) {
       panels.push({ type: PanelTypes.VideoOptions, Panel: VideoOptionsPanel });
       panels.push({ type: PanelTypes.VideoSegment, Panel: VideoSegmentPanel });
       panels.push({
@@ -89,7 +89,9 @@ function getDesignPanelsForSelection(
         type: PanelTypes.VideoAcessibility,
         Panel: VideoAccessibilityPanel,
       });
-    } else if (['gif', 'image'].includes(elements[0].type)) {
+    } else if (
+      [ELEMENT_TYPES.GIF, ELEMENT_TYPES.IMAGE].includes(elements[0].type)
+    ) {
       panels.push({
         type: PanelTypes.ImageAccessibility,
         Panel: ImageAccessibilityPanel,

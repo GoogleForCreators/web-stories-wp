@@ -25,6 +25,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
 } from '@googleforcreators/design-system';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -52,13 +53,16 @@ const OptimizeButton = styled(Button)`
 `;
 
 export function videoElementsNotOptimized(element = {}) {
+  if (!elementIs.video(element)) {
+    return false;
+  }
   const { resource } = element;
   if (!resource) {
     return false;
   }
 
   const { isOptimized, height = 0, width = 0 } = resource;
-  if (element.type !== 'video' || isOptimized) {
+  if (isOptimized) {
     return false;
   }
 

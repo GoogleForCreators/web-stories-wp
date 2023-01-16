@@ -20,6 +20,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icons, useSnackbar } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -112,12 +113,12 @@ const mockClickEvent = {
 const BACKGROUND_ELEMENT = {
   id: 'background-element-id',
   isBackground: true,
-  type: 'shape',
+  type: ELEMENT_TYPES.SHAPE,
 };
 const BACKGROUND_IMAGE_ELEMENT = {
   id: 'background-image-element-id',
   isBackground: true,
-  type: 'image',
+  type: ELEMENT_TYPES.IMAGE,
   resource: {
     resource: {
       id: 'mysite/1234',
@@ -128,7 +129,7 @@ const BACKGROUND_IMAGE_ELEMENT = {
 const BACKGROUND_IMAGE_MEDIA3P_ELEMENT = {
   id: 'background-image-media3p-element-id',
   isBackground: true,
-  type: 'image',
+  type: ELEMENT_TYPES.IMAGE,
   resource: {
     id: 'media/unsplash:wsomemedia-123',
     isExternal: true,
@@ -138,7 +139,7 @@ const BACKGROUND_IMAGE_MEDIA3P_ELEMENT = {
 const BACKGROUND_VIDEO_ELEMENT = {
   id: 'background-video-element-id',
   isBackground: true,
-  type: 'video',
+  type: ELEMENT_TYPES.VIDEO,
   resource: {
     id: 'mysite/1234',
   },
@@ -146,27 +147,27 @@ const BACKGROUND_VIDEO_ELEMENT = {
 
 const IMAGE_ELEMENT = {
   id: 'image-element-id',
-  type: 'image',
+  type: ELEMENT_TYPES.IMAGE,
 };
 
 const SHAPE_ELEMENT = {
   id: 'shape-element-id',
-  type: 'shape',
+  type: ELEMENT_TYPES.SHAPE,
 };
 
 const TEXT_ELEMENT = {
   id: 'text-element-id',
-  type: 'text',
+  type: ELEMENT_TYPES.TEXT,
 };
 
 const VIDEO_ELEMENT = {
   id: 'video-element-id',
-  type: 'video',
+  type: ELEMENT_TYPES.VIDEO,
 };
 
 const STICKER_ELEMENT = {
   id: 'sticker-element-id',
-  type: 'sticker',
+  type: ELEMENT_TYPES.STICKER,
 };
 
 const resetElementAction = expect.objectContaining({
@@ -266,14 +267,14 @@ const stickerQuickActionsWithClear = [
 
 const videoResource = {
   id: 'video',
-  type: 'video',
+  type: ELEMENT_TYPES.VIDEO,
   mimeType: 'video/mp4',
   src: 'video',
 };
 const imageResource = {
   id: 'image',
-  type: 'image',
-  mimeType: 'image',
+  type: ELEMENT_TYPES.IMAGE,
+  mimetype: ELEMENT_TYPES.IMAGE,
   src: 'image',
 };
 const gifResource = {

@@ -21,7 +21,10 @@ import { renderToStaticMarkup } from '@googleforcreators/react';
 import { render } from '@testing-library/react';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 import { MaskTypes } from '@googleforcreators/masks';
-import { registerElementType } from '@googleforcreators/elements';
+import {
+  ELEMENT_TYPES,
+  registerElementType,
+} from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 import {
   queryByAutoAdvanceAfter,
@@ -131,7 +134,7 @@ describe('Page output', () => {
       backgroundElement = {
         isBackground: true,
         id: 'baz',
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         mimeType: 'image/png',
         scale: 1,
         origRatio: 9 / 16,
@@ -255,7 +258,7 @@ describe('Page output', () => {
           elements: [
             {
               id: '123',
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -398,7 +401,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'baz',
-              type: 'image',
+              type: ELEMENT_TYPES.IMAGE,
               mimeType: 'image/png',
               scale: 1,
               origRatio: 9 / 16,
@@ -437,7 +440,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -495,7 +498,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -555,7 +558,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -613,7 +616,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -649,7 +652,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -671,7 +674,7 @@ describe('Page output', () => {
 
     const TEXT_ELEMENT = {
       id: 'baz',
-      type: 'text',
+      type: ELEMENT_TYPES.TEXT,
       content: 'Hello, link!',
       x: 50,
       y: PAGE_HEIGHT,
@@ -906,7 +909,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -955,7 +958,7 @@ describe('Page output', () => {
   describe('background color', () => {
     const BACKGROUND_ELEMENT = {
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1024,7 +1027,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1046,7 +1049,7 @@ describe('Page output', () => {
 
     const TEXT_ELEMENT = {
       id: 'baz',
-      type: 'text',
+      type: ELEMENT_TYPES.TEXT,
       content: 'Hello, link!',
       x: 50,
       y: PAGE_HEIGHT,
@@ -1131,7 +1134,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1155,7 +1158,7 @@ describe('Page output', () => {
       ...BACKGROUND_ELEMENT,
       isBackground: false,
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
     };
 
     it('should output element with border if border is set', () => {
@@ -1225,7 +1228,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1249,7 +1252,7 @@ describe('Page output', () => {
       ...BACKGROUND_ELEMENT,
       isBackground: false,
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
     };
 
     it('should output image with linear overlay if set', () => {
@@ -1294,7 +1297,7 @@ describe('Page output', () => {
             BACKGROUND_ELEMENT,
             {
               ...MEDIA_ELEMENT,
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               overlay: {
                 color: { r: 0, g: 0, b: 0, a: 0.5 },
               },
@@ -1314,7 +1317,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1338,7 +1341,7 @@ describe('Page output', () => {
       ...BACKGROUND_ELEMENT,
       isBackground: false,
       id: 'baz',
-      type: 'image',
+      type: ELEMENT_TYPES.IMAGE,
       borderRadius: {
         topLeft: 10,
         topRight: 20,
@@ -1578,7 +1581,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -1639,7 +1642,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'el1',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 50,
               y: 50,
               width: 32,
@@ -1649,7 +1652,7 @@ describe('Page output', () => {
             },
             {
               id: 'el2',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 100,
               y: 100,
               width: 32,
@@ -1681,7 +1684,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'el1',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 50,
               y: 50,
               width: 32,
@@ -1691,7 +1694,7 @@ describe('Page output', () => {
             },
             {
               id: 'el2',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 100,
               y: 100,
               width: 32,
@@ -1722,7 +1725,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'el1',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 50,
               y: 50,
               width: 32,
@@ -1732,7 +1735,7 @@ describe('Page output', () => {
             },
             {
               id: 'el2',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 100,
               y: 100,
               width: 32,
@@ -1847,7 +1850,7 @@ describe('Page output', () => {
           elements: [
             {
               id: '123',
-              type: 'video',
+              type: ELEMENT_TYPES.VIDEO,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -1888,7 +1891,7 @@ describe('Page output', () => {
           ],
           elements: [
             {
-              type: 'text',
+              type: ELEMENT_TYPES.TEXT,
               id: '123',
               x: 50,
               y: 100,
@@ -2010,7 +2013,7 @@ describe('Page output', () => {
           elements: [
             {
               id: 'el1',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 50,
               y: 50,
               width: 32,
@@ -2020,7 +2023,7 @@ describe('Page output', () => {
             },
             {
               id: 'el2',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 100,
               y: 100,
               width: 32,
@@ -2030,7 +2033,7 @@ describe('Page output', () => {
             },
             {
               id: 'el3',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 150,
               y: 150,
               width: 32,
@@ -2040,7 +2043,7 @@ describe('Page output', () => {
             },
             {
               id: 'el3',
-              type: 'product',
+              type: ELEMENT_TYPES.PRODUCT,
               x: 200,
               y: 200,
               width: 32,

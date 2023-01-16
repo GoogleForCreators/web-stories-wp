@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { videoElementResolution } from '../videoElementResolution';
@@ -22,7 +26,7 @@ describe('videoElementResolution', () => {
   it('should return a message if a video element is less than 480p', () => {
     const tooLowResolutionVideoElement = {
       id: 789,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         height: 480,
         width: 852,

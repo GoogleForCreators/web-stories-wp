@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -31,14 +32,30 @@ import * as stickerElement from './sticker';
 import * as productElement from './product';
 
 const elementTypes = [
-  { type: 'text', name: __('Text', 'web-stories'), ...textElement },
-  { type: 'image', name: __('Image', 'web-stories'), ...imageElement },
-  { type: 'shape', name: __('Shape', 'web-stories'), ...shapeElement },
-  { type: 'video', name: __('Video', 'web-stories'), ...videoElement },
-  { type: 'gif', name: __('GIF', 'web-stories'), ...gifElement },
-  { type: 'sticker', name: __('Sticker', 'web-stories'), ...stickerElement },
+  { type: ELEMENT_TYPES.TEXT, name: __('Text', 'web-stories'), ...textElement },
   {
-    type: 'product',
+    type: ELEMENT_TYPES.IMAGE,
+    name: __('Image', 'web-stories'),
+    ...imageElement,
+  },
+  {
+    type: ELEMENT_TYPES.SHAPE,
+    name: __('Shape', 'web-stories'),
+    ...shapeElement,
+  },
+  {
+    type: ELEMENT_TYPES.VIDEO,
+    name: __('Video', 'web-stories'),
+    ...videoElement,
+  },
+  { type: ELEMENT_TYPES.GIF, name: __('GIF', 'web-stories'), ...gifElement },
+  {
+    type: ELEMENT_TYPES.STICKER,
+    name: __('Sticker', 'web-stories'),
+    ...stickerElement,
+  },
+  {
+    type: ELEMENT_TYPES.PRODUCT,
     name: __('Product', 'web-stories'),
     ...productElement,
   },

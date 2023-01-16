@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { videoElementLength } from '../videoElementLength';
@@ -22,7 +26,7 @@ describe('videoElementLength', () => {
   it('should return true if the video element is longer than 1 minute', () => {
     const tooLongVideo = {
       id: 202,
-      type: 'video',
+      type: ELEMENT_TYPES.VIDEO,
       resource: {
         length: 75,
         sizes: {

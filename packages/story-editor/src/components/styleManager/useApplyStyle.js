@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { useCallback, useRef } from '@googleforcreators/react';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -33,7 +34,7 @@ function useApplyStyle({ pushUpdate }) {
 
   const selectedTextElements = useStory(({ state: { selectedElements } }) => {
     return selectedElements
-      ? selectedElements?.filter(({ type }) => type === 'text')
+      ? selectedElements?.filter(elementIs.text)
       : STABLE_ARRAY;
   });
 

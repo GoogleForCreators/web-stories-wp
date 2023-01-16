@@ -17,7 +17,10 @@
  * External dependencies
  */
 import { useState, useEffect } from '@googleforcreators/react';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -48,7 +51,7 @@ const useShapeMaskElements = () => {
 
     selectedElements.forEach((element) => {
       const { isMedia } = getDefinitionForType(element.type);
-      element.type === 'shape' && (shape = element);
+      element.type === ELEMENT_TYPES.SHAPE && (shape = element);
       isMedia && (target = element);
     });
 

@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -23,7 +26,7 @@ describe('textElementFontSizeTooSmall', () => {
   it('should return true if text element font size is too small', () => {
     const element = {
       id: 'elementid',
-      type: 'text',
+      type: ELEMENT_TYPES.TEXT,
       fontSize: 11,
     };
     expect(textElementFontSizeTooSmall(element)).toBeTrue();
@@ -32,7 +35,7 @@ describe('textElementFontSizeTooSmall', () => {
   it('should return false if text element font size is large enough', () => {
     const element = {
       id: 'elementid',
-      type: 'text',
+      type: ELEMENT_TYPES.TEXT,
       fontSize: 12,
     };
     expect(textElementFontSizeTooSmall(element)).toBeFalse();

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useMemo, useCallback } from '@googleforcreators/react';
-
+import { elementIs } from '@web-stories-wp/elements';
 /**
  * Internal dependencies
  */
@@ -31,7 +31,7 @@ import { useIsChecklistMounted } from '../popupMountedContext';
 import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementResolution(element) {
-  if (element.type !== 'video') {
+  if (!elementIs.video(element)) {
     return false;
   }
 

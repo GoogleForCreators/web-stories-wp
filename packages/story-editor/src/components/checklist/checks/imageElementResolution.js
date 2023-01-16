@@ -20,6 +20,7 @@
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { List, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -38,7 +39,7 @@ import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function imageElementResolution(element) {
-  if (!['image', 'gif'].includes(element.type)) {
+  if (![ELEMENT_TYPES.IMAGE, ELEMENT_TYPES.GIF].includes(element.type)) {
     return false;
   }
 
