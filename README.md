@@ -13,7 +13,7 @@ Build Status
 </summary>
 
 [![Build](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/build-and-deploy.yml?branch=main&label=Build)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
-[![Integration Tests](https://img.shields.io/actions/github/workflow/status/googleforcreators/web-stories-wp/tests-karma-editor.yml?branch=main&label=integration%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
+[![Integration Tests](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/tests-karma-editor.yml?branch=main&label=integration%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
 [![E2E Tests](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/tests-e2e.yml?branch=main&label=e2e%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
 [![JS Tests](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/tests-unit-js.yml?branch=main&label=js%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
 [![PHP Tests](https://img.shields.io/github/actions/workflow/status/googleforcreators/web-stories-wp/tests-unit-php.yml?branch=main&label=php%20tests)](https://github.com/googleforcreators/web-stories-wp/actions?query=branch%3Amain)
