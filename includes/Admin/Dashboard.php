@@ -418,7 +418,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_assets( $hook_suffix ): void {
+	public function enqueue_assets( string $hook_suffix ): void {
 		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
 			return;
 		}

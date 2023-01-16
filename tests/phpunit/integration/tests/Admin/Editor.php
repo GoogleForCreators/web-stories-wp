@@ -71,9 +71,6 @@ class Editor extends DependencyInjectedTestCase {
 
 	private \Google\Web_Stories\Admin\Editor $instance;
 
-	/**
-	 * @param WP_UnitTest_Factory $factory
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id      = $factory->user->create(
 			[ 'role' => 'administrator' ]

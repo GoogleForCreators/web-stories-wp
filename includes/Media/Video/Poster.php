@@ -154,7 +154,7 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	 * @param array<string, mixed> $prepared Prepared data before response.
 	 * @return array<string, mixed>
 	 */
-	public function get_callback_featured_media_src( $prepared ): array {
+	public function get_callback_featured_media_src( array $prepared ): array {
 		/**
 		 * Featured media ID.
 		 *

@@ -80,7 +80,7 @@ class Story_Sanitizer extends TestCase {
 	 * @covers ::sanitize
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
-	public function test_sanitize_publisher_logo( $source, $expected ): void {
+	public function test_sanitize_publisher_logo( string $source, string $expected ): void {
 		$args = [
 			'publisher'      => 'Web Stories',
 			'publisher_logo' => 'https://example.com/publisher_logo.png',
@@ -163,7 +163,7 @@ class Story_Sanitizer extends TestCase {
 	 * @covers ::sanitize
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
 	 */
-	public function test_sanitize_poster_image( $source, $expected, $args ): void {
+	public function test_sanitize_poster_image( string $source, string $expected, array $args ): void {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertEquals( $expected, $actual );
@@ -282,7 +282,7 @@ class Story_Sanitizer extends TestCase {
 	 * @covers ::sanitize
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
 	 */
-	public function test_sanitize_publisher( $source, $expected, $args ): void {
+	public function test_sanitize_publisher( string $source, string $expected, array $args ): void {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertEquals( $expected, $actual );
@@ -821,11 +821,10 @@ HTML;
 	/**
 	 * Helper method for tests.
 	 *
-	 * @param string $source
 	 * @param array<string, array<string, mixed>|string|bool> $sanitizer_args
 	 * @return string Sanitized HTML.
 	 */
-	protected function sanitize_and_get( $source, $sanitizer_args ): string {
+	protected function sanitize_and_get( string $source, array $sanitizer_args ): string {
 		/**
 		 * Document.
 		 *
