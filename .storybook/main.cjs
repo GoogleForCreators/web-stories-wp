@@ -56,6 +56,7 @@ module.exports = {
   framework: '@storybook/react',
   core: {
     builder: 'webpack5',
+    disableTelemetry: true,
   },
   //eslint-disable-next-line require-await -- Negligible.
   webpackFinal: async (config) => {
