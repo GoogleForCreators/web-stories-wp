@@ -142,7 +142,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		$this->register_post_type();
 	}
 
@@ -153,7 +153,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 */
-	public function on_plugin_deactivation( $network_wide ): void {
+	public function on_plugin_deactivation( bool $network_wide ): void {
 		$this->unregister_post_type();
 	}
 

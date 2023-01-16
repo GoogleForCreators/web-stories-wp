@@ -346,8 +346,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * Checks are supposedly from the hosted site blog.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
 	 * @since 1.2.0
 	 *
@@ -359,59 +357,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 */
 	private function url_to_post( $url ): ?WP_Post {
 		$post          = null;
-		$switched_blog = false;
+		$switched_blog = $this->maybe_switch_site( $url );
 
-		if ( is_multisite() ) {
-			/**
-			 * URL parts.
-			 *
-			 * @var array<string, string>|false $url_parts
-			 */
-			$url_parts = wp_parse_url( $url );
-			if ( ! $url_parts ) {
-				$url_parts = [];
-			}
-
-			$url_parts = wp_parse_args(
-				$url_parts,
-				[
-					'host' => '',
-					'path' => '/',
-				]
-			);
-
-			$qv = [
-				'domain'                 => $url_parts['host'],
-				'path'                   => '/',
-				'number'                 => 1,
-				'update_site_cache'      => false,
-				'update_site_meta_cache' => false,
-			];
-
-			// In case of subdirectory configs, set the path.
-			if ( ! is_subdomain_install() ) {
-				// Get "sub-site" part of "http://example.org/sub-site/web-stories/my-story/".
-				// But given just "http://example.org/web-stories/my-story/", don't treat "web-stories" as site path.
-				// This differs from the logic in get_oembed_response_data_for_url() which does not do this.
-				// TODO: Investigate possible core bug in get_oembed_response_data_for_url()?
-				$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
-				$path    = \count( $path ) > 2 ? reset( $path ) : false;
-				$network = get_network();
-				if ( $path && $network instanceof WP_Network ) {
-					$qv['path'] = $network->path . $path . '/';
-				}
-			}
-
-			$sites = (array) get_sites( $qv );
-			$site  = reset( $sites );
-
-			if ( $site && get_current_blog_id() !== (int) $site->blog_id ) {
-				// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
-				switch_to_blog( (int) $site->blog_id );
-
-				$switched_blog = true;
-			}
-		}
 
 		if ( function_exists( 'wpcom_vip_url_to_postid' ) ) {
 			$post_id = wpcom_vip_url_to_postid( $url );
@@ -478,6 +425,72 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		return $post;
+	}
+
+	/**
+	 * Maybe switch to site.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @param string $url Permalink to check.
+	 */
+	private function maybe_switch_site( $url ): bool {
+		if ( ! is_multisite() ) {
+			return false;
+		}
+		$switched_blog = false;
+
+		/**
+		 * URL parts.
+		 *
+		 * @var array<string, string>|false $url_parts
+		 */
+		$url_parts = wp_parse_url( $url );
+		if ( ! $url_parts ) {
+			$url_parts = [];
+		}
+
+		$url_parts = wp_parse_args(
+			$url_parts,
+			[
+				'host' => '',
+				'path' => '/',
+			]
+		);
+
+		$qv = [
+			'domain'                 => $url_parts['host'],
+			'path'                   => '/',
+			'number'                 => 1,
+			'update_site_cache'      => false,
+			'update_site_meta_cache' => false,
+		];
+
+		// In case of subdirectory configs, set the path.
+		if ( ! is_subdomain_install() ) {
+			// Get "sub-site" part of "http://example.org/sub-site/web-stories/my-story/".
+			// But given just "http://example.org/web-stories/my-story/", don't treat "web-stories" as site path.
+			// This differs from the logic in get_oembed_response_data_for_url() which does not do this.
+			// TODO: Investigate possible core bug in get_oembed_response_data_for_url()?
+			$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
+			$path    = \count( $path ) > 2 ? reset( $path ) : false;
+			$network = get_network();
+			if ( $path && $network instanceof WP_Network ) {
+				$qv['path'] = $network->path . $path . '/';
+			}
+		}
+
+		$sites = (array) get_sites( $qv );
+		$site  = reset( $sites );
+
+		if ( $site && get_current_blog_id() !== (int) $site->blog_id ) {
+			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
+			switch_to_blog( (int) $site->blog_id );
+
+			$switched_blog = true;
+		}
+
+		return $switched_blog;
 	}
 
 	/**

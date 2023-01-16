@@ -234,7 +234,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * @param int|float $milliseconds
-	 * @param string $string
 	 *
 	 * @dataProvider data_format_milliseconds
 	 * @covers ::format_milliseconds
@@ -246,8 +245,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * @param mixed $value
-	 * @param int $object_id
-	 * @param string $meta_key
 	 * @return \array[][]|mixed
 	 */
 	public function filter_wp_get_attachment_metadata( $value, int $object_id, string $meta_key ) {

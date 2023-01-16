@@ -260,6 +260,7 @@ class Admin extends DependencyInjectedTestCase {
 	public function test_media_states_no_active_logo(): void {
 		$post   = self::factory()->post->create_and_get( [] );
 		$result = $this->instance->media_states( [], $post );
+		$this->assertIsArray( $result );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -270,6 +271,7 @@ class Admin extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get( [] );
 		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
 		$result = $this->instance->media_states( [], $post );
+		$this->assertIsArray( $result );
 		$this->assertEqualSets( [ 'Web Stories Publisher Logo' ], $result );
 	}
 }

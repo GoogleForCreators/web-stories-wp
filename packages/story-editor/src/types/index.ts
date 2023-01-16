@@ -25,3 +25,4 @@ export * from './story';
 export * from './storyEditor';
 export * from './storyProvider';
 export * from './storyTriggers';
+export * from './taxonomyProvider';

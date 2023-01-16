@@ -75,21 +75,22 @@ function createTermFromName(taxonomy, name, overrides) {
 
 async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
   useAPI.mockImplementation(() => ({
-    getTaxonomyTerm: () => mockResponse([]),
-    createTaxonomyTerm: (_taxonomyEndpoint, { name, parent }) =>
-      mockResponse(
-        createTermFromName(createTaxonomy('fake restpoint response'), name, {
-          parent,
-        })
-      ),
-    getTaxonomies: () => mockResponse({}),
-    ...useAPIPartial,
+    actions: {
+      getTaxonomyTerm: () => mockResponse([]),
+      createTaxonomyTerm: (_taxonomyEndpoint, { name, parent }) =>
+        mockResponse(
+          createTermFromName(createTaxonomy('fake restpoint response'), name, {
+            parent,
+          })
+        ),
+      getTaxonomies: () => mockResponse({}),
+      ...useAPIPartial,
+    },
   }));
   useStory.mockImplementation(() => ({
     updateStory: () => {},
     isStoryLoaded: true,
     terms: [],
-    hasTaxonomies: true,
     ...useStoryPartial,
   }));
 
@@ -109,7 +110,6 @@ describe('TaxonomyProvider', () => {
 
     const { result } = await setup({
       useAPIPartial: { getTaxonomies: getTaxonomiesMock },
-      useStoryPartial: { hasTaxonomies: true },
     });
 
     expect(getTaxonomiesMock).toHaveBeenCalledOnce();
@@ -117,46 +117,23 @@ describe('TaxonomyProvider', () => {
   });
 
   it('populates initial termCache and selected slugs with story terms', async () => {
-    const updateStoryMock = jest.fn();
     const taxonomy1 = createTaxonomy('taxonomy_1');
     const taxonomy2 = createTaxonomy('taxonomy_2');
-    const taxonomiesResponse = [taxonomy1, taxonomy2];
 
     const taxonomy1Term1 = createTermFromName(taxonomy1, 'term1');
     const taxonomy1Term2 = createTermFromName(taxonomy1, 'term2');
     const taxonomy2Term1 = createTermFromName(taxonomy2, 'term1');
-    const embeddedTerms = [[taxonomy1Term1, taxonomy1Term2], [taxonomy2Term1]];
+    const embeddedTerms = [taxonomy1Term1, taxonomy1Term2, taxonomy2Term1];
 
     const { result } = await setup({
-      useAPIPartial: {
-        getTaxonomies: () => mockResponse(taxonomiesResponse),
-      },
       useStoryPartial: {
         terms: embeddedTerms,
-        isStoryLoaded: true,
-        updateStory: updateStoryMock,
       },
     });
 
-    const { termCache, taxonomies } = result.current.state;
-    expect(taxonomies).toHaveLength(2);
-    expect(termCache).toStrictEqual({
-      [taxonomy1.restBase]: {
-        [taxonomy1Term1.slug]: taxonomy1Term1,
-        [taxonomy1Term2.slug]: taxonomy1Term2,
-      },
-      [taxonomy2.restBase]: {
-        [taxonomy2Term1.slug]: taxonomy2Term1,
-      },
-    });
-    expect(updateStoryMock).toHaveBeenCalledWith({
-      properties: {
-        terms: {
-          [taxonomy1.restBase]: [taxonomy1Term1.id, taxonomy1Term2.id],
-          [taxonomy2.restBase]: [taxonomy2Term1.id],
-        },
-      },
-    });
+    const { termCache } = result.current.state;
+
+    expect(termCache).toStrictEqual(embeddedTerms);
   });
 
   it('populates the terms cache when addSearchResultsToCache(..args) called', async () => {
@@ -171,30 +148,25 @@ describe('TaxonomyProvider', () => {
         getTaxonomies: () => mockResponse(taxonomiesResponse),
         getTaxonomyTerm: getTaxonomyTermMock,
       },
-      useStoryPartial: {
-        isStoryLoaded: true,
-      },
     });
 
     act(() => {
-      result.current.actions.addSearchResultsToCache(sampleTaxonomy, {
-        search: 'term',
-        per_page: 20,
+      result.current.actions.addSearchResultsToCache({
+        taxonomy: sampleTaxonomy,
+        args: {
+          search: 'term',
+          per_page: 20,
+        },
       });
     });
 
     expect(getTaxonomyTermMock).toHaveBeenCalledWith('someUrl', {
-      per_page: 20,
       search: 'term',
+      per_page: 20,
     });
 
     await receiveQueuedMockedResponses();
 
-    expect(result.current.state.termCache).toStrictEqual({
-      [sampleTaxonomy.restBase]: {
-        [term1.slug]: term1,
-        [term2.slug]: term2,
-      },
-    });
+    expect(result.current.state.termCache).toStrictEqual([term1, term2]);
   });
 });

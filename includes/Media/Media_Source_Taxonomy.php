@@ -111,7 +111,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		parent::on_plugin_activation( $network_wide );
 
 		$this->add_missing_terms();
@@ -195,7 +195,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param array<string, mixed> $prepared Prepared data before response.
 	 */
-	public function get_callback_media_source( $prepared ): string {
+	public function get_callback_media_source( array $prepared ): string {
 		/**
 		 * Taxonomy ID.
 		 *
@@ -220,7 +220,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @param WP_Post $object Object to update on.
 	 * @return true|\WP_Error
 	 */
-	public function update_callback_media_source( $value, $object ) {
+	public function update_callback_media_source( string $value, WP_Post $object ) {
 		$check = wp_set_object_terms( $object->ID, $value, $this->taxonomy_slug );
 		if ( is_wp_error( $check ) ) {
 			return $check;
