@@ -150,8 +150,8 @@
 
   <rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator">
       <properties>
-        <property name="minDigitsAfterDecimalPoint" value="5" />
-        <property name="minDigitsBeforeDecimalPoint" value="2" />
+        <property name="minDigitsAfterDecimalPoint" value="3" />
+        <property name="minDigitsBeforeDecimalPoint" value="6" />
       </properties>
   </rule>
   <!-- Disallows grouped use declarations. -->
@@ -196,14 +196,14 @@
   </rule>
 
   <!-- Requires arrow functions if possible. -->
-  <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
+  <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction" />
   <!-- Enforces correct space usage in array functions. -->
   <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
     <properties>
-      <property name="spacesCountAfterKeyword" value="0"/>
-      <property name="spacesCountBeforeArrow" value="1"/>
-      <property name="spacesCountAfterArrow" value="1"/>
-      <property name="allowMultiLine" value="true"/>
+      <property name="spacesCountAfterKeyword" value="0" />
+      <property name="spacesCountBeforeArrow" value="1" />
+      <property name="spacesCountAfterArrow" value="1" />
+      <property name="allowMultiLine" value="true" />
     </properties>
   </rule>
 
@@ -229,7 +229,9 @@
   <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
 
   <rule ref="SlevomatCodingStandard.Variables">
-    <exclude name="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable" />
+    <exclude
+      name="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable"
+    />
   </rule>
 
   <!-- Requires use of null coalesce operator (??) when possible. -->
