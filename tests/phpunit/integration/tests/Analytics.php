@@ -47,7 +47,7 @@ class Analytics extends DependencyInjectedTestCase {
 	 * @covers ::get_tracking_id
 	 */
 	public function test_get_tracking_id_casts_to_string(): void {
-		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
+		update_option( Settings::SETTING_NAME_TRACKING_ID, 123_456_789, false );
 
 		$this->assertSame( '123456789', $this->instance->get_tracking_id() );
 	}
@@ -88,7 +88,7 @@ class Analytics extends DependencyInjectedTestCase {
 	public function test_print_analytics_tag(): void {
 		$actual_before = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
-		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
+		update_option( Settings::SETTING_NAME_TRACKING_ID, 123_456_789, false );
 		update_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS, false );
 
 		$actual_after = get_echo( [ $this->instance, 'print_analytics_tag' ] );
@@ -103,7 +103,7 @@ class Analytics extends DependencyInjectedTestCase {
 	public function test_print_analytics_tag_legacy(): void {
 		$actual_before = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
-		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
+		update_option( Settings::SETTING_NAME_TRACKING_ID, 123_456_789, false );
 		update_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS, true );
 
 		$actual_after = get_echo( [ $this->instance, 'print_analytics_tag' ] );
