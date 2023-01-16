@@ -24,6 +24,7 @@ import type { AudioResource } from '@googleforcreators/media';
  * Internal dependencies
  */
 import type { FontData } from './data';
+import type { Term } from './taxonomies';
 
 interface FeaturedMedia {
   id: number;
@@ -78,8 +79,7 @@ export interface Story {
   };
   currentStoryStyles: CurrentStyles;
   globalStoryStyles: GlobalStyles;
-  taxonomies: string[];
-  terms: string[];
+  terms: Term[] | null;
   status: string;
   backgroundAudio?: {
     resource: AudioResource;
