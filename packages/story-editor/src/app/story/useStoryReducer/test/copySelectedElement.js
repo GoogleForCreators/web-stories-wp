@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { setupReducer } from './_utils';
@@ -29,9 +33,9 @@ describe('copySelectedElement', () => {
           id: '111',
           animations: [],
           elements: [
-            { id: '123', isBackground: true, type: 'shape' },
-            { id: '456', x: 0, y: 0, type: 'shape' },
-            { id: '789', x: 0, y: 0, type: 'shape' },
+            { id: '123', isBackground: true, type: ELEMENT_TYPES.SHAPE },
+            { id: '456', x: 0, y: 0, type: ELEMENT_TYPES.SHAPE },
+            { id: '789', x: 0, y: 0, type: ELEMENT_TYPES.SHAPE },
           ],
         },
       ],
@@ -54,18 +58,18 @@ describe('copySelectedElement', () => {
           id: '111',
           animations: [{ id: '1234', targets: ['456'], effect: 'bounce' }],
           elements: [
-            { id: '123', isBackground: true, type: 'shape' },
+            { id: '123', isBackground: true, type: ELEMENT_TYPES.SHAPE },
             {
               id: '456',
               x: 0,
               y: 0,
-              type: 'shape',
+              type: ELEMENT_TYPES.SHAPE,
               background: 'blue',
               backgroundColor: 'red',
               backgroundTextMode: null,
               textAlign: 'middle',
             },
-            { id: '789', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: ELEMENT_TYPES.SHAPE },
           ],
         },
       ],
@@ -91,7 +95,7 @@ describe('copySelectedElement', () => {
           backgroundTextMode: null,
           textAlign: 'middle',
         },
-        type: 'shape',
+        type: ELEMENT_TYPES.SHAPE,
       },
     });
   });
@@ -105,18 +109,18 @@ describe('copySelectedElement', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true, type: 'shape' },
+            { id: '123', isBackground: true, type: ELEMENT_TYPES.SHAPE },
             {
               id: '456',
               x: 0,
               y: 0,
-              type: 'shape',
+              type: ELEMENT_TYPES.SHAPE,
               background: 'blue',
               backgroundColor: 'red',
               backgroundTextMode: null,
               textAlign: 'middle',
             },
-            { id: '789', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: ELEMENT_TYPES.SHAPE },
           ],
         },
       ],
@@ -136,7 +140,7 @@ describe('copySelectedElement', () => {
           backgroundTextMode: null,
           textAlign: 'middle',
         },
-        type: 'shape',
+        type: ELEMENT_TYPES.SHAPE,
       },
     });
   });
@@ -151,9 +155,9 @@ describe('copySelectedElement', () => {
           id: '111',
           animations: [],
           elements: [
-            { id: '123', isBackground: true, type: 'shape' },
-            { id: '456', x: 0, y: 0, type: 'shape' },
-            { id: '789', x: 0, y: 0, type: 'shape' },
+            { id: '123', isBackground: true, type: ELEMENT_TYPES.SHAPE },
+            { id: '456', x: 0, y: 0, type: ELEMENT_TYPES.SHAPE },
+            { id: '789', x: 0, y: 0, type: ELEMENT_TYPES.SHAPE },
           ],
         },
       ],

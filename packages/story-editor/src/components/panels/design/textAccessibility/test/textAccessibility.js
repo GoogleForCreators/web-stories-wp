@@ -19,6 +19,7 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { useFeature } from 'flagged';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -32,7 +33,7 @@ jest.mock('flagged');
 
 describe('Panels/TextAccessibility', () => {
   const defaultElement = {
-    type: 'text',
+    type: ELEMENT_TYPES.TEXT,
     tagName: 'p',
     content: 'Hello!',
   };
@@ -69,12 +70,12 @@ describe('Panels/TextAccessibility', () => {
     arrange([
       defaultElement,
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         tagName: 'h2',
         content: 'Hello friends!',
       },
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         tagName: 'h1',
         content: 'Zorak here!',
       },
@@ -96,12 +97,12 @@ describe('Panels/TextAccessibility', () => {
     const { pushUpdate } = arrange([
       defaultElement,
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         tagName: 'h2',
         content: 'Hello friends!',
       },
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         tagName: 'h1',
         content: 'Zorak here!',
       },

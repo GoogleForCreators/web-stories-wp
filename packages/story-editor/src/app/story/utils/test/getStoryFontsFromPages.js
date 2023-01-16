@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+/**
  * Internal dependencies
  */
 import { getStoryFontsFromPages } from '../getStoryFontsFromPages';
@@ -36,14 +40,14 @@ describe('getStoryFontsFromPages', () => {
     const pages = [
       {
         elements: [
-          { type: 'shape' },
-          { type: 'text', font: elementfonts['Oswald'] },
+          { type: ELEMENT_TYPES.SHAPE },
+          { type: ELEMENT_TYPES.TEXT, font: elementfonts['Oswald'] },
         ],
       },
       {
         elements: [
-          { type: 'shape' },
-          { type: 'text', font: elementfonts['Roboto'] },
+          { type: ELEMENT_TYPES.SHAPE },
+          { type: ELEMENT_TYPES.TEXT, font: elementfonts['Roboto'] },
         ],
       },
     ];

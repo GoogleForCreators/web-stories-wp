@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { registerElementType } from '@googleforcreators/elements';
+import {
+  registerElementType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -141,7 +144,12 @@ describe('duplicateGroupById', () => {
         {
           id: '111',
           elements: [
-            { id: '123', type: 'shape', isBackground: true, groupId: 'g1' },
+            {
+              id: '123',
+              type: ELEMENT_TYPES.SHAPE,
+              isBackground: true,
+              groupId: 'g1',
+            },
             { id: '234' },
           ],
           groups: { g1: { name: 'Group 1' } },
@@ -168,8 +176,18 @@ describe('duplicateGroupById', () => {
           id: '111',
           elements: [
             { id: '123', isBackground: true },
-            { id: '234', type: 'shape', border: { width: 1 }, groupId: 'g1' },
-            { id: '345', type: 'shape', border: { width: 3 }, groupId: 'g1' },
+            {
+              id: '234',
+              type: ELEMENT_TYPES.SHAPE,
+              border: { width: 1 },
+              groupId: 'g1',
+            },
+            {
+              id: '345',
+              type: ELEMENT_TYPES.SHAPE,
+              border: { width: 3 },
+              groupId: 'g1',
+            },
             { id: '456', groupId: 'g2' },
             { id: '567' },
           ],
@@ -192,19 +210,29 @@ describe('duplicateGroupById', () => {
       expect.objectContaining({
         elements: [
           { id: '123', isBackground: true },
-          { id: '234', type: 'shape', border: { width: 1 }, groupId: 'g1' },
-          { id: '345', type: 'shape', border: { width: 3 }, groupId: 'g1' },
+          {
+            id: '234',
+            type: ELEMENT_TYPES.SHAPE,
+            border: { width: 1 },
+            groupId: 'g1',
+          },
+          {
+            id: '345',
+            type: ELEMENT_TYPES.SHAPE,
+            border: { width: 3 },
+            groupId: 'g1',
+          },
           expect.objectContaining({
             id: expect.any(String),
             basedOn: '234',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             border: { width: 1 },
             groupId: 'g3',
           }),
           expect.objectContaining({
             id: expect.any(String),
             basedOn: '345',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             border: { width: 3 },
             groupId: 'g3',
           }),
@@ -239,8 +267,18 @@ describe('duplicateGroupById', () => {
           ],
           elements: [
             { id: '123', isBackground: true },
-            { id: '234', type: 'shape', border: { width: 1 }, groupId: 'g1' },
-            { id: '345', type: 'shape', border: { width: 3 }, groupId: 'g1' },
+            {
+              id: '234',
+              type: ELEMENT_TYPES.SHAPE,
+              border: { width: 1 },
+              groupId: 'g1',
+            },
+            {
+              id: '345',
+              type: ELEMENT_TYPES.SHAPE,
+              border: { width: 3 },
+              groupId: 'g1',
+            },
             { id: '456', groupId: 'g2' },
             { id: '567' },
           ],
@@ -270,19 +308,29 @@ describe('duplicateGroupById', () => {
         ],
         elements: [
           { id: '123', isBackground: true },
-          { id: '234', type: 'shape', border: { width: 1 }, groupId: 'g1' },
-          { id: '345', type: 'shape', border: { width: 3 }, groupId: 'g1' },
+          {
+            id: '234',
+            type: ELEMENT_TYPES.SHAPE,
+            border: { width: 1 },
+            groupId: 'g1',
+          },
+          {
+            id: '345',
+            type: ELEMENT_TYPES.SHAPE,
+            border: { width: 3 },
+            groupId: 'g1',
+          },
           expect.objectContaining({
             id: expect.any(String),
             basedOn: '234',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             border: { width: 1 },
             groupId: 'g3',
           }),
           expect.objectContaining({
             id: expect.any(String),
             basedOn: '345',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             border: { width: 3 },
             groupId: 'g3',
           }),

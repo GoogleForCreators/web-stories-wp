@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -29,9 +32,9 @@ describe('getInUseFontsForPages', () => {
       getInUseFontsForPages([
         {
           elements: [
-            { type: 'text', font: { family: 'Roboto' } },
-            { type: 'shape' },
-            { type: 'text', font: { family: 'Google Sans' } },
+            { type: ELEMENT_TYPES.TEXT, font: { family: 'Roboto' } },
+            { type: ELEMENT_TYPES.SHAPE },
+            { type: ELEMENT_TYPES.TEXT, font: { family: 'Google Sans' } },
           ],
         },
       ])
@@ -43,10 +46,10 @@ describe('getInUseFontsForPages', () => {
       getInUseFontsForPages([
         {
           elements: [
-            { type: 'text', font: { family: 'Roboto' } },
-            { type: 'shape' },
-            { type: 'text', font: { family: 'Roboto' } },
-            { type: 'text', font: { family: 'Google Sans' } },
+            { type: ELEMENT_TYPES.TEXT, font: { family: 'Roboto' } },
+            { type: ELEMENT_TYPES.SHAPE },
+            { type: ELEMENT_TYPES.TEXT, font: { family: 'Roboto' } },
+            { type: ELEMENT_TYPES.TEXT, font: { family: 'Google Sans' } },
           ],
         },
       ])
@@ -58,9 +61,9 @@ describe('getInUseFontsForPages', () => {
       getInUseFontsForPages([
         {
           elements: [
-            { type: 'shape' },
-            { type: 'text', font: { family: null } },
-            { type: 'text', font: { family: 'Google Sans' } },
+            { type: ELEMENT_TYPES.SHAPE },
+            { type: ELEMENT_TYPES.TEXT, font: { family: null } },
+            { type: ELEMENT_TYPES.TEXT, font: { family: 'Google Sans' } },
           ],
         },
       ])
@@ -72,14 +75,32 @@ describe('getInUseFontsForPages', () => {
       getTextSetsForFonts({
         fonts: ['Google Sans', 'Helvetica'],
         textSets: [
-          { elements: [{ type: 'text', font: { family: 'Google Sans' } }] },
-          { elements: [{ type: 'text', font: { family: 'Helvetica' } }] },
-          { elements: [{ type: 'text', font: { family: 'Times New Roman' } }] },
+          {
+            elements: [
+              { type: ELEMENT_TYPES.TEXT, font: { family: 'Google Sans' } },
+            ],
+          },
+          {
+            elements: [
+              { type: ELEMENT_TYPES.TEXT, font: { family: 'Helvetica' } },
+            ],
+          },
+          {
+            elements: [
+              { type: ELEMENT_TYPES.TEXT, font: { family: 'Times New Roman' } },
+            ],
+          },
         ],
       })
     ).toStrictEqual([
-      { elements: [{ font: { family: 'Google Sans' }, type: 'text' }] },
-      { elements: [{ font: { family: 'Helvetica' }, type: 'text' }] },
+      {
+        elements: [
+          { font: { family: 'Google Sans' }, type: ELEMENT_TYPES.TEXT },
+        ],
+      },
+      {
+        elements: [{ font: { family: 'Helvetica' }, type: ELEMENT_TYPES.TEXT }],
+      },
     ]);
   });
 
@@ -88,9 +109,21 @@ describe('getInUseFontsForPages', () => {
       getTextSetsForFonts({
         fonts: ['New York', 'San Francisco'],
         textSets: [
-          { elements: [{ type: 'text', font: { family: 'Google Sans' } }] },
-          { elements: [{ type: 'text', font: { family: 'Helvetica' } }] },
-          { elements: [{ type: 'text', font: { family: 'Times New Roman' } }] },
+          {
+            elements: [
+              { type: ELEMENT_TYPES.TEXT, font: { family: 'Google Sans' } },
+            ],
+          },
+          {
+            elements: [
+              { type: ELEMENT_TYPES.TEXT, font: { family: 'Helvetica' } },
+            ],
+          },
+          {
+            elements: [
+              { type: ELEMENT_TYPES.TEXT, font: { family: 'Times New Roman' } },
+            ],
+          },
         ],
       })
     ).toStrictEqual([]);

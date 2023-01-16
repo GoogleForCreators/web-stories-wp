@@ -17,7 +17,10 @@
  * External dependencies
  */
 import { MaskTypes } from '@googleforcreators/masks';
-import { registerElementType } from '@googleforcreators/elements';
+import {
+  registerElementType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -95,7 +98,7 @@ describe('combineElements', () => {
     const result = combineElements({
       firstElement: {
         id: 'abc',
-        type: 'video',
+        type: ELEMENT_TYPES.VIDEO,
         focalX: 20,
         resource: { type: 'video', src: '1' },
         x: 10,
@@ -109,7 +112,7 @@ describe('combineElements', () => {
     expect(result.pages[0].elements).toStrictEqual([
       {
         id: '123',
-        type: 'shape',
+        type: ELEMENT_TYPES.SHAPE,
         isBackground: true,
         isDefaultBackground: true,
         x: 1,
@@ -119,7 +122,7 @@ describe('combineElements', () => {
       },
       {
         id: '456',
-        type: 'video',
+        type: ELEMENT_TYPES.VIDEO,
         focalX: 20,
         resource: { type: 'video', src: '1' },
         x: 10,
@@ -131,7 +134,7 @@ describe('combineElements', () => {
       {
         id: '789',
         resource: { type: 'video', src: '1' },
-        type: 'video',
+        type: ELEMENT_TYPES.VIDEO,
         // Note that focalX is copied and focalY is reset to 50
         focalX: 20,
         focalY: 50,
@@ -164,7 +167,7 @@ describe('combineElements', () => {
     expect(result.pages[0].elements).toStrictEqual([
       {
         id: '123',
-        type: 'shape',
+        type: ELEMENT_TYPES.SHAPE,
         isBackground: true,
         isDefaultBackground: true,
         x: 1,
@@ -175,7 +178,7 @@ describe('combineElements', () => {
       {
         id: '789',
         resource: { type: 'video', src: '1' },
-        type: 'video',
+        type: ELEMENT_TYPES.VIDEO,
         // Note that focalX is copied and focalY is reset to 50
         focalX: 20,
         focalY: 50,
@@ -239,7 +242,7 @@ describe('combineElements', () => {
     expect(result.pages[0].elements).toStrictEqual([
       {
         id: '123',
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         overlay: { color: { r: 0, g: 0, b: 0 } },
         isBackground: true,
         x: 1,
@@ -249,7 +252,7 @@ describe('combineElements', () => {
       },
       {
         id: '456',
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         resource: { type: 'image', src: '1' },
         x: 10,
         y: 10,
@@ -263,7 +266,7 @@ describe('combineElements', () => {
       },
       {
         id: '007',
-        type: 'video',
+        type: ELEMENT_TYPES.VIDEO,
         resource: { type: 'video', src: '2' },
         focalX: 50,
         focalY: 50,
@@ -298,7 +301,7 @@ describe('combineElements', () => {
       {
         id: '123',
         resource: { type: 'image', src: '1' },
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         focalX: 50,
         focalY: 50,
         scale: 100,
@@ -329,7 +332,7 @@ describe('combineElements', () => {
         id: '123',
         resource: { type: 'image', src: '1' },
         alt: 'Hello',
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         focalX: 50,
         focalY: 50,
         scale: 100,
@@ -350,7 +353,7 @@ describe('combineElements', () => {
     // Combine new element into 123
     const result = combineElements({
       firstElement: {
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         resource: { type: 'image', src: '2' },
         width: 30,
         height: 30,
@@ -364,7 +367,7 @@ describe('combineElements', () => {
       {
         id: '123',
         resource: { type: 'image', src: '2' },
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         focalX: 50,
         focalY: 50,
         scale: 100,
@@ -376,7 +379,7 @@ describe('combineElements', () => {
       },
       {
         id: '456',
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         resource: { type: 'image', src: '1' },
         alt: 'Hello',
         x: 10,
@@ -403,7 +406,7 @@ describe('combineElements', () => {
       // Note that id is regenerated. It doesn't matter what it is, just
       // has to be unique and different from current
       id: expect.not.stringMatching('/^123$/'),
-      type: 'shape',
+      type: ELEMENT_TYPES.SHAPE,
       isBackground: true,
       isDefaultBackground: true,
       x: 1,
@@ -438,7 +441,7 @@ describe('combineElements', () => {
         },
         overlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         width: 10,
         x: 10,
         y: 10,
@@ -472,7 +475,7 @@ describe('combineElements', () => {
           type: 'image',
         },
         scale: 100,
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         width: 10,
         x: 10,
         y: 10,
@@ -506,7 +509,7 @@ describe('combineElements', () => {
         },
         poster: 'img.jpg',
         scale: 100,
-        type: 'video',
+        type: ELEMENT_TYPES.VIDEO,
         width: 10,
         x: 10,
         y: 10,
@@ -541,7 +544,7 @@ describe('combineElements', () => {
         },
         overlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         width: 10,
         x: 10,
         y: 10,
@@ -579,7 +582,7 @@ describe('combineElements', () => {
           type: 'image',
         },
         scale: 100,
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         width: 10,
         x: 10,
         y: 10,
@@ -609,7 +612,7 @@ describe('combineElements', () => {
           type: 'circle',
         },
         scale: 100,
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         width: 10,
         x: 10,
         y: 10,
@@ -650,7 +653,7 @@ describe('combineElements', () => {
         },
         overlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         width: 10,
         x: 10,
         y: 10,
@@ -688,7 +691,7 @@ describe('combineElements', () => {
           type: 'image',
         },
         scale: 100,
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         width: 10,
         x: 10,
         y: 10,
@@ -718,7 +721,7 @@ describe('combineElements', () => {
           type: 'circle',
         },
         scale: 100,
-        type: 'image',
+        type: ELEMENT_TYPES.IMAGE,
         width: 10,
         x: 10,
         y: 10,
@@ -772,7 +775,7 @@ function getDefaultState1() {
         elements: [
           {
             id: '123',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             isBackground: true,
             isDefaultBackground: true,
             x: 1,
@@ -782,7 +785,7 @@ function getDefaultState1() {
           },
           {
             id: '456',
-            type: 'video',
+            type: ELEMENT_TYPES.VIDEO,
             focalX: 20,
             resource: { type: 'video', src: '1' },
             x: 10,
@@ -793,7 +796,7 @@ function getDefaultState1() {
           },
           {
             id: '789',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             focalX: 10,
             focalY: 100,
             x: 20,
@@ -822,7 +825,7 @@ function getDefaultState2() {
         elements: [
           {
             id: '123',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             isBackground: true,
             x: 1,
             y: 1,
@@ -831,7 +834,7 @@ function getDefaultState2() {
           },
           {
             id: '456',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             resource: { type: 'image', src: '1' },
             x: 10,
             y: 10,
@@ -854,7 +857,7 @@ function getDefaultState3() {
         elements: [
           {
             id: '123',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
@@ -864,7 +867,7 @@ function getDefaultState3() {
           },
           {
             id: '456',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             resource: { type: 'image', src: '1' },
             x: 10,
             y: 10,
@@ -887,7 +890,7 @@ function getDefaultState4() {
         elements: [
           {
             id: '123',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
@@ -897,7 +900,7 @@ function getDefaultState4() {
           },
           {
             id: '456',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             resource: { type: 'image', src: '1' },
             x: 10,
             y: 10,
@@ -911,7 +914,7 @@ function getDefaultState4() {
           },
           {
             id: '789',
-            type: 'video',
+            type: ELEMENT_TYPES.VIDEO,
             resource: { type: 'video', src: '2' },
             x: 10,
             y: 10,
@@ -926,7 +929,7 @@ function getDefaultState4() {
           },
           {
             id: '007',
-            type: 'video',
+            type: ELEMENT_TYPES.VIDEO,
             resource: { type: 'video', src: '3' },
             x: 10,
             y: 10,
@@ -949,7 +952,7 @@ function getDefaultState5() {
         elements: [
           {
             id: '123',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
@@ -959,7 +962,7 @@ function getDefaultState5() {
           },
           {
             id: '456',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             resource: { type: 'image', src: '1' },
             x: 10,
             y: 10,
@@ -974,7 +977,7 @@ function getDefaultState5() {
           },
           {
             id: '789',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             x: 10,
             y: 10,
             width: 10,
@@ -985,7 +988,7 @@ function getDefaultState5() {
           },
           {
             id: '101',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             x: 10,
             y: 10,
             width: 10,
@@ -1016,7 +1019,7 @@ function getDefaultState6() {
         elements: [
           {
             id: '123',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
@@ -1026,7 +1029,7 @@ function getDefaultState6() {
           },
           {
             id: '456',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             resource: { type: 'image', src: '1' },
             x: 10,
             y: 10,
@@ -1041,7 +1044,7 @@ function getDefaultState6() {
           },
           {
             id: '789',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             x: 10,
             y: 10,
             width: 10,
@@ -1052,7 +1055,7 @@ function getDefaultState6() {
           },
           {
             id: '101',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             x: 10,
             y: 10,
             width: 10,
@@ -1087,7 +1090,7 @@ function getDefaultState7() {
         elements: [
           {
             id: '123',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
@@ -1097,7 +1100,7 @@ function getDefaultState7() {
           },
           {
             id: '456',
-            type: 'image',
+            type: ELEMENT_TYPES.IMAGE,
             resource: { type: 'image', src: '1' },
             x: 10,
             y: 10,
@@ -1106,7 +1109,7 @@ function getDefaultState7() {
           },
           {
             id: '789',
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             x: 10,
             y: 10,
             width: 10,

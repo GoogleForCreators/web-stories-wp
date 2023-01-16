@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -111,7 +114,7 @@ const page = {
       },
       isBackground: true,
       isDefaultBackground: true,
-      type: 'shape',
+      type: ELEMENT_TYPES.SHAPE,
       id: 'd5753439-bb84-45df-b348-e8d018e05aec',
     },
     {
@@ -129,7 +132,7 @@ const page = {
           b: 8,
         },
       },
-      type: 'shape',
+      type: ELEMENT_TYPES.SHAPE,
       x: 0,
       y: -49,
       width: 269,
@@ -157,7 +160,7 @@ const page = {
           b: 8,
         },
       },
-      type: 'shape',
+      type: ELEMENT_TYPES.SHAPE,
       width: 155,
       height: 148,
       scale: 100,
@@ -186,7 +189,7 @@ const page = {
           b: 8,
         },
       },
-      type: 'shape',
+      type: ELEMENT_TYPES.SHAPE,
       width: 301,
       height: 287,
       scale: 100,

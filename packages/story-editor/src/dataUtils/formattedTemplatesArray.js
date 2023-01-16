@@ -20,6 +20,7 @@
  * External dependencies
  */
 import { toUTCDate } from '@googleforcreators/date';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 const formattedTemplatesArray = [
   {
@@ -57,7 +58,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -97,7 +98,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -144,7 +145,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -197,7 +198,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: 'ID1',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -234,7 +235,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -274,7 +275,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -321,7 +322,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -374,7 +375,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -410,7 +411,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -450,7 +451,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -497,7 +498,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -550,7 +551,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: 'ID3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -586,7 +587,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -626,7 +627,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -673,7 +674,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -726,7 +727,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: 'ID4',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -762,7 +763,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -802,7 +803,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -849,7 +850,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -902,7 +903,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: 'ID5',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -938,7 +939,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -978,7 +979,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -1025,7 +1026,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -1078,7 +1079,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: 'ID6',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -1114,7 +1115,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -1154,7 +1155,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -1201,7 +1202,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -1254,7 +1255,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: 'ID7',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -1342,7 +1343,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -1382,7 +1383,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -1429,7 +1430,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -1482,7 +1483,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -1546,7 +1547,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -1586,7 +1587,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -1633,7 +1634,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -1686,7 +1687,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -1750,7 +1751,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -1790,7 +1791,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -1837,7 +1838,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -1890,7 +1891,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -1954,7 +1955,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -1994,7 +1995,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -2041,7 +2042,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -2094,7 +2095,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -2158,7 +2159,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -2198,7 +2199,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -2245,7 +2246,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -2298,7 +2299,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -2362,7 +2363,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -2402,7 +2403,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -2449,7 +2450,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -2502,7 +2503,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
@@ -2566,7 +2567,7 @@ const formattedTemplatesArray = [
             },
             isBackground: true,
             isDefaultBackground: true,
-            type: 'shape',
+            type: ELEMENT_TYPES.SHAPE,
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
           {
@@ -2606,7 +2607,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             basedOn: '53004538-6bca-4ac6-810e-18bd81e84276',
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
@@ -2653,7 +2654,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
             content:
               '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
@@ -2706,7 +2707,7 @@ const formattedTemplatesArray = [
             scale: 100,
             focalX: 50,
             focalY: 50,
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
             content:
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',

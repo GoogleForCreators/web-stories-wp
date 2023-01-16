@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -31,7 +34,7 @@ describe('updateElementsByFontFamily', () => {
           elements: [
             {
               id: '123',
-              type: 'text',
+              type: ELEMENT_TYPES.TEXT,
               font: {
                 name: 'font 1',
                 value: 'font 1',
@@ -41,7 +44,7 @@ describe('updateElementsByFontFamily', () => {
             },
             {
               id: '456',
-              type: 'text',
+              type: ELEMENT_TYPES.TEXT,
               font: {
                 name: 'font 2',
                 value: 'font 2',
@@ -57,7 +60,7 @@ describe('updateElementsByFontFamily', () => {
           elements: [
             {
               id: '987',
-              type: 'text',
+              type: ELEMENT_TYPES.TEXT,
               font: {
                 name: 'font 1',
                 value: 'font 1',
@@ -88,7 +91,7 @@ describe('updateElementsByFontFamily', () => {
         elements: [
           {
             id: '123',
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             font: {
               name: 'replaced font',
               value: 'replaced font',
@@ -98,7 +101,7 @@ describe('updateElementsByFontFamily', () => {
           },
           {
             id: '456',
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             font: {
               name: 'font 2',
               value: 'font 2',
@@ -114,7 +117,7 @@ describe('updateElementsByFontFamily', () => {
         elements: [
           {
             id: '987',
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             font: {
               name: 'replaced font',
               value: 'replaced font',
@@ -138,7 +141,7 @@ describe('updateElementsByFontFamily', () => {
           elements: [
             {
               id: '123',
-              type: 'text',
+              type: ELEMENT_TYPES.TEXT,
               font: {
                 name: 'font 1',
                 value: 'font 1',
@@ -177,7 +180,7 @@ describe('updateElementsByFontFamily', () => {
           elements: [
             {
               id: '123',
-              type: 'text',
+              type: ELEMENT_TYPES.TEXT,
               font: {
                 name: 'font 1',
                 value: 'font 1',
@@ -217,7 +220,7 @@ describe('updateElementsByFontFamily', () => {
           elements: [
             {
               id: '123',
-              type: 'text',
+              type: ELEMENT_TYPES.TEXT,
               font: {
                 name: 'font 1',
                 value: 'font 1',
@@ -286,7 +289,7 @@ describe('updateElementsByFontFamily', () => {
         elements: [
           {
             id: '123',
-            type: 'text',
+            type: ELEMENT_TYPES.TEXT,
             font: {
               name: 'replaced font',
               value: 'replaced font',

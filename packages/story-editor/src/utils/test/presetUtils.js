@@ -20,6 +20,7 @@
 import {
   TEXT_ELEMENT_DEFAULT_FONT,
   BACKGROUND_TEXT_MODE,
+  ELEMENT_TYPES,
 } from '@googleforcreators/elements';
 
 /**
@@ -168,7 +169,7 @@ describe('presetUtils', () => {
     };
     const elements = [
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
         font: TEXT_ELEMENT_DEFAULT_FONT,
         foo: 'bar',
@@ -179,7 +180,7 @@ describe('presetUtils', () => {
         content: '<span style="color: rgb(1,1,1)">Content</span>',
       },
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         x: 30,
         content:
           '<span style="font-weight: 700; font-style: italic; color: rgb(2,2,2)">Content</span>',
@@ -232,7 +233,7 @@ describe('presetUtils', () => {
   it('should ignore text color presets for multi-color text fields', () => {
     const elements = [
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
         font: TEXT_ELEMENT_DEFAULT_FONT,
         content:
@@ -269,7 +270,7 @@ describe('presetUtils', () => {
     };
     const elements = [
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         x: 30,
         content:
           '<span style="color: rgb(1,1,1)">O</span><span style="color: rgb(2,1,1)">K</span>',
@@ -300,7 +301,7 @@ describe('presetUtils', () => {
   it('should get correct font weight for text preset', () => {
     const elements = [
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
         font: TEXT_ELEMENT_DEFAULT_FONT,
         content: '<span style="font-weight: 600">Semi-bold</span>',
@@ -346,7 +347,7 @@ describe('presetUtils', () => {
     };
     const elements = [
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         x: 30,
         content:
           '<span style="letter-spacing: 2px; font-style: italic; font-weight: 700; text-decoration: underline; color: rgb(1,1,1)">O</span><span style="text-decoration: none; color: rgb(2,1,1)">K</span>',
@@ -384,7 +385,7 @@ describe('presetUtils', () => {
     };
     const elements = [
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
         font: TEXT_ELEMENT_DEFAULT_FONT,
         foo: 'bar',
@@ -395,7 +396,7 @@ describe('presetUtils', () => {
         },
       },
       {
-        type: 'text',
+        type: ELEMENT_TYPES.TEXT,
         x: 30,
         content: '<span style="color: rgb(2,2,2)">Content</span>',
         ...objectWithout(stylePreset, ['color']),

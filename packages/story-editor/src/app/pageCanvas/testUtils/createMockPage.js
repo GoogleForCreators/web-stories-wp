@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 function createMockPage() {
   return {
     elements: [
@@ -33,7 +37,7 @@ function createMockPage() {
           type: 'rectangle',
         },
         isBackground: true,
-        type: 'shape',
+        type: ELEMENT_TYPES.SHAPE,
         id: '21e59f86-f8e8-44d4-bf33-6fb25259fdf3',
         isDefaultBackground: true,
         basedOn: '37b01e6c-d289-4e86-a897-310a69040040',
@@ -53,7 +57,7 @@ function createMockPage() {
             b: 74,
           },
         },
-        type: 'shape',
+        type: ELEMENT_TYPES.SHAPE,
         x: 112.5,
         y: 281.5,
         width: 55,
@@ -82,7 +86,7 @@ function createMockPage() {
             b: 74,
           },
         },
-        type: 'shape',
+        type: ELEMENT_TYPES.SHAPE,
         x: 236,
         y: 281.5,
         width: 55,
@@ -111,7 +115,7 @@ function createMockPage() {
             b: 74,
           },
         },
-        type: 'shape',
+        type: ELEMENT_TYPES.SHAPE,
         x: 175,
         y: 281.5,
         width: 55,
@@ -162,7 +166,7 @@ function createMockPage() {
         type: 'rectangle',
       },
       isBackground: true,
-      type: 'shape',
+      type: ELEMENT_TYPES.SHAPE,
       id: '61df41e7-b2dc-4ed0-8c5e-91cd08261d1e',
       isDefaultBackground: true,
       basedOn: '696809e0-6749-4292-b28a-a8e633a994f4',

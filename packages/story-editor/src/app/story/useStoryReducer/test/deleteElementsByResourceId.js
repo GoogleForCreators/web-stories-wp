@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -101,7 +104,7 @@ describe('deleteElementsByResourceId', () => {
       pages: [
         {
           id: '111',
-          defaultBackgroundElement: { id: 'e0', type: 'shape' },
+          defaultBackgroundElement: { id: 'e0', type: ELEMENT_TYPES.SHAPE },
           elements: [
             {
               id: '123',
@@ -123,9 +126,9 @@ describe('deleteElementsByResourceId', () => {
     expect(result.pages).toStrictEqual([
       {
         id: '111',
-        defaultBackgroundElement: { id: 'e0', type: 'shape' },
+        defaultBackgroundElement: { id: 'e0', type: ELEMENT_TYPES.SHAPE },
         elements: [
-          { id: 'e0', type: 'shape' },
+          { id: 'e0', type: ELEMENT_TYPES.SHAPE },
           { id: '456', resource: { type: 'video', id: '10' } },
         ],
       },
