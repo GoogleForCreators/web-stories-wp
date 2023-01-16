@@ -63,7 +63,8 @@ function LibraryProvider({ children }) {
     ),
   }));
 
-  const isShoppingEnabled = 'none' !== shoppingProvider || hasProducts;
+  const isShoppingEnabled =
+    (shoppingProvider && 'none' !== shoppingProvider) || hasProducts;
 
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
   const showPageTemplates = canViewDefaultTemplates || supportsCustomTemplates;
