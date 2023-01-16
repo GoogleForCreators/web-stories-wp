@@ -38,7 +38,7 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  *
  * @phpstan-type PostData array{
- *   post_parent: int,
+ *   post_parent: int|string|null,
  *   post_type: string,
  *   post_content?: string,
  *   post_content_filtered?: string
@@ -780,11 +780,11 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param string   $post_type   Post type slug.
-	 * @param int|null $post_parent Parent post ID.
+	 * @param string          $post_type   Post type slug.
+	 * @param int|string|null $post_parent Parent post ID.
 	 * @return bool Whether the user can edit the provided post type.
 	 */
-	private function is_allowed_post_type( string $post_type, ?int $post_parent ): bool {
+	private function is_allowed_post_type( string $post_type, $post_parent ): bool {
 		if ( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return true;
 		}
@@ -798,7 +798,7 @@ class KSES extends Service_Base implements HasRequirements {
 			(
 				'revision' === $post_type &&
 				! empty( $post_parent ) &&
-				get_post_type( $post_parent ) === $this->story_post_type->get_slug()
+				get_post_type( (int) $post_parent ) === $this->story_post_type->get_slug()
 			) &&
 			$this->story_post_type->has_cap( 'edit_posts' )
 		) {
