@@ -18,8 +18,8 @@
     "symfony/polyfill-mbstring": "^1.18"
   },
   "require-dev": {
-    "automattic/vipwpcs": "^2.3",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+    "automattic/vipwpcs": "dev-develop",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "ergebnis/composer-normalize": "^2.28",
     "humbug/php-scoper": "^0.17.5",
     "php-stubs/woocommerce-stubs": "^7.0",

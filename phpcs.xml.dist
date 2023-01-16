@@ -105,7 +105,11 @@
       <property name="enableStaticTypeHint" value="false" />
       <property name="enableMixedTypeHint" value="false" />
       <property name="enableUnionTypeHint" value="false" />
+      <property name="enableIntersectionTypeHint" value="false" />
+      <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
+      <property name="enableNeverTypeHint" value="false" />
     </properties>
+
     <exclude
       name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification"
     />
@@ -119,6 +123,36 @@
     <exclude-pattern>includes/Interfaces/FieldState.php</exclude-pattern>
     <exclude-pattern>includes/Interfaces/FieldStateFactory.php</exclude-pattern>
     <exclude-pattern>includes/Renderer/Stories/*</exclude-pattern>
+  </rule>
+
+  <!-- Requires parameter typehints and reports useless @param annotations. -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
+    <properties>
+      <property name="enableMixedTypeHint" value="false" />
+      <property name="enableUnionTypeHint" value="false" />
+      <property name="enableIntersectionTypeHint" value="false" />
+      <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
+    </properties>
+
+    <exclude
+      name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification"
+    />
+
+    <!-- The main plugin file should be parsable by PHP 5.6. -->
+    <exclude-pattern>web-stories.php</exclude-pattern>
+    <exclude-pattern
+    >includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
+
+    <!-- To ensure backward compatibility for developers using these. -->
+    <exclude-pattern>includes/Interfaces/FieldState.php</exclude-pattern>
+    <exclude-pattern>includes/Interfaces/FieldStateFactory.php</exclude-pattern>
+    <exclude-pattern>includes/Renderer/Stories/*</exclude-pattern>
+
+    <!-- Parent REST API controller classes in WP don't use parameter type hints, need to match their signature -->
+    <exclude-pattern>includes/REST_API</exclude-pattern>
+
+    <!-- Parent widget classes in WP don't use parameter type hints, need to match their signature -->
+    <exclude-pattern>includes/Widgets</exclude-pattern>
   </rule>
 
   <!-- Checks whether the nullablity ? symbol is present before each nullable and optional parameter. -->

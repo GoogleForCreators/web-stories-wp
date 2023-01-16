@@ -39,7 +39,7 @@ trait ScriptHash {
 	 * @param string $script Script.
 	 * @return string|null Script hash or null if the sha384 algorithm is not supported.
 	 */
-	public function generate_script_hash( $script ): ?string {
+	public function generate_script_hash( string $script ): ?string {
 		$sha384 = hash( 'sha384', $script, true );
 		if ( ! $sha384 ) {
 			return null;
