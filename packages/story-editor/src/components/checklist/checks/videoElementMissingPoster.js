@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
-import { elementIs } from '@web-stories-wp/elements';
+import { elementIs } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
