@@ -257,24 +257,24 @@ class SVG extends Service_Base {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param array         $wp_check_filetype_and_ext {
-	 *                                                 Values for the extension, mime type, and corrected filename.
+	 * @param array               $wp_check_filetype_and_ext {
+	 *                                                       Values for the extension, mime type, and corrected filename.
 	 *
-	 * @type string|false   $ext                       File extension, or false if the file doesn't match a mime type.
-	 * @type string|false   $type                      File mime type, or false if the file doesn't match a mime type.
-	 * @type string|false   $proper_filename           File name with its correct extension, or false if it cannot be
+	 * @type string|false         $ext                       File extension, or false if the file doesn't match a mime type.
+	 * @type string|false         $type                      File mime type, or false if the file doesn't match a mime type.
+	 * @type string|false         $proper_filename           File name with its correct extension, or false if it cannot be
 	 *       determined.
 	 * }
-	 * @param string        $file                      Full path to the file.
-	 * @param string        $filename                  The name of the file (may differ from $file due to
-	 *                                                 $file being in a tmp directory).
-	 * @param string[]|null $mimes                     Array of mime types keyed by their file extension regex.
-	 * @param string|bool   $real_mime                 The actual mime type or false if the type cannot be determined.
+	 * @param string              $file                      Full path to the file.
+	 * @param string              $filename                  The name of the file (may differ from $file due to
+	 *                                                       $file being in a tmp directory).
+	 * @param string[]|null|false $mimes                     Array of mime types keyed by their file extension regex.
+	 * @param string|bool         $real_mime                 The actual mime type or false if the type cannot be determined.
 	 * @return array{ext?: string, type?: string, proper_filename?: bool}
 	 *
 	 * @phpstan-param array{ext?: string, type?: string, proper_filename?: bool} $wp_check_filetype_and_ext
 	 */
-	public function wp_check_filetype_and_ext( array $wp_check_filetype_and_ext, string $file, string $filename, ?array $mimes, $real_mime ): array {
+	public function wp_check_filetype_and_ext( array $wp_check_filetype_and_ext, string $file, string $filename, $mimes, $real_mime ): array {
 		if ( 'image/svg' === $real_mime ) {
 			$wp_check_filetype_and_ext = [
 				'ext'             => self::EXT,
