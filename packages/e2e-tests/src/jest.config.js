@@ -46,8 +46,8 @@ export default {
   setupFilesAfterEnv: [
     'jest-extended/all',
     '<rootDir>/packages/e2e-tests/src/config/bootstrap.js',
-    '@wordpress/jest-puppeteer-axe',
-    '@wordpress/jest-console',
+    '<rootDir>/packages/e2e-tests/node_modules/@wordpress/jest-puppeteer-axe',
+    '<rootDir>/packages/e2e-tests/node_modules/@wordpress/jest-console',
     'expect-puppeteer',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],
