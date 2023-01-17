@@ -49,7 +49,7 @@
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.5",
+    "@testing-library/preact": "^3.2.3",
     "@types/draft-js": "^0.11.9"
   }
 }

@@ -71,7 +71,7 @@ function useSelectionManipulation(
   );
 
   const getSetterCallback = useCallback(
-    (setter: StyleSetter, autoFocus) =>
+    (setter: StyleSetter, autoFocus: boolean) =>
       (...args: [AllowedSetterArgs]) =>
         updateWhileUnfocused((state) => setter(state, ...args), autoFocus),
     [updateWhileUnfocused]

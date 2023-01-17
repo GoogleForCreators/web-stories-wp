@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { preloadVideo } from '@googleforcreators/media';
-import { waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/preact';
 
 /**
  * Internal dependencies

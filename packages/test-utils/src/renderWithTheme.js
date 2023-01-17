@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, queries } from '@testing-library/react';
+import { render, queries } from '@testing-library/preact';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';

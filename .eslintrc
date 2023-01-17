@@ -277,7 +277,7 @@
         "mapping": {
           "^@googleforcreators\\/(.*)\\/(.*)": "./packages/$1/src/$2",
           "^@googleforcreators\\/(.*)": "./packages/$1/src/",
-          "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
+          "^@web-stories-wp\\/(.*)": ["./packages/$1/src/", "./packages-wp/$1/src/"]
         },
         "extensions": [ ".js", ".jsx", ".ts", ".tsx" ]
       }
@@ -331,7 +331,8 @@
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": [
-          "./packages/*/tsconfig.json"
+          "./packages/*/tsconfig.json",
+          "./packages-wp/*/tsconfig.json"
         ]
       },
       "rules": {
@@ -534,8 +535,8 @@
     },
     {
       "files": [
-        "packages/e2e-test-utils/**/*.js",
-        "packages/e2e-tests/src/**/*.js"
+        "packages-wp/e2e-test-utils/**/*.js",
+        "packages-wp/e2e-tests/src/**/*.js"
       ],
       "extends": [
         "plugin:jest/all"
@@ -579,7 +580,7 @@
     },
     {
       "files": [
-        "packages/e2e-test-utils/**/*.js"
+        "packages-wp/e2e-test-utils/**/*.js"
       ],
       "rules": {
         "eslint-comments/require-description": "off",
@@ -590,14 +591,14 @@
       }
     },
     {
-      "files": ["packages/e2e-tests/src/specs/**/*.js"],
+      "files": ["packages-wp/e2e-tests/src/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
       }
     },
     {
       "files": [
-        "packages/e2e-tests/src/config/**/*.js",
+        "packages-wp/e2e-tests/src/config/**/*.js",
         "**/testUtils/**/*.js"
       ],
       "rules": {
@@ -607,7 +608,7 @@
     },
     {
       "files": [
-        "packages/commander/**/*.js",
+        "packages-wp/commander/**/*.js",
         "packages/fonts/scripts/**/*.js",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
@@ -631,14 +632,14 @@
         ".storybook/*.cjs",
         ".storybook/*.js",
         "tests/js/*.js",
-        "packages/e2e-tests/src/*.js",
-        "packages/e2e-tests/src/config/*.js",
+        "packages-wp/e2e-tests/src/*.js",
+        "packages-wp/e2e-tests/src/config/*.js",
         "packages/dashboard/src/karma-tests.cjs",
         "packages/story-editor/src/karma-tests.cjs",
         "packages/eslint-import-resolver/**/*.cjs",
         "packages/jest-resolver/**/*.cjs",
         "packages/fonts/**/*.js",
-        "packages/commander/**/*.js",
+        "packages-wp/commander/**/*.js",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
         "packages/text-sets/scripts/**/*.js"
@@ -679,6 +680,15 @@
     },
     {
       "files": [
+        ".storybook/stories/**/*.js",
+        "__mocks__/**/*.js"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    },
+    {
+      "files": [
         "**/*.md/*.js"
       ],
       "parserOptions": {
@@ -705,12 +715,6 @@
         "packages/story-editor/src/**/*.js",
         "packages/**/*.js"
       ],
-      "excludedFiles": [
-        "packages/activation-notice/**/*.js",
-        "packages/i18n/**/*.js",
-        "packages/stories-block/**/*.js",
-        "packages/tinymce-button/**/*.js"
-      ],
       "rules":{
         "no-restricted-imports": [
           "error",
@@ -727,9 +731,9 @@
     },
     {
       "files": [
-        "packages/activation-notice/**/*.js",
-        "packages/stories-block/**/*.js",
-        "packages/tinymce-button/**/*.js"
+        "packages-wp/activation-notice/**/*.js",
+        "packages-wp/stories-block/**/*.js",
+        "packages-wp/tinymce-button/**/*.js"
       ],
       "rules":{
         "@wordpress/data-no-store-string-literals": "error",
@@ -761,12 +765,9 @@
       "excludedFiles": [
         ".storybook/preview.js",
         "__mocks__/**/*.js",
-        "packages/activation-notice/**/*.js",
         "packages/react/**/*.js",
         "packages/dashboard/src/karma/fixture.js",
-        "packages/story-editor/src/karma/fixture/fixture.js",
-        "packages/story-block/**/*.js",
-        "packages/tinymce-button/**/*.js"
+        "packages/story-editor/src/karma/fixture/fixture.js"
       ],
       "rules":{
         "no-restricted-imports": [
@@ -788,7 +789,7 @@
     },
     {
       "files": [
-        "packages/tinymce-button/src/**/*.js"
+        "packages-wp/tinymce-button/src/**/*.js"
       ],
       "globals": {
         "tinymce": "readonly"

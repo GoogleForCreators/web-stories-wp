@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { jest } from '@jest/globals';
+
 global.webStories = {};
 global.webStoriesBlockSettings = {
   config: {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/preact';
 import { FlagsProvider } from 'flagged';
 import { PAGE_RATIO, UnitsProvider } from '@googleforcreators/units';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { StoryAnimationState } from '@googleforcreators/animation';
-import { waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/preact';
 
 /**
  * Internal dependencies

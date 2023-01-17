@@ -17,8 +17,10 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
-import type { DependencyList, MutableRefObject } from 'react';
+import { useEffect } from 'preact/hooks';
+import type { RefObject } from 'preact/compat';
+
+type DependencyList = ReadonlyArray<unknown>;
 
 interface ResizeHandler {
   (dimensions: { width: number; height: number }): void;
@@ -30,7 +32,7 @@ interface ResizeHandler {
  * @param [deps] The effect's dependencies.
  */
 function useResizeEffect(
-  ref: MutableRefObject<Element>,
+  ref: RefObject<Element>,
   handler: ResizeHandler,
   deps: DependencyList | undefined = undefined
 ) {

@@ -29,6 +29,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const PreactRefreshPlugin = require('@prefresh/webpack');
 
 /**
  * WordPress dependencies
@@ -56,9 +57,10 @@ function requestToExternal(request) {
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
 const mode = isProduction ? 'production' : 'development';
 
-const sharedConfig = {
+const getSharedConfig = (isPreact = false) => ({
   resolve: {
     // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
     exportsFields: ['customExports', 'exports'],
@@ -103,7 +105,7 @@ const sharedConfig = {
         },
       },
       {
-        test: /\.(j|t)sx?$/,
+        test: /\.([jt])sx?$/,
         exclude: /node_modules/,
         resolve: {
           // Avoid having to provide full file extension for imports.
@@ -114,12 +116,20 @@ const sharedConfig = {
           {
             loader: 'babel-loader',
             options: {
+              configFile: !isPreact
+                ? resolve(process.cwd(), 'babel.config.wp.cjs')
+                : undefined,
               // Babel uses a directory within local node_modules
               // by default. Use the environment variable option
               // to enable more persistent caching.
               cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
               plugins: [
-                !isProduction && require.resolve('react-refresh/babel'),
+                isDevelopment &&
+                  !isPreact &&
+                  require.resolve('react-refresh/babel'),
+                isDevelopment &&
+                  isPreact &&
+                  require.resolve('@prefresh/babel-plugin'),
               ].filter(Boolean),
             },
           },
@@ -242,7 +252,7 @@ const sharedConfig = {
     !isProduction &&
       new CircularDependencyPlugin({
         // exclude detection of files based on a RegExp
-        include: /packages/,
+        include: /packages|packages-wp/,
         // add errors to webpack instead of warnings
         failOnError: true,
         // allow import cycles that include an asynchronous import,
@@ -275,7 +285,7 @@ const sharedConfig = {
       new CssMinimizerPlugin(),
     ],
   },
-};
+});
 
 const EDITOR_CHUNK = 'web-stories-editor';
 const DASHBOARD_CHUNK = 'web-stories-dashboard';
@@ -333,8 +343,20 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
   chunkNames: [...compilation.chunks].map(({ name }) => name).filter(Boolean),
 });
 
+const sharedConfig = getSharedConfig(false);
+const sharedConfigPreact = getSharedConfig(true);
+
 const editorAndDashboard = {
-  ...sharedConfig,
+  ...sharedConfigPreact,
+  resolve: {
+    ...sharedConfigPreact.resolve,
+    alias: {
+      react: 'preact/compat',
+      'react-dom/test-utils': 'preact/test-utils',
+      'react-dom': 'preact/compat', // Must be below test-utils
+      'react/jsx-runtime': 'preact/jsx-runtime',
+    },
+  },
   devServer: !isProduction
     ? {
         devMiddleware: {
@@ -351,11 +373,11 @@ const editorAndDashboard = {
     [DASHBOARD_CHUNK]: './packages/wp-dashboard/src/index.js',
   },
   plugins: [
-    ...sharedConfig.plugins.filter(
+    ...sharedConfigPreact.plugins.filter(
       (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
     ),
     // React Fast Refresh.
-    !isProduction && new ReactRefreshWebpackPlugin(),
+    !isProduction && new PreactRefreshPlugin(),
     new DependencyExtractionWebpackPlugin({
       requestToExternal,
     }),
@@ -380,9 +402,9 @@ const editorAndDashboard = {
     }),
   ].filter(Boolean),
   optimization: {
-    ...sharedConfig.optimization,
+    ...sharedConfigPreact.optimization,
     splitChunks: {
-      ...sharedConfig.optimization.splitChunks,
+      ...sharedConfigPreact.optimization.splitChunks,
       chunks: 'all',
     },
   },
@@ -391,8 +413,8 @@ const editorAndDashboard = {
 const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    'web-stories-lightbox': './packages/stories-lightbox/src/index.js',
-    'web-stories-carousel': './packages/stories-carousel/src/index.js',
+    'web-stories-lightbox': './packages-wp/stories-lightbox/src/index.js',
+    'web-stories-carousel': './packages-wp/stories-carousel/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -405,7 +427,7 @@ const webStoriesScripts = {
 
 // Collect all core themes style sheet paths.
 const coreThemesBlockStylesPaths = readdirSync(
-  './packages/stories-block/src/css/core-themes'
+  './packages-wp/stories-block/src/css/core-themes'
 );
 
 // Build entry object for the Core Themes Styles.
@@ -413,7 +435,7 @@ const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
   const fileName = parse(curr).name;
   return {
     ...acc,
-    [`web-stories-theme-style-${fileName}`]: `./packages/stories-block/src/css/core-themes/${curr}`,
+    [`web-stories-theme-style-${fileName}`]: `./packages-wp/stories-block/src/css/core-themes/${curr}`,
   };
 }, {});
 
@@ -421,11 +443,11 @@ const webStoriesBlock = {
   ...sharedConfig,
   entry: {
     'web-stories-block': [
-      './packages/stories-block/src/index.js',
-      './packages/stories-block/src/block/edit.css',
+      './packages-wp/stories-block/src/index.js',
+      './packages-wp/stories-block/src/block/edit.css',
     ],
-    'web-stories-list-styles': './packages/stories-block/src/css/style.css',
-    'web-stories-embed': './packages/stories-block/src/css/embed.css',
+    'web-stories-list-styles': './packages-wp/stories-block/src/css/style.css',
+    'web-stories-embed': './packages-wp/stories-block/src/css/embed.css',
     ...coreThemeBlockStyles,
   },
   plugins: [
@@ -443,7 +465,7 @@ const activationNotice = {
   ...sharedConfig,
   entry: {
     'web-stories-activation-notice':
-      './packages/activation-notice/src/index.tsx',
+      './packages-wp/activation-notice/src/index.tsx',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -459,7 +481,7 @@ const activationNotice = {
 const widgetScript = {
   ...sharedConfig,
   entry: {
-    'web-stories-widget': './packages/widget/src/index.js',
+    'web-stories-widget': './packages-wp/widget/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -473,7 +495,7 @@ const widgetScript = {
 const storiesMCEButton = {
   ...sharedConfig,
   entry: {
-    'web-stories-tinymce-button': './packages/tinymce-button/src/index.js',
+    'web-stories-tinymce-button': './packages-wp/tinymce-button/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -487,7 +509,7 @@ const storiesMCEButton = {
 const storiesImgareaselect = {
   ...sharedConfig,
   entry: {
-    imgareaselect: './packages/imgareaselect/src/index.js',
+    imgareaselect: './packages-wp/imgareaselect/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,

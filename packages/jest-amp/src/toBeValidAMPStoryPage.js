@@ -15,27 +15,26 @@
  */
 
 /**
- * External dependencies
- */
-import { renderToStaticMarkup } from '@googleforcreators/react';
-
-/**
  * Internal dependencies
  */
-import { AmpStory, getAMPValidationErrors } from './utils';
+import { getAMPValidationErrors } from './utils';
 
-/** @typedef {import('react').ReactElement} ReactElement */
 /** @typedef {import('jest').CustomMatcherResult} CustomMatcherResult */
 
 /**
- * @param {string|ReactElement} stringOrComponent String containing HTML markup or a component.
+ * @param {string} string String containing HTML markup.
  * @param {boolean} [optimize=true] Whether to use AMP Optimizer on the input string.
  * @return {CustomMatcherResult} Matcher result.
  */
-async function toBeValidAMPStoryPage(stringOrComponent, optimize = true) {
-  const string = renderToStaticMarkup(stringOrComponent);
+async function toBeValidAMPStoryPage(string, optimize = true) {
   const errors = await getAMPValidationErrors(
-    renderToStaticMarkup(<AmpStory>{stringOrComponent}</AmpStory>),
+    `<amp-story
+      standalone="standalone"
+      publisher="Example Publisher"
+      publisher-logo-src="https://example.com/publisher.png"
+      title="Example Story"
+      poster-portrait-src="https://example.com/poster.png"
+    >${string}</amp-story>`,
     optimize
   );
 

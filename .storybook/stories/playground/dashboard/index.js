@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useRef } from 'preact/hooks';
 import { toId } from '@storybook/csf';
 import { Dashboard, InterfaceSkeleton } from '@googleforcreators/dashboard';
 

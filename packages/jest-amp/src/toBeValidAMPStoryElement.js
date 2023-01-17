@@ -15,38 +15,32 @@
  */
 
 /**
- * External dependencies
- */
-import { renderToStaticMarkup } from '@googleforcreators/react';
-
-/**
  * Internal dependencies
  */
-import {
-  AmpStory,
-  AmpStoryPage,
-  AmpStoryGridLayer,
-  getAMPValidationErrors,
-} from './utils';
+import { getAMPValidationErrors } from './utils';
 
-/** @typedef {import('react').ReactElement} ReactElement */
 /** @typedef {import('jest').CustomMatcherResult} CustomMatcherResult */
 
 /**
- * @param {string|ReactElement} stringOrComponent String containing HTML markup or a component.
+ * @param {string} string String containing HTML markup.
  * @param {boolean} [optimize=true] Whether to use AMP Optimizer on the input string.
  * @return {CustomMatcherResult} Matcher result.
  */
-async function toBeValidAMPStoryElement(stringOrComponent, optimize = true) {
-  const string = renderToStaticMarkup(stringOrComponent);
+async function toBeValidAMPStoryElement(string, optimize = true) {
   const errors = await getAMPValidationErrors(
-    renderToStaticMarkup(
-      <AmpStory>
-        <AmpStoryPage>
-          <AmpStoryGridLayer>{stringOrComponent}</AmpStoryGridLayer>
-        </AmpStoryPage>
-      </AmpStory>
-    ),
+    `<amp-story
+      standalone="standalone"
+      publisher="Example Publisher"
+      publisher-logo-src="https://example.com/publisher.png"
+      title="Example Story"
+      poster-portrait-src="https://example.com/poster.png"
+    >
+      <amp-story-page id="foo">
+        <amp-story-grid-layer template="vertical">
+          ${string}
+        </amp-story-grid-layer>
+      </amp-story-page>
+    </amp-story>`,
     optimize
   );
 

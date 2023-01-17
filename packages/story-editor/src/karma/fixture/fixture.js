@@ -23,7 +23,7 @@ import {
   act,
   screen,
   waitFor,
-} from '@testing-library/react';
+} from '@testing-library/preact';
 import {
   LOCAL_STORAGE_PREFIX,
   setAppElement,
@@ -58,8 +58,8 @@ import DocumentPane, {
 } from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
 
-const React = require('react');
-const { useCallback, useState, useMemo, forwardRef } = React;
+const Preact = require('preact');
+const { useCallback, useState, useMemo, forwardRef } = Preact;
 
 if ('true' === WEB_STORIES_CI) {
   configure({
@@ -159,9 +159,9 @@ export class Fixture {
     this._config = { ...FIXTURE_DEFAULT_CONFIG };
 
     this._componentStubs = new Map();
-    const origCreateElement = React.createElement;
+    const origCreateElement = Preact.h;
     //eslint-disable-next-line jasmine/no-unsafe-spy
-    spyOn(React, 'createElement').and.callFake((type, props, ...children) => {
+    spyOn(Preact, 'h').and.callFake((type, props, ...children) => {
       if (!props?._wrapped) {
         const stubs = this._componentStubs.get(type);
         if (stubs) {

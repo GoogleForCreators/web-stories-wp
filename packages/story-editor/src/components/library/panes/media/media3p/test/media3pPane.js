@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 import { renderWithTheme } from '@googleforcreators/test-utils';

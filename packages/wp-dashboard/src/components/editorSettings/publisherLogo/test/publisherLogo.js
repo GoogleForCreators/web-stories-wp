@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within, screen } from '@testing-library/react';
+import { within, screen } from '@testing-library/preact';
 import { noop } from '@googleforcreators/design-system';
 
 /**

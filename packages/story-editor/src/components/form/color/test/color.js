@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import { createSolid } from '@googleforcreators/patterns';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 

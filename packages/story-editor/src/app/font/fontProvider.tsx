@@ -189,7 +189,7 @@ function FontProvider({ children }: PropsWithChildren<unknown>) {
   }, []);
 
   const ensureCustomFontsLoaded = useCallback(
-    (fontsToLoad) => {
+    (fontsToLoad: string[]) => {
       for (const font of fontsToLoad) {
         const fontObj = customFonts?.find(({ family }) => family === font);
 

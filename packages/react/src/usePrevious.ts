@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
-import type { MutableRefObject } from 'react';
+import { useEffect, useRef } from 'preact/hooks';
+import type { RefObject } from 'preact';
 
 export default function usePrevious<V>(value: V) {
-  const ref: MutableRefObject<V | undefined> = useRef();
+  const ref: RefObject<V | undefined> = useRef();
 
   useEffect(() => {
     ref.current = value;

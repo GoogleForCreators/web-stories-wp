@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, screen } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/preact';
 import { DatalistDropdown } from '@googleforcreators/design-system';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { renderWithTheme } from '@googleforcreators/test-utils';

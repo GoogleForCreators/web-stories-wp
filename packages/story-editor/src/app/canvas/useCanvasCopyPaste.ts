@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useBatchingCallback } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import { usePasteTextContent } from '@googleforcreators/rich-text';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
@@ -122,7 +122,7 @@ function useCanvasGlobalKeys() {
     ]
   );
 
-  const elementPasteHandler = useBatchingCallback(
+  const elementPasteHandler = useCallback(
     (content: DocumentFragment): boolean => {
       if (!currentPage) {
         return false;

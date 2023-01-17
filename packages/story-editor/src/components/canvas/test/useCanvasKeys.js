@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/preact';
 import { useRef } from '@googleforcreators/react';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import { axe } from 'jest-axe';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 

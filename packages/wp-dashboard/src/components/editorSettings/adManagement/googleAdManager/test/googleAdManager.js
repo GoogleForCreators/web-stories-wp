@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 
 /**
  * Internal dependencies
@@ -62,7 +62,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', () => {
 
     const input = screen.getByRole('textbox');
 
-    fireEvent.change(input, {
+    fireEvent.input(input, {
       target: { value: '/123456789/a4a/amp_story_dfp_example' },
     });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -77,7 +77,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', () => {
 
     expect(mockUpdate).toHaveBeenCalledOnce();
 
-    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.input(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
     // rerender to get updated adManagerSlotId prop
@@ -90,7 +90,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', () => {
 
     expect(mockUpdate).toHaveBeenCalledTimes(2);
 
-    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+    fireEvent.input(input, { target: { value: 'NOT A VALID ID!!!' } });
 
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
@@ -108,7 +108,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', () => {
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button');
 
-    fireEvent.change(input, {
+    fireEvent.input(input, {
       target: { value: '/123456789/a4a/amp_story_dfp_example' },
     });
 
@@ -124,7 +124,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', () => {
 
     expect(mockUpdate).toHaveBeenCalledOnce();
 
-    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.input(input, { target: { value: '' } });
 
     fireEvent.click(button);
 
@@ -138,7 +138,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', () => {
 
     expect(mockUpdate).toHaveBeenCalledTimes(2);
 
-    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+    fireEvent.input(input, { target: { value: 'NOT A VALID ID!!!' } });
 
     fireEvent.click(button);
 

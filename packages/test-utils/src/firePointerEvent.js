@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/preact';
 
 function firePointerEvent(node, eventType, properties) {
   fireEvent(node, new window.MouseEvent(eventType, properties));

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { act } from '@testing-library/react';
+import { act } from '@testing-library/preact';
 
 export default function actPromise(callback) {
   return new Promise((resolve) => {

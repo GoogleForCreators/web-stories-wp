@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/elements';
 
 /**
@@ -114,8 +114,6 @@ describe('panels/TextStyle/TextBox', () => {
   const paddingRatioLockLabel = 'Toggle padding ratio lock';
 
   beforeEach(() => {
-    window.fetch.resetMocks();
-
     unlockPaddingTextElement = {
       id: '1',
       textAlign: 'normal',
@@ -269,7 +267,7 @@ describe('panels/TextStyle/TextBox', () => {
       const input = screen.getByRole('textbox', {
         name: 'Padding',
       });
-      fireEvent.change(input, { target: { value: '20' } });
+      fireEvent.input(input, { target: { value: '20' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
       // See that updates were pushed
@@ -294,7 +292,7 @@ describe('panels/TextStyle/TextBox', () => {
         unlockPaddingTextElement,
       ]);
       const input = screen.getByRole('textbox', { name: 'Horizontal padding' });
-      fireEvent.change(input, { target: { value: '11' } });
+      fireEvent.input(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
       // See that updates were pushed
@@ -319,7 +317,7 @@ describe('panels/TextStyle/TextBox', () => {
         unlockPaddingTextElement,
       ]);
       const input = screen.getByRole('textbox', { name: 'Vertical padding' });
-      fireEvent.change(input, { target: { value: '12' } });
+      fireEvent.input(input, { target: { value: '12' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
       // See that updates were pushed
@@ -349,7 +347,7 @@ describe('panels/TextStyle/TextBox', () => {
       const input = screen.getByRole('textbox', {
         name: 'Padding',
       });
-      fireEvent.change(input, { target: { value: '' } });
+      fireEvent.input(input, { target: { value: '' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       fireEvent.blur(input);
 
@@ -364,7 +362,7 @@ describe('panels/TextStyle/TextBox', () => {
       const input = screen.getByRole('textbox', {
         name: 'Padding',
       });
-      fireEvent.change(input, { target: { value: '11' } });
+      fireEvent.input(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
       // See that updates were pushed
@@ -392,7 +390,7 @@ describe('panels/TextStyle/TextBox', () => {
       const input = screen.getByRole('textbox', {
         name: 'Padding',
       });
-      fireEvent.change(input, { target: { value: '11' } });
+      fireEvent.input(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       fireEvent.blur(input);
 
@@ -419,7 +417,7 @@ describe('panels/TextStyle/TextBox', () => {
         unlockPaddingTextSamePadding,
       ]);
       const input = screen.getByRole('textbox', { name: 'Horizontal padding' });
-      fireEvent.change(input, { target: { value: '11' } });
+      fireEvent.input(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
       // See that updates were pushed
@@ -445,7 +443,7 @@ describe('panels/TextStyle/TextBox', () => {
         unlockPaddingTextDifferentPadding,
       ]);
       const input = screen.getByRole('textbox', { name: 'Horizontal padding' });
-      fireEvent.change(input, { target: { value: '11' } });
+      fireEvent.input(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
       // See that updates were pushed
@@ -471,7 +469,7 @@ describe('panels/TextStyle/TextBox', () => {
         unlockPaddingTextDifferentPadding,
       ]);
       const input = screen.getByRole('textbox', { name: 'Horizontal padding' });
-      fireEvent.change(input, { target: { value: '11' } });
+      fireEvent.input(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
       // See that updates were pushed
@@ -497,7 +495,7 @@ describe('panels/TextStyle/TextBox', () => {
         unlockPaddingTextDifferentPadding,
       ]);
       const input = screen.getByRole('textbox', { name: 'Vertical padding' });
-      fireEvent.change(input, { target: { value: '11' } });
+      fireEvent.input(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
       // See that updates were pushed

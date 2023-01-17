@@ -18,7 +18,7 @@
  * External dependencies
  */
 import ReactModal from 'react-modal';
-import { screen } from '@testing-library/react';
+import { screen } from '@testing-library/preact';
 
 /**
  * Internal dependencies

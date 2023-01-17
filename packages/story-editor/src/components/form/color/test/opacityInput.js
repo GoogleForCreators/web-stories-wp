@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, act, fireEvent, screen } from '@testing-library/react';
+import { waitFor, act, fireEvent, screen } from '@testing-library/preact';
 import {
   createSolid,
   getPreviewText as getPreviewTextMock,

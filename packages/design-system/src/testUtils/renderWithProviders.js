@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render } from '@testing-library/preact';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 

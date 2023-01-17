@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/preact';
 import { SnackbarContext } from '@googleforcreators/design-system';
 import { ConfigContext } from '@googleforcreators/story-editor';
 

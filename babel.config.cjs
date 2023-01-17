@@ -38,9 +38,9 @@ module.exports = function (api) {
       [
         '@babel/preset-react',
         {
-          // Not fully released yet, see https://github.com/facebook/react/pull/18299#issuecomment-603738136.
-          //runtime: 'automatic',
-          development: !isProduction,
+          runtime: 'automatic',
+          importSource: 'preact',
+          development: !isProduction && !isTest,
         },
       ],
       '@babel/preset-typescript',

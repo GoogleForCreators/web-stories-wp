@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/preact';
 import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**

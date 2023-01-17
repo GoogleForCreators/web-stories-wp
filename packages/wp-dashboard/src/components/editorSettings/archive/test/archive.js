@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { screen } from '@testing-library/react';
+import { screen } from '@testing-library/preact';
 import { FlagsProvider } from 'flagged';
 
 /**

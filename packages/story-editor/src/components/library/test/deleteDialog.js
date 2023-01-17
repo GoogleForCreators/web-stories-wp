@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent, screen } from '@testing-library/react';
+import { waitFor, fireEvent, screen } from '@testing-library/preact';
 import {
   setAppElement,
   SnackbarContext,

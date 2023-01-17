@@ -9,6 +9,9 @@ node_modules
 /packages/*/dist
 /packages/*/dist-module
 /packages/*/dist-types
+/packages-wp/*/dist
+/packages-wp/*/dist-module
+/packages-wp/*/dist-types
 /build
 /bin/build
 /bin/local-env/data
@@ -23,5 +26,5 @@ bin/local-env/docker-compose.override.yml
 phpcs.xml
 phpunit.xml
 .phpunit.result.cache
-/packages/*/package-lock.json
+package-lock.json
 tsconfig.tsbuildinfo

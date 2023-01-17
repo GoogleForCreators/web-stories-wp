@@ -21,7 +21,7 @@ import {
   screen,
   waitFor,
   waitForElementToBeRemoved,
-} from '@testing-library/react';
+} from '@testing-library/preact';
 import {
   LOCAL_STORAGE_PREFIX,
   localStore,
@@ -63,10 +63,10 @@ function setup() {
 describe('corsCheck', () => {
   let modalWrapper;
 
-  const fetchSpy = jest.spyOn(window, 'fetch');
-
   beforeAll(() => {
-    fetchSpy.mockResolvedValue({
+    // eslint-disable-next-line jest/prefer-spy-on
+    global.fetch = jest.fn();
+    global.fetch.mockResolvedValue({
       text: () => ({
         status: 200,
       }),
@@ -78,7 +78,8 @@ describe('corsCheck', () => {
 
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
-    fetchSpy.mockClear();
+    global.fetch.mockClear();
+    delete global.fetch;
   });
 
   it('should do nothing if rest api returns nothing', async () => {
@@ -127,7 +128,7 @@ describe('corsCheck', () => {
 
   it('should display dismissible dialog if failed', async () => {
     getMediaForCorsCheck.mockResolvedValue(['https://example.com/logo.png']);
-    fetchSpy.mockRejectedValue(() => new Error('request failed'));
+    global.fetch.mockRejectedValue(() => new Error('request failed'));
 
     setup();
     expect(localStore.getItemByKey).toHaveBeenCalledWith(

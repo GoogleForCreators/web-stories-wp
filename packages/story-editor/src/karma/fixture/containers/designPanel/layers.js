@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getByLabelText, getAllByTestId } from '@testing-library/react';
+import { getByLabelText, getAllByTestId } from '@testing-library/preact';
 
 /**
  * Internal dependencies

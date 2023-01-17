@@ -74,7 +74,7 @@ const REGISTER_USAGE_URL =
   '?payload=02647749feef0d5536c92df1d9cfa38e';
 
 function mockFetch(response, { requestPath, requestMethod }) {
-  jest.spyOn(window, 'fetch').mockImplementation((url, { method }) => {
+  global.fetch.mockImplementation((url, { method }) => {
     const path = new URL(url).pathname;
     if (path !== requestPath) {
       throw new Error(
@@ -91,8 +91,23 @@ function mockFetch(response, { requestPath, requestMethod }) {
 }
 
 describe('ApiFetcher', () => {
+  beforeAll(() => {
+    // eslint-disable-next-line jest/prefer-spy-on
+    global.fetch = jest.fn();
+    global.fetch.mockResolvedValue({
+      text: () => ({
+        status: 200,
+      }),
+    });
+  });
+
   afterEach(() => {
     window.fetch?.mockClear();
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
   });
 
   describe('listMedia', () => {

@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
-import type { MutableRefObject } from 'react';
+import { useEffect, useRef } from 'preact/hooks';
+import type { RefObject } from 'preact/compat';
 
 /**
  * Hook to see which prop changes are causing a component to re-render.
@@ -30,7 +30,7 @@ import type { MutableRefObject } from 'react';
  * @param props Component props.
  */
 function useWhyDidYouUpdate(name: string, props: Record<string, unknown>) {
-  const previousProps: MutableRefObject<Record<string, unknown> | undefined> =
+  const previousProps: RefObject<Record<string, unknown> | undefined> =
     useRef();
 
   useEffect(() => {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, screen } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/preact';
 import MockDate from 'mockdate';
 import {
   APIContext,
@@ -215,10 +215,10 @@ describe('PublishPanel', () => {
     expect(hours).toBeInTheDocument();
     expect(am).toBeInTheDocument();
 
-    fireEvent.change(hours, { target: { value: '9' } });
+    fireEvent.input(hours, { target: { value: '9' } });
     fireEvent.blur(hours);
 
-    fireEvent.change(minutes, { target: { value: '59' } });
+    fireEvent.input(minutes, { target: { value: '59' } });
     fireEvent.blur(minutes);
 
     fireEvent.click(am);
@@ -246,10 +246,10 @@ describe('PublishPanel', () => {
     const hours = screen.getByLabelText('Hours');
     const minutes = screen.getByLabelText('Minutes');
 
-    fireEvent.change(hours, { target: { value: '30' } });
+    fireEvent.input(hours, { target: { value: '30' } });
     fireEvent.blur(hours);
 
-    fireEvent.change(minutes, { target: { value: '130' } });
+    fireEvent.input(minutes, { target: { value: '130' } });
     fireEvent.blur(minutes);
 
     await waitFor(() => expect(updateStory).toHaveBeenCalledTimes(0));

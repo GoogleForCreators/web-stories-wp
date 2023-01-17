@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/preact';
 
 /**
  * Internal dependencies

@@ -20,11 +20,13 @@
 import { getStoryAmpValidationErrors } from '../storyAmpValidationErrors';
 
 describe('getStoryAmpValidationErrors', () => {
-  const fetchSpy = jest.spyOn(window, 'fetch');
   const windowSpy = jest.spyOn(window, 'window', 'get');
 
   beforeAll(() => {
-    fetchSpy.mockResolvedValue({
+    // eslint-disable-next-line jest/prefer-spy-on
+    global.fetch = jest.fn();
+
+    global.fetch.mockResolvedValue({
       text: () => ({
         status: 200,
       }),
@@ -32,7 +34,8 @@ describe('getStoryAmpValidationErrors', () => {
   });
 
   afterAll(() => {
-    fetchSpy.mockClear();
+    global.fetch.mockClear();
+    delete global.fetch;
     windowSpy.mockRestore();
   });
 

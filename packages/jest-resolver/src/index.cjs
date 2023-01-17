@@ -34,19 +34,22 @@ module.exports = (request, options) => {
   // https://github.com/jsdom/jsdom/pull/3352 or a similar polyfill), this can go away.
   //
   // Same goes for other packages like react-colorful, which is used by @wordpress/components.
-  const affectedPackages = [
-    'uuid',
-    'react-colorful',
-    'use-debounce',
-    'blurhash',
-  ];
+  const affectedPackages = {
+    uuid: 'uuid',
+    'react-colorful': 'react-colorful',
+    'use-debounce': 'use-debounce',
+    blurhash: 'blurhash',
+    preact: 'preact',
+    'preact-render-to-string': 'preact-render-to-string',
+    '@testing-library/preact': '@testing-library/preact',
+  };
 
-  for (const affectedPackage of affectedPackages) {
-    if (affectedPackage === request) {
+  for (const [key, value] of Object.entries(affectedPackages)) {
+    if (key === request) {
       return options.defaultResolver(request, {
         ...options,
         packageFilter: (pkg) => {
-          if (affectedPackage === pkg.name) {
+          if (value === pkg.name) {
             delete pkg.exports;
             delete pkg.module;
           }

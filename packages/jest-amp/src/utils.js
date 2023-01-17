@@ -19,7 +19,6 @@
  */
 import { existsSync } from 'fs';
 import { tmpdir } from 'os';
-import PropTypes from 'prop-types';
 import AmpOptimizer, {
   TRANSFORMATIONS_AMP_FIRST,
 } from '@ampproject/toolbox-optimizer';
@@ -29,59 +28,6 @@ const fallback = tmpdir() + '/validator_wasm.js';
 const validatorJs =
   process.env.AMP_VALIDATOR_FILE ||
   (existsSync(fallback) ? fallback : undefined);
-
-/** @typedef {import('react').ReactElement} ReactElement */
-
-/**
- * @param {Object} props Component props.
- * @param {Node} props.children Children.
- * @return {ReactElement} AMP Story grid layer component
- */
-function AmpStoryGridLayer({ children }) {
-  return (
-    <amp-story-grid-layer template="vertical">{children}</amp-story-grid-layer>
-  );
-}
-
-AmpStoryGridLayer.propTypes = {
-  children: PropTypes.node,
-};
-
-/**
- * @param {Object} props Component props.
- * @param {Node} props.children Children.
- * @return {ReactElement} AMP Story page component
- */
-function AmpStoryPage({ children }) {
-  return <amp-story-page id="foo">{children}</amp-story-page>;
-}
-
-AmpStoryPage.propTypes = {
-  children: PropTypes.node,
-};
-
-/**
- * @param {Object} props Component props.
- * @param {Node} props.children Children.
- * @return {ReactElement} AMP story component.
- */
-function AmpStory({ children }) {
-  return (
-    <amp-story
-      standalone="standalone"
-      publisher="Example Publisher"
-      publisher-logo-src="https://example.com/publisher.png"
-      title="Example Story"
-      poster-portrait-src="https://example.com/poster.png"
-    >
-      {children}
-    </amp-story>
-  );
-}
-
-AmpStory.propTypes = {
-  children: PropTypes.node,
-};
 
 // Ignore some false positives when validating URLs in Puppeteer.
 // Perhaps the validator is outdated or something.
@@ -147,4 +93,4 @@ async function getAMPValidationErrors(string, optimize = true) {
   return errorMessages;
 }
 
-export { AmpStory, AmpStoryPage, AmpStoryGridLayer, getAMPValidationErrors };
+export { getAMPValidationErrors };

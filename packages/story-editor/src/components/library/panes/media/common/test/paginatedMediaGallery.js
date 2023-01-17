@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, screen } from '@testing-library/react';
+import { waitFor, screen } from '@testing-library/preact';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**

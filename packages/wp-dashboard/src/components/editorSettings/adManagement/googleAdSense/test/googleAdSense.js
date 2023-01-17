@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 
 /**
  * Internal dependencies
@@ -98,7 +98,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     const input = screen.getByTestId('adSensePublisherId');
 
-    fireEvent.change(input, { target: { value: 'pub-1234567891234567' } });
+    fireEvent.input(input, { target: { value: 'pub-1234567891234567' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
     // rerender to get updated publisherId prop
@@ -113,7 +113,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     expect(mockUpdatePublisherId).toHaveBeenCalledOnce();
 
-    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.input(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
     // rerender to get updated publisherId prop
@@ -128,7 +128,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     expect(mockUpdatePublisherId).toHaveBeenCalledTimes(2);
 
-    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+    fireEvent.input(input, { target: { value: 'NOT A VALID ID!!!' } });
 
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
@@ -148,7 +148,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
     const input = screen.getByTestId('adSensePublisherId');
     const button = screen.getByTestId('adSensePublisherIdButton');
 
-    fireEvent.change(input, { target: { value: 'pub-1234567891234567' } });
+    fireEvent.input(input, { target: { value: 'pub-1234567891234567' } });
 
     fireEvent.click(button);
 
@@ -164,7 +164,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     expect(mockUpdatePublisherId).toHaveBeenCalledOnce();
 
-    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.input(input, { target: { value: '' } });
 
     fireEvent.click(button);
 
@@ -180,7 +180,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     expect(mockUpdatePublisherId).toHaveBeenCalledTimes(2);
 
-    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+    fireEvent.input(input, { target: { value: 'NOT A VALID ID!!!' } });
 
     fireEvent.click(button);
 
@@ -199,7 +199,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     const input = screen.getByTestId('adSenseSlotId');
 
-    fireEvent.change(input, { target: { value: '0123456789' } });
+    fireEvent.input(input, { target: { value: '0123456789' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
     // rerender to get updated publisherId prop
@@ -214,7 +214,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     expect(mockUpdateSlotId).toHaveBeenCalledOnce();
 
-    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.input(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
     // rerender to get updated publisherId prop
@@ -229,7 +229,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     expect(mockUpdateSlotId).toHaveBeenCalledTimes(2);
 
-    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+    fireEvent.input(input, { target: { value: 'NOT A VALID ID!!!' } });
 
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
@@ -249,7 +249,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
     const input = screen.getByTestId('adSenseSlotId');
     const button = screen.getByTestId('adSenseSlotIdButton');
 
-    fireEvent.change(input, { target: { value: '0123456789' } });
+    fireEvent.input(input, { target: { value: '0123456789' } });
 
     fireEvent.click(button);
 
@@ -265,7 +265,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     expect(mockUpdateSlotId).toHaveBeenCalledOnce();
 
-    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.input(input, { target: { value: '' } });
 
     fireEvent.click(button);
 
@@ -281,7 +281,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', () => {
 
     expect(mockUpdateSlotId).toHaveBeenCalledTimes(2);
 
-    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+    fireEvent.input(input, { target: { value: 'NOT A VALID ID!!!' } });
 
     fireEvent.click(button);
 

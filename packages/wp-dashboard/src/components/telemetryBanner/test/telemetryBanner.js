@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState } from '@googleforcreators/react';
-import { screen } from '@testing-library/react';
+import { screen } from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 
 /**

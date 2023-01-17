@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, screen } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/preact';
 
 /**
  * Internal dependencies
@@ -293,7 +293,7 @@ describe('Dashboard <Header />', () => {
         />
       </LayoutProvider>
     );
-    fireEvent.change(screen.getByPlaceholderText('Search Stories'), {
+    fireEvent.input(screen.getByPlaceholderText('Search Stories'), {
       target: { value: 'Hermione Granger' },
     });
     await waitFor(() => {

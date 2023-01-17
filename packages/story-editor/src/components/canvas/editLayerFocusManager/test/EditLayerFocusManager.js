@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useEffect } from '@googleforcreators/react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/preact';
 
 /**
  * Internal dependencies

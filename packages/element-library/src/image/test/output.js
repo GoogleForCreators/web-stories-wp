@@ -71,27 +71,26 @@ describe('Image output', () => {
   });
 
   it('should produce an AMP img with a srcset/sizes', async () => {
-    const output = <ImageOutput {...baseProps} />;
-    const outputStr = renderToStaticMarkup(output);
+    const output = renderToStaticMarkup(<ImageOutput {...baseProps} />);
     await expect(output).toBeValidAMPStoryElement();
-    await expect(outputStr).toStrictEqual(
+    await expect(output).toStrictEqual(
       expect.stringMatching(
-        'srcSet="https://example.com/image.png 1920w,' +
+        'srcset="https://example.com/image.png 1920w,' +
           'https://example.com/image-mid.png 960w"'
       )
     );
-    await expect(outputStr).toStrictEqual(
+    await expect(output).toStrictEqual(
       expect.stringMatching('src="https://example.com/image.png"')
     );
     // `sizes` should match: (min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>
     // The image size is 206px wide, which is half page width.
     // 45vh is the page width of stories in desktop mode (divided by 2, rounded up is 23).
-    await expect(outputStr).toStrictEqual(
+    await expect(output).toStrictEqual(
       expect.stringMatching(/sizes="\(min-width: 1024px\) 23vh, 50vw"/)
     );
     // The "disable-inline-width" attribute should accompany the "sizes" attribute.
-    await expect(outputStr).toStrictEqual(
-      expect.stringMatching('disable-inline-width="true"')
+    await expect(output).toStrictEqual(
+      expect.stringMatching('disable-inline-width')
     );
   });
 
@@ -106,19 +105,18 @@ describe('Image output', () => {
         scale: 300,
       },
     };
-    const output = <ImageOutput {...props} />;
-    const outputStr = renderToStaticMarkup(output);
+    const output = renderToStaticMarkup(<ImageOutput {...props} />);
     await expect(output).toBeValidAMPStoryElement();
     // `sizes` should match: (min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>
     // The background image should scale up its width to fit the page.
     // 45vh is the page width of stories in desktop mode.
     // The image zoom is 300 (3x) so triple both measurements.
-    await expect(outputStr).toStrictEqual(
+    await expect(output).toStrictEqual(
       expect.stringMatching(/sizes="\(min-width: 1024px\) 135vh, 300vw"/)
     );
     // The "disable-inline-width" attribute should accompany the "sizes" attribute.
-    await expect(outputStr).toStrictEqual(
-      expect.stringMatching('disable-inline-width="true"')
+    await expect(output).toStrictEqual(
+      expect.stringMatching('disable-inline-width')
     );
   });
 
@@ -133,30 +131,28 @@ describe('Image output', () => {
         scale: 100,
       },
     };
-    const output = <ImageOutput {...props} />;
-    const outputStr = renderToStaticMarkup(output);
+    const output = renderToStaticMarkup(<ImageOutput {...props} />);
     await expect(output).toBeValidAMPStoryElement();
     // `sizes` should match: (min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>
     // The background image should scale up its width 4x since its height is 25%.
     // 45vh is the page width of stories in desktop mode.
-    await expect(outputStr).toStrictEqual(
+    await expect(output).toStrictEqual(
       expect.stringMatching(/sizes="\(min-width: 1024px\) 180vh, 400vw"/)
     );
     // The "disable-inline-width" attribute should accompany the "sizes" attribute.
-    await expect(outputStr).toStrictEqual(
-      expect.stringMatching('disable-inline-width="true"')
+    await expect(output).toStrictEqual(
+      expect.stringMatching('disable-inline-width')
     );
   });
 
   it('should produce an AMP img with no srcset/sizes if the resource has no `sizes`', async () => {
     const basePropsNoSrcset = { ...baseProps };
     basePropsNoSrcset.element.resource.sizes = {};
-    const output = <ImageOutput {...basePropsNoSrcset} />;
-    const outputStr = renderToStaticMarkup(output);
+    const output = renderToStaticMarkup(<ImageOutput {...basePropsNoSrcset} />);
     await expect(output).toBeValidAMPStoryElement();
-    await expect(outputStr).toStrictEqual(expect.not.stringMatching('srcSet='));
-    await expect(outputStr).toStrictEqual(expect.not.stringMatching('sizes='));
-    await expect(outputStr).toStrictEqual(
+    await expect(output).toStrictEqual(expect.not.stringMatching('srcset='));
+    await expect(output).toStrictEqual(expect.not.stringMatching('sizes='));
+    await expect(output).toStrictEqual(
       expect.stringMatching('src="https://example.com/image.png"')
     );
   });
@@ -166,20 +162,16 @@ describe('Image output', () => {
       ...baseProps,
       element: { ...baseProps.element, alt: undefined },
     };
-    const output = <ImageOutput {...props} />;
+    const output = renderToStaticMarkup(<ImageOutput {...props} />);
     await expect(output).toBeValidAMPStoryElement();
-    const outputStr = renderToStaticMarkup(output);
-    await expect(outputStr).toStrictEqual(expect.stringMatching('alt text'));
+    await expect(output).toStrictEqual(expect.stringMatching('alt text'));
   });
 
   it('an empty string alt tag in the element should not fall back to the resource', async () => {
     const props = { ...baseProps, element: { ...baseProps.element, alt: '' } };
-    const output = <ImageOutput {...props} />;
+    const output = renderToStaticMarkup(<ImageOutput {...props} />);
     await expect(output).toBeValidAMPStoryElement();
-    const outputStr = renderToStaticMarkup(output);
-    await expect(outputStr).not.toStrictEqual(
-      expect.stringMatching('alt text')
-    );
+    await expect(output).not.toStrictEqual(expect.stringMatching('alt text'));
   });
 
   it('should remove blob URLs', async () => {
@@ -193,9 +185,8 @@ describe('Image output', () => {
         },
       },
     };
-    const output = <ImageOutput {...props} />;
+    const output = renderToStaticMarkup(<ImageOutput {...props} />);
     await expect(output).not.toBeValidAMPStoryElement();
-    const outputStr = renderToStaticMarkup(output);
-    await expect(outputStr).not.toStrictEqual(expect.stringMatching('blob:'));
+    await expect(output).not.toStrictEqual(expect.stringMatching('blob:'));
   });
 });

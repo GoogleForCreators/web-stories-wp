@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/preact';
 import { ThemeProvider } from 'styled-components';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 

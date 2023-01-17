@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState } from '@googleforcreators/react';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import PropTypes from 'prop-types';
 import {
   AnimationDirection,

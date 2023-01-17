@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import type { MouseEvent } from 'react';
-
-/**
  * Internal dependencies
  */
 import isTrackingEnabled from './isTrackingEnabled';

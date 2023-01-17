@@ -35,12 +35,15 @@ exports.resolve = function (source, file, config) {
   }
 
   for (const [regex, dir] of Object.entries(config.mapping)) {
-    // eslint-disable-next-line security/detect-non-literal-regexp
-    const sourceLocation = source.replace(new RegExp(regex), dir);
-    const result = nodeResolve(path.resolve(sourceLocation));
+    const dirs = Array.isArray(dir) ? dir : [dir];
+    for (const d of dirs) {
+      // eslint-disable-next-line security/detect-non-literal-regexp
+      const sourceLocation = source.replace(new RegExp(regex), d);
+      const result = nodeResolve(path.resolve(sourceLocation));
 
-    if (result.found) {
-      return result;
+      if (result.found) {
+        return result;
+      }
     }
   }
 

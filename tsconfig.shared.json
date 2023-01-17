@@ -31,9 +31,11 @@
     "types": ["jest", "jest-extended", "node"]
   },
   "exclude": [
-    "packages/*/dist-*/**",
-    "packages/*/dist/**",
+    "**/dist/**",
+    "**/dist-module/**",
+    "**/dist-types/**",
     "packages/*/node_modules/**",
+    "packages-wp/*/node_modules/**",
     "**/karma/**",
     "**/stories/**",
     "**/storybookUtils/**",

@@ -60,14 +60,14 @@ describe('Video output', () => {
       ...baseProps,
       element: { ...baseProps.element, alt: undefined },
     };
-    const output = <VideoOutput {...props} />;
+    const output = renderToStaticMarkup(<VideoOutput {...props} />);
     await expect(output).toBeValidAMPStoryElement();
     const outputStr = renderToStaticMarkup(output);
     await expect(outputStr).toStrictEqual(expect.stringMatching('alt text'));
   });
 
   it('should not render noaudio attribute if isMuted is not set', async () => {
-    const output = <VideoOutput {...baseProps} />;
+    const output = renderToStaticMarkup(<VideoOutput {...baseProps} />);
     await expect(output).toBeValidAMPStoryElement();
     await expect(output).not.toStrictEqual(expect.stringMatching('noaudio'));
   });
@@ -81,7 +81,7 @@ describe('Video output', () => {
       },
     };
 
-    const output = <VideoOutput {...props} />;
+    const output = renderToStaticMarkup(<VideoOutput {...props} />);
     await expect(output).toBeValidAMPStoryElement();
     const outputStr = renderToStaticMarkup(output);
     await expect(outputStr).toStrictEqual(expect.stringMatching('noaudio'));
@@ -110,7 +110,7 @@ describe('Video output', () => {
         },
       },
     };
-    const output = <VideoOutput {...props} />;
+    const output = renderToStaticMarkup(<VideoOutput {...props} />);
     await expect(output).not.toBeValidAMPStoryElement();
     const outputStr = renderToStaticMarkup(output);
     await expect(outputStr).not.toStrictEqual(expect.stringMatching('blob:'));
@@ -147,8 +147,7 @@ describe('Video output', () => {
       await expect(<VideoOutput {...baseProps} />).toBeValidAMPStoryElement();
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests -- amp-story-captions is not stable yet.
-    it.skip('should produce valid AMP output with track', async () => {
+    it('should produce valid AMP output with track', async () => {
       const props = {
         ...baseProps,
         element: {

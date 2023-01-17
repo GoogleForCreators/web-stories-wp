@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/preact';
 /**
  * Internal dependencies
  */

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
-import { render } from '@testing-library/react';
+import { render } from '@testing-library/preact';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 import { MaskTypes } from '@googleforcreators/masks';
 import { registerElementType } from '@googleforcreators/elements';
@@ -989,7 +989,7 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).toContain('background-color:#00379b');
+      expect(content).toContain('background-color: #00379b');
     });
 
     it('should output the page background color in case of default background element', () => {
@@ -1016,7 +1016,7 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).toContain('background-color:rgba(255,255,255,0.5)');
+      expect(content).toContain('background-color: rgba(255,255,255,0.5)');
     });
   });
 
@@ -1183,8 +1183,8 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).toContain('border-width:10px 10px 10px 10px;');
-      expect(content).toContain('border-color:rgba(255,255,255,1);');
+      expect(content).toContain('border-width: 10px 10px 10px 10px;');
+      expect(content).toContain('border-color: rgba(255,255,255,1);');
     });
 
     it('should not output border if the element is not rectangular', () => {
@@ -1216,8 +1216,8 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).not.toContain('border-width:10px 10px 10px 10px;');
-      expect(content).not.toContain('border-color:rgba(255,255,255,1);');
+      expect(content).not.toContain('border-width: 10px 10px 10px 10px;');
+      expect(content).not.toContain('border-color: rgba(255,255,255,1);');
     });
   });
 
@@ -1280,7 +1280,7 @@ describe('Page output', () => {
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
       expect(content).toContain(
-        'background-image:linear-gradient(0.5turn, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)'
+        'background-image: linear-gradient(0.5turn, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)'
       );
     });
 
@@ -1306,7 +1306,7 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).toContain('background-color:rgba(0,0,0,0.5)');
+      expect(content).toContain('background-color: rgba(0,0,0,0.5)');
     });
   });
 
@@ -1361,7 +1361,7 @@ describe('Page output', () => {
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
       expect(content).toContain(
-        'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
+        'border-radius: 100% 200% 100% 100% / 100% 200% 100% 100%'
       );
     });
 
@@ -1387,7 +1387,7 @@ describe('Page output', () => {
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
       expect(content).not.toContain(
-        'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
+        'border-radius: 100% 200% 100% 100% / 100% 200% 100% 100%'
       );
     });
   });
@@ -1773,7 +1773,9 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid AMP output with manual page advancement', async () => {
@@ -1787,7 +1789,9 @@ describe('Page output', () => {
         defaultAutoAdvance: false,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid AMP output with custom page duration', async () => {
@@ -1803,7 +1807,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid AMP output with custom manual page advancement', async () => {
@@ -1818,7 +1824,9 @@ describe('Page output', () => {
         defaultAutoAdvance: true,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid AMP output with Page Attachment', async () => {
@@ -1835,7 +1843,9 @@ describe('Page output', () => {
           ctaText: 'Click me!',
         },
       };
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with media elements', async () => {
@@ -1874,7 +1884,9 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with animations', async () => {
@@ -1912,7 +1924,9 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with background audio', async () => {
@@ -1936,7 +1950,9 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with background audio with captions', async () => {
@@ -1970,7 +1986,9 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with non-looping background audio', async () => {
@@ -1997,7 +2015,9 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
 
     // eslint-disable-next-line jest/no-disabled-tests -- TODO: Enable once stable.
@@ -2052,7 +2072,9 @@ describe('Page output', () => {
         },
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        renderToStaticMarkup(<PageOutput {...props} />)
+      ).toBeValidAMPStoryPage();
     });
   });
 });

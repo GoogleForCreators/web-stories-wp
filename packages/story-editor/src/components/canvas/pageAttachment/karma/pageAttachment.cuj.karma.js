@@ -21,7 +21,7 @@ import { createSolidFromString } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/preact';
 import useInsertElement from '../../useInsertElement';
 import { useStory } from '../../../../app/story';
 import { Fixture } from '../../../../karma';

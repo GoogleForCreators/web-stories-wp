@@ -18,7 +18,7 @@
  * External dependencies
  */
 
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 
 /**
  * Internal dependencies
@@ -29,6 +29,10 @@ import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 describe('Button', () => {
   const buttonText = 'Some button text';
   const onClickMock = jest.fn();
+
+  afterEach(() => {
+    onClickMock.mockClear();
+  });
 
   it('should render the default non cta button', () => {
     renderWithProviders(<Button onClick={onClickMock}>{buttonText}</Button>);

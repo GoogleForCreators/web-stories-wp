@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/preact';
 import type { PropsWithChildren } from 'react';
 
 /**
@@ -49,31 +49,35 @@ function setup() {
       getCurrentUser: currentUserPromise,
     },
   };
-  const wrapper = ({ children }: PropsWithChildren<undefined>) => (
-    <APIContext.Provider value={apiContextValue}>
-      <CurrentUserProvider>
-        <HelpCenterProvider>{children}</HelpCenterProvider>
-      </CurrentUserProvider>
-    </APIContext.Provider>
-  );
 
-  return renderHook(() => useHelpCenter(), { wrapper });
+  function Wrapper({ children }: PropsWithChildren<unknown>) {
+    return (
+      <APIContext.Provider value={apiContextValue}>
+        <CurrentUserProvider>
+          <HelpCenterProvider>{children}</HelpCenterProvider>
+        </CurrentUserProvider>
+      </APIContext.Provider>
+    );
+  }
+
+  return renderHook(() => useHelpCenter(), { wrapper: Wrapper });
 }
 
 describe('useHelpCenter', () => {
-  it('always returns the same actions by reference', () => {
+  it('always returns the same actions by reference', async () => {
     const { result } = setup();
     const initialActionsReference = result.current.actions;
-    act(() => initialActionsReference.goToNext());
+    await act(() => initialActionsReference.goToNext());
     expect(result.current.actions).toBe(initialActionsReference);
   });
 
   describe('goToNext', () => {
-    it('doesnt increment out of navigation flow bounds', () => {
+    it('doesnt increment out of navigation flow bounds', async () => {
       const { result } = setup();
 
       for (let i = 0; i < result.current.state.navigationFlow.length + 5; i++) {
-        act(() => result.current.actions.goToNext());
+        // eslint-disable-next-line no-await-in-loop -- Intentional.
+        await act(() => result.current.actions.goToNext());
         const expected =
           i < result.current.state.navigationFlow.length
             ? i
@@ -82,11 +86,12 @@ describe('useHelpCenter', () => {
       }
     });
 
-    it('updates the read status of the tip', () => {
+    it('updates the read status of the tip', async () => {
       const { result } = setup();
       const expected: Record<string, boolean> = {};
       for (let i = 0; i < result.current.state.navigationFlow.length; i++) {
-        act(() => result.current.actions.goToNext());
+        // eslint-disable-next-line no-await-in-loop -- Intentional.
+        await act(() => result.current.actions.goToNext());
         const expectedKey = result.current.state.navigationFlow[i];
         if (expectedKey !== DONE_TIP_ENTRY[0]) {
           expected[expectedKey] = true;
@@ -97,11 +102,12 @@ describe('useHelpCenter', () => {
   });
 
   describe('goToPrev', () => {
-    it('doesnt decrement out of navigation flow bounds', () => {
+    it('doesnt decrement out of navigation flow bounds', async () => {
       const { result } = setup();
       // navigate to last tip in navigation flow
       for (let i = 0; i < result.current.state.navigationFlow.length; ++i) {
-        act(() => result.current.actions.goToNext());
+        // eslint-disable-next-line no-await-in-loop -- Intentional.
+        await act(() => result.current.actions.goToNext());
       }
 
       // navigate way back past first tip
@@ -110,17 +116,18 @@ describe('useHelpCenter', () => {
         const currentIndex = lastIndex - i;
         const expected = currentIndex > 0 ? currentIndex : 0;
         expect(result.current.state.navigationIndex).toBe(expected);
-        act(() => result.current.actions.goToPrev());
+        // eslint-disable-next-line no-await-in-loop -- Intentional.
+        await act(() => result.current.actions.goToPrev());
       }
     });
 
-    it('updates the read status of the tip', () => {
+    it('updates the read status of the tip', async () => {
       const { result } = setup();
 
       // go to the last tip
       const lastTipIndex = result.current.state.navigationFlow.length - 1;
       const lastTip = result.current.state.navigationFlow[lastTipIndex];
-      act(() => result.current.actions.goToTip(lastTip));
+      await act(() => result.current.actions.goToTip(lastTip));
 
       // that tip should be read
       const expected = { [lastTip]: true };
@@ -131,40 +138,44 @@ describe('useHelpCenter', () => {
         const expectedKey = result.current.state.navigationFlow[i];
         expected[expectedKey] = true;
         expect(result.current.state.readTips).toStrictEqual(expected);
-        act(() => result.current.actions.goToPrev());
+        // eslint-disable-next-line no-await-in-loop -- Intentional.
+        await act(() => result.current.actions.goToPrev());
       }
     });
   });
 
   describe('goToMenu', () => {
-    it('always sets the navigationIndex to -1', () => {
+    it('always sets the navigationIndex to -1', async () => {
       const { result } = setup();
       for (let i = 0; i < 3; i++) {
-        act(() => result.current.actions.goToNext());
+        // eslint-disable-next-line no-await-in-loop -- Intentional.
+        await act(() => result.current.actions.goToNext());
       }
-      act(() => result.current.actions.goToMenu());
+
+      await act(() => result.current.actions.goToMenu());
       expect(result.current.state.navigationIndex).toBe(-1);
     });
   });
 
   describe('goToTip', () => {
-    it('sets navigationIndex to -1 (main menu) if key isnt in navigationFlow', () => {
+    it('sets navigationIndex to -1 (main menu) if key isnt in navigationFlow', async () => {
       const { result } = setup();
       // navigate away from main menu
-      act(() =>
+      await act(() =>
         result.current.actions.goToTip(
           String(result.current.state.navigationFlow.length - 1)
         )
       );
       // navigate to unspecified key
-      act(() => result.current.actions.goToTip('this isnt a tip key'));
+      await act(() => result.current.actions.goToTip('this isnt a tip key'));
       expect(result.current.state.navigationIndex).toBe(-1);
     });
 
-    it('sets navigationIndex to index of key in navigation flow', () => {
+    it('sets navigationIndex to index of key in navigation flow', async () => {
       const { result } = setup();
       for (let i = 0; i < result.current.state.navigationFlow.length - 1; i++) {
-        act(() =>
+        // eslint-disable-next-line no-await-in-loop -- Intentional.
+        await act(() =>
           result.current.actions.goToTip(result.current.state.navigationFlow[i])
         );
         expect(result.current.state.navigationIndex).toBe(i);
@@ -173,9 +184,9 @@ describe('useHelpCenter', () => {
   });
 
   describe('openToUnreadTip', () => {
-    it('should only open the tip if it is not already read', () => {
+    it('should only open the tip if it is not already read', async () => {
       const { result } = setup();
-      act(() => {
+      await act(() => {
         result.current.actions.goToTip('cropSelectedElements');
         result.current.actions.goToMenu();
         result.current.actions.close();
@@ -184,11 +195,15 @@ describe('useHelpCenter', () => {
       expect(result.current.state.navigationIndex).toBe(-1);
       expect(result.current.state.isOpen).toBeFalse();
 
-      act(() => result.current.actions.openToUnreadTip('cropSelectedElements'));
+      await act(() =>
+        result.current.actions.openToUnreadTip('cropSelectedElements')
+      );
       expect(result.current.state.navigationIndex).toBe(-1);
       expect(result.current.state.isOpen).toBeFalse();
 
-      act(() => result.current.actions.openToUnreadTip('addBackgroundMedia'));
+      await act(() =>
+        result.current.actions.openToUnreadTip('addBackgroundMedia')
+      );
       expect(result.current.state.navigationIndex).toBe(
         result.current.state.navigationFlow.findIndex(
           (v) => v === 'addBackgroundMedia'

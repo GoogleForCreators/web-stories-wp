@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent, screen } from '@testing-library/react';
+import { waitFor, fireEvent, screen } from '@testing-library/preact';
 import {
   SnackbarContext,
   setAppElement,
@@ -118,7 +118,7 @@ describe('MediaEditDialog', () => {
     });
 
     const input = screen.getByLabelText('Assistive text');
-    fireEvent.change(input, { target: { value: 'new alt text' } });
+    fireEvent.input(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());
@@ -138,7 +138,7 @@ describe('MediaEditDialog', () => {
     });
 
     const input = screen.getByLabelText('Assistive text');
-    fireEvent.change(input, { target: { value: 'new alt text' } });
+    fireEvent.input(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());
@@ -156,7 +156,7 @@ describe('MediaEditDialog', () => {
     });
 
     const input = screen.getByLabelText('Assistive text');
-    fireEvent.change(input, { target: { value: 'new alt text' } });
+    fireEvent.input(input, { target: { value: 'new alt text' } });
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledOnce());

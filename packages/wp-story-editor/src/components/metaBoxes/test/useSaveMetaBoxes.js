@@ -17,8 +17,13 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/preact';
 import { ConfigContext } from '@googleforcreators/story-editor';
+
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
@@ -26,6 +31,8 @@ import { ConfigContext } from '@googleforcreators/story-editor';
 import useSaveMetaBoxes from '../useSaveMetaBoxes';
 import MetaBoxesProvider from '../metaBoxesProvider';
 import useMetaBoxes from '../useMetaBoxes';
+
+jest.mock('@wordpress/api-fetch');
 
 const render = ({ configValue, isEnabled, ...initialProps }) => {
   return renderHook(
@@ -45,6 +52,14 @@ const render = ({ configValue, isEnabled, ...initialProps }) => {
 };
 
 describe('useSaveMetaBoxes', () => {
+  beforeEach(() => {
+    apiFetch.mockReturnValue(Promise.resolve({}));
+  });
+
+  afterEach(() => {
+    apiFetch.mockReset();
+  });
+
   it('saves meta box form data', async () => {
     const baseFormElement = document.createElement('form');
     baseFormElement.className = 'metabox-base-form';
@@ -100,7 +115,7 @@ describe('useSaveMetaBoxes', () => {
       isAutoSavingStory: false,
     };
 
-    const { rerender, waitForNextUpdate, result } = render({
+    const { rerender, result } = render({
       configValue,
       isEnabled: true,
       ...hookProps,
@@ -109,8 +124,16 @@ describe('useSaveMetaBoxes', () => {
     expect(result.current.state.isSavingMetaBoxes).toBeFalse();
     rerender({ ...hookProps, isSavingStory: false });
 
-    expect(result.current.state.isSavingMetaBoxes).toBeTrue();
-    await waitForNextUpdate();
-    expect(result.current.state.isSavingMetaBoxes).toBeFalse();
+    await waitFor(() => {
+      expect(result.current.state.isSavingMetaBoxes).toBeTrue();
+    });
+
+    await waitFor(() => {
+      expect(apiFetch).toHaveBeenCalledOnce();
+    });
+
+    await waitFor(() => {
+      expect(result.current.state.isSavingMetaBoxes).toBeFalse();
+    });
   });
 });

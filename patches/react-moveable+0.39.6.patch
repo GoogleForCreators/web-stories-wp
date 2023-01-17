@@ -8,3 +8,22 @@ index e7706fd..a28c4ab 100644
  import { InitialMoveable } from "./InitialMoveable";
 -export declare function makeMoveable<T = {}>(ables: Array<Able<T>>): typeof InitialMoveable & (new (...args: any[]) => InitialMoveable<T>);
 +export declare function makeMoveable<T extends IObject<any> = {}>(ables: Array<Able<T>>): typeof InitialMoveable & (new (...args: any[]) => InitialMoveable<T>);
+diff --git a/node_modules/react-moveable/dist/moveable.esm.js b/node_modules/react-moveable/dist/moveable.esm.js
+index f2f88de..25df143 100644
+--- a/node_modules/react-moveable/dist/moveable.esm.js
++++ b/node_modules/react-moveable/dist/moveable.esm.js
+@@ -5956,6 +5956,14 @@ var Draggable = {
+     var bottom = datas.bottom - beforeDist[1];
+     var nextTransform = convertTransformFormat(datas, "translate(".concat(translate[0], "px, ").concat(translate[1], "px)"), "translate(".concat(dist[0], "px, ").concat(dist[1], "px)"));
+     fillOriginalTransform(e, nextTransform);
++
++    if(!moveable.state.dragInfo) {
++      moveable.state.dragInfo = {
++        startRect: moveable.getRect(),
++        dist: [0, 0]
++     };
++    }
++
+     moveable.state.dragInfo.dist = parentEvent ? [0, 0] : dist;
+ 
+     if (!parentEvent && !parentMoveable && delta.every(function (num) {

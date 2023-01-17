@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/preact';
 import { DATA_VERSION } from '@googleforcreators/migration';
 /**
  * Internal dependencies

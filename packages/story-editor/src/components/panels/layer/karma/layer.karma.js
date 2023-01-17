@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { within } from '@testing-library/preact';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**

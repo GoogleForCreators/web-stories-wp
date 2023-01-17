@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import { forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 

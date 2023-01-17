@@ -21,10 +21,8 @@ import {
   useEffect,
   useState,
   useContext,
-  useBatchingCallback,
   useCallback,
 } from '@googleforcreators/react';
-import type { DependencyList } from 'react';
 
 /**
  * Internal dependencies
@@ -44,6 +42,8 @@ import {
   prettifyShortcut,
 } from './utils';
 import type { HTMLElementWithMouseTrap } from './utils';
+
+type DependencyList = ReadonlyArray<unknown>;
 
 const globalRef: { current: null | HTMLElement } = { current: null };
 
@@ -65,7 +65,7 @@ function useKeyEffectInternal(
 ) {
   const { keys } = useContext(Context);
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
-  const batchingCallback = useBatchingCallback(callback, deps || []);
+  const batchingCallback = useCallback(callback, deps || []);
   useEffect(
     () => {
       const nodeEl = getNodeFromRefOrNode(refOrNode);

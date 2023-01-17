@@ -48,7 +48,7 @@ export const getActiveRoute = ({
 function RouterProvider({
   children,
   ...props
-}: PropsWithChildren<{ history: History }>) {
+}: PropsWithChildren<{ history?: History }>) {
   const history = useRef<History>(props.history || createHashHistory());
   const [currentPath, setCurrentPath] = useState(
     history.current.location.pathname

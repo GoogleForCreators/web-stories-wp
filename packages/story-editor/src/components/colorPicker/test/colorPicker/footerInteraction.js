@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent, act } from '@testing-library/react';
+import { waitFor, fireEvent, act } from '@testing-library/preact';
 import { createSolid } from '@googleforcreators/patterns';
 /**
  * Internal dependencies

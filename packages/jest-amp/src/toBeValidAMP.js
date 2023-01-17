@@ -15,25 +15,18 @@
  */
 
 /**
- * External dependencies
- */
-import { renderToStaticMarkup } from '@googleforcreators/react';
-
-/**
  * Internal dependencies
  */
 import { getAMPValidationErrors } from './utils';
 
-/** @typedef {import('react').ReactElement} ReactElement */
 /** @typedef {import('jest').CustomMatcherResult} CustomMatcherResult */
 
 /**
- * @param {string|ReactElement} stringOrComponent String or React component to test.
+ * @param {string} string HTML string to test.
  * @param {Array} args Optional arguments to pass down.
  * @return {CustomMatcherResult} Matcher result.
  */
-async function toBeValidAMP(stringOrComponent, ...args) {
-  const string = renderToStaticMarkup(stringOrComponent);
+async function toBeValidAMP(string, ...args) {
   const errors = await getAMPValidationErrors(string, ...args);
   const pass = errors.length === 0;
 

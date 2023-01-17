@@ -98,7 +98,7 @@ describe('getStoryMarkup', () => {
     ];
     const markup = getStoryMarkup(story, pages, metadata);
     expect(markup).toContain('Hello World');
-    expect(markup).toContain('transform:rotate(1deg)');
+    expect(markup).toContain('transform: rotate(1deg)');
     expect(markup).toContain(
       '</amp-story-grid-layer></amp-story-page></amp-story></body></html>'
     );

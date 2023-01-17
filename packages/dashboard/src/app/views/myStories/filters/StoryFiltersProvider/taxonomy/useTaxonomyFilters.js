@@ -56,6 +56,10 @@ function useTaxonomyFilters() {
    */
   const queryTaxonomyTerms = useCallback(
     async (taxonomy, search) => {
+      if (!getTaxonomyTerms) {
+        return [];
+      }
+
       const { restBase, restPath } = taxonomy;
       const terms = await getTaxonomyTerms(restPath, { search, per_page: -1 });
       return terms.map((t) => ({
@@ -95,6 +99,10 @@ function useTaxonomyFilters() {
    * @return {Promise<Array>} taxonomies filter data
    */
   const initializeTaxonomyFilters = useCallback(async () => {
+    if (!getTaxonomies) {
+      return [];
+    }
+
     const taxonomies = await getTaxonomies({
       hierarchical: true,
       show_ui: true,

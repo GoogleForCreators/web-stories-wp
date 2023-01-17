@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { queryAllByAttribute, buildQueries } from '@testing-library/react';
+import { queryAllByAttribute, buildQueries } from '@testing-library/preact';
 
 const queryAllById = (...args) => queryAllByAttribute('id', ...args);
 

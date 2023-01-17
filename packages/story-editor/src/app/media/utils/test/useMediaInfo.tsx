@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/preact';
 import type { VideoResource } from '@googleforcreators/media';
 import { ResourceType } from '@googleforcreators/media';
 

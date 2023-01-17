@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, act, screen } from '@testing-library/react';
+import { fireEvent, waitFor, act, screen } from '@testing-library/preact';
 
 /**
  * Internal dependencies
@@ -85,7 +85,7 @@ describe('Search <Search />', () => {
 
     const input = screen.getByPlaceholderText('select a value');
 
-    fireEvent.change(input, { target: { value: 'bruce wayne' } });
+    fireEvent.input(input, { target: { value: 'bruce wayne' } });
 
     await waitFor(() => {
       expect(screen.getByDisplayValue('bruce wayne')).toBeInTheDocument();
@@ -107,7 +107,7 @@ describe('Search <Search />', () => {
     expect(input).toBeInTheDocument();
 
     fireEvent.click(input);
-    fireEvent.change(input, { target: { value: 'bruce' } });
+    fireEvent.input(input, { target: { value: 'bruce' } });
 
     act(() => {
       // wait for debounced callback to allow a select click handler to process
@@ -209,7 +209,7 @@ describe('Search <Search />', () => {
     const input = screen.getByRole('combobox');
 
     fireEvent.focus(input);
-    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.input(input, { target: { value: '' } });
 
     act(() => {
       // wait for debounced callback to allow a select click handler to process
@@ -236,7 +236,7 @@ describe('Search <Search />', () => {
     const input = screen.getByRole('combobox');
 
     fireEvent.focus(input);
-    fireEvent.change(input, { target: { value: 'tapir' } });
+    fireEvent.input(input, { target: { value: 'tapir' } });
 
     act(() => {
       // wait for debounced callback to allow a select click handler to process
@@ -269,7 +269,7 @@ describe('Search <Search />', () => {
     const input = screen.getByRole('combobox');
 
     fireEvent.focus(input);
-    fireEvent.change(input, { target: { value: 'capybara' } });
+    fireEvent.input(input, { target: { value: 'capybara' } });
 
     act(() => {
       // wait for debounced callback to allow a select click handler to process

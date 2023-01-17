@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useBatchingCallback } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Element, Group, Groups } from '@googleforcreators/elements';
 import type { StoryAnimation } from '@googleforcreators/animation';
@@ -63,12 +63,7 @@ function useAddPastedElements() {
     }
   );
 
-  const addPastedElements = useBatchingCallback<
-    Element[],
-    StoryAnimation[] | undefined,
-    Groups | undefined,
-    boolean
-  >(
+  const addPastedElements = useCallback(
     (
       elements: Element[],
       animations: StoryAnimation[] = [],

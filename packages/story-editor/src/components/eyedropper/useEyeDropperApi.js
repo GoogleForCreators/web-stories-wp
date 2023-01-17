@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from '@googleforcreators/react';
 import { getSolidFromHex } from '@googleforcreators/patterns';
 import { noop } from '@googleforcreators/design-system';
 import { rgbToColorString, parseToRgb } from 'polished';

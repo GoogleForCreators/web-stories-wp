@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/preact';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,

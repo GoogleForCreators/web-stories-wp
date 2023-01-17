@@ -18,12 +18,11 @@
  * External dependencies
  */
 import {
-  useCallback,
   useEffect,
   useMemo,
   useState,
   useDebouncedCallback,
-  useBatchingCallback,
+  useCallback,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -99,7 +98,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
-  const updateLinkFromMetadataApi = useBatchingCallback(
+  const updateLinkFromMetadataApi = useCallback(
     ({ newUrl, newTitle, newIcon, needsProxy }) =>
       pushUpdateForObject(
         'link',

@@ -24,7 +24,7 @@ import {
   getAllByRole,
   queryByRole,
   waitFor,
-} from '@testing-library/react';
+} from '@testing-library/preact';
 
 /** @typedef {import('@testing-library/dom').Matcher} Matcher */
 /** @typedef {import('@testing-library/dom').ByRoleOptions} ByRoleOptions */

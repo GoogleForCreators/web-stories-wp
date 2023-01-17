@@ -24,7 +24,7 @@ import {
   useEffect,
   useState,
   useMemo,
-  useBatchingCallback,
+  useCallback,
   useCombinedRefs,
 } from '@googleforcreators/react';
 import classnames from 'classnames';
@@ -166,7 +166,7 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
    *
    * @param {Object} target Target element.
    */
-  const resetMoveable = useBatchingCallback(
+  const resetMoveable = useCallback(
     (target) => {
       if (!moveable.current) {
         return;

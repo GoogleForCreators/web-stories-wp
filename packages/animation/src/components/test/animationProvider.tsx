@@ -18,8 +18,8 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { renderHook, act } from '@testing-library/react-hooks';
-import type { PropsWithChildren } from 'react';
+import { act, renderHook } from '@testing-library/preact';
+import type { FunctionComponent, ComponentType } from 'preact';
 
 /**
  * Internal dependencies
@@ -47,13 +47,12 @@ function flushPromiseQueue() {
 }
 
 function createWrapperWithProps<T>(
-  Wrapper: React.FunctionComponent<T>,
+  Wrapper: FunctionComponent<T>,
   props: T
-) {
-  const WrapperWithProps = function ({ children }: PropsWithChildren<T>) {
+): ComponentType<{ children: Element }> {
+  return function WrapperWithProps({ children }) {
     return <Wrapper {...props}>{children}</Wrapper>;
   };
-  return WrapperWithProps;
 }
 
 const mockWAAPIAnimation = (overrides = {}) => ({
@@ -233,7 +232,7 @@ describe('AnimationProvider', () => {
   });
 
   describe('hoistWAAPIAnimation(WAAPIAnimation)', () => {
-    it('returns a cleanup function when called', () => {
+    it('returns a cleanup function when called', async () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(AnimationProvider, {
           animations: [],
@@ -241,7 +240,7 @@ describe('AnimationProvider', () => {
       });
 
       let unhoist;
-      act(() => {
+      await act(() => {
         unhoist = result.current.actions.hoistWAAPIAnimation({
           animation: mockWAAPIAnimation(),
           elementId: '',
@@ -258,7 +257,7 @@ describe('AnimationProvider', () => {
      *
      * https://developer.mozilla.org/en-US/docs/Web/API/Animation/cancel
      */
-    it('calls Animation.cancel() method on hoisted animation when cleanup performed', () => {
+    it('calls Animation.cancel() method on hoisted animation when cleanup performed', async () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(AnimationProvider, {
           animations: [],
@@ -266,7 +265,7 @@ describe('AnimationProvider', () => {
       });
 
       const cancel = jest.fn();
-      act(() => {
+      await act(() => {
         const unhoist = result.current.actions.hoistWAAPIAnimation({
           animation: mockWAAPIAnimation({ cancel }),
           elementId: '',
@@ -278,7 +277,7 @@ describe('AnimationProvider', () => {
   });
 
   describe('WAAPIAnimationMethods', () => {
-    it('calls all hoisted Animation methods when called', () => {
+    it('calls all hoisted Animation methods when called', async () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(AnimationProvider, {
           animations: [],
@@ -289,31 +288,33 @@ describe('AnimationProvider', () => {
       const play = jest.fn();
       const pause = jest.fn();
       const cancel = jest.fn();
-      const animations = Array.from({ length: numCalls }, () => {
-        const animation = mockWAAPIAnimation({
-          play,
-          pause,
-          cancel,
-          currentTime: 0,
-          effect: {
-            getTiming: () => ({
-              duration: 300,
-              delay: 0,
-            }),
-          },
-        });
-        act(() => {
-          result.current.actions.hoistWAAPIAnimation({
-            animation,
-            elementId: '',
+      const animations = await Promise.all(
+        Array.from({ length: numCalls }, async () => {
+          const animation = mockWAAPIAnimation({
+            play,
+            pause,
+            cancel,
+            currentTime: 0,
+            effect: {
+              getTiming: () => ({
+                duration: 300,
+                delay: 0,
+              }),
+            },
           });
-        });
-        return animation;
-      });
+          await act(() => {
+            result.current.actions.hoistWAAPIAnimation({
+              animation,
+              elementId: '',
+            });
+          });
+          return animation;
+        })
+      );
 
-      act(() => result.current.actions.WAAPIAnimationMethods.play());
-      act(() => result.current.actions.WAAPIAnimationMethods.pause());
-      act(() =>
+      await act(() => result.current.actions.WAAPIAnimationMethods.play());
+      await act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      await act(() =>
         result.current.actions.WAAPIAnimationMethods.setCurrentTime(200)
       );
 
@@ -324,7 +325,7 @@ describe('AnimationProvider', () => {
       });
     });
 
-    it('calls all selectedElement hoisted Animation methods when called and passed selected elements', () => {
+    it('calls all selectedElement hoisted Animation methods when called and passed selected elements', async () => {
       const selectedElementIds = ['a', 'b', 'c'];
       const allElementIds = [...selectedElementIds, 'd', 'e'];
       const { result } = renderHook(() => useStoryAnimationContext(), {
@@ -334,29 +335,34 @@ describe('AnimationProvider', () => {
         }),
       });
 
-      const animationsWithIds = allElementIds.map((elementId) => {
-        const animation: MockAnimation = mockWAAPIAnimation({
-          play: jest.fn(),
-          pause: jest.fn(),
-          cancel: jest.fn(),
-          currentTime: 0,
-          effect: {
-            getTiming: () => ({
-              duration: 300,
-              delay: 0,
-            }),
-          },
-        });
-        const animationWithElementId = { animation, elementId };
-        act(() => {
-          result.current.actions.hoistWAAPIAnimation({ animation, elementId });
-        });
-        return animationWithElementId;
-      });
+      const animationsWithIds = await Promise.all(
+        allElementIds.map(async (elementId) => {
+          const animation: MockAnimation = mockWAAPIAnimation({
+            play: jest.fn(),
+            pause: jest.fn(),
+            cancel: jest.fn(),
+            currentTime: 0,
+            effect: {
+              getTiming: () => ({
+                duration: 300,
+                delay: 0,
+              }),
+            },
+          });
+          const animationWithElementId = { animation, elementId };
+          await act(() => {
+            result.current.actions.hoistWAAPIAnimation({
+              animation,
+              elementId,
+            });
+          });
+          return animationWithElementId;
+        })
+      );
 
-      act(() => result.current.actions.WAAPIAnimationMethods.play());
-      act(() => result.current.actions.WAAPIAnimationMethods.pause());
-      act(() =>
+      await act(() => result.current.actions.WAAPIAnimationMethods.play());
+      await act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      await act(() =>
         result.current.actions.WAAPIAnimationMethods.setCurrentTime(200)
       );
 
@@ -373,7 +379,7 @@ describe('AnimationProvider', () => {
       });
     });
 
-    it('excludes cleaned up animation methods when called', () => {
+    it('excludes cleaned up animation methods when called', async () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(AnimationProvider, {
           animations: [],
@@ -402,23 +408,25 @@ describe('AnimationProvider', () => {
           })
       );
 
-      const unhoists = animations.map((animation) => {
-        let unhoist: () => void = () => undefined;
-        act(() => {
-          unhoist = result.current.actions.hoistWAAPIAnimation({
-            animation,
-            elementId: '',
+      const unhoists = await Promise.all(
+        animations.map(async (animation) => {
+          let unhoist: () => void = () => undefined;
+          await act(() => {
+            unhoist = result.current.actions.hoistWAAPIAnimation({
+              animation,
+              elementId: '',
+            });
           });
-        });
-        return unhoist;
-      });
-      act(() => {
+          return unhoist;
+        })
+      );
+      await act(() => {
         unhoists[unhoistIndex]();
       });
 
-      act(() => result.current.actions.WAAPIAnimationMethods.play());
-      act(() => result.current.actions.WAAPIAnimationMethods.pause());
-      act(() =>
+      await act(() => result.current.actions.WAAPIAnimationMethods.play());
+      await act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      await act(() =>
         result.current.actions.WAAPIAnimationMethods.setCurrentTime(newTime)
       );
 
@@ -450,14 +458,15 @@ describe('AnimationProvider', () => {
         const animations = Array.from({ length: 10 }, () =>
           mockWAAPIAnimation()
         );
-        animations.forEach((animation) => {
-          act(() => {
+        for (const animation of animations) {
+          // eslint-disable-next-line no-await-in-loop -- Intentional.
+          await act(() => {
             result.current.actions.hoistWAAPIAnimation({
               animation,
               elementId: '',
             });
           });
-        });
+        }
 
         const completeAllAnimations = async () => {
           animations.forEach((animation) => {

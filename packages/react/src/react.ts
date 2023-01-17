@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 export {
+  createRef,
+  Fragment,
+  Component,
+  cloneElement,
+  createElement,
+} from 'preact';
+
+export {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-  forwardRef,
-  lazy,
-  memo,
   useLayoutEffect,
   useReducer,
-  createRef,
-  Fragment,
-  Component,
-  StrictMode,
-  Suspense,
-  cloneElement,
-  createElement,
   useImperativeHandle,
   useContext as useContextReact,
-} from 'react';
+} from 'preact/hooks';
+
+export { forwardRef, Suspense, lazy, memo, StrictMode } from 'preact/compat';

@@ -38,7 +38,7 @@ const FormSection = styled.div`
   }
 `;
 
-const _TextArea = styled(TextArea)`
+const StyledTextArea = styled(TextArea)`
   margin: 8px 0 0;
   // We want 34px between each section on the main content panel. The TextArea's "hint" has a line height that forces the
   // space between sections to be too large, so this is to account for the extra space.
@@ -105,7 +105,7 @@ const MainStoryInfo = () => {
         <Headline as="label" size={TextSize.XXSmall} htmlFor="story-title">
           {__('Story Title', 'web-stories')}
         </Headline>
-        <_TextArea
+        <StyledTextArea
           name={INPUT_KEYS.TITLE}
           id="story-title"
           showCount
@@ -120,7 +120,7 @@ const MainStoryInfo = () => {
         <Headline as="label" size={TextSize.XXSmall} htmlFor="story-excerpt">
           {__('Story Description', 'web-stories')}
         </Headline>
-        <_TextArea
+        <StyledTextArea
           name={INPUT_KEYS.EXCERPT}
           id="story-excerpt"
           showCount

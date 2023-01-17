@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useState, useMemo, forwardRef } from '@googleforcreators/react';
-import { act } from '@testing-library/react';
+import { act } from '@testing-library/preact';
 
 export default class ComponentStub {
   constructor(fixture, Component, matcher) {

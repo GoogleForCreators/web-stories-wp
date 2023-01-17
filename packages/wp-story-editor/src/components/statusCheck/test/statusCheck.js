@@ -20,7 +20,7 @@ import {
   fireEvent,
   screen,
   waitForElementToBeRemoved,
-} from '@testing-library/react';
+} from '@testing-library/preact';
 import { setAppElement } from '@googleforcreators/design-system';
 import { ConfigContext } from '@googleforcreators/story-editor';
 import { renderWithTheme } from '@googleforcreators/test-utils';

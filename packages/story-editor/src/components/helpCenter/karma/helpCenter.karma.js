@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { within } from '@testing-library/preact';
 
 /**
  * Internal dependencies

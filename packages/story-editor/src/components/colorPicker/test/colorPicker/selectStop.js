@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/preact';
 
 /**
  * Internal dependencies

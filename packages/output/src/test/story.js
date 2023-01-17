@@ -132,7 +132,7 @@ describe('Story output', () => {
     const content = renderToStaticMarkup(<StoryOutput {...props} />);
 
     expect(content).toContain(
-      '<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto%3Aital%401&amp;family=Lato" rel="stylesheet"/>'
+      '<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto%3Aital%401&amp;family=Lato" rel="stylesheet" />'
     );
   });
 
@@ -257,7 +257,8 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).not.toBeValidAMP();
+      const content = renderToStaticMarkup(<StoryOutput {...props} />);
+      await expect(content).not.toBeValidAMP();
     });
 
     it('should produce valid AMP output', async () => {
@@ -306,7 +307,8 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).toBeValidAMP();
+      const content = renderToStaticMarkup(<StoryOutput {...props} />);
+      await expect(content).toBeValidAMP();
     });
 
     it('should produce valid AMP output when using Google fonts', async () => {
@@ -375,7 +377,8 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).toBeValidAMP();
+      const content = renderToStaticMarkup(<StoryOutput {...props} />);
+      await expect(content).toBeValidAMP();
     });
 
     it('should produce valid AMP output when using animations', async () => {
@@ -447,7 +450,8 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).toBeValidAMP();
+      const content = renderToStaticMarkup(<StoryOutput {...props} />);
+      await expect(content).toBeValidAMP();
     });
 
     it('should produce valid AMP output when using background audio', async () => {
@@ -526,7 +530,8 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).toBeValidAMP();
+      const content = renderToStaticMarkup(<StoryOutput {...props} />);
+      await expect(content).toBeValidAMP();
     });
   });
 });

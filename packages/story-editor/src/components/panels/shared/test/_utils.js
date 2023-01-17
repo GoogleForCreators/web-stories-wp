@@ -19,7 +19,7 @@
  */
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
-import { render } from '@testing-library/react';
+import { render } from '@testing-library/preact';
 import { useMemo } from '@googleforcreators/react';
 
 /**

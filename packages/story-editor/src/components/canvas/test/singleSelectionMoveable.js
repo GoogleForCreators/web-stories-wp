@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { render, act, waitFor } from '@testing-library/react';
+import { render, act, waitFor } from '@testing-library/preact';
 import { withOverlay } from '@googleforcreators/moveable';
 import { MockMoveable } from 'react-moveable'; // eslint-disable-line import/named -- This is a custom Jest mock
 import PropTypes from 'prop-types';

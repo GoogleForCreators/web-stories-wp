@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { memo, useRef, useCallback } from '@googleforcreators/react';
+import { memo, useRef, useCallback, useEffect } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PAGE_WIDTH } from '@googleforcreators/units';
 import { StoryAnimationState } from '@googleforcreators/animation';
@@ -33,7 +33,6 @@ import {
 /**
  * Internal dependencies
  */
-import { useEffect } from 'react';
 import { DESIGN_SPACE_MARGIN, STABLE_ARRAY } from '../../constants';
 import {
   useStory,

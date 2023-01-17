@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import {
   TEXT_ELEMENT_DEFAULT_FONT,
   BACKGROUND_TEXT_MODE,

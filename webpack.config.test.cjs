@@ -18,6 +18,8 @@
  * External dependencies
  */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const PreactRefreshPlugin = require('@prefresh/webpack');
 
 /**
  * WordPress dependencies
@@ -46,7 +48,9 @@ function getConfig(group, { coverage = false } = {}) {
         ...webpackConfig.plugins.filter(
           (plugin) =>
             !(plugin instanceof DependencyExtractionWebpackPlugin) &&
-            !(plugin instanceof HtmlWebpackPlugin)
+            !(plugin instanceof HtmlWebpackPlugin) &&
+            !(plugin instanceof ReactRefreshWebpackPlugin) &&
+            !(plugin instanceof PreactRefreshPlugin)
         ),
       ],
     }))[0];

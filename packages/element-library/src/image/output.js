@@ -48,7 +48,7 @@ function ImageOutput({ element, box, flags }) {
 
   const srcSet = calculateSrcSet(resource);
   if (srcSet) {
-    props.srcSet = srcSet;
+    props.srcset = srcSet;
 
     // `width` of background elements reflects their original size.
     // We need to account for both aspect-scale-to-fit background and element scale level.

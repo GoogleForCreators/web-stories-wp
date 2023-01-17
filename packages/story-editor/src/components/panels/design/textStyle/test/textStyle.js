@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/preact';
 import { createSolid } from '@googleforcreators/patterns';
 import { RichTextContext } from '@googleforcreators/rich-text';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/elements';
@@ -205,8 +205,6 @@ Wrapper.propTypes = {
 
 describe('Panels/TextStyle', () => {
   beforeEach(() => {
-    window.fetch.resetMocks();
-
     mockControls = {};
   });
 
@@ -288,7 +286,7 @@ describe('Panels/TextStyle', () => {
       const { pushUpdate } = arrange([textElement]);
       const input = screen.getByRole('textbox', { name: 'Font size' });
 
-      fireEvent.change(input, { target: { value: '32' } });
+      fireEvent.input(input, { target: { value: '32' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({ fontSize: 32 }, true);
     });
@@ -296,7 +294,7 @@ describe('Panels/TextStyle', () => {
     it('should not update font size if empty string is submitted', () => {
       const { pushUpdate } = arrange([textElement]);
       const input = screen.getByRole('textbox', { name: 'Font size' });
-      fireEvent.change(input, { target: { value: '' } });
+      fireEvent.input(input, { target: { value: '' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).not.toHaveBeenCalled();
     });
@@ -364,7 +362,7 @@ describe('Panels/TextStyle', () => {
     it('should set lineHeight', () => {
       const { pushUpdate } = arrange([textElement]);
       const input = screen.getByRole('textbox', { name: 'Line-height' });
-      fireEvent.change(input, { target: { value: '1.5' } });
+      fireEvent.input(input, { target: { value: '1.5' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({ lineHeight: 1.5 }, true);
     });
@@ -372,7 +370,7 @@ describe('Panels/TextStyle', () => {
     it('should clear line height if set to empty', () => {
       const { pushUpdate } = arrange([textElement]);
       const input = screen.getByRole('textbox', { name: 'Line-height' });
-      fireEvent.change(input, { target: { value: '' } });
+      fireEvent.input(input, { target: { value: '' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({ lineHeight: '' }, true);
     });
@@ -380,7 +378,7 @@ describe('Panels/TextStyle', () => {
     it('should set letterSpacing', () => {
       const { pushUpdate } = arrange([textElement]);
       const input = screen.getByRole('textbox', { name: 'Letter-spacing' });
-      fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.input(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       const updatingFunction = pushUpdate.mock.calls[0][0];
       const resultOfUpdating = updatingFunction({ content: 'Hello world' });
@@ -395,7 +393,7 @@ describe('Panels/TextStyle', () => {
     it('should clear letterSpacing if set to empty', () => {
       const { pushUpdate } = arrange([textElement]);
       const input = screen.getByRole('textbox', { name: 'Letter-spacing' });
-      fireEvent.change(input, { target: { value: '' } });
+      fireEvent.input(input, { target: { value: '' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       const updatingFunction = pushUpdate.mock.calls[0][0];
       const resultOfUpdating = updatingFunction({

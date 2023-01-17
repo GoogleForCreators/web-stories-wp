@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useRef } from '@googleforcreators/react';
-import { screen } from '@testing-library/react';
+import { screen } from '@testing-library/preact';
 import { TransformContext } from '@googleforcreators/transform';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 

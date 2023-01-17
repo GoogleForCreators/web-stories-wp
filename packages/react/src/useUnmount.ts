@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from 'preact/hooks';
 
 /**
  * @param callback The identity-stable callback to be executed on unmount

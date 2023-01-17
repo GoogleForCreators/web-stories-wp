@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, act } from '@testing-library/react';
+import { render, act } from '@testing-library/preact';
 import { resourceList } from '@googleforcreators/media';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';

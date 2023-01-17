@@ -17,8 +17,10 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect } from 'react';
-import type { DependencyList, RefObject } from 'react';
+import { useLayoutEffect } from 'preact/hooks';
+import type { RefObject } from 'preact/compat';
+
+type DependencyList = ReadonlyArray<unknown>;
 
 function useFocusOut(
   ref: RefObject<HTMLElement>,

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/preact';
 import { firePointerEvent } from '@googleforcreators/test-utils';
 
 /**

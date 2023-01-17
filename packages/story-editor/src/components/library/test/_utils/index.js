@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act } from '@testing-library/react';
+import { act } from '@testing-library/preact';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**

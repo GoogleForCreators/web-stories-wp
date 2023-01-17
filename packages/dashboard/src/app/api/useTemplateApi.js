@@ -43,35 +43,47 @@ const useTemplateApi = () => {
 
     const templatesByTag = {};
 
-    const { getAllTemplates } = await import(
-      /* webpackChunkName: "chunk-web-stories-templates" */ '@googleforcreators/templates'
-    );
+    try {
+      const { getAllTemplates } = await import(
+        /* webpackChunkName: "chunk-web-stories-templates" */ '@googleforcreators/templates'
+      );
 
-    const reshapedTemplates = (await getAllTemplates({ cdnURL }))
-      .map((template) => {
-        const reshapedTemplate = reshapeTemplateObject(template);
+      const reshapedTemplates = (await getAllTemplates({ cdnURL }))
+        .map((template) => {
+          const reshapedTemplate = reshapeTemplateObject(template);
 
-        reshapedTemplate.tags.forEach((tag) => {
-          if (templatesByTag[tag]) {
-            templatesByTag[tag].push(reshapedTemplate.id);
-          } else {
-            templatesByTag[tag] = [reshapedTemplate.id];
-          }
-        });
+          reshapedTemplate.tags.forEach((tag) => {
+            if (templatesByTag[tag]) {
+              templatesByTag[tag].push(reshapedTemplate.id);
+            } else {
+              templatesByTag[tag] = [reshapedTemplate.id];
+            }
+          });
 
-        return reshapedTemplate;
-      })
-      .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
-    dispatch({
-      type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
-      payload: {
-        page: 1,
-        templates: reshapedTemplates,
-        totalPages: 1,
-        totalTemplates: reshapedTemplates.length,
-        templatesByTag,
-      },
-    });
+          return reshapedTemplate;
+        })
+        .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
+        payload: {
+          page: 1,
+          templates: reshapedTemplates,
+          totalPages: 1,
+          totalTemplates: reshapedTemplates.length,
+          templatesByTag,
+        },
+      });
+    } catch (err) {
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_FAILURE,
+        payload: err,
+      });
+    } finally {
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+        payload: false,
+      });
+    }
   }, [cdnURL]);
 
   const fetchExternalTemplateById = useCallback(

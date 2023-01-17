@@ -49,8 +49,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/preact": "^3.2.3",
     "@types/styled-components": "^5.1.26",
     "@types/web-animations-js": "^2.2.12"
   }

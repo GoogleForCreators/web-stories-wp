@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/preact';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
 import {

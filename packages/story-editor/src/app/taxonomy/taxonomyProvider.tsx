@@ -28,7 +28,7 @@ import {
   useMemo,
   useState,
 } from '@googleforcreators/react';
-import type { PropsWithChildren } from 'react';
+import type { ComponentChildren } from 'preact';
 
 /**
  * Internal dependencies
@@ -44,7 +44,7 @@ import { useAPI } from '../api';
 import { useStory } from '../story';
 import Context from './context';
 
-function TaxonomyProvider(props: PropsWithChildren<unknown>) {
+function TaxonomyProvider({ children }: { children: ComponentChildren }) {
   // Should grab categories on mount
   const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
   const { updateStory, isStoryLoaded, terms } = useStory(
@@ -278,7 +278,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
     ]
   );
 
-  return <Context.Provider {...props} value={value} />;
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 export default TaxonomyProvider;

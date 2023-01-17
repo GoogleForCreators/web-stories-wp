@@ -387,7 +387,7 @@
   <!-- Third-party or auto-generated code -->
   <exclude-pattern>*/build/*</exclude-pattern>
   <exclude-pattern>*/data/*</exclude-pattern>
-  <exclude-pattern>packages/e2e-tests/src/plugins/*</exclude-pattern>
+  <exclude-pattern>packages-wp/e2e-tests/src/plugins/*</exclude-pattern>
   <exclude-pattern>*/node_modules/*</exclude-pattern>
   <exclude-pattern>*/third-party/*</exclude-pattern>
   <exclude-pattern>*/vendor/*</exclude-pattern>

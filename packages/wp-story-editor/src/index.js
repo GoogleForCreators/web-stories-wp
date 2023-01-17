@@ -15,6 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+// Must be the first import.
+import 'preact/devtools'; // eslint-disable-line import/no-extraneous-dependencies -- False positive.
+
+/**
  * Internal dependencies
  */
 // The __webpack_public_path__ assignment will be done after the imports.
@@ -32,7 +38,7 @@ import './setLocaleData';
  */
 import { StoryEditor, AutoSaveCheck } from '@googleforcreators/story-editor';
 import { setAppElement } from '@googleforcreators/design-system';
-import { StrictMode, render } from '@googleforcreators/react';
+import { render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
@@ -100,20 +106,18 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
   };
 
   render(
-    <StrictMode>
-      <StoryEditor config={editorConfig} initialEdits={initialEdits}>
-        <GlobalStyle />
-        <Layout />
-        <PostPublishDialog />
-        <PostReviewDialog />
-        <StatusCheck />
-        <CorsCheck />
-        <RevisionMessage />
-        <FontCheck />
-        <AutoSaveCheck />
-        <PostLock />
-      </StoryEditor>
-    </StrictMode>,
+    <StoryEditor config={editorConfig} initialEdits={initialEdits}>
+      <GlobalStyle />
+      <Layout />
+      <PostPublishDialog />
+      <PostReviewDialog />
+      <StatusCheck />
+      <CorsCheck />
+      <RevisionMessage />
+      <FontCheck />
+      <AutoSaveCheck />
+      <PostLock />
+    </StoryEditor>,
     appElement
   );
 };

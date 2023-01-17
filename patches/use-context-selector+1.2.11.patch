@@ -1,0 +1,10 @@
+diff --git a/node_modules/use-context-selector/src/index.d.ts b/node_modules/use-context-selector/src/index.d.ts
+index 3cdddaa..ef57a54 100644
+--- a/node_modules/use-context-selector/src/index.d.ts
++++ b/node_modules/use-context-selector/src/index.d.ts
+@@ -1,4 +1,4 @@
+-import { Context, FC } from 'react';
++import type { Context, FunctionComponent as FC } from 'preact';
+ 
+ export const createContext: <T>(defaultValue: T) => Context<T>;
+ 

@@ -17,45 +17,6 @@
 /**
  * External dependencies
  */
-import { renderToStaticMarkup as _renderToStaticMarkup } from 'react-dom/server';
-import type { ReactElement } from 'react';
+import { default as renderToString } from 'preact-render-to-string';
 
-/* eslint-disable no-console -- Deliberately overriding console.error  */
-
-/**
- * Render a React element to static markup.
- *
- * Silences any `useLayoutEffect` warnings.
- *
- * Similar to `renderToString`, except this doesn't create extra DOM attributes
- * such as `data-reactid`, that React uses internally. This is useful if you want
- * to use React as a simple static page generator, as stripping away the extra
- * attributes can save lots of bytes.
- *
- * @param element React element.
- * @return Markup.
- */
-function renderToStaticMarkup(
-  element: ReactElement | ReactElement[] | null | string
-): string {
-  const originalConsoleError = console.error;
-  console.error = function (error, ...args) {
-    if (
-      typeof error === 'string' &&
-      !error.startsWith('Warning: useLayoutEffect does nothing on the server')
-    ) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- OK to pass through here.
-      originalConsoleError(error, ...args);
-    }
-  };
-
-  const markup = _renderToStaticMarkup(element as ReactElement);
-
-  console.error = originalConsoleError;
-
-  return markup;
-}
-
-/* eslint-enable no-console -- Deliberately overriding console.error */
-
-export default renderToStaticMarkup;
+export default renderToString;

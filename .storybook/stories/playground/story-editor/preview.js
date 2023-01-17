@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from 'preact/hooks';
 
 /**
  * Internal dependencies

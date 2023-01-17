@@ -19,8 +19,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
-import { renderHook, cleanup, act } from '@testing-library/react-hooks';
+import { fireEvent, renderHook, cleanup, act } from '@testing-library/preact';
 
 /**
  * Internal dependencies
@@ -32,7 +31,7 @@ const keys = {
   b: { key: 'b', which: 66 },
 };
 
-/** @typedef {import('@testing-library/react-hooks').HookResult} HookResult */
+/** @typedef {import('@testing-library/preact').HookResult} HookResult */
 
 /**
  * Runs tests simulating a key being held down for useIsKeyPressed

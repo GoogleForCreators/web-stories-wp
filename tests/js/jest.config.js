@@ -23,20 +23,15 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('@jest/types').Config} */
-export default {
-  rootDir: '../../',
+const sharedConfig = {
+  rootDir: '.',
   resolver: '@web-stories-wp/jest-resolver',
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
-  },
-  moduleNameMapper: {
-    '\\.svg': join(__dirname, '/svgrMock.js'),
-    '\\.css': join(__dirname, '/styleMock.js'),
-    '\\.png': join(__dirname, '/imageMock.js'),
+    '\\.(png|css|svg)$': join(__dirname, 'fileTransformer.js'),
   },
   setupFiles: [
     '<rootDir>/tests/js/setup-globals',
-    '<rootDir>/tests/js/setup-mocks',
     'jest-canvas-mock',
     'core-js',
   ],
@@ -69,6 +64,15 @@ export default {
     'types.js',
     'rollup.config.js',
   ],
+  modulePathIgnorePatterns: [
+    '<rootDir>/build',
+    '<rootDir>/vendor',
+    '/dist-types/',
+  ],
+};
+
+/** @type {import('@jest/types').Config} */
+export default {
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
@@ -80,15 +84,72 @@ export default {
     '!**/testUtils/**',
     '!**/stories/**',
   ],
-  modulePathIgnorePatterns: [
-    '<rootDir>/build',
-    '<rootDir>/vendor',
-    '/dist-types/',
-  ],
   reporters: [
     [
       'jest-silent-reporter',
       { useDots: true, showWarnings: true, showPaths: true },
     ],
+  ],
+  projects: [
+    {
+      ...sharedConfig,
+      displayName: 'Core (jsdom)',
+      transform: {
+        '^.+\\.[jt]sx?$': [
+          'babel-jest',
+          { configFile: join(__dirname, '../../babel.config.cjs') },
+        ],
+        '\\.(png|css|svg)$': join(__dirname, 'fileTransformer.js'),
+      },
+      moduleNameMapper: {
+        '^react$': 'preact/compat',
+        '^react-dom/test-utils$': 'preact/test-utils',
+        '^react-dom$': 'preact/compat',
+        '^react/jsx-runtime$': 'preact/jsx-runtime',
+        '^react/jsx-dev-runtime$': 'preact/jsx-runtime',
+      },
+      testMatch: ['<rootDir>/packages/**/test/**/*.{js,jsx,ts,tsx}'],
+      testPathIgnorePatterns: [
+        ...sharedConfig.testPathIgnorePatterns,
+        '<rootDir>/packages/[a-z]+/scripts',
+      ],
+    },
+    {
+      ...sharedConfig,
+      displayName: 'Core (node)',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/packages/**/scripts/**/test/**/*.{js,ts}'],
+    },
+    {
+      ...sharedConfig,
+      displayName: 'WP (jsdom)',
+      transform: {
+        '^.+\\.[jt]sx?$': [
+          'babel-jest',
+          { configFile: join(__dirname, '../../babel.config.wp.cjs') },
+        ],
+        '\\.(png|svg)$': join(__dirname, 'fileTransformer.js'),
+      },
+      moduleNameMapper: {
+        '\\.css': join(__dirname, '/styleMock.js'),
+      },
+      testMatch: ['<rootDir>/packages-wp/**/test/**/*.{js,jsx,ts,tsx}'],
+      testPathIgnorePatterns: [
+        ...sharedConfig.testPathIgnorePatterns,
+        '<rootDir>/packages-wp/commander',
+        '<rootDir>/packages-wp/e2e-test-utils',
+        '<rootDir>/packages-wp/e2e-tests',
+      ],
+    },
+    {
+      ...sharedConfig,
+      displayName: 'WP (node)',
+      testEnvironment: 'node',
+      testMatch: [
+        '<rootDir>/packages-wp/commander/**/test/**/*.[jt]s',
+        '<rootDir>/packages-wp/e2e-test-utils/**/test/**/*.[jt]s',
+        '<rootDir>/packages-wp/e2e-tests/**/test/**/*.[jt]s',
+      ],
+    },
   ],
 };

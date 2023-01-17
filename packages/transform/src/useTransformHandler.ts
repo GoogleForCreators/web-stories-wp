@@ -18,13 +18,14 @@
  * External dependencies
  */
 import { useEffect } from '@googleforcreators/react';
-import type { DependencyList } from 'react';
 
 /**
  * Internal dependencies
  */
 import useTransform from './useTransform';
 import type { TransformHandler } from './types';
+
+type DependencyList = ReadonlyArray<unknown>;
 
 /**
  * @param id Target element's id.

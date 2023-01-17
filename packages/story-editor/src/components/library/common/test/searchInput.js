@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
@@ -29,7 +29,7 @@ jest.useFakeTimers();
 
 describe('SearchInput', () => {
   const pressEnter = (node) => fireEvent.submit(node.form);
-  const triggerOnChange = (node) => fireEvent.change(node);
+  const triggerOnChange = (node) => fireEvent.input(node);
 
   const setInputValue = (input, value) => {
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(

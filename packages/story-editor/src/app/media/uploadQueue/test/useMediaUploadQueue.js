@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act, waitFor } from '@testing-library/preact';
 import { createResource } from '@googleforcreators/media';
 
 /**
@@ -123,7 +123,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('sets initial state for upload queue', async () => {
-    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     await waitFor(() =>
       expect(result.current.state).toStrictEqual({
@@ -154,9 +154,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isUploading state when adding an item to the queue', async () => {
-    const { result, waitForNextUpdate, waitFor } = renderHook(() =>
-      useMediaUploadQueue()
-    );
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
@@ -179,7 +177,7 @@ describe('useMediaUploadQueue', () => {
       result.current.state.isCurrentResourceUploading(resourceId)
     ).toBeTrue();
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     await waitFor(() => {
       expect(result.current.state.uploaded).toHaveLength(1);
@@ -202,7 +200,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isUploading state when adding a gif item to the queue', async () => {
-    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
@@ -226,7 +224,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isTrancoding state when adding an item to the queue', async () => {
-    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
@@ -255,7 +253,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isMuting state when adding an item to the queue', async () => {
-    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
@@ -283,7 +281,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isTrimming state when adding an item to the queue', async () => {
-    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
@@ -313,9 +311,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('allows removing items from the queue', async () => {
-    const { result, waitFor, waitForNextUpdate } = renderHook(() =>
-      useMediaUploadQueue()
-    );
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     act(() =>
       result.current.actions.addItem({
@@ -324,7 +320,7 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     expect(result.current.state.failures).toHaveLength(0);
     expect(result.current.state.uploaded).toHaveLength(1);
@@ -372,9 +368,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('transcodes files sequentially', async () => {
-    const { result, waitFor, waitForNextUpdate } = renderHook(() =>
-      useMediaUploadQueue()
-    );
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     act(() =>
       result.current.actions.addItem({
@@ -407,7 +401,7 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     expect(
       result.current.state.progress.filter(
@@ -415,7 +409,7 @@ describe('useMediaUploadQueue', () => {
       )
     ).toHaveLength(1);
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     expect(
       result.current.state.progress.filter(
@@ -423,7 +417,7 @@ describe('useMediaUploadQueue', () => {
       )
     ).toHaveLength(1);
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     await waitFor(() => expect(result.current.state.pending).toHaveLength(0));
     await waitFor(() => expect(result.current.state.progress).toHaveLength(0));
@@ -431,9 +425,7 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('transcodes files sequentially with image first', async () => {
-    const { result, waitFor, waitForNextUpdate } = renderHook(() =>
-      useMediaUploadQueue()
-    );
+    const { result } = renderHook(() => useMediaUploadQueue());
 
     act(() =>
       result.current.actions.addItem({
@@ -466,7 +458,7 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     expect(
       result.current.state.progress.filter(
@@ -474,7 +466,7 @@ describe('useMediaUploadQueue', () => {
       )
     ).toHaveLength(1);
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     expect(
       result.current.state.progress.filter(
@@ -482,7 +474,7 @@ describe('useMediaUploadQueue', () => {
       )
     ).toHaveLength(1);
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     await waitFor(() => expect(result.current.state.pending).toHaveLength(0));
     await waitFor(() => expect(result.current.state.progress).toHaveLength(0));

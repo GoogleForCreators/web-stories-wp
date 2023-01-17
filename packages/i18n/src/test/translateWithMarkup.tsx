@@ -30,13 +30,13 @@ describe('TranslateWithMarkup component', () => {
     const result = renderToStaticMarkup(
       <TranslateWithMarkup>
         {
-          'This is a <b>bold</b> move!<br/>Look at all these <em>line breaks</em>!'
+          'This is a <b>bold</b> move!<br />Look at all these <em>line breaks</em>!'
         }
       </TranslateWithMarkup>
     );
 
     expect(result).toBe(
-      'This is a <b>bold</b> move!<br/>Look at all these <em>line breaks</em>!'
+      'This is a <b>bold</b> move!<br />Look at all these <em>line breaks</em>!'
     );
   });
 
@@ -110,12 +110,12 @@ describe('TranslateWithMarkup component', () => {
           ),
         }}
       >
-        {'Read the<br/><a>Get Started story</a>, or <a2>this blog post</a2>!'}
+        {'Read the<br /><a>Get Started story</a>, or <a2>this blog post</a2>!'}
       </TranslateWithMarkup>
     );
 
     expect(result).toBe(
-      'Read the<br/><a href="https://example.com" target="_blank" rel="noreferrer">Get Started story</a>, or <a href="https://example.org" target="_blank" rel="noreferrer">this blog post</a>!'
+      'Read the<br /><a href="https://example.com" target="_blank" rel="noreferrer">Get Started story</a>, or <a href="https://example.org" target="_blank" rel="noreferrer">this blog post</a>!'
     );
   });
 

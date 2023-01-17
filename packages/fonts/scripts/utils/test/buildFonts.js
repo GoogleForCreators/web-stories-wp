@@ -70,8 +70,18 @@ describe('buildFonts', () => {
     '/assets/src/fonts/fonts.json': '{}',
   };
 
+  beforeAll(() => {
+    // eslint-disable-next-line jest/prefer-spy-on
+    global.fetch = jest.fn();
+  });
+
   beforeEach(() => {
     __setMockFiles(MOCK_FILE_INFO);
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
   });
 
   it('should combine system fonts with pre-existing list of Google Fonts', async () => {

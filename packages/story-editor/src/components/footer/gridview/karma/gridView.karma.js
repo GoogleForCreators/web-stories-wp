@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitForElementToBeRemoved } from '@testing-library/react';
+import { waitForElementToBeRemoved } from '@testing-library/preact';
 import { createSolid } from '@googleforcreators/patterns';
 
 /**

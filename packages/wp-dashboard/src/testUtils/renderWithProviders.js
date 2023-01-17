@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render } from '@testing-library/preact';
 import { ThemeProvider } from 'styled-components';
 import { FlagsProvider } from 'flagged';
 import {

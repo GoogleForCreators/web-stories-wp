@@ -18,8 +18,9 @@
  * External dependencies
  */
 import { useContextSelector as useContextSelectorOrig } from 'use-context-selector';
-import { useRef } from 'react';
-import type { MutableRefObject, Context } from 'react';
+import { useRef } from 'preact/hooks';
+import type { Context } from 'preact';
+import type { RefObject } from 'preact/compat';
 
 /**
  * Internal dependencies
@@ -50,7 +51,7 @@ function useContextSelector<T, S>(
   selector: (value: T) => S,
   equalityFn: EqualityFn = shallowEqual
 ) {
-  const ref: MutableRefObject<S | undefined> = useRef();
+  const ref: RefObject<S | undefined> = useRef();
 
   const equalityFnCallback = (state: T) => {
     const selected = selector(state);

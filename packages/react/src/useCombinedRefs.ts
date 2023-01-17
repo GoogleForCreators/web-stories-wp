@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
-import type { ForwardedRef, MutableRefObject, RefCallback } from 'react';
+import { useCallback, useRef } from 'preact/hooks';
+import type { RefCallback, RefObject } from 'preact';
+import type { ForwardedRef } from 'preact/compat';
 
 /**
  * Synchronize multiple refs to a single ref
@@ -29,7 +30,7 @@ import type { ForwardedRef, MutableRefObject, RefCallback } from 'react';
  * @return A callback to be used as `ref` for element.
  */
 function useCombinedRefs<T>(
-  ...refs: Array<RefCallback<T> | MutableRefObject<T> | ForwardedRef<T>>
+  ...refs: Array<RefCallback<T> | RefObject<T> | ForwardedRef<T>>
 ) {
   const refsRef = useRef(refs);
   refsRef.current = refs;

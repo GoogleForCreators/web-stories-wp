@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useMemo } from '@googleforcreators/react';
 import { render, act } from '@testing-library/react';
+import { useMemo } from '@googleforcreators/react';
 import type { FunctionComponent } from 'react';
 
 /**
@@ -105,7 +105,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       </Provider>
     );
 
-    it('doesnt rerender wrappers uneffected by animation updates', () => {
+    it('doesnt rerender wrappers uneffected by animation updates', async () => {
       // Render with mock methods
       const ElOneWAAPIInvocationTracker = jest.fn(WAAPIWrapper);
       const ElTwoWAAPIInvocationTracker = jest.fn(WAAPIWrapper);
@@ -124,7 +124,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
 
       // Update animations with one new animation and one
       // previous animation instance
-      act(() => {
+      await act(() => {
         rerender(
           <ElementsWithWrapper
             animations={[
@@ -144,7 +144,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
     });
 
-    it('doesnt rerender wrappers uneffected by element updates', () => {
+    it('doesnt rerender wrappers uneffected by element updates', async () => {
       // Render with mock methods
       const ElOneWAAPIInvocationTracker = jest.fn(WAAPIWrapper);
       const ElTwoWAAPIInvocationTracker = jest.fn(WAAPIWrapper);
@@ -163,7 +163,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
 
       // Update animations with one new element and one
       // previous element instance
-      act(() => {
+      await act(() => {
         rerender(
           <ElementsWithWrapper
             animations={initialAnimations}

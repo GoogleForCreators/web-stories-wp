@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/preact';
 import { getDefinitionForType } from '@googleforcreators/elements';
 import { dataPixels } from '@googleforcreators/units';
 
@@ -132,7 +132,7 @@ describe('panels/SizePosition', () => {
         const input = screen.getByRole('textbox', {
           name: 'Opacity in percent',
         });
-        fireEvent.change(input, { target: { value: '23' } });
+        fireEvent.input(input, { target: { value: '23' } });
         fireEvent.keyDown(input, { key: 'Enter', which: 13 });
         expect(pushUpdate).toHaveBeenCalledWith({ opacity: 23 }, true);
       });
@@ -206,7 +206,7 @@ describe('panels/SizePosition', () => {
     it('should update width with lock ratio', () => {
       const { pushUpdate } = renderSizePosition([defaultImage]);
       const input = screen.getByRole('textbox', { name: 'Width' });
-      fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.input(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({
@@ -219,7 +219,7 @@ describe('panels/SizePosition', () => {
     it('should update height with lock ratio', () => {
       const { pushUpdate } = renderSizePosition([defaultImage]);
       const input = screen.getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '160' } });
+      fireEvent.input(input, { target: { value: '160' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({
@@ -233,7 +233,7 @@ describe('panels/SizePosition', () => {
       const { pushUpdate } = renderSizePosition([unlockAspectRatioElement]);
 
       const input = screen.getByRole('textbox', { name: 'Width' });
-      fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.input(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({ width: 150, height: 80 });
@@ -274,7 +274,7 @@ describe('panels/SizePosition', () => {
     it('should not update width if empty value is submitted', () => {
       const { pushUpdate } = renderSizePosition([defaultImage]);
       const inputWidth = screen.getByRole('textbox', { name: 'Width' });
-      fireEvent.change(inputWidth, { target: { value: '' } });
+      fireEvent.input(inputWidth, { target: { value: '' } });
       fireEvent.keyDown(inputWidth, { key: 'Enter', which: 13 });
       expect(pushUpdate).not.toHaveBeenCalled();
     });
@@ -282,7 +282,7 @@ describe('panels/SizePosition', () => {
     it('should not update height if empty value is submitted', () => {
       const { pushUpdate } = renderSizePosition([defaultImage]);
       const inputHeight = screen.getByRole('textbox', { name: 'Height' });
-      fireEvent.change(inputHeight, { target: { value: '' } });
+      fireEvent.input(inputHeight, { target: { value: '' } });
       fireEvent.keyDown(inputHeight, { key: 'Enter', which: 13 });
       expect(pushUpdate).not.toHaveBeenCalled();
     });
@@ -354,7 +354,7 @@ describe('panels/SizePosition', () => {
         imageWithSameSize,
       ]);
       const input = screen.getByRole('textbox', { name: 'Width' });
-      fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.input(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({
@@ -384,7 +384,7 @@ describe('panels/SizePosition', () => {
         imageWithDifferentSize,
       ]);
       const input = screen.getByRole('textbox', { name: 'Width' });
-      fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.input(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({
@@ -414,7 +414,7 @@ describe('panels/SizePosition', () => {
         imageWithDifferentSize,
       ]);
       const input = screen.getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '160' } });
+      fireEvent.input(input, { target: { value: '160' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({
@@ -471,7 +471,7 @@ describe('panels/SizePosition', () => {
     it('should update height with lock ratio and extrapolated size and reset to max allowed', () => {
       const { pushUpdate, submit } = renderSizePosition([image]);
       const input = screen.getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '2000' } });
+      fireEvent.input(input, { target: { value: '2000' } });
       fireEvent.blur(input);
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({
@@ -489,7 +489,7 @@ describe('panels/SizePosition', () => {
       );
     });
 
-    it('should display Mixed as placeholder in case of mixed values multi-selectio', () => {
+    it('should display Mixed as placeholder in case of mixed values multi-selection', () => {
       renderSizePosition([
         defaultText,
         {

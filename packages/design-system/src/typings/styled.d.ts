@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import 'styled-components';
+import type { JSX } from 'preact';
 
-/**
- * Internal dependencies
- */
-import type { Theme } from '../theme';
+declare module 'icons/*.svg' {
+  const Icon: (props: JSX.SVGAttributes) => Element;
+  export default Icon;
+}
 
-declare module 'styled-components' {
-  export interface DefaultTheme extends Theme {}
+declare module 'images/*.svg' {
+  const Image: (props: JSX.SVGAttributes) => Element;
+  export default Image;
+}
+
+declare module 'inline-icons/*.svg' {
+  const content: string;
+  export default content;
 }

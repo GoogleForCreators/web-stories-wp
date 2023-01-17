@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/preact';
 import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
@@ -167,7 +167,7 @@ describe('Editor Settings: Shopping <Shopping />', () => {
 
     const input = screen.getByLabelText('Shopify Domain');
 
-    fireEvent.change(input, { target: { value: 'mynewstore.myshopify.com' } });
+    fireEvent.input(input, { target: { value: 'mynewstore.myshopify.com' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
     expect(updateSettings).toHaveBeenCalledWith({
@@ -192,14 +192,14 @@ describe('Editor Settings: Shopping <Shopping />', () => {
     const input = screen.getByLabelText('Shopify Domain');
     const button = screen.getByTestId('shopifyHostButton');
 
-    fireEvent.change(input, {
+    fireEvent.input(input, {
       target: { value: 'https://mynewstore.myshopify.ca' },
     });
     fireEvent.click(button);
     const errorMessage = screen.getByText(SETTINGS_TEXT.INPUT_ERROR);
     expect(errorMessage).toBeInTheDocument();
 
-    fireEvent.change(input, { target: { value: 'mynewstore.myshopify.com' } });
+    fireEvent.input(input, { target: { value: 'mynewstore.myshopify.com' } });
     fireEvent.click(button);
     expect(updateSettings).toHaveBeenCalledWith({
       shopifyHost: 'mynewstore.myshopify.com',

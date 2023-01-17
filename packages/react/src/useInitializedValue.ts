@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 
 /**
  * Takes an initialization function and returns a memoized result of

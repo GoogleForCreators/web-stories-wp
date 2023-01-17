@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { createPortal, render, unmountComponentAtNode } from 'react-dom';
+export { createPortal, render, unmountComponentAtNode } from 'preact/compat';

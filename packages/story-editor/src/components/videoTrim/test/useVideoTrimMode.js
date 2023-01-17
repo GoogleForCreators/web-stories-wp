@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/preact';
 
 /**
  * Internal dependencies
@@ -190,12 +190,7 @@ describe('useVideoTrimMode', () => {
     const mockGetMediaById = jest
       .fn()
       .mockImplementation(() => Promise.resolve(originalResource));
-    const {
-      result,
-      setEditingElementWithState,
-      getMediaById,
-      waitForNextUpdate,
-    } = setup({
+    const { result, setEditingElementWithState, getMediaById } = setup({
       mockGetMediaById,
       element: {
         resource: {
@@ -208,9 +203,9 @@ describe('useVideoTrimMode', () => {
       },
     });
 
-    act(() => result.current.toggleTrimMode());
+    await act(() => result.current.toggleTrimMode());
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     expect(getMediaById).toHaveBeenCalledWith(originalId);
 
@@ -235,12 +230,7 @@ describe('useVideoTrimMode', () => {
       .fn()
       .mockImplementation(() => Promise.reject(new Error('404')));
 
-    const {
-      result,
-      setEditingElementWithState,
-      getMediaById,
-      waitForNextUpdate,
-    } = setup({
+    const { result, setEditingElementWithState, getMediaById } = setup({
       mockGetMediaById,
       element: {
         resource: {
@@ -253,9 +243,9 @@ describe('useVideoTrimMode', () => {
       },
     });
 
-    act(() => result.current.toggleTrimMode());
+    await act(() => result.current.toggleTrimMode());
 
-    await waitForNextUpdate();
+    // TODO: waitFor something.
 
     expect(getMediaById).toHaveBeenCalledWith(originalId);
 

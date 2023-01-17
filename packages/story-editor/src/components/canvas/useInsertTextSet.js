@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useBatchingCallback } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import {
   DANGER_ZONE_HEIGHT,
   FULLBLEED_HEIGHT,
@@ -48,7 +48,7 @@ function useInsertTextSet(shouldUseSmartColor = false) {
     }
   );
 
-  const insertTextSet = useBatchingCallback(
+  const insertTextSet = useCallback(
     async (toAdd, applySmartColor = shouldUseSmartColor) => {
       const htmlFormatters = getHTMLFormatters();
       const { setColor } = htmlFormatters;

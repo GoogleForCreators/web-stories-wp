@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/preact';
 import {
   queryByAriaLabel,
   renderWithTheme,
