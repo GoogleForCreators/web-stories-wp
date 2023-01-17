@@ -189,6 +189,12 @@
       </properties>
   </rule>
 
+  <rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator">
+      <properties>
+        <property name="minDigitsAfterDecimalPoint" value="3" />
+        <property name="minDigitsBeforeDecimalPoint" value="6" />
+      </properties>
+  </rule>
   <!-- Disallows grouped use declarations. -->
   <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse" />
   <!-- Disallows leading backslash in use statement. -->
