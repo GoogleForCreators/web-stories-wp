@@ -41,9 +41,6 @@ class Feed extends TestCase {
 	 */
 	protected static int $story_id;
 
-	/**
-	 * @param WP_UnitTest_Factory $factory
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]

@@ -200,7 +200,7 @@ class Admin extends DependencyInjectedTestCase {
 	public function test_prefill_post_content_invalid_id(): void {
 		wp_set_current_user( self::$admin_id );
 
-		$_GET['from-web-story'] = 999999999;
+		$_GET['from-web-story'] = 999_999_999;
 		$current_post           = get_post( self::$post_id );
 		$this->assertNotNull( $current_post );
 		$result = $this->instance->prefill_post_content( 'current', $current_post );
@@ -259,6 +259,7 @@ class Admin extends DependencyInjectedTestCase {
 	public function test_media_states_no_active_logo(): void {
 		$post   = self::factory()->post->create_and_get( [] );
 		$result = $this->instance->media_states( [], $post );
+		$this->assertIsArray( $result );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -269,6 +270,7 @@ class Admin extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get( [] );
 		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
 		$result = $this->instance->media_states( [], $post );
+		$this->assertIsArray( $result );
 		$this->assertEqualSets( [ 'Web Stories Publisher Logo' ], $result );
 	}
 }

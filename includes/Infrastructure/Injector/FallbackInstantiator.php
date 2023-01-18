@@ -43,7 +43,7 @@ final class FallbackInstantiator implements Instantiator {
 	 *
 	 * @phpstan-param class-string<T> $class Class to make an object instance out of.
 	 */
-	public function instantiate( string $class, $dependencies = [] ) {
+	public function instantiate( string $class, array $dependencies = [] ) {
 		return new $class( ...$dependencies );
 	}
 }

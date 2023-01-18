@@ -138,7 +138,7 @@ class Sanitization {
 	 * @param Document             $document Document instance.
 	 * @param array<string,string> $scripts  List of found scripts.
 	 */
-	protected function ensure_required_markup( Document $document, array $scripts ): void {
+	protected function ensure_required_markup( Document $document, array $scripts ): void { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		/**
 		 * Link elements.
 		 *

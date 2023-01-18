@@ -65,7 +65,7 @@ export default [
       show_in_quick_edit: true,
       show_ui: true,
     },
-    restPath: 'http://localhost:8899/wp-json/wp/v2/story-categories',
+    restPath: 'http://localhost:8899/wp-json/wp/v2/web_story_category',
   },
   {
     name: 'Tags',

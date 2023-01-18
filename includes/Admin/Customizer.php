@@ -513,7 +513,7 @@ class Customizer extends Service_Base implements Conditional {
 	 * @param WP_Error $validity WP_Error object.
 	 * @param int      $value    Value to be validated.
 	 */
-	public function validate_number_of_stories( $validity, $value ): WP_Error {
+	public function validate_number_of_stories( WP_Error $validity, int $value ): WP_Error {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 20 ) {
@@ -530,7 +530,7 @@ class Customizer extends Service_Base implements Conditional {
 	 * @param WP_Error $validity WP_Error object.
 	 * @param int      $value Value to be validated.
 	 */
-	public function validate_number_of_columns( $validity, $value ): WP_Error {
+	public function validate_number_of_columns( WP_Error $validity, int $value ): WP_Error {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 5 ) {

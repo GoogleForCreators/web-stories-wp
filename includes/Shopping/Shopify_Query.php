@@ -397,7 +397,7 @@ QUERY;
 	 * @param string $order        Whether to order products in ascending or descending order.
 	 *                             Accepts 'asc' (ascending) or 'desc' (descending).
 	 */
-	protected function get_cache_key( $search_term, $after, $per_page, $orderby, $order ): string {
+	protected function get_cache_key( string $search_term, string $after, int $per_page, string $orderby, string $order ): string {
 		$cache_args = (string) wp_json_encode( compact( 'search_term', 'after', 'per_page', 'orderby', 'order' ) );
 
 		return 'web_stories_shopify_data_' . md5( $cache_args );
