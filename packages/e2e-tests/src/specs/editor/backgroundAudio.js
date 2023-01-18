@@ -92,8 +92,9 @@ describe('Background Audio', () => {
     it('should allow adding background audio', async () => {
       await createNewStory();
 
-      // Select the current page by clicking bg change quick action (because of empty state).
-      await expect(page).toClick('button', { text: 'Change background color' });
+      await page.focus('[aria-label="Element: Background"]');
+
+      await expect(page).toClick('li', { text: /^Style$/i });
 
       await expect(page).toMatch('Page Background Audio');
 
@@ -129,8 +130,9 @@ describe('Background Audio', () => {
     it('should allow adding background audio with captions', async () => {
       await createNewStory();
 
-      // Select the current page by clicking bg change quick action (because of empty state).
-      await expect(page).toClick('button', { text: 'Change background color' });
+      await page.focus('[aria-label="Element: Background"]');
+
+      await expect(page).toClick('li', { text: /^Style$/i });
 
       await expect(page).toMatch('Page Background Audio');
 
@@ -180,12 +182,9 @@ describe('Background Audio', () => {
         it('should allow adding background audio', async () => {
           await createNewStory();
 
-          // Select the current page by clicking bg change quick action (because of empty state).
-          await expect(page).toClick('button', {
-            text: 'Change background color',
-          });
+          await page.focus('[aria-label="Element: Background"]');
 
-          await page.keyboard.press('Escape');
+          await expect(page).toClick('li', { text: /^Style$/i });
 
           await expect(page).toMatch('Page Background Audio');
 
@@ -202,6 +201,9 @@ describe('Background Audio', () => {
             text: 'Use audio file',
           });
 
+          // Dialog should disappear by now.
+          await expect(page).not.toMatch('Insert external background audio');
+
           await page.waitForSelector('audio source[src*="audio.mp3"]');
 
           await expect(page).not.toMatchElement('button', {
@@ -214,12 +216,9 @@ describe('Background Audio', () => {
         it('should allow adding background audio with captions', async () => {
           await createNewStory();
 
-          // Select the current page by clicking bg change quick action (because of empty state).
-          await expect(page).toClick('button', {
-            text: 'Change background color',
-          });
+          await page.focus('[aria-label="Element: Background"]');
 
-          await page.keyboard.press('Escape');
+          await expect(page).toClick('li', { text: /^Style$/i });
 
           await expect(page).toMatch('Page Background Audio');
 
