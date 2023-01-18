@@ -120,7 +120,7 @@ function OptionListWithRef<O extends AbstractOption>(
    */
   // Add option when observed entry is seen
   const observer = useMemo(() => {
-    if (!listRef) {
+    if (!listRef.current) {
       return null;
     }
     return new window.IntersectionObserver(
@@ -289,6 +289,9 @@ function OptionListWithRef<O extends AbstractOption>(
   );
 }
 
+// This cast is really annoying, but required to make a forwardRef'ed component
+// accept a generic type argument.
+// @see https://fettblog.eu/typescript-react-generic-forward-refs/
 const OptionList = memo(forwardRef(OptionListWithRef)) as <
   O extends AbstractOption
 >(

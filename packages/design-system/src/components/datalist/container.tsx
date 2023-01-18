@@ -149,6 +149,9 @@ function OptionsContainerWithRef<O extends AbstractOption>(
   );
 }
 
+// This cast is really annoying, but required to make a forwardRef'ed component
+// accept a generic type argument.
+// @see https://fettblog.eu/typescript-react-generic-forward-refs/
 const OptionsContainer = forwardRef(OptionsContainerWithRef) as <
   O extends AbstractOption
 >(
