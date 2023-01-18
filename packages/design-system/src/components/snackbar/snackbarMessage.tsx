@@ -181,7 +181,7 @@ interface SnackbarMessageProps extends ComponentPropsWithoutRef<'div'> {
   isPreventAutoDismiss?: boolean;
   isPreventActionDismiss?: boolean;
   thumbnail?: SnackbarNotificationThumbnail;
-  message?: JSX.Element;
+  message?: string;
   removeMessageTimeInterval?: number;
   showCloseButton?: boolean;
   placement?: SnackbarPlacement;

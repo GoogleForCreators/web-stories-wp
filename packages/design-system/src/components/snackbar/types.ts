@@ -39,7 +39,7 @@ export interface SnackbarNotificationThumbnail {
 }
 
 export interface SnackbarNotification {
-  message: JSX.Element;
+  message: string;
   actionLabel?: JSX.Element;
   actionHelpText?: string;
   dismissible?: boolean;
@@ -49,5 +49,6 @@ export interface SnackbarNotification {
   preventAutoDismiss?: boolean;
   timeout?: number;
   thumbnail?: SnackbarNotificationThumbnail;
+  key?: string;
   id?: string;
 }

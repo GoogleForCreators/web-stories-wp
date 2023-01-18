@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import type { ReactElement, SVGAttributes } from 'react';
-
 declare module '*.svg' {
-  const Icon: (props: SVGAttributes<SVGElement>) => ReactElement;
+  const Icon: (props: React.SVGAttributes<SVGElement>) => React.ReactElement;
   export default Icon;
 }
