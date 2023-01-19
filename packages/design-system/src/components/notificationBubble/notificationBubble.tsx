@@ -17,22 +17,12 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import type { ComponentPropsWithoutRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { themeHelpers } from '../../theme';
-
-export enum BubbleVariant {
-  Primary = 'primary',
-  Secondary = 'secondary',
-  Tertiary = 'tertiary',
-  Quarternary = 'quaternary',
-  Positive = 'positive',
-  Negative = 'negative',
-  Accent = 'accent',
-}
+import { BubbleVariant, type NotificationBubbleProps } from './types';
 
 const BUBBLE_DIAMETER = 24;
 const SMALL_BUBBLE_DIAMETER = 20;
@@ -78,13 +68,6 @@ const Inner = styled.span<{
     $invertColor ? theme.colors.inverted.fg.primary : theme.colors.fg.primary};
   user-select: none;
 `;
-
-interface NotificationBubbleProps extends ComponentPropsWithoutRef<'div'> {
-  notificationCount: number;
-  isSmall?: boolean;
-  variant?: BubbleVariant;
-  invertTextColor?: boolean;
-}
 
 function NotificationBubble({
   notificationCount,

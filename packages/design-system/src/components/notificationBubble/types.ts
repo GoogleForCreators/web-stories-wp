@@ -13,6 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import type { ComponentPropsWithoutRef } from 'react';
 
-export { default as NotificationBubble } from './notificationBubble';
-export * from './types';
+export enum BubbleVariant {
+  Primary = 'primary',
+  Secondary = 'secondary',
+  Tertiary = 'tertiary',
+  Quarternary = 'quaternary',
+  Positive = 'positive',
+  Negative = 'negative',
+  Accent = 'accent',
+}
+
+export interface NotificationBubbleProps
+  extends ComponentPropsWithoutRef<'div'> {
+  notificationCount: number;
+  isSmall?: boolean;
+  variant?: BubbleVariant;
+  invertTextColor?: boolean;
+}
