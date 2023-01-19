@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Media;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -43,7 +44,7 @@ class Product_Meta extends DependencyInjectedTestCase {
 	public function test_register_meta(): void {
 		$this->instance->register_meta();
 
-		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PRODUCTS_POST_META_KEY, \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PRODUCTS_POST_META_KEY, Story_Post_Type::POST_TYPE_SLUG ) );
 	}
 
 	/**
@@ -53,7 +54,7 @@ class Product_Meta extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);

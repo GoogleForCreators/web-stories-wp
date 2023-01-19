@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 use Brain\Monkey;
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Tests\Shared\Private_Access;
 use Google\Web_Stories\Tests\Unit\TestCase;
 use Mockery;
@@ -47,7 +48,7 @@ class WooCommerce_Query extends TestCase {
 			]
 		);
 
-		$woocommerce = $this->createMock( \Google\Web_Stories\Integrations\WooCommerce::class );
+		$woocommerce = $this->createMock( WooCommerce::class );
 		$woocommerce->method( 'get_plugin_status' )->willReturn(
 			[
 				'installed' => true,

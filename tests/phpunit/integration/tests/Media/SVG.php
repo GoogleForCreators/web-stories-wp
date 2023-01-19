@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Media;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -34,7 +35,7 @@ class SVG extends TestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments = $this->createMock( Experiments::class );
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 

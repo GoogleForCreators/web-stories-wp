@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_Customize_Manager;
 use WP_Customize_Section;
@@ -316,7 +317,7 @@ class Customizer extends DependencyInjectedTestCase {
 
 		self::factory()->post->create(
 			[
-				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 			]
 		);
 

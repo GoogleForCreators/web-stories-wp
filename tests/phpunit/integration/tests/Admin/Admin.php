@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use DateTime;
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
@@ -127,7 +128,7 @@ class Admin extends DependencyInjectedTestCase {
 		$current_post           = get_post( self::$post_id );
 		$this->assertNotNull( $current_post );
 		$result = $this->instance->prefill_post_content( 'current', $current_post );
-		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertIsString( $result );
 		$this->assertStringContainsString( 'wp-block-web-stories-embed', $result );
 		$this->assertStringContainsString( $poster, $result );
@@ -187,7 +188,7 @@ class Admin extends DependencyInjectedTestCase {
 		$current_post           = get_post( self::$post_id );
 		$this->assertNotNull( $current_post );
 		$result = $this->instance->prefill_post_content( 'current', $current_post );
-		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertIsString( $result );
 		$this->assertStringContainsString( '[web_stories_embed', $result );
 		$this->assertStringContainsString( $poster, $result );
