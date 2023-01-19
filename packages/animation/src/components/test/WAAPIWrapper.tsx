@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useMemo } from '@googleforcreators/react';
 import { render, act } from '@testing-library/react';
 import type { FunctionComponent } from 'react';
 
@@ -42,15 +43,18 @@ function Trackers({
   ElOneWAAPIInvocationTracker,
   ElTwoWAAPIInvocationTracker,
 }: TrackersProps) {
-  return (
-    <div>
-      <ElOneWAAPIInvocationTracker target={'elOne'}>
-        <div />
-      </ElOneWAAPIInvocationTracker>
-      <ElTwoWAAPIInvocationTracker target={'elTwo'}>
-        <div />
-      </ElTwoWAAPIInvocationTracker>
-    </div>
+  return useMemo(
+    () => (
+      <div>
+        <ElOneWAAPIInvocationTracker target={'elOne'}>
+          <div />
+        </ElOneWAAPIInvocationTracker>
+        <ElTwoWAAPIInvocationTracker target={'elTwo'}>
+          <div />
+        </ElTwoWAAPIInvocationTracker>
+      </div>
+    ),
+    [ElOneWAAPIInvocationTracker, ElTwoWAAPIInvocationTracker]
   );
 }
 
@@ -171,7 +175,6 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       });
 
       // See that only the element effected by the animation update rerendered
-      // See that mock methods were called on mount
       expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(2);
       expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
     });
