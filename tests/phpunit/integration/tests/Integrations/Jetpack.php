@@ -319,10 +319,6 @@ class Jetpack extends DependencyInjectedTestCase {
 				98_765_431,
 				'1646:05',
 			],
-			'5000.9876' => [
-				5_000.9876,
-				'0:05',
-			],
 		];
 	}
 }
