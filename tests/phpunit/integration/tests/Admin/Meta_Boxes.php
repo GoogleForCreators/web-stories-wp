@@ -40,7 +40,7 @@ class Meta_Boxes extends TestCase {
 		// is run multiple times, causing the story not to be available anymore.
 		$this->story_id = self::factory()->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Meta Boxes Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
