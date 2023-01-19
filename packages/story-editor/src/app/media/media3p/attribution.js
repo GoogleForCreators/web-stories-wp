@@ -101,9 +101,7 @@ export function UnsplashAttribution() {
       aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
     >
       <AttributionPill aria-hidden>
-        <Text.Span size={TextSize.XSmall}>
-          {__('Powered by', 'web-stories')}
-        </Text.Span>
+        <Text size={TextSize.XSmall}>{__('Powered by', 'web-stories')}</Text>
         <UnsplashLogo />
       </AttributionPill>
     </a>
