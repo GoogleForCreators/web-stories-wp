@@ -26,7 +26,7 @@ import {
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import {
-  Datalist,
+  DatalistDropdown,
   DatalistOption,
   DatalistSelected,
 } from '@googleforcreators/design-system';
@@ -155,8 +155,11 @@ const FontPicker = forwardRef(function FontPicker(
     ];
   }, [customFonts, recentFonts]);
 
+  //console.error('What is datalist?', DatalistDropdown, DatalistOption);
+  //return null;
+
   return (
-    <Datalist
+    <DatalistDropdown
       ref={ref}
       zIndex={zIndex}
       tabIndex={tabIndex}

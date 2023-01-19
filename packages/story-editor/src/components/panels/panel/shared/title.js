@@ -27,7 +27,7 @@ import {
   Headline,
   themeHelpers,
   NotificationBubble,
-  BUBBLE_VARIANTS,
+  BubbleVariant,
 } from '@googleforcreators/design-system';
 
 /**
@@ -265,7 +265,7 @@ function Title({
           <StyledNotificationBubble
             data-testid="panel-badge"
             notificationCount={count}
-            variant={BUBBLE_VARIANTS.PRIMARY}
+            variant={BubbleVariant.Primary}
             aria-hidden
           />
         )}

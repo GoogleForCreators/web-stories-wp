@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { default as Datalist } from './datalist';
+export { default as DatalistDropdown } from './datalist';
 export {
   ListElement as DatalistOption,
   Selected as DatalistSelected,

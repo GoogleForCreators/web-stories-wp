@@ -19,7 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
-import { Datalist } from '@googleforcreators/design-system';
+import { DatalistDropdown } from '@googleforcreators/design-system';
 import {
   Row,
   useStory,
@@ -117,7 +117,7 @@ function Author() {
 
   return (
     <Row>
-      <Datalist
+      <DatalistDropdown
         options={queriedUsers}
         searchResultsLabel={__('Search results', 'web-stories')}
         dropdownButtonLabel={__('Author', 'web-stories')}

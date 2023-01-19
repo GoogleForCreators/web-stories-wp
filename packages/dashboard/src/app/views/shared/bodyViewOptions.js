@@ -20,7 +20,11 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
-import { Text, TextSize, Datalist } from '@googleforcreators/design-system';
+import {
+  Text,
+  TextSize,
+  DatalistDropdown,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -55,7 +59,7 @@ const ControlsContainer = styled.div`
 `;
 
 const BodyViewOptionsHeader = styled.div``;
-const StyledDatalist = styled(Datalist)`
+const StyledDatalist = styled(DatalistDropdown)`
   max-width: ${FILTER_MAX_WIDTH}px;
 `;
 

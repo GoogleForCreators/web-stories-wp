@@ -38,7 +38,7 @@ import {
   Text,
   TextSize,
   Icons,
-  Datalist,
+  DatalistDropdown,
   DatalistOption,
 } from '@googleforcreators/design-system';
 import {
@@ -404,7 +404,7 @@ function PublishPanel({ nameOverride }) {
           </MediaInputWrapper>
           <DropdownWrapper>
             <MediaWrapper>
-              <Datalist
+              <DatalistDropdown
                 options={publisherLogosWithUploadOption}
                 primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}
