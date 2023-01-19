@@ -220,9 +220,19 @@
       <property name="linesCountAfterLastUse" value="1" />
     </properties>
   </rule>
+  <!-- All references to functions, classes and constants should import using a use statement. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+     <properties>
+        <property name="allowFullyQualifiedGlobalFunctions" value="true" />
+        <property name="allowFullyQualifiedGlobalClasses" value="true" />
+        <property name="allowFullyQualifiedGlobalConstants" value="true" />
+        <property name="allowFallbackGlobalFunctions" value="true" />
+        <property name="allowFallbackGlobalConstants" value="true" />
+        <property name="allowFullyQualifiedNameForCollidingClasses" value="true" />
+    </properties>
+  </rule>
   <!-- Prohibits uses from the same namespace. -->
   <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace" />
-  <!-- All references to types named Exception or ending with Exception must be referenced via a fully qualified name. -->
   <!-- Looks for unused imports from other namespaces. -->
   <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
     <properties>

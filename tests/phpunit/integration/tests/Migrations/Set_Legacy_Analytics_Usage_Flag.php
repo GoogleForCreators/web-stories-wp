@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -37,7 +38,7 @@ class Set_Legacy_Analytics_Usage_Flag extends DependencyInjectedTestCase {
 	}
 
 	public function tear_down(): void {
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_TRACKING_ID );
+		delete_option( Settings::SETTING_NAME_TRACKING_ID );
 
 		parent::tear_down();
 	}
@@ -46,21 +47,21 @@ class Set_Legacy_Analytics_Usage_Flag extends DependencyInjectedTestCase {
 	 * @covers ::migrate
 	 */
 	public function test_migrate_true(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_TRACKING_ID, 'UA-12345678-9' );
+		update_option( Settings::SETTING_NAME_TRACKING_ID, 'UA-12345678-9' );
 
 		$this->instance->migrate();
 
-		$this->assertTrue( get_option( \Google\Web_Stories\Settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) );
+		$this->assertTrue( get_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) );
 	}
 
 	/**
 	 * @covers ::migrate
 	 */
 	public function test_migrate_false(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_TRACKING_ID, '' );
+		update_option( Settings::SETTING_NAME_TRACKING_ID, '' );
 
 		$this->instance->migrate();
 
-		$this->assertFalse( get_option( \Google\Web_Stories\Settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) );
+		$this->assertFalse( get_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) );
 	}
 }

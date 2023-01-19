@@ -20,6 +20,8 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Settings;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Ad_Manager
  */
@@ -29,8 +31,8 @@ class Ad_Manager extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'admanager' );
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_MANAGER_SLOT_ID, '123' );
+		update_option( Settings::SETTING_NAME_AD_NETWORK, 'admanager' );
+		update_option( Settings::SETTING_NAME_AD_MANAGER_SLOT_ID, '123' );
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Ad_Manager::class );
 	}
@@ -38,8 +40,8 @@ class Ad_Manager extends DependencyInjectedTestCase {
 	public function tear_down(): void {
 		parent::tear_down();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
+		delete_option( Settings::SETTING_NAME_AD_NETWORK );
+		delete_option( Settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
 	}
 
 	/**

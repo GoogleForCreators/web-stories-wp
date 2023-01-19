@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -30,7 +31,7 @@ class Site_Health extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register(): void {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments = $this->createMock( Experiments::class );
 		$site_health = new \Google\Web_Stories\Admin\Site_Health( $experiments );
 		$site_health->register();
 
@@ -43,7 +44,7 @@ class Site_Health extends TestCase {
 	 * @covers ::add_debug_information
 	 */
 	public function test_add_debug_information(): void {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments = $this->createMock( Experiments::class );
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 		$experiments->method( 'get_experiments' )
