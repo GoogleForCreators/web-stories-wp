@@ -201,7 +201,7 @@ class Admin extends DependencyInjectedTestCase {
 	public function test_prefill_post_content_invalid_id(): void {
 		wp_set_current_user( self::$admin_id );
 
-		$_GET['from-web-story'] = 999999999;
+		$_GET['from-web-story'] = 999_999_999;
 		$current_post           = get_post( self::$post_id );
 		$this->assertNotNull( $current_post );
 		$result = $this->instance->prefill_post_content( 'current', $current_post );
