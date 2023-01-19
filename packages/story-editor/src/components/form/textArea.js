@@ -38,7 +38,7 @@ const TextArea = forwardRef(
       placeholder,
       value,
       disabled,
-      rows,
+      rows = 2,
       onChange,
       onBlur,
       ...rest
@@ -95,11 +95,6 @@ TextArea.propTypes = {
   rows: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
-};
-
-TextArea.defaultProps = {
-  showTextLimit: true,
-  rows: 2,
 };
 
 export default TextArea;
