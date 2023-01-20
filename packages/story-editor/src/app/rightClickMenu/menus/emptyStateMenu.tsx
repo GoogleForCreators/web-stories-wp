@@ -96,6 +96,5 @@ function EmptyStateMenu() {
     </>
   );
 }
-EmptyStateMenu.propTypes = MenuPropType;
 
 export default EmptyStateMenu;

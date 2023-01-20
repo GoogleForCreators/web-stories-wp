@@ -106,7 +106,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         label: <span>{getLayerName(element)}</span>,
         onClick: () => {
           setSelectedElementsById({ elementIds: [id] });
-          trackEvent('context_menu_action', {
+          void trackEvent('context_menu_action', {
             name: 'layer_selected',
             element: type,
             isBackground: isBackground,

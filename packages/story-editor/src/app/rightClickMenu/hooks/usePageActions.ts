@@ -29,7 +29,7 @@ import { useStory } from '../..';
 /**
  * Creates the right click menu page actions.
  *
- * @return {Object} Right click menu page actions
+ * @return Right click menu page actions
  */
 const usePageActions = () => {
   const {
@@ -64,7 +64,7 @@ const usePageActions = () => {
 
       addPageAt({ page: createPage(), position });
 
-      trackEvent('context_menu_action', {
+      void trackEvent('context_menu_action', {
         name: 'page_added',
         element: selectedElementType,
         isBackground: isSelectedElementBackground,
@@ -86,7 +86,7 @@ const usePageActions = () => {
   const handleDeletePage = useCallback(() => {
     deleteCurrentPage();
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'page_deleted',
       element: selectedElementType,
       isBackground: isSelectedElementBackground,

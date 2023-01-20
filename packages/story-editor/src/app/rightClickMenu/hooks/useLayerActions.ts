@@ -34,7 +34,7 @@ import { getCropParams } from '../../../utils/getCropParams';
  *
  * These define the ability of the element to move in the layers.
  *
- * @return {Object} Right click menu layer actions
+ * @return Right click menu layer actions
  */
 const useLayerActions = () => {
   const { cropExistingVideo } = useLocalMedia(
@@ -77,12 +77,14 @@ const useLayerActions = () => {
     const newPosition =
       elementPosition === 1 ? elementPosition : backwardPositionSkipGroups;
 
-    arrangeElement({
-      elementId: selectedElement.id,
-      position: newPosition,
-    });
+    if (arrangeElement) {
+      arrangeElement({
+        elementId: selectedElement.id,
+        position: newPosition,
+      });
+    }
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'send_backward',
       element: selectedElement.type,
       isBackground: selectedElement.isBackground,
@@ -103,12 +105,14 @@ const useLayerActions = () => {
       return;
     }
 
-    arrangeElement({
-      elementId: selectedElement.id,
-      position: 1,
-    });
+    if (arrangeElement) {
+      arrangeElement({
+        elementId: selectedElement.id,
+        position: 1,
+      });
+    }
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'send_to_back',
       element: selectedElement.type,
     });
@@ -132,12 +136,14 @@ const useLayerActions = () => {
         ? elementPosition
         : forwardPositionSkipGroups;
 
-    arrangeElement({
-      elementId: selectedElement.id,
-      position: newPosition,
-    });
+    if (arrangeElement) {
+      arrangeElement({
+        elementId: selectedElement.id,
+        position: newPosition,
+      });
+    }
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'bring_forward',
       element: selectedElement.type,
     });
@@ -157,12 +163,14 @@ const useLayerActions = () => {
       return;
     }
 
-    arrangeElement({
-      elementId: selectedElement.id,
-      position: elements.length - 1,
-    });
+    if (arrangeElement) {
+      arrangeElement({
+        elementId: selectedElement.id,
+        position: elements.length - 1,
+      });
+    }
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'bring_to_front',
       element: selectedElement.type,
     });

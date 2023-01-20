@@ -36,12 +36,12 @@ import { LayerHide, LayerLock, LayerName, LayerUngroup } from '../items';
 import useRightClickMenu from '../useRightClickMenu';
 import {
   DEFAULT_DISPLACEMENT,
-  MenuPropType,
   SubMenuContainer,
   SUB_MENU_ARIA_LABEL,
 } from './shared';
+import type { MenuPropType } from './shared';
 
-function StickerMenu({ parentMenuRef }) {
+function StickerMenu({ parentMenuRef }: MenuPropType) {
   const { handleDuplicateSelectedElements } = useElementActions();
   const {
     canElementMoveBackwards,
@@ -151,6 +151,5 @@ function StickerMenu({ parentMenuRef }) {
     </>
   );
 }
-StickerMenu.propTypes = MenuPropType;
 
 export default StickerMenu;

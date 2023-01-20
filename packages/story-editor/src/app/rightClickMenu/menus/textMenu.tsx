@@ -43,12 +43,12 @@ import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import {
   DEFAULT_DISPLACEMENT,
-  MenuPropType,
   SubMenuContainer,
   SUB_MENU_ARIA_LABEL,
 } from './shared';
+import type { MenuPropType } from './shared';
 
-function TextMenu({ parentMenuRef }) {
+function TextMenu({ parentMenuRef }: MenuPropType) {
   const { copiedElementType, selectedElementType } = useStory(({ state }) => ({
     copiedElementType: state.copiedElementState.type,
     selectedElementType: state.selectedElements?.[0].type,
@@ -236,6 +236,5 @@ function TextMenu({ parentMenuRef }) {
     </>
   );
 }
-TextMenu.propTypes = MenuPropType;
 
 export default TextMenu;

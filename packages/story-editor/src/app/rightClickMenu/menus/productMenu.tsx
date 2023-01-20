@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
+
 import {
   ContextMenu,
   ContextMenuComponents,
 } from '@googleforcreators/design-system';
 import { useRef } from '@googleforcreators/react';
-
 /**
  * Internal dependencies
  */
@@ -30,30 +30,18 @@ import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
 } from '../constants';
-import {
-  useCopyPasteActions,
-  useElementActions,
-  useLayerActions,
-  usePresetActions,
-} from '../hooks';
+import { useLayerActions } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
 import { LayerHide, LayerLock, LayerName, LayerUngroup } from '../items';
-import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import {
   DEFAULT_DISPLACEMENT,
-  MenuPropType,
   SubMenuContainer,
   SUB_MENU_ARIA_LABEL,
 } from './shared';
+import type { MenuPropType } from './shared';
 
-function ShapeMenu({ parentMenuRef }) {
-  const { copiedElementType, selectedElementType } = useStory(({ state }) => ({
-    copiedElementType: state.copiedElementState.type,
-    selectedElementType: state.selectedElements?.[0].type,
-  }));
-  const { handleCopyStyles, handlePasteStyles } = useCopyPasteActions();
-  const { handleDuplicateSelectedElements } = useElementActions();
+function ProductMenu({ parentMenuRef }: MenuPropType) {
   const {
     canElementMoveBackwards,
     canElementMoveForwards,
@@ -62,7 +50,6 @@ function ShapeMenu({ parentMenuRef }) {
     handleBringForward,
     handleBringToFront,
   } = useLayerActions();
-  const { handleAddColorPreset } = usePresetActions();
 
   const subMenuRef = useRef();
   const { menuPosition, onCloseMenu } = useRightClickMenu();
@@ -112,14 +99,6 @@ function ShapeMenu({ parentMenuRef }) {
       )}
 
       <ContextMenuComponents.MenuButton
-        onClick={handleDuplicateSelectedElements}
-      >
-        {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1)}
-      </ContextMenuComponents.MenuButton>
-
-      <ContextMenuComponents.MenuSeparator />
-
-      <ContextMenuComponents.MenuButton
         disabled={!canElementMoveBackwards}
         onClick={handleSendBackward}
       >
@@ -160,30 +139,8 @@ function ShapeMenu({ parentMenuRef }) {
       <LayerLock />
       <LayerHide />
       <LayerUngroup />
-
-      <ContextMenuComponents.MenuSeparator />
-
-      <ContextMenuComponents.MenuButton onClick={handleCopyStyles}>
-        {RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES}
-        <ContextMenuComponents.MenuShortcut>
-          {RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES.display}
-        </ContextMenuComponents.MenuShortcut>
-      </ContextMenuComponents.MenuButton>
-      <ContextMenuComponents.MenuButton
-        disabled={copiedElementType !== selectedElementType}
-        onClick={handlePasteStyles}
-      >
-        {RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES}
-        <ContextMenuComponents.MenuShortcut>
-          {RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES.display}
-        </ContextMenuComponents.MenuShortcut>
-      </ContextMenuComponents.MenuButton>
-      <ContextMenuComponents.MenuButton onClick={handleAddColorPreset}>
-        {RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS}
-      </ContextMenuComponents.MenuButton>
     </>
   );
 }
-ShapeMenu.propTypes = MenuPropType;
 
-export default ShapeMenu;
+export default ProductMenu;

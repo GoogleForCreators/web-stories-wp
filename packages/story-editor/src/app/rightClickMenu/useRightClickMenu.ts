@@ -21,10 +21,19 @@ import { useContextSelector, identity } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import type { RightClickMenuProviderState } from '../../types';
 import Context from './context';
 
-function useRightClickMenu(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useRightClickMenu(): RightClickMenuProviderState;
+function useRightClickMenu<T>(
+  selector: (state: RightClickMenuProviderState) => T
+): T;
+function useRightClickMenu<T>(
+  selector: (
+    state: RightClickMenuProviderState
+  ) => T | RightClickMenuProviderState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
 export default useRightClickMenu;

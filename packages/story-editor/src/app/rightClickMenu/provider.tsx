@@ -18,7 +18,7 @@
  */
 import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import PropTypes from 'prop-types';
+import type { PropsWithChildren } from 'react';
 import { useCallback, useMemo, useReducer } from '@googleforcreators/react';
 
 /** @typedef {import('react')} Node */
@@ -26,6 +26,7 @@ import { useCallback, useMemo, useReducer } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { PropsWithChildren } from 'react';
 import Context from './context';
 import rightClickMenuReducer, {
   ACTION_TYPES,
@@ -44,7 +45,8 @@ import { useCopyPasteActions } from './hooks';
  * @param {Node} root0.children the children to be rendered
  * @return {Node} React node
  */
-function RightClickMenuProvider({ children }) {
+
+function RightClickMenuProvider({ children }: PropsWithChildren<unknown>) {
   const [{ isMenuOpen, menuPosition }, dispatch] = useReducer(
     rightClickMenuReducer,
     DEFAULT_RIGHT_CLICK_MENU_STATE
@@ -57,7 +59,7 @@ function RightClickMenuProvider({ children }) {
    *
    * @param {Event} evt The triggering event
    */
-  const handleOpenMenu = useCallback((evt) => {
+  const handleOpenMenu = useCallback((evt: MouseEvent) => {
     evt.preventDefault();
     evt.stopPropagation();
 
@@ -77,7 +79,7 @@ function RightClickMenuProvider({ children }) {
       payload: { x, y },
     });
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'context_menu_opened',
     });
   }, []);
@@ -121,9 +123,5 @@ function RightClickMenuProvider({ children }) {
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-
-RightClickMenuProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default RightClickMenuProvider;

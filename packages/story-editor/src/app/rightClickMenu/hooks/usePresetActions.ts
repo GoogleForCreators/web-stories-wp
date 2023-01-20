@@ -35,14 +35,16 @@ import { UNDO_HELP_TEXT } from './constants';
 /**
  * Creates the right click menu preset actions.
  *
- * @return {Object} Right click menu preset actions
+ * @return Right click menu preset actions
  */
 const usePresetActions = () => {
   const { addGlobalPreset: addGlobalTextPreset } = useAddPreset({
     presetType: PRESET_TYPES.STYLE,
+    isBackgroundColor: false,
   });
   const { addGlobalPreset: addGlobalColorPreset } = useAddPreset({
     presetType: PRESET_TYPES.COLOR,
+    isBackgroundColor: false,
   });
   const deleteGlobalTextPreset = useDeleteStyle({
     onEmpty: noop,
@@ -54,7 +56,9 @@ const usePresetActions = () => {
 
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
 
-  const undo = useHistory(({ actions }) => actions.undo);
+  const {
+    actions: { undo },
+  } = useHistory();
 
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);
@@ -76,7 +80,7 @@ const usePresetActions = () => {
         onAction: () => {
           deleteGlobalTextPreset(preset);
 
-          trackEvent('context_menu_action', {
+          void trackEvent('context_menu_action', {
             name: 'remove_text_preset',
             element: selectedElement?.type,
           });
@@ -84,7 +88,7 @@ const usePresetActions = () => {
         actionHelpText: UNDO_HELP_TEXT,
       });
 
-      trackEvent('context_menu_action', {
+      void trackEvent('context_menu_action', {
         name: 'add_text_preset',
         element: selectedElement?.type,
       });
@@ -113,7 +117,7 @@ const usePresetActions = () => {
         onAction: () => {
           deleteGlobalColorPreset(preset);
 
-          trackEvent('context_menu_action', {
+          void trackEvent('context_menu_action', {
             name: 'remove_color_preset',
             element: selectedElement?.type,
           });
@@ -121,7 +125,7 @@ const usePresetActions = () => {
         actionHelpText: UNDO_HELP_TEXT,
       });
 
-      trackEvent('context_menu_action', {
+      void trackEvent('context_menu_action', {
         name: 'add_color_preset',
         element: selectedElement?.type,
       });

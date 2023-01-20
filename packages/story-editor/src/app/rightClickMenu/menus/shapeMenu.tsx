@@ -21,8 +21,7 @@ import {
   ContextMenu,
   ContextMenuComponents,
 } from '@googleforcreators/design-system';
-import { useRef, useMemo } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
+import { useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -35,32 +34,26 @@ import {
   useCopyPasteActions,
   useElementActions,
   useLayerActions,
+  usePresetActions,
 } from '../hooks';
-import useShapeMask from '../../../utils/useShapeMask';
-import { useStory, useLocalMedia } from '../..';
-import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
-import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
 import { LayerHide, LayerLock, LayerName, LayerUngroup } from '../items';
-import { isOffCanvas } from '../../../utils/isOffCanvas';
+import { useStory } from '../..';
+import useRightClickMenu from '../useRightClickMenu';
 import {
   DEFAULT_DISPLACEMENT,
-  MenuPropType,
   SubMenuContainer,
   SUB_MENU_ARIA_LABEL,
 } from './shared';
+import type { MenuPropType } from './shared';
 
-function ForegroundMediaMenu({ parentMenuRef }) {
-  const { copiedElementType, selectedElement } = useStory(({ state }) => ({
+function ShapeMenu({ parentMenuRef }: MenuPropType) {
+  const { copiedElementType, selectedElementType } = useStory(({ state }) => ({
     copiedElementType: state.copiedElementState.type,
-    selectedElement: state.selectedElements?.[0],
+    selectedElementType: state.selectedElements?.[0].type,
   }));
   const { handleCopyStyles, handlePasteStyles } = useCopyPasteActions();
-  const {
-    handleDuplicateSelectedElements,
-    handleOpenScaleAndCrop,
-    handleSetPageBackground,
-  } = useElementActions();
+  const { handleDuplicateSelectedElements } = useElementActions();
   const {
     canElementMoveBackwards,
     canElementMoveForwards,
@@ -68,27 +61,8 @@ function ForegroundMediaMenu({ parentMenuRef }) {
     handleSendToBack,
     handleBringForward,
     handleBringToFront,
-    handleCropOffScreenVideo,
   } = useLayerActions();
-
-  const { hasShapeMask, removeShapeMask } = useShapeMask(selectedElement);
-  // @todo #12203 -- handle elements that have been rotated
-  const { offCanvas } = useMemo(
-    () => isOffCanvas(selectedElement),
-    [selectedElement]
-  );
-
-  const offScreenVideoCropping = useFeature('offScreenVideoCropping');
-
-  const canTranscodeResource = useLocalMedia(
-    (value) => value.state.canTranscodeResource
-  );
-  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
-    ({ state, actions }) => ({
-      hasTrimMode: state.hasTrimMode,
-      toggleTrimMode: actions.toggleTrimMode,
-    })
-  );
+  const { handleAddColorPreset } = usePresetActions();
 
   const subMenuRef = useRef();
   const { menuPosition, onCloseMenu } = useRightClickMenu();
@@ -99,19 +73,6 @@ function ForegroundMediaMenu({ parentMenuRef }) {
 
   const { closeSubMenu, isSubMenuOpen, subMenuItems, ...subMenuTriggerProps } =
     layerSelectProps || {};
-
-  const isVideo = selectedElement?.type === 'video';
-  const scaleLabel = isVideo
-    ? RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_VIDEO
-    : RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE;
-  const copyLabel = isVideo
-    ? RIGHT_CLICK_MENU_LABELS.COPY_VIDEO_STYLES
-    : RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES;
-  const pasteLabel = isVideo
-    ? RIGHT_CLICK_MENU_LABELS.PASTE_VIDEO_STYLES
-    : RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES;
-
-  const showToggleTrimMode = isVideo && hasTrimMode;
 
   return (
     <>
@@ -155,12 +116,6 @@ function ForegroundMediaMenu({ parentMenuRef }) {
       >
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1)}
       </ContextMenuComponents.MenuButton>
-
-      {hasShapeMask && (
-        <ContextMenuComponents.MenuButton onClick={removeShapeMask}>
-          {RIGHT_CLICK_MENU_LABELS.REMOVE_MASK}
-        </ContextMenuComponents.MenuButton>
-      )}
 
       <ContextMenuComponents.MenuSeparator />
 
@@ -208,46 +163,26 @@ function ForegroundMediaMenu({ parentMenuRef }) {
 
       <ContextMenuComponents.MenuSeparator />
 
-      <ContextMenuComponents.MenuButton onClick={handleSetPageBackground}>
-        {RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND}
-      </ContextMenuComponents.MenuButton>
-      <ContextMenuComponents.MenuButton onClick={handleOpenScaleAndCrop}>
-        {scaleLabel}
-      </ContextMenuComponents.MenuButton>
-
-      {offScreenVideoCropping && isVideo && offCanvas && (
-        <ContextMenuComponents.MenuButton onClick={handleCropOffScreenVideo}>
-          {RIGHT_CLICK_MENU_LABELS.CROP_OFF_SCREEN_VIDEO}
-        </ContextMenuComponents.MenuButton>
-      )}
-
-      {showToggleTrimMode && (
-        <ContextMenuComponents.MenuButton
-          disabled={!canTranscodeResource(selectedElement?.resource)}
-          onClick={toggleTrimMode}
-        >
-          {RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO}
-        </ContextMenuComponents.MenuButton>
-      )}
-
       <ContextMenuComponents.MenuButton onClick={handleCopyStyles}>
-        {copyLabel}
+        {RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES}
         <ContextMenuComponents.MenuShortcut>
           {RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES.display}
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
       <ContextMenuComponents.MenuButton
-        disabled={copiedElementType !== selectedElement?.type}
+        disabled={copiedElementType !== selectedElementType}
         onClick={handlePasteStyles}
       >
-        {pasteLabel}
+        {RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES}
         <ContextMenuComponents.MenuShortcut>
           {RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES.display}
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton onClick={handleAddColorPreset}>
+        {RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS}
+      </ContextMenuComponents.MenuButton>
     </>
   );
 }
-ForegroundMediaMenu.propTypes = MenuPropType;
 
-export default ForegroundMediaMenu;
+export default ShapeMenu;

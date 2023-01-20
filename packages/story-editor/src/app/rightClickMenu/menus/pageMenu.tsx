@@ -34,12 +34,12 @@ import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
 import {
   DEFAULT_DISPLACEMENT,
-  MenuPropType,
   SubMenuContainer,
   SUB_MENU_ARIA_LABEL,
 } from './shared';
+import type { MenuPropType } from './shared';
 
-function PageMenu({ parentMenuRef }) {
+function PageMenu({ parentMenuRef }: MenuPropType) {
   const { currentPageIndex, canDeletePage, selectedElement } = useStory(
     ({ state }) => ({
       currentPageIndex: state.currentPageIndex,
@@ -170,6 +170,5 @@ function PageMenu({ parentMenuRef }) {
     </>
   );
 }
-PageMenu.propTypes = MenuPropType;
 
 export default PageMenu;

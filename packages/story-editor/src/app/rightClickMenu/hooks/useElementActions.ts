@@ -33,7 +33,7 @@ import { UNDO_HELP_TEXT } from './constants';
 /**
  * Creates the right click menu element actions.
  *
- * @return {Object} Right click menu element actions
+ * @return Right click menu element actions
  */
 const useElementActions = () => {
   const {
@@ -63,7 +63,9 @@ const useElementActions = () => {
   const setEditingElement = useCanvas(
     ({ actions }) => actions.setEditingElement
   );
-  const undo = useHistory(({ actions }) => actions.undo);
+  const {
+    actions: { undo },
+  } = useHistory();
 
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);
@@ -77,9 +79,11 @@ const useElementActions = () => {
       return;
     }
 
-    duplicateElementsById({
-      elementIds: selectedElements.map(({ id }) => id),
-    });
+    if (duplicateElementsById) {
+      duplicateElementsById({
+        elementIds: selectedElements.map(({ id }) => id),
+      });
+    }
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
@@ -90,7 +94,7 @@ const useElementActions = () => {
       onAction: () => {
         undoRef.current();
 
-        trackEvent('context_menu_action', {
+        void trackEvent('context_menu_action', {
           name: 'undo_duplicate_elements',
           elements: selectedElements.map((element) => element.type),
         });
@@ -98,7 +102,7 @@ const useElementActions = () => {
       actionHelpText: UNDO_HELP_TEXT,
     });
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'duplicate_elements',
       elements: selectedElements.map((element) => element.type),
     });
@@ -111,18 +115,22 @@ const useElementActions = () => {
 
     const groupId = uuidv4();
     const name = generateGroupName(groups);
-    addGroup({ groupId, name });
-    updateElementsById({
-      elementIds: selectedElements.map(({ id }) => id),
-      properties: (currentProperties) =>
-        updateProperties(
-          currentProperties,
-          {
-            groupId,
-          },
-          /* commitValues */ true
-        ),
-    });
+    if (addGroup) {
+      addGroup({ groupId, name });
+    }
+    if (updateElementsById) {
+      updateElementsById({
+        elementIds: selectedElements.map(({ id }) => id),
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            {
+              groupId,
+            },
+            /* commitValues */ true
+          ),
+      });
+    }
     // Fix the order
     const elementFromGroupWithHighestPosition = Math.max(
       ...selectedElements.map((el) =>
@@ -133,10 +141,12 @@ const useElementActions = () => {
       const position = elements.findIndex(({ id }) => id === element?.id);
       if (position !== elementFromGroupWithHighestPosition) {
         const newPosition = elementFromGroupWithHighestPosition - index;
-        arrangeElement({
-          elementId: element.id,
-          position: newPosition,
-        });
+        if (arrangeElement) {
+          arrangeElement({
+            elementId: element.id,
+            position: newPosition,
+          });
+        }
       }
     }
   }, [
@@ -154,19 +164,23 @@ const useElementActions = () => {
     }
 
     // this will remove the group but keep the elements
-    deleteGroupById({ groupId: selectedElements[0]?.groupId });
+    if (deleteGroupById) {
+      deleteGroupById({ groupId: selectedElements[0]?.groupId });
+    }
 
-    updateElementsById({
-      elementIds: selectedElements.map(({ id }) => id),
-      properties: (currentProperties) =>
-        updateProperties(
-          currentProperties,
-          {
-            groupId: null,
-          },
-          /* commitValues */ true
-        ),
-    });
+    if (updateElementsById) {
+      updateElementsById({
+        elementIds: selectedElements.map(({ id }) => id),
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            {
+              groupId: null,
+            },
+            /* commitValues */ true
+          ),
+      });
+    }
   }, [selectedElements, updateElementsById, deleteGroupById]);
 
   /**
@@ -181,7 +195,7 @@ const useElementActions = () => {
       if (selectedElement) {
         setEditingElement(selectedElement.id, evt);
 
-        trackEvent('context_menu_action', {
+        void trackEvent('context_menu_action', {
           name: 'open_scale_and_crop',
           element: selectedElement.type,
           isBackground: selectedElement.isBackground,
@@ -198,7 +212,9 @@ const useElementActions = () => {
     const selectedElement = selectedElements?.[0];
 
     if (selectedElement && !selectedElement.isBackground) {
-      setBackgroundElement({ elementId: selectedElement.id });
+      if (setBackgroundElement) {
+        setBackgroundElement({ elementId: selectedElement.id });
+      }
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
@@ -209,7 +225,7 @@ const useElementActions = () => {
         onAction: () => {
           undoRef.current();
 
-          trackEvent('context_menu_action', {
+          void trackEvent('context_menu_action', {
             name: 'undo_set_page_background',
             element: selectedElement.type,
             isBackground: selectedElement.isBackground,
@@ -218,7 +234,7 @@ const useElementActions = () => {
         actionHelpText: UNDO_HELP_TEXT,
       });
 
-      trackEvent('context_menu_action', {
+      void trackEvent('context_menu_action', {
         name: 'set_as_page_background',
         element: selectedElement.type,
         isBackground: selectedElement.isBackground,
@@ -232,7 +248,7 @@ const useElementActions = () => {
   const handleRemovePageBackground = useCallback(() => {
     const selectedElement = selectedElements?.[0];
 
-    if (selectedElement && selectedElement.isBackground) {
+    if (selectedElement && selectedElement.isBackground && updateElementsById) {
       updateElementsById({
         elementIds: [selectedElement.id],
         properties: (currentProperties) =>
@@ -247,7 +263,9 @@ const useElementActions = () => {
           ),
       });
 
-      clearBackgroundElement();
+      if (clearBackgroundElement) {
+        clearBackgroundElement();
+      }
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
@@ -258,7 +276,7 @@ const useElementActions = () => {
         onAction: () => {
           undoRef.current();
 
-          trackEvent('context_menu_action', {
+          void trackEvent('context_menu_action', {
             name: 'undo_remove_page_background',
             elements: selectedElement.type,
             isBackground: selectedElement.isBackground,
@@ -267,7 +285,7 @@ const useElementActions = () => {
         actionHelpText: UNDO_HELP_TEXT,
       });
 
-      trackEvent('context_menu_action', {
+      void trackEvent('context_menu_action', {
         name: 'remove_media_from_background',
         element: selectedElement.type,
         isBackground: selectedElement.isBackground,

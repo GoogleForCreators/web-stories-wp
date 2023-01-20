@@ -62,10 +62,12 @@ function getTextElementStyles(element, animation) {
 /**
  * Creates the right click menu copy/paste actions.
  *
- * @return {Object} Right click menu copy/paste actions
+ * @return Right click menu copy/paste actions
  */
 const useCopyPasteActions = () => {
-  const undo = useHistory(({ actions }) => actions.undo);
+  const {
+    actions: { undo },
+  } = useHistory();
   const {
     addAnimations,
     copySelectedElement,
@@ -96,7 +98,9 @@ const useCopyPasteActions = () => {
    * Copy the styles and animations of the selected element.
    */
   const handleCopyStyles = useCallback(() => {
-    copySelectedElement();
+    if (copySelectedElement) {
+      copySelectedElement();
+    }
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
@@ -105,7 +109,7 @@ const useCopyPasteActions = () => {
       onAction: () => {
         undoRef.current();
 
-        trackEvent('context_menu_action', {
+        void trackEvent('context_menu_action', {
           name: 'undo_copy_styles',
           element: selectedElementType,
           isBackground: isSelectedElementBackground,
@@ -114,7 +118,7 @@ const useCopyPasteActions = () => {
       actionHelpText: UNDO_HELP_TEXT,
     });
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'copy_styles',
       element: selectedElementType,
       isBackground: isSelectedElementBackground,
@@ -209,7 +213,7 @@ const useCopyPasteActions = () => {
       onAction: () => {
         undoRef.current();
 
-        trackEvent('context_menu_action', {
+        void trackEvent('context_menu_action', {
           name: 'undo_paste_styles',
           element: selectedElementType,
           isBackground: isSelectedElementBackground,
@@ -218,7 +222,7 @@ const useCopyPasteActions = () => {
       actionHelpText: UNDO_HELP_TEXT,
     });
 
-    trackEvent('context_menu_action', {
+    void trackEvent('context_menu_action', {
       name: 'paste_styles',
       element: selectedElementType,
       isBackground: isSelectedElementBackground,
