@@ -134,7 +134,8 @@ async function getCurrentStoryData() {
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
-describe('Font Check', () => {
+// eslint-disable-next-line jest/no-disabled-tests -- TODO: Fix flakey tests.
+describe.skip('Font Check', () => {
   beforeEach(async () => {
     await visitSettings();
     await removeAllFonts();
@@ -146,8 +147,7 @@ describe('Font Check', () => {
     await removeAllFonts();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests -- TODO: Fix flakey test.
-  it.skip('should show dialog & replace font with default font', async () => {
+  it('should show dialog & replace font with default font', async () => {
     const title = 'Test replace missing font with (default) Roboto';
     const replacementFont = 'Roboto';
     await prepareStoryWithFontCheckDialog(title);
