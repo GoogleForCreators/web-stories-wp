@@ -18,6 +18,7 @@
  */
 import MediaRecordingContext from '../context';
 import SettingsModal from '../settingsModal';
+import { noop } from '../../../utils/noop';
 
 export default {
   title: 'Stories Editor/Components/Media Recording/Settings Dialog',
@@ -78,10 +79,10 @@ export const _default = (args) => {
           ...args,
         },
         actions: {
-          setAudioInput: () => {},
-          setVideoInput: () => {},
-          clearMediaStream: () => {},
-          clearMediaBlob: () => {},
+          setAudioInput: noop,
+          setVideoInput: noop,
+          clearMediaStream: noop,
+          clearMediaBlob: noop,
           ...args,
         },
       }}

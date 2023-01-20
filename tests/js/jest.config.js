@@ -44,7 +44,7 @@ export default {
   // See https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
   transformIgnorePatterns: ['/node_modules/(?!(use-reduction)/)'],
   testEnvironment: 'jsdom',
-  testMatch: ['**/test/**/*.[jt]s'],
+  testMatch: ['**/test/**/*.{js,jsx,ts,tsx}'],
   globals: {
     WEB_STORIES_ENV: 'development',
     WEB_STORIES_DISABLE_ERROR_BOUNDARIES: true,

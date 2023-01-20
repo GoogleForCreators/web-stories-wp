@@ -30,6 +30,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Renderer\Stories\Generic_Renderer;
 use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
@@ -278,7 +279,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
+		$renderer = new Generic_Renderer( $this->story_query );
 		$expected = 'web-stories-list__story';
 
 		$output = $this->call_private_method( [ $renderer, 'get_single_story_classes' ] );
@@ -300,7 +301,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
+		$renderer = new Generic_Renderer( $story_query );
 
 		$expected = 'web-stories-list alignnone test is-view-type-circles is-style-default has-title is-carousel';
 
@@ -323,7 +324,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
+		$renderer = new Generic_Renderer( $story_query );
 
 		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();

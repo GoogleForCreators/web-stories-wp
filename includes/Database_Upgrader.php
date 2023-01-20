@@ -65,7 +65,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 		'3.0.0'  => Migrations\Add_Stories_Caps::class,
 		'3.0.1'  => Migrations\Rewrite_Flush::class,
 		'3.0.2'  => Migrations\Rewrite_Flush::class,
-		'3.0.3'  => Migrations\Yoast_Reindex_Stories::class,
 		'3.0.4'  => Migrations\Add_Poster_Generation_Media_Source::class,
 		'3.0.5'  => Migrations\Remove_Unneeded_Attachment_Meta::class,
 		'3.0.6'  => Migrations\Add_Media_Source_Video_Optimization::class,
@@ -112,7 +111,7 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		$this->run_upgrades();
 	}
 
@@ -140,6 +139,11 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 		 */
 		$version = get_option( self::OPTION, '0.0.0' );
 
+		if ( '0.0.0' === $version ) {
+			$this->finish_up( $version );
+			return;
+		}
+
 		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {
 			return;
 		}
@@ -147,6 +151,16 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 		$routines = self::ROUTINES;
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
 		$this->finish_up( $version );
+	}
+
+	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_option( self::PREVIOUS_OPTION );
+		delete_option( self::OPTION );
 	}
 
 	/**
@@ -180,15 +194,5 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	protected function finish_up( string $previous_version ): void {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
 		update_option( self::OPTION, WEBSTORIES_DB_VERSION );
-	}
-
-	/**
-	 * Act on plugin uninstall.
-	 *
-	 * @since 1.26.0
-	 */
-	public function on_plugin_uninstall(): void {
-		delete_option( self::PREVIOUS_OPTION );
-		delete_option( self::OPTION );
 	}
 }

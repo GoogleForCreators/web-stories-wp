@@ -93,7 +93,7 @@ class Story_Archive extends Service_Base {
 	 * @param \WP_Query  $query  The WP_Query object.
 	 * @return bool|mixed Whether to pass-through or not.
 	 */
-	public function redirect_post_type_archive_urls( $bypass, $query ) {
+	public function redirect_post_type_archive_urls( $bypass, WP_Query $query ) {
 		global $wp_rewrite;
 
 		if ( $bypass || ! \is_string( $this->story_post_type->get_has_archive() ) || ( ! $wp_rewrite instanceof WP_Rewrite || ! $wp_rewrite->using_permalinks() ) ) {
@@ -169,7 +169,7 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @param int $postid Post ID.
 	 */
-	public function on_remove_archive_page( $postid ): void {
+	public function on_remove_archive_page( int $postid ): void {
 		if ( 'page' !== get_post_type( $postid ) ) {
 			return;
 		}
@@ -197,7 +197,7 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @phpstan-return ($post_states is array<T> ? array<T> : mixed)
 	 */
-	public function filter_display_post_states( $post_states, $post ) {
+	public function filter_display_post_states( $post_states, ?WP_Post $post ) {
 		if ( ! \is_array( $post_states ) || ! $post ) {
 			return $post_states;
 		}

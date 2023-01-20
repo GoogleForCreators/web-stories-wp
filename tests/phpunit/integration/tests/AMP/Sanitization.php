@@ -22,6 +22,8 @@ namespace Google\Web_Stories\Tests\Integration\AMP;
 
 use DOMElement;
 use DOMNodeList;
+use Google\Web_Stories\AMP\Meta_Sanitizer;
+use Google\Web_Stories\AMP\Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories_Dependencies\AMP_Dev_Mode_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
@@ -491,8 +493,8 @@ class Sanitization extends DependencyInjectedTestCase {
 		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ \count( $ordered_sanitizers ) - 5 ] );
 		$this->assertEquals( AMP_Layout_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 4 ] );
 		$this->assertEquals( AMP_Style_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 3 ] );
-		$this->assertEquals( \Google\Web_Stories\AMP\Meta_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 2 ] );
-		$this->assertEquals( \Google\Web_Stories\AMP\Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 1 ] );
+		$this->assertEquals( Meta_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 2 ] );
+		$this->assertEquals( Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 1 ] );
 	}
 
 	/**
@@ -505,7 +507,7 @@ class Sanitization extends DependencyInjectedTestCase {
 		$validation_error_callback = [ $this->instance, 'validation_error_callback' ];
 		add_filter(
 			'web_stories_amp_dev_mode_element_xpaths',
-			fn( $xpaths ) => array_merge( $xpaths, $element_xpaths )
+			static fn( $xpaths ) => array_merge( $xpaths, $element_xpaths )
 		);
 
 		// Check that AMP_Dev_Mode_Sanitizer is not registered if not in dev mode.

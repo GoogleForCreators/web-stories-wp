@@ -27,7 +27,7 @@ final class LazilyInstantiatedServiceTest extends TestCase {
 	}
 
 	public function test_it_throws_when_instantiating_an_invalid_service(): void {
-		$callable     = fn() => new stdClass();
+		$callable     = static fn() => new stdClass();
 		$lazy_service = new LazilyInstantiatedService( $callable );
 
 		$this->expectException( InvalidService::class );

@@ -20,6 +20,8 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Story_Post_Type;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Context
  */
@@ -39,7 +41,7 @@ class Context extends DependencyInjectedTestCase {
 	 * @covers ::is_story_editor
 	 */
 	public function test_is_story_editor(): void {
-		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->assertTrue( $this->instance->is_story_editor() );
 	}

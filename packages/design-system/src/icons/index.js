@@ -77,6 +77,7 @@ export { default as DotsFillSmall } from './dots_fill_small.svg';
 export { default as Eraser } from './eraser.svg';
 export { default as ExclamationOutline } from './exclamation_outline.svg';
 export { default as ExclamationTriangle } from './exclamation_triangle.svg';
+export { default as ExternalLink } from './external_link.svg';
 export { default as Eye } from './eye.svg';
 export { default as FloppyDisk } from './floppy_disk.svg';
 export { default as GearWithGauge } from './gear_with_gauge.svg';

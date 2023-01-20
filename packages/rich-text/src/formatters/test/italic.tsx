@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { EditorState } from 'draft-js';
-import type { OrderedSet } from 'immutable';
+import { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
@@ -79,17 +79,13 @@ describe('Italic formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without italic style', () => {
-      const css = stylesToCSS({
-        toArray: () => ['NOT-ITALIC', 'ALSO-NOT-ITALIC'],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of('NOT-ITALIC', 'ALSO-NOT-ITALIC'));
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS if italic is present', () => {
-      const css = stylesToCSS({
-        toArray: () => [ITALIC],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(ITALIC));
 
       expect(css).toStrictEqual({ fontStyle: 'italic' });
     });

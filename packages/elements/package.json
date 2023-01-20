@@ -46,6 +46,6 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "immer": "^9.0.16"
+    "immer": "^9.0.18"
   }
 }

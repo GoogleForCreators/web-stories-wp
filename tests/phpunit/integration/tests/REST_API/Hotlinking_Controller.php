@@ -34,9 +34,6 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Hotlinking_Controller
  */
 class Hotlinking_Controller extends DependencyInjectedRestTestCase {
-	protected static int $subscriber;
-	protected static int $editor;
-
 	public const URL_INVALID      = 'https://https://invalid.commmm';
 	public const URL_404          = 'https://example.com/404/test.jpg';
 	public const URL_500          = 'https://example.com/500/test.jpg';
@@ -47,6 +44,9 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	public const URL_PATH         = '/test.jpg';
 
 	public const REST_URL = '/web-stories/v1/hotlink/validate';
+
+	protected static int $subscriber;
+	protected static int $editor;
 
 	/**
 	 * Count of the number of requests attempted.

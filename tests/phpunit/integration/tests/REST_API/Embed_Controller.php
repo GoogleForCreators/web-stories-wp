@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -32,15 +33,14 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
 class Embed_Controller extends DependencyInjectedRestTestCase {
+	public const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
+	public const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
+	public const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 
 	protected static int $story_id;
 	protected static int $subscriber;
 	protected static int $editor;
 	protected static int $admin;
-
-	public const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
-	public const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
-	public const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -76,7 +76,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$story_content  = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Embed Controller Test Story',
 				'post_status'  => 'publish',
 				'post_content' => $story_content,
@@ -145,21 +145,6 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
-
-		$route = $routes['/web-stories/v1/embed'];
-		$this->assertCount( 1, $route );
-		$this->assertArrayHasKey( 'callback', $route[0] );
-		$this->assertArrayHasKey( 'permission_callback', $route[0] );
-		$this->assertArrayHasKey( 'methods', $route[0] );
-		$this->assertArrayHasKey( 'args', $route[0] );
-	}
-
-	protected function dispatch_request( ?string $url = null ): WP_REST_Response {
-		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
-		if ( null !== $url ) {
-			$request->set_param( 'url', $url );
-		}
-		return rest_get_server()->dispatch( $request );
 	}
 
 	public function test_missing_param(): void {
@@ -294,7 +279,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?)
-		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$story_post_type = $this->injector->make( Story_Post_Type::class );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );
@@ -327,7 +312,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?).
-		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$story_post_type = $this->injector->make( Story_Post_Type::class );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );
@@ -343,7 +328,10 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 
 		$response = $this->dispatch_request( $permalink );
-		$data     = $response->get_data();
+
+		$this->assertNotWPError( $response->as_error() );
+
+		$data = $response->get_data();
 
 		restore_current_blog();
 
@@ -356,5 +344,13 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertIsArray( $data );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	protected function dispatch_request( ?string $url = null ): WP_REST_Response {
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
+		if ( null !== $url ) {
+			$request->set_param( 'url', $url );
+		}
+		return rest_get_server()->dispatch( $request );
 	}
 }

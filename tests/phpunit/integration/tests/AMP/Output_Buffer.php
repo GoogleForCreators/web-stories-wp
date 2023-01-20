@@ -46,14 +46,6 @@ class Output_Buffer extends DependencyInjectedTestCase {
 		parent::tear_down();
 	}
 
-	protected function prepare_response( WP_Post $post ): string {
-		$instance = $this->injector->make( \Google\Web_Stories\AMP\Output_Buffer::class );
-		$story    = new Story();
-		$story->load_from_post( $post );
-
-		return $instance->prepare_response( ( new HTML( $story ) )->render() );
-	}
-
 	/**
 	 * @covers ::prepare_response
 	 */
@@ -240,5 +232,13 @@ class Output_Buffer extends DependencyInjectedTestCase {
 		$actual = $this->prepare_response( $post );
 
 		$this->assertStringContainsString( 'amp=', $actual );
+	}
+
+	protected function prepare_response( WP_Post $post ): string {
+		$instance = $this->injector->make( \Google\Web_Stories\AMP\Output_Buffer::class );
+		$story    = new Story();
+		$story->load_from_post( $post );
+
+		return $instance->prepare_response( ( new HTML( $story ) )->render() );
 	}
 }

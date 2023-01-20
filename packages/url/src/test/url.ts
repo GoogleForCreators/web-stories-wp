@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { withProtocol, isValidUrl } from '..';
+import { withProtocol, isValidUrl, withoutProtocol } from '..';
 
 describe('isValidUrl', () => {
   it('should return correct results for valid URL', () => {
@@ -35,14 +35,16 @@ describe('isValidUrl', () => {
 
 describe('withProtocol', () => {
   it('should add protocol correctly if applicable', () => {
-    expect(withProtocol('https://foo-bar.com/test.jpg')).toBe(
-      'https://foo-bar.com/test.jpg'
-    );
-    expect(withProtocol('http://foo-bar.com/test.jpg')).toBe(
-      'http://foo-bar.com/test.jpg'
-    );
-    expect(withProtocol('foo-bar.com/test.jpg')).toBe(
-      'https://foo-bar.com/test.jpg'
-    );
+    expect(withProtocol('https://foo.com/test')).toBe('https://foo.com/test');
+    expect(withProtocol('http://foo.com/test')).toBe('http://foo.com/test');
+    expect(withProtocol('foo.com/test')).toBe('https://foo.com/test');
+  });
+});
+
+describe('withoutProtocol', () => {
+  it('should remove protocol correctly if applicable', () => {
+    expect(withoutProtocol('https://foo.com/test')).toBe('foo.com/test');
+    expect(withoutProtocol('http://foo.com/test')).toBe('foo.com/test');
+    expect(withoutProtocol('foo.com/test')).toBe('foo.com/test');
   });
 });

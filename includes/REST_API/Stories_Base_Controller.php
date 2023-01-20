@@ -104,64 +104,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
-	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 * @return stdClass|WP_Error Post object or WP_Error.
-	 */
-	protected function prepare_item_for_database( $request ) {
-		$prepared_post = parent::prepare_item_for_database( $request );
-
-		if ( is_wp_error( $prepared_post ) ) {
-			return $prepared_post;
-		}
-
-		/**
-		 * Schema.
-		 *
-		 * @phpstan-var Schema $schema
-		 */
-		$schema = $this->get_item_schema();
-
-		// Post content.
-		if ( ! empty( $schema['properties']['content'] ) ) {
-
-			// Ensure that content and story_data are updated together.
-			// Exception: new auto-draft created from a template.
-			if (
-				(
-				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
-				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
-				) && ( 'auto-draft' !== $prepared_post->post_status )
-			) {
-				return new \WP_Error(
-					'rest_empty_content',
-					sprintf(
-						/* translators: 1: content, 2: story_data */
-						__( '%1$s and %2$s should always be updated together.', 'web-stories' ),
-						'content',
-						'story_data'
-					),
-					[ 'status' => 412 ]
-				);
-			}
-
-			if ( isset( $request['content'] ) ) {
-				$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
-			}
-		}
-
-		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
-		if ( ! empty( $schema['properties']['story_data'] ) && isset( $request['story_data'] ) ) {
-			$prepared_post->post_content_filtered = wp_json_encode( $request['story_data'] );
-		}
-
-		return $prepared_post;
-	}
-
-	/**
 	 * Prepares a single template output for response.
 	 *
 	 * Adds post_content_filtered field to output.
@@ -279,32 +221,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
-	 * Get registered post meta.
-	 *
-	 * @since 1.23.0
-	 *
-	 * @param WP_Post $original_post Post Object.
-	 * @return array<string, mixed> $meta
-	 */
-	protected function get_registered_meta( WP_Post $original_post ): array {
-		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
-		$meta      = [];
-		/**
-		 * Meta key settings.
-		 *
-		 * @var array $settings
-		 * @phpstan-var RegisteredMetadata $settings
-		 */
-		foreach ( $meta_keys as $key => $settings ) {
-			if ( $settings['show_in_rest'] ) {
-				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
-			}
-		}
-
-		return $meta;
-	}
-
-	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
 	 *
 	 * @since 1.0.0
@@ -348,6 +264,90 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		 */
 		$schema = $this->add_additional_fields_schema( $this->schema );
 		return $schema;
+	}
+
+	/**
+	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return stdClass|WP_Error Post object or WP_Error.
+	 */
+	protected function prepare_item_for_database( $request ) {
+		$prepared_post = parent::prepare_item_for_database( $request );
+
+		if ( is_wp_error( $prepared_post ) ) {
+			return $prepared_post;
+		}
+
+		/**
+		 * Schema.
+		 *
+		 * @phpstan-var Schema $schema
+		 */
+		$schema = $this->get_item_schema();
+
+		// Post content.
+		if ( ! empty( $schema['properties']['content'] ) ) {
+
+			// Ensure that content and story_data are updated together.
+			// Exception: new auto-draft created from a template.
+			if (
+				(
+				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
+				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
+				) && ( 'auto-draft' !== $prepared_post->post_status )
+			) {
+				return new \WP_Error(
+					'rest_empty_content',
+					sprintf(
+						/* translators: 1: content, 2: story_data */
+						__( '%1$s and %2$s should always be updated together.', 'web-stories' ),
+						'content',
+						'story_data'
+					),
+					[ 'status' => 412 ]
+				);
+			}
+
+			if ( isset( $request['content'] ) ) {
+				$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
+			}
+		}
+
+		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
+		if ( ! empty( $schema['properties']['story_data'] ) && isset( $request['story_data'] ) ) {
+			$prepared_post->post_content_filtered = wp_json_encode( $request['story_data'] );
+		}
+
+		return $prepared_post;
+	}
+
+	/**
+	 * Get registered post meta.
+	 *
+	 * @since 1.23.0
+	 *
+	 * @param WP_Post $original_post Post Object.
+	 * @return array<string, mixed> $meta
+	 */
+	protected function get_registered_meta( WP_Post $original_post ): array {
+		$meta_keys = get_registered_meta_keys( 'post', $this->post_type );
+		$meta      = [];
+		/**
+		 * Meta key settings.
+		 *
+		 * @var array $settings
+		 * @phpstan-var RegisteredMetadata $settings
+		 */
+		foreach ( $meta_keys as $key => $settings ) {
+			if ( $settings['show_in_rest'] ) {
+				$meta[ $key ] = get_post_meta( $original_post->ID, $key, $settings['single'] );
+			}
+		}
+
+		return $meta;
 	}
 
 	/**

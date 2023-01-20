@@ -25,13 +25,10 @@ namespace Google\Web_Stories\Tests\Unit;
  */
 class Decoder extends TestCase {
 	/**
-	 * @param string $encoded
-	 * @param string $string
-	 *
 	 * @dataProvider get_encoded_data
 	 * @covers ::base64_decode
 	 */
-	public function test_base64_decode( $encoded, $string ): void {
+	public function test_base64_decode( string $encoded, string $string ): void {
 
 		$decoder = new \Google\Web_Stories\Decoder();
 		$actual  = $decoder->base64_decode( $encoded );

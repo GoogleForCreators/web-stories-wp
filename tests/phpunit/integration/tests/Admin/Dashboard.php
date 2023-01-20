@@ -20,6 +20,19 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
+use Google\Web_Stories\Admin\Google_Fonts;
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
+use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Font_Post_Type;
+use Google\Web_Stories\Integrations\Site_Kit;
+use Google\Web_Stories\Integrations\WooCommerce;
+use Google\Web_Stories\Locale;
+use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Shopping\Shopping_Vendors;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_UnitTest_Factory;
@@ -30,12 +43,12 @@ use WP_UnitTest_Factory;
 class Dashboard extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
 
-	private \Google\Web_Stories\Admin\Dashboard $instance;
-
 	protected static int $user_id;
 
 	protected static string $cpt_has_archive = 'cpt_has_archive';
 	protected static string $cpt_no_archive  = 'cpt_no_archive';
+
+	private \Google\Web_Stories\Admin\Dashboard $instance;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$user_id = $factory->user->create(
@@ -150,11 +163,11 @@ class Dashboard extends DependencyInjectedTestCase {
 	public function test_enqueue_assets(): void {
 		wp_set_current_user( self::$user_id );
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments = $this->createMock( Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 
-		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets = $this->getMockBuilder( Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
 				[
@@ -166,17 +179,17 @@ class Dashboard extends DependencyInjectedTestCase {
 				]
 			);
 
-		$site_kit         = $this->injector->make( \Google\Web_Stories\Integrations\Site_Kit::class );
-		$decoder          = $this->injector->make( \Google\Web_Stories\Decoder::class );
-		$locale           = $this->injector->make( \Google\Web_Stories\Locale::class );
-		$google_fonts     = $this->injector->make( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$font_post_type   = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
-		$post_type        = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$context          = $this->injector->make( \Google\Web_Stories\Context::class );
-		$types            = $this->injector->make( \Google\Web_Stories\Media\Types::class );
-		$shopping_vendors = $this->injector->make( \Google\Web_Stories\Shopping\Shopping_Vendors::class );
-		$woocommerce      = $this->injector->make( \Google\Web_Stories\Integrations\WooCommerce::class );
-		$settings         = $this->injector->make( \Google\Web_Stories\Settings::class );
+		$site_kit         = $this->injector->make( Site_Kit::class );
+		$decoder          = $this->injector->make( Decoder::class );
+		$locale           = $this->injector->make( Locale::class );
+		$google_fonts     = $this->injector->make( Google_Fonts::class );
+		$font_post_type   = $this->injector->make( Font_Post_Type::class );
+		$post_type        = $this->injector->make( Story_Post_Type::class );
+		$context          = $this->injector->make( Context::class );
+		$types            = $this->injector->make( Types::class );
+		$shopping_vendors = $this->injector->make( Shopping_Vendors::class );
+		$woocommerce      = $this->injector->make( WooCommerce::class );
+		$settings         = $this->injector->make( Settings::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,

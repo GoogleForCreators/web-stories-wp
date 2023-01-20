@@ -43,8 +43,8 @@ export const defaultAttributes = {
 };
 
 export const panels = [
-  PanelTypes.ELEMENT_ALIGNMENT,
+  PanelTypes.ElementAlignment,
   ...MEDIA_PANELS,
-  PanelTypes.LINK,
-  PanelTypes.IMAGE_ACCESSIBILITY,
+  PanelTypes.Link,
+  PanelTypes.ImageAccessibility,
 ];

@@ -65,10 +65,10 @@ function LibraryLayout() {
   const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: {
       // Note that the distinct key sets e.g. MEDIA.id !== states.MEDIA.
-      [MEDIA.id]: state[states.MEDIA],
-      [MEDIA3P.id]: state[states.MEDIA3P],
-      [TEXT.id]: state[states.TEXT_SET],
-      [PAGE_TEMPLATES.id]: state[states.PAGE_TEMPLATES],
+      [MEDIA.id]: state[states.Media],
+      [MEDIA3P.id]: state[states.Media3p],
+      [TEXT.id]: state[states.TextSet],
+      [PAGE_TEMPLATES.id]: state[states.PageTemplates],
     },
     resetHighlight: state.onFocusOut,
   }));

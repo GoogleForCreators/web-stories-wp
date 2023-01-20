@@ -24,6 +24,7 @@ import Gallery from 'react-photo-album';
 /**
  * Internal dependencies
  */
+import { SIDEBAR_WIDTH } from '../../../../../constants';
 import MediaElement from './mediaElement';
 import { GalleryContainer } from './styles';
 
@@ -112,6 +113,8 @@ function MediaGallery({
         targetRowHeight={TARGET_ROW_HEIGHT}
         rowConstraints={ROW_CONSTRAINTS}
         spacing={PHOTO_SPACING}
+        // Used for tests / SSR.
+        defaultContainerWidth={SIDEBAR_WIDTH}
       />
     </div>
   );

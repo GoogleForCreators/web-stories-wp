@@ -81,6 +81,13 @@ if (typeof window !== 'undefined') {
   File.prototype.arrayBuffer = () =>
     new Promise((resolve) => resolve(new ArrayBuffer(0)));
 
+  window.KeyframeEffect = class KeyframeEffect {};
+  window.Animation = class Animation {
+    cancel() {}
+    play() {}
+  };
+  window.AnimationPlaybackEvent = class AnimationPlaybackEvent {};
+
   // Prevent React warnings when setting the `muted` attribute on `<video>` elements.
   // See https://github.com/testing-library/react-testing-library/issues/470
   // See https://github.com/facebook/react/issues/10389

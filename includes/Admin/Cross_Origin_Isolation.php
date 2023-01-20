@@ -105,6 +105,112 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'user_preferences' ];
+	}
+
+	/**
+	 * Start output buffer to add headers and `crossorigin` attribute everywhere.
+	 *
+	 * @since 1.6.0
+	 */
+	public function admin_header(): void {
+		if ( $this->needs_isolation() ) {
+			header( 'Cross-Origin-Opener-Policy: same-origin' );
+			header( 'Cross-Origin-Embedder-Policy: require-corp' );
+		}
+
+		ob_start( [ $this, 'replace_in_dom' ] );
+	}
+
+	/**
+	 * Filters the HTML link tag of an enqueued style.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param mixed  $tag    The link tag for the enqueued style.
+	 * @param string $handle The style's registered handle.
+	 * @param string $href   The stylesheet's source URL.
+	 * @return string|mixed
+	 */
+	public function style_loader_tag( $tag, string $handle, string $href ) {
+		return $this->add_attribute( $tag, 'href', $href );
+	}
+
+	/**
+	 * Filters the HTML script tag of an enqueued script.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param mixed  $tag    The `<script>` tag for the enqueued script.
+	 * @param string $handle The script's registered handle.
+	 * @param string $src    The script's source URL.
+	 * @return string|mixed The filtered script tag.
+	 */
+	public function script_loader_tag( $tag, string $handle, string $src ) {
+		return $this->add_attribute( $tag, 'src', $src );
+	}
+
+	/**
+	 * Filter the avatar tag.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param string|mixed        $avatar      HTML for the user's avatar.
+	 * @param mixed               $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
+	 *                                         user email, WP_User object, WP_Post object, or WP_Comment object.
+	 * @param int                 $size        Square avatar width and height in pixels to retrieve.
+	 * @param string              $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
+	 *                                         'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or
+	 *                                         'gravatar_default'. Default is the value of the 'avatar_default' option, with a
+	 *                                         fallback of 'mystery'.
+	 * @param string              $alt         Alternative text to use in the avatar image tag. Default empty.
+	 * @param array<string,mixed> $args        Arguments passed to get_avatar_data(), after processing.
+	 * @return string|mixed Filtered avatar tag.
+	 */
+	public function get_avatar( $avatar, $id_or_email, int $size, string $default, string $alt, array $args ) {
+		return $this->add_attribute( $avatar, 'src', $args['url'] );
+	}
+
+	/**
+	 * Unhook wp_print_media_templates and replace with custom media templates.
+	 *
+	 * @since 1.8.0
+	 */
+	public function override_media_templates(): void {
+		remove_action( 'admin_footer', 'wp_print_media_templates' );
+		add_action( 'admin_footer', [ $this, 'custom_print_media_templates' ] );
+	}
+
+	/**
+	 * Add crossorigin attribute to all tags that could have assets loaded from a different domain.
+	 *
+	 * @since 1.8.0
+	 */
+	public function custom_print_media_templates(): void {
+		ob_start();
+		wp_print_media_templates();
+		$html = (string) ob_get_clean();
+
+		$tags = [
+			'audio',
+			'img',
+			'video',
+		];
+		foreach ( $tags as $tag ) {
+			$html = (string) str_replace( '<' . $tag, '<' . $tag . ' crossorigin="anonymous"', $html );
+		}
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
 	 * Determines whether "full" cross-origin isolation is needed.
 	 *
 	 * By default, `crossorigin="anonymous"` attributes are added to all external
@@ -142,31 +248,6 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Get the list of service IDs required for this service to be registered.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string[] List of required services.
-	 */
-	public static function get_requirements(): array {
-		return [ 'user_preferences' ];
-	}
-
-	/**
-	 * Start output buffer to add headers and `crossorigin` attribute everywhere.
-	 *
-	 * @since 1.6.0
-	 */
-	public function admin_header(): void {
-		if ( $this->needs_isolation() ) {
-			header( 'Cross-Origin-Opener-Policy: same-origin' );
-			header( 'Cross-Origin-Embedder-Policy: require-corp' );
-		}
-
-		ob_start( [ $this, 'replace_in_dom' ] );
-	}
-
-	/**
 	 * Process a html string and add attribute attributes to required tags.
 	 *
 	 * @since 1.6.0
@@ -174,7 +255,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * @param string $html HTML document as string.
 	 * @return string Processed HTML document.
 	 */
-	protected function replace_in_dom( string $html ): string {
+	protected function replace_in_dom( string $html ): string { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$site_url = site_url();
 
 		// See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin.
@@ -240,55 +321,6 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Filters the HTML link tag of an enqueued style.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param string $tag    The link tag for the enqueued style.
-	 * @param string $handle The style's registered handle.
-	 * @param string $href   The stylesheet's source URL.
-	 * @return string|mixed
-	 */
-	public function style_loader_tag( $tag, $handle, $href ) {
-		return $this->add_attribute( $tag, 'href', $href );
-	}
-
-	/**
-	 * Filters the HTML script tag of an enqueued script.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param string|mixed $tag The `<script>` tag for the enqueued script.
-	 * @param string       $handle    The script's registered handle.
-	 * @param string       $src       The script's source URL.
-	 * @return string|mixed The filtered script tag.
-	 */
-	public function script_loader_tag( $tag, $handle, $src ) {
-		return $this->add_attribute( $tag, 'src', $src );
-	}
-
-	/**
-	 * Filter the avatar tag.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param string|mixed        $avatar      HTML for the user's avatar.
-	 * @param mixed               $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
-	 *                                         user email, WP_User object, WP_Post object, or WP_Comment object.
-	 * @param int                 $size        Square avatar width and height in pixels to retrieve.
-	 * @param string              $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
-	 *                                         'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or
-	 *                                         'gravatar_default'. Default is the value of the 'avatar_default' option, with a
-	 *                                         fallback of 'mystery'.
-	 * @param string              $alt         Alternative text to use in the avatar image tag. Default empty.
-	 * @param array<string,mixed> $args        Arguments passed to get_avatar_data(), after processing.
-	 * @return string|mixed Filtered avatar tag.
-	 */
-	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ) {
-		return $this->add_attribute( $avatar, 'src', $args['url'] );
-	}
-
-	/**
 	 * Do replacement to add crossorigin attribute.
 	 *
 	 * @since 1.6.0
@@ -330,37 +362,5 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 			],
 			$html
 		);
-	}
-
-	/**
-	 * Unhook wp_print_media_templates and replace with custom media templates.
-	 *
-	 * @since 1.8.0
-	 */
-	public function override_media_templates(): void {
-		remove_action( 'admin_footer', 'wp_print_media_templates' );
-		add_action( 'admin_footer', [ $this, 'custom_print_media_templates' ] );
-	}
-
-	/**
-	 * Add crossorigin attribute to all tags that could have assets loaded from a different domain.
-	 *
-	 * @since 1.8.0
-	 */
-	public function custom_print_media_templates(): void {
-		ob_start();
-		wp_print_media_templates();
-		$html = (string) ob_get_clean();
-
-		$tags = [
-			'audio',
-			'img',
-			'video',
-		];
-		foreach ( $tags as $tag ) {
-			$html = (string) str_replace( '<' . $tag, '<' . $tag . ' crossorigin="anonymous"', $html );
-		}
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

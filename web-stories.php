@@ -64,7 +64,7 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
  * @return Web_Stories_Compatibility
  */
 function web_stories_get_compat_instance() {
-	$error      = new \WP_Error();
+	$error      = new WP_Error();
 	$extensions = array(
 		'date'   => array(
 			'classes' => array(
@@ -170,7 +170,7 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 	if ( $_error->errors ) {
 		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
 		if ( class_exists( '\WP_CLI' ) ) {
-			\WP_CLI::warning( $heading );
+			WP_CLI::warning( $heading );
 		} else {
 			echo "$heading\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
@@ -178,7 +178,7 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 			$message = $_error->get_error_message( $error_code );
 			$body    = htmlspecialchars_decode( wp_strip_all_tags( $message ) );
 			if ( class_exists( '\WP_CLI' ) ) {
-				\WP_CLI::line( $body );
+				WP_CLI::line( $body );
 			} else {
 				echo "$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
