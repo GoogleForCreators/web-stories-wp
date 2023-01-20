@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
   RTL_PLACEMENT,
   Tooltip as BaseTooltip,
-  TooltipPropTypes,
   Placement,
 } from '@googleforcreators/design-system';
 
@@ -35,4 +35,17 @@ export default function Tooltip({ placement = Placement.Bottom, ...props }) {
 
   return <BaseTooltip placement={derivedPlacement} {...props} />;
 }
-Tooltip.propTypes = TooltipPropTypes;
+Tooltip.propTypes = {
+  children: PropTypes.node.isRequired,
+  hasTail: PropTypes.bool,
+  placement: PropTypes.oneOf(Object.values(Placement)),
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  shortcut: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  forceAnchorRef: PropTypes.object,
+  styleOverride: PropTypes.object,
+  className: PropTypes.string,
+  isDelayed: PropTypes.bool,
+  popupZIndexOverride: PropTypes.number,
+};

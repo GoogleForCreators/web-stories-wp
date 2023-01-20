@@ -27,7 +27,6 @@ import PropTypes from 'prop-types';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Placement } from '../../popup';
 import { Text } from '../../typography';
-import { DROP_DOWN_ITEM } from '../../menu';
 import { DropDown } from '..';
 import {
   basicDropDownOptions,
@@ -242,7 +241,7 @@ const RenderItemOverride = forwardRef(
   )
 );
 RenderItemOverride.propTypes = {
-  option: DROP_DOWN_ITEM,
+  option: PropTypes.object,
   isSelected: PropTypes.bool,
 };
 

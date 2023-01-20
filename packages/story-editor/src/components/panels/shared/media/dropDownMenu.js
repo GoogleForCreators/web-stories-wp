@@ -38,7 +38,6 @@ import {
   ButtonType,
   ButtonSize,
   TextSize,
-  DROP_DOWN_ITEM,
   DefaultListItemInner,
   DefaultListItemLabelDisplayText,
 } from '@googleforcreators/design-system';
@@ -129,7 +128,7 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
 });
 
 CustomItemRenderer.propTypes = {
-  option: DROP_DOWN_ITEM,
+  option: PropTypes.object,
   isSelected: PropTypes.bool,
 };
 
