@@ -69,12 +69,13 @@ import removeTagNames from './migrations/v0043_removeTagNames';
 import unusedProperties from './migrations/v0044_unusedProperties';
 import globalPageAdvancement from './migrations/v0045_globalPageAdvancement';
 import removeRedundantScalingProperties from './migrations/v0046_removeRedundantScalingProperties';
+import fixBrokenTemplates from './migrations/v0047_fixBrokenTemplates';
 
 type MigrationFn<T, S> = (storyData: T) => S;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- See below.
 // @ts-ignore Reason: Temporary (hopefully). Don't have a good solution for this yet as it accepts all story types.
-const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = { // eslint-disable-line @typescript-eslint/no-explicit-any,prettier/prettier -- See above.
+const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = {
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],
@@ -121,6 +122,7 @@ const MIGRATIONS: Record<number, MigrationFn<any, any>[]> = { // eslint-disable-
   44: [unusedProperties],
   45: [globalPageAdvancement],
   46: [removeRedundantScalingProperties],
+  47: [fixBrokenTemplates],
 };
 
 export const DATA_VERSION = Math.max.apply(
