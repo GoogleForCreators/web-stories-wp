@@ -39,17 +39,23 @@ import {
 
 const Saturation = lazy(() =>
   import(
-    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: "Saturation" */
+    '@hello-pangea/color-picker'
   ).then((module) => ({ default: module.Saturation }))
 );
 const Hue = lazy(() =>
   import(
-    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: "Hue" */
+    '@hello-pangea/color-picker'
   ).then((module) => ({ default: module.Hue }))
 );
 const Alpha = lazy(() =>
   import(
-    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: "Alpha" */
+    '@hello-pangea/color-picker'
   ).then((module) => ({ default: module.Alpha }))
 );
 
@@ -157,15 +163,17 @@ function CurrentColorPicker({
 
   const { initEyedropper } = useEyedropper({ onChange });
 
+  // Note: pointer prop is handled differently for Saturation vs. Hue. See:
+  // https://github.com/hello-pangea/color-picker/blob/026c725c7d45f9690f71ca55c8d82a721356fdcc/packages/color-picker/src/components/common/Saturation.tsx#L128
+  // https://github.com/hello-pangea/color-picker/blob/026c725c7d45f9690f71ca55c8d82a721356fdcc/packages/color-picker/src/components/common/Hue.jsx#L101
+
   return (
     <>
       <Suspense fallback={null}>
         <SaturationWrapper>
           <Saturation
             radius="8px"
-            pointer={() => (
-              <Pointer offsetX={-8} offsetY={-8} currentColor={rgb} />
-            )}
+            pointer={<Pointer offsetX={-8} offsetY={-8} currentColor={rgb} />}
             hsl={hsl}
             hsv={hsv}
             onChange={onChange}
@@ -265,13 +273,15 @@ const DynamicImportWrapper = () => {
 
       useEffect(() => {
         isMounted.current = true;
-        import(/* webpackChunkName: "chunk-react-color" */ 'react-color').then(
-          ({ CustomPicker }) => {
-            if (isMounted.current) {
-              setPicker({ component: CustomPicker(...args) });
-            }
+        import(
+          /* webpackChunkName: "chunk-react-color" */
+          /* webpackExports: "CustomPicker" */
+          '@hello-pangea/color-picker'
+        ).then(({ CustomPicker }) => {
+          if (isMounted.current) {
+            setPicker({ component: CustomPicker(...args) });
           }
-        );
+        });
 
         return () => {
           isMounted.current = false;

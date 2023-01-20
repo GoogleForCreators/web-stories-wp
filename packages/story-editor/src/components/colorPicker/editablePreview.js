@@ -36,7 +36,9 @@ import {
 
 const EditableInput = lazy(() =>
   import(
-    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: "EditableInput" */
+    '@hello-pangea/color-picker'
   ).then((module) => ({ default: module.EditableInput }))
 );
 
