@@ -26,7 +26,12 @@ import type { StoryAnimation } from '@googleforcreators/animation';
 import { LayerDirection } from '../../../../constants';
 import { ELEMENT_RESERVED_PROPERTIES } from '../types';
 import objectWithout from '../../../../utils/objectWithout';
-import type { ElementUpdater } from '../../../../types';
+import type {
+  AnimationUpdate,
+  AnimationUpdater,
+  ElementUpdater,
+  UpdatableAnimation,
+} from '../../../../types';
 export { objectWithout };
 
 export function intersect<T>(first: T[], ...rest: T[][]) {
@@ -95,29 +100,31 @@ export function getAbsolutePosition({
   }
 }
 
-interface AllowedProperties extends Partial<Element> {
-  animation: StoryAnimation;
+function isAnimationUpdate(
+  e: AnimationUpdate | Partial<Element>
+): e is AnimationUpdate {
+  return 'animation' in e;
 }
-function isWithAnimation(
-  props: Partial<Element> | Element
-): props is AllowedProperties {
-  return 'animation' in props;
-}
+
 export function updateElementWithUpdater<T extends Element = Element>(
   element: T,
-  properties: Partial<T> | ElementUpdater<T>
+  properties:
+    | Partial<T>
+    | ElementUpdater<T>
+    | AnimationUpdate
+    | AnimationUpdater
 ): null | void | StoryAnimation {
-  const updater =
+  const value =
     typeof properties === 'function' ? properties(element) : properties;
+  if (isAnimationUpdate(value)) {
+    return value.animation;
+  }
   const allowedProperties: Partial<Element> | Element = objectWithout(
-    updater,
+    value,
     ELEMENT_RESERVED_PROPERTIES
   );
   if (Object.keys(allowedProperties).length === 0) {
     return null;
-  }
-  if (isWithAnimation(allowedProperties) && allowedProperties.animation) {
-    return allowedProperties.animation;
   }
   Object.assign(element, allowedProperties);
   return null;
@@ -132,12 +139,9 @@ export function removeAnimationsWithElementIds(
   );
 }
 
-type AnimationToDelete = StoryAnimation & {
-  delete?: boolean;
-};
 export function updateAnimations(
   oldAnimations: StoryAnimation[],
-  animationUpdates: Record<string, StoryAnimation>
+  animationUpdates: Record<string, UpdatableAnimation>
 ) {
   const newAnimations = oldAnimations.reduce(
     (animations: StoryAnimation[], animation) => {
@@ -146,7 +150,7 @@ export function updateAnimations(
       // remove animation from lookup
       delete animationUpdates[animation.id];
 
-      if ((updatedAnimation as AnimationToDelete)?.delete) {
+      if (updatedAnimation.delete) {
         // delete animation
         return animations;
       } else if (updatedAnimation) {

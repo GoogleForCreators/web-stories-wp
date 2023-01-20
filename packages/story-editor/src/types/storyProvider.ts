@@ -109,9 +109,16 @@ export type DeleteElementsAction = {
 };
 
 export type ElementUpdater<T = Element> = (prevProps: T) => T | Partial<T>;
+export type UpdatableAnimation = StoryAnimation & { delete?: boolean };
+export type AnimationUpdate = { animation: UpdatableAnimation };
+export type AnimationUpdater = (arg?: unknown) => AnimationUpdate;
 export type UpdateElementsProps = {
   elementIds?: string[] | null;
-  properties: Partial<Element> | ElementUpdater;
+  properties:
+    | Partial<Element>
+    | ElementUpdater
+    | AnimationUpdate
+    | AnimationUpdater;
 };
 export type UpdateElementsAction = {
   type: ActionTypes.UpdateElements;

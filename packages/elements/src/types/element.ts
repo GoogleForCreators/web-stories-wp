@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { Solid } from '@googleforcreators/patterns';
+import type { Pattern, Solid } from '@googleforcreators/patterns';
 import type { Resource, SequenceResource } from '@googleforcreators/media';
 import type { ElementBox } from '@googleforcreators/units';
 
@@ -103,6 +103,7 @@ export interface MediaElement extends BackgroundableElement {
   scale?: number;
   focalX?: number;
   focalY?: number;
+  overlay?: Pattern;
 }
 
 export interface SequenceMediaElement extends MediaElement {

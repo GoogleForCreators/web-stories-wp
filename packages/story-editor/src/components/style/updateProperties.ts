@@ -25,11 +25,11 @@ import type { Element } from '@googleforcreators/elements';
 import { MULTIPLE_VALUE } from '../../constants';
 import type { ElementUpdater } from '../../types';
 
-function updateProperties(
-  currentProperties: Element,
-  newPropertiesOrUpdater: Partial<Element> | ElementUpdater,
+function updateProperties<E extends Element = Element>(
+  currentProperties: E,
+  newPropertiesOrUpdater: Partial<E> | ElementUpdater,
   commitValues: boolean
-): Partial<Element> {
+): Partial<E> {
   const newProperties =
     typeof newPropertiesOrUpdater === 'function'
       ? newPropertiesOrUpdater(currentProperties)
@@ -60,7 +60,7 @@ function updateProperties(
       key,
       newProperties[key as keyof typeof newProperties],
     ])
-  );
+  ) as Partial<E>;
 }
 
 export default updateProperties;

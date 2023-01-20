@@ -23,7 +23,12 @@ import {
 } from '@googleforcreators/design-system';
 import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { Element, ElementId, ElementType } from '@googleforcreators/elements';
+import {
+  Element,
+  ElementId,
+  elementIs,
+  ElementType,
+} from '@googleforcreators/elements';
 import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
@@ -34,7 +39,7 @@ import { useStory } from '../story';
 import type { QuickAction } from '../../types';
 import updateProperties from '../../components/style/updateProperties';
 import { useHistory } from '../history';
-import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
+import { ACTIONS, RESET_DEFAULTS, ResetProperties } from './constants';
 
 interface CommonActionsProps {
   selectedElement: Element;
@@ -76,34 +81,37 @@ function useCommonActions({
    * @return {void}
    */
   const handleResetProperties = useCallback(
-    (elementType: ElementType, elementId: ElementId, properties: string[]) => {
-      const newProperties: Partial<Element> = {};
+    <E extends Element = Element>(
+      elementType: ElementType,
+      elementId: ElementId,
+      properties: string[]
+    ) => {
+      const newProperties: Partial<E> = {};
       // Choose properties to clear
-      if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
+      if (
+        elementIs.media(properties) &&
+        properties.includes(ResetProperties.Overlay)
+      ) {
         newProperties.overlay = null;
       }
 
-      if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
+      const firstAnimation = selectedElementAnimations?.[0];
+      if (properties.includes(ResetProperties.Animation) && firstAnimation) {
         // this is the only place where we're updating both animations and other
         // properties on an element. updateElementsById only accepts if you upate
         // one or the other, so we're upating animations if needed here separately
         updateElementsById({
           elementIds: [elementId],
-          properties: (currentProperties) =>
-            updateProperties(
-              currentProperties,
-              {
-                animation: { ...selectedElementAnimations?.[0], delete: true },
-              },
-              /* commitValues */ true
-            ),
+          properties: () => ({
+            animation: { ...firstAnimation, delete: true },
+          }),
         });
       }
 
-      if (properties.includes(RESET_PROPERTIES.STYLES)) {
+      if (properties.includes(ResetProperties.Styles)) {
         newProperties.opacity = 100;
-        newProperties.border = null;
-        newProperties.borderRadius = null;
+        newProperties.border = undefined;
+        newProperties.borderRadius = undefined;
       }
 
       if (elementType === ElementType.Text) {
@@ -112,7 +120,7 @@ function useCommonActions({
 
       updateElementsById({
         elementIds: [elementId],
-        properties: (currentProperties) =>
+        properties: (currentProperties: E) =>
           updateProperties(
             currentProperties,
             newProperties,

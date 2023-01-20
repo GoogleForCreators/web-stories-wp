@@ -17,10 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  StoryAnimation,
-  StoryAnimationState,
-} from '@googleforcreators/animation';
+import { StoryAnimationState } from '@googleforcreators/animation';
 import { produce } from 'immer';
 
 /**
@@ -30,6 +27,7 @@ import type {
   UpdateElementsProps,
   ReducerState,
   ReducerStateDraft,
+  UpdatableAnimation,
 } from '../../../../types';
 import { updateElementWithUpdater, updateAnimations } from './utils';
 
@@ -66,7 +64,7 @@ export const updateElements = (
   if (!page || !idsToUpdate) {
     return;
   }
-  const animationLookup: Record<string, StoryAnimation> = {};
+  const animationLookup: Record<string, UpdatableAnimation> = {};
   page.elements
     .filter(({ id }) => idsToUpdate.includes(id))
     .forEach((element) => {
