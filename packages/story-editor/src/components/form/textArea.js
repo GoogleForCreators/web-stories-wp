@@ -76,6 +76,7 @@ const TextArea = forwardRef(
         placeholder={placeholder}
         value={currentValue}
         {...rest}
+        rows={rows}
         containerStyleOverride={inputContainerStyleOverride}
         onChange={(evt) => setCurrentValue(evt.target.value)}
         onBlur={handleBlur}
