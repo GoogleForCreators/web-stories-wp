@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { EditorState } from 'draft-js';
-import type { OrderedSet } from 'immutable';
+import { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
@@ -79,17 +79,15 @@ describe('Underline formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without underline style', () => {
-      const css = stylesToCSS({
-        toArray: () => ['NOT-UNDERLINE', 'ALSO-NOT-UNDERLINE'],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(
+        OrderedSet.of('NOT-UNDERLINE', 'ALSO-NOT-UNDERLINE')
+      );
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS if underline is present', () => {
-      const css = stylesToCSS({
-        toArray: () => [UNDERLINE],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(UNDERLINE));
 
       expect(css).toStrictEqual({ textDecoration: 'underline' });
     });

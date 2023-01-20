@@ -25,27 +25,25 @@ import type { PropsWithChildren } from 'react';
  * Internal dependencies
  */
 import { AnimationProvider, useStoryAnimationContext } from '..';
-import * as animationParts from '../../parts';
-import { AnimationType } from '../../types';
+import { createAnimationPart } from '../../parts';
+import { AnimationType, Element } from '../../types';
 
 jest.mock('flagged');
+jest.mock('../../parts', () => ({
+  createAnimationPart: jest.fn().mockImplementation(() => ({
+    id: '',
+    keyframes: {},
+    WAAPIAnimation: { keyframes: {}, timings: {} },
+    AMPTarget: () => null,
+    AMPAnimation: () => null,
+    generatedKeyframes: {},
+  })),
+}));
 const mockedUseFeature = jest.mocked(useFeature);
+const mockedCreateAnimationPart = jest.mocked(createAnimationPart);
 
 function flushPromiseQueue() {
   return Promise.resolve();
-}
-
-function mockCreateAnimationPart() {
-  return jest
-    .spyOn(animationParts, 'createAnimationPart')
-    .mockImplementation(() => ({
-      id: '',
-      keyframes: {},
-      WAAPIAnimation: { keyframes: {}, timings: {} },
-      AMPTarget: () => null,
-      AMPAnimation: () => null,
-      generatedKeyframes: {},
-    }));
 }
 
 function createWrapperWithProps<T>(
@@ -73,40 +71,49 @@ describe('AnimationProvider', () => {
     mockedUseFeature.mockImplementation(() => true);
   });
 
+  afterEach(() => {
+    mockedCreateAnimationPart.mockReset();
+  });
+
   describe('getAnimationParts(target)', () => {
     it('gets all generated parts for a target', () => {
-      const target = 'some-target';
-      const targets = [target];
+      const target = 'id1';
+      const otherTarget = 'id2';
       const animations = [
         {
           id: '1',
-          targets,
+          targets: [target],
           type: AnimationType.Move as const,
           duration: 1000,
         },
         {
           id: '2',
-          targets,
+          targets: [target],
           type: AnimationType.Spin as const,
           duration: 1000,
         },
         {
           id: '3',
-          targets: ['other-target'],
+          targets: [otherTarget],
           type: AnimationType.Move as const,
           duration: 1000,
         },
         {
           id: '4',
-          targets: [target, 'other-target'],
+          targets: [target, otherTarget],
           type: AnimationType.Zoom as const,
           duration: 1000,
         },
+      ];
+      const elements: Element[] = [
+        { id: target, x: 0, y: 0, width: 0, height: 0, rotationAngle: 0 },
+        { id: otherTarget, x: 0, y: 0, width: 0, height: 0, rotationAngle: 0 },
       ];
 
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(AnimationProvider, {
           animations,
+          elements,
         }),
       });
 
@@ -115,12 +122,12 @@ describe('AnimationProvider', () => {
       } = result.current;
 
       expect(getAnimationParts(target)).toHaveLength(3);
-      expect(getAnimationParts('other-target')).toHaveLength(2);
-      expect(getAnimationParts('not used target')).toHaveLength(0);
+      expect(getAnimationParts(otherTarget)).toHaveLength(2);
+      expect(getAnimationParts('id3')).toHaveLength(0);
     });
 
     it('calls generators for a target in ascending order', () => {
-      const target = 'some-target';
+      const target = 'id1';
       const targets = [target];
       const args = { someProp: 1, duration: 1000 };
       const types = [
@@ -133,12 +140,14 @@ describe('AnimationProvider', () => {
         { id: '2', targets, type: types[1], ...args },
         { id: '3', targets, type: types[2], ...args },
       ];
-
-      const AnimationPartMock = mockCreateAnimationPart();
+      const elements: Element[] = [
+        { id: target, x: 0, y: 0, width: 0, height: 0, rotationAngle: 0 },
+      ];
 
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(AnimationProvider, {
           animations,
+          elements,
         }),
       });
 
@@ -148,17 +157,15 @@ describe('AnimationProvider', () => {
 
       getAnimationParts(target);
 
-      animations.forEach(({ type }) => {
-        expect(animationParts.createAnimationPart).toHaveBeenCalledWith({
-          type,
-          args: { ...args, element: undefined },
-        });
+      animations.forEach((animation) => {
+        expect(createAnimationPart).toHaveBeenCalledWith(
+          animation,
+          elements[0]
+        );
       });
-
-      AnimationPartMock.mockRestore();
     });
 
-    it('calls generators for a target with propper args', () => {
+    it('calls generators for a target with proper args', () => {
       const target = 'some-target';
       const target2 = 'that-target';
       const element1 = {
@@ -192,8 +199,6 @@ describe('AnimationProvider', () => {
         { id: '3', targets: [target2], type: animType, ...args[2] },
       ];
 
-      const AnimationPartMock = mockCreateAnimationPart();
-
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(AnimationProvider, {
           animations,
@@ -209,23 +214,21 @@ describe('AnimationProvider', () => {
       animations
         .filter(({ targets }) => targets.includes(target))
         .forEach(({ type, ...rest }) => {
-          expect(mockCreateAnimationPart).toHaveBeenCalledWith({
-            type,
-            args: { ...rest, element: element1 },
-          });
+          expect(mockedCreateAnimationPart).toHaveBeenCalledWith(
+            { type, ...rest },
+            element1
+          );
         });
 
       getAnimationParts(target2);
       animations
         .filter(({ targets }) => targets.includes(target2))
         .forEach(({ type, ...rest }) => {
-          expect(mockCreateAnimationPart).toHaveBeenCalledWith({
-            type,
-            args: { ...rest, element: element1 },
-          });
+          expect(mockedCreateAnimationPart).toHaveBeenCalledWith(
+            { type, ...rest },
+            element2
+          );
         });
-
-      AnimationPartMock.mockRestore();
     });
   });
 
@@ -285,10 +288,12 @@ describe('AnimationProvider', () => {
       const numCalls = 10;
       const play = jest.fn();
       const pause = jest.fn();
+      const cancel = jest.fn();
       const animations = Array.from({ length: numCalls }, () => {
         const animation = mockWAAPIAnimation({
           play,
           pause,
+          cancel,
           currentTime: 0,
           effect: {
             getTiming: () => ({
@@ -333,6 +338,7 @@ describe('AnimationProvider', () => {
         const animation: MockAnimation = mockWAAPIAnimation({
           play: jest.fn(),
           pause: jest.fn(),
+          cancel: jest.fn(),
           currentTime: 0,
           effect: {
             getTiming: () => ({
@@ -385,6 +391,7 @@ describe('AnimationProvider', () => {
           mockWAAPIAnimation({
             play: jest.fn(),
             pause: jest.fn(),
+            cancel: jest.fn(),
             currentTime: initialTime,
             effect: {
               getTiming: () => ({

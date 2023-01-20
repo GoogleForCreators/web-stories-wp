@@ -19,7 +19,7 @@
  */
 import { createSolid } from '@googleforcreators/patterns';
 import type { EditorState } from 'draft-js';
-import type { OrderedSet } from 'immutable';
+import { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
@@ -90,23 +90,19 @@ describe('Color formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without a color style', () => {
-      const css = stylesToCSS({} as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet<string>([]));
 
       expect(css).toBeNull();
     });
 
     it('should ignore invalid color style', () => {
-      const css = stylesToCSS({
-        toArray: () => [`${COLOR}-invalid`],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(`${COLOR}-invalid`));
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS for a valid color style', () => {
-      const css = stylesToCSS({
-        toArray: () => [`${COLOR}-ff000032`],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(`${COLOR}-ff000032`));
 
       expect(css).toStrictEqual({ color: 'rgba(255,0,0,0.5)' });
     });

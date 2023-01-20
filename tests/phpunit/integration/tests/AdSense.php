@@ -20,6 +20,8 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Settings;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\AdSense
  */
@@ -29,9 +31,9 @@ class AdSense extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'adsense' );
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID, '123' );
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, '456' );
+		update_option( Settings::SETTING_NAME_AD_NETWORK, 'adsense' );
+		update_option( Settings::SETTING_NAME_ADSENSE_SLOT_ID, '123' );
+		update_option( Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, '456' );
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\AdSense::class );
 	}
@@ -39,9 +41,9 @@ class AdSense extends DependencyInjectedTestCase {
 	public function tear_down(): void {
 		parent::tear_down();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
+		delete_option( Settings::SETTING_NAME_AD_NETWORK );
+		delete_option( Settings::SETTING_NAME_ADSENSE_SLOT_ID );
+		delete_option( Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
 	}
 
 	/**

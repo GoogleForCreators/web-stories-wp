@@ -21,6 +21,9 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\KSES;
+use Google\Web_Stories\Page_Template_Post_Type;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Trait Kses_Setup
@@ -33,11 +36,11 @@ trait Kses_Setup {
 	 * Setup KSES init class.
 	 */
 	protected function kses_int(): void {
-		$settings        = $this->createMock( \Google\Web_Stories\Settings::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $settings );
+		$settings        = $this->createMock( Settings::class );
+		$story_post_type = new Story_Post_Type( $settings );
 		$this->kses      = new KSES(
 			$story_post_type,
-			new \Google\Web_Stories\Page_Template_Post_Type( $story_post_type )
+			new Page_Template_Post_Type( $story_post_type )
 		);
 		$this->kses->register();
 	}

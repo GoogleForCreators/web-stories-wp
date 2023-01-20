@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\User\Preferences;
 
@@ -73,7 +74,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		wp_set_current_user( $this->admin_id );
 		update_user_meta( $this->admin_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->instance->register();
 

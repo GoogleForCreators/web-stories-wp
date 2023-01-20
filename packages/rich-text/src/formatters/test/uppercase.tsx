@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import type { OrderedSet } from 'immutable';
+import { OrderedSet } from 'immutable';
 import type { EditorState } from 'draft-js';
 
 /**
@@ -79,17 +79,15 @@ describe('Uppercase formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without uppercase style', () => {
-      const css = stylesToCSS({
-        toArray: () => ['NOT-UPPERCASE', 'ALSO-NOT-UPPERCASE'],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(
+        OrderedSet.of('NOT-UPPERCASE', 'ALSO-NOT-UPPERCASE')
+      );
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS if uppercase is present', () => {
-      const css = stylesToCSS({
-        toArray: () => [UPPERCASE],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(UPPERCASE));
 
       expect(css).toStrictEqual({ textTransform: 'uppercase' });
     });

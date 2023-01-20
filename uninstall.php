@@ -26,6 +26,9 @@
 
 declare(strict_types = 1);
 
+use Google\Web_Stories\PluginFactory;
+use Google\Web_Stories\Settings;
+
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	return;
 }
@@ -60,9 +63,9 @@ if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' )
 	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
 }
 
-\Google\Web_Stories\PluginFactory::create()->register();
+PluginFactory::create()->register();
 
-$erase = (bool) get_option( \Google\Web_Stories\Settings::SETTING_NAME_DATA_REMOVAL );
+$erase = (bool) get_option( Settings::SETTING_NAME_DATA_REMOVAL );
 
 /**
  * Filters whether data should be erased when uninstalling the plugin.
@@ -83,7 +86,7 @@ if ( false === $erase ) {
  * @since 1.26.0
  */
 function web_stories_uninstall(): void {
-	$ws_plugin = \Google\Web_Stories\PluginFactory::create();
+	$ws_plugin = PluginFactory::create();
 	$ws_plugin->register();
 	$ws_plugin->on_site_uninstall();
 }
