@@ -19,6 +19,7 @@
 import { useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef } from '@googleforcreators/react';
+import { elementIs } from '@googleforcreators/elements';
 import { trackEvent } from '@googleforcreators/tracking';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -164,7 +165,7 @@ const useElementActions = () => {
     }
 
     // this will remove the group but keep the elements
-    if (deleteGroupById) {
+    if (deleteGroupById && selectedElements) {
       deleteGroupById({ groupId: selectedElements[0]?.groupId });
     }
 
@@ -188,22 +189,21 @@ const useElementActions = () => {
    *
    * @param {Event} evt The triggering event
    */
-  const handleOpenScaleAndCrop = useCallback(
-    (evt) => {
-      const selectedElement = selectedElements?.[0];
+  const handleOpenScaleAndCrop = useCallback(() => {
+    const selectedElement = selectedElements?.[0];
 
-      if (selectedElement) {
-        setEditingElement(selectedElement.id, evt);
+    if (selectedElement) {
+      setEditingElement(selectedElement.id);
 
-        void trackEvent('context_menu_action', {
-          name: 'open_scale_and_crop',
-          element: selectedElement.type,
-          isBackground: selectedElement.isBackground,
-        });
-      }
-    },
-    [selectedElements, setEditingElement]
-  );
+      void trackEvent('context_menu_action', {
+        name: 'open_scale_and_crop',
+        element: selectedElement.type,
+        isBackground:
+          elementIs.backgroundable(selectedElement) &&
+          selectedElement.isBackground,
+      });
+    }
+  }, [selectedElements, setEditingElement]);
 
   /**
    * Set currently selected element as the page's background.
@@ -211,7 +211,11 @@ const useElementActions = () => {
   const handleSetPageBackground = useCallback(() => {
     const selectedElement = selectedElements?.[0];
 
-    if (selectedElement && !selectedElement.isBackground) {
+    if (
+      selectedElement &&
+      elementIs.backgroundable(selectedElement) &&
+      !selectedElement.isBackground
+    ) {
       if (setBackgroundElement) {
         setBackgroundElement({ elementId: selectedElement.id });
       }
@@ -228,7 +232,9 @@ const useElementActions = () => {
           void trackEvent('context_menu_action', {
             name: 'undo_set_page_background',
             element: selectedElement.type,
-            isBackground: selectedElement.isBackground,
+            isBackground:
+              elementIs.backgroundable(selectedElement) &&
+              selectedElement.isBackground,
           });
         },
         actionHelpText: UNDO_HELP_TEXT,
@@ -237,7 +243,9 @@ const useElementActions = () => {
       void trackEvent('context_menu_action', {
         name: 'set_as_page_background',
         element: selectedElement.type,
-        isBackground: selectedElement.isBackground,
+        isBackground:
+          elementIs.backgroundable(selectedElement) &&
+          selectedElement.isBackground,
       });
     }
   }, [selectedElements, setBackgroundElement, showSnackbar]);
@@ -248,7 +256,12 @@ const useElementActions = () => {
   const handleRemovePageBackground = useCallback(() => {
     const selectedElement = selectedElements?.[0];
 
-    if (selectedElement && selectedElement.isBackground && updateElementsById) {
+    if (
+      selectedElement &&
+      elementIs.backgroundable(selectedElement) &&
+      selectedElement.isBackground &&
+      updateElementsById
+    ) {
       updateElementsById({
         elementIds: [selectedElement.id],
         properties: (currentProperties) =>
@@ -279,7 +292,9 @@ const useElementActions = () => {
           void trackEvent('context_menu_action', {
             name: 'undo_remove_page_background',
             elements: selectedElement.type,
-            isBackground: selectedElement.isBackground,
+            isBackground:
+              elementIs.backgroundable(selectedElement) &&
+              selectedElement.isBackground,
           });
         },
         actionHelpText: UNDO_HELP_TEXT,
@@ -288,7 +303,9 @@ const useElementActions = () => {
       void trackEvent('context_menu_action', {
         name: 'remove_media_from_background',
         element: selectedElement.type,
-        isBackground: selectedElement.isBackground,
+        isBackground:
+          elementIs.backgroundable(selectedElement) &&
+          selectedElement.isBackground,
       });
     }
   }, [

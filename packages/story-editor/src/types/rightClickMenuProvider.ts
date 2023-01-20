@@ -1,9 +1,12 @@
+
+export type MenuPosition = {
+  x: number;
+  y: number;
+}
+
 export interface RightClickMenuProviderState {
   isMenuOpen: boolean;
-  menuPosition: {
-    x: number;
-    y: number;
-  };
+  menuPosition: MenuPosition;
   onCloseMenu: () => void;
   onOpenMenu: () => void,
 }

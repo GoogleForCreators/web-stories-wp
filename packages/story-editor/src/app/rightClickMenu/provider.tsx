@@ -26,10 +26,9 @@ import { useCallback, useMemo, useReducer } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { PropsWithChildren } from 'react';
 import Context from './context';
 import rightClickMenuReducer, {
-  ACTION_TYPES,
+  ActionType,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
 import { useCopyPasteActions } from './hooks';
@@ -47,11 +46,11 @@ import { useCopyPasteActions } from './hooks';
  */
 
 function RightClickMenuProvider({ children }: PropsWithChildren<unknown>) {
-  const [{ isMenuOpen, menuPosition }, dispatch] = useReducer(
+  const [state, dispatch] = useReducer(
     rightClickMenuReducer,
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
-
+  const { isMenuOpen, menuPosition } = state;
   const { handleCopyStyles, handlePasteStyles } = useCopyPasteActions();
 
   /**
@@ -59,23 +58,24 @@ function RightClickMenuProvider({ children }: PropsWithChildren<unknown>) {
    *
    * @param {Event} evt The triggering event
    */
-  const handleOpenMenu = useCallback((evt: MouseEvent) => {
+  const handleOpenMenu = useCallback((evt: MouseEvent | KeyboardEvent) => {
     evt.preventDefault();
     evt.stopPropagation();
 
-    let x = evt?.clientX;
-    let y = evt?.clientY;
+    let x = Number(evt?.clientX);
+    let y = Number(evt?.clientY);
 
+    const { target }: { target?: Element } = evt;
     // Context menus opened through a shortcut will not have clientX and clientY
     // Instead determine the position of the menu off of the element
-    if (!x && !y) {
-      const dims = evt.target.getBoundingClientRect();
+    if (!x && !y && target) {
+      const dims = target.getBoundingClientRect();
       x = dims.x;
       y = dims.y;
     }
 
     dispatch({
-      type: ACTION_TYPES.OPEN_MENU,
+      type: ActionType.OpenMenu,
       payload: { x, y },
     });
 
@@ -89,7 +89,7 @@ function RightClickMenuProvider({ children }: PropsWithChildren<unknown>) {
    */
   const handleCloseMenu = useCallback(() => {
     if (isMenuOpen) {
-      dispatch({ type: ACTION_TYPES.CLOSE_MENU });
+      dispatch({ type: ActionType.CloseMenu });
     }
   }, [isMenuOpen]);
 

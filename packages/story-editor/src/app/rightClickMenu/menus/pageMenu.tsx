@@ -32,17 +32,13 @@ import { useElementActions, usePageActions } from '../hooks';
 import { useStory, useLocalMedia } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
-import {
-  DEFAULT_DISPLACEMENT,
-  SubMenuContainer,
-  SUB_MENU_ARIA_LABEL,
-} from './shared';
+import { getXvalue, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 import type { MenuPropType } from './shared';
 
 function PageMenu({ parentMenuRef }: MenuPropType) {
   const { currentPageIndex, canDeletePage, selectedElement } = useStory(
     ({ state }) => ({
-      currentPageIndex: state.currentPageIndex,
+      currentPageIndex: state.currentPageIndex | 0,
       canDeletePage: state.pages.length > 1,
       selectedElement: state.selectedElements?.[0],
     })
@@ -97,9 +93,7 @@ function PageMenu({ parentMenuRef }: MenuPropType) {
           <SubMenuContainer
             ref={subMenuRef}
             position={{
-              x:
-                (parentMenuRef.current.firstChild?.offsetWidth ||
-                  DEFAULT_DISPLACEMENT) + 2,
+              x: getXvalue(parentMenuRef),
               y: 0,
             }}
           >

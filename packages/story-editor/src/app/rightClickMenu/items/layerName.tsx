@@ -35,9 +35,11 @@ function LayerName() {
     renamableLayer: state.renamableLayer,
   }));
   const enableLayerNaming = useCallback(() => {
-    setRenamableLayer({
-      elementId: selectedElementIds[0],
-    });
+    if (selectedElementIds?.length) {
+      setRenamableLayer({
+        elementId: selectedElementIds[0],
+      });
+    }
   }, [setRenamableLayer, selectedElementIds]);
 
   return (

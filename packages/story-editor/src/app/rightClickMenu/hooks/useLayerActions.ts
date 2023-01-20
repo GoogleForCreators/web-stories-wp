@@ -18,6 +18,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import { elementIs } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -57,9 +58,11 @@ const useLayerActions = () => {
 
   // Non background elements may change layers.
   const canElementMoveBackwards =
-    selectedElement && !selectedElement.isBackground && elementPosition > 1;
+    elementIs.backgroundable(selectedElement) &&
+    !selectedElement.isBackground &&
+    elementPosition > 1;
   const canElementMoveForwards =
-    selectedElement &&
+    elementIs.backgroundable(selectedElement) &&
     !selectedElement.isBackground &&
     elementPosition < elements.length - 1;
 
@@ -67,7 +70,7 @@ const useLayerActions = () => {
    * Send element one layer backwards, if possible.
    */
   const handleSendBackward = useCallback(() => {
-    if (!canElementMoveBackwards) {
+    if (!canElementMoveBackwards || !selectedElement) {
       return;
     }
 
@@ -87,7 +90,9 @@ const useLayerActions = () => {
     void trackEvent('context_menu_action', {
       name: 'send_backward',
       element: selectedElement.type,
-      isBackground: selectedElement.isBackground,
+      isBackground:
+        elementIs.backgroundable(selectedElement) &&
+        selectedElement.isBackground,
     });
   }, [
     arrangeElement,
@@ -101,7 +106,7 @@ const useLayerActions = () => {
    * Send element all the way back, if possible.
    */
   const handleSendToBack = useCallback(() => {
-    if (!canElementMoveBackwards) {
+    if (!canElementMoveBackwards || !selectedElement) {
       return;
     }
 
@@ -122,7 +127,7 @@ const useLayerActions = () => {
    * Bring element one layer forwards, if possible.
    */
   const handleBringForward = useCallback(() => {
-    if (!canElementMoveForwards) {
+    if (!canElementMoveForwards || !selectedElement) {
       return;
     }
 
@@ -159,7 +164,7 @@ const useLayerActions = () => {
    * Send element all the way to the front, if possible.
    */
   const handleBringToFront = useCallback(() => {
-    if (!canElementMoveForwards) {
+    if (!canElementMoveForwards || !selectedElement) {
       return;
     }
 
@@ -180,7 +185,13 @@ const useLayerActions = () => {
    * Crop Video to remove off-canvas portion of the video.
    */
   const handleCropOffScreenVideo = useCallback(() => {
-    cropExistingVideo(selectedElement, getCropParams(selectedElement));
+    if (
+      cropExistingVideo &&
+      selectedElement &&
+      elementIs.media(selectedElement)
+    ) {
+      cropExistingVideo(selectedElement, getCropParams(selectedElement));
+    }
   }, [selectedElement, cropExistingVideo]);
 
   return {

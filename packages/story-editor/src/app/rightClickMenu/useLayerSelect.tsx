@@ -29,6 +29,7 @@ import { Icons } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import { getLayerName } from '@googleforcreators/elements';
+import type { ReactElement } from 'react';
 
 /**
  * Internal dependencies
@@ -37,12 +38,38 @@ import useStory from '../story/useStory';
 import { useCanvas } from '../canvas';
 import { useConfig } from '../config';
 import useElementPolygon from '../../utils/useElementPolygon';
+import type { MenuPosition } from '../../types';
 
 const ReversedIcon = styled(Icons.ChevronRightSmall)`
   transform: rotate(180deg);
 `;
 
-function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
+interface UseLayerSelectProps {
+  menuPosition: MenuPosition;
+  isMenuOpen: boolean;
+}
+
+type SubMenuItem = {
+  key: string;
+  supportsIcon: boolean;
+  icon: ReactElement | null;
+  label: ReactElement;
+  onClick: () => void;
+};
+
+interface UseLayerSelectState {
+  closeSubMenu: () => void;
+  isSubMenuOpen: boolean;
+  label: string;
+  openSubMenu: () => void;
+
+  subMenuItems: SubMenuItem[];
+}
+
+function useLayerSelect({
+  menuPosition,
+  isMenuOpen,
+}: UseLayerSelectProps): UseLayerSelectState | null {
   const { isRTL } = useConfig();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const nodesById = useCanvas(({ state: { nodesById } }) => nodesById);
@@ -89,7 +116,8 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     if (!isMenuOpen || selectedElements.length === 0) {
       return [];
     }
-    const intersectingElements = getIntersectingElements();
+    const intersectingElements: Element[] =
+      getIntersectingElements() as Element[];
     // If the only intersecting element is the selected element, don't display the menu.
     if (
       intersectingElements.length === 1 &&
@@ -98,7 +126,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
       return [];
     }
     return intersectingElements.map((element) => {
-      const { id, isBackground, type } = element;
+      const { id, isBackground = false, type } = element;
       return {
         key: id,
         supportsIcon: true,
@@ -112,28 +140,25 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
             isBackground: isBackground,
           });
         },
-        ...menuItemProps,
       };
     });
   }, [
     getIntersectingElements,
     isMenuOpen,
-    menuItemProps,
     setSelectedElementsById,
     selectedElements,
   ]);
 
   // Only display if submenu has any items.
   return subMenuItems.length > 0
-    ? {
+    ? ({
         label: __('Select Layer', 'web-stories'),
         openSubMenu: () => setIsSubMenuOpen(true),
         closeSubMenu: () => setIsSubMenuOpen(false),
         isSubMenuOpen,
         subMenuItems: isSubMenuOpen ? subMenuItems : [],
         SuffixIcon: isRTL ? ReversedIcon : Icons.ChevronRightSmall,
-        ...menuItemProps,
-      }
+      } as UseLayerSelectState)
     : null;
 }
 

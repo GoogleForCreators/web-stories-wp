@@ -62,7 +62,9 @@ const usePageActions = () => {
       position = position > pageLength ? pageLength - 1 : position;
       position = position < 0 ? 0 : position;
 
-      addPageAt({ page: createPage(), position });
+      if (addPageAt) {
+        addPageAt({ page: createPage(), position, updateSelection: false });
+      }
 
       void trackEvent('context_menu_action', {
         name: 'page_added',
@@ -77,14 +79,22 @@ const usePageActions = () => {
    * Duplicate the current page.
    */
   const handleDuplicatePage = useCallback(() => {
-    addPageAt({ page: duplicatePage(currentPage), position: null });
+    if (addPageAt) {
+      addPageAt({
+        page: duplicatePage(currentPage),
+        position: null,
+        updateSelection: false,
+      });
+    }
   }, [addPageAt, currentPage]);
 
   /**
    * Delete the current page.
    */
   const handleDeletePage = useCallback(() => {
-    deleteCurrentPage();
+    if (deleteCurrentPage) {
+      deleteCurrentPage();
+    }
 
     void trackEvent('context_menu_action', {
       name: 'page_deleted',

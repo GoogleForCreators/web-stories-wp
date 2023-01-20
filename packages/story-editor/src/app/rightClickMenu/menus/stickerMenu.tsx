@@ -34,11 +34,7 @@ import { useElementActions, useLayerActions } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
 import { LayerHide, LayerLock, LayerName, LayerUngroup } from '../items';
 import useRightClickMenu from '../useRightClickMenu';
-import {
-  DEFAULT_DISPLACEMENT,
-  SubMenuContainer,
-  SUB_MENU_ARIA_LABEL,
-} from './shared';
+import { getXvalue, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 import type { MenuPropType } from './shared';
 
 function StickerMenu({ parentMenuRef }: MenuPropType) {
@@ -76,9 +72,7 @@ function StickerMenu({ parentMenuRef }: MenuPropType) {
           <SubMenuContainer
             ref={subMenuRef}
             position={{
-              x:
-                (parentMenuRef.current.firstChild?.offsetWidth ||
-                  DEFAULT_DISPLACEMENT) + 2,
+              x: getXvalue(parentMenuRef),
               y: 0,
             }}
           >

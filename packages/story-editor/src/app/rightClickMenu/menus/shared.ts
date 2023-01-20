@@ -19,6 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
+import type { RefObject } from 'react';
 
 interface SubMenuContainerProps {
   position: { x: number; y: number };
@@ -35,6 +36,12 @@ export const DEFAULT_DISPLACEMENT = 210;
 
 export const SUB_MENU_ARIA_LABEL = __('Select a layer', 'web-stories');
 
+export function getXvalue(parentMenuRef: RefObject<Element>) {
+  if (parentMenuRef.current && parentMenuRef.current.firstChild) {
+    return Number(parentMenuRef.current.firstChild.offsetWidth) + 2;
+  }
+  return DEFAULT_DISPLACEMENT + 2;
+}
 export interface MenuPropType {
-  parentMenuRef: () => void | { current: Element };
+  parentMenuRef: RefObject<Element>;
 }

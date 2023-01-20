@@ -41,11 +41,7 @@ import useHeadingSelect from '../hooks/useHeadingSelect';
 import { LayerLock, LayerHide, LayerName, LayerUngroup } from '../items';
 import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
-import {
-  DEFAULT_DISPLACEMENT,
-  SubMenuContainer,
-  SUB_MENU_ARIA_LABEL,
-} from './shared';
+import { getXvalue, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 import type { MenuPropType } from './shared';
 
 function TextMenu({ parentMenuRef }: MenuPropType) {
@@ -102,9 +98,7 @@ function TextMenu({ parentMenuRef }: MenuPropType) {
           <SubMenuContainer
             ref={subMenuRef}
             position={{
-              x:
-                (parentMenuRef.current.firstChild?.offsetWidth ||
-                  DEFAULT_DISPLACEMENT) + 2,
+              x: getXvalue(parentMenuRef),
               y: 0,
             }}
           >
@@ -137,9 +131,7 @@ function TextMenu({ parentMenuRef }: MenuPropType) {
           <SubMenuContainer
             ref={headingSubMenuRef}
             position={{
-              x:
-                (parentMenuRef.current.firstChild?.offsetWidth ||
-                  DEFAULT_DISPLACEMENT) + 2,
+              x: getXvalue(parentMenuRef),
               y: 40,
             }}
           >

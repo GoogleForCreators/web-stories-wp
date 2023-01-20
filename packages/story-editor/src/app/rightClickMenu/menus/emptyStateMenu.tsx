@@ -29,7 +29,6 @@ import useOnMediaSelect from '../../../components/library/panes/media/local/useO
 import LibraryProvider from '../../../components/library/libraryProvider';
 import { useMediaRecording } from '../../../components/mediaRecording';
 import useFFmpeg from '../../media/utils/useFFmpeg';
-import { MenuPropType } from './shared';
 
 const MediaButton = () => {
   const { onSelect } = useOnMediaSelect();

@@ -34,10 +34,12 @@ function LayerUngroup() {
     })
   );
   const handleLayerUngroup = useCallback(() => {
-    removeElementFromGroup({
-      elementId: selectedElements[0].id,
-      groupId: selectedElements[0].groupId,
-    });
+    if (removeElementFromGroup && selectedElements?.length) {
+      removeElementFromGroup({
+        elementId: selectedElements[0].id,
+        groupId: selectedElements[0].groupId,
+      });
+    }
   }, [selectedElements, removeElementFromGroup]);
 
   const isLayerInGroup = selectedElements.some((el) => el.groupId);

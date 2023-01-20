@@ -21,6 +21,7 @@ import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { v4 as uuidv4 } from 'uuid';
+import type { StoryAnimation } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
@@ -30,16 +31,21 @@ import useApplyStyle from '../../../components/styleManager/useApplyStyle';
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import { getTextPresets } from '../../../utils/presetUtils';
 import { useHistory, useStory } from '../..';
+import type { CopiedElementState } from '../../../types';
 import { UNDO_HELP_TEXT } from './constants';
 
-function getTextElementStyles(element, animation) {
+function getTextElementStyles(
+  element: CopiedElementState,
+  animation: StoryAnimation
+) {
   const { textStyles } = getTextPresets(
     [element.styles],
     {
       textStyles: [],
       colors: [],
     },
-    PRESET_TYPES.STYLE
+    PRESET_TYPES.STYLE,
+    false
   );
   const { colors } = getTextPresets(
     [element.styles],
@@ -47,7 +53,8 @@ function getTextElementStyles(element, animation) {
       textStyles: [],
       colors: [],
     },
-    PRESET_TYPES.COLOR
+    PRESET_TYPES.COLOR,
+    false
   );
   const { content, ...copiedElementStyles } = element.styles;
   return {
@@ -55,7 +62,7 @@ function getTextElementStyles(element, animation) {
     ...textStyles[0],
     ...colors[0].color,
     animation,
-    border: copiedElementStyles.border || null,
+    border: copiedElementStyles?.border || null,
   };
 }
 
@@ -83,7 +90,8 @@ const useCopyPasteActions = () => {
     copySelectedElement: actions.copySelectedElement,
     selectedElement: state.selectedElements?.[0],
     selectedElementType: state.selectedElements?.[0]?.type,
-    isSelectedElementBackground: state.selectedElements?.[0]?.isBackground,
+    isSelectedElementBackground:
+      state.selectedElements?.[0]?.isBackground | false,
     selectedElementAnimations: state.selectedElementAnimations,
     updateSelectedElements: actions.updateSelectedElements,
   }));
@@ -132,19 +140,21 @@ const useCopyPasteActions = () => {
 
   const pushUpdate = useCallback(
     (update, commitValues) => {
-      updateSelectedElements({
-        properties: (element) => {
-          const updates = updateProperties(element, update, commitValues);
-          const sizeUpdates = getUpdatedSizeAndPosition({
-            ...element,
-            ...updates,
-          });
-          return {
-            ...updates,
-            ...sizeUpdates,
-          };
-        },
-      });
+      if (updateSelectedElements) {
+        updateSelectedElements({
+          properties: (element) => {
+            const updates = updateProperties(element, update, commitValues);
+            const sizeUpdates = getUpdatedSizeAndPosition({
+              ...element,
+              ...updates,
+            });
+            return {
+              ...updates,
+              ...sizeUpdates,
+            };
+          },
+        });
+      }
     },
     [updateSelectedElements]
   );
@@ -160,23 +170,26 @@ const useCopyPasteActions = () => {
   const handlePasteStyles = useCallback(() => {
     const id = selectedElement?.id;
 
-    if (!id || selectedElementType !== copiedElementState.type) {
+    if (!id || selectedElementType !== copiedElementState?.type) {
       return;
     }
 
     // Delete old animation if one exists
-    const oldAnimationToDelete = selectedElementAnimations.length
-      ? { ...selectedElementAnimations[0], delete: true }
-      : undefined;
+    const oldAnimationToDelete =
+      selectedElementAnimations && selectedElementAnimations.length
+        ? { ...selectedElementAnimations[0], delete: true }
+        : undefined;
 
     // Create new animations
-    const newAnimations = copiedElementState.animations.map((animation) => ({
+    const newAnimations = copiedElementState?.animations.map((animation) => ({
       ...animation,
       id: uuidv4(),
-      targets: [selectedElement.id],
+      targets: selectedElement ? [selectedElement.id] : [],
     }));
 
-    addAnimations({ animations: newAnimations });
+    if (addAnimations) {
+      addAnimations({ animations: newAnimations });
+    }
 
     // Text elements need the text styles extracted from content before
     // applying to the other text
@@ -191,17 +204,19 @@ const useCopyPasteActions = () => {
       handleApplyStyle(updatedElementStyles);
     } else {
       // Add styles and animations to element
-      updateSelectedElements({
-        properties: (currentProperties) =>
-          updateProperties(
-            currentProperties,
-            {
-              ...copiedElementState.styles,
-              animation: oldAnimationToDelete,
-            },
-            /* commitValues */ true
-          ),
-      });
+      if (updateSelectedElements) {
+        updateSelectedElements({
+          properties: (currentProperties) =>
+            updateProperties(
+              currentProperties,
+              {
+                ...copiedElementState.styles,
+                animation: oldAnimationToDelete,
+              },
+              /* commitValues */ true
+            ),
+        });
+      }
     }
 
     showSnackbar({

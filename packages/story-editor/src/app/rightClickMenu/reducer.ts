@@ -14,13 +14,28 @@
  * limitations under the License.
  */
 
-export const ACTION_TYPES = {
-  OPEN_MENU: 'OPEN_MENU',
-  CLOSE_MENU: 'CLOSE_MENU',
-  RESET: 'RESET',
-};
+/**
+ * Internal dependencies
+ */
+import type { MenuPosition } from '../../types';
 
-export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
+export enum ActionType {
+  OpenMenu = 'OPEN_MENU',
+  CloseMenu = 'CLOSE_MENU',
+  Reset = 'RESET',
+}
+
+export interface State {
+  isMenuOpen: boolean;
+  menuPosition: MenuPosition;
+}
+
+interface Action {
+  type: ActionType;
+  payload?: MenuPosition;
+}
+
+export const DEFAULT_RIGHT_CLICK_MENU_STATE: State = {
   isMenuOpen: false,
   menuPosition: {
     x: 0,
@@ -29,21 +44,27 @@ export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
 };
 
 // TODO: check if we need to add tracking events when we come back to right click menu.
-function rightClickMenuReducer(state, action) {
+function rightClickMenuReducer(state: State, action: Action): State {
   switch (action.type) {
-    case ACTION_TYPES.CLOSE_MENU:
+    case ActionType.CloseMenu:
       return {
         ...state,
         isMenuOpen: false,
         menuPosition: DEFAULT_RIGHT_CLICK_MENU_STATE.menuPosition,
       };
-    case ACTION_TYPES.OPEN_MENU:
+    case ActionType.OpenMenu:
+      if (action.payload) {
+        return {
+          ...state,
+          isMenuOpen: true,
+          menuPosition: action.payload,
+        };
+      }
       return {
         ...state,
         isMenuOpen: true,
-        menuPosition: action.payload,
       };
-    case ACTION_TYPES.RESET:
+    case ActionType.Reset:
       return {
         ...DEFAULT_RIGHT_CLICK_MENU_STATE,
       };

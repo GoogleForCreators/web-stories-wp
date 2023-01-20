@@ -52,7 +52,10 @@ const usePresetActions = () => {
   const { deleteGlobalColor: deleteGlobalColorPreset } = useDeleteColor({
     onEmpty: noop,
   });
-  const selectedElement = useStory(({ state }) => state.selectedElements?.[0]);
+
+  const selectedElementType = useStory(
+    ({ state }) => state.selectedElements?.[0]?.type
+  );
 
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
 
@@ -82,7 +85,7 @@ const usePresetActions = () => {
 
           void trackEvent('context_menu_action', {
             name: 'remove_text_preset',
-            element: selectedElement?.type,
+            element: selectedElementType,
           });
         },
         actionHelpText: UNDO_HELP_TEXT,
@@ -90,13 +93,13 @@ const usePresetActions = () => {
 
       void trackEvent('context_menu_action', {
         name: 'add_text_preset',
-        element: selectedElement?.type,
+        element: selectedElementType,
       });
     },
     [
       addGlobalTextPreset,
       deleteGlobalTextPreset,
-      selectedElement?.type,
+      selectedElementType,
       showSnackbar,
     ]
   );
@@ -119,7 +122,7 @@ const usePresetActions = () => {
 
           void trackEvent('context_menu_action', {
             name: 'remove_color_preset',
-            element: selectedElement?.type,
+            element: selectedElementType,
           });
         },
         actionHelpText: UNDO_HELP_TEXT,
@@ -127,13 +130,13 @@ const usePresetActions = () => {
 
       void trackEvent('context_menu_action', {
         name: 'add_color_preset',
-        element: selectedElement?.type,
+        element: selectedElementType,
       });
     },
     [
       addGlobalColorPreset,
       deleteGlobalColorPreset,
-      selectedElement?.type,
+      selectedElementType,
       showSnackbar,
     ]
   );

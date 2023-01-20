@@ -43,15 +43,12 @@ import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
 import { LayerHide, LayerLock, LayerName, LayerUngroup } from '../items';
 import { isOffCanvas } from '../../../utils/isOffCanvas';
-import {
-  DEFAULT_DISPLACEMENT,
-  SubMenuContainer,
-  SUB_MENU_ARIA_LABEL,
-} from './shared';
+import { getXvalue, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
+import type { MenuPropType } from './shared';
 
 function ForegroundMediaMenu({ parentMenuRef }: MenuPropType) {
   const { copiedElementType, selectedElement } = useStory(({ state }) => ({
-    copiedElementType: state.copiedElementState.type,
+    copiedElementType: state.copiedElementState?.type,
     selectedElement: state.selectedElements?.[0],
   }));
   const { handleCopyStyles, handlePasteStyles } = useCopyPasteActions();
@@ -126,9 +123,7 @@ function ForegroundMediaMenu({ parentMenuRef }: MenuPropType) {
           <SubMenuContainer
             ref={subMenuRef}
             position={{
-              x:
-                (parentMenuRef.current.firstChild?.offsetWidth ||
-                  DEFAULT_DISPLACEMENT) + 2,
+              x: getXvalue(parentMenuRef),
               y: 0,
             }}
           >
