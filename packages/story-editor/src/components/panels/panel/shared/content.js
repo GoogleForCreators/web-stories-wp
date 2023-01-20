@@ -33,7 +33,7 @@ const Container = styled.div`
     isSecondary ? theme.colors.interactiveBg.secondaryNormal : 'transparent'};
 `;
 
-function Content({ children, isPrimary = false, ...rest }) {
+function Content({ children, ...rest }) {
   const {
     state: { isCollapsed, height, resizable, panelContentId },
   } = useContext(panelContext);
@@ -44,12 +44,7 @@ function Content({ children, isPrimary = false, ...rest }) {
 
   // Don't render panel content/children when collapsed.
   return isCollapsed ? null : (
-    <Container
-      style={formStyle}
-      isPrimary={isPrimary}
-      {...rest}
-      id={panelContentId}
-    >
+    <Container style={formStyle} {...rest} id={panelContentId}>
       {children}
     </Container>
   );
@@ -57,7 +52,6 @@ function Content({ children, isPrimary = false, ...rest }) {
 
 Content.propTypes = {
   children: PropTypes.node,
-  isPrimary: PropTypes.bool,
 };
 
 export default Content;
