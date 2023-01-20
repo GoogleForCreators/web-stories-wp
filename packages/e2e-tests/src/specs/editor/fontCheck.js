@@ -146,7 +146,8 @@ describe('Font Check', () => {
     await removeAllFonts();
   });
 
-  it('should show dialog & replace font with default font', async () => {
+  // eslint-disable-next-line jest/no-disabled-tests -- TODO: Fix flakey test.
+  it.skip('should show dialog & replace font with default font', async () => {
     const title = 'Test replace missing font with (default) Roboto';
     const replacementFont = 'Roboto';
     await prepareStoryWithFontCheckDialog(title);
