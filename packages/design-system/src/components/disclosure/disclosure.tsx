@@ -16,8 +16,7 @@
 /**
  * External dependencies
  */
-import { useTheme } from 'styled-components';
-import type { ComponentPropsWithoutRef } from 'react';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -32,38 +31,27 @@ const rotate: Record<Direction, [number, number]> = {
   left: [-90, 0],
   right: [90, 0],
 };
-
-interface DisclosureProps extends ComponentPropsWithoutRef<'svg'> {
-  direction?: Direction;
-  disabled?: boolean;
-  duration?: number;
-  isOpen?: boolean;
-}
-
 /**
  * Simple component that shows a chevron icon which rotates when
  * controlled contents are shown (open). Values for `direction` prop of
  * 'up' or 'down' rotate icon 180deg, and 'right' or 'left' rotate down.
  */
-function Disclosure({
-  direction = 'down',
-  disabled = false,
-  duration = 0,
-  isOpen = false,
-  ...rest
-}: DisclosureProps) {
-  const [whenClosed, whenOpen] = rotate[direction];
-  const theme = useTheme();
-  const iconStyle = {
-    height: `${THEME_CONSTANTS.ICON_SIZE}px`,
-    width: 'auto',
-    margin: '0 -10px',
-    color: disabled ? theme.colors.fg.disable : theme.colors.fg.secondary,
-    transition: `transform ${duration}`,
-    transform: `rotate(${isOpen ? whenOpen : whenClosed}deg)`,
-  };
-
-  return <ChevronDownSmall style={iconStyle} {...rest} />;
-}
+const Disclosure = styled(ChevronDownSmall)<{
+  direction?: Direction;
+  disabled?: boolean;
+  duration?: number;
+  isOpen?: boolean;
+}>`
+  height: ${THEME_CONSTANTS.ICON_SIZE}px;
+  width: auto;
+  margin: 0 -10px;
+  color: ${({ disabled, theme }) =>
+    disabled ? theme.colors.fg.disable : theme.colors.fg.secondary};
+  transition: transform ${({ duration = 0 }) => duration};
+  transform: ${({ direction = 'down', isOpen = false }) => {
+    const [whenClosed, whenOpen] = rotate[direction];
+    return `rotate(${isOpen ? whenOpen : whenClosed}deg);`;
+  }};
+`;
 
 export default Disclosure;
