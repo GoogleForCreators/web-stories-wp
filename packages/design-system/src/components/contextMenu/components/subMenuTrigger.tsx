@@ -31,7 +31,8 @@ import type { RefObject } from 'react';
 import { useKeyDownEffect } from '../../keyboard';
 import { FOCUSABLE_SELECTORS, KEYS } from '../../../utils';
 import { useContextMenu } from '../contextMenuProvider';
-import MenuItem, { MenuItemProps } from './item';
+import MenuItem from './item';
+import type { MenuItemProps } from './item';
 
 /**
  * Extracts all focusable children from an html tree.

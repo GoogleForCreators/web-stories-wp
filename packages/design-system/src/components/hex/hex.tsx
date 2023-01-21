@@ -25,11 +25,8 @@ import {
   useState,
 } from '@googleforcreators/react';
 import { parseToRgb } from 'polished';
-import {
-  getHexFromValue,
-  getPreviewText,
-  Solid,
-} from '@googleforcreators/patterns';
+import { getHexFromValue, getPreviewText } from '@googleforcreators/patterns';
+import type { Solid } from '@googleforcreators/patterns';
 import type {
   ChangeEvent,
   ComponentPropsWithoutRef,

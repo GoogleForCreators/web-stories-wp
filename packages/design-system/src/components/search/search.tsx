@@ -32,7 +32,8 @@ import type { ChangeEvent, KeyboardEvent, UIEvent } from 'react';
  * Internal dependencies
  */
 import { TextSize } from '../../theme';
-import { DropdownItem, DropdownValue, Menu } from '../menu';
+import { Menu } from '../menu';
+import type { DropdownItem, DropdownValue } from '../menu';
 import { Popup, Placement } from '../popup';
 import { DropDownContainer, Hint, Label } from './components';
 import {

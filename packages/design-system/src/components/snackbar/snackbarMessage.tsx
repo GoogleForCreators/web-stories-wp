@@ -36,10 +36,10 @@ import {
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
   DEFAULT_MESSAGE_Z_INDEX,
-  SnackbarNotificationThumbnail,
   SnackbarPlacement,
   ThumbnailStatus,
 } from './types';
+import type { SnackbarNotificationThumbnail } from './types';
 
 const MessageContainer = styled.div<{
   customZIndex?: number;

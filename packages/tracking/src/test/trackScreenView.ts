@@ -20,7 +20,8 @@ jest.mock('../shared');
  * Internal dependencies
  */
 import trackScreenView from '../trackScreenView';
-import { config, ControlParams, gtag } from '../shared';
+import { config, gtag } from '../shared';
+import type { ControlParams } from '../shared';
 
 describe('trackScreenView', () => {
   afterEach(() => {

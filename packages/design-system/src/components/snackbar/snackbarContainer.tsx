@@ -26,12 +26,14 @@ import {
 import styled from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
 import { useLiveRegion } from '../../utils';
 import SnackbarMessage from './snackbarMessage';
-import { SnackbarPlacement, SnackbarNotification } from './types';
+import { SnackbarPlacement } from './types';
+import type { SnackbarNotification } from './types';
 
 const StyledContainer = styled.div<{
   placement: SnackbarPlacement;

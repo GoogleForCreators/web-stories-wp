@@ -28,7 +28,8 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers, Theme, TextSize } from '../../theme';
+import { THEME_CONSTANTS, themeHelpers, TextSize } from '../../theme';
+import type { Theme } from '../../theme';
 import {
   ButtonSize,
   ButtonType,

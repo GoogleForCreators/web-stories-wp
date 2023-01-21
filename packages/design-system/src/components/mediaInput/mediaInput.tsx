@@ -33,7 +33,8 @@ import {
   ButtonVariant,
 } from '../button';
 import { Pencil } from '../../icons';
-import { DropdownItem, DropdownValue, Menu } from '../menu';
+import { Menu } from '../menu';
+import type { DropdownItem, DropdownValue } from '../menu';
 import { Tooltip } from '../tooltip';
 import { Placement, Popup } from '../popup';
 import type { Theme } from '../../theme';

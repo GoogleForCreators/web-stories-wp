@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, MutableRefObject } from 'react';
+import { useEffect, useRef } from 'react';
+import type { MutableRefObject } from 'react';
 
 /**
  * Hook to see which prop changes are causing a component to re-render.

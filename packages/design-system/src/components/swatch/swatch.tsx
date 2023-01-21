@@ -23,8 +23,8 @@ import {
   getOpaquePattern,
   hasGradient,
   hasOpacity,
-  Pattern,
 } from '@googleforcreators/patterns';
+import type { Pattern } from '@googleforcreators/patterns';
 import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 
 /**

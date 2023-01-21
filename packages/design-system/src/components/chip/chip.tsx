@@ -24,10 +24,12 @@ import type {
   PropsWithChildren,
 } from 'react';
 import styled, { css } from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import { Theme, themeHelpers, TextSize } from '../../theme';
+import { themeHelpers, TextSize } from '../../theme';
+import type { Theme } from '../../theme';
 import { focusableOutlineCSS } from '../../theme/helpers';
 
 const getChipBackgroundColor = ({

@@ -30,7 +30,8 @@ import { __, sprintf } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { DropdownValue, Menu } from '../menu';
+import { Menu } from '../menu';
+import type { DropdownValue } from '../menu';
 import { Popup, Placement } from '../popup';
 import useForwardedRef from '../../utils/useForwardedRef';
 import { DropDownContainer, Hint } from './components';
