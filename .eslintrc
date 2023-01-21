@@ -826,6 +826,17 @@
           }
         ]
       }
+    },
+    {
+      "files": [
+        "packages/date/src/third_party/**/*"
+      ],
+      "rules": {
+        "header/header": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-unsafe-return": "off"
+      }
     }
   ]
 }

@@ -160,6 +160,9 @@ wp plugin install classic-widgets --force --quiet
 echo -e $(status_message "Activating Twenty Twenty theme...")
 wp theme install twentytwenty --activate --force --quiet
 
+echo -e $(status_message "Disable block directory and remote patterns...")
+wp plugin activate web-stories-test-plugins/disable-block-directory --quiet
+
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")
 wp rewrite structure '%postname%' --hard --quiet
@@ -194,7 +197,7 @@ fi
 
 MEDIA_TRASH_CURRENT=!MEDIA_TRASH;
 if [[ "$(wp config has --type=constant MEDIA_TRASH)" ]]; then
-  $MEDIA_TRASH_CURRENT=$(wp config get --type=constant --format=json MEDIA_TRASH | tr -d '\r')
+  MEDIA_TRASH_CURRENT=$(wp config get --type=constant --format=json MEDIA_TRASH | tr -d '\r')
 fi
 
 if [[ "$MEDIA_TRASH" != $MEDIA_TRASH_CURRENT ]]; then

@@ -41,7 +41,7 @@ use WP_Site;
  *
  * @param bool $network_wide Whether to activate network-wide.
  */
-function activate( bool $network_wide = false ): void {
+function activate( ?bool $network_wide = false ): void {
 	$network_wide = (bool) $network_wide;
 
 	// Runs all PluginActivationAware services.
@@ -116,7 +116,7 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  *
  * @param bool $network_wide Whether to deactivate network-wide.
  */
-function deactivate( bool $network_wide = false ): void {
+function deactivate( ?bool $network_wide = false ): void {
 	$network_wide = (bool) $network_wide;
 
 	// Runs all PluginDeactivationAware services.
