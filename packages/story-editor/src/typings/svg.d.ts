@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-import { ReactElement, SVGProps } from 'react';
-
-declare module 'icons/*.svg' {
-  const Icon: (props: SVGProps<SVGElement>) => ReactElement;
-  export default Icon;
-}
-
-declare module 'images/*.svg' {
-  const Image: (props: SVGProps<SVGElement>) => ReactElement;
-  export default Image;
-}
-
-declare module 'inline-icons/*.svg' {
-  const content: string;
-  export default content;
+declare module '*.svg' {
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<
+    SVGProps<SVGElement> & { title?: string }
+  >;
+  export default ReactComponent;
 }

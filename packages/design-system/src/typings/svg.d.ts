@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 
 declare module '*.svg' {
-  const Icon: (props: React.SVGAttributes<SVGElement>) => React.ReactElement;
-  export default Icon;
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<
+    SVGProps<SVGElement> & { title?: string }
+  >;
+  export default ReactComponent;
 }

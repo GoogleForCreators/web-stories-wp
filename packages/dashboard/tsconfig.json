@@ -20,6 +20,7 @@
     "src/app/router",
     "src/constants",
     "src/icons",
-    "src/types"
+    "src/types",
+    "src/typings"
   ]
 }
