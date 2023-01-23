@@ -49,6 +49,8 @@ jobs:
 
       - name: Bundle packages
         run: npm run workflow:bundle-packages
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
 
       # Exact format here doesn't matter for the dry-run, it's gonna be done properly later on.
       - name: Version bumps
@@ -120,6 +122,8 @@ jobs:
 
       - name: Bundle packages
         run: npm run workflow:bundle-packages
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
 
       # For the time being, using incremental versions like 0.1.202111302140
       # `npm version` updates all packages, even the ones we don't intend to publish.
