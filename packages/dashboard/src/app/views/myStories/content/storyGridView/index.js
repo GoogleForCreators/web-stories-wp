@@ -40,7 +40,7 @@ import {
   StoryMenuPropType,
   PageSizePropType,
   RenameStoryPropType,
-} from '../../../../../types';
+} from '../../../../../propTypes';
 import {
   PAGE_WRAPPER,
   STORY_CONTEXT_MENU_ACTIONS,

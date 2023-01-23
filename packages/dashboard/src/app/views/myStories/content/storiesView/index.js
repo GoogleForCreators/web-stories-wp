@@ -36,7 +36,10 @@ import {
 /**
  * Internal dependencies
  */
-import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
+import {
+  StoriesPropType,
+  StoryActionsPropType,
+} from '../../../../../propTypes';
 import { titleFormatted } from '../../../../../utils';
 import {
   ViewPropTypes,
