@@ -24,6 +24,7 @@ import {
   ResourceType,
   VideoResource,
   AudioResource,
+  ImageResource,
 } from './types';
 import getTypeFromMime from './getTypeFromMime';
 
@@ -51,7 +52,7 @@ function createResource({
   trimData,
   needsProxy = false,
   ...rest
-}: ResourceInput): Resource | VideoResource | GifResource | AudioResource {
+}: ResourceInput): Resource | ImageResource | VideoResource | GifResource | AudioResource {
   type = type || getTypeFromMime(mimeType);
   const resource: Resource = {
     type,
@@ -63,12 +64,15 @@ function createResource({
     isExternal,
     needsProxy,
     ...rest,
-  };
+  } as Resource;
   const sequenceProps = {
     poster,
     posterId,
     isOptimized,
   };
+  if (type === ResourceType.Image) {
+    return resource as ImageResource;
+  }
   if (type === ResourceType.Video) {
     return {
       ...resource,

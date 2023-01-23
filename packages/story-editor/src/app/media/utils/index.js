@@ -16,6 +16,6 @@
 
 export { default as getResourceFromLocalFile } from './getResourceFromLocalFile';
 export { default as getResourceFromMedia3p } from './getResourceFromMedia3p';
-export { default as useMediaUploadQueue } from './useMediaUploadQueue';
+export { default as useMediaUploadQueue } from '../uploadQueue';
 export { default as useUploadVideoFrame } from './useUploadVideoFrame';
 export { default as getPosterName } from './getPosterName';

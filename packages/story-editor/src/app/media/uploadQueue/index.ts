@@ -18,34 +18,45 @@
  * External dependencies
  */
 import {
-  useEffect,
   useCallback,
+  useEffect,
   useMemo,
   useReduction,
   useRef,
 } from '@googleforcreators/react';
 import {
+  getTimeTracker,
   trackError,
   trackEvent,
-  getTimeTracker,
 } from '@googleforcreators/tracking';
+import type {
+  AudioResource,
+  GifResource,
+  ImageResource,
+  Resource,
+  ResourceId,
+  VideoResource,
+} from '@googleforcreators/media';
 import {
   createBlob,
   getFileBasename,
   getImageDimensions,
+  ResourceType,
 } from '@googleforcreators/media';
+import type { ElementId } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { useUploader } from '../../../uploader';
-import { noop } from '../../../../utils/noop';
-import useUploadVideoFrame from '../useUploadVideoFrame';
-import useFFmpeg from '../useFFmpeg';
-import useMediaInfo from '../useMediaInfo';
-import getResourceFromLocalFile from '../getResourceFromLocalFile';
+import { useUploader } from '../../uploader';
+import { noop } from '../../../utils/noop';
+import useUploadVideoFrame from '../utils/useUploadVideoFrame';
+import useFFmpeg from '../utils/useFFmpeg';
+import useMediaInfo from '../utils/useMediaInfo';
+import getResourceFromLocalFile from '../utils/getResourceFromLocalFile';
 import * as reducer from './reducer';
-import { ITEM_STATUS } from './constants';
+import type { QueueItem } from './types';
+import { ItemStatus } from './types';
 
 const initialState = {
   queue: [],
@@ -63,7 +74,7 @@ const initialState = {
  *
  * PENDING -> PREPARING -> PENDING TRANSCODING -> TRANSCODING -> TRANSCODED -> TRIMMING -> TRIMMED -> MUTING -> MUTED -> CROPPING -> CROPPED -> UPLOADING -> UPLOADED -> FINISHED
  *
- * @return {{state: {Object}, actions: {Object}}} Media queue state.
+ * @return Media queue state.
  */
 function useMediaUploadQueue() {
   const {
@@ -88,8 +99,8 @@ function useMediaUploadQueue() {
   });
 
   const isMounted = useRef(false);
-  const currentTranscodingItem = useRef(null);
-  const currentPosterGenerationItem = useRef(null);
+  const currentTranscodingItem = useRef<string | null>(null);
+  const currentPosterGenerationItem = useRef<string | null>(null);
 
   const {
     prepareItem,
@@ -110,19 +121,19 @@ function useMediaUploadQueue() {
 
   // Try to update placeholder resources for freshly transcoded file if still missing.
   useEffect(() => {
-    (async () => {
-      await Promise.all(
-        state.queue.map(async (item) => {
+    void (async () => {
+      void (await Promise.all(
+        state.queue.map(async (item: QueueItem) => {
           const { id, file, state: itemState, resource } = item;
           if (
             ![
-              ITEM_STATUS.TRIMMED,
-              ITEM_STATUS.MUTED,
-              ITEM_STATUS.CROPPED,
-              ITEM_STATUS.TRANSCODED,
+              ItemStatus.Trimmed,
+              ItemStatus.Muted,
+              ItemStatus.Cropped,
+              ItemStatus.Transcoded,
             ].includes(itemState) ||
             !resource.isPlaceholder ||
-            resource.poster
+            (resource.type === ResourceType.Video && resource.poster)
           ) {
             return;
           }
@@ -144,7 +155,7 @@ function useMediaUploadQueue() {
             // Not interested in errors here.
           }
         })
-      );
+      ));
     })();
   }, [state.queue, replacePlaceholderResource]);
 
@@ -152,11 +163,11 @@ function useMediaUploadQueue() {
   // This way we can show something more meaningful to the user before transcoding has finished.
   // Since this uses ffmpeg, we're going to limit this to one at a time.
   useEffect(() => {
-    (async () => {
-      await Promise.all(
-        state.queue.map(async (item) => {
+    void (async () => {
+      void (await Promise.all(
+        state.queue.map(async (item: QueueItem) => {
           const { id, file, state: itemState, resource } = item;
-          if (ITEM_STATUS.PENDING !== itemState || !resource.isPlaceholder) {
+          if (ItemStatus.Pending !== itemState || !resource.isPlaceholder) {
             return;
           }
 
@@ -201,7 +212,7 @@ function useMediaUploadQueue() {
             currentPosterGenerationItem.current = null;
           }
         })
-      );
+      ));
     })();
   }, [
     state.queue,
@@ -213,7 +224,7 @@ function useMediaUploadQueue() {
 
   // Convert animated GIFs to videos if possible.
   const convertGifItem = useCallback(
-    async (item) => {
+    async (item: QueueItem) => {
       const { id, file, additionalData = {} } = item;
 
       startTranscoding({ id });
@@ -231,10 +242,13 @@ function useMediaUploadQueue() {
         additionalData.isMuted = true;
         finishTranscoding({ id, file: newFile, additionalData });
       } catch (error) {
-        // Cancel uploading if there were any errors.
-        cancelUploading({ id, error });
-
-        trackError('upload_media', error?.message);
+        if (error instanceof Error) {
+          // Cancel uploading if there were any errors.
+          cancelUploading({ id, error });
+          void trackError('upload_media', error.message);
+        } else {
+          cancelUploading({ id });
+        }
       } finally {
         currentTranscodingItem.current = null;
       }
@@ -243,15 +257,22 @@ function useMediaUploadQueue() {
   );
 
   const trimVideoItem = useCallback(
-    async (item) => {
+    async (item: QueueItem) => {
       const { id, file, additionalData = {}, trimData } = item;
+      if (!trimData) {
+        return;
+      }
 
       startTrimming({ id });
 
       currentTranscodingItem.current = id;
 
       try {
-        const newFile = await trimVideo(file, trimData.start, trimData.end);
+        const newFile = await trimVideo(
+          file,
+          Number(trimData.start),
+          Number(trimData.end)
+        );
 
         if (!isMounted.current) {
           return;
@@ -259,10 +280,13 @@ function useMediaUploadQueue() {
 
         finishTrimming({ id, file: newFile, additionalData });
       } catch (error) {
-        // Cancel uploading if there were any errors.
-        cancelUploading({ id, error });
-
-        trackError('upload_media', error?.message);
+        if (error instanceof Error) {
+          // Cancel uploading if there were any errors.
+          cancelUploading({ id, error });
+          void trackError('upload_media', error.message);
+        } else {
+          cancelUploading({ id });
+        }
       } finally {
         currentTranscodingItem.current = null;
       }
@@ -271,7 +295,7 @@ function useMediaUploadQueue() {
   );
 
   const muteVideoItem = useCallback(
-    async (item) => {
+    async (item: QueueItem) => {
       const { id, file, additionalData = {} } = item;
 
       startMuting({ id });
@@ -288,10 +312,13 @@ function useMediaUploadQueue() {
         additionalData.isMuted = true;
         finishMuting({ id, file: newFile, additionalData });
       } catch (error) {
-        // Cancel uploading if there were any errors.
-        cancelUploading({ id, error });
-
-        trackError('upload_media', error?.message);
+        if (error instanceof Error) {
+          // Cancel uploading if there were any errors.
+          cancelUploading({ id, error });
+          void trackError('upload_media', error.message);
+        } else {
+          cancelUploading({ id });
+        }
       } finally {
         currentTranscodingItem.current = null;
       }
@@ -300,8 +327,12 @@ function useMediaUploadQueue() {
   );
 
   const cropVideoItem = useCallback(
-    async (item) => {
+    async (item: QueueItem) => {
       const { id, file, additionalData } = item;
+
+      if (!additionalData?.cropParams) {
+        return;
+      }
 
       startCropping({ id });
 
@@ -317,10 +348,13 @@ function useMediaUploadQueue() {
 
         finishCropping({ id, file: newFile, posterFile, additionalData });
       } catch (error) {
-        // Cancel uploading if there were any errors.
-        cancelUploading({ id, error });
-
-        trackError('upload_media', error?.message);
+        if (error instanceof Error) {
+          // Cancel uploading if there were any errors.
+          cancelUploading({ id, error });
+          void trackError('upload_media', error.message);
+        } else {
+          cancelUploading({ id });
+        }
       } finally {
         currentTranscodingItem.current = null;
       }
@@ -335,7 +369,7 @@ function useMediaUploadQueue() {
   );
 
   const optimizeVideoItem = useCallback(
-    async (item) => {
+    async (item: QueueItem) => {
       const { id, file, additionalData = {} } = item;
 
       startTranscoding({ id });
@@ -357,10 +391,13 @@ function useMediaUploadQueue() {
 
         finishTranscoding({ id, file: newFile, additionalData });
       } catch (error) {
-        // Cancel uploading if there were any errors.
-        cancelUploading({ id, error });
-
-        trackError('upload_media', error?.message);
+        if (error instanceof Error) {
+          // Cancel uploading if there were any errors.
+          cancelUploading({ id, error });
+          void trackError('upload_media', error.message);
+        } else {
+          cancelUploading({ id });
+        }
       } finally {
         currentTranscodingItem.current = null;
       }
@@ -369,7 +406,7 @@ function useMediaUploadQueue() {
   );
 
   const uploadVideo = useCallback(
-    async (item) => {
+    async (item: QueueItem) => {
       const { id, file, resource, additionalData = {} } = item;
       let { posterFile } = item;
 
@@ -377,7 +414,15 @@ function useMediaUploadQueue() {
       // However, we'll likely still have one on file.
       // Add it back so we're never without one.
       // The final poster will be uploaded later by uploadVideoPoster().
-      let newResource = await uploadFile(file, additionalData);
+      let newResource:
+        | ImageResource
+        | VideoResource
+        | GifResource
+        | AudioResource = (await uploadFile(file, additionalData)) as
+        | ImageResource
+        | VideoResource
+        | GifResource
+        | AudioResource;
 
       if (!isMounted.current) {
         return;
@@ -385,33 +430,47 @@ function useMediaUploadQueue() {
 
       // If we don't have a poster yet (e.g. after converting a GIF),
       // try to generate one now.
-      if (!resource.poster && !posterFile) {
+      if (
+        resource.type === ResourceType.Video &&
+        !resource.poster &&
+        !posterFile
+      ) {
         try {
           posterFile = await getFirstFrameOfVideo(file);
         } catch {
           // Not interested in errors here.
         }
       }
+      if (newResource.type === ResourceType.Video && posterFile) {
+        try {
+          const posterFileName = getFileBasename(posterFile);
+          const { poster, posterId }: { poster: string; posterId: string } =
+            (await uploadVideoPoster(
+              newResource.id,
+              posterFileName,
+              posterFile
+            )) as { poster: string; posterId: string };
 
-      try {
-        const posterFileName = getFileBasename(posterFile);
-        const { poster, posterId } = await uploadVideoPoster(
-          newResource.id,
-          posterFileName,
-          posterFile
-        );
+          if (!isMounted.current) {
+            return;
+          }
 
-        if (!isMounted.current) {
-          return;
+          newResource = {
+            ...newResource,
+            poster: poster || newResource.poster,
+            posterId,
+          };
+
+          if (
+            !newResource.poster &&
+            resource.type === ResourceType.Video &&
+            resource.poster
+          ) {
+            newResource.poster = resource.poster;
+          }
+        } catch {
+          // Not interested in errors here.
         }
-
-        newResource = {
-          ...newResource,
-          poster: poster || newResource.poster || resource.poster,
-          posterId,
-        };
-      } catch {
-        // Not interested in errors here.
       }
 
       finishUploading({
@@ -423,9 +482,12 @@ function useMediaUploadQueue() {
   );
 
   const uploadImage = useCallback(
-    async (item) => {
+    async (item: QueueItem) => {
       const { id, file, additionalData = {} } = item;
-      const resource = await uploadFile(file, additionalData);
+      const resource: ImageResource = (await uploadFile(
+        file,
+        additionalData
+      )) as ImageResource;
 
       if (!isMounted.current) {
         return;
@@ -440,12 +502,12 @@ function useMediaUploadQueue() {
   );
 
   const uploadItem = useCallback(
-    async (item) => {
+    async (item: QueueItem) => {
       const { id, file, resource } = item;
 
       startUploading({ id });
 
-      trackEvent('upload_media', {
+      void trackEvent('upload_media', {
         file_size: file?.size,
         file_type: file?.type,
       });
@@ -453,16 +515,19 @@ function useMediaUploadQueue() {
       const trackTiming = getTimeTracker('load_upload_media');
 
       try {
-        if (['video', 'gif'].includes(resource.type)) {
+        if ([ResourceType.Video, ResourceType.Gif].includes(resource.type)) {
           await uploadVideo(item);
         } else {
           await uploadImage(item);
         }
       } catch (error) {
-        // Cancel uploading if there were any errors.
-        cancelUploading({ id, error });
-
-        trackError('upload_media', error?.message);
+        if (error instanceof Error) {
+          // Cancel uploading if there were any errors.
+          cancelUploading({ id, error });
+          void trackError('upload_media', error.message);
+        } else {
+          cancelUploading({ id });
+        }
       } finally {
         trackTiming();
       }
@@ -476,65 +541,69 @@ function useMediaUploadQueue() {
       /**
        * Uploads a single pending item.
        *
-       * @param {Object} item Queue item.
-       * @param {File} item.file File object.
-       * @param {Object} item.additionalData Additional Data object.
+       * @param item Queue item.
+       * @param item.file File object.
+       * @param item.additionalData Additional Data object.
        */
-      async (item) => {
-        const {
-          id,
-          file,
-          resource,
-          isAnimatedGif,
-          state: itemState,
-          muteVideo,
-          cropVideo,
-          trimData,
-        } = item;
-        if (ITEM_STATUS.PENDING !== itemState) {
-          return;
-        }
+      (item: QueueItem) => {
+        void (async () => {
+          const {
+            id,
+            file,
+            resource,
+            isAnimatedGif,
+            state: itemState,
+            muteVideo,
+            cropVideo,
+            trimData,
+          } = item;
+          if (ItemStatus.Pending !== itemState) {
+            return;
+          }
 
-        // Changing item state so that an item is never processed twice
-        // in this effect.
-        prepareItem({ id });
+          // Changing item state so that an item is never processed twice
+          // in this effect.
+          prepareItem({ id });
 
-        const needsTranscoding =
-          isAnimatedGif || muteVideo || cropVideo || trimData;
+          const needsTranscoding =
+            isAnimatedGif || muteVideo || cropVideo || trimData;
 
-        if (needsTranscoding) {
-          prepareForTranscoding({ id });
-          return;
-        }
+          if (needsTranscoding) {
+            prepareForTranscoding({ id });
+            return;
+          }
 
-        const isVideo = file.type.startsWith('video/');
+          const isVideo = file.type.startsWith('video/');
 
-        if (isVideo) {
-          // TODO: Consider always using getFileInfo() to have more accurate audio information.
+          if (isVideo) {
+            // TODO: Consider always using getFileInfo() to have more accurate audio information.
 
-          if (
-            item.additionalData.mediaSource !== 'recording' &&
-            (await isConsideredOptimized(resource, file))
-          ) {
-            // Do not override pre-existing mediaSource if provided,
-            // for example by media recording.
-            if (!item.additionalData.mediaSource) {
-              item.additionalData.mediaSource = 'video-optimization';
+            if (
+              item.additionalData.mediaSource !== 'recording' &&
+              resource &&
+              resource.type === ResourceType.Video &&
+              (await isConsideredOptimized(resource, file))
+            ) {
+              // Do not override pre-existing mediaSource if provided,
+              // for example by media recording.
+              if (!item.additionalData.mediaSource) {
+                item.additionalData.mediaSource = 'video-optimization';
+              }
+
+              void uploadItem(item);
+
+              return;
             }
+          }
 
-            uploadItem(item);
+          if (!isTranscodingEnabled || !canTranscodeFile(file)) {
+            void uploadItem(item);
 
             return;
           }
-        }
 
-        if (!isTranscodingEnabled || !canTranscodeFile(file)) {
-          uploadItem(item);
-
-          return;
-        }
-
-        prepareForTranscoding({ id });
+          prepareForTranscoding({ id });
+        })();
       }
     );
   }, [
@@ -553,11 +622,11 @@ function useMediaUploadQueue() {
       /**
        * Uploads a single pending item.
        *
-       * @param {Object} item Queue item.
-       * @param {File} item.file File object.
-       * @param {Object} item.additionalData Additional Data object.
+       * @param item Queue item.
+       * @param item.file File object.
+       * @param item.additionalData Additional Data object.
        */
-      (item) => {
+      (item: QueueItem) => {
         const {
           muteVideo,
           cropVideo,
@@ -565,7 +634,7 @@ function useMediaUploadQueue() {
           isAnimatedGif,
           state: itemState,
         } = item;
-        if (ITEM_STATUS.PENDING_TRANSCODING !== itemState) {
+        if (ItemStatus.PendingTranscoding !== itemState) {
           return;
         }
 
@@ -578,26 +647,26 @@ function useMediaUploadQueue() {
         }
 
         if (isAnimatedGif) {
-          convertGifItem(item);
+          void convertGifItem(item);
           return;
         }
 
         if (trimData) {
-          trimVideoItem(item);
+          void trimVideoItem(item);
           return;
         }
 
         if (muteVideo) {
-          muteVideoItem(item);
+          void muteVideoItem(item);
           return;
         }
 
         if (cropVideo) {
-          cropVideoItem(item);
+          void cropVideoItem(item);
           return;
         }
 
-        optimizeVideoItem(item);
+        void optimizeVideoItem(item);
       }
     );
   }, [
@@ -612,20 +681,20 @@ function useMediaUploadQueue() {
 
   // Upload freshly transcoded files to server.
   useEffect(() => {
-    state.queue.forEach((item) => {
+    state.queue.forEach((item: QueueItem) => {
       const { state: itemState } = item;
       if (
         ![
-          ITEM_STATUS.TRANSCODED,
-          ITEM_STATUS.MUTED,
-          ITEM_STATUS.TRIMMED,
-          ITEM_STATUS.CROPPED,
+          ItemStatus.Transcoded,
+          ItemStatus.Muted,
+          ItemStatus.Trimmed,
+          ItemStatus.Cropped,
         ].includes(itemState)
       ) {
         return;
       }
 
-      uploadItem(item);
+      void uploadItem(item);
     });
   }, [state.queue, uploadItem]);
 
@@ -644,12 +713,12 @@ function useMediaUploadQueue() {
      * @type {Array} In-progress items.
      */
     const progress = state.queue.filter(
-      (item) =>
+      (item: QueueItem) =>
         ![
-          ITEM_STATUS.PENDING,
-          ITEM_STATUS.CANCELLED,
-          ITEM_STATUS.UPLOADED,
-          ITEM_STATUS.FINISHED,
+          ItemStatus.Pending,
+          ItemStatus.Cancelled,
+          ItemStatus.Uploaded,
+          ItemStatus.Finished,
         ].includes(item.state)
     );
 
@@ -659,7 +728,7 @@ function useMediaUploadQueue() {
      * @type {Array} Pending items.
      */
     const pending = state.queue.filter(
-      (item) => item.state === ITEM_STATUS.PENDING
+      (item: QueueItem) => item.state === ItemStatus.Pending
     );
 
     /**
@@ -668,7 +737,7 @@ function useMediaUploadQueue() {
      * @type {Array} Uploaded items.
      */
     const uploaded = state.queue.filter(
-      (item) => item.state === ITEM_STATUS.UPLOADED
+      (item: QueueItem) => item.state === ItemStatus.Uploaded
     );
 
     /**
@@ -679,7 +748,7 @@ function useMediaUploadQueue() {
      * @type {Array} Uploaded items.
      */
     const finished = state.queue.filter(
-      (item) => item.state === ITEM_STATUS.FINISHED
+      (item: QueueItem) => item.state === ItemStatus.Finished
     );
 
     /**
@@ -688,7 +757,7 @@ function useMediaUploadQueue() {
      * @type {Array} Failed items.
      */
     const active = state.queue.filter(
-      (item) => item.state !== ITEM_STATUS.CANCELLED
+      (item: QueueItem) => item.state !== ItemStatus.Cancelled
     );
 
     /**
@@ -697,7 +766,7 @@ function useMediaUploadQueue() {
      * @type {Array} Failed items.
      */
     const failures = state.queue.filter(
-      (item) => item.state === ITEM_STATUS.CANCELLED
+      (item: QueueItem) => item.state === ItemStatus.Cancelled
     );
 
     /**
@@ -709,11 +778,11 @@ function useMediaUploadQueue() {
      * @type {boolean} Whether we're uploading.
      */
     const isUploading = state.queue.some(
-      (item) =>
+      (item: QueueItem) =>
         ![
-          ITEM_STATUS.FINISHED,
-          ITEM_STATUS.CANCELLED,
-          ITEM_STATUS.PENDING,
+          ItemStatus.Finished,
+          ItemStatus.Cancelled,
+          ItemStatus.Pending,
         ].includes(item.state)
     );
 
@@ -723,7 +792,7 @@ function useMediaUploadQueue() {
      * @type {boolean} Whether we're transcoding.
      */
     const isTranscoding = state.queue.some(
-      (item) => item.state === ITEM_STATUS.TRANSCODING
+      (item: QueueItem) => item.state === ItemStatus.Transcoding
     );
 
     /**
@@ -732,7 +801,7 @@ function useMediaUploadQueue() {
      * @type {boolean} Whether we're muting.
      */
     const isMuting = state.queue.some(
-      (item) => item.state === ITEM_STATUS.MUTING
+      (item: QueueItem) => item.state === ItemStatus.Muting
     );
 
     /**
@@ -741,7 +810,7 @@ function useMediaUploadQueue() {
      * @type {boolean} Whether we're muting.
      */
     const isCropping = state.queue.some(
-      (item) => item.state === ITEM_STATUS.CROPPING
+      (item: QueueItem) => item.state === ItemStatus.Cropping
     );
 
     /**
@@ -750,7 +819,7 @@ function useMediaUploadQueue() {
      * @type {boolean} Whether we're trimming.
      */
     const isTrimming = state.queue.some(
-      (item) => item.state === ITEM_STATUS.TRIMMING
+      (item: QueueItem) => item.state === ItemStatus.Trimming
     );
 
     /**
@@ -760,17 +829,17 @@ function useMediaUploadQueue() {
      * is being optimized/muted/trimmed, which will cause
      * a new resource to be created and uploaded.
      *
-     * @param {number} resourceId Resource ID.
-     * @return {boolean} Whether the resource is processing.
+     * @param resourceId Resource ID.
+     * @return Whether the resource is processing.
      */
-    const isNewResourceProcessing = (resourceId) =>
+    const isNewResourceProcessing = (resourceId: ResourceId) =>
       state.queue.some(
-        (item) =>
+        (item: QueueItem) =>
           [
-            ITEM_STATUS.TRANSCODING,
-            ITEM_STATUS.TRIMMING,
-            ITEM_STATUS.MUTING,
-            ITEM_STATUS.CROPPING,
+            ItemStatus.Transcoding,
+            ItemStatus.Trimming,
+            ItemStatus.Muting,
+            ItemStatus.Cropping,
           ].includes(item.state) && item.originalResourceId === resourceId
       );
 
@@ -780,18 +849,18 @@ function useMediaUploadQueue() {
      * This is the case when uploading a new media item that first
      * needs to be transcoded/muted/trimmed.
      *
-     * @param {number} resourceId Resource ID.
-     * @return {boolean} Whether the resource is processing.
+     * @param resourceId Resource ID.
+     * @return Whether the resource is processing.
      */
-    const isCurrentResourceProcessing = (resourceId) =>
+    const isCurrentResourceProcessing = (resourceId: ResourceId) =>
       state.queue.some(
-        (item) =>
+        (item: QueueItem) =>
           [
-            ITEM_STATUS.PENDING_TRANSCODING,
-            ITEM_STATUS.TRANSCODING,
-            ITEM_STATUS.TRIMMING,
-            ITEM_STATUS.MUTING,
-            ITEM_STATUS.CROPPING,
+            ItemStatus.PendingTranscoding,
+            ItemStatus.Transcoding,
+            ItemStatus.Trimming,
+            ItemStatus.Muting,
+            ItemStatus.Cropping,
           ].includes(item.state) && item.resource.id === resourceId
       );
 
@@ -806,18 +875,18 @@ function useMediaUploadQueue() {
      * since after upload to the backend, the resource's temporary uuid
      * will be replaced by the permanent ID from the backend.
      *
-     * @param {number} resourceId Resource ID.
-     * @return {boolean} Whether the resource is uploading.
+     * @param resourceId Resource ID.
+     * @return Whether the resource is uploading.
      */
-    const isCurrentResourceUploading = (resourceId) =>
+    const isCurrentResourceUploading = (resourceId: ResourceId) =>
       state.queue.some(
-        (item) =>
+        (item: QueueItem) =>
           [
-            ITEM_STATUS.PENDING,
-            ITEM_STATUS.PREPARING,
-            ITEM_STATUS.UPLOADING,
-            ITEM_STATUS.UPLOADED,
-            ITEM_STATUS.FINISHED,
+            ItemStatus.Pending,
+            ItemStatus.Preparing,
+            ItemStatus.Uploading,
+            ItemStatus.Uploaded,
+            ItemStatus.Finished,
           ].includes(item.state) &&
           (item.resource.id === resourceId ||
             item.previousResourceId === resourceId)
@@ -838,13 +907,13 @@ function useMediaUploadQueue() {
      * isNewResourceTranscoding(B) -> false
      * isCurrentResourceTranscoding(A) -> false
      *
-     * @param {number} resourceId Resource ID.
-     * @return {boolean} Whether the resource is transcoding.
+     * @param resourceId Resource ID.
+     * @return Whether the resource is transcoding.
      */
-    const isCurrentResourceTranscoding = (resourceId) =>
+    const isCurrentResourceTranscoding = (resourceId: ResourceId) =>
       state.queue.some(
-        (item) =>
-          item.state === ITEM_STATUS.TRANSCODING &&
+        (item: QueueItem) =>
+          item.state === ItemStatus.Transcoding &&
           item.resource.id === resourceId
       );
 
@@ -856,13 +925,13 @@ function useMediaUploadQueue() {
      * This is also the case when muting an existing video in the story,
      * which will cause a new resource to be uploaded (the "current" one).
      *
-     * @param {number} resourceId Resource ID.
-     * @return {boolean} Whether the resource is muting.
+     * @param resourceId Resource ID.
+     * @return Whether the resource is muting.
      */
-    const isCurrentResourceMuting = (resourceId) =>
+    const isCurrentResourceMuting = (resourceId: ResourceId) =>
       state.queue.some(
-        (item) =>
-          item.state === ITEM_STATUS.MUTING && item.resource.id === resourceId
+        (item: QueueItem) =>
+          item.state === ItemStatus.Muting && item.resource.id === resourceId
       );
 
     /**
@@ -870,12 +939,12 @@ function useMediaUploadQueue() {
      *
      * batchId is available when uploading a new array of files
      *
-     * @param {number} batchId Resource batchId.
-     * @return {boolean} Whether the batch of resources is uploading.
+     * @param batchId Resource batchId.
+     * @return Whether the batch of resources is uploading.
      */
-    const isBatchUploading = (batchId) => {
+    const isBatchUploading = (batchId: string) => {
       return state.queue.some(
-        (item) => item.additionalData?.batchId === batchId
+        (item: QueueItem) => item.additionalData?.batchId === batchId
       );
     };
 
@@ -885,13 +954,13 @@ function useMediaUploadQueue() {
      * This is the case when trimming an existing video in the story,
      * which will cause a new resource to be uploaded (the "current" one).
      *
-     * @param {number} resourceId Resource ID.
-     * @return {boolean} Whether the resource is trimming.
+     * @param resourceId Resource ID.
+     * @return Whether the resource is trimming.
      */
-    const isCurrentResourceTrimming = (resourceId) =>
+    const isCurrentResourceTrimming = (resourceId: ResourceId) =>
       state.queue.some(
-        (item) =>
-          item.state === ITEM_STATUS.TRIMMING && item.resource.id === resourceId
+        (item: QueueItem) =>
+          item.state === ItemStatus.Trimming && item.resource.id === resourceId
       );
 
     /**
@@ -901,13 +970,13 @@ function useMediaUploadQueue() {
      * which will cause a new resource to be uploaded,
      * this returns the state of this new resource.
      *
-     * @param {number} resourceId Resource ID.
-     * @return {boolean} Whether the resource is transcoding.
+     * @param resourceId Resource ID.
+     * @return Whether the resource is transcoding.
      */
-    const isNewResourceTranscoding = (resourceId) =>
+    const isNewResourceTranscoding = (resourceId: ResourceId) =>
       state.queue.some(
-        (item) =>
-          item.state === ITEM_STATUS.TRANSCODING &&
+        (item: QueueItem) =>
+          item.state === ItemStatus.Transcoding &&
           item.originalResourceId === resourceId
       );
 
@@ -918,13 +987,13 @@ function useMediaUploadQueue() {
      * which will cause a new resource to be uploaded,
      * this returns the state of this new resource.
      *
-     * @param {number} resourceId Resource ID.
-     * @return {boolean} Whether the resource is muting.
+     * @param resourceId Resource ID.
+     * @return Whether the resource is muting.
      */
-    const isNewResourceMuting = (resourceId) =>
+    const isNewResourceMuting = (resourceId: ResourceId) =>
       state.queue.some(
-        (item) =>
-          item.state === ITEM_STATUS.MUTING &&
+        (item: QueueItem) =>
+          item.state === ItemStatus.Muting &&
           item.originalResourceId === resourceId
       );
 
@@ -934,17 +1003,17 @@ function useMediaUploadQueue() {
      * Checks whether the resource is not external and
      * not already uploading.
      *
-     * @param {import('@googleforcreators/media').Resource} resource Resource object.
-     * @return {boolean} Whether a given resource can be transcoded.
+     * @param resource Resource object.
+     * @return Whether a given resource can be transcoded.
      */
-    const canTranscodeResource = (resource) => {
-      const { isExternal, id, src } = resource || {};
+    const canTranscodeResource = (resource: Resource) => {
+      const { isExternal = false, id = '', src = '' } = resource || {};
 
       return (
         !isExternal &&
         src &&
         !state.queue.some(
-          (item) =>
+          (item: QueueItem) =>
             item.resource.id === id ||
             item.previousResourceId === id ||
             item.originalResourceId === id
@@ -955,13 +1024,13 @@ function useMediaUploadQueue() {
     /**
      * Is a element trimming.
      *
-     * @param {string} elementId Element ID.
-     * @return {boolean} if element with id is found.
+     * @param elementId Element ID.
+     * @return if element with id is found.
      */
-    const isElementTrimming = (elementId) =>
+    const isElementTrimming = (elementId: ElementId) =>
       state.queue.some(
-        (item) =>
-          item.state === ITEM_STATUS.TRIMMING && item.elementId === elementId
+        (item: QueueItem) =>
+          item.state === ItemStatus.Trimming && item.elementId === elementId
       );
 
     return {

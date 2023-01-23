@@ -38,7 +38,7 @@ import {
   startTrimming,
   startUploading,
 } from '../reducer';
-import { ITEM_STATUS } from '../constants';
+import { ItemStatus } from '../types';
 
 jest.mock('@googleforcreators/media', () => ({
   revokeBlob: jest.fn(),
@@ -68,7 +68,7 @@ describe('useMediaUploadQueue', () => {
         queue: [
           expect.objectContaining({
             id: expect.any(String),
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
             file: {},
             originalResourceId: 789,
             resource: expect.objectContaining({
@@ -101,7 +101,7 @@ describe('useMediaUploadQueue', () => {
         queue: [
           expect.objectContaining({
             id: expect.any(String),
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
             file: {},
             originalResourceId: 789,
             resource: expect.objectContaining({
@@ -138,7 +138,7 @@ describe('useMediaUploadQueue', () => {
         queue: [
           expect.objectContaining({
             id: expect.any(String),
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
             file: {},
             originalResourceId: 789,
             resource: expect.objectContaining({
@@ -175,7 +175,7 @@ describe('useMediaUploadQueue', () => {
         queue: [
           expect.objectContaining({
             id: expect.any(String),
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
             file: {},
             originalResourceId: 789,
             resource: expect.objectContaining({
@@ -201,7 +201,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
           },
         ],
       };
@@ -221,7 +221,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: ITEM_STATUS.UPLOADING,
+            state: ItemStatus.Uploading,
           },
         ],
       });
@@ -241,7 +241,7 @@ describe('useMediaUploadQueue', () => {
               poster: 'blob-url',
             },
             originalResourceId: 111,
-            state: ITEM_STATUS.UPLOADING,
+            state: ItemStatus.Uploading,
             posterFile: {},
           },
         ],
@@ -271,7 +271,7 @@ describe('useMediaUploadQueue', () => {
               poster: 'new-url',
             },
             previousResourceId: 456,
-            state: ITEM_STATUS.UPLOADED,
+            state: ItemStatus.Uploaded,
           },
         ],
       });
@@ -284,7 +284,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: ITEM_STATUS.UPLOADING,
+            state: ItemStatus.Uploading,
           },
         ],
       };
@@ -309,7 +309,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
               src: 'blob-url',
             },
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
           },
         ],
       };
@@ -338,7 +338,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
               poster: 'blob-url',
             },
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
           },
         ],
       };
@@ -367,7 +367,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
               poster: 'blob-url',
             },
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
           },
         ],
       };
@@ -392,7 +392,7 @@ describe('useMediaUploadQueue', () => {
               bar: 'baz',
               poster: 'blob-url',
             },
-            state: ITEM_STATUS.UPLOADED,
+            state: ItemStatus.Uploaded,
             previousResourceId: 456,
             posterFile: null,
             originalResourceId: null,
@@ -414,7 +414,7 @@ describe('useMediaUploadQueue', () => {
               src: 'foo',
             },
             originalResourceId: 111,
-            state: ITEM_STATUS.UPLOADED,
+            state: ItemStatus.Uploaded,
             posterFile: {},
           },
         ],
@@ -437,7 +437,7 @@ describe('useMediaUploadQueue', () => {
               src: 'foo',
             },
             originalResourceId: 111,
-            state: ITEM_STATUS.FINISHED,
+            state: ItemStatus.Finished,
           },
         ],
       });
@@ -450,7 +450,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: ITEM_STATUS.UPLOADED,
+            state: ItemStatus.Uploaded,
           },
         ],
       };
@@ -473,7 +473,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: ITEM_STATUS.UPLOADING,
+            state: ItemStatus.Uploading,
           },
         ],
       };
@@ -490,7 +490,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: ITEM_STATUS.CANCELLED,
+            state: ItemStatus.Cancelled,
           },
         ],
       });
@@ -508,7 +508,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
           },
         ],
       };
@@ -528,7 +528,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.MUTING,
+            state: ItemStatus.Muting,
           },
         ],
       });
@@ -549,7 +549,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
             },
             additionalData: {},
-            state: ITEM_STATUS.MUTING,
+            state: ItemStatus.Muting,
           },
         ],
       };
@@ -576,7 +576,7 @@ describe('useMediaUploadQueue', () => {
               isMuted: true,
             },
             additionalData: {},
-            state: ITEM_STATUS.MUTED,
+            state: ItemStatus.Muted,
           },
         ],
       });
@@ -594,7 +594,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
           },
         ],
       };
@@ -614,7 +614,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.TRIMMING,
+            state: ItemStatus.Trimming,
           },
         ],
       });
@@ -635,7 +635,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
             },
             additionalData: {},
-            state: ITEM_STATUS.TRIMMING,
+            state: ItemStatus.Trimming,
           },
         ],
       };
@@ -661,7 +661,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
             },
             additionalData: {},
-            state: ITEM_STATUS.TRIMMED,
+            state: ItemStatus.Trimmed,
           },
         ],
       });
@@ -679,7 +679,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
           },
         ],
       };
@@ -699,7 +699,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.PREPARING,
+            state: ItemStatus.Preparing,
           },
         ],
       });
@@ -717,7 +717,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.PREPARING,
+            state: ItemStatus.Preparing,
           },
         ],
       };
@@ -737,7 +737,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.PENDING_TRANSCODING,
+            state: ItemStatus.PendingTranscoding,
           },
         ],
       });
@@ -755,7 +755,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.PENDING,
+            state: ItemStatus.Pending,
           },
         ],
       };
@@ -775,7 +775,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.TRANSCODING,
+            state: ItemStatus.Transcoding,
           },
         ],
       });
@@ -796,7 +796,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
             },
             additionalData: {},
-            state: ITEM_STATUS.TRANSCODING,
+            state: ItemStatus.Transcoding,
           },
         ],
       };
@@ -823,7 +823,7 @@ describe('useMediaUploadQueue', () => {
               isOptimized: true,
             },
             additionalData: {},
-            state: ITEM_STATUS.TRANSCODED,
+            state: ItemStatus.Transcoded,
           },
         ],
       });
@@ -841,7 +841,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.UPLOADING,
+            state: ItemStatus.Uploading,
           },
         ],
       };
@@ -870,7 +870,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
               isPlaceholder: false,
             },
-            state: ITEM_STATUS.UPLOADING,
+            state: ItemStatus.Uploading,
           },
         ],
       };

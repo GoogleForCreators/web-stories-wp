@@ -25,6 +25,7 @@ import {
   getFileNameFromUrl,
   getFileBasename,
 } from '@googleforcreators/media';
+import type { ResourceId } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
@@ -34,7 +35,19 @@ import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
 import getPosterName from './getPosterName';
 
-function useUploadVideoFrame({ updateMediaElement }) {
+interface UseUploadVideoFrameProps {
+  updateMediaElement: (props: {
+    id: number;
+    data: {
+      posterId?: ResourceId;
+      poster?: string;
+      width?: number;
+      height?: number;
+    };
+  }) => void;
+}
+
+function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -54,12 +67,12 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const uploadVideoPoster = useCallback(
     /**
      *
-     * @param {number} id Video ID.
-     * @param {string} fileName File name.
-     * @param {File} posterFile File object.
-     * @return {Promise<{posterHeight: *, posterWidth: *, poster: *, posterId: *}>} Poster information.
+     * @param id Video ID.
+     * @param fileName File name.
+     * @param posterFile File object.
+     * @return Poster information.
      */
-    async (id, fileName, posterFile) => {
+    async (id: ResourceId, fileName: string, posterFile: File | Blob | null) => {
       // TODO: Make param mandatory; don't allow calling without.
       if (!posterFile) {
         return {};
@@ -81,7 +94,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       } = resource;
 
       // If video ID is not set, skip relating media.
-      if (id) {
+      if (id && updateMedia) {
         await updateMedia(id, {
           posterId,
           storyId,
@@ -109,11 +122,10 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const uploadVideoFrame = useCallback(
     /**
      *
-     * @param {number} id Video ID.
-     * @param {string} src Video URL.
-     * @return {Promise<void>}
+     * @param id Video ID.
+     * @param src Video URL.
      */
-    async (id, src) => {
+    async (id: number, src: string) => {
       const trackTiming = getTimeTracker('load_video_poster');
       try {
         const originalFileName = getFileNameFromUrl(src);
@@ -128,31 +140,36 @@ function useUploadVideoFrame({ updateMediaElement }) {
         // accurate dimensions of the video that includes orientation changes.
         const newSize =
           (posterWidth &&
-            posterHeight && {
-              width: posterWidth,
-              height: posterHeight,
-            }) ||
-          null;
-        const properties = ({ resource }) => ({
-          resource: {
-            ...resource,
-            posterId,
-            poster,
-            ...newSize,
-          },
-        });
-        updateElementsByResourceId({ id, properties });
-        updateMediaElement({
-          id,
-          data: {
-            posterId,
-            poster,
-            ...newSize,
-          },
-        });
+            posterHeight && { width: posterWidth, height: posterHeight }) ||
+          {};
+        if (updateElementsByResourceId) {
+          updateElementsByResourceId({
+            id,
+            properties: ({ resource }) => ({
+              resource: {
+                ...resource,
+                posterId,
+                poster,
+                ...newSize,
+              },
+            }),
+          });
+        }
+        if (updateMediaElement) {
+          updateMediaElement({
+            id,
+            data: {
+              posterId,
+              poster,
+              ...newSize,
+            },
+          });
+        }
       } catch (err) {
-        // TODO: Potentially display error message to user.
-        trackError('video_poster_generation', err.message);
+        if (err instanceof Error) {
+          // TODO: Potentially display error message to user.
+          void trackError('video_poster_generation', err.message);
+        }
       } finally {
         trackTiming();
       }

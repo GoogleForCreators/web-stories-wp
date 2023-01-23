@@ -24,9 +24,9 @@ import { createResource } from '@googleforcreators/media';
  * Internal dependencies
  */
 import useMediaUploadQueue from '..';
-import useFFmpeg from '../../useFFmpeg';
-import useMediaInfo from '../../useMediaInfo';
-import { ITEM_STATUS } from '../constants';
+import useFFmpeg from '../../utils/useFFmpeg';
+import useMediaInfo from '../../utils/useMediaInfo';
+import { ItemStatus } from '../types';
 
 const canTranscodeFile = (file) => {
   return ['video/mp4'].includes(file.type);
@@ -411,7 +411,7 @@ describe('useMediaUploadQueue', () => {
 
     expect(
       result.current.state.progress.filter(
-        (item) => item.state === ITEM_STATUS.TRANSCODING
+        (item) => item.state === ItemStatus.Transcoding
       )
     ).toHaveLength(1);
 
@@ -419,7 +419,7 @@ describe('useMediaUploadQueue', () => {
 
     expect(
       result.current.state.progress.filter(
-        (item) => item.state === ITEM_STATUS.TRANSCODING
+        (item) => item.state === ItemStatus.Transcoding
       )
     ).toHaveLength(1);
 
@@ -470,7 +470,7 @@ describe('useMediaUploadQueue', () => {
 
     expect(
       result.current.state.progress.filter(
-        (item) => item.state === ITEM_STATUS.TRANSCODING
+        (item) => item.state === ItemStatus.Transcoding
       )
     ).toHaveLength(1);
 
@@ -478,7 +478,7 @@ describe('useMediaUploadQueue', () => {
 
     expect(
       result.current.state.progress.filter(
-        (item) => item.state === ITEM_STATUS.TRANSCODING
+        (item) => item.state === ItemStatus.Transcoding
       )
     ).toHaveLength(1);
 
