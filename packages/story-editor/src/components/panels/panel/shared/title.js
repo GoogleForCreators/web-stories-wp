@@ -161,11 +161,11 @@ Toggle.propTypes = {
 function Title({
   ariaLabel,
   children,
-  isPrimary,
-  isSecondary,
+  isPrimary = false,
+  isSecondary = false,
   secondaryAction,
-  isResizable,
-  canCollapse,
+  isResizable = false,
+  canCollapse = true,
   maxHeight: maxHeightOverride,
   count,
   ...props
@@ -288,13 +288,6 @@ Title.propTypes = {
   ]),
   canCollapse: PropTypes.bool,
   count: PropTypes.number,
-};
-
-Title.defaultProps = {
-  isPrimary: false,
-  isSecondary: false,
-  isResizable: false,
-  canCollapse: true,
 };
 
 export default Title;

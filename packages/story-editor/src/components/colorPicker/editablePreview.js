@@ -36,7 +36,9 @@ import {
 
 const EditableInput = lazy(() =>
   import(
-    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: "EditableInput" */
+    '@hello-pangea/color-picker'
   ).then((module) => ({ default: module.EditableInput }))
 );
 
@@ -63,7 +65,7 @@ const Wrapper = styled.div`
   }
 `;
 
-function EditablePreview({ label, value, width, format, onChange }) {
+function EditablePreview({ label = '', value = '', width, format, onChange }) {
   const [isEditing, setIsEditing] = useState(false);
   const enableEditing = useCallback(() => setIsEditing(true), []);
   const disableEditing = useCallback(() => setIsEditing(false), []);
@@ -153,11 +155,6 @@ EditablePreview.propTypes = {
   width: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   format: PropTypes.func.isRequired,
-};
-
-EditablePreview.defaultProps = {
-  label: '',
-  value: '',
 };
 
 export default EditablePreview;

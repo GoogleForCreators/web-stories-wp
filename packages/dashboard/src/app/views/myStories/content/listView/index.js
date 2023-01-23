@@ -28,7 +28,7 @@ import {
   StoriesPropType,
   RenameStoryPropType,
   StoryMenuPropType,
-} from '../../../../../types';
+} from '../../../../../propTypes';
 import {
   Table,
   TableAuthorHeaderCell,

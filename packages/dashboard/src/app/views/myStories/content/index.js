@@ -34,7 +34,7 @@ import {
 import { resolveRoute } from '../../../router';
 import { APP_ROUTES } from '../../../../constants';
 import { Layout, StandardViewContentGutter } from '../../../../components';
-import { StoriesPropType, StoryActionsPropType } from '../../../../types';
+import { StoriesPropType, StoryActionsPropType } from '../../../../propTypes';
 import {
   ViewPropTypes,
   PagePropTypes,

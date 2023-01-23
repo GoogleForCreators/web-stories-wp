@@ -36,7 +36,7 @@ import {
  * Internal dependencies
  */
 import { CardGallery, ColorList } from '../../../../../../components';
-import { TemplatePropType } from '../../../../../../types';
+import { TemplatePropType } from '../../../../../../propTypes';
 import {
   Container,
   Panel,

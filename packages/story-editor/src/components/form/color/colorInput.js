@@ -43,6 +43,7 @@ import {
   CONTEXT_MENU_SKIP_ELEMENT,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
@@ -147,7 +148,11 @@ const DisclosureContainer = styled.div`
 `;
 
 const loadReactColor = () =>
-  import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
+  import(
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: ["Hue", "Saturation", "Alpha", "CustomPicker", "EditableInput"] */
+    '@hello-pangea/color-picker'
+  );
 
 const ColorInput = forwardRef(function ColorInput(
   {
