@@ -5462,9 +5462,12 @@
   {
     "family": "BIZ UDMincho",
     "fallbacks": ["serif"],
-    "weights": [400],
+    "weights": [400, 700],
     "styles": ["regular"],
-    "variants": [[0, 400]],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2048,
@@ -5515,9 +5518,12 @@
   {
     "family": "BIZ UDPMincho",
     "fallbacks": ["serif"],
-    "weights": [400],
+    "weights": [400, 700],
     "styles": ["regular"],
-    "variants": [[0, 400]],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2048,
@@ -37593,6 +37599,31 @@
       "yMax": 895,
       "hAsc": 900,
       "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Solitreo",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 880,
+      "des": -550,
+      "tAsc": 880,
+      "tDes": -550,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 600,
+      "xH": 490,
+      "capH": 700,
+      "yMin": -528,
+      "yMax": 989,
+      "hAsc": 880,
+      "hDes": -550,
       "lGap": 0
     }
   },
