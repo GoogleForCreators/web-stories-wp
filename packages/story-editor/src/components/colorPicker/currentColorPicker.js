@@ -136,7 +136,7 @@ function CurrentColorPicker({
   hsv,
   hex,
   onChange,
-  showOpacity,
+  showOpacity = true,
   hasEyedropper,
 }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
@@ -259,10 +259,6 @@ CurrentColorPicker.propTypes = {
   hsl: PropTypes.object,
   hsv: PropTypes.object,
   hasEyedropper: PropTypes.bool,
-};
-
-CurrentColorPicker.defaultProps = {
-  showOpacity: true,
 };
 
 const DynamicImportWrapper = () => {

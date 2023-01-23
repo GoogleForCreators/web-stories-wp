@@ -44,14 +44,14 @@ VirtualizedWrapper.propTypes = {
 export const VirtualizedContainer = styled.div`
   position: absolute;
   top: 0;
-  left: ${({ paneLeft }) => paneLeft};
+  left: ${({ paneLeft = 0 }) => paneLeft};
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-columns: ${({ columnWidth }) => `
     repeat(auto-fill, ${columnWidth}px)`};
   grid-template-rows: ${({ rowHeight }) => `minmax(${rowHeight}px, auto)`};
-  gap: ${({ rowGap }) => rowGap}px;
-  width: calc(100% - ${({ paneLeft }) => paneLeft});
+  gap: ${({ rowGap = 12 }) => rowGap}px;
+  width: calc(100% - ${({ paneLeft = 0 }) => paneLeft});
   height: 100%;
   margin-top: 4px;
 `;
@@ -61,8 +61,4 @@ VirtualizedContainer.propTypes = {
   rowHeight: PropTypes.number.isRequired,
   rowGap: PropTypes.number,
   paneLeft: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
-VirtualizedContainer.defaultProps = {
-  rowGap: 12,
-  paneLeft: 0,
 };
