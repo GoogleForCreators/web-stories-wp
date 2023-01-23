@@ -49,7 +49,7 @@ function StoryCard({
   });
   const hasContentOverlay = isShowingTitle || isShowingAuthor || isShowingDate;
 
-  // @todo Keep an eye on this experimental API, make necessary changes when this gets updated in core.
+  // @todo Remove this workaround when WP 6.1 is made minimum supported version.
   const getSettings = __getSettings ? __getSettings : __experimentalGetSettings;
   const dateFormat = getSettings().formats.date;
 
