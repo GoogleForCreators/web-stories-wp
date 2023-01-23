@@ -271,7 +271,7 @@ Element.propTypes = {
  * @param {string?} props.margin The margin in around the element
  * @param {Function} props.onInsert Insertion callback.
  * @param {string} props.providerType Which provider the element is from.
- * @param props.canEditMedia
+ * @param {boolean} props.canEditMedia Current user can upload media.
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement({
