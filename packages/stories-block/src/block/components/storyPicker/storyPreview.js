@@ -23,7 +23,11 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { dateI18n, __experimentalGetSettings } from '@wordpress/date';
+import {
+  dateI18n,
+  __experimentalGetSettings,
+  getSettings as __getSettings,
+} from '@wordpress/date';
 import { useMemo } from '@wordpress/element';
 
 /**
@@ -41,7 +45,8 @@ function StoryPreview({
   isSelectable = true,
 }) {
   // @todo Keep an eye on this experimental API, make necessary changes when this gets updated in core.
-  const dateFormat = __experimentalGetSettings().formats.date;
+  const getSettings = __getSettings ? __getSettings : __experimentalGetSettings;
+  const dateFormat = getSettings().formats.date;
   const displayDate = dateI18n(dateFormat, story.created);
   const displayDateText = useMemo(() => {
     if (!displayDate) {
