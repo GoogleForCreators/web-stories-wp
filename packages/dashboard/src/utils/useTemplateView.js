@@ -28,7 +28,7 @@ import {
   VIEW_STYLE,
   DEFAULT_TEMPLATE_FILTERS,
 } from '../constants';
-import { PageSizePropType } from '../types';
+import { PageSizePropType } from '../propTypes';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useTemplateView({

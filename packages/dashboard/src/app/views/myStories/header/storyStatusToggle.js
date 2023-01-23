@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
  */
 import useStoryFilters from '../filters/useStoryFilters';
 import { DEFAULT_FILTERS, STORY_STATUSES } from '../../../../constants';
-import { TotalStoriesByStatusPropType } from '../../../../types';
+import { TotalStoriesByStatusPropType } from '../../../../propTypes';
 
 const StyledPill = styled(Pill)`
   margin: 0 2px;
