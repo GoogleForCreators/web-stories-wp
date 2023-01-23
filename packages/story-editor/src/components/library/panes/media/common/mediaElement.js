@@ -271,9 +271,14 @@ Element.propTypes = {
  * @param {string?} props.margin The margin in around the element
  * @param {Function} props.onInsert Insertion callback.
  * @param {string} props.providerType Which provider the element is from.
+ * @param {boolean} props.canEditMedia Current user can upload media.
  * @return {null|*} Element or null if does not map to video/image.
  */
-function MediaElement(props) {
+function MediaElement({
+  providerType = 'local',
+  canEditMedia = false,
+  ...props
+}) {
   const { isCurrentResourceProcessing, isCurrentResourceUploading } =
     useLocalMedia(({ state }) => ({
       isCurrentResourceProcessing: state.isCurrentResourceProcessing,
@@ -288,12 +293,22 @@ function MediaElement(props) {
   ) {
     return (
       <Tooltip title={__('Uploading media…', 'web-stories')}>
-        <Element {...props} />
+        <Element
+          {...props}
+          providerType={providerType}
+          canEditMedia={canEditMedia}
+        />
       </Tooltip>
     );
   }
 
-  return <Element {...props} />;
+  return (
+    <Element
+      {...props}
+      providerType={providerType}
+      canEditMedia={canEditMedia}
+    />
+  );
 }
 
 MediaElement.propTypes = {
@@ -305,11 +320,6 @@ MediaElement.propTypes = {
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
   canEditMedia: PropTypes.bool,
-};
-
-MediaElement.defaultProps = {
-  providerType: 'local',
-  canEditMedia: false,
 };
 
 export default memo(MediaElement);

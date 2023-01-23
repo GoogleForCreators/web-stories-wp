@@ -64,7 +64,7 @@ function PaginatedMediaGallery({
   hasMore,
   onInsert,
   setNextPage,
-  canEditMedia,
+  canEditMedia = false,
 }) {
   // State and callback ref necessary to load on scroll.
   const refContainer = useRef();
@@ -227,10 +227,6 @@ PaginatedMediaGallery.propTypes = {
   searchTerm: PropTypes.string,
   selectedCategoryId: PropTypes.string,
   canEditMedia: PropTypes.bool,
-};
-
-PaginatedMediaGallery.defaultProps = {
-  canEditMedia: false,
 };
 
 export default PaginatedMediaGallery;

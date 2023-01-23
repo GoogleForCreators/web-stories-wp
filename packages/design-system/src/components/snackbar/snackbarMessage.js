@@ -180,7 +180,7 @@ const SnackbarMessage = ({
   thumbnail,
   message,
   removeMessageTimeInterval,
-  showCloseButton,
+  showCloseButton = true,
   placement = 'bottom',
   actionHelpText,
   ...props
@@ -286,10 +286,6 @@ SnackbarMessage.propTypes = {
   showCloseButton: PropTypes.bool,
   placement: Placement,
   thumbnail: SnackbarNotificationThumbnail,
-};
-
-SnackbarMessage.defaultProps = {
-  showCloseButton: true,
 };
 
 export { SnackbarMessage };
