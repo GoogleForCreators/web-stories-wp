@@ -26,10 +26,10 @@ import { execSync } from 'child_process';
  * appending a plus sign.
  *
  * @see https://semver.org/
- * @param {string} version Version number.
- * @return {string} Modified version.
+ * @param version Version number.
+ * @return Modified version.
  */
-function appendRevisionToVersion(version) {
+function appendRevisionToVersion(version: string): string {
   // Get the current commit hash. Used for pre-releases.
   // GITHUB_SHA is available during the GitHub Actions workflow.
   const currentCommitHash = process.env.GITHUB_SHA

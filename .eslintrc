@@ -605,7 +605,7 @@
     },
     {
       "files": [
-        "packages/commander/**/*.js",
+        "packages/commander/**/*.ts",
         "packages/fonts/scripts/**/*.js",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
@@ -636,7 +636,7 @@
         "packages/eslint-import-resolver/**/*.cjs",
         "packages/jest-resolver/**/*.cjs",
         "packages/fonts/**/*.js",
-        "packages/commander/**/*.js",
+        "packages/commander/**/*.ts",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
         "packages/text-sets/scripts/**/*.js"
@@ -658,6 +658,15 @@
         "node/no-unpublished-import": "off",
         "node/no-unpublished-require": "off",
         "security/detect-non-literal-fs-filename": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/commander/src/index.ts"
+      ],
+      "rules": {
+        "no-console": "off",
+        "node/shebang": "off"
       }
     },
     {

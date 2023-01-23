@@ -292,6 +292,11 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
+
       - name: Create release branch
         id: release_branch
         run: |
@@ -317,7 +322,7 @@ jobs:
           echo "release_name=${RELEASE_NAME}" >> $GITHUB_OUTPUT
 
       - name: Update assets version
-        run: npm run workflow:assets-version $ASSETS_VERSION
+        run: bun run workflow:assets-version $ASSETS_VERSION
         if: ${{ env.ASSETS_VERSION }}
         env:
           ASSETS_VERSION: ${{ env.ASSETS_VERSION }}
@@ -334,7 +339,7 @@ jobs:
           ASSETS_VERSION: ${{ env.ASSETS_VERSION }}
 
       - name: Update plugin version
-        run: npm run workflow:version $PLUGIN_VERSION
+        run: bun run workflow:version $PLUGIN_VERSION
 
       # Commit the plugin version bump if it was successful.
       # It's also possible that there were no changes, for example if the
@@ -374,16 +379,16 @@ jobs:
           BRANCH: ${{ steps.release_branch.outputs.release_branch }}
 
       - name: Build plugin
-        run: npm run build:js
+        run: bun run build:js
 
       - name: Bundle regular version
-        run: npm run workflow:build-plugin -- --zip web-stories.zip
+        run: bun run workflow:build-plugin -- --zip web-stories.zip
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           npx webpack --env=development
-          npm run workflow:build-plugin -- --zip web-stories-dev.zip
+          bun run workflow:build-plugin -- --zip web-stories-dev.zip
 
       - name: Prepare release artifacts
         run: |
@@ -459,6 +464,11 @@ jobs:
         run: npm ci
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
 
       # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
       - name: Update plugin version

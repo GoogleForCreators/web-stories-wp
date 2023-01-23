@@ -17,17 +17,17 @@
 /**
  * Internal dependencies
  */
-import copyFiles from './copyFiles.js';
-import getIgnoredFiles from './getIgnoredFiles.js';
+import copyFiles from './copyFiles';
+import getIgnoredFiles from './getIgnoredFiles';
 
 /**
  * Main function to bundle the plugin.
  *
- * @param {string} source Path to the source directory.
- * @param {string} target Path to target directory.
- * @param {boolean} [composer=false] Create Composer-ready ZIP file without PHP autoloader.
+ * @param source Path to the source directory.
+ * @param target Path to target directory.
+ * @param [composer=false] Create Composer-ready ZIP file without PHP autoloader.
  */
-function createBuild(source, target, composer = false) {
+function createBuild(source: string, target: string, composer = false) {
   const ignoredFiles = getIgnoredFiles(source);
 
   if (composer) {

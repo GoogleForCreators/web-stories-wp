@@ -22,7 +22,7 @@ import { readFileSync, writeFileSync } from 'fs';
 /**
  * Internal dependencies
  */
-import appendRevisionToVersion from './appendRevisionToVersion.js';
+import appendRevisionToVersion from './appendRevisionToVersion';
 
 const VERSION_REGEX = /\* Version:(.+)/;
 const VERSION_CONSTANT_REGEX =
@@ -36,12 +36,15 @@ const VERSION_CONSTANT_REGEX =
  *
  * If a specific version is provided, uses that version to update the constant.
  *
- * @param {string} pluginFile Path to the plugin file.
- * @param {string} version Desired version number.
- * @param {boolean} [nightly=false] Whether this is a nightly build or not.
- * @return {void}
+ * @param pluginFile Path to the plugin file.
+ * @param version Desired version number.
+ * @param [nightly=false] Whether this is a nightly build or not.
  */
-function updateVersionNumbers(pluginFile, version, nightly = false) {
+function updateVersionNumbers(
+  pluginFile: string,
+  version: string,
+  nightly = false
+) {
   let pluginFileContent = readFileSync(pluginFile, 'utf8');
 
   if (!nightly) {

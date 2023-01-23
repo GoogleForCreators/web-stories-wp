@@ -100,15 +100,20 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
+
       - name: Build plugin
-        run: npm run build:js
+        run: bun run build:js
         env:
           # TODO: remove eventually
           DISABLE_PREVENT: true
           DISABLE_QUICK_TIPS: true
 
       - name: Bundle plugin
-        run: npm run workflow:build-plugin
+        run: bun run workflow:build-plugin
 
       - name: Upload bundle
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce

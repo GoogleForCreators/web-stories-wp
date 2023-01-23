@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import resizeSvgPath from '../resizeSvgPath.js';
+import resizeSvgPath from '../resizeSvgPath';
 
 describe('resizeSvgPaths', () => {
   it('should resize paths', () => {
