@@ -78,7 +78,11 @@ function MyStoriesView() {
     })
   );
 
-  const { apiCallbacks, canViewDefaultTemplates } = useConfig();
+  const {
+    apiCallbacks,
+    canViewDefaultTemplates,
+    labels: { search_items: searchPlaceholder },
+  } = useConfig();
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -118,6 +122,7 @@ function MyStoriesView() {
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
+        searchPlaceholder={searchPlaceholder}
       />
 
       <Content

@@ -65,6 +65,7 @@ function LeftRail() {
     leftRailSecondaryNavigation,
     canViewDefaultTemplates,
     styleConstants: { topOffset },
+    labels: { add_new_item: addNew },
   } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
@@ -131,7 +132,7 @@ function LeftRail() {
             href={newStoryURL}
             onClick={onCreateNewStoryClick}
           >
-            {__('Create New Story', 'web-stories')}
+            {addNew}
           </Button>
         </Content>
         <Content>

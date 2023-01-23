@@ -47,7 +47,13 @@ import { getSearchOptions } from '../../utils';
 import useStoryFilters from '../filters/useStoryFilters';
 import StoryStatusToggle from './storyStatusToggle';
 
-function Header({ initialPageReady, stories, totalStoriesByStatus, view }) {
+function Header({
+  initialPageReady,
+  stories,
+  totalStoriesByStatus,
+  view,
+  searchPlaceholder = __('Search Stories', 'web-stories'),
+}) {
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
   const { filters, sortObject, updateFilter, updateSort, registerFilters } =
@@ -111,7 +117,7 @@ function Header({ initialPageReady, stories, totalStoriesByStatus, view }) {
     <>
       <PageHeading
         heading={__('Dashboard', 'web-stories')}
-        searchPlaceholder={__('Search Stories', 'web-stories')}
+        searchPlaceholder={searchPlaceholder}
         searchOptions={searchOptions}
         handleSearchChange={debouncedSearchChange}
         showSearch={initialPageReady}
@@ -146,6 +152,7 @@ Header.propTypes = {
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
+  searchPlaceholder: PropTypes.string,
 };
 
 export default memo(Header);

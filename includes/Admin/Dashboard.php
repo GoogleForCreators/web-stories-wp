@@ -480,6 +480,7 @@ class Dashboard extends Service_Base {
 			'allowedImageMimeTypes'   => $allowed_image_mime_types,
 			'version'                 => WEBSTORIES_VERSION,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
+			'labels'                  => $this->story_post_type->get_labels(),
 			'api'                     => [
 				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
 				'media'          => '/web-stories/v1/media/',

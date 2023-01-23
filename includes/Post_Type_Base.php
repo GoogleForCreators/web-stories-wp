@@ -268,6 +268,16 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		return $capability_name;
 	}
 
+	public function get_labels() {
+		$post_type_obj = $this->get_object();
+
+		if ( ! $post_type_obj instanceof WP_Post_Type ) {
+			return false;
+		}
+
+		return $post_type_obj->labels;
+	}
+
 	/**
 	 * Get Label on the post type slug and name.
 	 *
@@ -276,15 +286,15 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @param string $label Label name.
 	 */
 	public function get_label( string $label ): string {
-		$post_type_obj = $this->get_object();
 		$name          = '';
 
-		if ( ! $post_type_obj instanceof WP_Post_Type ) {
+		$labels = $this->get_labels();
+		if ( ! $labels) {
 			return $name;
 		}
 
-		if ( property_exists( $post_type_obj->labels, $label ) ) {
-			$name = $post_type_obj->labels->$label;
+		if ( property_exists( $labels, $label ) ) {
+			$name = $labels->$label;
 		}
 
 		return $name;

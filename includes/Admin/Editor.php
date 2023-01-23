@@ -416,6 +416,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'revisionMessage'         => $revision_message,
 			'dashboardSettingsLink'   => $dashboard_settings_url,
 			'generalSettingsLink'     => $general_settings_url,
+			'labels'                  => $this->story_post_type->get_labels(),
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
 			'maxUpload'               => $max_upload_size,
 			'editPostsCapabilityName' => $this->story_post_type->get_cap_name( 'edit_posts' ),

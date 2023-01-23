@@ -34,6 +34,7 @@ import {
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../config';
 import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView } from '../../../utils';
 
@@ -58,6 +59,10 @@ function ExploreTemplatesView() {
       replace: actions.replace,
     })
   );
+
+  const {
+    labels: { search_items: searchPlaceholder },
+  } = useConfig();
 
   const idRef = useRef(templateIdParam);
 
@@ -265,6 +270,7 @@ function ExploreTemplatesView() {
         totalTemplates={totalVisibleTemplates}
         searchOptions={searchOptions}
         view={view}
+        searchPlaceholder={searchPlaceholder}
       />
       <Content
         isLoading={isLoading}

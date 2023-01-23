@@ -146,6 +146,13 @@ function PublishPanel({ nameOverride }) {
   } = useSidebar();
   const {
     api: { publisherLogos: publisherLogosPath },
+    labels: {
+      featured_image: featuredImage = __('Poster image', 'web-stories'),
+      set_featured_image: setFeaturedImage = __(
+        'Select as poster image',
+        'web-stories'
+      ),
+    },
   } = useConfig();
 
   const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
@@ -389,9 +396,9 @@ function PublishPanel({ nameOverride }) {
                   'Using image as poster image',
                   'web-stories'
                 )}
-                buttonInsertText={__('Select as poster image', 'web-stories')}
+                buttonInsertText={setFeaturedImage}
                 type={allowedImageMimeTypes}
-                ariaLabel={__('Poster image', 'web-stories')}
+                ariaLabel={featuredImage}
                 onChangeErrorText={posterErrorMessage}
                 imgProps={featuredMedia}
                 canUpload
@@ -399,7 +406,7 @@ function PublishPanel({ nameOverride }) {
               />
             </MediaWrapper>
             <LabelWrapper>
-              <Label>{__('Poster image', 'web-stories')}</Label>
+              <Label>{featuredImage}</Label>
               <Required />
             </LabelWrapper>
           </MediaInputWrapper>
