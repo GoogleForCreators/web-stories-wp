@@ -24,6 +24,7 @@ import { ResourceType } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
+import type { ConfigState } from '../../../../types';
 import { ConfigProvider } from '../../../config';
 import useMediaInfo from '../useMediaInfo';
 
@@ -47,7 +48,7 @@ jest.mock('mediainfo.js', () => ({
 function arrange() {
   const configState = {
     mediainfoUrl: 'https://example.com',
-  };
+  } as ConfigState;
 
   return renderHook(() => useMediaInfo(), {
     wrapper: ({ children }) => (
@@ -71,6 +72,7 @@ const BASE_RESOURCE: VideoResource = {
   alt: 'small-video',
   sizes: {},
   isOptimized: false,
+  isExternal: false,
   baseColor: '#734727',
 };
 
