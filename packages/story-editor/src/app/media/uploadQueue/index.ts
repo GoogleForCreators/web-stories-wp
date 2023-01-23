@@ -55,10 +55,10 @@ import useFFmpeg from '../utils/useFFmpeg';
 import useMediaInfo from '../utils/useMediaInfo';
 import getResourceFromLocalFile from '../utils/getResourceFromLocalFile';
 import * as reducer from './reducer';
-import type { QueueItem } from './types';
+import type { QueueItem, QueueState } from './types';
 import { ItemStatus } from './types';
 
-const initialState = {
+const initialState: QueueState = {
   queue: [],
 };
 
@@ -140,7 +140,14 @@ function useMediaUploadQueue() {
 
           try {
             const { resource: newResource, posterFile } =
-              await getResourceFromLocalFile(file);
+              (await getResourceFromLocalFile(file)) as {
+                resource:
+                  | ImageResource
+                  | VideoResource
+                  | GifResource
+                  | AudioResource;
+                posterFile: File | null;
+              };
 
             if (!isMounted.current) {
               return;
@@ -225,7 +232,7 @@ function useMediaUploadQueue() {
   // Convert animated GIFs to videos if possible.
   const convertGifItem = useCallback(
     async (item: QueueItem) => {
-      const { id, file, additionalData = {} } = item;
+      const { id, file, additionalData } = item;
 
       startTranscoding({ id });
 
@@ -296,7 +303,7 @@ function useMediaUploadQueue() {
 
   const muteVideoItem = useCallback(
     async (item: QueueItem) => {
-      const { id, file, additionalData = {} } = item;
+      const { id, file, additionalData } = item;
 
       startMuting({ id });
 
@@ -370,7 +377,7 @@ function useMediaUploadQueue() {
 
   const optimizeVideoItem = useCallback(
     async (item: QueueItem) => {
-      const { id, file, additionalData = {} } = item;
+      const { id, file, additionalData } = item;
 
       startTranscoding({ id });
 

@@ -72,14 +72,22 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
      * @param posterFile File object.
      * @return Poster information.
      */
-    async (id: ResourceId, fileName: string, posterFile: File | Blob | null) => {
+    async (
+      id: ResourceId,
+      fileName: string,
+      posterFile: File | Blob | null
+    ) => {
       // TODO: Make param mandatory; don't allow calling without.
       if (!posterFile) {
         return {};
       }
       // if blob given change name of file.
-      if (!posterFile.name) {
-        posterFile.name = fileName;
+      if (posterFile.name) {
+        posterFile = new File(
+          [posterFile.slice(0, posterFile.size)],
+          fileName,
+          { type: posterFile.type }
+        );
       }
 
       const resource = await uploadFile(posterFile, {

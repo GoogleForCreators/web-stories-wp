@@ -33,7 +33,7 @@ import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
 
-const bytesToMB = (bytes: number) => Math.round(bytes / Math.pow(1024, 2));
+const bytesToMB = (bytes: number) => String( Math.round(bytes / Math.pow(1024, 2)) );
 
 function useUploader() {
   const {

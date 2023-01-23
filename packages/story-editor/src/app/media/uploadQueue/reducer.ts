@@ -23,7 +23,6 @@ import type {
   GifResource,
   ImageResource,
   VideoResource,
-  Resource,
 } from '@googleforcreators/media';
 import { ResourceType, revokeBlob } from '@googleforcreators/media';
 
@@ -45,12 +44,7 @@ interface IdInterface {
 interface ReplacePlaceholderResourceProps {
   payload: {
     id: string;
-    resource:
-      | Resource
-      | ImageResource
-      | VideoResource
-      | GifResource
-      | AudioResource;
+    resource: ImageResource | VideoResource | GifResource | AudioResource;
     posterFile: File | null;
   };
 }

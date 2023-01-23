@@ -61,13 +61,12 @@ export type AdditionalData = {
 export type QueueItem = {
   id: string;
   resource: ImageResource | VideoResource | GifResource | AudioResource;
-  originalResourceId: ResourceId;
-  previousResourceId: ResourceId;
-
+  originalResourceId?: ResourceId | null;
+  previousResourceId?: ResourceId;
   state: ItemStatus;
 
   file: File;
-  posterFile?: File;
+  posterFile?: File | null;
   onUploadStart?: () => void;
   onUploadProgress?: () => void;
   onUploadError?: () => void;
