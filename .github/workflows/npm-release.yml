@@ -93,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # for Git to git push
-    timeout-minutes: 10
+    timeout-minutes: 20
     needs: [dry-run]
     steps:
       - name: Harden Runner
