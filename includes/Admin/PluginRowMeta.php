@@ -71,7 +71,7 @@ class PluginRowMeta extends Service_Base {
 	 *
 	 * @phpstan-return ($meta is array<T> ? array<T> : mixed)
 	 */
-	public function get_plugin_row_meta( $meta, $plugin_file ) {
+	public function get_plugin_row_meta( $meta, string $plugin_file ) {
 		if ( plugin_basename( WEBSTORIES_PLUGIN_FILE ) !== $plugin_file ) {
 			return $meta;
 		}

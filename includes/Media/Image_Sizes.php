@@ -88,7 +88,7 @@ class Image_Sizes extends Service_Base {
 	 *
 	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
-	public function wp_prepare_attachment_for_js( $response, $attachment ) {
+	public function wp_prepare_attachment_for_js( $response, WP_Post $attachment ) {
 		if ( ! \is_array( $response ) ) {
 			return $response;
 		}

@@ -21,6 +21,8 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Shopping\Product;
+use Google\Web_Stories\Story_Post_Type;
 use WP_UnitTest_Factory;
 
 /**
@@ -59,7 +61,7 @@ class Discovery extends DependencyInjectedTestCase {
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Discovery Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -250,7 +252,7 @@ class Discovery extends DependencyInjectedTestCase {
 	 * @covers ::get_product_data
 	 */
 	public function test_get_product_data(): void {
-		$product_object = \Google\Web_Stories\Shopping\Product::load_from_array(
+		$product_object = Product::load_from_array(
 			[
 				'aggregateRating'      => [
 					'ratingValue' => 5,

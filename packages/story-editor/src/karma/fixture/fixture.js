@@ -121,6 +121,7 @@ export const FIXTURE_DEFAULT_CONFIG = {
     timezone: 'America/New_York',
     weekStartsOn: 0,
   },
+  shoppingProvider: 'karma',
   flags: {},
   MediaUpload,
 };
@@ -812,24 +813,21 @@ class APIProviderFixture {
         []
       );
 
-      const createTaxonomyTerm = useCallback(
-        (_endpoint, data) =>
-          asyncResponse({
-            id: this._termAutoIncrementId++,
-            count: 0,
-            description: '',
-            link: '',
-            name: 'random name',
-            slug:
-              data?.name?.toLowerCase().replace(/[\s./_]/, '-') ||
-              'random-slug',
-            taxonomy: 'web_story_category',
-            parent: 0,
-            meta: [],
-            ...data,
-          }),
-        []
-      );
+      const createTaxonomyTerm = useCallback((_endpoint, data) => {
+        return asyncResponse({
+          id: this._termAutoIncrementId++,
+          count: 0,
+          description: '',
+          link: '',
+          name: 'random name',
+          slug:
+            data?.name?.toLowerCase().replace(/[\s./_]/, '-') || 'random-slug',
+          taxonomy: _endpoint.split('/').pop(),
+          parent: 0,
+          meta: [],
+          ...data,
+        });
+      }, []);
 
       const getTaxonomies = useCallback(
         () => asyncResponse(taxonomiesResponse),

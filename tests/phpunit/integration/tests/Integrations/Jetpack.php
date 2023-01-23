@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
 use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
+use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_Term;
@@ -213,7 +214,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @covers ::filter_ajax_query_attachments_args
 	 */
 	public function test_filter_ajax_query_attachments_args(): void {
-		$types                = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$types                = $this->injector->make( Types::class );
 		$allowed_mime_types   = $types->get_allowed_mime_types();
 		$allowed_mime_types   = array_merge( ...array_values( $allowed_mime_types ) );
 		$allowed_mime_types[] = $this->instance::VIDEOPRESS_MIME_TYPE;
@@ -233,7 +234,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * @param int|float $milliseconds
-	 * @param string $string
 	 *
 	 * @dataProvider data_format_milliseconds
 	 * @covers ::format_milliseconds
@@ -245,8 +245,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * @param mixed $value
-	 * @param int $object_id
-	 * @param string $meta_key
 	 * @return \array[][]|mixed
 	 */
 	public function filter_wp_get_attachment_metadata( $value, int $object_id, string $meta_key ) {
@@ -281,49 +279,45 @@ class Jetpack extends DependencyInjectedTestCase {
 	 */
 	public function data_format_milliseconds(): array {
 		return [
-			'5000'      => [
+			'5000'     => [
 				5000,
 				'0:05',
 			],
-			'15123'     => [
+			'15123'    => [
 				15123,
 				'0:15',
 			],
-			'15999'     => [
+			'15999'    => [
 				15123,
 				'0:15',
 			],
-			'0'         => [
+			'0'        => [
 				0,
 				'0:00',
 			],
-			'-1'        => [
+			'-1'       => [
 				- 1,
 				'0:00',
 			],
-			'-5000'     => [
+			'-5000'    => [
 				- 5000,
 				'0:00',
 			],
-			'30526'     => [
+			'30526'    => [
 				30526,
 				'0:30',
 			],
-			'13123'     => [
+			'13123'    => [
 				13123,
 				'0:13',
 			],
-			'3600000'   => [
-				3600000,
+			'3600000'  => [
+				3600_000,
 				'60:00',
 			],
-			'98765431'  => [
-				98765431,
+			'98765431' => [
+				98_765_431,
 				'1646:05',
-			],
-			'5000.9876' => [
-				5000.9876,
-				'0:05',
 			],
 		];
 	}

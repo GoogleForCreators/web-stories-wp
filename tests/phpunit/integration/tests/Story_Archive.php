@@ -55,9 +55,6 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 	protected string $redirect_location = '';
 
-	/**
-	 * @param WP_UnitTest_Factory $factory
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]

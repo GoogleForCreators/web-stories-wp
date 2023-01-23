@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -64,7 +65,7 @@ class Conditional_Featured_Image extends DependencyInjectedTestCase {
 	 * @covers ::cybocfi_enabled_for_post_type
 	 */
 	public function test_cybocfi_enabled_for_post_type(): void {
-		$result = $this->instance->cybocfi_enabled_for_post_type( true, \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$result = $this->instance->cybocfi_enabled_for_post_type( true, Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->assertFalse( $result );
 	}

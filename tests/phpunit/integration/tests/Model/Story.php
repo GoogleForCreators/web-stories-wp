@@ -20,6 +20,9 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Model;
 
+use Google\Web_Stories\Shopping\Product;
+use Google\Web_Stories\Shopping\Product_Meta;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -47,7 +50,7 @@ class Story extends TestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -66,14 +69,14 @@ class Story extends TestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
 		add_post_meta(
 			$post->ID,
-			\Google\Web_Stories\Shopping\Product_Meta::PRODUCTS_POST_META_KEY,
+			Product_Meta::PRODUCTS_POST_META_KEY,
 			[
 				[
 					'aggregateRating'      => [
@@ -108,7 +111,7 @@ class Story extends TestCase {
 		$this->assertEquals( $story->get_title(), 'test title' );
 		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
 		$this->assertIsArray( $story->get_products() );
-		$this->assertInstanceOf( \Google\Web_Stories\Shopping\Product::class, $story->get_products()[0] );
+		$this->assertInstanceOf( Product::class, $story->get_products()[0] );
 	}
 
 
@@ -119,7 +122,7 @@ class Story extends TestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -160,14 +163,14 @@ class Story extends TestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
 		add_post_meta(
 			$post->ID,
-			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
+			Story_Post_Type::POSTER_META_KEY,
 			[
 				'url'        => 'http://www.example.com/image.png',
 				'height'     => 1000,
@@ -193,7 +196,7 @@ class Story extends TestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -215,7 +218,7 @@ class Story extends TestCase {
 
 		add_post_meta(
 			$post->ID,
-			\Google\Web_Stories\Story_Post_Type::POSTER_META_KEY,
+			Story_Post_Type::POSTER_META_KEY,
 			[
 				'url'        => 'http://www.example.com/image.png',
 				'height'     => 1000,

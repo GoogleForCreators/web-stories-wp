@@ -183,7 +183,7 @@ trait Sanitization_Utils {
 	 *
 	 * @param DOMNodeList $text_elements List of text elements.
 	 */
-	private function use_semantic_heading_tags_for_elements( $text_elements ): void {
+	private function use_semantic_heading_tags_for_elements( DOMNodeList $text_elements ): void {
 		// Matches PAGE_HEIGHT in the editor, as also seen in amp-story-grid-layer[aspect-ratio].
 		$page_height = 618;
 

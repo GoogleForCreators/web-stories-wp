@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -82,12 +83,12 @@ class Replace_Conic_Style_Presets extends TestCase {
 				$radial_preset,
 			],
 		];
-		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
+		add_option( Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Migrations\Replace_Conic_Style_Presets();
 		$object->migrate();
 
-		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION );
 		$this->assertIsArray( $style_presets );
 		$this->assertArrayHasKey( 'textStyles', $style_presets );
 		$this->assertIsArray( $style_presets['textStyles'] );
@@ -107,6 +108,6 @@ class Replace_Conic_Style_Presets extends TestCase {
 			]
 		);
 
-		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+		delete_option( Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 }

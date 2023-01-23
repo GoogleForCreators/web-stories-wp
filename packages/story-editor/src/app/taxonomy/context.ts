@@ -17,5 +17,21 @@
  * External dependencies
  */
 import { createContext } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import type { TaxonomyState } from '../../types';
 
-export default createContext({ state: {}, actions: {} });
+export default createContext<TaxonomyState>({
+  state: {
+    taxonomies: [],
+    termCache: [],
+    terms: [],
+  },
+  actions: {
+    createTerm: () => Promise.resolve(undefined),
+    addSearchResultsToCache: () => Promise.resolve(undefined),
+    addTerms: () => undefined,
+    removeTerms: () => undefined,
+  },
+});
