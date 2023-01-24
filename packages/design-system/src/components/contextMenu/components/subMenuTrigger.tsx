@@ -103,8 +103,10 @@ function SubMenuTrigger({
   useEffect(() => {
     if (isSubMenuOpen && subMenuRef.current) {
       const subMenuItems = getFocusableChildren(subMenuRef.current);
-      subMenuItems[0].focus();
-      setFocusedId(subMenuItems[0].id);
+      if (subMenuItems.length) {
+        subMenuItems[0].focus();
+        setFocusedId(subMenuItems[0].id);
+      }
     }
   }, [isSubMenuOpen, subMenuRef, setFocusedId]);
 

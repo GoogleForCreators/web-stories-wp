@@ -26,10 +26,9 @@ import { LockOpen, LockClosed } from '../../icons';
 import { ButtonType, ButtonVariant, ButtonSize } from './constants';
 import { Button } from './button';
 
-interface ToggleProps extends Omit<ComponentPropsWithoutRef<'button'>, 'type'> {
-  size: ButtonSize;
+interface ToggleProps
+  extends Omit<ComponentPropsWithoutRef<typeof Button>, 'type'> {
   type?: ButtonType;
-  variant: ButtonVariant;
   isToggled?: boolean;
 }
 

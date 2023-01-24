@@ -106,11 +106,11 @@ const ButtonCombosToDisplay = (args) => (
               >
                 <ButtonContent variant={buttonVariant} />
               </Button>
-              <Text>
+              <Text.Paragraph>
                 {`variant: ${buttonVariant}`} <br />
                 {`size: ${buttonSize}`} <br />
                 {`type: ${buttonType}`}
-              </Text>
+              </Text.Paragraph>
             </div>
           ))}
         </Row>
@@ -124,23 +124,23 @@ const ButtonCombosToDisplay = (args) => (
         <ButtonAsLink href="" {...args}>
           {'Link as Button'}
         </ButtonAsLink>
-        <Text>{'Link as Button'}</Text>
+        <Text.Paragraph>{'Link as Button'}</Text.Paragraph>
       </div>
       <div>
         <Button type={ButtonType.Primary}>
           {'Just a really really long button to ensure edge cases!!!!!'}
         </Button>
-        <Text>{'Edge case: really long'}</Text>
+        <Text.Paragraph>{'Edge case: really long'}</Text.Paragraph>
       </div>
       <div>
         <Button type={ButtonType.Primary}>{'Text'}</Button>
-        <Text>{'Edge case: short'}</Text>
+        <Text.Paragraph>{'Edge case: short'}</Text.Paragraph>
       </div>
       <div>
         <Button disabled {...args}>
           {'Text'}
         </Button>
-        <Text>{'Disabled button'}</Text>
+        <Text.Paragraph>{'Disabled button'}</Text.Paragraph>
       </div>
     </Row>
   </Container>
@@ -173,7 +173,7 @@ const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
             >
               <ButtonContent variant={buttonVariant} />
             </ToggleButton>
-            <Text>
+            <Text.Paragraph>
               {`variant: ${buttonVariant}`} <br />
               {`size: ${buttonSize}`} <br />
               {`is toggled: ${isToggled}`}
@@ -183,7 +183,7 @@ const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
                   {`type: ${type}`}
                 </>
               )}
-            </Text>
+            </Text.Paragraph>
           </div>
         ))}
       </Row>
@@ -212,13 +212,13 @@ export const ToggleButtons = () => {
       <ToggleButtonContainer
         isToggled={isToggled}
         swapToggled={swapToggled}
-        type={ButtonType.Quaternary}
+        type={ButtonType.Quarternary}
       />
       <DarkThemeProvider>
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
-          type={ButtonType.Quaternary}
+          type={ButtonType.Quarternary}
         />
       </DarkThemeProvider>
     </>

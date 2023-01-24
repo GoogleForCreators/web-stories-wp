@@ -263,24 +263,29 @@ const ButtonRectangle = styled.button<ElementProps>`
 const AnchorRectangle = styled.a<ElementProps>`
   ${base} ${anchorBase} ${rectangle}
 `;
-const ButtonCircle = styled.button<ElementProps>`
-  ${base} ${circle}
-`;
-const AnchorCircle = styled.a<ElementProps>`
-  ${base} ${anchorBase}  ${circle}
-`;
+
 const ButtonSquare = styled.button<ElementProps>`
   ${base} ${square}
 `;
 const AnchorSquare = styled.a<ElementProps>`
   ${base} ${anchorBase} ${square}
 `;
+
+// Note that circle extends square
+const ButtonCircle = styled.button<ElementProps>`
+  ${base} ${square} ${circle}
+`;
+const AnchorCircle = styled.a<ElementProps>`
+  ${base} ${anchorBase} ${square} ${circle}
+`;
+
 const ButtonIcon = styled.button<ElementProps>`
   ${base} ${icon}
 `;
 const AnchorIcon = styled.a<ElementProps>`
   ${base} ${anchorBase} ${icon}
 `;
+
 const ButtonLink = styled.button<ElementProps>`
   ${base} ${link}
 `;

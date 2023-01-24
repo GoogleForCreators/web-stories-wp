@@ -106,11 +106,11 @@ export const _default = ({ onMenuItemClick, ...args }) => {
   return (
     <DarkThemeProvider>
       <Container>
-        <Text>
+        <Text.Paragraph>
           {
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus luctus ex eu maximus. Nam cursus nulla massa, vel porta nisi mattis et. Vivamus vitae massa nulla. Sed enim velit, iaculis ut pharetra vitae, sagittis et dui. In sollicitudin lectus vel rhoncus auctor. Morbi pulvinar nisl sed mi fringilla, vitae bibendum felis egestas.'
           }
-        </Text>
+        </Text.Paragraph>
         <DropDown
           emptyText={'No options available'}
           options={basicDropDownOptions}
@@ -128,7 +128,9 @@ export const _default = ({ onMenuItemClick, ...args }) => {
 
 // eslint-disable-next-line react/prop-types
 export const LightTheme = ({ onMenuItemClick, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(
+    basicDropDownOptions[2].value
+  );
 
   return (
     <Container>
