@@ -28,11 +28,11 @@ import { Text } from '../../typography';
 
 export const SelectButton = styled.button<{
   hasError?: boolean;
-  isOpen?: boolean;
+  $isOpen?: boolean;
   selectButtonStylesOverride?: StyleOverride;
   autoHeight?: boolean;
 }>(
-  ({ theme, hasError, isOpen, selectButtonStylesOverride, autoHeight }) => css`
+  ({ theme, hasError, $isOpen, selectButtonStylesOverride, autoHeight }) => css`
     // FIXME: Does the width *need* to be 100%?
     //  This can lead to unexpected styling issues.
     width: 100%;
@@ -44,7 +44,7 @@ export const SelectButton = styled.button<{
     border-radius: ${theme.borders.radius.small};
     background-color: ${theme.colors.opacity.footprint};
     border: 1px solid
-      ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
+      ${theme.colors.border[$isOpen ? 'defaultActive' : 'defaultNormal']};
 
     padding: 8px 12px;
     white-space: nowrap;
@@ -56,7 +56,7 @@ export const SelectButton = styled.button<{
 
     &:hover {
       border-color: ${theme.colors.border[
-        isOpen ? 'defaultActive' : 'defaultHover'
+        $isOpen ? 'defaultActive' : 'defaultHover'
       ]};
     }
 

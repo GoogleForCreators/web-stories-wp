@@ -40,7 +40,7 @@ const Disclosure = styled(ChevronDownSmall)<{
   direction?: Direction;
   disabled?: boolean;
   duration?: number;
-  isOpen?: boolean;
+  $isOpen?: boolean;
 }>`
   height: ${THEME_CONSTANTS.ICON_SIZE}px;
   width: auto;
@@ -48,9 +48,9 @@ const Disclosure = styled(ChevronDownSmall)<{
   color: ${({ disabled, theme }) =>
     disabled ? theme.colors.fg.disable : theme.colors.fg.secondary};
   transition: transform ${({ duration = 0 }) => duration};
-  transform: ${({ direction = 'down', isOpen = false }) => {
+  transform: ${({ direction = 'down', $isOpen = false }) => {
     const [whenClosed, whenOpen] = rotate[direction];
-    return `rotate(${isOpen ? whenOpen : whenClosed}deg);`;
+    return `rotate(${$isOpen ? whenOpen : whenClosed}deg);`;
   }};
 `;
 

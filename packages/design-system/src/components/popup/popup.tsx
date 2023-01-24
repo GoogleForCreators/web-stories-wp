@@ -80,7 +80,7 @@ function Popup({
 
   const [popupState, setPopupState] = useState<{
     offset: Offset;
-    height: number;
+    height: number | null;
   } | null>(null);
   const isMounted = useRef(false);
   const popup = useRef<HTMLDivElement | null>(null);
@@ -111,28 +111,31 @@ function Popup({
             offsetOverride,
           })
         : EMPTY_OFFSET;
-      const {
-        height = 0,
-        x = 0,
-        width = 0,
-        right = 0,
-      } = popup.current?.getBoundingClientRect() || {};
+      const popupRect = popup.current?.getBoundingClientRect();
 
       const updatedXOffset = (): Offset | null => {
+        if (!popupRect) {
+          return null;
+        }
         // When in RTL the popup could render off the left side of the screen. If so, let's update the
-        // offset to keep it inbounds.
-        if (x <= leftOffset) {
+        // offset to keep it inbounds.)
+        if (popupRect.x <= leftOffset) {
           switch (placement) {
             case Placement.BottomEnd:
             case Placement.TopEnd:
-              return { ...offset, x: isRTL ? offset.x : width + leftOffset };
+              return {
+                ...offset,
+                x: isRTL ? offset.x : popupRect.width + leftOffset,
+              };
             case Placement.LeftEnd:
             case Placement.Left:
             case Placement.LeftStart:
               // Left placement shouldn't be used if it renders off the left of the screen in LTR
               return {
                 ...offset,
-                x: isRTL ? offset.x : width + -x - leftOffset,
+                x: isRTL
+                  ? offset.x
+                  : popupRect.width + -popupRect.x - leftOffset,
               };
             case Placement.BottomStart:
             case Placement.TopStart:
@@ -140,23 +143,29 @@ function Popup({
             case Placement.RightStart:
             case Placement.Right:
               // These should only matter in the case of isRTL so we'll need the entire width of the popup as the offset
-              return { ...offset, x: width };
+              return { ...offset, x: popupRect.width };
             default:
-              return { ...offset, x: width / 2 + (isRTL ? 0 : leftOffset) };
+              return {
+                ...offset,
+                x: popupRect.width / 2 + (isRTL ? 0 : leftOffset),
+              };
           }
         }
 
-        if (isRTL && right >= offset.bodyRight - leftOffset) {
+        if (isRTL && popupRect.right >= offset.bodyRight - leftOffset) {
           // maxOffset should keep us inbounds, except in the case of RTL due to the admin-sidebar nav we could use another
           // switch case here to make offset more precise, however the math below will always return the popup fully in screen.
-          return { ...offset, x: offset.bodyRight - width - leftOffset };
+          return {
+            ...offset,
+            x: offset.bodyRight - popupRect.width - leftOffset,
+          };
         }
 
-        return EMPTY_OFFSET;
+        return null;
       };
       setPopupState({
         offset: updatedXOffset() || offset,
-        height,
+        height: popupRect?.height || null,
       });
     },
     [

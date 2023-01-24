@@ -59,7 +59,7 @@ const DropDownSelect = forwardRef(
     return (
       <SelectButton
         aria-haspopup
-        isOpen={isOpen}
+        $isOpen={isOpen}
         disabled={disabled}
         hasError={hasError}
         onClick={onSelectClick}
@@ -78,7 +78,7 @@ const DropDownSelect = forwardRef(
         <Label>
           {dropDownLabel && <LabelText>{dropDownLabel}</LabelText>}
 
-          <Disclosure direction={direction} isOpen={isOpen} />
+          <Disclosure direction={direction} $isOpen={isOpen} />
         </Label>
       </SelectButton>
     );
