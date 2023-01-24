@@ -80,7 +80,7 @@ function IconDisplay({ getStyle = () => {} }) {
           onChange={(evt) => setQuery(evt.target.value)}
         />
       </Text.Label>
-      <Text>{`Matching: ${matchingIcons.length}`}</Text>
+      <Text.Paragraph>{`Matching: ${matchingIcons.length}`}</Text.Paragraph>
 
       <IconsList>
         {matchingIcons.map(({ key, Icon }, index) => {

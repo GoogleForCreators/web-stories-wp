@@ -23,12 +23,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { dark, light } from '../theme/colors';
-import { Headline, Text, TextSize } from '..';
-import { Button, ButtonType } from '../components';
+import { dark, light } from '../colors';
+import { Button, ButtonType, Headline, Text } from '../../components';
+import { TextSize } from '../types';
 
 export default {
-  title: 'DesignSystem/Colors',
+  title: 'DesignSystem/Theme/Colors',
 };
 
 const Row = styled.div`
@@ -82,7 +82,6 @@ export const _default = () => {
     () => (isDarkTheme ? dark : light),
     [isDarkTheme]
   );
-  const { SMALL } = TextSize;
   return (
     <div>
       <FixedButton
@@ -96,7 +95,7 @@ export const _default = () => {
             if (typeof activeTheme[themeSection][sectionValue] === 'object') {
               return (
                 <Row key={`${themeSection} - ${sectionValue}`}>
-                  <Headline as="h3" size={SMALL}>
+                  <Headline as="h3" size={TextSize.Small}>
                     {`${themeSection} - ${sectionValue}`}
                   </Headline>
                   {Object.keys(activeTheme[themeSection][sectionValue]).map(
@@ -113,7 +112,7 @@ export const _default = () => {
                             }
                           />
                           <Text.Paragraph
-                            size={SMALL}
+                            size={TextSize.Small}
                           >{`${themeSection}.${sectionValue}.${nestedSection} (${activeTheme[themeSection][sectionValue][nestedSection]})`}</Text.Paragraph>
                         </Container>
                       );
@@ -127,7 +126,7 @@ export const _default = () => {
               <Container key={`${themeSection}_${sectionValue}`}>
                 <ColorBlock color={activeTheme[themeSection][sectionValue]} />
                 <Text.Paragraph
-                  size={SMALL}
+                  size={TextSize.Small}
                 >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text.Paragraph>
               </Container>
             );

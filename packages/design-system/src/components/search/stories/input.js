@@ -68,12 +68,12 @@ export const _default = (args) => {
   return (
     <>
       <Container>
-        <Text>{'Light Mode'}</Text>
+        <Text.Paragraph>{'Light Mode'}</Text.Paragraph>
         {StorybookInput}
       </Container>
       <DarkThemeProvider>
         <Container>
-          <Text>{'Dark Mode'}</Text>
+          <Text.Paragraph>{'Dark Mode'}</Text.Paragraph>
           {StorybookInput}
         </Container>
       </DarkThemeProvider>

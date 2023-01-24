@@ -77,7 +77,7 @@ export const _default = ({ onHandleChange, ...args }) => {
       <Headline as="h1">{'Switch'}</Headline>
       <Container>
         <div>
-          <Text>{'Normal'}</Text>
+          <Text.Paragraph>{'Normal'}</Text.Paragraph>
           <Switch
             name="radioOne"
             groupLabel="radio one"
@@ -87,7 +87,7 @@ export const _default = ({ onHandleChange, ...args }) => {
           />
         </div>
         <div>
-          <Text>{'Disabled Switch'}</Text>
+          <Text.Paragraph>{'Disabled Switch'}</Text.Paragraph>
           <Switch
             name="radioOneDisabled"
             groupLabel="radio one disabled"
@@ -101,7 +101,7 @@ export const _default = ({ onHandleChange, ...args }) => {
       <DarkThemeProvider>
         <Container>
           <div>
-            <Text>{'Normal'}</Text>
+            <Text.Paragraph>{'Normal'}</Text.Paragraph>
             <Switch
               name="radioTwo"
               groupLabel="radio two"
@@ -111,7 +111,7 @@ export const _default = ({ onHandleChange, ...args }) => {
             />
           </div>
           <div>
-            <Text>{'Disabled Switch'}</Text>
+            <Text.Paragraph>{'Disabled Switch'}</Text.Paragraph>
             <Switch
               name="radioTwoDisabled"
               groupLabel="radio two disabled"

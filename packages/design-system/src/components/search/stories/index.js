@@ -25,7 +25,7 @@ import styled from 'styled-components';
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Placement } from '../../popup';
-import { Search } from '../search';
+import Search from '../search';
 import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
 
 export default {

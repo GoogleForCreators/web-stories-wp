@@ -72,10 +72,10 @@ export const _default = () => (
       </Headline>
       <Row>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'with image'}
-          </Text>
+          </Text.Paragraph>
           <MediaInput
             value={image}
             variant={MediaVariant.Rectangle}
@@ -84,10 +84,10 @@ export const _default = () => (
           />
         </div>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: circle'} <br />
             {'with image'}
-          </Text>
+          </Text.Paragraph>
           <CircleMedia
             value={image}
             variant={MediaVariant.Circle}
@@ -98,10 +98,10 @@ export const _default = () => (
       </Row>
       <Row>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'no edit icon'}
-          </Text>
+          </Text.Paragraph>
           <MediaInput
             value={image}
             canUpload={false}
@@ -111,10 +111,10 @@ export const _default = () => (
           />
         </div>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: circle'} <br />
             {'no edit icon'}
-          </Text>
+          </Text.Paragraph>
           <CircleMedia
             value={image}
             canUpload={false}
@@ -126,10 +126,10 @@ export const _default = () => (
       </Row>
       <Row>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'without image'}
-          </Text>
+          </Text.Paragraph>
           <MediaInput
             value={null}
             variant={MediaVariant.Rectangle}
@@ -138,10 +138,10 @@ export const _default = () => (
           />
         </div>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: circle'} <br />
             {'without image'}
-          </Text>
+          </Text.Paragraph>
           <CircleMedia
             value={null}
             variant={MediaVariant.Circle}
@@ -152,10 +152,10 @@ export const _default = () => (
       </Row>
       <Row>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'no menu'}
-          </Text>
+          </Text.Paragraph>
           <MediaInput
             value={image}
             variant={MediaVariant.Rectangle}
@@ -163,10 +163,10 @@ export const _default = () => (
           />
         </div>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'no menu'}
-          </Text>
+          </Text.Paragraph>
           <CircleMedia
             value={image}
             variant={MediaVariant.Circle}

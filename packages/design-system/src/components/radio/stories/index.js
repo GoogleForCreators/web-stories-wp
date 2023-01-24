@@ -21,7 +21,7 @@ import { useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { Radio } from '../radio';
+import Radio from '../radio';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../typography';
 

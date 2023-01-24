@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { theme } from '../../..';
 import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
-import { SnackbarContainer } from '../snackbarContainer';
+import SnackbarContainer from '../snackbarContainer';
 import { ThumbnailStatus } from '../types';
 import { Button, ButtonType } from '../..';
 

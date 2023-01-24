@@ -43,11 +43,11 @@ export const _default = ({ onClose }) => {
   return (
     <>
       <Headline as="h1">{'Lorem ipsum dolor'}</Headline>
-      <Text>
+      <Text.Paragraph>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
         }
-      </Text>
+      </Text.Paragraph>
       <Button
         size={ButtonSize.Small}
         type={ButtonType.Primary}
@@ -71,11 +71,11 @@ export const _default = ({ onClose }) => {
       >
         <div>
           <Headline as="h2">{'Ut enim ad minim veniam'}</Headline>
-          <Text>
+          <Text.Paragraph>
             {
               'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
             }
-          </Text>
+          </Text.Paragraph>
         </div>
       </Modal>
     </>
@@ -89,11 +89,11 @@ export const OverriddenStyles = ({ onClose }) => {
   return (
     <>
       <Headline as="h1">{'Lorem ipsum dolor'}</Headline>
-      <Text>
+      <Text.Paragraph>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
         }
-      </Text>
+      </Text.Paragraph>
       <Button
         size={ButtonSize.Small}
         type={ButtonType.Primary}
@@ -120,11 +120,11 @@ export const OverriddenStyles = ({ onClose }) => {
       >
         <div>
           <Headline as="h2">{'Ut enim ad minim veniam'}</Headline>
-          <Text>
+          <Text.Paragraph>
             {
               'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
             }
-          </Text>
+          </Text.Paragraph>
         </div>
       </Modal>
     </>
