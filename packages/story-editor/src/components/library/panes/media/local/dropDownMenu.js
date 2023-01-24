@@ -185,8 +185,8 @@ function DropDownMenu({
               <Menu
                 parentId={buttonId}
                 listId={listId}
-                onMenuItemClick={handleCurrentValue}
-                options={options}
+                handleMenuItemSelect={handleCurrentValue}
+                groups={options}
                 onDismissMenu={onClose}
                 hasMenuRole
                 menuStylesOverride={menuStylesOverride}

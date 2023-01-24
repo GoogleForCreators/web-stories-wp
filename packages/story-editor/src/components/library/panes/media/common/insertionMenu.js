@@ -120,9 +120,9 @@ function InsertionMenu({
   const insertLabel = ['image', 'gif'].includes(type)
     ? __('Insert image', 'web-stories')
     : __('Insert video', 'web-stories');
-  const options = [
+  const groups = [
     {
-      group: [
+      options: [
         { label: insertLabel, value: MENU_OPTIONS.INSERT },
         {
           label: __('Add as background', 'web-stories'),
@@ -192,8 +192,8 @@ function InsertionMenu({
             <Menu
               parentId={buttonId}
               listId={listId}
-              onMenuItemClick={handleCurrentValue}
-              options={options}
+              handleMenuItemSelect={handleCurrentValue}
+              groups={groups}
               onDismissMenu={onMenuCancelled}
               hasMenuRole
               menuStylesOverride={menuStylesOverride}
