@@ -38,7 +38,7 @@ jest.mock('../../uploader', () => ({
 const mockAddItem = jest.fn();
 const mockRemoveItem = jest.fn();
 
-jest.mock('../utils/useMediaUploadQueue', () => ({
+jest.mock('../uploadQueue', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     actions: {

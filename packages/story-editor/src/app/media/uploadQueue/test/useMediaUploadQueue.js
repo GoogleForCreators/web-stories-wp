@@ -40,7 +40,7 @@ const getFileWithSleep = () => {
   return new Promise((res) => setTimeout(() => res(file), 10));
 };
 
-jest.mock('../../useFFmpeg', () => ({
+jest.mock('../../utils/useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     isTranscodingEnabled: true,
@@ -54,7 +54,7 @@ jest.mock('../../useFFmpeg', () => ({
   })),
 }));
 
-jest.mock('../../useMediaInfo', () => ({
+jest.mock('../../utils/useMediaInfo', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     isConsideredOptimized: jest.fn(() => Promise.resolve(false)),
@@ -105,7 +105,7 @@ const gifResource = createResource({
   mimeType: 'image/gif',
 });
 
-jest.mock('../../../../uploader', () => ({
+jest.mock('../../../uploader', () => ({
   useUploader: jest.fn(() => ({
     actions: {
       uploadFile: mockUploadFile,

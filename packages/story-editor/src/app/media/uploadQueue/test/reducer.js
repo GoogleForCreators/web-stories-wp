@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { revokeBlob } from '@googleforcreators/media';
+import { revokeBlob, ResourceType } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -41,6 +41,7 @@ import {
 import { ItemStatus } from '../types';
 
 jest.mock('@googleforcreators/media', () => ({
+  ...jest.requireActual('@googleforcreators/media'),
   revokeBlob: jest.fn(),
 }));
 
@@ -253,6 +254,7 @@ describe('useMediaUploadQueue', () => {
           resource: {
             id: 789,
             src: 'bar',
+            type: ResourceType.Video,
             poster: 'new-url',
           },
         },
@@ -268,6 +270,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               id: 789,
               src: 'bar',
+              type: ResourceType.Video,
               poster: 'new-url',
             },
             previousResourceId: 456,
@@ -336,6 +339,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               id: 456,
               foo: 'bar',
+              type: ResourceType.Video,
               poster: 'blob-url',
             },
             state: ItemStatus.Pending,
@@ -349,6 +353,7 @@ describe('useMediaUploadQueue', () => {
           resource: {
             id: 456,
             bar: 'baz',
+            type: ResourceType.Video,
             poster: 'new-url',
           },
         },
@@ -365,6 +370,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               id: 456,
               foo: 'bar',
+              type: ResourceType.Video,
               poster: 'blob-url',
             },
             state: ItemStatus.Pending,
@@ -378,6 +384,7 @@ describe('useMediaUploadQueue', () => {
           resource: {
             id: 456,
             bar: 'baz',
+            type: ResourceType.Video,
           },
         },
       });
@@ -390,6 +397,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               id: 456,
               bar: 'baz',
+              type: ResourceType.Video,
               poster: 'blob-url',
             },
             state: ItemStatus.Uploaded,
@@ -491,6 +499,7 @@ describe('useMediaUploadQueue', () => {
             file: {},
             resource: {},
             state: ItemStatus.Cancelled,
+            error: undefined,
           },
         ],
       });
