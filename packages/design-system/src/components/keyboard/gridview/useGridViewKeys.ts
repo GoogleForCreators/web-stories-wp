@@ -75,7 +75,8 @@ function useGridViewKeys({
             return;
           }
 
-          const index = focusedItemId ? itemIds.indexOf(focusedItemId) : -1;
+          const index =
+            focusedItemId !== null ? itemIds.indexOf(focusedItemId) : -1;
           const nextIndex = index + dir;
           if (nextIndex < 0 || nextIndex === itemIds.length) {
             return;
