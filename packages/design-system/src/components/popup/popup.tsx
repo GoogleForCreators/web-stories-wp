@@ -212,24 +212,27 @@ function Popup({
   }, [popupState, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
-  return popupState && isOpen
-    ? createPortal(
-        <PopupContainer
-          ref={popup}
-          fillWidth={Boolean(fillWidth)}
-          maxWidth={maxWidth}
-          $offset={popupState.offset}
-          topOffset={topOffset}
-          zIndex={zIndex}
-          transforms={getTransforms(placement, isRTL)}
-        >
-          {renderContents
-            ? renderContents({ propagateDimensionChange: positionPopup })
-            : children}
-        </PopupContainer>,
-        document.body
-      )
-    : null;
+  if (!popupState || !isOpen) {
+    return null;
+  }
+
+  const portal = createPortal(
+    <PopupContainer
+      ref={popup}
+      fillWidth={Boolean(fillWidth)}
+      maxWidth={maxWidth}
+      $offset={popupState.offset}
+      topOffset={topOffset}
+      zIndex={zIndex}
+      transforms={getTransforms(placement, isRTL)}
+    >
+      {renderContents
+        ? renderContents({ propagateDimensionChange: positionPopup })
+        : children}
+    </PopupContainer>,
+    document.body
+  );
+  return portal;
 }
 
 export default Popup;
