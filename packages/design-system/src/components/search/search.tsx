@@ -152,8 +152,7 @@ function Search({
   const handleInputChange = useCallback(
     ({ target }: ChangeEvent<HTMLInputElement>) => {
       setInputState(target.value);
-
-      setIsOpen((wasOpen) => target.value.length > 0 && !wasOpen);
+      setIsOpen(target.value.length > 0);
     },
     [setInputState, setIsOpen]
   );
