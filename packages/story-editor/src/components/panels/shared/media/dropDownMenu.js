@@ -142,7 +142,7 @@ CustomItemRenderer.propTypes = {
  * @param {Function} props.onMenuClose Callback for when menu is closed without any selections.
  * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
  * @param {Function} props.setParentActive Sets the parent element active.
- * @param {Array} props.options Menu items.
+ * @param {Array} props.groups Menu items.
  * @param {Object} props.children Children.
  * @param {string} props.ariaLabel ARIA label for the toggle button.
  * @param {string} props.className Class name.
@@ -155,7 +155,7 @@ function DropDownMenu({
   onMenuClose,
   onMenuSelected,
   setParentActive = noop,
-  options,
+  groups,
   children,
   ariaLabel = __('More', 'web-stories'),
   className,
@@ -211,8 +211,8 @@ function DropDownMenu({
             <Menu
               parentId={buttonId}
               listId={listId}
-              onMenuItemClick={onMenuItemClick}
-              options={options}
+              handleMenuItemSelect={onMenuItemClick}
+              groups={groups}
               onDismissMenu={onClose}
               hasMenuRole
               menuStylesOverride={menuStylesOverride}
@@ -233,7 +233,7 @@ DropDownMenu.propTypes = {
   onMenuClose: PropTypes.func.isRequired,
   onMenuSelected: PropTypes.func.isRequired,
   setParentActive: PropTypes.func,
-  options: PropTypes.array,
+  groups: PropTypes.array,
   children: PropTypes.node,
   ariaLabel: PropTypes.string,
   className: PropTypes.string,
