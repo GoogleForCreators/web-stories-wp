@@ -71,11 +71,11 @@ function useGridViewKeys({
         case 'ArrowRight': {
           const dir = getArrowDir(key, 'ArrowRight', 'ArrowLeft', isRTL);
 
-          if (dir === 0 || !focusedItemId) {
+          if (dir === 0) {
             return;
           }
 
-          const index = itemIds.indexOf(focusedItemId);
+          const index = focusedItemId ? itemIds.indexOf(focusedItemId) : -1;
           const nextIndex = index + dir;
           if (nextIndex < 0 || nextIndex === itemIds.length) {
             return;
