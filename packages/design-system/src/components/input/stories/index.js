@@ -23,8 +23,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Input } from '..';
-import { NumericInput } from '../numericInput';
+import Input from '../input';
+import NumericInput from '../numericInput';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline, Text } from '../../..';
 import { AlignCenter } from '../../../icons';
