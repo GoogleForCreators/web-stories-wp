@@ -92,9 +92,9 @@ function DropDownMenu({
   onMenuSelected,
   setParentActive = noop,
 }) {
-  const options = [
+  const groups = [
     {
-      group: [
+      options: [
         {
           label: __('Edit meta data', 'web-stories'),
           value: MENU_OPTIONS.EDIT,
@@ -186,7 +186,7 @@ function DropDownMenu({
                 parentId={buttonId}
                 listId={listId}
                 handleMenuItemSelect={handleCurrentValue}
-                groups={options}
+                groups={groups}
                 onDismissMenu={onClose}
                 hasMenuRole
                 menuStylesOverride={menuStylesOverride}
