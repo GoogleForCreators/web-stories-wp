@@ -104,16 +104,17 @@ function StickerPreview({ stickerType, index }) {
   const makeActive = () => setIsActive(true);
   const makeInactive = () => setIsActive(false);
 
+  const onClick = () =>
+    insertElement('sticker', {
+      width: DEFAULT_ELEMENT_WIDTH,
+      sticker: { type: stickerType },
+    });
+
   const Svg = sticker.svg;
   return (
     <StickerButton
       data-testid={`library-sticker-${stickerType}`}
-      onClick={() =>
-        insertElement('sticker', {
-          width: DEFAULT_ELEMENT_WIDTH,
-          sticker: { type: stickerType },
-        })
-      }
+      onClick={onClick}
       tabIndex={index === 0 ? 0 : -1}
       onPointerEnter={makeActive}
       onFocus={makeActive}
@@ -132,6 +133,7 @@ function StickerPreview({ stickerType, index }) {
           type={'sticker'}
           elementProps={stickerData}
           cloneElement={StickerClone}
+          onClick={onClick}
           cloneProps={{
             width: dataToEditorX(
               DEFAULT_ELEMENT_WIDTH * (aspectRatio < 1 ? aspectRatio : 1)
