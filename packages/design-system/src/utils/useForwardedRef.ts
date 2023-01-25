@@ -17,23 +17,31 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect } from '@googleforcreators/react';
+import { useRef } from '@googleforcreators/react';
+import type { RefObject } from 'react';
 
 function useForwardedRef<T>(ref: React.ForwardedRef<T>) {
-  const innerRef = useRef<T>(null);
+  const wrappedRef = useRef<{ current: T | null }>({ current: null });
+  const reference = useRef<T | null>(null);
 
-  useEffect(() => {
-    if (!ref) {
-      return;
-    }
-    if (typeof ref === 'function') {
-      ref(innerRef.current);
-    } else {
-      ref.current = innerRef.current;
-    }
+  Object.defineProperty(wrappedRef.current, 'current', {
+    get: () => reference.current,
+    set: (value: T | null) => {
+      if (!Object.is(reference.current, value)) {
+        reference.current = value;
+        if (!ref) {
+          return;
+        }
+        if (typeof ref === 'function') {
+          ref(reference.current);
+        } else {
+          ref.current = reference.current;
+        }
+      }
+    },
   });
 
-  return innerRef;
+  return wrappedRef.current as RefObject<T>;
 }
 
 export default useForwardedRef;
