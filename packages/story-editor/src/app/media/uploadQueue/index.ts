@@ -39,7 +39,6 @@ import type {
 } from '@googleforcreators/media';
 import {
   createBlob,
-  getFileBasename,
   getImageDimensions,
   ResourceType,
 } from '@googleforcreators/media';
@@ -450,13 +449,11 @@ function useMediaUploadQueue() {
       }
       if (newResource.type === ResourceType.Video && posterFile) {
         try {
-          const posterFileName = getFileBasename(posterFile);
           const { poster, posterId }: { poster: string; posterId: string } =
-            (await uploadVideoPoster(
-              newResource.id,
-              posterFileName,
-              posterFile
-            )) as { poster: string; posterId: string };
+            (await uploadVideoPoster(newResource.id, posterFile)) as {
+              poster: string;
+              posterId: string;
+            };
 
           if (!isMounted.current) {
             return;

@@ -56,6 +56,7 @@ export type AdditionalData = {
   baseColor?: string;
   blurHash?: string;
   batchId?: string;
+  mediaId?: ResourceId;
 };
 
 export type QueueItem = {

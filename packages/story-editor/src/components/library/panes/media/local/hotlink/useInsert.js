@@ -25,6 +25,7 @@ import {
   preloadVideo,
   hasVideoGotAudio,
   getExtensionsFromMimeType,
+  blobToFile,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
@@ -41,6 +42,7 @@ import {
 } from '../../../../../../app/media/utils';
 import { useConfig } from '../../../../../../app/config';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
+import { MEDIA_POSTER_IMAGE_MIME_TYPE } from '../../../../../../constants';
 
 const eventName = 'hotlink_media';
 
@@ -131,12 +133,13 @@ function useInsert() {
                 originalFileName.replace(`.${ext}`, '')
               );
 
-              const posterFile = await getImageFromVideo(video);
-              const posterData = await uploadVideoPoster(
-                0,
+              const blob = await getImageFromVideo(video);
+              const posterFile = blobToFile(
+                blob,
                 fileName,
-                posterFile
+                MEDIA_POSTER_IMAGE_MIME_TYPE
               );
+              const posterData = await uploadVideoPoster(0, posterFile);
 
               resourceLike.poster = posterData.poster;
               resourceLike.posterId = posterData.posterId;

@@ -24,6 +24,7 @@ import {
   getFirstFrameOfVideo,
   getFileNameFromUrl,
   getFileBasename,
+  blobToFile,
 } from '@googleforcreators/media';
 import type { ResourceId } from '@googleforcreators/media';
 /**
@@ -33,6 +34,7 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
+import { MEDIA_POSTER_IMAGE_MIME_TYPE } from '../../../constants';
 import getPosterName from './getPosterName';
 
 interface UseUploadVideoFrameProps {
@@ -68,26 +70,13 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
     /**
      *
      * @param id Video ID.
-     * @param fileName File name.
      * @param posterFile File object.
      * @return Poster information.
      */
-    async (
-      id: ResourceId,
-      fileName: string,
-      posterFile: File | Blob | null
-    ) => {
+    async (id: ResourceId, posterFile: File | null) => {
       // TODO: Make param mandatory; don't allow calling without.
       if (!posterFile) {
         return {};
-      }
-      // if blob given change name of file.
-      if (posterFile.name) {
-        posterFile = new File(
-          [posterFile.slice(0, posterFile.size)],
-          fileName,
-          { type: posterFile.type }
-        );
       }
 
       const resource = await uploadFile(posterFile, {
@@ -140,9 +129,12 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
         const fileName = getPosterName(
           getFileBasename({ name: originalFileName })
         );
-        const obj = await getFirstFrameOfVideo(src);
+        const blob = await getFirstFrameOfVideo(src);
+        const posterFile = blob
+          ? blobToFile(blob, fileName, MEDIA_POSTER_IMAGE_MIME_TYPE)
+          : null;
         const { posterId, poster, posterWidth, posterHeight } =
-          await uploadVideoPoster(id, fileName, obj);
+          await uploadVideoPoster(id, posterFile);
 
         // Overwrite the original video dimensions. The poster reupload has more
         // accurate dimensions of the video that includes orientation changes.
