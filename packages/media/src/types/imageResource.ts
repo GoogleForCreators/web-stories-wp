@@ -22,5 +22,4 @@ import type { Resource } from './resource';
 
 export interface ImageResource extends Resource {
   type: ResourceType.Image;
-
 }

@@ -23,7 +23,6 @@ import {
   getFileBasename,
   getExtensionsFromMimeType,
 } from '@googleforcreators/media';
-import type{ Resource } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -31,9 +30,18 @@ import type{ Resource } from '@googleforcreators/media';
 import { useAPI } from '../api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
+import type { AdditionalData } from '../media/uploadQueue/types';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
 
-const bytesToMB = (bytes: number) => String( Math.round(bytes / Math.pow(1024, 2)) );
+interface ValidateFileForUploadProps {
+  file: File;
+  canTranscodeFile?: boolean;
+  isFileTooLarge?: boolean;
+  overrideAllowedMimeTypes: string[];
+}
+
+const bytesToMB = (bytes: number) =>
+  String(Math.round(bytes / Math.pow(1024, 2)));
 
 function useUploader() {
   const {
@@ -81,7 +89,7 @@ function useUploader() {
       canTranscodeFile,
       isFileTooLarge,
       overrideAllowedMimeTypes = allowedMimeTypes,
-    } : {file: File, canTranscodeFile?: boolean; isFileTooLarge?: boolean, overrideAllowedMimeTypes: string[]}) => {
+    }: ValidateFileForUploadProps) => {
       // Bail early if user doesn't have upload capabilities.
       if (!hasUploadMediaAction) {
         const message = __(
@@ -106,8 +114,8 @@ function useUploader() {
           throw createError('SizeError', file.name, message);
         }
 
-        const isValidType = (file: File) =>
-          overrideAllowedMimeTypes.includes(file.type);
+        const isValidType = (currentFile: File) =>
+          overrideAllowedMimeTypes.includes(currentFile.type);
         // TODO: Move this check to useUploadMedia?
         if (!isValidType(file)) {
           let message = __(
@@ -156,14 +164,14 @@ function useUploader() {
    */
   const uploadFile = useCallback(
     (
-      file,
-      additionalData = {},
-      overrideAllowedMimeTypes = allowedMimeTypes
+      file: File,
+      additionalData: AdditionalData = {},
+      overrideAllowedMimeTypes: string[] = allowedMimeTypes
     ) => {
       // This will throw if the file cannot be uploaded.
       validateFileForUpload({ file, overrideAllowedMimeTypes });
 
-      if(!uploadMedia){
+      if (!uploadMedia) {
         throw createError('UploadError', file.name, '');
       }
       const _additionalData = {
@@ -173,7 +181,7 @@ function useUploader() {
         ...additionalData,
       };
 
-      return uploadMedia(file, _additionalData) as Promise<Resource>;
+      return uploadMedia(file, _additionalData);
     },
     [allowedMimeTypes, validateFileForUpload, storyId, uploadMedia]
   );

@@ -52,7 +52,12 @@ function createResource({
   trimData,
   needsProxy = false,
   ...rest
-}: ResourceInput): Resource | ImageResource | VideoResource | GifResource | AudioResource {
+}: ResourceInput):
+  | Resource
+  | ImageResource
+  | VideoResource
+  | GifResource
+  | AudioResource {
   type = type || getTypeFromMime(mimeType);
   const resource: Resource = {
     type,
