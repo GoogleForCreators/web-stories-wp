@@ -34,6 +34,12 @@ const _FocusTrapButton = styled(Button).attrs({ type: ButtonType.Primary })`
   margin: 0;
   padding: 0;
   min-width: inherit;
+
+  :hover,
+  :focus {
+    background-color: transparent;
+  }
+
   ${({ styleOverride }) =>
     css`
       ${styleOverride}
