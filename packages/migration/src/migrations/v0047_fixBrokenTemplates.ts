@@ -47,7 +47,7 @@ function fixBrokenPage({ elements, animations, ...rest }: PageV46): PageV47 {
     elements: fixElementOrder(elements),
     ...(animations
       ? {
-          animations: (animations as AnimationV0[]).filter((animation) =>
+          animations: animations.filter((animation) =>
             removeBrokenAnimation(animation, elementIds)
           ),
         }
