@@ -153,7 +153,7 @@ const TextArea = forwardRef(
       onFocus,
       value,
       showCount = false,
-      maxLength = 0,
+      maxLength,
       isIndeterminate = false,
       containerStyleOverride = '',
       ...props
@@ -162,7 +162,8 @@ const TextArea = forwardRef(
   ) => {
     const textAreaId = useMemo(() => id || uuidv4(), [id]);
 
-    const hasCounter = showCount && maxLength > 0;
+    const hasCounter =
+      showCount && typeof maxLength === 'number' && maxLength > 0;
 
     const [isFocused, setIsFocused] = useState(false);
     const [hasBeenSelected, setHasBeenSelected] = useState(false);

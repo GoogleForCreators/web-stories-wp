@@ -102,7 +102,7 @@ const MainStoryInfo = () => {
   return (
     <>
       <FormSection>
-        <Headline as="label" size={TextSize.XXSmall} htmlFor={INPUT_KEYS.TITLE}>
+        <Headline as="label" size={TextSize.XXSmall} htmlFor="story-title">
           {__('Story Title', 'web-stories')}
         </Headline>
         <_TextArea
@@ -117,11 +117,7 @@ const MainStoryInfo = () => {
         />
       </FormSection>
       <FormSection>
-        <Headline
-          as="label"
-          size={TextSize.XXSmall}
-          htmlFor={INPUT_KEYS.EXCERPT}
-        >
+        <Headline as="label" size={TextSize.XXSmall} htmlFor="story-excerpt">
           {__('Story Description', 'web-stories')}
         </Headline>
         <_TextArea
