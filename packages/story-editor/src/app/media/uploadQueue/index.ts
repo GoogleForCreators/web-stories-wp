@@ -252,8 +252,6 @@ function useMediaUploadQueue() {
           // Cancel uploading if there were any errors.
           cancelUploading({ id, error });
           void trackError('upload_media', error.message);
-        } else {
-          cancelUploading({ id });
         }
       } finally {
         currentTranscodingItem.current = null;
@@ -290,8 +288,6 @@ function useMediaUploadQueue() {
           // Cancel uploading if there were any errors.
           cancelUploading({ id, error });
           void trackError('upload_media', error.message);
-        } else {
-          cancelUploading({ id });
         }
       } finally {
         currentTranscodingItem.current = null;
@@ -322,8 +318,6 @@ function useMediaUploadQueue() {
           // Cancel uploading if there were any errors.
           cancelUploading({ id, error });
           void trackError('upload_media', error.message);
-        } else {
-          cancelUploading({ id });
         }
       } finally {
         currentTranscodingItem.current = null;
@@ -358,8 +352,6 @@ function useMediaUploadQueue() {
           // Cancel uploading if there were any errors.
           cancelUploading({ id, error });
           void trackError('upload_media', error.message);
-        } else {
-          cancelUploading({ id });
         }
       } finally {
         currentTranscodingItem.current = null;
@@ -401,8 +393,6 @@ function useMediaUploadQueue() {
           // Cancel uploading if there were any errors.
           cancelUploading({ id, error });
           void trackError('upload_media', error.message);
-        } else {
-          cancelUploading({ id });
         }
       } finally {
         currentTranscodingItem.current = null;
@@ -529,8 +519,6 @@ function useMediaUploadQueue() {
           // Cancel uploading if there were any errors.
           cancelUploading({ id, error });
           void trackError('upload_media', error.message);
-        } else {
-          cancelUploading({ id });
         }
       } finally {
         trackTiming();
