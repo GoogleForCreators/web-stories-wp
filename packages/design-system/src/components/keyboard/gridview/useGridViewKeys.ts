@@ -65,7 +65,10 @@ function useGridViewKeys({
   useKeyDownEffect(
     containerRef,
     { key: ['up', 'down', 'left', 'right'] },
-    ({ key }: KeyboardEvent) => {
+    ({ key, ctrlKey }: KeyboardEvent) => {
+      if (ctrlKey) {
+        return;
+      }
       switch (key) {
         case 'ArrowLeft':
         case 'ArrowRight': {
@@ -91,12 +94,13 @@ function useGridViewKeys({
         }
         case 'ArrowUp':
         case 'ArrowDown': {
-          if (!gridRef.current || !focusedItemId) {
+          if (!gridRef.current) {
             return;
           }
           const { rows: numRows, columns: numColumns } =
             getGridColumnAndRowCount(gridRef.current, itemIds.length);
-          const currentIndex = itemIds.indexOf(focusedItemId);
+          const currentIndex =
+            focusedItemId !== null ? itemIds.indexOf(focusedItemId) : -1;
           const dir = key === 'ArrowDown' ? 1 : -1;
 
           const currentRow = getRow(currentIndex, numColumns);
@@ -143,11 +147,12 @@ function useGridViewKeys({
         case 'ArrowRight': {
           const dir = getArrowDir(key, 'ArrowRight', 'ArrowLeft', isRTL);
 
-          if (dir === 0 || !focusedItemId) {
+          if (dir === 0) {
             return;
           }
 
-          const currentIndex = itemIds.indexOf(focusedItemId);
+          const currentIndex =
+            focusedItemId !== null ? itemIds.indexOf(focusedItemId) : -1;
           nextIndex = currentIndex;
 
           // If the user is pressing shift, jump to the beginning/end
@@ -166,12 +171,13 @@ function useGridViewKeys({
         }
         case 'ArrowUp':
         case 'ArrowDown': {
-          if (!gridRef.current || !focusedItemId) {
+          if (!gridRef.current) {
             return;
           }
           const { rows: numRows, columns: numColumns } =
             getGridColumnAndRowCount(gridRef.current, itemIds.length);
-          const currentIndex = itemIds.indexOf(focusedItemId);
+          const currentIndex =
+            focusedItemId !== null ? itemIds.indexOf(focusedItemId) : -1;
           const dir = key === 'ArrowDown' ? 1 : -1;
 
           const currentRow = getRow(currentIndex, numColumns);
