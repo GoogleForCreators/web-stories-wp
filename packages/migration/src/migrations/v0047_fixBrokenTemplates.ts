@@ -44,7 +44,7 @@ function fixBrokenPage({ elements, animations, ...rest }: PageV46): PageV47 {
   const elementIds = elements.map(({ id }) => id);
 
   return {
-    elements: fixElementOrder(elements),
+    elements: fixElementOrder(elements.concat()),
     ...(animations
       ? {
           animations: animations.filter((animation) =>
