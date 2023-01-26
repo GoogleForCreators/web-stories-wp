@@ -29,21 +29,23 @@ import { ResourceType, revokeBlob } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import type { AdditionalData, QueueItem, QueueState } from './types';
-/**
- * Internal dependencies
- */
+import type {
+  AdditionalData,
+  QueueItem,
+  QueueState,
+  QueueItemId,
+} from './types';
 import { ItemStatus } from './types';
 
-interface IdInterface {
+interface BaseReducerProps {
   payload: {
-    id: string;
+    id: QueueItemId;
   };
 }
 
 interface ReplacePlaceholderResourceProps {
   payload: {
-    id: string;
+    id: QueueItemId;
     resource: ImageResource | VideoResource | GifResource | AudioResource;
     posterFile: File | null;
   };
@@ -51,7 +53,7 @@ interface ReplacePlaceholderResourceProps {
 
 interface FinishTrimmingProps {
   payload: {
-    id: string;
+    id: QueueItemId;
     file: File;
     additionalData: AdditionalData;
   };
@@ -59,7 +61,7 @@ interface FinishTrimmingProps {
 
 interface FinishCroppingProps {
   payload: {
-    id: string;
+    id: QueueItemId;
     file: File;
     posterFile?: File;
     additionalData: AdditionalData;
@@ -68,7 +70,7 @@ interface FinishCroppingProps {
 
 interface FinishMutingProps {
   payload: {
-    id: string;
+    id: QueueItemId;
     file: File;
     additionalData: AdditionalData;
   };
@@ -76,7 +78,7 @@ interface FinishMutingProps {
 
 interface FinishTranscodingProps {
   payload: {
-    id: string;
+    id: QueueItemId;
     file: File;
     additionalData: AdditionalData;
   };
@@ -84,7 +86,7 @@ interface FinishTranscodingProps {
 
 interface FinishUploadingProps {
   payload: {
-    id: string;
+    id: QueueItemId;
     resource: ImageResource | VideoResource | GifResource | AudioResource;
   };
 }
@@ -95,7 +97,7 @@ interface AddItemProps {
 
 interface CancelUploadingProps {
   payload: {
-    id: string;
+    id: QueueItemId;
     error?: Error;
   };
 }
@@ -203,7 +205,7 @@ export function addItem(
  */
 export function prepareItem(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   return {
     ...state,
@@ -229,7 +231,7 @@ export function prepareItem(
  */
 export function prepareForTranscoding(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   return {
     ...state,
@@ -255,7 +257,7 @@ export function prepareForTranscoding(
  */
 export function startUploading(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   return {
     ...state,
@@ -374,7 +376,7 @@ export function cancelUploading(
  */
 export function startTranscoding(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   return {
     ...state,
@@ -437,7 +439,7 @@ export function finishTranscoding(
  */
 export function startMuting(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   return {
     ...state,
@@ -500,7 +502,7 @@ export function finishMuting(
  */
 export function startCropping(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   return {
     ...state,
@@ -563,7 +565,7 @@ export function finishCropping(
  */
 export function startTrimming(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   return {
     ...state,
@@ -674,7 +676,7 @@ export function replacePlaceholderResource(
  */
 export function finishItem(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   return {
     ...state,
@@ -700,7 +702,7 @@ export function finishItem(
  */
 export function removeItem(
   state: QueueState,
-  { payload: { id } }: IdInterface
+  { payload: { id } }: BaseReducerProps
 ) {
   const newQueue = state.queue.filter((item: QueueItem) => item.id !== id);
   return {

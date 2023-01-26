@@ -22,6 +22,7 @@ import type {
   GifResource,
   AudioResource,
   ResourceId,
+  Resource,
   TrimData,
 } from '@googleforcreators/media';
 import type { ElementId } from '@googleforcreators/elements';
@@ -49,18 +50,22 @@ export enum ItemStatus {
   Finished = 'FINISHED',
 }
 
+export type BatchId = string;
+
 export type AdditionalData = {
   isMuted?: boolean;
   cropParams?: CropParams;
   mediaSource?: string;
   baseColor?: string;
   blurHash?: string;
-  batchId?: string;
+  batchId?: BatchId;
   mediaId?: ResourceId;
 };
 
+export type QueueItemId = string;
+
 export type QueueItem = {
-  id: string;
+  id: QueueItemId;
   resource: ImageResource | VideoResource | GifResource | AudioResource;
   originalResourceId?: ResourceId | null;
   previousResourceId?: ResourceId;
@@ -68,10 +73,14 @@ export type QueueItem = {
 
   file: File;
   posterFile?: File | null;
-  onUploadStart?: () => void;
-  onUploadProgress?: () => void;
-  onUploadError?: () => void;
-  onUploadSuccess?: () => void;
+  onUploadStart?: (args: { resource: Resource }) => void;
+  onUploadProgress?: (args: { resource: Resource; id: ResourceId }) => void;
+  onUploadError?: (args: { id: ResourceId }) => void;
+  onUploadSuccess?: (args: {
+    resource: Resource;
+    id: ResourceId;
+    batchPosition: number;
+  }) => void;
 
   additionalData: AdditionalData;
   elementId: ElementId;

@@ -54,7 +54,7 @@ import useFFmpeg from '../utils/useFFmpeg';
 import useMediaInfo from '../utils/useMediaInfo';
 import getResourceFromLocalFile from '../utils/getResourceFromLocalFile';
 import * as reducer from './reducer';
-import type { QueueItem, QueueState } from './types';
+import type { BatchId, QueueItem, QueueState } from './types';
 import { ItemStatus } from './types';
 
 const initialState: QueueState = {
@@ -946,7 +946,7 @@ function useMediaUploadQueue() {
      * @param batchId Resource batchId.
      * @return Whether the batch of resources is uploading.
      */
-    const isBatchUploading = (batchId: string) => {
+    const isBatchUploading = (batchId: BatchId) => {
       return state.queue.some(
         (item: QueueItem) => item.additionalData?.batchId === batchId
       );
