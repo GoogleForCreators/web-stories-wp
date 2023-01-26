@@ -43,7 +43,7 @@ const StyledContainer = styled.div`
   margin-bottom: 33px;
   display: flex;
   flex-direction: column;
-  align-items: ${({ alignItems }) => alignItems};
+  align-items: ${({ alignItems = 'center' }) => alignItems};
   width: 100%;
   z-index: 2147483647;
   pointer-events: none;
@@ -71,9 +71,6 @@ function getSnackbarXPos({ placement }) {
 
 StyledContainer.propTypes = {
   alignItems: PropTypes.string,
-};
-StyledContainer.defaultProps = {
-  alignItems: 'center',
 };
 
 const ChildContainer = styled.div`

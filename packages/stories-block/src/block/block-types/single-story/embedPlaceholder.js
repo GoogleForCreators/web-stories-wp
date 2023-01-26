@@ -37,7 +37,7 @@ const EmbedPlaceholder = ({
   label,
   value,
   onSubmit,
-  cannotEmbed,
+  cannotEmbed = false,
   errorMessage,
   selectedStories = [],
   setSelectedStories,
@@ -144,10 +144,6 @@ EmbedPlaceholder.propTypes = {
   errorMessage: PropTypes.string,
   selectedStories: PropTypes.array,
   setSelectedStories: PropTypes.func,
-};
-
-EmbedPlaceholder.defaultProps = {
-  cannotEmbed: false,
 };
 
 export default EmbedPlaceholder;

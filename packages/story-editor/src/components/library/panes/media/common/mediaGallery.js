@@ -60,7 +60,7 @@ function MediaGallery({
   uploadingResources = [],
   onInsert,
   providerType,
-  canEditMedia,
+  canEditMedia = false,
 }) {
   // Use different key for uploading vs. uploaded items to avoid confusions.
   const photos = [
@@ -127,9 +127,4 @@ MediaGallery.propTypes = {
   providerType: PropTypes.string.isRequired,
   canEditMedia: PropTypes.bool,
 };
-
-MediaGallery.defaultProps = {
-  canEditMedia: false,
-};
-
 export default MediaGallery;
