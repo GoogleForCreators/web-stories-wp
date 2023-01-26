@@ -24,6 +24,8 @@ import {
   useState,
   lazy,
   Suspense,
+  createContext,
+  useContext,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -130,15 +132,8 @@ const Opacity = styled.div`
   width: ${OPACITY_WIDTH}px;
 `;
 
-function CurrentColorPicker({
-  rgb,
-  hsl,
-  hsv,
-  hex,
-  onChange,
-  showOpacity = true,
-  hasEyedropper,
-}) {
+function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
+  const [showOpacity, hasEyedropper] = useContext(CurrentColorPickerContext);
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
@@ -253,17 +248,17 @@ function CurrentColorPicker({
 
 CurrentColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
-  showOpacity: PropTypes.bool,
   rgb: PropTypes.object,
   hex: PropTypes.string,
   hsl: PropTypes.object,
   hsv: PropTypes.object,
-  hasEyedropper: PropTypes.bool,
 };
+
+const CurrentColorPickerContext = createContext([false, false]);
 
 const DynamicImportWrapper = () => {
   return (...args) => {
-    function DynamicFetcher(props) {
+    function DynamicFetcher({ showOpacity, hasEyedropper, ...props }) {
       const isMounted = useRef(false);
       const [Picker, setPicker] = useState(null);
 
@@ -285,13 +280,21 @@ const DynamicImportWrapper = () => {
       }, []);
 
       return Picker ? (
-        <Picker.component {...props} />
+        <CurrentColorPickerContext.Provider
+          value={[showOpacity, hasEyedropper]}
+        >
+          <Picker.component {...props} />
+        </CurrentColorPickerContext.Provider>
       ) : (
         <BodyFallback>
           <CircularProgress />
         </BodyFallback>
       );
     }
+    DynamicFetcher.propTypes = {
+      showOpacity: PropTypes.bool.isRequired,
+      hasEyedropper: PropTypes.bool.isRequired,
+    };
     return DynamicFetcher;
   };
 };
