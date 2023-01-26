@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /*
  * Copyright 2021 Google LLC
  *
@@ -21,6 +24,7 @@ use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\HTML;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Post;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Output_Buffer
@@ -40,14 +44,6 @@ class Output_Buffer extends DependencyInjectedTestCase {
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
 		parent::tear_down();
-	}
-
-	protected function prepare_response( $post ): string {
-		$instance = $this->injector->make( \Google\Web_Stories\AMP\Output_Buffer::class );
-		$story    = new Story();
-		$story->load_from_post( $post );
-
-		return $instance->prepare_response( ( new HTML( $story ) )->render() );
 	}
 
 	/**
@@ -80,7 +76,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->go_to( get_permalink( $post ) );
+		$this->go_to( (string) get_permalink( $post ) );
 
 		$name = get_bloginfo( 'name' );
 
@@ -104,16 +100,20 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
+
 		add_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, $attachment_id );
 
-		$this->go_to( get_permalink( $post ) );
+		$this->go_to( (string) get_permalink( $post ) );
 
 		$logo = wp_get_attachment_url( $attachment_id );
 		$name = get_bloginfo( 'name' );
 
 		$actual = $this->prepare_response( $post );
 
+		$this->assertNotFalse( $logo );
 		$this->assertStringContainsString( 'publisher-logo-src="http', $actual );
 		$this->assertStringContainsString( $name, $actual );
 		$this->assertStringContainsString( $logo, $actual );
@@ -139,7 +139,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->go_to( get_permalink( $post ) );
+		$this->go_to( (string) get_permalink( $post ) );
 
 		$actual = $this->prepare_response( $post );
 
@@ -151,7 +151,9 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
 	 */
 	public function test_add_poster_images(): void {
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
 
 		$post = self::factory()->post->create_and_get(
 			[
@@ -160,7 +162,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->go_to( get_permalink( $post ) );
+		$this->go_to( (string) get_permalink( $post ) );
 
 		set_post_thumbnail( $post->ID, $attachment_id );
 
@@ -173,7 +175,9 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
 	public function test_add_poster_images_overrides_existing_poster(): void {
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
 
 		$post = self::factory()->post->create_and_get(
 			[
@@ -182,7 +186,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->go_to( get_permalink( $post ) );
+		$this->go_to( (string) get_permalink( $post ) );
 
 		set_post_thumbnail( $post->ID, $attachment_id );
 
@@ -190,7 +194,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 
 		$this->assertStringNotContainsString( 'https://example.com/poster.jpg', $actual );
 		$this->assertStringContainsString( 'poster-portrait-src=', $actual );
-		$this->assertStringContainsString( wp_get_attachment_url( $attachment_id ), $actual );
+		$this->assertStringContainsString( (string) wp_get_attachment_url( $attachment_id ), $actual );
 		$this->assertStringNotContainsString( 'poster-portrait-src=""', $actual );
 	}
 
@@ -205,7 +209,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->go_to( get_permalink( $post ) );
+		$this->go_to( (string) get_permalink( $post ) );
 
 		$actual = $this->prepare_response( $post );
 
@@ -223,10 +227,18 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->go_to( get_permalink( $post ) );
+		$this->go_to( (string) get_permalink( $post ) );
 
 		$actual = $this->prepare_response( $post );
 
 		$this->assertStringContainsString( 'amp=', $actual );
+	}
+
+	protected function prepare_response( WP_Post $post ): string {
+		$instance = $this->injector->make( \Google\Web_Stories\AMP\Output_Buffer::class );
+		$story    = new Story();
+		$story->load_from_post( $post );
+
+		return $instance->prepare_response( ( new HTML( $story ) )->render() );
 	}
 }

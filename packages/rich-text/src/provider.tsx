@@ -43,7 +43,7 @@ import customImport from './customImport';
 import customExport from './customExport';
 import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
-import type { State } from './types';
+import type { EditingState, State } from './types';
 
 const INITIAL_SELECTION_INFO = {
   isBold: false,
@@ -51,13 +51,6 @@ const INITIAL_SELECTION_INFO = {
   isUnderline: false,
   isUppercase: false,
 };
-
-interface EditingState {
-  hasEditMenu?: boolean;
-  showOverflow?: boolean;
-  selectAll?: boolean;
-  offset?: number;
-}
 
 export interface RichTextProviderProps {
   children: ReactNode;

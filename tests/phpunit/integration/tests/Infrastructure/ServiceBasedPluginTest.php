@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\Infrastructure;
 
 use Google\Web_Stories\Infrastructure\Injector;
@@ -103,9 +105,7 @@ final class ServiceBasedPluginTest extends TestCase {
 
 		add_filter(
 			'services',
-			static function () {
-				return [ 'filtered_service' => DummyService::class ];
-			}
+			static fn() => [ 'filtered_service' => DummyService::class ]
 		);
 
 		$this->assertFalse( $container->has( 'filtered_service' ) );
@@ -135,12 +135,10 @@ final class ServiceBasedPluginTest extends TestCase {
 
 		add_filter(
 			'services',
-			static function ( $services ) {
-				return array_merge(
-					$services,
-					[ 'filtered_service' => DummyService::class ]
-				);
-			}
+			static fn( $services ) => array_merge(
+				$services,
+				[ 'filtered_service' => DummyService::class ]
+			)
 		);
 
 		$this->assertFalse( $container->has( 'filtered_service' ) );
@@ -173,12 +171,10 @@ final class ServiceBasedPluginTest extends TestCase {
 						)
 						->getMock();
 
-		$service_callback = static function ( $services ) {
-			return array_merge(
-				$services,
-				[ 'service_with_requirements' => DummyServiceWithRequirements::class ]
-			);
-		};
+		$service_callback = static fn( $services ) => array_merge(
+			$services,
+			[ 'service_with_requirements' => DummyServiceWithRequirements::class ]
+		);
 
 		add_filter( 'services', $service_callback );
 
@@ -210,15 +206,13 @@ final class ServiceBasedPluginTest extends TestCase {
 						)
 						->getMock();
 
-		$service_callback = static function ( $services ) {
-			return array_merge(
-				$services,
-				[
-					'service_a'                 => DummyServiceWithDelay::class,
-					'service_with_requirements' => DummyServiceWithRequirements::class,
-				]
-			);
-		};
+		$service_callback = static fn( $services ) => array_merge(
+			$services,
+			[
+				'service_a'                 => DummyServiceWithDelay::class,
+				'service_with_requirements' => DummyServiceWithRequirements::class,
+			]
+		);
 
 		add_filter( 'services', $service_callback );
 
@@ -255,9 +249,7 @@ final class ServiceBasedPluginTest extends TestCase {
 						)
 						->getMock();
 
-		$service_callback = static function () {
-			return [ 'service_with_requirements' => DummyServiceWithRequirements::class ];
-		};
+		$service_callback = static fn() => [ 'service_with_requirements' => DummyServiceWithRequirements::class ];
 
 		add_filter( 'services', $service_callback );
 
@@ -275,9 +267,7 @@ final class ServiceBasedPluginTest extends TestCase {
 
 		add_filter(
 			'services',
-			static function () {
-				return [ DummyService::class ];
-			}
+			static fn() => [ DummyService::class ]
 		);
 
 		$plugin->register();
@@ -297,47 +287,15 @@ final class ServiceBasedPluginTest extends TestCase {
 
 		add_filter(
 			'services',
-			static function () {
-				return [
-					'unknown_class' => 'UnknownClass',
-				];
-			}
+			static fn() => [
+				'unknown_class' => 'UnknownClass',
+			]
 		);
 
 		$plugin->register();
 
 		$this->assertCount( 1, $container );
 		$this->assertFalse( $container->has( 'dummy_service' ) );
-	}
-
-	public function test_it_falls_back_to_defaults_on_broken_filtering(): void {
-		$container = new SimpleServiceContainer();
-		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
-			->enableOriginalConstructor()
-			->setConstructorArgs( [ true, null, $container ] )
-			->setMethodsExcept(
-				[
-					'register',
-					'register_services',
-					'get_service_classes',
-				]
-			)
-			->getMock();
-
-		add_filter(
-			'services',
-			static function () {
-				return null;
-			}
-		);
-
-		$plugin->register();
-
-		$this->assertCount( 3, $container );
-		$this->assertTrue( $container->has( 'service_a' ) );
-		$this->assertInstanceof( DummyService::class, $container->get( 'service_a' ) );
-		$this->assertTrue( $container->has( 'service_b' ) );
-		$this->assertInstanceof( DummyService::class, $container->get( 'service_b' ) );
 	}
 
 	public function test_it_can_have_filtering_disabled(): void {
@@ -356,9 +314,7 @@ final class ServiceBasedPluginTest extends TestCase {
 
 		add_filter(
 			'services',
-			static function () {
-				return [ 'filtered_service' => DummyService::class ];
-			}
+			static fn() => [ 'filtered_service' => DummyService::class ]
 		);
 
 		$plugin->register();

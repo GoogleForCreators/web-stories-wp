@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -18,8 +21,8 @@
 namespace Google\Web_Stories\Tests\Unit\AMP;
 
 use AMP_Allowed_Tags_Generated;
-use AMP_Tag_And_Attribute_Sanitizer;
 use Brain\Monkey;
+use Google\Web_Stories\AMP\Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories\Tests\Unit\MarkupComparison;
 use Google\Web_Stories\Tests\Unit\ScriptHash;
 use Google\Web_Stories\Tests\Unit\TestCase;
@@ -37,9 +40,7 @@ class Meta_Sanitizer extends TestCase {
 
 		Monkey\Functions\stubs(
 			[
-				'wp_parse_url' => static function ( $url, $component = -1 ) {
-					return parse_url( $url, $component ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
-				},
+				'wp_parse_url' => static fn( $url, $component = -1 ) => parse_url( $url, $component ), // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
 			]
 		);
 	}
@@ -49,15 +50,13 @@ class Meta_Sanitizer extends TestCase {
 	 */
 	public function test_expected_meta_tags(): void {
 		$named_specs = array_filter(
-			AMP_Allowed_Tags_Generated::get_allowed_tag( 'meta' ),
-			static function ( $spec ) {
-				return isset( $spec['tag_spec']['spec_name'] ) && \Google\Web_Stories\AMP\Meta_Sanitizer::BODY_ANCESTOR_META_TAG_SPEC_NAME === $spec['tag_spec']['spec_name'];
-			}
+			(array) AMP_Allowed_Tags_Generated::get_allowed_tag( 'meta' ),
+			static fn( $spec ) => isset( $spec['tag_spec']['spec_name'] ) && \Google\Web_Stories\AMP\Meta_Sanitizer::BODY_ANCESTOR_META_TAG_SPEC_NAME === $spec['tag_spec']['spec_name']
 		);
 		$this->assertCount( 1, $named_specs );
 
 		$body_ok_specs = array_filter(
-			AMP_Allowed_Tags_Generated::get_allowed_tag( 'meta' ),
+			(array) AMP_Allowed_Tags_Generated::get_allowed_tag( 'meta' ),
 			static function ( $spec ) {
 				$head_required = (
 					( isset( $spec['tag_spec']['mandatory_parent'] ) && 'head' === $spec['tag_spec']['mandatory_parent'] )
@@ -78,7 +77,7 @@ class Meta_Sanitizer extends TestCase {
 	/**
 	 * Provide data to the test_sanitize method.
 	 *
-	 * @return array[] Array of arrays with test data.
+	 * @return array<string, string[]> Array of arrays with test data.
 	 */
 	public function get_data_for_sanitize(): array {
 		$script1 = 'document.body.textContent += "First!";';
@@ -175,7 +174,7 @@ class Meta_Sanitizer extends TestCase {
 			],
 
 			'Process invalid meta http-equiv value'       => [
-				// Note the AMP_Tag_And_Attribute_Sanitizer removes the http-equiv attribute because the content is invalid.
+				// Note the Tag_And_Attribute_Sanitizer removes the http-equiv attribute because the content is invalid.
 				'<!DOCTYPE html><html><head>' . $amp_boilerplate . '</head><body><meta http-equiv="Content-Type" content="text/vbscript"></body></html>',
 				'<!DOCTYPE html><html><head><meta charset="utf-8"><meta content="text/vbscript"><meta name="viewport" content="width=device-width">' . $amp_boilerplate . '</head><body></body></html>',
 			],
@@ -250,14 +249,19 @@ class Meta_Sanitizer extends TestCase {
 	 * @param string  $expected_content Expected content after sanitization.
 	 *
 	 * @dataProvider get_data_for_sanitize
-	 * @covers ::sanitize()
+	 * @covers ::sanitize
 	 */
-	public function test_sanitize( $source_content, $expected_content ): void {
+	public function test_sanitize( string $source_content, string $expected_content ): void {
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
 		$dom       = Document::fromHtml( $source_content );
 		$sanitizer = new \Google\Web_Stories\AMP\Meta_Sanitizer( $dom );
 		$sanitizer->sanitize();
 
-		$sanitizer = new AMP_Tag_And_Attribute_Sanitizer(
+		$sanitizer = new Tag_And_Attribute_Sanitizer(
 			$dom,
 			[ 'use_document_element' => true ]
 		);

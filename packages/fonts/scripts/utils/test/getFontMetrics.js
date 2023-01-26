@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 /*
  * Copyright 2020 Google LLC
  *
@@ -17,22 +20,26 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line header/header -- Needed because of the @jest-environment comment.
 import { join } from 'path';
 import { readFileSync } from 'fs';
-import got from 'got';
 
 /**
  * Internal dependencies
  */
 import getFontMetrics from '../getFontMetrics';
 
-jest.mock('got');
-
 describe('getFontMetrics', () => {
   it('should return font metrics', async () => {
-    got.mockImplementationOnce(() => {
-      // eslint-disable-next-line no-undef
-      return { rawBody: readFileSync(join(__dirname, '/fixtures/abezee.ttf')) };
+    global.fetch.mockImplementationOnce(() => {
+      return {
+        ok: true,
+        arrayBuffer: () =>
+          Promise.resolve(
+            // eslint-disable-next-line no-undef
+            readFileSync(join(__dirname, '/fixtures/abezee.ttf'))
+          ),
+      };
     });
 
     const result = await getFontMetrics(

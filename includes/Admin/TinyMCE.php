@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -42,28 +42,28 @@ class TinyMCE extends Service_Base {
 	/**
 	 * Web Stories tinymce script handle.
 	 */
-	public const SCRIPT_HANDLE = 'tinymce-button';
+	public const SCRIPT_HANDLE = 'web-stories-tinymce-button';
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Stories_Script_Data instance.
 	 *
 	 * @var Stories_Script_Data Stories_Script_Data instance.
 	 */
-	protected $stories_script_data;
+	protected Stories_Script_Data $stories_script_data;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Tinymce constructor.
@@ -117,6 +117,10 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @param array|mixed $buttons Array of TinyMCE buttons.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($buttons is array<T> ? array<T> : mixed)
 	 */
 	public function tinymce_web_stories_button( $buttons ) {
 		if ( ! \is_array( $buttons ) ) {
@@ -134,12 +138,16 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @param array|mixed $plugins Array of TinyMCE plugin scripts.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($plugins is array<T> ? array<T> : mixed)
 	 */
 	public function web_stories_mce_plugin( $plugins ) {
 		if ( ! \is_array( $plugins ) ) {
 			return $plugins;
 		}
-		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
+		$plugins['web_stories'] = $this->assets->get_base_url( sprintf( 'assets/js/%s.js', self::SCRIPT_HANDLE ) );
 
 		return $plugins;
 	}
@@ -170,7 +178,7 @@ class TinyMCE extends Service_Base {
 	 * @param string       $src    The script's source URL.
 	 * @return string|mixed The filtered script tag.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ) {
+	public function script_loader_tag( $tag, string $handle, string $src ) {
 		if ( ! \is_string( $tag ) ) {
 			return $tag;
 		}

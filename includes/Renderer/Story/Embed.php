@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Renderer\Story;
 
@@ -43,21 +43,21 @@ class Embed {
 	 *
 	 * @var Story Post object.
 	 */
-	protected $story;
+	protected Story $story;
 
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Embed constructor.

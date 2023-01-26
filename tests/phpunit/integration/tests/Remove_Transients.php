@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,10 +28,8 @@ namespace Google\Web_Stories\Tests\Integration;
 class Remove_Transients extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Remove_Transients
 	 */
-	private $instance;
+	private \Google\Web_Stories\Remove_Transients $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -43,7 +44,7 @@ class Remove_Transients extends DependencyInjectedTestCase {
 	 * @covers ::delete_transients
 	 */
 	public function test_delete_transients(): void {
-		$this->call_private_method( $this->instance, 'delete_transients' );
+		$this->call_private_method( [ $this->instance, 'delete_transients' ] );
 		$this->assertFalse( get_transient( 'web_stories_link_data_fdsf' ) );
 	}
 
@@ -52,7 +53,7 @@ class Remove_Transients extends DependencyInjectedTestCase {
 	 * @covers ::delete_network_transients
 	 */
 	public function test_delete_network_transients(): void {
-		$this->call_private_method( $this->instance, 'delete_network_transients' );
+		$this->call_private_method( [ $this->instance, 'delete_network_transients' ] );
 		$this->assertFalse( get_site_transient( 'web_stories_updater' ) );
 	}
 }

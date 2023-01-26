@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -50,7 +50,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @var Types Types instance.
 	 */
-	private $types;
+	private Types $types;
 
 	/**
 	 * Constructor.
@@ -189,62 +189,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	}
 
 	/**
-	 * Process post to update attribute.
-	 *
-	 * @since 1.11.0
-	 *
-	 * @param int      $post_id Post id.
-	 * @param int|null $parent_post New post parent. Default null.
-	 * @param int|null $original_id Original id to copy data from. Default null.
-	 * @return WP_Post|WP_Error
-	 */
-	protected function process_post( $post_id, $parent_post, $original_id ) {
-		$args = [ 'ID' => $post_id ];
-
-		if ( $parent_post ) {
-			$args['post_parent'] = $parent_post;
-		}
-
-		if ( $original_id ) {
-			$attachment_post = $this->get_post( (int) $original_id );
-			if ( is_wp_error( $attachment_post ) ) {
-				return $attachment_post;
-			}
-			$args['post_content'] = $attachment_post->post_content;
-			$args['post_excerpt'] = $attachment_post->post_excerpt;
-			$args['post_title']   = $attachment_post->post_title;
-
-			$meta_fields = [ '_wp_attachment_image_alt', Base_Color::BASE_COLOR_POST_META_KEY ];
-			foreach ( $meta_fields as $meta_field ) {
-				/**
-				 * Meta value.
-				 *
-				 * @var string $value
-				 */
-				$value = get_post_meta( $original_id, $meta_field, true );
-
-				if ( ! empty( $value ) ) {
-					// update_post_meta() expects slashed.
-					update_post_meta( $post_id, $meta_field, wp_slash( $value ) );
-				}
-			}
-		}
-
-		$attachment_id = wp_update_post( $args, true );
-		if ( is_wp_error( $attachment_id ) ) {
-			if ( 'db_update_error' === $attachment_id->get_error_code() ) {
-				$attachment_id->add_data( [ 'status' => 500 ] );
-			} else {
-				$attachment_id->add_data( [ 'status' => 400 ] );
-			}
-
-			return $attachment_id;
-		}
-
-		return $this->get_post( $attachment_id );
-	}
-
-	/**
 	 * Prime post caches for attachments and parents.
 	 *
 	 * @since 1.20.0
@@ -259,21 +203,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		}
 
 		return $posts;
-	}
-
-	/**
-	 * Get an array of attached post objects.
-	 *
-	 * @since 1.20.0
-	 *
-	 * @param WP_Post[] $posts Array of post objects.
-	 * @return int[] Array of post ids.
-	 */
-	protected function get_attached_post_ids( array $posts ): array {
-		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
-		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
-
-		return array_unique( array_merge( $thumb_ids, $parent_ids ) );
 	}
 
 	/**
@@ -294,41 +223,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 
 		return $query_params;
 	}
-
-	/**
-	 * Filter request by allowed mime types.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param array<string,mixed> $prepared_args Optional. Array of prepared arguments. Default empty array.
-	 * @param WP_REST_Request     $request       Optional. Request to prepare items for.
-	 * @return array<string, mixed> Array of query arguments.
-	 */
-	protected function prepare_items_query( $prepared_args = [], $request = null ): array {
-		$query_args = parent::prepare_items_query( $prepared_args, $request );
-
-		if ( empty( $request['mime_type'] ) && empty( $request['media_type'] ) ) {
-			$media_types      = $this->get_media_types();
-			$media_type_mimes = array_values( $media_types );
-			$media_type_mimes = array_filter( $media_type_mimes );
-			$media_type_mimes = array_merge( ...$media_type_mimes );
-
-			$query_args['post_mime_type'] = $media_type_mimes;
-		}
-
-		/**
-		 * Filters WP_Query arguments when querying posts via the REST API.
-		 *
-		 * @since 1.10.0
-		 *
-		 * @see WP_Query
-		 *
-		 * @param array                $args    Array of arguments for WP_Query.
-		 * @param WP_REST_Request|null $request The REST API request.
-		 */
-		return apply_filters( 'web_stories_rest_attachment_query', $query_args, $request );
-	}
-
 
 	/**
 	 * Prepares a single attachment output for response.
@@ -390,6 +284,112 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$this->schema = $schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
+	}
+
+
+	/**
+	 * Process post to update attribute.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param int      $post_id Post id.
+	 * @param int|null $parent_post New post parent. Default null.
+	 * @param int|null $original_id Original id to copy data from. Default null.
+	 * @return WP_Post|WP_Error
+	 */
+	protected function process_post( $post_id, $parent_post, $original_id ) {
+		$args = [ 'ID' => $post_id ];
+
+		if ( $parent_post ) {
+			$args['post_parent'] = $parent_post;
+		}
+
+		if ( $original_id ) {
+			$attachment_post = $this->get_post( (int) $original_id );
+			if ( is_wp_error( $attachment_post ) ) {
+				return $attachment_post;
+			}
+			$args['post_content'] = $attachment_post->post_content;
+			$args['post_excerpt'] = $attachment_post->post_excerpt;
+			$args['post_title']   = $attachment_post->post_title;
+
+			$meta_fields = [ '_wp_attachment_image_alt', Base_Color::BASE_COLOR_POST_META_KEY ];
+			foreach ( $meta_fields as $meta_field ) {
+				/**
+				 * Meta value.
+				 *
+				 * @var string $value
+				 */
+				$value = get_post_meta( $original_id, $meta_field, true );
+
+				if ( ! empty( $value ) ) {
+					// update_post_meta() expects slashed.
+					update_post_meta( $post_id, $meta_field, wp_slash( $value ) );
+				}
+			}
+		}
+
+		$attachment_id = wp_update_post( $args, true );
+		if ( is_wp_error( $attachment_id ) ) {
+			if ( 'db_update_error' === $attachment_id->get_error_code() ) {
+				$attachment_id->add_data( [ 'status' => 500 ] );
+			} else {
+				$attachment_id->add_data( [ 'status' => 400 ] );
+			}
+
+			return $attachment_id;
+		}
+
+		return $this->get_post( $attachment_id );
+	}
+
+	/**
+	 * Get an array of attached post objects.
+	 *
+	 * @since 1.20.0
+	 *
+	 * @param WP_Post[] $posts Array of post objects.
+	 * @return int[] Array of post ids.
+	 */
+	protected function get_attached_post_ids( array $posts ): array {
+		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
+		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
+
+		return array_unique( [ ...$thumb_ids, ...$parent_ids ] );
+	}
+
+	/**
+	 * Filter request by allowed mime types.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array<string,mixed> $prepared_args Optional. Array of prepared arguments. Default empty array.
+	 * @param WP_REST_Request     $request       Optional. Request to prepare items for.
+	 * @return array<string, mixed> Array of query arguments.
+	 */
+	protected function prepare_items_query( $prepared_args = [], $request = null ): array {
+		$query_args = parent::prepare_items_query( $prepared_args, $request );
+
+		if ( empty( $request['mime_type'] ) && empty( $request['media_type'] ) ) {
+			$media_types      = $this->get_media_types();
+			$media_type_mimes = array_values( $media_types );
+			$media_type_mimes = array_filter( $media_type_mimes );
+			$media_type_mimes = array_merge( ...$media_type_mimes );
+
+			$query_args['post_mime_type'] = $media_type_mimes;
+		}
+
+		/**
+		 * Filters WP_Query arguments when querying posts via the REST API.
+		 *
+		 * @since 1.10.0
+		 *
+		 * @see WP_Query
+		 *
+		 * @param array                $args    Array of arguments for WP_Query.
+		 * @param WP_REST_Request|null $request The REST API request.
+		 */
+		return apply_filters( 'web_stories_rest_attachment_query', $query_args, $request );
 	}
 
 	/**

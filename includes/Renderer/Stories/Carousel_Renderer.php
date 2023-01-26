@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Renderer\Stories;
 
@@ -40,7 +40,7 @@ class Carousel_Renderer extends Renderer {
 	/**
 	 * Script handle.
 	 */
-	public const SCRIPT_HANDLE = 'carousel-view';
+	public const SCRIPT_HANDLE = 'web-stories-carousel';
 
 	/**
 	 * Perform initial setup for object.
@@ -77,21 +77,6 @@ class Carousel_Renderer extends Renderer {
 	}
 
 	/**
-	 * Get Carousel settings.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return array<string,array<string,bool>> Carousel settings.
-	 */
-	protected function get_carousel_settings(): array {
-		return [
-			'config' => [
-				'isRTL' => is_rtl(),
-			],
-		];
-	}
-
-	/**
 	 * Renders the stories output for given attributes.
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
@@ -121,10 +106,13 @@ class Carousel_Renderer extends Renderer {
 					?>
 					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>">
 						<?php
-						foreach ( $this->stories as $story ) {
-							$this->render_single_story_content();
-							$this->next();
-						}
+						array_map(
+							function() {
+								$this->render_single_story_content();
+								$this->next();
+							},
+							$this->stories
+						);
 						?>
 					</div>
 					<div tabindex="0" aria-label="<?php esc_attr_e( 'Previous', 'web-stories' ); ?>" class="glider-prev"></div>
@@ -141,10 +129,13 @@ class Carousel_Renderer extends Renderer {
 						aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
 					>
 						<?php
-						foreach ( $this->stories as $story ) {
-							$this->render_single_story_content();
-							$this->next();
-						}
+						array_map(
+							function() {
+								$this->render_single_story_content();
+								$this->next();
+							},
+							$this->stories
+						);
 						?>
 					</amp-carousel>
 					<?php
@@ -164,6 +155,21 @@ class Carousel_Renderer extends Renderer {
 		 * @param string $content Stories content.
 		 */
 		return apply_filters( 'web_stories_carousel_renderer_stories_content', $content );
+	}
+
+	/**
+	 * Get Carousel settings.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array<string,array<string,bool>> Carousel settings.
+	 */
+	protected function get_carousel_settings(): array {
+		return [
+			'config' => [
+				'isRTL' => is_rtl(),
+			],
+		];
 	}
 
 }

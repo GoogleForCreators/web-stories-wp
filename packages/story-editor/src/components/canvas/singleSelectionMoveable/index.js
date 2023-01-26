@@ -62,8 +62,8 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
     scrollTop: state.scrollTop,
   }));
 
-  const { isLocked } = selectedElement;
-  const actionsEnabled = !selectedElement.isBackground && !isLocked;
+  const { isBackground, isLocked, isHidden } = selectedElement;
+  const actionsEnabled = !isBackground && !isLocked && !isHidden;
 
   const latestEvent = useRef();
 
@@ -193,7 +193,7 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
   const classNames = classnames('default-moveable', {
     'hide-handles': hideHandles,
     'type-text': selectedElement.type === 'text',
-    immoveable: isLocked,
+    immoveable: isLocked || isHidden,
   });
   const _dragProps = useDrag({
     setIsDragging,

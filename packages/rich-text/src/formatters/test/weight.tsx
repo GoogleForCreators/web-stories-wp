@@ -18,7 +18,7 @@
  * External dependencies
  */
 import type { EditorState } from 'draft-js';
-import type { OrderedSet } from 'immutable';
+import { OrderedSet } from 'immutable';
 
 /**
  * Internal dependencies
@@ -81,25 +81,19 @@ describe('Color formatter', () => {
 
   describe('stylesToCSS', () => {
     it('should ignore styles without a font weight style', () => {
-      const css = stylesToCSS({
-        toArray: () => ['NOT-WEIGHT', 'ALSO-NOT-WEIGHT'],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of('NOT-WEIGHT', 'ALSO-NOT-WEIGHT'));
 
       expect(css).toBeNull();
     });
 
     it('should ignore invalid font weight style', () => {
-      const css = stylesToCSS({
-        toArray: () => [`${WEIGHT}-invalid`],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(`${WEIGHT}-invalid`));
 
       expect(css).toBeNull();
     });
 
     it('should return correct CSS for a valid style', () => {
-      const css = stylesToCSS({
-        toArray: () => [`${WEIGHT}-500`],
-      } as OrderedSet<string>);
+      const css = stylesToCSS(OrderedSet.of(`${WEIGHT}-500`));
 
       expect(css).toStrictEqual({ fontWeight: 500 });
     });

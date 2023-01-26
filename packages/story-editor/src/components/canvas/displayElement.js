@@ -22,7 +22,7 @@ import { memo, useRef, useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { calcRotatedResizeOffset, useUnits } from '@googleforcreators/units';
-import { StoryAnimation } from '@googleforcreators/animation';
+import { WAAPIWrapper } from '@googleforcreators/animation';
 import { useTransformHandler } from '@googleforcreators/transform';
 import {
   getDefinitionForType,
@@ -43,7 +43,7 @@ import {
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '../../propTypes';
 import useCORSProxy from '../../utils/useCORSProxy';
 import { useLocalMedia, useFont } from '../../app';
 import renderResourcePlaceholder from './renderResourcePlaceholder';
@@ -93,9 +93,7 @@ const ReplacementContainer = styled.div`
 
 function AnimationWrapper({ children, id, isAnimatable }) {
   return isAnimatable ? (
-    <StoryAnimation.WAAPIWrapper target={id}>
-      {children}
-    </StoryAnimation.WAAPIWrapper>
+    <WAAPIWrapper target={id}>{children}</WAAPIWrapper>
   ) : (
     children
   );
@@ -165,15 +163,13 @@ function DisplayElement({
       }
     : null;
 
-  const { Display } = getDefinitionForType(type);
-  const { Display: Replacement } =
-    getDefinitionForType(replacement?.resource.type) || {};
+  let Replacement;
+  if (replacement?.resource.type) {
+    const definition = getDefinitionForType(replacement.resource.type);
+    Replacement = definition.Display;
+  }
 
   const wrapperRef = useRef(null);
-
-  // The element content will use box without border, the wrapper will use box with border.
-  const box = getBox(element);
-  const boxWithBorder = getBoxWithBorder(element);
 
   const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   useTransformHandler(id, (transform) => {
@@ -226,6 +222,16 @@ function DisplayElement({
     targetRef: bgOverlayRef,
     resetOnNullTransform: false,
   });
+
+  if (element.isHidden) {
+    return null;
+  }
+
+  const { Display } = getDefinitionForType(type);
+
+  // The element content will use box without border, the wrapper will use box with border.
+  const box = getBox(element);
+  const boxWithBorder = getBoxWithBorder(element);
 
   const responsiveBorder = getResponsiveBorder(
     border,

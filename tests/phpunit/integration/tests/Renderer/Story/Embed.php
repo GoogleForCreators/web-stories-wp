@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\Renderer\Story;
 
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -9,21 +15,15 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  */
 class Embed extends DependencyInjectedTestCase {
 
-	/**
-	 * @var \Google\Web_Stories\Context
-	 */
-	private $context;
+	private Context $context;
 
-	/**
-	 * @var \Google\Web_Stories\Assets
-	 */
-	private $assets;
+	private Assets $assets;
 
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->assets  = $this->injector->make( \Google\Web_Stories\Assets::class );
-		$this->context = $this->injector->make( \Google\Web_Stories\Context::class );
+		$this->assets  = $this->injector->make( Assets::class );
+		$this->context = $this->injector->make( Context::class );
 	}
 
 	/**
@@ -33,12 +33,12 @@ class Embed extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
-		$story = new \Google\Web_Stories\Model\Story();
+		$story = new Story();
 		$story->load_from_post( $post );
 
 		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $this->assets, $this->context );
@@ -59,7 +59,7 @@ class Embed extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -72,10 +72,14 @@ class Embed extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		wp_maybe_generate_attachment_metadata( get_post( $poster_attachment_id ) );
+		$this->assertNotWPError( $poster_attachment_id );
+		$poster_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $poster_attachment );
+
+		wp_maybe_generate_attachment_metadata( $poster_attachment );
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 
-		$story = new \Google\Web_Stories\Model\Story();
+		$story = new Story();
 		$story->load_from_post( $post );
 
 		$this->assertNotEmpty( $story->get_poster_portrait() );
@@ -104,7 +108,7 @@ class Embed extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -117,10 +121,11 @@ class Embed extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 
-		$story = new \Google\Web_Stories\Model\Story();
+		$story = new Story();
 		$story->load_from_post( $post );
 
 		$this->assertNotEmpty( $story->get_poster_portrait() );

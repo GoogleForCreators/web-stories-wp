@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -17,6 +20,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -26,7 +30,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  */
 class Update_Publisher_Logos extends DependencyInjectedTestCase {
 	public function tear_down(): void {
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS );
+		delete_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
 
 		parent::tear_down();
 	}
@@ -35,13 +39,20 @@ class Update_Publisher_Logos extends DependencyInjectedTestCase {
 	 * @covers ::migrate
 	 */
 	public function test_migrate(): void {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS, [ 'active' => 123 ] );
+		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ 'active' => 123 ] );
 
 		$instance = $this->injector->make( \Google\Web_Stories\Migrations\Update_Publisher_Logos::class );
 		$instance->migrate();
 
-		$all_publisher_logos   = get_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo = (int) get_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		/**
+		 * @var array<string, int> $all_publisher_logos
+		 */
+		$all_publisher_logos = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+		/**
+		 * @var string $active_publisher_logo
+		 */
+		$active_publisher_logo = get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		$active_publisher_logo = (int) $active_publisher_logo;
 
 		$this->assertEqualSets( [ 123 ], $all_publisher_logos );
 		$this->assertSame( 123, $active_publisher_logo );

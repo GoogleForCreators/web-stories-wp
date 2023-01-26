@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -17,6 +20,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
+use Google\Web_Stories\Media\Video\Poster;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -47,14 +51,17 @@ class Remove_Unneeded_Attachment_Meta extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+		$this->assertNotWPError( $poster_attachment_id );
+
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, 'true' );
-		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, Poster::POSTER_POST_META_KEY, 'true' );
+		add_post_meta( $video_attachment_id, Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
 		$object = new \Google\Web_Stories\Migrations\Remove_Unneeded_Attachment_Meta();
 		$object->migrate();
 
-		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, true );
+		$meta = get_post_meta( $poster_attachment_id, Poster::POSTER_POST_META_KEY, true );
 
 		$this->assertSame( '', $meta );
 	}

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -27,26 +30,12 @@ use Google\Web_Stories\Tests\Integration\Shopping\Mock_Vendor_Invalid;
 trait Mock_Vendor_Setup {
 
 	/**
-	 * Add filter to add vendor.
-	 */
-	protected function setup_vendors(): void {
-		add_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
-	}
-
-	/**
-	 * Remove filter to remove vendor.
-	 */
-	protected function remove_vendors(): void {
-		remove_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
-	}
-
-	/**
 	 * Add mock vendor to array with filter.
 	 *
-	 * @param array $vendors
-	 * @return array
+	 * @param array<string, array<string,string>> $unused
+	 * @return array<string, array<string,string>>
 	 */
-	public function add_mock_vendor( $vendors ): array {
+	public function add_mock_vendor( array $unused ): array {
 		return [
 			'none'    => [
 				'label' => 'None',
@@ -64,5 +53,19 @@ trait Mock_Vendor_Setup {
 				'class' => Mock_Vendor_Invalid::class,
 			],
 		];
+	}
+
+	/**
+	 * Add filter to add vendor.
+	 */
+	protected function setup_vendors(): void {
+		add_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
+	}
+
+	/**
+	 * Remove filter to remove vendor.
+	 */
+	protected function remove_vendors(): void {
+		remove_filter( 'web_stories_shopping_vendors', [ $this, 'add_mock_vendor' ] );
 	}
 }

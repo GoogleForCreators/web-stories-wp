@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -57,7 +57,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 *
 	 * @var Assets Assets instance.
 	 */
-	private $assets;
+	private Assets $assets;
 
 	/**
 	 * Constructor.
@@ -88,7 +88,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		$this->set_activation_flag( $network_wide );
 	}
 
@@ -99,7 +99,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 */
-	public function on_plugin_deactivation( $network_wide ): void {
+	public function on_plugin_deactivation( bool $network_wide ): void {
 		$this->delete_activation_flag( $network_wide );
 	}
 
@@ -131,6 +131,43 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 			'webStoriesActivationSettings',
 			$this->get_script_settings()
 		);
+	}
+
+	/**
+	 * Renders the plugin activation notice.
+	 *
+	 * @since 1.0.0
+	 */
+	public function render_notice(): void {
+		global $hook_suffix;
+
+		if ( ! $this->is_plugins_page( $hook_suffix ) ) {
+			return;
+		}
+
+		$network_wide = is_network_admin();
+		$flag         = $this->get_activation_flag( $network_wide );
+
+		if ( ! $flag ) {
+			return;
+		}
+
+		// Unset the flag so that the notice only shows once.
+		$this->delete_activation_flag( $network_wide );
+
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/activation-notice.php';
+	}
+
+	/**
+	 * Deletes the flag that the plugin has just been uninstalled.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		if ( is_multisite() ) {
+			delete_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
+		}
+		delete_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
 	}
 
 	/**
@@ -184,36 +221,11 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	}
 
 	/**
-	 * Renders the plugin activation notice.
-	 *
-	 * @since 1.0.0
-	 */
-	public function render_notice(): void {
-		global $hook_suffix;
-
-		if ( ! $this->is_plugins_page( $hook_suffix ) ) {
-			return;
-		}
-
-		$network_wide = is_network_admin();
-		$flag         = $this->get_activation_flag( $network_wide );
-
-		if ( ! $flag ) {
-			return;
-		}
-
-		// Unset the flag so that the notice only shows once.
-		$this->delete_activation_flag( $network_wide );
-
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/activation-notice.php';
-	}
-
-	/**
 	 * Determines whether we're currently on the Plugins page or not.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $hook_suffix Current hook_suffix.
+	 * @param mixed $hook_suffix Current hook_suffix.
 	 * @return bool Whether we're on the Plugins page.
 	 */
 	protected function is_plugins_page( $hook_suffix ): bool {
@@ -271,17 +283,5 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 		}
 
 		return delete_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
-	}
-
-	/**
-	 * Deletes the flag that the plugin has just been uninstalled.
-	 *
-	 * @since 1.26.0
-	 */
-	public function on_plugin_uninstall(): void {
-		if ( is_multisite() ) {
-			delete_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
-		}
-		delete_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
 	}
 }

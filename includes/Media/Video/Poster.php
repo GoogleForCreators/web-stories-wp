@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Media\Video;
 
@@ -53,7 +53,7 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	 *
 	 * @var Media_Source_Taxonomy Experiments instance.
 	 */
-	protected $media_source_taxonomy;
+	protected Media_Source_Taxonomy $media_source_taxonomy;
 
 	/**
 	 * Poster constructor.
@@ -154,7 +154,7 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	 * @param array<string, mixed> $prepared Prepared data before response.
 	 * @return array<string, mixed>
 	 */
-	public function get_callback_featured_media_src( $prepared ): array {
+	public function get_callback_featured_media_src( array $prepared ): array {
 		/**
 		 * Featured media ID.
 		 *
@@ -176,7 +176,11 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	 *
 	 * @param array<string, mixed>|mixed $response   Array of prepared attachment data.
 	 * @param WP_Post                    $attachment Attachment object.
-	 * @return array<string, mixed>|mixed $response;
+	 * @return array<string, mixed>|mixed $response
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($response is array<T> ? array<T> : mixed)
 	 */
 	public function wp_prepare_attachment_for_js( $response, WP_Post $attachment ) {
 		if ( ! \is_array( $response ) ) {
@@ -246,6 +250,16 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 	}
 
 	/**
+	 * Act on plugin uninstall.
+	 *
+	 * @since 1.26.0
+	 */
+	public function on_plugin_uninstall(): void {
+		delete_post_meta_by_key( self::POSTER_ID_POST_META_KEY );
+		delete_post_meta_by_key( self::POSTER_POST_META_KEY );
+	}
+
+	/**
 	 * Helper util to check if attachment is a poster.
 	 *
 	 * @since 1.2.1
@@ -257,19 +271,9 @@ class Poster extends Service_Base implements HasMeta, PluginUninstallAware {
 		if ( \is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 
-			return \in_array( 'poster-generation', $slugs, true );
+			return \in_array( $this->media_source_taxonomy::TERM_POSTER_GENERATION, $slugs, true );
 		}
 
 		return false;
-	}
-
-	/**
-	 * Act on plugin uninstall.
-	 *
-	 * @since 1.26.0
-	 */
-	public function on_plugin_uninstall(): void {
-		delete_post_meta_by_key( self::POSTER_ID_POST_META_KEY );
-		delete_post_meta_by_key( self::POSTER_POST_META_KEY );
 	}
 }

@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Media;
 
@@ -63,7 +63,7 @@ class SVG extends Service_Base {
 	 *
 	 * @var string[]
 	 */
-	protected $svgs = [];
+	protected array $svgs = [];
 
 	/**
 	 * Experiments instance.
@@ -72,7 +72,7 @@ class SVG extends Service_Base {
 	 *
 	 * @var Experiments Experiments instance.
 	 */
-	private $experiments;
+	private Experiments $experiments;
 
 	/**
 	 * SVG constructor.
@@ -110,18 +110,6 @@ class SVG extends Service_Base {
 		add_filter( 'wp_generate_attachment_metadata', [ $this, 'wp_generate_attachment_metadata' ], 10, 3 );
 		add_filter( 'wp_check_filetype_and_ext', [ $this, 'wp_check_filetype_and_ext' ], 10, 5 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
-	}
-
-	/**
-	 * Helper function to check if svg uploads are already enabled.
-	 *
-	 * @since 1.3.0
-	 */
-	private function svg_already_enabled(): bool {
-		$allowed_mime_types = get_allowed_mime_types();
-		$mime_types         = array_values( $allowed_mime_types );
-
-		return \in_array( self::MIME_TYPE, $mime_types, true );
 	}
 
 	/**
@@ -178,7 +166,7 @@ class SVG extends Service_Base {
 	 * @param string $value List of allowed file types.
 	 * @return string List of allowed file types.
 	 */
-	public function filter_list_of_allowed_filetypes( $value ): string {
+	public function filter_list_of_allowed_filetypes( string $value ): string {
 		$filetypes = explode( ' ', $value );
 		if ( ! \in_array( self::EXT, $filetypes, true ) ) {
 			$filetypes[] = self::EXT;
@@ -264,6 +252,52 @@ class SVG extends Service_Base {
 		return $upload;
 	}
 
+	/**
+	 * Work around for incorrect mime type.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array               $wp_check_filetype_and_ext {
+	 *                                                       Values for the extension, mime type, and corrected filename.
+	 *
+	 * @type string|false         $ext                       File extension, or false if the file doesn't match a mime type.
+	 * @type string|false         $type                      File mime type, or false if the file doesn't match a mime type.
+	 * @type string|false         $proper_filename           File name with its correct extension, or false if it cannot be
+	 *       determined.
+	 * }
+	 * @param string              $file                      Full path to the file.
+	 * @param string              $filename                  The name of the file (may differ from $file due to
+	 *                                                       $file being in a tmp directory).
+	 * @param string[]|null|false $mimes                     Array of mime types keyed by their file extension regex.
+	 * @param string|bool         $real_mime                 The actual mime type or false if the type cannot be determined.
+	 * @return array{ext?: string, type?: string, proper_filename?: bool}
+	 *
+	 * @phpstan-param array{ext?: string, type?: string, proper_filename?: bool} $wp_check_filetype_and_ext
+	 */
+	public function wp_check_filetype_and_ext( array $wp_check_filetype_and_ext, string $file, string $filename, $mimes, $real_mime ): array {
+		if ( 'image/svg' === $real_mime ) {
+			$wp_check_filetype_and_ext = [
+				'ext'             => self::EXT,
+				'type'            => self::MIME_TYPE,
+				'proper_filename' => false,
+			];
+		}
+
+		return $wp_check_filetype_and_ext;
+	}
+
+	/**
+	 * Helper function to check if svg uploads are already enabled.
+	 *
+	 * @since 1.3.0
+	 */
+	private function svg_already_enabled(): bool {
+		$allowed_mime_types = get_allowed_mime_types();
+		$mime_types         = array_values( $allowed_mime_types );
+
+		return \in_array( self::MIME_TYPE, $mime_types, true );
+	}
+
 
 	/**
 	 * Get SVG image size.
@@ -296,7 +330,7 @@ class SVG extends Service_Base {
 			}
 			$pieces = explode( ' ', $view_box );
 			if ( 4 === \count( $pieces ) ) {
-				list (, , $width, $height ) = $pieces;
+				[, , $width, $height] = $pieces;
 			}
 		}
 
@@ -330,40 +364,6 @@ class SVG extends Service_Base {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Work around for incorrect mime type.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @param array       $wp_check_filetype_and_ext {
-	 *                                               Values for the extension, mime type, and corrected filename.
-	 *
-	 * @type string|false $ext                       File extension, or false if the file doesn't match a mime type.
-	 * @type string|false $type                      File mime type, or false if the file doesn't match a mime type.
-	 * @type string|false $proper_filename           File name with its correct extension, or false if it cannot be
-	 *       determined.
-	 * }
-	 * @param string      $file                      Full path to the file.
-	 * @param string      $filename                  The name of the file (may differ from $file due to
-	 *                                               $file being in a tmp directory).
-	 * @param string[]    $mimes                     Array of mime types keyed by their file extension regex.
-	 * @param string|bool $real_mime                 The actual mime type or false if the type cannot be determined.
-	 * @return array{ext?: string, type?: string, proper_filename?: bool}
-	 *
-	 * @phpstan-param array{ext?: string, type?: string, proper_filename?: bool} $wp_check_filetype_and_ext
-	 */
-	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ): array {
-		if ( 'image/svg' === $real_mime ) {
-			$wp_check_filetype_and_ext = [
-				'ext'             => self::EXT,
-				'type'            => self::MIME_TYPE,
-				'proper_filename' => false,
-			];
-		}
-
-		return $wp_check_filetype_and_ext;
 	}
 
 	/**

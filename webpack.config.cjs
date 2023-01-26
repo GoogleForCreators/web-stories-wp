@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-const path = require('path');
-const glob = require('glob');
+const { readdirSync } = require('fs');
+const { resolve, parse } = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -67,7 +67,7 @@ const sharedConfig = {
   mode,
   devtool: !isProduction ? 'source-map' : undefined,
   output: {
-    path: path.resolve(process.cwd(), 'assets', 'js'),
+    path: resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
     chunkFilename: '[name].js?v=[chunkhash]',
     publicPath: '',
@@ -130,7 +130,7 @@ const sharedConfig = {
             include: [/inline-icons\/.*\.svg$/],
           },
           {
-            issuer: /\.js?$/,
+            issuer: /\.[jt]s?$/,
             include: [/\/icons\/.*\.svg$/],
             use: [
               {
@@ -160,7 +160,7 @@ const sharedConfig = {
             ],
           },
           {
-            issuer: /\.js?$/,
+            issuer: /\.[jt]s?$/,
             include: [/images\/.*\.svg$/],
             use: [
               {
@@ -270,8 +270,8 @@ const sharedConfig = {
   },
 };
 
-const EDITOR_CHUNK = 'wp-story-editor';
-const DASHBOARD_CHUNK = 'wp-dashboard';
+const EDITOR_CHUNK = 'web-stories-editor';
+const DASHBOARD_CHUNK = 'web-stories-dashboard';
 
 // Template for html-webpack-plugin to generate JS/CSS chunk manifests in PHP.
 const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
@@ -384,8 +384,8 @@ const editorAndDashboard = {
 const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    lightbox: './packages/stories-lightbox/src/index.js',
-    'carousel-view': './packages/stories-carousel/src/index.js',
+    'web-stories-lightbox': './packages/stories-lightbox/src/index.js',
+    'web-stories-carousel': './packages/stories-carousel/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -397,17 +397,16 @@ const webStoriesScripts = {
 };
 
 // Collect all core themes style sheet paths.
-const coreThemesBlockStylesPaths = glob.sync(
-  './packages/stories-block/src/css/core-themes/*.css'
+const coreThemesBlockStylesPaths = readdirSync(
+  './packages/stories-block/src/css/core-themes'
 );
 
 // Build entry object for the Core Themes Styles.
 const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
-  const fileName = path.parse(curr).name;
-
+  const fileName = parse(curr).name;
   return {
     ...acc,
-    [`web-stories-theme-style-${fileName}`]: curr,
+    [`web-stories-theme-style-${fileName}`]: `./packages/stories-block/src/css/core-themes/${curr}`,
   };
 }, {});
 
@@ -467,7 +466,7 @@ const widgetScript = {
 const storiesMCEButton = {
   ...sharedConfig,
   entry: {
-    'tinymce-button': './packages/tinymce-button/src/index.js',
+    'web-stories-tinymce-button': './packages/tinymce-button/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { resolve as resolvePath, dirname } from 'path';
+import { existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -27,8 +28,7 @@ import json from '@rollup/plugin-json';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import typescript from '@rollup/plugin-typescript';
 import svgr from '@svgr/rollup';
-import { terser } from 'rollup-plugin-terser';
-import filesize from 'rollup-plugin-filesize';
+import terser from '@rollup/plugin-terser';
 import del from 'rollup-plugin-delete';
 import copy from 'rollup-plugin-copy';
 import webWorkerLoader from 'rollup-plugin-web-worker-loader';
@@ -41,7 +41,6 @@ const plugins = [
     browser: true, // To correctly import browser version of @ffmpeg/ffmpeg for example.
     preferBuiltins: true,
   }),
-  typescript(),
   babel({
     babelrc: false,
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
@@ -50,7 +49,12 @@ const plugins = [
     presets: ['@babel/env', '@babel/preset-react', '@babel/preset-typescript'],
     plugins: [
       'babel-plugin-styled-components',
-      'babel-plugin-transform-react-remove-prop-types',
+      [
+        'babel-plugin-transform-react-remove-prop-types',
+        {
+          removeImport: true,
+        },
+      ],
     ],
   }),
   url({
@@ -123,7 +127,6 @@ const plugins = [
       reserved: ['__', '_x', '_n', '_nx', 'sprintf'],
     },
   }),
-  filesize(),
 ];
 
 /**
@@ -138,7 +141,7 @@ const plugins = [
  *
  * To build only a subset of all public packages, run:
  *
- * `npx rollup --configPackages=i18n,fonts`
+ * `npx rollup -c --configPackages=i18n,fonts`
  *
  * @param {CustomInputOptions} cliArgs CLI arguments.
  * @return {import('rollup').RollupOptions} Rollup configuration.
@@ -181,63 +184,11 @@ async function config(cliArgs) {
       ]),
     ];
 
-    const sourceDir = dirname(resolvePath(pkg.dir, pkg.config.source));
-
-    if (entriesToBuild.includes('es')) {
-      const moduleDir = dirname(resolvePath(pkg.dir, pkg.config.module));
-      const _plugins = [
-        del({
-          targets: [moduleDir],
-          runOnce: false !== cliArgs.watch,
-        }),
-      ];
-
-      if ('@googleforcreators/fonts' === pkg.name) {
-        _plugins.push(
-          copy({
-            targets: [{ src: `${sourceDir}/fonts.json`, dest: moduleDir }],
-          })
-        );
-      }
-
-      entries.push({
-        input,
-        output: {
-          dir: moduleDir,
-          format: 'es',
-          preserveModules: true,
-        },
-        plugins: [...plugins, ..._plugins],
-        external,
-        context: 'window',
-      });
-    }
-
-    if (entriesToBuild.includes('cjs')) {
-      const mainDir = dirname(resolvePath(pkg.dir, pkg.config.main));
-      const _plugins = [
-        del({
-          targets: [mainDir],
-          runOnce: false !== cliArgs.watch,
-        }),
-      ];
-
-      if ('@googleforcreators/fonts' === pkg.name) {
-        _plugins.push(
-          copy({
-            targets: [{ src: `${sourceDir}/fonts.json`, dest: mainDir }],
-          })
-        );
-      }
-
-      entries.push({
-        input,
-        output: {
-          dir: mainDir,
-          format: 'cjs',
-          exports: 'auto',
-          preserveModules: true,
-          banner: `/*
+    const output = {
+      sourcemap: true,
+      exports: 'auto',
+      preserveModules: true,
+      banner: `/*
  * Copyright ${new Date().getFullYear()} Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -252,6 +203,90 @@ async function config(cliArgs) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */`,
+    };
+
+    const sourceDir = dirname(resolvePath(pkg.dir, pkg.config.source));
+
+    const tsconfig = resolvePath(pkg.dir, 'tsconfig.json');
+    const hasTypeScript = existsSync(tsconfig);
+    const tsPlugin = typescript({
+      tsconfig,
+      // Override config from tsconfig.shared.json to not emit declarations.
+      compilerOptions: {
+        declaration: false,
+        declarationDir: null,
+        declarationMap: false,
+        composite: false,
+        emitDeclarationOnly: false,
+        sourceMap: false,
+      },
+    });
+
+    if (entriesToBuild.includes('es')) {
+      const _plugins = [];
+
+      if (hasTypeScript) {
+        _plugins.push(tsPlugin);
+      }
+
+      const moduleDir = dirname(resolvePath(pkg.dir, pkg.config.module));
+      _plugins.push(
+        del({
+          targets: [moduleDir],
+          runOnce: false !== cliArgs.watch,
+        })
+      );
+
+      if ('@googleforcreators/fonts' === pkg.name) {
+        _plugins.push(
+          copy({
+            targets: [{ src: `${sourceDir}/fonts.json`, dest: moduleDir }],
+          })
+        );
+      }
+
+      entries.push({
+        input,
+        output: {
+          ...output,
+          dir: moduleDir,
+          format: 'es',
+        },
+        plugins: [...plugins, ..._plugins],
+        external,
+        context: 'window',
+      });
+    }
+
+    if (entriesToBuild.includes('cjs')) {
+      const _plugins = [];
+
+      if (hasTypeScript) {
+        _plugins.push(tsPlugin);
+      }
+
+      const mainDir = dirname(resolvePath(pkg.dir, pkg.config.main));
+      _plugins.push(
+        del({
+          targets: [mainDir],
+          runOnce: false !== cliArgs.watch,
+        })
+      );
+
+      if ('@googleforcreators/fonts' === pkg.name) {
+        _plugins.push(
+          copy({
+            targets: [{ src: `${sourceDir}/fonts.json`, dest: mainDir }],
+          })
+        );
+      }
+
+      entries.push({
+        input,
+        output: {
+          ...output,
+          dir: mainDir,
+          format: 'cjs',
         },
         plugins: [...plugins, ..._plugins],
         external,

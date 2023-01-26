@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,21 +20,20 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Settings;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\AdSense
  */
 class AdSense extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\AdSense
-	 */
-	private $instance;
+	private \Google\Web_Stories\AdSense $instance;
 
 	public function set_up(): void {
 		parent::set_up();
 
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'adsense' );
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID, '123' );
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, '456' );
+		update_option( Settings::SETTING_NAME_AD_NETWORK, 'adsense' );
+		update_option( Settings::SETTING_NAME_ADSENSE_SLOT_ID, '123' );
+		update_option( Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, '456' );
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\AdSense::class );
 	}
@@ -39,9 +41,9 @@ class AdSense extends DependencyInjectedTestCase {
 	public function tear_down(): void {
 		parent::tear_down();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
+		delete_option( Settings::SETTING_NAME_AD_NETWORK );
+		delete_option( Settings::SETTING_NAME_ADSENSE_SLOT_ID );
+		delete_option( Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
 	}
 
 	/**
@@ -57,7 +59,7 @@ class AdSense extends DependencyInjectedTestCase {
 	 * @covers ::get_publisher_id
 	 */
 	public function test_get_publisher_id(): void {
-		$result = $this->call_private_method( $this->instance, 'get_publisher_id' );
+		$result = $this->call_private_method( [ $this->instance, 'get_publisher_id' ] );
 		$this->assertSame( '456', $result );
 	}
 
@@ -65,7 +67,7 @@ class AdSense extends DependencyInjectedTestCase {
 	 * @covers ::get_slot_id
 	 */
 	public function test_get_slot_id(): void {
-		$result = $this->call_private_method( $this->instance, 'get_slot_id' );
+		$result = $this->call_private_method( [ $this->instance, 'get_slot_id' ] );
 		$this->assertSame( '123', $result );
 	}
 
@@ -73,7 +75,7 @@ class AdSense extends DependencyInjectedTestCase {
 	 * @covers ::is_enabled
 	 */
 	public function test_is_enabled(): void {
-		$result = $this->call_private_method( $this->instance, 'is_enabled' );
+		$result = $this->call_private_method( [ $this->instance, 'is_enabled' ] );
 		$this->assertTrue( $result );
 	}
 

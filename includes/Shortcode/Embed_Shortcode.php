@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Shortcode;
 
@@ -53,8 +53,8 @@ class Embed_Shortcode extends Embed_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array<string, string> $attributes Shortcode attributes.
-	 * @param string                $content Shortcode content.
+	 * @param array<string, string|int> $attributes Shortcode attributes.
+	 * @param string                    $content Shortcode content.
 	 * @return string Rendered Shortcode
 	 */
 	public function render_shortcode( array $attributes, string $content ): string { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable

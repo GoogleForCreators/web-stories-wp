@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,49 +20,37 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
+use WP_UnitTest_Factory;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
 class Story_Post_Type extends DependencyInjectedTestCase {
-	use Capabilities_Setup;
-
 	/**
 	 * Admin user for test.
-	 *
-	 * @var int
 	 */
-	protected static $admin_id;
+	protected static int $admin_id;
 
 	/**
 	 * Story id.
-	 *
-	 * @var int
 	 */
-	protected static $story_id;
-
-	/**
-	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Story_Post_Type
-	 */
-	protected $instance;
-
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $settings;
+	protected static int $story_id;
 
 	/**
 	 * Archive page ID.
-	 *
-	 * @var int
 	 */
-	protected static $archive_page_id;
+	protected static int $archive_page_id;
 
 	/**
-	 * @param \WP_UnitTest_Factory $factory
+	 * Test instance.
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	protected \Google\Web_Stories\Story_Post_Type $instance;
+
+	private Settings $settings;
+
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -74,7 +65,10 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 			]
 		);
 
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_attachment_id
+		 */
+		$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -91,19 +85,15 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments = $this->createMock( Experiments::class );
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 
-		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
-		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
-
-		$this->add_caps_to_roles();
+		$this->settings = $this->injector->make( Settings::class );
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings );
 	}
 
 	public function tear_down(): void {
-		$this->remove_caps_from_roles();
-
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
@@ -134,7 +124,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_post_type_icon
 	 */
 	public function test_get_post_type_icon(): void {
-		$valid = $this->call_private_method( $this->instance, 'get_post_type_icon' );
+		$valid = $this->call_private_method( [ $this->instance, 'get_post_type_icon' ] );
 		$this->assertStringContainsString( 'data:image/svg+xml;base64', $valid );
 	}
 
@@ -144,6 +134,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_register_post_type(): void {
 
 		$post_type = $this->instance->register_post_type();
+		$this->assertNotWPError( $post_type );
 		$this->assertTrue( $post_type->has_archive );
 	}
 
@@ -153,6 +144,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_register_post_type_disabled(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
 		$post_type = $this->instance->register_post_type();
+		$this->assertNotWPError( $post_type );
 		$this->assertFalse( $post_type->has_archive );
 	}
 
@@ -162,6 +154,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_register_post_type_default(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
 		$post_type = $this->instance->register_post_type();
+		$this->assertNotWPError( $post_type );
 		$this->assertTrue( $post_type->has_archive );
 	}
 
@@ -223,8 +216,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_disabled_experiments(): void {
-		$experiments    = new \Google\Web_Stories\Experiments( $this->settings );
-		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings );
 
 		$actual = $this->instance->get_has_archive();
 		$this->assertTrue( $actual );
@@ -284,7 +276,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertIsString( $actual );
-		$this->assertSame( urldecode( get_page_uri( self::$archive_page_id ) ), $actual );
+		$this->assertSame( urldecode( (string) get_page_uri( self::$archive_page_id ) ), $actual );
 	}
 
 	/**

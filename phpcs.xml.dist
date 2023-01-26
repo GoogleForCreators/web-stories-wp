@@ -16,6 +16,7 @@
     <exclude-pattern>tests/*</exclude-pattern>
     <!-- Documentation is organized with the use of namespaces. -->
     <exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+    <exclude name="Squiz.Commenting.VariableComment.MissingVar" />
   </rule>
 
   <rule ref="WordPress-Extra">
@@ -34,6 +35,10 @@
 
   <rule ref="WordPress.Security.NonceVerification">
     <exclude-pattern>tests/*</exclude-pattern>
+  </rule>
+
+  <rule ref="WordPress.WP.AlternativeFunctions">
+     <exclude-pattern>tests/*</exclude-pattern>
   </rule>
 
   <rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
@@ -100,7 +105,11 @@
       <property name="enableStaticTypeHint" value="false" />
       <property name="enableMixedTypeHint" value="false" />
       <property name="enableUnionTypeHint" value="false" />
+      <property name="enableIntersectionTypeHint" value="false" />
+      <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
+      <property name="enableNeverTypeHint" value="false" />
     </properties>
+
     <exclude
       name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification"
     />
@@ -114,6 +123,36 @@
     <exclude-pattern>includes/Interfaces/FieldState.php</exclude-pattern>
     <exclude-pattern>includes/Interfaces/FieldStateFactory.php</exclude-pattern>
     <exclude-pattern>includes/Renderer/Stories/*</exclude-pattern>
+  </rule>
+
+  <!-- Requires parameter typehints and reports useless @param annotations. -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
+    <properties>
+      <property name="enableMixedTypeHint" value="false" />
+      <property name="enableUnionTypeHint" value="false" />
+      <property name="enableIntersectionTypeHint" value="false" />
+      <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
+    </properties>
+
+    <exclude
+      name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification"
+    />
+
+    <!-- The main plugin file should be parsable by PHP 5.6. -->
+    <exclude-pattern>web-stories.php</exclude-pattern>
+    <exclude-pattern
+    >includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
+
+    <!-- To ensure backward compatibility for developers using these. -->
+    <exclude-pattern>includes/Interfaces/FieldState.php</exclude-pattern>
+    <exclude-pattern>includes/Interfaces/FieldStateFactory.php</exclude-pattern>
+    <exclude-pattern>includes/Renderer/Stories/*</exclude-pattern>
+
+    <!-- Parent REST API controller classes in WP don't use parameter type hints, need to match their signature -->
+    <exclude-pattern>includes/REST_API</exclude-pattern>
+
+    <!-- Parent widget classes in WP don't use parameter type hints, need to match their signature -->
+    <exclude-pattern>includes/Widgets</exclude-pattern>
   </rule>
 
   <!-- Checks whether the nullablity ? symbol is present before each nullable and optional parameter. -->
@@ -133,16 +172,29 @@
   <!-- Reports useless @var annotation for constants because the type of constant is always clear. -->
   <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint" />
 
-  <!-- Enforces correct space usage in array functions. -->
-  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
-    <properties>
-      <property name="spacesCountAfterKeyword" value="0" />
-      <property name="spacesCountBeforeArrow" value="1" />
-      <property name="spacesCountAfterArrow" value="1" />
-      <property name="allowMultiLine" value="true" />
-    </properties>
+  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+      <exclude-pattern>web-stories.php</exclude-pattern>
+      <exclude-pattern>includes/compat/*</exclude-pattern>
+      <exclude-pattern>includes/templates/*</exclude-pattern>
   </rule>
 
+  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+      <exclude-pattern>web-stories.php</exclude-pattern>
+      <exclude-pattern>includes/compat/*</exclude-pattern>
+       <properties>
+        <property name="enableMixedTypeHint" value="false" />
+        <property name="enableUnionTypeHint" value="false" />
+        <property name="enableIntersectionTypeHint" value="false" />
+        <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
+      </properties>
+  </rule>
+
+  <rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator">
+      <properties>
+        <property name="minDigitsAfterDecimalPoint" value="3" />
+        <property name="minDigitsBeforeDecimalPoint" value="6" />
+      </properties>
+  </rule>
   <!-- Disallows grouped use declarations. -->
   <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse" />
   <!-- Disallows leading backslash in use statement. -->
@@ -168,9 +220,19 @@
       <property name="linesCountAfterLastUse" value="1" />
     </properties>
   </rule>
+  <!-- All references to functions, classes and constants should import using a use statement. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+     <properties>
+        <property name="allowFullyQualifiedGlobalFunctions" value="true" />
+        <property name="allowFullyQualifiedGlobalClasses" value="true" />
+        <property name="allowFullyQualifiedGlobalConstants" value="true" />
+        <property name="allowFallbackGlobalFunctions" value="true" />
+        <property name="allowFallbackGlobalConstants" value="true" />
+        <property name="allowFullyQualifiedNameForCollidingClasses" value="true" />
+    </properties>
+  </rule>
   <!-- Prohibits uses from the same namespace. -->
   <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace" />
-  <!-- All references to types named Exception or ending with Exception must be referenced via a fully qualified name. -->
   <!-- Looks for unused imports from other namespaces. -->
   <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
     <properties>
@@ -184,14 +246,74 @@
     </properties>
   </rule>
 
+  <!-- Requires arrow functions if possible. -->
+  <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction" />
+  <!-- Enforces correct space usage in array functions. -->
+  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
+    <properties>
+      <property name="spacesCountAfterKeyword" value="0" />
+      <property name="spacesCountBeforeArrow" value="1" />
+      <property name="spacesCountAfterArrow" value="1" />
+      <property name="allowMultiLine" value="true" />
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Functions.StaticClosure" />
+
+  <rule ref="SlevomatCodingStandard.PHP">
+    <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
+    <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
+  </rule>
+
   <!-- Class names should be referenced via ::class constant when possible. -->
   <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
     <properties>
       <property name="enableOnObjects" value="false" />
     </properties>
   </rule>
+
   <!-- Requires declaring visibility for class constants. -->
   <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
+
+  <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
+    <properties>
+      <property name="groups" type="array">
+        <element value="uses" />
+
+        <element value="enum cases" />
+
+        <!-- Public constants are first but you don't care about the order of protected or private constants -->
+        <element value="public constants" />
+        <element value="constants" />
+
+        <!-- You don't care about the order among the properties. The same can be done with "properties" shortcut -->
+        <element
+          value="public static properties, protected static properties, private static properties"
+        />
+        <element
+          value="public properties, protected properties, private properties"
+        />
+
+        <!-- Constructor is first, then all public methods, then protected/private methods and magic methods are last -->
+        <element value="constructor" />
+        <element value="all public methods" />
+        <element value="methods" />
+        <element value="magic methods" />
+      </property>
+    </properties>
+  </rule>
+
+  <rule ref="SlevomatCodingStandard.Variables">
+    <exclude
+      name="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable"
+    />
+  </rule>
+
+  <!-- Enforces maximum cognitive complexity for functions.. -->
+  <rule ref="SlevomatCodingStandard.Complexity.Cognitive">
+    <properties>
+      <property name="maxComplexity" value="25" />
+    </properties>
+  </rule>
 
   <!-- Requires use of null coalesce operator (??) when possible. -->
   <rule

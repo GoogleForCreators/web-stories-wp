@@ -14,19 +14,6 @@
  * limitations under the License.
  */
 
-// See https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html
-
-interface AudioTrackList {
-  [Symbol.iterator](): IterableIterator<unknown>;
-  length: number;
-}
-
-interface HTMLVideoElement {
-  readonly audioTracks?: AudioTrackList;
-  readonly mozHasAudio?: boolean;
-  readonly webkitAudioDecodedByteCount?: number;
-}
-
 /**
  * Determines whether a video element has audio tracks.
  *
@@ -37,7 +24,7 @@ function hasVideoGotAudio(video: HTMLVideoElement): boolean {
   return (
     video.mozHasAudio ||
     Boolean(video.webkitAudioDecodedByteCount) ||
-    Boolean(video.audioTracks?.length)
+    (video.audioTracks ? video.audioTracks.length > 0 : false)
   );
 }
 

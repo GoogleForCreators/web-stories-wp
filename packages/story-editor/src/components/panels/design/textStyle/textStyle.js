@@ -27,7 +27,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
-import { styles, useHighlights, states } from '../../../../app/highlights';
+import { useHighlights, states } from '../../../../app/highlights';
+import styles from '../../../../app/highlights/styles';
 import { useStory, useLayout } from '../../../../app';
 import {
   getPagesWithFailedContrast,
@@ -37,6 +38,7 @@ import { usePresubmitHandler } from '../../../form';
 import PanelContent from '../../panel/shared/content';
 import Panel from '../../panel/panel';
 import Warning from '../warning';
+import { noop } from '../../../../utils/noop';
 import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
@@ -64,8 +66,8 @@ function StylePanel(props) {
   // will be wrong.
   const { dropdownHighlight, colorHighlight, resetHighlight, cancelHighlight } =
     useHighlights((state) => ({
-      dropdownHighlight: state[states.FONT],
-      colorHighlight: state[states.TEXT_COLOR],
+      dropdownHighlight: state[states.Font],
+      colorHighlight: state[states.TextColor],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     }));
@@ -99,7 +101,7 @@ function StylePanel(props) {
         const elementIds = pages[0]?.result;
         setFailedElementIds(elementIds);
       })
-      .catch(() => {});
+      .catch(noop);
   }, [currentPage, pageSize]);
 
   return (

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -18,8 +21,10 @@
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_Customize_Manager;
+use WP_Customize_Section;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Customizer
@@ -30,17 +35,13 @@ class Customizer extends DependencyInjectedTestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Admin\Customizer
 	 */
-	private $instance;
+	private TheCustomizer $instance;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \WP_Customize_Manager
 	 */
-	private $wp_customize_mock;
+	private ?WP_Customize_Manager $wp_customize = null;
 
 	public static function wpSetUpBeforeClass(): void {
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';
@@ -53,14 +54,17 @@ class Customizer extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		global $wp_customize;
+		$wp_customize            = new WP_Customize_Manager();
+		$GLOBALS['wp_customize'] = $wp_customize;
+		$this->wp_customize      = $GLOBALS['wp_customize'];
 
-		$wp_customize            = new \WP_Customize_Manager();
-		$this->wp_customize_mock = $this->createMock( WP_Customize_Manager::class );
-		$this->instance          = $this->injector->make( \Google\Web_Stories\Admin\Customizer::class );
+		$this->instance = $this->injector->make( TheCustomizer::class );
 	}
 
 	public function tear_down(): void {
+		$this->wp_customize = null;
+		unset( $GLOBALS['wp_customize'] );
+
 		remove_theme_support( 'web-stories' );
 
 		parent::tear_down();
@@ -71,62 +75,6 @@ class Customizer extends DependencyInjectedTestCase {
 	 */
 	public function test_is_needed(): void {
 		$this->assertTrue( $this->instance::is_needed() );
-	}
-
-	/**
-	 * Add theme support for web stories.
-	 */
-	private function add_web_stories_theme_support(): void {
-		add_theme_support(
-			'web-stories',
-			[
-				'customizer' => [
-					'view_type'         => [
-						'enabled' => [ 'circles', 'grid', 'list', 'carousel' ],
-						'default' => 'circles',
-					],
-					'title'             => [
-						'enabled' => true,
-						'default' => false,
-					],
-					'author'            => [
-						'enabled' => true,
-						'default' => false,
-					],
-					'date'              => [
-						'enabled' => true,
-						'default' => false,
-					],
-					'archive_link'      => [
-						'enabled' => true,
-						'default' => true,
-						'label'   => 'View all stories',
-					],
-					'sharp_corners'     => [
-						'enabled' => false,
-						'default' => false,
-					],
-					'order'             => [
-						'default' => 'DESC',
-					],
-					'orderby'           => [
-						'default' => 'post_date',
-					],
-					'circle_size'       => [
-						'default' => 150,
-					],
-					'number_of_stories' => [
-						'default' => 5,
-					],
-					'number_of_columns' => [
-						'default' => 4,
-					],
-					'image_alignment'   => [
-						'default' => is_rtl() ? 'right' : 'left',
-					],
-				],
-			]
-		);
 	}
 
 	/**
@@ -153,7 +101,8 @@ class Customizer extends DependencyInjectedTestCase {
 	public function test_customizer_web_stories_section_added(): void {
 		$this->add_web_stories_theme_support();
 
-		$this->wp_customize_mock->expects( $this->once() )->method( 'add_section' )->with(
+		$this->assertInstanceOf( WP_Customize_Manager::class, $this->wp_customize );
+		$this->wp_customize->add_section(
 			TheCustomizer::SECTION_SLUG,
 			[
 				'title'          => 'Web Stories',
@@ -161,7 +110,16 @@ class Customizer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->instance->register_customizer_settings( $this->wp_customize_mock );
+		$this->instance->register_customizer_settings( $this->wp_customize );
+		$settings = $this->wp_customize->sections();
+		$this->assertIsArray( $settings );
+		$this->assertArrayHasKey( TheCustomizer::SECTION_SLUG, $settings );
+		$this->assertInstanceOf( WP_Customize_Section::class, $settings[ TheCustomizer::SECTION_SLUG ] );
+		$this->assertObjectHasAttribute( 'title', $settings[ TheCustomizer::SECTION_SLUG ] );
+		$this->assertObjectHasAttribute( 'theme_supports', $settings[ TheCustomizer::SECTION_SLUG ] );
+
+		$this->assertSame( 'Web Stories', $settings[ TheCustomizer::SECTION_SLUG ]->title );
+		$this->assertSame( 'web-stories', $settings[ TheCustomizer::SECTION_SLUG ]->theme_supports );
 	}
 
 	/**
@@ -169,121 +127,24 @@ class Customizer extends DependencyInjectedTestCase {
 	 */
 	public function test_customizer_settings_added(): void {
 		$this->add_web_stories_theme_support();
-		$this->wp_customize_mock->expects( $this->exactly( 14 ) )->method( 'add_setting' );
-		$this->instance->register_customizer_settings( $this->wp_customize_mock );
-	}
-
-	/**
-	 * @covers ::register_customizer_settings
-	 */
-	public function test_customizer_show_stories_settings_added(): void {
-		$this->add_web_stories_theme_support();
-		$this->wp_customize_mock->expects( $this->exactly( 14 ) )->
-		method( 'add_setting' )->
-		withConsecutive(
-			[
-				'web_stories_customizer_settings[show_stories]',
-				[
-					'default' => false,
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[view_type]',
-				[
-					'default' => 'circles',
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[number_of_stories]',
-				[
-					'default'           => 5,
-					'type'              => 'option',
-					'validate_callback' => [ $this->instance, 'validate_number_of_stories' ],
-				],
-			],
-			[
-				'web_stories_customizer_settings[number_of_columns]',
-				[
-					'default'           => 4,
-					'type'              => 'option',
-					'validate_callback' => [ $this->instance, 'validate_number_of_columns' ],
-				],
-			],
-			[
-				'web_stories_customizer_settings[orderby]',
-				[
-					'default' => 'post_date',
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[order]',
-				[
-					'default' => 'DESC',
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[circle_size]',
-				[
-					'default' => 150,
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[image_alignment]',
-				[
-					'type'    => 'option',
-					'default' => 'left',
-				],
-			],
-			[
-				'web_stories_customizer_settings[show_title]',
-				[
-					'default' => false,
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[show_excerpt]',
-				[
-					'default' => false,
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[show_author]',
-				[
-					'default' => false,
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[show_date]',
-				[
-					'default' => false,
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[show_archive_link]',
-				[
-					'default' => true,
-					'type'    => 'option',
-				],
-			],
-			[
-				'web_stories_customizer_settings[archive_link_label]',
-				[
-					'type'    => 'option',
-					'default' => 'View all stories',
-				],
-			]
-		);
-
-		$this->instance->register_customizer_settings( $this->wp_customize_mock );
+		$this->assertInstanceOf( WP_Customize_Manager::class, $this->wp_customize );
+		$this->instance->register_customizer_settings( $this->wp_customize );
+		$settings = $this->wp_customize->settings();
+		$this->assertIsArray( $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_stories]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[view_type]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[number_of_stories]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[number_of_columns]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[orderby]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[order]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[circle_size]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[image_alignment]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_title]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_excerpt]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_author]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_date]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_archive_link]', $settings );
+		$this->assertArrayHasKey( 'web_stories_customizer_settings[archive_link_label]', $settings );
 	}
 
 	/**
@@ -456,7 +317,7 @@ class Customizer extends DependencyInjectedTestCase {
 
 		self::factory()->post->create(
 			[
-				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 			]
 		);
 
@@ -464,5 +325,61 @@ class Customizer extends DependencyInjectedTestCase {
 
 		$this->assertNotEmpty( $output );
 		$this->assertStringContainsString( 'web-stories-list--customizer', $output );
+	}
+
+	/**
+	 * Add theme support for web stories.
+	 */
+	private function add_web_stories_theme_support(): void {
+		add_theme_support(
+			'web-stories',
+			[
+				'customizer' => [
+					'view_type'         => [
+						'enabled' => [ 'circles', 'grid', 'list', 'carousel' ],
+						'default' => 'circles',
+					],
+					'title'             => [
+						'enabled' => true,
+						'default' => false,
+					],
+					'author'            => [
+						'enabled' => true,
+						'default' => false,
+					],
+					'date'              => [
+						'enabled' => true,
+						'default' => false,
+					],
+					'archive_link'      => [
+						'enabled' => true,
+						'default' => true,
+						'label'   => 'View all stories',
+					],
+					'sharp_corners'     => [
+						'enabled' => false,
+						'default' => false,
+					],
+					'order'             => [
+						'default' => 'DESC',
+					],
+					'orderby'           => [
+						'default' => 'post_date',
+					],
+					'circle_size'       => [
+						'default' => 150,
+					],
+					'number_of_stories' => [
+						'default' => 5,
+					],
+					'number_of_columns' => [
+						'default' => 4,
+					],
+					'image_alignment'   => [
+						'default' => is_rtl() ? 'right' : 'left',
+					],
+				],
+			]
+		);
 	}
 }

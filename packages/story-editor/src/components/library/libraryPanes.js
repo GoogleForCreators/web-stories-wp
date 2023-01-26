@@ -16,7 +16,8 @@
 /**
  * Internal dependencies
  */
-import { styles, useHighlights } from '../../app/highlights';
+import { useHighlights } from '../../app/highlights';
+import styles from '../../app/highlights/styles';
 import { useAPI } from '../../app';
 import useLibrary from './useLibrary';
 import { Pane, getTabId } from './panes/shared';

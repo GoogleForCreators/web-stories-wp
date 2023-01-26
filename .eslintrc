@@ -57,7 +57,7 @@
       "",
       {
         "pattern": " \\* Copyright \\d{4} Google LLC",
-        "template": " * Copyright 2022 Google LLC"
+        "template": " * Copyright 2023 Google LLC"
       },
       " *",
       " * Licensed under the Apache License, Version 2.0 (the \"License\");",
@@ -230,6 +230,9 @@
     ],
     "jsdoc/check-indentation": "error",
     "jsdoc/check-syntax": "error",
+    "jsdoc/check-tag-names": ["error", {
+      "definedTags": [ "jest-environment" ]
+    }],
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
@@ -333,7 +336,11 @@
       },
       "rules": {
         "@typescript-eslint/no-duplicate-imports": "error",
-        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/no-shadow": ["error",
+          {
+            "ignoreOnInitialization": true
+          }
+        ],
         "@typescript-eslint/unbound-method": [
           "error",
           {
@@ -414,6 +421,7 @@
         "eslint-comments/require-description": "off",
         "react/prop-types": "off",
         "jest/no-hooks": "off",
+        "jest/no-untyped-mock-factory": "off",
         "jest/max-expects": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -439,7 +447,8 @@
       ],
       "rules": {
         "@typescript-eslint/unbound-method": "off",
-        "jest/unbound-method": "error"
+        "jest/unbound-method": "error",
+        "jest/no-untyped-mock-factory": "error"
       }
     },
     {
@@ -658,7 +667,8 @@
         "node/no-extraneous-import": "off",
         "node/no-missing-import": "off",
         "node/no-unpublished-import": "off",
-        "node/no-unpublished-require": "off"
+        "node/no-unpublished-require": "off",
+        "security/detect-non-literal-fs-filename": "off"
       }
     },
     {
@@ -824,6 +834,17 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "packages/date/src/third_party/**/*"
+      ],
+      "rules": {
+        "header/header": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-unsafe-return": "off"
       }
     }
   ]

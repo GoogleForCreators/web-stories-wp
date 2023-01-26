@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Taxonomy;
 
@@ -93,17 +93,13 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
-	 *
-	 * @var string
 	 */
-	protected $taxonomy_slug;
+	protected string $taxonomy_slug;
 
 	/**
-	 * Object type or array of object types with which the taxonomy should be associated.
-	 *
-	 * @var string[]|string
+	 * Object type which the taxonomy should be associated.
 	 */
-	protected $taxonomy_post_type;
+	protected string $taxonomy_post_type;
 
 	/**
 	 * Register taxonomy on register service.
@@ -133,15 +129,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	}
 
 	/**
-	 * Taxonomy args.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return TaxonomyArgs Taxonomy args.
-	 */
-	abstract protected function taxonomy_args(): array;
-
-	/**
 	 * Act on site initialization.
 	 *
 	 * @since 1.12.0
@@ -159,7 +146,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		$this->register_taxonomy();
 	}
 
@@ -170,7 +157,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 */
-	public function on_plugin_deactivation( $network_wide ): void {
+	public function on_plugin_deactivation( bool $network_wide ): void {
 		$this->unregister_taxonomy();
 	}
 
@@ -210,4 +197,13 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 			}
 		}
 	}
+
+	/**
+	 * Taxonomy args.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return TaxonomyArgs Taxonomy args.
+	 */
+	abstract protected function taxonomy_args(): array;
 }

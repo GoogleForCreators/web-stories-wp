@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -61,7 +61,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Constructor.
@@ -189,7 +189,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		$args = [
-			'limit_response_size' => 153600, // 150 KB.
+			'limit_response_size' => 153_600, // 150 KB.
 			'timeout'             => 7, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 		];
 

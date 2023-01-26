@@ -40,7 +40,7 @@ const StoryTitleLength = () => {
   const handleClick = useCallback(
     () =>
       setHighlights({
-        highlight: states.STORY_TITLE,
+        highlight: states.StoryTitle,
       }),
     [setHighlights]
   );

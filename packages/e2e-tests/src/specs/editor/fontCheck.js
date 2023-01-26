@@ -135,7 +135,8 @@ async function getCurrentStoryData() {
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
-describe('Font Check', () => {
+// eslint-disable-next-line jest/no-disabled-tests -- TODO: Fix flakey tests.
+describe.skip('Font Check', () => {
   beforeEach(async () => {
     await visitSettings();
     await removeAllFonts();

@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Exception;
 
@@ -65,7 +65,7 @@ final class FailedToMakeInstance
 	 *                                           circular reference.
 	 */
 	public static function for_circular_reference(
-		$interface_or_class,
+		string $interface_or_class,
 		InjectionChain $injection_chain
 	): self {
 		$message = \sprintf(
@@ -89,7 +89,7 @@ final class FailedToMakeInstance
 	 *
 	 * @param string $interface Interface that was left unresolved.
 	 */
-	public static function for_unresolved_interface( $interface ): self {
+	public static function for_unresolved_interface( string $interface ): self {
 		$message = \sprintf(
 			'Could not resolve the interface "%s" to an instantiable class, probably forgot to bind an implementation.',
 			$interface
@@ -107,7 +107,7 @@ final class FailedToMakeInstance
 	 * @param string $interface_or_class Interface or class that could not be
 	 *                                   reflected upon.
 	 */
-	public static function for_unreflectable_class( $interface_or_class ): self {
+	public static function for_unreflectable_class( string $interface_or_class ): self {
 		$message = \sprintf(
 			'Could not reflect on the interface or class "%s", probably not a valid FQCN.',
 			$interface_or_class
@@ -127,7 +127,7 @@ final class FailedToMakeInstance
 	 * @param string $class         Class that had the argument in its
 	 *                              constructor.
 	 */
-	public static function for_unresolved_argument( $argument_name, $class ): self {
+	public static function for_unresolved_argument( string $argument_name, string $class ): self {
 		$message = \sprintf(
 			'Could not resolve the argument "%s" while trying to instantiate the class "%s".',
 			$argument_name,
@@ -145,7 +145,7 @@ final class FailedToMakeInstance
 	 *
 	 * @param string $class Class that was not yet instantiated.
 	 */
-	public static function for_uninstantiated_shared_instance( $class ): self {
+	public static function for_uninstantiated_shared_instance( string $class ): self {
 		$message = \sprintf(
 			'Could not retrieve the shared instance for "%s" as it was not instantiated yet.',
 			$class
@@ -162,7 +162,7 @@ final class FailedToMakeInstance
 	 *
 	 * @param string $class Class for which there is no delegate.
 	 */
-	public static function for_invalid_delegate( $class ): self {
+	public static function for_invalid_delegate( string $class ): self {
 		$message = \sprintf(
 			'Could not retrieve a delegate for "%s", none was defined.',
 			$class

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,10 +28,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Base_Color extends TestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Base_Color
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Base_Color $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -67,6 +68,8 @@ class Base_Color extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$color = '#000000';
 
 		update_post_meta( $attachment_id, $this->instance::BASE_COLOR_POST_META_KEY, $color );
@@ -96,6 +99,8 @@ class Base_Color extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $attachment_id );
 
 		$color = '#000000';
 

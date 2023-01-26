@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import {
-  Text,
-  THEME_CONSTANTS,
-  themeHelpers,
-} from '@googleforcreators/design-system';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -61,7 +57,7 @@ export const MediaGalleryContainer = styled.div`
 // Exceeding the parent's width here so the media items
 // better align with the upload buttons and scroll bar.
 export const MediaGalleryInnerContainer = styled.div`
-  width: calc(100% + ${themeHelpers.SCROLLBAR_WIDTH}px);
+  width: calc(100% + ${THEME_CONSTANTS.SCROLLBAR_WIDTH}px);
 `;
 
 export const MediaGalleryLoadingPill = styled.div`

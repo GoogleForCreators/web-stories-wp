@@ -32,7 +32,7 @@ import { __ } from '@googleforcreators/i18n';
 import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
 import {
   useKeyDownEffect,
-  themeHelpers,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 
@@ -41,6 +41,7 @@ import { useTransform } from '@googleforcreators/transform';
  */
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import useStory from '../../app/story/useStory';
+import { noop } from '../../utils/noop';
 import CustomColorPicker from './customColorPicker';
 import BasicColorPicker from './basicColorPicker';
 
@@ -58,7 +59,7 @@ const Container = styled.div`
     maxHeight
       ? `
           height: ${maxHeight}px;
-          width: ${PICKER_WIDTH + themeHelpers.SCROLLBAR_WIDTH}px;
+          width: ${PICKER_WIDTH + THEME_CONSTANTS.SCROLLBAR_WIDTH}px;
         `
       : `
           width: ${PICKER_WIDTH}px;
@@ -87,9 +88,9 @@ function ColorPicker({
   allowsSavedColors = false,
   hasEyedropper = true,
   maxHeight = null,
-  onClose = () => {},
+  onClose = noop,
   changedStyle = 'background',
-  onDimensionChange = () => {},
+  onDimensionChange = noop,
   allowsSavedColorDeletion = true,
   shouldCloseOnSelection = false,
 }) {

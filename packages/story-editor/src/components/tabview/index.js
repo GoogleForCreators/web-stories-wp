@@ -35,6 +35,7 @@ import { useConfig } from '../../app';
 import Tooltip from '../tooltip';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants';
+import { noop } from '../../utils/noop';
 
 const ALERT_ICON_SIZE = 28;
 export const TAB_HEIGHT = 32;
@@ -146,8 +147,6 @@ const TabText = styled(Headline).attrs({
   color: inherit;
 `;
 
-const noop = () => {};
-
 function UnreffedTab(
   { children, tooltip = null, placement, refId, tabRefs, ...rest },
   ref
@@ -255,7 +254,7 @@ function TabView({
   useKeyDownEffect(ref, 'right', () => handleNavigation(1), [handleNavigation]);
 
   // Empty up/down handlers for consistency with left/right.
-  useKeyDownEffect(ref, ['up', 'down'], () => {}, []);
+  useKeyDownEffect(ref, ['up', 'down'], noop, []);
 
   // Home/end keys navigate to first/last tab regardless of direction
   useKeyDownEffect(ref, 'home', () => focusTabByIndex(0), [focusTabByIndex]);

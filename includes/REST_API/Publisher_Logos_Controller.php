@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -51,14 +51,14 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Constructor.
@@ -388,36 +388,6 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	}
 
 	/**
-	 * Get an existing publisher logo's post object, if valid.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param int $id Supplied ID.
-	 * @return WP_Post|WP_Error Post object if ID is valid, WP_Error otherwise.
-	 */
-	protected function get_publisher_logo( $id ) {
-		/**
-		 * List of publisher logos.
-		 *
-		 * @var int[] $publisher_logos
-		 */
-		$publisher_logos = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
-		$publisher_logos = $this->filter_publisher_logos( $publisher_logos );
-
-		$post = get_post( $id );
-
-		if ( ! $post || ! \in_array( $post->ID, $publisher_logos, true ) ) {
-			return new \WP_Error(
-				'rest_invalid_id',
-				__( 'Invalid ID', 'web-stories' ),
-				[ 'status' => 400 ]
-			);
-		}
-
-		return $post;
-	}
-
-	/**
 	 * Prepares a single publisher logo output for response.
 	 *
 	 * @since 1.12.0
@@ -463,42 +433,6 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	}
 
 	/**
-	 * Filters publisher logos to remove non-existent or invalid ones.
-	 *
-	 * @param int[] $publisher_logos List of publisher logos.
-	 * @return int[] Filtered list of publisher logos.
-	 */
-	protected function filter_publisher_logos( $publisher_logos ): array {
-		return array_filter( $publisher_logos, 'wp_attachment_is_image' );
-	}
-
-	/**
-	 * Prepares links for the request.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param WP_Post $post Post object.
-	 * @return array Links for the given post.
-	 *
-	 * @phpstan-return Links
-	 */
-	protected function prepare_links( $post ): array {
-		$base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
-
-		// Entity meta.
-		$links = [
-			'self'       => [
-				'href' => rest_url( trailingslashit( $base ) . $post->ID ),
-			],
-			'collection' => [
-				'href' => rest_url( $base ),
-			],
-		];
-
-		return $links;
-	}
-
-	/**
 	 * Retrieves the publisher logo's schema, conforming to JSON Schema.
 	 *
 	 * @since 1.12.0
@@ -510,7 +444,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 			return $this->add_additional_fields_schema( $this->schema );
 		}
 
-		$schema = [
+		return [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => 'publisher-logo',
 			'type'       => 'object',
@@ -542,7 +476,69 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 				],
 			],
 		];
+	}
 
-		return $schema;
+	/**
+	 * Get an existing publisher logo's post object, if valid.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param int $id Supplied ID.
+	 * @return WP_Post|WP_Error Post object if ID is valid, WP_Error otherwise.
+	 */
+	protected function get_publisher_logo( $id ) {
+		/**
+		 * List of publisher logos.
+		 *
+		 * @var int[] $publisher_logos
+		 */
+		$publisher_logos = $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
+		$publisher_logos = $this->filter_publisher_logos( $publisher_logos );
+
+		$post = get_post( $id );
+
+		if ( ! $post || ! \in_array( $post->ID, $publisher_logos, true ) ) {
+			return new \WP_Error(
+				'rest_invalid_id',
+				__( 'Invalid ID', 'web-stories' ),
+				[ 'status' => 400 ]
+			);
+		}
+
+		return $post;
+	}
+
+	/**
+	 * Filters publisher logos to remove non-existent or invalid ones.
+	 *
+	 * @param int[] $publisher_logos List of publisher logos.
+	 * @return int[] Filtered list of publisher logos.
+	 */
+	protected function filter_publisher_logos( $publisher_logos ): array {
+		return array_filter( $publisher_logos, 'wp_attachment_is_image' );
+	}
+
+	/**
+	 * Prepares links for the request.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param WP_Post $post Post object.
+	 * @return array Links for the given post.
+	 *
+	 * @phpstan-return Links
+	 */
+	protected function prepare_links( $post ): array {
+		$base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+
+		// Entity meta.
+		return [
+			'self'       => [
+				'href' => rest_url( trailingslashit( $base ) . $post->ID ),
+			],
+			'collection' => [
+				'href' => rest_url( $base ),
+			],
+		];
 	}
 }

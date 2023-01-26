@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
@@ -66,21 +66,21 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Analytics constructor.
@@ -141,6 +141,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @return array|mixed Filtered options.
 	 *
 	 * @phpstan-param AMPOptions $options
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($options is array<T> ? array<T> : mixed)
 	 */
 	public function filter_amp_options( $options ) {
 		if ( ! \is_array( $options ) ) {
@@ -164,6 +168,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @param string[]|mixed $post_types Supportable post types.
 	 * @return array|mixed Supportable post types.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($post_types is array<T> ? array<T> : mixed)
 	 */
 	public function filter_supportable_post_types( $post_types ) {
 		if ( ! \is_array( $post_types ) ) {
@@ -175,7 +183,7 @@ class AMP extends Service_Base implements HasRequirements {
 		$post_types = array_diff( $post_types, [ $story_post_type ] );
 
 		if ( $this->get_request_post_type() === $story_post_type ) {
-			$post_types = array_merge( $post_types, [ $story_post_type ] );
+			$post_types = [ ...$post_types, $story_post_type ];
 		}
 
 		return array_unique( array_values( $post_types ) );
@@ -234,6 +242,8 @@ class AMP extends Service_Base implements HasRequirements {
 			'publisher'      => $story->get_publisher_name(),
 			'poster_images'  => array_filter( $poster_images ),
 			'video_cache'    => $video_cache_enabled,
+			'title_tag'      => wp_get_document_title(),
+			'description'    => wp_strip_all_tags( get_the_excerpt() ),
 		];
 
 		return $sanitizers;
@@ -259,10 +269,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param array{node_type?: int, node_name?: string, parent_name?: string} $error     Validation error being sanitized.
 	 * @return null|bool Whether sanitized.
 	 */
-	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
+	public function filter_amp_validation_error_sanitized( ?bool $sanitized, array $error ): ?bool {
 		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
-			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
+			isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) &&
 			(
 				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
 				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] ) ||
@@ -292,13 +302,13 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param bool|mixed $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
-	 * @param string     $url      URL considered for exclusion.
-	 * @param string[]   $rel      Link relations.
-	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
+	 * @param bool|mixed      $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
+	 * @param string          $url      URL considered for exclusion.
+	 * @param string[]        $rel      Link relations.
+	 * @param DOMElement|null $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
 	 * @return bool|mixed Whether AMP-to-AMP is excluded.
 	 */
-	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
+	public function filter_amp_to_amp_linking_element_excluded( $excluded, string $url, array $rel, ?DOMElement $element ) {
 		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
 			return true;
 		}
@@ -321,7 +331,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param int        $post    Post ID.
 	 * @return bool|mixed Whether post should be skipped from AMP.
 	 */
-	public function filter_amp_skip_post( $skipped, $post ) {
+	public function filter_amp_skip_post( $skipped, int $post ) {
 		// This is the opposite to the `AMP__VERSION >= WEBSTORIES_AMP_VERSION` check in the HTML renderer.
 		if (
 			$this->story_post_type->get_slug() === get_post_type( $post )
@@ -390,7 +400,7 @@ class AMP extends Service_Base implements HasRequirements {
 			 * @var string $request_uri
 			 */
 			$request_uri = $_SERVER['REQUEST_URI'];
-			if ( false !== strpos( (string) wp_unslash( $request_uri ), $this->story_post_type->get_rest_url() ) ) {
+			if ( str_contains( (string) wp_unslash( $request_uri ), $this->story_post_type->get_rest_url() ) ) {
 				return $this->story_post_type->get_slug();
 			}
 		}
@@ -408,7 +418,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param int $post_id Post ID for Validated URL Post.
 	 * @return string|null Post type or null if validated URL is not for a singular post.
 	 */
-	protected function get_validated_url_post_type( $post_id ): ?string {
+	protected function get_validated_url_post_type( int $post_id ): ?string {
 		if ( empty( $post_id ) ) {
 			return null;
 		}

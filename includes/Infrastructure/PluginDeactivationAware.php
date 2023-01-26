@@ -15,7 +15,7 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Infrastructure;
 
@@ -41,5 +41,5 @@ interface PluginDeactivationAware {
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 */
-	public function on_plugin_deactivation( $network_wide ): void;
+	public function on_plugin_deactivation( bool $network_wide ): void;
 }

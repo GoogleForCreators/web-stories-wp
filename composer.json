@@ -13,21 +13,21 @@
     "ext-mbstring": "*",
     "ampproject/amp-toolbox": "*",
     "ampproject/amp-wp": "dev-develop",
-    "cweagans/composer-patches": "^1.6",
     "enshrined/svg-sanitize": "^0.15.2",
     "mcaskill/composer-exclude-files": "^3.0",
     "symfony/polyfill-mbstring": "^1.18"
   },
   "require-dev": {
-    "automattic/vipwpcs": "^2.3",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
-    "dg/bypass-finals": "^1.4.1",
+    "automattic/vipwpcs": "dev-develop",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "ergebnis/composer-normalize": "^2.28",
     "humbug/php-scoper": "^0.17.5",
     "php-stubs/woocommerce-stubs": "^7.0",
+    "php-stubs/wordpress-tests-stubs": "^6.1.1",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
     "phpstan/extension-installer": "^1.1",
+    "phpstan/phpstan-phpunit": "^1.2",
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^8.0.0",
@@ -53,10 +53,7 @@
       "Google\\Web_Stories\\": "includes",
       "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
       "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
-    },
-    "files": [
-      "includes/polyfills/mbstring.php"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
@@ -69,7 +66,7 @@
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "cweagans/composer-patches": true,
+      "cweagans/composer-patches": false,
       "mcaskill/composer-exclude-files": true,
       "phpstan/extension-installer": true,
       "composer/installers": true,
@@ -87,19 +84,7 @@
     "exclude-from-files": [
       "ampproject/amp-wp/includes/bootstrap.php"
     ],
-    "installer-disable": true,
-    "patches": {
-      "phpunit/phpunit-mock-objects": {
-        "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"
-      }
-    },
-    "patches-ignore": {
-      "ampproject/amp-wp": {
-        "phpunit/phpunit-mock-objects": {
-          "We patch this ourselves": "patches/phpunit-mock-objects.patch"
-        }
-      }
-    }
+    "installer-disable": true
   },
   "scripts": {
     "post-install-cmd": [
@@ -117,7 +102,7 @@
       "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",
       "@composer dump-autoload --working-dir ./third-party --no-dev --classmap-authoritative",
       "sed -i'.bak' -e 's/Composer\\\\Autoload/Google_Web_Stories_Composer\\\\Autoload/' third-party/vendor/composer/*.php && rm -rf third-party/vendor/composer/*.php.bak",
-      "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./includes/composer.json",
+      "echo '{ \"autoload\": { \"classmap\": [\"\"], \"files\": [\"polyfills/mbstring.php\"] } }' > ./includes/composer.json",
       "@composer dump-autoload --working-dir ./includes --no-dev --classmap-authoritative",
       "sed -i'.bak' -e 's/Composer\\\\Autoload/Google_Web_Stories_Composer\\\\Autoload/' includes/vendor/composer/*.php && rm -rf includes/vendor/composer/*.php.bak"
     ]

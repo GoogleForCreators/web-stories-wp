@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -22,13 +25,10 @@ namespace Google\Web_Stories\Tests\Unit;
  */
 class Decoder extends TestCase {
 	/**
-	 * @param string $encoded
-	 * @param string $string
-	 *
 	 * @dataProvider get_encoded_data
 	 * @covers ::base64_decode
 	 */
-	public function test_base64_decode( $encoded, $string ): void {
+	public function test_base64_decode( string $encoded, string $string ): void {
 
 		$decoder = new \Google\Web_Stories\Decoder();
 		$actual  = $decoder->base64_decode( $encoded );
@@ -44,6 +44,9 @@ class Decoder extends TestCase {
 		$this->assertTrue( $decoder->supports_decoding() );
 	}
 
+	/**
+	 * @return array<string, array<int, string>>
+	 */
 	public function get_encoded_data(): array {
 		return [
 			'converts UTF 16'             => [

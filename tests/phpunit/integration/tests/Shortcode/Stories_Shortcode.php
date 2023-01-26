@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Stories_Shortcode Unit Test class.
  *
@@ -29,25 +32,15 @@ namespace Google\Web_Stories\Tests\Integration\Shortcode;
 use Google\Web_Stories\Shortcode\Stories_Shortcode as Testee;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use WP_UnitTest_Factory;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Stories_Shortcode
  */
 class Stories_Shortcode extends TestCase {
-	/**
-	 * Story ID.
-	 *
-	 * @var int
-	 */
-	private static $story_id;
-
-	/**
-	 * Run before any test is run and class is being setup.
-	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
-		require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/amp.php';
-
-		self::$story_id = $factory->post->create(
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
+		// So there is an en existing story to be displayed by the shortcode.
+		$factory->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'publish',
@@ -56,9 +49,6 @@ class Stories_Shortcode extends TestCase {
 		);
 	}
 
-	/**
-	 * Runs after all tests are run.
-	 */
 	public function tear_down(): void {
 		remove_shortcode( Testee::SHORTCODE_NAME );
 
@@ -105,12 +95,12 @@ class Stories_Shortcode extends TestCase {
 	public function test_max_number_for_stories(): void {
 		$stories_shortcode = new Testee();
 		$attributes        = [
-			'number_of_stories' => 1000000,
+			'number_of_stories' => 1_000_000,
 			'order'             => 'DESC',
 			'orderby'           => 'post_title',
 		];
 
-		$args = $this->call_private_method( $stories_shortcode, 'prepare_story_args', [ $attributes ] );
+		$args = $this->call_private_method( [ $stories_shortcode, 'prepare_story_args' ], [ $attributes ] );
 		$this->assertArrayHasKey( 'posts_per_page', $args );
 		$this->assertSame( 100, $args['posts_per_page'] );
 	}
@@ -151,7 +141,7 @@ class Stories_Shortcode extends TestCase {
 			'sharp_corners'      => 'false',
 		];
 
-		$actual = $this->call_private_method( $shortcode, 'prepare_story_attrs', [ $attributes ] );
+		$actual = $this->call_private_method( [ $shortcode, 'prepare_story_attrs' ], [ $attributes ] );
 
 		$this->assertEqualSets( $expected, $actual );
 	}

@@ -34,6 +34,7 @@ import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import { noop } from '../../../../../utils/noop';
 import MediaGallery from './mediaGallery';
 import {
   MediaGalleryContainer,
@@ -63,7 +64,7 @@ function PaginatedMediaGallery({
   hasMore,
   onInsert,
   setNextPage,
-  canEditMedia,
+  canEditMedia = false,
 }) {
   // State and callback ref necessary to load on scroll.
   const refContainer = useRef();
@@ -75,7 +76,7 @@ function PaginatedMediaGallery({
     ) {
       return setNextPage();
     }
-    return () => {};
+    return noop;
   }, [setNextPage]);
 
   const debouncedSetNextPage = useDebouncedCallback(isNextPageNeeded, 500);
@@ -226,10 +227,6 @@ PaginatedMediaGallery.propTypes = {
   searchTerm: PropTypes.string,
   selectedCategoryId: PropTypes.string,
   canEditMedia: PropTypes.bool,
-};
-
-PaginatedMediaGallery.defaultProps = {
-  canEditMedia: false,
 };
 
 export default PaginatedMediaGallery;

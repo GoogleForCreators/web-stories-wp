@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
@@ -52,12 +52,10 @@ class ShortPixel extends Service_Base {
 	 * @param string[] $urls  Urls that will be sent to optimisation.
 	 * @return string[] The filtered Urls.
 	 */
-	public function image_urls( $urls ): array {
+	public function image_urls( array $urls ): array {
 		return array_filter(
 			$urls,
-			static function( $url ) {
-				return false === strpos( $url, 'web-stories-page-template' );
-			}
+			static fn( $url ) => ! str_contains( $url, 'web-stories-page-template' )
 		);
 	}
 }

@@ -38,10 +38,11 @@ import {
 } from '../../../../utils/contrastUtils';
 import { getSpansFromContent } from '../../utils';
 import getMediaBaseColor from '../../../../utils/getMediaBaseColor';
+import { noop } from '../../../../utils/noop';
 
 /**
- * @typedef {import('../../../../types').Page} Page
- * @typedef {import('../../../../types').Element} Element
+ * @typedef {import('@googleforcreators/elements').Page} Page
+ * @typedef {import('@googleforcreators/elements').Element} Element
  * @typedef RGB The shape of color objects used for calculating color use against accessibility standards
  * @property {number} r red value
  * @property {number} g green value
@@ -335,7 +336,7 @@ function getBackgroundColorByType(element) {
     case 'shape':
       return getTextShapeBackgroundColor;
     default:
-      return () => undefined;
+      return noop;
   }
 }
 /**

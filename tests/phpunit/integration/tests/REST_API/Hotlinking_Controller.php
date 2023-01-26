@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,10 +20,13 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
+use WP_UnitTest_Factory;
 
 /**
  * Class Hotlinking_Controller
@@ -28,9 +34,6 @@ use WP_REST_Server;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Hotlinking_Controller
  */
 class Hotlinking_Controller extends DependencyInjectedRestTestCase {
-	protected static $subscriber;
-	protected static $editor;
-
 	public const URL_INVALID      = 'https://https://invalid.commmm';
 	public const URL_404          = 'https://example.com/404/test.jpg';
 	public const URL_500          = 'https://example.com/500/test.jpg';
@@ -42,21 +45,20 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 
 	public const REST_URL = '/web-stories/v1/hotlink/validate';
 
+	protected static int $subscriber;
+	protected static int $editor;
+
 	/**
 	 * Count of the number of requests attempted.
-	 *
-	 * @var int
 	 */
-	protected $request_count = 0;
+	protected int $request_count = 0;
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\REST_API\Hotlinking_Controller
 	 */
-	private $controller;
+	private \Google\Web_Stories\REST_API\Hotlinking_Controller $controller;
 
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -91,7 +93,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
 	 * @param mixed  $r       HTTP request arguments.
 	 * @param string $url     The request URL.
-	 * @return array|WP_Error Response data.
+	 * @return mixed|WP_Error Response data.
 	 */
 	public function mock_http_request( $preempt, $r, string $url ) {
 		++ $this->request_count;
@@ -226,6 +228,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'file_size', $properties );
 		$this->assertArrayHasKey( 'mime_type', $properties );
 		$this->assertArrayHasKey( 'type', $properties );
+		$this->assertIsArray( $properties['type'] );
 		$this->assertArrayHasKey( 'enum', $properties['type'] );
 		$this->assertEqualSets( [ 'audio', 'image', 'video', 'caption' ], $properties['type']['enum'] );
 	}
@@ -252,6 +255,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertEquals( 403, $response->get_status() );
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEquals( 'rest_forbidden', $data['code'] );
 	}
 
@@ -266,6 +270,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertEquals( 0, $this->request_count );
 		$this->assertEquals( 400, $response->get_status() );
+		$this->assertIsArray( $data );
 		$this->assertEquals( 'rest_invalid_param', $data['code'] );
 	}
 
@@ -285,6 +290,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEquals( 0, $this->request_count );
 		$this->assertTrue( $response->is_error() );
 		$this->assertEquals( 400, $response->get_status() );
+		$this->assertIsArray( $data );
 		$this->assertEquals( 'rest_invalid_param', $data['code'] );
 	}
 
@@ -302,6 +308,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$data     = $response->get_data();
 
 		$this->assertFalse( $response->is_error() );
+		$this->assertIsArray( $data );
 		$this->assertEqualSets(
 			[
 				'ext'       => 'jpg',
@@ -330,6 +337,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEquals( 1, $this->request_count );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSets(
 			[
 				'ext'       => 'jpg',
@@ -347,6 +355,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEquals( 1, $this->request_count );
 
 		$data = $response->get_data();
+		$this->assertIsArray( $data );
 		$this->assertEqualSets(
 			[
 				'ext'       => 'jpg',
@@ -417,6 +426,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$data     = $response->get_data();
 
 		$this->assertFalse( $response->is_error() );
+		$this->assertIsArray( $data );
 		$this->assertEqualSets(
 			[
 				'ext'       => 'png',
@@ -433,13 +443,11 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_allowed_mime_types
 	 */
 	public function test_get_allowed_mime_types(): void {
-		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$types           = $this->injector->make( \Google\Web_Stories\Media\Types::class );
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
-		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( $story_post_type, $types, $experiments );
-		$mime_types = $this->call_private_method( $controller, 'get_allowed_mime_types' );
+		$story_post_type = $this->injector->make( Story_Post_Type::class );
+		$types           = $this->injector->make( Types::class );
+		$controller      = new \Google\Web_Stories\REST_API\Hotlinking_Controller( $story_post_type, $types );
+		$mime_types      = $this->call_private_method( [ $controller, 'get_allowed_mime_types' ] );
+		$this->assertIsArray( $mime_types );
 		$this->assertArrayHasKey( 'audio', $mime_types );
 		$this->assertArrayHasKey( 'video', $mime_types );
 		$this->assertArrayHasKey( 'caption', $mime_types );
@@ -450,9 +458,9 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * Test that validate_url validates URLs.
 	 *
-	 * @param string       $url            The URL to validate.
-	 * @param string       $expected       Expected result.
-	 * @param false|string $cb_safe_ports  The name of the callback to http_allowed_safe_ports or false if none.
+	 * @param string         $url            The URL to validate.
+	 * @param string         $expected       Expected result.
+	 * @param false|callable $cb_safe_ports  The name of the callback to http_allowed_safe_ports or false if none.
 	 *                                     Default false.
 	 *
 	 * @dataProvider data_validate_url_should_validate
@@ -460,16 +468,16 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 */
 	public function test_validate_url_should_validate( string $url, string $expected, $cb_safe_ports = false ): void {
 		if ( $cb_safe_ports ) {
-			add_filter( 'http_allowed_safe_ports', [ $this, $cb_safe_ports ] );
+			add_filter( 'http_allowed_safe_ports', $cb_safe_ports );
 		}
 
-		$this->assertSame( $expected, $this->call_private_method( $this->controller, 'validate_url', [ $url ] ) );
+		$this->assertSame( $expected, $this->call_private_method( [ $this->controller, 'validate_url' ], [ $url ] ) );
 	}
 
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array{url: string, expected: string, cb_safe_ports?: callable}>
 	 */
 	public function data_validate_url_should_validate(): array {
 		return [
@@ -484,7 +492,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			'a port considered safe by filter'  => [
 				'url'           => 'https://example.com:81/caniload.php',
 				'expected'      => '93.184.216.34',
-				'cb_safe_ports' => 'callback_custom_safe_ports',
+				'cb_safe_ports' => [ $this, 'callback_custom_safe_ports' ],
 			],
 		];
 	}
@@ -496,8 +504,14 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_should_validate_with_an_unsafe_port_when_the_host_and_port_match_the_home_url(): void {
-		$original_home    = get_option( 'home' );
-		$home_parsed      = wp_parse_url( $original_home );
+		/**
+		 * Home URL.
+		 *
+		 * @var string
+		 */
+		$original_home = get_option( 'home' );
+		$home_parsed   = wp_parse_url( $original_home );
+		$this->assertIsArray( $home_parsed );
 		$home_scheme_host = implode( '://', \array_slice( $home_parsed, 0, 2 ) );
 		$home_modified    = $home_scheme_host . ':83';
 
@@ -505,7 +519,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 
 		$url = $home_modified . '/caniload.php';
 
-		$actual = $this->call_private_method( $this->controller, 'validate_url', [ $url ] );
+		$actual = $this->call_private_method( [ $this->controller, 'validate_url' ], [ $url ] );
 
 		update_option( 'home', $original_home );
 
@@ -516,7 +530,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * Test that validate_url does not validate invalid URLs.
 	 *
 	 * @param string       $url            The URL to validate.
-	 * @param false|string $cb_safe_ports  The name of the callback to http_allowed_safe_ports or false if none.
+	 * @param false|callable $cb_safe_ports  The name of the callback to http_allowed_safe_ports or false if none.
 	 *                                     Default false.
 	 * @param bool         $external_host  Whether or not the host is external.
 	 *                                     Default false.
@@ -530,16 +544,16 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		}
 
 		if ( $cb_safe_ports ) {
-			add_filter( 'http_allowed_safe_ports', [ $this, $cb_safe_ports ] );
+			add_filter( 'http_allowed_safe_ports', $cb_safe_ports );
 		}
 
-		$this->assertFalse( $this->call_private_method( $this->controller, 'validate_url', [ $url ] ) );
+		$this->assertFalse( $this->call_private_method( [ $this->controller, 'validate_url' ], [ $url ] ) );
 	}
 
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array{url: string, cb_safe_ports?: callable}>
 	 */
 	public function data_validate_url_should_not_validate(): array {
 		return [
@@ -581,19 +595,25 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			],
 			'a port not considered safe by filter'         => [
 				'url'           => 'https://example.com:82/caniload.php',
-				'cb_safe_ports' => 'callback_custom_safe_ports',
+				'cb_safe_ports' => [ $this, 'callback_custom_safe_ports' ],
 			],
 			'all safe ports removed by filter'             => [
 				'url'           => 'https://example.com:81/caniload.php',
-				'cb_safe_ports' => 'callback_remove_safe_ports',
+				'cb_safe_ports' => [ $this, 'callback_remove_safe_ports' ],
 			],
 		];
 	}
 
+	/**
+	 * @return array<int>
+	 */
 	public function callback_custom_safe_ports(): array {
 		return [ 81, 444, 8081 ];
 	}
 
+	/**
+	 * @return array<int>
+	 */
 	public function callback_remove_safe_ports(): array {
 		return [];
 	}

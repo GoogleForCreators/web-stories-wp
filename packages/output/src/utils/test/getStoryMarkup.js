@@ -52,6 +52,7 @@ describe('getStoryMarkup', () => {
         width: 640,
         height: 853,
       },
+      fonts: {},
       password: '',
     };
     const metadata = {

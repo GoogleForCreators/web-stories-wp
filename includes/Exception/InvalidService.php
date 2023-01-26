@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Exception;
 
@@ -68,7 +68,7 @@ final class InvalidService
 	 * @param string $service_id Identifier of the service that is not being
 	 *                           recognized.
 	 */
-	public static function from_service_id( $service_id ): self {
+	public static function from_service_id( string $service_id ): self {
 		$message = \sprintf(
 			'The service ID "%s" is not recognized and cannot be retrieved.',
 			$service_id

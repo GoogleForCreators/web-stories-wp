@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -48,14 +48,14 @@ class Admin extends Service_Base {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
 	 */
-	private $context;
+	private Context $context;
 
 	/**
 	 * Single constructor.
@@ -115,7 +115,7 @@ class Admin extends Service_Base {
 		$class .= ' edit-story';
 
 		// Overrides regular WordPress behavior by collapsing the admin menu by default.
-		if ( false === strpos( $class, 'folded' ) ) {
+		if ( ! str_contains( $class, 'folded' ) ) {
 			$class .= ' folded';
 		}
 
@@ -248,11 +248,15 @@ class Admin extends Service_Base {
 	 *
 	 * @since 1.23.0
 	 *
-	 * @param string[] $media_states Array of media states.
-	 * @param WP_Post  $post    Post object.
-	 * @return string[] updated media states.
+	 * @param mixed   $media_states Array of media states.
+	 * @param WP_Post $post         Post object.
+	 * @return mixed Filtered media states.
 	 */
-	public function media_states( $media_states, $post ): array {
+	public function media_states( $media_states, WP_Post $post ) {
+		if ( ! \is_array( $media_states ) ) {
+			return $media_states;
+		}
+
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
 
 		if ( $post->ID === $active_publisher_logo_id ) {

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -36,7 +39,7 @@ class Mock_Vendor implements Product_Query {
 	 * @param int    $per_page    Number of products to be fetched.
 	 * @param string $orderby     Sort collection by product attribute.
 	 * @param string $order       Order sort attribute ascending or descending.
-	 * @return array|WP_Error
+	 * @return array{products: array<Product>, has_next_page: bool}|WP_Error
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
 		$products = [];

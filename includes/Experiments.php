@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -54,7 +54,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Experiments constructor.
@@ -258,18 +258,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #10339
-			 * Creation date: 2022-02-02
-			 */
-			[
-				'name'        => 'enablePostLockingTakeOver',
-				'label'       => __( 'Story locking take over', 'web-stories' ),
-				'description' => __( 'Allow locked stories to be taken over by another author', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @timarney
 			 * Issue: #12093
 			 * Creation date: 2022-08-18
@@ -301,6 +289,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Per-Page Page Advance', 'web-stories' ),
 				'description' => __( 'Enable detailed page advancement settings on a per-page basis', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @timarney
@@ -346,21 +335,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Returns an experiment by name.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @param string $name Experiment name.
-	 * @return array|null Experiment if found, null otherwise.
-	 *
-	 * @phpstan-return Experiment|null
-	 */
-	protected function get_experiment( string $name ): ?array {
-		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
-		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
-	}
-
-	/**
 	 * Checks whether an experiment is enabled.
 	 *
 	 * @since 1.0.0
@@ -397,11 +371,24 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @return string[] List of all enabled experiments.
 	 */
 	public function get_enabled_experiments(): array {
-		$experiments = array_filter(
+		return array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]
 		);
+	}
 
-		return $experiments;
+	/**
+	 * Returns an experiment by name.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string $name Experiment name.
+	 * @return array|null Experiment if found, null otherwise.
+	 *
+	 * @phpstan-return Experiment|null
+	 */
+	protected function get_experiment( string $name ): ?array {
+		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
+		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
 	}
 }

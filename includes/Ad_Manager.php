@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -39,7 +39,7 @@ class Ad_Manager extends Service_Base implements HasRequirements {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Analytics constructor.
@@ -73,32 +73,6 @@ class Ad_Manager extends Service_Base implements HasRequirements {
 	 */
 	public static function get_requirements(): array {
 		return [ 'settings' ];
-	}
-
-	/**
-	 * Returns the Google Ad_Manager slot ID.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @return string Slot ID.
-	 */
-	private function get_slot_id(): string {
-		/**
-		 * Slot ID.
-		 *
-		 * @var string
-		 */
-		$slot_id = $this->settings->get_setting( $this->settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
-		return $slot_id;
-	}
-
-	/**
-	 * Returns if Google manager is enabled.
-	 *
-	 * @since 1.3.0
-	 */
-	private function is_enabled(): bool {
-		return ( 'admanager' === $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 
 	/**
@@ -138,5 +112,30 @@ class Ad_Manager extends Service_Base implements HasRequirements {
 			</script>
 		</amp-story-auto-ads>
 		<?php
+	}
+
+	/**
+	 * Returns the Google Ad_Manager slot ID.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return string Slot ID.
+	 */
+	private function get_slot_id(): string {
+		/**
+		 * Slot ID.
+		 *
+		 * @var string
+		 */
+		return $this->settings->get_setting( $this->settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
+	}
+
+	/**
+	 * Returns if Google manager is enabled.
+	 *
+	 * @since 1.3.0
+	 */
+	private function is_enabled(): bool {
+		return ( 'admanager' === $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 }

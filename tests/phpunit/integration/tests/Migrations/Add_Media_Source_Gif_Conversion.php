@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -27,10 +30,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Add_Media_Source_Gif_Conversion extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Migrations\Add_Media_Source_Gif_Conversion
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Migrations\Add_Media_Source_Gif_Conversion $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -45,7 +46,7 @@ class Add_Media_Source_Gif_Conversion extends DependencyInjectedTestCase {
 	 */
 	public function test_migrate(): void {
 		$this->instance->migrate();
-		$term = $this->call_private_method( $this->instance, 'get_term' );
+		$term = $this->call_private_method( [ $this->instance, 'get_term' ] );
 
 		$terms = get_terms(
 			[
@@ -53,6 +54,8 @@ class Add_Media_Source_Gif_Conversion extends DependencyInjectedTestCase {
 				'hide_empty' => false,
 			]
 		);
+
+		$this->assertNotWPError( $terms );
 
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertContains( $term, $slugs );

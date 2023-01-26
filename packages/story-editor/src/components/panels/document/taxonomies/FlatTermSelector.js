@@ -30,7 +30,7 @@ import { useLiveRegion } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import Tags, { deepEquals } from '../../../form/tags';
+import Tags from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { useHistory } from '../../../../app';
@@ -43,24 +43,19 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     termCache,
     addSearchResultsToCache,
     terms = [],
-    setTerms,
-    addTermToSelection,
+    addTerms,
+    removeTerms,
   } = useTaxonomy(
     ({
       state: { termCache, terms },
-      actions: {
-        createTerm,
-        addSearchResultsToCache,
-        setTerms,
-        addTermToSelection,
-      },
+      actions: { createTerm, addSearchResultsToCache, addTerms, removeTerms },
     }) => ({
       termCache,
       createTerm,
       addSearchResultsToCache,
       terms,
-      setTerms,
-      addTermToSelection,
+      addTerms,
+      removeTerms,
     })
   );
 
@@ -70,37 +65,57 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
-      // set terms that exist in the cache
-      const termNameSlugTuples = termNames.map((name) => [
-        cleanForSlug(name),
-        name,
-      ]);
-      const termsInCache = termNameSlugTuples
-        .map(([slug]) => slug)
-        .map((slug) => termCache[taxonomy.restBase]?.[slug])
-        .filter((v) => v)
-        .map((term) => term.id);
-
-      // We don't want to cause a redundant history entry
-      if (!deepEquals(terms[taxonomy.restBase], termsInCache)) {
-        setTerms(taxonomy, termsInCache);
-      }
+      const currentTerms = termCache.filter(
+        (term) =>
+          term.taxonomy === taxonomy.slug && termNames.includes(term.name)
+      );
+      const removeToTerms = terms.filter(
+        (term) =>
+          term.taxonomy === taxonomy.slug && !termNames.includes(term.name)
+      );
+      removeTerms(removeToTerms);
+      addTerms(currentTerms);
 
       // Return early if user doesn't have capability to create new terms
       if (!canCreateTerms) {
         return;
       }
 
+      // set terms that exist in the cache
+      const termNameSlugTuples = termNames.map((name) => [
+        cleanForSlug(name),
+        name,
+      ]);
+
       const termNamesNotInCache = termNameSlugTuples
-        .filter(([slug]) => !termCache[taxonomy.restBase]?.[slug])
+        .filter(
+          ([slug]) =>
+            !termCache
+              .filter((term) => term.taxonomy === taxonomy.slug)
+              .map(({ slug: thisSlug }) => thisSlug.toLowerCase())
+              .includes(slug)
+        )
         .map(([, name]) => name);
 
       // create new terms for ones that don't
       termNamesNotInCache.forEach((name) =>
-        createTerm(taxonomy, name, null, true)
+        createTerm({
+          taxonomy,
+          termName: name,
+          parent: null,
+          addToSelection: true,
+        })
       );
     },
-    [canCreateTerms, terms, taxonomy, termCache, setTerms, createTerm]
+    [
+      termCache,
+      removeTerms,
+      terms,
+      addTerms,
+      canCreateTerms,
+      createTerm,
+      taxonomy,
+    ]
   );
 
   const handleFreeformInputChange = useDebouncedCallback(async (value) => {
@@ -112,10 +127,13 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     if (value.length < 3) {
       return;
     }
-    const results = await addSearchResultsToCache(taxonomy, {
-      search: value,
-      // This is the per_page value Gutenberg is using
-      per_page: 20,
+    const results = await addSearchResultsToCache({
+      taxonomy,
+      args: {
+        search: value,
+        // This is the per_page value Gutenberg is using
+        per_page: 20,
+      },
     });
     setSearchResults(results);
 
@@ -129,28 +147,26 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   }, 300);
 
   const tokens = useMemo(() => {
-    return (terms[taxonomy.restBase] || [])
-      .map((id) => {
-        const term = Object.values(termCache[taxonomy.restBase] || {}).find(
-          (term) => term.id === id
-        );
-        return term;
-      })
+    return terms
+      .filter((term) => term.taxonomy === taxonomy.slug)
       .filter((term) => term !== undefined)
       .map((term) => term.name);
-  }, [taxonomy, terms, termCache]);
+  }, [terms, taxonomy]);
 
   const termDisplayTransformer = useCallback(
-    (tagName) => termCache[taxonomy.restBase]?.[cleanForSlug(tagName)]?.name,
-    [taxonomy, termCache]
+    (tagName) => termCache.filter((term) => term.name === tagName)?.[0]?.name,
+    [termCache]
   );
 
   useEffect(() => {
     (async function () {
-      const results = await addSearchResultsToCache(taxonomy, {
-        orderby: 'count',
-        order: 'desc',
-        hide_empty: true,
+      const results = await addSearchResultsToCache({
+        taxonomy,
+        args: {
+          orderby: 'count',
+          order: 'desc',
+          hide_empty: true,
+        },
       });
       setMostUsed(results);
     })();
@@ -178,7 +194,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separateItemsWithCommas}
         </Tags.Description>
-        {mostUsed.length > 0 && (
+        {mostUsed?.length > 0 && (
           <WordCloud.Wrapper data-testid={`${taxonomy.slug}-most-used`}>
             <WordCloud.Heading>{taxonomy.labels.mostUsed}</WordCloud.Heading>
             <WordCloud.List>
@@ -186,10 +202,10 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
                 <WordCloud.ListItem key={term.id}>
                   <WordCloud.Word
                     onClick={() => {
-                      if (terms[taxonomy.restBase]?.includes(term.id)) {
+                      if (terms.map(({ id }) => id).includes(term.id)) {
                         return;
                       }
-                      addTermToSelection(taxonomy, term);
+                      addTerms([term]);
                     }}
                   >
                     {term.name}

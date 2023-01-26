@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
@@ -71,14 +71,14 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @var Settings Settings instance.
 	 */
-	private $settings;
+	private Settings $settings;
 
 	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 
 	/**
@@ -86,7 +86,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
 	 */
-	private $shopping_vendors;
+	private Shopping_Vendors $shopping_vendors;
 
 	/**
 	 * Constructor.
@@ -267,7 +267,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $item, $request ): WP_REST_Response {
+	public function prepare_item_for_response( $item, $request ): WP_REST_Response { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$product = $item;
 		$fields  = $this->get_fields_for_response( $request );
 
@@ -379,7 +379,9 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 
 		$schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'product',
+			// This must not be an actually existing post type like "product".
+			// See https://github.com/GoogleForCreators/web-stories-wp/issues/12735.
+			'title'      => 'web-story-product',
 			'type'       => 'object',
 			'properties' => [
 				'productId'            => [

@@ -20,13 +20,13 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18",
     "npm": ">= 7.3"
   },
   "type": "module",
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/dom-ready": "^3.17.0"
+    "@wordpress/dom-ready": "^3.24.0"
   },
   "devDependencies": {}
 }

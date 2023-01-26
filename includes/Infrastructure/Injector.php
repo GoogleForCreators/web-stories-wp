@@ -15,7 +15,7 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Infrastructure;
 
@@ -39,6 +39,8 @@ namespace Google\Web_Stories\Infrastructure;
  * @internal
  *
  * @since 1.6.0
+ *
+ * @template T
  */
 interface Injector extends Service {
 
@@ -47,12 +49,20 @@ interface Injector extends Service {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param class-string|object $interface_or_class Interface or class to make an object instance out of.
-	 * @param class-string[]      $arguments          Optional. Additional arguments to pass to the constructor.
-	 *                                                Defaults to an empty array.
-	 * @return object Instantiated object.
+	 * @param string   $interface_or_class Interface or class to make an object instance out of.
+	 * @param string[] $arguments          Optional. Additional arguments to pass to the constructor.
+	 *                                           Defaults to an empty array.
+	 * @return C Instantiated object.
+	 *
+	 * @phpstan-param class-string<C> $interface_or_class Interface or class to make an object instance out of.
+	 * @phpstan-param class-string[]  $arguments          Optional. Additional arguments to pass to the constructor.
+	 *                                                    Defaults to an empty array.
+	 *
+	 * @phpstan-return C
+	 *
+	 * @template C
 	 */
-	public function make( $interface_or_class, array $arguments = [] ): object;
+	public function make( string $interface_or_class, array $arguments = [] );
 
 	/**
 	 * Bind a given interface or class to an implementation.
@@ -64,6 +74,9 @@ interface Injector extends Service {
 	 *
 	 * @param string $from Interface or class to bind an implementation to.
 	 * @param string $to   Interface or class that provides the implementation.
+	 *
+	 * @phpstan-param class-string<T> $from Interface or class to bind an implementation to.
+	 * @phpstan-param class-string<T> $to   Interface or class that provides the implementation.
 	 */
 	public function bind( string $from, string $to ): Injector;
 
@@ -73,9 +86,11 @@ interface Injector extends Service {
 	 * @since 1.6.0
 	 *
 	 * @param string $interface_or_class Interface or class to bind an argument
-	 *                                   for.
+	 *                                      for.
 	 * @param string $argument_name      Argument name to bind a value to.
 	 * @param mixed  $value              Value to bind the argument to.
+	 *
+	 * @phpstan-param class-string<T> $interface_or_class Interface or class to bind an argument
 	 */
 	public function bind_argument(
 		string $interface_or_class,
@@ -90,6 +105,8 @@ interface Injector extends Service {
 	 * @since 1.6.0
 	 *
 	 * @param string $interface_or_class Interface or class to reuse.
+	 *
+	 * @phpstan-param class-string<T> $interface_or_class Interface or class to reuse.
 	 */
 	public function share( string $interface_or_class ): Injector;
 
@@ -101,6 +118,9 @@ interface Injector extends Service {
 	 * @param string   $interface_or_class Interface or class to delegate the
 	 *                                     instantiation of.
 	 * @param callable $callable           Callable to use for instantiation.
+	 *
+	 * @phpstan-param class-string<T> $interface_or_class Interface or class to delegate the
+	 *                                                    instantiation of.
 	 */
 	public function delegate( string $interface_or_class, callable $callable ): Injector;
 }

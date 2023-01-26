@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -48,7 +48,7 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * Font_Post_Type constructor.
@@ -68,6 +68,19 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	 */
 	public function get_slug(): string {
 		return self::POST_TYPE_SLUG;
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
 	}
 
 	/**
@@ -119,18 +132,5 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 			'rest_base'             => 'fonts',
 			'rest_controller_class' => Font_Controller::class,
 		];
-	}
-
-	/**
-	 * Get the list of service IDs required for this service to be registered.
-	 *
-	 * Needed because the story post type needs to be registered first.
-	 *
-	 * @since 1.16.0
-	 *
-	 * @return string[] List of required services.
-	 */
-	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
 	}
 }

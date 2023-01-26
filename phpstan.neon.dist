@@ -22,6 +22,10 @@ parameters:
       path: includes/Admin/Customizer.php
   paths:
     - includes/
+    - tests/phpunit/integration/includes
+    - tests/phpunit/integration/tests
+    - tests/phpunit/unit/includes/
+    - tests/phpunit/unit/tests/
     - uninstall.php
   excludePaths:
     - includes/vendor/*
@@ -29,6 +33,8 @@ parameters:
   scanDirectories:
     - third-party/
   scanFiles:
+    - web-stories.php
+    - vendor/php-stubs/wordpress-tests-stubs/wordpress-tests-stubs.php
     - tests/phpstan/stubs/amp.php
     - tests/phpstan/stubs/wordpress-seo.php
     - tests/phpstan/stubs/wp-cli.php

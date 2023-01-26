@@ -182,6 +182,9 @@ const ALLOWED_ERROR_MESSAGES_CHROME = [
   'Bundle not found for language en:',
 
   'Failed to fetch',
+
+  // Customizer preview iframe.
+  'An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing',
 ];
 
 /**

@@ -8,6 +8,10 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
+use Google\Web_Stories\Admin\Editor;
+use Google\Web_Stories\Services;
+use function Google\Web_Stories\rest_preload_api_request;
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -115,6 +119,7 @@ $story_query_params = [
 				'style_presets',
 				'password',
 				'_links',
+				'_embedded',
 			]
 		)
 	),
@@ -133,8 +138,8 @@ if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.N
 	$story_query_params['web_stories_demo'] = 'true';
 
 	$story_path             = $story_initial_path . build_query( $story_query_params );
-	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
-	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
+	$story_data             = rest_preload_api_request( [], $story_path );
+	$initial_edits['story'] = ! empty( $story_data[ $story_path ]['body'] ) ? $story_data[ $story_path ]['body'] : [];
 }
 
 /**
@@ -160,7 +165,7 @@ $post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverrid
 require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
 register_and_do_post_meta_boxes( $post );
 
-$editor_settings = \Google\Web_Stories\Services::get( 'editor' )->get_editor_settings();
+$editor_settings = Services::get( 'editor' )->get_editor_settings();
 
 wp_add_inline_script(
 	'wp-api-fetch',
@@ -168,7 +173,7 @@ wp_add_inline_script(
 	'after'
 );
 
-$init_script = <<<JS
+$init_script = <<<'JS'
 	wp.domReady( function() {
 	  webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
 	} );
@@ -176,7 +181,7 @@ JS;
 
 $script = sprintf( $init_script, wp_json_encode( $editor_settings ), wp_json_encode( $initial_edits ) );
 
-wp_add_inline_script( \Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE, $script );
+wp_add_inline_script( Editor::SCRIPT_HANDLE, $script );
 
 require_once ABSPATH . 'wp-admin/admin-header.php';
 

@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -66,8 +66,12 @@ class PluginRowMeta extends Service_Base {
 	 *                              and plugin URI.
 	 * @param string         $plugin_file Path to the plugin file relative to the plugins directory.
 	 * @return string[]|mixed Plugin row meta.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($meta is array<T> ? array<T> : mixed)
 	 */
-	public function get_plugin_row_meta( $meta, $plugin_file ) {
+	public function get_plugin_row_meta( $meta, string $plugin_file ) {
 		if ( plugin_basename( WEBSTORIES_PLUGIN_FILE ) !== $plugin_file ) {
 			return $meta;
 		}
@@ -79,6 +83,6 @@ class PluginRowMeta extends Service_Base {
 			'<a href="https://wordpress.org/support/plugin/web-stories/reviews/#new-post" target="_blank" rel="noreferrer noopener">' . esc_html__( 'Leave review', 'web-stories' ) . '</a>',
 		];
 
-		return array_merge( $meta, $additional_meta );
+		return [ ...$meta, ...$additional_meta ];
 	}
 }

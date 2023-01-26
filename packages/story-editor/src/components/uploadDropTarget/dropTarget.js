@@ -55,7 +55,13 @@ function disableDefaults(evt) {
   evt.stopPropagation();
 }
 
-function UploadDropTarget({ disabled, label, labelledBy, onDrop, children }) {
+function UploadDropTarget({
+  disabled = false,
+  label = null,
+  labelledBy = null,
+  onDrop = null,
+  children,
+}) {
   const [isDragging, setIsDragging] = useState(false);
 
   const onDragEnter = useCallback(
@@ -121,13 +127,6 @@ UploadDropTarget.propTypes = {
   labelledBy: PropTypes.string,
   onDrop: PropTypes.func,
   children: PropTypes.node.isRequired,
-};
-
-UploadDropTarget.defaultProps = {
-  disabled: false,
-  label: null,
-  labelledBy: null,
-  onDrop: null,
 };
 
 export default UploadDropTarget;

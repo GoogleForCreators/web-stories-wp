@@ -53,13 +53,13 @@ export interface ResourceInput {
   /** Resource creation date. */
   creationDate?: string;
   /** Resource sizes */
-  sizes: { [key: string]: ResourceSize };
+  sizes?: { [key: string]: ResourceSize };
   /** Resource author attribution */
   attribution?: Attribution;
   /** The resource's poster. */
   poster?: string;
   /** The resource's poster ID. */
-  posterId?: string;
+  posterId?: ResourceId;
   /** Length in seconds. */
   length?: number;
   /** The formatted length, e.g. "01:17". */

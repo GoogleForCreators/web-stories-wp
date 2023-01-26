@@ -40,17 +40,17 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
+        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@4238421316c33d73aeea2801274dd286f157c2bb
+        uses: github/codeql-action/init@a34ca99b4610d924e04c68db79e503e1f79f9f02
         with:
           languages: javascript
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@4238421316c33d73aeea2801274dd286f157c2bb
+        uses: github/codeql-action/analyze@a34ca99b4610d924e04c68db79e503e1f79f9f02

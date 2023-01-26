@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2021 Google LLC
  *
@@ -17,6 +20,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -50,12 +54,14 @@ class Unify_Color_Presets extends TestCase {
 				],
 			],
 		];
-		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
+		add_option( Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Migrations\Unify_Color_Presets();
 		$object->migrate();
 
-		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION );
+		$this->assertIsArray( $style_presets );
+		$this->assertArrayHasKey( 'colors', $style_presets );
 		$this->assertSame(
 			$style_presets['colors'],
 			[
@@ -75,6 +81,6 @@ class Unify_Color_Presets extends TestCase {
 				],
 			]
 		);
-		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+		delete_option( Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 }

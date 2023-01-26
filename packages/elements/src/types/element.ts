@@ -25,6 +25,7 @@ import type { ElementBox } from '@googleforcreators/units';
  * Internal dependencies
  */
 import type { ElementType } from './elementType';
+import type { FontMetrics, ProductData } from './data';
 
 export interface Link {
   url: string;
@@ -85,6 +86,7 @@ export interface Element extends ElementBox {
   basedOn?: string;
   layerName?: string;
   isLocked?: boolean;
+  isHidden?: boolean;
 }
 
 export interface DefaultBackgroundElement extends Element {
@@ -105,4 +107,67 @@ export interface MediaElement extends BackgroundableElement {
 
 export interface SequenceMediaElement extends MediaElement {
   resource: SequenceResource;
+}
+
+export interface VideoElement extends SequenceMediaElement {
+  type: ElementType.Video;
+}
+
+export interface ProductElement extends Element {
+  type: ElementType.Product;
+  product: ProductData;
+}
+
+export interface StickerElement extends Element {
+  type: ElementType.Sticker;
+  sticker: {
+    type: string;
+  };
+}
+
+interface BaseTextElementFont {
+  service: string;
+  family: string;
+  fallbacks: string[];
+  metrics?: FontMetrics;
+}
+
+export interface GoogleTextElementFont extends BaseTextElementFont {
+  service: 'fonts.google.com';
+}
+
+export interface SystemTextElementFont extends BaseTextElementFont {
+  service: 'system';
+}
+
+export interface CustomTextElementFont extends BaseTextElementFont {
+  service: 'custom';
+  url: string;
+}
+
+export type TextElementFont =
+  | GoogleTextElementFont
+  | SystemTextElementFont
+  | CustomTextElementFont;
+
+export interface Padding {
+  horizontal: number;
+  vertical: number;
+  locked: boolean;
+  hasHiddenPadding?: boolean;
+}
+
+export type TextAlign = 'center' | 'justify' | 'left' | 'right';
+export interface TextElement extends Element {
+  backgroundColor: Solid;
+  content: string;
+  font: TextElementFont;
+  fontSize: number;
+
+  backgroundTextMode?: string;
+  tagName?: 'h1' | 'h2' | 'h3' | 'p';
+  padding: Padding;
+  marginOffset: number;
+  lineHeight: number;
+  textAlign: TextAlign;
 }

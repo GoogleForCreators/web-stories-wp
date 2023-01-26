@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -30,6 +33,11 @@ class Canonical_Sanitizer extends TestCase {
 	public function test_sanitize_canonical_exists(): void {
 		$source = '<html><head><title>Example</title><link rel="canonical" href="https://example.com/canonical.html"></head><body><p>Hello World</p></body></html>';
 
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
 		$dom = Document::fromHtml( $source );
 
 		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
@@ -48,6 +56,11 @@ class Canonical_Sanitizer extends TestCase {
 	public function test_sanitize_canonical_remove_duplicates(): void {
 		$source = '<html><head><title>Example</title><link rel="canonical" href="https://example.com/canonical.html"><link rel="canonical" href="https://example.com/canonical2.html"></head><body><p>Hello World</p></body></html>';
 
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
 		$dom = Document::fromHtml( $source );
 
 		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
@@ -69,6 +82,11 @@ class Canonical_Sanitizer extends TestCase {
 
 		$source = '<html><head><title>Example</title></head><body><p>Hello World</p></body></html>';
 
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
 		$dom = Document::fromHtml( $source );
 
 		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
@@ -90,6 +108,11 @@ class Canonical_Sanitizer extends TestCase {
 
 		$source = '<html><head><title>Example</title><link rel="canonical" href=""></head><body><p>Hello World</p></body></html>';
 
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
 		$dom = Document::fromHtml( $source );
 
 		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
@@ -113,6 +136,11 @@ class Canonical_Sanitizer extends TestCase {
 
 		$source = '<html><head><title>Example</title><link rel="stylesheet" href="https://example.com/style.css"><link rel="stylesheet" href="https://example.com/style2.css"></head><body><p>Hello World</p></body></html>';
 
+		/**
+		 * Document.
+		 *
+		 * @var Document $dom Document.
+		 */
 		$dom = Document::fromHtml( $source );
 
 		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(

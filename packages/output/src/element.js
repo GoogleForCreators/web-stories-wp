@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@googleforcreators/units';
-import { StoryAnimation } from '@googleforcreators/animation';
+import { AMPWrapper } from '@googleforcreators/animation';
 import {
   BACKGROUND_TEXT_MODE,
   getDefinitionForType,
@@ -48,7 +48,13 @@ function OutputElement({ element, flags }) {
     backgroundColor,
     backgroundTextMode,
     overlay,
+    isHidden,
   } = element;
+
+  if (isHidden) {
+    return null;
+  }
+
   const { Output, isMaskable } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -84,7 +90,7 @@ function OutputElement({ element, flags }) {
         opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
       }}
     >
-      <StoryAnimation.AMPWrapper target={id}>
+      <AMPWrapper target={id}>
         <WithMask
           className={!isMaskable ? undefined : 'mask'}
           element={element}
@@ -126,7 +132,7 @@ function OutputElement({ element, flags }) {
             />
           )}
         </WithMask>
-      </StoryAnimation.AMPWrapper>
+      </AMPWrapper>
     </div>
   );
 }

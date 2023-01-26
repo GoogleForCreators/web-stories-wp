@@ -18,7 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { DIRECTION, SCALE_DIRECTION } from '@googleforcreators/animation';
+import {
+  AnimationDirection,
+  ScaleDirection,
+} from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
@@ -30,12 +33,12 @@ const ANIMATION_OPTION_PROP_TYPE = {
   Effect: PropTypes.any,
   gridSpace: PropTypes.oneOf(Object.values(GRID_SIZING)),
   size: PropTypes.number,
-  scaleDirection: PropTypes.oneOf(Object.values(SCALE_DIRECTION)),
-  panDirection: PropTypes.oneOf(Object.values(DIRECTION)),
-  zoomDirection: PropTypes.oneOf(Object.values(SCALE_DIRECTION)),
-  flyInDirection: PropTypes.oneOf(Object.values(DIRECTION)),
-  rotateInDirection: PropTypes.oneOf(Object.values(DIRECTION)),
-  whooshInDirection: PropTypes.oneOf(Object.values(DIRECTION)),
+  scaleDirection: PropTypes.oneOf(Object.values(ScaleDirection)),
+  panDirection: PropTypes.oneOf(Object.values(AnimationDirection)),
+  zoomDirection: PropTypes.oneOf(Object.values(ScaleDirection)),
+  flyInDirection: PropTypes.oneOf(Object.values(AnimationDirection)),
+  rotateInDirection: PropTypes.oneOf(Object.values(AnimationDirection)),
+  whooshInDirection: PropTypes.oneOf(Object.values(AnimationDirection)),
 };
 
 export const ANIMATION_DROPDOWN_OPTION_PROP_TYPE = {
@@ -45,7 +48,7 @@ export const ANIMATION_DROPDOWN_OPTION_PROP_TYPE = {
 };
 
 export const ANIMATION_DIRECTION_PROP_TYPE = PropTypes.oneOf([
-  ...Object.values(DIRECTION),
-  ...Object.values(SCALE_DIRECTION),
+  ...Object.values(AnimationDirection),
+  ...Object.values(ScaleDirection),
   false,
 ]);

@@ -75,7 +75,7 @@ function DragHandle({
   handleHeightChange,
   handleExpandToHeightChange,
   handleDoubleClick,
-  position,
+  position = 'top',
   showDragHandle,
   showFocusStyles = true,
   ...rest
@@ -116,10 +116,6 @@ DragHandle.propTypes = {
   position: PropTypes.oneOf(['top', 'bottom']),
   showDragHandle: PropTypes.bool,
   showFocusStyles: PropTypes.bool,
-};
-
-DragHandle.defaultProps = {
-  position: 'top',
 };
 
 export default DragHandle;

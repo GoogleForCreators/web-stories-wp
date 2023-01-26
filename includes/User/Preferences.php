@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\User;
 
@@ -124,7 +124,7 @@ class Preferences extends Service_Base implements HasMeta, PluginUninstallAware 
 	 * @param int    $user_id ID of the user being edited.
 	 * @param int    $current_user_id The currently editing user's ID.
 	 */
-	public function can_edit_current_user( $allowed, $meta_key, $user_id, $current_user_id ): bool {
+	public function can_edit_current_user( bool $allowed, string $meta_key, int $user_id, int $current_user_id ): bool {
 		return user_can( $current_user_id, 'edit_user', $user_id );
 	}
 
@@ -137,7 +137,7 @@ class Preferences extends Service_Base implements HasMeta, PluginUninstallAware 
 	 * @param string $key Preference key.
 	 * @return mixed User preference value.
 	 */
-	public function get_preference( $user_id, $key ) {
+	public function get_preference( int $user_id, string $key ) {
 		return get_user_meta( $user_id, $key, true );
 	}
 

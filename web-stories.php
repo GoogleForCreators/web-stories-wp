@@ -9,7 +9,7 @@
  * Plugin URI: https://wp.stories.google/
  * Author: Google
  * Author URI: https://opensource.google.com/
- * Version: 1.28.0-alpha.0
+ * Version: 1.29.0-alpha.0
  * Requires at least: 5.9
  * Requires PHP: 7.4
  * Text Domain: web-stories
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WEBSTORIES_VERSION', '1.28.0-alpha.0' );
+define( 'WEBSTORIES_VERSION', '1.29.0-alpha.0' );
 define( 'WEBSTORIES_DB_VERSION', '3.0.14' );
 define( 'WEBSTORIES_AMP_VERSION', '2.3.0' ); // Version of the AMP library included in the plugin.
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
@@ -64,7 +64,7 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
  * @return Web_Stories_Compatibility
  */
 function web_stories_get_compat_instance() {
-	$error      = new \WP_Error();
+	$error      = new WP_Error();
 	$extensions = array(
 		'date'   => array(
 			'classes' => array(
@@ -113,8 +113,8 @@ function web_stories_get_compat_instance() {
 	$compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
 	$compatibility->set_required_files(
 		array(
-			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/wp-story-editor.js',
-			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/wp-dashboard.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-editor.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-dashboard.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-block.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
@@ -170,7 +170,7 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 	if ( $_error->errors ) {
 		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
 		if ( class_exists( '\WP_CLI' ) ) {
-			\WP_CLI::warning( $heading );
+			WP_CLI::warning( $heading );
 		} else {
 			echo "$heading\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
@@ -178,7 +178,7 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 			$message = $_error->get_error_message( $error_code );
 			$body    = htmlspecialchars_decode( wp_strip_all_tags( $message ) );
 			if ( class_exists( '\WP_CLI' ) ) {
-				\WP_CLI::line( $body );
+				WP_CLI::line( $body );
 			} else {
 				echo "$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}

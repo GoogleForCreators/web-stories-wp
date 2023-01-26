@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -25,10 +28,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Blurhash extends TestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Blurhash
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Blurhash $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -76,6 +77,8 @@ class Blurhash extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $attachment_id );
+
 		$blurhash = '000000';
 
 		update_post_meta( $attachment_id, $this->instance::BLURHASH_POST_META_KEY, $blurhash );
@@ -105,6 +108,8 @@ class Blurhash extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $attachment_id );
 
 		$blurhash = '000000';
 

@@ -29,10 +29,11 @@ import { safeDecodeURIComponent } from '@googleforcreators/url';
  */
 import { useStory } from '../../../../app/story';
 import cleanForSlug from '../../../../utils/cleanForSlug';
-import inRange from '../../../../utils/inRange';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared/styles';
+
+const inRange = (value, { MIN, MAX }) => value >= MIN && value <= MAX;
 
 export const MIN_MAX = {
   PERMALINK: {

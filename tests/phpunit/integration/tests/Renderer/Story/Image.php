@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Google\Web_Stories\Tests\Integration\Renderer\Story;
 
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -15,12 +19,12 @@ class Image extends TestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
-		$story = new \Google\Web_Stories\Model\Story();
+		$story = new Story();
 		$story->load_from_post( $post );
 
 		$image  = new \Google\Web_Stories\Renderer\Story\Image( $story );
@@ -40,7 +44,7 @@ class Image extends TestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -53,10 +57,14 @@ class Image extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		wp_maybe_generate_attachment_metadata( get_post( $poster_attachment_id ) );
+		$this->assertNotWPError( $poster_attachment_id );
+		$poster_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $poster_attachment );
+
+		wp_maybe_generate_attachment_metadata( $poster_attachment );
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 
-		$story = new \Google\Web_Stories\Model\Story();
+		$story = new Story();
 		$story->load_from_post( $post );
 
 		$this->assertNotEmpty( $story->get_poster_portrait() );
@@ -84,7 +92,7 @@ class Image extends TestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -97,10 +105,13 @@ class Image extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+		$this->assertNotWPError( $poster_attachment_id );
+		$poster_attachment = get_post( $poster_attachment_id );
+		$this->assertNotNull( $poster_attachment );
 
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 
-		$story = new \Google\Web_Stories\Model\Story();
+		$story = new Story();
 		$story->load_from_post( $post );
 
 		$this->assertNotEmpty( $story->get_poster_portrait() );

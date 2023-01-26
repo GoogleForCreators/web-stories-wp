@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -21,10 +24,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
 class KSES extends DependencyInjectedTestCase {
-	/**
-	 * @var \Google\Web_Stories\KSES
-	 */
-	private $instance;
+	private \Google\Web_Stories\KSES $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -40,7 +40,7 @@ class KSES extends DependencyInjectedTestCase {
 	 * @dataProvider data_test_safecss_filter_attr
 	 * @covers ::safecss_filter_attr
 	 */
-	public function test_safecss_filter_attr( $css, $expected ): void {
+	public function test_safecss_filter_attr( string $css, string $expected ): void {
 		$this->assertSame( $expected, $this->instance->safecss_filter_attr( $css ) );
 	}
 
@@ -54,7 +54,7 @@ class KSES extends DependencyInjectedTestCase {
 	 * @dataProvider data_test_safecss_filter_attr_extended
 	 * @covers ::safecss_filter_attr
 	 */
-	public function test_safecss_filter_attr_extended( $css, $expected ): void {
+	public function test_safecss_filter_attr_extended( string $css, string $expected ): void {
 		add_filter( 'safe_style_css', [ $this->instance, 'filter_safe_style_css' ] );
 		$actual = $this->instance->safecss_filter_attr( $css );
 		remove_filter( 'safe_style_css', [ $this->instance, 'filter_safe_style_css' ] );
@@ -81,8 +81,7 @@ class KSES extends DependencyInjectedTestCase {
 		];
 
 		$output = $this->call_private_method(
-			$this->instance,
-			'array_merge_recursive_distinct',
+			[ $this->instance, 'array_merge_recursive_distinct' ],
 			[
 				$input_array1,
 				$input_array2,
@@ -100,6 +99,8 @@ class KSES extends DependencyInjectedTestCase {
 	 *         @string string $expected Expected string of CSS rules.
 	 *     }
 	 * }
+	 *
+	 * @phpstan-return array<int, array{css: string, expected: string}>
 	 */
 	public function data_test_safecss_filter_attr(): array {
 		return [
@@ -279,6 +280,8 @@ class KSES extends DependencyInjectedTestCase {
 	 *         @string string $expected Expected string of CSS rules.
 	 *     }
 	 * }
+	 *
+	 * @phpstan-return array<int, array{css: string, expected: string}|string[]>
 	 */
 	public function data_test_safecss_filter_attr_extended(): array {
 		return [
@@ -378,7 +381,7 @@ class KSES extends DependencyInjectedTestCase {
 	 * @covers ::add_global_attributes
 	 * @covers ::array_merge_recursive_distinct
 	 */
-	public function test_filter_kses_allowed_html( $html, $expected ): void {
+	public function test_filter_kses_allowed_html( string $html, string $expected ): void {
 				add_filter( 'wp_kses_allowed_html', [ $this->instance, 'filter_kses_allowed_html' ] );
 
 		$this->assertSame( $expected, wp_unslash( wp_filter_post_kses( $html ) ) );
@@ -403,6 +406,7 @@ class KSES extends DependencyInjectedTestCase {
 
 		$result = $this->instance->filter_kses_allowed_html( $allowed_tags );
 
+		$this->assertIsArray( $result );
 		$this->assertArrayHasKey( 'img', $result );
 		$this->assertArrayHasKey( 'width', $result['img'] );
 		$this->assertArrayHasKey( 'intrinsicsize', $result['img'] );
@@ -410,8 +414,11 @@ class KSES extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'width', $result['testing'] );
 	}
 
+	/**
+	 * @return array<string, string[]>
+	 */
 	public function data_test_filter_kses_allowed_html(): array {
-		$blue_rings_svg = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/multipleBlueRings.svg' );
+		$blue_rings_svg = (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/multipleBlueRings.svg' );
 
 		return [
 			'Video Element'                    => [

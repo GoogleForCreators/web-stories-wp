@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Renderer;
 
@@ -77,6 +77,8 @@ class Oembed extends Service_Base {
 	 * @param int          $width  The width for the response.
 	 * @param int          $height The height for the response.
 	 * @return string|mixed Filtered embed code.
+	 *
+	 * @phpstan-return ($output is string ? string : mixed)
 	 */
 	public function filter_embed_html( $output, WP_Post $post, int $width, int $height ) {
 		if ( ! \is_string( $output ) ) {
@@ -117,6 +119,10 @@ class Oembed extends Service_Base {
 	 * @param WP_Post     $post   The post object.
 	 * @param int         $width  The requested width.
 	 * @return array|mixed The modified response data.
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($data is array<T> ? array<T> : mixed)
 	 */
 	public function filter_oembed_response_data( $data, WP_Post $post, int $width ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {

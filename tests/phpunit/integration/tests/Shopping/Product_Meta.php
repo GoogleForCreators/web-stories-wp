@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -17,6 +20,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Media;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -25,10 +29,8 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 class Product_Meta extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Shopping\Product_Meta
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Shopping\Product_Meta $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -42,7 +44,7 @@ class Product_Meta extends DependencyInjectedTestCase {
 	public function test_register_meta(): void {
 		$this->instance->register_meta();
 
-		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PRODUCTS_POST_META_KEY, \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PRODUCTS_POST_META_KEY, Story_Post_Type::POST_TYPE_SLUG ) );
 	}
 
 	/**
@@ -52,12 +54,18 @@ class Product_Meta extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 		update_post_meta( $post->ID, $this->instance::PRODUCTS_POST_META_KEY, [ 'foo' => 'bar' ] );
 		$this->instance->on_plugin_uninstall();
-		$this->assertSameSets( [], get_post_meta( $post->ID, $this->instance::PRODUCTS_POST_META_KEY, true ) );
+
+		/**
+		 * @var array<mixed> $actual
+		 */
+		$actual = get_post_meta( $post->ID, $this->instance::PRODUCTS_POST_META_KEY, true );
+
+		$this->assertSameSets( [], $actual );
 	}
 }

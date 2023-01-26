@@ -31,9 +31,12 @@ import Tooltip from '../../../tooltip';
 import ToggleButton from './toggleButton';
 
 const IconButton = memo(
-  forwardRef(function IconButton({ Icon, ...rest }, ref) {
+  forwardRef(function IconButton({ Icon, hasTooltip = true, ...rest }, ref) {
     return (
-      <Tooltip placement={TOOLTIP_PLACEMENT.BOTTOM} title={rest.title}>
+      <Tooltip
+        placement={TOOLTIP_PLACEMENT.BOTTOM}
+        title={hasTooltip ? rest.title : undefined}
+      >
         <ToggleButton ref={ref} tabIndex={-1} {...rest}>
           <ContextMenuComponents.MenuIcon title={rest.title}>
             <Icon />
@@ -47,6 +50,7 @@ const IconButton = memo(
 IconButton.propTypes = {
   Icon: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
+  hasTooltip: PropTypes.bool,
   title: PropTypes.string,
 };
 

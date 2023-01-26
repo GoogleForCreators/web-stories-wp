@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './animation';
 export * from './data';
 export * from './element';
 export * from './elementType';
@@ -21,3 +20,4 @@ export * from './elementDefinition';
 export * from './propTypes';
 export * from './page';
 export * from './story';
+export * from './taxonomies';

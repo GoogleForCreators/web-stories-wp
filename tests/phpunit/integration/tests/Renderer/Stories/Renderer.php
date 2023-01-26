@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Generic_Renderer class.
  *
@@ -27,10 +30,14 @@
 namespace Google\Web_Stories\Tests\Integration\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Renderer\Stories\Generic_Renderer;
 use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Integration\Test_Renderer;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use WP_UnitTest_Factory;
 
 /**
  * Generic_Renderer class.
@@ -41,46 +48,43 @@ class Renderer extends TestCase {
 
 	/**
 	 * Story post ID.
-	 *
-	 * @var int
 	 */
-	private static $story_id;
+	private static int $story_id;
 
 	/**
 	 * Poster attachment ID.
-	 *
-	 * @var int
 	 */
-	private static $poster_id;
+	private static int $poster_id;
 
 	/**
 	 * Stories mock object.
 	 *
-	 * @var Story_Query
+	 * @var Story_Query & MockObject
 	 */
 	private $story_query;
 
 	/**
 	 * Story Model Mock.
-	 *
-	 * @var Story
 	 */
-	private $story_model;
+	private Story $story_model;
 
 	/**
 	 * Runs once before any test in the class run.
 	 *
-	 * @param \WP_UnitTest_Factory $factory Factory class object.
+	 * @param WP_UnitTest_Factory $factory Factory class object.
 	 */
-	public static function wpSetUpBeforeClass( $factory ): void {
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'  => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'  => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title' => 'Story Title',
 			]
 		);
 
-		self::$poster_id = self::factory()->attachment->create_object(
+		/**
+		 * @var int $poster_id
+		 */
+		$poster_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -88,6 +92,8 @@ class Renderer extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		self::$poster_id = $poster_id;
 	}
 
 	/**
@@ -130,11 +136,11 @@ class Renderer extends TestCase {
 
 		$renderer = new Test_Renderer( $this->story_query );
 
-		$output = $this->call_private_method( $renderer, 'is_view_type', [ 'grid' ] );
+		$output = $this->call_private_method( [ $renderer, 'is_view_type' ], [ 'grid' ] );
 
 		$this->assertTrue( $output );
 
-		$output = $this->call_private_method( $renderer, 'is_view_type', [ 'list' ] );
+		$output = $this->call_private_method( [ $renderer, 'is_view_type' ], [ 'list' ] );
 
 		$this->assertFalse( $output );
 	}
@@ -151,7 +157,7 @@ class Renderer extends TestCase {
 		);
 		$renderer = new Test_Renderer( $this->story_query );
 
-		$output = $this->call_private_method( $renderer, 'get_view_type' );
+		$output = $this->call_private_method( [ $renderer, 'get_view_type' ] );
 
 		$this->assertEquals( 'grid', $output );
 
@@ -170,12 +176,11 @@ class Renderer extends TestCase {
 		);
 
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
-		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_poster' );
-		$output = ob_get_clean();
+		$this->call_private_method( [ $renderer, 'render_story_with_poster' ] );
+		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 		$this->assertStringNotContainsString( '<img', $output );
@@ -185,10 +190,13 @@ class Renderer extends TestCase {
 	 * @covers ::render_story_with_poster
 	 */
 	public function test_render_story_with_poster(): void {
-		wp_maybe_generate_attachment_metadata( get_post( self::$poster_id ) );
+		$poster_attachment = get_post( self::$poster_id );
+		$this->assertNotNull( $poster_attachment );
+
+		wp_maybe_generate_attachment_metadata( $poster_attachment );
 		set_post_thumbnail( self::$story_id, self::$poster_id );
 
-		$this->story_model = new \Google\Web_Stories\Model\Story();
+		$this->story_model = new Story();
 		$this->story_model->load_from_post( self::$poster_id );
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
@@ -200,12 +208,11 @@ class Renderer extends TestCase {
 		);
 
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
-		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_poster' );
-		$output = ob_get_clean();
+		$this->call_private_method( [ $renderer, 'render_story_with_poster' ] );
+		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 	}
@@ -217,7 +224,7 @@ class Renderer extends TestCase {
 	public function test_render_story_with_poster_missing_srcset_and_sizes(): void {
 		set_post_thumbnail( self::$story_id, self::$poster_id );
 
-		$this->story_model = new \Google\Web_Stories\Model\Story();
+		$this->story_model = new Story();
 		$this->story_model->load_from_post( self::$poster_id );
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
@@ -229,12 +236,11 @@ class Renderer extends TestCase {
 		);
 
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
-		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_poster' );
-		$output = ob_get_clean();
+		$this->call_private_method( [ $renderer, 'render_story_with_poster' ] );
+		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 	}
@@ -244,13 +250,12 @@ class Renderer extends TestCase {
 	 */
 	public function test_get_content_overlay(): void {
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
-		$renderer->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 		$this->set_private_property( $renderer, 'content_overlay', false );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'get_content_overlay' );
-		$output = ob_get_clean();
+		$this->call_private_method( [ $renderer, 'get_content_overlay' ] );
+		$output = (string) ob_get_clean();
 
 		$this->assertEmpty( $output );
 
@@ -258,8 +263,8 @@ class Renderer extends TestCase {
 		$this->set_private_property( $renderer, 'content_overlay', true );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'get_content_overlay' );
-		$output = ob_get_clean();
+		$this->call_private_method( [ $renderer, 'get_content_overlay' ] );
+		$output = (string) ob_get_clean();
 
 		$this->assertStringContainsString( 'story-content-overlay__title', $output );
 	}
@@ -274,10 +279,10 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
+		$renderer = new Generic_Renderer( $this->story_query );
 		$expected = 'web-stories-list__story';
 
-		$output = $this->call_private_method( $renderer, 'get_single_story_classes' );
+		$output = $this->call_private_method( [ $renderer, 'get_single_story_classes' ] );
 
 		$this->assertEquals( $expected, $output );
 	}
@@ -296,11 +301,11 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
+		$renderer = new Generic_Renderer( $story_query );
 
 		$expected = 'web-stories-list alignnone test is-view-type-circles is-style-default has-title is-carousel';
 
-		$output = $this->call_private_method( $renderer, 'get_container_classes' );
+		$output = $this->call_private_method( [ $renderer, 'get_container_classes' ] );
 
 		$this->assertEquals( $expected, $output );
 	}
@@ -319,16 +324,16 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
+		$renderer = new Generic_Renderer( $story_query );
 
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$archive_link = (string) get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();
-		$this->call_private_method( $renderer, 'maybe_render_archive_link' );
-		$expected = ob_get_clean();
+		$this->call_private_method( [ $renderer, 'maybe_render_archive_link' ] );
+		$output = (string) ob_get_clean();
 
-		$this->assertStringContainsString( 'web-stories-list__archive-link', $expected );
-		$this->assertStringContainsString( $archive_link, $expected );
-		$this->assertStringContainsString( 'View all stories', $expected );
+		$this->assertStringContainsString( 'web-stories-list__archive-link', $output );
+		$this->assertStringContainsString( $archive_link, $output );
+		$this->assertStringContainsString( 'View all stories', $output );
 
 	}
 
@@ -354,23 +359,21 @@ class Renderer extends TestCase {
 	}
 
 	public function test_render_link_attributes(): void {
-		$filter = static function( $attrs, $story, $position ) {
-			return [
-				'class'                              => '123',
-				'foo'                                => 'bar',
-				'"><script>console.log(1)</script>>' => 'bar',
-				'data-tgev'                          => 'event1234',
-				'data-tgev-metric'                   => 'ev',
-				'data-tgev-order'                    => $position,
-			];
-		};
+		$filter = static fn( $attrs, $story, $position ) => [
+			'class'                              => '123',
+			'foo'                                => 'bar',
+			'"><script>console.log(1)</script>>' => 'bar',
+			'data-tgev'                          => 'event1234',
+			'data-tgev-metric'                   => 'ev',
+			'data-tgev-order'                    => $position,
+		];
 
 		add_filter( 'web_stories_renderer_link_attributes', $filter, 10, 3 );
 
 		$renderer = new Test_Renderer( $this->story_query );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_link_attributes' );
+		$this->call_private_method( [ $renderer, 'render_link_attributes' ] );
 		$expected = ob_get_clean();
 
 		remove_filter( 'web_stories_renderer_link_attributes', $filter );

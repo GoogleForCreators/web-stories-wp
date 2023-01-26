@@ -29,12 +29,9 @@ export const Popover = styled.div`
   --translate-y: calc(var(--delta-y, 0) * 1px);
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: ${({ isInline }) => (isInline ? 'relative' : 'absolute')};
-  z-index: ${({ popoverZIndex }) => popoverZIndex};
+  z-index: ${({ popoverZIndex = POPOVER_Z_INDEX }) => popoverZIndex};
   transform: translate(var(--translate-x), var(--translate-y));
 `;
-Popover.defaultProps = {
-  popoverZIndex: POPOVER_Z_INDEX,
-};
 Popover.propTypes = {
   popoverZIndex: PropTypes.number,
 };

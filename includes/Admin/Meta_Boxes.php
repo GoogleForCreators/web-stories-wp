@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories\Admin;
 
@@ -110,7 +110,7 @@ class Meta_Boxes extends Service_Base {
 	 * @param int $story_id Story ID.
 	 * @return string Meta box URL.
 	 */
-	public function get_meta_box_url( $story_id ): string {
+	public function get_meta_box_url( int $story_id ): string {
 		$meta_box_url = admin_url( 'post.php' );
 		$meta_box_url = add_query_arg(
 			[

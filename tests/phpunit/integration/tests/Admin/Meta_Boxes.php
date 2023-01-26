@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,10 +29,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Meta_Boxes extends TestCase {
 	/**
 	 * Story ID.
-	 *
-	 * @var int
 	 */
-	private $story_id;
+	private int $story_id;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -39,7 +40,7 @@ class Meta_Boxes extends TestCase {
 		// is run multiple times, causing the story not to be available anymore.
 		$this->story_id = self::factory()->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Meta Boxes Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
@@ -92,8 +93,12 @@ class Meta_Boxes extends TestCase {
 
 		add_action( 'add_meta_boxes', [ $this, 'register_test_meta_boxes' ] );
 
+
+		$current_post = get_post( $this->story_id );
+
+		$this->assertNotNull( $current_post );
 		// Registers default meta boxes.
-		register_and_do_post_meta_boxes( get_post( $this->story_id ) );
+		register_and_do_post_meta_boxes( $current_post );
 
 		$registered_meta_boxes = [];
 
@@ -133,8 +138,12 @@ class Meta_Boxes extends TestCase {
 
 		add_action( 'add_meta_boxes', [ $this, 'register_test_meta_boxes' ] );
 
+		$current_post = get_post( $this->story_id );
+
+		$this->assertNotNull( $current_post );
+
 		// Registers default meta boxes.
-		register_and_do_post_meta_boxes( get_post( $this->story_id ) );
+		register_and_do_post_meta_boxes( $current_post );
 
 		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$actual     = $meta_boxes->get_meta_boxes_per_location();

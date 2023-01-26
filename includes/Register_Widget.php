@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
@@ -41,7 +41,7 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @var Stories Stories instance.
 	 */
-	private $stories;
+	private Stories $stories;
 
 	/**
 	 * Register_Widget constructor.
@@ -81,6 +81,10 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @param array|mixed $widget_types An array of excluded widget-type IDs.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($widget_types is array<T> ? array<T> : mixed)
 	 */
 	public function hide_widget( $widget_types ) {
 		if ( ! \is_array( $widget_types ) ) {
@@ -98,6 +102,10 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @param string[]|mixed $classes An array of body class names.
 	 * @return array|mixed
+	 *
+	 * @template T
+	 *
+	 * @phpstan-return ($classes is array<T> ? array<T> : mixed)
 	 */
 	public function body_class( $classes ) {
 		if ( ! \is_array( $classes ) ) {

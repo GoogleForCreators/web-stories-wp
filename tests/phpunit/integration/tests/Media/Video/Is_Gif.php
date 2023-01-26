@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2022 Google LLC
  *
@@ -25,10 +28,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Is_Gif extends TestCase {
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Video\Is_Gif
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Video\Is_Gif $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -57,6 +58,8 @@ class Is_Gif extends TestCase {
 				'post_title'     => 'Test Video',
 			]
 		);
+
+		$this->assertNotWPError( $video_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::IS_GIF_POST_META_KEY, 999 );
 		$this->instance->on_plugin_uninstall();

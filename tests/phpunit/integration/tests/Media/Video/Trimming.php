@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,10 +29,8 @@ class Trimming extends TestCase {
 
 	/**
 	 * Test instance.
-	 *
-	 * @var \Google\Web_Stories\Media\Video\Trimming
 	 */
-	protected $instance;
+	protected \Google\Web_Stories\Media\Video\Trimming $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -68,6 +69,8 @@ class Trimming extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $video_attachment_id );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -76,6 +79,8 @@ class Trimming extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
@@ -110,6 +115,8 @@ class Trimming extends TestCase {
 				'post_title'     => 'Test Video',
 			]
 		);
+
+		$this->assertNotWPError( $video_attachment_id );
 
 		add_post_meta( $video_attachment_id, $this->instance::TRIM_POST_META_KEY, [] );
 		$this->instance->on_plugin_uninstall();
