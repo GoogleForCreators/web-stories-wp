@@ -37,16 +37,15 @@ import { useUploader } from '../../uploader';
 import { MEDIA_POSTER_IMAGE_MIME_TYPE } from '../../../constants';
 import getPosterName from './getPosterName';
 
+type VideoPosterType = {
+  posterId?: ResourceId;
+  poster?: string;
+  posterWidth?: number;
+  posterHeight?: number;
+};
+
 interface UseUploadVideoFrameProps {
-  updateMediaElement: (props: {
-    id: number;
-    data: {
-      posterId?: ResourceId;
-      poster?: string;
-      width?: number;
-      height?: number;
-    };
-  }) => void;
+  updateMediaElement?: (props: { id: number; data: VideoPosterType }) => void;
 }
 
 function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
@@ -73,7 +72,10 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
      * @param posterFile File object.
      * @return Poster information.
      */
-    async (id: ResourceId, posterFile: File | null) => {
+    async (
+      id: ResourceId,
+      posterFile: File | null
+    ): Promise<VideoPosterType> => {
       // TODO: Make param mandatory; don't allow calling without.
       if (!posterFile) {
         return {};

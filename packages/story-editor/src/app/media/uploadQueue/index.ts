@@ -48,7 +48,6 @@ import type { ElementId } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { useUploader } from '../../uploader';
-import { noop } from '../../../utils/noop';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useFFmpeg from '../utils/useFFmpeg';
 import useMediaInfo from '../utils/useMediaInfo';
@@ -93,9 +92,7 @@ function useMediaUploadQueue() {
 
   const [state, actions] = useReduction(initialState, reducer);
 
-  const { uploadVideoPoster } = useUploadVideoFrame({
-    updateMediaElement: noop,
-  });
+  const { uploadVideoPoster } = useUploadVideoFrame({});
 
   const isMounted = useRef(false);
   const currentTranscodingItem = useRef<string | null>(null);
@@ -439,11 +436,10 @@ function useMediaUploadQueue() {
       }
       if (newResource.type === ResourceType.Video && posterFile) {
         try {
-          const { poster, posterId }: { poster: string; posterId: string } =
-            (await uploadVideoPoster(newResource.id, posterFile)) as {
-              poster: string;
-              posterId: string;
-            };
+          const { poster, posterId } = await uploadVideoPoster(
+            newResource.id,
+            posterFile
+          );
 
           if (!isMounted.current) {
             return;
