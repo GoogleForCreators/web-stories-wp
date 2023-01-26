@@ -1210,6 +1210,20 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "x": 73,
+          "y": 555,
+          "width": 31,
+          "height": 32,
+          "sticker": { "type": "skinCareCombAndScissors" },
+          "id": "978989fd-7e0a-4b34-b138-e9dd089c7a8e",
+          "type": "sticker",
+          "groupId": "8701c6e5-0348-4da4-949e-203edaf029d0"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Mulish",
@@ -1273,6 +1287,20 @@
           "x": 169,
           "y": 602,
           "type": "text",
+          "groupId": "16de95b7-85b5-44ba-bea7-39fe77f7ff40"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 199,
+          "y": 556,
+          "width": 22,
+          "height": 36,
+          "sticker": { "type": "skinCareFaceIcon" },
+          "id": "de52b375-b0f0-47fb-9020-f607a1ca4bfd",
+          "type": "sticker",
           "groupId": "16de95b7-85b5-44ba-bea7-39fe77f7ff40"
         },
         {
@@ -1344,34 +1372,6 @@
           "y": 602,
           "type": "text",
           "groupId": "3017fbbd-cc27-44e9-86b2-242e36ad0df9"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 73,
-          "y": 555,
-          "width": 31,
-          "height": 32,
-          "sticker": { "type": "skinCareCombAndScissors" },
-          "id": "978989fd-7e0a-4b34-b138-e9dd089c7a8e",
-          "type": "sticker",
-          "groupId": "8701c6e5-0348-4da4-949e-203edaf029d0"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 199,
-          "y": 556,
-          "width": 22,
-          "height": 36,
-          "sticker": { "type": "skinCareFaceIcon" },
-          "id": "de52b375-b0f0-47fb-9020-f607a1ca4bfd",
-          "type": "sticker",
-          "groupId": "16de95b7-85b5-44ba-bea7-39fe77f7ff40"
         },
         {
           "opacity": 100,
@@ -2485,6 +2485,21 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "width": 31,
+          "height": 32,
+          "sticker": { "type": "skinCareCombAndScissors" },
+          "basedOn": "8df7694b-f72b-4766-be9e-841c3f9e566d",
+          "id": "151343f1-87de-4d35-b899-e04ac77250ca",
+          "x": 73,
+          "y": 555,
+          "type": "sticker",
+          "groupId": "ab49d554-690a-4328-84db-781ca9da9730"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Mulish",
@@ -2548,6 +2563,21 @@
           "x": 169,
           "y": 602,
           "type": "text",
+          "groupId": "aeaaeaeb-9b0a-4756-93a6-c14109f23e54"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "width": 22,
+          "height": 36,
+          "sticker": { "type": "skinCareFaceIcon" },
+          "basedOn": "318278db-2aff-423d-a234-f5e5ef5ead71",
+          "id": "11ff418c-29d0-4829-8519-517a7af5b8ff",
+          "x": 199,
+          "y": 556,
+          "type": "sticker",
           "groupId": "aeaaeaeb-9b0a-4756-93a6-c14109f23e54"
         },
         {
@@ -2619,36 +2649,6 @@
           "y": 602,
           "type": "text",
           "groupId": "b17a3386-b3fd-49f2-8396-6bad6e54cf52"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "width": 31,
-          "height": 32,
-          "sticker": { "type": "skinCareCombAndScissors" },
-          "basedOn": "8df7694b-f72b-4766-be9e-841c3f9e566d",
-          "id": "151343f1-87de-4d35-b899-e04ac77250ca",
-          "x": 73,
-          "y": 555,
-          "type": "sticker",
-          "groupId": "ab49d554-690a-4328-84db-781ca9da9730"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "width": 22,
-          "height": 36,
-          "sticker": { "type": "skinCareFaceIcon" },
-          "basedOn": "318278db-2aff-423d-a234-f5e5ef5ead71",
-          "id": "11ff418c-29d0-4829-8519-517a7af5b8ff",
-          "x": 199,
-          "y": 556,
-          "type": "sticker",
-          "groupId": "aeaaeaeb-9b0a-4756-93a6-c14109f23e54"
         },
         {
           "opacity": 100,
@@ -3763,6 +3763,21 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "width": 31,
+          "height": 32,
+          "sticker": { "type": "skinCareCombAndScissors" },
+          "basedOn": "8df7694b-f72b-4766-be9e-841c3f9e566d",
+          "id": "7007c4c0-eea7-4370-9a30-4b6f2bd497a6",
+          "x": 73,
+          "y": 555,
+          "type": "sticker",
+          "groupId": "0dff1010-c026-44d1-aced-c89935385385"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Mulish",
@@ -3826,6 +3841,21 @@
           "x": 169,
           "y": 602,
           "type": "text",
+          "groupId": "92312010-b686-460e-9487-4671b5eb46b4"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "width": 22,
+          "height": 36,
+          "sticker": { "type": "skinCareFaceIcon" },
+          "basedOn": "318278db-2aff-423d-a234-f5e5ef5ead71",
+          "id": "c69c154e-02ad-435b-9747-81a6e0a5b386",
+          "x": 199,
+          "y": 556,
+          "type": "sticker",
           "groupId": "92312010-b686-460e-9487-4671b5eb46b4"
         },
         {
@@ -3897,36 +3927,6 @@
           "y": 602,
           "type": "text",
           "groupId": "9f6a79e4-d42e-4c22-8a20-c4acad9dfde7"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "width": 31,
-          "height": 32,
-          "sticker": { "type": "skinCareCombAndScissors" },
-          "basedOn": "8df7694b-f72b-4766-be9e-841c3f9e566d",
-          "id": "7007c4c0-eea7-4370-9a30-4b6f2bd497a6",
-          "x": 73,
-          "y": 555,
-          "type": "sticker",
-          "groupId": "0dff1010-c026-44d1-aced-c89935385385"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "width": 22,
-          "height": 36,
-          "sticker": { "type": "skinCareFaceIcon" },
-          "basedOn": "318278db-2aff-423d-a234-f5e5ef5ead71",
-          "id": "c69c154e-02ad-435b-9747-81a6e0a5b386",
-          "x": 199,
-          "y": 556,
-          "type": "sticker",
-          "groupId": "92312010-b686-460e-9487-4671b5eb46b4"
         },
         {
           "opacity": 100,

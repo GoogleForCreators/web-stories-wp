@@ -94,4 +94,68 @@ describe('getTemplate', () => {
       });
     });
   });
+
+  it('should only list valid elements as animation targets', async () => {
+    const templates = await getTemplates('example.com/');
+    for (const template of templates) {
+      for (const { id, elements, animations = [] } of template.pages) {
+        const elementIds = elements.map((e) => e.id);
+        for (const animation of animations) {
+          try {
+            expect(elementIds).toIncludeAllMembers(animation.targets);
+          } catch {
+            throw new Error(
+              `Animation target failure in: '${template.slug}', page ${id}, animation ${animation.id}`
+            );
+          }
+        }
+      }
+    }
+  });
+
+  it('should list elements in the same group sequentially without gaps', async () => {
+    const templates = await getTemplates('example.com/');
+    let i = 0;
+    for (const template of templates) {
+      i++;
+      for (const { id, elements, groups = {} } of template.pages) {
+        const existingGroupIds = Object.keys(groups);
+
+        const seenGroupIds = [];
+
+        let lastGroupId = null;
+        const elementGroups = elements.map(({ groupId }) => groupId);
+        for (const groupId of elementGroups) {
+          try {
+            expect(
+              // eslint-disable-next-line jest/no-conditional-in-test
+              lastGroupId &&
+                groupId &&
+                lastGroupId !== groupId &&
+                seenGroupIds.includes(groupId)
+            ).toBeFalsy();
+          } catch {
+            throw new Error(
+              `Group order failure in: '${template.slug} (${i}/${
+                templates.length
+              })', page ${id}, group ${groupId}.\nGroups are:\n* ${elementGroups
+                // eslint-disable-next-line jest/no-conditional-in-test
+                .map((g) => (g === undefined ? 'none' : g))
+                .join('\n* ')}`
+            );
+          }
+
+          // eslint-disable-next-line jest/no-conditional-in-test
+          if (groupId) {
+            seenGroupIds.push(groupId);
+
+            // eslint-disable-next-line jest/no-conditional-expect
+            expect(existingGroupIds).toContain(groupId);
+          }
+
+          lastGroupId = groupId;
+        }
+      }
+    }
+  });
 });
