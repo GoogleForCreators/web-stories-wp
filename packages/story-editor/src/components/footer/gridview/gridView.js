@@ -268,7 +268,6 @@ function GridView({ onClose }) {
                 </PageSeparator>
                 <ReorderableItem position={index}>
                   <PagePreview
-                    key={page.id}
                     label={
                       isCurrentPage
                         ? sprintf(

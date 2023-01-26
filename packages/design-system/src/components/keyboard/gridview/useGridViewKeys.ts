@@ -65,10 +65,7 @@ function useGridViewKeys({
   useKeyDownEffect(
     containerRef,
     { key: ['up', 'down', 'left', 'right'] },
-    ({ key, ctrlKey }: KeyboardEvent) => {
-      if (ctrlKey) {
-        return;
-      }
+    ({ key }: KeyboardEvent) => {
       switch (key) {
         case 'ArrowLeft':
         case 'ArrowRight': {
@@ -202,14 +199,10 @@ function useGridViewKeys({
           break;
       }
 
-      if (canArrange && nextIndex) {
+      if (canArrange && typeof nextIndex !== 'undefined') {
         if (arrangeItem && focusedItemId) {
           arrangeItem(focusedItemId, nextIndex);
         }
-
-        // Focus on DOM element where this page is moving to
-        const item = itemRefs?.current?.[itemIds[nextIndex]];
-        focusOnPage(item);
       }
     },
     [
