@@ -180,15 +180,14 @@ function useCanvasKeys(ref: RefObject<Node>) {
   useGlobalKeyDownEffect(
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
-      if (isEditing || !selectedElements.length) {
+      if (isEditing || !selectedElements?.length) {
         return;
       }
-      const { isLocked } = selectedElements?.[0] || {};
-      if (
-        (elementIs.backgroundable(selectedElements?.[0]) &&
-          selectedElements[0].isBackground) ||
-        isLocked
-      ) {
+      const { isLocked } = selectedElements[0];
+      const isBackground =
+        elementIs.backgroundable(selectedElements[0]) &&
+        selectedElements[0].isBackground;
+      if (isBackground || isLocked) {
         return;
       }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
