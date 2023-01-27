@@ -18,15 +18,10 @@
  * External dependencies
  */
 import {
-  Button,
-  ButtonSize,
-  ButtonType,
-  ButtonVariant,
   Icons,
   LOCAL_STORAGE_PREFIX,
   localStore,
   Placement,
-  themeHelpers,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled, { css } from 'styled-components';
@@ -38,10 +33,9 @@ import Tooltip from '../tooltip';
 import { useCanvas } from '../../app';
 import { states, useHighlights } from '../../app/highlights';
 import styles from '../../app/highlights/styles';
+import { ToggleButton } from '../toggleButton';
 
-const StyledButton = styled(Button)`
-  ${themeHelpers.focusableOutlineCSS};
-
+const StyledButton = styled(ToggleButton)`
   ${({ isHighlighted }) =>
     isHighlighted &&
     css`
@@ -90,16 +84,14 @@ function ToolbarToggle() {
             node.focus();
           }
         }}
-        variant={ButtonVariant.Square}
-        type={ButtonType.Tertiary}
-        size={ButtonSize.Small}
         onClick={handleToolbarVisibility}
         aria-label={__('Show element toolbar', 'web-stories')}
+        label={__('Show element toolbar', 'web-stories')}
+        isOpen={false}
         isHighlighted={highlight?.showEffect}
         onAnimationEnd={() => resetHighlight()}
-      >
-        <Icons.BoxWithDots />
-      </StyledButton>
+        MainIcon={Icons.BoxWithDots}
+      />
     </Tooltip>
   );
 }
