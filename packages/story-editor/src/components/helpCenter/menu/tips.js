@@ -37,7 +37,7 @@ const Panel = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
+  ${themeHelpers.expandTextPreset(({ label }, { Small }) => label[Small])}
   display: flex;
   justify-content: space-between;
   width: 100%;

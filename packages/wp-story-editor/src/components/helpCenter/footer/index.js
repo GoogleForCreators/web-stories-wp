@@ -42,7 +42,7 @@ const Links = styled.ul`
 
 const ListItem = styled.li`
   ${themeHelpers.expandTextPreset(
-    ({ paragraph }, { X_SMALL }) => paragraph[X_SMALL]
+    ({ paragraph }, { XSmall }) => paragraph[XSmall]
   )}
   &::before {
     content: '- ';

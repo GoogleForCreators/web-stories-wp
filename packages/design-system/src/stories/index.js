@@ -82,7 +82,7 @@ export const _default = () => {
     () => (isDarkTheme ? dark : light),
     [isDarkTheme]
   );
-  const { SMALL } = TextSize;
+  const { Small } = TextSize;
   return (
     <div>
       <FixedButton
@@ -96,7 +96,7 @@ export const _default = () => {
             if (typeof activeTheme[themeSection][sectionValue] === 'object') {
               return (
                 <Row key={`${themeSection} - ${sectionValue}`}>
-                  <Headline as="h3" size={SMALL}>
+                  <Headline as="h3" size={Small}>
                     {`${themeSection} - ${sectionValue}`}
                   </Headline>
                   {Object.keys(activeTheme[themeSection][sectionValue]).map(
@@ -113,7 +113,7 @@ export const _default = () => {
                             }
                           />
                           <Text.Paragraph
-                            size={SMALL}
+                            size={Small}
                           >{`${themeSection}.${sectionValue}.${nestedSection} (${activeTheme[themeSection][sectionValue][nestedSection]})`}</Text.Paragraph>
                         </Container>
                       );
@@ -127,7 +127,7 @@ export const _default = () => {
               <Container key={`${themeSection}_${sectionValue}`}>
                 <ColorBlock color={activeTheme[themeSection][sectionValue]} />
                 <Text.Paragraph
-                  size={SMALL}
+                  size={Small}
                 >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text.Paragraph>
               </Container>
             );

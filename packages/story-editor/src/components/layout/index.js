@@ -44,7 +44,7 @@ const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
 })`
   ${themeHelpers.expandTextPreset(
-    ({ paragraph }, { MEDIUM }) => paragraph[MEDIUM]
+    ({ paragraph }, { Medium }) => paragraph[Medium]
   )}
   background-color: ${({ theme }) => theme.colors.bg.primary};
 

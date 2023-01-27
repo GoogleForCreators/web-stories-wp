@@ -51,7 +51,7 @@ export const ContentHeading = styled(Headline).attrs({
 export const LinkButton = styled(Button).attrs({
   variant: ButtonVariant.Link,
 })`
-  ${themeHelpers.expandTextPreset(({ link }, { X_SMALL }) => link[X_SMALL])}
+  ${themeHelpers.expandTextPreset(({ link }, { XSmall }) => link[XSmall])}
   margin-bottom: 16px;
   font-weight: 500;
 `;
