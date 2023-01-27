@@ -34,7 +34,7 @@ const Input = styled.input`
   color: ${({ theme }) => `${theme.colors.fg.primary} !important`};
   margin: 0;
   ${themeHelpers.expandTextPreset(
-    ({ paragraph }, { MEDIUM }) => paragraph[MEDIUM]
+    ({ paragraph }, { Medium }) => paragraph[Medium]
   )}
   background: ${({ isHighlighted }) => !isHighlighted && 'none !important'};
   border: none !important;
