@@ -29,6 +29,7 @@ import {
   themeHelpers,
   TextSize,
   theme as dsTheme,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -80,7 +81,7 @@ const Button = styled(dsButton)`
   // Margin is set to -8px to compensate for empty space
   // around the actual icon graphic in the svg
   .main-icon {
-    height: ${TextSize.ICON_SIZE}px;
+    height: ${THEME_CONSTANTS.ICON_SIZE}px;
     width: auto;
     margin: -8px;
     display: block;
@@ -100,7 +101,7 @@ const badgeSize = 22;
 const badgeText = dsTheme.typography.presets.label[TextSize.Small];
 
 // TODO: Extract `CountBadge` to its own component?
-const CountBadge = styled(Text.Paragraph).attrs({ as: 'span' })`
+const CountBadge = styled(Text.Span)`
   ${({ size = badgeSize, fontSize = badgeText.size, theme }) => css`
     min-width: ${size}px;
     width: auto;
