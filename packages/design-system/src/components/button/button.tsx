@@ -179,7 +179,7 @@ const buttonColors = {
   [ButtonType.Primary]: primaryColors,
   [ButtonType.Secondary]: secondaryColors,
   [ButtonType.Tertiary]: tertiaryColors,
-  [ButtonType.Quarternary]: quaternaryColors,
+  [ButtonType.Quaternary]: quaternaryColors,
   [ButtonType.Plain]: css``,
 } as const;
 

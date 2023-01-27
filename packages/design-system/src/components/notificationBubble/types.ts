@@ -22,7 +22,7 @@ export enum BubbleVariant {
   Primary = 'primary',
   Secondary = 'secondary',
   Tertiary = 'tertiary',
-  Quarternary = 'quaternary',
+  Quaternary = 'quaternary',
   Positive = 'positive',
   Negative = 'negative',
   Accent = 'accent',

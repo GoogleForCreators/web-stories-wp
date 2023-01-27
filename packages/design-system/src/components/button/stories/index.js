@@ -212,13 +212,13 @@ export const ToggleButtons = () => {
       <ToggleButtonContainer
         isToggled={isToggled}
         swapToggled={swapToggled}
-        type={ButtonType.Quarternary}
+        type={ButtonType.Quaternary}
       />
       <DarkThemeProvider>
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
-          type={ButtonType.Quarternary}
+          type={ButtonType.Quaternary}
         />
       </DarkThemeProvider>
     </>

@@ -35,7 +35,7 @@ interface ToggleProps
 function ToggleButton({ isToggled = false, type, ...rest }: ToggleProps) {
   // if type is set to quaternary, use that, otherwise use secondary or tertiary based on state
   const actualType =
-    type === ButtonType.Quarternary
+    type === ButtonType.Quaternary
       ? type
       : isToggled
       ? ButtonType.Secondary

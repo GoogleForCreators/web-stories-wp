@@ -18,7 +18,7 @@ export enum ButtonType {
   Primary = 'primary',
   Secondary = 'secondary',
   Tertiary = 'tertiary',
-  Quarternary = 'quaternary',
+  Quaternary = 'quaternary',
   Plain = 'plain',
 }
 

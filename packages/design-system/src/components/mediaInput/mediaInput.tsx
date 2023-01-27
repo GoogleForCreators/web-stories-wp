@@ -238,7 +238,7 @@ const MediaInput = forwardRef(function MediaInput(
             id={buttonId}
             showImage={variant !== MediaVariant.None}
             variant={ButtonVariant.Square}
-            type={ButtonType.Quarternary}
+            type={ButtonType.Quaternary}
             size={ButtonSize.Small}
             aria-label={ariaLabel}
             onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
