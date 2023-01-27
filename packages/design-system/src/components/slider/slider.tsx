@@ -255,11 +255,9 @@ function Slider({
       popupZIndexOverride={popupZIndexOverride}
       forceAnchorRef={fakeThumbRef}
       styleOverride={{
-        style: {
-          transform: `translate(${
-            ((widthTracker - thumbSize) * percentageVal) / 100
-          }px, 0)`,
-        },
+        transform: `translate(${
+          ((widthTracker - thumbSize) * percentageVal) / 100
+        }px, 0)`,
       }}
     >
       <Wrapper>

@@ -69,11 +69,7 @@ function DurationIndicator() {
         ),
         MAX_RECORDING_DURATION_IN_MINUTES
       )}
-      styleOverride={{
-        style: {
-          maxWidth: '20em',
-        },
-      }}
+      styleOverride={{ maxWidth: '20em' }}
     >
       <Wrapper>{getVideoLengthDisplay(duration)}</Wrapper>
     </Tooltip>
