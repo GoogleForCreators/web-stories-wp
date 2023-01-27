@@ -31,8 +31,6 @@ import { ToggleButton } from '../../toggleButton';
 import GridView from './gridView';
 
 const Box = styled.div`
-  width: 32px;
-  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
