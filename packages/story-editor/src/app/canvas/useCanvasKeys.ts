@@ -180,7 +180,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
   useGlobalKeyDownEffect(
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
-      if (isEditing) {
+      if (isEditing || !selectedElements.length) {
         return;
       }
       const { isLocked } = selectedElements?.[0] || {};
