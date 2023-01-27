@@ -18,15 +18,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import {
-  Button,
-  ButtonSize,
-  ButtonType,
-  ButtonVariant,
-  Icons,
-  Modal,
-  Placement,
-} from '@googleforcreators/design-system';
+import { Icons, Modal, Placement } from '@googleforcreators/design-system';
 import { useCallback, useState } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
@@ -35,6 +27,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
+import { ToggleButton } from '../../toggleButton';
 import GridView from './gridView';
 
 const Box = styled.div`
@@ -68,21 +61,21 @@ function GridViewButton() {
           placement={Placement.Top}
           hasTail
         >
-          <Button
-            variant={ButtonVariant.Square}
-            type={ButtonType.Tertiary}
-            size={ButtonSize.Small}
+          <ToggleButton
+            isOpen={isGridViewOpen}
             onClick={toggleModal}
+            aria-owns="gridview_modal"
+            MainIcon={Icons.Box4}
             aria-label={__('Grid View', 'web-stories')}
-          >
-            <Icons.Box4 />
-          </Button>
+            label={__('Grid View', 'web-stories')}
+          />
         </Tooltip>
       </Box>
       <Modal
         isOpen={isGridViewOpen}
         onClose={toggleModal}
         contentLabel={__('Grid View', 'web-stories')}
+        popupId="gridview_modal"
         overlayStyles={{
           alignItems: 'stretch',
           backgroundColor: '#131516', // theme.colors.brand.gray[90]
