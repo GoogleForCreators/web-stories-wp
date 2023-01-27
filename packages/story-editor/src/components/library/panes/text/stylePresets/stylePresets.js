@@ -207,7 +207,7 @@ function PresetPanel() {
           <Popup
             anchor={buttonRef}
             isOpen={isPopupOpen}
-            placement={Placement.Right_START}
+            placement={Placement.RightStart}
             spacing={SPACING}
             renderContents={() => (
               <StyleManager

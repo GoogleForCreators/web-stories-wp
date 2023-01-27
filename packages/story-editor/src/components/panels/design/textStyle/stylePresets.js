@@ -132,7 +132,7 @@ function PresetPanel({ pushUpdate }) {
             anchor={buttonRef}
             dock={sidebar}
             isOpen={isPopupOpen}
-            placement={Placement.Right_START}
+            placement={Placement.RightStart}
             spacing={SPACING}
             renderContents={() => (
               <StyleManager

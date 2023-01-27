@@ -101,7 +101,7 @@ const Color = forwardRef(function Color(
     maxHeight = null,
     shouldCloseOnSelection = false,
     allowsSavedColorDeletion = true,
-    pickerPlacement = Placement.Right_START,
+    pickerPlacement = Placement.RightStart,
     isInDesignMenu = false,
     hasInputs = true,
     width,

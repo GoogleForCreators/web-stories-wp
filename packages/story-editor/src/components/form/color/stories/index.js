@@ -263,7 +263,7 @@ function DesignPanel({ style, pickerPlacement }) {
 
 export function DesignPanelLeft() {
   return (
-    <DesignPanel style={{ left: 0 }} pickerPlacement={Placement.Right_START} />
+    <DesignPanel style={{ left: 0 }} pickerPlacement={Placement.RightStart} />
   );
 }
 

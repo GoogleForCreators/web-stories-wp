@@ -160,7 +160,7 @@ const ColorInput = forwardRef(function ColorInput(
     value = null,
     label = null,
     changedStyle,
-    pickerPlacement = Placement.Right_START,
+    pickerPlacement = Placement.RightStart,
     isInDesignMenu = false,
     hasInputs = true,
     pickerProps,
