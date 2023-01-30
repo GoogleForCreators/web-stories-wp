@@ -112,7 +112,7 @@ Dialog.propTypes = {
   onPrimary: PropTypes.func,
   onSecondary: PropTypes.func,
   primaryText: PropTypes.string,
-  PrimaryComponent: PropTypes.func,
+  PrimaryComponent: PropTypes.object,
   primaryRest: PropTypes.object,
   secondaryText: PropTypes.string,
   secondaryRest: PropTypes.object,
