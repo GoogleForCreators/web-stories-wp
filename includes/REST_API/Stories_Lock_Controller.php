@@ -344,7 +344,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		 */
 		$post_id = $request['id'];
 
-		// Make preparing links optional after WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/b7bae6936a9ad54f85bad7e5a73a9d110190d927
+		// Make preparing links optional after WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/b7bae6936a9ad54f85bad7e5a73a9d110190d927.
 		$response->add_links( $this->prepare_links( $item, $post_id ) );
 
 		$post_type = $this->story_post_type->get_slug();

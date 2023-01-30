@@ -204,7 +204,7 @@ function rest_preload_api_request( array $memo, $path ): array {
 		return $memo;
 	}
 
-	// This line is different from code. Adds untrailingslashit. See https://core.trac.wordpress.org/ticket/57048
+	// This line is different from code. Adds untrailingslashit. See https://core.trac.wordpress.org/ticket/57048.
 	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];
