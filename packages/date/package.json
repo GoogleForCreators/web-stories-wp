@@ -40,7 +40,7 @@
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "date-fns": "^2.29.3",
-    "date-fns-tz": "^1.3.7"
+    "date-fns-tz": "^2.0.0"
   },
   "devDependencies": {
     "mockdate": "^3.0.5"

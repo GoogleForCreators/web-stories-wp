@@ -36,6 +36,8 @@ use Google\Web_Stories\Infrastructure\Service;
 
 /**
  * Class ImgAreaSelect_Patch
+ *
+ * TODO Remove this workaround once WP 6.2 is min version. See https://github.com/WordPress/wordpress-develop/commit/ef0c1d1dd28f13bbe6b39447fb5fbc36edf7df80
  */
 class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	/**

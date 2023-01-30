@@ -176,12 +176,6 @@ add_action( 'init', __NAMESPACE__ . '\load_functions' );
  * @return array<string, array{body: string, headers: array<string,string>}|array<string, array{body: string, headers: array<string,string>}>> Modified reduce accumulator.
  */
 function rest_preload_api_request( array $memo, $path ): array {
-	// array_reduce() doesn't support passing an array in PHP 5.2,
-	// so we need to make sure we start with one.
-	if ( ! \is_array( $memo ) ) {
-		$memo = [];
-	}
-
 	if ( empty( $path ) ) {
 		return $memo;
 	}
@@ -210,6 +204,7 @@ function rest_preload_api_request( array $memo, $path ): array {
 		return $memo;
 	}
 
+	// This line is different from code. Adds untrailingslashit. See https://core.trac.wordpress.org/ticket/57048.
 	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];

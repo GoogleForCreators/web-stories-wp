@@ -43,6 +43,8 @@ use WP_REST_Server;
 /**
  * Stories_Autosaves_Controller class.
  *
+ * Register using register_post_type once https://core.trac.wordpress.org/ticket/56922 is committed.
+ *
  * @phpstan-import-type Schema from \Google\Web_Stories\REST_API\Stories_Base_Controller
  */
 class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implements Service, Delayed, Registerable, HasRequirements {
