@@ -361,7 +361,6 @@ function SizePositionPanel(props) {
           <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
             <StyledLockToggle
               aria-label={__('Lock aspect ratio', 'web-stories')}
-              title={__('Lock aspect ratio', 'web-stories')}
               isLocked={lockAspectRatio || isAspectAlwaysLocked}
               disabled={isAspectAlwaysLocked}
               onClick={() =>
