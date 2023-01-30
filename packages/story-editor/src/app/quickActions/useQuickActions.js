@@ -35,9 +35,9 @@ import { getResetProperties } from './utils';
 import { ACTIONS } from './constants';
 import useTextActions from './useTextActions';
 import useMediaActions from './useMediaActions';
-import useElementReset from './useElementReset';
+import useForegroundActions from './useForegroundActions';
 
-const { Bucket, CircleSpeed, Eraser, LetterTPlus, Link, Media } = Icons;
+const { Bucket, LetterTPlus, Media } = Icons;
 
 /**
  * Determines the quick actions to display in the quick
@@ -50,7 +50,6 @@ const { Bucket, CircleSpeed, Eraser, LetterTPlus, Link, Media } = Icons;
 const useQuickActions = () => {
   const {
     backgroundElement,
-    currentPageNumber,
     selectedElementAnimations,
     selectedElements,
     updateElementsById,
@@ -96,8 +95,6 @@ const useQuickActions = () => {
     ev.stopPropagation();
   }, []);
 
-  const handleElementReset = useElementReset();
-
   /**
    * Highlights a panel in the editor. Triggers a tracking event
    * using the selected element's type.
@@ -127,7 +124,6 @@ const useQuickActions = () => {
     [selectedElement, selectedElementAnimations]
   );
 
-  const showClearAction = resetProperties.length > 0;
   const handleFocusMediaPanel = useMemo(() => {
     const resourceId = selectedElements?.[0]?.resource?.id?.toString() || '';
     const is3PMedia = resourceId.startsWith('media/');
@@ -136,14 +132,8 @@ const useQuickActions = () => {
     return handleFocusPanel(panelToFocus);
   }, [handleFocusPanel, selectedElements]);
 
-  const {
-    handleFocusAnimationPanel,
-    handleFocusLinkPanel,
-    handleFocusPageBackground,
-  } = useMemo(
+  const { handleFocusPageBackground } = useMemo(
     () => ({
-      handleFocusAnimationPanel: handleFocusPanel(states.Animation),
-      handleFocusLinkPanel: handleFocusPanel(states.Link),
       handleFocusPageBackground: handleFocusPanel(states.PageBackground),
     }),
     [handleFocusPanel]
@@ -214,77 +204,12 @@ const useQuickActions = () => {
     insertElement,
   ]);
 
-  const foregroundCommonActions = useMemo(() => {
-    const commonActions = [];
-
-    // Don't show the 'Add animation' button on the first page
-    if (currentPageNumber > 1) {
-      // 'Add animation' button
-      commonActions.push({
-        Icon: CircleSpeed,
-        label: ACTIONS.ADD_ANIMATION.text,
-        onClick: (evt) => {
-          handleFocusAnimationPanel()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.ADD_ANIMATION.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      });
-    }
-
-    // 'Add link' button is always rendered
-    commonActions.push({
-      Icon: Link,
-      label: ACTIONS.ADD_LINK.text,
-      onClick: (evt) => {
-        handleFocusLinkPanel()(evt);
-
-        trackEvent('quick_action', {
-          name: ACTIONS.ADD_LINK.trackingEventName,
-          element: selectedElement?.type,
-        });
-      },
-      ...actionMenuProps,
-    });
-
-    // Only show 'Reset element' button for modified elements
-    if (showClearAction) {
-      // 'Reset element' button
-      commonActions.push({
-        Icon: Eraser,
-        label: ACTIONS.RESET_ELEMENT.text,
-        onClick: () => {
-          handleElementReset({
-            elementId: selectedElement?.id,
-            resetProperties,
-            elementType: selectedElement?.type,
-          });
-
-          trackEvent('quick_action', {
-            name: ACTIONS.RESET_ELEMENT.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        separator: 'top',
-        ...actionMenuProps,
-      });
-    }
-
-    return commonActions;
-  }, [
-    currentPageNumber,
-    handleFocusAnimationPanel,
-    selectedElement?.id,
-    selectedElement?.type,
-    actionMenuProps,
-    handleFocusLinkPanel,
-    showClearAction,
-    handleElementReset,
+  const foregroundCommonActions = useForegroundActions({
+    actionProps: actionMenuProps,
+    selectedElement,
+    handleFocusPanel,
     resetProperties,
-  ]);
+  });
 
   const textActions = useTextActions({
     selectedElement,
