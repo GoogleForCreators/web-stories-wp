@@ -63,6 +63,16 @@ const initialState: QueueState = {
   queue: [],
 };
 
+const hasStatus =
+  (...states: ItemStatus[]) =>
+  (item: QueueItem) =>
+    states.includes(item.state);
+
+const hasNotStatus =
+  (...states: ItemStatus[]) =>
+  (item: QueueItem) =>
+    !states.includes(item.state);
+
 /**
  * Media upload queue implementation.
  *
@@ -120,17 +130,19 @@ function useMediaUploadQueue() {
 
   // Try to update placeholder resources for freshly transcoded file if still missing.
   useEffect(() => {
-    void (async () => {
-      void (await Promise.all(
-        state.queue.map(async (item) => {
-          const { id, file, state: itemState, resource } = item;
+    void Promise.all(
+      state.queue
+        .filter(
+          hasStatus(
+            ItemStatus.Trimmed,
+            ItemStatus.Muted,
+            ItemStatus.Cropped,
+            ItemStatus.Transcoded
+          )
+        )
+        .map(async (item) => {
+          const { id, file, resource } = item;
           if (
-            ![
-              ItemStatus.Trimmed,
-              ItemStatus.Muted,
-              ItemStatus.Cropped,
-              ItemStatus.Transcoded,
-            ].includes(itemState) ||
             !resource.isPlaceholder ||
             (resource.type === ResourceType.Video && resource.poster)
           ) {
@@ -157,65 +169,62 @@ function useMediaUploadQueue() {
             // Not interested in errors here.
           }
         })
-      ));
-    })();
+    );
   }, [state.queue, replacePlaceholderResource]);
 
   // Try to get dimensions and poster for placeholder resources.
   // This way we can show something more meaningful to the user before transcoding has finished.
   // Since this uses ffmpeg, we're going to limit this to one at a time.
   useEffect(() => {
-    void (async () => {
-      void (await Promise.all(
-        state.queue.map(async (item) => {
-          const { id, file, state: itemState, resource } = item;
-          if (ItemStatus.Pending !== itemState || !resource.isPlaceholder) {
+    void Promise.all(
+      state.queue.filter(hasStatus(ItemStatus.Pending)).map(async (item) => {
+        const { id, file, resource } = item;
+        if (!resource.isPlaceholder) {
+          return;
+        }
+
+        if (!isTranscodingEnabled || !canTranscodeFile(file)) {
+          return;
+        }
+
+        const isAlreadyGeneratingPoster =
+          currentPosterGenerationItem.current !== null;
+
+        // Prevent simultaneous ffmpeg poster generation processes.
+        // See https://github.com/googleforcreators/web-stories-wp/issues/8779
+        if (isAlreadyGeneratingPoster) {
+          return;
+        }
+
+        currentPosterGenerationItem.current = id;
+
+        try {
+          const videoFrame = await getFirstFrameOfVideo(file);
+          const poster = createBlob(videoFrame);
+          const { width, height } = await getImageDimensions(poster);
+          const newResource = {
+            ...resource,
+            poster,
+            width,
+            height,
+          };
+
+          if (!isMounted.current) {
             return;
           }
 
-          if (!isTranscodingEnabled || !canTranscodeFile(file)) {
-            return;
-          }
-
-          const isAlreadyGeneratingPoster =
-            currentPosterGenerationItem.current !== null;
-
-          // Prevent simultaneous ffmpeg poster generation processes.
-          // See https://github.com/googleforcreators/web-stories-wp/issues/8779
-          if (isAlreadyGeneratingPoster) {
-            return;
-          }
-
-          currentPosterGenerationItem.current = id;
-
-          try {
-            const videoFrame = await getFirstFrameOfVideo(file);
-            const poster = createBlob(videoFrame);
-            const { width, height } = await getImageDimensions(poster);
-            const newResource = {
-              ...resource,
-              poster,
-              width,
-              height,
-            };
-
-            if (!isMounted.current) {
-              return;
-            }
-
-            replacePlaceholderResource({
-              id,
-              resource: newResource,
-              posterFile: videoFrame,
-            });
-          } catch {
-            // Not interested in errors here.
-          } finally {
-            currentPosterGenerationItem.current = null;
-          }
-        })
-      ));
-    })();
+          replacePlaceholderResource({
+            id,
+            resource: newResource,
+            posterFile: videoFrame,
+          });
+        } catch {
+          // Not interested in errors here.
+        } finally {
+          currentPosterGenerationItem.current = null;
+        }
+      })
+    );
   }, [
     state.queue,
     isTranscodingEnabled,
@@ -519,29 +528,21 @@ function useMediaUploadQueue() {
 
   // Upload files to server, optionally first transcoding them.
   useEffect(() => {
-    state.queue.forEach(
+    state.queue.filter(hasStatus(ItemStatus.Pending)).forEach(
       /**
        * Uploads a single pending item.
-       *
-       * @param item Queue item.
-       * @param item.file File object.
-       * @param item.additionalData Additional Data object.
        */
-      (item: QueueItem) => {
+      (item) => {
         void (async () => {
           const {
             id,
             file,
             resource,
             isAnimatedGif,
-            state: itemState,
             muteVideo,
             cropVideo,
             trimData,
           } = item;
-          if (ItemStatus.Pending !== itemState) {
-            return;
-          }
 
           // Changing item state so that an item is never processed twice
           // in this effect.
@@ -600,25 +601,12 @@ function useMediaUploadQueue() {
 
   // Transcode items sequentially.
   useEffect(() => {
-    state.queue.forEach(
+    state.queue.filter(hasStatus(ItemStatus.PendingTranscoding)).forEach(
       /**
        * Uploads a single pending item.
-       *
-       * @param item Queue item.
-       * @param item.file File object.
-       * @param item.additionalData Additional Data object.
        */
-      (item: QueueItem) => {
-        const {
-          muteVideo,
-          cropVideo,
-          trimData,
-          isAnimatedGif,
-          state: itemState,
-        } = item;
-        if (ItemStatus.PendingTranscoding !== itemState) {
-          return;
-        }
+      (item) => {
+        const { muteVideo, cropVideo, trimData, isAnimatedGif } = item;
 
         const isAlreadyTranscoding = currentTranscodingItem.current !== null;
 
@@ -663,21 +651,16 @@ function useMediaUploadQueue() {
 
   // Upload freshly transcoded files to server.
   useEffect(() => {
-    state.queue.forEach((item: QueueItem) => {
-      const { state: itemState } = item;
-      if (
-        ![
+    state.queue
+      .filter(
+        hasStatus(
           ItemStatus.Transcoded,
           ItemStatus.Muted,
           ItemStatus.Trimmed,
-          ItemStatus.Cropped,
-        ].includes(itemState)
-      ) {
-        return;
-      }
-
-      void uploadItem(item);
-    });
+          ItemStatus.Cropped
+        )
+      )
+      .forEach((item) => void uploadItem(item));
   }, [state.queue, uploadItem]);
 
   useEffect(() => {
@@ -691,118 +674,76 @@ function useMediaUploadQueue() {
   return useMemo(() => {
     /**
      * A list of all in-progress items.
-     *
-     * @type {Array} In-progress items.
      */
     const progress = state.queue.filter(
-      (item: QueueItem) =>
-        ![
-          ItemStatus.Pending,
-          ItemStatus.Cancelled,
-          ItemStatus.Uploaded,
-          ItemStatus.Finished,
-        ].includes(item.state)
+      hasNotStatus(
+        ItemStatus.Pending,
+        ItemStatus.Cancelled,
+        ItemStatus.Uploaded,
+        ItemStatus.Finished
+      )
     );
 
     /**
      * A list of all pending items that still have to be uploaded.
-     *
-     * @type {Array} Pending items.
      */
-    const pending = state.queue.filter(
-      (item: QueueItem) => item.state === ItemStatus.Pending
-    );
+    const pending = state.queue.filter(hasStatus(ItemStatus.Pending));
 
     /**
      * A list of all items that just finished uploading.
-     *
-     * @type {Array} Uploaded items.
      */
-    const uploaded = state.queue.filter(
-      (item: QueueItem) => item.state === ItemStatus.Uploaded
-    );
+    const uploaded = state.queue.filter(hasStatus(ItemStatus.Uploaded));
 
     /**
      * A list of all items that just finished completely.
      *
      * Nothing further is happening.
-     *
-     * @type {Array} Uploaded items.
      */
-    const finished = state.queue.filter(
-      (item: QueueItem) => item.state === ItemStatus.Finished
-    );
+    const finished = state.queue.filter(hasStatus(ItemStatus.Finished));
 
     /**
      * A list of all items that are still in the queue and not cancelled.
-     *
-     * @type {Array} Failed items.
      */
-    const active = state.queue.filter(
-      (item: QueueItem) => item.state !== ItemStatus.Cancelled
-    );
+    const active = state.queue.filter( hasNotStatus( ItemStatus.Cancelled ));
 
     /**
      * A list of all items that failed to upload.
-     *
-     * @type {Array} Failed items.
      */
-    const failures = state.queue.filter(
-      (item: QueueItem) => item.state === ItemStatus.Cancelled
-    );
+    const failures = state.queue.filter(hasStatus(ItemStatus.Cancelled));
 
     /**
      * Whether any upload is currently in progress.
      *
      * This includes any transcoding/trimming/muting
      * happening before the actual file upload.
-     *
-     * @type {boolean} Whether we're uploading.
      */
     const isUploading = state.queue.some(
-      (item: QueueItem) =>
-        ![
-          ItemStatus.Finished,
-          ItemStatus.Cancelled,
-          ItemStatus.Pending,
-        ].includes(item.state)
+      hasNotStatus(
+        ItemStatus.Finished,
+        ItemStatus.Cancelled,
+        ItemStatus.Pending
+      )
     );
 
     /**
      * Whether any video transcoding is currently in progress.
-     *
-     * @type {boolean} Whether we're transcoding.
      */
-    const isTranscoding = state.queue.some(
-      (item: QueueItem) => item.state === ItemStatus.Transcoding
-    );
+    const isTranscoding = state.queue.some(hasStatus(ItemStatus.Transcoding));
 
     /**
      * Whether any video muting is currently in progress.
-     *
-     * @type {boolean} Whether we're muting.
      */
-    const isMuting = state.queue.some(
-      (item: QueueItem) => item.state === ItemStatus.Muting
-    );
+    const isMuting = state.queue.some(hasStatus(ItemStatus.Muting));
 
     /**
      * Whether any video cropping is currently in progress.
-     *
-     * @type {boolean} Whether we're muting.
      */
-    const isCropping = state.queue.some(
-      (item: QueueItem) => item.state === ItemStatus.Cropping
-    );
+    const isCropping = state.queue.some(hasStatus(ItemStatus.Cropping));
 
     /**
      * Whether any video trimming is currently in progress.
-     *
-     * @type {boolean} Whether we're trimming.
      */
-    const isTrimming = state.queue.some(
-      (item: QueueItem) => item.state === ItemStatus.Trimming
-    );
+    const isTrimming = state.queue.some(hasStatus(ItemStatus.Trimming));
 
     /**
      * Determine whether a new resource is being processed.
@@ -810,41 +751,37 @@ function useMediaUploadQueue() {
      * This is the case when an existing video in a story
      * is being optimized/muted/trimmed, which will cause
      * a new resource to be created and uploaded.
-     *
-     * @param resourceId Resource ID.
-     * @return Whether the resource is processing.
      */
     const isNewResourceProcessing = (resourceId: ResourceId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          [
+      state.queue
+        .filter(
+          hasStatus(
             ItemStatus.Transcoding,
             ItemStatus.Trimming,
             ItemStatus.Muting,
-            ItemStatus.Cropping,
-          ].includes(item.state) && item.originalResourceId === resourceId
-      );
+            ItemStatus.Cropping
+          )
+        )
+        .some((item) => item.originalResourceId === resourceId);
 
     /**
      * Determine whether the current resource is being processed.
      *
      * This is the case when uploading a new media item that first
      * needs to be transcoded/muted/trimmed.
-     *
-     * @param resourceId Resource ID.
-     * @return Whether the resource is processing.
      */
     const isCurrentResourceProcessing = (resourceId: ResourceId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          [
+      state.queue
+        .filter(
+          hasStatus(
             ItemStatus.PendingTranscoding,
             ItemStatus.Transcoding,
             ItemStatus.Trimming,
             ItemStatus.Muting,
-            ItemStatus.Cropping,
-          ].includes(item.state) && item.resource.id === resourceId
-      );
+            ItemStatus.Cropping
+          )
+        )
+        .some((item) => item.resource.id === resourceId);
 
     /**
      * Determine whether the current resource is being uploaded.
@@ -856,23 +793,23 @@ function useMediaUploadQueue() {
      * Checks for both `resource.id` and `previousResourceId`,
      * since after upload to the backend, the resource's temporary uuid
      * will be replaced by the permanent ID from the backend.
-     *
-     * @param resourceId Resource ID.
-     * @return Whether the resource is uploading.
      */
     const isCurrentResourceUploading = (resourceId: ResourceId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          [
+      state.queue
+        .filter(
+          hasStatus(
             ItemStatus.Pending,
             ItemStatus.Preparing,
             ItemStatus.Uploading,
             ItemStatus.Uploaded,
-            ItemStatus.Finished,
-          ].includes(item.state) &&
-          (item.resource.id === resourceId ||
-            item.previousResourceId === resourceId)
-      );
+            ItemStatus.Finished
+          )
+        )
+        .some(
+          (item) =>
+            item.resource.id === resourceId ||
+            item.previousResourceId === resourceId
+        );
 
     /**
      * Determine whether the current resource is being transcoded.
@@ -888,16 +825,11 @@ function useMediaUploadQueue() {
      * isCurrentResourceTranscoding(B) -> true
      * isNewResourceTranscoding(B) -> false
      * isCurrentResourceTranscoding(A) -> false
-     *
-     * @param resourceId Resource ID.
-     * @return Whether the resource is transcoding.
      */
     const isCurrentResourceTranscoding = (resourceId: ResourceId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          item.state === ItemStatus.Transcoding &&
-          item.resource.id === resourceId
-      );
+      state.queue
+        .filter(hasStatus(ItemStatus.Transcoding))
+        .some((item) => item.resource.id === resourceId);
 
     /**
      * Determine whether the current resource is being muted.
@@ -906,15 +838,11 @@ function useMediaUploadQueue() {
      * needs to be muted.
      * This is also the case when muting an existing video in the story,
      * which will cause a new resource to be uploaded (the "current" one).
-     *
-     * @param resourceId Resource ID.
-     * @return Whether the resource is muting.
      */
     const isCurrentResourceMuting = (resourceId: ResourceId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          item.state === ItemStatus.Muting && item.resource.id === resourceId
-      );
+      state.queue
+        .filter(hasStatus(ItemStatus.Muting))
+        .some((item) => item.resource.id === resourceId);
 
     /**
      * Determine whether a batch of resources is being uploaded.
@@ -926,7 +854,7 @@ function useMediaUploadQueue() {
      */
     const isBatchUploading = (batchId: BatchId) => {
       return state.queue.some(
-        (item: QueueItem) => item.additionalData?.batchId === batchId
+        (item) => item.additionalData?.batchId === batchId
       );
     };
 
@@ -935,15 +863,11 @@ function useMediaUploadQueue() {
      *
      * This is the case when trimming an existing video in the story,
      * which will cause a new resource to be uploaded (the "current" one).
-     *
-     * @param resourceId Resource ID.
-     * @return Whether the resource is trimming.
      */
     const isCurrentResourceTrimming = (resourceId: ResourceId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          item.state === ItemStatus.Trimming && item.resource.id === resourceId
-      );
+      state.queue
+        .filter(hasStatus(ItemStatus.Trimming))
+        .some((item) => item.resource.id === resourceId);
 
     /**
      * Determine whether a resource is being transcoded.
@@ -951,16 +875,11 @@ function useMediaUploadQueue() {
      * When optimizing an existing video in the story,
      * which will cause a new resource to be uploaded,
      * this returns the state of this new resource.
-     *
-     * @param resourceId Resource ID.
-     * @return Whether the resource is transcoding.
      */
     const isNewResourceTranscoding = (resourceId: ResourceId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          item.state === ItemStatus.Transcoding &&
-          item.originalResourceId === resourceId
-      );
+      state.queue
+        .filter(hasStatus(ItemStatus.Transcoding))
+        .some((item) => item.originalResourceId === resourceId);
 
     /**
      * Determine whether a resource is being muted.
@@ -968,25 +887,17 @@ function useMediaUploadQueue() {
      * When muting an existing video in the story,
      * which will cause a new resource to be uploaded,
      * this returns the state of this new resource.
-     *
-     * @param resourceId Resource ID.
-     * @return Whether the resource is muting.
      */
     const isNewResourceMuting = (resourceId: ResourceId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          item.state === ItemStatus.Muting &&
-          item.originalResourceId === resourceId
-      );
+      state.queue
+        .filter(hasStatus(ItemStatus.Muting))
+        .some((item) => item.originalResourceId === resourceId);
 
     /**
      * Whether a given resource can be transcoded.
      *
      * Checks whether the resource is not external and
      * not already uploading.
-     *
-     * @param resource Resource object.
-     * @return Whether a given resource can be transcoded.
      */
     const canTranscodeResource = (resource: Resource) => {
       const { isExternal = false, id = '', src = '' } = resource || {};
@@ -995,7 +906,7 @@ function useMediaUploadQueue() {
         !isExternal &&
         src &&
         !state.queue.some(
-          (item: QueueItem) =>
+          (item) =>
             item.resource.id === id ||
             item.previousResourceId === id ||
             item.originalResourceId === id
@@ -1010,10 +921,9 @@ function useMediaUploadQueue() {
      * @return if element with id is found.
      */
     const isElementTrimming = (elementId: ElementId) =>
-      state.queue.some(
-        (item: QueueItem) =>
-          item.state === ItemStatus.Trimming && item.elementId === elementId
-      );
+      state.queue
+        .filter(hasStatus(ItemStatus.Trimming))
+        .some((item) => item.elementId === elementId);
 
     return {
       state: {
