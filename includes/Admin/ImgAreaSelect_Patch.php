@@ -36,6 +36,8 @@ use Google\Web_Stories\Infrastructure\Service;
 
 /**
  * Class ImgAreaSelect_Patch
+ *
+ * TODO remove this workaround https://core.trac.wordpress.org/ticket/54308 is committed.
  */
 class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	/**
