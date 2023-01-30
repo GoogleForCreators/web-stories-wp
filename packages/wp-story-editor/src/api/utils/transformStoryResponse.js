@@ -26,6 +26,8 @@ function transformStoryResponse(post) {
     ...rest
   } = post;
 
+  const terms = (embedded?.['wp:term'] || []).flat();
+
   // TODO: Make author, lockUser, etc. null if absent, instead of these "empty" objects.
   const story = {
     ...snakeToCamelCaseObjectKeys(rest, ['story_data']),
@@ -60,12 +62,11 @@ function transformStoryResponse(post) {
       width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
       url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
     },
-    taxonomies: links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [],
+    terms,
     revisions: {
       count: links?.['version-history']?.[0]?.count,
       id: links?.['predecessor-version']?.[0]?.id,
     },
-    terms: embedded?.['wp:term'] || [],
   };
 
   for (const link of Object.keys(links)) {

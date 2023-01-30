@@ -139,7 +139,9 @@ function Provider({
           const element = elementsInstanceMap.get(elementId);
 
           if (!element) {
-            throw new Error('Should not happen');
+            throw new Error(
+              `Should not happen, element ${elementId} is missing`
+            );
           }
 
           if (!element.isHidden) {

@@ -18,7 +18,10 @@
  * External dependencies
  */
 import originalLocale from 'date-fns/locale/en-US/index';
-import buildLocalizeFn from 'date-fns/locale/_lib/buildLocalizeFn';
+/**
+ * Internal dependencies
+ */
+import buildLocalizeFn from './third_party/buildLocalizeFn';
 
 /** @typedef {import('date-fns-tz').OptionsWithTZ} OptionsWithTZ */
 /** @typedef {import('date-fns-tz').Locale} Locale */

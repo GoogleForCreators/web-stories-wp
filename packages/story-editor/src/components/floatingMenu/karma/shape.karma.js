@@ -135,11 +135,11 @@ describe('Shape Design Menu: Keyboard Navigation', () => {
 
     await fixture.events.keyboard.press('ArrowRight');
 
-    expect(document.activeElement.getAttribute('title')).toBe(
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
       'Flip horizontally'
     );
     await fixture.events.keyboard.press('ArrowRight');
-    expect(document.activeElement.getAttribute('title')).toBe(
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
       'Flip vertically'
     );
     await fixture.events.keyboard.press('Space');
@@ -176,15 +176,19 @@ describe('Shape Design Menu: Keyboard Navigation', () => {
     );
     // Arrow right to more button
     await fixture.events.keyboard.press('ArrowRight');
-    expect(document.activeElement.getAttribute('title')).toBe('More');
+    expect(document.activeElement).toHaveTextContent('More');
 
     // Arrow right to Menu settings
     await fixture.events.keyboard.press('ArrowRight');
-    expect(document.activeElement.getAttribute('title')).toBe('Menu settings');
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
+      'Menu settings'
+    );
 
     // Arrow right to Dismiss menu button
     await fixture.events.keyboard.press('ArrowRight');
-    expect(document.activeElement.getAttribute('title')).toBe('Dismiss menu');
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
+      'Dismiss menu'
+    );
 
     // Arrow right twice and end up back on the color input
     await fixture.events.keyboard.press('ArrowRight');

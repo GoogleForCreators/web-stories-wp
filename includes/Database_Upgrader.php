@@ -111,7 +111,7 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 */
-	public function on_plugin_activation( $network_wide ): void {
+	public function on_plugin_activation( bool $network_wide ): void {
 		$this->run_upgrades();
 	}
 

@@ -65,28 +65,6 @@ export const TemplatePropType = PropTypes.shape({
   ),
 });
 
-export const TagPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  count: PropTypes.number.isRequired,
-});
-
-export const CategoryPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  parent: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  count: PropTypes.number.isRequired,
-});
-
-export const UserPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  avatarUrls: PropTypes.object,
-});
-
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType);
 export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
 

@@ -21,8 +21,10 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Unit\Shopping;
 
 use Brain\Monkey;
+use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Tests\Shared\Private_Access;
 use Google\Web_Stories\Tests\Unit\TestCase;
+use Mockery;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\WooCommerce_Query
@@ -46,7 +48,7 @@ class WooCommerce_Query extends TestCase {
 			]
 		);
 
-		$woocommerce = $this->createMock( \Google\Web_Stories\Integrations\WooCommerce::class );
+		$woocommerce = $this->createMock( WooCommerce::class );
 		$woocommerce->method( 'get_plugin_status' )->willReturn(
 			[
 				'installed' => true,
@@ -67,11 +69,18 @@ class WooCommerce_Query extends TestCase {
 				'wc_get_products'             => static function () {
 					$object   = new \stdClass();
 					$products = [
-						new Mock_Product(
+						Mockery::mock(
+							\WC_Product::class,
 							[
-								'id'                => 1,
-								'image_id'          => 50,
-								'gallery_image_ids' => [
+								'get_id'                => 1,
+								'get_title'             => '',
+								'get_price'             => 0,
+								'get_average_rating'    => 0.0,
+								'get_rating_count'      => 0,
+								'get_permalink'         => '',
+								'get_short_description' => '',
+								'get_image_id'          => 50,
+								'get_gallery_image_ids' => [
 									51,
 									59,
 									60,
@@ -79,23 +88,36 @@ class WooCommerce_Query extends TestCase {
 							]
 						),
 
-						new Mock_Product(
+						Mockery::mock(
+							\WC_Product::class,
 							[
-								'id'                => 2,
-								'image_id'          => null,
-								'gallery_image_ids' => [],
+								'get_id'                => 2,
+								'get_title'             => '',
+								'get_price'             => 0,
+								'get_average_rating'    => 0.0,
+								'get_rating_count'      => 0,
+								'get_permalink'         => '',
+								'get_short_description' => '',
+								'get_image_id'          => null,
+								'get_gallery_image_ids' => [],
 							]
 						),
 
-						new Mock_Product(
+						Mockery::mock(
+							\WC_Product::class,
 							[
-								'id'                => 3,
-								'image_id'          => null,
-								'gallery_image_ids' => [
+								'get_id'                => 3,
+								'get_title'             => '',
+								'get_price'             => 0,
+								'get_average_rating'    => 0.0,
+								'get_rating_count'      => 0,
+								'get_permalink'         => '',
+								'get_short_description' => '',
+								'get_image_id'          => null,
+								'get_gallery_image_ids' => [
 									72,
 									null,
 									76,
-
 								],
 							]
 						),
@@ -129,11 +151,18 @@ class WooCommerce_Query extends TestCase {
 	 * @covers ::get_product_image_ids
 	 */
 	public function test_get_product_image_ids(): void {
-		$product = new Mock_Product(
+		$product = Mockery::mock(
+			\WC_Product::class,
 			[
-				'id'                => '1',
-				'image_id'          => 50,
-				'gallery_image_ids' => [
+				'get_id'                => 1,
+				'get_title'             => '',
+				'get_price'             => 0,
+				'get_average_rating'    => 0.0,
+				'get_rating_count'      => 0,
+				'get_permalink'         => '',
+				'get_short_description' => '',
+				'get_image_id'          => 50,
+				'get_gallery_image_ids' => [
 					51,
 					59,
 				],
@@ -143,12 +172,24 @@ class WooCommerce_Query extends TestCase {
 		$ids = $this->call_private_method( [ $this->instance, 'get_product_image_ids' ], [ $product ] );
 
 		$this->assertEquals( [ 50, 51, 59 ], $ids );
+	}
 
-		$product = new Mock_Product(
+	/**
+	 * @covers ::get_product_image_ids
+	 */
+	public function test_get_product_image_ids_invalid(): void {
+		$product = Mockery::mock(
+			\WC_Product::class,
 			[
-				'id'                => '1',
-				'image_id'          => null,
-				'gallery_image_ids' => [
+				'get_id'                => 1,
+				'get_title'             => '',
+				'get_price'             => 0,
+				'get_average_rating'    => 0.0,
+				'get_rating_count'      => 0,
+				'get_permalink'         => '',
+				'get_short_description' => '',
+				'get_image_id'          => null,
+				'get_gallery_image_ids' => [
 					null,
 					27,
 				],

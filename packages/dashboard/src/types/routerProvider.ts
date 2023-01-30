@@ -14,17 +14,25 @@
  * limitations under the License.
  */
 
-// See https://github.com/moroshko/shallow-equal/issues/13
-// and https://github.com/moroshko/shallow-equal/pull/16
+/**
+ * External dependencies
+ */
+import type { Dispatch, SetStateAction } from 'react';
+import type { History } from 'history';
 
-declare module 'shallow-equal' {
-  export function shallowEqualArrays(
-    arr1: any[] | null | undefined,
-    arr2: any[] | null | undefined
-  ): boolean;
-
-  export function shallowEqualObjects(
-    obj1: Record<string, any> | null | undefined,
-    obj2: Record<string, any> | null | undefined
-  ): boolean;
+interface State {
+  activeRoute: string;
+  currentPath: string;
+  queryParams: Record<string, string>;
+  availableRoutes: string[];
+  defaultRoute: string;
+}
+interface Actions {
+  push: History['push'];
+  replace: History['replace'];
+  setAvailableRoutes: Dispatch<SetStateAction<string[]>>;
+}
+export interface RouterProviderState {
+  state: State;
+  actions: Actions;
 }

@@ -36,6 +36,8 @@ use Google\Web_Stories\Infrastructure\Service;
 
 /**
  * Class ImgAreaSelect_Patch
+ *
+ * TODO Remove this workaround once WP 6.2 is min version. See https://github.com/WordPress/wordpress-develop/commit/ef0c1d1dd28f13bbe6b39447fb5fbc36edf7df80
  */
 class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	/**
@@ -101,7 +103,7 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	 * @param string       $src    The script's source URL.
 	 * @return string|mixed The filtered script tag.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ) {
+	public function script_loader_tag( $tag, string $handle, string $src ) {
 		if ( ! \is_string( $tag ) || self::SCRIPT_HANDLE !== $handle || ! $this->context->is_story_editor() ) {
 			return $tag;
 		}

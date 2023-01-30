@@ -30,6 +30,7 @@ namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Interfaces\Product_Query;
+use WC_Product;
 use WC_Query;
 use WP_Error;
 
@@ -103,7 +104,7 @@ class WooCommerce_Query implements Product_Query {
 		/**
 		 * Products.
 		 *
-		 * @var \WC_Product[] $wc_products
+		 * @var WC_Product[] $wc_products
 		 */
 		$wc_products = $product_query->products;
 
@@ -157,10 +158,10 @@ class WooCommerce_Query implements Product_Query {
 	 *
 	 * @since 1.21.0
 	 *
-	 * @param \WC_Product $product Product.
+	 * @param WC_Product $product Product.
 	 * @return int[]
 	 */
-	protected function get_product_image_ids( $product ): array {
+	protected function get_product_image_ids( WC_Product $product ): array {
 		$product_image_ids = $product->get_gallery_image_ids();
 		array_unshift( $product_image_ids, $product->get_image_id() );
 		$product_image_ids = array_map( 'absint', $product_image_ids );

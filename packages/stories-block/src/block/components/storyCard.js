@@ -25,7 +25,12 @@ import classNames from 'classnames';
  */
 import { RawHTML } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import { dateI18n, format, __experimentalGetSettings } from '@wordpress/date';
+import {
+  dateI18n,
+  format,
+  __experimentalGetSettings,
+  getSettings as __getSettings,
+} from '@wordpress/date';
 
 function StoryCard({
   title,
@@ -44,8 +49,9 @@ function StoryCard({
   });
   const hasContentOverlay = isShowingTitle || isShowingAuthor || isShowingDate;
 
-  // @todo Keep an eye on this experimental API, make necessary changes when this gets updated in core.
-  const dateFormat = __experimentalGetSettings().formats.date;
+  // @todo Remove this workaround when WP 6.1 is made minimum supported version.
+  const getSettings = __getSettings ? __getSettings : __experimentalGetSettings;
+  const dateFormat = getSettings().formats.date;
 
   return (
     <div className={singleStoryClasses}>

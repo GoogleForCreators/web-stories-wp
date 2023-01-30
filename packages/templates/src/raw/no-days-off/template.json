@@ -1532,94 +1532,6 @@
       ],
       "animations": [
         {
-          "id": "04ec7870-24a3-4249-a6e3-b788bb9c6250",
-          "targets": ["1faa5827-39ec-45c0-958e-d5c72bcb4d29"],
-          "type": "bounce",
-          "duration": 1000,
-          "delay": 350,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "ee535044-53b4-49f5-a9ea-170fa4faefee",
-          "targets": ["2858cbba-bfc8-49a1-b932-bb569e381864"],
-          "type": "bounce",
-          "duration": 1000,
-          "delay": 350,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "12f6d6c9-270c-45a7-86fa-25081f5c2899",
-          "targets": ["4aa64455-2d4f-4640-9dfe-0e985f8f057b"],
-          "type": "bounce",
-          "duration": 1000,
-          "delay": 400,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "0d0b8e96-2eee-4558-9b05-48246d8f182f",
-          "targets": ["0584e281-ec48-468c-84ad-c6bc6be4855a"],
-          "type": "bounce",
-          "duration": 1000,
-          "delay": 400,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "1d613bd8-c407-4108-a905-be7abad756c6",
-          "targets": ["1faa5827-39ec-45c0-958e-d5c72bcb4d29"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 200,
-          "delay": 360,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "eb06964e-89d6-4384-8cf3-03b547665936",
-          "targets": ["2858cbba-bfc8-49a1-b932-bb569e381864"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 200,
-          "delay": 360,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "92fd8256-8f70-4527-a671-5fbf8bb6264c",
-          "targets": ["4aa64455-2d4f-4640-9dfe-0e985f8f057b"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 200,
-          "delay": 410,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "4613b8bc-30e0-4786-b841-567862b718e0",
-          "targets": ["0584e281-ec48-468c-84ad-c6bc6be4855a"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 200,
-          "delay": 410,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
           "id": "f5c7034e-c6bb-4a7b-8165-b4cd097d0e79",
           "type": "effect-fly-in",
           "targets": ["5d25ecb0-3056-4597-ba08-44e958de6069"],
@@ -1987,7 +1899,7 @@
           "type": "text",
           "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
           "id": "03c44ea1-7ec8-4bdf-8e49-bb43ba83b2f3",
-          "content": "<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Triathlon</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Trainining</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">in The Summer</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Triathlon</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Training</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">in The Summer</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         }

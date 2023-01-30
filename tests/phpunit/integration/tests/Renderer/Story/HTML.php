@@ -279,7 +279,7 @@ class HTML extends TestCase {
 	 *
 	 * @param WP_Post $post Post Object.
 	 */
-	protected function setup_renderer( $post ): string {
+	protected function setup_renderer( WP_Post $post ): string {
 		$story = new Story();
 		$story->load_from_post( $post );
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );

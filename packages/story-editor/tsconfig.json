@@ -41,6 +41,7 @@
     "src/app/pageCanvas",
     "src/app/pageDataUrls",
     "src/app/story",
+    "src/app/taxonomy",
     "src/components/library/panes/text/textPresets.ts",
     "src/components/canvas/*.ts",
     "src/components/canvas/utils/*.ts",

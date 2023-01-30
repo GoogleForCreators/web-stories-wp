@@ -25,7 +25,10 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useConfig } from '../../../config';
-import { TemplatePropType, TemplateActionsPropType } from '../../../../types';
+import {
+  TemplatePropType,
+  TemplateActionsPropType,
+} from '../../../../propTypes';
 import Header from './templateDetails/header';
 import DetailsContent from './templateDetails/content';
 

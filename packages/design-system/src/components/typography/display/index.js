@@ -28,7 +28,7 @@ import { defaultTypographyStyle } from '../styles';
 
 export const Display = styled.h1`
   ${defaultTypographyStyle}
-  ${({ size, theme }) =>
+  ${({ size = THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM, theme }) =>
     themeHelpers.expandPresetStyles({
       preset: theme.typography.presets.display[size],
       theme,
@@ -38,7 +38,4 @@ export const Display = styled.h1`
 Display.propTypes = {
   as: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.DISPLAY_SIZES),
-};
-Display.defaultProps = {
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };

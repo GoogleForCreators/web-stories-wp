@@ -22,10 +22,15 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { RouterContext } from './routerProvider';
+import type { RouterProviderState } from '../../types';
+import Context from './context';
 
-function useRouteHistory(selector = identity) {
-  return useContextSelector(RouterContext, selector);
+function useRouteHistory(): RouterProviderState;
+function useRouteHistory<T>(selector: (state: RouterProviderState) => T): T;
+function useRouteHistory<T>(
+  selector: (state: RouterProviderState) => T | RouterProviderState = identity
+) {
+  return useContextSelector(Context, selector);
 }
 
 export default useRouteHistory;

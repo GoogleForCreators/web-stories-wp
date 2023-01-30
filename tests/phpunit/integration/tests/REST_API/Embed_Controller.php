@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -75,7 +76,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$story_content  = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Embed Controller Test Story',
 				'post_status'  => 'publish',
 				'post_content' => $story_content,
@@ -278,7 +279,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?)
-		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$story_post_type = $this->injector->make( Story_Post_Type::class );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );
@@ -306,6 +307,13 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		$this->set_permalink_structure( '/%postname%/' );
+
+		// Without (re-)registering the post type here there won't be any rewrite rules for it
+		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
+		// instead of "http://example.org/web-stories/embed-controller-test-story/".
+		// @todo Investigate why this is  needed (leakage between tests?).
+		$story_post_type = $this->injector->make( Story_Post_Type::class );
+		$story_post_type->register();
 
 		flush_rewrite_rules( false );
 

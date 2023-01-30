@@ -18,6 +18,6 @@
  * Internal dependencies
  */
 
-export { default as RouterProvider, RouterContext } from './routerProvider';
+export { default as RouterProvider } from './routerProvider';
 export { default as useRouteHistory } from './useRouteHistory';
 export { default as Route, matchPath, resolveRoute } from './route';

@@ -20,6 +20,8 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
 use WP_UnitTest_Factory;
 
 /**
@@ -46,11 +48,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 */
 	protected \Google\Web_Stories\Story_Post_Type $instance;
 
-	private \Google\Web_Stories\Settings $settings;
+	private Settings $settings;
 
-	/**
-	 * @param WP_UnitTest_Factory $factory
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
@@ -86,11 +85,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments = $this->createMock( Experiments::class );
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 
-		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
+		$this->settings = $this->injector->make( Settings::class );
 		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings );
 	}
 

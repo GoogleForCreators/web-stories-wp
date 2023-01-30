@@ -19,6 +19,11 @@
  */
 import { __, sprintf, _n } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
+import type { DashboardStory } from '../types/configProvider';
+
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
   RENAME: 'rename-action',
@@ -33,34 +38,38 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Open in editor', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
-    isEnabled: (story) => Boolean(story?.capabilities?.hasEditAction),
+    isEnabled: (story: DashboardStory) =>
+      Boolean(story?.capabilities?.hasEditAction),
   },
   {
     label: __('Open in new tab', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK,
-    isEnabled: (story) => Boolean(story?.previewLink),
+    isEnabled: (story: DashboardStory) => Boolean(story?.previewLink),
   },
   {
     label: __('Copy Story URL', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK,
-    isEnabled: (story) => Boolean(story?.previewLink),
+    isEnabled: (story: DashboardStory) => Boolean(story?.previewLink),
   },
   {
     label: __('Rename', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.RENAME,
     separator: 'top',
-    isEnabled: (story) => Boolean(story?.capabilities?.hasEditAction),
+    isEnabled: (story: DashboardStory) =>
+      Boolean(story?.capabilities?.hasEditAction),
   },
   {
     label: __('Duplicate', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.DUPLICATE,
-    isEnabled: (story) => Boolean(story?.capabilities?.hasEditAction),
+    isEnabled: (story: DashboardStory) =>
+      Boolean(story?.capabilities?.hasEditAction),
   },
   {
     label: __('Delete Story', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.DELETE,
     separator: 'top',
-    isEnabled: (story) => Boolean(story?.capabilities?.hasDeleteAction),
+    isEnabled: (story: DashboardStory) =>
+      Boolean(story?.capabilities?.hasDeleteAction),
   },
 ];
 
@@ -166,7 +175,7 @@ export const STORY_STATUSES = [
 ];
 
 export const STORY_VIEWING_LABELS = {
-  [STORY_STATUS.ALL]: (n) =>
+  [STORY_STATUS.ALL]: (n: number) =>
     sprintf(
       /* translators: %d: number of stories in view */
       _n(
@@ -175,9 +184,9 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      n
+      String(n)
     ),
-  [STORY_STATUS.DRAFT]: (n) =>
+  [STORY_STATUS.DRAFT]: (n: number) =>
     sprintf(
       /* translators: %d: number of draft stories in view */
       _n(
@@ -186,9 +195,9 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      n
+      String(n)
     ),
-  [STORY_STATUS.PUBLISH]: (n) =>
+  [STORY_STATUS.PUBLISH]: (n: number) =>
     sprintf(
       /* translators: %d: number of stories */
       _n(
@@ -197,9 +206,9 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      n
+      String(n)
     ),
-  [STORY_STATUS.FUTURE]: (n) =>
+  [STORY_STATUS.FUTURE]: (n: number) =>
     sprintf(
       /* translators: %d: number of stories */
       _n(
@@ -208,9 +217,9 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      n
+      String(n)
     ),
-  [STORY_STATUS.PENDING]: (n) =>
+  [STORY_STATUS.PENDING]: (n: number) =>
     sprintf(
       /* translators: %d: number of stories */
       _n(
@@ -219,9 +228,9 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      n
+      String(n)
     ),
-  [STORY_STATUS.PRIVATE]: (n) =>
+  [STORY_STATUS.PRIVATE]: (n: number) =>
     sprintf(
       /* translators: %d: number of stories */
       _n(
@@ -230,7 +239,7 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      n
+      String(n)
     ),
 };
 
