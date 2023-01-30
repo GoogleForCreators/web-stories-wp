@@ -18,13 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo, useRef } from '@googleforcreators/react';
-import { __, sprintf } from '@googleforcreators/i18n';
-import {
-  Icons,
-  PLACEMENT,
-  prettifyShortcut,
-  useSnackbar,
-} from '@googleforcreators/design-system';
+import { Icons, PLACEMENT } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { ElementType } from '@googleforcreators/elements';
 
@@ -41,13 +35,7 @@ import { getResetProperties } from './utils';
 import { ACTIONS } from './constants';
 import useTextActions from './useTextActions';
 import useMediaActions from './useMediaActions';
-import useResetProperties from './useResetProperties';
-
-const UNDO_HELP_TEXT = sprintf(
-  /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
-  __('Press %s to undo the last change', 'web-stories'),
-  prettifyShortcut('mod+z')
-);
+import useElementReset from './useElementReset';
 
 const { Bucket, CircleSpeed, Eraser, LetterTPlus, Link, Media } = Icons;
 
@@ -88,7 +76,6 @@ const useQuickActions = () => {
   const { undo } = useHistory(({ actions: { undo } }) => ({
     undo,
   }));
-  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -109,40 +96,7 @@ const useQuickActions = () => {
     ev.stopPropagation();
   }, []);
 
-  const handleResetProperties = useResetProperties();
-
-  /**
-   * Reset element styles and show a confirmation snackbar. Clicking
-   * the action in the snackbar adds the animations back to the element.
-   *
-   * @param {string} elementId the id of the element
-   * @param {Array} resetProperties the properties that are to be reset ('animations', 'overlay')
-   * @param {string} elementType the type of element being adjusted
-   * @return {void}
-   */
-  const handleElementReset = useCallback(
-    ({ elementId, resetProperties, elementType }) => {
-      handleResetProperties(elementType, elementId, resetProperties);
-
-      showSnackbar({
-        actionLabel: __('Undo', 'web-stories'),
-        dismissible: false,
-        message: __('Element properties have been reset', 'web-stories'),
-        // Don't pass a stale version of `undo`
-        onAction: () => {
-          undoRef.current();
-
-          trackEvent('quick_action', {
-            name: `undo_${ACTIONS.RESET_ELEMENT.trackingEventName}`,
-            element: elementType,
-            isBackground: true,
-          });
-        },
-        actionHelpText: UNDO_HELP_TEXT,
-      });
-    },
-    [handleResetProperties, showSnackbar]
-  );
+  const handleElementReset = useElementReset();
 
   /**
    * Highlights a panel in the editor. Triggers a tracking event

@@ -16,19 +16,26 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import {
+  useSnackbar,
+  prettifyShortcut,
+} from '@googleforcreators/design-system';
+import { useCallback, useRef } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 import { ElementType } from '@googleforcreators/elements';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
+import { useHistory } from '../history';
 import { useStory } from '../story';
 import updateProperties from '../../components/style/updateProperties';
-import { RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
+import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
 
-function useResetProperties() {
-  const { selectedElementAnimations, updateElementsById } =
-    useStory(
+function useElementReset() {
+  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
+  const { selectedElementAnimations, updateElementsById } = useStory(
     ({
       state: { selectedElementAnimations },
       actions: { updateElementsById },
@@ -37,6 +44,11 @@ function useResetProperties() {
       updateElementsById,
     })
   );
+  const { undo } = useHistory(({ actions: { undo } }) => ({
+    undo,
+  }));
+  const undoRef = useRef(undo);
+  undoRef.current = undo;
   /**
    * Reset properties on an element. Shows a snackbar once the properties
    * have been reset.
@@ -93,7 +105,44 @@ function useResetProperties() {
     [selectedElementAnimations, updateElementsById]
   );
 
-  return handleResetProperties;
+  /**
+   * Reset element styles and show a confirmation snackbar. Clicking
+   * the action in the snackbar adds the animations back to the element.
+   *
+   * @param {string} elementId the id of the element
+   * @param {Array} resetProperties the properties that are to be reset ('animations', 'overlay')
+   * @param {string} elementType the type of element being adjusted
+   * @return {void}
+   */
+  const handleElementReset = useCallback(
+    ({ elementId, resetProperties, elementType }) => {
+      handleResetProperties(elementType, elementId, resetProperties);
+
+      showSnackbar({
+        actionLabel: __('Undo', 'web-stories'),
+        dismissible: false,
+        message: __('Element properties have been reset', 'web-stories'),
+        // Don't pass a stale version of `undo`
+        onAction: () => {
+          undoRef.current();
+
+          trackEvent('quick_action', {
+            name: `undo_${ACTIONS.RESET_ELEMENT.trackingEventName}`,
+            element: elementType,
+            isBackground: true,
+          });
+        },
+        actionHelpText: sprintf(
+          /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
+          __('Press %s to undo the last change', 'web-stories'),
+          prettifyShortcut('mod+z')
+        ),
+      });
+    },
+    [handleResetProperties, showSnackbar]
+  );
+
+  return handleElementReset;
 }
 
-export default useResetProperties;
+export default useElementReset;
