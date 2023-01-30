@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -675,9 +675,6 @@
           "y": 600
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "66f978ae-cd61-476f-8c06-fbe79179c2d6",
       "animations": [
         {
           "id": "c1609c53-1a9b-4a11-ad2b-2d834080923c",
@@ -688,6 +685,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "66f978ae-cd61-476f-8c06-fbe79179c2d6",
       "pageTemplateType": "steps",
       "groups": {
         "1d1b6c99-ad82-4fa0-8fa7-6f213ef06c6c": {

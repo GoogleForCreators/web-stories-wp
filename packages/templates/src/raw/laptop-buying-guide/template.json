@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -334,10 +334,10 @@
           "tagName": "h1"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "1cc6d76a-3b98-40d7-958f-7bab37485254",
-      "animations": [],
       "pageTemplateType": "cover",
       "groups": {
         "9cec2110-856a-4b49-8046-7443dd3762fd": {
@@ -530,9 +530,6 @@
           "y": 474
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "ffc8e95c-666a-4427-8c71-f9594093a1fa",
       "animations": [
         {
           "id": "03648b35-3582-487b-a0c8-3d541fcb58bf",
@@ -543,6 +540,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "ffc8e95c-666a-4427-8c71-f9594093a1fa",
       "pageTemplateType": null
     },
     {
@@ -1167,10 +1167,10 @@
           "y": 596
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "ea8facb2-b00c-4c76-8804-2a4f8b4b43f5",
-      "animations": [],
       "pageTemplateType": null,
       "groups": {
         "8f7420b5-bed5-4aed-9973-9da1b622a354": {
@@ -6794,9 +6794,6 @@
           "groupId": "10eb0ab1-2ec5-455e-9187-5719368baea1"
         }
       ],
-      "backgroundColor": { "color": { "r": 0, "g": 87, "b": 255 } },
-      "type": "page",
-      "id": "2cdd54a4-58a1-4f76-99a0-b740f41f3feb",
       "animations": [
         {
           "id": "6524fe1a-01cb-40c5-a150-734a4d39c5ed",
@@ -6843,6 +6840,9 @@
           "delay": 100
         }
       ],
+      "backgroundColor": { "color": { "r": 0, "g": 87, "b": 255 } },
+      "type": "page",
+      "id": "2cdd54a4-58a1-4f76-99a0-b740f41f3feb",
       "pageTemplateType": null,
       "groups": {
         "0190afbb-fab7-49fd-b1d7-49c8a36ad32a": {
