@@ -40,7 +40,7 @@ const IconButton = memo(
         placement={TOOLTIP_PLACEMENT.BOTTOM}
         title={hasTooltip ? title : undefined}
       >
-        <ToggleButton ref={ref} tabIndex={-1} {...rest}>
+        <ToggleButton aria-label={title} ref={ref} tabIndex={-1} {...rest}>
           <ContextMenuComponents.MenuIcon title={title}>
             <Icon />
           </ContextMenuComponents.MenuIcon>
