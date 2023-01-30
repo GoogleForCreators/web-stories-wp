@@ -170,7 +170,9 @@ function LeftRail() {
                   >
                     <IconWrap>{Icon && <Icon width="22px" />}</IconWrap>
 
-                    <PathName isBold>{path.label}</PathName>
+                    <PathName size={TextSize.Small} isBold>
+                      {path.label}
+                    </PathName>
                   </NavLink>
                 </NavListItem>
               );
