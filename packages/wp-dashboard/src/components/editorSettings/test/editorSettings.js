@@ -138,6 +138,8 @@ function createProviderValues({
           error: {},
           archive: 'default',
           archivePageId: 0,
+          autoAdvance: true,
+          defaultPageDuration: 20,
         },
         media: {
           isLoading,
