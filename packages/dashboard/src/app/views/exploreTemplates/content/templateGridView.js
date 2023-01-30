@@ -35,7 +35,7 @@ import {
   PageSizePropType,
   TemplatesPropType,
   TemplateActionsPropType,
-} from '../../../../types';
+} from '../../../../propTypes';
 import { useConfig } from '../../../config';
 import { noop } from '../../../../utils';
 import TemplateGridItem, { FOCUS_TEMPLATE_CLASS } from './templateGridItem';

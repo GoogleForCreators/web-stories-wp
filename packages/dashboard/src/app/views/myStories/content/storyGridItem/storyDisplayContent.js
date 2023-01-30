@@ -27,7 +27,7 @@ import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
  */
 import { STORY_STATUS } from '../../../../../constants';
 import { InlineInputForm, Tooltip } from '../../../../../components';
-import { DashboardStatusesPropType } from '../../../../../types';
+import { DashboardStatusesPropType } from '../../../../../propTypes';
 import {
   StyledStoryDisplayContent,
   CardDetailsGrid,

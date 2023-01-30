@@ -263,7 +263,3 @@ ArchiveSettings.propTypes = {
   archivePageId: PropTypes.number.isRequired,
   getPageById: PropTypes.func.isRequired,
 };
-
-ArchiveSettings.defaultProps = {
-  archive: ARCHIVE_TYPE.DEFAULT,
-};

@@ -25,7 +25,7 @@ import { themeHelpers } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { PageSizePropType } from '../../types';
+import { PageSizePropType } from '../../propTypes';
 import { GRID_SPACING } from '../../constants';
 
 const DashboardGrid = styled.div`

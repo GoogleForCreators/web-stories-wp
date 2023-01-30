@@ -69,10 +69,13 @@ ConditionalSpanWrapper.propTypes = {
   isWrapped: PropTypes.bool,
 };
 
-const Link = forwardRef(function Link({ children, ...props }, ref) {
+const Link = forwardRef(function Link(
+  { children, size = THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM, ...props },
+  ref
+) {
   const isExternalLink = props.target === '_blank';
   return (
-    <StyledAnchor ref={ref} {...props}>
+    <StyledAnchor ref={ref} size={size} {...props}>
       <ConditionalSpanWrapper isWrapped={isExternalLink}>
         {children}
         {isExternalLink && <StyledLaunch />}
@@ -84,9 +87,6 @@ Link.propTypes = {
   children: PropTypes.node,
   target: PropTypes.string,
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
-};
-Link.defaultProps = {
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };
 
 export { Link };

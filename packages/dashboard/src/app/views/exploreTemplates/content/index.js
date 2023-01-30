@@ -43,7 +43,10 @@ import {
   ViewPropTypes,
   PagePropTypes,
 } from '../../../../utils/useTemplateView';
-import { TemplatesPropType, TemplateActionsPropType } from '../../../../types';
+import {
+  TemplatesPropType,
+  TemplateActionsPropType,
+} from '../../../../propTypes';
 import { EmptyContentMessage } from '../../shared';
 import TemplateGridView from './templateGridView';
 

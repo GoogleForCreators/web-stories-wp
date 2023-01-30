@@ -37,7 +37,7 @@ import {
   STORY_SORT_OPTIONS,
   VIEW_STYLE,
 } from '../constants';
-import { PageSizePropType } from '../types';
+import { PageSizePropType } from '../propTypes';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useStoryView({

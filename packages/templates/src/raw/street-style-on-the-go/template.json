@@ -1002,45 +1002,6 @@
           "groupId": "936a023d-b437-40dc-bfb7-b045082e0adf"
         },
         {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-05-13T13:51:45",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/street-style-on-the-go/page05_image01.png",
-            "width": 330,
-            "height": 298,
-            "posterId": 0,
-            "id": 0,
-            "alt": "two women in teal romper pants",
-            "sizes": [],
-            "isOptimized": false,
-            "baseColor": "#c1b6b9",
-            "isExternal": true
-          },
-          "type": "image",
-          "x": -13.5,
-          "y": -173,
-          "width": 451,
-          "height": 524,
-          "mask": {
-            "type": "rectangle",
-            "showInLibrary": true,
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1,
-            "supportsBorder": true
-          },
-          "id": "e91883e6-167f-4423-b564-1ce98fb792da",
-          "groupId": "7c934704-3be5-41fb-98d7-717306e3c36a"
-        },
-        {
           "x": 0,
           "y": -57,
           "id": "9aa548af-ba86-4f93-a58c-55d80e3e8895",
@@ -1062,28 +1023,6 @@
           "height": 732,
           "mask": { "type": "rectangle" },
           "groupId": "936a023d-b437-40dc-bfb7-b045082e0adf"
-        },
-        {
-          "opacity": 60,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "type": "linear",
-            "stops": [
-              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
-              { "color": { "r": 0, "g": 0, "b": 0 }, "position": 1 }
-            ],
-            "rotation": 0.5
-          },
-          "type": "shape",
-          "x": -6,
-          "y": -61,
-          "width": 424,
-          "height": 342,
-          "mask": { "type": "rectangle" },
-          "id": "a5b9e0c2-ccd3-4e60-9ef3-49394ff77859",
-          "groupId": "7c934704-3be5-41fb-98d7-717306e3c36a"
         },
         {
           "opacity": 100,
@@ -1217,26 +1156,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "x": 310,
-          "y": 113,
-          "id": "e6535291-ee64-43a6-bd4d-88153aef3f86",
-          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "7c934704-3be5-41fb-98d7-717306e3c36a"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "x": 149,
           "y": 368,
           "id": "68d96cfa-c217-4e09-8f9f-3b4e30d8a190",
@@ -1251,6 +1170,87 @@
             "desc": "Product Domain"
           },
           "groupId": "936a023d-b437-40dc-bfb7-b045082e0adf"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-05-13T13:51:45",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/street-style-on-the-go/page05_image01.png",
+            "width": 330,
+            "height": 298,
+            "posterId": 0,
+            "id": 0,
+            "alt": "two women in teal romper pants",
+            "sizes": [],
+            "isOptimized": false,
+            "baseColor": "#c1b6b9",
+            "isExternal": true
+          },
+          "type": "image",
+          "x": -13.5,
+          "y": -173,
+          "width": 451,
+          "height": 524,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1,
+            "supportsBorder": true
+          },
+          "id": "e91883e6-167f-4423-b564-1ce98fb792da",
+          "groupId": "7c934704-3be5-41fb-98d7-717306e3c36a"
+        },
+        {
+          "opacity": 60,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "type": "linear",
+            "stops": [
+              { "color": { "r": 0, "g": 0, "b": 0, "a": 0 }, "position": 0 },
+              { "color": { "r": 0, "g": 0, "b": 0 }, "position": 1 }
+            ],
+            "rotation": 0.5
+          },
+          "type": "shape",
+          "x": -6,
+          "y": -61,
+          "width": 424,
+          "height": 342,
+          "mask": { "type": "rectangle" },
+          "id": "a5b9e0c2-ccd3-4e60-9ef3-49394ff77859",
+          "groupId": "7c934704-3be5-41fb-98d7-717306e3c36a"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 310,
+          "y": 113,
+          "id": "e6535291-ee64-43a6-bd4d-88153aef3f86",
+          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "7c934704-3be5-41fb-98d7-717306e3c36a"
         },
         {
           "x": 51,
