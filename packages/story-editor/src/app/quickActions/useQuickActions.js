@@ -32,16 +32,16 @@ import { ElementType } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { states, useHighlights } from '../highlights';
-import updateProperties from '../../components/style/updateProperties';
 import { useHistory } from '../history';
 import { useStory } from '../story';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../components/mediaRecording';
 import { getResetProperties } from './utils';
-import { ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES } from './constants';
+import { ACTIONS } from './constants';
 import useTextActions from './useTextActions';
 import useMediaActions from './useMediaActions';
+import useResetProperties from './useResetProperties';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
@@ -109,61 +109,7 @@ const useQuickActions = () => {
     ev.stopPropagation();
   }, []);
 
-  /**
-   * Reset properties on an element. Shows a snackbar once the properties
-   * have been reset.
-   *
-   * @param {string} elementId the id of the element
-   * @param {Array.<string>} properties The properties of the element to update
-   * @return {void}
-   */
-  const handleResetProperties = useCallback(
-    (elementType, elementId, properties) => {
-      const newProperties = {};
-      // Choose properties to clear
-      if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
-        newProperties.overlay = null;
-      }
-
-      if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
-        // this is the only place where we're updating both animations and other
-        // properties on an element. updateElementsById only accepts if you upate
-        // one or the other, so we're upating animations if needed here separately
-        updateElementsById({
-          elementIds: [elementId],
-          properties: (currentProperties) =>
-            updateProperties(
-              currentProperties,
-              {
-                animation: { ...selectedElementAnimations?.[0], delete: true },
-              },
-              /* commitValues */ true
-            ),
-        });
-      }
-
-      if (properties.includes(RESET_PROPERTIES.STYLES)) {
-        newProperties.opacity = 100;
-        newProperties.border = null;
-        newProperties.borderRadius = null;
-      }
-
-      if (elementType === ElementType.Text) {
-        newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
-      }
-
-      updateElementsById({
-        elementIds: [elementId],
-        properties: (currentProperties) =>
-          updateProperties(
-            currentProperties,
-            newProperties,
-            /* commitValues */ true
-          ),
-      });
-    },
-    [selectedElementAnimations, updateElementsById]
-  );
+  const handleResetProperties = useResetProperties();
 
   /**
    * Reset element styles and show a confirmation snackbar. Clicking
