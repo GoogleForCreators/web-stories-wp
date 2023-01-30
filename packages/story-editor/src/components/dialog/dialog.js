@@ -49,6 +49,7 @@ const Dialog = ({
   onSecondary,
   onPrimary,
   primaryText,
+  PrimaryComponent = Button,
   secondaryText,
   primaryRest,
   secondaryRest,
@@ -59,14 +60,14 @@ const Dialog = ({
   const _PrimaryButton = useMemo(
     () =>
       primaryText && (
-        <Button
+        <PrimaryComponent
           type={ButtonType.Primary}
           size={ButtonSize.Small}
           onClick={(evt) => onPrimary?.(evt)}
           {...primaryRest}
         >
           {primaryText}
-        </Button>
+        </PrimaryComponent>
       ),
     [primaryText, primaryRest, onPrimary]
   );
@@ -111,6 +112,7 @@ Dialog.propTypes = {
   onPrimary: PropTypes.func,
   onSecondary: PropTypes.func,
   primaryText: PropTypes.string,
+  PrimaryComponent: PropTypes.func,
   primaryRest: PropTypes.object,
   secondaryText: PropTypes.string,
   secondaryRest: PropTypes.object,

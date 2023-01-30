@@ -20,7 +20,12 @@
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
-import { Link, Text, TextSize } from '@googleforcreators/design-system';
+import {
+  ButtonAsLink,
+  Link,
+  Text,
+  TextSize,
+} from '@googleforcreators/design-system';
 import { Dialog, useStory } from '@googleforcreators/story-editor';
 
 function PostPublishDialog() {
@@ -65,6 +70,7 @@ function PostPublishDialog() {
       secondaryText={__('Dismiss', 'web-stories')}
       primaryText={primaryText}
       onPrimary={onAddToPostClick}
+      PrimaryComponent={ButtonAsLink}
       primaryRest={{ href: confirmURL }}
     >
       <Text.Paragraph size={TextSize.Small}>
