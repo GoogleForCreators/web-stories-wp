@@ -26846,31 +26846,6 @@
     }
   },
   {
-    "family": "Noto Sans N Ko",
-    "fallbacks": ["sans-serif"],
-    "weights": [400],
-    "styles": ["regular"],
-    "variants": [[0, 400]],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 1000,
-      "asc": 1069,
-      "des": -293,
-      "tAsc": 1069,
-      "tDes": -293,
-      "tLGap": 0,
-      "wAsc": 1069,
-      "wDes": 293,
-      "xH": 513,
-      "capH": 714,
-      "yMin": -272,
-      "yMax": 1059,
-      "hAsc": 1069,
-      "hDes": -293,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Noto Sans Nabataean",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -26947,6 +26922,31 @@
       "yMax": 1036,
       "hAsc": 1036,
       "hDes": -396,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Noto Sans NKo",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1069,
+      "des": -293,
+      "tAsc": 1069,
+      "tDes": -293,
+      "tLGap": 0,
+      "wAsc": 1069,
+      "wDes": 293,
+      "xH": 513,
+      "capH": 714,
+      "yMin": -272,
+      "yMax": 1059,
+      "hAsc": 1069,
+      "hDes": -293,
       "lGap": 0
     }
   },
@@ -29356,36 +29356,6 @@
       "xH": 536,
       "capH": 714,
       "yMin": -240,
-      "yMax": 1039,
-      "hAsc": 1068,
-      "hDes": -292,
-      "lGap": 0
-    }
-  },
-  {
-    "family": "Noto Serif Nyiakeng Puachue Hmong",
-    "fallbacks": ["serif"],
-    "weights": [400, 500, 600, 700],
-    "styles": ["regular"],
-    "variants": [
-      [0, 400],
-      [0, 500],
-      [0, 600],
-      [0, 700]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 1000,
-      "asc": 1068,
-      "des": -292,
-      "tAsc": 1068,
-      "tDes": -292,
-      "tLGap": 0,
-      "wAsc": 1068,
-      "wDes": 292,
-      "xH": 536,
-      "capH": 714,
-      "yMin": -236,
       "yMax": 1039,
       "hAsc": 1068,
       "hDes": -292,
