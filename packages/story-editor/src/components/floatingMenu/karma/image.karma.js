@@ -117,8 +117,7 @@ describe('Image Design Menu: Keyboard Navigation', () => {
     );
     // Arrow right to more button
     await fixture.events.keyboard.press('ArrowRight');
-
-    expect(document.activeElement.getAttribute('aria-label')).toBe('More');
+    expect(document.activeElement).toHaveTextContent('More');
 
     // Arrow right to Menu settings
     await fixture.events.keyboard.press('ArrowRight');
