@@ -69,20 +69,28 @@ const Label = styled.label`
     disabled ? theme.colors.fg.disable : 'auto'};
 `;
 
-export const Text = ({ as, disabled, ...props }) => {
+export const Text = ({
+  as = 'p',
+  isBold = false,
+  size = THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+  disabled,
+  ...props
+}) => {
   switch (as) {
     case 'label':
-      /* eslint-disable-next-line styled-components-a11y/label-has-associated-control --
-       * This is building block in the design system that is used with inputs
-       * and therefore has no associated control in the text element itself since it is unassembled.
-       **/
-      return <Label disabled={disabled} {...props} />;
+      return (
+        /* eslint-disable-next-line styled-components-a11y/label-has-associated-control --
+         * This is building block in the design system that is used with inputs
+         * and therefore has no associated control in the text element itself since it is unassembled.
+         **/
+        <Label isBold={isBold} size={size} disabled={disabled} {...props} />
+      );
     case 'span':
-      return <Span {...props} />;
+      return <Span isBold={isBold} size={size} {...props} />;
     case 'kbd':
-      return <Kbd {...props} />;
+      return <Kbd isBold={isBold} size={size} {...props} />;
     default:
-      return <Paragraph {...props} />;
+      return <Paragraph isBold={isBold} size={size} {...props} />;
   }
 };
 
@@ -92,9 +100,4 @@ Text.propTypes = {
   disabled: PropTypes.bool,
   isBold: PropTypes.bool,
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
-};
-Text.defaultProps = {
-  as: 'p',
-  isBold: false,
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };

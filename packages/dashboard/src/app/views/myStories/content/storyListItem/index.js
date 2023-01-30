@@ -44,7 +44,7 @@ import {
   RenameStoryPropType,
   StoryMenuPropType,
   StoryPropType,
-} from '../../../../../types';
+} from '../../../../../propTypes';
 import { titleFormatted } from '../../../../../utils';
 
 import {

@@ -803,12 +803,12 @@
       "tAsc": 825,
       "tDes": -425,
       "tLGap": 0,
-      "wAsc": 950,
+      "wAsc": 962,
       "wDes": 430,
       "xH": 320,
       "capH": 700,
       "yMin": -425,
-      "yMax": 888,
+      "yMax": 962,
       "hAsc": 825,
       "hDes": -425,
       "lGap": 0
@@ -1496,8 +1496,8 @@
       "tAsc": 1124,
       "tDes": -634,
       "tLGap": 0,
-      "wAsc": 2546,
-      "wDes": 1629,
+      "wAsc": 1850,
+      "wDes": 910,
       "xH": 433,
       "capH": 646,
       "yMin": -900,
@@ -5462,9 +5462,12 @@
   {
     "family": "BIZ UDMincho",
     "fallbacks": ["serif"],
-    "weights": [400],
+    "weights": [400, 700],
     "styles": ["regular"],
-    "variants": [[0, 400]],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2048,
@@ -5515,9 +5518,12 @@
   {
     "family": "BIZ UDPMincho",
     "fallbacks": ["serif"],
-    "weights": [400],
+    "weights": [400, 700],
     "styles": ["regular"],
-    "variants": [[0, 400]],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2048,
@@ -16389,7 +16395,7 @@
       "xH": 1118,
       "capH": 1490,
       "yMin": -654,
-      "yMax": 2263,
+      "yMax": 2234,
       "hAsc": 1984,
       "hDes": -494,
       "lGap": 0
@@ -30979,6 +30985,31 @@
     }
   },
   {
+    "family": "Padyakke Expanded One",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 813,
+      "des": -628,
+      "tAsc": 813,
+      "tDes": -628,
+      "tLGap": 0,
+      "wAsc": 843,
+      "wDes": 628,
+      "xH": 357,
+      "capH": 520,
+      "yMin": -628,
+      "yMax": 843,
+      "hAsc": 813,
+      "hDes": -628,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Palanquin",
     "fallbacks": ["sans-serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700],
@@ -37568,6 +37599,31 @@
       "yMax": 895,
       "hAsc": 900,
       "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Solitreo",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 880,
+      "des": -550,
+      "tAsc": 880,
+      "tDes": -550,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 600,
+      "xH": 490,
+      "capH": 700,
+      "yMin": -528,
+      "yMax": 989,
+      "hAsc": 880,
+      "hDes": -550,
       "lGap": 0
     }
   },

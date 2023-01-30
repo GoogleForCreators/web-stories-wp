@@ -34,10 +34,10 @@ jobs:
     environment: Production
     steps:
       - name: Checkout
-        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
 
       - name: Setup Node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -49,6 +49,8 @@ jobs:
 
       - name: Bundle packages
         run: npm run workflow:bundle-packages
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
 
       # Exact format here doesn't matter for the dry-run, it's gonna be done properly later on.
       - name: Version bumps
@@ -91,22 +93,22 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # for Git to git push
-    timeout-minutes: 10
+    timeout-minutes: 20
     needs: [dry-run]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
+        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       # See go/npm-publish
       - name: Setup Node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -120,6 +122,8 @@ jobs:
 
       - name: Bundle packages
         run: npm run workflow:bundle-packages
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
 
       # For the time being, using incremental versions like 0.1.202111302140
       # `npm version` updates all packages, even the ones we don't intend to publish.

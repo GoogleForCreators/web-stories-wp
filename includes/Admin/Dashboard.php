@@ -365,7 +365,8 @@ class Dashboard extends Service_Base {
 								'link',
 								'preview_link',
 								'edit_link',
-								'_links', // Needed for WP 6.1+
+								'_links', // Needed for WP 6.1+.
+								'_embedded',
 								// _web_stories_envelope will add these fields, we need them too.
 								'body',
 								'status',
@@ -417,7 +418,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_assets( $hook_suffix ): void {
+	public function enqueue_assets( string $hook_suffix ): void {
 		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
 			return;
 		}

@@ -232,7 +232,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @phpstan-return ($data is array<T> ? array<T> : mixed)
 	 */
-	public function filter_admin_ajax_response( $data, $attachment ) {
+	public function filter_admin_ajax_response( $data, WP_Post $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
 			return $data;
 		}
@@ -339,13 +339,48 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
+	 * Hook into added_post_meta.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @param int    $mid         The meta ID after successful update.
+	 * @param int    $object_id   ID of the object metadata is for.
+	 * @param string $meta_key    Metadata key.
+	 */
+	public function add_term( int $mid, int $object_id, string $meta_key ): void {
+		if ( self::VIDEOPRESS_POSTER_META_KEY !== $meta_key ) {
+			return;
+		}
+		if ( 'attachment' !== get_post_type( $object_id ) ) {
+			return;
+		}
+
+		wp_set_object_terms( (int) $object_id, $this->media_source_taxonomy::TERM_POSTER_GENERATION, $this->media_source_taxonomy->get_taxonomy_slug() );
+	}
+
+	/**
+	 * Force Jetpack to see Web Stories as AMP.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param bool $is_amp_request Is the request supposed to return valid AMP content.
+	 * @return bool Whether the current request is an AMP request.
+	 */
+	public function force_amp_request( bool $is_amp_request ): bool {
+		if ( ! $this->context->is_web_story() ) {
+			return (bool) $is_amp_request;
+		}
+		return true;
+	}
+
+	/**
 	 * Format milliseconds into seconds.
 	 *
 	 * @since 1.7.2
 	 *
 	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
 	 */
-	protected function format_milliseconds( $milliseconds ): string {
+	protected function format_milliseconds( int $milliseconds ): string {
 		$seconds = floor( $milliseconds / 1000 );
 
 		if ( $seconds >= 1 ) {
@@ -357,40 +392,5 @@ class Jetpack extends Service_Base {
 		}
 
 		return sprintf( '%d:%02u', $minutes, $seconds );
-	}
-
-	/**
-	 * Hook into added_post_meta.
-	 *
-	 * @since 1.7.2
-	 *
-	 * @param int    $mid         The meta ID after successful update.
-	 * @param int    $object_id   ID of the object metadata is for.
-	 * @param string $meta_key    Metadata key.
-	 */
-	public function add_term( $mid, $object_id, $meta_key ): void {
-		if ( self::VIDEOPRESS_POSTER_META_KEY !== $meta_key ) {
-			return;
-		}
-		if ( 'attachment' !== get_post_type( $object_id ) ) {
-			return;
-		}
-
-		wp_set_object_terms( (int) $object_id, 'poster-generation', $this->media_source_taxonomy->get_taxonomy_slug() );
-	}
-
-	/**
-	 * Force Jetpack to see Web Stories as AMP.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param bool $is_amp_request Is the request supposed to return valid AMP content.
-	 * @return bool Whether the current request is an AMP request.
-	 */
-	public function force_amp_request( $is_amp_request ): bool {
-		if ( ! $this->context->is_web_story() ) {
-			return (bool) $is_amp_request;
-		}
-		return true;
 	}
 }

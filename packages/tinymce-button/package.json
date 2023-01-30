@@ -28,9 +28,9 @@
     "@wordpress/components": "^22.1.0",
     "@wordpress/compose": "^5.20.0",
     "@wordpress/data": "^7.6.0",
-    "@wordpress/dom-ready": "^3.22.0",
+    "@wordpress/dom-ready": "^3.24.0",
     "@wordpress/element": "^4.20.0",
-    "@wordpress/i18n": "^4.22.0",
+    "@wordpress/i18n": "^4.24.0",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {

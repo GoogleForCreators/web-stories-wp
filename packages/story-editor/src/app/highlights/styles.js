@@ -29,11 +29,17 @@ const flash = keyframes`
   }
 `;
 
-export const FLASH = css`
+const FLASH = css`
   background-color: ${rgba(dsTheme.colors.standard.white, 0)};
   animation: ${flash} 0.3s ease-in-out 2;
 `;
 
-export const OUTLINE = css`
+const OUTLINE = css`
   ${themeHelpers.focusCSS};
 `;
+
+const styles = {
+  OUTLINE,
+  FLASH,
+};
+export default styles;

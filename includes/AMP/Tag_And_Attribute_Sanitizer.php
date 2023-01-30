@@ -38,7 +38,7 @@ class Tag_And_Attribute_Sanitizer extends AMP_Tag_And_Attribute_Sanitizer {
 	 * @param Document             $dom  DOM.
 	 * @param array<string, mixed> $args args.
 	 */
-	public function __construct( $dom, $args = [] ) { // phpcs:ignore Generic.CodeAnalysis.UselessOverridingMethod.Found
+	public function __construct( Document $dom, array $args = [] ) { // phpcs:ignore Generic.CodeAnalysis.UselessOverridingMethod.Found
 		parent::__construct( $dom, $args );
 	}
 }

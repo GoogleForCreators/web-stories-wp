@@ -37,6 +37,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html
       - ../../:/var/www/html/wp-content/plugins/web-stories
+      - ../../packages/e2e-tests/src/plugins:/var/www/html/wp-content/plugins/web-stories-test-plugins
       - ../../packages/e2e-tests/src/assets:/var/www/html/wp-content/e2e-assets
     depends_on:
       - mysql

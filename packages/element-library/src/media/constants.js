@@ -58,9 +58,9 @@ export const resizeRules = {
 };
 
 export const MEDIA_PANELS = [
-  PanelTypes.FILTER,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.BORDER,
-  PanelTypes.ANIMATION,
-  PanelTypes.LINK,
+  PanelTypes.Filter,
+  PanelTypes.SizePosition,
+  PanelTypes.Border,
+  PanelTypes.Animation,
+  PanelTypes.Link,
 ];

@@ -335,21 +335,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Returns an experiment by name.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @param string $name Experiment name.
-	 * @return array|null Experiment if found, null otherwise.
-	 *
-	 * @phpstan-return Experiment|null
-	 */
-	protected function get_experiment( string $name ): ?array {
-		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
-		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
-	}
-
-	/**
 	 * Checks whether an experiment is enabled.
 	 *
 	 * @since 1.0.0
@@ -390,5 +375,20 @@ class Experiments extends Service_Base implements HasRequirements {
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]
 		);
+	}
+
+	/**
+	 * Returns an experiment by name.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string $name Experiment name.
+	 * @return array|null Experiment if found, null otherwise.
+	 *
+	 * @phpstan-return Experiment|null
+	 */
+	protected function get_experiment( string $name ): ?array {
+		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
+		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
 	}
 }

@@ -125,8 +125,3 @@ Dialog.propTypes = {
   title: PropTypes.string,
   contentLabel: PropTypes.string,
 };
-
-Dialog.defaultProps = {
-  isOpen: false,
-  actions: [],
-};

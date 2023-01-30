@@ -29,8 +29,6 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\Story_Archive
  */
 class Story_Archive extends DependencyInjectedTestCase {
-	use Capabilities_Setup;
-
 	/**
 	 * Admin user for test.
 	 */
@@ -42,6 +40,11 @@ class Story_Archive extends DependencyInjectedTestCase {
 	protected static int $story_id;
 
 	/**
+	 * Archive page ID.
+	 */
+	protected static int $archive_page_id;
+
+	/**
 	 * Test instance.
 	 */
 	protected Testee $instance;
@@ -50,16 +53,8 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 	private Story_Post_Type $story_post_type;
 
-	/**
-	 * Archive page ID.
-	 */
-	protected static int $archive_page_id;
-
 	protected string $redirect_location = '';
 
-	/**
-	 * @param WP_UnitTest_Factory $factory
-	 */
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
@@ -99,15 +94,10 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$this->story_post_type = new Story_Post_Type( $this->settings );
 		$this->instance        = new Testee( $this->settings, $this->story_post_type );
 
-
-		$this->add_caps_to_roles();
-
 		add_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 	}
 
 	public function tear_down(): void {
-		$this->remove_caps_from_roles();
-
 		$this->redirect_location = '';
 		remove_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 

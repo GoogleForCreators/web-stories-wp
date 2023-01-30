@@ -27,7 +27,8 @@ import { themeHelpers } from '@googleforcreators/design-system';
  */
 import { useStory } from '../../app/story';
 import { updateSlug } from '../../utils/storyUpdates';
-import { styles, states, useHighlights } from '../../app/highlights';
+import { states, useHighlights } from '../../app/highlights';
+import styles from '../../app/highlights/styles';
 
 const Input = styled.input`
   color: ${({ theme }) => `${theme.colors.fg.primary} !important`};
@@ -66,7 +67,7 @@ function HeaderTitle() {
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
-      highlight: state[states.STORY_TITLE],
+      highlight: state[states.StoryTitle],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
     })

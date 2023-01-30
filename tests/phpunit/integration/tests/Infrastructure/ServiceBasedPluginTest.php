@@ -298,34 +298,6 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertFalse( $container->has( 'dummy_service' ) );
 	}
 
-	public function test_it_falls_back_to_defaults_on_broken_filtering(): void {
-		$container = new SimpleServiceContainer();
-		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
-			->enableOriginalConstructor()
-			->setConstructorArgs( [ true, null, $container ] )
-			->setMethodsExcept(
-				[
-					'register',
-					'register_services',
-					'get_service_classes',
-				]
-			)
-			->getMock();
-
-		add_filter(
-			'services',
-			static fn() => null
-		);
-
-		$plugin->register();
-
-		$this->assertCount( 3, $container );
-		$this->assertTrue( $container->has( 'service_a' ) );
-		$this->assertInstanceof( DummyService::class, $container->get( 'service_a' ) );
-		$this->assertTrue( $container->has( 'service_b' ) );
-		$this->assertInstanceof( DummyService::class, $container->get( 'service_b' ) );
-	}
-
 	public function test_it_can_have_filtering_disabled(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )

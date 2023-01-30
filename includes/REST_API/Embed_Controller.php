@@ -178,7 +178,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		$args = [
-			'limit_response_size' => 153600, // 150 KB.
+			'limit_response_size' => 153_600, // 150 KB.
 			'timeout'             => 7, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 		];
 
@@ -218,231 +218,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
 		return rest_ensure_response( $response );
-	}
-
-	/**
-	 * Retrieves the story metadata for a given URL on the current site.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $url The URL that should be inspected for metadata.
-	 * @return array{title: string, poster: string}|false Story metadata if the URL does belong to the current site. False otherwise.
-	 */
-	private function get_data_from_post( string $url ) {
-		$post = $this->url_to_post( $url );
-
-		if ( ! $post || $this->story_post_type->get_slug() !== $post->post_type ) {
-			return false;
-		}
-
-		return $this->get_data_from_document( $post->post_content );
-	}
-
-	/**
-	 * Examines a URL and try to determine the post it represents.
-	 *
-	 * Checks are supposedly from the hosted site blog.
-	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 *
-	 * @since 1.2.0
-	 *
-	 * @see get_oembed_response_data_for_url
-	 * @see url_to_postid
-	 *
-	 * @param string $url Permalink to check.
-	 * @return WP_Post|null Post object on success, null otherwise.
-	 */
-	private function url_to_post( $url ): ?WP_Post {
-		$post          = null;
-		$switched_blog = false;
-
-		if ( is_multisite() ) {
-			/**
-			 * URL parts.
-			 *
-			 * @var array<string, string>|false $url_parts
-			 */
-			$url_parts = wp_parse_url( $url );
-			if ( ! $url_parts ) {
-				$url_parts = [];
-			}
-
-			$url_parts = wp_parse_args(
-				$url_parts,
-				[
-					'host' => '',
-					'path' => '/',
-				]
-			);
-
-			$qv = [
-				'domain'                 => $url_parts['host'],
-				'path'                   => '/',
-				'number'                 => 1,
-				'update_site_cache'      => false,
-				'update_site_meta_cache' => false,
-			];
-
-			// In case of subdirectory configs, set the path.
-			if ( ! is_subdomain_install() ) {
-				// Get "sub-site" part of "http://example.org/sub-site/web-stories/my-story/".
-				// But given just "http://example.org/web-stories/my-story/", don't treat "web-stories" as site path.
-				// This differs from the logic in get_oembed_response_data_for_url() which does not do this.
-				// TODO: Investigate possible core bug in get_oembed_response_data_for_url()?
-				$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
-				$path    = \count( $path ) > 2 ? reset( $path ) : false;
-				$network = get_network();
-				if ( $path && $network instanceof WP_Network ) {
-					$qv['path'] = $network->path . $path . '/';
-				}
-			}
-
-			$sites = (array) get_sites( $qv );
-			$site  = reset( $sites );
-
-			if ( $site && get_current_blog_id() !== (int) $site->blog_id ) {
-				// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
-				switch_to_blog( (int) $site->blog_id );
-
-				$switched_blog = true;
-			}
-		}
-
-		if ( function_exists( 'wpcom_vip_url_to_postid' ) ) {
-			$post_id = wpcom_vip_url_to_postid( $url );
-		} else {
-			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
-			$post_id = url_to_postid( $url );
-		}
-
-		if ( $post_id ) {
-			$post = get_post( $post_id );
-		}
-
-		if ( ! $post_id ) {
-			// url_to_postid() does not recognize plain permalinks like https://example.com/?web-story=my-story.
-			// Let's check for that ourselves.
-
-			/**
-			 * The URL's hostname.
-			 *
-			 * @var string|false|null $url_host
-			 */
-			$url_host = wp_parse_url( $url, PHP_URL_HOST );
-			if ( $url_host ) {
-				$url_host = str_replace( 'www.', '', $url_host );
-			}
-
-			/**
-			 * The home URL's hostname.
-			 *
-			 * @var string|false|null $home_url_host
-			 */
-			$home_url_host = wp_parse_url( home_url(), PHP_URL_HOST );
-			if ( $home_url_host ) {
-				$home_url_host = str_replace( 'www.', '', $home_url_host );
-			}
-
-			if ( $url_host && $home_url_host && $url_host === $home_url_host ) {
-				$values = [];
-				if (
-				preg_match(
-					'#[?&](' . preg_quote( $this->story_post_type->get_slug(), '#' ) . ')=([^&]+)#',
-					$url,
-					$values
-				)
-				) {
-					$slug = $values[2];
-
-					if ( function_exists( 'wpcom_vip_get_page_by_path' ) ) {
-						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
-					} else {
-						// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
-						$post = get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
-					}
-				}
-			}
-		}
-
-		if ( $switched_blog ) {
-			restore_current_blog();
-		}
-
-		if ( ! $post instanceof WP_Post ) {
-			return null;
-		}
-
-		return $post;
-	}
-
-	/**
-	 * Parses an HTML document to and returns the story's title and poster.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $html HTML document markup.
-	 * @return array{title: string, poster: string}|false Response data or false if document is not a story.
-	 */
-	private function get_data_from_document( string $html ) {
-		try {
-			$doc = Document::fromHtml( $html );
-		} catch ( \DOMException $exception ) {
-			return false;
-		}
-
-		if ( ! $doc ) {
-			return false;
-		}
-
-		/**
-		 * List of <amp-story> elements.
-		 *
-		 * @var DOMNodeList<DOMElement> $amp_story
-		 */
-		$amp_story = $doc->xpath->query( '//amp-story' );
-
-		if ( ! $amp_story instanceof DOMNodeList || 0 === $amp_story->length ) {
-			return false;
-		}
-
-		$title  = $this->get_dom_attribute_content( $amp_story, 'title' );
-		$poster = $this->get_dom_attribute_content( $amp_story, 'poster-portrait-src' );
-
-		return [
-			'title'  => $title ?: '',
-			'poster' => $poster ?: '',
-		];
-	}
-
-	/**
-	 * Retrieve content of a given DOM node attribute.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param DOMNodeList<DOMElement>|false $query     XPath query result.
-	 * @param string                        $attribute Attribute name.
-	 * @return string|false Attribute content on success, false otherwise.
-	 */
-	protected function get_dom_attribute_content( $query, string $attribute ) {
-		if ( ! $query instanceof DOMNodeList || 0 === $query->length ) {
-			return false;
-		}
-
-		/**
-		 * DOMElement
-		 *
-		 * @var DOMElement $node
-		 */
-		$node = $query->item( 0 );
-
-		if ( ! $node instanceof DOMElement ) {
-			return false;
-		}
-
-		return $node->getAttribute( $attribute );
 	}
 
 	/**
@@ -545,5 +320,243 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Retrieves the story metadata for a given URL on the current site.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $url The URL that should be inspected for metadata.
+	 * @return array{title: string, poster: string}|false Story metadata if the URL does belong to the current site. False otherwise.
+	 */
+	private function get_data_from_post( string $url ) {
+		$post = $this->url_to_post( $url );
+
+		if ( ! $post || $this->story_post_type->get_slug() !== $post->post_type ) {
+			return false;
+		}
+
+		return $this->get_data_from_document( $post->post_content );
+	}
+
+	/**
+	 * Examines a URL and try to determine the post it represents.
+	 *
+	 * Checks are supposedly from the hosted site blog.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
+	 * @since 1.2.0
+	 *
+	 * @see get_oembed_response_data_for_url
+	 * @see url_to_postid
+	 *
+	 * @param string $url Permalink to check.
+	 * @return WP_Post|null Post object on success, null otherwise.
+	 */
+	private function url_to_post( $url ): ?WP_Post {
+		$post          = null;
+		$switched_blog = $this->maybe_switch_site( $url );
+
+
+		if ( function_exists( 'wpcom_vip_url_to_postid' ) ) {
+			$post_id = wpcom_vip_url_to_postid( $url );
+		} else {
+			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
+			$post_id = url_to_postid( $url );
+		}
+
+		if ( $post_id ) {
+			$post = get_post( $post_id );
+		}
+
+		if ( ! $post_id ) {
+			// url_to_postid() does not recognize plain permalinks like https://example.com/?web-story=my-story.
+			// Let's check for that ourselves.
+
+			/**
+			 * The URL's hostname.
+			 *
+			 * @var string|false|null $url_host
+			 */
+			$url_host = wp_parse_url( $url, PHP_URL_HOST );
+			if ( $url_host ) {
+				$url_host = str_replace( 'www.', '', $url_host );
+			}
+
+			/**
+			 * The home URL's hostname.
+			 *
+			 * @var string|false|null $home_url_host
+			 */
+			$home_url_host = wp_parse_url( home_url(), PHP_URL_HOST );
+			if ( $home_url_host ) {
+				$home_url_host = str_replace( 'www.', '', $home_url_host );
+			}
+
+			if ( $url_host && $home_url_host && $url_host === $home_url_host ) {
+				$values = [];
+				if (
+				preg_match(
+					'#[?&](' . preg_quote( $this->story_post_type->get_slug(), '#' ) . ')=([^&]+)#',
+					$url,
+					$values
+				)
+				) {
+					$slug = $values[2];
+
+					if ( function_exists( 'wpcom_vip_get_page_by_path' ) ) {
+						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
+					} else {
+						// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
+						$post = get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
+					}
+				}
+			}
+		}
+
+		if ( $switched_blog ) {
+			restore_current_blog();
+		}
+
+		if ( ! $post instanceof WP_Post ) {
+			return null;
+		}
+
+		return $post;
+	}
+
+	/**
+	 * Maybe switch to site.
+	 *
+	 * @since 1.29.0
+	 *
+	 * @param string $url Permalink to check.
+	 */
+	private function maybe_switch_site( $url ): bool {
+		if ( ! is_multisite() ) {
+			return false;
+		}
+		$switched_blog = false;
+
+		/**
+		 * URL parts.
+		 *
+		 * @var array<string, string>|false $url_parts
+		 */
+		$url_parts = wp_parse_url( $url );
+		if ( ! $url_parts ) {
+			$url_parts = [];
+		}
+
+		$url_parts = wp_parse_args(
+			$url_parts,
+			[
+				'host' => '',
+				'path' => '/',
+			]
+		);
+
+		$qv = [
+			'domain'                 => $url_parts['host'],
+			'path'                   => '/',
+			'number'                 => 1,
+			'update_site_cache'      => false,
+			'update_site_meta_cache' => false,
+		];
+
+		// In case of subdirectory configs, set the path.
+		if ( ! is_subdomain_install() ) {
+			// Get "sub-site" part of "http://example.org/sub-site/web-stories/my-story/".
+			// But given just "http://example.org/web-stories/my-story/", don't treat "web-stories" as site path.
+			// This differs from the logic in get_oembed_response_data_for_url() which does not do this.
+			// TODO: Investigate possible core bug in get_oembed_response_data_for_url()?
+			$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
+			$path    = \count( $path ) > 2 ? reset( $path ) : false;
+			$network = get_network();
+			if ( $path && $network instanceof WP_Network ) {
+				$qv['path'] = $network->path . $path . '/';
+			}
+		}
+
+		$sites = (array) get_sites( $qv );
+		$site  = reset( $sites );
+
+		if ( $site && get_current_blog_id() !== (int) $site->blog_id ) {
+			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
+			switch_to_blog( (int) $site->blog_id );
+
+			$switched_blog = true;
+		}
+
+		return $switched_blog;
+	}
+
+	/**
+	 * Parses an HTML document to and returns the story's title and poster.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $html HTML document markup.
+	 * @return array{title: string, poster: string}|false Response data or false if document is not a story.
+	 */
+	private function get_data_from_document( string $html ) {
+		try {
+			$doc = Document::fromHtml( $html );
+		} catch ( \DOMException $exception ) {
+			return false;
+		}
+
+		if ( ! $doc ) {
+			return false;
+		}
+
+		/**
+		 * List of <amp-story> elements.
+		 *
+		 * @var DOMNodeList<DOMElement> $amp_story
+		 */
+		$amp_story = $doc->xpath->query( '//amp-story' );
+
+		if ( ! $amp_story instanceof DOMNodeList || 0 === $amp_story->length ) {
+			return false;
+		}
+
+		$title  = $this->get_dom_attribute_content( $amp_story, 'title' );
+		$poster = $this->get_dom_attribute_content( $amp_story, 'poster-portrait-src' );
+
+		return [
+			'title'  => $title ?: '',
+			'poster' => $poster ?: '',
+		];
+	}
+
+	/**
+	 * Retrieve content of a given DOM node attribute.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param DOMNodeList<DOMElement>|false $query     XPath query result.
+	 * @param string                        $attribute Attribute name.
+	 * @return string|false Attribute content on success, false otherwise.
+	 */
+	protected function get_dom_attribute_content( $query, string $attribute ) {
+		if ( ! $query instanceof DOMNodeList || 0 === $query->length ) {
+			return false;
+		}
+
+		/**
+		 * DOMElement
+		 *
+		 * @var DOMElement $node
+		 */
+		$node = $query->item( 0 );
+
+		if ( ! $node instanceof DOMElement ) {
+			return false;
+		}
+
+		return $node->getAttribute( $attribute );
 	}
 }

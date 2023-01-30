@@ -44,17 +44,17 @@ import LinkIcon from './icons/linkIcon';
 import AnimationIcon from './icons/animationIcon';
 
 export const SELECTION = {
-  id: STYLE_PANE_IDS.SELECTION,
+  id: STYLE_PANE_IDS.Selection,
   icon: SelectionIcon,
   tooltip: __('Selection', 'web-stories'),
 };
 export const LINK = {
-  id: STYLE_PANE_IDS.LINK,
+  id: STYLE_PANE_IDS.Link,
   icon: LinkIcon,
   tooltip: __('Link', 'web-stories'),
 };
 export const ANIMATION = {
-  id: STYLE_PANE_IDS.ANIMATION,
+  id: STYLE_PANE_IDS.Animation,
   icon: AnimationIcon,
   tooltip: __('Animation', 'web-stories'),
 };

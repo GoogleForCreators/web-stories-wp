@@ -178,7 +178,7 @@ class TinyMCE extends Service_Base {
 	 * @param string       $src    The script's source URL.
 	 * @return string|mixed The filtered script tag.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ) {
+	public function script_loader_tag( $tag, string $handle, string $src ) {
 		if ( ! \is_string( $tag ) ) {
 			return $tag;
 		}

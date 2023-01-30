@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_Customize_Manager;
 use WP_Customize_Section;
@@ -74,62 +75,6 @@ class Customizer extends DependencyInjectedTestCase {
 	 */
 	public function test_is_needed(): void {
 		$this->assertTrue( $this->instance::is_needed() );
-	}
-
-	/**
-	 * Add theme support for web stories.
-	 */
-	private function add_web_stories_theme_support(): void {
-		add_theme_support(
-			'web-stories',
-			[
-				'customizer' => [
-					'view_type'         => [
-						'enabled' => [ 'circles', 'grid', 'list', 'carousel' ],
-						'default' => 'circles',
-					],
-					'title'             => [
-						'enabled' => true,
-						'default' => false,
-					],
-					'author'            => [
-						'enabled' => true,
-						'default' => false,
-					],
-					'date'              => [
-						'enabled' => true,
-						'default' => false,
-					],
-					'archive_link'      => [
-						'enabled' => true,
-						'default' => true,
-						'label'   => 'View all stories',
-					],
-					'sharp_corners'     => [
-						'enabled' => false,
-						'default' => false,
-					],
-					'order'             => [
-						'default' => 'DESC',
-					],
-					'orderby'           => [
-						'default' => 'post_date',
-					],
-					'circle_size'       => [
-						'default' => 150,
-					],
-					'number_of_stories' => [
-						'default' => 5,
-					],
-					'number_of_columns' => [
-						'default' => 4,
-					],
-					'image_alignment'   => [
-						'default' => is_rtl() ? 'right' : 'left',
-					],
-				],
-			]
-		);
 	}
 
 	/**
@@ -372,7 +317,7 @@ class Customizer extends DependencyInjectedTestCase {
 
 		self::factory()->post->create(
 			[
-				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 			]
 		);
 
@@ -380,5 +325,61 @@ class Customizer extends DependencyInjectedTestCase {
 
 		$this->assertNotEmpty( $output );
 		$this->assertStringContainsString( 'web-stories-list--customizer', $output );
+	}
+
+	/**
+	 * Add theme support for web stories.
+	 */
+	private function add_web_stories_theme_support(): void {
+		add_theme_support(
+			'web-stories',
+			[
+				'customizer' => [
+					'view_type'         => [
+						'enabled' => [ 'circles', 'grid', 'list', 'carousel' ],
+						'default' => 'circles',
+					],
+					'title'             => [
+						'enabled' => true,
+						'default' => false,
+					],
+					'author'            => [
+						'enabled' => true,
+						'default' => false,
+					],
+					'date'              => [
+						'enabled' => true,
+						'default' => false,
+					],
+					'archive_link'      => [
+						'enabled' => true,
+						'default' => true,
+						'label'   => 'View all stories',
+					],
+					'sharp_corners'     => [
+						'enabled' => false,
+						'default' => false,
+					],
+					'order'             => [
+						'default' => 'DESC',
+					],
+					'orderby'           => [
+						'default' => 'post_date',
+					],
+					'circle_size'       => [
+						'default' => 150,
+					],
+					'number_of_stories' => [
+						'default' => 5,
+					],
+					'number_of_columns' => [
+						'default' => 4,
+					],
+					'image_alignment'   => [
+						'default' => is_rtl() ? 'right' : 'left',
+					],
+				],
+			]
+		);
 	}
 }

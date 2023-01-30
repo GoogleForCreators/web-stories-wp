@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use DateTime;
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
@@ -30,11 +31,6 @@ use WP_UnitTest_Factory;
  * @coversDefaultClass \Google\Web_Stories\Admin\Admin
  */
 class Admin extends DependencyInjectedTestCase {
-
-	/**
-	 * Settings for test.
-	 */
-	private Settings $settings;
 
 	/**
 	 * Admin user for test.
@@ -50,6 +46,16 @@ class Admin extends DependencyInjectedTestCase {
 	 * Post ID.
 	 */
 	protected static int $post_id;
+
+	/**
+	 * Settings for test.
+	 */
+	private Settings $settings;
+
+	/**
+	 * Test instance.
+	 */
+	private \Google\Web_Stories\Admin\Admin $instance;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 
@@ -82,11 +88,6 @@ class Admin extends DependencyInjectedTestCase {
 
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
-
-	/**
-	 * Test instance.
-	 */
-	private \Google\Web_Stories\Admin\Admin $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -127,7 +128,7 @@ class Admin extends DependencyInjectedTestCase {
 		$current_post           = get_post( self::$post_id );
 		$this->assertNotNull( $current_post );
 		$result = $this->instance->prefill_post_content( 'current', $current_post );
-		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertIsString( $result );
 		$this->assertStringContainsString( 'wp-block-web-stories-embed', $result );
 		$this->assertStringContainsString( $poster, $result );
@@ -187,7 +188,7 @@ class Admin extends DependencyInjectedTestCase {
 		$current_post           = get_post( self::$post_id );
 		$this->assertNotNull( $current_post );
 		$result = $this->instance->prefill_post_content( 'current', $current_post );
-		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertIsString( $result );
 		$this->assertStringContainsString( '[web_stories_embed', $result );
 		$this->assertStringContainsString( $poster, $result );
@@ -200,7 +201,7 @@ class Admin extends DependencyInjectedTestCase {
 	public function test_prefill_post_content_invalid_id(): void {
 		wp_set_current_user( self::$admin_id );
 
-		$_GET['from-web-story'] = 999999999;
+		$_GET['from-web-story'] = 999_999_999;
 		$current_post           = get_post( self::$post_id );
 		$this->assertNotNull( $current_post );
 		$result = $this->instance->prefill_post_content( 'current', $current_post );
@@ -259,6 +260,7 @@ class Admin extends DependencyInjectedTestCase {
 	public function test_media_states_no_active_logo(): void {
 		$post   = self::factory()->post->create_and_get( [] );
 		$result = $this->instance->media_states( [], $post );
+		$this->assertIsArray( $result );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -269,6 +271,7 @@ class Admin extends DependencyInjectedTestCase {
 		$post = self::factory()->post->create_and_get( [] );
 		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
 		$result = $this->instance->media_states( [], $post );
+		$this->assertIsArray( $result );
 		$this->assertEqualSets( [ 'Web Stories Publisher Logo' ], $result );
 	}
 }

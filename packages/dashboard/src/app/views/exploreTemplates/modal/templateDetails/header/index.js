@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import { TemplateActionsPropType } from '../../../../../../types';
+import { TemplateActionsPropType } from '../../../../../../propTypes';
 
 const Nav = styled.nav`
   justify-content: space-between;
