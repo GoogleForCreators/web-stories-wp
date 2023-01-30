@@ -135,24 +135,28 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
         const posterFile = blob
           ? blobToFile(blob, fileName, MEDIA_POSTER_IMAGE_MIME_TYPE)
           : null;
-        const { posterId, poster, posterWidth, posterHeight } =
-          await uploadVideoPoster(id, posterFile);
+        const {
+          posterId,
+          poster,
+          posterWidth: width,
+          posterHeight: height,
+        } = await uploadVideoPoster(id, posterFile);
 
         // Overwrite the original video dimensions. The poster reupload has more
         // accurate dimensions of the video that includes orientation changes.
-        const newSize =
-          (posterWidth &&
-            posterHeight && { width: posterWidth, height: posterHeight }) ||
-          {};
+        const newSize = (width && height && { width, height }) || {};
+        const newPoster = {
+          posterId,
+          poster,
+          ...newSize,
+        };
         if (updateElementsByResourceId) {
           updateElementsByResourceId({
             id,
             properties: ({ resource }) => ({
               resource: {
                 ...resource,
-                posterId,
-                poster,
-                ...newSize,
+                ...newPoster,
               },
             }),
           });
@@ -160,11 +164,7 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
         if (updateMediaElement) {
           updateMediaElement({
             id,
-            data: {
-              posterId,
-              poster,
-              ...newSize,
-            },
+            data: newPoster,
           });
         }
       } catch (err) {

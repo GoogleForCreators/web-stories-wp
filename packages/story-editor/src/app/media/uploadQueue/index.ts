@@ -30,12 +30,9 @@ import {
   trackEvent,
 } from '@googleforcreators/tracking';
 import type {
-  AudioResource,
-  GifResource,
-  ImageResource,
   Resource,
   ResourceId,
-  VideoResource,
+  ImageResource,
 } from '@googleforcreators/media';
 import {
   createBlob,
@@ -53,7 +50,13 @@ import useFFmpeg from '../utils/useFFmpeg';
 import useMediaInfo from '../utils/useMediaInfo';
 import getResourceFromLocalFile from '../utils/getResourceFromLocalFile';
 import * as reducer from './reducer';
-import type { BatchId, QueueItem, QueueState } from './types';
+import type {
+  BatchId,
+  QueueItem,
+  QueueState,
+  QueueItemResource,
+  QueueItemId,
+} from './types';
 import { ItemStatus } from './types';
 
 const initialState: QueueState = {
@@ -95,8 +98,8 @@ function useMediaUploadQueue() {
   const { uploadVideoPoster } = useUploadVideoFrame({});
 
   const isMounted = useRef(false);
-  const currentTranscodingItem = useRef<string | null>(null);
-  const currentPosterGenerationItem = useRef<string | null>(null);
+  const currentTranscodingItem = useRef<QueueItemId | null>(null);
+  const currentPosterGenerationItem = useRef<QueueItemId | null>(null);
 
   const {
     prepareItem,
@@ -119,7 +122,7 @@ function useMediaUploadQueue() {
   useEffect(() => {
     void (async () => {
       void (await Promise.all(
-        state.queue.map(async (item: QueueItem) => {
+        state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
           if (
             ![
@@ -137,11 +140,7 @@ function useMediaUploadQueue() {
           try {
             const { resource: newResource, posterFile } =
               (await getResourceFromLocalFile(file)) as {
-                resource:
-                  | ImageResource
-                  | VideoResource
-                  | GifResource
-                  | AudioResource;
+                resource: QueueItemResource;
                 posterFile: File | null;
               };
 
@@ -168,7 +167,7 @@ function useMediaUploadQueue() {
   useEffect(() => {
     void (async () => {
       void (await Promise.all(
-        state.queue.map(async (item: QueueItem) => {
+        state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
           if (ItemStatus.Pending !== itemState || !resource.isPlaceholder) {
             return;
@@ -259,7 +258,7 @@ function useMediaUploadQueue() {
 
   const trimVideoItem = useCallback(
     async (item: QueueItem) => {
-      const { id, file, additionalData = {}, trimData } = item;
+      const { id, file, additionalData, trimData } = item;
       if (!trimData) {
         return;
       }
@@ -400,22 +399,17 @@ function useMediaUploadQueue() {
 
   const uploadVideo = useCallback(
     async (item: QueueItem) => {
-      const { id, file, resource, additionalData = {} } = item;
+      const { id, file, resource, additionalData } = item;
       let { posterFile } = item;
 
       // The newly uploaded file won't have a poster yet.
       // However, we'll likely still have one on file.
       // Add it back so we're never without one.
       // The final poster will be uploaded later by uploadVideoPoster().
-      let newResource:
-        | ImageResource
-        | VideoResource
-        | GifResource
-        | AudioResource = (await uploadFile(file, additionalData)) as
-        | ImageResource
-        | VideoResource
-        | GifResource
-        | AudioResource;
+      let newResource: QueueItemResource = (await uploadFile(
+        file,
+        additionalData
+      )) as QueueItemResource;
 
       if (!isMounted.current) {
         return;
@@ -473,7 +467,7 @@ function useMediaUploadQueue() {
 
   const uploadImage = useCallback(
     async (item: QueueItem) => {
-      const { id, file, additionalData = {} } = item;
+      const { id, file, additionalData } = item;
       const resource: ImageResource = (await uploadFile(
         file,
         additionalData

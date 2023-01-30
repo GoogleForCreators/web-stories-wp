@@ -64,9 +64,15 @@ export type AdditionalData = {
 
 export type QueueItemId = string;
 
+export type QueueItemResource =
+  | ImageResource
+  | VideoResource
+  | GifResource
+  | AudioResource;
+
 export type QueueItem = {
   id: QueueItemId;
-  resource: ImageResource | VideoResource | GifResource | AudioResource;
+  resource: QueueItemResource;
   originalResourceId?: ResourceId | null;
   previousResourceId?: ResourceId;
   state: ItemStatus;

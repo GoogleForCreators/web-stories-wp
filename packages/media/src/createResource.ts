@@ -69,7 +69,7 @@ function createResource({
     isExternal,
     needsProxy,
     ...rest,
-  } as Resource;
+  };
   const sequenceProps = {
     poster,
     posterId,
