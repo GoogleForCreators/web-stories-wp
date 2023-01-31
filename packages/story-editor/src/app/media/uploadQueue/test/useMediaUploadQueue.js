@@ -23,7 +23,7 @@ import { createResource } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import useMediaUploadQueue from '..';
+import { useMediaUploadQueue } from '..';
 import useFFmpeg from '../../utils/useFFmpeg';
 import useMediaInfo from '../../utils/useMediaInfo';
 import { ItemStatus } from '../types';

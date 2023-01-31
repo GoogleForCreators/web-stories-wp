@@ -58,20 +58,11 @@ import type {
   QueueItemId,
 } from './types';
 import { ItemStatus } from './types';
+import { hasStatus, hasNotStatus } from './utils';
 
 const initialState: QueueState = {
   queue: [],
 };
-
-const hasStatus =
-  (...states: ItemStatus[]) =>
-  (item: QueueItem) =>
-    states.includes(item.state);
-
-const hasNotStatus =
-  (...states: ItemStatus[]) =>
-  (item: QueueItem) =>
-    !states.includes(item.state);
 
 /**
  * Media upload queue implementation.
@@ -704,7 +695,7 @@ function useMediaUploadQueue() {
     /**
      * A list of all items that are still in the queue and not cancelled.
      */
-    const active = state.queue.filter( hasNotStatus( ItemStatus.Cancelled ));
+    const active = state.queue.filter(hasNotStatus(ItemStatus.Cancelled));
 
     /**
      * A list of all items that failed to upload.
