@@ -24,7 +24,7 @@ import {
   TranslateWithMarkup,
 } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
-import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Link, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Determine whether a URL is valid and acceptable for hotlinking.
@@ -85,7 +85,7 @@ export function CORSMessage() {
       mapping={{
         a: (
           <Link
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+            size={TextSize.Medium}
             href={DOCS_URL}
             target="_blank"
             rel="noopener noreferrer"

@@ -23,10 +23,10 @@ import styled from 'styled-components';
 import { useState, useCallback } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Icons,
   Link,
 } from '@googleforcreators/design-system';
@@ -134,15 +134,15 @@ export const FontCheckDialog = ({
             {__('Back to dashboard', 'web-stories')}
           </StyledLink>
           <StyledButton
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Secondary}
+            size={ButtonSize.Small}
             onClick={updateMissingFontWithDefault}
           >
             {__('Open anyway', 'web-stories')}
           </StyledButton>
           <StyledButton
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             onClick={updateMissingFontWithSelected}
           >
             {__('Replace font', 'web-stories')}
@@ -151,21 +151,21 @@ export const FontCheckDialog = ({
       }
     >
       <DialogContent>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text.Paragraph size={TextSize.Small}>
           {__(
             'This story contains the following font that is no longer available:',
             'web-stories'
           )}
-        </Text>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} isBold>
+        </Text.Paragraph>
+        <Text.Paragraph size={TextSize.Small} isBold>
           {missingFont}
-        </Text>
+        </Text.Paragraph>
         <div>
           <TranslateWithMarkup
             mapping={{
               a: (
                 <Link
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  size={TextSize.Small}
                   onClick={onSettingsClick}
                   href={dashboardSettingsLink}
                   isBold
@@ -179,9 +179,9 @@ export const FontCheckDialog = ({
             )}
           </TranslateWithMarkup>
         </div>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text.Paragraph size={TextSize.Small}>
           {__('Or, choose replacement font below:', 'web-stories')}
-        </Text>
+        </Text.Paragraph>
         <FontPicker
           zIndex={10}
           currentValue={suggestedFont.family}

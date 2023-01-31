@@ -63,9 +63,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       limit++;
     }
 
-    return gridContainer.contains(document.activeElement)
-      ? Promise.resolve()
-      : Promise.reject(new Error('could not focus on grid'));
+    if (!gridContainer.contains(document.activeElement)) {
+      throw new Error('could not focus on grid');
+    }
   }
 
   async function getContextMenuItem(contextMenuText, storyIndex = 0) {

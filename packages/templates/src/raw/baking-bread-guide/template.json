@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -234,10 +234,10 @@
           "y": 584
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
       "type": "page",
       "id": "21cf9649-5574-4038-bd34-e297eca0a920",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -413,9 +413,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundColor": { "color": { "r": 188, "g": 235, "b": 238 } },
-      "type": "page",
-      "id": "a5371335-75d1-4360-828d-d8a0ec8b0485",
       "animations": [
         {
           "id": "7a815ce1-b866-4bd8-9e92-b4cb4a0d1bc1",
@@ -436,6 +433,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 188, "g": 235, "b": 238 } },
+      "type": "page",
+      "id": "a5371335-75d1-4360-828d-d8a0ec8b0485",
       "pageTemplateType": "editorial"
     },
     {
@@ -612,6 +612,7 @@
           "y": 362
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "fa833674-57f8-4311-80bc-de1817acc6e7",
@@ -631,7 +632,6 @@
         "type": "shape",
         "id": "da50f3de-460e-4c42-bf3c-67dbe2d0ae77"
       },
-      "animations": [],
       "pageTemplateType": "quote"
     },
     {
@@ -762,6 +762,20 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 97,
+          "y": 151,
+          "width": 33,
+          "height": 40,
+          "sticker": { "type": "yeastPackage" },
+          "id": "3f1bc3f7-c9cf-44c0-8263-30f739d37db8",
+          "groupId": "dd43b0fa-072f-4a02-8846-86b32ca0ca30"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
@@ -808,6 +822,20 @@
           "id": "92b13dac-b7bf-4b20-8a30-c2440824eb99",
           "x": 237,
           "y": 159,
+          "groupId": "cf61d1d8-02fb-4d0d-af5e-ba7e7be08669"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 279,
+          "y": 140,
+          "width": 33,
+          "height": 52,
+          "sticker": { "type": "thermometer" },
+          "id": "db3ce326-32cd-4a9c-9466-547b17186779",
           "groupId": "cf61d1d8-02fb-4d0d-af5e-ba7e7be08669"
         },
         {
@@ -868,6 +896,20 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 100,
+          "y": 330,
+          "width": 27,
+          "height": 37,
+          "sticker": { "type": "jar" },
+          "id": "f98bf842-45d7-4587-939f-1f0b7bd32723",
+          "groupId": "f2346ced-a649-41c8-a9a4-f79c95cd05f8"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
@@ -921,6 +963,20 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 273,
+          "y": 337,
+          "width": 46,
+          "height": 20,
+          "sticker": { "type": "dough" },
+          "id": "a2e91787-181c-409d-a6f3-a449dc2698c3",
+          "groupId": "9bb74869-ce4c-43a1-9a46-c748b0a00d95"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Trykker",
@@ -967,6 +1023,20 @@
           "id": "7c520025-e6f3-452e-94c5-c0d0ca0a8c82",
           "x": 59,
           "y": 497,
+          "groupId": "54e505b6-550c-4976-9e30-cf0b903ee9af"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 94,
+          "y": 484,
+          "width": 36,
+          "height": 38,
+          "sticker": { "type": "flourBag" },
+          "id": "2c9c36c0-13ce-41ae-a799-19eea39ffdff",
           "groupId": "54e505b6-550c-4976-9e30-cf0b903ee9af"
         },
         {
@@ -1028,76 +1098,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
-          "x": 97,
-          "y": 151,
-          "width": 33,
-          "height": 40,
-          "sticker": { "type": "yeastPackage" },
-          "id": "3f1bc3f7-c9cf-44c0-8263-30f739d37db8",
-          "groupId": "dd43b0fa-072f-4a02-8846-86b32ca0ca30"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 279,
-          "y": 140,
-          "width": 33,
-          "height": 52,
-          "sticker": { "type": "thermometer" },
-          "id": "db3ce326-32cd-4a9c-9466-547b17186779",
-          "groupId": "cf61d1d8-02fb-4d0d-af5e-ba7e7be08669"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 100,
-          "y": 330,
-          "width": 27,
-          "height": 37,
-          "sticker": { "type": "jar" },
-          "id": "f98bf842-45d7-4587-939f-1f0b7bd32723",
-          "groupId": "f2346ced-a649-41c8-a9a4-f79c95cd05f8"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 273,
-          "y": 337,
-          "width": 46,
-          "height": 20,
-          "sticker": { "type": "dough" },
-          "id": "a2e91787-181c-409d-a6f3-a449dc2698c3",
-          "groupId": "9bb74869-ce4c-43a1-9a46-c748b0a00d95"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 94,
-          "y": 484,
-          "width": 36,
-          "height": 38,
-          "sticker": { "type": "flourBag" },
-          "id": "2c9c36c0-13ce-41ae-a799-19eea39ffdff",
-          "groupId": "54e505b6-550c-4976-9e30-cf0b903ee9af"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
           "x": 277,
           "y": 493,
           "width": 41,
@@ -1107,9 +1107,6 @@
           "groupId": "b8f993b0-d14c-4267-900c-33c2c2a5e814"
         }
       ],
-      "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
-      "type": "page",
-      "id": "3bebb81e-b6bf-4b85-92ef-27c958f7b3c2",
       "animations": [
         {
           "id": "79e2585d-8701-4ddc-b016-36237b33e53f",
@@ -1166,6 +1163,9 @@
           "delay": 3300
         }
       ],
+      "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
+      "type": "page",
+      "id": "3bebb81e-b6bf-4b85-92ef-27c958f7b3c2",
       "pageTemplateType": "list",
       "groups": {
         "dd43b0fa-072f-4a02-8846-86b32ca0ca30": {
@@ -1423,10 +1423,10 @@
           "height": 99
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
       "type": "page",
       "id": "dbcb59d0-1ecf-403b-8eef-5d9f0d595a3c",
-      "animations": [],
       "pageTemplateType": null
     },
     {
@@ -1652,10 +1652,10 @@
           "y": 488
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "09e3254f-73d9-4e45-a888-510d39a554c0",
-      "animations": [],
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
@@ -2745,61 +2745,6 @@
         },
         {
           "x": 66,
-          "y": 186,
-          "id": "835c0875-e0c3-42aa-b2ca-a157c263498e",
-          "basedOn": "7f8d3dad-7463-4d82-9246-75dbce5a4670",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Trykker",
-            "fallbacks": ["serif"],
-            "weights": [400],
-            "styles": ["regular"],
-            "variants": [[0, 400]],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 2048,
-              "asc": 2022,
-              "des": -538,
-              "tAsc": 2022,
-              "tDes": -538,
-              "tLGap": 0,
-              "wAsc": 2022,
-              "wDes": 538,
-              "xH": 1013,
-              "capH": 1492,
-              "yMin": -539,
-              "yMax": 2027,
-              "hAsc": 2022,
-              "hDes": -538,
-              "lGap": 0
-            }
-          },
-          "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 1.28,
-          "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "type": "text",
-          "content": "<span style=\"color: #2d2a35\">Sour French Baguette</span>",
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 0,
-            "topRight": 0,
-            "bottomRight": 0,
-            "bottomLeft": 0
-          },
-          "width": 115,
-          "height": 46,
-          "marginOffset": 0.06000000000000005,
-          "groupId": "a28e72c2-599f-4fbd-b06a-48ed6b3b8481",
-          "tagName": "h3"
-        },
-        {
-          "x": 66,
           "y": 294,
           "id": "8b105649-9015-4c21-90b2-9242f0dda07e",
           "basedOn": "7f8d3dad-7463-4d82-9246-75dbce5a4670",
@@ -2854,39 +2799,6 @@
           "tagName": "h3"
         },
         {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "type": "image",
-          "x": 195,
-          "y": 161,
-          "width": 153,
-          "height": 96,
-          "scale": 147,
-          "focalX": 58.723066344144655,
-          "focalY": 50,
-          "mask": { "type": "rectangle" },
-          "id": "95df0e77-bdab-4709-a33e-b43f1cc44349",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-05-10T11:27:57",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/baking-bread-guide/page11_image1.jpg",
-            "width": 480,
-            "height": 360,
-            "posterId": 0,
-            "id": 0,
-            "alt": "page13_image1",
-            "isOptimized": false,
-            "baseColor": "#694c3d",
-            "isExternal": true,
-            "sizes": []
-          },
-          "groupId": "a28e72c2-599f-4fbd-b06a-48ed6b3b8481"
-        },
-        {
           "x": 195,
           "y": 281,
           "id": "3838e975-9f05-4195-9202-c9c3a2a11871",
@@ -2919,6 +2831,94 @@
             "sizes": []
           },
           "groupId": "689d34df-a852-421d-a8b0-eb0fbf057331"
+        },
+        {
+          "x": 66,
+          "y": 186,
+          "id": "835c0875-e0c3-42aa-b2ca-a157c263498e",
+          "basedOn": "7f8d3dad-7463-4d82-9246-75dbce5a4670",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Trykker",
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 2022,
+              "des": -538,
+              "tAsc": 2022,
+              "tDes": -538,
+              "tLGap": 0,
+              "wAsc": 2022,
+              "wDes": 538,
+              "xH": 1013,
+              "capH": 1492,
+              "yMin": -539,
+              "yMax": 2027,
+              "hAsc": 2022,
+              "hDes": -538,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.28,
+          "textAlign": "left",
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "type": "text",
+          "content": "<span style=\"color: #2d2a35\">Sour French Baguette</span>",
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 0,
+            "topRight": 0,
+            "bottomRight": 0,
+            "bottomLeft": 0
+          },
+          "width": 115,
+          "height": 46,
+          "marginOffset": 0.06000000000000005,
+          "groupId": "a28e72c2-599f-4fbd-b06a-48ed6b3b8481",
+          "tagName": "h3"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "type": "image",
+          "x": 195,
+          "y": 161,
+          "width": 153,
+          "height": 96,
+          "scale": 147,
+          "focalX": 58.723066344144655,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "95df0e77-bdab-4709-a33e-b43f1cc44349",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-05-10T11:27:57",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/baking-bread-guide/page11_image1.jpg",
+            "width": 480,
+            "height": 360,
+            "posterId": 0,
+            "id": 0,
+            "alt": "page13_image1",
+            "isOptimized": false,
+            "baseColor": "#694c3d",
+            "isExternal": true,
+            "sizes": []
+          },
+          "groupId": "a28e72c2-599f-4fbd-b06a-48ed6b3b8481"
         },
         {
           "opacity": 100,
@@ -3088,9 +3088,6 @@
           "groupId": "890df759-960b-404e-a9c7-c0999dc07269"
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "5e448bcd-223a-42af-bb53-b2b676948f32",
       "animations": [
         {
           "id": "e04e89fc-fb3d-49b4-8769-e9017bf3b4d8",
@@ -3140,6 +3137,9 @@
           "delay": 200
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "5e448bcd-223a-42af-bb53-b2b676948f32",
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },

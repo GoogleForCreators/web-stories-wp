@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -4003,41 +4003,6 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "creationDate": "2021-07-21T08:22:03",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/a-day-in-the-life/page13_img1.jpg",
-            "width": 720,
-            "height": 1080,
-            "id": 0,
-            "alt": "Man wearing black crew-neck shirt",
-            "sizes": [],
-            "isPlaceholder": false,
-            "isOptimized": false,
-            "isMuted": false,
-            "baseColor": "#161817",
-            "isExternal": true
-          },
-          "x": 170,
-          "y": 357,
-          "id": "3bb0ef4b-92f9-4aef-9509-0db281673427",
-          "basedOn": "6069f666-e14e-45ef-9717-cbe5b5c5fe60",
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "width": 195,
-          "height": 295,
-          "mask": { "type": "rectangle" },
-          "type": "image",
-          "groupId": "b8a12257-1cb9-4178-8119-50630afc8a32"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
@@ -4106,6 +4071,41 @@
           "type": "text",
           "groupId": "870bd98c-1033-475e-a2f4-288a02fe7f24",
           "tagName": "h3"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2021-07-21T08:22:03",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/a-day-in-the-life/page13_img1.jpg",
+            "width": 720,
+            "height": 1080,
+            "id": 0,
+            "alt": "Man wearing black crew-neck shirt",
+            "sizes": [],
+            "isPlaceholder": false,
+            "isOptimized": false,
+            "isMuted": false,
+            "baseColor": "#161817",
+            "isExternal": true
+          },
+          "x": 170,
+          "y": 357,
+          "id": "3bb0ef4b-92f9-4aef-9509-0db281673427",
+          "basedOn": "6069f666-e14e-45ef-9717-cbe5b5c5fe60",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "width": 195,
+          "height": 295,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "groupId": "b8a12257-1cb9-4178-8119-50630afc8a32"
         },
         {
           "opacity": 100,

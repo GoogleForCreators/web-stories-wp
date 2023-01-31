@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -171,6 +171,7 @@
           "marginOffset": -24.779999999999994
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "c359b3cd-b99d-47be-8d46-57b14b735477",
@@ -190,7 +191,6 @@
         "type": "shape",
         "id": "cff73925-1ba0-41f4-a3ae-2ed3c2f54292"
       },
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -387,9 +387,6 @@
           "id": "2c46ae1f-9a06-4017-a1f2-ac54ef251f9f"
         }
       ],
-      "backgroundColor": { "color": { "r": 33, "g": 36, "b": 38 } },
-      "type": "page",
-      "id": "bd8cc584-3b14-416c-87aa-55fdb89ca4fe",
       "animations": [
         {
           "id": "ca74840c-7add-4c7e-ab54-1c69ceb4b408",
@@ -400,6 +397,9 @@
           "delay": 250
         }
       ],
+      "backgroundColor": { "color": { "r": 33, "g": 36, "b": 38 } },
+      "type": "page",
+      "id": "bd8cc584-3b14-416c-87aa-55fdb89ca4fe",
       "pageTemplateType": "editorial"
     },
     {
@@ -662,10 +662,10 @@
           "groupId": "18078796-061e-4f77-a0a5-55c19544b98b"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 33, "g": 36, "b": 38 } },
       "type": "page",
       "id": "c83559fd-1ec2-4def-b9fc-1bdbfe0ad2b6",
-      "animations": [],
       "pageTemplateType": null,
       "groups": {
         "18078796-061e-4f77-a0a5-55c19544b98b": {
@@ -1345,6 +1345,65 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 194, "g": 205, "b": 163 } },
+          "type": "shape",
+          "x": 47,
+          "y": 131,
+          "width": 318,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "id": "049f1eb9-c1fe-4698-97bb-45c0289580bf"
+        },
+        {
+          "x": 47,
+          "y": 263,
+          "id": "42a248b4-9218-467b-9529-b3187417ea8a",
+          "basedOn": "049f1eb9-c1fe-4698-97bb-45c0289580bf",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 194, "g": 205, "b": 163 } },
+          "type": "shape",
+          "width": 318,
+          "height": 1,
+          "mask": { "type": "rectangle" }
+        },
+        {
+          "x": 47,
+          "y": 395,
+          "id": "48b4e14b-c157-46b0-811a-919691b7b50e",
+          "basedOn": "049f1eb9-c1fe-4698-97bb-45c0289580bf",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 194, "g": 205, "b": 163 } },
+          "type": "shape",
+          "width": 318,
+          "height": 1,
+          "mask": { "type": "rectangle" }
+        },
+        {
+          "x": 47,
+          "y": 526,
+          "id": "ae851434-42f4-4e48-bd47-2f11041018a1",
+          "basedOn": "049f1eb9-c1fe-4698-97bb-45c0289580bf",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 194, "g": 205, "b": 163 } },
+          "type": "shape",
+          "width": 318,
+          "height": 1,
+          "mask": { "type": "rectangle" }
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Biryani",
@@ -1401,189 +1460,6 @@
           "marginOffset": -6.1949999999999985,
           "type": "text",
           "groupId": "c56acbc9-44ae-49e0-81af-f8f78efe7ae3"
-        },
-        {
-          "x": 47,
-          "y": 293,
-          "id": "c95dec3e-321a-4c4f-80e5-d2315b0e9c26",
-          "basedOn": "98663352-5c1c-4d3a-bc1a-f93c00d30ca2",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Biryani",
-            "fallbacks": ["sans-serif"],
-            "weights": [200, 300, 400, 600, 700, 800, 900],
-            "styles": ["regular"],
-            "variants": [
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 1109,
-              "des": -656,
-              "tAsc": 1109,
-              "tDes": -656,
-              "tLGap": 0,
-              "wAsc": 1109,
-              "wDes": 656,
-              "xH": 563,
-              "capH": 758,
-              "yMin": -592,
-              "yMax": 1109,
-              "hAsc": 1109,
-              "hDes": -656,
-              "lGap": 0
-            }
-          },
-          "fontSize": 12,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 1.4,
-          "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">DEVELOPED</span>",
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 112,
-          "height": 20,
-          "marginOffset": -6.205000000000002,
-          "type": "text",
-          "groupId": "b34814a7-ff26-41f2-96cd-d9f93e432867"
-        },
-        {
-          "x": 47,
-          "y": 435,
-          "id": "928bc426-93d8-4dea-879a-5464a19b8bf4",
-          "basedOn": "98663352-5c1c-4d3a-bc1a-f93c00d30ca2",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Biryani",
-            "fallbacks": ["sans-serif"],
-            "weights": [200, 300, 400, 600, 700, 800, 900],
-            "styles": ["regular"],
-            "variants": [
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 1109,
-              "des": -656,
-              "tAsc": 1109,
-              "tDes": -656,
-              "tLGap": 0,
-              "wAsc": 1109,
-              "wDes": 656,
-              "xH": 563,
-              "capH": 758,
-              "yMin": -592,
-              "yMax": 1109,
-              "hAsc": 1109,
-              "hDes": -656,
-              "lGap": 0
-            }
-          },
-          "fontSize": 12,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 1.4,
-          "textAlign": "left",
-          "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">CURRENT VALUE</span>",
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 112,
-          "height": 20,
-          "marginOffset": -6.205000000000002,
-          "type": "text",
-          "groupId": "c9b76bd8-2edc-4620-838f-26bc1847c7c3"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 194, "g": 205, "b": 163 } },
-          "type": "shape",
-          "x": 47,
-          "y": 131,
-          "width": 318,
-          "height": 1,
-          "mask": { "type": "rectangle" },
-          "id": "049f1eb9-c1fe-4698-97bb-45c0289580bf"
-        },
-        {
-          "x": 47,
-          "y": 263,
-          "id": "42a248b4-9218-467b-9529-b3187417ea8a",
-          "basedOn": "049f1eb9-c1fe-4698-97bb-45c0289580bf",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 194, "g": 205, "b": 163 } },
-          "type": "shape",
-          "width": 318,
-          "height": 1,
-          "mask": { "type": "rectangle" }
-        },
-        {
-          "x": 47,
-          "y": 395,
-          "id": "48b4e14b-c157-46b0-811a-919691b7b50e",
-          "basedOn": "049f1eb9-c1fe-4698-97bb-45c0289580bf",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 194, "g": 205, "b": 163 } },
-          "type": "shape",
-          "width": 318,
-          "height": 1,
-          "mask": { "type": "rectangle" }
-        },
-        {
-          "x": 47,
-          "y": 526,
-          "id": "ae851434-42f4-4e48-bd47-2f11041018a1",
-          "basedOn": "049f1eb9-c1fe-4698-97bb-45c0289580bf",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 194, "g": 205, "b": 163 } },
-          "type": "shape",
-          "width": 318,
-          "height": 1,
-          "mask": { "type": "rectangle" }
         },
         {
           "x": 193,
@@ -1650,6 +1526,68 @@
           "tagName": "p"
         },
         {
+          "x": 47,
+          "y": 293,
+          "id": "c95dec3e-321a-4c4f-80e5-d2315b0e9c26",
+          "basedOn": "98663352-5c1c-4d3a-bc1a-f93c00d30ca2",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Biryani",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 800, 900],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1109,
+              "des": -656,
+              "tAsc": 1109,
+              "tDes": -656,
+              "tLGap": 0,
+              "wAsc": 1109,
+              "wDes": 656,
+              "xH": 563,
+              "capH": 758,
+              "yMin": -592,
+              "yMax": 1109,
+              "hAsc": 1109,
+              "hDes": -656,
+              "lGap": 0
+            }
+          },
+          "fontSize": 12,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "left",
+          "padding": { "locked": true, "hasHiddenPadding": false },
+          "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">DEVELOPED</span>",
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 112,
+          "height": 20,
+          "marginOffset": -6.205000000000002,
+          "type": "text",
+          "groupId": "b34814a7-ff26-41f2-96cd-d9f93e432867"
+        },
+        {
           "x": 168,
           "y": 277,
           "id": "16535e27-ca83-4081-a561-659da1c81ede",
@@ -1712,6 +1650,68 @@
           "type": "text",
           "groupId": "b34814a7-ff26-41f2-96cd-d9f93e432867",
           "tagName": "p"
+        },
+        {
+          "x": 47,
+          "y": 435,
+          "id": "928bc426-93d8-4dea-879a-5464a19b8bf4",
+          "basedOn": "98663352-5c1c-4d3a-bc1a-f93c00d30ca2",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Biryani",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 800, 900],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 1109,
+              "des": -656,
+              "tAsc": 1109,
+              "tDes": -656,
+              "tLGap": 0,
+              "wAsc": 1109,
+              "wDes": 656,
+              "xH": 563,
+              "capH": 758,
+              "yMin": -592,
+              "yMax": 1109,
+              "hAsc": 1109,
+              "hDes": -656,
+              "lGap": 0
+            }
+          },
+          "fontSize": 12,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "left",
+          "padding": { "locked": true, "hasHiddenPadding": false },
+          "content": "<span style=\"font-weight: 900; color: #c2cda3; text-transform: uppercase\">CURRENT VALUE</span>",
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 112,
+          "height": 20,
+          "marginOffset": -6.205000000000002,
+          "type": "text",
+          "groupId": "c9b76bd8-2edc-4620-838f-26bc1847c7c3"
         },
         {
           "x": 166,

@@ -20,9 +20,9 @@
 import { __ } from '@googleforcreators/i18n';
 import {
   Button as DefaultButton,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
@@ -50,9 +50,9 @@ function Hotlink() {
     <>
       <Tooltip title={label}>
         <Button
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Square}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           onClick={onClick}
           aria-label={label}
         >

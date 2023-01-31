@@ -30,13 +30,16 @@ import {
   LoadingSpinner,
   useSnackbar,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
+import {
+  StoriesPropType,
+  StoryActionsPropType,
+} from '../../../../../propTypes';
 import { titleFormatted } from '../../../../../utils';
 import {
   ViewPropTypes,
@@ -276,13 +279,13 @@ function StoriesView({ loading, storyActions, stories, view }) {
             ),
           }}
         >
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text.Paragraph size={TextSize.Small}>
             {sprintf(
               /* translators: %s: story title. */
               __('Are you sure you want to delete "%s"?', 'web-stories'),
               titleFormatted(activeStory.title)
             )}
-          </Text>
+          </Text.Paragraph>
         </Dialog>
       )}
     </>

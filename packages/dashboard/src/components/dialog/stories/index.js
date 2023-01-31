@@ -19,10 +19,11 @@
  */
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonAsLink,
+  ButtonSize,
+  ButtonType,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -57,11 +58,11 @@ export default {
 export const _default = (args) => {
   return (
     <Dialog {...args}>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Paragraph size={TextSize.Small}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 };
@@ -73,29 +74,29 @@ export const WithCustomAction = ({ onClickButton, onConfirmed, ...args }) => {
       actions={
         <>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             onClick={onClickButton}
           >
             {'Dismiss'}
           </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+          <ButtonAsLink
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             href={args.href}
             onClick={onConfirmed}
           >
             {'Add to new post'}
-          </Button>
+          </ButtonAsLink>
         </>
       }
       {...args}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Paragraph size={TextSize.Small}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 };

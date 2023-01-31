@@ -26,10 +26,7 @@ import {
   useFocusOut,
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import {
-  useGridViewKeys,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { useGridViewKeys, TextSize } from '@googleforcreators/design-system';
 import { FileUpload, useConfig } from '@googleforcreators/dashboard';
 
 /**
@@ -165,13 +162,13 @@ function PublisherLogoSettings({
     <SettingForm>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {TEXT.UPLOAD_CONTEXT}
         </SettingSubheading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {TEXT.CLICK_CONTEXT}
         </SettingSubheading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {TEXT.REMOVAL}
         </SettingSubheading>
       </div>
@@ -218,9 +215,7 @@ function PublisherLogoSettings({
               instructionalText={TEXT.HELPER_UPLOAD}
               acceptableFormats={Object.values(allowedImageMimeTypes)}
             />
-            <SettingSubheading
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <SettingSubheading size={TextSize.Small}>
               {TEXT.INSTRUCTIONS}
             </SettingSubheading>
           </>

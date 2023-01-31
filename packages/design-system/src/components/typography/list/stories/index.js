@@ -25,11 +25,11 @@ export default {
   component: List,
 };
 
-const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
+const textTextSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 
 export const _default = () => (
   <>
-    {textPresetSizes.map((presetSize) => (
+    {textTextSizes.map((presetSize) => (
       <List key={`${presetSize}_text_list`} size={presetSize}>
         <li>{`${presetSize} - 1`}</li>
         <li>{`${presetSize} - 2`}</li>

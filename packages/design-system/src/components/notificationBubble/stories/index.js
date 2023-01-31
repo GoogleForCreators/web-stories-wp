@@ -24,7 +24,7 @@ import styled from 'styled-components';
  */
 import { Headline } from '../../typography';
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { NotificationBubble, BUBBLE_VARIANTS } from '..';
+import { NotificationBubble, BubbleVariant } from '..';
 
 export default {
   title: 'DesignSystem/Components/NotificationBubble',
@@ -41,7 +41,7 @@ export default {
   },
 };
 
-const VARIANT_OPTIONS = Object.values(BUBBLE_VARIANTS);
+const VARIANT_OPTIONS = Object.values(BubbleVariant);
 
 const Container = styled.div`
   display: grid;

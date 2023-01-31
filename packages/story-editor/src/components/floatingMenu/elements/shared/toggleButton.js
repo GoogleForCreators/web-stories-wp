@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
 import {
   ContextMenuComponents,
-  BUTTON_TYPES,
+  ButtonType,
 } from '@googleforcreators/design-system';
 
 const ToggleButton = forwardRef(function ToggleButton(
@@ -32,7 +32,7 @@ const ToggleButton = forwardRef(function ToggleButton(
   const toggleProps =
     typeof isToggled === 'boolean'
       ? {
-          type: isToggled ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.TERTIARY,
+          type: isToggled ? ButtonType.Secondary : ButtonType.Tertiary,
           'aria-pressed': isToggled,
           role: 'button',
         }

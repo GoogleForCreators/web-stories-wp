@@ -30,7 +30,7 @@ import {
 import {
   Text,
   TextArea,
-  THEME_CONSTANTS,
+  TextSize,
   useSnackbar,
 } from '@googleforcreators/design-system';
 
@@ -69,7 +69,7 @@ const MetadataTextContainer = styled.div`
   margin: 0 4px;
 `;
 
-const DateText = styled(Text)`
+const DateText = styled(Text.Span)`
   margin-bottom: 8px;
 `;
 
@@ -166,10 +166,7 @@ function MediaEditDialog({ resource, onClose }) {
         )}
         <MetadataTextContainer>
           {isValid(parsedDate) && (
-            <DateText
-              forwardedAs="span"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-            >
+            <DateText size={TextSize.XSmall}>
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
@@ -177,14 +174,14 @@ function MediaEditDialog({ resource, onClose }) {
               )}
             </DateText>
           )}
-          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text.Span size={TextSize.Small}>
             {sprintf(
               /* translators: 1: image width. 2: image height. */
               __('%1$d x %2$d pixels', 'web-stories'),
               width,
               height
             )}
-          </Text>
+          </Text.Span>
           <AssistiveTextArea
             value={altText}
             aria-label={isImage ? imageInputTitle : videoInputTitle}
@@ -192,9 +189,9 @@ function MediaEditDialog({ resource, onClose }) {
             placeholder={isImage ? imageInputTitle : videoInputTitle}
             onChange={handleAltTextChange}
           />
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text.Paragraph size={TextSize.Small}>
             {isImage ? imageDialogDescription : videoDialogDescription}
-          </Text>
+          </Text.Paragraph>
         </MetadataTextContainer>
       </DialogBody>
     </Dialog>

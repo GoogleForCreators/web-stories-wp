@@ -23,8 +23,8 @@ import { ThemeProvider } from 'styled-components';
 import {
   Dialog as StyledDialog,
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   theme,
 } from '@googleforcreators/design-system';
 
@@ -59,8 +59,8 @@ const Dialog = ({
     () =>
       primaryText && (
         <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Primary}
+          size={ButtonSize.Small}
           onClick={() => onPrimary?.()}
           {...primaryRest}
         >
@@ -74,8 +74,8 @@ const Dialog = ({
     () =>
       secondaryText && (
         <Button
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
           onClick={() => onSecondary?.() || onClose()}
           {...secondaryRest}
         >

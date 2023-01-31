@@ -26,7 +26,7 @@ import {
 import PropTypes from 'prop-types';
 import { __, _x, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
-import { THEME_CONSTANTS, DropDown } from '@googleforcreators/design-system';
+import { TextSize, DropDown } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -119,9 +119,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
       />
 
       {message && (
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <TextInputHelperText size={TextSize.Small}>
           <TranslateWithMarkup
             mapping={{
               a: (
@@ -130,7 +128,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
                   rel="noreferrer"
                   target="_blank"
                   onClick={handleMonetizationClick}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  size={TextSize.Small}
                 />
               ),
               help: (
@@ -138,7 +136,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
                   href={TEXT.HELPER_LINK_ADSENSE_HELP}
                   rel="noreferrer"
                   target="_blank"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  size={TextSize.Small}
                 />
               ),
             }}

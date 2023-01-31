@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { Icons, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Icons, Text, TextSize } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -28,7 +28,7 @@ import {
   StoriesPropType,
   RenameStoryPropType,
   StoryMenuPropType,
-} from '../../../../../types';
+} from '../../../../../propTypes';
 import {
   Table,
   TableAuthorHeaderCell,
@@ -147,8 +147,7 @@ export default function StoryListView({
                   'Title, select to sort table by story title',
                   'web-stories'
                 )}
-                forwardedAs="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 isBold
               >
                 {__('Title', 'web-stories')}
@@ -161,8 +160,7 @@ export default function StoryListView({
               <SelectableTitle
                 aria-hidden
                 active={storySort === STORY_SORT_OPTIONS.NAME}
-                forwardedAs="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 isBold
               >
                 {__('Title', 'web-stories')}
@@ -187,8 +185,7 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.CREATED_BY)
                 }
                 active={storySort === STORY_SORT_OPTIONS.CREATED_BY}
-                forwardedAs="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 isBold
               >
                 {__('Author', 'web-stories')}
@@ -218,8 +215,7 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.DATE_CREATED)
                 }
                 active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                forwardedAs="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 isBold
               >
                 {__('Date Created', 'web-stories')}
@@ -245,8 +241,7 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
                 active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                forwardedAs="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 isBold
               >
                 {__('Last Modified', 'web-stories')}
@@ -261,13 +256,9 @@ export default function StoryListView({
             </TableDateHeaderCell>
             {statusFilterValue !== STORY_STATUS.DRAFT && (
               <TableStatusHeaderCell>
-                <Text
-                  as="span"
-                  isBold
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                >
+                <Text.Span isBold size={TextSize.Small}>
                   {__('Publish State', 'web-stories')}
-                </Text>
+                </Text.Span>
               </TableStatusHeaderCell>
             )}
           </TableRow>

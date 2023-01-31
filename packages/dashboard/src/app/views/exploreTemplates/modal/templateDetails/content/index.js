@@ -22,21 +22,21 @@ import { sprintf, __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Chip,
   Display,
   Icons,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { CardGallery, ColorList } from '../../../../../../components';
-import { TemplatePropType } from '../../../../../../types';
+import { TemplatePropType } from '../../../../../../propTypes';
 import {
   Container,
   Panel,
@@ -49,12 +49,12 @@ const StyledPanel = styled(Panel)`
   padding: 0 0 48px 0;
 `;
 
-const ByLineText = styled(Text)`
+const ByLineText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   margin: 8px 0 24px;
 `;
 
-const DescriptionText = styled(Text)`
+const DescriptionText = styled(Text.Paragraph)`
   margin-bottom: 24px;
 `;
 
@@ -128,9 +128,9 @@ function DetailsContent({
 
     const Previous = (
       <Button
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Tertiary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => {
           switchToTemplateByOffset(previousIndex);
@@ -144,9 +144,9 @@ function DetailsContent({
 
     const Next = (
       <Button
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Tertiary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         aria-label={__('View next template', 'web-stories')}
         onClick={() => {
           switchToTemplateByOffset(nextIndex);
@@ -195,18 +195,14 @@ function DetailsContent({
           <TemplateDetails>
             <DetailContainer>
               <Display
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 as="h3"
                 data-testid="template-details-title"
               >
                 {title}
               </Display>
-              <ByLineText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
-                {byLine}
-              </ByLineText>
-              <DescriptionText
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
-              >
+              <ByLineText size={TextSize.Medium}>{byLine}</ByLineText>
+              <DescriptionText size={TextSize.Medium}>
                 {description}
               </DescriptionText>
 

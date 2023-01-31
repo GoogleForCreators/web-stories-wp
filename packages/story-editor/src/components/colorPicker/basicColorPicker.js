@@ -21,13 +21,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { PatternPropType } from '@googleforcreators/patterns';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   Button,
   Icons,
   Text,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   localStore,
   LOCAL_STORAGE_PREFIX,
   themeHelpers,
@@ -67,8 +67,8 @@ const SavedColors = styled.div`
 
 const DefaultColors = styled.div``;
 
-const Label = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const Label = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin: 12px 0 10px;
@@ -86,7 +86,7 @@ const StyledButton = styled(Button)`
   flex-basis: 100%;
 `;
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   padding: 5px 10px;
 `;
 
@@ -186,16 +186,16 @@ function BasicColorPicker({
         {hasEyedropper && (
           <EyedropperWrapper>
             <Button
-              variant={BUTTON_VARIANTS.SQUARE}
-              type={BUTTON_TYPES.QUATERNARY}
-              size={BUTTON_SIZES.SMALL}
+              variant={ButtonVariant.Square}
+              type={ButtonType.Quaternary}
+              size={ButtonSize.Small}
               aria-label={__('Pick a color from canvas', 'web-stories')}
               onClick={initEyedropper()}
               onPointerEnter={initEyedropper(false)}
             >
               <Icons.Pipette />
             </Button>
-            <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            <StyledText size={TextSize.Small}>
               {__('Sample color', 'web-stories')}
             </StyledText>
           </EyedropperWrapper>
@@ -255,9 +255,9 @@ function BasicColorPicker({
       <Footer>
         <StyledButton
           onClick={showCustomPicker}
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Rectangle}
         >
           {__('Custom', 'web-stories')}
           <StyledPlus />

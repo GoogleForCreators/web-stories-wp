@@ -20,9 +20,9 @@
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 
 /**
@@ -41,9 +41,9 @@ export const NoStylesWrapper = styled.div`
 `;
 
 export const MoreButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PLAIN,
-  size: BUTTON_SIZES.SMALL,
-  variant: BUTTON_VARIANTS.RECTANGLE,
+  type: ButtonType.Plain,
+  size: ButtonSize.Small,
+  variant: ButtonVariant.Rectangle,
 })`
   ${focusStyle};
   margin: 12px 0;

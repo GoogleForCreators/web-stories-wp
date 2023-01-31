@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -185,10 +185,10 @@
           "marginOffset": 0.4781249999999986
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "f0d308dc-15f3-4959-ae9c-fc0c1ddb65c7",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -2777,45 +2777,6 @@
           "groupId": "d5b52bcf-ff85-4e32-9d38-b119ab2943bb"
         },
         {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-05-13T14:34:39",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/belly-fat-workout/page12_image03.png",
-            "width": 289,
-            "height": 232,
-            "posterId": 0,
-            "id": 0,
-            "alt": "Woman Performing Yoga",
-            "sizes": [],
-            "isOptimized": false,
-            "baseColor": "#cfcac6",
-            "isExternal": true
-          },
-          "type": "image",
-          "x": 66,
-          "y": 447,
-          "width": 145,
-          "height": 116,
-          "mask": {
-            "type": "rectangle",
-            "showInLibrary": true,
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1,
-            "supportsBorder": true
-          },
-          "id": "ff3734c4-2d2a-4a51-bb55-d4fb536c8514",
-          "groupId": "e7ed1138-5631-42ea-87b5-702ea39e36a9"
-        },
-        {
           "x": 241,
           "y": 358,
           "id": "a6aee34c-b1a4-4baf-bc56-3f5f196a63ef",
@@ -2869,6 +2830,45 @@
           "type": "text",
           "groupId": "d5b52bcf-ff85-4e32-9d38-b119ab2943bb",
           "tagName": "h3"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-05-13T14:34:39",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/belly-fat-workout/page12_image03.png",
+            "width": 289,
+            "height": 232,
+            "posterId": 0,
+            "id": 0,
+            "alt": "Woman Performing Yoga",
+            "sizes": [],
+            "isOptimized": false,
+            "baseColor": "#cfcac6",
+            "isExternal": true
+          },
+          "type": "image",
+          "x": 66,
+          "y": 447,
+          "width": 145,
+          "height": 116,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1,
+            "supportsBorder": true
+          },
+          "id": "ff3734c4-2d2a-4a51-bb55-d4fb536c8514",
+          "groupId": "e7ed1138-5631-42ea-87b5-702ea39e36a9"
         },
         {
           "x": 238,

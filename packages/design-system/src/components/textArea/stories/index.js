@@ -91,7 +91,7 @@ export const _default = ({ onHandleChange, ...args }) => {
       <Container>
         <Row>
           <div>
-            <Text isBold>{'Normal'}</Text>
+            <Text.Paragraph isBold>{'Normal'}</Text.Paragraph>
             <TextArea
               aria-label="input-one"
               id="one-light"
@@ -102,7 +102,7 @@ export const _default = ({ onHandleChange, ...args }) => {
             />
           </div>
           <div>
-            <Text isBold>{'Error'}</Text>
+            <Text.Paragraph isBold>{'Error'}</Text.Paragraph>
             <TextArea
               aria-label="input-two"
               id="two-light"
@@ -114,7 +114,7 @@ export const _default = ({ onHandleChange, ...args }) => {
             />
           </div>
           <div>
-            <Text isBold>{'Disabled'}</Text>
+            <Text.Paragraph isBold>{'Disabled'}</Text.Paragraph>
             <TextArea
               aria-label="disabled-input-one"
               id="three-light"
@@ -126,7 +126,7 @@ export const _default = ({ onHandleChange, ...args }) => {
             />
           </div>
           <div>
-            <Text isBold>{'With Counter'}</Text>
+            <Text.Paragraph isBold>{'With Counter'}</Text.Paragraph>
             <TextArea
               aria-label="input-four"
               id="four-light"

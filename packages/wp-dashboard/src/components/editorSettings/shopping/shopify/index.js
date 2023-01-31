@@ -27,9 +27,9 @@ import {
   trackEvent,
 } from '@googleforcreators/tracking';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
+  ButtonSize,
+  ButtonType,
+  TextSize,
   CircularProgress,
   useLiveRegion,
 } from '@googleforcreators/design-system';
@@ -239,8 +239,8 @@ function ShopifySettings({
           hint={hostInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disableHostSaveButton}
           onClick={onSaveHost}
           data-testid="shopifyHostButton"
@@ -248,7 +248,7 @@ function ShopifySettings({
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -257,7 +257,7 @@ function ShopifySettings({
                 rel="noreferrer"
                 target="_blank"
                 onClick={handleClick}
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
               />
             ),
           }}
@@ -283,8 +283,8 @@ function ShopifySettings({
           hint={accessTokenInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disableAccessTokenSaveButton}
           onClick={onSaveAccessToken}
           data-testid="shopifyAccessTokenButton"
@@ -292,7 +292,7 @@ function ShopifySettings({
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -300,7 +300,7 @@ function ShopifySettings({
                 href={TEXT.ACCESS_TOKEN_CONTEXT_LINK}
                 rel="noreferrer"
                 target="_blank"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
               />
             ),
           }}
@@ -311,8 +311,8 @@ function ShopifySettings({
 
       <TestConnectionButton
         onFocus={() => setTestConnectionStatus('')}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
         disabled={!canTestConnection}
         onClick={onTestConnection}
       >
@@ -333,7 +333,7 @@ function ShopifySettings({
           data-testid="api-status"
           aria-label={__('API connection status', 'web-stories')}
           hasError={hasConnectionError}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          size={TextSize.Small}
         >
           {testConnectionStatus}
         </ConnectionHelperText>

@@ -79,8 +79,6 @@ describe('Author User', () => {
 
     await publishStory();
 
-    await page.screenshot({ path: 'build/after-publish.png' });
-
     // Make some changes _after_ publishing so previewing will cause an autosave.
     await expect(page).toClick('[data-testid="mediaElement-image"]');
     await expect(page).toClick('[role="menu"] [role="menuitem"]', {

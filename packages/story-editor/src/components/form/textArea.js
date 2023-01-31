@@ -38,7 +38,7 @@ const TextArea = forwardRef(
       placeholder,
       value,
       disabled,
-      rows,
+      rows = 2,
       onChange,
       onBlur,
       ...rest
@@ -76,6 +76,7 @@ const TextArea = forwardRef(
         placeholder={placeholder}
         value={currentValue}
         {...rest}
+        rows={rows}
         containerStyleOverride={inputContainerStyleOverride}
         onChange={(evt) => setCurrentValue(evt.target.value)}
         onBlur={handleBlur}
@@ -95,11 +96,6 @@ TextArea.propTypes = {
   rows: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
-};
-
-TextArea.defaultProps = {
-  showTextLimit: true,
-  rows: 2,
 };
 
 export default TextArea;

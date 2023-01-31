@@ -31,9 +31,9 @@ import {
   LockToggle,
   NumericInput,
   Icons,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 import { getDefinitionForType } from '@googleforcreators/elements';
 
@@ -249,9 +249,9 @@ function SizePositionPanel(props) {
             <StyledButton
               ref={bgButtonRef}
               onClick={handleSetBackground}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={ButtonType.Secondary}
+              size={ButtonSize.Small}
+              variant={ButtonVariant.Rectangle}
             >
               {__('Set as background', 'web-stories')}
             </StyledButton>
@@ -361,7 +361,6 @@ function SizePositionPanel(props) {
           <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
             <StyledLockToggle
               aria-label={__('Lock aspect ratio', 'web-stories')}
-              title={__('Lock aspect ratio', 'web-stories')}
               isLocked={lockAspectRatio || isAspectAlwaysLocked}
               disabled={isAspectAlwaysLocked}
               onClick={() =>

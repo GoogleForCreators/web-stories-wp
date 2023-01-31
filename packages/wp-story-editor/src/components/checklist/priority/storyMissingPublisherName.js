@@ -25,7 +25,7 @@ import {
   useRegisterCheck,
   useIsChecklistMounted,
 } from '@googleforcreators/story-editor';
-import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Link, TextSize } from '@googleforcreators/design-system';
 
 const StoryMissingPublisherName = () => {
   const isChecklistMounted = useIsChecklistMounted();
@@ -55,7 +55,7 @@ const StoryMissingPublisherName = () => {
                     href={generalSettingsLink}
                     rel="noreferrer"
                     target="_blank"
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                    size={TextSize.XSmall}
                   />
                 ),
               }}

@@ -20,9 +20,9 @@
 import { useEffect, useState, useRef } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  THEME_CONSTANTS,
+  ButtonType,
+  ButtonSize,
+  TextSize,
   Text,
   sessionStore,
 } from '@googleforcreators/design-system';
@@ -180,15 +180,15 @@ function LocalAutoSave() {
       actions={
         <>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             onClick={onClose}
           >
             {__('Dismiss', 'web-stories')}
           </Button>
           <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             onClick={restoreBackup}
           >
             {__('Restore Backup', 'web-stories')}
@@ -196,12 +196,12 @@ function LocalAutoSave() {
         </>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Paragraph size={TextSize.Small}>
         {__(
           'The backup of this story in your browser is different from the current version.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 }

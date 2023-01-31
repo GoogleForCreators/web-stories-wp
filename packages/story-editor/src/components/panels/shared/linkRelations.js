@@ -21,7 +21,7 @@ import {
   Checkbox,
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
@@ -47,7 +47,7 @@ const Label = styled.label`
   margin-left: 12px;
 `;
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   padding: 8px 0;
 `;
@@ -71,7 +71,7 @@ function LinkRelations({ rel, onChangeRel }) {
   return (
     <Row>
       <div>
-        <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <StyledText size={TextSize.Small}>
           {__('Qualify outbound links', 'web-stories')}
         </StyledText>
         {LinkTypes.map(({ key, title }) => (
@@ -83,12 +83,7 @@ function LinkRelations({ rel, onChangeRel }) {
               onChange={() => onChange(key)}
             />
             <Label htmlFor={key}>
-              <Text
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                as="span"
-              >
-                {title}
-              </Text>
+              <Text.Span size={TextSize.Small}>{title}</Text.Span>
             </Label>
           </CheckboxWrapper>
         ))}
@@ -96,7 +91,7 @@ function LinkRelations({ rel, onChangeRel }) {
           rel="noopener noreferrer"
           target="_blank"
           href={relHelpLink}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          size={TextSize.XSmall}
         >
           {__('Learn more', 'web-stories')}
         </Link>

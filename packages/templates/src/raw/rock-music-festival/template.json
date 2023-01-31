@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -230,6 +230,7 @@
           "id": "7cff4dc0-6d11-4c1c-9feb-65772e3c0353"
         }
       ],
+      "animations": [],
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -256,7 +257,6 @@
         "type": "shape",
         "id": "f35e71dc-82b5-4b6c-b34a-96b614e20921"
       },
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {

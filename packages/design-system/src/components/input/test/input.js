@@ -22,7 +22,7 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Input } from '..';
+import Input from '../input';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop } from '../../../utils';
 

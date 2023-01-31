@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
-import { Datalist } from '@googleforcreators/design-system';
+import { DatalistDropdown } from '@googleforcreators/design-system';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
@@ -66,7 +66,7 @@ function arrange(options) {
 
   return renderWithTheme(
     <FontContext.Provider value={fontContextValues}>
-      <Datalist.DropDown {...props} />
+      <DatalistDropdown {...props} />
     </FontContext.Provider>
   );
 }

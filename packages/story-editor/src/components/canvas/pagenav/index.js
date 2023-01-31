@@ -24,9 +24,9 @@ import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   Icons,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  ButtonVariant,
+  ButtonType,
+  ButtonSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -103,9 +103,9 @@ function PageNav({ isNext = true }) {
     <Wrapper>
       <Button
         ref={buttonRef}
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.MEDIUM}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Tertiary}
+        size={ButtonSize.Medium}
         aria-disabled={!displayNav}
         aria-label={
           isNext

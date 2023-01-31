@@ -23,10 +23,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { BaseTooltip } from '../../tooltip';
+import { Tooltip } from '../../tooltip';
 import { Text } from '../../typography';
 import { Cross, Pipette } from '../../../icons';
-import { Swatch } from '../swatch';
+import Swatch from '../swatch';
 
 const Container = styled.div`
   padding: 50px;
@@ -171,13 +171,13 @@ function _default(args) {
           <Cell />
           {VARIANTS.map(({ variant }) => (
             <Cell key={variant}>
-              <Text>{variant}</Text>
+              <Text.Paragraph>{variant}</Text.Paragraph>
             </Cell>
           ))}
         </Row>
         {DEMO_COLORS.map(({ label, pattern, ...patternProps }) => (
           <Row key={label}>
-            <Text>{label}</Text>
+            <Text.Paragraph>{label}</Text.Paragraph>
             {VARIANTS.map(({ variant, Icon, ...props }) => (
               <Cell key={variant}>
                 <Swatch pattern={pattern} {...patternProps} {...props}>
@@ -190,9 +190,9 @@ function _default(args) {
         <hr />
         {DEMO_COLORS.map(({ label, pattern, ...patternProps }) => (
           <Row key={`${label}_tooltip`}>
-            <Text>{`${label} + tooltips`}</Text>
+            <Text.Paragraph>{`${label} + tooltips`}</Text.Paragraph>
             {VARIANTS.map(({ variant, Icon, ...props }) => (
-              <BaseTooltip title={variant} key={variant}>
+              <Tooltip title={variant} key={variant}>
                 <Cell>
                   <Swatch
                     pattern={pattern}
@@ -203,7 +203,7 @@ function _default(args) {
                     {Icon && <Icon />}
                   </Swatch>
                 </Cell>
-              </BaseTooltip>
+              </Tooltip>
             ))}
           </Row>
         ))}

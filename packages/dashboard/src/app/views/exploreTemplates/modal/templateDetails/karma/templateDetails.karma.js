@@ -292,6 +292,7 @@ describe('See template details modal', () => {
         press('right'),
         press('right'),
       ]);
+
       expect(page4).toEqual(document.activeElement);
 
       await fixture.events.keyboard.press('Enter');

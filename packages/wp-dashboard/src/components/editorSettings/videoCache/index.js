@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@googleforcreators/i18n';
-import { Checkbox, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Checkbox, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -50,7 +50,7 @@ export default function VideoCacheSettings({
         <SettingHeading>{__('Video Cache', 'web-stories')}</SettingHeading>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor={videoCacheId}>
+        <CheckboxLabel htmlFor={videoCacheId}>
           <Checkbox
             id={videoCacheId}
             data-testid="video-cache-settings-checkbox"
@@ -58,9 +58,8 @@ export default function VideoCacheSettings({
             checked={Boolean(isEnabled)}
           />
           <CheckboxLabelText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            size={TextSize.Small}
             aria-checked={Boolean(isEnabled)}
-            forwardedAs="span"
           >
             {__(
               'Reduce hosting costs and improve user experience by serving videos from the Google cache.',

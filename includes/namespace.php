@@ -41,7 +41,7 @@ use WP_Site;
  *
  * @param bool $network_wide Whether to activate network-wide.
  */
-function activate( bool $network_wide = false ): void {
+function activate( ?bool $network_wide = false ): void {
 	$network_wide = (bool) $network_wide;
 
 	// Runs all PluginActivationAware services.
@@ -116,7 +116,7 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  *
  * @param bool $network_wide Whether to deactivate network-wide.
  */
-function deactivate( bool $network_wide = false ): void {
+function deactivate( ?bool $network_wide = false ): void {
 	$network_wide = (bool) $network_wide;
 
 	// Runs all PluginDeactivationAware services.
@@ -176,12 +176,6 @@ add_action( 'init', __NAMESPACE__ . '\load_functions' );
  * @return array<string, array{body: string, headers: array<string,string>}|array<string, array{body: string, headers: array<string,string>}>> Modified reduce accumulator.
  */
 function rest_preload_api_request( array $memo, $path ): array {
-	// array_reduce() doesn't support passing an array in PHP 5.2,
-	// so we need to make sure we start with one.
-	if ( ! \is_array( $memo ) ) {
-		$memo = [];
-	}
-
 	if ( empty( $path ) ) {
 		return $memo;
 	}
@@ -210,6 +204,7 @@ function rest_preload_api_request( array $memo, $path ): array {
 		return $memo;
 	}
 
+	// This line is different from code. Adds untrailingslashit. See https://core.trac.wordpress.org/ticket/57048.
 	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];

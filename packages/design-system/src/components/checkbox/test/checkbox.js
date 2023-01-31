@@ -22,28 +22,28 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Checkbox } from '..';
+import Checkbox from '../checkbox';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop } from '../../../utils';
 
 describe('Checkbox', () => {
   it('should render the checkbox', () => {
-    renderWithProviders(<Checkbox data-testid="checkbox" onChange={noop} />);
+    renderWithProviders(<Checkbox onChange={noop} />);
 
-    expect(screen.getByTestId('checkbox')).toBeInTheDocument();
+    expect(screen.getByRole('checkbox')).toBeInTheDocument();
   });
 
   it('should render the checkmark if the checkbox is checked', () => {
-    renderWithProviders(
-      <Checkbox data-testid="checkbox" onChange={noop} checked />
-    );
+    renderWithProviders(<Checkbox onChange={noop} checked />);
 
-    expect(screen.getByTestId('checkbox-checkmark')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Checked' })).toBeInTheDocument();
   });
 
   it('should not render the checkmark if the checkbox is not checked', () => {
-    renderWithProviders(<Checkbox data-testid="checkbox" onChange={noop} />);
+    renderWithProviders(<Checkbox onChange={noop} />);
 
-    expect(screen.queryByTestId('checkbox-checkmark')).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('img', { name: 'Checked' })
+    ).not.toBeInTheDocument();
   });
 });

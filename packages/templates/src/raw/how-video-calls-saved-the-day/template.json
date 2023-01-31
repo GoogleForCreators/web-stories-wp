@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -100,6 +100,40 @@
           "height": 204,
           "sticker": { "type": "videoCallsBrowserIcon" },
           "id": "aecd13c7-4abe-420c-bff8-1723d0adb3e0",
+          "groupId": "f3f8ba78-47a0-4c12-8e45-a55263db974d"
+        },
+        {
+          "x": -224,
+          "y": 322,
+          "id": "323e1d16-d1b6-4256-beb8-facf11a6a2df",
+          "basedOn": "d10b538c-f14a-4c98-81c1-29a7d82e687c",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-05-25T10:30:56",
+            "baseColor": "#c3b4b4",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page01_image02.jpg",
+            "width": 677,
+            "height": 720,
+            "posterId": 0,
+            "id": 0,
+            "alt": "Woman using macbook",
+            "sizes": [],
+            "isOptimized": false,
+            "isExternal": true
+          },
+          "width": 278,
+          "height": 175,
+          "scale": 100,
+          "focalX": 49.94290127731412,
+          "focalY": 43.36426077894482,
+          "mask": { "type": "rectangle" },
           "groupId": "f3f8ba78-47a0-4c12-8e45-a55263db974d"
         },
         {
@@ -224,40 +258,6 @@
           },
           "width": 317,
           "height": 58
-        },
-        {
-          "x": -224,
-          "y": 322,
-          "id": "323e1d16-d1b6-4256-beb8-facf11a6a2df",
-          "basedOn": "d10b538c-f14a-4c98-81c1-29a7d82e687c",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "type": "image",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-05-25T10:30:56",
-            "baseColor": "#c3b4b4",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page01_image02.jpg",
-            "width": 677,
-            "height": 720,
-            "posterId": 0,
-            "id": 0,
-            "alt": "Woman using macbook",
-            "sizes": [],
-            "isOptimized": false,
-            "isExternal": true
-          },
-          "width": 278,
-          "height": 175,
-          "scale": 100,
-          "focalX": 49.94290127731412,
-          "focalY": 43.36426077894482,
-          "mask": { "type": "rectangle" },
-          "groupId": "f3f8ba78-47a0-4c12-8e45-a55263db974d"
         },
         {
           "opacity": 100,
@@ -406,10 +406,10 @@
           "groupId": "a75a32db-67d1-4071-b7da-7d39b8f28830"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
       "type": "page",
       "id": "a2b16ddc-2786-458a-a8e3-8ad0cd34aa31",
-      "animations": [],
       "pageTemplateType": "cover",
       "groups": {
         "a75a32db-67d1-4071-b7da-7d39b8f28830": {
@@ -796,9 +796,6 @@
           "id": "00c0c07e-ce38-41ec-88b7-5bb7c62a2dab"
         }
       ],
-      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
-      "type": "page",
-      "id": "eafd228f-ca60-4d9a-a0d8-621a0c64f000",
       "animations": [
         {
           "id": "10be46a9-c9c3-4fed-81b2-cf74dfb14b73",
@@ -830,6 +827,9 @@
           "delay": 400
         }
       ],
+      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+      "type": "page",
+      "id": "eafd228f-ca60-4d9a-a0d8-621a0c64f000",
       "pageTemplateType": "editorial",
       "groups": {
         "d9144810-2fe1-4198-98cc-e27ed5b5a51f": {
@@ -855,20 +855,6 @@
           "isDefaultBackground": true,
           "type": "shape",
           "id": "6ef7d527-f05d-41ae-b6d4-48605a1f8f39"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": -3,
-          "y": 393,
-          "width": 419,
-          "height": 306,
-          "sticker": { "type": "videoCallsBrowserIcon" },
-          "id": "1020e519-5e8f-4dbc-98c6-2d6cc2ba5b3b",
-          "groupId": "aba13638-ddf4-4ee3-ace9-c6784a3beb62"
         },
         {
           "opacity": 100,
@@ -1015,6 +1001,20 @@
           "height": 37,
           "groupId": "4320a8bc-318d-4567-999f-50d5d8e8b9f6",
           "tagName": "p"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": -3,
+          "y": 393,
+          "width": 419,
+          "height": 306,
+          "sticker": { "type": "videoCallsBrowserIcon" },
+          "id": "1020e519-5e8f-4dbc-98c6-2d6cc2ba5b3b",
+          "groupId": "aba13638-ddf4-4ee3-ace9-c6784a3beb62"
         },
         {
           "opacity": 100,
@@ -1197,9 +1197,6 @@
           "groupId": "993bd94e-33f1-4407-a78c-d601f60d4040"
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
-      "type": "page",
-      "id": "8ce91ead-121e-4e39-a8dd-a0302b660873",
       "animations": [
         {
           "id": "ae0f38d3-cbcf-4ea9-936b-004f027f302e",
@@ -1242,6 +1239,9 @@
           "delay": 400
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
+      "type": "page",
+      "id": "8ce91ead-121e-4e39-a8dd-a0302b660873",
       "pageTemplateType": "section",
       "groups": {
         "993bd94e-33f1-4407-a78c-d601f60d4040": {
@@ -1532,9 +1532,6 @@
           "groupId": "21f64464-a4ba-4dd7-b8f9-8f98e75c0c92"
         }
       ],
-      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
-      "type": "page",
-      "id": "fe31b57a-485e-4584-b7e7-1a0108e865e3",
       "animations": [
         {
           "id": "caecc005-5805-4cde-8782-4548bfe53830",
@@ -1545,6 +1542,9 @@
           "delay": 500
         }
       ],
+      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+      "type": "page",
+      "id": "fe31b57a-485e-4584-b7e7-1a0108e865e3",
       "pageTemplateType": null,
       "groups": {
         "21f64464-a4ba-4dd7-b8f9-8f98e75c0c92": {
@@ -1864,20 +1864,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "x": -4.5,
-          "y": 392,
-          "width": 419,
-          "height": 306,
-          "sticker": { "type": "videoCallsBrowserIcon" },
-          "id": "7ba63f7e-1ada-4388-9d2d-f599c1e77d21",
-          "type": "sticker",
-          "groupId": "198c77cb-26f1-41cf-a54f-f4a55521eeae"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Montserrat",
@@ -2018,40 +2004,6 @@
           "type": "text",
           "groupId": "0818554c-bcab-414c-ab5c-7dae86c15717",
           "tagName": "p"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "type": "image",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-05-25T10:39:17",
-            "baseColor": "#e6e6ed",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page06_image01.jpg",
-            "width": 1080,
-            "height": 720,
-            "posterId": 0,
-            "id": 0,
-            "alt": "Photo Of Woman Wearing White Shirt",
-            "sizes": [],
-            "isOptimized": false,
-            "isExternal": true
-          },
-          "width": 412,
-          "height": 250,
-          "scale": 130,
-          "focalX": 40.51069703243616,
-          "focalY": 47.412008281573506,
-          "mask": { "type": "rectangle" },
-          "basedOn": "9209a9f3-71ec-4f2e-b5fa-80b1a10a56b3",
-          "id": "5e8ed5b0-173f-4c71-ade7-fc3c0d0b358e",
-          "x": 0,
-          "y": 433,
-          "groupId": "198c77cb-26f1-41cf-a54f-f4a55521eeae"
         },
         {
           "opacity": 100,
@@ -2199,6 +2151,54 @@
           "id": "14eb0c30-651b-4dfa-aea1-794c3d8df75f",
           "marginOffset": 6.5625,
           "groupId": "2a4108b1-14db-4fc2-9a60-1a9069aed787"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": -4.5,
+          "y": 392,
+          "width": 419,
+          "height": 306,
+          "sticker": { "type": "videoCallsBrowserIcon" },
+          "id": "7ba63f7e-1ada-4388-9d2d-f599c1e77d21",
+          "type": "sticker",
+          "groupId": "198c77cb-26f1-41cf-a54f-f4a55521eeae"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-05-25T10:39:17",
+            "baseColor": "#e6e6ed",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page06_image01.jpg",
+            "width": 1080,
+            "height": 720,
+            "posterId": 0,
+            "id": 0,
+            "alt": "Photo Of Woman Wearing White Shirt",
+            "sizes": [],
+            "isOptimized": false,
+            "isExternal": true
+          },
+          "width": 412,
+          "height": 250,
+          "scale": 130,
+          "focalX": 40.51069703243616,
+          "focalY": 47.412008281573506,
+          "mask": { "type": "rectangle" },
+          "basedOn": "9209a9f3-71ec-4f2e-b5fa-80b1a10a56b3",
+          "id": "5e8ed5b0-173f-4c71-ade7-fc3c0d0b358e",
+          "x": 0,
+          "y": 433,
+          "groupId": "198c77cb-26f1-41cf-a54f-f4a55521eeae"
         },
         {
           "opacity": 100,
@@ -3200,35 +3200,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 49,
-          "y": 244,
-          "width": 158,
-          "height": 112,
-          "sticker": { "type": "videoCallsBrowserIcon" },
-          "id": "d0d37097-15ae-4a55-b377-60d87b617440",
-          "groupId": "d57fa946-aff5-4b21-852a-d13fba941faf"
-        },
-        {
-          "x": 48,
-          "y": 434,
-          "id": "fbd645f5-bac7-40e6-8c24-14af1220eafd",
-          "basedOn": "d0d37097-15ae-4a55-b377-60d87b617440",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 158,
-          "height": 112,
-          "sticker": { "type": "videoCallsBrowserIcon" },
-          "groupId": "db10a96c-253b-4b41-be0d-33524c304eef"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3266,6 +3237,20 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 49,
+          "y": 244,
+          "width": 158,
+          "height": 112,
+          "sticker": { "type": "videoCallsBrowserIcon" },
+          "id": "d0d37097-15ae-4a55-b377-60d87b617440",
+          "groupId": "d57fa946-aff5-4b21-852a-d13fba941faf"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "image",
@@ -3294,6 +3279,21 @@
           "mask": { "type": "rectangle" },
           "id": "de91ce5b-8a1b-4603-ad3e-350cb916fc17",
           "groupId": "d57fa946-aff5-4b21-852a-d13fba941faf"
+        },
+        {
+          "x": 48,
+          "y": 434,
+          "id": "fbd645f5-bac7-40e6-8c24-14af1220eafd",
+          "basedOn": "d0d37097-15ae-4a55-b377-60d87b617440",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 158,
+          "height": 112,
+          "sticker": { "type": "videoCallsBrowserIcon" },
+          "groupId": "db10a96c-253b-4b41-be0d-33524c304eef"
         },
         {
           "x": 49,

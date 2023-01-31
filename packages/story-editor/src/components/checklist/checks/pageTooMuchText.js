@@ -18,7 +18,7 @@
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { List, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { List, TextSize } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -102,9 +102,7 @@ const PageTooMuchText = () => {
         }
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-              {footer}
-            </List>
+            <List size={TextSize.XSmall}>{footer}</List>
           </ChecklistCardStyles.CardListWrapper>
         }
         thumbnails={thumbnails}

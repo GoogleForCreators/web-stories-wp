@@ -21,12 +21,12 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { forwardRef } from '@googleforcreators/react';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Headline,
   Icons,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -41,7 +41,7 @@ const TopNavButtons = styled.div`
 
 const Label = styled(Headline).attrs({
   as: 'h2',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+  size: TextSize.XXSmall,
 })`
   padding-left: 24px;
   font-weight: ${({ theme }) => theme.typography.weight.regular};
@@ -62,9 +62,9 @@ export const TopNavigation = forwardRef(function TopNavigation(
             forceFocusCompanionToggle(popupId);
             onClose();
           }}
-          type={BUTTON_TYPES.PLAIN}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.CIRCLE}
+          type={ButtonType.Plain}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Circle}
         >
           <Icons.Cross />
         </NavButton>

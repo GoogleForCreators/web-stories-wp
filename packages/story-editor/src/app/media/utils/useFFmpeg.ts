@@ -150,7 +150,9 @@ function useFFmpeg() {
   const getFFmpegInstance = useCallback(
     async (file: File) => {
       const { createFFmpeg, fetchFile } = await import(
-        /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
+        /* webpackChunkName: "chunk-ffmpeg" */
+        /* webpackExports: ["createFFmpeg", "fetchFile"] */
+        '@ffmpeg/ffmpeg'
       );
 
       const ffmpeg = createFFmpeg({

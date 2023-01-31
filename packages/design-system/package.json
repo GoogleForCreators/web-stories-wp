@@ -2,7 +2,7 @@
   "name": "@googleforcreators/design-system",
   "description": "Main UI components for the Web Stories editor and dashboard",
   "private": false,
-  "version": "0.1.202212191259",
+  "version": "0.1.202301231653",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -26,13 +26,13 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "types": "dist-types/types.d.ts",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -43,7 +43,6 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
     "@types/react-modal": "^3.13.1",
-    "@types/styled-components": "^5.1.26",
     "big.js": "^6.2.1",
     "mousetrap": "^1.6.5",
     "polished": "^4.2.2",
@@ -56,6 +55,10 @@
   "devDependencies": {
     "@storybook/addon-essentials": "^6.5.12",
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1"
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/big.js": "^6.1.6",
+    "@types/react-transition-group": "^4.4.5",
+    "@types/styled-components": "^5.1.26",
+    "use-debounce": "^9.0.3"
   }
 }

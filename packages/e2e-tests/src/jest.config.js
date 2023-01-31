@@ -32,7 +32,7 @@ export default {
   rootDir: '../../../',
   resolver: '@web-stories-wp/jest-resolver',
   preset: 'jest-puppeteer',
-  testEnvironment: '<rootDir>/packages/e2e-tests/src/puppeteerEnvironment.js',
+  // testEnvironment: '<rootDir>/packages/e2e-tests/src/puppeteerEnvironment.js',
   testMatch: ['**/specs/**/*.[jt]s'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
@@ -46,8 +46,8 @@ export default {
   setupFilesAfterEnv: [
     'jest-extended/all',
     '<rootDir>/packages/e2e-tests/src/config/bootstrap.js',
-    '@wordpress/jest-puppeteer-axe',
-    '@wordpress/jest-console',
+    '<rootDir>/packages/e2e-tests/node_modules/@wordpress/jest-puppeteer-axe',
+    '<rootDir>/packages/e2e-tests/node_modules/@wordpress/jest-console',
     'expect-puppeteer',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],

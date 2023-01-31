@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -306,10 +306,10 @@
           "id": "b08b7a4a-51d3-4c28-ac19-c25865620ceb"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 223, "g": 227, "b": 228 } },
       "type": "page",
       "id": "dad018db-27b9-4813-9821-3e5bcba833f5",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -533,6 +533,7 @@
           "marginOffset": -7
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 28, "g": 98, "b": 50 } },
       "type": "page",
       "id": "cf5733d2-959d-4e81-bcc3-9e4e32e111a8",
@@ -552,7 +553,6 @@
         "type": "shape",
         "id": "c68c0246-0102-4823-91a1-99eba95a3e01"
       },
-      "animations": [],
       "pageTemplateType": "quote"
     },
     {
@@ -773,9 +773,6 @@
           "marginOffset": -7
         }
       ],
-      "backgroundColor": { "color": { "r": 220, "g": 236, "b": 195 } },
-      "type": "page",
-      "id": "aac6d458-24d5-4d3a-94bf-40c9f079e3ac",
       "animations": [
         {
           "id": "9e692bf4-4600-4449-86bd-a231a4e4bbec",
@@ -786,6 +783,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 220, "g": 236, "b": 195 } },
+      "type": "page",
+      "id": "aac6d458-24d5-4d3a-94bf-40c9f079e3ac",
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
@@ -1088,9 +1088,6 @@
           "id": "fb6c5e85-f9c2-4a76-a92f-f4681d21e96a"
         }
       ],
-      "backgroundColor": { "color": { "r": 17, "g": 121, "b": 50 } },
-      "type": "page",
-      "id": "38e2963d-c2cb-43ee-82cf-42e10bdf1917",
       "animations": [
         {
           "id": "7a417151-21f5-4fc2-a4a9-00a8299f2f69",
@@ -1108,6 +1105,9 @@
           "delay": 300
         }
       ],
+      "backgroundColor": { "color": { "r": 17, "g": 121, "b": 50 } },
+      "type": "page",
+      "id": "38e2963d-c2cb-43ee-82cf-42e10bdf1917",
       "pageTemplateType": "quote"
     },
     {
@@ -1220,34 +1220,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
-          "x": 90,
-          "y": 363,
-          "width": 60,
-          "height": 39,
-          "sticker": { "type": "openPill" },
-          "id": "85d298dc-bc94-4123-a3a6-9d39cc173cda",
-          "groupId": "245b1fb9-bff9-4c1c-9fc5-3bab19d7be63"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 97,
-          "y": 515,
-          "width": 54,
-          "height": 61,
-          "sticker": { "type": "pillBox" },
-          "id": "f1605c9e-b541-4c77-8747-69a01adbc6d2",
-          "groupId": "cbe20a8f-4f95-4896-8db1-7f47c603f35e"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
           "x": 88,
           "y": 179,
           "width": 60,
@@ -1330,6 +1302,20 @@
           "groupId": "e8ba7b50-b96d-47d1-853d-8a72b1f12ade"
         },
         {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 90,
+          "y": 363,
+          "width": 60,
+          "height": 39,
+          "sticker": { "type": "openPill" },
+          "id": "85d298dc-bc94-4123-a3a6-9d39cc173cda",
+          "groupId": "245b1fb9-bff9-4c1c-9fc5-3bab19d7be63"
+        },
+        {
           "x": 222,
           "y": 342,
           "id": "c773c4df-e7cc-4ffa-873b-39f567edc037",
@@ -1401,6 +1387,20 @@
           "height": 79,
           "marginOffset": -7,
           "groupId": "245b1fb9-bff9-4c1c-9fc5-3bab19d7be63"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 97,
+          "y": 515,
+          "width": 54,
+          "height": 61,
+          "sticker": { "type": "pillBox" },
+          "id": "f1605c9e-b541-4c77-8747-69a01adbc6d2",
+          "groupId": "cbe20a8f-4f95-4896-8db1-7f47c603f35e"
         },
         {
           "x": 222,
@@ -1476,9 +1476,6 @@
           "groupId": "cbe20a8f-4f95-4896-8db1-7f47c603f35e"
         }
       ],
-      "backgroundColor": { "color": { "r": 249, "g": 252, "b": 244 } },
-      "type": "page",
-      "id": "850e73eb-1f10-4273-a865-45bf67e1012d",
       "animations": [
         {
           "id": "fd22d612-2240-496a-b782-9d140582c592",
@@ -1516,6 +1513,9 @@
           "delay": 500
         }
       ],
+      "backgroundColor": { "color": { "r": 249, "g": 252, "b": 244 } },
+      "type": "page",
+      "id": "850e73eb-1f10-4273-a865-45bf67e1012d",
       "pageTemplateType": "list",
       "groups": {
         "e8ba7b50-b96d-47d1-853d-8a72b1f12ade": {
@@ -1764,6 +1764,23 @@
           "y": 223
         }
       ],
+      "animations": [
+        {
+          "id": "7a263d6e-531a-4228-af60-3752f7b7cfcb",
+          "type": "effect-background-zoom",
+          "targets": ["561fcf03-a366-4365-bf93-d96db733f440"],
+          "zoomDirection": "scaleIn",
+          "duration": 3000,
+          "delay": 0
+        },
+        {
+          "id": "6a4411d5-77fe-4b3b-a53c-126453312518",
+          "type": "effect-fade-in",
+          "targets": ["5daa82b0-3e7e-407c-95a8-dabc4151fa46"],
+          "duration": 1200,
+          "delay": 600
+        }
+      ],
       "backgroundColor": { "color": { "r": 249, "g": 252, "b": 244 } },
       "type": "page",
       "id": "046c764c-5f2d-46b5-a6ae-9620f716c565",
@@ -1783,23 +1800,6 @@
         "type": "shape",
         "id": "c6bd2a09-64be-4cec-8302-f8b0fd89f3fc"
       },
-      "animations": [
-        {
-          "id": "7a263d6e-531a-4228-af60-3752f7b7cfcb",
-          "type": "effect-background-zoom",
-          "targets": ["561fcf03-a366-4365-bf93-d96db733f440"],
-          "zoomDirection": "scaleIn",
-          "duration": 3000,
-          "delay": 0
-        },
-        {
-          "id": "6a4411d5-77fe-4b3b-a53c-126453312518",
-          "type": "effect-fade-in",
-          "targets": ["5daa82b0-3e7e-407c-95a8-dabc4151fa46"],
-          "duration": 1200,
-          "delay": 600
-        }
-      ],
       "pageTemplateType": "section"
     },
     {
@@ -2430,9 +2430,6 @@
           "y": 393
         }
       ],
-      "backgroundColor": { "color": { "r": 249, "g": 252, "b": 244 } },
-      "type": "page",
-      "id": "d5efd352-ad61-42d8-8dc2-7f942d429e76",
       "animations": [
         {
           "id": "f6bd1448-00e5-4f0d-a324-2da0e232c622",
@@ -2452,6 +2449,9 @@
           "delay": 400
         }
       ],
+      "backgroundColor": { "color": { "r": 249, "g": 252, "b": 244 } },
+      "type": "page",
+      "id": "d5efd352-ad61-42d8-8dc2-7f942d429e76",
       "pageTemplateType": "steps"
     },
     {
@@ -3350,6 +3350,46 @@
           "tagName": "h3"
         },
         {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "type": "image",
+          "x": 207,
+          "y": 135,
+          "width": 154,
+          "height": 115,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "19a471db-914b-48f9-a5d1-e468d1a7f8e1",
+          "borderRadius": {
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2,
+            "locked": true
+          },
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-05-11T11:44:05",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sangria-artichoke/page12_image01.jpg",
+            "width": 231,
+            "height": 173,
+            "posterId": 0,
+            "id": 0,
+            "alt": "page12_image01",
+            "isOptimized": false,
+            "baseColor": "#464037",
+            "isExternal": true,
+            "sizes": []
+          },
+          "groupId": "5020d16e-2d35-4d34-a6ce-5873262402f4"
+        },
+        {
           "x": 48,
           "y": 311,
           "id": "40fc78ba-48ee-41a3-ad49-1466ce5d0f2c",
@@ -3422,6 +3462,47 @@
           "marginOffset": -7,
           "groupId": "ee4d1f7f-3b00-413f-8942-301b7a005675",
           "tagName": "h3"
+        },
+        {
+          "x": 210,
+          "y": 297,
+          "id": "5a5f82ce-f26d-4bf5-9bd3-bcaf7fadd647",
+          "basedOn": "19a471db-914b-48f9-a5d1-e468d1a7f8e1",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "type": "image",
+          "width": 154,
+          "height": 115,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "borderRadius": {
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2,
+            "locked": true
+          },
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-05-11T11:44:00",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sangria-artichoke/page12_image02.jpg",
+            "width": 231,
+            "height": 173,
+            "posterId": 0,
+            "id": 0,
+            "alt": "page12_image02",
+            "isOptimized": false,
+            "baseColor": "#d5cfc3",
+            "isExternal": true,
+            "sizes": []
+          },
+          "groupId": "ee4d1f7f-3b00-413f-8942-301b7a005675"
         },
         {
           "x": 48,
@@ -3498,87 +3579,6 @@
           "tagName": "h3"
         },
         {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "type": "image",
-          "x": 207,
-          "y": 135,
-          "width": 154,
-          "height": 115,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": { "type": "rectangle" },
-          "id": "19a471db-914b-48f9-a5d1-e468d1a7f8e1",
-          "borderRadius": {
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2,
-            "locked": true
-          },
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-05-11T11:44:05",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sangria-artichoke/page12_image01.jpg",
-            "width": 231,
-            "height": 173,
-            "posterId": 0,
-            "id": 0,
-            "alt": "page12_image01",
-            "isOptimized": false,
-            "baseColor": "#464037",
-            "isExternal": true,
-            "sizes": []
-          },
-          "groupId": "5020d16e-2d35-4d34-a6ce-5873262402f4"
-        },
-        {
-          "x": 210,
-          "y": 297,
-          "id": "5a5f82ce-f26d-4bf5-9bd3-bcaf7fadd647",
-          "basedOn": "19a471db-914b-48f9-a5d1-e468d1a7f8e1",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "type": "image",
-          "width": 154,
-          "height": 115,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": { "type": "rectangle" },
-          "borderRadius": {
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2,
-            "locked": true
-          },
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-05-11T11:44:00",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sangria-artichoke/page12_image02.jpg",
-            "width": 231,
-            "height": 173,
-            "posterId": 0,
-            "id": 0,
-            "alt": "page12_image02",
-            "isOptimized": false,
-            "baseColor": "#d5cfc3",
-            "isExternal": true,
-            "sizes": []
-          },
-          "groupId": "ee4d1f7f-3b00-413f-8942-301b7a005675"
-        },
-        {
           "x": 210,
           "y": 459,
           "id": "58060017-8a7b-4c83-a1f3-eda72fabab3e",
@@ -3620,9 +3620,6 @@
           "groupId": "b954269c-3d83-45d4-a0d9-0654e5db52b0"
         }
       ],
-      "backgroundColor": { "color": { "r": 252, "g": 239, "b": 171 } },
-      "type": "page",
-      "id": "cdd23b86-3e0e-4926-9f81-02ec4e74898d",
       "animations": [
         {
           "id": "83e28a9a-4705-472f-b8a0-be4fdbc6f50c",
@@ -3657,6 +3654,9 @@
           "delay": 500
         }
       ],
+      "backgroundColor": { "color": { "r": 252, "g": 239, "b": 171 } },
+      "type": "page",
+      "id": "cdd23b86-3e0e-4926-9f81-02ec4e74898d",
       "pageTemplateType": "list",
       "groups": {
         "5020d16e-2d35-4d34-a6ce-5873262402f4": {

@@ -17,11 +17,10 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
-export default styled(Text).attrs({
-  forwardedAs: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+export default styled(Text.Label).attrs({
+  size: TextSize.Small,
 })`
   display: inline-block;
   color: ${({ theme }) => theme.colors.fg.secondary};

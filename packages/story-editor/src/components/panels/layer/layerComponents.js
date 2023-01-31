@@ -21,10 +21,10 @@ import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import {
   Button,
-  BUTTON_TYPES,
+  ButtonType,
   Input,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -84,7 +84,7 @@ export const LayerContainer = styled.div.attrs({
 `;
 
 export const LayerButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PLAIN,
+  type: ButtonType.Plain,
   tabIndex: -1,
   role: 'option',
 })`
@@ -175,9 +175,8 @@ export const LayerDescription = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-export const LayerText = styled(Text).attrs({
-  forwardedAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+export const LayerText = styled(Text.Span).attrs({
+  size: TextSize.Small,
 })`
   color: inherit;
   white-space: nowrap;

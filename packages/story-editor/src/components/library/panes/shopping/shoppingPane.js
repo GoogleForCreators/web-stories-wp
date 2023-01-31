@@ -26,7 +26,7 @@ import {
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   SearchInput,
   useLiveRegion,
   useSnackbar,
@@ -55,8 +55,8 @@ const LoadingContainer = styled.div`
   justify-content: center;
 `;
 
-const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const HelperText = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;

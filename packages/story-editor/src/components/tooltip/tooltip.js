@@ -17,18 +17,31 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
-  BaseTooltip,
-  TooltipPropTypes,
-  TOOLTIP_PLACEMENT,
+  Tooltip as BaseTooltip,
+  Placement,
 } from '@googleforcreators/design-system';
 
 export default function Tooltip({
   hasTail = true,
-  placement = TOOLTIP_PLACEMENT.BOTTOM,
+  placement = Placement.Bottom,
   ...props
 }) {
   // The <BaseTooltip> component will handle proper placement for RTL layout
   return <BaseTooltip placement={placement} hasTail={hasTail} {...props} />;
 }
-Tooltip.propTypes = TooltipPropTypes;
+Tooltip.propTypes = {
+  children: PropTypes.node.isRequired,
+  hasTail: PropTypes.bool,
+  placement: PropTypes.oneOf(Object.values(Placement)),
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  shortcut: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  forceAnchorRef: PropTypes.object,
+  styleOverride: PropTypes.object,
+  className: PropTypes.string,
+  isDelayed: PropTypes.bool,
+  popupZIndexOverride: PropTypes.number,
+};

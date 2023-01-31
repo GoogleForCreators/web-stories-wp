@@ -21,13 +21,13 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   Icons,
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { ResourcePropTypes } from '@googleforcreators/media';
@@ -64,9 +64,7 @@ const Wrapper = styled.div(
 
     ${themeHelpers.expandPresetStyles({
       preset: {
-        ...theme.typography.presets.paragraph[
-          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-        ],
+        ...theme.typography.presets.paragraph[TextSize.Small],
       },
       theme,
     })};
@@ -165,9 +163,9 @@ function AudioPlayer({ src, mimeType, tracks = [], audioId, loop, playerRef }) {
         popupZIndexOverride={Z_INDEX_STORY_DETAILS}
       >
         <StyledButton
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
           aria-label={buttonTitle}
           onClick={handlePlayPause}
         >

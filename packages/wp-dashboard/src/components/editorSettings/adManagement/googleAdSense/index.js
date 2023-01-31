@@ -22,9 +22,9 @@ import PropTypes from 'prop-types';
 import { __, sprintf, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
+  ButtonSize,
+  ButtonType,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -184,8 +184,8 @@ function GoogleAdSenseSettings({
           hint={publisherIdInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disablePublisherIdSaveButton}
           onClick={onSavePublisherId}
           data-testid="adSensePublisherIdButton"
@@ -193,7 +193,7 @@ function GoogleAdSenseSettings({
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -202,7 +202,7 @@ function GoogleAdSenseSettings({
                 rel="noreferrer"
                 target="_blank"
                 onClick={handleClick}
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
               />
             ),
           }}
@@ -228,8 +228,8 @@ function GoogleAdSenseSettings({
           hint={slotIdInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disableSlotIdSaveButton}
           onClick={onSaveSlotId}
           data-testid="adSenseSlotIdButton"
@@ -237,7 +237,7 @@ function GoogleAdSenseSettings({
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -245,7 +245,7 @@ function GoogleAdSenseSettings({
                 href={TEXT.SLOT_ID_CONTEXT_LINK}
                 rel="noreferrer"
                 target="_blank"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
               />
             ),
           }}

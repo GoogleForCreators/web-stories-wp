@@ -32,7 +32,7 @@ import { trackEvent } from '@googleforcreators/tracking';
 import {
   NumericInput,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Toggle,
 } from '@googleforcreators/design-system';
 import { clamp } from '@googleforcreators/units';
@@ -57,16 +57,17 @@ const JustifyEndRow = styled(Row)`
   gap: 8px;
 `;
 
-const MutedText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const MutedText = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-const LabelText = styled(MutedText).attrs({
-  as: 'label',
-})``;
-
+const LabelText = styled(Text.Label).attrs({
+  size: TextSize.Small,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
 const MIN_MAX = {
   PAGE_DURATION: {
     MIN: 1,
@@ -178,7 +179,7 @@ function GeneralPageAdvancementPanel({
               containerStyleOverride={inputContainerStyleOverride}
             />
           </Row>
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text.Paragraph size={TextSize.Small}>
             {sprintf(
               /* translators: 1: minimum duration. 2: maximum duration. */
               _n(
@@ -190,7 +191,7 @@ function GeneralPageAdvancementPanel({
               MIN_MAX.PAGE_DURATION.MIN,
               MIN_MAX.PAGE_DURATION.MAX
             )}
-          </Text>
+          </Text.Paragraph>
         </>
       )}
     </SimplePanel>

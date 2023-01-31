@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -967,9 +967,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "5a5a5532-8738-4dae-96ee-b7cccda85223",
       "animations": [
         {
           "id": "1d24f4c2-ed60-4d01-859f-101e2c6a3df3",
@@ -980,6 +977,9 @@
           "targets": ["0be7ded0-d3d7-46d4-a0c2-e48f00b51273"]
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "5a5a5532-8738-4dae-96ee-b7cccda85223",
       "pageTemplateType": null,
       "groups": {
         "15608c48-5e23-47ac-9420-ff2944bde348": {
@@ -1610,171 +1610,6 @@
           "width": 241,
           "height": 241,
           "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "849db591-181c-4cc5-baf4-f132373f0c84",
-          "id": "167cac5c-f5f1-4127-ab4f-4eef672fc3f1",
-          "x": -97,
-          "y": -142,
-          "groupId": "1ec28ba2-9106-4d7d-9a85-1e142e1d4c75"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "167cac5c-f5f1-4127-ab4f-4eef672fc3f1",
-          "id": "d1f8d40a-0409-4886-ac2b-3d046c5ac7be",
-          "x": 268,
-          "y": -142,
-          "groupId": "8b3de13d-fead-4772-b05c-75de213ad00e"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "d1f8d40a-0409-4886-ac2b-3d046c5ac7be",
-          "id": "8a5d41aa-8112-4643-bc8d-dde0ad2c5bab",
-          "x": -97,
-          "y": 41,
-          "groupId": "83642705-3da1-4018-9ccc-d947e7502b11"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "8a5d41aa-8112-4643-bc8d-dde0ad2c5bab",
-          "id": "b229f274-2ef4-4ccf-8e02-31153c9a91c5",
-          "x": 268,
-          "y": 41,
-          "groupId": "ba4fb876-7146-4078-b1d2-8fa777f73ec9"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "b229f274-2ef4-4ccf-8e02-31153c9a91c5",
-          "id": "dba0f245-7515-4339-9647-ee981abb4b82",
-          "x": 82,
-          "y": 121,
-          "groupId": "85263dcf-ce9b-4a2c-b05e-e86eeb251327"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "dba0f245-7515-4339-9647-ee981abb4b82",
-          "id": "58855cc7-5bd5-40cc-bf20-d9e763c84d25",
-          "x": -97,
-          "y": 220,
-          "groupId": "2547cf1b-708b-49ee-af30-f733ee01cee4"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "58855cc7-5bd5-40cc-bf20-d9e763c84d25",
-          "id": "13431965-90e4-4ab8-84be-3fb52ef19ee0",
-          "x": 268,
-          "y": 220,
-          "groupId": "099f912a-b4c8-4cc9-b310-6bffbed1e7ed"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "13431965-90e4-4ab8-84be-3fb52ef19ee0",
-          "id": "19bb87ff-0c58-4501-a681-de0794128166",
-          "x": 82,
-          "y": 304,
-          "groupId": "aca8bc97-a418-4426-81b8-727510f9bab1"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "19bb87ff-0c58-4501-a681-de0794128166",
-          "id": "0b20a372-4f7b-478f-953d-e6daecf1fed0",
-          "x": -97,
-          "y": 397,
-          "groupId": "6283ca3f-f57d-4832-bc7c-cc30c0750cf1"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "0b20a372-4f7b-478f-953d-e6daecf1fed0",
-          "id": "379fe051-74aa-427f-988a-c444831db902",
-          "x": 268,
-          "y": 399,
-          "groupId": "4594afc1-a596-4e5c-a069-4061b0f8fabb"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
-          "basedOn": "379fe051-74aa-427f-988a-c444831db902",
-          "id": "06f3264f-758c-4673-a566-c5f50bf98daf",
-          "x": 85,
-          "y": 483,
-          "groupId": "750395af-fb6f-4c8f-b530-b841eb4f5462"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 241,
-          "height": 241,
-          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
           "basedOn": "06f3264f-758c-4673-a566-c5f50bf98daf",
           "id": "94796b51-6311-47b2-b33f-9f4f524ddf3b",
           "x": -97,
@@ -1793,6 +1628,21 @@
           "id": "8722b660-d374-4954-ba74-3d4463c1982b",
           "x": 268,
           "y": 577
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "849db591-181c-4cc5-baf4-f132373f0c84",
+          "id": "167cac5c-f5f1-4127-ab4f-4eef672fc3f1",
+          "x": -97,
+          "y": -142,
+          "groupId": "1ec28ba2-9106-4d7d-9a85-1e142e1d4c75"
         },
         {
           "opacity": 100,
@@ -1840,6 +1690,21 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "167cac5c-f5f1-4127-ab4f-4eef672fc3f1",
+          "id": "d1f8d40a-0409-4886-ac2b-3d046c5ac7be",
+          "x": 268,
+          "y": -142,
+          "groupId": "8b3de13d-fead-4772-b05c-75de213ad00e"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1875,6 +1740,21 @@
           "x": 337,
           "y": -72,
           "groupId": "8b3de13d-fead-4772-b05c-75de213ad00e"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "d1f8d40a-0409-4886-ac2b-3d046c5ac7be",
+          "id": "8a5d41aa-8112-4643-bc8d-dde0ad2c5bab",
+          "x": -97,
+          "y": 41,
+          "groupId": "83642705-3da1-4018-9ccc-d947e7502b11"
         },
         {
           "opacity": 100,
@@ -1922,6 +1802,21 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "8a5d41aa-8112-4643-bc8d-dde0ad2c5bab",
+          "id": "b229f274-2ef4-4ccf-8e02-31153c9a91c5",
+          "x": 268,
+          "y": 41,
+          "groupId": "ba4fb876-7146-4078-b1d2-8fa777f73ec9"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1957,6 +1852,21 @@
           "x": 337,
           "y": 111,
           "groupId": "ba4fb876-7146-4078-b1d2-8fa777f73ec9"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "b229f274-2ef4-4ccf-8e02-31153c9a91c5",
+          "id": "dba0f245-7515-4339-9647-ee981abb4b82",
+          "x": 82,
+          "y": 121,
+          "groupId": "85263dcf-ce9b-4a2c-b05e-e86eeb251327"
         },
         {
           "opacity": 100,
@@ -2004,6 +1914,21 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "dba0f245-7515-4339-9647-ee981abb4b82",
+          "id": "58855cc7-5bd5-40cc-bf20-d9e763c84d25",
+          "x": -97,
+          "y": 220,
+          "groupId": "2547cf1b-708b-49ee-af30-f733ee01cee4"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2039,6 +1964,21 @@
           "x": -28,
           "y": 290,
           "groupId": "2547cf1b-708b-49ee-af30-f733ee01cee4"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "58855cc7-5bd5-40cc-bf20-d9e763c84d25",
+          "id": "13431965-90e4-4ab8-84be-3fb52ef19ee0",
+          "x": 268,
+          "y": 220,
+          "groupId": "099f912a-b4c8-4cc9-b310-6bffbed1e7ed"
         },
         {
           "opacity": 100,
@@ -2086,6 +2026,21 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "13431965-90e4-4ab8-84be-3fb52ef19ee0",
+          "id": "19bb87ff-0c58-4501-a681-de0794128166",
+          "x": 82,
+          "y": 304,
+          "groupId": "aca8bc97-a418-4426-81b8-727510f9bab1"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2121,6 +2076,21 @@
           "x": 151,
           "y": 374,
           "groupId": "aca8bc97-a418-4426-81b8-727510f9bab1"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "19bb87ff-0c58-4501-a681-de0794128166",
+          "id": "0b20a372-4f7b-478f-953d-e6daecf1fed0",
+          "x": -97,
+          "y": 397,
+          "groupId": "6283ca3f-f57d-4832-bc7c-cc30c0750cf1"
         },
         {
           "opacity": 100,
@@ -2168,6 +2138,21 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "0b20a372-4f7b-478f-953d-e6daecf1fed0",
+          "id": "379fe051-74aa-427f-988a-c444831db902",
+          "x": 268,
+          "y": 399,
+          "groupId": "4594afc1-a596-4e5c-a069-4061b0f8fabb"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2203,6 +2188,21 @@
           "x": 337,
           "y": 469,
           "groupId": "4594afc1-a596-4e5c-a069-4061b0f8fabb"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 241,
+          "height": 241,
+          "sticker": { "type": "selfDrivingCarsMultipleBlueRings" },
+          "basedOn": "379fe051-74aa-427f-988a-c444831db902",
+          "id": "06f3264f-758c-4673-a566-c5f50bf98daf",
+          "x": 85,
+          "y": 483,
+          "groupId": "750395af-fb6f-4c8f-b530-b841eb4f5462"
         },
         {
           "opacity": 100,
@@ -4285,9 +4285,6 @@
           "groupId": "0191a669-a433-446b-ba06-af000646e49b"
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "9431d792-419b-4489-be8e-8c53bb16ac10",
       "animations": [
         {
           "id": "087ef4a7-d65b-4797-8265-70c3564ce669",
@@ -4298,6 +4295,9 @@
           "targets": ["02eb1747-08ee-4b70-87c7-fbbf519b284c"]
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "9431d792-419b-4489-be8e-8c53bb16ac10",
       "pageTemplateType": null,
       "groups": {
         "0191a669-a433-446b-ba06-af000646e49b": {

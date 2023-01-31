@@ -21,8 +21,8 @@ import styled from 'styled-components';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Icons,
   useLiveRegion,
   useSnackbar,
@@ -65,8 +65,8 @@ import {
 } from './constants';
 
 const BaseButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PRIMARY,
-  size: BUTTON_SIZES.SMALL,
+  type: ButtonType.Primary,
+  size: ButtonSize.Small,
 })``;
 
 const RecordingButton = styled(BaseButton)`
@@ -80,7 +80,7 @@ const RecordingButton = styled(BaseButton)`
 `;
 
 const PauseButton = styled(BaseButton).attrs({
-  type: BUTTON_TYPES.SECONDARY,
+  type: ButtonType.Secondary,
 })`
   margin-right: 20px;
   padding-top: 12px;
@@ -105,7 +105,7 @@ const StopButton = styled(BaseButton)`
 `;
 
 const CaptureButton = styled(BaseButton).attrs({
-  type: BUTTON_TYPES.QUATERNARY,
+  type: ButtonType.Quaternary,
 })`
   background-color: ${({ theme }) => theme.colors.opacity.overlayDark};
   padding-top: 12px;
@@ -117,13 +117,13 @@ const CaptureButton = styled(BaseButton).attrs({
 `;
 
 const InsertButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PRIMARY,
-  size: BUTTON_SIZES.SMALL,
+  type: ButtonType.Primary,
+  size: ButtonSize.Small,
 })``;
 
 const RetryButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PLAIN,
-  size: BUTTON_SIZES.SMALL,
+  type: ButtonType.Plain,
+  size: ButtonSize.Small,
 })`
   margin-right: 20px;
 `;

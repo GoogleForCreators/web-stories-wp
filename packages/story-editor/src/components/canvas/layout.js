@@ -38,7 +38,6 @@ import { HEADER_HEIGHT, HEADER_GAP } from '../../constants';
 import { useLayout } from '../../app';
 import useFooterHeight from '../footer/useFooterHeight';
 import { FOOTER_BOTTOM_MARGIN } from '../footer/constants';
-import pointerEventsCss from '../../utils/pointerEventsCss';
 import usePinchToZoom from './usePinchToZoom';
 
 /**
@@ -51,7 +50,7 @@ const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
 
 const LayerGrid = styled.section`
-  ${pointerEventsCss}
+  pointer-events: ${({ pointerEvents }) => pointerEvents};
 
   position: absolute;
   top: 0;
@@ -99,7 +98,7 @@ const LayerGrid = styled.section`
 `;
 
 const Area = styled.div`
-  ${pointerEventsCss}
+  pointer-events: ${({ pointerEvents }) => pointerEvents};
 
   grid-area: ${({ area }) => area};
   overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};

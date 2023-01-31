@@ -52,11 +52,6 @@ function Content({ children, ...rest }) {
 
 Content.propTypes = {
   children: PropTypes.node,
-  isPrimary: PropTypes.bool,
-};
-
-Content.defaultProps = {
-  isPrimary: false,
 };
 
 export default Content;

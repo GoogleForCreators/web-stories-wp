@@ -22,8 +22,8 @@ import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
 import {
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonVariant,
   ToggleButton,
   Icons,
 } from '@googleforcreators/design-system';
@@ -72,8 +72,8 @@ function FlipControls({ value, onChange }) {
     <ControlsContainer>
       <Tooltip title={__('Flip horizontally', 'web-stories')}>
         <StyledToggleButton
-          variant={BUTTON_VARIANTS.SQUARE}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Square}
+          size={ButtonSize.Small}
           isToggled={value.horizontal === true}
           onClick={() =>
             onChange({
@@ -89,8 +89,8 @@ function FlipControls({ value, onChange }) {
       <Space />
       <Tooltip title={__('Flip vertically', 'web-stories')}>
         <StyledToggleButton
-          variant={BUTTON_VARIANTS.SQUARE}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Square}
+          size={ButtonSize.Small}
           isToggled={value.vertical === true}
           onClick={() =>
             onChange({ ...value, vertical: !getCurrentFlipValue('vertical') })

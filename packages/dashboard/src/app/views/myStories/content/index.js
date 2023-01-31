@@ -20,12 +20,12 @@
 import PropTypes from 'prop-types';
 import { sprintf, __ } from '@googleforcreators/i18n';
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Headline,
-  THEME_CONSTANTS,
+  TextSize,
   InfiniteScroller,
+  ButtonAsLink,
 } from '@googleforcreators/design-system';
 
 /**
@@ -34,7 +34,7 @@ import {
 import { resolveRoute } from '../../../router';
 import { APP_ROUTES } from '../../../../constants';
 import { Layout, StandardViewContentGutter } from '../../../../components';
-import { StoriesPropType, StoryActionsPropType } from '../../../../types';
+import { StoriesPropType, StoryActionsPropType } from '../../../../propTypes';
 import {
   ViewPropTypes,
   PagePropTypes,
@@ -97,22 +97,18 @@ function Content({
         ) : (
           !loading?.isLoading && (
             <EmptyContentMessage>
-              <Headline
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                as="h3"
-              >
+              <Headline size={TextSize.Small} as="h3">
                 <NoAvailableContent filtersObject={filtersObject} />
               </Headline>
               {Object.keys(filtersObject).length === 0 &&
                 canViewDefaultTemplates && (
-                  <Button
-                    type={BUTTON_TYPES.PRIMARY}
-                    size={BUTTON_SIZES.MEDIUM}
-                    as="a"
+                  <ButtonAsLink
+                    type={ButtonType.Primary}
+                    size={ButtonSize.Medium}
                     href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
                   >
                     {__('Explore Templates', 'web-stories')}
-                  </Button>
+                  </ButtonAsLink>
                 )}
             </EmptyContentMessage>
           )

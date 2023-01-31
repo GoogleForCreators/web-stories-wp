@@ -28,7 +28,7 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -47,7 +47,7 @@ const ROOT_MARGIN = 300;
 
 const SHOW_LOADING_PILL_DELAY_MS = 1000;
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
@@ -64,7 +64,7 @@ function PaginatedMediaGallery({
   hasMore,
   onInsert,
   setNextPage,
-  canEditMedia,
+  canEditMedia = false,
 }) {
   // State and callback ref necessary to load on scroll.
   const refContainer = useRef();
@@ -202,10 +202,7 @@ function PaginatedMediaGallery({
       </MediaGalleryContainer>
       {showLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
-          <StyledText
-            forwardedAs="span"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <StyledText size={TextSize.Small}>
             {__('Loading…', 'web-stories')}
           </StyledText>
         </MediaGalleryLoadingPill>
@@ -227,10 +224,6 @@ PaginatedMediaGallery.propTypes = {
   searchTerm: PropTypes.string,
   selectedCategoryId: PropTypes.string,
   canEditMedia: PropTypes.bool,
-};
-
-PaginatedMediaGallery.defaultProps = {
-  canEditMedia: false,
 };
 
 export default PaginatedMediaGallery;

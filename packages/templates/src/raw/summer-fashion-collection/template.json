@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -202,6 +202,7 @@
           }
         }
       ],
+      "animations": [],
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -212,7 +213,6 @@
       },
       "type": "page",
       "id": "a108edbc-92be-4cba-807e-5bdbf551945f",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -459,16 +459,6 @@
           }
         }
       ],
-      "backgroundColor": {
-        "type": "linear",
-        "stops": [
-          { "color": { "r": 225, "g": 129, "b": 65 }, "position": 0 },
-          { "color": { "r": 235, "g": 174, "b": 192 }, "position": 0.54 }
-        ],
-        "rotation": 0.5
-      },
-      "type": "page",
-      "id": "ffe48325-d8c8-4aa9-b71a-769e698fac4f",
       "animations": [
         {
           "id": "faeb3537-5fde-496b-956c-ae57eea025c1",
@@ -485,6 +475,16 @@
           "delay": 0
         }
       ],
+      "backgroundColor": {
+        "type": "linear",
+        "stops": [
+          { "color": { "r": 225, "g": 129, "b": 65 }, "position": 0 },
+          { "color": { "r": 235, "g": 174, "b": 192 }, "position": 0.54 }
+        ],
+        "rotation": 0.5
+      },
+      "type": "page",
+      "id": "ffe48325-d8c8-4aa9-b71a-769e698fac4f",
       "pageTemplateType": null
     },
     {
@@ -904,6 +904,7 @@
           "groupId": "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39"
         }
       ],
+      "animations": [],
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -915,7 +916,6 @@
       },
       "type": "page",
       "id": "9bddedee-ad4f-4abe-a391-76909650d68c",
-      "animations": [],
       "pageTemplateType": "section",
       "groups": {
         "1b94a3aa-7de5-4cdd-a86e-b3e9f7d6be39": {
@@ -1102,6 +1102,16 @@
           "height": 16
         }
       ],
+      "animations": [
+        {
+          "id": "435a3a57-9843-48d4-8ee0-dbb2432be34f",
+          "type": "effect-background-pan",
+          "targets": ["a5507610-cde7-43e7-a14b-9d4f274068b4"],
+          "panDir": "bottomToTop",
+          "duration": 3000,
+          "delay": 0
+        }
+      ],
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -1128,16 +1138,6 @@
         "type": "shape",
         "id": "ff914cfc-c429-4983-a8f5-e4e3e82a9098"
       },
-      "animations": [
-        {
-          "id": "435a3a57-9843-48d4-8ee0-dbb2432be34f",
-          "type": "effect-background-pan",
-          "targets": ["a5507610-cde7-43e7-a14b-9d4f274068b4"],
-          "panDir": "bottomToTop",
-          "duration": 3000,
-          "delay": 0
-        }
-      ],
       "pageAttachment": { "theme": "light" },
       "pageTemplateType": "quote"
     },
@@ -1478,6 +1478,7 @@
           "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
         }
       ],
+      "animations": [],
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -1489,7 +1490,6 @@
       },
       "type": "page",
       "id": "7d3625fb-7c89-4cae-b49f-b908f665edb2",
-      "animations": [],
       "pageTemplateType": null
     },
     {
@@ -1551,58 +1551,6 @@
           "id": "22a12da3-3feb-46a5-a6f4-9a38aa6bcbaa",
           "type": "shape",
           "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Ultra",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400],
-            "styles": ["regular"],
-            "variants": [[0, 400]],
-            "metrics": {
-              "upm": 2048,
-              "asc": 2066,
-              "des": -561,
-              "tAsc": 2066,
-              "tDes": -561,
-              "tLGap": 0,
-              "wAsc": 2066,
-              "wDes": 561,
-              "xH": 1102,
-              "capH": 1473,
-              "yMin": -561,
-              "yMax": 2066,
-              "hAsc": 2066,
-              "hDes": -561,
-              "lGap": 0
-            }
-          },
-          "fontSize": 42,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"letter-spacing: 0.05em; text-transform: uppercase\">The Matching Set•The Matching Set&nbsp;</span>",
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 1000,
-          "height": 54,
-          "basedOn": "a6ec82ef-867b-4b15-ad74-6c39e9b7d005",
-          "id": "4eb840ff-1576-4877-b895-2330c04e4a39",
-          "x": -465,
-          "y": -4,
-          "type": "text"
         },
         {
           "opacity": 100,
@@ -1906,6 +1854,58 @@
           },
           "type": "text",
           "groupId": "9947d792-9ca1-436f-b709-3ad80374431a"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Ultra",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "metrics": {
+              "upm": 2048,
+              "asc": 2066,
+              "des": -561,
+              "tAsc": 2066,
+              "tDes": -561,
+              "tLGap": 0,
+              "wAsc": 2066,
+              "wDes": 561,
+              "xH": 1102,
+              "capH": 1473,
+              "yMin": -561,
+              "yMax": 2066,
+              "hAsc": 2066,
+              "hDes": -561,
+              "lGap": 0
+            }
+          },
+          "fontSize": 42,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "content": "<span style=\"letter-spacing: 0.05em; text-transform: uppercase\">The Matching Set•The Matching Set&nbsp;</span>",
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 1000,
+          "height": 54,
+          "basedOn": "a6ec82ef-867b-4b15-ad74-6c39e9b7d005",
+          "id": "4eb840ff-1576-4877-b895-2330c04e4a39",
+          "x": -465,
+          "y": -4,
+          "type": "text"
         }
       ],
       "animations": [],
@@ -2560,58 +2560,6 @@
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Ultra",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400],
-            "styles": ["regular"],
-            "variants": [[0, 400]],
-            "metrics": {
-              "upm": 2048,
-              "asc": 2066,
-              "des": -561,
-              "tAsc": 2066,
-              "tDes": -561,
-              "tLGap": 0,
-              "wAsc": 2066,
-              "wDes": 561,
-              "xH": 1102,
-              "capH": 1473,
-              "yMin": -561,
-              "yMax": 2066,
-              "hAsc": 2066,
-              "hDes": -561,
-              "lGap": 0
-            }
-          },
-          "fontSize": 42,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"letter-spacing: 0.05em\">THE ONE PIECE • THE ONE PIECE</span>",
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "width": 886,
-          "height": 54,
-          "basedOn": "a6ec82ef-867b-4b15-ad74-6c39e9b7d005",
-          "id": "e81d6077-7563-405f-8c18-9029bbf17eea",
-          "x": -349,
-          "y": -3,
-          "type": "text"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 2,
           "lockAspectRatio": false,
           "scale": 104,
@@ -2912,6 +2860,58 @@
           },
           "type": "text",
           "groupId": "8f209e48-e15a-4082-9dfe-76749ea2d7f8"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Ultra",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "metrics": {
+              "upm": 2048,
+              "asc": 2066,
+              "des": -561,
+              "tAsc": 2066,
+              "tDes": -561,
+              "tLGap": 0,
+              "wAsc": 2066,
+              "wDes": 561,
+              "xH": 1102,
+              "capH": 1473,
+              "yMin": -561,
+              "yMax": 2066,
+              "hAsc": 2066,
+              "hDes": -561,
+              "lGap": 0
+            }
+          },
+          "fontSize": 42,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "content": "<span style=\"letter-spacing: 0.05em\">THE ONE PIECE • THE ONE PIECE</span>",
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 886,
+          "height": 54,
+          "basedOn": "a6ec82ef-867b-4b15-ad74-6c39e9b7d005",
+          "id": "e81d6077-7563-405f-8c18-9029bbf17eea",
+          "x": -349,
+          "y": -3,
+          "type": "text"
         }
       ],
       "animations": [],
@@ -3918,73 +3918,44 @@
           "tagName": "h3"
         },
         {
-          "x": 71,
-          "y": 318,
-          "id": "14157845-3d99-4d8a-99f7-5fc7137b4b7a",
-          "basedOn": "f9bee353-0525-4042-b8b2-96bc8b3bdd22",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Rubik",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "metrics": {
-              "upm": 1000,
-              "asc": 935,
-              "des": -250,
-              "tAsc": 935,
-              "tDes": -250,
-              "tLGap": 0,
-              "wAsc": 945,
-              "wDes": 307,
-              "xH": 520,
-              "capH": 700,
-              "yMin": -264,
-              "yMax": 905,
-              "hAsc": 935,
-              "hDes": -250,
-              "lGap": 0
-            }
-          },
-          "fontSize": 19,
+          "rotationAngle": 3,
+          "lockAspectRatio": false,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 1.4,
-          "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "Zenraya’s Summer Looks",
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
+          "type": "image",
+          "x": 50,
+          "y": 103,
+          "width": 136,
+          "height": 149,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "792798d4-cb3e-42bb-bf1b-6bb3a05fbd44",
+          "border": {
+            "left": 4,
+            "right": 4,
+            "top": 4,
+            "bottom": 4,
+            "lockedWidth": true,
+            "color": { "color": { "r": 255, "g": 247, "b": 206 } }
           },
-          "width": 152,
-          "height": 50,
-          "type": "text",
-          "groupId": "687c1444-b285-4137-8f69-250a3d622e50",
-          "tagName": "h3"
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-06-07T14:38:43",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/summer-fashion-collection/page13_image1.jpg",
+            "width": 480,
+            "height": 527,
+            "id": 0,
+            "alt": "Selective focus photography of woman standing beside rail during daytime",
+            "sizes": [],
+            "isOptimized": false,
+            "baseColor": "#a6a4a0",
+            "isExternal": true
+          },
+          "groupId": "6e6bda5a-ba8d-4d39-a64f-9f1671d43608"
         },
         {
           "x": 210,
@@ -4056,46 +4027,6 @@
           "tagName": "h3"
         },
         {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 3,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "type": "image",
-          "x": 50,
-          "y": 103,
-          "width": 136,
-          "height": 149,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": { "type": "rectangle" },
-          "id": "792798d4-cb3e-42bb-bf1b-6bb3a05fbd44",
-          "border": {
-            "left": 4,
-            "right": 4,
-            "top": 4,
-            "bottom": 4,
-            "lockedWidth": true,
-            "color": { "color": { "r": 255, "g": 247, "b": 206 } }
-          },
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-06-07T14:38:43",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/summer-fashion-collection/page13_image1.jpg",
-            "width": 480,
-            "height": 527,
-            "id": 0,
-            "alt": "Selective focus photography of woman standing beside rail during daytime",
-            "sizes": [],
-            "isOptimized": false,
-            "baseColor": "#a6a4a0",
-            "isExternal": true
-          },
-          "groupId": "6e6bda5a-ba8d-4d39-a64f-9f1671d43608"
-        },
-        {
           "x": 47,
           "y": 455,
           "id": "ea6c10d5-19b9-46d2-be95-39bfa5f7bece",
@@ -4135,6 +4066,75 @@
             "isExternal": true
           },
           "groupId": "90972d0d-c9d9-454f-b0fe-22e80cdc2374"
+        },
+        {
+          "x": 71,
+          "y": 318,
+          "id": "14157845-3d99-4d8a-99f7-5fc7137b4b7a",
+          "basedOn": "f9bee353-0525-4042-b8b2-96bc8b3bdd22",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Rubik",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 935,
+              "des": -250,
+              "tAsc": 935,
+              "tDes": -250,
+              "tLGap": 0,
+              "wAsc": 945,
+              "wDes": 307,
+              "xH": 520,
+              "capH": 700,
+              "yMin": -264,
+              "yMax": 905,
+              "hAsc": 935,
+              "hDes": -250,
+              "lGap": 0
+            }
+          },
+          "fontSize": 19,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "left",
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "content": "Zenraya’s Summer Looks",
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "width": 152,
+          "height": 50,
+          "type": "text",
+          "groupId": "687c1444-b285-4137-8f69-250a3d622e50",
+          "tagName": "h3"
         },
         {
           "x": 228,
@@ -4178,16 +4178,6 @@
           "groupId": "687c1444-b285-4137-8f69-250a3d622e50"
         }
       ],
-      "backgroundColor": {
-        "type": "linear",
-        "stops": [
-          { "color": { "r": 225, "g": 129, "b": 65 }, "position": 0 },
-          { "color": { "r": 235, "g": 174, "b": 192 }, "position": 0.54 }
-        ],
-        "rotation": 0.5
-      },
-      "type": "page",
-      "id": "17f1455e-5e7e-434d-a408-c5dc395e9db2",
       "animations": [
         {
           "id": "765fe380-38f2-4ca6-bc5a-8f55c999c536",
@@ -4214,6 +4204,16 @@
           "delay": 600
         }
       ],
+      "backgroundColor": {
+        "type": "linear",
+        "stops": [
+          { "color": { "r": 225, "g": 129, "b": 65 }, "position": 0 },
+          { "color": { "r": 235, "g": 174, "b": 192 }, "position": 0.54 }
+        ],
+        "rotation": 0.5
+      },
+      "type": "page",
+      "id": "17f1455e-5e7e-434d-a408-c5dc395e9db2",
       "pageTemplateType": "list",
       "groups": {
         "6e6bda5a-ba8d-4d39-a64f-9f1671d43608": {

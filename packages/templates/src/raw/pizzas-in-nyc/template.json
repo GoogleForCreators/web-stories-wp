@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -158,6 +158,7 @@
           "height": 44
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "622df19a-39be-43de-9b02-e94449d0988d",
@@ -177,7 +178,6 @@
         "type": "shape",
         "id": "bbdc08c8-4ad8-4ed6-8040-f87a30b56f16"
       },
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -352,6 +352,15 @@
           "groupId": "9ec8f4c2-5acd-4485-87b1-8a83b9d10e30"
         }
       ],
+      "animations": [
+        {
+          "id": "341259c4-cf2c-46fa-b608-31570784981a",
+          "type": "effect-fade-in",
+          "targets": ["bb1dd937-9734-4d5e-8b60-68e45a56cc1f"],
+          "duration": 2000,
+          "delay": 200
+        }
+      ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "cd007a53-4d9d-4363-82ec-8f334f64ac6f",
@@ -371,15 +380,6 @@
         "type": "shape",
         "id": "8f9e6993-c98f-4fc7-90bc-212fa10036bd"
       },
-      "animations": [
-        {
-          "id": "341259c4-cf2c-46fa-b608-31570784981a",
-          "type": "effect-fade-in",
-          "targets": ["bb1dd937-9734-4d5e-8b60-68e45a56cc1f"],
-          "duration": 2000,
-          "delay": 200
-        }
-      ],
       "pageTemplateType": null,
       "groups": {
         "9ec8f4c2-5acd-4485-87b1-8a83b9d10e30": {
@@ -648,10 +648,10 @@
           "groupId": "1573a2c0-1bf1-4d21-8a69-15a355dccfef"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "19bcb726-8666-4323-8c64-c684699d0a41",
-      "animations": [],
       "pageTemplateType": "editorial",
       "groups": {
         "1573a2c0-1bf1-4d21-8a69-15a355dccfef": {
@@ -1031,6 +1031,16 @@
           "groupId": "1bbe0d93-915e-4b8a-80dd-e90112fabe6c"
         }
       ],
+      "animations": [
+        {
+          "id": "dc8a2e9f-dcd2-4009-b1b2-6c248e0e8f79",
+          "type": "effect-background-zoom",
+          "zoomDirection": "scaleIn",
+          "duration": 4000,
+          "delay": 0,
+          "targets": ["96134eee-b383-4fde-869f-53c57ce6c307"]
+        }
+      ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "b047a2c1-00bb-4421-9e63-381b6dc23ad6",
@@ -1050,16 +1060,6 @@
         "type": "shape",
         "id": "65f27998-4542-4af5-9793-80a0fab0b074"
       },
-      "animations": [
-        {
-          "id": "dc8a2e9f-dcd2-4009-b1b2-6c248e0e8f79",
-          "type": "effect-background-zoom",
-          "zoomDirection": "scaleIn",
-          "duration": 4000,
-          "delay": 0,
-          "targets": ["96134eee-b383-4fde-869f-53c57ce6c307"]
-        }
-      ],
       "pageTemplateType": null,
       "groups": {
         "1bbe0d93-915e-4b8a-80dd-e90112fabe6c": {
@@ -1733,6 +1733,22 @@
           "id": "d53839a4-51b4-4e0c-9aae-19f7b9b8f061"
         }
       ],
+      "animations": [
+        {
+          "id": "b5f32c5b-85bc-43e7-aa87-daeac1c80ddc",
+          "type": "effect-fade-in",
+          "targets": ["755bf31d-5ecd-47f0-abce-95938e285635"],
+          "duration": 2000,
+          "delay": 0
+        },
+        {
+          "targets": ["d53839a4-51b4-4e0c-9aae-19f7b9b8f061"],
+          "id": "93876a65-3343-491d-99d9-9681711c55f1",
+          "type": "effect-fade-in",
+          "duration": 2000,
+          "delay": 0
+        }
+      ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "15071bca-99eb-4d5d-b978-5942860fdf69",
@@ -1752,22 +1768,6 @@
         "type": "shape",
         "id": "47621367-6c30-4f3d-89e5-240c6e0cd13b"
       },
-      "animations": [
-        {
-          "id": "b5f32c5b-85bc-43e7-aa87-daeac1c80ddc",
-          "type": "effect-fade-in",
-          "targets": ["755bf31d-5ecd-47f0-abce-95938e285635"],
-          "duration": 2000,
-          "delay": 0
-        },
-        {
-          "targets": ["d53839a4-51b4-4e0c-9aae-19f7b9b8f061"],
-          "id": "93876a65-3343-491d-99d9-9681711c55f1",
-          "type": "effect-fade-in",
-          "duration": 2000,
-          "delay": 0
-        }
-      ],
       "pageTemplateType": null,
       "groups": {
         "3cf7b9b0-4373-4675-bfdd-90c9774d7e7d": {
