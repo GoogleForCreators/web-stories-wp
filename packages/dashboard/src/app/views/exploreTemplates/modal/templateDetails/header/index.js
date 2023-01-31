@@ -21,9 +21,9 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
   Icons,
 } from '@googleforcreators/design-system';
 /**
@@ -41,8 +41,8 @@ const Nav = styled.nav`
 `;
 
 const CTAButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PRIMARY,
-  size: BUTTON_SIZES.SMALL,
+  type: ButtonType.Primary,
+  size: ButtonSize.Small,
 })`
   /* Use Template button should be same height as Close button.*/
   padding: 10px 16px;
@@ -58,9 +58,9 @@ function Header({
   return (
     <Nav>
       <Button
-        type={BUTTON_TYPES.TERTIARY}
-        variant={BUTTON_VARIANTS.SQUARE}
-        size={BUTTON_SIZES.SMALL}
+        type={ButtonType.Tertiary}
+        variant={ButtonVariant.Square}
+        size={ButtonSize.Small}
         aria-label={__('Close', 'web-stories')}
         onClick={handleDetailsToggle}
       >

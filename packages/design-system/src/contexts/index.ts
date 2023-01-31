@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 export * from './snackbar';
-export { default as PopupContext } from './popup/context';
-export { default as PopupProvider } from './popup/popupProvider';
-export { usePopup } from './popup/usePopup';
+export * from './popup';

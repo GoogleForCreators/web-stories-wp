@@ -21,10 +21,10 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import {
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Dialog,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  ButtonType,
+  ButtonSize,
   Button,
   theme,
 } from '@googleforcreators/design-system';
@@ -39,15 +39,15 @@ function ConfirmationDialog({ onClose, onPrimary }) {
         actions={
           <>
             <Button
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
+              type={ButtonType.Tertiary}
+              size={ButtonSize.Small}
               onClick={() => onClose()}
             >
               {__('Cancel', 'web-stories')}
             </Button>
             <Button
-              type={BUTTON_TYPES.PRIMARY}
-              size={BUTTON_SIZES.SMALL}
+              type={ButtonType.Primary}
+              size={ButtonSize.Small}
               onClick={() => onPrimary()}
             >
               {__('Delete Font', 'web-stories')}
@@ -55,12 +55,12 @@ function ConfirmationDialog({ onClose, onPrimary }) {
           </>
         }
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text.Paragraph size={TextSize.Small}>
           {__(
             'Deleting a font will delete it from every previous story it’s in. Would you like to proceed?',
             'web-stories'
           )}
-        </Text>
+        </Text.Paragraph>
       </Dialog>
     </ThemeProvider>
   );

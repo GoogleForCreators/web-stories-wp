@@ -19,9 +19,13 @@
  */
 import { createContext } from '@googleforcreators/react';
 
-export interface PopupContext {
-  topOffset?: number;
-  leftOffset?: number;
-  isRTL?: boolean;
-}
-export default createContext<PopupContext>({});
+/**
+ * Internal dependencies
+ */
+import type { PopupState } from './types';
+
+export default createContext<PopupState>({
+  isRTL: false,
+  leftOffset: 0,
+  topOffset: 0,
+});

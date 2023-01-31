@@ -20,11 +20,11 @@
 import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  THEME_CONSTANTS,
+  ButtonAsLink,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
 
@@ -64,23 +64,23 @@ function PostTakeOverDialog({
       shouldCloseOnOverlayClick={false}
       actions={
         <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+          <ButtonAsLink
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             href={previewLink}
             target="_blank"
             rel="noreferrer"
           >
             {__('Preview', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.RECTANGLE}
+          </ButtonAsLink>
+          <ButtonAsLink
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
+            variant={ButtonVariant.Rectangle}
             href={dashboardLink}
           >
             {__('Back to dashboard', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         </>
       }
     >
@@ -99,7 +99,7 @@ function PostTakeOverDialog({
         )}
 
         <DialogContent>
-          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <DialogText size={TextSize.Small}>
             {sprintf(
               /* translators: %s: owner's name */
               __('%s now has editing control of this story.', 'web-stories'),
@@ -107,7 +107,7 @@ function PostTakeOverDialog({
             )}
           </DialogText>
 
-          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <DialogText size={TextSize.Small}>
             {__(
               "Don't worry, your changes up to this moment have been saved",
               'web-stories'

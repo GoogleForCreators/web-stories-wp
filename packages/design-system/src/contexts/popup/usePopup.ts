@@ -22,11 +22,15 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import Context, { PopupContext } from './context';
+import Context from './context';
+import type { PopupState } from './types';
 
-export function usePopup(): PopupContext;
-export function usePopup<T>(
-  selector: (state: PopupContext) => T | PopupContext = identity
+function usePopup(): PopupState;
+function usePopup<T>(selector: (state: PopupState) => T): T;
+function usePopup<T>(
+  selector: (state: PopupState) => T | PopupState = identity
 ) {
   return useContextSelector(Context, selector);
 }
+
+export default usePopup;

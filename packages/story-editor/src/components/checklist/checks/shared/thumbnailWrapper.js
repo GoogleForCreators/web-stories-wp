@@ -21,9 +21,9 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Disclosure,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -52,9 +52,9 @@ const Wrapper = styled.div`
 `;
 
 const StyledButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.RECTANGLE,
-  size: BUTTON_SIZES.SMALL,
-  type: BUTTON_TYPES.TERTIARY,
+  variant: ButtonVariant.Rectangle,
+  size: ButtonSize.Small,
+  type: ButtonType.Tertiary,
 })`
   grid-column: span 4;
   display: flex;

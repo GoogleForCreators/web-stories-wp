@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_TYPES,
+  ButtonType,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { useRef, memo, useContext } from '@googleforcreators/react';
@@ -34,7 +34,7 @@ import Tooltip from '../../tooltip';
 import LayerIdContext from './layerIdContext';
 
 const ActionButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PLAIN,
+  type: ButtonType.Plain,
   tabIndex: -1,
 })`
   position: relative;

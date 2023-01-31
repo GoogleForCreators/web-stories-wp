@@ -24,11 +24,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
+import { TextSize } from '../../../theme';
 import { Headline, Text } from '../../typography';
 import { Cross } from '../../../icons';
-import { Button } from '../button';
-import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../constants';
+import { Button, ButtonAsLink } from '../button';
+import { ButtonSize, ButtonType, ButtonVariant } from '../constants';
 import { ToggleButton, LockToggle } from '../toggleButton';
 import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 
@@ -36,22 +36,22 @@ export default {
   title: 'DesignSystem/Components/Button',
   argTypes: {
     type: {
-      options: Object.values(BUTTON_TYPES),
+      options: Object.values(ButtonType),
       control: 'select',
     },
     variant: {
-      options: Object.values(BUTTON_VARIANTS),
+      options: Object.values(ButtonVariant),
       control: 'select',
     },
     size: {
-      options: Object.values(BUTTON_SIZES),
+      options: Object.values(ButtonSize),
       control: 'radio',
     },
   },
   args: {
-    type: BUTTON_TYPES.PRIMARY,
-    variant: BUTTON_VARIANTS.RECTANGLE,
-    size: BUTTON_SIZES.MEDIUM,
+    type: ButtonType.Primary,
+    variant: ButtonVariant.Rectangle,
+    size: ButtonSize.Medium,
   },
 };
 
@@ -79,7 +79,7 @@ const Row = styled.div`
 `;
 
 function ButtonContent({ variant }) {
-  return [BUTTON_VARIANTS.RECTANGLE, BUTTON_VARIANTS.LINK].includes(variant) ? (
+  return [ButtonVariant.Rectangle, ButtonVariant.Link].includes(variant) ? (
     'Standard Button'
   ) : (
     <Cross />
@@ -87,16 +87,16 @@ function ButtonContent({ variant }) {
 }
 
 ButtonContent.propTypes = {
-  variant: PropTypes.oneOf(Object.values(BUTTON_VARIANTS)),
+  variant: PropTypes.oneOf(Object.values(ButtonVariant)),
 };
 
 const ButtonCombosToDisplay = (args) => (
   <Container>
     <Headline as="h2">{'Buttons by Variant, Size, and Type'}</Headline>
-    {Object.values(BUTTON_VARIANTS).map((buttonVariant) => {
-      return Object.values(BUTTON_SIZES).map((buttonSize) => (
+    {Object.values(ButtonVariant).map((buttonVariant) => {
+      return Object.values(ButtonSize).map((buttonSize) => (
         <Row key={`${buttonVariant}_${buttonSize}_row_storybook`}>
-          {Object.values(BUTTON_TYPES).map((buttonType) => (
+          {Object.values(ButtonType).map((buttonType) => (
             <div key={`${buttonVariant}_${buttonSize}_${buttonType}_storybook`}>
               <Button
                 key={`${buttonVariant}_${buttonType}_storybook`}
@@ -106,41 +106,41 @@ const ButtonCombosToDisplay = (args) => (
               >
                 <ButtonContent variant={buttonVariant} />
               </Button>
-              <Text>
+              <Text.Paragraph>
                 {`variant: ${buttonVariant}`} <br />
                 {`size: ${buttonSize}`} <br />
                 {`type: ${buttonType}`}
-              </Text>
+              </Text.Paragraph>
             </div>
           ))}
         </Row>
       ));
     })}
-    <Headline as="h3" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+    <Headline as="h3" size={TextSize.Small}>
       {'Button Demos'}
     </Headline>
     <Row>
       <div>
-        <Button href="" {...args}>
+        <ButtonAsLink href="" {...args}>
           {'Link as Button'}
-        </Button>
-        <Text>{'Link as Button'}</Text>
+        </ButtonAsLink>
+        <Text.Paragraph>{'Link as Button'}</Text.Paragraph>
       </div>
       <div>
-        <Button type={BUTTON_TYPES.PRIMARY}>
+        <Button type={ButtonType.Primary}>
           {'Just a really really long button to ensure edge cases!!!!!'}
         </Button>
-        <Text>{'Edge case: really long'}</Text>
+        <Text.Paragraph>{'Edge case: really long'}</Text.Paragraph>
       </div>
       <div>
-        <Button type={BUTTON_TYPES.PRIMARY}>{'Text'}</Button>
-        <Text>{'Edge case: short'}</Text>
+        <Button type={ButtonType.Primary}>{'Text'}</Button>
+        <Text.Paragraph>{'Edge case: short'}</Text.Paragraph>
       </div>
       <div>
         <Button disabled {...args}>
           {'Text'}
         </Button>
-        <Text>{'Disabled button'}</Text>
+        <Text.Paragraph>{'Disabled button'}</Text.Paragraph>
       </div>
     </Row>
   </Container>
@@ -156,10 +156,10 @@ export const DarkTheme = (args) => {
 
 export const LightTheme = (args) => <ButtonCombosToDisplay {...args} />;
 
-const TOGGLE_VARIANTS = [BUTTON_VARIANTS.CIRCLE, BUTTON_VARIANTS.SQUARE];
+const TOGGLE_VARIANTS = [ButtonVariant.Circle, ButtonVariant.Square];
 const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
   <Container>
-    {Object.values(BUTTON_SIZES).map((buttonSize) => (
+    {Object.values(ButtonSize).map((buttonSize) => (
       <Row key={`${buttonSize}_row_storybook`}>
         {TOGGLE_VARIANTS.map((buttonVariant) => (
           <div key={`${buttonVariant}_${buttonSize}_storybook`}>
@@ -173,7 +173,7 @@ const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
             >
               <ButtonContent variant={buttonVariant} />
             </ToggleButton>
-            <Text>
+            <Text.Paragraph>
               {`variant: ${buttonVariant}`} <br />
               {`size: ${buttonSize}`} <br />
               {`is toggled: ${isToggled}`}
@@ -183,7 +183,7 @@ const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
                   {`type: ${type}`}
                 </>
               )}
-            </Text>
+            </Text.Paragraph>
           </div>
         ))}
       </Row>
@@ -194,7 +194,7 @@ const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
 ToggleButtonContainer.propTypes = {
   isToggled: PropTypes.bool.isRequired,
   swapToggled: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
+  type: PropTypes.oneOf(Object.values(ButtonType)),
 };
 
 export const ToggleButtons = () => {
@@ -212,13 +212,13 @@ export const ToggleButtons = () => {
       <ToggleButtonContainer
         isToggled={isToggled}
         swapToggled={swapToggled}
-        type={BUTTON_TYPES.QUATERNARY}
+        type={ButtonType.Quaternary}
       />
       <DarkThemeProvider>
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
-          type={BUTTON_TYPES.QUATERNARY}
+          type={ButtonType.Quaternary}
         />
       </DarkThemeProvider>
     </>

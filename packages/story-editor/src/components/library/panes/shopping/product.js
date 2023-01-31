@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -31,8 +31,8 @@ const StyledDescription = styled.div`
   padding-left: 12px;
 `;
 
-const StyledTitle = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const StyledTitle = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;

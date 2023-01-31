@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { Button, BUTTON_VARIANTS } from '@googleforcreators/design-system';
+import { Button, ButtonVariant } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -56,7 +56,7 @@ const LoadingContainer = styled.div`
 `;
 
 const ACTION_BUTTON_SIZE = 16;
-const ActionButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
+const ActionButton = styled(Button).attrs({ variant: ButtonVariant.Icon })`
   display: flex;
   align-items: center;
   position: absolute;

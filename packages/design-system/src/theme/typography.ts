@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-
-import { PRESET_SIZES } from './constants/typography';
+import { TextSize } from './types';
 
 // sizes are in px but unit is left off in case calculations are necessary
 const themeFonts = {
@@ -32,19 +32,19 @@ export const typography = {
   },
   presets: {
     display: {
-      [PRESET_SIZES.LARGE]: {
+      [TextSize.Large]: {
         weight: 700,
         size: 122,
         lineHeight: 124,
         letterSpacing: -2.4,
       },
-      [PRESET_SIZES.MEDIUM]: {
+      [TextSize.Medium]: {
         weight: 700,
         size: 58,
         lineHeight: 64,
         letterSpacing: -1.4,
       },
-      [PRESET_SIZES.SMALL]: {
+      [TextSize.Small]: {
         weight: 700,
         size: 36,
         lineHeight: 40,
@@ -52,49 +52,49 @@ export const typography = {
       },
     },
     headline: {
-      [PRESET_SIZES.XX_LARGE]: {
+      [TextSize.XXLarge]: {
         weight: 400,
         size: 42,
         lineHeight: 56,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.X_LARGE]: {
+      [TextSize.XLarge]: {
         weight: 400,
         size: 36,
         lineHeight: 44,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.LARGE]: {
+      [TextSize.Large]: {
         weight: 400,
         size: 32,
         lineHeight: 40,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.MEDIUM]: {
+      [TextSize.Medium]: {
         weight: 400,
         size: 28,
         lineHeight: 36,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.SMALL]: {
+      [TextSize.Small]: {
         weight: 400,
         size: 24,
         lineHeight: 32,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.X_SMALL]: {
+      [TextSize.XSmall]: {
         weight: 500,
         size: 20,
         lineHeight: 24,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.XX_SMALL]: {
+      [TextSize.XXSmall]: {
         weight: 700,
         size: 16,
         lineHeight: 24,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.XXX_SMALL]: {
+      [TextSize.XXXSmall]: {
         weight: 700,
         size: 14,
         lineHeight: 20,
@@ -102,31 +102,31 @@ export const typography = {
       },
     },
     paragraph: {
-      [PRESET_SIZES.X_LARGE]: {
+      [TextSize.XLarge]: {
         weight: 400,
         size: 24,
         lineHeight: 32,
         letterSpacing: -0.02,
       },
-      [PRESET_SIZES.LARGE]: {
+      [TextSize.Large]: {
         weight: 400,
         size: 18,
         lineHeight: 24,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.MEDIUM]: {
+      [TextSize.Medium]: {
         weight: 400,
         size: 16,
         lineHeight: 24,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.SMALL]: {
+      [TextSize.Small]: {
         weight: 400,
         size: 14,
         lineHeight: 20,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.X_SMALL]: {
+      [TextSize.XSmall]: {
         weight: 400,
         size: 12,
         lineHeight: 20,
@@ -134,31 +134,31 @@ export const typography = {
       },
     },
     link: {
-      [PRESET_SIZES.X_LARGE]: {
+      [TextSize.XLarge]: {
         weight: 400,
         size: 24,
         lineHeight: 32,
         letterSpacing: -0.02,
       },
-      [PRESET_SIZES.LARGE]: {
+      [TextSize.Large]: {
         weight: 700,
         size: 18,
         lineHeight: 24,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.MEDIUM]: {
+      [TextSize.Medium]: {
         weight: 700,
         size: 16,
         lineHeight: 24,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.SMALL]: {
+      [TextSize.Small]: {
         weight: 700,
         size: 14,
         lineHeight: 20,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.X_SMALL]: {
+      [TextSize.XSmall]: {
         weight: 700,
         size: 12,
         lineHeight: 20,
@@ -166,25 +166,25 @@ export const typography = {
       },
     },
     label: {
-      [PRESET_SIZES.LARGE]: {
+      [TextSize.Large]: {
         weight: 400,
         size: 18,
         lineHeight: 24,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.MEDIUM]: {
+      [TextSize.Medium]: {
         weight: 400,
         size: 16,
         lineHeight: 20,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.SMALL]: {
+      [TextSize.Small]: {
         weight: 400,
         size: 14,
         lineHeight: 12,
         letterSpacing: 0,
       },
-      [PRESET_SIZES.X_SMALL]: {
+      [TextSize.XSmall]: {
         weight: 400,
         size: 12,
         lineHeight: 20,
@@ -192,4 +192,4 @@ export const typography = {
       },
     },
   },
-};
+} as const;

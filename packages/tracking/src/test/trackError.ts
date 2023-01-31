@@ -20,7 +20,8 @@ jest.mock('../shared');
  * Internal dependencies
  */
 import trackError from '../trackError';
-import { config, ControlParams, gtag } from '../shared';
+import { config, gtag } from '../shared';
+import type { ControlParams } from '../shared';
 
 describe('trackError', () => {
   afterEach(() => {

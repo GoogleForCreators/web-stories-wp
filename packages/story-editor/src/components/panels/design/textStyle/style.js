@@ -25,8 +25,8 @@ import {
   NumericInput,
   Icons,
   ToggleButton,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 import { stripHTML } from '@googleforcreators/dom';
 import { clamp } from '@googleforcreators/units';
@@ -67,8 +67,8 @@ const StyledToggle = styled(ToggleButton)`
 function Toggle(props) {
   return (
     <StyledToggle
-      size={BUTTON_SIZES.SMALL}
-      variant={BUTTON_VARIANTS.SQUARE}
+      size={ButtonSize.Small}
+      variant={ButtonVariant.Square}
       {...props}
     />
   );

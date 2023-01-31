@@ -19,7 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { THEME_CONSTANTS, Text } from '@googleforcreators/design-system';
+import { TextSize, Text } from '@googleforcreators/design-system';
 import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 
@@ -67,7 +67,7 @@ const NoSelection = styled.div`
   align-items: center;
 `;
 
-const Note = styled(Text)`
+const Note = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
@@ -106,7 +106,7 @@ function StyleLayout() {
   if (selectedElementIds.length === 0) {
     return (
       <NoSelection>
-        <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+        <Note size={TextSize.Medium}>
           {__('Nothing selected', 'web-stories')}
         </Note>
       </NoSelection>

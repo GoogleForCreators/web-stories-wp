@@ -23,9 +23,9 @@ import { __ } from '@googleforcreators/i18n';
 import { ColorStopPropType } from '@googleforcreators/patterns';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
 } from '@googleforcreators/design-system';
 
@@ -89,9 +89,9 @@ function GradientPicker({
           <SmallButton
             aria-label={reverseLabel}
             onClick={onReverse}
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.SQUARE}
+            type={ButtonType.Quaternary}
+            size={ButtonSize.Small}
+            variant={ButtonVariant.Square}
           >
             <Icons.ArrowsLeftRight />
           </SmallButton>
@@ -101,9 +101,9 @@ function GradientPicker({
             <SmallButton
               onClick={onRotate}
               aria-label={rotateLabel}
-              type={BUTTON_TYPES.QUATERNARY}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.SQUARE}
+              type={ButtonType.Quaternary}
+              size={ButtonSize.Small}
+              variant={ButtonVariant.Square}
             >
               <Icons.ArrowRightCurved id="gradient-rotator" />
             </SmallButton>

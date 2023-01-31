@@ -25,9 +25,9 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { theme } from '../../..';
 import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
-import { SnackbarContainer } from '../snackbarContainer';
-import { THUMBNAIL_STATUS } from '../constants';
-import { Button, BUTTON_TYPES } from '../..';
+import SnackbarContainer from '../snackbarContainer';
+import { ThumbnailStatus } from '../types';
+import { Button, ButtonType } from '../..';
 
 const buttonText = [
   'Sorry, your image failed to load',
@@ -146,8 +146,8 @@ export const ThumbnailMessage = ({ successBool, landscapeBool, ...args }) => {
                 src: `https://picsum.photos/${landscape ? '90/60' : '60/90'}`,
                 alt: 'test',
                 status: success
-                  ? THUMBNAIL_STATUS.SUCCESS
-                  : THUMBNAIL_STATUS.ERROR,
+                  ? ThumbnailStatus.Success
+                  : ThumbnailStatus.Error,
               },
               ...args,
             },
@@ -226,7 +226,7 @@ export const ShowSnackbarByClickingButton = ({
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <Button type={BUTTON_TYPES.PRIMARY} onClick={handleAddSnackbarToQueue}>
+        <Button type={ButtonType.Primary} onClick={handleAddSnackbarToQueue}>
           {'Show Snackbar'}
         </Button>
         <SnackbarContainer notifications={messageQueue} />

@@ -25,7 +25,7 @@ import { memo, useMemo } from '@googleforcreators/react';
 import {
   Icons,
   Text as DefaultText,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -50,7 +50,7 @@ const Box = styled.div`
   text-align: center;
 `;
 
-const Text = styled(DefaultText)`
+const Text = styled(DefaultText.Paragraph)`
   color: ${({ theme }) => theme.colors.standard.white};
   margin-bottom: 14px;
   margin-top: 0px;
@@ -99,12 +99,10 @@ function UploadDropTargetMessage({ message, ...rest }) {
     <Container {...rest}>
       <Box>
         <Icon />
-        <Text isBold size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+        <Text.Paragraph isBold size={TextSize.Medium}>
           {message}
-        </Text>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {description}
-        </Text>
+        </Text.Paragraph>
+        <Text.Paragraph size={TextSize.Small}>{description}</Text.Paragraph>
       </Box>
     </Container>
   );

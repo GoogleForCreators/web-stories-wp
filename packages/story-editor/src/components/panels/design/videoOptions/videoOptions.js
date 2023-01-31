@@ -23,11 +23,11 @@ import styled from 'styled-components';
 import {
   Text,
   CircularProgress,
-  THEME_CONSTANTS,
+  TextSize,
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   useLiveRegion,
   Slider,
 } from '@googleforcreators/design-system';
@@ -71,8 +71,8 @@ const VolumeWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+const HelperText = styled(Text.Paragraph).attrs({
+  size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
@@ -141,9 +141,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           <TrimWrapper>
             <TrimButton
               disabled={isDisabled}
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
+              variant={ButtonVariant.Rectangle}
+              type={ButtonType.Secondary}
+              size={ButtonSize.Small}
               onClick={handleTrim}
             >
               {trimButtonText}
@@ -154,13 +154,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       </Row>
       {showVolumeControl && (
         <VolumeWrapper>
-          <Text
-            as="label"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            htmlFor={slideId}
-          >
+          <Text.Label size={TextSize.Small} htmlFor={slideId}>
             {__('Volume', 'web-stories')}
-          </Text>
+          </Text.Label>
           <StyledSlider
             value={Math.round(volume * 100)}
             handleChange={onChangeVolume}
@@ -178,9 +174,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           <Row spaceBetween={false}>
             <StyledButton
               disabled={isDisabled}
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
+              variant={ButtonVariant.Rectangle}
+              type={ButtonType.Secondary}
+              size={ButtonSize.Small}
               onClick={handleMute}
             >
               {muteButtonText}

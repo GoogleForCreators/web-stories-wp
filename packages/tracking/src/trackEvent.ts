@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { config, EventParameters } from './shared';
+import { config } from './shared';
+import type { EventParameters } from './shared';
 import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
 

@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { SnackbarContainer } from '../snackbarContainer';
+import SnackbarContainer from '../snackbarContainer';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop, useLiveRegion } from '../../../utils';
 

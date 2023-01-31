@@ -24,7 +24,7 @@ import styled from 'styled-components';
 import {
   Text,
   Checkbox,
-  THEME_CONSTANTS,
+  TextSize,
   LOCAL_STORAGE_PREFIX,
   localStore,
 } from '@googleforcreators/design-system';
@@ -62,12 +62,12 @@ function ConfirmationDialog({ onClose, onPrimary }) {
       onPrimary={onPrimary}
       primaryText={__('Delete', 'web-stories')}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Paragraph size={TextSize.Small}>
         {__(
           'This is a global color. Deleting this color will remove it from the Saved Colors across all stories and the color will no longer be available to any other users on the site.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
       <CheckboxWrapper>
         <Checkbox
           id={cbId}
@@ -81,9 +81,9 @@ function ConfirmationDialog({ onClose, onPrimary }) {
           }}
         />
         <Label htmlFor={cbId}>
-          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text.Span size={TextSize.Small}>
             {__("Don't ask for confirmation again.", 'web-stories')}
-          </Text>
+          </Text.Span>
         </Label>
       </CheckboxWrapper>
     </Dialog>

@@ -24,12 +24,12 @@ import {
 } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Checkbox,
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
@@ -55,18 +55,15 @@ const ButtonContainer = styled.div`
   margin-top: 16px;
 `;
 
-const BoldText = styled(Text).attrs({ as: 'span', isBold: true })`
+const BoldText = styled(Text.Span).attrs({ isBold: true })`
   color: ${({ theme }) => theme.colors.standard.white};
 `;
 
-const DescriptionText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const CheckboxLabel = styled(Text.Label).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin-bottom: 16px;
-`;
-
-const CheckboxLabel = styled(DescriptionText)`
   margin-left: 8px;
   margin-bottom: 0;
   line-height: 20px;
@@ -131,8 +128,8 @@ function VideoOptimizationCheckbox() {
             </DefaultFooterText>
             <ButtonContainer>
               <Button
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
+                type={ButtonType.Secondary}
+                size={ButtonSize.Small}
                 onClick={handleSave}
                 disabled={isSaving}
                 ref={saveButtonRef}
@@ -148,15 +145,12 @@ function VideoOptimizationCheckbox() {
               checked={currentUser?.mediaOptimization}
               onChange={handleToggle}
             />
-            <CheckboxLabel
-              forwardedAs="label"
-              htmlFor="automatic-video-optimization-toggle"
-            >
+            <CheckboxLabel htmlFor="automatic-video-optimization-toggle">
               <TranslateWithMarkup
                 mapping={{
                   a: (
                     <Link
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      size={TextSize.Small}
                       onClick={(evt) =>
                         trackClick(evt, 'click_video_optimization_settings')
                       }

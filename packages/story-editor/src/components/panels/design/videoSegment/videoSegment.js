@@ -22,10 +22,10 @@ import styled from 'styled-components';
 import {
   Text,
   Button,
-  THEME_CONSTANTS,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  TextSize,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   useSnackbar,
   Slider,
 } from '@googleforcreators/design-system';
@@ -60,8 +60,8 @@ const StyledSlider = styled(Slider)`
   width: 100%;
 `;
 
-const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+const HelperText = styled(Text.Paragraph).attrs({
+  size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
@@ -234,9 +234,9 @@ function VideoSegmentPanel({ pushUpdate, selectedElements }) {
         </SliderWrapper>
         <StyledButton
           disabled={isSegmenting}
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Rectangle}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           onClick={onClick}
         >
           {segmentButtonText}

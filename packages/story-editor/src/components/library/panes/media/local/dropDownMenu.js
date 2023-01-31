@@ -30,7 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   Icons,
   Menu,
-  PLACEMENT,
+  Placement,
   Popup,
   noop,
 } from '@googleforcreators/design-system';
@@ -92,9 +92,9 @@ function DropDownMenu({
   onMenuSelected,
   setParentActive = noop,
 }) {
-  const options = [
+  const groups = [
     {
-      group: [
+      options: [
         {
           label: __('Edit meta data', 'web-stories'),
           value: MENU_OPTIONS.EDIT,
@@ -178,15 +178,15 @@ function DropDownMenu({
         {(display || isMenuOpen) && (
           <Popup
             anchor={moreButtonRef}
-            placement={PLACEMENT.BOTTOM_START}
+            placement={Placement.Bottom_START}
             isOpen={isMenuOpen}
           >
             <DropDownContainer>
               <Menu
                 parentId={buttonId}
                 listId={listId}
-                onMenuItemClick={handleCurrentValue}
-                options={options}
+                handleMenuItemSelect={handleCurrentValue}
+                groups={groups}
                 onDismissMenu={onClose}
                 hasMenuRole
                 menuStylesOverride={menuStylesOverride}

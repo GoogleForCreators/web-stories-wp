@@ -23,7 +23,7 @@ import {
   Link,
   themeHelpers,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   VisuallyHidden,
 } from '@googleforcreators/design-system';
 
@@ -63,13 +63,13 @@ const Video = styled.video`
 `;
 
 const Title = styled.h1`
-  ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
+  ${themeHelpers.expandTextPreset(({ label }, { Medium }) => label[Medium])}
   color: ${({ theme }) => theme.colors.fg.primary};
   line-height: 32px;
   margin: 0 0 8px 0;
 `;
 
-const Paragraph = styled(Text)`
+const Paragraph = styled(Text.Paragraph)`
   & + & {
     margin-top: 8px;
   }
@@ -144,13 +144,13 @@ export function QuickTip({
             <Paragraph
               // eslint-disable-next-line react/no-array-index-key -- Should be OK due to also using the title.
               key={`${title}-${i}`}
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              size={TextSize.Small}
             >
               <TranslateWithMarkup
                 mapping={{
                   a: (
                     <Link
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      size={TextSize.Small}
                       rel="noreferrer noopener"
                       target="_blank"
                       href={href}

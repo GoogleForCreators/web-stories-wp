@@ -38,12 +38,12 @@ import Context from './context';
 import {
   getNodeFromRefOrNode,
   getOrCreateMousetrap,
-  HTMLElementWithMouseTrap,
   resolveKeySpec,
   createKeyHandler,
   createShortcutAriaLabel,
   prettifyShortcut,
 } from './utils';
+import type { HTMLElementWithMouseTrap } from './utils';
 
 const globalRef: { current: null | HTMLElement } = { current: null };
 

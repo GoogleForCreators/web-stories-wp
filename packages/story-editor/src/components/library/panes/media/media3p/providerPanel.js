@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { resourceList } from '@googleforcreators/media';
-import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Headline, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -37,7 +37,7 @@ import useLocalMedia from '../../../../../app/media/local/useLocalMedia';
 
 const MediaSubheading = styled(Headline).attrs(() => ({
   as: 'h2',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+  size: TextSize.XXSmall,
 }))`
   margin-top: 24px;
   padding: 0 24px;

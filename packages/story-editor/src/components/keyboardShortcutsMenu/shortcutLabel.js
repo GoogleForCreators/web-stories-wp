@@ -27,7 +27,7 @@ const Wrapper = styled.dd`
 
   kbd {
     ${themeHelpers.expandTextPreset(
-      ({ paragraph }, { X_SMALL }) => paragraph[X_SMALL]
+      ({ paragraph }, { XSmall }) => paragraph[XSmall]
     )}
 
     display: flex;

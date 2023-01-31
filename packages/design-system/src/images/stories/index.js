@@ -49,9 +49,7 @@ export const Default = () => {
         return (
           <li key={imageName}>
             <Image />
-            <Text as="span" isBold>
-              {imageName}
-            </Text>
+            <Text.Span isBold>{imageName}</Text.Span>
           </li>
         );
       })}

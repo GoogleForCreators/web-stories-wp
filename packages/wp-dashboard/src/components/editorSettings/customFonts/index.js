@@ -27,12 +27,12 @@ import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { isValidUrl, withProtocol } from '@googleforcreators/url';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   useSnackbar,
   useLiveRegion,
@@ -96,7 +96,7 @@ const FontsWrapper = styled.div`
   margin-top: 34px;
 `;
 
-const ListHeading = styled(Text)`
+const ListHeading = styled(Text.Span)`
   margin-bottom: 10px;
   display: inline-block;
 `;
@@ -147,7 +147,7 @@ const FontData = styled.div`
   max-width: calc(100% - 32px);
 `;
 
-const StyledText = styled(Text).attrs({
+const StyledText = styled(Text.Paragraph).attrs({
   as: 'span',
 })``;
 
@@ -321,10 +321,10 @@ function CustomFontsSettings({
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading as="h3">{TEXT.SECTION_HEADING}</SettingHeading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {TEXT.ADD_CONTEXT}
         </SettingSubheading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {TEXT.REMOVAL}
         </SettingSubheading>
       </div>
@@ -339,22 +339,20 @@ function CustomFontsSettings({
             label={TEXT.LABEL}
           />
           <AddButton
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             disabled={!canSave}
             onClick={handleOnSave}
           >
             {TEXT.SUBMIT_BUTTON}
           </AddButton>
         </InlineForm>
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <TextInputHelperText size={TextSize.Small}>
           {TEXT.INPUT_CONTEXT}
         </TextInputHelperText>
         {customFonts?.length > 0 && (
           <FontsWrapper>
-            <ListHeading forwardedAs="span">{TEXT.FONTS_HEADING}</ListHeading>
+            <ListHeading>{TEXT.FONTS_HEADING}</ListHeading>
             <FontsList
               ref={currentFontsContainerRef}
               role="listbox"
@@ -393,9 +391,9 @@ function CustomFontsSettings({
                         __('Delete %s', 'web-stories'),
                         family
                       )}
-                      type={BUTTON_TYPES.TERTIARY}
-                      size={BUTTON_SIZES.SMALL}
-                      variant={BUTTON_VARIANTS.SQUARE}
+                      type={ButtonType.Tertiary}
+                      size={ButtonSize.Small}
+                      variant={ButtonVariant.Square}
                       onClick={() => {
                         setToDelete(id);
                         setShowDialog(true);
@@ -407,9 +405,7 @@ function CustomFontsSettings({
                 </FontRow>
               ))}
             </FontsList>
-            <TextInputHelperText
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <TextInputHelperText size={TextSize.Small}>
               {TEXT.FONTS_CONTEXT}
             </TextInputHelperText>
           </FontsWrapper>

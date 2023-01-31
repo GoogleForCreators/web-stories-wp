@@ -25,11 +25,11 @@ export default {
   component: Link,
 };
 
-const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
+const textTextSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 
 export const _default = () => (
   <>
-    {textPresetSizes.map((presetSize) => (
+    {textTextSizes.map((presetSize) => (
       <Link
         key={`${presetSize}_text_link`}
         size={presetSize}

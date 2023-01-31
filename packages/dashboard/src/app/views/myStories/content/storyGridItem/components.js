@@ -20,7 +20,7 @@
 import {
   Headline,
   Icons,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
 } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
@@ -104,7 +104,7 @@ export const CardDetailsColumn = styled.div`
 // don't leave their designated space, just no ellipsis.
 export const Title = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  size: TextSize.XSmall,
 })`
   overflow: hidden;
   text-overflow: ellipsis;
@@ -119,9 +119,8 @@ export const Title = styled(Headline).attrs({
 `;
 
 // All body text
-export const DetailCopy = styled(Text).attrs({
-  forwardedAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+export const DetailCopy = styled(Text.Span).attrs({
+  size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   margin: 0;

@@ -54,9 +54,7 @@ jest.mock('@googleforcreators/design-system', () => {
   return {
     __esModule: true,
     ...jest.requireActual('@googleforcreators/design-system'),
-    Datalist: {
-      DropDown: FakeControl,
-    },
+    DatalistDropdown: FakeControl,
   };
 });
 jest.mock('@googleforcreators/element-library');

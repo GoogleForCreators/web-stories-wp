@@ -21,12 +21,12 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   useLiveRegion,
 } from '@googleforcreators/design-system';
@@ -88,8 +88,8 @@ const StyledButton = styled(Button)`
     )};
 `;
 
-const FileName = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const FileName = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
   text-overflow: ellipsis;
@@ -166,9 +166,9 @@ function FileRow({
       <Tooltip hasTail title={removeItemLabel}>
         <StyledButton
           aria-label={removeItemLabel}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
           onClick={onItemRemove}
         >
           <Icons.Trash />

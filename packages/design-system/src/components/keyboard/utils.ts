@@ -22,7 +22,8 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import Mousetrap, { MousetrapInstance } from 'mousetrap';
+import Mousetrap from 'mousetrap';
+import type { MousetrapInstance } from 'mousetrap';
 import type {
   RefOrNode,
   KeyEffectCallback,

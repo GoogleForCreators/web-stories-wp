@@ -36,7 +36,7 @@ import {
   translateToInclusiveList,
 } from '@googleforcreators/i18n';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   LOCAL_STORAGE_PREFIX,
   Text,
   Toggle,
@@ -212,20 +212,13 @@ function TextSetsPane({ paneRef }) {
   return (
     <SectionContainer id={sectionId}>
       <TitleBar>
-        <Headline
-          as="h2"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-        >
+        <Headline as="h2" size={TextSize.XXXSmall}>
           {PANE_TEXT.TITLE}
         </Headline>
         <TextSetsToggle>
-          <Text
-            as="label"
-            htmlFor={toggleId}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <Text.Label htmlFor={toggleId} size={TextSize.Small}>
             {PANE_TEXT.SWITCH_LABEL}
-          </Text>
+          </Text.Label>
           <Toggle
             id={toggleId}
             aria-label={PANE_TEXT.SWITCH_LABEL}

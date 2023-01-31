@@ -19,7 +19,7 @@
 import { useState } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_TYPES,
+  ButtonType,
   SnackbarProvider,
 } from '@googleforcreators/design-system';
 
@@ -73,7 +73,7 @@ export const _default = () => {
       }}
     >
       <Button
-        type={BUTTON_TYPES.PRIMARY}
+        type={ButtonType.Primary}
         onClick={() => {
           setStoryErrorIndexToAdd(storyErrorIndexToAdd + 1);
           setStoryError({
@@ -89,7 +89,7 @@ export const _default = () => {
       </Button>
       <br />
       <Button
-        type={BUTTON_TYPES.PRIMARY}
+        type={ButtonType.Primary}
         onClick={() => {
           setTemplateErrorIndexToAdd(templateErrorIndexToAdd + 1);
           setTemplateError({

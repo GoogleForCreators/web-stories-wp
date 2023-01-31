@@ -23,11 +23,11 @@ import { useCallback, useEffect, useContext } from '@googleforcreators/react';
 import {
   BUTTON_TRANSITION_TIMING,
   Icons,
-  THEME_CONSTANTS,
+  TextSize,
   Headline,
   themeHelpers,
   NotificationBubble,
-  BUBBLE_VARIANTS,
+  BubbleVariant,
 } from '@googleforcreators/design-system';
 
 /**
@@ -65,10 +65,7 @@ const Heading = styled.span`
   align-items: space-between;
   ${({ theme }) =>
     themeHelpers.expandPresetStyles({
-      preset:
-        theme.typography.presets.headline[
-          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL
-        ],
+      preset: theme.typography.presets.headline[TextSize.XXSmall],
       theme,
     })};
 `;
@@ -260,7 +257,7 @@ function Title({
         <Heading
           isCollapsed={isCollapsed}
           id={panelTitleId}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+          size={TextSize.XXSmall}
         >
           {children}
         </Heading>
@@ -268,7 +265,7 @@ function Title({
           <StyledNotificationBubble
             data-testid="panel-badge"
             notificationCount={count}
-            variant={BUBBLE_VARIANTS.PRIMARY}
+            variant={BubbleVariant.Primary}
             aria-hidden
           />
         )}

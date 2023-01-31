@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-import { List, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { List, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -59,9 +59,7 @@ const PublisherLogoMissing = () => {
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-              {footer}
-            </List>
+            <List size={TextSize.XSmall}>{footer}</List>
           </ChecklistCardStyles.CardListWrapper>
         }
       />

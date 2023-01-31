@@ -24,7 +24,10 @@ import {
 } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { trackScreenView } from '@googleforcreators/tracking';
-import { Snackbar, useSnackbar } from '@googleforcreators/design-system';
+import {
+  SnackbarContainer,
+  useSnackbar,
+} from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**
@@ -168,7 +171,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
           )}
         </PageContent>
       </AppFrame>
-      <Snackbar.Container
+      <SnackbarContainer
         notifications={currentSnacks}
         onRemove={removeSnack}
         placement={placement}
