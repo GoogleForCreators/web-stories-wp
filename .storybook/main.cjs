@@ -50,6 +50,13 @@ module.exports = {
       // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
       // This should be sync'd with the config in `webpack.config.cjs`.
       exportsFields: ['customExports', 'exports'],
+      // To make loading mediainfo.js work.
+      fallback: {
+        fs: false,
+        path: false,
+        url: false,
+        module: false,
+      },
     };
 
     // Avoid having to provide full file extension for imports.
