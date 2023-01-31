@@ -63,6 +63,13 @@ const sharedConfig = {
     // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
     exportsFields: ['customExports', 'exports'],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.wasm'],
+    // To make loading mediainfo.js work.
+    fallback: {
+      fs: false,
+      path: false,
+      url: false,
+      module: false,
+    },
   },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,
