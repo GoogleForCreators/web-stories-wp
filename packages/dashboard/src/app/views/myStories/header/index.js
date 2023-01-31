@@ -39,7 +39,7 @@ import {
 import {
   StoriesPropType,
   TotalStoriesByStatusPropType,
-} from '../../../../types';
+} from '../../../../propTypes';
 import { ViewPropTypes } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';

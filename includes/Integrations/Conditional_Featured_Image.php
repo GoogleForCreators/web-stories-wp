@@ -68,10 +68,11 @@ class Conditional_Featured_Image extends Service_Base {
 	 *
 	 * @since 1.16.0
 	 *
-	 * @param bool   $enabled If enabled or not.
-	 * @param string $post_type Post type name.
+	 * @param mixed  $enabled   If enabled or not.
+	 * @param string $post_type Post type slug.
+	 * @return mixed Filter value.
 	 */
-	public function cybocfi_enabled_for_post_type( $enabled, $post_type ): bool {
+	public function cybocfi_enabled_for_post_type( $enabled, string $post_type ) {
 		if ( $this->story_post_type->get_slug() === $post_type ) {
 			return false;
 		}

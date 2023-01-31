@@ -58,7 +58,7 @@ const StyledCircle = styled.circle`
   stroke: ${({ theme }) => `${theme.colors.accent.secondary}`};
 `;
 
-function CircularProgress({ size, thickness }) {
+function CircularProgress({ size = 24, thickness = 2 }) {
   const nodeRef = useRef();
 
   return (
@@ -82,11 +82,6 @@ function CircularProgress({ size, thickness }) {
 CircularProgress.propTypes = {
   size: PropTypes.number,
   thickness: PropTypes.number,
-};
-
-CircularProgress.defaultProps = {
-  size: 24,
-  thickness: 2,
 };
 
 export default CircularProgress;

@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-const path = require('path');
-const glob = require('glob');
+const { readdirSync } = require('fs');
+const { resolve, parse } = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -63,11 +63,18 @@ const sharedConfig = {
     // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
     exportsFields: ['customExports', 'exports'],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.wasm'],
+    // To make loading mediainfo.js work.
+    fallback: {
+      fs: false,
+      path: false,
+      url: false,
+      module: false,
+    },
   },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,
   output: {
-    path: path.resolve(process.cwd(), 'assets', 'js'),
+    path: resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
     chunkFilename: '[name].js?v=[chunkhash]',
     publicPath: '',
@@ -397,17 +404,16 @@ const webStoriesScripts = {
 };
 
 // Collect all core themes style sheet paths.
-const coreThemesBlockStylesPaths = glob.sync(
-  './packages/stories-block/src/css/core-themes/*.css'
+const coreThemesBlockStylesPaths = readdirSync(
+  './packages/stories-block/src/css/core-themes'
 );
 
 // Build entry object for the Core Themes Styles.
 const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
-  const fileName = path.parse(curr).name;
-
+  const fileName = parse(curr).name;
   return {
     ...acc,
-    [`web-stories-theme-style-${fileName}`]: curr,
+    [`web-stories-theme-style-${fileName}`]: `./packages/stories-block/src/css/core-themes/${curr}`,
   };
 }, {});
 

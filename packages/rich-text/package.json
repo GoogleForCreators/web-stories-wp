@@ -2,7 +2,7 @@
   "name": "@googleforcreators/rich-text",
   "description": "A wrapper around draft-js and utilities for rich-text editor.",
   "private": false,
-  "version": "0.1.202212191259",
+  "version": "0.1.202301231653",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -45,7 +45,7 @@
     "draft-js-import-element": "https://github.com/swissspidy/draft-js-import-element",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^3.0.1",
-    "immutable": "^4.2.1",
+    "immutable": "^4.2.2",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {

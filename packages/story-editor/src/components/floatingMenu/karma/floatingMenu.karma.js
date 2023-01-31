@@ -128,7 +128,7 @@ describe('Design Menu: Keyboard Navigation', () => {
     await fixture.events.keyboard.press('ArrowRight');
     // arrow right again to flip
     await fixture.events.keyboard.press('ArrowRight');
-    expect(document.activeElement.getAttribute('title')).toBe(
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
       'Flip horizontally'
     );
 
@@ -174,7 +174,7 @@ describe('Design Menu: Keyboard Navigation', () => {
     await fixture.events.click(
       fixture.editor.canvas.designMenu.flipHorizontal.node
     );
-    expect(document.activeElement.getAttribute('title')).toBe(
+    expect(document.activeElement.getAttribute('aria-label')).toBe(
       'Flip horizontally'
     );
 

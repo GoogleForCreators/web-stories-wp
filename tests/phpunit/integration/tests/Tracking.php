@@ -21,8 +21,11 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration;
 
 use _WP_Dependency;
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Integrations\WooCommerce;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\User\Preferences;
 use PHPUnit\Framework\MockObject\MockObject;
 use WP_UnitTest_Factory;
@@ -61,10 +64,10 @@ class Tracking extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$this->experiments = $this->createMock( Experiments::class );
 		$this->site_kit    = $this->createMock( Site_Kit::class );
-		$assets            = $this->injector->make( \Google\Web_Stories\Assets::class );
-		$settings          = $this->injector->make( \Google\Web_Stories\Settings::class );
+		$assets            = $this->injector->make( Assets::class );
+		$settings          = $this->injector->make( Settings::class );
 		$preferences       = $this->injector->make( Preferences::class );
 		$this->woocommerce = $this->createMock( WooCommerce::class );
 		$this->instance    = new \Google\Web_Stories\Tracking(

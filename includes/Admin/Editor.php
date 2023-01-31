@@ -226,7 +226,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param WP_Post    $post    Current post object.
 	 * @return bool|mixed Whether the editor has been replaced.
 	 */
-	public function replace_editor( $replace, $post ) {
+	public function replace_editor( $replace, WP_Post $post ) {
 		if ( $this->story_post_type->get_slug() === get_post_type( $post ) ) {
 
 			$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
@@ -259,7 +259,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param string     $post_type         The post type being checked.
 	 * @return false|mixed Whether to use the block editor.
 	 */
-	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+	public function filter_use_block_editor_for_post_type( $use_block_editor, string $post_type ) {
 		if ( $this->story_post_type->get_slug() === $post_type ) {
 			return false;
 		}
@@ -274,7 +274,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @param string $hook The current admin page.
 	 */
-	public function admin_enqueue_scripts( $hook ): void {
+	public function admin_enqueue_scripts( string $hook ): void {
 		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
@@ -457,7 +457,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),
 			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js',
-			'mediainfoUrl'            => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/mediainfo.js@0.1.7/dist/mediainfo.min.js',
+			'mediainfoUrl'            => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/mediainfo.js@0.1.9/dist/MediaInfoModule.wasm',
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'editor' ),

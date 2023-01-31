@@ -17,61 +17,38 @@
  * External dependencies
  */
 import {
-  Icons,
-  prettifyShortcut,
   useSnackbar,
+  prettifyShortcut,
 } from '@googleforcreators/design-system';
-import { useCallback, useMemo, useRef } from '@googleforcreators/react';
+import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import {
-  Element,
-  ElementId,
-  elementIs,
-  ElementType,
-} from '@googleforcreators/elements';
+import {Element, ElementId, elementIs, ElementType} from '@googleforcreators/elements';
 import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
-import { states } from '../highlights';
-import { useStory } from '../story';
-import type { QuickAction } from '../../types';
-import updateProperties from '../../components/style/updateProperties';
 import { useHistory } from '../history';
-import { ACTIONS, RESET_DEFAULTS, ResetProperties } from './constants';
+import { useStory } from '../story';
+import updateProperties from '../../components/style/updateProperties';
+import {ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES, ResetProperties} from './constants';
 
-interface CommonActionsProps {
-  selectedElement: Element;
-  actionProps: Partial<QuickAction>;
-  handleFocusPanel: (props: string) => void;
-  resetProperties: string[];
-}
-function useCommonActions({
-  actionProps,
-  selectedElement,
-  handleFocusPanel,
-  resetProperties,
-}: CommonActionsProps): QuickAction[] {
+function useElementReset() {
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
-  const { currentPageNumber, selectedElementAnimations, updateElementsById } =
-    useStory(
-      ({
-        state: { currentPageNumber, selectedElementAnimations },
-        actions: { updateElementsById },
-      }) => ({
-        currentPageNumber,
-        selectedElementAnimations,
-        updateElementsById,
-      })
-    );
-
+  const { selectedElementAnimations, updateElementsById } = useStory(
+    ({
+      state: { selectedElementAnimations },
+      actions: { updateElementsById },
+    }) => ({
+      selectedElementAnimations,
+      updateElementsById,
+    })
+  );
   const { undo } = useHistory(({ actions: { undo } }) => ({
     undo,
   }));
   const undoRef = useRef(undo);
   undoRef.current = undo;
-
   /**
    * Reset properties on an element. Shows a snackbar once the properties
    * have been reset.
@@ -142,9 +119,9 @@ function useCommonActions({
    */
   const handleElementReset = useCallback(
     ({
-      elementId,
-      elementType,
-    }: {
+       elementId,
+       elementType,
+     }: {
       elementId: ElementId;
       elementType: ElementType;
     }) => {
@@ -174,78 +151,7 @@ function useCommonActions({
     [handleResetProperties, showSnackbar]
   );
 
-  const foregroundCommonActions: QuickAction[] = useMemo(() => {
-    const handleFocusAnimationPanel = handleFocusPanel(states.Animation);
-    const handleFocusLinkPanel = handleFocusPanel(states.Link);
-    const commonActions = [];
-
-    // Don't show the 'Add animation' button on the first page
-    if (currentPageNumber > 1) {
-      // 'Add animation' button
-      commonActions.push({
-        Icon: Icons.CircleSpeed,
-        label: ACTIONS.ADD_ANIMATION.text,
-        onClick: (evt) => {
-          handleFocusAnimationPanel()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.ADD_ANIMATION.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionProps,
-      });
-    }
-
-    // 'Add link' button is always rendered
-    commonActions.push({
-      Icon: Icons.Link,
-      label: ACTIONS.ADD_LINK.text,
-      onClick: (evt) => {
-        handleFocusLinkPanel()(evt);
-
-        trackEvent('quick_action', {
-          name: ACTIONS.ADD_LINK.trackingEventName,
-          element: selectedElement?.type,
-        });
-      },
-      ...actionProps,
-    });
-
-    // Only show 'Reset element' button for modified elements
-    if (resetProperties.length > 0) {
-      // 'Reset element' button
-      commonActions.push({
-        Icon: Icons.Eraser,
-        label: ACTIONS.RESET_ELEMENT.text,
-        onClick: () => {
-          handleElementReset({
-            elementId: selectedElement?.id,
-            resetProperties,
-            elementType: selectedElement?.type,
-          });
-
-          void trackEvent('quick_action', {
-            name: ACTIONS.RESET_ELEMENT.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        separator: 'top',
-        ...actionProps,
-      });
-    }
-    return commonActions;
-  }, [
-    currentPageNumber,
-    selectedElement?.id,
-    selectedElement?.type,
-    actionProps,
-    handleFocusPanel,
-    handleElementReset,
-    resetProperties,
-  ]);
-
-  return foregroundCommonActions;
+  return handleElementReset;
 }
 
-export default useCommonActions;
+export default useElementReset;

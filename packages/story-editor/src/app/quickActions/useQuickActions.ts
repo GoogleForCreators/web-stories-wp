@@ -40,7 +40,7 @@ import { getResetProperties } from './utils';
 import { ACTIONS } from './constants';
 import useTextActions from './useTextActions';
 import useMediaActions from './useMediaActions';
-import useCommonActions from './useCommonActions';
+import useForegroundActions from './useForegroundActions';
 
 const { Bucket, LetterTPlus, Media } = Icons;
 
@@ -192,7 +192,7 @@ const useQuickActions = (): QuickAction[] => {
     insertElement,
   ]);
 
-  const foregroundCommonActions = useCommonActions({
+  const foregroundCommonActions = useForegroundActions({
     actionProps: actionMenuProps,
     selectedElement,
     handleFocusPanel,

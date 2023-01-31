@@ -3422,6 +3422,52 @@
           "groupId": "77a8ba7f-2523-47ff-9031-521aec451a84"
         },
         {
+          "x": -112,
+          "y": 385,
+          "id": "bc168ffd-841e-47af-b3e1-e7ec793854b3",
+          "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 28, "g": 39, "b": 27 } },
+          "type": "shape",
+          "width": 202,
+          "height": 140,
+          "mask": { "type": "rectangle" },
+          "borderRadius": {
+            "topLeft": 15,
+            "topRight": 15,
+            "bottomRight": 15,
+            "bottomLeft": 15,
+            "locked": true
+          },
+          "groupId": "77a8ba7f-2523-47ff-9031-521aec451a84"
+        },
+        {
+          "x": 325,
+          "y": 385,
+          "id": "1bbf68d0-4e83-424a-8935-ea7c64809dd1",
+          "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 28, "g": 39, "b": 27 } },
+          "type": "shape",
+          "width": 202,
+          "height": 140,
+          "mask": { "type": "rectangle" },
+          "borderRadius": {
+            "topLeft": 15,
+            "topRight": 15,
+            "bottomRight": 15,
+            "bottomLeft": 15,
+            "locked": true
+          },
+          "groupId": "77a8ba7f-2523-47ff-9031-521aec451a84"
+        },
+        {
           "x": 109,
           "y": 124,
           "id": "2a6a2790-5d10-42e6-96e5-a37704ed2136",
@@ -3522,52 +3568,6 @@
           "id": "a0cad156-0467-42bb-a2c2-9c074999edf7",
           "groupId": "a63ffb4c-9149-429a-b0d5-c0c21cd59f70",
           "tagName": "h3"
-        },
-        {
-          "x": -112,
-          "y": 385,
-          "id": "bc168ffd-841e-47af-b3e1-e7ec793854b3",
-          "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 28, "g": 39, "b": 27 } },
-          "type": "shape",
-          "width": 202,
-          "height": 140,
-          "mask": { "type": "rectangle" },
-          "borderRadius": {
-            "topLeft": 15,
-            "topRight": 15,
-            "bottomRight": 15,
-            "bottomLeft": 15,
-            "locked": true
-          },
-          "groupId": "77a8ba7f-2523-47ff-9031-521aec451a84"
-        },
-        {
-          "x": 325,
-          "y": 385,
-          "id": "1bbf68d0-4e83-424a-8935-ea7c64809dd1",
-          "basedOn": "8f98248e-e03b-4e4f-a1c0-04857b9ab1da",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 28, "g": 39, "b": 27 } },
-          "type": "shape",
-          "width": 202,
-          "height": 140,
-          "mask": { "type": "rectangle" },
-          "borderRadius": {
-            "topLeft": 15,
-            "topRight": 15,
-            "bottomRight": 15,
-            "bottomLeft": 15,
-            "locked": true
-          },
-          "groupId": "77a8ba7f-2523-47ff-9031-521aec451a84"
         },
         {
           "x": 109,

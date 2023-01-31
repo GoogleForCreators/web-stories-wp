@@ -33,11 +33,53 @@ type Settings = {
   timezoneAbbr: string;
   weekStartsOn: WeekdayIndex;
   locale?: string;
-  months?: string[];
-  monthsShort?: string[];
-  weekdays?: string[];
-  weekdaysShort?: string[];
-  weekdaysInitials?: string[];
+  months?: readonly [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+  ];
+  monthsShort?: readonly [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+  ];
+  weekdays?: readonly [string, string, string, string, string, string, string];
+  weekdaysShort?: readonly [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+  ];
+  weekdaysInitials?: readonly [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+  ];
 };
 
 let settings: Settings = {

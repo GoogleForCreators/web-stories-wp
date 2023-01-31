@@ -24,6 +24,8 @@ import {
   useState,
   lazy,
   Suspense,
+  createContext,
+  useContext,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -39,17 +41,23 @@ import {
 
 const Saturation = lazy(() =>
   import(
-    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: "Saturation" */
+    '@hello-pangea/color-picker'
   ).then((module) => ({ default: module.Saturation }))
 );
 const Hue = lazy(() =>
   import(
-    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: "Hue" */
+    '@hello-pangea/color-picker'
   ).then((module) => ({ default: module.Hue }))
 );
 const Alpha = lazy(() =>
   import(
-    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+    /* webpackChunkName: "chunk-react-color" */
+    /* webpackExports: "Alpha" */
+    '@hello-pangea/color-picker'
   ).then((module) => ({ default: module.Alpha }))
 );
 
@@ -124,15 +132,8 @@ const Opacity = styled.div`
   width: ${OPACITY_WIDTH}px;
 `;
 
-function CurrentColorPicker({
-  rgb,
-  hsl,
-  hsv,
-  hex,
-  onChange,
-  showOpacity,
-  hasEyedropper,
-}) {
+function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
+  const [showOpacity, hasEyedropper] = useContext(CurrentColorPickerContext);
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
@@ -157,15 +158,17 @@ function CurrentColorPicker({
 
   const { initEyedropper } = useEyedropper({ onChange });
 
+  // Note: pointer prop is handled differently for Saturation vs. Hue. See:
+  // https://github.com/hello-pangea/color-picker/blob/026c725c7d45f9690f71ca55c8d82a721356fdcc/packages/color-picker/src/components/common/Saturation.tsx#L128
+  // https://github.com/hello-pangea/color-picker/blob/026c725c7d45f9690f71ca55c8d82a721356fdcc/packages/color-picker/src/components/common/Hue.jsx#L101
+
   return (
     <>
       <Suspense fallback={null}>
         <SaturationWrapper>
           <Saturation
             radius="8px"
-            pointer={() => (
-              <Pointer offsetX={-8} offsetY={-8} currentColor={rgb} />
-            )}
+            pointer={<Pointer offsetX={-8} offsetY={-8} currentColor={rgb} />}
             hsl={hsl}
             hsv={hsv}
             onChange={onChange}
@@ -245,33 +248,31 @@ function CurrentColorPicker({
 
 CurrentColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
-  showOpacity: PropTypes.bool,
   rgb: PropTypes.object,
   hex: PropTypes.string,
   hsl: PropTypes.object,
   hsv: PropTypes.object,
-  hasEyedropper: PropTypes.bool,
 };
 
-CurrentColorPicker.defaultProps = {
-  showOpacity: true,
-};
+const CurrentColorPickerContext = createContext([false, false]);
 
 const DynamicImportWrapper = () => {
   return (...args) => {
-    function DynamicFetcher(props) {
+    function DynamicFetcher({ showOpacity, hasEyedropper, ...props }) {
       const isMounted = useRef(false);
       const [Picker, setPicker] = useState(null);
 
       useEffect(() => {
         isMounted.current = true;
-        import(/* webpackChunkName: "chunk-react-color" */ 'react-color').then(
-          ({ CustomPicker }) => {
-            if (isMounted.current) {
-              setPicker({ component: CustomPicker(...args) });
-            }
+        import(
+          /* webpackChunkName: "chunk-react-color" */
+          /* webpackExports: "CustomPicker" */
+          '@hello-pangea/color-picker'
+        ).then(({ CustomPicker }) => {
+          if (isMounted.current) {
+            setPicker({ component: CustomPicker(...args) });
           }
-        );
+        });
 
         return () => {
           isMounted.current = false;
@@ -279,13 +280,21 @@ const DynamicImportWrapper = () => {
       }, []);
 
       return Picker ? (
-        <Picker.component {...props} />
+        <CurrentColorPickerContext.Provider
+          value={[showOpacity, hasEyedropper]}
+        >
+          <Picker.component {...props} />
+        </CurrentColorPickerContext.Provider>
       ) : (
         <BodyFallback>
           <CircularProgress />
         </BodyFallback>
       );
     }
+    DynamicFetcher.propTypes = {
+      showOpacity: PropTypes.bool.isRequired,
+      hasEyedropper: PropTypes.bool.isRequired,
+    };
     return DynamicFetcher;
   };
 };

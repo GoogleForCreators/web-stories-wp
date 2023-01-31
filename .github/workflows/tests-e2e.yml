@@ -70,7 +70,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
+        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -84,7 +84,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@8e2ac35f639d3e794c1da1f28999385ab6fdf0fc
+        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d
         with:
           php-version: '8.0'
           coverage: none
@@ -152,7 +152,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
+        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -241,7 +241,7 @@ jobs:
     needs: [e2e, nonce]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
+        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-declare module 'date-fns/locale/_lib/buildLocalizeFn' {
-  type LocalizeFunction = (...args: any[]) => any;
-  type Width = 'narrow' | 'short' | 'abbreviated' | 'wide';
-  type LocalizeValues = Partial<Record<Width, string[]>>;
-  type LocalizeFunctionBuilderArg = {
-    values: LocalizeValues;
-    defaultWidth: Width;
-  };
-  type LocalizeFunctionBuilder = (
-    args: LocalizeFunctionBuilderArg
-  ) => LocalizeFunction;
-  const localizeFunctionBuilder: LocalizeFunctionBuilder;
-  export default localizeFunctionBuilder;
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
+
+/**
+ * Internal dependencies
+ */
+import type { TaxonomyState } from '../../types';
+import Context from './context';
+
+function useTaxonomy(): TaxonomyState;
+function useTaxonomy<T>(selector: (state: TaxonomyState) => T): T;
+function useTaxonomy<T>(
+  selector: (state: TaxonomyState) => T | TaxonomyState = identity
+) {
+  return useContextSelector(Context, selector);
 }
+
+export default useTaxonomy;

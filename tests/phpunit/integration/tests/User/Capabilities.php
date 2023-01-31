@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\User;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -37,7 +38,7 @@ class Capabilities extends DependencyInjectedTestCase {
 	 * @covers ::add_caps_to_roles
 	 */
 	public function test_add_caps_to_roles(): void {
-		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->assertNotNull( $post_type_object );
 
@@ -63,7 +64,7 @@ class Capabilities extends DependencyInjectedTestCase {
 	public function test_remove_caps_from_roles(): void {
 		$this->instance->remove_caps_from_roles();
 
-		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
 		$this->assertNotNull( $post_type_object );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 		$all_capabilities = array_filter(
@@ -91,7 +92,7 @@ class Capabilities extends DependencyInjectedTestCase {
 
 		$this->instance->add_caps_to_roles();
 
-		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
 		$this->assertNotNull( $post_type_object );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 

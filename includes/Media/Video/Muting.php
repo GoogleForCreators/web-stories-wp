@@ -155,7 +155,7 @@ class Muting extends Service_Base implements HasMeta, PluginUninstallAware {
 	 *
 	 * @param array<string, mixed> $prepared Array of data to add to.
 	 */
-	public function get_callback_is_muted( $prepared ): ?bool {
+	public function get_callback_is_muted( array $prepared ): ?bool {
 		/**
 		 * Attachment ID.
 		 *

@@ -38,7 +38,7 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  *
  * @phpstan-type PostData array{
- *   post_parent: int,
+ *   post_parent: int|string|null,
  *   post_type: string,
  *   post_content?: string,
  *   post_content_filtered?: string
@@ -122,7 +122,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @phpstan-return ($data is array<T> ? array<T> : mixed)
 	 */
-	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
+	public function filter_insert_post_data( $data, array $postarr, array $unsanitized_postarr ) {
 		if ( ! \is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
 			return $data;
 		}
@@ -206,7 +206,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param string $css A string of CSS rules.
 	 * @return string Filtered string of CSS rules.
 	 */
-	public function safecss_filter_attr( $css ): string {
+	public function safecss_filter_attr( string $css ): string { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$css = wp_kses_no_null( $css );
 		$css = str_replace( [ "\n", "\r", "\t" ], '', $css );
 
@@ -748,7 +748,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param string $post_content Post content.
 	 * @return string Filtered post content.
 	 */
-	public function filter_content_save_pre_before_kses( $post_content ): string {
+	public function filter_content_save_pre_before_kses( string $post_content ): string {
 		return (string) preg_replace_callback(
 			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
 			static fn( $matches ) => $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'],
@@ -764,7 +764,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param string $post_content Post content.
 	 * @return string Filtered post content.
 	 */
-	public function filter_content_save_pre_after_kses( $post_content ): string {
+	public function filter_content_save_pre_after_kses( string $post_content ): string {
 		return (string) preg_replace_callback(
 			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
 			function ( $matches ) {
@@ -780,11 +780,11 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.22.0
 	 *
-	 * @param string   $post_type   Post type slug.
-	 * @param int|null $post_parent Parent post ID.
+	 * @param string          $post_type   Post type slug.
+	 * @param int|string|null $post_parent Parent post ID.
 	 * @return bool Whether the user can edit the provided post type.
 	 */
-	private function is_allowed_post_type( string $post_type, ?int $post_parent ): bool {
+	private function is_allowed_post_type( string $post_type, $post_parent ): bool {
 		if ( $this->story_post_type->get_slug() === $post_type && $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return true;
 		}
@@ -798,7 +798,7 @@ class KSES extends Service_Base implements HasRequirements {
 			(
 				'revision' === $post_type &&
 				! empty( $post_parent ) &&
-				get_post_type( $post_parent ) === $this->story_post_type->get_slug()
+				get_post_type( (int) $post_parent ) === $this->story_post_type->get_slug()
 			) &&
 			$this->story_post_type->has_cap( 'edit_posts' )
 		) {
@@ -867,7 +867,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @param array<string,bool> $value An array of attributes.
 	 * @return array<string,bool> The array of attributes with global attributes added.
 	 */
-	protected function add_global_attributes( $value ): array {
+	protected function add_global_attributes( array $value ): array {
 		$global_attributes = [
 			'aria-describedby'    => true,
 			'aria-details'        => true,

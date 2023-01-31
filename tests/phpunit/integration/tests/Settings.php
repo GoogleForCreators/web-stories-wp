@@ -113,7 +113,6 @@ class Settings extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @param string $name
 	 * @param array{type?: string, description?: string, sanitize_callback?: callable, show_in_rest?: bool|array<mixed>, default?: mixed} $args
 	 * @param mixed $value
 	 * @param mixed $expected

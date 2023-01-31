@@ -29,7 +29,7 @@ import { defaultTypographyStyle } from '../styles';
 export const Headline = styled.h1`
   ${defaultTypographyStyle};
 
-  ${({ theme, size }) =>
+  ${({ theme, size = THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM }) =>
     themeHelpers.expandPresetStyles({
       preset: theme.typography.presets.headline[size],
       theme,
@@ -48,7 +48,4 @@ export const Headline = styled.h1`
 Headline.propTypes = {
   as: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'label']),
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.HEADLINE_SIZES),
-};
-Headline.defaultProps = {
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };
