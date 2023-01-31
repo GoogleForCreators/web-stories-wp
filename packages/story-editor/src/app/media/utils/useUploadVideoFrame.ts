@@ -40,8 +40,8 @@ import getPosterName from './getPosterName';
 type VideoPosterType = {
   posterId?: ResourceId;
   poster?: string;
-  posterWidth?: number;
-  posterHeight?: number;
+  width?: number;
+  height?: number;
 };
 
 interface UseUploadVideoFrameProps {
@@ -88,8 +88,8 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
       const {
         id: posterId,
         src: poster,
-        width: posterWidth,
-        height: posterHeight,
+        width,
+        height,
       } = resource;
 
       // If video ID is not set, skip relating media.
@@ -107,7 +107,7 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
         // Ignore
       }
 
-      return { posterId, poster, posterWidth, posterHeight };
+      return { posterId, poster, width, height };
     },
     [storyId, updateMedia, uploadFile]
   );
@@ -135,21 +135,8 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
         const posterFile = blob
           ? blobToFile(blob, fileName, MEDIA_POSTER_IMAGE_MIME_TYPE)
           : null;
-        const {
-          posterId,
-          poster,
-          posterWidth: width,
-          posterHeight: height,
-        } = await uploadVideoPoster(id, posterFile);
+        const newPoster = await uploadVideoPoster(id, posterFile);
 
-        // Overwrite the original video dimensions. The poster reupload has more
-        // accurate dimensions of the video that includes orientation changes.
-        const newSize = (width && height && { width, height }) || {};
-        const newPoster = {
-          posterId,
-          poster,
-          ...newSize,
-        };
         if (updateElementsByResourceId) {
           updateElementsByResourceId({
             id,

@@ -411,7 +411,7 @@ function useMediaUploadQueue() {
       }
       if (newResource.type === ResourceType.Video && posterFile) {
         try {
-          const { poster, posterId } = await uploadVideoPoster(
+          const { height, width, ...posterResource } = await uploadVideoPoster(
             newResource.id,
             posterFile
           );
@@ -422,17 +422,9 @@ function useMediaUploadQueue() {
 
           newResource = {
             ...newResource,
-            poster: poster || newResource.poster,
-            posterId,
+            ...posterResource
           };
 
-          if (
-            !newResource.poster &&
-            resource.type === ResourceType.Video &&
-            resource.poster
-          ) {
-            newResource.poster = resource.poster;
-          }
         } catch {
           // Not interested in errors here.
         }
