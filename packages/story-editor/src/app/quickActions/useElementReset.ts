@@ -31,7 +31,7 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import { useHistory } from '../history';
 import { useStory } from '../story';
 import updateProperties from '../../components/style/updateProperties';
-import {ACTIONS, RESET_DEFAULTS, RESET_PROPERTIES, ResetProperties} from './constants';
+import { ACTIONS, RESET_DEFAULTS, ResetProperties } from './constants';
 
 function useElementReset() {
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);

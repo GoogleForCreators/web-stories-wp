@@ -23,7 +23,7 @@ import { Element, elementIs, ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { RESET_PROPERTIES, RESET_DEFAULTS } from '../constants';
+import { ResetProperties, RESET_DEFAULTS } from '../constants';
 
 function isBorderRadiusDefault(element: Element) {
   // text element presets have a different default border radius
@@ -54,10 +54,10 @@ const getResetProperties = (
   const resetProperties = [];
 
   if (elementIs.media(selectedElement) && selectedElement.overlay) {
-    resetProperties.push(RESET_PROPERTIES.OVERLAY);
+    resetProperties.push(ResetProperties.Overlay);
   }
   if (selectedElementAnimations.length) {
-    resetProperties.push(RESET_PROPERTIES.ANIMATION);
+    resetProperties.push(ResetProperties.Animation);
   }
 
   const isSemiTransparent =
@@ -67,7 +67,7 @@ const getResetProperties = (
     !isBorderRadiusDefault(selectedElement) ||
     selectedElement.border
   ) {
-    resetProperties.push(RESET_PROPERTIES.STYLES);
+    resetProperties.push(ResetProperties.Styles);
   }
   return resetProperties;
 };

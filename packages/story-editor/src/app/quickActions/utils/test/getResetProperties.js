@@ -16,18 +16,18 @@
 /**
  * Internal dependencies
  */
-import { RESET_PROPERTIES } from '../../constants';
+import { ResetProperties } from '../../constants';
 import getResetProperties from '../getResetProperties';
 
 describe('getResetProperties', () => {
   it.each`
     selectedElement                                             | selectedElementAnimations       | result
     ${{ overlay: '', id: '1234' }}                              | ${[]}                           | ${[]}
-    ${{ overlay: { type: 'linear' }, id: '1234' }}              | ${[]}                           | ${[RESET_PROPERTIES.OVERLAY]}
-    ${{ overlay: { type: 'linear' }, id: '1234' }}              | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.OVERLAY, RESET_PROPERTIES.ANIMATION]}
-    ${{ overlay: '', id: '1234' }}                              | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.ANIMATION]}
-    ${{ overlay: { type: 'linear' }, id: '1234', opacity: 60 }} | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.OVERLAY, RESET_PROPERTIES.ANIMATION, RESET_PROPERTIES.STYLES]}
-    ${{ opacity: 60 }}                                          | ${[]}                           | ${[RESET_PROPERTIES.STYLES]}
+    ${{ overlay: { type: 'linear' }, id: '1234' }}              | ${[]}                           | ${[ResetProperties.Overlay]}
+    ${{ overlay: { type: 'linear' }, id: '1234' }}              | ${[{ type: 'effect-fade-in' }]} | ${[ResetProperties.Overlay, ResetProperties.Animation]}
+    ${{ overlay: '', id: '1234' }}                              | ${[{ type: 'effect-fade-in' }]} | ${[ResetProperties.Animation]}
+    ${{ overlay: { type: 'linear' }, id: '1234', opacity: 60 }} | ${[{ type: 'effect-fade-in' }]} | ${[ResetProperties.Overlay, ResetProperties.Animation, ResetProperties.Styles]}
+    ${{ opacity: 60 }}                                          | ${[]}                           | ${[ResetProperties.Styles]}
   `(
     'should return array with reset properties',
     ({ selectedElement, selectedElementAnimations, result }) => {
