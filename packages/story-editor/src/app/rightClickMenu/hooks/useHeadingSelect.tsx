@@ -30,18 +30,16 @@ import { useConfig } from '../../config';
 import { getCommonValue } from '../../../components/panels/shared';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { HEADING_LEVELS } from '../../../constants';
-import type { MenuPosition } from '../../../types';
 
 const ReversedIcon = styled(Icons.ChevronRightSmall)`
   transform: rotate(180deg);
 `;
 
 interface UseHeadingSelectProps {
-  menuPosition: MenuPosition;
   isMenuOpen: boolean;
 }
 
-function useHeadingSelect({ menuPosition, isMenuOpen }: UseHeadingSelectProps) {
+function useHeadingSelect({ isMenuOpen }: UseHeadingSelectProps) {
   const { isRTL } = useConfig();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 

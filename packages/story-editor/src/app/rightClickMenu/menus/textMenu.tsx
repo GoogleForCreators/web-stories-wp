@@ -73,12 +73,10 @@ function TextMenu({ parentMenuRef }: MenuPropType) {
     layerSelectProps || {};
 
   const headingSelectProps = useHeadingSelect({
-    menuPosition,
     isMenuOpen: true,
   });
 
   const {
-    closeHeadingSubMenu,
     isHeadingSubMenuOpen,
     headingSubMenuItems,
     ...headingSubMenuTriggerProps
@@ -122,7 +120,6 @@ function TextMenu({ parentMenuRef }: MenuPropType) {
       {headingSelectProps && (
         <>
           <ContextMenuComponents.SubMenuTrigger
-            closeSubMenu={closeHeadingSubMenu}
             parentMenuRef={parentMenuRef}
             subMenuRef={headingSubMenuRef}
             isSubMenuOpen={isHeadingSubMenuOpen}
@@ -138,7 +135,6 @@ function TextMenu({ parentMenuRef }: MenuPropType) {
             <ContextMenu
               onDismiss={onCloseMenu}
               isOpen={isHeadingSubMenuOpen}
-              onCloseSubMenu={closeHeadingSubMenu}
               aria-label={RIGHT_CLICK_MENU_LABELS.HEADING_LEVEL}
               isSubMenu
               parentMenuRef={parentMenuRef}

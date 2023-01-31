@@ -19,7 +19,11 @@
  */
 import { trackEvent } from '@googleforcreators/tracking';
 import { useCallback } from '@googleforcreators/react';
-import { createPage, duplicatePage } from '@googleforcreators/elements';
+import {
+  createPage,
+  duplicatePage,
+  elementIs,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -43,8 +47,11 @@ const usePageActions = () => {
     addPageAt: actions.addPageAt,
     currentPage: state.currentPage,
     deleteCurrentPage: actions.deleteCurrentPage,
-    isSelectedElementBackground:
-      state.selectedElements?.[0]?.background || false,
+    isSelectedElementBackground: elementIs.backgroundable(
+      state.selectedElements?.[0]
+    )
+      ? state.selectedElements?.[0]?.isBackground
+      : false,
     pageLength: state.pages?.length || 1,
     selectedElementType: state.selectedElements?.[0]?.type || null,
   }));

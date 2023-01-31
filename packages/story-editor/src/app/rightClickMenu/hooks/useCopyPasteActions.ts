@@ -22,6 +22,7 @@ import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { v4 as uuidv4 } from 'uuid';
 import type { StoryAnimation } from '@googleforcreators/animation';
+import { elementIs } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
@@ -91,8 +92,11 @@ const useCopyPasteActions = () => {
     copySelectedElement: actions.copySelectedElement,
     selectedElement: state.selectedElements?.[0],
     selectedElementType: state.selectedElements?.[0]?.type,
-    isSelectedElementBackground:
-      state.selectedElements?.[0]?.isBackground | false,
+    isSelectedElementBackground: elementIs.backgroundable(
+      state.selectedElements?.[0]
+    )
+      ? state.selectedElements?.[0]?.isBackground
+      : false,
     selectedElementAnimations: state.selectedElementAnimations,
     updateSelectedElements: actions.updateSelectedElements,
   }));
