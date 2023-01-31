@@ -15,6 +15,7 @@
  */
 
 export * from './gifResource';
+export * from './imageResource';
 export * from './resource';
 export * from './resourceType';
 export * from './videoResource';
