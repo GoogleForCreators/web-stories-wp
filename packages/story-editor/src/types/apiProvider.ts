@@ -77,7 +77,7 @@ type LinkMetaData = {
 
 type UploadMediaProps = {
   originalId?: ResourceId;
-  mediaId?: number;
+  mediaId?: ResourceId;
   storyId?: number | null;
   templateId?: number;
   optimizedId?: ResourceId;

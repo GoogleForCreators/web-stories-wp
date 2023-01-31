@@ -13,20 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const ITEM_STATUS = {
-  PENDING: 'PENDING',
-  PREPARING: 'PREPARING',
-  PENDING_TRANSCODING: 'PENDING_TRANSCODING',
-  CANCELLED: 'CANCELLED',
-  UPLOADED: 'UPLOADED',
-  UPLOADING: 'UPLOADING',
-  TRANSCODED: 'TRANSCODED',
-  TRANSCODING: 'TRANSCODING',
-  MUTING: 'MUTING',
-  MUTED: 'MUTED',
-  CROPPING: 'CROPPING',
-  CROPPED: 'CROPPED',
-  TRIMMING: 'TRIMMING',
-  TRIMMED: 'TRIMMED',
-  FINISHED: 'FINISHED',
-};
+
+/**
+ * Internal dependencies
+ */
+import type { ResourceType } from './resourceType';
+import type { Resource } from './resource';
+
+export interface ImageResource extends Resource {
+  type: ResourceType.Image;
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,4 @@
  * limitations under the License.
  */
 
-export { default as getResourceFromLocalFile } from './getResourceFromLocalFile';
-export { default as getResourceFromMedia3p } from './getResourceFromMedia3p';
-export { default as useUploadVideoFrame } from './useUploadVideoFrame';
-export { default as getPosterName } from './getPosterName';
+export { default as useMediaUploadQueue } from './useMediaUploadQueue';

@@ -386,7 +386,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Transcoded video file object.
    */
   const trimVideo = useCallback(
-    async (file: File, start: number, end: number) => {
+    async (file: File, start: string, end: string) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_trim_video_transcoding');
 
@@ -410,9 +410,9 @@ function useFFmpeg() {
           '-i',
           file.name,
           '-ss',
-          start.toString(),
+          start,
           '-to',
-          end.toString(),
+          end,
           tempFileName
         );
         const data = ffmpeg.FS('readFile', tempFileName);

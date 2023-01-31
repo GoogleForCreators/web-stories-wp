@@ -27,12 +27,8 @@ import {
   Resource,
   seekVideo,
   VideoResource,
+  ResourceType,
 } from '@googleforcreators/media';
-
-/**
- * Internal dependencies
- */
-import { ResourceType } from './getResourceFromLocalFile';
 
 type ResourceLike = Pick<
   Resource,

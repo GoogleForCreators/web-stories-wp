@@ -32,7 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
-import useMediaUploadQueue from './utils/useMediaUploadQueue';
+import { useMediaUploadQueue } from './uploadQueue';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
 import useFFmpeg from './utils/useFFmpeg';
 
