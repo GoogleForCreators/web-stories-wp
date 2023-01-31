@@ -145,6 +145,7 @@ describe('Web Stories Widget', () => {
         visible: false,
       });
 
+      await page.waitForSelector("iframe[title='Site Preview']");
       const frameHandle = await page.$("iframe[title='Site Preview']");
       const frame = await frameHandle.contentFrame();
       expect(frame).not.toBeNull();
