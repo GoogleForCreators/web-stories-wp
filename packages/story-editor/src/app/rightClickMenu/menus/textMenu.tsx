@@ -39,14 +39,14 @@ import {
 import useLayerSelect from '../useLayerSelect';
 import useHeadingSelect from '../hooks/useHeadingSelect';
 import { LayerLock, LayerHide, LayerName, LayerUngroup } from '../items';
-import { useStory } from '../..';
+import { useStory } from '../../story';
 import useRightClickMenu from '../useRightClickMenu';
 import { getXvalue, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 import type { MenuPropType } from './shared';
 
 function TextMenu({ parentMenuRef }: MenuPropType) {
   const { copiedElementType, selectedElementType } = useStory(({ state }) => ({
-    copiedElementType: state.copiedElementState.type,
+    copiedElementType: state.copiedElementState?.type,
     selectedElementType: state.selectedElements?.[0].type,
   }));
   const { handleCopyStyles, handlePasteStyles } = useCopyPasteActions();

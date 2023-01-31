@@ -29,7 +29,8 @@ import useDeleteColor from '../../../components/colorPicker/useDeleteColor';
 import useDeleteStyle from '../../../components/styleManager/useDeleteStyle';
 import useAddPreset from '../../../utils/useAddPreset';
 import { noop } from '../../../utils/noop';
-import { useHistory, useStory } from '../..';
+import { useHistory } from '../../history';
+import { useStory } from '../../story';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**

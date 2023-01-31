@@ -21,7 +21,7 @@ import { renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import { useLayerActions } from '..';
-import { useStory } from '../../..';
+import { useStory } from '../../../story';
 import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/tracking'); // should be mocked in the testing env.

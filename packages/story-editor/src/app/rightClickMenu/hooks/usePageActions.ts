@@ -24,7 +24,7 @@ import { createPage, duplicatePage } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { useStory } from '../..';
+import { useStory } from '../../story';
 
 /**
  * Creates the right click menu page actions.

@@ -26,7 +26,9 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { useCanvas, useHistory, useStory } from '../..';
+import { useStory } from '../../story';
+import { useHistory } from '../../history';
+import { useCanvas } from '../../canvas';
 import updateProperties from '../../../components/style/updateProperties';
 import generateGroupName from '../../../utils/generateGroupName';
 import { UNDO_HELP_TEXT } from './constants';

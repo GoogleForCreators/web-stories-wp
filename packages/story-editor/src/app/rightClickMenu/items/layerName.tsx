@@ -24,7 +24,8 @@ import { useCallback } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
-import { useCanvas, useStory } from '../..';
+import useCanvas from '../../canvas/useCanvas';
+import useStory from '../../story/useStory';
 
 function LayerName() {
   const { selectedElementIds } = useStory(({ state }) => ({

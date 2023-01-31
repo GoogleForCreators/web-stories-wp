@@ -30,7 +30,8 @@ import updateProperties from '../../../components/style/updateProperties';
 import useApplyStyle from '../../../components/styleManager/useApplyStyle';
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import { getTextPresets } from '../../../utils/presetUtils';
-import { useHistory, useStory } from '../..';
+import { useHistory } from '../../history';
+import { useStory } from '../../story';
 import type { CopiedElementState } from '../../../types';
 import { UNDO_HELP_TEXT } from './constants';
 

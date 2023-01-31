@@ -24,7 +24,7 @@ import { useCallback } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
-import { useStory } from '../..';
+import useStory from '../../story/useStory';
 
 function LayerLock() {
   const updateSelectedElements = useStory(

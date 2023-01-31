@@ -25,7 +25,7 @@ import { ContextMenuComponents } from '@googleforcreators/design-system';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions } from '../hooks';
 import useShapeMaskElements from '../../../utils/useShapeMaskElements';
-import { useStory } from '../..';
+import { useStory } from '../../story';
 
 function MultipleElementsMenu() {
   const {

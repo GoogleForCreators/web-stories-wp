@@ -23,7 +23,7 @@ import { renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import useAddPreset from '../../../../utils/useAddPreset';
-import { useStory } from '../../..';
+import { useStory } from '../../../story';
 import { usePresetActions } from '..';
 import { ELEMENT } from './testUtils';
 

@@ -37,7 +37,8 @@ import {
   useLayerActions,
 } from '../hooks';
 import useShapeMask from '../../../utils/useShapeMask';
-import { useStory, useLocalMedia } from '../..';
+import { useStory } from '../../story';
+import useLocalMedia from '../../media/local/useLocalMedia';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';

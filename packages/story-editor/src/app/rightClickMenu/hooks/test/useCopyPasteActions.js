@@ -23,7 +23,7 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 import { useCopyPasteActions } from '..';
 import objectPick from '../../../../utils/objectPick';
-import { useStory } from '../../..';
+import { useStory } from '../../../story';
 import { ATTRIBUTES_TO_COPY } from '../../../story/useStoryReducer/reducers/copySelectedElement';
 import { ELEMENT } from './testUtils';
 

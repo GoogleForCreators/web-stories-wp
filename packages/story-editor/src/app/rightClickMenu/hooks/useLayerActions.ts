@@ -22,8 +22,8 @@ import { elementIs } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { useStory } from '../..';
-import { useLocalMedia } from '../../media';
+import { useStory } from '../../story';
+import useLocalMedia from '../../media/local/useLocalMedia';
 import { getCropParams } from '../../../utils/getCropParams';
 
 /**
