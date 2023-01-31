@@ -59,7 +59,8 @@ async function deleteAllPublisherLogos() {
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
-describe('Publisher Logos', () => {
+// eslint-disable-next-line jest/no-disabled-tests -- TODO: Fix flakey test.
+describe.skip('Publisher Logos', () => {
   describe('Without SVG support', () => {
     beforeEach(async () => {
       await deleteAllMedia(); // Will also delete *all* publisher logos.

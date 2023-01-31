@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -222,10 +222,10 @@
           "id": "7e70bd8d-cc67-4470-aec2-8e64755c6f6d"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "fb9e9e6b-998e-430b-b965-eaf3f3d0c1f8",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -709,9 +709,6 @@
           "sticker": { "type": "SummerAdventureDashedTrail" }
         }
       ],
-      "backgroundColor": { "color": { "r": 74, "g": 98, "b": 24 } },
-      "type": "page",
-      "id": "e56de283-7b57-4559-8610-c9509c489c0e",
       "animations": [
         {
           "id": "d6467f65-254a-43ce-a829-a61239558356",
@@ -756,6 +753,9 @@
           "delay": 1500
         }
       ],
+      "backgroundColor": { "color": { "r": 74, "g": 98, "b": 24 } },
+      "type": "page",
+      "id": "e56de283-7b57-4559-8610-c9509c489c0e",
       "pageTemplateType": "list",
       "groups": {
         "d5fdf9d7-6dfa-48ca-96fb-49c8b33d8695": {
@@ -1035,9 +1035,6 @@
           "y": -215
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "2024f354-b683-4695-aa27-45bb7cf00ffe",
       "animations": [
         {
           "id": "70331b93-5e86-4246-a6fc-4658eab4ccde",
@@ -1055,6 +1052,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "2024f354-b683-4695-aa27-45bb7cf00ffe",
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
@@ -1255,9 +1255,6 @@
           "y": 552
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "f606d759-0a00-4305-af53-323c42f1506a",
       "animations": [
         {
           "id": "140fa7f3-6721-4c06-971b-1b485b9bdea9",
@@ -1268,6 +1265,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "f606d759-0a00-4305-af53-323c42f1506a",
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
