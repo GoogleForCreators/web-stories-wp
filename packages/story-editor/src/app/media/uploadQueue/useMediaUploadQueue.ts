@@ -422,9 +422,8 @@ function useMediaUploadQueue() {
 
           newResource = {
             ...newResource,
-            ...posterResource
+            ...posterResource,
           };
-
         } catch {
           // Not interested in errors here.
         }

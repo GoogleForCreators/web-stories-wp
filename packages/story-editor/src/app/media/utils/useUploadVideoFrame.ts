@@ -85,12 +85,7 @@ function useUploadVideoFrame({ updateMediaElement }: UseUploadVideoFrameProps) {
         mediaId: id,
         mediaSource: 'poster-generation',
       });
-      const {
-        id: posterId,
-        src: poster,
-        width,
-        height,
-      } = resource;
+      const { id: posterId, src: poster, width, height } = resource;
 
       // If video ID is not set, skip relating media.
       if (id && updateMedia) {
