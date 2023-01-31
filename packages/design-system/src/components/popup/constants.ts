@@ -58,6 +58,7 @@ export const PopupContainer = styled.div<{
   noOverFlow?: boolean;
   topOffset?: number;
 }>`
+  /*! @noflip */
   ${({
     $offset: { x, y, width },
     fillWidth,
