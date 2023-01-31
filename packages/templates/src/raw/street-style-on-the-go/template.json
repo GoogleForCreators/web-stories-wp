@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -221,10 +221,10 @@
           "marginOffset": 0.4781249999999986
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "0a63bedc-b774-47f4-8702-e2f97d0df862",
-      "animations": [],
       "pageTemplateType": "cover",
       "groups": {
         "43822f2d-e2ce-445d-ac82-13372d91db61": {
@@ -365,10 +365,10 @@
           "groupId": "69941a5e-88a5-4c8c-8cfa-19cb195da1b5"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "044acf92-f5dc-41a5-b1d6-1171880d0c23",
-      "animations": [],
       "pageTemplateType": "editorial",
       "groups": {
         "69941a5e-88a5-4c8c-8cfa-19cb195da1b5": {
@@ -708,6 +708,65 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 171,
+          "y": 43,
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "id": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "9e02919f-ac5c-40ba-bb58-e90081c93011"
+        },
+        {
+          "x": 223,
+          "y": 167,
+          "id": "e961ad3d-4583-4668-a61a-270dee386a3b",
+          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "9e02919f-ac5c-40ba-bb58-e90081c93011"
+        },
+        {
+          "x": 149,
+          "y": 404,
+          "id": "19750fef-2288-45b5-a636-8442c8384399",
+          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "9e02919f-ac5c-40ba-bb58-e90081c93011"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
@@ -828,70 +887,8 @@
           "height": 18,
           "id": "043e48d6-10c5-41f0-a985-6e59b34069e1",
           "marginOffset": 0.42499999999999716
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 171,
-          "y": 43,
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "id": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "9e02919f-ac5c-40ba-bb58-e90081c93011"
-        },
-        {
-          "x": 223,
-          "y": 167,
-          "id": "e961ad3d-4583-4668-a61a-270dee386a3b",
-          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "9e02919f-ac5c-40ba-bb58-e90081c93011"
-        },
-        {
-          "x": 149,
-          "y": 404,
-          "id": "19750fef-2288-45b5-a636-8442c8384399",
-          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "9e02919f-ac5c-40ba-bb58-e90081c93011"
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "717f9e7a-fb90-4630-90fc-6981f0963a7d",
       "animations": [
         {
           "id": "72fff2a9-09b9-441c-8648-62200b42d877",
@@ -921,6 +918,9 @@
           "delay": 100
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "717f9e7a-fb90-4630-90fc-6981f0963a7d",
       "pageTemplateType": null,
       "groups": {
         "9e02919f-ac5c-40ba-bb58-e90081c93011": {
@@ -1749,6 +1749,65 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 148,
+          "y": 176,
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "id": "8c6204fb-504d-4a36-bcb6-8158640c8aa8",
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "374fa7aa-59fc-4407-babb-59569bb35d91"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 206,
+          "y": 367,
+          "id": "03d6f4c6-71f5-4f52-a71c-abf2873eefdd",
+          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "374fa7aa-59fc-4407-babb-59569bb35d91"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 118,
+          "y": 565,
+          "id": "766fd6c5-d038-4dfa-b2cf-ab2b869a27a8",
+          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "374fa7aa-59fc-4407-babb-59569bb35d91"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
@@ -1869,65 +1928,6 @@
           "id": "daf40241-7590-4dea-bbfa-54517191b1cc",
           "marginOffset": -4.125,
           "type": "text"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 148,
-          "y": 176,
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "id": "8c6204fb-504d-4a36-bcb6-8158640c8aa8",
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "374fa7aa-59fc-4407-babb-59569bb35d91"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 206,
-          "y": 367,
-          "id": "03d6f4c6-71f5-4f52-a71c-abf2873eefdd",
-          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "374fa7aa-59fc-4407-babb-59569bb35d91"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 118,
-          "y": 565,
-          "id": "766fd6c5-d038-4dfa-b2cf-ab2b869a27a8",
-          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "374fa7aa-59fc-4407-babb-59569bb35d91"
         }
       ],
       "animations": [
@@ -2055,6 +2055,45 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 99,
+          "y": 424,
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "id": "d4c31f52-6dbd-486d-b0ac-e771141d336e",
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "5ff05d6a-4844-4834-a14a-5eeec2ad7268"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 206,
+          "y": 200,
+          "id": "20b13191-5fee-4d5d-b2a4-d15790e7f414",
+          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "5ff05d6a-4844-4834-a14a-5eeec2ad7268"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
@@ -2175,45 +2214,6 @@
           "id": "8cf1cdb6-eb51-425d-a4bd-ff41bf4808dd",
           "marginOffset": -4.125,
           "type": "text"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 99,
-          "y": 424,
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "id": "d4c31f52-6dbd-486d-b0ac-e771141d336e",
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "5ff05d6a-4844-4834-a14a-5eeec2ad7268"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 206,
-          "y": 200,
-          "id": "20b13191-5fee-4d5d-b2a4-d15790e7f414",
-          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "5ff05d6a-4844-4834-a14a-5eeec2ad7268"
         }
       ],
       "animations": [
@@ -2579,6 +2579,65 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 257,
+          "y": 232,
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "id": "0e4df1c9-fcc8-4ec2-81cf-83f43800011f",
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "520fbcd1-de3e-40ae-8c54-cbe352b4dc04"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 157,
+          "y": 299,
+          "id": "e47bcf2b-70f8-48dc-a648-caa16e579732",
+          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "520fbcd1-de3e-40ae-8c54-cbe352b4dc04"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 257,
+          "y": 505,
+          "id": "43dfe5b4-2b0c-4231-af65-85eecb988c18",
+          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "520fbcd1-de3e-40ae-8c54-cbe352b4dc04"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
@@ -2699,65 +2758,6 @@
           "id": "34e75c51-6a39-4e0c-9f7c-c0a112f95de5",
           "marginOffset": -4.125,
           "type": "text"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 257,
-          "y": 232,
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "id": "0e4df1c9-fcc8-4ec2-81cf-83f43800011f",
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "520fbcd1-de3e-40ae-8c54-cbe352b4dc04"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 157,
-          "y": 299,
-          "id": "e47bcf2b-70f8-48dc-a648-caa16e579732",
-          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "520fbcd1-de3e-40ae-8c54-cbe352b4dc04"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 257,
-          "y": 505,
-          "id": "43dfe5b4-2b0c-4231-af65-85eecb988c18",
-          "basedOn": "2618ee74-b460-41bc-bf79-ab03945bb7de",
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "520fbcd1-de3e-40ae-8c54-cbe352b4dc04"
         }
       ],
       "animations": [
@@ -2885,6 +2885,25 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "x": 294,
+          "y": 301,
+          "width": 42,
+          "height": 42,
+          "sticker": { "type": "fashionTap" },
+          "id": "34986906-17c7-4662-bc99-7dec99cb099e",
+          "type": "sticker",
+          "link": {
+            "url": "https://google.com",
+            "icon": null,
+            "desc": "Product Domain"
+          },
+          "groupId": "dccf59cf-db53-4885-afd2-44041e844611"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
@@ -3005,25 +3024,6 @@
           "id": "57bb1bc8-e907-4ab1-a109-b588ed8c5dd6",
           "marginOffset": -4.125,
           "type": "text"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "x": 294,
-          "y": 301,
-          "width": 42,
-          "height": 42,
-          "sticker": { "type": "fashionTap" },
-          "id": "34986906-17c7-4662-bc99-7dec99cb099e",
-          "type": "sticker",
-          "link": {
-            "url": "https://google.com",
-            "icon": null,
-            "desc": "Product Domain"
-          },
-          "groupId": "dccf59cf-db53-4885-afd2-44041e844611"
         }
       ],
       "animations": [
@@ -3527,9 +3527,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-      "type": "page",
-      "id": "78887218-eb63-4166-9e99-5101d819d218",
       "animations": [
         {
           "id": "fb64b5f4-cdb5-4ef2-83c4-194b0b2e04f4",
@@ -3577,6 +3574,9 @@
           "delay": 1000
         }
       ],
+      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "type": "page",
+      "id": "78887218-eb63-4166-9e99-5101d819d218",
       "pageTemplateType": "list",
       "groups": {
         "0447b865-badc-49fe-a1b9-63fea133a862": {

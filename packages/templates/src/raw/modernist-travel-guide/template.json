@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -223,10 +223,10 @@
           "id": "992268d0-90a5-45ea-80de-35dbb4bd00e3"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
       "type": "page",
       "id": "4dc45791-28b8-416a-b74a-da6ddc409a14",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -546,9 +546,6 @@
           "marginOffset": -18.91000000000001
         }
       ],
-      "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
-      "type": "page",
-      "id": "606df260-8e5f-47c0-9a8d-01f4b3d8797d",
       "animations": [
         {
           "id": "1ca3fea9-483f-4121-b81f-6cc3fe31e78c",
@@ -575,6 +572,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
+      "type": "page",
+      "id": "606df260-8e5f-47c0-9a8d-01f4b3d8797d",
       "pageTemplateType": "editorial"
     },
     {
@@ -678,44 +678,6 @@
           "height": 374,
           "mask": { "type": "circle" },
           "groupId": "a2581183-0eb2-4baa-a44a-e0a8d7897b20"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-06-21T10:27:18",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/modernist-travel-guide/page02_image02.png",
-            "width": 480,
-            "height": 480,
-            "posterId": 0,
-            "id": 0,
-            "alt": "Woman wearing black shirt standing in front of red wall",
-            "sizes": [],
-            "isOptimized": false,
-            "baseColor": "#da9688",
-            "isExternal": true
-          },
-          "type": "image",
-          "x": 47,
-          "y": 437,
-          "width": 129,
-          "height": 129,
-          "mask": {
-            "type": "rectangle",
-            "showInLibrary": true,
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1,
-            "supportsBorder": true
-          },
-          "id": "3b5c5069-ec14-430c-9f6a-83719ac8fe1d"
         },
         {
           "opacity": 100,
@@ -861,6 +823,44 @@
           "x": 47,
           "y": 600,
           "groupId": "a2581183-0eb2-4baa-a44a-e0a8d7897b20"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-06-21T10:27:18",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/modernist-travel-guide/page02_image02.png",
+            "width": 480,
+            "height": 480,
+            "posterId": 0,
+            "id": 0,
+            "alt": "Woman wearing black shirt standing in front of red wall",
+            "sizes": [],
+            "isOptimized": false,
+            "baseColor": "#da9688",
+            "isExternal": true
+          },
+          "type": "image",
+          "x": 47,
+          "y": 437,
+          "width": 129,
+          "height": 129,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1,
+            "supportsBorder": true
+          },
+          "id": "3b5c5069-ec14-430c-9f6a-83719ac8fe1d"
         },
         {
           "opacity": 100,
@@ -1076,6 +1076,16 @@
           "groupId": "ce9914e2-da16-4f01-b40a-9a6682c9e462"
         }
       ],
+      "animations": [
+        {
+          "id": "125a2999-95da-4cdc-9c2d-152cb0323b1d",
+          "type": "effect-background-zoom",
+          "targets": ["2fd050ff-3949-4327-8511-d20857e02378"],
+          "zoomDirection": "scaleIn",
+          "duration": 4000,
+          "delay": 0
+        }
+      ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "c7ba8f18-4a75-4175-a6b4-efaab898de64",
@@ -1095,16 +1105,6 @@
         "type": "shape",
         "id": "f7e9a9fe-bd08-4d78-8258-187bc4b050ec"
       },
-      "animations": [
-        {
-          "id": "125a2999-95da-4cdc-9c2d-152cb0323b1d",
-          "type": "effect-background-zoom",
-          "targets": ["2fd050ff-3949-4327-8511-d20857e02378"],
-          "zoomDirection": "scaleIn",
-          "duration": 4000,
-          "delay": 0
-        }
-      ],
       "pageTemplateType": "section",
       "groups": {
         "a2581183-0eb2-4baa-a44a-e0a8d7897b20": {
@@ -1618,9 +1618,6 @@
           }
         }
       ],
-      "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
-      "type": "page",
-      "id": "4d233f88-21b3-4859-a478-b7140b212d93",
       "animations": [
         {
           "id": "feb887c6-b277-4dfe-81d8-07b202fad804",
@@ -1630,6 +1627,9 @@
           "delay": 250
         }
       ],
+      "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
+      "type": "page",
+      "id": "4d233f88-21b3-4859-a478-b7140b212d93",
       "pageTemplateType": null
     },
     {
@@ -4198,9 +4198,6 @@
           "id": "a0963597-bf13-4117-91be-1db1833f7aa3"
         }
       ],
-      "backgroundColor": { "color": { "r": 181, "g": 16, "b": 6 } },
-      "type": "page",
-      "id": "27f5c03c-4a36-4269-8d27-966b911dfc57",
       "animations": [
         {
           "id": "0f3b82c8-0432-49e4-958a-b229f7895173",
@@ -4245,6 +4242,9 @@
           "delay": 750
         }
       ],
+      "backgroundColor": { "color": { "r": 181, "g": 16, "b": 6 } },
+      "type": "page",
+      "id": "27f5c03c-4a36-4269-8d27-966b911dfc57",
       "pageTemplateType": "list"
     }
   ],

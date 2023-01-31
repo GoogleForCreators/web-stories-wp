@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -269,10 +269,10 @@
           "height": 23
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 253, "g": 240, "b": 214 } },
       "type": "page",
       "id": "53d519bc-2c93-4301-8e8e-30bac768ad46",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -2392,9 +2392,6 @@
           "id": "32159c7e-a95f-406d-8bb2-a6fbd56ba3bb"
         }
       ],
-      "backgroundColor": { "color": { "r": 73, "g": 69, "b": 61 } },
-      "type": "page",
-      "id": "49a34cbc-7b00-447b-992d-bd60c5d10636",
       "animations": [
         {
           "id": "e8d6ffb3-21c3-4eb9-b162-562b6dabc1f7",
@@ -2404,6 +2401,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 73, "g": 69, "b": 61 } },
+      "type": "page",
+      "id": "49a34cbc-7b00-447b-992d-bd60c5d10636",
       "pageTemplateType": null
     }
   ],

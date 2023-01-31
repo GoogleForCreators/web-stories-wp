@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -232,10 +232,10 @@
           "id": "46770d7c-7dd1-47ed-900a-6e94d96613d5"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 0, "g": 97, "b": 16 } },
       "type": "page",
       "id": "bbccbe21-c824-4760-a4bb-a24296c45abd",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -567,9 +567,6 @@
           "y": 541
         }
       ],
-      "backgroundColor": { "color": { "r": 181, "g": 0, "b": 33 } },
-      "type": "page",
-      "id": "7cd72777-83f1-4bf3-9dc5-5fb6aaec7240",
       "animations": [
         {
           "id": "05b17473-6c62-4e98-8dd1-38b150f7cdba",
@@ -586,6 +583,9 @@
           "delay": 150
         }
       ],
+      "backgroundColor": { "color": { "r": 181, "g": 0, "b": 33 } },
+      "type": "page",
+      "id": "7cd72777-83f1-4bf3-9dc5-5fb6aaec7240",
       "pageTemplateType": "section"
     },
     {
@@ -813,6 +813,7 @@
           "y": 530
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "c4a3852f-216c-47b4-94e4-3e1e45ca39f4",
@@ -832,7 +833,6 @@
         "type": "shape",
         "id": "73eb1435-661c-46df-b781-2f53ab0af86d"
       },
-      "animations": [],
       "pageTemplateType": null
     },
     {
@@ -1282,9 +1282,6 @@
           "y": 566
         }
       ],
-      "backgroundColor": { "color": { "r": 158, "g": 0, "b": 95 } },
-      "type": "page",
-      "id": "963b3076-2c74-48e3-84cd-2353f6ce6c2e",
       "animations": [
         {
           "id": "3caa1365-b466-40f4-84d1-8314cd452837",
@@ -1303,6 +1300,9 @@
           "delay": 150
         }
       ],
+      "backgroundColor": { "color": { "r": 158, "g": 0, "b": 95 } },
+      "type": "page",
+      "id": "963b3076-2c74-48e3-84cd-2353f6ce6c2e",
       "pageTemplateType": null
     },
     {
@@ -1527,6 +1527,7 @@
           "y": 574
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "7529f122-4e94-4bca-b817-838c9da696b3",
@@ -1546,7 +1547,6 @@
         "type": "shape",
         "id": "8bf27660-d58f-4a25-8d1c-3a1d019a7ec9"
       },
-      "animations": [],
       "pageTemplateType": null
     },
     {
@@ -1771,6 +1771,7 @@
           "y": 552
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "8eef080d-9ad8-4523-9c98-7afd82074d30",
@@ -1790,7 +1791,6 @@
         "type": "shape",
         "id": "7577a8d2-0ded-4fe6-b9c6-30110eaf6083"
       },
-      "animations": [],
       "pageTemplateType": null
     },
     {
@@ -1919,6 +1919,7 @@
           "y": 273
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 158, "g": 0, "b": 95 } },
       "type": "page",
       "id": "787df553-c506-4767-b61f-2b944fbabea1",
@@ -1927,7 +1928,6 @@
         "ctaText": "WATCH THE TRAILER",
         "theme": "light"
       },
-      "animations": [],
       "pageTemplateType": "editorial"
     },
     {
@@ -2134,9 +2134,6 @@
           "y": 567
         }
       ],
-      "backgroundColor": { "color": { "r": 92, "g": 0, "b": 148 } },
-      "type": "page",
-      "id": "c0262900-6070-4da8-b493-1f2a05a9f622",
       "animations": [
         {
           "id": "edc9dbc3-3ab2-484c-9005-cbb8bb2d7cab",
@@ -2153,6 +2150,9 @@
           "delay": 150
         }
       ],
+      "backgroundColor": { "color": { "r": 92, "g": 0, "b": 148 } },
+      "type": "page",
+      "id": "c0262900-6070-4da8-b493-1f2a05a9f622",
       "pageTemplateType": null
     },
     {

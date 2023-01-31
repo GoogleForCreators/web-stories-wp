@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -215,10 +215,10 @@
           "y": 572
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 45, "g": 42, "b": 53 } },
       "type": "page",
       "id": "53ece471-d87a-4e9d-9d33-908102e5c322",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -374,10 +374,10 @@
           "y": 206
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 238, "g": 194, "b": 188 } },
       "type": "page",
       "id": "70a3cd58-9d7b-4d3c-bdd4-1df98654559f",
-      "animations": [],
       "pageTemplateType": "editorial"
     },
     {
