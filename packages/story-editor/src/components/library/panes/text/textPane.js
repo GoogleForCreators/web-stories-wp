@@ -27,11 +27,7 @@ import {
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Text,
-  THEME_CONSTANTS,
-  Toggle,
-} from '@googleforcreators/design-system';
+import { Text, TextSize, Toggle } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -106,13 +102,9 @@ function TextPane(props) {
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
       <SmartColorToggle>
-        <Text
-          as="label"
-          htmlFor={toggleId}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <Text.Label htmlFor={toggleId} size={TextSize.Small}>
           {__('Adaptive text colors', 'web-stories')}
-        </Text>
+        </Text.Label>
         <Tooltip
           title={__(
             'May impact performance when inserting text',

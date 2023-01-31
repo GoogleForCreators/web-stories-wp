@@ -22,9 +22,9 @@ import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
 } from '@googleforcreators/design-system';
 import { escapeHTML } from '@googleforcreators/dom';
@@ -149,9 +149,9 @@ function PreviewButton({ forceIsSaving = false }) {
     <>
       <Tooltip title={label} hasTail>
         <Button
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.QUATERNARY}
-          size={BUTTON_SIZES.SMALL}
+          variant={ButtonVariant.Square}
+          type={ButtonType.Quaternary}
+          size={ButtonSize.Small}
           onClick={openPreviewLink}
           disabled={isSaving || forceIsSaving || isUploading}
           aria-label={label}

@@ -27,8 +27,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Button,
   Text,
   themeHelpers,
@@ -66,7 +66,7 @@ const UploadFormArea = styled.div`
   transition: border-color 300ms ease-in;
 `;
 
-const UploadHelperText = styled(Text)`
+const UploadHelperText = styled(Text.Paragraph)`
   margin: 0 auto 16px;
   padding: 0 20%;
   text-align: center;
@@ -184,8 +184,8 @@ const FileUpload = ({
         forwardedAs="label"
         htmlFor={id}
         aria-label={ariaLabel}
-        type={BUTTON_TYPES.PRIMARY}
-        size={BUTTON_SIZES.SMALL}
+        type={ButtonType.Primary}
+        size={ButtonSize.Small}
       >
         {label}
         <Input

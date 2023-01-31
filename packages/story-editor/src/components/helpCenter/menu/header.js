@@ -18,11 +18,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import {
-  themeHelpers,
-  Text,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { themeHelpers, Text, TextSize } from '@googleforcreators/design-system';
 
 const Panel = styled.div`
   padding: 24px 0 16px 0;
@@ -30,7 +26,7 @@ const Panel = styled.div`
 `;
 
 const Heading = styled.h1`
-  ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
+  ${themeHelpers.expandTextPreset(({ label }, { Medium }) => label[Medium])}
   color: ${({ theme }) => theme.colors.fg.primary};
   line-height: 32px;
   margin: 0 0 8px 0;
@@ -40,12 +36,12 @@ export function Header() {
   return (
     <Panel>
       <Heading as="h2">{__('Web Stories Help Center', 'web-stories')}</Heading>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <Text.Paragraph size={TextSize.XSmall}>
         {__(
           'Discover tips & resources to help you get the most out of your Web Stories.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Panel>
   );
 }

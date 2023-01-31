@@ -19,7 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useState, useEffect } from '@googleforcreators/react';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -52,7 +52,7 @@ const SubSection = styled.section`
   display: flex;
   flex-direction: column;
 `;
-const SubHeading = styled(Text)`
+const SubHeading = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin: 14px 0;
   font-weight: ${({ theme }) => theme.typography.weight.bold};
@@ -145,7 +145,7 @@ function StylePanel(props) {
           <Warning message={ACCESSIBILITY_COPY.lowContrast.textPanel} />
         )}
         <SubSection>
-          <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <SubHeading size={TextSize.Small}>
             {__('Text Box', 'web-stories')}
           </SubHeading>
           <BackgroundColorControls {...props} />

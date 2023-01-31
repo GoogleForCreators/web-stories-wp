@@ -20,7 +20,7 @@
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   NumericInput,
   Switch,
 } from '@googleforcreators/design-system';
@@ -113,7 +113,7 @@ function PageAdvancementSettings({
     <MultilineForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading as="h3">{TEXT.SECTION_HEADING}</SettingHeading>
-        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SettingSubheading size={TextSize.Small}>
           {TEXT.CONTEXT}
         </SettingSubheading>
       </div>
@@ -142,9 +142,7 @@ function PageAdvancementSettings({
                 max={MIN_MAX.PAGE_DURATION.MAX}
               />
             </InlineForm>
-            <TextInputHelperText
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <TextInputHelperText size={TextSize.Small}>
               {TEXT.INPUT_HELPER}
             </TextInputHelperText>
           </>

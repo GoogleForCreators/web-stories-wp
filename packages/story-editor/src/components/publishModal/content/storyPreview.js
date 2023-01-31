@@ -21,8 +21,8 @@ import styled from 'styled-components';
 import {
   Headline,
   Text,
-  THEME_CONSTANTS,
-  MEDIA_VARIANTS,
+  TextSize,
+  MediaVariant,
 } from '@googleforcreators/design-system';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
@@ -155,7 +155,7 @@ const ScrimBottom = styled.div`
 // the lines that have stylelint disabled.
 const Title = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  size: TextSize.XSmall,
 })`
   max-height: calc(1.2em * 3);
   /* stylelint-disable-next-line */
@@ -170,9 +170,8 @@ const Title = styled(Headline).attrs({
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-const Publisher = styled(Text).attrs({
-  forwardAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+const Publisher = styled(Text.Span).attrs({
+  size: TextSize.Medium,
 })`
   display: block;
   margin: 0;
@@ -256,10 +255,7 @@ const StoryPreview = () => {
 
   return (
     <>
-      <Headline
-        as="label"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
-      >
+      <Headline as="label" size={TextSize.XXSmall}>
         {__('Cover Preview', 'web-stories')}
       </Headline>
       <PreviewWrapper width={mediaWidth} height={mediaHeight}>
@@ -311,7 +307,7 @@ const StoryPreview = () => {
                   ariaLabel={__('Poster image', 'web-stories')}
                   onChangeErrorText={posterErrorMessage}
                   imgProps={featuredMedia}
-                  variant={MEDIA_VARIANTS.NONE}
+                  variant={MediaVariant.None}
                   menuOptions={menuOptions}
                   cropParams={{
                     width: 640,

@@ -20,7 +20,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { useNumericInput } from '../useNumericInput';
+import useNumericInput from '../useNumericInput';
 
 const mockOnChange = jest.fn();
 

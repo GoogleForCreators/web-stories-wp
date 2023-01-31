@@ -18,7 +18,8 @@
  * Internal dependencies
  */
 import hasOpacity from '../hasOpacity';
-import { PatternType, Linear } from '../types';
+import { PatternType } from '../types';
+import type { Linear } from '../types';
 
 describe('hasOpacity', () => {
   it('should return false for opaque solid', () => {

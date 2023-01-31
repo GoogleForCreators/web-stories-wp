@@ -22,8 +22,8 @@ import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
   Text,
-  THEME_CONSTANTS,
-  Datalist,
+  TextSize,
+  DatalistDropdown,
 } from '@googleforcreators/design-system';
 
 /**
@@ -59,7 +59,7 @@ const ControlsContainer = styled.div`
 `;
 
 const BodyViewOptionsHeader = styled.div``;
-const StyledDatalist = styled(Datalist.DropDown)`
+const StyledDatalist = styled(DatalistDropdown)`
   max-width: ${FILTER_MAX_WIDTH}px;
 `;
 
@@ -83,9 +83,9 @@ export default function BodyViewOptions({
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
       <DisplayFormatContainer>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text.Span size={TextSize.Small}>
           <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
-        </Text>
+        </Text.Span>
         <ControlsContainer>
           {filters?.length
             ? filters.map((filter) => (

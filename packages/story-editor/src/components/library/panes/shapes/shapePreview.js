@@ -196,6 +196,7 @@ function ShapePreview({ mask, isPreview, index }) {
         type={'shape'}
         elementProps={shapeData}
         cloneElement={ShapeClone}
+        onClick={onClick}
         cloneProps={{
           width: dataToEditorX(DEFAULT_ELEMENT_WIDTH * mask.ratio),
           height: dataToEditorY(DEFAULT_ELEMENT_WIDTH),

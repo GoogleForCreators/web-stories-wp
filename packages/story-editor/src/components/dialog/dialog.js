@@ -23,8 +23,8 @@ import { ThemeProvider } from 'styled-components';
 import {
   Dialog as StyledDialog,
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   theme,
   lightMode,
 } from '@googleforcreators/design-system';
@@ -49,6 +49,7 @@ const Dialog = ({
   onSecondary,
   onPrimary,
   primaryText,
+  PrimaryComponent = Button,
   secondaryText,
   primaryRest,
   secondaryRest,
@@ -59,14 +60,14 @@ const Dialog = ({
   const _PrimaryButton = useMemo(
     () =>
       primaryText && (
-        <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
+        <PrimaryComponent
+          type={ButtonType.Primary}
+          size={ButtonSize.Small}
           onClick={(evt) => onPrimary?.(evt)}
           {...primaryRest}
         >
           {primaryText}
-        </Button>
+        </PrimaryComponent>
       ),
     [primaryText, primaryRest, onPrimary]
   );
@@ -75,8 +76,8 @@ const Dialog = ({
     () =>
       secondaryText && (
         <Button
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
           onClick={() => onSecondary?.() || onClose()}
           {...secondaryRest}
         >
@@ -111,6 +112,7 @@ Dialog.propTypes = {
   onPrimary: PropTypes.func,
   onSecondary: PropTypes.func,
   primaryText: PropTypes.string,
+  PrimaryComponent: PropTypes.object,
   primaryRest: PropTypes.object,
   secondaryText: PropTypes.string,
   secondaryRest: PropTypes.object,

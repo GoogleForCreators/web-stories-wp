@@ -6,6 +6,7 @@
   },
   "references": [
     { "path": "../date" },
+    { "path": "../design-system" },
     { "path": "../element-library" },
     { "path": "../patterns" },
     { "path": "../react" },
@@ -19,6 +20,7 @@
     "src/app/router",
     "src/constants",
     "src/icons",
-    "src/types"
+    "src/types",
+    "src/typings"
   ]
 }

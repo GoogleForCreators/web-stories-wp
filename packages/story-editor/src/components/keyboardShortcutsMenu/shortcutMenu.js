@@ -28,9 +28,9 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   themeHelpers,
   useKeyDownEffect,
@@ -136,9 +136,9 @@ function ShortcutMenu() {
       <CloseContainer>
         <Button
           ref={anchorRef}
-          type={BUTTON_TYPES.PLAIN}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.CIRCLE}
+          type={ButtonType.Plain}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Circle}
           onClick={close}
           aria-label={__('Close Menu', 'web-stories')}
         >

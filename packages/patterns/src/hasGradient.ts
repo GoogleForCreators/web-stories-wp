@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { Pattern, PatternType } from './types';
+import { PatternType } from './types';
+import type { Pattern } from './types';
 
 function hasGradient(pattern: Pattern) {
   return Boolean(pattern?.type) && PatternType.Solid !== pattern.type;

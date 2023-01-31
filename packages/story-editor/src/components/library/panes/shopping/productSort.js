@@ -88,14 +88,7 @@ function ProductSort({ onChange, value = 'date-desc' }) {
     [onChange]
   );
 
-  const optionsWithGroup = [
-    {
-      group: options.map((option) => ({
-        value: `${option.orderby}-${option.order}`,
-        ...option,
-      })),
-    },
-  ];
+  const optionsWithGroup = [{ options }];
 
   return (
     <StyledDropDownMenu
@@ -104,7 +97,7 @@ function ProductSort({ onChange, value = 'date-desc' }) {
       onMenuSelected={onMenuSelected}
       display
       onMenuClose={onMenuClose}
-      options={optionsWithGroup}
+      groups={optionsWithGroup}
       ariaLabel={__('Product sort options', 'web-stories')}
       activeValue={value}
       dropDownHeight={340}

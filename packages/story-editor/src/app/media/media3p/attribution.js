@@ -21,7 +21,7 @@ import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import {
   Text as DefaultText,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -45,7 +45,7 @@ const AttributionPill = styled.div`
   z-index: 9999;
 `;
 
-const Text = styled(DefaultText)`
+const Text = styled(DefaultText.Span)`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
@@ -101,12 +101,7 @@ export function UnsplashAttribution() {
       aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
     >
       <AttributionPill aria-hidden>
-        <Text
-          forwardedAs="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-        >
-          {__('Powered by', 'web-stories')}
-        </Text>
+        <Text size={TextSize.XSmall}>{__('Powered by', 'web-stories')}</Text>
         <UnsplashLogo />
       </AttributionPill>
     </a>
@@ -122,12 +117,7 @@ export function CoverrAttribution() {
       aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
     >
       <AttributionPill aria-hidden>
-        <Text
-          forwardedAs="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-        >
-          {__('Powered by', 'web-stories')}
-        </Text>
+        <Text size={TextSize.XSmall}>{__('Powered by', 'web-stories')}</Text>
         <CoverrLogo />
       </AttributionPill>
     </a>

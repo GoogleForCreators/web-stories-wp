@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Toggle } from '..';
+import Toggle from '../toggle';
 import { Text } from '../..';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../..';
@@ -92,10 +92,10 @@ export const _default = (args) => {
       <br />
       <Container>
         <Row>
-          <Text>{'Normal'}</Text>
-          <Text>{'Normal'}</Text>
-          <Text>{'Disabled'}</Text>
-          <Text>{'Disabled'}</Text>
+          <Text.Paragraph>{'Normal'}</Text.Paragraph>
+          <Text.Paragraph>{'Normal'}</Text.Paragraph>
+          <Text.Paragraph>{'Disabled'}</Text.Paragraph>
+          <Text.Paragraph>{'Disabled'}</Text.Paragraph>
         </Row>
         <Row>
           <Toggle
@@ -133,10 +133,10 @@ export const _default = (args) => {
       <DarkThemeProvider>
         <Container darkMode>
           <Row>
-            <Text>{'Normal'}</Text>
-            <Text>{'Normal'}</Text>
-            <Text>{'Disabled'}</Text>
-            <Text>{'Disabled'}</Text>
+            <Text.Paragraph>{'Normal'}</Text.Paragraph>
+            <Text.Paragraph>{'Normal'}</Text.Paragraph>
+            <Text.Paragraph>{'Disabled'}</Text.Paragraph>
+            <Text.Paragraph>{'Disabled'}</Text.Paragraph>
           </Row>
           <Row>
             <Toggle

@@ -24,9 +24,9 @@ import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   themeHelpers,
 } from '@googleforcreators/design-system';
 
@@ -122,9 +122,9 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
           }
         }}
         onClick={open}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.RECTANGLE}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Rectangle}
       >
         {__('Upload a file', 'web-stories')}
       </UploadButton>

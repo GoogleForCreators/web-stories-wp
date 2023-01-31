@@ -19,9 +19,9 @@
  */
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
 } from '@googleforcreators/design-system';
 import { useCallback } from '@googleforcreators/react';
@@ -38,9 +38,9 @@ function HistoryButton({ title, shortcut, children, ...rest }) {
   return (
     <Tooltip title={title} shortcut={shortcut} hasTail>
       <Button
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.QUATERNARY}
-        size={BUTTON_SIZES.SMALL}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Quaternary}
+        size={ButtonSize.Small}
         {...rest}
       >
         {children}

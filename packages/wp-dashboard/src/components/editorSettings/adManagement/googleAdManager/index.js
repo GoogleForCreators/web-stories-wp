@@ -21,9 +21,9 @@ import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
+  ButtonSize,
+  ButtonType,
+  TextSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -106,15 +106,15 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
           hint={slotIdInputError}
         />
         <SaveButton
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Secondary}
+          size={ButtonSize.Small}
           disabled={disableSlotIdSaveButton}
           onClick={onSaveSlotId}
         >
           {TEXT.SUBMIT_BUTTON}
         </SaveButton>
       </InlineForm>
-      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <TextInputHelperText size={TextSize.Small}>
         {TEXT.SLOT_ID_CONTEXT}
       </TextInputHelperText>
     </>

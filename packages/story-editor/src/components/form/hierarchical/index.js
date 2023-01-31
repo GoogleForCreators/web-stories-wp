@@ -24,7 +24,7 @@ import {
   KEYS,
   Text,
   themeHelpers,
-  THEME_CONSTANTS,
+  TextSize,
   useKeyDownEffect,
   useLiveRegion,
 } from '@googleforcreators/design-system';
@@ -51,9 +51,8 @@ const Container = styled.div`
   display: block;
 `;
 
-const Label = styled(Text).attrs({
-  forwardedAs: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const Label = styled(Text.Label).attrs({
+  size: TextSize.Small,
 })`
   margin: 0 12px;
 `;
@@ -92,7 +91,7 @@ const CheckboxContainer = styled.li`
   margin-left: ${({ $level }) => 20 * $level}px;
 `;
 
-const NoResultsText = styled(Text)`
+const NoResultsText = styled(Text.Paragraph)`
   margin-bottom: 12px;
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
@@ -339,10 +338,7 @@ const HierarchicalInput = ({
                   />
                 ))
               ) : (
-                <NoResultsText
-                  role="treeitem"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                >
+                <NoResultsText role="treeitem" size={TextSize.Small}>
                   {noOptionsText}
                 </NoResultsText>
               )}

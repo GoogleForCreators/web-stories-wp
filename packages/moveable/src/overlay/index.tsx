@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { forwardRef, useContext, createPortal } from '@googleforcreators/react';
 import type { ReactNode, HTMLAttributes, ForwardedRef } from 'react';
 
@@ -34,17 +34,8 @@ interface WrapperProps {
   pointerEvents?: PointerEventsValue;
 }
 
-const pointerEventsCss = css<WrapperProps>`
-  ${({ pointerEvents }) => {
-    if (pointerEvents) {
-      return `pointer-events: ${pointerEvents};`;
-    }
-    return '';
-  }}
-`;
-
 const Wrapper = styled.div<WrapperProps>`
-  ${pointerEventsCss}
+  pointer-events: ${({ pointerEvents }) => pointerEvents}
   position: absolute;
   top: 0;
   left: 0;

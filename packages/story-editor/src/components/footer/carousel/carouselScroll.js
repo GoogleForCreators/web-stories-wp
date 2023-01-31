@@ -23,9 +23,9 @@ import styled from 'styled-components';
 import {
   Button,
   Icons,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  ButtonVariant,
+  ButtonType,
+  ButtonSize,
 } from '@googleforcreators/design-system';
 
 /**
@@ -78,9 +78,9 @@ function CarouselScrollButton({ isNext = false }) {
 
   return (
     <Button
-      variant={BUTTON_VARIANTS.SQUARE}
-      type={BUTTON_TYPES.PLAIN}
-      size={BUTTON_SIZES.SMALL}
+      variant={ButtonVariant.Square}
+      type={ButtonType.Plain}
+      size={ButtonSize.Small}
       disabled={!canScroll}
       onClick={onClick}
       aria-label={label}

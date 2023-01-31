@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-export interface Notification {
-  id?: string;
-  key?: string;
-  'aria-label'?: string;
-  message: string;
-  onDismiss?: () => void;
-  dismissible?: boolean;
-  thumbnail?: {
-    src: string;
-    alt: string;
-  };
-}
+/**
+ * Internal dependencies
+ */
+import type { SnackbarNotification } from '../components';
+
 export interface SnackbarState {
-  showSnackbar: (snackbar: Omit<Notification, 'id'>) => void;
+  showSnackbar: (snackbar: Omit<SnackbarNotification, 'id'>) => void;
   clearSnackbar: () => void;
-  removeSnack: (toRemove: Notification | Notification[]) => void;
-  currentSnacks: Notification[];
+  removeSnack: (
+    toRemove: SnackbarNotification | SnackbarNotification[]
+  ) => void;
+  currentSnacks: SnackbarNotification[];
   placement: string;
 }

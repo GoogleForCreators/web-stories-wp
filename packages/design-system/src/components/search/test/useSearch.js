@@ -47,7 +47,7 @@ describe('useSearch()', () => {
     expect(result.current.activeOption).toMatchObject(basicDropDownOptions[2]);
   });
 
-  it('should return null for activeOption when selectedValue is empty', () => {
+  it('should return undefined for activeOption when selectedValue is empty', () => {
     const { result } = renderHook(() =>
       useSearch({
         selectedValue: {},
@@ -56,13 +56,11 @@ describe('useSearch()', () => {
     );
 
     act(() => {
-      result.current.inputState.set('freeform answer not in options');
+      result.current.setInputState('freeform answer not in options');
     });
 
-    expect(result.current.activeOption).toBeNull();
-    expect(result.current.inputState.value).toBe(
-      'freeform answer not in options'
-    );
+    expect(result.current.activeOption).toBeUndefined();
+    expect(result.current.inputState).toBe('freeform answer not in options');
   });
 
   it('should return an empty array when no options are present', () => {
@@ -70,7 +68,7 @@ describe('useSearch()', () => {
       useSearch({ selectedValue: {}, options: [] })
     );
 
-    expect(result.current.normalizedOptions).toStrictEqual([]);
+    expect(result.current.groups).toStrictEqual([]);
   });
 
   it('should return an empty array when only bad options are present', () => {
@@ -85,7 +83,7 @@ describe('useSearch()', () => {
       })
     );
 
-    expect(result.current.normalizedOptions).toStrictEqual([]);
+    expect(result.current.groups).toStrictEqual([]);
   });
 
   it('should return only sanitized options that meet requirements', () => {
@@ -93,9 +91,9 @@ describe('useSearch()', () => {
       useSearch({ selectedValue: {}, options: nestedDropDownOptions })
     );
 
-    expect(result.current.normalizedOptions).toStrictEqual([
+    expect(result.current.groups).toStrictEqual([
       {
-        group: [
+        options: [
           { label: 'ET', value: 'alien-1' },
           { label: 'Stitch', value: 'alien-2' },
           { label: 'Groot', value: 'alien-3' },
@@ -108,7 +106,7 @@ describe('useSearch()', () => {
         label: 'aliens',
       },
       {
-        group: [
+        options: [
           { label: 'Smaug', value: 'dragon-1' },
           { label: 'Mushu', value: 'dragon-2' },
           { label: 'Toothless', value: 'dragon-3' },
@@ -119,7 +117,7 @@ describe('useSearch()', () => {
         label: 'dragons',
       },
       {
-        group: [
+        options: [
           { label: 'Snoopy', value: 'dog-1' },
           { label: 'Scooby', value: 'dog-2' },
         ],

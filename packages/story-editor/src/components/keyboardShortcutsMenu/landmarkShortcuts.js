@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -39,9 +39,8 @@ const Landmark = styled.div`
   flex-direction: column;
 `;
 
-const Label = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
-  forwardedAs: 'span',
+const Label = styled(Text.Span).attrs({
+  size: TextSize.XSmall,
 })`
   text-align: center;
   margin-top: 8px;

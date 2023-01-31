@@ -24,9 +24,9 @@ import { __ } from '@googleforcreators/i18n';
 import {
   ToggleButton,
   Icons,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonVariant,
+  ButtonType,
 } from '@googleforcreators/design-system';
 
 const HEADER_FOOTER_HEIGHT = 52;
@@ -56,9 +56,9 @@ function PatternTypePicker({ type, setToGradient, setToSolid }) {
       <ToggleButton
         aria-label={__('Solid pattern type', 'web-stories')}
         onClick={setToSolid}
-        type={BUTTON_TYPES.QUATERNARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Quaternary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         isToggled={type === 'solid'}
       >
         <Icons.PatternSolid />
@@ -66,9 +66,9 @@ function PatternTypePicker({ type, setToGradient, setToSolid }) {
       <ToggleButton
         aria-label={__('Linear gradient pattern type', 'web-stories')}
         onClick={setToLinear}
-        type={BUTTON_TYPES.QUATERNARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Quaternary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         isToggled={type === 'linear'}
       >
         <Icons.PatternLinear />
@@ -76,9 +76,9 @@ function PatternTypePicker({ type, setToGradient, setToSolid }) {
       <ToggleButton
         aria-label={__('Radial gradient pattern type', 'web-stories')}
         onClick={setToRadial}
-        type={BUTTON_TYPES.QUATERNARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Quaternary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         isToggled={type === 'radial'}
       >
         <Icons.PatternRadial />

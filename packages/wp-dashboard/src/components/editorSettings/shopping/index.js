@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
-import { THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { TextSize } from '@googleforcreators/design-system';
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -109,9 +109,7 @@ function Shopping({
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
 
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <TextInputHelperText size={TextSize.Small}>
           {TEXT.HELPER_MESSAGE}
         </TextInputHelperText>
         {shoppingProvider === SHOPPING_PROVIDER_TYPE.WOOCOMMERCE &&
@@ -119,7 +117,7 @@ function Shopping({
           link && (
             <TextInputHelperText
               data-testid="woocommerceMessage"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              size={TextSize.Small}
             >
               <TranslateWithMarkup
                 mapping={{
@@ -128,7 +126,7 @@ function Shopping({
                       href={link}
                       rel="noreferrer"
                       target="_blank"
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      size={TextSize.Small}
                       onClick={onWoocommerceClick}
                     />
                   ),
@@ -147,9 +145,7 @@ function Shopping({
           handleUpdate={handleUpdateShoppingProvider}
         />
 
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
+        <TextInputHelperText size={TextSize.Small}>
           {TEXT.SHOPPING_PROVIDER_HELPER_MESSAGE}
         </TextInputHelperText>
 

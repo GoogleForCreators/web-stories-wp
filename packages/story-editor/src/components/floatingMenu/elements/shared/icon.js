@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { memo, forwardRef } from '@googleforcreators/react';
 import {
   ContextMenuComponents,
-  TOOLTIP_PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 
 /**
@@ -37,7 +37,7 @@ const IconButton = memo(
   ) {
     return (
       <Tooltip
-        placement={TOOLTIP_PLACEMENT.BOTTOM}
+        placement={Placement.BOTTOM}
         title={hasTooltip ? title : undefined}
       >
         <ToggleButton aria-label={title} ref={ref} tabIndex={-1} {...rest}>

@@ -20,9 +20,9 @@
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 import { useCallback } from '@googleforcreators/react';
 
@@ -60,9 +60,9 @@ function CopyStoryDataToClipboard() {
   return (
     <Button
       onClick={copyToClipboard}
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      type={BUTTON_TYPES.QUATERNARY}
-      size={BUTTON_SIZES.SMALL}
+      variant={ButtonVariant.Rectangle}
+      type={ButtonType.Quaternary}
+      size={ButtonSize.Small}
     >
       {__('Copy story data', 'web-stories')}
     </Button>

@@ -22,7 +22,7 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Popup } from '..';
+import Popup from '../popup';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 // TODO tests with karma to easily get positions and interact

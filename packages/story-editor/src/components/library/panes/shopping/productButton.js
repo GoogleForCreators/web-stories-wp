@@ -20,9 +20,9 @@ import styled from 'styled-components';
 import {
   Icons,
   Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
@@ -152,9 +152,9 @@ function ProductButton({ product, onClick, onFocus, isOnPage, canAddMore }) {
                 }
               : noop
           }
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
           onFocus={onFocus}
         >
           {isOnPage ? (

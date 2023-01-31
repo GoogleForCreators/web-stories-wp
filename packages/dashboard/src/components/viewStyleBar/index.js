@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import {
   Icons,
   themeHelpers,
-  TOOLTIP_PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 
 /**
@@ -58,7 +58,7 @@ export default function ViewStyleBar({ onPress, layoutStyle }) {
     <Container>
       <Tooltip
         title={VIEW_STYLE_LABELS[layoutStyle]}
-        placement={TOOLTIP_PLACEMENT.BOTTOM_END}
+        placement={Placement.BottomEnd}
         hasTail
       >
         <ToggleButton

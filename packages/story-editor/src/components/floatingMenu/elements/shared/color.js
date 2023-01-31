@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { PLACEMENT } from '@googleforcreators/design-system';
+import { Placement } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
@@ -46,7 +46,7 @@ function FloatingColor(props) {
     <Color
       width={width}
       maxHeight={PICKER_MAX_HEIGHT}
-      pickerPlacement={PLACEMENT.TOP_START}
+      pickerPlacement={Placement.Top_START}
       isInDesignMenu
       allowsGradient={allowsGradient}
       allowsSavedColors

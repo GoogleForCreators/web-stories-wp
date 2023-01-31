@@ -23,9 +23,9 @@ import { createSolid, PatternPropType } from '@googleforcreators/patterns';
 import {
   Button,
   Icons,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -109,9 +109,9 @@ function CustomColorPicker({
         <Button
           aria-label={__('Go back', 'web-stories')}
           onClick={hideCustomPicker}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
         >
           <Icons.ArrowLeft />
         </Button>

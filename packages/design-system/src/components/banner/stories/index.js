@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
+import { TextSize } from '../../../theme';
 import { Text, Link } from '../../typography';
 import { Banner } from '..';
 
@@ -44,9 +44,7 @@ export const _default = ({ message, ...args }) => {
       backgroundUrl={demoBgUrl}
       {...args}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {message}
-      </Text>
+      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
     </Banner>
   );
 };
@@ -59,9 +57,7 @@ export const EditorBanner = ({ message, ...args }) => {
       backgroundUrl={demoBgUrl}
       {...args}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {message}
-      </Text>
+      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
     </Banner>
   );
 };
@@ -80,15 +76,12 @@ export const DashboardBanner = ({ message, ...args }) => {
       backgroundUrl={demoBgUrl}
       {...args}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <Text.Paragraph size={TextSize.XSmall}>
         {message}
-        <Link
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          href="https://policies.google.com/privacy"
-        >
+        <Link size={TextSize.XSmall} href="https://policies.google.com/privacy">
           {'Google Privacy Policy'}
         </Link>
-      </Text>
+      </Text.Paragraph>
     </Banner>
   );
 };
@@ -106,9 +99,7 @@ export const BannerNoBackgroundImage = ({ message, ...args }) => {
       onClose={(e) => args.onClose(e)}
       {...args}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {message}
-      </Text>
+      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
     </Banner>
   );
 };

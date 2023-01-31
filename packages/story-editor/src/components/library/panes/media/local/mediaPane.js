@@ -23,13 +23,13 @@ import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   Button as DefaultButton,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Icons,
-  PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 
 /**
@@ -70,8 +70,8 @@ const FilterArea = styled.div`
   padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
 `;
 
-const SearchCount = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+const SearchCount = styled(Text.Paragraph).attrs({
+  size: TextSize.Medium,
 })`
   display: flex;
   align-items: center;
@@ -177,9 +177,9 @@ function MediaPane(props) {
   const renderUploadButtonIcon = useCallback(
     (open) => (
       <Button
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
         onClick={open}
         aria-label={__('Upload', 'web-stories')}
       >
@@ -205,7 +205,7 @@ function MediaPane(props) {
               selectedValue={mediaType?.toString() || FILTER_NONE}
               onMenuItemClick={onFilter}
               options={FILTERS}
-              placement={PLACEMENT.BOTTOM_START}
+              placement={Placement.Bottom_START}
             />
             {isSearching && media.length > 0 && (
               <SearchCount>

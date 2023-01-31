@@ -24,7 +24,7 @@ import {
   useKeyDownEffect,
   useGlobalKeyDownEffect,
   Headline,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
 } from '@googleforcreators/design-system';
 
@@ -142,7 +142,7 @@ const TabElement = styled.li.attrs(({ isActive }) => ({
 
 const TabText = styled(Headline).attrs({
   as: 'p',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
+  size: TextSize.XXXSmall,
 })`
   color: inherit;
 `;

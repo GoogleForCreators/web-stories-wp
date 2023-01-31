@@ -19,12 +19,12 @@
  */
 import styled, { ThemeProvider } from 'styled-components';
 import {
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonVariant,
   Button,
   Icons,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   theme,
   lightMode,
   CONTEXT_MENU_MIN_WIDTH,
@@ -101,8 +101,8 @@ function EmptyStateLayer() {
       <DisplayPageArea withSafezone={false}>
         <EmptyStateMessage>
           <StyledButton
-            type={BUTTON_TYPES.SECONDARY}
-            variant={BUTTON_VARIANTS.CIRCLE}
+            type={ButtonType.Secondary}
+            variant={ButtonVariant.Circle}
             onClick={onButtonClick}
             aria-haspopup="true"
             aria-label={__('Add content', 'web-stories')}
@@ -112,15 +112,12 @@ function EmptyStateLayer() {
             <Icons.Media />
           </StyledButton>
           <ThemeProvider theme={{ ...theme, colors: lightMode }}>
-            <Text
-              id="emptystate-message"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <Text.Paragraph id="emptystate-message" size={TextSize.Small}>
               {__(
                 'Add an image, video or template to get started',
                 'web-stories'
               )}
-            </Text>
+            </Text.Paragraph>
           </ThemeProvider>
         </EmptyStateMessage>
       </DisplayPageArea>

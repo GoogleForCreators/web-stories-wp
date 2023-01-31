@@ -20,8 +20,8 @@
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   noop,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
@@ -47,8 +47,8 @@ import {
 export const FOCUS_TEMPLATE_CLASS = 'focus_template';
 
 const SeeDetailsButton = styled(Button).attrs({
-  type: BUTTON_TYPES.TERTIARY,
-  size: BUTTON_SIZES.SMALL,
+  type: ButtonType.Tertiary,
+  size: ButtonSize.Small,
 })`
   background-color: ${({ theme }) => theme.colors.standard.white};
 `;
@@ -119,8 +119,8 @@ const TemplateGridItem = forwardRef(
 
                 {onCreateStory && (
                   <Button
-                    size={BUTTON_SIZES.SMALL}
-                    type={BUTTON_TYPES.PRIMARY}
+                    size={ButtonSize.Small}
+                    type={ButtonType.Primary}
                     onClick={onCreateStory}
                     tabIndex={tabIndex}
                     ariaLabel={sprintf(

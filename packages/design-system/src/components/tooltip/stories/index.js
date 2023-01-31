@@ -25,20 +25,15 @@ import { useCallback, useEffect, useState } from '@googleforcreators/react';
  */
 import { theme } from '../../../theme';
 import { Table } from '../../../icons';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-} from '../../button';
-import { BaseTooltip as Tooltip, TOOLTIP_PLACEMENT } from '..';
+import { Button, ButtonSize, ButtonType, ButtonVariant } from '../../button';
+import { BaseTooltip as Tooltip, Placement } from '..';
 import { Text } from '../../typography';
 
 export default {
   title: 'DesignSystem/Components/Tooltip',
   args: {
     hasTail: true,
-    placement: TOOLTIP_PLACEMENT.BOTTOM,
+    placement: Placement.Bottom,
     colorShortcut: 'mod+z',
     colorTitle: 'Page background colors cannot have opacity',
     iconShortcut: 'Shortcut for icon',
@@ -48,7 +43,7 @@ export default {
   },
   argTypes: {
     placement: {
-      options: Object.values(TOOLTIP_PLACEMENT),
+      options: Object.values(Placement),
       control: 'select',
     },
     colorShortcut: {
@@ -111,7 +106,7 @@ export const _default = (args) => (
         shortcut={args.iconShortcut}
         title={args.iconTitle}
       >
-        <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
+        <Button type={ButtonType.Primary} variant={ButtonVariant.Icon}>
           <Table aria-hidden />
         </Button>
       </Tooltip>
@@ -122,7 +117,7 @@ export const _default = (args) => (
         shortcut={args.buttonShortcut}
         title={args.buttonTitle}
       >
-        <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
+        <Button type={ButtonType.Primary} size={ButtonSize.Small}>
           {'I am just a normal button'}
         </Button>
       </Tooltip>
@@ -147,7 +142,7 @@ export const LightMode = (args) => (
       shortcut={args.iconShortcut}
       title={args.iconTitle}
     >
-      <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
+      <Button type={ButtonType.Primary} variant={ButtonVariant.Icon}>
         <Table aria-hidden />
       </Button>
     </Tooltip>
@@ -158,7 +153,7 @@ export const LightMode = (args) => (
       shortcut={args.buttonShortcut}
       title={args.buttonTitle}
     >
-      <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
+      <Button type={ButtonType.Primary} size={ButtonSize.Small}>
         {'I am just a normal button'}
       </Button>
     </Tooltip>
@@ -187,8 +182,8 @@ export const TooltipWithChangingTextOnClick = (args) => {
         title={tooltipTitles[currentTooltipIndex]}
       >
         <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Primary}
+          size={ButtonSize.Small}
           onClick={handleTooltipTextChange}
         >
           {'Switch view'}
@@ -242,8 +237,8 @@ export const TooltipWithChangingTextOnInterval = (args) => {
         title={tooltipTitles[currentTooltipIndex]}
       >
         <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Primary}
+          size={ButtonSize.Small}
           onFocus={handleToggleButtonFocus}
           onBlur={handleToggleButtonFocus}
         >

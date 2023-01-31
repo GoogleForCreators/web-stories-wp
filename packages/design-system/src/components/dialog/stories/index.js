@@ -22,8 +22,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
-import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../button';
+import { TextSize } from '../../../theme';
+import { Button, ButtonSize, ButtonType } from '../../button';
 import { Text } from '../../typography';
 import { Dialog } from '..';
 import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
@@ -57,8 +57,8 @@ export const _default = ({ message, onClick, ...args }) => {
 
   const ActionsNode = (
     <Button
-      size={BUTTON_SIZES.SMALL}
-      type={BUTTON_TYPES.PRIMARY}
+      size={ButtonSize.Small}
+      type={ButtonType.Primary}
       onClick={() => {
         onClick('button');
         setToggleDialog(!toggleDialog);
@@ -70,8 +70,8 @@ export const _default = ({ message, onClick, ...args }) => {
   return (
     <InvertedWrapper>
       <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
+        size={ButtonSize.Small}
+        type={ButtonType.Primary}
         onClick={() => setToggleDialog(!toggleDialog)}
       >
         {'Toggle Dialog'}
@@ -86,9 +86,7 @@ export const _default = ({ message, onClick, ...args }) => {
         actions={ActionsNode}
         {...args}
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {message}
-        </Text>
+        <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
       </Dialog>
     </InvertedWrapper>
   );
@@ -101,8 +99,8 @@ export const With2Actions = ({ message, onClick, ...args }) => {
   const ActionsNode = (
     <>
       <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.TERTIARY}
+        size={ButtonSize.Small}
+        type={ButtonType.Tertiary}
         onClick={() => {
           onClick('cancel button');
           setToggleDialog(!toggleDialog);
@@ -111,8 +109,8 @@ export const With2Actions = ({ message, onClick, ...args }) => {
         {'Secondary'}
       </Button>
       <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
+        size={ButtonSize.Small}
+        type={ButtonType.Primary}
         onClick={() => {
           onClick('primary button');
         }}
@@ -124,8 +122,8 @@ export const With2Actions = ({ message, onClick, ...args }) => {
   return (
     <InvertedWrapper>
       <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
+        size={ButtonSize.Small}
+        type={ButtonType.Primary}
         onClick={() => setToggleDialog(!toggleDialog)}
       >
         {'Toggle Dialog'}
@@ -140,9 +138,7 @@ export const With2Actions = ({ message, onClick, ...args }) => {
         actions={ActionsNode}
         {...args}
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {message}
-        </Text>
+        <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
       </Dialog>
     </InvertedWrapper>
   );
@@ -155,8 +151,8 @@ export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
   const ActionsNode = (
     <>
       <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.TERTIARY}
+        size={ButtonSize.Small}
+        type={ButtonType.Tertiary}
         onClick={() => {
           onClick('cancel button ');
           setToggleDialog(!toggleDialog);
@@ -165,8 +161,8 @@ export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
         {'Secondary'}
       </Button>
       <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
+        size={ButtonSize.Small}
+        type={ButtonType.Primary}
         onClick={() => {
           onClick('primary button ');
         }}
@@ -179,8 +175,8 @@ export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
     <DarkThemeProvider>
       <InvertedWrapper>
         <Button
-          size={BUTTON_SIZES.SMALL}
-          type={BUTTON_TYPES.PRIMARY}
+          size={ButtonSize.Small}
+          type={ButtonType.Primary}
           onClick={() => setToggleDialog(!toggleDialog)}
         >
           {'Toggle Dialog'}
@@ -195,9 +191,7 @@ export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
           actions={ActionsNode}
           {...args}
         >
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {message}
-          </Text>
+          <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
         </Dialog>
       </InvertedWrapper>
     </DarkThemeProvider>

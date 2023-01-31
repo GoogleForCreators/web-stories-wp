@@ -20,14 +20,14 @@
 import styled, { css } from 'styled-components';
 import {
   Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
   Headline,
   Input,
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { StandardViewContentGutter } from '@googleforcreators/dashboard';
@@ -61,9 +61,7 @@ export const SettingHeading = styled(Headline).attrs({
   ${({ theme }) =>
     themeHelpers.expandPresetStyles({
       preset: {
-        ...theme.typography.presets.label[
-          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.LARGE
-        ],
+        ...theme.typography.presets.label[TextSize.Large],
       },
       theme,
     })};
@@ -74,17 +72,17 @@ export const InlineLink = styled(Link)`
   display: inline-block;
 `;
 
-export const HelperText = styled(Text)`
+export const HelperText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
-export const ConnectionHelperText = styled(Text)`
+export const ConnectionHelperText = styled(Text.Paragraph)`
   padding-top: 12px;
   color: ${({ hasError, theme }) =>
     hasError ? theme.colors.fg.negative : theme.colors.fg.tertiary};
 `;
 
-export const CenterMutedText = styled(Text)`
+export const CenterMutedText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   text-align: center;
 `;
@@ -97,7 +95,7 @@ export const TextInputHelperText = styled(HelperText)`
   padding-top: 12px;
 `;
 
-export const CheckboxLabel = styled(Text)`
+export const CheckboxLabel = styled(Text.Label)`
   display: flex;
   justify-content: flex-start;
   margin-top: 8px;
@@ -170,9 +168,9 @@ export const MenuContainer = styled.div`
 `;
 
 export const LogoMenuButton = styled(Button).attrs({
-  size: BUTTON_SIZES.SMALL,
-  type: BUTTON_TYPES.SECONDARY,
-  variant: BUTTON_VARIANTS.CIRCLE,
+  size: ButtonSize.Small,
+  type: ButtonType.Secondary,
+  variant: ButtonVariant.Circle,
 })`
   opacity: ${({ isActive, menuOpen }) => (menuOpen || isActive ? 1 : 0)};
   position: absolute;

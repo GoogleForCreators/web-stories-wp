@@ -21,10 +21,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   Headline,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   Button,
-  BUTTON_VARIANTS,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 
 export const TaxonomyPropType = PropTypes.shape({
@@ -42,16 +42,16 @@ export const TaxonomyPropType = PropTypes.shape({
 
 export const ContentHeading = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
+  size: TextSize.XXXSmall,
 })`
   margin: 4px 0 16px;
   font-weight: ${({ theme }) => theme.typography.weight.regular};
 `;
 
 export const LinkButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.LINK,
+  variant: ButtonVariant.Link,
 })`
-  ${themeHelpers.expandTextPreset(({ link }, { X_SMALL }) => link[X_SMALL])}
+  ${themeHelpers.expandTextPreset(({ link }, { XSmall }) => link[XSmall])}
   margin-bottom: 16px;
   font-weight: 500;
 `;

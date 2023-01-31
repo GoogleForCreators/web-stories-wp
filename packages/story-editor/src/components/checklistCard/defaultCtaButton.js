@@ -20,12 +20,12 @@
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
 } from '@googleforcreators/design-system';
 
 export const DefaultCtaButton = ({ children, ...rest }) => (
-  <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY} {...rest}>
+  <Button size={ButtonSize.Small} type={ButtonType.Secondary} {...rest}>
     {children}
   </Button>
 );

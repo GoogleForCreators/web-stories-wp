@@ -57,7 +57,7 @@ export const _default = (args) => {
   return (
     <>
       <Container>
-        <Text>{'Percentage:'}</Text>
+        <Text.Paragraph>{'Percentage:'}</Text.Paragraph>
         <Slider
           {...args}
           handleChange={setLightValue}
@@ -67,7 +67,7 @@ export const _default = (args) => {
       </Container>
       <DarkThemeProvider>
         <Container>
-          <Text>{'Milliseconds:'}</Text>
+          <Text.Paragraph>{'Milliseconds:'}</Text.Paragraph>
           <Slider
             {...args}
             handleChange={setDarkValue}

@@ -20,9 +20,9 @@
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   useGlobalKeyDownEffect,
   Icons,
 } from '@googleforcreators/design-system';
@@ -46,9 +46,9 @@ function PlainButton({ text, onClick, disabled }) {
   return (
     <Tooltip title={text} hasTail>
       <Button
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.QUATERNARY}
-        size={BUTTON_SIZES.SMALL}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Quaternary}
+        size={ButtonSize.Small}
         onClick={onClick}
         disabled={disabled}
         aria-label={text}

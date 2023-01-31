@@ -28,7 +28,7 @@ import {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { Input, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Input, Text, TextSize } from '@googleforcreators/design-system';
 import {
   isValidUrl,
   toAbsoluteUrl,
@@ -56,7 +56,7 @@ const IconInfo = styled.div`
   margin-left: 20px;
 `;
 
-const IconText = styled(Text)`
+const IconText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
@@ -306,7 +306,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               disabled={fetchingMetadata}
             />
             <IconInfo>
-              <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              <IconText size={TextSize.Small}>
                 {__('Optional brand icon', 'web-stories')}
               </IconText>
             </IconInfo>

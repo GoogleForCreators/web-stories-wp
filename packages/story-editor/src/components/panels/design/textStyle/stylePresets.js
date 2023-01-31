@@ -19,14 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   Text,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
   Icons,
   Button,
-  PLACEMENT,
+  Placement,
   Popup,
   Disclosure,
 } from '@googleforcreators/design-system';
@@ -60,7 +60,7 @@ const NoStylesWrapper = styled(DefaultNoStylesWrapper)`
   width: calc(100% + 28px);
 `;
 
-const SubHeading = styled(Text)`
+const SubHeading = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin: 6px 0;
   font-weight: ${({ theme }) => theme.typography.weight.bold};
@@ -70,7 +70,7 @@ const StyledButton = styled(Button)`
   margin-left: auto;
 `;
 
-const NoStylesText = styled(Text)`
+const NoStylesText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
@@ -98,13 +98,13 @@ function PresetPanel({ pushUpdate }) {
   return (
     <>
       <PresetsHeader>
-        <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <SubHeading size={TextSize.Small}>
           {__('Recently Saved Styles', 'web-stories')}
         </SubHeading>
         <StyledButton
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Small}
+          variant={ButtonVariant.Square}
           onClick={addGlobalPreset}
           aria-label={__('Add style', 'web-stories')}
         >
@@ -132,7 +132,7 @@ function PresetPanel({ pushUpdate }) {
             anchor={buttonRef}
             dock={sidebar}
             isOpen={isPopupOpen}
-            placement={PLACEMENT.RIGHT_START}
+            placement={Placement.RightStart}
             spacing={SPACING}
             renderContents={() => (
               <StyleManager
@@ -146,7 +146,7 @@ function PresetPanel({ pushUpdate }) {
       )}
       {!hasPresets && (
         <NoStylesWrapper>
-          <NoStylesText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <NoStylesText size={TextSize.Small}>
             {__('No Styles Saved', 'web-stories')}
           </NoStylesText>
         </NoStylesWrapper>

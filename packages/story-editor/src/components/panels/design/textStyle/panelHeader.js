@@ -20,9 +20,9 @@
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -40,9 +40,9 @@ import PanelTitle from '../../panel/shared/title';
 import panelContext from '../../panel/context';
 
 const AutoStyleButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.SQUARE,
-  type: BUTTON_TYPES.TERTIARY,
-  size: BUTTON_SIZES.SMALL,
+  variant: ButtonVariant.Square,
+  type: ButtonType.Tertiary,
+  size: ButtonSize.Small,
 })`
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(theme.colors.border.focus, '#1d1f20')};

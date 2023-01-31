@@ -23,9 +23,9 @@ import styled, { css } from 'styled-components';
 import { __, _x } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
 } from '@googleforcreators/design-system';
 import {
@@ -81,9 +81,9 @@ const StyledButton = styled(Button)`
 
 const Direction = ({ className, direction, ...rest }) => (
   <StyledButton
-    variant={BUTTON_VARIANTS.SQUARE}
-    type={BUTTON_TYPES.TERTIARY}
-    size={BUTTON_SIZES.SMALL}
+    variant={ButtonVariant.Square}
+    type={ButtonType.Tertiary}
+    size={ButtonSize.Small}
     className={className}
     direction={direction}
     {...rest}
