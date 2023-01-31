@@ -19,7 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { Icons, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Icons, Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -58,12 +58,12 @@ export const EmptyContent = () => {
       <IconContainer>
         <Icons.CheckmarkCircle />
       </IconContainer>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Paragraph size={TextSize.Small}>
         {__(
           'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Wrapper>
   );
 };

@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { MEDIA_VARIANTS } from '@googleforcreators/design-system';
+import { MediaVariant } from '@googleforcreators/design-system';
 import { useConfig } from '../../app';
 import Media from './media';
 
@@ -89,7 +89,7 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
       hotlinkInsertingText={__('Using image as link icon', 'web-stories')}
       type={allowedImageMimeTypes}
       isLoading={isLoading}
-      variant={MEDIA_VARIANTS.CIRCLE}
+      variant={MediaVariant.Circle}
       canUpload={options.length !== 0}
       menuOptions={options}
       {...rest}

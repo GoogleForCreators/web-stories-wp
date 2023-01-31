@@ -18,7 +18,8 @@
  * Internal dependencies
  */
 import getOpaquePattern from '../getOpaquePattern';
-import { PatternType, Linear } from '../types';
+import { PatternType } from '../types';
+import type { Linear } from '../types';
 
 describe('getOpaquePattern', () => {
   it('should get the opaque color correctly from a solid', () => {

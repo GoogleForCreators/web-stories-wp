@@ -24,7 +24,7 @@ import {
   PatternPropType,
 } from '@googleforcreators/patterns';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   BUTTON_TRANSITION_TIMING,
   Text,
 } from '@googleforcreators/design-system';
@@ -104,9 +104,8 @@ const Wrapper = styled.div`
   width: 60px;
 `;
 
-const StyledText = styled(Text).attrs({
-  forwardedAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const StyledText = styled(Text.Span).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.border.defaultActive};
   margin-top: 8px;

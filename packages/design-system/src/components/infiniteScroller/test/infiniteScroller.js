@@ -23,7 +23,7 @@ import { screen } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils';
-import InfiniteScroller from '..';
+import InfiniteScroller from '../infiniteScroller';
 
 describe('InfiniteScroller', () => {
   const onGetDataMock = jest.fn();

@@ -25,12 +25,12 @@ import {
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonAsLink,
+  ButtonSize,
+  ButtonType,
   LogoWithTypeCircleColor,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
@@ -125,14 +125,14 @@ function LeftRail() {
           />
         </Header>
         <Content>
-          <Button
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
+          <ButtonAsLink
+            type={ButtonType.Quaternary}
+            size={ButtonSize.Small}
             href={newStoryURL}
             onClick={onCreateNewStoryClick}
           >
             {__('Create New Story', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         </Content>
         <Content>
           <NavList>
@@ -150,7 +150,7 @@ function LeftRail() {
                   <NavLink
                     active={activeRoute === path.value}
                     href={resolveRoute(path.value)}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    size={TextSize.Small}
                     isBold
                     isIconLink={Boolean(Icon)}
                     aria-label={
@@ -170,7 +170,7 @@ function LeftRail() {
                   >
                     <IconWrap>{Icon && <Icon width="22px" />}</IconWrap>
 
-                    <PathName as="span" isBold>
+                    <PathName size={TextSize.Small} isBold>
                       {path.label}
                     </PathName>
                   </NavLink>
@@ -188,7 +188,7 @@ function LeftRail() {
                 <NavLink
                   active={activeRoute === path.value}
                   href={resolveRoute(path.value)}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  size={TextSize.Small}
                   aria-label={
                     activeRoute === path.value
                       ? sprintf(
@@ -204,19 +204,15 @@ function LeftRail() {
                     onClick: (evt) => onExternalLinkClick(evt, path),
                   })}
                 >
-                  <Text
-                    as="span"
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    isBold
-                  >
+                  <Text.Span size={TextSize.Small} isBold>
                     {path.label}
-                  </Text>
+                  </Text.Span>
                 </NavLink>
               </NavListItem>
             ))}
           </NavList>
         )}
-        <AppInfo size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+        <AppInfo size={TextSize.XSmall}>
           {sprintf(
             /* translators: 1: Current Year, 2: App Version */
             __('\u00A9 %1$s Google Version %2$s', 'web-stories'),

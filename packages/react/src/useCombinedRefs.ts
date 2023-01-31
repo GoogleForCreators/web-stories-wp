@@ -17,13 +17,8 @@
 /**
  * External dependencies
  */
-import {
-  ForwardedRef,
-  MutableRefObject,
-  RefCallback,
-  useCallback,
-  useRef,
-} from 'react';
+import { useCallback, useRef } from 'react';
+import type { ForwardedRef, MutableRefObject, RefCallback } from 'react';
 
 /**
  * Synchronize multiple refs to a single ref

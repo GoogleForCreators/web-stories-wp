@@ -29,9 +29,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Chip,
   Icons,
   useKeyDownEffect,
@@ -82,9 +82,9 @@ const InnerContainer = styled.div`
 // Important: the visibility is 'inherit' when props.visible because otherwise
 // it gets shown even when the provider is not the selectedProvider!
 const ExpandButton = styled(Button).attrs({
-  type: BUTTON_TYPES.TERTIARY,
-  size: BUTTON_SIZES.SMALL,
-  variant: BUTTON_VARIANTS.CIRCLE,
+  type: ButtonType.Tertiary,
+  size: ButtonSize.Small,
+  variant: ButtonVariant.Circle,
 })`
   display: flex;
   position: absolute;

@@ -20,13 +20,13 @@
 import { __, _x, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   DropDown,
   Input,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   themeHelpers,
   useLiveRegion,
 } from '@googleforcreators/design-system';
@@ -55,10 +55,7 @@ const ContentArea = styled.div`
   * > label {
     ${({ theme }) =>
       themeHelpers.expandPresetStyles({
-        preset:
-          theme.typography.presets.label[
-            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-          ],
+        preset: theme.typography.presets.label[TextSize.Small],
         theme,
       })};
 
@@ -75,18 +72,17 @@ const ButtonContainer = styled.div`
   gap: 8px;
 `;
 
-const Label = styled(Text).attrs({
-  forwardedAs: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const Label = styled(Text.Label).attrs({
+  size: TextSize.Small,
 })`
   display: inline-block;
   margin: 12px 0;
 `;
 
 const AddNewCategoryButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.RECTANGLE,
-  size: BUTTON_SIZES.SMALL,
-  type: BUTTON_TYPES.SECONDARY,
+  variant: ButtonVariant.Rectangle,
+  size: ButtonSize.Small,
+  type: ButtonType.Secondary,
 })`
   margin-top: 20px;
 `;

@@ -23,12 +23,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
   Text as DefaultText,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
@@ -90,14 +90,14 @@ const RemoveButton = styled(Button)`
 `;
 
 const ReplaceButton = styled(Button).attrs({
-  size: BUTTON_SIZES.SMALL,
-  variant: BUTTON_VARIANTS.SQUARE,
-  type: BUTTON_TYPES.TERTIARY,
+  size: ButtonSize.Small,
+  variant: ButtonVariant.Square,
+  type: ButtonType.Tertiary,
 })`
   margin-right: 8px;
 `;
 
-const Text = styled(DefaultText)`
+const Text = styled(DefaultText.Paragraph)`
   align-self: center;
   width: 55px;
 `;
@@ -251,15 +251,13 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
                 currentPageBackgroundColor={currentPageBackgroundColor}
               />
             </MediaWrapper>
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-              {__('Media', 'web-stories')}
-            </Text>
+            <Text size={TextSize.Small}>{__('Media', 'web-stories')}</Text>
             <RemoveButton
               aria-label={__('Detach background', 'web-stories')}
               onClick={removeAsBackground}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.SQUARE}
-              type={BUTTON_TYPES.TERTIARY}
+              size={ButtonSize.Small}
+              variant={ButtonVariant.Square}
+              type={ButtonType.Tertiary}
             >
               <Icons.Cross />
             </RemoveButton>

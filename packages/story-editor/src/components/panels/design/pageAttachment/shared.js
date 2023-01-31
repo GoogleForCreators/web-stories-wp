@@ -28,7 +28,7 @@ import {
   Checkbox,
   Input,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -137,9 +137,9 @@ export function Theme({ theme, onChange }) {
         onChange={handleChangeTheme}
       />
       <Label htmlFor={checkboxId}>
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text.Span size={TextSize.Small}>
           {__('Use dark theme', 'web-stories')}
-        </Text>
+        </Text.Span>
       </Label>
     </StyledRow>
   );
@@ -176,9 +176,9 @@ export function Icon({ icon, onChange, isFetching, needsProxy }) {
         disabled={isFetching}
       />
       <Space />
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Span size={TextSize.Small}>
         {__('Link icon', 'web-stories')}
-      </Text>
+      </Text.Span>
     </StyledRow>
   );
 }

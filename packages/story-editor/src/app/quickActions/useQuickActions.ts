@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
-import { Icons, PLACEMENT } from '@googleforcreators/design-system';
+import { Icons, Placement } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   ElementType,
@@ -132,7 +132,7 @@ const useQuickActions = (): QuickAction[] => {
   const actionMenuProps = useMemo(
     () => ({
       // The <BaseTooltip> component will handle proper placement for RTL layout
-      tooltipPlacement: PLACEMENT.RIGHT,
+      tooltipPlacement: Placement.Right,
       onMouseDown: handleMouseDown,
     }),
     [handleMouseDown]

@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -52,11 +52,7 @@ export const Rail = styled.div`
 `;
 
 export function Duration({ children }) {
-  return (
-    <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-      {children}
-    </Text>
-  );
+  return <Text.Span size={TextSize.XSmall}>{children}</Text.Span>;
 }
 Duration.propTypes = {
   children: PropTypes.node,

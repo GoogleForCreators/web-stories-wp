@@ -22,7 +22,8 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { Pattern, PatternType } from './types';
+import { PatternType } from './types';
+import type { Pattern } from './types';
 
 function printRGB(r: number, g: number, b: number) {
   const hex = (v: number) => v.toString(16).padStart(2, '0');

@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { Menu, DROP_DOWN_ITEM } from '..';
+import { Menu } from '..';
 import {
   basicDropDownOptions,
   effectChooserOptions,
@@ -214,7 +214,7 @@ const RenderItemOverride = forwardRef(
   )
 );
 RenderItemOverride.propTypes = {
-  option: DROP_DOWN_ITEM,
+  option: PropTypes.object,
   isSelected: PropTypes.bool,
 };
 

@@ -20,15 +20,16 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Button as dsButton,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  BUTTON_SIZES,
+  ButtonType,
+  ButtonVariant,
+  ButtonSize,
   Disclosure,
   Text,
-  TOOLTIP_PLACEMENT,
+  Placement,
   themeHelpers,
-  THEME_CONSTANTS,
+  TextSize,
   theme as dsTheme,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -64,9 +65,7 @@ const Button = styled(dsButton)`
       css`
         ${themeHelpers.expandPresetStyles({
           preset: {
-            ...theme.typography.presets.paragraph[
-              THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-            ],
+            ...theme.typography.presets.paragraph[TextSize.Small],
           },
           theme,
         })};
@@ -99,13 +98,10 @@ Button.propTypes = {
 const badgeSize = 22;
 
 // Defaults for badge come from typography.presets.label.small
-const badgeText =
-  dsTheme.typography.presets.label[
-    THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
-  ];
+const badgeText = dsTheme.typography.presets.label[TextSize.Small];
 
 // TODO: Extract `CountBadge` to its own component?
-const CountBadge = styled(Text).attrs({ as: 'span' })`
+const CountBadge = styled(Text.Span)`
   ${({ size = badgeSize, fontSize = badgeText.size, theme }) => css`
     min-width: ${size}px;
     width: auto;
@@ -148,7 +144,7 @@ export const ToggleButton = forwardRef(
       <Tooltip
         hasTail
         title={label}
-        placement={TOOLTIP_PLACEMENT.TOP}
+        placement={Placement.Top}
         shortcut={shortcut}
         popupZIndexOverride={popupZIndexOverride}
       >
@@ -160,9 +156,9 @@ export const ToggleButton = forwardRef(
           hasText={Boolean(copy)}
           isOpen={isOpen}
           isSquare={!hasNotifications}
-          type={BUTTON_TYPES.TERTIARY}
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          size={BUTTON_SIZES.MEDIUM}
+          type={ButtonType.Tertiary}
+          variant={ButtonVariant.Rectangle}
+          size={ButtonSize.Medium}
           {...rest}
         >
           {MainIcon && <MainIcon className="main-icon" />}

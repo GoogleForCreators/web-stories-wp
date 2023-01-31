@@ -21,11 +21,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useState, useMemo, useCallback } from '@googleforcreators/react';
@@ -49,8 +49,8 @@ const ButtonRow = styled(Row)`
   gap: 12px;
 `;
 
-const FileName = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const FileName = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
@@ -170,9 +170,9 @@ function CaptionsPanelContent({
             />
           )}
           <HotlinkButton
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
+            variant={ButtonVariant.Rectangle}
+            type={ButtonType.Secondary}
+            size={ButtonSize.Small}
             onClick={() => setIsOpen(true)}
           >
             {__('Link to caption file', 'web-stories')}

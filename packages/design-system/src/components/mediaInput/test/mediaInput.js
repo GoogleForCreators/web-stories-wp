@@ -22,7 +22,7 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { MediaInput } from '..';
+import MediaInput from '../mediaInput';
 import { renderWithProviders } from '../../../testUtils';
 
 const openMediaPicker = jest.fn();

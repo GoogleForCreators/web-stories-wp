@@ -21,12 +21,12 @@ import PropTypes from 'prop-types';
 import { useMemo } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonAsLink,
+  ButtonSize,
+  ButtonType,
   Headline,
   LoadingSpinner,
-  THEME_CONSTANTS,
+  TextSize,
   InfiniteScroller,
 } from '@googleforcreators/design-system';
 
@@ -91,7 +91,7 @@ function Content({
       </>
     ) : (
       <EmptyContentMessage>
-        <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
+        <Headline size={TextSize.Small} as="h3">
           {search
             ? sprintf(
                 /* translators: %s: search term. */
@@ -104,14 +104,13 @@ function Content({
             : __('No templates currently available.', 'web-stories')}
         </Headline>
         {!search && (
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.MEDIUM}
-            as="a"
+          <ButtonAsLink
+            type={ButtonType.Primary}
+            size={ButtonSize.Medium}
             href={newStoryURL}
           >
             {__('Create New Story', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         )}
       </EmptyContentMessage>
     );

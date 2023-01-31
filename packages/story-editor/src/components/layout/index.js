@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
-  Snackbar,
+  SnackbarContainer,
   useSnackbar,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -44,7 +44,7 @@ const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
 })`
   ${themeHelpers.expandTextPreset(
-    ({ paragraph }, { MEDIUM }) => paragraph[MEDIUM]
+    ({ paragraph }, { Medium }) => paragraph[Medium]
   )}
   background-color: ${({ theme }) => theme.colors.bg.primary};
 
@@ -90,7 +90,7 @@ function Layout({ header, footer = {}, sidebarTabs, children }) {
           </HighlightsProvider>
         </ChecklistCheckpointProvider>
       </LayoutProvider>
-      <Snackbar.Container {...snackbarState} />
+      <SnackbarContainer {...snackbarState} />
     </>
   );
 }

@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import {
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   Link,
   List,
@@ -91,10 +91,7 @@ export const _default = () => {
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </DefaultFooterText>
@@ -113,10 +110,7 @@ export const _default = () => {
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </DefaultFooterText>
@@ -132,10 +126,7 @@ export const _default = () => {
           footer={
             <DefaultFooterText>
               {'Maintain a 1:1 aspect ratio. '}
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </DefaultFooterText>
@@ -150,10 +141,7 @@ export const _default = () => {
           footer={
             <DefaultFooterText>
               {'Keep title under 40 characters. '}
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </DefaultFooterText>
@@ -173,10 +161,7 @@ export const _default = () => {
                 <li>{'Maintain a 3:4 aspect ratio.'}</li>
               </List>
 
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </CardListWrapper>
@@ -193,10 +178,7 @@ export const _default = () => {
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </DefaultFooterText>
@@ -216,10 +198,7 @@ export const _default = () => {
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </DefaultFooterText>
@@ -250,10 +229,7 @@ export const _default = () => {
           footer={
             <DefaultFooterText>
               {'Unoptimized video may cause playback issues. '}
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </DefaultFooterText>
@@ -282,10 +258,7 @@ export const _default = () => {
           footer={
             <DefaultFooterText>
               {'Unoptimized video may cause playback issues. '}
-              <Link
-                href="/demo"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
+              <Link href="/demo" size={TextSize.XSmall}>
                 {'Learn more'}
               </Link>
             </DefaultFooterText>

@@ -18,15 +18,10 @@
  * External dependencies
  */
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
   Icons,
   LOCAL_STORAGE_PREFIX,
   localStore,
-  PLACEMENT,
-  themeHelpers,
+  Placement,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled, { css } from 'styled-components';
@@ -38,10 +33,9 @@ import Tooltip from '../tooltip';
 import { useCanvas } from '../../app';
 import { states, useHighlights } from '../../app/highlights';
 import styles from '../../app/highlights/styles';
+import { ToggleButton } from '../toggleButton';
 
-const StyledButton = styled(Button)`
-  ${themeHelpers.focusableOutlineCSS};
-
+const StyledButton = styled(ToggleButton)`
   ${({ isHighlighted }) =>
     isHighlighted &&
     css`
@@ -81,7 +75,7 @@ function ToolbarToggle() {
   return (
     <Tooltip
       title={__('Show element toolbar', 'web-stories')}
-      placement={PLACEMENT.TOP}
+      placement={Placement.Top}
       hasTail
     >
       <StyledButton
@@ -90,16 +84,14 @@ function ToolbarToggle() {
             node.focus();
           }
         }}
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
         onClick={handleToolbarVisibility}
         aria-label={__('Show element toolbar', 'web-stories')}
+        label={__('Show element toolbar', 'web-stories')}
+        isOpen={false}
         isHighlighted={highlight?.showEffect}
         onAnimationEnd={() => resetHighlight()}
-      >
-        <Icons.BoxWithDots />
-      </StyledButton>
+        MainIcon={Icons.BoxWithDots}
+      />
     </Tooltip>
   );
 }

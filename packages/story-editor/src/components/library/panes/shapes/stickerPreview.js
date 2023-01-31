@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import STICKERS from '@googleforcreators/stickers';
 import {
   Button,
-  BUTTON_SIZES,
+  ButtonSize,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { useUnits } from '@googleforcreators/units';
@@ -36,7 +36,7 @@ import InsertionOverlay from '../shared/insertionOverlay';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 
 const StickerButton = styled(Button).attrs({
-  size: BUTTON_SIZES.SMALL,
+  size: ButtonSize.Small,
 })`
   position: relative;
   padding: 0 0 95.5% 0;
@@ -104,16 +104,17 @@ function StickerPreview({ stickerType, index }) {
   const makeActive = () => setIsActive(true);
   const makeInactive = () => setIsActive(false);
 
+  const onClick = () =>
+    insertElement('sticker', {
+      width: DEFAULT_ELEMENT_WIDTH,
+      sticker: { type: stickerType },
+    });
+
   const Svg = sticker.svg;
   return (
     <StickerButton
       data-testid={`library-sticker-${stickerType}`}
-      onClick={() =>
-        insertElement('sticker', {
-          width: DEFAULT_ELEMENT_WIDTH,
-          sticker: { type: stickerType },
-        })
-      }
+      onClick={onClick}
       tabIndex={index === 0 ? 0 : -1}
       onPointerEnter={makeActive}
       onFocus={makeActive}
@@ -132,6 +133,7 @@ function StickerPreview({ stickerType, index }) {
           type={'sticker'}
           elementProps={stickerData}
           cloneElement={StickerClone}
+          onClick={onClick}
           cloneProps={{
             width: dataToEditorX(
               DEFAULT_ELEMENT_WIDTH * (aspectRatio < 1 ? aspectRatio : 1)

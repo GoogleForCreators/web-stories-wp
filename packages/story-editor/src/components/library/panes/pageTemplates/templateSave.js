@@ -23,7 +23,7 @@ import { useCallback, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import {
   BUTTON_TRANSITION_TIMING,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   useSnackbar,
 } from '@googleforcreators/design-system';
@@ -41,7 +41,7 @@ import isDefaultPage from '../../../../utils/isDefaultPage';
 import createThumbnailCanvasFromFullbleedCanvas from '../../../../utils/createThumbnailCanvasFromFullbleedCanvas';
 import Icon from './images/illustration.svg';
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
@@ -186,10 +186,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       <IconWrapper>
         <Icon aria-hidden />
       </IconWrapper>
-      <StyledText
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        forwardedAs="span"
-      >
+      <StyledText size={TextSize.Small}>
         {__('Save current page as template', 'web-stories')}
       </StyledText>
     </SaveButton>

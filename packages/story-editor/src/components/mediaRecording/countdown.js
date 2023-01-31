@@ -24,7 +24,7 @@ import { Text } from '@googleforcreators/design-system';
  */
 import useMediaRecording from './useMediaRecording';
 
-const Number = styled(Text).attrs({ as: 'div' })`
+const Number = styled(Text.Paragraph).attrs({ as: 'div' })`
   position: absolute;
   top: 0;
   left: 0;

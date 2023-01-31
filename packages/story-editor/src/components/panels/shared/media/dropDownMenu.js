@@ -31,14 +31,13 @@ import {
   Menu,
   Popup,
   noop,
-  PLACEMENT,
+  Placement,
   Icons,
   Button,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  THEME_CONSTANTS,
-  DROP_DOWN_ITEM,
+  ButtonVariant,
+  ButtonType,
+  ButtonSize,
+  TextSize,
   DefaultListItemInner,
   DefaultListItemLabelDisplayText,
 } from '@googleforcreators/design-system';
@@ -96,10 +95,7 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
               open(evt);
             }}
           >
-            <DefaultListItemLabelDisplayText
-              forwardedAs="span"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
+            <DefaultListItemLabelDisplayText size={TextSize.Small}>
               {option.label}
             </DefaultListItemLabelDisplayText>
           </DefaultListItemInner>
@@ -124,10 +120,7 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
           height={32}
         />
       )}
-      <DefaultListItemLabelDisplayText
-        forwardedAs="span"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      >
+      <DefaultListItemLabelDisplayText size={TextSize.Small}>
         {option.label}
       </DefaultListItemLabelDisplayText>
     </DefaultListItemInner>
@@ -135,7 +128,7 @@ const CustomItemRenderer = forwardRef(function CustomItemRenderer(
 });
 
 CustomItemRenderer.propTypes = {
-  option: DROP_DOWN_ITEM,
+  option: PropTypes.object,
   isSelected: PropTypes.bool,
 };
 
@@ -149,7 +142,7 @@ CustomItemRenderer.propTypes = {
  * @param {Function} props.onMenuClose Callback for when menu is closed without any selections.
  * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
  * @param {Function} props.setParentActive Sets the parent element active.
- * @param {Array} props.options Menu items.
+ * @param {Array} props.groups Menu items.
  * @param {Object} props.children Children.
  * @param {string} props.ariaLabel ARIA label for the toggle button.
  * @param {string} props.className Class name.
@@ -162,7 +155,7 @@ function DropDownMenu({
   onMenuClose,
   onMenuSelected,
   setParentActive = noop,
-  options,
+  groups,
   children,
   ariaLabel = __('More', 'web-stories'),
   className,
@@ -192,9 +185,9 @@ function DropDownMenu({
         <DropDownKeyEvents target={MenuButtonRef.current} />
       )}
       <MenuButton
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
+        type={ButtonType.Tertiary}
+        size={ButtonSize.Small}
+        variant={ButtonVariant.Square}
         ref={MenuButtonRef}
         onClick={onMenuOpen}
         aria-label={ariaLabel}
@@ -211,15 +204,15 @@ function DropDownMenu({
       {(display || isMenuOpen) && (
         <Popup
           anchor={MenuButtonRef}
-          placement={PLACEMENT.BOTTOM_START}
+          placement={Placement.Bottom_START}
           isOpen={isMenuOpen}
         >
           <DropDownContainer>
             <Menu
               parentId={buttonId}
               listId={listId}
-              onMenuItemClick={onMenuItemClick}
-              options={options}
+              handleMenuItemSelect={onMenuItemClick}
+              groups={groups}
               onDismissMenu={onClose}
               hasMenuRole
               menuStylesOverride={menuStylesOverride}
@@ -240,7 +233,7 @@ DropDownMenu.propTypes = {
   onMenuClose: PropTypes.func.isRequired,
   onMenuSelected: PropTypes.func.isRequired,
   setParentActive: PropTypes.func,
-  options: PropTypes.array,
+  groups: PropTypes.array,
   children: PropTypes.node,
   ariaLabel: PropTypes.string,
   className: PropTypes.string,

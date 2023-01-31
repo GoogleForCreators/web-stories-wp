@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, MutableRefObject } from 'react';
+import { useEffect, useRef } from 'react';
+import type { MutableRefObject } from 'react';
 
 export default function usePrevious<V>(value: V) {
   const ref: MutableRefObject<V | undefined> = useRef();

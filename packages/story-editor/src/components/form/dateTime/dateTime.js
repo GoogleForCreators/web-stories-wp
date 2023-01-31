@@ -23,7 +23,7 @@ import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
+  ButtonSize,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
 
@@ -101,7 +101,7 @@ function DateTime({
       />
       {canReset && (
         <StyledButton
-          size={BUTTON_SIZES.SMALL}
+          size={ButtonSize.Small}
           onClick={() => {
             onChange(null);
             onClose();

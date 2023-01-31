@@ -33,9 +33,9 @@ import { __ } from '@googleforcreators/i18n';
 import {
   Icons,
   Button,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonVariant,
+  ButtonType,
   CircularProgress,
 } from '@googleforcreators/design-system';
 
@@ -210,9 +210,9 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
       <Footer>
         {hasEyedropper && (
           <Button
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
+            variant={ButtonVariant.Square}
+            type={ButtonType.Quaternary}
+            size={ButtonSize.Small}
             aria-label={__('Pick a color from canvas', 'web-stories')}
             onClick={initEyedropper()}
             onPointerEnter={initEyedropper(false)}

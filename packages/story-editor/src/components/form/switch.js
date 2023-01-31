@@ -22,9 +22,9 @@ import { useCallback, useRef } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   Switch as BaseSwitch,
-  SwitchPropTypes,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
+import PropTypes from 'prop-types';
 
 const StyledSwitch = styled(BaseSwitch)`
   label:focus-within ~ span {
@@ -67,6 +67,17 @@ function Switch({
     />
   );
 }
-Switch.propTypes = SwitchPropTypes;
+Switch.propTypes = {
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  groupLabel: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  offLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  value: PropTypes.bool,
+  darkTheme: PropTypes.bool,
+};
 
 export default Switch;

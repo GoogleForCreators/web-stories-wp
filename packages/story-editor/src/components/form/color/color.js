@@ -24,12 +24,11 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import { getPreviewText, PatternPropType } from '@googleforcreators/patterns';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
-  PLACEMENT,
-  TOOLTIP_PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -78,9 +77,9 @@ const InputWrapper = styled.div`
 `;
 
 const EyeDropperButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.SQUARE,
-  type: BUTTON_TYPES.TERTIARY,
-  size: BUTTON_SIZES.SMALL,
+  variant: ButtonVariant.Square,
+  type: ButtonType.Tertiary,
+  size: ButtonSize.Small,
 })`
   ${focusStyle};
 `;
@@ -102,7 +101,7 @@ const Color = forwardRef(function Color(
     maxHeight = null,
     shouldCloseOnSelection = false,
     allowsSavedColorDeletion = true,
-    pickerPlacement = PLACEMENT.RIGHT_START,
+    pickerPlacement = Placement.RightStart,
     isInDesignMenu = false,
     hasInputs = true,
     width,
@@ -134,9 +133,7 @@ const Color = forwardRef(function Color(
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
   const tooltipPlacement =
-    isInDesignMenu || hasEyedropper
-      ? TOOLTIP_PLACEMENT.BOTTOM
-      : TOOLTIP_PLACEMENT.BOTTOM_START;
+    isInDesignMenu || hasEyedropper ? Placement.Bottom : Placement.BottomStart;
 
   // Sometimes there's more than 1 color to an element.
   // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
@@ -153,11 +150,7 @@ const Color = forwardRef(function Color(
         <Tooltip
           title={tooltip}
           hasTail
-          placement={
-            isInDesignMenu
-              ? TOOLTIP_PLACEMENT.BOTTOM
-              : TOOLTIP_PLACEMENT.BOTTOM_START
-          }
+          placement={isInDesignMenu ? Placement.Bottom : Placement.BottomStart}
         >
           <EyeDropperButton
             id={uuidv4()}

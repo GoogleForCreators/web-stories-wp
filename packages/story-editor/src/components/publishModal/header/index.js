@@ -21,12 +21,12 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Headline,
   Icons,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -62,18 +62,15 @@ const Header = ({
   return (
     <_Header>
       <CloseButton
-        variant={BUTTON_VARIANTS.SQUARE}
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.TERTIARY}
+        variant={ButtonVariant.Square}
+        size={ButtonSize.Small}
+        type={ButtonType.Tertiary}
         onClick={onClose}
         aria-label={__('Close', 'web-stories')}
       >
         <Icons.Cross />
       </CloseButton>
-      <Headline
-        as="h2"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-      >
+      <Headline as="h2" size={TextSize.XXXSmall}>
         {__('Story Details', 'web-stories')}
       </Headline>
       <PublishButtonWrapper>

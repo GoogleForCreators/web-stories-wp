@@ -24,8 +24,8 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { dark, light } from '../theme/colors';
-import { Headline, Text, THEME_CONSTANTS } from '..';
-import { Button, BUTTON_TYPES } from '../components';
+import { Headline, Text, TextSize } from '..';
+import { Button, ButtonType } from '../components';
 
 export default {
   title: 'DesignSystem/Colors',
@@ -82,11 +82,11 @@ export const _default = () => {
     () => (isDarkTheme ? dark : light),
     [isDarkTheme]
   );
-  const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES;
+  const { Small } = TextSize;
   return (
     <div>
       <FixedButton
-        type={BUTTON_TYPES.PRIMARY}
+        type={ButtonType.Primary}
         onClick={() => setIsDarkTheme(!isDarkTheme)}
       >{`Toggle to ${isDarkTheme ? 'light' : 'dark'} theme`}</FixedButton>
       {Object.keys(activeTheme).map((themeSection) => (
@@ -96,7 +96,7 @@ export const _default = () => {
             if (typeof activeTheme[themeSection][sectionValue] === 'object') {
               return (
                 <Row key={`${themeSection} - ${sectionValue}`}>
-                  <Headline as="h3" size={SMALL}>
+                  <Headline as="h3" size={Small}>
                     {`${themeSection} - ${sectionValue}`}
                   </Headline>
                   {Object.keys(activeTheme[themeSection][sectionValue]).map(
@@ -112,9 +112,9 @@ export const _default = () => {
                               ]
                             }
                           />
-                          <Text
-                            size={SMALL}
-                          >{`${themeSection}.${sectionValue}.${nestedSection} (${activeTheme[themeSection][sectionValue][nestedSection]})`}</Text>
+                          <Text.Paragraph
+                            size={Small}
+                          >{`${themeSection}.${sectionValue}.${nestedSection} (${activeTheme[themeSection][sectionValue][nestedSection]})`}</Text.Paragraph>
                         </Container>
                       );
                     }
@@ -126,9 +126,9 @@ export const _default = () => {
             return (
               <Container key={`${themeSection}_${sectionValue}`}>
                 <ColorBlock color={activeTheme[themeSection][sectionValue]} />
-                <Text
-                  size={SMALL}
-                >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text>
+                <Text.Paragraph
+                  size={Small}
+                >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text.Paragraph>
               </Container>
             );
           })}
