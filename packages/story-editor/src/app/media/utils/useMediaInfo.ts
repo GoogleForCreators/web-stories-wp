@@ -92,22 +92,6 @@ interface MediaInfoResult {
   isMuted?: boolean;
 }
 
-function loadScriptOnce(url: string) {
-  if (document.querySelector(`script[src="${url}"]`)) {
-    return Promise.resolve();
-  }
-
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.async = true;
-    script.crossOrigin = 'anonymous';
-    script.src = url;
-    script.addEventListener('load', resolve);
-    script.addEventListener('error', reject);
-    document.head.appendChild(script);
-  });
-}
-
 /**
  * Determines whether the resource/file has small enough dimensions.
  *
@@ -183,15 +167,17 @@ function useMediaInfo() {
       const trackTiming = getTimeTracker('load_mediainfo');
 
       try {
-        // This will expose the window.MediaInfo global.
-        await loadScriptOnce(mediainfoUrl);
+        const { default: MediaInfoFactory } = await import(
+          /* webpackChunkName: "chunk-mediainfo" */
+          /* webpackExports: "default" */
+          'mediainfo.js'
+        );
 
-        // If for some reason it's not available yet.
-        if (!window.MediaInfo) {
-          return null;
-        }
+        const mediaInfo = await MediaInfoFactory({
+          format: 'JSON',
+          locateFile: () => mediainfoUrl,
+        });
 
-        const mediaInfo = await window.MediaInfo({ format: 'JSON' });
         const result: ResultObject = JSON.parse(
           (await mediaInfo.analyzeData(getSize, readChunk)) as unknown as string
         ) as ResultObject;

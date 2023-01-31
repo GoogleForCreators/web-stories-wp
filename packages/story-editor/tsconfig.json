@@ -22,6 +22,8 @@
     { "path": "../tracking" }
   ],
   "include": [
+    "src/**/test/**/*.ts",
+    "src/**/test/**/*.tsx",
     "src/app/api",
     "src/app/canvas",
     "src/app/config",
