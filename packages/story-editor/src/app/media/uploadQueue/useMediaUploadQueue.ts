@@ -131,8 +131,7 @@ function useMediaUploadQueue() {
             ItemStatus.Transcoded
           )
         )
-        .map(async (item) => {
-          const { id, file, resource } = item;
+        .map(async ({ id, file, resource }) => {
           if (
             !resource.isPlaceholder ||
             (resource.type === ResourceType.Video && resource.poster)
@@ -168,53 +167,54 @@ function useMediaUploadQueue() {
   // Since this uses ffmpeg, we're going to limit this to one at a time.
   useEffect(() => {
     void Promise.all(
-      state.queue.filter(hasStatus(ItemStatus.Pending)).map(async (item) => {
-        const { id, file, resource } = item;
-        if (!resource.isPlaceholder) {
-          return;
-        }
-
-        if (!isTranscodingEnabled || !canTranscodeFile(file)) {
-          return;
-        }
-
-        const isAlreadyGeneratingPoster =
-          currentPosterGenerationItem.current !== null;
-
-        // Prevent simultaneous ffmpeg poster generation processes.
-        // See https://github.com/googleforcreators/web-stories-wp/issues/8779
-        if (isAlreadyGeneratingPoster) {
-          return;
-        }
-
-        currentPosterGenerationItem.current = id;
-
-        try {
-          const videoFrame = await getFirstFrameOfVideo(file);
-          const poster = createBlob(videoFrame);
-          const { width, height } = await getImageDimensions(poster);
-          const newResource = {
-            ...resource,
-            poster,
-            width,
-            height,
-          };
-
-          if (!isMounted.current) {
+      state.queue
+        .filter(hasStatus(ItemStatus.Pending))
+        .map(async ({ id, file, resource }) => {
+          if (!resource.isPlaceholder) {
             return;
           }
 
-          replacePlaceholderResource({
-            id,
-            resource: newResource,
-            posterFile: videoFrame,
-          });
-        } catch {
-          // Not interested in errors here.
-        } finally {
-          currentPosterGenerationItem.current = null;
-        }
-      })
+          if (!isTranscodingEnabled || !canTranscodeFile(file)) {
+            return;
+          }
+
+          const isAlreadyGeneratingPoster =
+            currentPosterGenerationItem.current !== null;
+
+          // Prevent simultaneous ffmpeg poster generation processes.
+          // See https://github.com/googleforcreators/web-stories-wp/issues/8779
+          if (isAlreadyGeneratingPoster) {
+            return;
+          }
+
+          currentPosterGenerationItem.current = id;
+
+          try {
+            const videoFrame = await getFirstFrameOfVideo(file);
+            const poster = createBlob(videoFrame);
+            const { width, height } = await getImageDimensions(poster);
+            const newResource = {
+              ...resource,
+              poster,
+              width,
+              height,
+            };
+
+            if (!isMounted.current) {
+              return;
+            }
+
+            replacePlaceholderResource({
+              id,
+              resource: newResource,
+              posterFile: videoFrame,
+            });
+          } catch {
+            // Not interested in errors here.
+          } finally {
+            currentPosterGenerationItem.current = null;
+          }
+        })
     );
   }, [
     state.queue,
@@ -226,9 +226,7 @@ function useMediaUploadQueue() {
 
   // Convert animated GIFs to videos if possible.
   const convertGifItem = useCallback(
-    async (item: QueueItem) => {
-      const { id, file, additionalData } = item;
-
+    async ({ id, file, additionalData }: QueueItem) => {
       startTranscoding({ id });
 
       currentTranscodingItem.current = id;
@@ -257,8 +255,7 @@ function useMediaUploadQueue() {
   );
 
   const trimVideoItem = useCallback(
-    async (item: QueueItem) => {
-      const { id, file, additionalData, trimData } = item;
+    async ({ id, file, additionalData, trimData }: QueueItem) => {
       if (!trimData) {
         return;
       }
@@ -268,11 +265,8 @@ function useMediaUploadQueue() {
       currentTranscodingItem.current = id;
 
       try {
-        const newFile = await trimVideo(
-          file,
-          Number(trimData.start),
-          Number(trimData.end)
-        );
+        const { start, end } = trimData;
+        const newFile = await trimVideo(file, start, end);
 
         if (!isMounted.current) {
           return;
@@ -293,9 +287,7 @@ function useMediaUploadQueue() {
   );
 
   const muteVideoItem = useCallback(
-    async (item: QueueItem) => {
-      const { id, file, additionalData } = item;
-
+    async ({ id, file, additionalData }: QueueItem) => {
       startMuting({ id });
 
       currentTranscodingItem.current = id;
@@ -323,9 +315,7 @@ function useMediaUploadQueue() {
   );
 
   const cropVideoItem = useCallback(
-    async (item: QueueItem) => {
-      const { id, file, additionalData } = item;
-
+    async ({ id, file, additionalData }: QueueItem) => {
       if (!additionalData?.cropParams) {
         return;
       }
@@ -363,9 +353,7 @@ function useMediaUploadQueue() {
   );
 
   const optimizeVideoItem = useCallback(
-    async (item: QueueItem) => {
-      const { id, file, additionalData } = item;
-
+    async ({ id, file, additionalData }: QueueItem) => {
       startTranscoding({ id });
 
       currentTranscodingItem.current = id;
@@ -466,8 +454,7 @@ function useMediaUploadQueue() {
   );
 
   const uploadImage = useCallback(
-    async (item: QueueItem) => {
-      const { id, file, additionalData } = item;
+    async ({ id, file, additionalData }: QueueItem) => {
       const resource: ImageResource = (await uploadFile(
         file,
         additionalData
