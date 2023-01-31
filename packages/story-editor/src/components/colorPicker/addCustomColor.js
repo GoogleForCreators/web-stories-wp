@@ -23,9 +23,9 @@ import styled from 'styled-components';
 import { PatternPropType } from '@googleforcreators/patterns';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -70,9 +70,9 @@ function AddCustomColor({ color, onSave }) {
   return (
     <StyledButton
       onClick={handleAddSavedColor}
-      type={BUTTON_TYPES.SECONDARY}
-      size={BUTTON_SIZES.SMALL}
-      variant={BUTTON_VARIANTS.RECTANGLE}
+      type={ButtonType.Secondary}
+      size={ButtonSize.Small}
+      variant={ButtonVariant.Rectangle}
     >
       {__('Add to Saved Colors', 'web-stories')}
     </StyledButton>

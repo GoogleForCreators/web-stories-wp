@@ -23,7 +23,7 @@ import {
   ContextMenu,
   ContextMenuComponents,
   Disclosure,
-  TOOLTIP_PLACEMENT,
+  Placement,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
@@ -144,7 +144,7 @@ function TextAlign() {
 
   return (
     <>
-      <Tooltip placement={TOOLTIP_PLACEMENT.BOTTOM} title={tooltip}>
+      <Tooltip placement={Placement.Bottom} title={tooltip}>
         <StyledMenuButton
           tabIndex={-1}
           ref={buttonRef}

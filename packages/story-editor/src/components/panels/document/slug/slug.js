@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { Input, Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Input, Link, TextSize } from '@googleforcreators/design-system';
 import { safeDecodeURIComponent } from '@googleforcreators/url';
 
 /**
@@ -138,7 +138,7 @@ function SlugPanel({ nameOverride }) {
           rel="noopener noreferrer"
           target="_blank"
           href={link}
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          size={TextSize.Small}
         >
           {displayLink}
         </Link>

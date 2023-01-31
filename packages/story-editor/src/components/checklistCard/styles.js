@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Icons,
-  THEME_CONSTANTS,
+  TextSize,
   Text,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -84,9 +84,8 @@ export const Cta = styled.div`
   margin: 0;
 `;
 
-export const CheckboxCtaLabel = styled(Text).attrs({
-  forwardedAs: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+export const CheckboxCtaLabel = styled(Text.Label).attrs({
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.linkNormal};
 `;

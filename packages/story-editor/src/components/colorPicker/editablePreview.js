@@ -30,7 +30,7 @@ import {
 } from '@googleforcreators/react';
 import {
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
 
@@ -126,9 +126,7 @@ function EditablePreview({ label = '', value = '', width, format, onChange }) {
         onClick={enableEditing}
         onFocus={enableEditing}
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {format(value)}
-        </Text>
+        <Text.Paragraph size={TextSize.Small}>{format(value)}</Text.Paragraph>
       </Preview>
     );
   }

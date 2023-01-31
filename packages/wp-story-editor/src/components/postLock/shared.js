@@ -28,7 +28,7 @@ export const DialogImageWrapper = styled.div``;
 
 export const DialogContent = styled.div``;
 
-export const DialogText = styled(Text)`
+export const DialogText = styled(Text.Paragraph)`
   margin-bottom: 12px;
 `;
 

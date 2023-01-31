@@ -30,7 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   Icons,
   Menu,
-  PLACEMENT,
+  Placement,
   Popup,
   useKeyDownEffect,
   noop,
@@ -120,9 +120,9 @@ function InsertionMenu({
   const insertLabel = ['image', 'gif'].includes(type)
     ? __('Insert image', 'web-stories')
     : __('Insert video', 'web-stories');
-  const options = [
+  const groups = [
     {
-      group: [
+      options: [
         { label: insertLabel, value: MENU_OPTIONS.INSERT },
         {
           label: __('Add as background', 'web-stories'),
@@ -185,15 +185,15 @@ function InsertionMenu({
       {isMenuOpen && (
         <Popup
           anchor={insertButtonRef}
-          placement={PLACEMENT.BOTTOM_START}
+          placement={Placement.Bottom_START}
           isOpen={isMenuOpen}
         >
           <DropDownContainer>
             <Menu
               parentId={buttonId}
               listId={listId}
-              onMenuItemClick={handleCurrentValue}
-              options={options}
+              handleMenuItemSelect={handleCurrentValue}
+              groups={groups}
               onDismissMenu={onMenuCancelled}
               hasMenuRole
               menuStylesOverride={menuStylesOverride}

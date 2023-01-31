@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
-import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Link, Text, TextSize } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
 
 const SUPPORT_URL = __(
@@ -43,12 +43,12 @@ function StatusCheckFailed({ isOpen, onClose }) {
       onPrimary={onClose}
       primaryText={__('Dismiss', 'web-stories')}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Paragraph size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
               <Link
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 href={SUPPORT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -62,7 +62,7 @@ function StatusCheckFailed({ isOpen, onClose }) {
             'web-stories'
           )}
         </TranslateWithMarkup>
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 }

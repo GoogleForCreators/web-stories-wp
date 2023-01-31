@@ -22,8 +22,8 @@ import styled from 'styled-components';
 import { useCallback, useMemo, useReducer } from '@googleforcreators/react';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
 } from '@googleforcreators/design-system';
 
 /**
@@ -253,8 +253,8 @@ const BulkVideoOptimization = () => {
       <ChecklistCard
         cta={
           <OptimizeButton
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Secondary}
+            size={ButtonSize.Small}
             onClick={handleUpdateVideos}
             disabled={isTranscoding}
           >

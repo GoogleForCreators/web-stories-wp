@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from '@googleforcreators/react';
-import {
-  Headline,
-  TextArea,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { Headline, TextArea, TextSize } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 
@@ -106,11 +102,7 @@ const MainStoryInfo = () => {
   return (
     <>
       <FormSection>
-        <Headline
-          as="label"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
-          htmlFor={INPUT_KEYS.TITLE}
-        >
+        <Headline as="label" size={TextSize.XXSmall} htmlFor="story-title">
           {__('Story Title', 'web-stories')}
         </Headline>
         <_TextArea
@@ -125,11 +117,7 @@ const MainStoryInfo = () => {
         />
       </FormSection>
       <FormSection>
-        <Headline
-          as="label"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
-          htmlFor={INPUT_KEYS.EXCERPT}
-        >
+        <Headline as="label" size={TextSize.XXSmall} htmlFor="story-excerpt">
           {__('Story Description', 'web-stories')}
         </Headline>
         <_TextArea

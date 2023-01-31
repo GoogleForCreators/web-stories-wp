@@ -23,7 +23,7 @@ import { __, _x, sprintf } from '@googleforcreators/i18n';
 import {
   BUTTON_TRANSITION_TIMING,
   DropDown,
-  PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 
 /**
@@ -123,7 +123,7 @@ function ZoomSelector() {
       ariaLabel={__('Zoom Level', 'web-stories')}
       placeholder={placeholder}
       options={ZOOM_OPTIONS}
-      placement={PLACEMENT.TOP_START}
+      placement={Placement.Top_START}
       onMenuItemClick={handleSetZoom}
       selectedValue={zoomSetting}
       popupFillWidth={false}

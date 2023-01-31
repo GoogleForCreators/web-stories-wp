@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { badOptions } from '../../../testUtils/sampleData';
-import { getOptions, getInset } from '../utils';
+import { getGroups, getInset } from '../utils';
 
 const basicDropDownOptions = [
   {
@@ -35,13 +35,13 @@ const basicDropDownOptions = [
   },
 ];
 
-describe('DropDown/utils getOptions', () => {
+describe('DropDown/utils getGroups', () => {
   it('should shape and sanititize basic dropDown options', () => {
-    const groupedOptions = getOptions(basicDropDownOptions);
+    const groupedOptions = getGroups(basicDropDownOptions);
 
     expect(groupedOptions).toStrictEqual([
       {
-        group: [
+        options: [
           {
             label: 'label item one',
             value: 'label-item-one',
@@ -60,7 +60,7 @@ describe('DropDown/utils getOptions', () => {
   });
 
   it('should shape and sanitize basic dropDown options even when some shaped data is bad', () => {
-    const groupedOptions = getOptions([
+    const groupedOptions = getGroups([
       ...basicDropDownOptions,
       'just a string',
       { label: 'bad data sneaking through', somethingNew: [1, 2, 3] },
@@ -68,7 +68,7 @@ describe('DropDown/utils getOptions', () => {
 
     expect(groupedOptions).toStrictEqual([
       {
-        group: [
+        options: [
           {
             label: 'label item one',
             value: 'label-item-one',
@@ -87,14 +87,22 @@ describe('DropDown/utils getOptions', () => {
   });
 
   it('should shape and sanitize dropDown options even when some value data is bad', () => {
-    const groupedOptions = getOptions(badOptions);
+    const groupedOptions = getGroups(badOptions);
 
     expect(groupedOptions).toStrictEqual([
       {
-        group: [
+        options: [
+          {
+            label: '0 as a number',
+            value: 0,
+          },
           {
             label: '0 as a string',
             value: '0',
+          },
+          {
+            label: 'false as a boolean',
+            value: false,
           },
           {
             label: 'false as a string',
@@ -108,7 +116,6 @@ describe('DropDown/utils getOptions', () => {
       },
     ]);
     expect(badOptions).toHaveLength(6);
-    expect(groupedOptions[0].group).toHaveLength(3);
   });
 
   it('should shape and sanitize nested dropDown options', () => {
@@ -141,11 +148,11 @@ describe('DropDown/utils getOptions', () => {
       },
     ];
 
-    const groupedOptions = getOptions(nestedDropDownOptions);
+    const groupedOptions = getGroups(nestedDropDownOptions);
 
     expect(groupedOptions).toStrictEqual([
       {
-        group: [
+        options: [
           { label: 'ET', value: 'alien-1' },
           { label: 'Stitch', value: 'alien-2' },
           { label: 'Groot', value: 'alien-3' },
@@ -153,7 +160,7 @@ describe('DropDown/utils getOptions', () => {
         label: 'aliens',
       },
       {
-        group: [
+        options: [
           {
             label: 'Snoopy',
             value: 'dog-1',
@@ -166,7 +173,7 @@ describe('DropDown/utils getOptions', () => {
         label: 'dogs',
       },
       {
-        group: [
+        options: [
           {
             label: '0 as a number',
             value: 0,
@@ -188,7 +195,7 @@ describe('DropDown/utils getOptions', () => {
 
 describe('DropDown/utils getInset', () => {
   it('should take sanitized dropDown options and structure placement by group', () => {
-    const sanitizedOptions = getOptions(basicDropDownOptions);
+    const sanitizedOptions = getGroups(basicDropDownOptions);
     const option = getInset(sanitizedOptions, 0, 2);
 
     expect(option).toBe(2);

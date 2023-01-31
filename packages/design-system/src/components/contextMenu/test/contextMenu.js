@@ -21,7 +21,7 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { ContextMenu } from '..';
+import ContextMenu from '../contextMenu';
 import * as ContextMenuComponents from '../components';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop } from '../../../utils';

@@ -24,11 +24,7 @@ import {
 } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import {
-  Button,
-  BUTTON_VARIANTS,
-  Icons,
-} from '@googleforcreators/design-system';
+import { Button, ButtonVariant, Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -86,7 +82,7 @@ const ScrollToTop = () => {
       data-testid="scroll-to-top-button"
       $isVisible={isVisible}
       onClick={scrollToTop}
-      variant={BUTTON_VARIANTS.CIRCLE}
+      variant={ButtonVariant.Circle}
     >
       <DropUpArrowIcon aria-hidden />
     </StyledButton>

@@ -36,9 +36,10 @@ import {
 import {
   Link,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Icons,
-  Datalist,
+  DatalistDropdown,
+  DatalistOption,
 } from '@googleforcreators/design-system';
 import {
   highlightStates as states,
@@ -66,9 +67,9 @@ const LabelWrapper = styled.div`
   height: 40px;
 `;
 
-const Label = styled(Text).attrs({
+const Label = styled(Text.Paragraph).attrs({
   as: 'label',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
   font-size: 14px;
@@ -280,14 +281,14 @@ function PublishPanel({ nameOverride }) {
         return option;
       }
       return (
-        <Datalist.Option value={option.id} ref={ref} {...rest}>
+        <DatalistOption value={option.id} ref={ref} {...rest}>
           <LogoImg
             src={option.url}
             alt=""
             decoding="async"
             crossOrigin="anonymous"
           />
-        </Datalist.Option>
+        </DatalistOption>
       );
     }
   );
@@ -303,19 +304,17 @@ function PublishPanel({ nameOverride }) {
         crossOrigin="anonymous"
       />
     ) : (
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {displayText}
-      </Text>
+      <Text.Span size={TextSize.Small}>{displayText}</Text.Span>
     );
   };
 
   const renderUploadButton = (open) => (
-    <Datalist.Option onClick={open} aria-label={__('Add new', 'web-stories')}>
+    <DatalistOption onClick={open} aria-label={__('Add new', 'web-stories')}>
       <Icons.ArrowCloud height={32} width={32} />
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <Text.Span size={TextSize.XSmall}>
         {__('Add new', 'web-stories')}
-      </Text>
-    </Datalist.Option>
+      </Text.Span>
+    </DatalistOption>
   );
   const publisherLogosWithUploadOption = [...publisherLogos];
   if (hasUploadMediaAction) {
@@ -405,7 +404,7 @@ function PublishPanel({ nameOverride }) {
           </MediaInputWrapper>
           <DropdownWrapper>
             <MediaWrapper>
-              <Datalist.DropDown
+              <DatalistDropdown
                 options={publisherLogosWithUploadOption}
                 primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}
@@ -436,7 +435,7 @@ function PublishPanel({ nameOverride }) {
                     rel="noopener noreferrer"
                     target="_blank"
                     href={dashboardSettingsLink}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                    size={TextSize.XSmall}
                   >
                     {__('Manage', 'web-stories')}
                   </Link>
@@ -468,7 +467,7 @@ function PublishPanel({ nameOverride }) {
                   rel="noopener noreferrer"
                   target="_blank"
                   href={addQueryArgs(revisionLink, { revision: revisionId })}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                  size={TextSize.XSmall}
                 >
                   {__('Browse', 'web-stories')}
                 </Link>

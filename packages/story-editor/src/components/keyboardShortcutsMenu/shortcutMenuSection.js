@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Headline,
-  Text,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import { Headline, Text, TextSize } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -32,7 +28,7 @@ import ShortcutLabel from './shortcutLabel';
 
 const Header = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+  size: TextSize.XXSmall,
 })`
   margin-top: 24px;
   color: ${({ theme }) => theme.colors.fg.primary};
@@ -63,9 +59,8 @@ const ListRow = styled.div`
   }
 `;
 
-const Label = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-  forwardedAs: 'span',
+const Label = styled(Text.Span).attrs({
+  size: TextSize.Small,
 })`
   display: inline-block;
   color: ${({ theme }) => theme.colors.fg.secondary};

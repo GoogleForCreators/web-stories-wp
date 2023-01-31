@@ -24,7 +24,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { basicDropDownOptions } from '../../../testUtils/sampleData';
-import { DropDown } from '..';
+import DropDown from '../dropdown';
 
 const scrollTo = jest.fn();
 

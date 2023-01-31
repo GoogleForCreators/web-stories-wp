@@ -24,12 +24,7 @@ import {
   resourceList,
   ResourcePropTypes,
 } from '@googleforcreators/media';
-import {
-  Icons,
-  Text,
-  THEME_CONSTANTS,
-  noop,
-} from '@googleforcreators/design-system';
+import { Icons, Text, TextSize, noop } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -77,9 +72,8 @@ const MuteWrapper = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 100px;
 `;
-const Duration = styled(Text).attrs({
-  forwardedAs: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+const Duration = styled(Text.Span).attrs({
+  size: TextSize.XSmall,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
   display: block;

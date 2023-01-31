@@ -24,7 +24,7 @@ import {
   Text,
   Icons,
   useLiveRegion,
-  THEME_CONSTANTS,
+  TextSize,
 } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -46,8 +46,8 @@ const WarningIcon = styled(Icons.ExclamationTriangle)`
   color: ${({ theme }) => theme.colors.status.warning};
 `;
 
-const Message = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const Message = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   max-width: calc(100% - 40px);
 `;

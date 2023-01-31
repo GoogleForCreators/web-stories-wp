@@ -76,7 +76,7 @@ const Preview = styled.button`
   }
 `;
 
-const PreviewText = styled(Text).attrs({ forwardedAs: 'span' })`
+const PreviewText = styled(Text.Span)`
   color: ${({ theme, isClone }) =>
     isClone ? theme.colors.standard.black : theme.colors.fg.primary};
   font-size: ${({ fontSize }) => fontSize}px;

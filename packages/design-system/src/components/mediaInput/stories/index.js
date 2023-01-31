@@ -22,10 +22,10 @@ import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme, THEME_CONSTANTS } from '../../../theme';
+import { theme, TextSize } from '../../../theme';
 import { MediaInput as DefaultMediaInput } from '..';
 import { shortDropDownOptions } from '../../../storybookUtils/sampleData';
-import { MEDIA_VARIANTS } from '../constants';
+import { MediaVariant } from '../types';
 import { Headline } from '../../typography/headline';
 import { Text } from '../../typography/text';
 import image from './image.jpg';
@@ -67,30 +67,30 @@ const mediaProps = {
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
-      <Headline as="h3" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Headline as="h3" size={TextSize.Small}>
         {'Media Input demos'}
       </Headline>
       <Row>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'with image'}
-          </Text>
+          </Text.Paragraph>
           <MediaInput
             value={image}
-            variant={MEDIA_VARIANTS.RECTANGLE}
+            variant={MediaVariant.Rectangle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
         </div>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: circle'} <br />
             {'with image'}
-          </Text>
+          </Text.Paragraph>
           <CircleMedia
             value={image}
-            variant={MEDIA_VARIANTS.CIRCLE}
+            variant={MediaVariant.Circle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -98,27 +98,27 @@ export const _default = () => (
       </Row>
       <Row>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'no edit icon'}
-          </Text>
+          </Text.Paragraph>
           <MediaInput
             value={image}
             canUpload={false}
-            variant={MEDIA_VARIANTS.RECTANGLE}
+            variant={MediaVariant.Rectangle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
         </div>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: circle'} <br />
             {'no edit icon'}
-          </Text>
+          </Text.Paragraph>
           <CircleMedia
             value={image}
             canUpload={false}
-            variant={MEDIA_VARIANTS.CIRCLE}
+            variant={MediaVariant.Circle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -126,25 +126,25 @@ export const _default = () => (
       </Row>
       <Row>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'without image'}
-          </Text>
+          </Text.Paragraph>
           <MediaInput
             value={null}
-            variant={MEDIA_VARIANTS.RECTANGLE}
+            variant={MediaVariant.Rectangle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
         </div>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: circle'} <br />
             {'without image'}
-          </Text>
+          </Text.Paragraph>
           <CircleMedia
             value={null}
-            variant={MEDIA_VARIANTS.CIRCLE}
+            variant={MediaVariant.Circle}
             menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
@@ -152,24 +152,24 @@ export const _default = () => (
       </Row>
       <Row>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'no menu'}
-          </Text>
+          </Text.Paragraph>
           <MediaInput
             value={image}
-            variant={MEDIA_VARIANTS.RECTANGLE}
+            variant={MediaVariant.Rectangle}
             {...mediaProps}
           />
         </div>
         <div>
-          <Text>
+          <Text.Paragraph>
             {'variant: rectangle'} <br />
             {'no menu'}
-          </Text>
+          </Text.Paragraph>
           <CircleMedia
             value={image}
-            variant={MEDIA_VARIANTS.CIRCLE}
+            variant={MediaVariant.Circle}
             {...mediaProps}
           />
         </div>

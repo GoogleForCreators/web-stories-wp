@@ -72,24 +72,22 @@ function IconDisplay({ getStyle = () => {} }) {
 
   return (
     <Page>
-      <Text as="label">
+      <Text.Label>
         <span>{'Filter: '}</span>
         <input
           type="search"
           value={query}
           onChange={(evt) => setQuery(evt.target.value)}
         />
-      </Text>
-      <Text>{`Matching: ${matchingIcons.length}`}</Text>
+      </Text.Label>
+      <Text.Paragraph>{`Matching: ${matchingIcons.length}`}</Text.Paragraph>
 
       <IconsList>
         {matchingIcons.map(({ key, Icon }, index) => {
           return (
             <li key={key}>
               <Icon style={getStyle(index, key)} />
-              <Text as="span" isBold>
-                {key}
-              </Text>
+              <Text.Span isBold>{key}</Text.Span>
             </li>
           );
         })}

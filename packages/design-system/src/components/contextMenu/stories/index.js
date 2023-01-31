@@ -46,7 +46,7 @@ import {
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
-import { TOOLTIP_PLACEMENT } from '../../tooltip';
+import { Placement } from '../../popup';
 import * as MenuItems from '../components';
 
 export default {
@@ -211,7 +211,7 @@ export const QuickActionMenu = ({ onClick, ...args }) => {
   return (
     <Grid>
       <Container>
-        <Text>{'Blank page; no item selected'}</Text>
+        <Text.Paragraph>{'Blank page; no item selected'}</Text.Paragraph>
         <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={() => onClick('on the first action')}>
             <MenuItems.MenuIcon title="Change background color">
@@ -232,7 +232,7 @@ export const QuickActionMenu = ({ onClick, ...args }) => {
         </ContextMenu>
       </Container>
       <Container>
-        <Text>{'Background Image selected'}</Text>
+        <Text.Paragraph>{'Background Image selected'}</Text.Paragraph>
         <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={() => onClick('on the first action')}>
             <MenuItems.MenuIcon title="Replace background">
@@ -253,7 +253,7 @@ export const QuickActionMenu = ({ onClick, ...args }) => {
         </ContextMenu>
       </Container>
       <Container>
-        <Text>{'Foreground Image selected'}</Text>
+        <Text.Paragraph>{'Foreground Image selected'}</Text.Paragraph>
         <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={() => onClick('on the first action')}>
             <MenuItems.MenuIcon title="Replace media">
@@ -279,7 +279,7 @@ export const QuickActionMenu = ({ onClick, ...args }) => {
         </ContextMenu>
       </Container>
       <Container>
-        <Text>{'Video selected'}</Text>
+        <Text.Paragraph>{'Video selected'}</Text.Paragraph>
         <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={() => onClick('on the first action')}>
             <MenuItems.MenuIcon title="Replace media">
@@ -310,7 +310,7 @@ export const QuickActionMenu = ({ onClick, ...args }) => {
         </ContextMenu>
       </Container>
       <Container>
-        <Text>{'Shape selected'}</Text>
+        <Text.Paragraph>{'Shape selected'}</Text.Paragraph>
         <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={() => onClick('on the first action')}>
             <MenuItems.MenuIcon title="Change color">
@@ -336,7 +336,7 @@ export const QuickActionMenu = ({ onClick, ...args }) => {
         </ContextMenu>
       </Container>
       <Container>
-        <Text>{'Text selected'}</Text>
+        <Text.Paragraph>{'Text selected'}</Text.Paragraph>
         <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={() => onClick('on the first action')}>
             <MenuItems.MenuIcon title="Change color">
@@ -375,47 +375,32 @@ export const HorizontalMenu = ({ onClick, ...args }) => {
   return (
     <Grid>
       <Container>
-        <Text>{'Dummy horizontal menu'}</Text>
+        <Text.Paragraph>{'Dummy horizontal menu'}</Text.Paragraph>
         <ContextMenu isHorizontal isInline isSecondary {...args}>
           <MenuItems.MenuButton onClick={() => onClick('Clicked on bucket')}>
-            <MenuItems.MenuIcon
-              title="Bucket"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Bucket" placement={Placement.Bottom}>
               <Bucket />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuButton onClick={() => onClick('Clicked on link')}>
-            <MenuItems.MenuIcon
-              title="Link"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Link" placement={Placement.Bottom}>
               <IconLink />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuButton onClick={() => onClick('Clicked on captions')}>
-            <MenuItems.MenuIcon
-              title="Captions"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Captions" placement={Placement.Bottom}>
               <Captions />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuSeparator />
           <MenuItems.MenuButton onClick={() => onClick('Clicked on animation')}>
-            <MenuItems.MenuIcon
-              title="Animation"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Animation" placement={Placement.BOTTOM}>
               <CircleSpeed />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuSeparator />
           <MenuItems.MenuButton onClick={() => onClick('Clicked on cross')}>
-            <MenuItems.MenuIcon
-              title="Cross"
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-            >
+            <MenuItems.MenuIcon title="Cross" placement={Placement.Bottom}>
               <Cross />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
@@ -835,26 +820,30 @@ export const RightClickMenuStaticValues = (args) => {
   return (
     <Grid>
       <RightClickMenuOnShapeAndBackground {...args}>
-        <Text>{'Right click menu on top of shape and background'}</Text>
+        <Text.Paragraph>
+          {'Right click menu on top of shape and background'}
+        </Text.Paragraph>
       </RightClickMenuOnShapeAndBackground>
       <Container>
-        <Text>{'Right click on page element'}</Text>
+        <Text.Paragraph>{'Right click on page element'}</Text.Paragraph>
         <ContextMenu {...args}>{pageMenu}</ContextMenu>
       </Container>
       <Container>
-        <Text>{'Right click on shape element'}</Text>
+        <Text.Paragraph>{'Right click on shape element'}</Text.Paragraph>
         <ContextMenu {...args}>{shapeMenu}</ContextMenu>
       </Container>
       <Container>
-        <Text>{'Right click on foreground media element'}</Text>
+        <Text.Paragraph>
+          {'Right click on foreground media element'}
+        </Text.Paragraph>
         <ContextMenu {...args}>{foregroundMediaMenu}</ContextMenu>
       </Container>
       <Container>
-        <Text>{'Right click on background element'}</Text>
+        <Text.Paragraph>{'Right click on background element'}</Text.Paragraph>
         <ContextMenu {...args}>{backgroundMediaMenu}</ContextMenu>
       </Container>
       <TextMenu {...args}>
-        <Text>{'Right click on text element'}</Text>
+        <Text.Paragraph>{'Right click on text element'}</Text.Paragraph>
       </TextMenu>
     </Grid>
   );

@@ -22,7 +22,7 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Toggle } from '..';
+import Toggle from '../toggle';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Toggle', () => {

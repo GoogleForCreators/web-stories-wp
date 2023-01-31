@@ -20,10 +20,11 @@ import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import {
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
+  ButtonAsLink,
 } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -41,28 +42,28 @@ export const AutoSaveDialog = ({ onClose, isOpen, autoSaveLink }) => {
       actions={
         <>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             onClick={onClose}
           >
             {__('Dismiss', 'web-stories')}
           </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+          <ButtonAsLink
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             href={autoSaveLink}
           >
             {__('View the autosave', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         </>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Paragraph size={TextSize.Small}>
         {__(
           'There is an autosave of this story that is more recent than the version you are editing.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Dialog>
   );
 };

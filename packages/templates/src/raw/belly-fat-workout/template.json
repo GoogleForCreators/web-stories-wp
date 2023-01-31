@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -185,10 +185,10 @@
           "marginOffset": 0.4781249999999986
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "f0d308dc-15f3-4959-ae9c-fc0c1ddb65c7",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {

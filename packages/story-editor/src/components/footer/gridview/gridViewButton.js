@@ -18,15 +18,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  Icons,
-  Modal,
-  PLACEMENT,
-} from '@googleforcreators/design-system';
+import { Icons, Modal, Placement } from '@googleforcreators/design-system';
 import { useCallback, useState } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
@@ -35,11 +27,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
+import { ToggleButton } from '../../toggleButton';
 import GridView from './gridView';
 
 const Box = styled.div`
-  width: 32px;
-  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,24 +56,24 @@ function GridViewButton() {
       <Box>
         <Tooltip
           title={__('Grid View', 'web-stories')}
-          placement={PLACEMENT.TOP}
+          placement={Placement.Top}
           hasTail
         >
-          <Button
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+          <ToggleButton
+            isOpen={isGridViewOpen}
             onClick={toggleModal}
+            aria-owns="gridview_modal"
+            MainIcon={Icons.Box4}
             aria-label={__('Grid View', 'web-stories')}
-          >
-            <Icons.Box4 />
-          </Button>
+            label={__('Grid View', 'web-stories')}
+          />
         </Tooltip>
       </Box>
       <Modal
         isOpen={isGridViewOpen}
         onClose={toggleModal}
         contentLabel={__('Grid View', 'web-stories')}
+        popupId="gridview_modal"
         overlayStyles={{
           alignItems: 'stretch',
           backgroundColor: '#131516', // theme.colors.brand.gray[90]

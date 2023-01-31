@@ -21,9 +21,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useState } from '@googleforcreators/react';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Span)`
   color: ${({ theme, active }) =>
     rgba(theme.colors.standard.white, active ? 1.0 : 0.6)};
 `;
@@ -60,12 +60,7 @@ const Attribution = ({ author, url }) => {
       target="_blank"
       rel="noreferrer"
     >
-      <StyledText
-        forwardedAs="span"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-      >
-        {author}
-      </StyledText>
+      <StyledText size={TextSize.XSmall}>{author}</StyledText>
     </Link>
   );
 };

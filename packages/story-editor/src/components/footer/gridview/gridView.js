@@ -30,9 +30,9 @@ import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import {
   Slider,
   Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
+  ButtonType,
+  ButtonSize,
+  ButtonVariant,
   Icons,
   useGridViewKeys,
 } from '@googleforcreators/design-system';
@@ -208,9 +208,9 @@ function GridView({ onClose }) {
     <Container aria-label={__('Grid View', 'web-stories')}>
       <TopRow>
         <ClickableButton
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.MEDIUM}
+          variant={ButtonVariant.Square}
+          type={ButtonType.Tertiary}
+          size={ButtonSize.Medium}
           onClick={onClose}
           aria-label={__('Close', 'web-stories')}
         >
@@ -268,7 +268,6 @@ function GridView({ onClose }) {
                 </PageSeparator>
                 <ReorderableItem position={index}>
                   <PagePreview
-                    key={page.id}
                     label={
                       isCurrentPage
                         ? sprintf(

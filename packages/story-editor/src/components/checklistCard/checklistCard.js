@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Headline, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -64,10 +64,7 @@ const ChecklistCard = ({
     <Wrapper className={className}>
       <Container gridVariant={gridVariant}>
         <Title as={titleProps?.onClick ? 'button' : 'div'} {...titleProps}>
-          <Headline
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-            as="h2"
-          >
+          <Headline size={TextSize.XXXSmall} as="h2">
             {title}
           </Headline>
         </Title>

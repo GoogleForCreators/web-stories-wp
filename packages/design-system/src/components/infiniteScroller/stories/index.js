@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import InfiniteScroller from '..';
+import InfiniteScroller from '../infiniteScroller';
 
 export default {
   title: 'DesignSystem/Components/InfiniteScroller',

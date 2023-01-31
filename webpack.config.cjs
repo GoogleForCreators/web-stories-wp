@@ -137,7 +137,7 @@ const sharedConfig = {
             include: [/inline-icons\/.*\.svg$/],
           },
           {
-            issuer: /\.[jt]s?$/,
+            issuer: /\.[jt]sx?$/,
             include: [/\/icons\/.*\.svg$/],
             use: [
               {
@@ -167,7 +167,7 @@ const sharedConfig = {
             ],
           },
           {
-            issuer: /\.[jt]s?$/,
+            issuer: /\.[jt]sx?$/,
             include: [/images\/.*\.svg$/],
             use: [
               {

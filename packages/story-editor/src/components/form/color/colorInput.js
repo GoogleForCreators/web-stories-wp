@@ -35,11 +35,11 @@ import {
 import {
   HexInput,
   Text,
-  THEME_CONSTANTS,
+  TextSize,
   Swatch,
   Popup,
   Disclosure,
-  PLACEMENT,
+  Placement,
   CONTEXT_MENU_SKIP_ELEMENT,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
@@ -160,7 +160,7 @@ const ColorInput = forwardRef(function ColorInput(
     value = null,
     label = null,
     changedStyle,
-    pickerPlacement = PLACEMENT.RIGHT_START,
+    pickerPlacement = Placement.RightStart,
     isInDesignMenu = false,
     hasInputs = true,
     pickerProps,
@@ -309,21 +309,18 @@ const ColorInput = forwardRef(function ColorInput(
             </ColorPreview>
             {hasInputs ? (
               <TextualPreview>
-                <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                <Text.Paragraph size={TextSize.Small}>
                   {previewText}
-                </Text>
+                </Text.Paragraph>
               </TextualPreview>
             ) : (
               <>
                 {/* We display Mixed value even without inputs */}
                 {isMixed && (
                   <MixedLabel>
-                    <Text
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                      as="span"
-                    >
+                    <Text.Span size={TextSize.Small}>
                       {MULTIPLE_DISPLAY_VALUE}
-                    </Text>
+                    </Text.Span>
                   </MixedLabel>
                 )}
                 <DisclosureContainer isSmall={isMixed}>

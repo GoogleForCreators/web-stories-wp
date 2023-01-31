@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
 /**
@@ -32,7 +32,7 @@ import { useHighlights, states } from '../../../../app/highlights';
 import styles from '../../../../app/highlights/styles';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin-bottom: 10px;
 `;
@@ -68,7 +68,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
       title={__('Accessibility', 'web-stories')}
       isPersistable={!highlight}
     >
-      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <StyledText size={TextSize.Small}>
         {__('Add a brief description of the image.', 'web-stories')}
       </StyledText>
       <Row>

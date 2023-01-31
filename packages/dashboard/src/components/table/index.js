@@ -29,7 +29,7 @@ const CELL_PADDING = 16;
 
 export const Table = styled.table`
   ${themeHelpers.expandTextPreset(
-    ({ paragraph }, { SMALL }) => paragraph[SMALL]
+    ({ paragraph }, { Small }) => paragraph[Small]
   )}
   border-collapse: collapse;
   width: inherit;

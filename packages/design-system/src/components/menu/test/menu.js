@@ -25,11 +25,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Menu } from '..';
+import Menu from '../menu';
 import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
-import { getOptions } from '../utils';
+import { getGroups } from '../utils';
 
-const groupedOptions = getOptions(basicDropDownOptions);
+const groupedOptions = getGroups(basicDropDownOptions);
 
 const onClickMock = jest.fn();
 const scrollTo = jest.fn();
@@ -50,8 +50,8 @@ describe('<Menu />', () => {
         parentId="bar"
         hasMenuRole={false}
         emptyText={'No options available'}
-        options={groupedOptions}
-        onMenuItemClick={onClickMock}
+        groups={groupedOptions}
+        handleMenuItemSelect={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
       />
@@ -71,8 +71,8 @@ describe('<Menu />', () => {
         parentId="bar"
         hasMenuRole={false}
         emptyText={'No options available'}
-        options={[]}
-        onMenuItemClick={onClickMock}
+        groups={[]}
+        handleMenuItemSelect={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
       />
@@ -82,15 +82,15 @@ describe('<Menu />', () => {
     expect(emptyMessage).toBeInTheDocument();
   });
 
-  it('should trigger onMenuItemClick when list item is clicked', () => {
+  it('should trigger handleMenuItemSelect when list item is clicked', () => {
     renderWithProviders(
       <Menu
         listId="foo"
         parentId="bar"
         hasMenuRole={false}
         emptyText={'No options available'}
-        options={groupedOptions}
-        onMenuItemClick={onClickMock}
+        groups={groupedOptions}
+        handleMenuItemSelect={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
       />
@@ -123,8 +123,8 @@ describe('<Menu />', () => {
         parentId="bar"
         hasMenuRole={false}
         emptyText={'No options available'}
-        options={groupedOptions}
-        onMenuItemClick={onClickMock}
+        groups={groupedOptions}
+        handleMenuItemSelect={onClickMock}
         onDismissMenu={() => {}}
         activeValue={basicDropDownOptions[2].value}
         renderItem={OverrideRenderItem}

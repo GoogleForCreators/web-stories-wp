@@ -24,7 +24,7 @@ import type { ReactNode } from 'react';
 /**
  * Internal dependencies
  */
-import type { Notification } from '../../types/snackbar';
+import type { SnackbarNotification } from '../../components';
 import Context from './context';
 
 interface SnackbarProviderProps {
@@ -35,31 +35,39 @@ function SnackbarProvider({
   children,
   placement = 'bottom',
 }: SnackbarProviderProps) {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<SnackbarNotification[]>(
+    []
+  );
 
-  const remove = useCallback((toRemove: Notification | Notification[]) => {
-    setNotifications((currentNotifications) =>
-      currentNotifications.filter((item) => {
-        if (Array.isArray(toRemove)) {
-          return !toRemove.find(({ key }) => key === item.key);
-        }
-        return item.key !== toRemove.key;
-      })
-    );
-  }, []);
+  const remove = useCallback(
+    (toRemove: SnackbarNotification | SnackbarNotification[]) => {
+      setNotifications((currentNotifications) =>
+        currentNotifications.filter((item) => {
+          if (Array.isArray(toRemove)) {
+            return !toRemove.find(({ key }) => key === item.key);
+          }
+          return item.key !== toRemove.key;
+        })
+      );
+    },
+    []
+  );
 
-  const create = useCallback((notification: Omit<Notification, 'id'>) => {
-    const newNotification = {
-      id: uuidv4(),
-      ...notification,
-    };
-    // React may batch state updates, so use the setter that receives the
-    // previous state.
-    setNotifications((currentNotifications) => [
-      ...currentNotifications,
-      newNotification,
-    ]);
-  }, []);
+  const create = useCallback(
+    (notification: Omit<SnackbarNotification, 'id'>) => {
+      const newNotification = {
+        id: uuidv4(),
+        ...notification,
+      };
+      // React may batch state updates, so use the setter that receives the
+      // previous state.
+      setNotifications((currentNotifications) => [
+        ...currentNotifications,
+        newNotification,
+      ]);
+    },
+    []
+  );
 
   const clear = useCallback(() => {
     setNotifications([]);

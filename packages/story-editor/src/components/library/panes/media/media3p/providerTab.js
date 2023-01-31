@@ -18,14 +18,14 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { focusStyle } from '../../../../panels/shared/styles';
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text.Span)`
   color: inherit;
 `;
 
@@ -63,12 +63,7 @@ const Tab = styled.button`
 function ProviderTab({ name, isActive, ...rest }) {
   return (
     <Tab $isActive={isActive} {...rest}>
-      <StyledText
-        forwardedAs="span"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      >
-        {name}
-      </StyledText>
+      <StyledText size={TextSize.Small}>{name}</StyledText>
     </Tab>
   );
 }

@@ -23,8 +23,8 @@ import styled from 'styled-components';
 import { _x, sprintf, __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
+  ButtonType,
+  TextSize,
   Text,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -38,7 +38,7 @@ import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled.div``;
 
-const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
+const PageTemplateButton = styled(Button).attrs({ type: ButtonType.Plain })`
   position: relative;
   display: block;
   padding: 0;
@@ -111,12 +111,7 @@ const DefaultPageTemplate = forwardRef(
           {isFocused && <InsertionOverlay />}
           {page.title && (
             <TemplateTitleContainer>
-              <Text
-                as="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              >
-                {templateTitle}
-              </Text>
+              <Text.Span size={TextSize.Small}>{templateTitle}</Text.Span>
             </TemplateTitleContainer>
           )}
         </PageTemplateButton>

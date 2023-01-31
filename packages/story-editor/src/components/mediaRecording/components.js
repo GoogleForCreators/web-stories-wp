@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Text, TextSize } from '@googleforcreators/design-system';
 
 export const MessageWrap = styled.div`
   display: flex;
@@ -32,14 +32,14 @@ export const MessageWrap = styled.div`
   user-select: text;
 `;
 
-export const MessageHeading = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE,
+export const MessageHeading = styled(Text.Paragraph).attrs({
+  size: TextSize.XLarge,
 })`
   margin: 0 0 14px;
 `;
 
-export const MessageText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+export const MessageText = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   margin: 0 0 14px;
 `;

@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import {
   Button,
-  BUTTON_SIZES,
+  ButtonSize,
   Icons,
   themeHelpers,
 } from '@googleforcreators/design-system';
@@ -37,7 +37,7 @@ const Panel = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
+  ${themeHelpers.expandTextPreset(({ label }, { Small }) => label[Small])}
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -77,7 +77,7 @@ const StyledArrow = styled(Icons.ArrowLeft)`
 function Tip({ children, onClick, unread = true }) {
   const { isRTL } = useConfig();
   return (
-    <StyledButton size={BUTTON_SIZES.SMALL} onClick={onClick}>
+    <StyledButton size={ButtonSize.Small} onClick={onClick}>
       <ButtonText unread={unread}>{children}</ButtonText>
       <ArrowWrap $isRTL={isRTL}>
         <StyledArrow />

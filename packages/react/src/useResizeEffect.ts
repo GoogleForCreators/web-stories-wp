@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect, DependencyList, MutableRefObject } from 'react';
+import { useEffect } from 'react';
+import type { DependencyList, MutableRefObject } from 'react';
 
 interface ResizeHandler {
   (dimensions: { width: number; height: number }): void;

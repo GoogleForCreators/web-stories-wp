@@ -32,11 +32,11 @@ export const NavBar = styled.div`
   width: 100%;
   height: ${NAVIGATION_HEIGHT}px;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
-  ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
+  ${themeHelpers.expandTextPreset(({ label }, { Medium }) => label[Medium])}
 `;
 
 export const NavButton = styled(Button)`
-  ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
+  ${themeHelpers.expandTextPreset(({ label }, { Medium }) => label[Medium])}
   ${focusStyle};
 
   svg {

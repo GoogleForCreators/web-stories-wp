@@ -21,9 +21,10 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
+  ButtonAsLink,
+  ButtonSize,
+  ButtonType,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { Dialog } from '@googleforcreators/story-editor';
 
@@ -63,29 +64,29 @@ function PostLockDialog({
       title={__('This story is already being edited', 'web-stories')}
       actions={
         <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+          <ButtonAsLink
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             href={previewLink}
             target="_blank"
             rel="noreferrer"
           >
             {__('Preview', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
+            type={ButtonType.Tertiary}
+            size={ButtonSize.Small}
             onClick={onClose}
           >
             {__('Take over', 'web-stories')}
           </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
+          <ButtonAsLink
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
             href={dashboardLink}
           >
             {__('Back to dashboard', 'web-stories')}
-          </Button>
+          </ButtonAsLink>
         </>
       }
     >
@@ -103,7 +104,7 @@ function PostLockDialog({
           </DialogImageWrapper>
         )}
         <DialogContent>
-          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <DialogText size={TextSize.Small}>
             <>
               {sprintf(
                 /* translators: %s: owner's name */
@@ -115,7 +116,7 @@ function PostLockDialog({
               )}
             </>
           </DialogText>
-          <DialogText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <DialogText size={TextSize.Small}>
             {sprintf(
               /* translators: %s: owner's name */ __(
                 'If you take over, %s will lose editing control to the story, but their changes will be saved.',

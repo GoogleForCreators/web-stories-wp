@@ -24,7 +24,7 @@ import {
   Icons,
   Headline,
   Text,
-  PLACEMENT,
+  Placement,
 } from '@googleforcreators/design-system';
 
 /**
@@ -263,7 +263,7 @@ function DesignPanel({ style, pickerPlacement }) {
 
 export function DesignPanelLeft() {
   return (
-    <DesignPanel style={{ left: 0 }} pickerPlacement={PLACEMENT.RIGHT_START} />
+    <DesignPanel style={{ left: 0 }} pickerPlacement={Placement.RightStart} />
   );
 }
 
@@ -282,7 +282,7 @@ export function DesignMenu() {
           initialColor={RED}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={PLACEMENT.TOP_END}
+          pickerPlacement={Placement.Top_END}
           isInDesignMenu
           shouldCloseOnSelection
           allowsSavedColors
@@ -297,7 +297,7 @@ export function DesignMenu() {
           initialColor={BLUE}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={PLACEMENT.TOP_END}
+          pickerPlacement={Placement.Top_END}
           isInDesignMenu
           shouldCloseOnSelection
           allowsSavedColors
@@ -313,7 +313,7 @@ export function DesignMenu() {
           initialColor={CYAN}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={PLACEMENT.TOP_END}
+          pickerPlacement={Placement.Top_END}
           hasInputs={false}
           isInDesignMenu
           shouldCloseOnSelection
@@ -327,7 +327,7 @@ export function DesignMenu() {
           initialColor={RED_GREEN}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={PLACEMENT.TOP_END}
+          pickerPlacement={Placement.Top_END}
           hasInputs={false}
           isInDesignMenu
           shouldCloseOnSelection
@@ -341,7 +341,7 @@ export function DesignMenu() {
           initialColor={YELLOW}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={PLACEMENT.TOP_START}
+          pickerPlacement={Placement.Top_START}
           hasInputs={false}
           isInDesignMenu
           shouldCloseOnSelection

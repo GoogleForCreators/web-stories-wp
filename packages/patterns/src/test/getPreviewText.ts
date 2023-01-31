@@ -19,7 +19,8 @@
  */
 import getPreviewText from '../getPreviewText';
 import createSolid from '../createSolid';
-import { PatternType, Linear, Radial, Solid } from '../types';
+import { PatternType } from '../types';
+import type { Linear, Radial, Solid } from '../types';
 
 describe('getPreviewText', () => {
   it('should return null for no pattern', () => {

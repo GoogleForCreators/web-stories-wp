@@ -21,8 +21,8 @@ import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { useEffect, useState, useRef } from '@googleforcreators/react';
 import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
+  ButtonSize,
+  ButtonType,
   Icons,
   BEZIER,
 } from '@googleforcreators/design-system';
@@ -118,8 +118,8 @@ export function BottomNavigation({
             forceFocusCompanion();
             onAllTips();
           }}
-          type={BUTTON_TYPES.PLAIN}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Plain}
+          size={ButtonSize.Small}
           disabled={!hasBottomNavigation}
         >
           <ArrowWrap $isRTL={isRTL}>
@@ -132,8 +132,8 @@ export function BottomNavigation({
         <NavButton
           ref={prevButtonRef}
           onClick={onPrev}
-          type={BUTTON_TYPES.PLAIN}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Plain}
+          size={ButtonSize.Small}
           disabled={!hasBottomNavigation || local.isPrevDisabled}
         >
           {__('Previous', 'web-stories')}
@@ -141,8 +141,8 @@ export function BottomNavigation({
         <NavButton
           ref={nextButtonRef}
           onClick={onNext}
-          type={BUTTON_TYPES.PLAIN}
-          size={BUTTON_SIZES.SMALL}
+          type={ButtonType.Plain}
+          size={ButtonSize.Small}
           disabled={!hasBottomNavigation || local.isNextDisabled}
         >
           {__('Next', 'web-stories')}

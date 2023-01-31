@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -408,10 +408,10 @@
           "id": "d82f1093-bc73-465b-913d-061deb133a12"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
       "type": "page",
       "id": "8ab426f5-d4a4-4347-94d0-35e946676428",
-      "animations": [],
       "pageTemplateType": "cover",
       "groups": {
         "903cc0be-bc9f-4062-b4d0-a6c813745c0f": {
@@ -651,9 +651,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
-      "type": "page",
-      "id": "21c1ef65-6c22-46bf-b1ec-391b0eb6add9",
       "animations": [
         {
           "id": "90bb1c1d-967f-41f6-96f3-a80914693d56",
@@ -664,6 +661,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
+      "type": "page",
+      "id": "21c1ef65-6c22-46bf-b1ec-391b0eb6add9",
       "pageTemplateType": "editorial"
     },
     {
@@ -1195,9 +1195,6 @@
           "tagName": "p"
         }
       ],
-      "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
-      "type": "page",
-      "id": "2103e5d5-a865-46a5-9533-e52d10bad635",
       "animations": [
         {
           "id": "889e5fea-9fa3-4e9d-a0e4-67b4a3123d2a",
@@ -1216,6 +1213,9 @@
           "delay": 50
         }
       ],
+      "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
+      "type": "page",
+      "id": "2103e5d5-a865-46a5-9533-e52d10bad635",
       "pageTemplateType": "section"
     },
     {
@@ -1248,6 +1248,45 @@
           "height": 237,
           "mask": { "type": "rectangle" },
           "id": "850278ac-d800-4d6b-8235-e4d2a93784aa",
+          "groupId": "885d5a17-8172-4fb5-a6ca-cafbbe421bac"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2021-05-11T08:12:36",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/ways-to-eat-avocado/page05_image01.jpg",
+            "width": 289,
+            "height": 360,
+            "posterId": 0,
+            "id": 0,
+            "alt": "page05_image01",
+            "isOptimized": false,
+            "baseColor": "#736d66",
+            "isExternal": true,
+            "sizes": []
+          },
+          "type": "image",
+          "x": -40,
+          "y": -76,
+          "width": 467,
+          "height": 382,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1,
+            "supportsBorder": true
+          },
+          "id": "1405b095-d009-473f-bbb9-934588a308bd",
           "groupId": "885d5a17-8172-4fb5-a6ca-cafbbe421bac"
         },
         {
@@ -1545,50 +1584,8 @@
           "x": 48,
           "y": 466,
           "tagName": "p"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2021-05-11T08:12:36",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/ways-to-eat-avocado/page05_image01.jpg",
-            "width": 289,
-            "height": 360,
-            "posterId": 0,
-            "id": 0,
-            "alt": "page05_image01",
-            "isOptimized": false,
-            "baseColor": "#736d66",
-            "isExternal": true,
-            "sizes": []
-          },
-          "type": "image",
-          "x": -40,
-          "y": -76,
-          "width": 467,
-          "height": 382,
-          "mask": {
-            "type": "rectangle",
-            "showInLibrary": true,
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1,
-            "supportsBorder": true
-          },
-          "id": "1405b095-d009-473f-bbb9-934588a308bd",
-          "groupId": "885d5a17-8172-4fb5-a6ca-cafbbe421bac"
         }
       ],
-      "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
-      "type": "page",
-      "id": "9639c764-6d23-4ad6-a950-a9ac51fae9f5",
       "animations": [
         {
           "id": "74e5227b-7284-4a26-b8f0-7fff38ff9847",
@@ -1617,6 +1614,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 242, "g": 242, "b": 242 } },
+      "type": "page",
+      "id": "9639c764-6d23-4ad6-a950-a9ac51fae9f5",
       "pageTemplateType": "list",
       "groups": {
         "885d5a17-8172-4fb5-a6ca-cafbbe421bac": {

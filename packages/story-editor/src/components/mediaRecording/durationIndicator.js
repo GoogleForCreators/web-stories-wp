@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import {
-  Text,
-  THEME_CONSTANTS,
-  TOOLTIP_PLACEMENT,
-} from '@googleforcreators/design-system';
+import { Text, TextSize, Placement } from '@googleforcreators/design-system';
 import { _n, sprintf } from '@googleforcreators/i18n';
 import { getVideoLengthDisplay } from '@googleforcreators/media';
 
@@ -33,8 +29,8 @@ import Tooltip from '../tooltip';
 import useMediaRecording from './useMediaRecording';
 import { MAX_RECORDING_DURATION_IN_MINUTES } from './constants';
 
-const Wrapper = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+const Wrapper = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
 })`
   font-variant-numeric: tabular-nums;
 
@@ -62,7 +58,7 @@ function DurationIndicator() {
 
   return (
     <Tooltip
-      position={TOOLTIP_PLACEMENT.TOP}
+      position={Placement.TOP}
       title={sprintf(
         /* translators: %s: number of minutes */
         _n(
@@ -73,11 +69,7 @@ function DurationIndicator() {
         ),
         MAX_RECORDING_DURATION_IN_MINUTES
       )}
-      styleOverride={{
-        style: {
-          maxWidth: '20em',
-        },
-      }}
+      styleOverride={{ maxWidth: '20em' }}
     >
       <Wrapper>{getVideoLengthDisplay(duration)}</Wrapper>
     </Tooltip>

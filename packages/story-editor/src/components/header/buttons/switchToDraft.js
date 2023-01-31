@@ -21,9 +21,9 @@ import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   Icons,
 } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
@@ -54,9 +54,9 @@ function SwitchToDraftButton({ forceIsSaving = false }) {
   return (
     <Tooltip title={label} hasTail>
       <Button
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.QUATERNARY}
-        size={BUTTON_SIZES.SMALL}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Quaternary}
+        size={ButtonSize.Small}
         onClick={handleUnPublish}
         disabled={isSaving || forceIsSaving || isUploading}
         aria-label={label}

@@ -21,10 +21,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   Button,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  PLACEMENT,
+  ButtonVariant,
+  ButtonType,
+  ButtonSize,
+  Placement,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -45,13 +45,13 @@ function PageMenuButtonWithRef(
     <Tooltip
       title={title}
       shortcut={shortcut}
-      placement={PLACEMENT.RIGHT}
+      placement={Placement.Right}
       hasTail
     >
       <StyledButton
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
+        variant={ButtonVariant.Square}
+        type={ButtonType.Secondary}
+        size={ButtonSize.Small}
         ref={forwardedRef}
         {...rest}
       >

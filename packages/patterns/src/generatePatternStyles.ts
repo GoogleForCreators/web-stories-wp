@@ -22,7 +22,8 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { ColorStop, Gradient, Hex, Pattern, PatternType, Solid } from './types';
+import { PatternType } from './types';
+import type { ColorStop, Gradient, Hex, Pattern, Solid } from './types';
 
 /**
  * Truncate a number to a given number of decimals.

@@ -23,7 +23,7 @@ import {
   useState,
   useMemo,
 } from '@googleforcreators/react';
-import { Datalist } from '@googleforcreators/design-system';
+import { DatalistDropdown } from '@googleforcreators/design-system';
 import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import PropTypes from 'prop-types';
 
@@ -106,7 +106,7 @@ function ProductDropdown({ product, setProduct, ...rest }) {
   };
 
   return (
-    <Datalist.DropDown
+    <DatalistDropdown
       options={initialOptions}
       searchResultsLabel={__('Search results', 'web-stories')}
       aria-label={__('Product', 'web-stories')}

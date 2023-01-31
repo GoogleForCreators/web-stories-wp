@@ -19,7 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
-import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Link, TextSize } from '@googleforcreators/design-system';
 import { trackClick } from '@googleforcreators/tracking';
 
 /**
@@ -89,7 +89,7 @@ const FirstPageAnimation = () => {
               rel="noreferrer"
               onClick={onClick}
               href="https://wp.stories.google/docs/how-to/animations/"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              size={TextSize.XSmall}
             >
               {__('Learn more', 'web-stories')}
             </Link>

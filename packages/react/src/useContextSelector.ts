@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { useContextSelector as useContextSelectorOrig } from 'use-context-selector';
-import { useRef, Context, MutableRefObject } from 'react';
+import { useRef } from 'react';
+import type { MutableRefObject, Context } from 'react';
 
 /**
  * Internal dependencies

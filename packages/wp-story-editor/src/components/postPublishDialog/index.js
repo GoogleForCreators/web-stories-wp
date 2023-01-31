@@ -20,7 +20,12 @@
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@googleforcreators/tracking';
-import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import {
+  ButtonAsLink,
+  Link,
+  Text,
+  TextSize,
+} from '@googleforcreators/design-system';
 import { Dialog, useStory } from '@googleforcreators/story-editor';
 
 function PostPublishDialog() {
@@ -65,14 +70,15 @@ function PostPublishDialog() {
       secondaryText={__('Dismiss', 'web-stories')}
       primaryText={primaryText}
       onPrimary={onAddToPostClick}
+      PrimaryComponent={ButtonAsLink}
       primaryRest={{ href: confirmURL }}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text.Paragraph size={TextSize.Small}>
         <TranslateWithMarkup
           mapping={{
             a: (
               <Link
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                size={TextSize.Small}
                 href={storyURL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -86,14 +92,14 @@ function PostPublishDialog() {
             'web-stories'
           )}
         </TranslateWithMarkup>
-      </Text>
+      </Text.Paragraph>
       {confirmURL && (
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <Text.Paragraph size={TextSize.Small}>
           {
             /* translators: 'it' refers to a web story. */
             __('Would you like to include it on a new post?', 'web-stories')
           }
-        </Text>
+        </Text.Paragraph>
       )}
     </Dialog>
   );

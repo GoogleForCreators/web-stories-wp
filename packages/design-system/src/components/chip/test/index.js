@@ -22,7 +22,7 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Chip } from '..';
+import Chip from '../chip';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Chip', () => {

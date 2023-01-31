@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { PLACEMENT, Popup } from '@googleforcreators/design-system';
+import { Placement, Popup } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useUnits } from '@googleforcreators/units';
 
@@ -174,7 +174,7 @@ function PageAttachment({ pageAttachment = {} }) {
               <Popup
                 anchor={{ current: pageAttachmentContainer }}
                 isOpen
-                placement={PLACEMENT.LEFT}
+                placement={Placement.Left}
                 spacing={spacing}
               >
                 <Tooltip>
