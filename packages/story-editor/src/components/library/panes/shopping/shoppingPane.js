@@ -40,8 +40,9 @@ import { trackError, trackEvent } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import { Section } from '../../common';
-import { useAPI, useConfig } from '../../../../app';
-import { Row } from '../../../form';
+import { useAPI } from '../../../../app/api';
+import { useConfig } from '../../../../app/config';
+import Row from '../../../form/row';
 import { Pane } from '../shared';
 import { useStory } from '../../../../app/story';
 import useLibrary from '../../useLibrary';

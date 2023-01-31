@@ -23,14 +23,18 @@ import { FULLBLEED_RATIO } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
-import { useDropTargets } from '../../dropTargets';
+import useDropTargets from '../../dropTargets/useDropTargets';
 import {
   useCanvas,
-  useLayout,
-  useUserOnboarding,
   CANVAS_BOUNDING_BOX_IDS,
-  useCanvasBoundingBox,
-} from '../../../app';
+  useCanvasBoundingBox
+} from '../../../app/canvas';
+import {
+  useLayout,
+} from '../../../app/layout';
+import {
+  useUserOnboarding,
+} from '../../../app/userOnboarding';
 
 function useSnapping({
   canSnap,

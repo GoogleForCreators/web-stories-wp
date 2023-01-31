@@ -33,7 +33,8 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { useInsertElement, useInsertTextSet } from '../canvas';
+import useInsertElement from '../canvas/useInsertElement';
+import useInsertTextSet from '../canvas/useInsertTextSet';
 import { useHighlights } from '../../app/highlights';
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';

@@ -36,7 +36,7 @@ import {
  * Internal dependencies
  */
 import { useConfig } from '../../../../../app/config';
-import { useLocalMedia } from '../../../../../app/media';
+import useLocalMedia from '../../../../../app/media/local/useLocalMedia';
 import { SearchInput } from '../../../common';
 import { MediaUploadButton, Select } from '../../../../form';
 import {

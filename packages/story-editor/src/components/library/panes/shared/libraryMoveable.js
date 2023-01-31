@@ -33,13 +33,14 @@ import { useTransform } from '@googleforcreators/transform';
  * Internal dependencies
  */
 import { ZoomSetting, TRACKING_EVENTS } from '../../../../constants';
-import { useDropTargets } from '../../../dropTargets';
+import useDropTargets from '../../../dropTargets/useDropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
 import { useInsertTextSet } from '../../../canvas';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import useSnapping from '../../../canvas/utils/useSnapping';
-import { useStory, useCanvas } from '../../../../app';
+import { useCanvas } from '../../../../app/canvas';
+import { useStory } from '../../../../app/story';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';

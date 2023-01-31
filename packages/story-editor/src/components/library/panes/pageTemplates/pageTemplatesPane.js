@@ -37,7 +37,7 @@ import { trackError } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import { Pane } from '../shared';
-import { Select } from '../../../form';
+import Select from '../../../form/select';
 import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
 import { useConfig } from '../../../../app/config';
