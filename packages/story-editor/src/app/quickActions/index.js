@@ -13,5 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as useQuickActions, MediaPicker } from './useQuickActions';
+export { default as useQuickActions } from './useQuickActions';
+export { default as MediaPicker } from './mediaPicker';
 export * from './constants';
