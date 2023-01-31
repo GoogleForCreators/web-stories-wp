@@ -36,6 +36,7 @@ import { useMediaRecording } from '../../components/mediaRecording';
 import { STORY_EVENTS, useStoryTriggersDispatch } from '../story';
 import { useConfig } from '../config';
 import { ACTIONS } from './constants';
+import useElementReset from './useElementReset';
 
 const quickActionIconAttrs = {
   width: 24,
@@ -174,76 +175,75 @@ function useMediaActions({
     showClearAction,
   ]);
 
-  const backgroundElementMediaActions = useMemo(
-    (handleElementReset) => {
-      const baseActions = [
-        {
-          Icon: Icons.CircleSpeed,
-          label: ACTIONS.ADD_ANIMATION.text,
-          onClick: (evt) => {
-            handleFocusAnimationPanel()(evt);
-
-            trackEvent('quick_action', {
-              name: ACTIONS.ADD_ANIMATION.trackingEventName,
-              element: selectedElement?.type,
-              isBackground: true,
-            });
-          },
-          ...actionProps,
-        },
-      ];
-
-      if (hasUploadMediaAction) {
-        baseActions.unshift({
-          Icon: Icons.PictureSwap,
-          label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
-          onClick: () => {
-            dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
-
-            trackEvent('quick_action', {
-              name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
-              element: selectedElement?.type,
-              isBackground: true,
-            });
-          },
-          wrapWithMediaPicker: true,
-          ...actionProps,
-        });
-      }
-
-      const clearAction = {
-        Icon: Icons.Eraser,
-        label: ACTIONS.RESET_ELEMENT.text,
-        onClick: () => {
-          handleElementReset({
-            elementId: selectedElement?.id,
-            resetProperties,
-            elementType: ELEMENT_TYPES.IMAGE,
-          });
+  const handleElementReset = useElementReset();
+  const backgroundElementMediaActions = useMemo(() => {
+    const baseActions = [
+      {
+        Icon: Icons.CircleSpeed,
+        label: ACTIONS.ADD_ANIMATION.text,
+        onClick: (evt) => {
+          handleFocusAnimationPanel()(evt);
 
           trackEvent('quick_action', {
-            name: ACTIONS.RESET_ELEMENT.trackingEventName,
+            name: ACTIONS.ADD_ANIMATION.trackingEventName,
             element: selectedElement?.type,
             isBackground: true,
           });
         },
-        separator: 'top',
         ...actionProps,
-      };
+      },
+    ];
 
-      return showClearAction ? [...baseActions, clearAction] : baseActions;
-    },
-    [
-      actionProps,
-      dispatchStoryEvent,
-      handleFocusAnimationPanel,
-      hasUploadMediaAction,
-      resetProperties,
-      selectedElement?.id,
-      selectedElement?.type,
-      showClearAction,
-    ]
-  );
+    if (hasUploadMediaAction) {
+      baseActions.unshift({
+        Icon: Icons.PictureSwap,
+        label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
+        onClick: () => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
+            element: selectedElement?.type,
+            isBackground: true,
+          });
+        },
+        wrapWithMediaPicker: true,
+        ...actionProps,
+      });
+    }
+
+    const clearAction = {
+      Icon: Icons.Eraser,
+      label: ACTIONS.RESET_ELEMENT.text,
+      onClick: () => {
+        handleElementReset({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: ELEMENT_TYPES.IMAGE,
+        });
+
+        trackEvent('quick_action', {
+          name: ACTIONS.RESET_ELEMENT.trackingEventName,
+          element: selectedElement?.type,
+          isBackground: true,
+        });
+      },
+      separator: 'top',
+      ...actionProps,
+    };
+
+    return showClearAction ? [...baseActions, clearAction] : baseActions;
+  }, [
+    actionProps,
+    dispatchStoryEvent,
+    handleElementReset,
+    handleFocusAnimationPanel,
+    hasUploadMediaAction,
+    resetProperties,
+    selectedElement?.id,
+    selectedElement?.type,
+    showClearAction,
+  ]);
 
   const mediaRecordingActions = useMemo(() => {
     return [
