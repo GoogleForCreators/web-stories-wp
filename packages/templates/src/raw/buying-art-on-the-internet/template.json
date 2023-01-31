@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -213,10 +213,10 @@
           "height": 20
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "e505d4f4-6f7d-4ab1-9a49-8fc96c4156d2",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -377,6 +377,7 @@
           "y": 600
         }
       ],
+      "animations": [],
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -403,7 +404,6 @@
         "type": "shape",
         "id": "dc7cb486-74bc-4b71-8e85-5238a7cbad96"
       },
-      "animations": [],
       "pageTemplateType": null
     },
     {
@@ -593,6 +593,7 @@
           "tracks": []
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 139, "g": 139, "b": 139 } },
       "type": "page",
       "id": "cf875a7d-17df-4be8-baae-85dddd021d73",
@@ -612,7 +613,6 @@
         "type": "shape",
         "id": "b9ae2e3a-40d8-4599-b98e-001b83173395"
       },
-      "animations": [],
       "pageTemplateType": "section"
     },
     {
@@ -854,10 +854,10 @@
           "id": "aac3071a-740f-456b-a762-cf2b35759788"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "8e6b1578-7804-4deb-91be-42e47da083cc",
-      "animations": [],
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
@@ -1200,62 +1200,6 @@
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Libre Baskerville",
-            "fallbacks": ["serif"],
-            "weights": [400, 700],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 700]
-            ],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 1000,
-              "asc": 970,
-              "des": -270,
-              "tAsc": 970,
-              "tDes": -270,
-              "tLGap": 0,
-              "wAsc": 970,
-              "wDes": 270,
-              "xH": 530,
-              "capH": 770,
-              "yMin": -260,
-              "yMax": 970,
-              "hAsc": 970,
-              "hDes": -270,
-              "lGap": 0
-            }
-          },
-          "fontSize": 12,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 1.5,
-          "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase\">Where to look:</span>",
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "x": 49,
-          "y": 0,
-          "width": 214,
-          "height": 15,
-          "id": "2e6b6761-9cb7-4bba-b532-a04659992d1e",
-          "type": "text",
-          "tagName": "h2"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
             "family": "Fjalla One",
             "fallbacks": ["sans-serif"],
             "weights": [400],
@@ -1411,6 +1355,62 @@
           "height": 15,
           "type": "text",
           "groupId": "fd8a3f60-c3a7-4acc-8e8f-ab0aa64d98c2"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Libre Baskerville",
+            "fallbacks": ["serif"],
+            "weights": [400, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [1, 400],
+              [0, 700]
+            ],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 1000,
+              "asc": 970,
+              "des": -270,
+              "tAsc": 970,
+              "tDes": -270,
+              "tLGap": 0,
+              "wAsc": 970,
+              "wDes": 270,
+              "xH": 530,
+              "capH": 770,
+              "yMin": -260,
+              "yMax": 970,
+              "hAsc": 970,
+              "hDes": -270,
+              "lGap": 0
+            }
+          },
+          "fontSize": 12,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase\">Where to look:</span>",
+          "borderRadius": {
+            "locked": true,
+            "topLeft": 2,
+            "topRight": 2,
+            "bottomRight": 2,
+            "bottomLeft": 2
+          },
+          "x": 49,
+          "y": 0,
+          "width": 214,
+          "height": 15,
+          "id": "2e6b6761-9cb7-4bba-b532-a04659992d1e",
+          "type": "text",
+          "tagName": "h2"
         },
         {
           "x": 47,

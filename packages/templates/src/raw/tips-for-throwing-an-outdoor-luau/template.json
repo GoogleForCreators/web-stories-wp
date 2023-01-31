@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -295,6 +295,7 @@
           "id": "9d6198b0-aae1-4d69-b480-52202b511192"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "bd7c5157-9295-4c70-9455-5e6bebe2183d",
@@ -314,7 +315,6 @@
         "type": "shape",
         "id": "c0bb0984-50ae-493e-a0f6-3ce9cc00dfcd"
       },
-      "animations": [],
       "pageTemplateType": "cover",
       "groups": {
         "006edb2f-afe4-4187-96de-c36072e9c665": {
@@ -2034,6 +2034,24 @@
           "y": 26
         }
       ],
+      "animations": [
+        {
+          "id": "2d0f79f2-4e2f-4f9f-9053-1e4a8664db3c",
+          "type": "effect-fly-in",
+          "targets": ["3a5cd35c-3b81-4292-9a41-147558c6c430"],
+          "flyInDir": "leftToRight",
+          "duration": 1500,
+          "delay": 0
+        },
+        {
+          "id": "71a34e85-f32b-4bc2-a3e3-bb0337dd6a63",
+          "type": "effect-fly-in",
+          "targets": ["556fe8c2-07b7-4ab7-bbc8-1719ddf54b8e"],
+          "flyInDir": "leftToRight",
+          "duration": 1500,
+          "delay": 100
+        }
+      ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "8bc2f54e-e886-4c8c-8baf-0f52cd462767",
@@ -2053,24 +2071,6 @@
         "type": "shape",
         "id": "c5e2d360-0176-42b8-a25f-959aa571de48"
       },
-      "animations": [
-        {
-          "id": "2d0f79f2-4e2f-4f9f-9053-1e4a8664db3c",
-          "type": "effect-fly-in",
-          "targets": ["3a5cd35c-3b81-4292-9a41-147558c6c430"],
-          "flyInDir": "leftToRight",
-          "duration": 1500,
-          "delay": 0
-        },
-        {
-          "id": "71a34e85-f32b-4bc2-a3e3-bb0337dd6a63",
-          "type": "effect-fly-in",
-          "targets": ["556fe8c2-07b7-4ab7-bbc8-1719ddf54b8e"],
-          "flyInDir": "leftToRight",
-          "duration": 1500,
-          "delay": 100
-        }
-      ],
       "pageTemplateType": null
     },
     {

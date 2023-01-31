@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -218,6 +218,7 @@
           "id": "e1df29f5-2ec4-4bcc-85aa-d136b15122e6"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "a2ac85f3-e76c-4d6d-9664-2b9311857b1e",
@@ -237,7 +238,6 @@
         "type": "shape",
         "id": "022ce6ae-e8ef-4c37-a65a-512cdbd2fa39"
       },
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -366,9 +366,6 @@
           "tagName": "h2"
         }
       ],
-      "backgroundColor": { "color": { "r": 246, "g": 242, "b": 237 } },
-      "type": "page",
-      "id": "b1ffaed7-d622-45bd-9225-67205ffccb1d",
       "animations": [
         {
           "id": "893722cb-2a8d-4e59-b3e2-3ff40d2793ed",
@@ -387,6 +384,9 @@
           "delay": 200
         }
       ],
+      "backgroundColor": { "color": { "r": 246, "g": 242, "b": 237 } },
+      "type": "page",
+      "id": "b1ffaed7-d622-45bd-9225-67205ffccb1d",
       "pageTemplateType": "section"
     },
     {
@@ -658,6 +658,16 @@
           "y": 402
         }
       ],
+      "animations": [
+        {
+          "id": "9bee326d-f612-407d-85b8-7a970119396d",
+          "type": "effect-background-pan",
+          "targets": ["64f2d500-f5b6-40c9-a7ad-dc3c7c9c49c9"],
+          "panDir": "leftToRight",
+          "duration": 3000,
+          "delay": 0
+        }
+      ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "d61744e3-eac7-4f14-8ebb-74ffc667b202",
@@ -677,16 +687,6 @@
         "type": "shape",
         "id": "f0f5fc6e-1f9c-4d7c-bb76-243f67c77948"
       },
-      "animations": [
-        {
-          "id": "9bee326d-f612-407d-85b8-7a970119396d",
-          "type": "effect-background-pan",
-          "targets": ["64f2d500-f5b6-40c9-a7ad-dc3c7c9c49c9"],
-          "panDir": "leftToRight",
-          "duration": 3000,
-          "delay": 0
-        }
-      ],
       "pageTemplateType": null
     },
     {
@@ -2198,6 +2198,23 @@
           "id": "16bc4f8d-28dd-4793-9c0b-784078204ce1"
         }
       ],
+      "animations": [
+        {
+          "id": "83b11778-a27c-4634-bf67-a7b844a15dc9",
+          "type": "effect-fade-in",
+          "targets": ["b282552a-c253-4393-a17f-f9689ec7fb7f"],
+          "duration": 2000,
+          "delay": 300
+        },
+        {
+          "id": "583a1769-306a-488f-b5ab-54165fdfdb1a",
+          "type": "effect-fly-in",
+          "targets": ["16bc4f8d-28dd-4793-9c0b-784078204ce1"],
+          "flyInDir": "leftToRight",
+          "duration": 2500,
+          "delay": 0
+        }
+      ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "34ff8fa6-6779-4404-8741-bdef70a62909",
@@ -2217,23 +2234,6 @@
         "type": "shape",
         "id": "aa302879-fe46-4d1c-8a4c-d31f7ef5c45b"
       },
-      "animations": [
-        {
-          "id": "83b11778-a27c-4634-bf67-a7b844a15dc9",
-          "type": "effect-fade-in",
-          "targets": ["b282552a-c253-4393-a17f-f9689ec7fb7f"],
-          "duration": 2000,
-          "delay": 300
-        },
-        {
-          "id": "583a1769-306a-488f-b5ab-54165fdfdb1a",
-          "type": "effect-fly-in",
-          "targets": ["16bc4f8d-28dd-4793-9c0b-784078204ce1"],
-          "flyInDir": "leftToRight",
-          "duration": 2500,
-          "delay": 0
-        }
-      ],
       "pageTemplateType": null,
       "groups": {
         "7e1e3b93-5644-4a34-9b24-338e9c9a9906": {
@@ -2456,9 +2456,6 @@
           "id": "7102a86e-52d0-4ca2-a85c-6670406c2ea7"
         }
       ],
-      "backgroundColor": { "color": { "r": 61, "g": 55, "b": 48 } },
-      "type": "page",
-      "id": "5c8c6848-3cb2-4e4d-8897-36870c4c3c83",
       "animations": [
         {
           "id": "6319fd8e-382a-456b-8dab-1f46d5dc0678",
@@ -2477,6 +2474,9 @@
           "delay": 0
         }
       ],
+      "backgroundColor": { "color": { "r": 61, "g": 55, "b": 48 } },
+      "type": "page",
+      "id": "5c8c6848-3cb2-4e4d-8897-36870c4c3c83",
       "pageTemplateType": null
     }
   ],

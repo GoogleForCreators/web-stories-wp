@@ -56,6 +56,7 @@ module.exports = {
         path: false,
         url: false,
         module: false,
+        assert: false,
       },
     };
 

@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -205,10 +205,10 @@
           }
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 242, "g": 229, "b": 214 } },
       "type": "page",
       "id": "93ec2ce2-944b-41d9-a329-255003bbf5f2",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -483,9 +483,6 @@
           "height": 17
         }
       ],
-      "backgroundColor": { "color": { "r": 254, "g": 246, "b": 223 } },
-      "type": "page",
-      "id": "d61fe28e-60c0-4822-ace8-82bbbb2a1888",
       "animations": [
         {
           "id": "560404e3-24eb-4c4a-b981-a4950af16aaa",
@@ -511,6 +508,9 @@
           "delay": 1500
         }
       ],
+      "backgroundColor": { "color": { "r": 254, "g": 246, "b": 223 } },
+      "type": "page",
+      "id": "d61fe28e-60c0-4822-ace8-82bbbb2a1888",
       "pageAttachment": {
         "url": "https://www.google.com/",
         "ctaText": "See the location",
@@ -1835,9 +1835,6 @@
           }
         }
       ],
-      "backgroundColor": { "color": { "r": 242, "g": 229, "b": 214 } },
-      "type": "page",
-      "id": "e83483f4-4610-43c1-9fa8-b9543b47fcda",
       "animations": [
         {
           "id": "2b2a00f1-8b54-4577-9f10-47124cc35d4d",
@@ -1885,6 +1882,9 @@
           "delay": 1000
         }
       ],
+      "backgroundColor": { "color": { "r": 242, "g": 229, "b": 214 } },
+      "type": "page",
+      "id": "e83483f4-4610-43c1-9fa8-b9543b47fcda",
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
@@ -2445,9 +2445,6 @@
           "tagName": "h3"
         }
       ],
-      "backgroundColor": { "color": { "r": 242, "g": 229, "b": 214 } },
-      "type": "page",
-      "id": "ea962a18-b3b9-42b7-b82a-5711c26062bb",
       "animations": [
         {
           "id": "5b1f17a7-630d-430e-9a73-b141584d0027",
@@ -2480,6 +2477,9 @@
           "delay": 500
         }
       ],
+      "backgroundColor": { "color": { "r": 242, "g": 229, "b": 214 } },
+      "type": "page",
+      "id": "ea962a18-b3b9-42b7-b82a-5711c26062bb",
       "pageTemplateType": "list"
     }
   ],

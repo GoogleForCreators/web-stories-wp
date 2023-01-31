@@ -1,5 +1,5 @@
 {
-  "version": 46,
+  "version": 47,
   "pages": [
     {
       "elements": [
@@ -308,10 +308,10 @@
           "marginOffset": 3.6549999999999976
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "0ae62c1d-aeb1-4308-a532-dc00885410d2",
-      "animations": [],
       "pageTemplateType": "cover"
     },
     {
@@ -531,10 +531,10 @@
           "marginOffset": 0.84375
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "7c52ab9e-0b07-487c-8f22-4c15c478687b",
-      "animations": [],
       "pageTemplateType": null
     },
     {
@@ -800,9 +800,6 @@
           "id": "371e6077-5535-49d0-89ba-ac60672cc6b3"
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-      "type": "page",
-      "id": "1550d2e0-77cb-4fdf-b7e6-174fec5272d0",
       "animations": [
         {
           "id": "953d94aa-b632-4beb-bddc-030988d12d82",
@@ -828,6 +825,9 @@
           "targets": ["f1e2f2e2-dd79-4ecd-8866-8c0e24fe1388"]
         }
       ],
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "type": "page",
+      "id": "1550d2e0-77cb-4fdf-b7e6-174fec5272d0",
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
@@ -2898,10 +2898,10 @@
           "tagName": "h3"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "cede7b34-0a4c-4205-90cc-8f9411c96d01",
-      "animations": [],
       "pageTemplateType": null
     }
   ],
