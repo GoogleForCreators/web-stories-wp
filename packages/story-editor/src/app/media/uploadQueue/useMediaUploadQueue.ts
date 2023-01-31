@@ -870,12 +870,12 @@ function useMediaUploadQueue() {
      * Checks whether the resource is not external and
      * not already uploading.
      */
-    const canTranscodeResource = (resource: QueueItemResource) => {
-      const { isExternal = false, id = '', src = '' } = resource || {};
+    const canTranscodeResource = (resource?: QueueItemResource) => {
+      const { isExternal, id, src = '' } = resource || {};
 
       return (
-        !isExternal &&
-        src &&
+        isExternal === false &&
+        src !== '' &&
         !state.queue.some(
           (item) =>
             item.resource.id === id ||
