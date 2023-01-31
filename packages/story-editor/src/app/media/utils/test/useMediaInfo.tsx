@@ -18,10 +18,13 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+import type { VideoResource } from '@googleforcreators/media';
+import { ResourceType } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
+import type { ConfigState } from '../../../../types';
 import { ConfigProvider } from '../../../config';
 import useMediaInfo from '../useMediaInfo';
 
@@ -30,10 +33,22 @@ jest.mock('@googleforcreators/tracking', () => ({
   getTimeTracker: jest.fn(() => jest.fn()),
 }));
 
+const mockAnalyzeData = jest.fn();
+
+jest.mock('mediainfo.js', () => ({
+  __esModule: true,
+  default: jest.fn(() =>
+    Promise.resolve({
+      analyzeData: mockAnalyzeData,
+      close: jest.fn(),
+    })
+  ),
+}));
+
 function arrange() {
   const configState = {
     mediainfoUrl: 'https://example.com',
-  };
+  } as ConfigState;
 
   return renderHook(() => useMediaInfo(), {
     wrapper: ({ children }) => (
@@ -42,16 +57,8 @@ function arrange() {
   });
 }
 
-const analyzeData = jest.fn();
-const mediaInfo = jest.fn(() =>
-  Promise.resolve({
-    analyzeData,
-    close: jest.fn(),
-  })
-);
-
-const BASE_RESOURCE = {
-  type: 'video',
+const BASE_RESOURCE: VideoResource = {
+  type: ResourceType.Video,
   mimeType: 'video/webm',
   creationDate: '2021-05-11T21:55:24',
   src: 'http://test.example/video.webm',
@@ -65,6 +72,7 @@ const BASE_RESOURCE = {
   alt: 'small-video',
   sizes: {},
   isOptimized: false,
+  isExternal: false,
   baseColor: '#734727',
 };
 
@@ -214,17 +222,8 @@ const MEDIAINFO_RESULT_WEBM = JSON.stringify({
 });
 
 describe('useMediaInfo', () => {
-  let mediaInfoScript;
-
   beforeAll(() => {
-    // Tricks loadScriptOnce() into resolving immediately.
-    mediaInfoScript = document.createElement('script');
-    mediaInfoScript.src = 'https://example.com';
-    document.documentElement.appendChild(mediaInfoScript);
-
-    window.MediaInfo = mediaInfo;
-
-    analyzeData.mockImplementation(() =>
+    mockAnalyzeData.mockImplementation(() =>
       Promise.resolve(
         JSON.stringify({
           media: {
@@ -236,13 +235,7 @@ describe('useMediaInfo', () => {
   });
 
   afterEach(() => {
-    mediaInfo.mockClear();
-  });
-
-  afterAll(() => {
-    document.documentElement.removeChild(mediaInfoScript);
-
-    delete window.MediaInfo;
+    mockAnalyzeData.mockClear();
   });
 
   describe('getFileInfo', () => {
@@ -264,7 +257,7 @@ describe('useMediaInfo', () => {
     it('should return file info for muted mp4 file', async () => {
       const { result } = arrange();
 
-      analyzeData.mockImplementation(() =>
+      mockAnalyzeData.mockImplementation(() =>
         Promise.resolve(MEDIAINFO_RESULT_MP4)
       );
 
@@ -292,7 +285,7 @@ describe('useMediaInfo', () => {
     it('should return file info for webm file', async () => {
       const { result } = arrange();
 
-      analyzeData.mockImplementation(() =>
+      mockAnalyzeData.mockImplementation(() =>
         Promise.resolve(MEDIAINFO_RESULT_WEBM)
       );
 
@@ -369,7 +362,7 @@ describe('useMediaInfo', () => {
     });
 
     it('should return false for large MP4 file', async () => {
-      analyzeData.mockImplementation(() =>
+      mockAnalyzeData.mockImplementation(() =>
         Promise.resolve(MEDIAINFO_RESULT_MP4)
       );
 
@@ -385,7 +378,7 @@ describe('useMediaInfo', () => {
     });
 
     it('should return true for small MP4 file', async () => {
-      analyzeData.mockImplementation(() =>
+      mockAnalyzeData.mockImplementation(() =>
         Promise.resolve(MEDIAINFO_RESULT_MP4_SMALL)
       );
 
