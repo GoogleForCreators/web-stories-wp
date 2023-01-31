@@ -27,7 +27,7 @@ import { getTextElementTagNames } from '@googleforcreators/output';
  */
 import useStory from '../../story/useStory';
 import { useConfig } from '../../config';
-import { getCommonValue } from '../../../components/panels/shared';
+import getCommonValue from '../../../components/panels/shared/getCommonValue';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { HEADING_LEVELS } from '../../../constants';
 

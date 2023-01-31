@@ -22,8 +22,8 @@ import { useCallback, useRef } from '@googleforcreators/react';
  * Internal dependencies
  */
 import useRichTextFormatting from '../panels/design/textStyle/useRichTextFormatting';
-import { useStory } from '../../app';
-import { usePresubmitHandler } from '../form';
+import { useStory } from '../../app/story';
+import usePresubmitHandler from '../form/usePresubmitHandler';
 import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import { STABLE_ARRAY } from '../../constants';
 

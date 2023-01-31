@@ -22,7 +22,7 @@ import { getDefinitionForType } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { useStory } from '../app';
+import { useStory } from '../app/story';
 
 const useShapeMaskElements = () => {
   const { selectedElements, combineElements } = useStory(

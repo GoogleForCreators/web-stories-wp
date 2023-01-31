@@ -20,7 +20,7 @@ import { useCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../app';
+import { useStory } from '../app/story';
 import getUniquePresets from './getUniquePresets';
 import {
   areAllType,

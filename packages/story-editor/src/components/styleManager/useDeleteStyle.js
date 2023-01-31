@@ -21,7 +21,7 @@ import { useCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory } from '../../app/story';
 
 function useDeletePreset({ onEmpty }) {
   const { globalStoryStyles, updateStory } = useStory(

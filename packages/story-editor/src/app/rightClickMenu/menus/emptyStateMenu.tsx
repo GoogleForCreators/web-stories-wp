@@ -24,10 +24,10 @@ import { ContextMenuComponents } from '@googleforcreators/design-system';
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { states, useHighlights } from '../../highlights';
-import { MediaUploadButton } from '../../../components/form';
+import MediaUploadButton from '../../../components/form/mediaUploadButton';
 import useOnMediaSelect from '../../../components/library/panes/media/local/useOnMediaSelect';
 import LibraryProvider from '../../../components/library/libraryProvider';
-import { useMediaRecording } from '../../../components/mediaRecording';
+import useMediaRecording from '../../../components/mediaRecording/useMediaRecording';
 import useFFmpeg from '../../media/utils/useFFmpeg';
 
 const MediaButton = () => {

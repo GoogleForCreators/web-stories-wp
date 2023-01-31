@@ -35,7 +35,9 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
-import { useConfig, useAPI, useStory } from '../../app';
+import { useConfig } from '../../app/config';
+import { useAPI } from '../../app/api';
+import { useStory } from '../../app/story';
 import Context from './context';
 import {
   MEDIA,
