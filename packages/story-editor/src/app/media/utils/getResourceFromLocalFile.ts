@@ -34,13 +34,7 @@ import {
   ResourceType,
   seekVideo,
 } from '@googleforcreators/media';
-import type {
-  AudioResource,
-  GifResource,
-  ImageResource,
-  VideoResource,
-  Resource,
-} from '@googleforcreators/media';
+import type { ImageResource, VideoResource } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -166,15 +160,7 @@ const getPlaceholderResource = (file: File) => {
  * @param file File object.
  * @return Object containing resource object and poster file.
  */
-async function getResourceFromLocalFile(file: File): Promise<{
-  resource:
-    | Resource
-    | ImageResource
-    | VideoResource
-    | GifResource
-    | AudioResource;
-  posterFile: File | null;
-}> {
+async function getResourceFromLocalFile(file: File) {
   const type = getTypeFromMime(file.type);
 
   const fallbackResource = getPlaceholderResource(file);

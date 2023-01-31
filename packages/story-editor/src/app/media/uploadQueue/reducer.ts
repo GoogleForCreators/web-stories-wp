@@ -114,7 +114,7 @@ interface CancelUploadingProps {
  * @param action.payload.onUploadProgress Callback for when upload progresses.
  * @param action.payload.onUploadError Callback for when upload errors.
  * @param action.payload.onUploadSuccess Callback for when upload succeeds.
- * @param   action.payload.additionalData Additional Data object.
+ * @param action.payload.additionalData Additional Data object.
  * @param action.payload.posterFile File object.
  * @param action.payload.muteVideo Whether the video being uploaded should be muted.
  * @param action.payload.cropVideo Whether the video being uploaded should be cropped.

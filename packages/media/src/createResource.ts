@@ -53,7 +53,6 @@ function createResource({
   needsProxy = false,
   ...rest
 }: ResourceInput):
-  | Resource
   | ImageResource
   | VideoResource
   | GifResource
@@ -75,9 +74,6 @@ function createResource({
     posterId,
     isOptimized,
   };
-  if (type === ResourceType.Image) {
-    return resource as ImageResource;
-  }
   if (type === ResourceType.Video) {
     return {
       ...resource,
@@ -102,7 +98,7 @@ function createResource({
       lengthFormatted,
     } as AudioResource;
   }
-  return resource;
+  return resource as ImageResource;
 }
 
 export default createResource;

@@ -29,11 +29,7 @@ import {
   trackError,
   trackEvent,
 } from '@googleforcreators/tracking';
-import type {
-  Resource,
-  ResourceId,
-  ImageResource,
-} from '@googleforcreators/media';
+import type { ResourceId, ImageResource } from '@googleforcreators/media';
 import {
   createBlob,
   getImageDimensions,
@@ -141,10 +137,7 @@ function useMediaUploadQueue() {
 
           try {
             const { resource: newResource, posterFile } =
-              (await getResourceFromLocalFile(file)) as {
-                resource: QueueItemResource;
-                posterFile: File | null;
-              };
+              await getResourceFromLocalFile(file);
 
             if (!isMounted.current) {
               return;
@@ -877,7 +870,7 @@ function useMediaUploadQueue() {
      * Checks whether the resource is not external and
      * not already uploading.
      */
-    const canTranscodeResource = (resource: Resource) => {
+    const canTranscodeResource = (resource: QueueItemResource) => {
       const { isExternal = false, id = '', src = '' } = resource || {};
 
       return (
