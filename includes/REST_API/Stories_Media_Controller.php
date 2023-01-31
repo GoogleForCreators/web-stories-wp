@@ -352,7 +352,9 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @return int[] Array of post ids.
 	 */
 	protected function get_attached_post_ids( array $posts ): array {
-		$thumb_ids  = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
+		// Post thumbnail should not be need to be primed once WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/c2de42b9adec84397b4c3e5895809f01880a241a.
+		$thumb_ids = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
+		// Post parent should not be need to be primed once WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/9a488568a027b3b84fbac7b4d25cf43f86dd7a13.
 		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
 
 		return array_unique( [ ...$thumb_ids, ...$parent_ids ] );
