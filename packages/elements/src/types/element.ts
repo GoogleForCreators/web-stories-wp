@@ -103,7 +103,7 @@ export interface MediaElement extends BackgroundableElement {
   scale?: number;
   focalX?: number;
   focalY?: number;
-  overlay?: Pattern;
+  overlay?: Pattern | null;
 }
 
 export interface SequenceMediaElement extends MediaElement {

@@ -171,6 +171,7 @@ interface UpdateElementByIdProps
   extends Omit<UpdateElementsProps, 'elementIds'> {
   elementId: string;
 }
+
 const updateElementById =
   (dispatch: DispatchType) =>
   ({ elementId, properties }: UpdateElementByIdProps) =>

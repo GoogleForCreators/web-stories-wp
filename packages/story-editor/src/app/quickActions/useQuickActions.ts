@@ -36,6 +36,7 @@ import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../components/mediaRecording';
 import type { QuickAction } from '../../types';
+import { HighlightType } from '../highlights/states';
 import { getResetProperties } from './utils';
 import { ACTIONS } from './constants';
 import useTextActions from './useTextActions';
@@ -102,13 +103,15 @@ const useQuickActions = (): QuickAction[] => {
    * @param {Event} ev The triggering event.
    */
   const handleFocusPanel = useCallback(
-    (highlight) => (elementId: ElementId) => (ev: MouseEvent) => {
-      ev.preventDefault();
-      setHighlights({
-        elementId: elementId || selectedElement?.id,
-        highlight,
-      });
-    },
+    (highlight: HighlightType) =>
+      (elementId?: ElementId) =>
+      (ev: MouseEvent) => {
+        ev.preventDefault();
+        setHighlights({
+          elementId: elementId || selectedElement?.id,
+          highlight,
+        });
+      },
     [setHighlights, selectedElement]
   );
 

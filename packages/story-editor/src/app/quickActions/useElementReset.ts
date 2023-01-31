@@ -22,7 +22,12 @@ import {
 } from '@googleforcreators/design-system';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import {Element, ElementId, elementIs, ElementType} from '@googleforcreators/elements';
+import {
+  Element,
+  ElementId,
+  elementIs,
+  ElementType,
+} from '@googleforcreators/elements';
 import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
@@ -35,13 +40,13 @@ import { ACTIONS, RESET_DEFAULTS, ResetProperties } from './constants';
 
 function useElementReset() {
   const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
-  const { selectedElementAnimations, updateElementsById } = useStory(
+  const { selectedElementAnimations, updateElementById } = useStory(
     ({
       state: { selectedElementAnimations },
-      actions: { updateElementsById },
+      actions: { updateElementById },
     }) => ({
       selectedElementAnimations,
-      updateElementsById,
+      updateElementById,
     })
   );
   const { undo } = useHistory(({ actions: { undo } }) => ({
@@ -66,7 +71,7 @@ function useElementReset() {
       const newProperties: Partial<E> = {};
       // Choose properties to clear
       if (
-        elementIs.media(properties) &&
+        elementIs.media(newProperties) &&
         properties.includes(ResetProperties.Overlay)
       ) {
         newProperties.overlay = null;
@@ -77,8 +82,8 @@ function useElementReset() {
         // this is the only place where we're updating both animations and other
         // properties on an element. updateElementsById only accepts if you upate
         // one or the other, so we're upating animations if needed here separately
-        updateElementsById({
-          elementIds: [elementId],
+        updateElementById({
+          elementId: elementId,
           properties: () => ({
             animation: { ...firstAnimation, delete: true },
           }),
@@ -95,8 +100,8 @@ function useElementReset() {
         newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
       }
 
-      updateElementsById({
-        elementIds: [elementId],
+      updateElementById({
+        elementId: elementId,
         properties: (currentProperties: E) =>
           updateProperties(
             currentProperties,
@@ -105,7 +110,7 @@ function useElementReset() {
           ),
       });
     },
-    [selectedElementAnimations, updateElementsById]
+    [selectedElementAnimations, updateElementById]
   );
 
   /**
@@ -119,10 +124,12 @@ function useElementReset() {
    */
   const handleElementReset = useCallback(
     ({
-       elementId,
-       elementType,
-     }: {
+      elementId,
+      resetProperties,
+      elementType,
+    }: {
       elementId: ElementId;
+      resetProperties: string[];
       elementType: ElementType;
     }) => {
       handleResetProperties(elementType, elementId, resetProperties);

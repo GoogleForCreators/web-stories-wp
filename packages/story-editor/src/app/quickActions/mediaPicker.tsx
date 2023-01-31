@@ -17,37 +17,52 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useSnackbar } from '@googleforcreators/design-system';
 import {
   getExtensionsFromMimeType,
+  Resource,
+  ResourceCacheEntryType,
   resourceList,
 } from '@googleforcreators/media';
+import type { ElementType, MediaElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../config';
 import { useStory } from '../story';
-import { TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../media';
+import { CropParams, TRANSCODABLE_MIME_TYPES, useLocalMedia } from '../media';
 import useFFmpeg from '../media/utils/useFFmpeg';
 
-const MediaPicker = ({ render, ...props }) => {
+interface MediaPickerProps {
+  buttonInsertText: string;
+  cropParams: CropParams;
+  multiple: boolean;
+  onClose: () => void;
+  onPermissionError: () => void;
+  onSelect: (resource: Resource) => void;
+  onSelectErrorMessage: string;
+  render: () => void;
+  title: string;
+  type: string | string[];
+}
+
+const MediaPicker = ({ render, ...props }: MediaPickerProps) => {
   const {
     allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      vector: allowedVectorMimeTypes,
-      video: allowedVideoMimeTypes,
+      image: allowedImageMimeTypes = [],
+      vector: allowedVectorMimeTypes = [],
+      video: allowedVideoMimeTypes = [],
     },
     MediaUpload,
   } = useConfig();
 
-  const { selectedElements, updateElementsById } = useStory(
-    ({ state: { selectedElements }, actions: { updateElementsById } }) => ({
+  const { selectedElements, updateElementById } = useStory(
+    ({ state: { selectedElements }, actions: { updateElementById } }) => ({
       selectedElements,
-      updateElementsById,
+      updateElementById,
     })
   );
   const {
@@ -119,17 +134,20 @@ const MediaPicker = ({ render, ...props }) => {
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = useCallback(
-    (resource, thumbnailURL) => {
+    (resource: Resource, thumbnailURL) => {
       resourceList.set(resource.id, {
         url: thumbnailURL,
-        type: 'cached',
+        type: ResourceCacheEntryType.Cached,
       });
-      updateElementsById({
-        elementIds: [selectedElements?.[0]?.id],
-        properties: { type: resource.type, resource },
+      updateElementById<MediaElement>({
+        elementId: selectedElements?.[0]?.id,
+        properties: () => ({
+          type: resource.type as unknown as ElementType,
+          resource,
+        }),
       });
     },
-    [selectedElements, updateElementsById]
+    [selectedElements, updateElementById]
   );
 
   const handleMediaSelect = useCallback(
@@ -152,10 +170,12 @@ const MediaPicker = ({ render, ...props }) => {
 
         postProcessingResource(resource);
       } catch (e) {
-        showSnackbar({
-          message: e.message,
-          dismissable: true,
-        });
+        if (e instanceof Error) {
+          showSnackbar({
+            message: e.message,
+            dismissible: true,
+          });
+        }
       }
     },
     [
@@ -183,21 +203,6 @@ const MediaPicker = ({ render, ...props }) => {
       {...props}
     />
   );
-};
-MediaPicker.propTypes = {
-  buttonInsertText: PropTypes.string,
-  cropParams: PropTypes.bool,
-  multiple: PropTypes.bool,
-  onClose: PropTypes.func,
-  onPermissionError: PropTypes.func,
-  onSelect: PropTypes.func,
-  onSelectErrorMessage: PropTypes.string,
-  render: PropTypes.func.isRequired,
-  title: PropTypes.string,
-  type: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
 };
 
 export default MediaPicker;

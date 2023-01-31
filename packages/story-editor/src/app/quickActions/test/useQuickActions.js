@@ -1038,7 +1038,7 @@ describe('MediaPicker', () => {
     expect(mockUpdateElementsById).not.toHaveBeenCalled();
     expect(mockShowSnackbar).toHaveBeenCalledWith({
       message: 'throwing it down',
-      dismissable: true,
+      dismissible: true,
     });
   });
 });

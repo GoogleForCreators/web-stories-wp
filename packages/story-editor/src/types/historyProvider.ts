@@ -63,8 +63,8 @@ export interface Actions {
   stateToHistory: (state: HistoryEntry) => void;
   clearHistory: () => void;
   resetNewChanges: () => void;
-  undo: (offset: number) => boolean;
-  redo: (offset: number) => boolean;
+  undo: (offset?: number) => boolean;
+  redo: (offset?: number) => boolean;
 }
 export interface HistoryState {
   currentEntry: HistoryEntry;

@@ -40,7 +40,7 @@ export interface SnackbarNotificationThumbnail {
 
 export interface SnackbarNotification {
   message: string;
-  actionLabel?: JSX.Element;
+  actionLabel?: JSX.Element | string;
   actionHelpText?: string;
   dismissible?: boolean;
   onAction?: () => void;

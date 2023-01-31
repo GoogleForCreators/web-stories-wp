@@ -132,7 +132,7 @@ function MediaRecordingProvider({ children }) {
             'There was an error recording a video. Please try again.',
             'web-stories'
           ),
-          dismissable: true,
+          dismissible: true,
         });
       }
     },

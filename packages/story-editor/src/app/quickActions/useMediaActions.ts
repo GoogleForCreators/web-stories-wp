@@ -20,7 +20,7 @@
 import { useMemo } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { Icons } from '@googleforcreators/design-system';
-import { ELEMENT_TYPES, Element } from '@googleforcreators/elements';
+import { Element, ElementId, ElementType } from '@googleforcreators/elements';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
@@ -28,6 +28,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { states } from '../highlights';
+import type { HighlightType } from '../highlights/states';
 import {
   BACKGROUND_BLUR_PX,
   VIDEO_EFFECTS,
@@ -37,7 +38,7 @@ import { STORY_EVENTS, useStoryTriggersDispatch } from '../story';
 import { useConfig } from '../config';
 import type { QuickAction } from '../../types';
 import { ACTIONS } from './constants';
-import useElementReset from './useElementReset';
+import type useElementReset from './useElementReset';
 
 const quickActionIconAttrs = {
   width: 24,
@@ -56,14 +57,16 @@ const BackgroundBlurOff = styled(Icons.BackgroundBlurOff).attrs(
 )``;
 
 interface UseMediaActionsProps {
-  actionProps: Partial<QuickAction>;
+  actionProps?: Partial<QuickAction>;
   selectedElement: Element;
-  handleFocusPanel: (state: string) => void;
+  handleFocusPanel: (
+    highlight: HighlightType
+  ) => (elementId?: ElementId) => (evt: MouseEvent) => void;
   resetProperties: string[];
   commonActions: QuickAction[];
 }
 function useMediaActions({
-  actionProps,
+  actionProps = {},
   selectedElement,
   handleFocusPanel,
   resetProperties,
@@ -124,7 +127,7 @@ function useMediaActions({
         onClick: () => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.REPLACE_MEDIA.trackingEventName,
             element: selectedElement?.type,
           });
@@ -153,9 +156,9 @@ function useMediaActions({
   const videoActions = useMemo(() => {
     const [baseActions, clearActions] = showClearAction
       ? [
-        foregroundImageActions.slice(0, foregroundImageActions.length - 1),
-        foregroundImageActions.slice(-1),
-      ]
+          foregroundImageActions.slice(0, foregroundImageActions.length - 1),
+          foregroundImageActions.slice(-1),
+        ]
       : [foregroundImageActions, []];
 
     return [
@@ -163,7 +166,7 @@ function useMediaActions({
       {
         Icon: Icons.Captions,
         label: ACTIONS.ADD_CAPTIONS.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent) => {
           handleFocusCaptionsPanel()(evt);
 
           void trackEvent('quick_action', {
@@ -189,7 +192,7 @@ function useMediaActions({
       {
         Icon: Icons.CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent) => {
           handleFocusAnimationPanel()(evt);
 
           void trackEvent('quick_action', {
@@ -227,7 +230,7 @@ function useMediaActions({
         handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
-          elementType: ELEMENT_TYPES.IMAGE,
+          elementType: ElementType.Image,
         });
 
         void trackEvent('quick_action', {

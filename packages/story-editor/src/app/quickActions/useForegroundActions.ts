@@ -20,12 +20,13 @@
 import { Icons } from '@googleforcreators/design-system';
 import { useMemo } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import type { Element } from '@googleforcreators/elements';
+import type { Element, ElementId } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { states } from '../highlights';
+import type { HighlightType } from '../highlights/states';
 import { useStory } from '../story';
 import type { QuickAction } from '../../types';
 import { ACTIONS } from './constants';
@@ -34,7 +35,9 @@ import useElementReset from './useElementReset';
 interface ForegroundActionsProps {
   selectedElement: Element;
   actionProps: Partial<QuickAction>;
-  handleFocusPanel: (props: string) => void;
+  handleFocusPanel: (
+    highlight: HighlightType
+  ) => (elementId?: ElementId) => (evt: MouseEvent) => void;
   resetProperties: string[];
 }
 function useForegroundActions({
@@ -45,7 +48,7 @@ function useForegroundActions({
 }: ForegroundActionsProps) {
   const { currentPageNumber } = useStory(
     ({ state: { currentPageNumber } }) => ({
-      currentPageNumber,
+      currentPageNumber: currentPageNumber || 1,
     })
   );
   const handleElementReset = useElementReset();
@@ -61,10 +64,10 @@ function useForegroundActions({
       commonActions.push({
         Icon: Icons.CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
-        onClick: (evt) => {
+        onClick: (evt: MouseEvent) => {
           handleFocusAnimationPanel()(evt);
 
-          trackEvent('quick_action', {
+          void trackEvent('quick_action', {
             name: ACTIONS.ADD_ANIMATION.trackingEventName,
             element: selectedElement?.type,
           });
@@ -77,10 +80,10 @@ function useForegroundActions({
     commonActions.push({
       Icon: Icons.Link,
       label: ACTIONS.ADD_LINK.text,
-      onClick: (evt) => {
+      onClick: (evt: MouseEvent) => {
         handleFocusLinkPanel()(evt);
 
-        trackEvent('quick_action', {
+        void trackEvent('quick_action', {
           name: ACTIONS.ADD_LINK.trackingEventName,
           element: selectedElement?.type,
         });

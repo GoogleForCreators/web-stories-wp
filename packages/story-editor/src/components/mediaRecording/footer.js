@@ -352,7 +352,7 @@ function Footer() {
           'There was an error taking a photo. Please try again.',
           'web-stories'
         ),
-        dismissable: true,
+        dismissible: true,
       });
     }
 

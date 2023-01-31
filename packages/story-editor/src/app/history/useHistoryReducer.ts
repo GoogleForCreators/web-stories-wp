@@ -65,15 +65,15 @@ function useHistoryReducer(size: number) {
   );
 
   const undo = useCallback(
-    (count = 1) => {
-      return replay(typeof count === 'number' ? count : 1);
+    (count: number = 1) => {
+      return replay(count);
     },
     [replay]
   );
 
   const redo = useCallback(
-    (count = 1) => {
-      return replay(typeof count === 'number' ? -count : -1);
+    (count: number = 1) => {
+      return replay(-count);
     },
     [replay]
   );
