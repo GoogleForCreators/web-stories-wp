@@ -40,8 +40,7 @@ interface ValidateFileForUploadProps {
   overrideAllowedMimeTypes: string[];
 }
 
-const bytesToMB = (bytes: number) =>
-  String(Math.round(bytes / Math.pow(1024, 2)));
+const bytesToMB = (bytes: number) => String(Math.round(bytes / 1_048_576)); // 2^20
 
 function useUploader() {
   const {
