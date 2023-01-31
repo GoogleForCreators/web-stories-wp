@@ -23,10 +23,10 @@ import { createResource } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import useMediaUploadQueue from '..';
-import useFFmpeg from '../../useFFmpeg';
-import useMediaInfo from '../../useMediaInfo';
-import { ITEM_STATUS } from '../constants';
+import { useMediaUploadQueue } from '..';
+import useFFmpeg from '../../utils/useFFmpeg';
+import useMediaInfo from '../../utils/useMediaInfo';
+import { ItemStatus } from '../types';
 
 const canTranscodeFile = (file) => {
   return ['video/mp4'].includes(file.type);
@@ -40,7 +40,7 @@ const getFileWithSleep = () => {
   return new Promise((res) => setTimeout(() => res(file), 10));
 };
 
-jest.mock('../../useFFmpeg', () => ({
+jest.mock('../../utils/useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     isTranscodingEnabled: true,
@@ -54,7 +54,7 @@ jest.mock('../../useFFmpeg', () => ({
   })),
 }));
 
-jest.mock('../../useMediaInfo', () => ({
+jest.mock('../../utils/useMediaInfo', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     isConsideredOptimized: jest.fn(() => Promise.resolve(false)),
@@ -105,7 +105,7 @@ const gifResource = createResource({
   mimeType: 'image/gif',
 });
 
-jest.mock('../../../../uploader', () => ({
+jest.mock('../../../uploader', () => ({
   useUploader: jest.fn(() => ({
     actions: {
       uploadFile: mockUploadFile,
@@ -411,7 +411,7 @@ describe('useMediaUploadQueue', () => {
 
     expect(
       result.current.state.progress.filter(
-        (item) => item.state === ITEM_STATUS.TRANSCODING
+        (item) => item.state === ItemStatus.Transcoding
       )
     ).toHaveLength(1);
 
@@ -419,7 +419,7 @@ describe('useMediaUploadQueue', () => {
 
     expect(
       result.current.state.progress.filter(
-        (item) => item.state === ITEM_STATUS.TRANSCODING
+        (item) => item.state === ItemStatus.Transcoding
       )
     ).toHaveLength(1);
 
@@ -470,7 +470,7 @@ describe('useMediaUploadQueue', () => {
 
     expect(
       result.current.state.progress.filter(
-        (item) => item.state === ITEM_STATUS.TRANSCODING
+        (item) => item.state === ItemStatus.Transcoding
       )
     ).toHaveLength(1);
 
@@ -478,7 +478,7 @@ describe('useMediaUploadQueue', () => {
 
     expect(
       result.current.state.progress.filter(
-        (item) => item.state === ITEM_STATUS.TRANSCODING
+        (item) => item.state === ItemStatus.Transcoding
       )
     ).toHaveLength(1);
 

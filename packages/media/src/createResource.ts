@@ -24,6 +24,7 @@ import {
   ResourceType,
   VideoResource,
   AudioResource,
+  ImageResource,
 } from './types';
 import getTypeFromMime from './getTypeFromMime';
 
@@ -51,7 +52,7 @@ function createResource({
   trimData,
   needsProxy = false,
   ...rest
-}: ResourceInput): Resource | VideoResource | GifResource | AudioResource {
+}: ResourceInput): ImageResource | VideoResource | GifResource | AudioResource {
   type = type || getTypeFromMime(mimeType);
   const resource: Resource = {
     type,
@@ -93,7 +94,7 @@ function createResource({
       lengthFormatted,
     } as AudioResource;
   }
-  return resource;
+  return resource as ImageResource;
 }
 
 export default createResource;

@@ -30,9 +30,17 @@ import {
 import { useAPI } from '../api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
+import type { AdditionalData } from '../media/uploadQueue/types';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
 
-const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2));
+interface ValidateFileForUploadProps {
+  file: File;
+  canTranscodeFile?: boolean;
+  isFileTooLarge?: boolean;
+  overrideAllowedMimeTypes: string[];
+}
+
+const bytesToMB = (bytes: number) => String(Math.round(bytes / 1_048_576)); // 2^20
 
 function useUploader() {
   const {
@@ -40,11 +48,11 @@ function useUploader() {
   } = useAPI();
   const {
     storyId,
-    maxUpload,
+    maxUpload = 0,
     allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      vector: allowedVectorMimeTypes,
-      video: allowedVideoMimeTypes,
+      image: allowedImageMimeTypes = [],
+      vector: allowedVectorMimeTypes = [],
+      video: allowedVideoMimeTypes = [],
     },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -80,7 +88,7 @@ function useUploader() {
       canTranscodeFile,
       isFileTooLarge,
       overrideAllowedMimeTypes = allowedMimeTypes,
-    }) => {
+    }: ValidateFileForUploadProps) => {
       // Bail early if user doesn't have upload capabilities.
       if (!hasUploadMediaAction) {
         const message = __(
@@ -105,8 +113,8 @@ function useUploader() {
           throw createError('SizeError', file.name, message);
         }
 
-        const isValidType = ({ type }) =>
-          overrideAllowedMimeTypes.includes(type);
+        const isValidType = (currentFile: File) =>
+          overrideAllowedMimeTypes.includes(currentFile.type);
         // TODO: Move this check to useUploadMedia?
         if (!isValidType(file)) {
           let message = __(
@@ -155,13 +163,16 @@ function useUploader() {
    */
   const uploadFile = useCallback(
     (
-      file,
-      additionalData = {},
-      overrideAllowedMimeTypes = allowedMimeTypes
+      file: File,
+      additionalData: AdditionalData = {},
+      overrideAllowedMimeTypes: string[] = allowedMimeTypes
     ) => {
       // This will throw if the file cannot be uploaded.
       validateFileForUpload({ file, overrideAllowedMimeTypes });
 
+      if (!uploadMedia) {
+        throw createError('UploadError', file.name, '');
+      }
       const _additionalData = {
         storyId,
         altText: getFileBasename(file),
