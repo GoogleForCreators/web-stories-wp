@@ -3,7 +3,6 @@ changelog:
     authors:
       - dependabot
       - github-actions
-      - imgbot
       - googleforcreators-bot
   categories:
     - title: '🚀 Features'

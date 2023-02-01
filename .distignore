@@ -33,7 +33,6 @@ web-stories-scraper
 .git-blame-ignore-revs
 .gitattributes
 .gitignore
-.imgbotconfig
 .markdownlint.json
 .markdownlintignore
 .npmignore
