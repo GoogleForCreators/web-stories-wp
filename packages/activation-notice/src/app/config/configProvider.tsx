@@ -22,7 +22,7 @@ import type { ReactNode } from 'react';
 /**
  * Internal dependencies
  */
-import Context, { ContextState } from './context';
+import Context, { type ContextState } from './context';
 
 interface ConfigProviderProps {
   config: ContextState;

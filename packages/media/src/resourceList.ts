@@ -18,8 +18,8 @@
  * Internal dependencies
  */
 import {
-  ResourceId,
-  ResourceCacheEntry,
+  type ResourceId,
+  type ResourceCacheEntry,
   ResourceCacheEntryType,
 } from './types';
 

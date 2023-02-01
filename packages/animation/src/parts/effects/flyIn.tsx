@@ -27,10 +27,10 @@ import { AnimationMove } from '../simple/move';
 import { AnimationFade } from '../simple/fade';
 import { getOffPageOffset } from '../../utils';
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationDirection,
   AnimationType,
-  Element,
+  type Element,
   FieldType,
 } from '../../types';
 import type { AnimationPart } from '../types';

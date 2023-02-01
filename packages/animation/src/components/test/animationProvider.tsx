@@ -26,7 +26,7 @@ import type { PropsWithChildren } from 'react';
  */
 import { AnimationProvider, useStoryAnimationContext } from '..';
 import { createAnimationPart } from '../../parts';
-import { AnimationType, Element } from '../../types';
+import { AnimationType, type Element } from '../../types';
 
 jest.mock('flagged');
 jest.mock('../../parts', () => ({

@@ -17,11 +17,11 @@
 /**
  * Internal dependencies
  */
-import {
+import { ResourceType } from './types';
+import type {
   ResourceInput,
   GifResource,
   Resource,
-  ResourceType,
   VideoResource,
   AudioResource,
   ImageResource,

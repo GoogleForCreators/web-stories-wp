@@ -323,8 +323,7 @@
     },
     "ignoreCommitters": [
       "dependabot",
-      "github-actions",
-      "imgbot"
+      "github-actions"
     ]
   }
 }

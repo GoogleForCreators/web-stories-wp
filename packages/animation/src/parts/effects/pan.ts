@@ -23,7 +23,7 @@ import {
   DANGER_ZONE_HEIGHT,
   dataToEditorY,
   getBox,
-  ElementBox,
+  type ElementBox,
 } from '@googleforcreators/units';
 
 /**
@@ -31,10 +31,10 @@ import {
  */
 import createAnimation from '../createAnimation';
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationDirection,
   AnimationType,
-  Element,
+  type Element,
   FieldType,
 } from '../../types';
 

@@ -21,7 +21,7 @@ import {
   getBox,
   DANGER_ZONE_HEIGHT,
   type ElementBox,
-  DimensionableElement,
+  type DimensionableElement,
 } from '@googleforcreators/units';
 
 function calcTopOffset(box: ElementBox, dangerZoneOffset: number) {

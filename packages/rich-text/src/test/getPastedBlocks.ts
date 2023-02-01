@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { EditorState, ContentState, BlockMap } from 'draft-js';
+import { EditorState, ContentState, type BlockMap } from 'draft-js';
 
 /**
  * Internal dependencies

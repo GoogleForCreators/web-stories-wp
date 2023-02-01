@@ -26,9 +26,9 @@ import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../constants';
 import { getElementOffsets, getElementOrigin } from '../../utils';
 import { AnimationZoom } from '../simple/zoom';
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationType,
-  Element,
+  type Element,
   FieldType,
   isScaledElement,
   ScaleDirection,

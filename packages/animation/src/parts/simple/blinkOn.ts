@@ -19,7 +19,7 @@
  */
 import generateLookupMap from '../../utils/generateLookupMap';
 import padArray from '../../utils/padArray';
-import { AMPEffectTiming, AnimationType, FieldType } from '../../types';
+import { type AMPEffectTiming, AnimationType, FieldType } from '../../types';
 import createAnimation from '../createAnimation';
 
 const DEFAULT_BLINKS = 10;

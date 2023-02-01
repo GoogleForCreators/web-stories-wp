@@ -23,7 +23,7 @@ import { _x, __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { AnimationPulse } from '../simple/pulse';
-import { AMPEffectTiming, AnimationType, FieldType } from '../../types';
+import { type AMPEffectTiming, AnimationType, FieldType } from '../../types';
 
 export interface PulseEffect extends AMPEffectTiming {
   scale?: number;
