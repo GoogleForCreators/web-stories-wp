@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import getCorner from './getCorner';
-import { Corner, Corners } from './types';
+import { Corner, type Corners } from './types';
 
 function getCorners(
   angle: number,

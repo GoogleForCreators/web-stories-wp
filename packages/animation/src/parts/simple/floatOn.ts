@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationDirection,
   AnimationType,
   FieldType,

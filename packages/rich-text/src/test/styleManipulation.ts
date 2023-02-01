@@ -20,7 +20,7 @@
 import {
   convertFromRaw,
   EditorState,
-  RawDraftContentState,
+  type RawDraftContentState,
   SelectionState,
 } from 'draft-js';
 

@@ -19,10 +19,10 @@
  */
 import { BEZIER } from '../constants';
 import {
-  AnimationInput,
-  AnimationInputWithPreset,
+  type AnimationInput,
+  type AnimationInputWithPreset,
   AnimationType,
-  Element,
+  type Element,
 } from '../types';
 import { EffectDrop } from './effects/drop';
 import { EffectFadeIn } from './effects/fadeIn';

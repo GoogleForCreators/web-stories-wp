@@ -24,7 +24,8 @@ import type { FunctionComponent } from 'react';
 /**
  * Internal dependencies
  */
-import { AnimationType, Element, ElementId, StoryAnimation } from '../../types';
+import { AnimationType } from '../../types';
+import type { Element, ElementId, StoryAnimation } from '../../types';
 import Provider from '../provider';
 import WAAPIWrapper from '../WAAPIWrapper';
 

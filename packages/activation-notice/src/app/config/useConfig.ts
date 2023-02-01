@@ -22,7 +22,7 @@ import { useContext } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import Context, { ContextState } from './context';
+import Context, { type ContextState } from './context';
 
 function useConfig(): ContextState {
   return useContext(Context) as ContextState;

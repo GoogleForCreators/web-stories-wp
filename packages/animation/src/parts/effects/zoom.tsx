@@ -19,13 +19,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import type { CSSProperties, PropsWithChildren } from 'react';
 import { sprintf, _x, __ } from '@googleforcreators/i18n';
+
 /**
  * Internal dependencies
  */
 import { AnimationZoom } from '../simple/zoom';
 import { AnimationFade } from '../simple/fade';
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationType,
   FieldType,
   ScaleDirection,

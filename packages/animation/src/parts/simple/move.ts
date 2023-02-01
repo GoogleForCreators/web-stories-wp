@@ -18,9 +18,9 @@
  * Internal dependencies
  */
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationType,
-  Element,
+  type Element,
   FieldType,
 } from '../../types';
 import { defaultUnit, getGlobalSpace } from '../../utils';

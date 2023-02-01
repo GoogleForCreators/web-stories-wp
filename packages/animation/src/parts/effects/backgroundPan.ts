@@ -24,10 +24,10 @@ import { sprintf, _x, __ } from '@googleforcreators/i18n';
  */
 import createAnimation from '../createAnimation';
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationDirection,
   AnimationType,
-  Element,
+  type Element,
   FieldType,
 } from '../../types';
 import { getElementOffsets } from '../../utils';

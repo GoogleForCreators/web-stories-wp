@@ -30,7 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { AnimationPart, createAnimationPart } from '../parts';
+import { type AnimationPart, createAnimationPart } from '../parts';
 import type { Element, StoryAnimation } from '../types';
 import type {
   ElementId,

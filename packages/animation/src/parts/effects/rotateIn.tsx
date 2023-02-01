@@ -20,6 +20,7 @@
 import { __ } from '@googleforcreators/i18n';
 import type { CSSProperties, PropsWithChildren } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
@@ -27,10 +28,10 @@ import type { AnimationPart } from '../types';
 import { AnimationMove } from '../simple/move';
 import { AnimationSpin } from '../simple/spin';
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationDirection,
   AnimationType,
-  Element,
+  type Element,
   FieldType,
 } from '../../types';
 import { getOffPageOffset } from '../../utils';

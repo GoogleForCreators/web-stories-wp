@@ -23,7 +23,7 @@ import { _x, __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { AnimationFade } from '../simple/fade';
-import { AMPEffectTiming, AnimationType, FieldType } from '../../types';
+import { type AMPEffectTiming, AnimationType, FieldType } from '../../types';
 
 export interface FadeInEffect extends AMPEffectTiming {
   type: AnimationType.EffectFadeIn;

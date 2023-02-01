@@ -25,11 +25,11 @@ import type { DimensionableElement } from '@googleforcreators/units';
  */
 import createAnimation from '../createAnimation';
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationType,
-  Element,
+  type Element,
   FieldType,
-  Keyframes,
+  type Keyframes,
 } from '../../types';
 import { getGlobalSpace, getOffPageOffset } from '../../utils';
 

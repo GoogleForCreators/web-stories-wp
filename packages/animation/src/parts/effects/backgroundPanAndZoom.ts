@@ -19,10 +19,10 @@
  */
 import createAnimation from '../createAnimation';
 import {
-  AMPEffectTiming,
+  type AMPEffectTiming,
   AnimationDirection,
   AnimationType,
-  Element,
+  type Element,
   ScaleDirection,
 } from '../../types';
 import { getElementOrigin, getElementOffsets } from '../../utils';
