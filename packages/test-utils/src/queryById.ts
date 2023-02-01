@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { queryAllByAttribute, buildQueries } from '@testing-library/react';
+import { queryAllByAttribute, buildQueries, type GetErrorFunction, type Matcher } from "@testing-library/react";
 
-const queryAllById = (...args) => queryAllByAttribute('id', ...args);
+const queryAllById = (container: HTMLElement, id: Matcher) => queryAllByAttribute('id', container, id);
 
-const getMultipleError = (c, value) =>
+const getMultipleError: GetErrorFunction = (_c: Element | null, value) =>
   `Found multiple elements with the id attribute of: ${value}`;
-const getMissingError = (c, value) =>
+const getMissingError: GetErrorFunction = (_c: Element | null, value) =>
   `Unable to find an element with the id attribute of: ${value}`;
 
 const [queryById, getAllById, getById, findAllById, findById] = buildQueries(

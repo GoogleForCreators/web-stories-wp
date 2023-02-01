@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { render, queries } from '@testing-library/react';
+import { render, queries, RenderOptions } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@googleforcreators/design-system';
-import PropTypes from 'prop-types';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 /**
  * Internal dependencies
@@ -29,16 +29,12 @@ import * as ariaLabelQueries from './queryByAriaLabel';
 import * as autoAdvanceAfterQueries from './queryByAutoAdvanceAfter';
 import * as idQueries from './queryById';
 
-const WithThemeProvider = ({ children }) => {
+const WithThemeProvider = ({ children }: PropsWithChildren<unknown>) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
-WithThemeProvider.propTypes = {
-  children: PropTypes.element,
-};
-
-const renderWithTheme = (ui, options) =>
-  render(ui, {
+function renderWithTheme(ui: ReactElement, options: Partial<Omit<RenderOptions, 'queries'>>) {
+  return render(ui, {
     wrapper: WithThemeProvider,
     queries: {
       ...queries,
@@ -48,5 +44,6 @@ const renderWithTheme = (ui, options) =>
     },
     ...options,
   });
+}
 
 export default renderWithTheme;

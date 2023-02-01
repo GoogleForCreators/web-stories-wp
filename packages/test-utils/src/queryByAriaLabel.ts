@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { queryAllByAttribute, buildQueries } from '@testing-library/react';
+import { queryAllByAttribute, buildQueries, type GetErrorFunction, Matcher } from "@testing-library/react";
 
-const queryAllByAriaLabel = (...args) =>
-  queryAllByAttribute('aria-label', ...args);
+const queryAllByAriaLabel = (container: HTMLElement, id: Matcher) =>
+  queryAllByAttribute('aria-label', container, id);
 
-const getMultipleError = (c, value) =>
+const getMultipleError: GetErrorFunction = (_c: Element | null, value) =>
   `Found multiple elements with the aria-label attribute of: ${value}`;
-const getMissingError = (c, value) =>
+const getMissingError: GetErrorFunction = (_c: Element | null, value) =>
   `Unable to find an element with the aria-label attribute of: ${value}`;
 
 const [

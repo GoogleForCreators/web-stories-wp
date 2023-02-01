@@ -19,7 +19,7 @@
  */
 import { fireEvent } from '@testing-library/react';
 
-function firePointerEvent(node, eventType, properties) {
+function _firePointerEvent(node: Element | Node | Document | Window, eventType: string, properties: MouseEventInit) {
   fireEvent(node, new window.MouseEvent(eventType, properties));
 }
 
@@ -36,9 +36,11 @@ const pointerEventTypes = [
   'lostPointerCapture',
 ];
 
+const firePointerEvent: Record<string, (node: Element | Node | Document | Window, properties: MouseEventInit) => void> = {};
+
 pointerEventTypes.forEach((type) => {
-  firePointerEvent[type] = (node, properties) =>
-    firePointerEvent(node, type.toLowerCase(), {
+  firePointerEvent[type] = (node: Element | Node | Document | Window, properties: MouseEventInit) =>
+    _firePointerEvent(node, type.toLowerCase(), {
       bubbles: true,
       ...properties,
     });

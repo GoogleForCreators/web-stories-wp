@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { queryAllByAttribute, buildQueries } from '@testing-library/react';
+import { queryAllByAttribute, buildQueries, type GetErrorFunction, Matcher } from "@testing-library/react";
 
-const queryAllByAutoAdvanceAfter = (...args) =>
-  queryAllByAttribute('auto-advance-after', ...args);
+const queryAllByAutoAdvanceAfter = (container: HTMLElement, id: Matcher) =>
+  queryAllByAttribute('auto-advance-after', container, id);
 
-const getMultipleError = (c, value) =>
+const getMultipleError: GetErrorFunction = (_c: Element | null, value) =>
   `Found multiple elements with the auto-advance-after attribute of: ${value}`;
-const getMissingError = (c, value) =>
+const getMissingError: GetErrorFunction = (_c: Element | null, value) =>
   `Unable to find an element with the auto-advance-after attribute of: ${value}`;
 
 const [
