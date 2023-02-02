@@ -83,7 +83,7 @@ ResourcePropTypes.videoResource = PropTypes.shape({
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   poster: PropTypes.string,
-  posterId: PropTypes.number,
+  posterId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   alt: PropTypes.string,
   title: PropTypes.string,
