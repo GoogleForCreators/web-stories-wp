@@ -29,7 +29,7 @@ import {
  * Internal dependencies
  */
 import CarouselLayout from './carouselLayout';
-import CarouselProvider from './carouselProvider';
+import { CarouselProvider } from './carouselContext';
 
 const Wrapper = styled.div`
   height: auto;

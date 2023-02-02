@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import {
   useCallback,
   useRef,
@@ -25,21 +24,26 @@ import {
   useState,
   useEffect,
 } from '@googleforcreators/react';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import type { ElementId, Page } from '@googleforcreators/elements';
+import { useStory } from '../../../../app/story';
 import {
   requestIdleCallback,
   cancelIdleCallback,
-} from '../../../utils/idleCallback';
-import CarouselContext from './carouselContext';
+} from '../../../../utils/idleCallback';
+import Context from './context';
 import useCarouselSizing from './useCarouselSizing';
 import useCarouselScroll from './useCarouselScroll';
 import useCarouselKeys from './useCarouselKeys';
 
-function CarouselProvider({ availableSpace, children }) {
+function CarouselProvider({
+  availableSpace,
+  children,
+}: PropsWithChildren<{ availableSpace: number }>) {
   const { pages, currentPageId, setCurrentPage, arrangePage } = useStory(
     ({
       state: { pages, currentPageId },
@@ -47,8 +51,8 @@ function CarouselProvider({ availableSpace, children }) {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
 
-  const [listElement, setListElement] = useState(null);
-  const pageRefs = useRef([]);
+  const [listElement, setListElement] = useState<HTMLElement | null>(null);
+  const pageRefs = useRef<Record<ElementId, HTMLElement>>({});
 
   const numPages = pages.length;
 
@@ -84,17 +88,21 @@ function CarouselProvider({ availableSpace, children }) {
 
   useCarouselKeys({ listElement, pageRefs });
 
-  const setPageRef = useCallback((page, el) => {
+  const setPageRef = useCallback((page: Page, el: HTMLElement) => {
     pageRefs.current[page.id] = el;
   }, []);
 
   const clickPage = useCallback(
-    (page) => setCurrentPage({ pageId: page.id }),
+    (page: Page) => setCurrentPage({ pageId: page.id }),
     [setCurrentPage]
   );
 
+  interface Position {
+    position: number;
+  }
+
   const rearrangePages = useCallback(
-    ({ position: oldPos }, { position: newPos }) => {
+    ({ position: oldPos }: Position, { position: newPos }: Position) => {
       const pageId = pageIds[oldPos];
       arrangePage({ pageId, position: newPos });
       setCurrentPage({ pageId });
@@ -127,16 +135,7 @@ function CarouselProvider({ availableSpace, children }) {
     },
   };
 
-  return (
-    <CarouselContext.Provider value={value}>
-      {children}
-    </CarouselContext.Provider>
-  );
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-
-CarouselProvider.propTypes = {
-  availableSpace: PropTypes.number,
-  children: PropTypes.node,
-};
 
 export default CarouselProvider;

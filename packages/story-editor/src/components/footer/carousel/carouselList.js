@@ -26,7 +26,7 @@ import { __ } from '@googleforcreators/i18n';
 import { Reorderable } from '../../reorderable';
 import CarouselPage from './carouselPage';
 import SkeletonPage from './skeletonPage';
-import useCarousel from './useCarousel';
+import { useCarousel } from './carouselContext';
 
 const PageList = styled(Reorderable).attrs({
   role: 'listbox',

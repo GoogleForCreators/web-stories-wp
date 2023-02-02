@@ -22,9 +22,15 @@ import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import CarouselContext from './carouselContext';
+import Context from './context';
+import type { CarouselContext } from './types';
 
-function useCarousel(selector) {
-  return useContextSelector(CarouselContext, selector ?? identity);
+function useCarousel(): CarouselContext;
+function useCarousel<T>(selector: (state: CarouselContext) => T): T;
+function useCarousel<T>(
+  selector: (state: CarouselContext) => T | CarouselContext = identity
+) {
+  return useContextSelector(Context, selector);
 }
+
 export default useCarousel;

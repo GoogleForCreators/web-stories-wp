@@ -28,8 +28,19 @@ import {
 /**
  * Internal dependencies
  */
-import { useConfig, useStory, useLayout } from '../../../app';
-import { CarouselState } from '../../../constants';
+import { useConfig } from '../../../../app/config';
+import { useStory } from '../../../../app/story';
+import { useLayout } from '../../../../app/layout';
+import { CarouselState } from '../../../../constants';
+
+interface UseCarouselScrollProps {
+  listElement: HTMLElement | null;
+  carouselWidth: number;
+  hasOverflow: boolean;
+  showablePages: number;
+  pageThumbWidth: number;
+  pageThumbMargin: number;
+}
 
 function useCarouselScroll({
   listElement,
@@ -38,7 +49,7 @@ function useCarouselScroll({
   showablePages,
   pageThumbWidth,
   pageThumbMargin,
-}) {
+}: UseCarouselScrollProps) {
   const [ratio, setRatio] = useState(0);
   const { isRTL } = useConfig();
   const { carouselState } = useLayout(({ state: { carouselState } }) => ({
@@ -51,7 +62,11 @@ function useCarouselScroll({
   );
 
   const scroll = useCallback(
-    (offset) => {
+    (offset: number) => {
+      if (!listElement) {
+        return;
+      }
+
       if (isRTL) {
         offset *= -1;
       }
@@ -156,7 +171,7 @@ function useCarouselScroll({
       }
 
       // If this is the first scroll, jump instantly to the target offset
-      const scrollBehavior = firstScroll.current ? 'instant' : 'smooth';
+      const scrollBehavior = firstScroll.current ? 'auto' : 'smooth';
       firstScroll.current = false;
 
       // Otherwise, do scroll and cancel interval

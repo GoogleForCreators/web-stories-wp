@@ -22,14 +22,22 @@ import {
   useEscapeToBlurEffect,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
-import { duplicatePage } from '@googleforcreators/elements';
+import { duplicatePage, ElementId } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { useStory, useConfig } from '../../../app';
+import type { RefObject } from 'react';
+import { useStory } from '../../../../app/story';
+import { useConfig } from '../../../../app/config';
 
-function useCarouselKeys({ listElement, pageRefs }) {
+function useCarouselKeys({
+  listElement,
+  pageRefs,
+}: {
+  listElement: HTMLElement | null;
+  pageRefs: RefObject<Record<ElementId, HTMLElement>>;
+}) {
   const { isRTL } = useConfig();
   const {
     addPageAt,
@@ -68,6 +76,11 @@ function useCarouselKeys({ listElement, pageRefs }) {
       if (dir === 0) {
         return;
       }
+
+      if (!currentPageId) {
+        return;
+      }
+
       const index = pageIds.indexOf(currentPageId);
       const nextIndex = index + dir;
       if (nextIndex >= 0 && nextIndex < pageIds.length) {
@@ -102,6 +115,11 @@ function useCarouselKeys({ listElement, pageRefs }) {
       if (dir === 0) {
         return;
       }
+
+      if (!currentPageId) {
+        return;
+      }
+
       const index = pageIds.indexOf(currentPageId);
       let newPos = index + dir;
       if (shiftKey) {
@@ -124,11 +142,12 @@ function useCarouselKeys({ listElement, pageRefs }) {
       // Wait for active page to change, then set new active page as focus
       const currentElement = document.activeElement;
       const setFocusWhenActiveElementChanges = () => {
-        if (document.activeElement !== currentElement) {
+        if (document.activeElement !== currentElement && listElement) {
           // Find the new active element (an option with tabindex=0)
-          const focusableOption = listElement.querySelector(
+          const focusableOption: HTMLElement | null = listElement.querySelector(
             '[role="option"][tabindex="0"]'
           );
+
           // If exists, set focus
           if (focusableOption) {
             focusableOption.focus();
@@ -148,6 +167,10 @@ function useCarouselKeys({ listElement, pageRefs }) {
     listElement,
     'clone',
     () => {
+      if (!currentPage) {
+        return;
+      }
+
       const index = pageIds.indexOf(currentPage.id);
       addPageAt({ page: duplicatePage(currentPage), position: index + 1 });
     },
@@ -155,7 +178,7 @@ function useCarouselKeys({ listElement, pageRefs }) {
   );
 }
 
-function getArrowDir(key, pos, neg, isRTL) {
+function getArrowDir(key: string, pos: string, neg: string, isRTL: boolean) {
   const rtlDir = isRTL ? -1 : 1;
   if (key === pos) {
     return rtlDir;

@@ -26,7 +26,7 @@ import { __, sprintf } from '@googleforcreators/i18n';
  */
 import { ReorderableSeparator, ReorderableItem } from '../../reorderable';
 import PagePreview from '../pagepreview';
-import useCarousel from './useCarousel';
+import { useCarousel } from './carouselContext';
 import { THUMBNAIL_LINE_WIDTH } from './constants';
 
 const Line = styled.div`

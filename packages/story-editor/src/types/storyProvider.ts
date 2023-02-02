@@ -42,7 +42,7 @@ import type { Capabilities } from './configProvider';
 export type AddPageProps = {
   page: Page;
   position: null | number;
-  updateSelection: boolean;
+  updateSelection?: boolean;
 };
 export type AddPageAction = {
   type: ActionTypes.AddPage;

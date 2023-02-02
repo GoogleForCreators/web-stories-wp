@@ -18,18 +18,17 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import {
   generatePatternStyles,
   getSolidFromHex,
   isHexColorString,
 } from '@googleforcreators/patterns';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import { type ElementId, elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import useCarousel from './useCarousel';
+import { useCarousel } from './carouselContext';
 
 const EmptyPage = styled.li.attrs({ role: 'presentation' })`
   display: block;
@@ -40,31 +39,47 @@ const EmptyPage = styled.li.attrs({ role: 'presentation' })`
   border-radius: 4px;
 `;
 
-function SkeletonPage({ pageId, index }) {
-  const { pageThumbWidth, pageThumbHeight, pageThumbMargin, page } =
+function SkeletonPage({ pageId, index }: { pageId: ElementId; index: number }) {
+  const { pageThumbWidth, pageThumbHeight, pageThumbMargin, hasPage, bgColor } =
     useCarousel(
       ({
         state: { pageThumbWidth, pageThumbHeight, pageThumbMargin, pages },
-      }) => ({
-        pageThumbWidth,
-        pageThumbHeight,
-        pageThumbMargin,
-        page: pages.find(({ id }) => id === pageId),
-      })
+      }) => {
+        let bgColor = null;
+
+        const page = pages.find(({ id }) => id === pageId);
+
+        if (page) {
+          bgColor = page.backgroundColor;
+          const bgElement = page.elements[0];
+
+          // Using isHexColorString for extra hardening.
+          // See https://github.com/googleforcreators/web-stories-wp/issues/9888.
+          if (
+            elementIs.media(bgElement) &&
+            bgElement.resource.baseColor &&
+            isHexColorString(bgElement.resource.baseColor)
+          ) {
+            bgColor = getSolidFromHex(
+              bgElement.resource.baseColor.replace('#', '')
+            );
+          }
+        }
+
+        return {
+          pageThumbWidth,
+          pageThumbHeight,
+          pageThumbMargin,
+          hasPage: Boolean(page && page.id),
+          bgColor,
+        };
+      }
     );
 
-  if (!page || !page.id) {
+  if (!hasPage) {
     return null;
   }
 
-  const bgElement = page.elements[0];
-  const { isMedia } = getDefinitionForType(bgElement.type);
-  // Using isHexColorString for extra hardening.
-  // See https://github.com/googleforcreators/web-stories-wp/issues/9888.
-  const bgColor =
-    isMedia && isHexColorString(bgElement.resource?.baseColor)
-      ? getSolidFromHex(bgElement.resource.baseColor.replace('#', ''))
-      : page.backgroundColor;
   return (
     <EmptyPage
       style={{
@@ -78,10 +93,5 @@ function SkeletonPage({ pageId, index }) {
     />
   );
 }
-
-SkeletonPage.propTypes = {
-  pageId: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-};
 
 export default SkeletonPage;
