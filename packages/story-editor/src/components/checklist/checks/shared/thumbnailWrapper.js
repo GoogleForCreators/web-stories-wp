@@ -81,7 +81,7 @@ const ToggleButton = ({ children, isExpanded, ...props }) => (
     {children || isExpanded
       ? __('Collapse', 'web-stories')
       : __('Expand', 'web-stories')}
-    <Disclosure css={disclosureStyle} duration="100ms" isOpen={isExpanded} />
+    <Disclosure css={disclosureStyle} duration="100ms" $isOpen={isExpanded} />
   </StyledButton>
 );
 ToggleButton.propTypes = {

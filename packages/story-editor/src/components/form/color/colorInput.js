@@ -324,7 +324,7 @@ const ColorInput = forwardRef(function ColorInput(
                   </MixedLabel>
                 )}
                 <DisclosureContainer isSmall={isMixed}>
-                  <Disclosure isOpen={pickerOpen} />
+                  <Disclosure $isOpen={pickerOpen} />
                 </DisclosureContainer>
               </>
             )}
