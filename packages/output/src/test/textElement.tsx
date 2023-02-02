@@ -25,6 +25,7 @@ import {
   BACKGROUND_TEXT_MODE,
 } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
@@ -32,7 +33,7 @@ import { elementTypes } from '@googleforcreators/element-library';
 import OutputElement from '../element';
 import { DEFAULT_TEXT } from './_utils/constants';
 
-function WrapAnimation({ children }) {
+function WrapAnimation({ children }: PropsWithChildren<unknown>) {
   return <AnimationProvider animations={[]}>{children}</AnimationProvider>;
 }
 
@@ -104,7 +105,7 @@ describe('Text Element output', () => {
   it('should render text with color', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_COLOR} />
+        <OutputElement element={TEXT_WITH_COLOR} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -113,7 +114,7 @@ describe('Text Element output', () => {
   it('should render text with fill', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_FILL} />
+        <OutputElement element={TEXT_WITH_FILL} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -122,7 +123,7 @@ describe('Text Element output', () => {
   it('should render text with highlight', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_HIGHLIGHT} />
+        <OutputElement element={TEXT_WITH_HIGHLIGHT} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -131,7 +132,7 @@ describe('Text Element output', () => {
   it('should render text with padding', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_PADDING} />
+        <OutputElement element={TEXT_WITH_PADDING} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -145,7 +146,7 @@ describe('Text Element output', () => {
 
     const textLeft = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_ALIGN_LEFT} />
+        <OutputElement element={TEXT_ALIGN_LEFT} flags={{}} />
       </WrapAnimation>
     );
     expect(textLeft).toMatchSnapshot();
@@ -157,7 +158,7 @@ describe('Text Element output', () => {
 
     const textRight = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_ALIGN_RIGHT} />
+        <OutputElement element={TEXT_ALIGN_RIGHT} flags={{}} />
       </WrapAnimation>
     );
     expect(textRight).toMatchSnapshot();
@@ -169,7 +170,7 @@ describe('Text Element output', () => {
 
     const textCenter = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_ALIGN_CENTER} />
+        <OutputElement element={TEXT_ALIGN_CENTER} flags={{}} />
       </WrapAnimation>
     );
     expect(textCenter).toMatchSnapshot();
@@ -181,7 +182,7 @@ describe('Text Element output', () => {
 
     const textJustify = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_ALIGN_JUSTIFY} />
+        <OutputElement element={TEXT_ALIGN_JUSTIFY} flags={{}} />
       </WrapAnimation>
     );
     expect(textJustify).toMatchSnapshot();
@@ -190,7 +191,7 @@ describe('Text Element output', () => {
   it('should render text with bold, italic, and underline', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_BIU} />
+        <OutputElement element={TEXT_WITH_BIU} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -199,7 +200,7 @@ describe('Text Element output', () => {
   it('should render text with adjusted font-size and family', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_FONTSIZE_FAMILY} />
+        <OutputElement element={TEXT_WITH_FONTSIZE_FAMILY} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -208,7 +209,7 @@ describe('Text Element output', () => {
   it('should render text with line-height', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_LINEHEIGHT} />
+        <OutputElement element={TEXT_WITH_LINEHEIGHT} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -217,7 +218,7 @@ describe('Text Element output', () => {
   it('should render text with letter-spacing', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_LETTERSPACING} />
+        <OutputElement element={TEXT_WITH_LETTERSPACING} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -226,7 +227,7 @@ describe('Text Element output', () => {
   it('should render text with applied rotation', () => {
     const element = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={TEXT_WITH_ROTATION} />
+        <OutputElement element={TEXT_WITH_ROTATION} flags={{}} />
       </WrapAnimation>
     );
     expect(element).toMatchSnapshot();
@@ -235,7 +236,7 @@ describe('Text Element output', () => {
   it('should render text without the mask class', () => {
     const html = renderToStaticMarkup(
       <WrapAnimation>
-        <OutputElement element={DEFAULT_TEXT} />
+        <OutputElement element={DEFAULT_TEXT} flags={{}} />
       </WrapAnimation>
     );
     const div = document.createElement('div');
@@ -251,7 +252,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text color', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_COLOR} />
+          <OutputElement element={TEXT_WITH_COLOR} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -259,7 +260,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text fill', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_FILL} />
+          <OutputElement element={TEXT_WITH_FILL} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -267,7 +268,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text highlight', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_HIGHLIGHT} />
+          <OutputElement element={TEXT_WITH_HIGHLIGHT} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -275,7 +276,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text padding', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_PADDING} />
+          <OutputElement element={TEXT_WITH_PADDING} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -288,7 +289,7 @@ describe('Text Element output', () => {
 
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_ALIGN_LEFT} />
+          <OutputElement element={TEXT_ALIGN_LEFT} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
 
@@ -299,7 +300,7 @@ describe('Text Element output', () => {
 
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_ALIGN_RIGHT} />
+          <OutputElement element={TEXT_ALIGN_RIGHT} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
 
@@ -310,7 +311,7 @@ describe('Text Element output', () => {
 
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_ALIGN_CENTER} />
+          <OutputElement element={TEXT_ALIGN_CENTER} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
 
@@ -321,7 +322,7 @@ describe('Text Element output', () => {
 
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_ALIGN_JUSTIFY} />
+          <OutputElement element={TEXT_ALIGN_JUSTIFY} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -329,7 +330,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text to bold, italic, and underline', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_BIU} />
+          <OutputElement element={TEXT_WITH_BIU} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -337,7 +338,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text font-size and family', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_FONTSIZE_FAMILY} />
+          <OutputElement element={TEXT_WITH_FONTSIZE_FAMILY} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -345,7 +346,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text line-height', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_LINEHEIGHT} />
+          <OutputElement element={TEXT_WITH_LINEHEIGHT} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -353,7 +354,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text letter-spacing', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_LETTERSPACING} />
+          <OutputElement element={TEXT_WITH_LETTERSPACING} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });
@@ -361,7 +362,7 @@ describe('Text Element output', () => {
     it('should produce valid AMP output when setting text rotation', async () => {
       await expect(
         <WrapAnimation>
-          <OutputElement element={TEXT_WITH_ROTATION} />
+          <OutputElement element={TEXT_WITH_ROTATION} flags={{}} />
         </WrapAnimation>
       ).toBeValidAMPStoryElement();
     });

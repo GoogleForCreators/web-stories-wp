@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, queries, RenderOptions } from '@testing-library/react';
+import { render, queries, type RenderOptions } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@googleforcreators/design-system';
 import type { PropsWithChildren, ReactElement } from 'react';
@@ -33,7 +33,10 @@ const WithThemeProvider = ({ children }: PropsWithChildren<unknown>) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
-function renderWithTheme(ui: ReactElement, options: Partial<Omit<RenderOptions, 'queries'>>) {
+function renderWithTheme(
+  ui: ReactElement,
+  options: Partial<Omit<RenderOptions, 'queries'>>
+) {
   return render(ui, {
     wrapper: WithThemeProvider,
     queries: {

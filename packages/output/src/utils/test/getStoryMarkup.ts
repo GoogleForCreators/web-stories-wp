@@ -17,14 +17,22 @@
 /**
  * External dependencies
  */
-jest.mock('flagged');
-import { registerElementType } from '@googleforcreators/elements';
+import {
+  ElementType,
+  registerElementType,
+  type Page,
+  type TextElement,
+  FontService,
+} from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
+import { AnimationType } from '@googleforcreators/animation';
 import getStoryMarkup from '../getStoryMarkup';
+
+jest.mock('flagged');
 
 describe('getStoryMarkup', () => {
   beforeAll(() => {
@@ -58,18 +66,23 @@ describe('getStoryMarkup', () => {
     const metadata = {
       publisher: 'AMP',
     };
-    const pages = [
+    const pages: Page[] = [
       {
-        type: 'page',
         id: '2',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         animations: [
-          { id: '1', targets: ['2'], type: 'bounce', duration: 1000 },
-          { id: '2', targets: ['2'], type: 'spin', duration: 1000 },
+          {
+            id: '1',
+            targets: ['2'],
+            type: AnimationType.Bounce,
+            duration: 1000,
+          },
+          { id: '2', targets: ['2'], type: AnimationType.Spin, duration: 1000 },
         ],
         elements: [
           {
             id: '2',
-            type: 'text',
+            type: ElementType.Text,
             x: 0,
             y: 0,
             width: 211,
@@ -78,7 +91,8 @@ describe('getStoryMarkup', () => {
             content: 'Hello World',
             font: {
               family: 'Roboto',
-              service: 'fonts.google.com',
+              service: FontService.GoogleFonts,
+              fallbacks: ['Arial', 'sans-serif'],
             },
             color: {
               color: {
@@ -89,10 +103,16 @@ describe('getStoryMarkup', () => {
               },
             },
             padding: {
+              locked: false,
               vertical: 0,
               horizontal: 0,
             },
-          },
+            marginOffset: 0,
+            fontSize: 10,
+            lineHeight: 1,
+            textAlign: 'center',
+            backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          } as TextElement,
         ],
       },
     ];

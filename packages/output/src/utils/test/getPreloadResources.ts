@@ -15,11 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Page, BackgroundableElement } from '@googleforcreators/elements';
+import type { ImageElement } from '@googleforcreators/element-library';
+
+/**
  * Internal dependencies
  */
 import getPreloadResources from '../getPreloadResources';
 
-const IMAGE_ELEMENT = {
+const IMAGE_ELEMENT: ImageElement = {
   id: 'baz',
   type: 'image',
   mimeType: 'image/png',
@@ -103,8 +109,10 @@ describe('getPreloadResources', () => {
   });
 
   it('should ignore non-background elements', () => {
-    const pages = [
+    const pages: Page[] = [
       {
+        id: 'abc',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         elements: [IMAGE_ELEMENT, GIF_ELEMENT, VIDEO_ELEMENT],
       },
     ];
@@ -113,10 +121,14 @@ describe('getPreloadResources', () => {
   });
 
   it("should add the first page's background video", () => {
-    const pages = [
+    const pages: Page[] = [
       {
-        elements: [{ ...VIDEO_ELEMENT, isBackground: true }],
-      },
+        id: 'abc',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        elements: [
+          { ...VIDEO_ELEMENT, isBackground: true } as BackgroundableElement,
+        ],
+      } as Page,
     ];
     const result = getPreloadResources(pages);
     expect(result).toStrictEqual([
@@ -128,10 +140,14 @@ describe('getPreloadResources', () => {
   });
 
   it("should add the first page's background image", () => {
-    const pages = [
+    const pages: Page[] = [
       {
-        elements: [{ ...IMAGE_ELEMENT, isBackground: true }],
-      },
+        id: 'abc',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        elements: [
+          { ...IMAGE_ELEMENT, isBackground: true } as BackgroundableElement,
+        ],
+      } as Page,
     ];
     const result = getPreloadResources(pages);
     expect(result).toStrictEqual([
@@ -143,9 +159,13 @@ describe('getPreloadResources', () => {
   });
 
   it("should add the first page's background GIF", () => {
-    const pages = [
+    const pages: Page[] = [
       {
-        elements: [{ ...GIF_ELEMENT, isBackground: true }],
+        id: 'abc',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        elements: [
+          { ...GIF_ELEMENT, isBackground: true } as BackgroundableElement,
+        ],
       },
     ];
     const result = getPreloadResources(pages);

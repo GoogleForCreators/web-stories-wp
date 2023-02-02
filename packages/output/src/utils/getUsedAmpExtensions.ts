@@ -15,23 +15,31 @@
  */
 
 /**
- * AMP Extension
- *
- * @typedef {Extension} Extension
- * @property {string} src The URL to the extension.
- * @property {?string} name The extension's name. Used for the custom-element attribute.
+ * External dependencies
  */
+import {
+  ElementType,
+  type Page,
+  type VideoElement,
+} from '@googleforcreators/elements';
+
+type ExtensionName = `amp-${Lowercase<string>}`;
+
+interface AmpExtension {
+  src: string;
+  name?: ExtensionName;
+}
 
 /**
  * Goes through all pages in a story to find the needed AMP extensions for them.
  *
  * Always includes the runtime as well as the amp-story extension.
  *
- * @param {Array} pages List of pages.
- * @return {Array<Extension>} List of used AMP extensions.
+ * @param pages List of pages.
+ * @return List of used AMP extensions.
  */
-const getUsedAmpExtensions = (pages) => {
-  const extensions = [
+const getUsedAmpExtensions = (pages: Page[]) => {
+  const extensions: AmpExtension[] = [
     // runtime.
     { src: 'https://cdn.ampproject.org/v0.js' },
     {
@@ -40,17 +48,17 @@ const getUsedAmpExtensions = (pages) => {
     },
   ];
 
-  const ampVideo = {
+  const ampVideo: AmpExtension = {
     name: 'amp-video',
     src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
   };
 
-  const ampStoryCaptions = {
+  const ampStoryCaptions: AmpExtension = {
     name: 'amp-story-captions',
     src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
   };
 
-  const ampStoryShopping = {
+  const ampStoryShopping: AmpExtension = {
     name: 'amp-story-shopping',
     src: 'https://cdn.ampproject.org/v0/amp-story-shopping-0.1.js',
   };
@@ -60,18 +68,19 @@ const getUsedAmpExtensions = (pages) => {
       extensions.push(ampVideo);
       extensions.push(ampStoryCaptions);
     }
-    for (const { type, tracks } of elements) {
+    for (const element of elements) {
+      const { type } = element;
       switch (type) {
-        case 'video':
+        case ElementType.Video:
           extensions.push(ampVideo);
-          if (tracks?.length > 0) {
+          if ((element as VideoElement).tracks?.length > 0) {
             extensions.push(ampStoryCaptions);
           }
           break;
-        case 'gif':
+        case ElementType.Gif:
           extensions.push(ampVideo);
           break;
-        case 'product':
+        case ElementType.Product:
           extensions.push(ampStoryShopping);
           break;
         default:

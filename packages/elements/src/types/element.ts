@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import type { Solid } from '@googleforcreators/patterns';
+import type { Solid, Pattern } from '@googleforcreators/patterns';
 import type {
-  GifResource,
   Resource,
   SequenceResource,
+  GifResource,
   VideoResource,
 } from '@googleforcreators/media';
 import type { ElementBox } from '@googleforcreators/units';
@@ -30,8 +30,13 @@ import type { ElementBox } from '@googleforcreators/units';
  * Internal dependencies
  */
 import type { ElementType } from './elementType';
-import type { FontMetrics, ProductData } from './data';
 import type { Track } from './media';
+import type {
+  ProductData,
+  GoogleFontData,
+  SystemFontData,
+  CustomFontData,
+} from './data';
 
 export enum LinkType {
   Regular = 'regular',
@@ -101,6 +106,10 @@ export interface Element extends ElementBox {
   isHidden?: boolean;
 }
 
+export interface LinkableElement extends Element {
+  link: Link;
+}
+
 export interface DefaultBackgroundElement extends Element {
   isDefaultBackground: boolean;
   backgroundColor: Solid;
@@ -108,10 +117,6 @@ export interface DefaultBackgroundElement extends Element {
 
 export interface BackgroundableElement extends Element {
   isBackground?: boolean;
-}
-
-export interface LinkableElement extends Element {
-  link: Link;
 }
 
 export interface MediaElement extends BackgroundableElement {
@@ -136,6 +141,10 @@ export interface GifElement extends SequenceMediaElement {
   resource: GifResource;
 }
 
+export interface OverlayableElement extends Element {
+  overlay?: Pattern | null;
+}
+
 export interface ProductElement extends Element {
   type: ElementType.Product;
   product: ProductData;
@@ -148,30 +157,7 @@ export interface StickerElement extends Element {
   };
 }
 
-interface BaseTextElementFont {
-  service: string;
-  family: string;
-  fallbacks: string[];
-  metrics?: FontMetrics;
-}
-
-export interface GoogleTextElementFont extends BaseTextElementFont {
-  service: 'fonts.google.com';
-}
-
-export interface SystemTextElementFont extends BaseTextElementFont {
-  service: 'system';
-}
-
-export interface CustomTextElementFont extends BaseTextElementFont {
-  service: 'custom';
-  url: string;
-}
-
-export type TextElementFont =
-  | GoogleTextElementFont
-  | SystemTextElementFont
-  | CustomTextElementFont;
+export type TextElementFont = GoogleFontData | SystemFontData | CustomFontData;
 
 export interface Padding {
   horizontal: number;

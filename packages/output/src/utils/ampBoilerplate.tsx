@@ -19,7 +19,7 @@
  *
  * @see https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/
  * @see https://amp.dev/documentation/components/amp-story/#boilerplate
- * @return {Element} AMP boilerplate.
+ * @return AMP boilerplate.
  */
 function Boilerplate() {
   return (

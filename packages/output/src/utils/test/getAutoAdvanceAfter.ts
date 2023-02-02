@@ -13,10 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { registerElementType } from '@googleforcreators/elements';
+import type { StoryAnimation } from '@googleforcreators/animation';
+import { AnimationType } from '@googleforcreators/animation';
+import type {
+  BackgroundAudio,
+  Element,
+  VideoElement,
+} from '@googleforcreators/elements';
+import { ElementType, registerElementType } from '@googleforcreators/elements';
+import type { ShapeElement } from '@googleforcreators/element-library';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -24,7 +33,7 @@ import { elementTypes } from '@googleforcreators/element-library';
  */
 import getAutoAdvanceAfter from '../getAutoAdvanceAfter';
 
-const id = 999;
+const id = '999';
 
 describe('getAutoAdvanceAfter', () => {
   beforeAll(() => {
@@ -32,20 +41,32 @@ describe('getAutoAdvanceAfter', () => {
   });
 
   it('should return the media element with the longest duration', () => {
-    const elements = [
-      { id: 123, type: 'video', resource: { length: 1 } },
-      { id: 456, type: 'video', resource: { length: 10 } },
-      { id: 789, type: 'video', resource: { length: 15 } },
+    const elements: Element[] = [
+      {
+        id: '123',
+        type: 'video',
+        resource: { length: 1 },
+      } as unknown as VideoElement,
+      {
+        id: '456',
+        type: 'video',
+        resource: { length: 10 },
+      } as unknown as VideoElement,
+      {
+        id: '789',
+        type: 'video',
+        resource: { length: 15 },
+      } as unknown as VideoElement,
     ];
 
     expect(
-      getAutoAdvanceAfter({ id: 999, elements, defaultPageDuration: 7 })
+      getAutoAdvanceAfter({ id: '999', elements, defaultPageDuration: 7 })
     ).toBe('el-789-media');
   });
 
   it('should return default value', () => {
     expect(
-      getAutoAdvanceAfter({ id: 999, elements: [], defaultPageDuration: 7 })
+      getAutoAdvanceAfter({ id: '999', elements: [], defaultPageDuration: 7 })
     ).toBe('7s');
   });
 
@@ -57,7 +78,7 @@ describe('getAutoAdvanceAfter', () => {
         backgroundAudio: {
           resource: { length: 15 },
           loop: false,
-        },
+        } as unknown as BackgroundAudio,
       })
     ).toBe('page-999-background-audio');
   });
@@ -67,22 +88,27 @@ describe('getAutoAdvanceAfter', () => {
       getAutoAdvanceAfter({
         id,
         elements: [],
-        defaultPageDuration: 7,
         backgroundAudio: {
           resource: { length: 15 },
           loop: true,
-        },
+        } as unknown as BackgroundAudio,
       })
     ).toBe('7s');
   });
 
   it('should return not background audio length has elements', () => {
-    const elements = [{ id: 456, type: 'video', resource: { length: 10 } }];
-    const animations = [
+    const elements: Element[] = [
+      {
+        id: 456,
+        type: ElementType.Video,
+        resource: { length: 10 },
+      } as unknown as VideoElement,
+    ];
+    const animations: StoryAnimation[] = [
       {
         id: '1',
         targets: ['456'],
-        type: 'wild_wacky_animation',
+        type: AnimationType.Bounce,
         duration: 1000,
       },
     ];
@@ -94,18 +120,41 @@ describe('getAutoAdvanceAfter', () => {
         backgroundAudio: {
           resource: { length: 15 },
           loop: true,
-        },
+        } as unknown as BackgroundAudio,
       })
     ).toBe('el-456-media');
   });
 
   it('should return background audio length with video elements', () => {
-    const elements = [{ id: 456, type: 'video', resource: { length: 10 } }];
-    const animations = [
+    const elements: Element[] = [
+      {
+        id: '456',
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 100,
+        rotationAngle: 0,
+        type: ElementType.Video,
+        resource: {
+          type: 'video',
+          mimeType: 'video/mp4',
+          id: 123,
+          src: 'https://example.com/video.mp4',
+          alt: '',
+          width: 100,
+          height: 100,
+          isExternal: false,
+          length: 10,
+          lengthFormatted: '0:10',
+        },
+        tracks: [],
+      } as VideoElement,
+    ];
+    const animations: StoryAnimation[] = [
       {
         id: '1',
         targets: ['456'],
-        type: 'wild_wacky_animation',
+        type: AnimationType.Bounce,
         duration: 1000,
       },
     ];
@@ -117,24 +166,47 @@ describe('getAutoAdvanceAfter', () => {
         backgroundAudio: {
           resource: { length: 15 },
           loop: false,
-        },
+        } as unknown as BackgroundAudio,
       })
     ).toBe('page-999-background-audio');
   });
 
   it('should return animation time', () => {
-    const elements = [
-      { id: '123', type: 'video', loop: true, resource: { length: 1 } },
-      { id: '456', x: 0, y: 0, type: 'shape' },
+    const elements: Element[] = [
+      {
+        id: '123',
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 100,
+        rotationAngle: 0,
+        type: ElementType.Video,
+        loop: true,
+        resource: {
+          type: 'video',
+          mimeType: 'video/mp4',
+          id: 123,
+          src: 'https://example.com/video.mp4',
+          alt: '',
+          width: 100,
+          height: 100,
+          isExternal: false,
+          length: 10,
+          lengthFormatted: '0:10',
+        },
+        tracks: [],
+      } as VideoElement,
+      { id: '456', x: 0, y: 0, type: 'shape' } as ShapeElement,
     ];
 
-    const animations = [
+    const animations: StoryAnimation[] = [
       {
         id: '1',
         targets: ['456'],
         duration: 10000,
         zoomFrom: 1,
         zoomTo: 2,
+        type: AnimationType.Zoom,
       },
       {
         id: '2',
@@ -142,13 +214,14 @@ describe('getAutoAdvanceAfter', () => {
         duration: 10000,
         zoomFrom: 2,
         zoomTo: 1,
+        type: AnimationType.Zoom,
       },
     ];
 
     const backgroundAudio = {
       resource: { length: 15 },
       loop: true,
-    };
+    } as unknown as BackgroundAudio;
     expect(
       getAutoAdvanceAfter({
         id,
@@ -160,18 +233,19 @@ describe('getAutoAdvanceAfter', () => {
   });
 
   it('should return animation time non-looping media', () => {
-    const elements = [
+    const elements: Element[] = [
       { id: '123', type: 'video', loop: false, resource: { length: 5 } },
-      { id: '456', x: 0, y: 0, type: 'shape' },
+      { id: '456', x: 0, y: 0, type: ElementType.Shape } as ShapeElement,
     ];
 
-    const animations = [
+    const animations: StoryAnimation[] = [
       {
         id: '1',
         targets: ['456'],
         duration: 10000,
         zoomFrom: 1,
         zoomTo: 2,
+        type: AnimationType.Zoom,
       },
       {
         id: '2',
@@ -179,13 +253,14 @@ describe('getAutoAdvanceAfter', () => {
         duration: 10000,
         zoomFrom: 2,
         zoomTo: 1,
+        type: AnimationType.Zoom,
       },
     ];
 
     const backgroundAudio = {
       resource: { length: 8 },
       loop: false,
-    };
+    } as unknown as BackgroundAudio;
     expect(
       getAutoAdvanceAfter({
         id,
@@ -197,12 +272,13 @@ describe('getAutoAdvanceAfter', () => {
   });
 
   it('should return default page duration', () => {
-    const elements = [{ id: '456', x: 0, y: 0, type: 'shape' }];
+    const elements: Element[] = [
+      { id: '456', x: 0, y: 0, type: 'shape' } as ShapeElement,
+    ];
     expect(
       getAutoAdvanceAfter({
         id,
         elements,
-        backgroundAudio: {},
         animations: [],
       })
     ).toBe('7s');

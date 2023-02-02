@@ -17,9 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { BackgroundAudioPropType } from '@googleforcreators/media';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { Page } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -31,6 +29,14 @@ import FontDeclarations from './utils/fontDeclarations';
 import OutputPage from './page';
 import getPreloadResources from './utils/getPreloadResources';
 import { populateElementFontData } from './utils/populateElementFontData';
+import type { StoryMetadata, Story } from './types';
+
+interface OutputStoryProps {
+  story: Story;
+  pages: Page[];
+  flags: Record<string, boolean>;
+  metadata: StoryMetadata;
+}
 
 function OutputStory({
   story: {
@@ -46,7 +52,7 @@ function OutputStory({
   pages,
   metadata: { publisher },
   flags,
-}) {
+}: OutputStoryProps) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
 
@@ -104,29 +110,5 @@ function OutputStory({
     </html>
   );
 }
-
-OutputStory.propTypes = {
-  story: PropTypes.shape({
-    fonts: PropTypes.object,
-    link: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    autoAdvance: PropTypes.bool,
-    defaultPageDuration: PropTypes.number,
-    backgroundAudio: PropTypes.shape({
-      resource: BackgroundAudioPropType,
-    }),
-    publisherLogo: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-    }),
-    featuredMedia: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
-  metadata: PropTypes.shape({
-    publisher: PropTypes.string.isRequired,
-  }).isRequired,
-  flags: PropTypes.object,
-};
 
 export default OutputStory;

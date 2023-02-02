@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { ElementType, FontService } from '@googleforcreators/elements';
+
 export const DEFAULT_TEXT = {
   opacity: 100,
   flip: {
@@ -42,7 +47,7 @@ export const DEFAULT_TEXT = {
       [1, 900],
     ],
     fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-    service: 'fonts.google.com',
+    service: FontService.GoogleFonts,
     metrics: {
       upm: 2048,
       asc: 1900,
@@ -70,13 +75,13 @@ export const DEFAULT_TEXT = {
     },
   },
   lineHeight: 1.5,
-  textAlign: 'initial',
+  textAlign: 'center',
   padding: {
     vertical: 0,
     horizontal: 0,
     locked: true,
   },
-  type: 'text',
+  type: ElementType.Text,
   content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   x: 40,
   y: 300,

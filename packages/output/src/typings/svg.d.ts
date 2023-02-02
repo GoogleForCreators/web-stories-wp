@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { __ } from '@googleforcreators/i18n';
-import type { PageAttachment } from '@googleforcreators/elements';
-
-function Outlink({ ctaText, url, icon, theme, rel = [] }: PageAttachment) {
-  return (
-    <amp-story-page-outlink
-      layout="nodisplay"
-      cta-image={icon || undefined}
-      theme={theme}
-    >
-      <a href={url} rel={rel.join(' ')}>
-        {ctaText || __('Learn more', 'web-stories')}
-      </a>
-    </amp-story-page-outlink>
-  );
+declare module '*.svg' {
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<
+    SVGProps<SVGElement> & { title?: string }
+  >;
+  export default ReactComponent;
 }
-
-export default Outlink;

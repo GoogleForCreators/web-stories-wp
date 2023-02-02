@@ -13,10 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { getTotalDuration } from '@googleforcreators/animation';
+import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
+import type {
+  BackgroundAudio,
+  Element,
+  ElementId,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -24,13 +30,21 @@ import { getTotalDuration } from '@googleforcreators/animation';
 import { DEFAULT_PAGE_DURATION } from '../constants';
 import getLongestMediaElement from './getLongestMediaElement';
 
+interface AutoAdvanceProps {
+  animations?: StoryAnimation[];
+  defaultPageDuration?: number;
+  elements: Element[];
+  backgroundAudio?: BackgroundAudio;
+  id: ElementId;
+}
+
 function getAutoAdvanceAfter({
   animations,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
   elements,
   backgroundAudio,
   id,
-}) {
+}: AutoAdvanceProps) {
   const { resource, loop } = backgroundAudio || {};
 
   const visibleAnimations = animations?.filter((animation) =>

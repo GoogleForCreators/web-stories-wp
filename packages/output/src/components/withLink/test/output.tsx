@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { render, screen } from '@testing-library/react';
+import { ElementType, type Link } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -25,11 +26,11 @@ import { render, screen } from '@testing-library/react';
 import WithLink from '..';
 
 describe('WithLink', () => {
-  function withLink(linkProps) {
+  function withLink(linkProps: Partial<Link> = {}) {
     const props = {
       element: {
         id: '123',
-        type: 'image',
+        type: ElementType.Image,
         mimeType: 'image/png',
         scale: 1,
         x: 50,
@@ -60,33 +61,33 @@ describe('WithLink', () => {
   }
 
   describe('a[target]', () => {
-    it('should use target=_blank', async () => {
+    it('should use target=_blank', () => {
       render(withLink());
-      const a = screen.getByRole('link');
-      await expect(a.target).toBe('_blank');
-      await expect(a.rel).toBe('noreferrer');
+      const a = screen.getByRole<HTMLAnchorElement>('link');
+      expect(a.target).toBe('_blank');
+      expect(a.rel).toBe('noreferrer');
     });
   });
 
   describe('a[rel]', () => {
-    it('should use rel=noreferrer', async () => {
+    it('should use rel=noreferrer', () => {
       render(withLink());
-      const a = screen.getByRole('link');
-      await expect(a.rel).toBe('noreferrer');
+      const a = screen.getByRole<HTMLAnchorElement>('link');
+      expect(a.rel).toBe('noreferrer');
     });
 
-    it('should use rel=noreferrer nofollow', async () => {
+    it('should use rel=noreferrer nofollow', () => {
       render(withLink({ rel: ['nofollow'] }));
-      const a = screen.getByRole('link');
-      await expect(a.rel).toBe('nofollow noreferrer');
+      const a = screen.getByRole<HTMLAnchorElement>('link');
+      expect(a.rel).toBe('nofollow noreferrer');
     });
   });
 
   describe('a[data-tooltip-icon]', () => {
-    it('should not add data-tooltip-icon attribute if there is no icon', async () => {
+    it('should not add data-tooltip-icon attribute if there is no icon', () => {
       render(withLink({ icon: '' }));
-      const a = screen.getByRole('link');
-      await expect(a).not.toHaveAttribute('data-tooltip-icon');
+      const a = screen.getByRole<HTMLAnchorElement>('link');
+      expect(a).not.toHaveAttribute('data-tooltip-icon');
     });
   });
 

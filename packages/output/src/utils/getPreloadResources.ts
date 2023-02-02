@@ -15,39 +15,42 @@
  */
 
 /**
- * AMP Extension
- *
- * @typedef {Object} PreloadResource
- * @property {string} url The URL to the resource.
- * @property {string} type Type of resource, e.g. "video" or "image".
+ * External dependencies
  */
+import { elementIs, type Page } from '@googleforcreators/elements';
+
+interface PreloadResource {
+  url: string;
+  type: string;
+}
 
 /**
  * Goes through all pages in a story to find the resources that should be preloaded.
  *
  * Currently this includes the first page's background image/video.
  *
- * @param {Array} pages List of pages.
- * @return {Array<PreloadResource>} List of preload resources.
+ * @param pages List of pages.
+ * @return List of preload resources.
  */
-function getPreloadResources(pages) {
-  const preloadResources = [];
+function getPreloadResources(pages: Page[]) {
+  const preloadResources: PreloadResource[] = [];
 
   if (pages.length === 0) {
     return preloadResources;
   }
 
-  for (const { type, resource, isBackground } of pages[0].elements) {
-    if (!['image', 'video', 'gif'].includes(type)) {
-      continue;
-    }
+  const mediaElements = pages[0].elements
+    .filter(elementIs.media)
+    .filter(elementIs.backgroundable);
 
+  for (const element of mediaElements) {
+    const { type, resource, isBackground } = element;
     if (!isBackground) {
       continue;
     }
 
     // resource?.output?.src is used only for GIF resources.
-    const src = resource?.output?.src || resource.src;
+    const src = elementIs.gif(element) ? resource?.output?.src : resource.src;
 
     preloadResources.push({
       url: src,

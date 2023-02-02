@@ -13,32 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  elementIs,
+  type SequenceMediaElement,
+  type VideoElement,
+  type Element,
+} from '@googleforcreators/elements';
 
 /**
  * Among all elements, returns the media element with the longest duration.
  *
- * @param {Array<Object>} elements List of elements.
- * @param {number} minDuration Duration that the minimum element must exceed in seconds.
- * @return {Object|undefined} Found element, or undefined if there are no media elements.
+ * @param elements List of elements.
+ * @param minDuration Duration that the minimum element must exceed in seconds.
+ * @return Found element, or undefined if there are no media elements.
  */
-function getLongestMediaElement(elements, minDuration = 0) {
+function getLongestMediaElement(
+  elements: Element[],
+  minDuration = 0
+): SequenceMediaElement | undefined {
   return elements
-    .filter(({ type, loop, isHidden }) => {
-      const { isMedia } = getDefinitionForType(type);
+    .filter(elementIs.video)
+    .filter(({ loop, isHidden }) => {
       // Ensure looping media is not considered.
-      return isMedia && !loop && !isHidden;
+      return !loop && !isHidden;
     })
-    .reduce((longest, element) => {
-      if (!element?.resource?.length) {
+    .reduce((longest: VideoElement | undefined, element) => {
+      if (!element?.resource.length) {
         return longest;
       }
 
       if (element?.resource?.length < minDuration) {
         return longest;
+      }
+
+      if (!longest) {
+        return element;
       }
 
       return longest?.resource?.length > element?.resource?.length

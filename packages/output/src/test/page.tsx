@@ -19,25 +19,34 @@
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { render } from '@testing-library/react';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import { MaskTypes } from '@googleforcreators/masks';
-import { registerElementType } from '@googleforcreators/elements';
+import {
+  BackgroundableElement,
+  ElementType,
+  MediaElement,
+  PageAttachment,
+  ProductData,
+  registerElementType,
+} from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 import {
-  queryByAutoAdvanceAfter,
   getByAutoAdvanceAfter,
-  queryById,
   getById,
+  queryByAutoAdvanceAfter,
+  queryById,
 } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
+import { AnimationType, StoryAnimation } from '@googleforcreators/animation';
+import { Resource, ResourceType } from '@googleforcreators/media';
 import PageOutput from '../page';
 
 jest.mock('flagged');
 
-const PRODUCT_LAMP = {
+const PRODUCT_LAMP: ProductData = {
   productUrl: 'https://www.google.com',
   productId: 'lamp',
   productTitle: 'Brass Lamp',
@@ -61,7 +70,7 @@ const PRODUCT_LAMP = {
     'One newline after this. \n Two newlines after this. \n\n  Five consecutive newlines after this, should become 2 newlines. \n\n\n\n\n Many consecutive newlines with different spacing and tabs after this, should become 2 newlines. \n          \n\n   \n  \n \n  \n \n I hope it works!',
 };
 
-const PRODUCT_ART = {
+const PRODUCT_ART: ProductData = {
   productUrl: 'https://www.google.com',
   productId: 'art',
   productTitle: 'Abstract Art',
@@ -76,15 +85,16 @@ const PRODUCT_ART = {
     reviewCount: 89,
     reviewUrl: 'https://www.google.com',
   },
+  productDetails: 'Some short text',
 };
 
-const PRODUCT_CHAIR = {
+const PRODUCT_CHAIR: ProductData = {
   productUrl: 'https://www.google.com',
   productId: 'chair',
   productTitle: 'Yellow chair',
+  productBrand: 'The Chair Company',
   productPrice: 1000.0,
   productPriceCurrency: 'BRL',
-  productText: 'The perfectly imperfect yellow chair',
   productImages: [
     { url: '/examples/visual-tests/amp-story/img/cat1.jpg', alt: 'chair' },
   ],
@@ -97,7 +107,7 @@ const PRODUCT_CHAIR = {
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere error deserunt dignissimos in laborum ea molestias veritatis sint laudantium iusto expedita atque provident doloremque, ad voluptatem culpa adipisci.',
 };
 
-const PRODUCT_FLOWERS = {
+const PRODUCT_FLOWERS: ProductData = {
   productUrl: 'https://www.google.com',
   productId: 'flowers',
   productTitle: 'Flowers',
@@ -117,39 +127,36 @@ const PRODUCT_FLOWERS = {
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere error deserunt dignissimos in laborum ea molestias veritatis sint laudantium iusto expedita atque provident doloremque, ad voluptatem culpa adipisci.',
 };
 
-/* eslint-disable testing-library/no-node-access, testing-library/no-container */
-
 describe('Page output', () => {
   beforeAll(() => {
     elementTypes.forEach(registerElementType);
   });
 
   describe('aspect-ratio markup', () => {
-    let backgroundElement;
+    let backgroundElement: BackgroundableElement & MediaElement;
 
     beforeEach(() => {
       backgroundElement = {
         isBackground: true,
         id: 'baz',
-        type: 'image',
-        mimeType: 'image/png',
+        type: ElementType.Image,
         scale: 1,
-        origRatio: 9 / 16,
         x: 50,
         y: 100,
         height: 1920,
         width: 1080,
         rotationAngle: 0,
-        loop: true,
         resource: {
-          type: 'image',
+          type: ResourceType.Image,
           mimeType: 'image/png',
           id: 123,
           src: 'https://example.com/image.png',
           poster: 'https://example.com/poster.png',
           height: 1920,
           width: 1080,
-        },
+          alt: '',
+          isExternal: false,
+        } as Resource,
       };
     });
 
@@ -159,13 +166,14 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const layers = container.querySelectorAll('amp-story-grid-layer');
       expect(layers).toHaveLength(1);
       const layer = layers[0];
@@ -188,13 +196,14 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [backgroundElement],
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const layers = container.querySelectorAll('amp-story-grid-layer');
       expect(layers).toHaveLength(2);
       const bgLayer = layers[0];
@@ -217,6 +226,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               ...backgroundElement,
@@ -228,7 +238,7 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const overlayLayer = container.querySelector(
         '.page-background-overlay-area'
       );
@@ -240,22 +250,28 @@ describe('Page output', () => {
     it('should render animation tags for animations', () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           animations: [
             {
               id: '123',
               targets: ['123', '124'],
-              type: 'bounce',
+              type: AnimationType.Bounce,
               duration: 1000,
             },
-            { id: '124', targets: ['123'], type: 'spin', duration: 1000 },
-          ],
+            {
+              id: '124',
+              targets: ['123'],
+              type: AnimationType.Spin,
+              duration: 1000,
+            },
+          ] as StoryAnimation[],
           elements: [
             {
               id: '123',
-              type: 'video',
+              type: ElementType.Video,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -278,7 +294,7 @@ describe('Page output', () => {
             },
             {
               id: '124',
-              type: 'shape',
+              type: ElementType.Shape,
               opacity: 100,
               flip: {
                 vertical: false,
@@ -310,7 +326,7 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
 
       const storyAnimations = container.querySelectorAll('amp-story-animation');
       expect(storyAnimations).toHaveLength(3);
@@ -319,46 +335,47 @@ describe('Page output', () => {
   });
 
   describe('page advancement', () => {
-    it('should use default value for auto-advance-after', async () => {
+    it('should use default value for auto-advance-after', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
-      await expect(
-        queryByAutoAdvanceAfter(container, '7s')
-      ).not.toBeInTheDocument();
+      const { container } = render(<PageOutput {...props} flags={{}} />);
+      expect(queryByAutoAdvanceAfter(container, '7s')).not.toBeInTheDocument();
     });
 
-    it('should use default duration for auto-advance-after', async () => {
+    it('should use default duration for auto-advance-after', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
         },
         defaultAutoAdvance: true,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
-      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
+      const { container } = render(<PageOutput {...props} flags={{}} />);
+      expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
 
-    it('should use custom value for auto-advance-after', async () => {
+    it('should use custom value for auto-advance-after', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           advancement: { autoAdvance: false },
           elements: [],
         },
@@ -366,18 +383,17 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
-      await expect(
-        queryByAutoAdvanceAfter(container, '7s')
-      ).not.toBeInTheDocument();
+      const { container } = render(<PageOutput {...props} flags={{}} />);
+      expect(queryByAutoAdvanceAfter(container, '7s')).not.toBeInTheDocument();
     });
 
-    it('should use custom duration for auto-advance-after', async () => {
+    it('should use custom duration for auto-advance-after', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           advancement: { autoAdvance: true, pageDuration: 9 },
           elements: [],
         },
@@ -385,20 +401,21 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
-      await expect(getByAutoAdvanceAfter(container, '9s')).toBeInTheDocument();
+      const { container } = render(<PageOutput {...props} flags={{}} />);
+      expect(getByAutoAdvanceAfter(container, '9s')).toBeInTheDocument();
     });
 
-    it('should use default duration for images', async () => {
+    it('should use default duration for images', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'baz',
-              type: 'image',
+              type: ElementType.Image,
               mimeType: 'image/png',
               scale: 1,
               origRatio: 9 / 16,
@@ -424,20 +441,21 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
-      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
+      const { container } = render(<PageOutput {...props} flags={{}} />);
+      expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
 
-    it('should use video element ID for auto-advance-after', async () => {
+    it('should use video element ID for auto-advance-after', () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ElementType.Video,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -464,9 +482,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const video = queryById(container, 'el-baz-media');
-      await expect(video).toBeInTheDocument();
+      expect(video).toBeInTheDocument();
       expect(video).toMatchInlineSnapshot(`
         <amp-video
           artwork="https://example.com/poster.png"
@@ -481,21 +499,22 @@ describe('Page output', () => {
           />
         </amp-video>
       `);
-      await expect(
+      expect(
         getByAutoAdvanceAfter(container, 'el-baz-media')
       ).toBeInTheDocument();
     });
 
-    it('should use video with volume', async () => {
+    it('should use video with volume', () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ElementType.Video,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -523,9 +542,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const video = queryById(container, 'el-baz-media');
-      await expect(video).toBeInTheDocument();
+      expect(video).toBeInTheDocument();
       expect(video).toMatchInlineSnapshot(`
         <amp-video
           artwork="https://example.com/poster.png"
@@ -541,21 +560,22 @@ describe('Page output', () => {
           />
         </amp-video>
       `);
-      await expect(
+      expect(
         getByAutoAdvanceAfter(container, 'el-baz-media')
       ).toBeInTheDocument();
     });
 
-    it('should use video element ID for auto-advance-after if video is below defaultPageDuration', async () => {
+    it('should use video element ID for auto-advance-after if video is below defaultPageDuration', () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ElementType.Video,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -582,9 +602,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const video = getById(container, 'el-baz-media');
-      await expect(video).toBeInTheDocument();
+      expect(video).toBeInTheDocument();
       expect(video).toMatchInlineSnapshot(`
         <amp-video
           artwork="https://example.com/poster.png"
@@ -599,21 +619,22 @@ describe('Page output', () => {
           />
         </amp-video>
       `);
-      await expect(
+      expect(
         getByAutoAdvanceAfter(container, 'el-baz-media')
       ).toBeInTheDocument();
     });
 
-    it('should ignore looping video for auto-advance-after and set default instead', async () => {
+    it('should ignore looping video for auto-advance-after and set default instead', () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ElementType.Video,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -640,8 +661,8 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
-      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
+      const { container } = render(<PageOutput {...props} flags={{}} />);
+      expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
   });
 
@@ -649,7 +670,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ElementType.Image,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -671,7 +692,7 @@ describe('Page output', () => {
 
     const TEXT_ELEMENT = {
       id: 'baz',
-      type: 'text',
+      type: ElementType.Text,
       content: 'Hello, link!',
       x: 50,
       y: PAGE_HEIGHT,
@@ -697,45 +718,47 @@ describe('Page output', () => {
       },
     };
 
-    it('should output page attachment if the URL is set', async () => {
+    it('should output page attachment if the URL is set', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
           pageAttachment: {
             url: 'https://example.test',
             ctaText: 'Click me!',
             theme: 'dark',
             icon: 'https://example.test/example.jpg',
-          },
+          } as PageAttachment,
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const pageOutlink = container.querySelector('amp-story-page-outlink');
-      await expect(pageOutlink).toHaveTextContent('Click me!');
-      await expect(pageOutlink).toHaveAttribute(
+      expect(pageOutlink).toHaveTextContent('Click me!');
+      expect(pageOutlink).toHaveAttribute(
         'cta-image',
         'https://example.test/example.jpg'
       );
-      await expect(pageOutlink).toHaveAttribute('theme', 'dark');
-      await expect(pageOutlink.firstChild).toHaveAttribute(
+      expect(pageOutlink).toHaveAttribute('theme', 'dark');
+      expect(pageOutlink.firstChild).toHaveAttribute(
         'href',
         'https://example.test'
       );
-      await expect(pageOutlink).toBeInTheDocument();
+      expect(pageOutlink).toBeInTheDocument();
     });
 
-    it('should not output page attachment if the URL is empty', async () => {
+    it('should not output page attachment if the URL is empty', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
           pageAttachment: {
             url: '',
@@ -746,42 +769,44 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const pageOutlink = container.querySelector('amp-story-page-outlink');
-      await expect(pageOutlink).not.toBeInTheDocument();
+      expect(pageOutlink).not.toBeInTheDocument();
     });
 
-    it('should not output cta-image if empty', async () => {
+    it('should not output cta-image if empty', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
           pageAttachment: {
             url: 'https://example.test',
             ctaText: 'Click me!',
             theme: 'dark',
             icon: '',
-          },
+          } as PageAttachment,
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const pageOutlink = container.querySelector('amp-story-page-outlink');
-      await expect(pageOutlink).toHaveTextContent('Click me!');
-      await expect(pageOutlink).not.toHaveAttribute('cta-image');
-      await expect(pageOutlink).toBeInTheDocument();
+      expect(pageOutlink).toHaveTextContent('Click me!');
+      expect(pageOutlink).not.toHaveAttribute('cta-image');
+      expect(pageOutlink).toBeInTheDocument();
     });
 
-    it('should output rel', async () => {
+    it('should output rel', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
           pageAttachment: {
             url: 'https://example.test',
@@ -789,21 +814,21 @@ describe('Page output', () => {
             theme: 'dark',
             icon: '',
             rel: ['nofollow'],
-          },
+          } as PageAttachment,
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const pageOutlink = container.querySelector('amp-story-page-outlink');
-      await expect(pageOutlink).toBeInTheDocument();
-      await expect(pageOutlink).toHaveTextContent('Click me!');
-      await expect(pageOutlink).not.toHaveAttribute('cta-image');
+      expect(pageOutlink).toBeInTheDocument();
+      expect(pageOutlink).toHaveTextContent('Click me!');
+      expect(pageOutlink).not.toHaveAttribute('cta-image');
 
       const pageOutATag = pageOutlink.querySelector('a');
-      await expect(pageOutATag).toBeInTheDocument();
-      await expect(pageOutATag).toHaveAttribute('rel', 'nofollow');
+      expect(pageOutATag).toBeInTheDocument();
+      expect(pageOutATag).toHaveAttribute('rel', 'nofollow');
     });
 
     it('should not output a link in page attachment area', () => {
@@ -812,17 +837,18 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
               ...TEXT_ELEMENT,
               link: {
-                url: 'http://shouldremove.com',
+                url: 'https://shouldremove.com',
               },
             },
           ],
           pageAttachment: {
-            url: 'http://example.com',
+            url: 'https://example.com',
             ctaText: 'Click me!',
           },
         },
@@ -830,9 +856,11 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain('Hello, link');
-      expect(content).not.toContain('http://shouldremove.com');
+      expect(content).not.toContain('https://shouldremove.com');
     });
 
     it('should output a link outside of page attachment area', () => {
@@ -841,19 +869,20 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
               ...TEXT_ELEMENT,
               link: {
-                url: 'http://shouldoutput.com',
+                url: 'https://shouldoutput.com',
               },
               y: 0,
               height: 100,
             },
           ],
           pageAttachment: {
-            url: 'http://example.com',
+            url: 'https://example.com',
             ctaText: 'Click me!',
           },
         },
@@ -861,9 +890,11 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain('Hello, link');
-      expect(content).toContain('http://shouldoutput.com');
+      expect(content).toContain('https://shouldoutput.com');
     });
 
     it('should output a link in page attachment area if page attachment is not set', () => {
@@ -872,41 +903,44 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
               ...TEXT_ELEMENT,
               link: {
-                url: 'http://shouldoutput.com',
+                url: 'https://shouldoutput.com',
               },
             },
           ],
-          pageAttachment: null,
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain('Hello, link');
-      expect(content).toContain('http://shouldoutput.com');
+      expect(content).toContain('https://shouldoutput.com');
     });
 
     it('should print page attachment as the last child element', () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           pageAttachment: {
-            url: 'http://example.com',
+            url: 'https://example.com',
             ctaText: 'Click me!',
           },
           animations: [],
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ElementType.Video,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -944,7 +978,7 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const page = container.querySelector('amp-story-page');
       const pageOutlink = container.querySelector('amp-story-page-outlink');
       expect(pageOutlink).toBeInTheDocument();
@@ -955,7 +989,7 @@ describe('Page output', () => {
   describe('background color', () => {
     const BACKGROUND_ELEMENT = {
       id: 'baz',
-      type: 'image',
+      type: ElementType.Image,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -980,7 +1014,7 @@ describe('Page output', () => {
       const props = {
         id: '123',
         page: {
-          backgroundColor: { color: '#00379b' },
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           id: '123',
           elements: [BACKGROUND_ELEMENT],
         },
@@ -988,7 +1022,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain('background-color:#00379b');
     });
 
@@ -1000,7 +1036,7 @@ describe('Page output', () => {
           elements: [
             {
               id: '123',
-              type: 'shape',
+              type: ElementType.Shape,
               isBackground: true,
               isDefaultBackground: true,
               x: 1,
@@ -1015,7 +1051,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain('background-color:rgba(255,255,255,0.5)');
     });
   });
@@ -1024,7 +1062,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ElementType.Image,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1046,7 +1084,7 @@ describe('Page output', () => {
 
     const TEXT_ELEMENT = {
       id: 'baz',
-      type: 'text',
+      type: ElementType.Text,
       content: 'Hello, link!',
       x: 50,
       y: PAGE_HEIGHT,
@@ -1078,6 +1116,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
@@ -1094,7 +1133,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain('Hello, example!');
       expect(content).toContain('https://hello.example');
     });
@@ -1105,6 +1146,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
@@ -1121,7 +1163,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).not.toContain('Hello, example!');
       expect(content).not.toContain('https://hello.example');
     });
@@ -1131,7 +1175,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ElementType.Image,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1154,8 +1198,6 @@ describe('Page output', () => {
     const MEDIA_ELEMENT = {
       ...BACKGROUND_ELEMENT,
       isBackground: false,
-      id: 'baz',
-      type: 'image',
     };
 
     it('should output element with border if border is set', () => {
@@ -1164,6 +1206,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
@@ -1173,7 +1216,7 @@ describe('Page output', () => {
                 left: 10,
                 right: 10,
                 bottom: 10,
-                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                color: { color: { r: 255, g: 255, b: 255 } },
               },
             },
           ],
@@ -1182,7 +1225,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain('border-width:10px 10px 10px 10px;');
       expect(content).toContain('border-color:rgba(255,255,255,1);');
     });
@@ -1193,6 +1238,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
@@ -1202,7 +1248,7 @@ describe('Page output', () => {
                 left: 10,
                 right: 10,
                 bottom: 10,
-                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                color: { color: { r: 255, g: 255, b: 255 } },
                 position: 'center',
               },
               mask: {
@@ -1215,7 +1261,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).not.toContain('border-width:10px 10px 10px 10px;');
       expect(content).not.toContain('border-color:rgba(255,255,255,1);');
     });
@@ -1225,7 +1273,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ElementType.Image,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1248,8 +1296,6 @@ describe('Page output', () => {
     const MEDIA_ELEMENT = {
       ...BACKGROUND_ELEMENT,
       isBackground: false,
-      id: 'baz',
-      type: 'image',
     };
 
     it('should output image with linear overlay if set', () => {
@@ -1258,6 +1304,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
@@ -1278,7 +1325,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain(
         'background-image:linear-gradient(0.5turn, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)'
       );
@@ -1290,11 +1339,12 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
               ...MEDIA_ELEMENT,
-              type: 'video',
+              type: ElementType.Video,
               overlay: {
                 color: { r: 0, g: 0, b: 0, a: 0.5 },
               },
@@ -1305,7 +1355,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain('background-color:rgba(0,0,0,0.5)');
     });
   });
@@ -1314,7 +1366,7 @@ describe('Page output', () => {
     const BACKGROUND_ELEMENT = {
       isBackground: true,
       id: 'baz',
-      type: 'image',
+      type: ElementType.Image,
       mimeType: 'image/png',
       origRatio: 1,
       x: 50,
@@ -1338,8 +1390,9 @@ describe('Page output', () => {
       ...BACKGROUND_ELEMENT,
       isBackground: false,
       id: 'baz',
-      type: 'image',
+      type: ElementType.Image,
       borderRadius: {
+        locked: false,
         topLeft: 10,
         topRight: 20,
         bottomRight: 10,
@@ -1353,13 +1406,16 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [BACKGROUND_ELEMENT, MEDIA_ELEMENT],
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain(
         'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
       );
@@ -1371,6 +1427,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             BACKGROUND_ELEMENT,
             {
@@ -1385,7 +1442,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).not.toContain(
         'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
       );
@@ -1397,6 +1456,8 @@ describe('Page output', () => {
       const props = {
         id: '123',
         page: {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
               src: 'https://example.com/audio.mp3',
@@ -1405,25 +1466,30 @@ describe('Page output', () => {
               length: 100,
               lengthFormatted: '1:40',
             },
+            loop: true,
             tracks: [],
           },
-          id: '123',
           elements: [],
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      const content = renderToStaticMarkup(
+        <PageOutput {...props} flags={{}} />
+      );
       expect(content).toContain(
         'background-audio="https://example.com/audio.mp3"'
       );
       expect(content).not.toContain('amp-video');
     });
-    it('should add background audio as amp-video', async () => {
+
+    it('should add background audio as amp-video', () => {
       const props = {
         id: '123',
         page: {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
               src: 'https://example.com/audio.mp3',
@@ -1445,54 +1511,55 @@ describe('Page output', () => {
             ],
             loop: true,
           },
-          id: '123',
           elements: [],
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
 
       const captions = container.querySelector('amp-story-captions');
-      await expect(captions).toBeInTheDocument();
+      expect(captions).toBeInTheDocument();
       expect(captions).toMatchSnapshot();
       expect(captions).toHaveAttribute('id', 'el-123-captions');
 
       const video = container.querySelector('amp-video');
-      await expect(video).toBeInTheDocument();
+      expect(video).toBeInTheDocument();
       expect(video).toMatchSnapshot();
       expect(video).toHaveAttribute('captions-id', 'el-123-captions');
 
       const page = container.querySelector('amp-story-page');
-      await expect(page).toBeInTheDocument();
+      expect(page).toBeInTheDocument();
       expect(page).not.toContain(
         'background-audio="https://example.com/audio.mp3"'
       );
     });
 
-    it('should not contain background audio if null', async () => {
+    it('should not contain background audio if missing', () => {
       const props = {
         id: '123',
         page: {
-          backgroundAudio: null,
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const page = container.querySelector('amp-story-page');
-      await expect(page).toBeInTheDocument();
+      expect(page).toBeInTheDocument();
       expect(page).not.toContain('background-audio=');
     });
 
-    it('should use amp-video for non-looping background audio', async () => {
+    it('should use amp-video for non-looping background audio', () => {
       const props = {
         id: '123',
         page: {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
               src: 'https://example.com/audio.mp3',
@@ -1504,29 +1571,29 @@ describe('Page output', () => {
             tracks: [],
             loop: false,
           },
-          id: '123',
           elements: [],
         },
         defaultAutoAdvance: false,
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const video = container.querySelector('amp-video');
-      await expect(video).toBeInTheDocument();
+      expect(video).toBeInTheDocument();
       expect(video).toMatchSnapshot();
 
       const page = container.querySelector('amp-story-page');
-      await expect(page).toBeInTheDocument();
+      expect(page).toBeInTheDocument();
       expect(page).not.toContain(
         'background-audio="https://example.com/audio.mp3"'
       );
     });
 
-    it('should use amp-video with crossorigin="anonymous" for background audio with tracks', async () => {
+    it('should use amp-video with crossorigin="anonymous" for background audio with tracks', () => {
       const props = {
         id: '123',
         page: {
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
               src: 'https://example.com/audio.mp3',
@@ -1555,13 +1622,13 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const video = container.querySelector('amp-video');
-      await expect(video).toBeInTheDocument();
+      expect(video).toBeInTheDocument();
       expect(video).toMatchSnapshot();
 
       const page = container.querySelector('amp-story-page');
-      await expect(page).toBeInTheDocument();
+      expect(page).toBeInTheDocument();
       expect(page).not.toContain(
         'background-audio="https://example.com/audio.mp3"'
       );
@@ -1569,16 +1636,17 @@ describe('Page output', () => {
   });
 
   describe('video captions', () => {
-    it('should render layer for amp-story-captions', async () => {
+    it('should render layer for amp-story-captions', () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'baz',
-              type: 'video',
+              type: ElementType.Video,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -1616,9 +1684,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const captions = container.querySelector('amp-story-captions');
-      await expect(captions).toBeInTheDocument();
+      expect(captions).toBeInTheDocument();
       expect(captions).toMatchInlineSnapshot(`
       <amp-story-captions
         id="el-baz-captions"
@@ -1630,16 +1698,17 @@ describe('Page output', () => {
   });
 
   describe('Shopping', () => {
-    it('should render shopping attachment if there are products', async () => {
+    it('should render shopping attachment if there are products', () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'el1',
-              type: 'product',
+              type: ElementType.Product,
               x: 50,
               y: 50,
               width: 32,
@@ -1649,7 +1718,7 @@ describe('Page output', () => {
             },
             {
               id: 'el2',
-              type: 'product',
+              type: ElementType.Product,
               x: 100,
               y: 100,
               width: 32,
@@ -1661,27 +1730,27 @@ describe('Page output', () => {
         },
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const shoppingAttachment = container.querySelector(
         'amp-story-shopping-attachment'
       );
-      await expect(shoppingAttachment).toBeInTheDocument();
+      expect(shoppingAttachment).toBeInTheDocument();
     });
 
-    it('should render shopping attachment with custom cta text if there are products', async () => {
+    it('should render shopping attachment with custom cta text if there are products', () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           shoppingAttachment: {
-            theme: 'light',
             ctaText: 'Buy now',
           },
           elements: [
             {
               id: 'el1',
-              type: 'product',
+              type: ElementType.Product,
               x: 50,
               y: 50,
               width: 32,
@@ -1691,7 +1760,7 @@ describe('Page output', () => {
             },
             {
               id: 'el2',
-              type: 'product',
+              type: ElementType.Product,
               x: 100,
               y: 100,
               width: 32,
@@ -1703,26 +1772,27 @@ describe('Page output', () => {
         },
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const shoppingAttachment = container.querySelector(
         'amp-story-shopping-attachment'
       );
 
-      await expect(shoppingAttachment).toBeInTheDocument();
-      await expect(shoppingAttachment).toHaveAttribute('cta-text', 'Buy now');
-      await expect(shoppingAttachment).toHaveAttribute('theme', 'light');
+      expect(shoppingAttachment).toBeInTheDocument();
+      expect(shoppingAttachment).toHaveAttribute('cta-text', 'Buy now');
+      expect(shoppingAttachment).toHaveAttribute('theme', 'light');
     });
 
-    it('should not render page attachment if there are products', async () => {
+    it('should not render page attachment if there are products', () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'el1',
-              type: 'product',
+              type: ElementType.Product,
               x: 50,
               y: 50,
               width: 32,
@@ -1732,7 +1802,7 @@ describe('Page output', () => {
             },
             {
               id: 'el2',
-              type: 'product',
+              type: ElementType.Product,
               x: 100,
               y: 100,
               width: 32,
@@ -1742,19 +1812,19 @@ describe('Page output', () => {
             },
           ],
           pageAttachment: {
-            url: 'http://example.com',
+            url: 'https://example.com',
             ctaText: 'Click me!',
           },
         },
       };
 
-      const { container } = render(<PageOutput {...props} />);
+      const { container } = render(<PageOutput {...props} flags={{}} />);
       const shoppingAttachment = container.querySelector(
         'amp-story-shopping-attachment'
       );
-      await expect(shoppingAttachment).toBeInTheDocument();
+      expect(shoppingAttachment).toBeInTheDocument();
       const pageOutlink = container.querySelector('amp-story-page-outlink');
-      await expect(pageOutlink).not.toBeInTheDocument();
+      expect(pageOutlink).not.toBeInTheDocument();
     });
   });
 
@@ -1767,13 +1837,16 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
         },
         defaultAutoAdvance: true,
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid AMP output with manual page advancement', async () => {
@@ -1782,12 +1855,15 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
         },
         defaultAutoAdvance: false,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid AMP output with custom page duration', async () => {
@@ -1796,6 +1872,7 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'p1',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           advancement: { autoAdvance: true, pageDuration: 10 },
           elements: [],
         },
@@ -1803,7 +1880,9 @@ describe('Page output', () => {
         defaultPageDuration: 7,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid AMP output with custom manual page advancement', async () => {
@@ -1812,13 +1891,16 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'p1',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           advancement: { autoAdvance: false },
           elements: [],
         },
         defaultAutoAdvance: true,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid AMP output with Page Attachment', async () => {
@@ -1827,15 +1909,18 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [],
         },
         defaultAutoAdvance: true,
         pageAttachment: {
-          url: 'http://example.com',
+          url: 'https://example.com',
           ctaText: 'Click me!',
         },
       };
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with media elements', async () => {
@@ -1844,10 +1929,11 @@ describe('Page output', () => {
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: '123',
-              type: 'video',
+              type: ElementType.Video,
               mimeType: 'video/mp4',
               scale: 1,
               origRatio: 9 / 16,
@@ -1874,21 +1960,29 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with animations', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           animations: [
-            { id: '123', targets: ['123'], type: 'bounce', duration: 1000 },
-          ],
+            {
+              id: '123',
+              targets: ['123'],
+              type: AnimationType.Bounce,
+              duration: 1000,
+            },
+          ] as StoryAnimation[],
           elements: [
             {
-              type: 'text',
+              type: ElementType.Text,
               id: '123',
               x: 50,
               y: 100,
@@ -1912,22 +2006,28 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with background audio', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
             },
             tracks: [],
+            loop: true,
           },
           animations: [],
           elements: [],
@@ -1936,20 +2036,25 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with background audio with captions', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
             },
             tracks: [
               {
@@ -1962,6 +2067,7 @@ describe('Page output', () => {
                 kind: 'captions',
               },
             ],
+            loop: false,
           },
           animations: [],
           elements: [],
@@ -1970,15 +2076,18 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
     it('should produce valid output with non-looping background audio', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
               src: 'https://example.com/audio.mp3',
@@ -1997,20 +2106,22 @@ describe('Page output', () => {
         defaultPageDuration: 11,
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests -- TODO: Enable once stable.
     it.skip('should produce valid output with shopping products', async () => {
       const props = {
         id: 'foo',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           elements: [
             {
               id: 'el1',
-              type: 'product',
+              type: ElementType.Product,
               x: 50,
               y: 50,
               width: 32,
@@ -2020,7 +2131,7 @@ describe('Page output', () => {
             },
             {
               id: 'el2',
-              type: 'product',
+              type: ElementType.Product,
               x: 100,
               y: 100,
               width: 32,
@@ -2030,7 +2141,7 @@ describe('Page output', () => {
             },
             {
               id: 'el3',
-              type: 'product',
+              type: ElementType.Product,
               x: 150,
               y: 150,
               width: 32,
@@ -2040,7 +2151,7 @@ describe('Page output', () => {
             },
             {
               id: 'el3',
-              type: 'product',
+              type: ElementType.Product,
               x: 200,
               y: 200,
               width: 32,
@@ -2052,7 +2163,9 @@ describe('Page output', () => {
         },
       };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      await expect(
+        <PageOutput {...props} flags={{}} />
+      ).toBeValidAMPStoryPage();
     });
   });
 });

@@ -17,9 +17,20 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import type {
+  ShoppingAttachment,
+  ProductData,
+} from '@googleforcreators/elements';
 
-function ShoppingAttachment({ products, theme, ctaText }) {
+type ShoppingAttachmentProps = Partial<ShoppingAttachment> & {
+  products: ProductData[];
+};
+
+function ShoppingAttachment({
+  products,
+  theme,
+  ctaText,
+}: ShoppingAttachmentProps) {
   return (
     <amp-story-shopping-attachment
       theme={theme}
@@ -36,11 +47,5 @@ function ShoppingAttachment({ products, theme, ctaText }) {
     </amp-story-shopping-attachment>
   );
 }
-
-ShoppingAttachment.propTypes = {
-  theme: PropTypes.oneOf(['light', 'dark']),
-  ctaText: PropTypes.string,
-  products: PropTypes.arrayOf(PropTypes.object),
-};
 
 export default ShoppingAttachment;

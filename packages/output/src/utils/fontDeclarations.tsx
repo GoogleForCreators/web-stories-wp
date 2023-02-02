@@ -17,19 +17,25 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
 import { getFontVariants } from '@googleforcreators/rich-text';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import { elementIs, FontService } from '@googleforcreators/elements';
+import type {
+  CustomFontData,
+  GoogleFontData,
+  FontFamily,
+  FontVariant,
+  Page,
+} from '@googleforcreators/elements';
 
-const hasTuple = (tuples, tuple) =>
+const hasTuple = (tuples: FontVariant[], tuple: FontVariant) =>
   tuples.some((val) => val[0] === tuple[0] && val[1] === tuple[1]);
 
-const tupleDiff = (a, b) => {
+const tupleDiff = (a: FontVariant, b: FontVariant) => {
   return Math.abs(a[0] + a[1] - b[0] - b[1]);
 };
 
-const getNearestTuple = (tuples, tuple) => {
+const getNearestTuple = (tuples: FontVariant[], tuple: FontVariant) => {
   return tuples.reduce((acc, curr) => {
     const currDiff = tupleDiff(curr, tuple);
     const accDiff = tupleDiff(acc, tuple);
@@ -38,22 +44,29 @@ const getNearestTuple = (tuples, tuple) => {
   });
 };
 
-function FontDeclarations({ pages }) {
-  const map = new Map();
+function FontDeclarations({ pages }: { pages: Page[] }) {
+  const map = new Map<
+    FontService,
+    Map<FontFamily, CustomFontData | GoogleFontData>
+  >();
 
   for (const { elements } of pages) {
-    const textElements = elements.filter(({ type }) => type === 'text');
+    const textElements = elements.filter(elementIs.text);
     // Prepare font objects for later use.
     for (const { font, content } of textElements) {
-      const { service, family, variants = [], url } = font;
-      if (!service || service === 'system') {
+      const { service, family, variants = [] } = font;
+      if (!service || service === FontService.System) {
         continue;
       }
 
       const serviceMap = map.get(service) || new Map();
       map.set(service, serviceMap);
 
-      const fontObj = serviceMap.get(family) || { family, variants: [], url };
+      const fontObj = serviceMap.get(family) || {
+        family,
+        variants: [],
+        url: 'url' in font ? font.url : null,
+      };
 
       const contentVariants = getFontVariants(content);
 
@@ -92,18 +105,32 @@ function FontDeclarations({ pages }) {
     <>
       {Array.from(map.keys()).map((service) => {
         const serviceMap = map.get(service);
+        if (!serviceMap) {
+          return null;
+        }
         switch (service) {
-          case 'fonts.google.com':
+          case FontService.GoogleFonts:
             return (
               <link
                 key={service}
-                href={getGoogleFontURL(Array.from(serviceMap.values()))}
+                href={getGoogleFontURL(
+                  Array.from(
+                    (serviceMap as Map<FontFamily, GoogleFontData>).values()
+                  )
+                )}
                 rel="stylesheet"
               />
             );
-          case 'custom':
-            return Array.from(serviceMap.values()).map(({ family, url }) => {
+          case FontService.Custom:
+            return Array.from(
+              (serviceMap as Map<FontFamily, CustomFontData>).values()
+            ).map(({ family, url }) => {
               const inlineStyle = getFontCSS(family, url);
+
+              if (!inlineStyle) {
+                return null;
+              }
+
               return (
                 <style
                   key={family}
@@ -120,9 +147,5 @@ function FontDeclarations({ pages }) {
     </>
   );
 }
-
-FontDeclarations.propTypes = {
-  pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
-};
 
 export default FontDeclarations;

@@ -17,11 +17,21 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { withProtocol } from '@googleforcreators/url';
-import { LinkType, StoryPropTypes } from '@googleforcreators/elements';
+import { LinkType } from '@googleforcreators/elements';
+import { type Element, elementIs } from '@googleforcreators/elements';
+import type { HTMLAttributes, PropsWithChildren, ReactElement } from 'react';
 
-function WithLink({ element, children, ...rest }) {
+type WithLinkProps = PropsWithChildren<{
+  element: Element;
+}> &
+  HTMLAttributes<HTMLAnchorElement>;
+
+function WithLink({ element, children, ...rest }: WithLinkProps) {
+  if (!elementIs.linkable(element)) {
+    return children as unknown as ReactElement;
+  }
+
   const link = element.link || {};
   const { url, icon, desc, rel = [], type, pageId } = link;
 
@@ -39,8 +49,9 @@ function WithLink({ element, children, ...rest }) {
   }
 
   if (!url) {
-    return children;
+    return children as unknown as ReactElement;
   }
+
   const clonedRel = rel.concat(['noreferrer']);
   const urlWithProtocol = withProtocol(url);
   return (
@@ -57,10 +68,5 @@ function WithLink({ element, children, ...rest }) {
     </a>
   );
 }
-
-WithLink.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 export default WithLink;

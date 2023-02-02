@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@googleforcreators/units';
 import { AMPWrapper } from '@googleforcreators/animation';
 import {
   BACKGROUND_TEXT_MODE,
   getDefinitionForType,
-  StoryPropTypes,
+  type Element,
+  elementIs,
 } from '@googleforcreators/elements';
 import {
   OutputWithMask as WithMask,
@@ -39,17 +39,13 @@ import {
  */
 import WithLink from './components/withLink';
 
-function OutputElement({ element, flags }) {
-  const {
-    id,
-    opacity,
-    type,
-    border,
-    backgroundColor,
-    backgroundTextMode,
-    overlay,
-    isHidden,
-  } = element;
+interface OutputElementProps {
+  element: Element;
+  flags: Record<string, boolean>;
+}
+
+function OutputElement({ element, flags }: OutputElementProps) {
+  const { id, opacity, type, isHidden } = element;
 
   if (isHidden) {
     return null;
@@ -60,6 +56,16 @@ function OutputElement({ element, flags }) {
   // Box is calculated based on the 100%:100% basis for width and height
   const box = getBox(element, 100, 100);
   const { x, y, width, height, rotationAngle } = box;
+
+  const backgroundColor = elementIs.text(element)
+    ? element.backgroundColor
+    : null;
+
+  const isFillBackground =
+    elementIs.text(element) &&
+    element.backgroundTextMode === BACKGROUND_TEXT_MODE.FILL;
+
+  const isOverlayable = elementIs.overlayable(element);
 
   // We're adding background styles in case of Fill here so that
   // the background and the border would match together.
@@ -79,22 +85,22 @@ function OutputElement({ element, flags }) {
         height: `${height}%`,
         ...(shouldDisplayBorder(element)
           ? getBorderPositionCSS({
-              ...border,
+              ...element.border,
               width: `${width}%`,
               height: `${height}%`,
               posTop: `${y}%`,
               posLeft: `${x}%`,
             })
           : null),
-        transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
-        opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
+        transform: rotationAngle ? `rotate(${rotationAngle}deg)` : undefined,
+        opacity: typeof opacity !== 'undefined' ? opacity / 100 : undefined,
       }}
     >
       <AMPWrapper target={id}>
         <WithMask
           className={!isMaskable ? undefined : 'mask'}
           element={element}
-          id={'el-' + id}
+          id={`el-${id}`}
           style={{
             ...(shouldDisplayBorder(element) ? getBorderStyle(element) : null),
             pointerEvents: 'initial',
@@ -106,9 +112,7 @@ function OutputElement({ element, flags }) {
             left: 0,
             zIndex: 0,
             ...getBorderRadius(element),
-            ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
-              ? bgStyles
-              : null),
+            ...(isFillBackground ? bgStyles : null),
           }}
           skipDefaultMask
         >
@@ -125,10 +129,10 @@ function OutputElement({ element, flags }) {
           >
             <Output element={element} box={box} flags={flags} />
           </WithLink>
-          {overlay && (
+          {isOverlayable && element.overlay && (
             <div
               className="element-overlay-area"
-              style={generatePatternStyles(overlay)}
+              style={generatePatternStyles(element.overlay)}
             />
           )}
         </WithMask>
@@ -136,10 +140,5 @@ function OutputElement({ element, flags }) {
     </div>
   );
 }
-
-OutputElement.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  flags: PropTypes.object,
-};
 
 export default OutputElement;

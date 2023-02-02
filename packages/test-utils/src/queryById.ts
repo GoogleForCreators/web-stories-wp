@@ -17,9 +17,15 @@
 /**
  * External dependencies
  */
-import { queryAllByAttribute, buildQueries, type GetErrorFunction, type Matcher } from "@testing-library/react";
+import {
+  queryAllByAttribute,
+  buildQueries,
+  type GetErrorFunction,
+  type Matcher,
+} from '@testing-library/react';
 
-const queryAllById = (container: HTMLElement, id: Matcher) => queryAllByAttribute('id', container, id);
+const queryAllById = (container: HTMLElement, id: Matcher) =>
+  queryAllByAttribute('id', container, id);
 
 const getMultipleError: GetErrorFunction = (_c: Element | null, value) =>
   `Found multiple elements with the id attribute of: ${value}`;

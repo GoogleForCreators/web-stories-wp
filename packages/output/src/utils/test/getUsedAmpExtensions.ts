@@ -17,6 +17,16 @@
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
+import { ElementType } from '@googleforcreators/elements';
+import type {
+  BackgroundAudio,
+  Page,
+  ProductElement,
+  VideoElement,
+} from '@googleforcreators/elements';
 import getUsedAmpExtensions from '../getUsedAmpExtensions';
 
 describe('getUsedAmpExtensions', () => {
@@ -43,10 +53,10 @@ describe('getUsedAmpExtensions', () => {
   });
 
   it('should include the amp-video script if there is a video', () => {
-    const pages = [
+    const pages: Page[] = [
       {
-        elements: [{ type: 'video' }],
-      },
+        elements: [{ type: ElementType.Video }],
+      } as Page,
     ];
 
     const actual = getUsedAmpExtensions(pages);
@@ -63,10 +73,10 @@ describe('getUsedAmpExtensions', () => {
   });
 
   it('should include the amp-video script if there is a gif element', () => {
-    const pages = [
+    const pages: Page[] = [
       {
-        elements: [{ type: 'gif' }],
-      },
+        elements: [{ type: ElementType.Gif }],
+      } as Page,
     ];
 
     const actual = getUsedAmpExtensions(pages);
@@ -83,19 +93,19 @@ describe('getUsedAmpExtensions', () => {
   });
 
   it('should include the amp-video script only once if there are multiple videos', () => {
-    const pages = [
+    const pages: Page[] = [
       {
-        elements: [{ type: 'video' }],
-      },
+        elements: [{ type: ElementType.Video }],
+      } as Page,
       {
-        elements: [{ type: 'text' }],
-      },
+        elements: [{ type: ElementType.Text }],
+      } as Page,
       {
-        elements: [{ type: 'video' }],
-      },
+        elements: [{ type: ElementType.Video }],
+      } as Page,
       {
-        elements: [{ type: 'video' }],
-      },
+        elements: [{ type: ElementType.Video }],
+      } as Page,
     ];
 
     const actual = getUsedAmpExtensions(pages);
@@ -112,25 +122,43 @@ describe('getUsedAmpExtensions', () => {
   });
 
   it('should include the amp-story-captions script if there is a video with tracks', () => {
-    const pages = [
+    const pages: Page[] = [
       {
+        id: 'abc',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         elements: [
           {
-            type: 'video',
+            id: 'a',
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
+            rotationAngle: 0,
+            type: ElementType.Video,
+            resource: {
+              type: 'video',
+              mimeType: 'video/mp4',
+              id: 123,
+              src: 'https://example.com/video.mp4',
+              alt: '',
+              width: 100,
+              height: 100,
+              isExternal: false,
+            },
             tracks: [
               {
                 track: 'https://example.com/track.vtt',
                 trackId: 123,
                 trackName: 'track.vtt',
                 id: 'rersd-fdfd-fdfd-fdfd',
-                srcLang: '',
+                srclang: '',
                 label: '',
                 kind: 'captions',
               },
             ],
-          },
+          } as VideoElement,
         ],
-      },
+      } as Page,
     ];
 
     const actual = getUsedAmpExtensions(pages);
@@ -147,8 +175,10 @@ describe('getUsedAmpExtensions', () => {
   });
 
   it('should include the amp-story-captions script if there is a background audio with tracks', () => {
-    const pages = [
+    const pages: Page[] = [
       {
+        id: 'abc',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         backgroundAudio: {
           resource: { src: 'https://example.com/audio.mp3' },
           tracks: [
@@ -157,12 +187,12 @@ describe('getUsedAmpExtensions', () => {
               trackId: 123,
               trackName: 'track.vtt',
               id: 'rersd-fdfd-fdfd-fdfd',
-              srcLang: '',
+              srclang: '',
               label: '',
               kind: 'captions',
             },
           ],
-        },
+        } as BackgroundAudio,
         elements: [],
       },
     ];
@@ -185,19 +215,21 @@ describe('getUsedAmpExtensions', () => {
   });
 
   it('should include the amp-story-shopping script if there are products', () => {
-    const pages = [
+    const pages: Page[] = [
       {
+        id: 'abc',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         elements: [
           {
             id: 'el1',
-            type: 'product',
+            type: ElementType.Product,
             x: 50,
             y: 50,
             width: 32,
             height: 32,
             rotationAngle: 0,
             product: {},
-          },
+          } as ProductElement,
         ],
       },
     ];

@@ -17,6 +17,8 @@
 /**
  * External dependencies
  */
+import type { Page, TextElement } from '@googleforcreators/elements';
+import { ElementType, FontService } from '@googleforcreators/elements';
 import { render } from '@testing-library/react';
 
 /**
@@ -26,36 +28,37 @@ import FontDeclarations from '../fontDeclarations';
 
 describe('FontDeclarations', () => {
   it('should ignore system fonts', () => {
-    const pages = [
+    const pages: Page[] = [
       {
         id: 'abc123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         elements: [
           {
             id: 'a',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Arial',
-              service: 'system',
+              service: FontService.System,
             },
             x: 100,
             y: 100,
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as TextElement,
           {
             id: 'b',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Helvetica',
-              service: 'system',
+              service: FontService.System,
             },
             x: 100,
             y: 100,
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as TextElement,
         ],
       },
     ];
@@ -65,62 +68,85 @@ describe('FontDeclarations', () => {
   });
 
   it('should return one item for multiple Google fonts', () => {
-    const pages = [
+    const pages: Page[] = [
       {
         id: 'abc123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         elements: [
           {
-            id: 'a',
-            type: 'text',
+            id: 'def456',
+            x: 0,
+            y: 0,
+            width: 211,
+            height: 221,
+            rotationAngle: 1,
+            type: ElementType.Text,
             font: {
               family: 'Roboto',
-              service: 'fonts.google.com',
+              service: FontService.GoogleFonts,
               variants: [
                 [0, 400],
                 [1, 400],
               ],
+              fallbacks: ['Arial', 'sans-serif'],
             },
             content: '<span style="font-style: italic">Hello</span>',
-            x: 100,
-            y: 100,
-            width: 200,
-            height: 50,
-            rotationAngle: 0,
-          },
+            padding: {
+              locked: false,
+              vertical: 0,
+              horizontal: 0,
+            },
+            marginOffset: 0,
+            fontSize: 10,
+            lineHeight: 1,
+            textAlign: 'center',
+            backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          } as TextElement,
           {
-            id: 'b',
-            type: 'text',
+            id: 'abc123',
+            x: 0,
+            y: 0,
+            width: 211,
+            height: 221,
+            rotationAngle: 1,
+            type: ElementType.Text,
             font: {
               family: 'Roboto',
-              service: 'fonts.google.com',
+              service: FontService.GoogleFonts,
               variants: [
                 [0, 400],
                 [1, 400],
               ],
+              fallbacks: ['Arial', 'sans-serif'],
             },
             content: '<span style="font-style: italic">Hello</span>',
-            x: 100,
-            y: 100,
-            width: 200,
-            height: 50,
-            rotationAngle: 0,
-          },
+            padding: {
+              locked: false,
+              vertical: 0,
+              horizontal: 0,
+            },
+            marginOffset: 0,
+            fontSize: 10,
+            lineHeight: 1,
+            textAlign: 'center',
+            backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          } as TextElement,
           {
-            id: 'c',
-            type: 'text',
+            id: 'xyz789',
+            x: 0,
+            y: 0,
+            width: 211,
+            height: 221,
+            rotationAngle: 1,
+            type: ElementType.Text,
             font: {
               family: 'Lato',
-              service: 'fonts.google.com',
+              service: FontService.GoogleFonts,
             },
-            x: 100,
-            y: 100,
-            width: 200,
-            height: 50,
-            rotationAngle: 0,
-          },
+          } as TextElement,
           {
             id: 'd',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Lato',
               service: 'fonts.google.com',
@@ -130,7 +156,7 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as TextElement,
         ],
       },
     ];
@@ -147,25 +173,37 @@ describe('FontDeclarations', () => {
   });
 
   it('should only include valid variants', () => {
-    const pages = [
+    const pages: Page[] = [
       {
         id: 'abc123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         elements: [
           {
-            id: 'a',
-            type: 'text',
+            id: 'def456',
+            x: 0,
+            y: 0,
+            width: 211,
+            height: 221,
+            rotationAngle: 1,
+            type: ElementType.Text,
             font: {
               family: 'Architects Daughter',
-              service: 'fonts.google.com',
+              service: FontService.GoogleFonts,
               variants: [[0, 400]],
+              fallbacks: ['sans-serif'],
             },
             content: '<span style="font-style: italic">Hello</span>',
-            x: 100,
-            y: 100,
-            width: 200,
-            height: 50,
-            rotationAngle: 0,
-          },
+            padding: {
+              locked: false,
+              vertical: 0,
+              horizontal: 0,
+            },
+            marginOffset: 0,
+            fontSize: 10,
+            lineHeight: 1,
+            textAlign: 'center',
+            backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          } as TextElement,
         ],
       },
     ];
@@ -182,13 +220,14 @@ describe('FontDeclarations', () => {
   });
 
   it('should fall back to closest variant', () => {
-    const pages = [
+    const pages: Page[] = [
       {
         id: 'abc123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         elements: [
           {
             id: 'a',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Mukta Mahee',
               service: 'fonts.google.com',
@@ -209,10 +248,10 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
           {
             id: 'b',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Mukta Mahee',
               service: 'fonts.google.com',
@@ -233,10 +272,10 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
           {
             id: 'c',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Molle',
               service: 'fonts.google.com',
@@ -248,10 +287,10 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
           {
             id: 'd',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Abel',
               service: 'fonts.google.com',
@@ -263,10 +302,10 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
           {
             id: 'e',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Alef',
               service: 'fonts.google.com',
@@ -282,7 +321,7 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
         ],
       },
     ];
@@ -299,13 +338,14 @@ describe('FontDeclarations', () => {
   });
 
   it('should add inline stylesheets for custom fonts', () => {
-    const pages = [
+    const pages: Page[] = [
       {
         id: 'abc123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         elements: [
           {
             id: 'a',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
@@ -320,10 +360,10 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
           {
             id: 'b',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
@@ -338,10 +378,10 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
           {
             id: 'c',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Lato',
               service: 'fonts.google.com',
@@ -351,10 +391,10 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
           {
             id: 'd',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Lato',
               service: 'fonts.google.com',
@@ -364,10 +404,10 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
           {
             id: 'e',
-            type: 'text',
+            type: ElementType.Text,
             font: {
               family: 'Vazir Regular',
               service: 'custom',
@@ -378,7 +418,7 @@ describe('FontDeclarations', () => {
             width: 200,
             height: 50,
             rotationAngle: 0,
-          },
+          } as unknown as TextElement,
         ],
       },
     ];

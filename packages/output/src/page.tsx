@@ -22,9 +22,10 @@ import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import { AnimationProvider, AMPAnimations } from '@googleforcreators/animation';
 import {
-  ELEMENT_TYPES,
   StoryPropTypes,
   isElementBelowLimit,
+  type Page,
+  elementIs,
 } from '@googleforcreators/elements';
 
 /**
@@ -40,12 +41,19 @@ import ShoppingAttachment from './utils/shoppingAttachment';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
+interface OutputPageProps {
+  page: Page;
+  defaultAutoAdvance?: boolean;
+  defaultPageDuration?: number;
+  flags: Record<string, boolean>;
+}
+
 function OutputPage({
   page,
   defaultAutoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
   flags,
-}) {
+}: OutputPageProps) {
   const {
     id,
     animations,
@@ -53,7 +61,7 @@ function OutputPage({
     elements,
     backgroundColor,
     backgroundAudio,
-    pageAttachment = {},
+    pageAttachment = null,
     shoppingAttachment = {},
   } = page;
 
@@ -111,7 +119,8 @@ function OutputPage({
   });
 
   const products = elements
-    .filter(({ type, isHidden }) => type === ELEMENT_TYPES.PRODUCT && !isHidden)
+    .filter(elementIs.product)
+    .filter(({ isHidden }) => !isHidden)
     .map(({ product }) => product)
     .filter(Boolean);
 
@@ -119,9 +128,8 @@ function OutputPage({
   const hasPageAttachment = pageAttachment?.url && !hasProducts;
 
   const videoCaptions = elements
-    .filter(
-      ({ type, tracks }) => type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
-    )
+    .filter(elementIs.video)
+    .filter(({ tracks }) => tracks?.length > 0)
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
   const backgroundAudioSrc = backgroundAudio?.resource?.src;

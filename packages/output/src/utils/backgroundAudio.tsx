@@ -17,24 +17,27 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import {
-  ResourcePropTypes,
-  BackgroundAudioPropType,
-} from '@googleforcreators/media';
+import type { BackgroundAudio, ElementId } from '@googleforcreators/elements';
 
-function BackgroundAudio({ backgroundAudio, id }) {
-  const { resource, tracks, loop } = backgroundAudio || {};
+interface BackgroundAudioProps {
+  backgroundAudio: BackgroundAudio;
+  id: ElementId;
+}
+
+function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioProps) {
+  const { resource, tracks, loop } = backgroundAudio;
   const { mimeType, src } = resource;
+
+  const hasTracks = tracks?.length && tracks?.length > 0;
 
   const videoProps = {
     loop: loop ? 'loop' : undefined,
     id: `page-${id}-background-audio`,
     // Actual <amp-story-captions> output happens in OutputPage.
-    'captions-id': tracks?.length > 0 ? `el-${id}-captions` : undefined,
+    'captions-id':hasTracks ? `el-${id}-captions` : undefined,
     // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track#attr-src
     // and https://github.com/GoogleForCreators/web-stories-wp/issues/11479
-    crossorigin: tracks?.length > 0 ? 'anonymous' : undefined,
+    crossorigin: hasTracks ? 'anonymous' : undefined,
   };
 
   const sourceProps = {
@@ -72,14 +75,5 @@ function BackgroundAudio({ backgroundAudio, id }) {
     </amp-story-grid-layer>
   );
 }
-
-BackgroundAudio.propTypes = {
-  backgroundAudio: PropTypes.shape({
-    resource: BackgroundAudioPropType,
-    loop: PropTypes.bool,
-    tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
-  }),
-  id: PropTypes.string.isRequired,
-};
 
 export default BackgroundAudio;

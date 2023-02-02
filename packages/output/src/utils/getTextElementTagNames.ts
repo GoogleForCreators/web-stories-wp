@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { elementIs, type Element } from '@googleforcreators/elements';
+
 const MINIMUM_CONTENT_LENGTH = 3;
 
 /**
@@ -22,23 +27,24 @@ const MINIMUM_CONTENT_LENGTH = 3;
  * Uses a very simple algorithm to set tag name (h1, h2, h3, p)
  * based on font size.
  *
- * @param {Array<Object>} elements List of text elements
- * @return {Map<string, string>} Map of element IDs to tag name.
+ * @param elements List of text elements
+ * @return Map of element IDs to tag name.
  */
-function getTextElementTagNames(elements) {
+function getTextElementTagNames(elements: Element[]) {
   return elements
+    .filter(elementIs.text)
     .sort((a, b) => a.y - b.y)
     .reduce(
       /**
        * Reducer.
        *
-       * @param {Map<string, string>} tagNamesMap Tag names map.
-       * @param {Object} element Text element.
-       * @param {string} element.id Element ID
-       * @param {number} element.fontSize Font size.
-       * @param {string} element.content Text content.
-       * @param {string} element.tagName Existing tagName
-       * @return {Map<string, string>} Tag names map.
+       * @param tagNamesMap Tag names map.
+       * @param element Text element.
+       * @param element.id Element ID
+       * @param element.fontSize Font size.
+       * @param element.content Text content.
+       * @param element.tagName Existing tagName
+       * @return Tag names map.
        */
       (tagNamesMap, { id, fontSize, content, tagName }) => {
         // if a tag already exists,

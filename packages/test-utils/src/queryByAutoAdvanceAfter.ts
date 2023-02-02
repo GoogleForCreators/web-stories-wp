@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { queryAllByAttribute, buildQueries, type GetErrorFunction, Matcher } from "@testing-library/react";
+import {
+  queryAllByAttribute,
+  buildQueries,
+  type GetErrorFunction,
+  type Matcher,
+} from '@testing-library/react';
 
 const queryAllByAutoAdvanceAfter = (container: HTMLElement, id: Matcher) =>
   queryAllByAttribute('auto-advance-after', container, id);

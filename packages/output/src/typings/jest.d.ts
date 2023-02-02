@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import 'jest-extended';
+import '@testing-library/jest-dom';
 
-/**
- * External dependencies
- */
-import { __ } from '@googleforcreators/i18n';
-import type { PageAttachment } from '@googleforcreators/elements';
-
-function Outlink({ ctaText, url, icon, theme, rel = [] }: PageAttachment) {
-  return (
-    <amp-story-page-outlink
-      layout="nodisplay"
-      cta-image={icon || undefined}
-      theme={theme}
-    >
-      <a href={url} rel={rel.join(' ')}>
-        {ctaText || __('Learn more', 'web-stories')}
-      </a>
-    </amp-story-page-outlink>
-  );
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toBeValidAMP(): Promise<R>;
+      toBeValidAMPStory(): Promise<R>;
+      toBeValidAMPStoryPage(): Promise<R>;
+      toBeValidAMPStoryElement(): Promise<R>;
+    }
+  }
 }
 
-export default Outlink;
+export {};

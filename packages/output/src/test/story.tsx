@@ -18,12 +18,13 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
-import { registerElementType } from '@googleforcreators/elements';
+import { ElementType, registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
+import { AnimationType, StoryAnimation } from '@googleforcreators/animation';
 import StoryOutput from '../story';
 
 describe('Story output', () => {
@@ -64,11 +65,20 @@ describe('Story output', () => {
         {
           id: '123',
           animations: [
-            { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
-            { id: 'anim1', targets: ['124'], type: 'spin', duration: 500 },
-          ],
+            {
+              id: 'anim1',
+              targets: ['123'],
+              type: AnimationType.Bounce,
+              duration: 1000,
+            },
+            {
+              id: 'anim1',
+              targets: ['124'],
+              type: AnimationType.Spin,
+              duration: 500,
+            },
+          ] as StoryAnimation[],
           backgroundColor: {
-            type: 'solid',
             color: { r: 255, g: 255, b: 255 },
           },
           page: {
@@ -76,7 +86,7 @@ describe('Story output', () => {
           },
           elements: [
             {
-              type: 'text',
+              type: ElementType.Text,
               id: '123',
               x: 50,
               y: 100,
@@ -99,7 +109,7 @@ describe('Story output', () => {
               },
             },
             {
-              type: 'text',
+              type: ElementType.Text,
               id: '124',
               x: 50,
               y: 100,
@@ -129,7 +139,7 @@ describe('Story output', () => {
       },
     };
 
-    const content = renderToStaticMarkup(<StoryOutput {...props} />);
+    const content = renderToStaticMarkup(<StoryOutput {...props} flags={{}} />);
 
     expect(content).toContain(
       '<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto%3Aital%401&amp;family=Lato" rel="stylesheet"/>'
@@ -168,18 +178,30 @@ describe('Story output', () => {
             src: 'https://example.com/audio.mp3',
             id: 123,
             mimeType: 'audio/mpeg',
+            length: 100,
+            lengthFormatted: '1:40',
           },
         },
+        fonts: {},
       },
       pages: [
         {
           id: '123',
           animations: [
-            { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
-            { id: 'anim1', targets: ['123'], type: 'spin', duration: 500 },
-          ],
+            {
+              id: 'anim1',
+              targets: ['123'],
+              type: AnimationType.Bounce,
+              duration: 1000,
+            },
+            {
+              id: 'anim1',
+              targets: ['123'],
+              type: AnimationType.Spin,
+              duration: 500,
+            },
+          ] as StoryAnimation[],
           backgroundColor: {
-            type: 'solid',
             color: { r: 255, g: 255, b: 255 },
           },
           page: {
@@ -187,7 +209,7 @@ describe('Story output', () => {
           },
           elements: [
             {
-              type: 'text',
+              type: ElementType.Text,
               id: '123',
               x: 50,
               y: 100,
@@ -213,7 +235,7 @@ describe('Story output', () => {
       },
     };
 
-    const content = renderToStaticMarkup(<StoryOutput {...props} />);
+    const content = renderToStaticMarkup(<StoryOutput {...props} flags={{}} />);
 
     expect(content).toContain(
       'background-audio="https://example.com/audio.mp3"'
@@ -250,6 +272,7 @@ describe('Story output', () => {
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
+          fonts: {},
         },
         pages: [],
         metadata: {
@@ -257,13 +280,13 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).not.toBeValidAMP();
+      await expect(<StoryOutput {...props} flags={{}} />).not.toBeValidAMP();
     });
 
     it('should produce valid AMP output', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         story: {
           title: 'Example',
           slug: 'example',
@@ -287,12 +310,12 @@ describe('Story output', () => {
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
+          fonts: {},
         },
         pages: [
           {
             id: '123',
             backgroundColor: {
-              type: 'solid',
               color: { r: 255, g: 255, b: 255 },
             },
             page: {
@@ -306,7 +329,7 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).toBeValidAMP();
+      await expect(<StoryOutput {...props} flags={{}} />).toBeValidAMP();
     });
 
     it('should produce valid AMP output when using Google fonts', async () => {
@@ -336,12 +359,12 @@ describe('Story output', () => {
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
+          fonts: {},
         },
         pages: [
           {
             id: '123',
             backgroundColor: {
-              type: 'solid',
               color: { r: 255, g: 255, b: 255 },
             },
             page: {
@@ -349,7 +372,7 @@ describe('Story output', () => {
             },
             elements: [
               {
-                type: 'text',
+                type: ElementType.Text,
                 id: '123',
                 x: 50,
                 y: 100,
@@ -375,7 +398,7 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).toBeValidAMP();
+      await expect(<StoryOutput {...props} flags={{}} />).toBeValidAMP();
     });
 
     it('should produce valid AMP output when using animations', async () => {
@@ -405,15 +428,20 @@ describe('Story output', () => {
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
+          fonts: {},
         },
         pages: [
           {
             id: '123',
             animations: [
-              { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
-            ],
+              {
+                id: 'anim1',
+                targets: ['123'],
+                type: AnimationType.Bounce,
+                duration: 1000,
+              },
+            ] as StoryAnimation[],
             backgroundColor: {
-              type: 'solid',
               color: { r: 255, g: 255, b: 255 },
             },
             page: {
@@ -421,7 +449,7 @@ describe('Story output', () => {
             },
             elements: [
               {
-                type: 'text',
+                type: ElementType.Text,
                 id: '123',
                 x: 50,
                 y: 100,
@@ -447,13 +475,13 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).toBeValidAMP();
+      await expect(<StoryOutput {...props} flags={{}} />).toBeValidAMP();
     });
 
     it('should produce valid AMP output when using background audio', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         story: {
           title: 'Example',
           slug: 'example',
@@ -482,25 +510,30 @@ describe('Story output', () => {
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
             },
           },
+          fonts: {},
         },
         pages: [
           {
             id: '123',
             animations: [
-              { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
-            ],
-            backgroundColor: {
-              type: 'solid',
-              color: { r: 255, g: 255, b: 255 },
-            },
+              {
+                id: 'anim1',
+                targets: ['123'],
+                type: AnimationType.Bounce,
+                duration: 1000,
+              },
+            ] as StoryAnimation[],
+            backgroundColor: { color: { r: 255, g: 255, b: 255 } },
             page: {
               id: '123',
             },
             elements: [
               {
-                type: 'text',
+                type: ElementType.Text,
                 id: '123',
                 x: 50,
                 y: 100,
@@ -526,7 +559,7 @@ describe('Story output', () => {
         },
       };
 
-      await expect(<StoryOutput {...props} />).toBeValidAMP();
+      await expect(<StoryOutput {...props} flags={{}} />).toBeValidAMP();
     });
   });
 });

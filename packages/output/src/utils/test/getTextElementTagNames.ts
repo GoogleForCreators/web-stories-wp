@@ -15,47 +15,53 @@
  */
 
 /**
+ * External dependencies
+ */
+import { ElementType } from '@googleforcreators/elements';
+import type { TextElement } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import getTextElementTagNames from '../getTextElementTagNames';
 
-const ELEMENT_H1 = {
+const ELEMENT_H1: TextElement = {
   id: '111',
   content: 'Title 1',
   fontSize: 36,
-  type: 'text',
+  type: ElementType.Text,
   x: 10,
   y: 10,
-};
+} as TextElement;
 
-const ELEMENT_H2 = {
+const ELEMENT_H2: TextElement = {
   id: '222',
   content: 'Title 2',
   fontSize: 27,
   type: 'text',
   x: 10,
   y: 10,
-};
+} as TextElement;
 
-const ELEMENT_H3 = {
+const ELEMENT_H3: TextElement = {
   id: '333',
   content: 'Title 3',
   fontSize: 21,
   type: 'text',
   x: 10,
   y: 10,
-};
+} as TextElement;
 
-const PARAGRAPH = {
+const PARAGRAPH: TextElement = {
   id: '444',
   content: 'Paragraph',
   fontSize: 17,
   type: 'text',
   x: 10,
   y: 10,
-};
+} as TextElement;
 
-const ELEMENT_WITH_TAG_NAME = {
+const ELEMENT_WITH_TAG_NAME: TextElement = {
   id: '555',
   content: 'Title 1',
   fontSize: 36,
@@ -63,7 +69,7 @@ const ELEMENT_WITH_TAG_NAME = {
   tagName: 'h1',
   x: 10,
   y: 10,
-};
+} as TextElement;
 
 describe('getTextElementTagNames', () => {
   it('should return tag name map for elements', () => {
