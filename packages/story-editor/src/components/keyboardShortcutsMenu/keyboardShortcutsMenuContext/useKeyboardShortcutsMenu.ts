@@ -23,7 +23,16 @@ import { useContextSelector, identity } from '@googleforcreators/react';
  * Internal dependencies
  */
 import Context from './context';
+import type { KeyboardShortcutsMenuContext } from './types';
 
-export function useKeyboardShortcutsMenu(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export function useKeyboardShortcutsMenu(): KeyboardShortcutsMenuContext;
+export function useKeyboardShortcutsMenu<T>(
+  selector: (state: KeyboardShortcutsMenuContext) => T
+): T;
+export function useKeyboardShortcutsMenu<T>(
+  selector: (
+    state: KeyboardShortcutsMenuContext
+  ) => T | KeyboardShortcutsMenuContext = identity
+) {
+  return useContextSelector(Context, selector);
 }

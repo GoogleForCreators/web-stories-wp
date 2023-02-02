@@ -17,22 +17,24 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Internal dependencies
  */
 import Context from './context';
 
-const KeyboardShortcutsMenuProvider = ({ children }) => {
+function KeyboardShortcutsMenuProvider({
+  children,
+}: PropsWithChildren<unknown>) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       e.preventDefault();
-      trackEvent('shortcuts_menu_toggled', {
+      void trackEvent('shortcuts_menu_toggled', {
         status: isOpen ? 'closed' : 'open',
       });
 
@@ -43,7 +45,7 @@ const KeyboardShortcutsMenuProvider = ({ children }) => {
 
   const close = useCallback(() => {
     if (isOpen) {
-      trackEvent('shortcuts_menu_toggled', {
+      void trackEvent('shortcuts_menu_toggled', {
         status: 'closed',
       });
       setIsOpen(false);
@@ -64,9 +66,6 @@ const KeyboardShortcutsMenuProvider = ({ children }) => {
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
-};
+}
 
-KeyboardShortcutsMenuProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 export default KeyboardShortcutsMenuProvider;
