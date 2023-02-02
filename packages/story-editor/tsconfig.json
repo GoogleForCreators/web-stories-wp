@@ -50,6 +50,7 @@
     "src/components/canvas/*.ts",
     "src/components/canvas/utils/*.ts",
     "src/components/floatingMenu/elements/shared/*.ts",
+    "src/components/keyboardShortcutsMenu/keyboardShortcutsMenuContext",
     "src/constants/*",
     "src/utils/**/*.ts",
     "src/utils/**/*.tsx",

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { createContext } from '@googleforcreators/react';
-
-export default createContext({ state: {}, actions: {} });
+export interface KeyboardShortcutsMenuContext {
+  state: {
+    isOpen: boolean;
+  };
+  actions: {
+    toggle: (evt: KeyboardEvent) => void;
+    close: () => void;
+  };
+}
