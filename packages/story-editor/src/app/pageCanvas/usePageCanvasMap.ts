@@ -29,7 +29,7 @@ const INITIAL_STATE: PageCanvasMap = {};
 interface Action {
   payload: {
     pageId: string;
-    canvas?: HTMLCanvasElement;
+    canvas?: HTMLCanvasElement | null;
   };
 }
 const reducer = {

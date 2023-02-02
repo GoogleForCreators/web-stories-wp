@@ -27,6 +27,7 @@ import {
   Text as DefaultText,
   TextSize,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -99,10 +100,10 @@ function UploadDropTargetMessage({ message, ...rest }) {
     <Container {...rest}>
       <Box>
         <Icon />
-        <Text.Paragraph isBold size={TextSize.Medium}>
+        <Text isBold size={TextSize.Medium}>
           {message}
-        </Text.Paragraph>
-        <Text.Paragraph size={TextSize.Small}>{description}</Text.Paragraph>
+        </Text>
+        <Text size={TextSize.Small}>{description}</Text>
       </Box>
     </Container>
   );

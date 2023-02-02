@@ -49,6 +49,7 @@
     "src/components/library/panes/text/textPresets.ts",
     "src/components/canvas/*.ts",
     "src/components/canvas/utils/*.ts",
+    "src/components/floatingMenu/elements/shared/*.ts",
     "src/constants/*",
     "src/utils/**/*.ts",
     "src/utils/**/*.tsx",

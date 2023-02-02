@@ -109,6 +109,11 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.29.0 =
+
+* Stability and compatibility improvements.
+* Bug fixes and performance improvements.
+
 = 1.28.1 =
 
 * Fixes editor crashes when adding/uploading media.
@@ -120,13 +125,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * New feature: support for toggling visibility of individual layers.
 * Bug fixes and performance improvements.
 
-= 1.27.0 =
-
-* New feature: support for changing page advancement defaults on the settings page.
-* Fixes issues with the carousel and grid layouts in the Web Stories block.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.29.0 =
+
+This release includes several bug fixes and stability improvements.
 
 = 1.28.1 =
 
@@ -135,7 +138,3 @@ This release fixes an issue where the editor would inadvertently crash when addi
 = 1.28.0 =
 
 This release includes support for page-level page advancement settings and toggling layer visibility.
-
-= 1.27.0 =
-
-This release adds support for changing page advancement defaults and fixes various bugs.

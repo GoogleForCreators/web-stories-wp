@@ -67,6 +67,7 @@ const LinkInput = forwardRef(function LinkInput(
         hasError={isNotValid || hasError}
         hint={isNotValid ? __('Invalid web address.', 'web-stories') : hint}
         containerStyleOverride={inputContainerStyleOverride}
+        type="url"
         {...rest}
       />
     </Row>

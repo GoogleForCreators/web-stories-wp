@@ -15,12 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { Element } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
-import { useStory } from '../../../../app';
+import { useStory } from '../../../../app/story';
 import objectPick from '../../../../utils/objectPick';
 
-function useProperties(propertyList) {
+function useProperties(propertyList: (keyof Element)[]) {
   return useStory(({ state: { selectedElements } }) =>
     objectPick(selectedElements[0], propertyList)
   );

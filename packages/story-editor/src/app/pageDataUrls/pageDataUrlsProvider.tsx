@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -27,6 +28,7 @@ import useIdleTaskQueue from '../../utils/useIdleTaskQueue';
 import storyPageToDataUrl from '../pageCanvas/utils/storyPageToDataUrl';
 import type { PageDataUrls, QueuePageImageGeneration } from '../../types';
 import Context from './context';
+
 function PageDataUrlProvider({ children }: PropsWithChildren<unknown>) {
   const [dataUrls, setDataUrls] = useState<PageDataUrls>({});
   const queueIdleTask = useIdleTaskQueue();
@@ -39,11 +41,15 @@ function PageDataUrlProvider({ children }: PropsWithChildren<unknown>) {
     (storyPage: Page) => {
       const idleTaskUid: string = storyPage.id;
       const idleTask: () => Promise<void> = async () => {
-        const dataUrl = await storyPageToDataUrl(storyPage, {});
-        setDataUrls((state) => ({
-          ...state,
-          [storyPage?.id]: dataUrl,
-        }));
+        try {
+          const dataUrl = await storyPageToDataUrl(storyPage, {});
+          setDataUrls((state) => ({
+            ...state,
+            [storyPage?.id]: dataUrl,
+          }));
+        } catch {
+          // Do nothing for now.
+        }
       };
 
       const clearQueueOfPageTask = queueIdleTask({

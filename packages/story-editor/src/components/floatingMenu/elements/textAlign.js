@@ -157,7 +157,7 @@ function TextAlign() {
             <CurrentIcon role="img" aria-label={currentLabel} />
             <Disclosure
               style={{ marginLeft: -8, marginRight: 0 }}
-              isOpen={isMenuOpen}
+              $isOpen={isMenuOpen}
             />
           </StyledMenuIcon>
         </StyledMenuButton>

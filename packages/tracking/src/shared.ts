@@ -57,6 +57,7 @@ export interface EventParameters {
   file_type?: string;
   width?: number;
   height?: number;
+  element?: string;
 }
 
 interface Gtag {

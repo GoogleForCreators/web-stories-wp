@@ -126,7 +126,7 @@ function PresetPanel({ pushUpdate }) {
             aria-expanded={isPopupOpen}
           >
             {__('More styles', 'web-stories')}
-            <Disclosure isOpen={isPopupOpen} />
+            <Disclosure $isOpen={isPopupOpen} />
           </MoreButton>
           <Popup
             anchor={buttonRef}

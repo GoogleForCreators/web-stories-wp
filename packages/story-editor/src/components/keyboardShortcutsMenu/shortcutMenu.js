@@ -88,9 +88,9 @@ function ShortcutMenu() {
   const anchorRef = useRef();
   const containerRef = useRef();
 
-  const { close, toggleMenu, isOpen } = useKeyboardShortcutsMenu(
+  const { close, toggle, isOpen } = useKeyboardShortcutsMenu(
     ({ actions, state }) => ({
-      toggleMenu: actions.toggleMenu,
+      toggle: actions.toggle,
       close: actions.close,
       isOpen: state.isOpen,
     })
@@ -125,9 +125,7 @@ function ShortcutMenu() {
     }
   }, [isOpen]);
 
-  useKeyDownEffect(containerRef, TOGGLE_SHORTCUTS_MENU, toggleMenu, [
-    toggleMenu,
-  ]);
+  useKeyDownEffect(containerRef, TOGGLE_SHORTCUTS_MENU, toggle, [toggle]);
 
   useKeyDownEffect(containerRef, 'esc', close);
 

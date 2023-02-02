@@ -164,7 +164,7 @@ export const ToggleButton = forwardRef(
           {MainIcon && <MainIcon className="main-icon" />}
           {copy}
           {hasNotifications && <CountBadge>{notificationCount}</CountBadge>}
-          {hasMenuList && <Disclosure direction="down" isOpen={isOpen} />}
+          {hasMenuList && <Disclosure direction="down" $isOpen={isOpen} />}
         </Button>
       </Tooltip>
     );

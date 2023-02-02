@@ -17,33 +17,36 @@
  * External dependencies
  */
 import { trackEvent } from '@googleforcreators/tracking';
+import type { Flip } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app';
+import { useStory } from '../../../../app/story';
 import useProperties from './useProperties';
 
-function useFlip(property) {
+function useFlip(property: keyof Flip) {
   const { flip, type } = useProperties(['flip', 'type']);
   const updateSelectedElements = useStory(
     (state) => state.actions.updateSelectedElements
   );
   const toggle = () => {
-    trackEvent('floating_menu', {
+    void trackEvent('floating_menu', {
       name: `set_flip_${property}`,
-      element: type,
+      element: type as unknown as string,
     });
     updateSelectedElements({
       properties: (oldElement) => ({
         flip: {
           ...oldElement.flip,
-          [property]: !oldElement.flip[property] || false,
-        },
+          [property]: Boolean(!oldElement.flip?.[property] || false),
+        } as Flip,
       }),
     });
   };
+
   return {
-    [property]: flip[property] || false,
+    [property]: flip?.[property] || false,
     toggle,
   };
 }
