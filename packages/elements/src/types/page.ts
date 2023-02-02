@@ -24,22 +24,13 @@ import type { StoryAnimation } from '@googleforcreators/animation';
  * Internal dependencies
  */
 import type { DefaultBackgroundElement, Element, ElementId } from './element';
+import type { Track } from './media';
 
 export interface Group {
   name: string;
   isLocked: boolean;
   isCollapsed?: boolean;
 }
-
-export type Track = {
-  track: string;
-  trackId: number;
-  trackName: string;
-  id: string;
-  srcLang?: string;
-  label?: string;
-  kind: string;
-};
 
 export type Groups = Record<string, Group>;
 

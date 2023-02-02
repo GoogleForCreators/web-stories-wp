@@ -27,9 +27,10 @@ import {
  * Internal dependencies
  */
 import type { Element } from '../types';
+import elementIs from './elementIs';
 
 function isElementBelowLimit(element: Element, verifyLink = true) {
-  if (verifyLink && !element.link?.url?.length) {
+  if (verifyLink && !elementIs.linkable(element)) {
     return false;
   }
 

@@ -26,6 +26,8 @@ import type {
   BackgroundableElement,
   DefaultBackgroundElement,
   Element,
+  GifElement,
+  LinkableElement,
   MediaElement,
   ProductElement,
   SequenceMediaElement,
@@ -93,6 +95,21 @@ function isVideo(e: Element): e is VideoElement {
   );
 }
 
+function isGif(e: Draft<Element>): e is Draft<GifElement>;
+function isGif(e: Element): e is GifElement {
+  return (
+    isMediaElement(e) && isSequenceMediaElement(e) && e.type === ElementType.Gif
+  );
+}
+
+function isLinkable(e: Element): e is LinkableElement;
+function isLinkable(e: Draft<Element>): e is Draft<LinkableElement>;
+function isLinkable(e: Element): e is LinkableElement {
+  return (
+    'link' in e && typeof e.link !== 'undefined' && e.link?.url?.length > 0
+  );
+}
+
 const elementIs = {
   media: isMediaElement,
   text: isTextElement,
@@ -102,6 +119,8 @@ const elementIs = {
   sequenceMedia: isSequenceMediaElement,
   sticker: isSticker,
   video: isVideo,
+  gif: isGif,
+  linkable: isLinkable,
 };
 
 export default elementIs;
