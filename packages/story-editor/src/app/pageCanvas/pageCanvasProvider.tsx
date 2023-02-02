@@ -78,8 +78,12 @@ function PageCanvasProvider({ children }: PropsWithChildren<unknown>) {
       const cancelIdleTask = queueIdleTask({
         taskId,
         task: async () => {
-          const canvas = await storyPageToCanvas(page, {});
-          actions.setPageCanvas({ pageId: page.id, canvas });
+          try {
+            const canvas = await storyPageToCanvas(page, {});
+            actions.setPageCanvas({ pageId: page.id, canvas });
+          } catch {
+            actions.setPageCanvas({ pageId: page.id, canvas: null });
+          }
         },
       });
       return cancelIdleTask;
@@ -96,7 +100,7 @@ function PageCanvasProvider({ children }: PropsWithChildren<unknown>) {
   const generateDeferredCurrentPageCanvas = useCallback(() => {
     const { currentPageValue, pageCanvasMapValue } = valuesRef.current;
     const canvas = pageCanvasMapValue[currentPageValue.id];
-    if (!canvas) {
+    if (typeof canvas === 'undefined') {
       generateDeferredPageCanvas([currentPageValue.id, currentPageValue]);
     }
   }, [generateDeferredPageCanvas]);

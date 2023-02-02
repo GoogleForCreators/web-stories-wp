@@ -25,6 +25,7 @@ import type { PageDataUrlsContext } from '../../types';
 import Context from './context';
 
 function usePageDataUrls(): PageDataUrlsContext;
+function usePageDataUrls<T>(selector: (state: PageDataUrlsContext) => T): T;
 function usePageDataUrls<T>(
   selector: (state: PageDataUrlsContext) => T | PageDataUrlsContext = identity
 ) {
