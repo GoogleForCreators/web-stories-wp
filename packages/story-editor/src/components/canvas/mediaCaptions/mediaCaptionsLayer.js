@@ -55,14 +55,14 @@ function MediaCaptionsLayer() {
   const { currentPageId, backgroundAudio, videoElement } = useStory(
     ({ state }) => {
       const { selectedElements, currentPage } = state;
-      const { backgroundAudio: currentPageBackgroundAudio } = currentPage;
 
       let backgroundAudio = null;
       let videoElement = null;
 
-      if (selectedElements.length === 1) {
+      if (selectedElements.length === 1 && currentPage) {
         const selectedElement = selectedElements[0];
         const { isBackground, type, tracks } = selectedElement;
+        const { backgroundAudio: currentPageBackgroundAudio } = currentPage;
         if (
           isBackground &&
           currentPageBackgroundAudio &&
