@@ -32,7 +32,7 @@ import {
  * Internal dependencies
  */
 import { useConfig } from '../../../app';
-import useCarousel from './useCarousel';
+import { useCarousel } from './carouselContext';
 
 const FlippableArrow = styled(Icons.ArrowLeft)`
   transform: rotate(${({ $isLeft }) => ($isLeft ? 0 : 0.5)}turn);

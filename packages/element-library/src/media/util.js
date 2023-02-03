@@ -47,6 +47,7 @@ export const getBackgroundStyle = () => {
   };
 };
 
+// TODO: Display poster as actual <img> with crossorigin attr to avoid CORS issues.
 export const Video = styled.video.attrs({ crossOrigin: 'anonymous' })`
   position: absolute;
   max-width: initial;

@@ -34,7 +34,7 @@ import { Z_INDEX_FOOTER } from '../../../constants/zIndex';
 import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
 import CarouselList from './carouselList';
 import CarouselDrawer from './carouselDrawer';
-import useCarousel from './useCarousel';
+import { useCarousel } from './carouselContext';
 import {
   NAVIGATION_BUTTON_WIDTH,
   NAVIGATION_BUTTON_GAP,

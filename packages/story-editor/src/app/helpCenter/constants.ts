@@ -90,7 +90,7 @@ export const TIPS = {
     figureSrc: 'images/help-center/add_link_module_6',
     description: [
       __(
-        'Go to the Design tab. Scroll down to <strong>Link</strong> and enter a URL. To remove a link, select the "X" <screenreader> (clear)</screenreader> button next to the URL box.',
+        'Go to the Style tab. Scroll down to <strong>Link</strong> and enter a URL. To remove a link, select the "X" <screenreader> (clear)</screenreader> button next to the URL box.',
         'web-stories'
       ),
     ],
@@ -100,7 +100,7 @@ export const TIPS = {
     figureSrc: 'images/help-center/page_attachment_module_7',
     description: [
       __(
-        'Go to the Design tab. Navigate to <strong>Page Attachment</strong> and enter a web address and a call to action to describe the link.',
+        'Go to the Style tab. Navigate to <strong>Call to Action</strong> and enter a web address and a call to action to describe the link.',
         'web-stories'
       ),
     ],

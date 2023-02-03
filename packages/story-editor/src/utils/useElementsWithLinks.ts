@@ -18,17 +18,22 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-import { isElementBelowLimit } from '@googleforcreators/elements';
+import {
+  elementIs,
+  isElementBelowLimit,
+  type Element,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas } from '../app';
+import { useStory } from '../app/story';
+import { useCanvas } from '../app/canvas';
 
 /**
  * Custom hook to aid with detecting links conflicting with page attachments.
  *
- * @return {{hasElementsInAttachmentArea: boolean, isElementInAttachmentArea: (Object) => (boolean), hasLinksInAttachmentArea: boolean, hasInvalidLinkSelected: boolean}} Hook result.
+ * @return Hook result.
  */
 function useElementsWithLinks() {
   const { pageAttachmentContainer } = useCanvas((state) => ({
@@ -40,8 +45,8 @@ function useElementsWithLinks() {
     hasPageAttachment,
     hasElementsInAttachmentArea,
   } = useStory(({ state }) => {
-    const elementHasLink = ({ link }) => link?.url?.length;
-    const elementsWithLinks = state.currentPage.elements.filter(elementHasLink);
+    const elementsWithLinks =
+      state.currentPage?.elements.filter(elementIs.linkable) || [];
 
     const hasPageAttachment = Boolean(
       state.currentPage?.pageAttachment?.url?.length
@@ -52,8 +57,8 @@ function useElementsWithLinks() {
         pageAttachmentContainer &&
           hasPageAttachment &&
           state.selectedElements
-            .filter(elementHasLink)
-            .some(isElementBelowLimit)
+            .filter(elementIs.linkable)
+            .some((element) => isElementBelowLimit(element))
       ),
       hasLinksInAttachmentArea: Boolean(
         pageAttachmentContainer &&
@@ -73,7 +78,7 @@ function useElementsWithLinks() {
   });
 
   const isElementInAttachmentArea = useCallback(
-    (element) => {
+    (element: Element) => {
       if (!pageAttachmentContainer) {
         return false;
       }

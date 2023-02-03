@@ -18,7 +18,12 @@
  * External dependencies
  */
 import type { Solid } from '@googleforcreators/patterns';
-import type { Resource, SequenceResource } from '@googleforcreators/media';
+import type {
+  GifResource,
+  Resource,
+  SequenceResource,
+  VideoResource,
+} from '@googleforcreators/media';
 import type { ElementBox } from '@googleforcreators/units';
 
 /**
@@ -26,6 +31,7 @@ import type { ElementBox } from '@googleforcreators/units';
  */
 import type { ElementType } from './elementType';
 import type { FontMetrics, ProductData } from './data';
+import type { Track } from './media';
 
 export interface Link {
   url: string;
@@ -83,7 +89,7 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
-  basedOn?: string;
+  basedOn?: ElementId;
   layerName?: string;
   isLocked?: boolean;
   isHidden?: boolean;
@@ -96,6 +102,10 @@ export interface DefaultBackgroundElement extends Element {
 
 export interface BackgroundableElement extends Element {
   isBackground?: boolean;
+}
+
+export interface LinkableElement extends Element {
+  link: Link;
 }
 
 export interface MediaElement extends BackgroundableElement {
@@ -111,6 +121,13 @@ export interface SequenceMediaElement extends MediaElement {
 
 export interface VideoElement extends SequenceMediaElement {
   type: ElementType.Video;
+  tracks: Track[];
+  resource: VideoResource;
+}
+
+export interface GifElement extends SequenceMediaElement {
+  type: ElementType.Gif;
+  resource: GifResource;
 }
 
 export interface ProductElement extends Element {

@@ -30,9 +30,15 @@ import {
   NARROW_THUMBNAIL_WIDTH,
   NARROW_THUMBNAIL_HEIGHT,
   THUMBNAIL_MARGIN,
-} from './constants';
+} from '../constants';
 
-function useCarouselSizing({ availableSpace, numPages }) {
+function useCarouselSizing({
+  availableSpace,
+  numPages,
+}: {
+  availableSpace: number;
+  numPages: number;
+}) {
   return useMemo(() => {
     const isWideCarousel = availableSpace >= WIDE_CAROUSEL_LIMIT;
     const spaceForCarousel = availableSpace - 2 * NAVIGATION_BUTTON_GUTTER;

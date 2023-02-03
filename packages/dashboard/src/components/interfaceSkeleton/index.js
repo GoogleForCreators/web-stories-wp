@@ -87,6 +87,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
         canViewDefaultTemplates
       ) {
         push(APP_ROUTES.TEMPLATES_GALLERY);
+        isFirstLoadOnMyStories.current = false;
       }
       setIsRedirectComplete(true);
     });
