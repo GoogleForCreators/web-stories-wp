@@ -179,7 +179,7 @@ function GeneralPageAdvancementPanel({
               containerStyleOverride={inputContainerStyleOverride}
             />
           </Row>
-          <Text.Paragraph size={TextSize.Small}>
+          <MutedText>
             {sprintf(
               /* translators: 1: minimum duration. 2: maximum duration. */
               _n(
@@ -191,7 +191,7 @@ function GeneralPageAdvancementPanel({
               MIN_MAX.PAGE_DURATION.MIN,
               MIN_MAX.PAGE_DURATION.MAX
             )}
-          </Text.Paragraph>
+          </MutedText>
         </>
       )}
     </SimplePanel>

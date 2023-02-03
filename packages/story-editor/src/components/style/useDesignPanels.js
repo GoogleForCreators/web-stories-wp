@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -60,11 +59,9 @@ function useDesignPanels() {
     }
   );
 
-  const hasCustomPageAdvancement = useFeature('customPageAdvance');
   const panels = useMemo(
-    () =>
-      getDesignPanelsForSelection(selectedElements, hasCustomPageAdvancement),
-    [selectedElements, hasCustomPageAdvancement]
+    () => getDesignPanelsForSelection(selectedElements),
+    [selectedElements]
   );
   const [submitHandlers, registerSubmitHandler] = useHandlers();
   const onSetProperties = useCallback(

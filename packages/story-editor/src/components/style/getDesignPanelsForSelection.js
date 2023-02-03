@@ -50,10 +50,7 @@ function intersect(a, b) {
   return a.filter((v) => b.includes(v));
 }
 
-function getDesignPanelsForSelection(
-  elements,
-  hasCustomPageAdvancement = false
-) {
+function getDesignPanelsForSelection(elements) {
   if (elements.length === 0) {
     return [];
   }
@@ -112,12 +109,10 @@ function getDesignPanelsForSelection(
       Panel: PageBackgroundAudioPanel,
     });
 
-    if (hasCustomPageAdvancement) {
-      panels.push({
-        type: PanelTypes.PageAdvancement,
-        Panel: PageAdvancementPanel,
-      });
-    }
+    panels.push({
+      type: PanelTypes.PageAdvancement,
+      Panel: PageAdvancementPanel,
+    });
 
     return panels;
   }
