@@ -161,6 +161,7 @@ jobs:
             objects.githubusercontent.com:443
             packagist.org:443
             registry.npmjs.org:443
+            storage.googleapis.com:443
 
       - name: Checkout
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
