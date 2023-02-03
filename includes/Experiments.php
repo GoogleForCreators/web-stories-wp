@@ -280,18 +280,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @barklund
-			 * Issue: #12210
-			 * Creation date: 2022-09-14
-			 */
-			[
-				'name'        => 'customPageAdvance',
-				'label'       => __( 'Per-Page Page Advance', 'web-stories' ),
-				'description' => __( 'Enable detailed page advancement settings on a per-page basis', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @timarney
 			 * Issue: #12164
 			 * Creation date: 2022-09-19
