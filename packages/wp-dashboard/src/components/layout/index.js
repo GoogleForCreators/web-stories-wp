@@ -21,13 +21,13 @@ import { InterfaceSkeleton } from '@googleforcreators/dashboard';
 /**
  * Internal dependencies
  */
-import { useAdminSubMenu } from '../../effects';
+import { useSyncAdminMenu } from '../../effects';
 import { EditorSettingsProvider, EditorSettings } from '../editorSettings';
 import TelemetryBanner from '../telemetryBanner';
 import { EDITOR_SETTINGS_ROUTE } from '../../constants';
 
 function Layout() {
-  useAdminSubMenu();
+  useSyncAdminMenu();
 
   return (
     <EditorSettingsProvider>
