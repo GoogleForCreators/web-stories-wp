@@ -155,7 +155,7 @@ jobs:
         uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
         with:
           disable-file-monitoring: true
-          egress-policy: block
+          egress-policy: audit
           allowed-endpoints: >
             github.com:443
             objects.githubusercontent.com:443
@@ -164,6 +164,7 @@ jobs:
             storage.googleapis.com:443
             docker.io:443
             registry-1.docker.io:443
+            auth.docker.io:443
 
       - name: Checkout
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
