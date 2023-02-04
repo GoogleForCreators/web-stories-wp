@@ -53,7 +53,7 @@ jobs:
         with:
           disable-sudo: true
           disable-file-monitoring: true
-          egress-policy: block
+          egress-policy: audit
           allowed-endpoints: >
             cdn.ampproject.org:443
             codecov.io:443
