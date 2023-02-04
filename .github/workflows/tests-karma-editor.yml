@@ -106,6 +106,8 @@ jobs:
             storage.googleapis.com:443
             uploader.codecov.io:443
             wp.stories.google:443
+            media3p.googleapis.com:443
+            stories.local:80
 
       - name: Checkout
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
