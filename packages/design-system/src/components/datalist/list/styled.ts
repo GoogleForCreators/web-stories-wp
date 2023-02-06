@@ -54,8 +54,13 @@ export const GroupLabel = styled.li`
   margin: 0;
 `;
 
-export const ListElement = styled.li<{ fontFamily?: string }>`
-  font-family: ${({ fontFamily }) => fontFamily};
+export const ListElement = styled.li.attrs<{ fontFamily?: string }>(
+  ({ fontFamily }) => ({
+    style: {
+      fontFamily,
+    },
+  })
+)`
   display: flex;
   align-items: center;
   position: relative;

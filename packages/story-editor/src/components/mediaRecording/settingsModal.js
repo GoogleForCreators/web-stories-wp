@@ -173,12 +173,12 @@ function SettingsModal() {
       secondaryText={__('Cancel', 'web-stories')}
     >
       <Row>
-        <Text>
+        <Text.Paragraph>
           {__(
             'Choose the camera and microphone to use for the recording.',
             'web-stories'
           )}
-        </Text>
+        </Text.Paragraph>
       </Row>
 
       {videoInputs.length > 0 && (

@@ -645,12 +645,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "df9caf935d863a15b538f60eaca8c609881aad61"
+                "reference": "e250d8e924edd7dbcbb36fbc9191a082f071b170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/df9caf935d863a15b538f60eaca8c609881aad61",
-                "reference": "df9caf935d863a15b538f60eaca8c609881aad61",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/e250d8e924edd7dbcbb36fbc9191a082f071b170",
+                "reference": "e250d8e924edd7dbcbb36fbc9191a082f071b170",
                 "shasum": ""
             },
             "require": {
@@ -691,7 +691,7 @@
                 "source": "https://github.com/Automattic/VIP-Coding-Standards",
                 "wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
             },
-            "time": "2023-01-31T22:00:07+00:00"
+            "time": "2023-02-05T16:32:16+00:00"
         },
         {
             "name": "brain/monkey",
@@ -4952,22 +4952,22 @@
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "6.0.1",
+            "version": "6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
-                "reference": "6fce87f9c5463223013745ec5489967198c11348"
+                "reference": "e013d818f999db9ff1b8172fdd107e27ea0be17a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/6fce87f9c5463223013745ec5489967198c11348",
-                "reference": "6fce87f9c5463223013745ec5489967198c11348",
+                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/e013d818f999db9ff1b8172fdd107e27ea0be17a",
+                "reference": "e013d818f999db9ff1b8172fdd107e27ea0be17a",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.4",
                 "php-stubs/wordpress-globals": "0.2.0",
-                "php-stubs/wordpress-stubs": "6.0.1",
+                "php-stubs/wordpress-stubs": "6.1.1",
                 "sniccowp/php-scoper-excludes": "dev-master"
             },
             "type": "library",
@@ -4993,9 +4993,9 @@
             ],
             "support": {
                 "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.0.1"
+                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.1.1"
             },
-            "time": "2022-07-16T01:54:10+00:00"
+            "time": "2023-02-05T01:43:05+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

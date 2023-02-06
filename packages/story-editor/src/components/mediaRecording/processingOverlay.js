@@ -41,12 +41,12 @@ function ProcessingOverlay() {
   return (
     <Wrapper>
       <LoadingSpinner />
-      <Text>
+      <Text.Paragraph>
         {__(
           'Video trimming in progress. Please wait up to a few minutes depending on output video length.',
           'web-stories'
         )}
-      </Text>
+      </Text.Paragraph>
     </Wrapper>
   );
 }

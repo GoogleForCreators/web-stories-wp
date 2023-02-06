@@ -42,7 +42,6 @@ async function storyPageToCanvas(page: Page, { width = 400, ...options }) {
 
   const canvas = await htmlToImage.toCanvas(node, {
     ...options,
-    fontEmbedCSS: '',
   });
 
   cleanup();
