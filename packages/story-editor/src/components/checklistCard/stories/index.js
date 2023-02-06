@@ -83,7 +83,7 @@ export const _default = () => {
   return (
     <Container>
       <div>
-        <Text>{'Single Issue'}</Text>
+        <Text.Paragraph>{'Single Issue'}</Text.Paragraph>
         <ChecklistCard
           title="Add video captions"
           footer={
@@ -102,7 +102,7 @@ export const _default = () => {
         />
       </div>
       <div>
-        <Text>{'Single Issue - No CTA'}</Text>
+        <Text.Paragraph>{'Single Issue - No CTA'}</Text.Paragraph>
         <ChecklistCard
           title="Add video captions"
           footer={
@@ -120,7 +120,7 @@ export const _default = () => {
         />
       </div>
       <div>
-        <Text>{'Single Issue - No Thumbnail'}</Text>
+        <Text.Paragraph>{'Single Issue - No Thumbnail'}</Text.Paragraph>
         <ChecklistCard
           title="Increase size of publisher logo to at least 96x96px"
           footer={
@@ -135,7 +135,7 @@ export const _default = () => {
         />
       </div>
       <div>
-        <Text>{'Single Issue - No Thumbnail or CTA'}</Text>
+        <Text.Paragraph>{'Single Issue - No Thumbnail or CTA'}</Text.Paragraph>
         <ChecklistCard
           title="Add Web Story title"
           footer={
@@ -149,7 +149,9 @@ export const _default = () => {
         />
       </div>
       <div>
-        <Text>{'Single Issue - No Thumbnail with a list'}</Text>
+        <Text.Paragraph>
+          {'Single Issue - No Thumbnail with a list'}
+        </Text.Paragraph>
         <ChecklistCard
           title="Add Web Story poster image"
           footer={
@@ -170,7 +172,7 @@ export const _default = () => {
         />
       </div>
       <div>
-        <Text>{'Multiple Issues - No CTA'}</Text>
+        <Text.Paragraph>{'Multiple Issues - No CTA'}</Text.Paragraph>
         <ChecklistCard
           title="Add video captions"
           footer={
@@ -189,7 +191,7 @@ export const _default = () => {
         />
       </div>
       <div>
-        <Text>{'Multiple Issues'}</Text>
+        <Text.Paragraph>{'Multiple Issues'}</Text.Paragraph>
         <ChecklistCard
           title="Add video captions"
           cta={<DefaultCtaButton>{'Fix everything'}</DefaultCtaButton>}
@@ -210,7 +212,7 @@ export const _default = () => {
       </div>
 
       <div>
-        <Text>{'Multiple Issues - 4'}</Text>
+        <Text.Paragraph>{'Multiple Issues - 4'}</Text.Paragraph>
         <ChecklistCard
           title="Videos not optimized"
           cta={
@@ -241,7 +243,7 @@ export const _default = () => {
       </div>
 
       <div>
-        <Text>{'Video Optimization - more than 4'}</Text>
+        <Text.Paragraph>{'Video Optimization - more than 4'}</Text.Paragraph>
         <ChecklistCard
           title="Videos not optimized"
           cta={

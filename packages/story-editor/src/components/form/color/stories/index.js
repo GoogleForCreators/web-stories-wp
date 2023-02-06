@@ -150,7 +150,7 @@ function Wrapper({ children }) {
 function DesignPanelColorInput({ label, ...props }) {
   return (
     <>
-      <Text>{label}</Text>
+      <Text.Paragraph>{label}</Text.Paragraph>
       <Row>
         <ColorInput {...props} />
       </Row>

@@ -101,7 +101,9 @@ function TabDisplay({ TabsComponent, tabs }) {
     <TabWrapper>
       <TabsComponent onTabChange={(id) => setTab(id)} tabs={tabs} />
       <TabContent>
-        <Text>{`Tab content: ${activeTab.content || activeTab.title}`}</Text>
+        <Text.Paragraph>{`Tab content: ${
+          activeTab.content || activeTab.title
+        }`}</Text.Paragraph>
       </TabContent>
     </TabWrapper>
   );
