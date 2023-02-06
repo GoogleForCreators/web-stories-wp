@@ -106,9 +106,9 @@ function FileRow({
   onRemove,
   children,
 }) {
-  const optionsWithGroup = [
+  const groups = [
     {
-      group: options,
+      options,
     },
   ];
 
@@ -155,7 +155,7 @@ function FileRow({
           onMenuSelected={onMenuSelected}
           display
           onMenuClose={onMenuClose}
-          options={optionsWithGroup}
+          groups={groups}
           ariaLabel={__('Replace file', 'web-stories')}
         >
           <Tooltip title={__('Replace', 'web-stories')}>
