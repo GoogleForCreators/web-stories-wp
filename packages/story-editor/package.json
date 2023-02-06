@@ -64,7 +64,7 @@
     "@googleforcreators/units": "*",
     "@googleforcreators/url": "*",
     "@hello-pangea/color-picker": "^3.2.2",
-    "@mediapipe/selfie_segmentation": "^0.1.1671057942",
+    "@mediapipe/selfie_segmentation": "^0.1.1675465747",
     "@pioug/colorthief": "^3.0.1",
     "@wmik/use-media-recorder": "^1.6.5-beta.0",
     "blurhash": "^2.0.4",
