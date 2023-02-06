@@ -22,12 +22,19 @@ import {
   convertToCSS,
 } from '@googleforcreators/patterns';
 import { useTransformHandler } from '@googleforcreators/transform';
+import type { ElementId } from '@googleforcreators/elements';
+import type { RefObject } from "react";
 
 function useColorTransformHandler({
   id,
   targetRef,
   expectedStyle,
   resetOnNullTransform = true,
+}: {
+  id: ElementId;
+  targetRef: RefObject<HTMLElement | null>;
+  expectedStyle: string;
+  resetOnNullTransform: boolean;
 }) {
   useTransformHandler(id, (transform) => {
     const target =

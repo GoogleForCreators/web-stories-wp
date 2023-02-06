@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import type { HTMLAttributes } from 'react';
 
 const Image = styled.img`
   display: block;
@@ -28,17 +28,10 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-function VisibleImage({ ...attrs }) {
+function VisibleImage({ ...attrs }: HTMLAttributes<HTMLImageElement>) {
   // The image is purely decorative by default, because the alt text is already used
   // for the layer description. Hence using alt="" to avoid repetition.
   return <Image alt="" {...attrs} decoding="async" crossOrigin="anonymous" />;
 }
-
-VisibleImage.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-};
 
 export default VisibleImage;

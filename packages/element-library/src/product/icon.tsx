@@ -24,8 +24,11 @@ import { Icons } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import VisibleImage from '../shared/visibleImage';
+import type { ProductElement } from '../types';
 
-function ProductLayerIcon({ element: { product } }) {
+function ProductLayerIcon({ element: { product } }: {
+  element: ProductElement
+}) {
   const productImage = product?.productImages?.[0] || {};
   const { url, alt } = productImage;
   if (!url) {

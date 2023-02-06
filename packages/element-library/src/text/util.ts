@@ -19,10 +19,11 @@
  */
 import type { CSSProperties } from 'react';
 import type {
+  BaseFontData,
   Padding,
   TextAlign,
   TextElement,
-  TextElementFont,
+  TextElementFont
 } from '@googleforcreators/elements';
 
 type DataToStyle = (prop: number) => string;
@@ -72,14 +73,10 @@ export function generateParagraphTextStyle(
   };
 }
 
-interface GenerateFontFamilyProps {
-  family?: string;
-  fallbacks?: string[];
-}
 export const generateFontFamily = ({
   family,
   fallbacks,
-}: GenerateFontFamilyProps = {}) => {
+}: Partial<BaseFontData>) => {
   const genericFamilyKeywords = [
     'cursive',
     'fantasy',

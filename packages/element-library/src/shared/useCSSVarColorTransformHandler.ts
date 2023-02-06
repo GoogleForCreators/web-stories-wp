@@ -13,16 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+import type { ElementId } from '@googleforcreators/elements';
 import { useTransformHandler } from '@googleforcreators/transform';
+import type { RefObject } from 'react';
 
 function useCSSVarColorTransformHandler({
   id,
   targetRef,
   cssVar,
   expectedStyle,
+}: {
+  id: ElementId;
+  targetRef: RefObject<HTMLElement>
+  cssVar: string;
+  expectedStyle: string;
 }) {
   useTransformHandler(id, (transform) => {
     const target = targetRef.current;

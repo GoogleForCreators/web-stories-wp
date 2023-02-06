@@ -15,3 +15,6 @@
  */
 
 export * from './elements';
+
+export * from '../constants';
+export * from '../utils/textMeasurements';

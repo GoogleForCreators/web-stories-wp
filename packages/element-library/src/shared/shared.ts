@@ -18,13 +18,15 @@
  * External dependencies
  */
 import { css } from 'styled-components';
-import { generatePatternStyles } from '@googleforcreators/patterns';
+import { generatePatternStyles, Pattern } from '@googleforcreators/patterns';
 import { getBorderStyle, getBorderRadius } from '@googleforcreators/masks';
+import type { BorderRadius, Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { generateFontFamily } from '../text/util';
+import type { TextElement } from '../types';
 
 export const elementFillContent = css`
   position: absolute;
@@ -34,7 +36,7 @@ export const elementFillContent = css`
   height: 100%;
 `;
 
-export const elementWithPosition = css`
+export const elementWithPosition = css<Element>`
   position: absolute;
   z-index: 1;
   left: ${({ x }) => `${x}px`};
@@ -42,23 +44,25 @@ export const elementWithPosition = css`
 `;
 
 // TODO: removed round/ceil, calculateFitTextFontSize needs to be improved?
-export const elementWithSize = css`
+export const elementWithSize = css<{width: number; height: number}>`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
 `;
 
-export const elementWithRotation = css`
+export const elementWithRotation = css<{rotationAngle: number}>`
   transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
 `;
 
-export const elementWithBorderRadius = css`
+export const elementWithBorderRadius = css<Element>`
   ${(props) => getBorderRadius(props)}
 `;
+
+type DataToStyle = (prop: number) => string;
 
 export const elementWithHighlightBorderRadius = ({
   borderRadius,
   dataToEditorY,
-}) =>
+}: { borderRadius: BorderRadius, dataToEditorY?: DataToStyle}) =>
   dataToEditorY &&
   css`
     border-radius: ${dataToEditorY(borderRadius?.topLeft || 0)}px
@@ -67,7 +71,7 @@ export const elementWithHighlightBorderRadius = ({
       ${dataToEditorY(borderRadius?.bottomLeft || 0)}px;
   `;
 
-export const elementWithBorder = css`
+export const elementWithBorder = css<Element>`
   ${({ border, borderRadius, width, height, mask }) =>
     getBorderStyle({
       border,
@@ -79,12 +83,14 @@ export const elementWithBorder = css`
   background-clip: padding-box;
 `;
 
-export const elementWithBackgroundColor = css`
+export const elementWithBackgroundColor = css<{
+  backgroundColor?: Pattern;
+}>`
   ${({ backgroundColor }) =>
     backgroundColor && generatePatternStyles(backgroundColor)};
 `;
 
-export const elementWithFont = css`
+export const elementWithFont = css<TextElement>`
   white-space: pre-line;
   font-family: ${({ font }) => generateFontFamily(font)};
   overflow-wrap: break-word;
@@ -97,7 +103,12 @@ export const elementWithFont = css`
 `;
 
 // See generateParagraphTextStyle for the full set of properties.
-export const elementWithTextParagraphStyle = css`
+export const elementWithTextParagraphStyle = css<{
+  margin: number;
+  padding?: number;
+  lineHeight: number;
+  textAlign: 'left'|'right'|'center'|'justify'|'initial'|'inherit';
+}>`
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding || 0};
   line-height: ${({ lineHeight }) => lineHeight};
@@ -105,6 +116,8 @@ export const elementWithTextParagraphStyle = css`
   overflow-wrap: break-word;
 `;
 
-export const elementWithFlip = css`
+export const elementWithFlip = css<{
+  transformFlip: string;
+}>`
   transform: ${({ transformFlip }) => transformFlip};
 `;

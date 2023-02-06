@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
+/**
+ * External dependencies
+ */
+import { __ } from '@googleforcreators/i18n';
 
-export * from './constants';
-export * from './utils/textMeasurements';
+import type { ProductElement } from '../types';
 
-export {};
+function getProductLayerText(element: ProductElement) {
+  return element?.product?.productTitle || __('Product', 'web-stories');
+}
+
+export default getProductLayerText;

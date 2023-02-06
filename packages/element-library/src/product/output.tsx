@@ -17,10 +17,27 @@
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
+import { StoryPropTypes } from '@googleforcreators/elements';
+import type { ProductElement } from '../types';
 
-function getProductLayerText(element) {
-  return element?.product?.productTitle || __('Product', 'web-stories');
+/**
+ * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object<*>} props Props.
+ * @return {*} Rendered component.
+ */
+function ProductOutput({ element }: { element: ProductElement }) {
+  const { product } = element;
+
+  if (!product?.productId) {
+    return null;
+  }
+
+  return <amp-story-shopping-tag data-product-id={product.productId} />;
 }
 
-export default getProductLayerText;
+ProductOutput.propTypes = {
+  element: StoryPropTypes.elements.shape.isRequired,
+};
+
+export default ProductOutput;
