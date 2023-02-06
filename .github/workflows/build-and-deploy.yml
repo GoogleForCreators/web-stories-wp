@@ -182,7 +182,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@d51b5346f85640ec2aa2fa057354d2b82c2fcbce
+        uses: google-github-actions/setup-gcloud@62d4898025f6041e16b1068643bfc5a696863587
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
@@ -195,7 +195,7 @@ jobs:
 
       - name: Check if a comment was already made
         id: find-comment
-        uses: peter-evans/find-comment@81e2da3af01c92f83cb927cf3ace0e085617c556
+        uses: peter-evans/find-comment@85a676a52594b4481e0532825a2d8906ef96dac2
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: googleforcreators-bot
@@ -224,7 +224,7 @@ jobs:
           github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Create or update comment on PR with links to plugin builds
-        uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808
+        uses: peter-evans/create-or-update-comment@67dcc547d311b736a8e6c5c236542148a47adc3d
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
