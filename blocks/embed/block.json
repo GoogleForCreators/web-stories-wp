@@ -74,6 +74,10 @@
     "fieldState": {
       "type": "object",
       "default": {}
+    },
+    "taxQuery": {
+      "type": "object",
+      "default": {}
     }
   },
   "supports": {
