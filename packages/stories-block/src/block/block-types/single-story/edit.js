@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* eslint complexity: ["error", { "max": 21 }] -- TODO: Refactor this. */
+/* eslint complexity: ["error", { "max": 25 }] -- TODO: Refactor this. */
 
 /**
  * External dependencies
@@ -53,6 +53,7 @@ function StoryEmbedEdit({
   className,
   isSelected,
   _isResizable,
+  context = {},
 }) {
   const {
     url: outerURL = '',
@@ -64,13 +65,20 @@ function StoryEmbedEdit({
     stories = [],
   } = attributes;
 
+  const { postId, queryId } = context;
+  const isDescendentOfQueryLoop = Number.isFinite(queryId);
+
   const [editingURL, setEditingURL] = useState(false);
-  const [localURL, setLocalURL] = useState(outerURL);
+  const [localURL, setLocalURL] = useState(
+    isDescendentOfQueryLoop ? undefined : outerURL
+  );
   const [isFetchingData, setIsFetchingData] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [storyData, setStoryData] = useState({});
   const [cannotEmbed, setCannotEmbed] = useState(false);
-  const [selectedStoryIds, setSelectedStoryIds] = useState(stories);
+  const [selectedStoryIds, setSelectedStoryIds] = useState(
+    isDescendentOfQueryLoop ? [postId] : stories
+  );
   const [selectedStories, _setSelectedStories] = useState([]);
 
   const showLoadingIndicator = isFetchingData;
@@ -222,7 +230,7 @@ function StoryEmbedEdit({
           icon={<BlockIcon />}
           label={label}
           selectedStoryIds={selectedStoryIds}
-          setSelectedStories={_setSelectedStories}
+          setSelectedStories={setSelectedStories}
           setIsFetching={setIsFetching}
         />
       );
@@ -356,6 +364,10 @@ StoryEmbedEdit.propTypes = {
   className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   _isResizable: PropTypes.bool,
+  context: PropTypes.shape({
+    postType: PropTypes.string,
+    postId: PropTypes.number,
+  }),
 };
 
 export default withViewportMatch({ _isResizable: 'medium' })(StoryEmbedEdit);

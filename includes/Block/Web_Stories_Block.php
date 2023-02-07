@@ -36,6 +36,7 @@ use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
+use WP_Block;
 
 /**
  * Latest Stories block class.
@@ -167,9 +168,17 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @phpstan-param BlockAttributesWithDefaults $attributes
 	 */
-	public function render_block( array $attributes ): string {
+	public function render_block( array $attributes, string $content, WP_Block $block ): string {
 		if ( false === $this->initialize_block_attributes( $attributes ) ) {
 			return '';
+		}
+
+		if ( 'web-story' === $block->context['postType'] && ! empty( $block->context['postId'] ) ) {
+			$attributes = wp_parse_args( $attributes, $this->default_attrs() );
+
+			$attributes['class'] = 'wp-block-web-stories-embed';
+
+			return $this->render( $attributes );
 		}
 
 		if ( ! empty( $attributes['blockType'] )

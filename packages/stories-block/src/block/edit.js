@@ -41,8 +41,35 @@ import {
   VIEW_TYPES,
 } from './constants';
 
-function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
+function WebStoriesEdit({
+  attributes,
+  setAttributes,
+  className,
+  isSelected,
+  context,
+}) {
   const { blockType, viewType } = attributes;
+  const { postType, postId, queryId } = context;
+
+  const isDescendentOfQueryLoop = Number.isFinite(queryId);
+
+  if (
+    isDescendentOfQueryLoop &&
+    postType &&
+    postId &&
+    'web-story' === postType
+  ) {
+    return (
+      <SingleStoryEmbed
+        icon={<BlockIcon />}
+        attributes={attributes}
+        setAttributes={setAttributes}
+        context={context}
+        className={className}
+        isSelected={isSelected}
+      />
+    );
+  }
 
   if (!blockType) {
     return (
@@ -129,6 +156,11 @@ WebStoriesEdit.propTypes = {
   setAttributes: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
+  context: PropTypes.shape({
+    postType: PropTypes.string,
+    postId: PropTypes.number,
+    queryId: PropTypes.number,
+  }),
 };
 
 export default WebStoriesEdit;
