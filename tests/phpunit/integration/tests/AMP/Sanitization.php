@@ -90,7 +90,7 @@ class Sanitization extends DependencyInjectedTestCase {
 		$this->assertSame( 2, $scripts->length );
 		foreach ( $scripts as $script ) {
 			$this->assertIsObject( $script );
-			$this->assertObjectHasAttribute( 'parentNode', $script );
+			$this->assertTrue( property_exists( $script, 'parentNode' ) );
 			$this->assertSame( 'head', $script->parentNode->nodeName );
 
 		}
