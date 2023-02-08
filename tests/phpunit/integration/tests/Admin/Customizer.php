@@ -115,8 +115,8 @@ class Customizer extends DependencyInjectedTestCase {
 		$this->assertIsArray( $settings );
 		$this->assertArrayHasKey( TheCustomizer::SECTION_SLUG, $settings );
 		$this->assertInstanceOf( WP_Customize_Section::class, $settings[ TheCustomizer::SECTION_SLUG ] );
-		$this->assertObjectHasAttribute( 'title', $settings[ TheCustomizer::SECTION_SLUG ] );
-		$this->assertObjectHasAttribute( 'theme_supports', $settings[ TheCustomizer::SECTION_SLUG ] );
+		$this->assertTrue( property_exists( $settings[ TheCustomizer::SECTION_SLUG ], 'title' ) );
+		$this->assertTrue( property_exists( $settings[ TheCustomizer::SECTION_SLUG ], 'theme_supports' ) );
 
 		$this->assertSame( 'Web Stories', $settings[ TheCustomizer::SECTION_SLUG ]->title );
 		$this->assertSame( 'web-stories', $settings[ TheCustomizer::SECTION_SLUG ]->theme_supports );
