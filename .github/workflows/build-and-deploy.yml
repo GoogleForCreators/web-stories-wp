@@ -92,6 +92,7 @@ jobs:
             codeserver.dev.6b7f1eeb-705b-4201-864d-2007030c8372.drush.in:2222
             dl.google.com:443
             github.com:443
+            api.github.com:443
             oauth2.googleapis.com:443
             objects.githubusercontent.com:443
             packagist.org:443
