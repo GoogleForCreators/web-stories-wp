@@ -78,6 +78,10 @@
     "taxQuery": {
       "type": "object",
       "default": {}
+    },
+    "previewOnly": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {

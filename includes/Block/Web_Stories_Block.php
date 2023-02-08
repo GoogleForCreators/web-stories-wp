@@ -32,6 +32,7 @@ use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Embed_Base;
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
@@ -60,7 +61,8 @@ use WP_Block;
  *   order?: string,
  *   archiveLinkLabel?: string,
  *   authors?: int[],
- *   fieldState?: array<string, mixed>
+ *   fieldState?: array<string, mixed>,
+ *   previewOnly?: bool
  * }
  * @phpstan-type BlockAttributesWithDefaults array{
  *   blockType?: string,
@@ -80,7 +82,8 @@ use WP_Block;
  *   order?: string,
  *   archiveLinkLabel?: string,
  *   authors?: int[],
- *   fieldState?: array<string, mixed>
+ *   fieldState?: array<string, mixed>,
+ *   previewOnly?: bool
  * }
  */
 class Web_Stories_Block extends Embed_Base {
@@ -164,6 +167,8 @@ class Web_Stories_Block extends Embed_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
+	 * @param string               $content    Block content.
+	 * @param WP_Block             $block      Block instance.
 	 * @return string Rendered block type output.
 	 *
 	 * @phpstan-param BlockAttributesWithDefaults $attributes
@@ -173,12 +178,15 @@ class Web_Stories_Block extends Embed_Base {
 			return '';
 		}
 
-		if ( 'web-story' === $block->context['postType'] && ! empty( $block->context['postId'] ) ) {
+		if ( isset( $block->context['postType'], $block->context['postId'] ) && 'web-story' === $block->context['postType'] && ! empty( $block->context['postId'] ) ) {
 			$attributes = wp_parse_args( $attributes, $this->default_attrs() );
 
 			$attributes['class'] = 'wp-block-web-stories-embed';
 
-			return $this->render( $attributes );
+			$story = new Story();
+			$story->load_from_post( get_post( $block->context['postId'] ) );
+
+			return $this->render_story( $story, $attributes );
 		}
 
 		if ( ! empty( $attributes['blockType'] )

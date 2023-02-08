@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { BlockIcon } from './icons';
 import SingleStoryEmbed from './block-types/single-story/edit';
+import SingleStoryEmbedInLoop from './block-types/single-story/editInLoop';
 import StoriesBlockControls from './components/storiesBlockControls';
 import BlockConfigurationPanel from './components/storiesBlockConfigurationPanel';
 import LatestStoriesEdit from './block-types/latest-stories/edit';
@@ -60,7 +61,7 @@ function WebStoriesEdit({
     'web-story' === postType
   ) {
     return (
-      <SingleStoryEmbed
+      <SingleStoryEmbedInLoop
         icon={<BlockIcon />}
         attributes={attributes}
         setAttributes={setAttributes}

@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Embed;
 use Google\Web_Stories\Renderer\Story\Image;
+use Google\Web_Stories\Renderer\Story\Singleton;
 
 /**
  * Embed block class.
@@ -139,6 +140,27 @@ abstract class Embed_Base extends Service_Base {
 	}
 
 	/**
+	 * Renders a story with given attributes.
+	 *
+	 * @since 1.30.0
+	 *
+	 * @param Story                     $story      Story instance.
+	 * @param array<string, string|int> $attributes Embed render attributes.
+	 * @return string Rendered embed output.
+	 */
+	public function render_story( Story $story, array $attributes ): string {
+		if ( is_feed() ) {
+			$renderer = new Image( $story );
+		} elseif ( ! empty( $attributes['previewOnly'] ) ) {
+			$renderer = new Singleton( $story, $this->assets );
+		} else {
+			$renderer = new Embed( $story, $this->assets, $this->context );
+		}
+
+		return $renderer->render( $attributes );
+	}
+
+	/**
 	 * Renders an embed with given attributes.
 	 *
 	 * @since 1.1.0
@@ -148,7 +170,7 @@ abstract class Embed_Base extends Service_Base {
 	 */
 	public function render( array $attributes ): string {
 		// The only mandatory attribute.
-		if ( empty( $attributes['url'] ) ) {
+		if ( empty( $attributes['url'] ) && empty( $attributes['previewOnly'] ) ) {
 			return '';
 		}
 
@@ -164,13 +186,7 @@ abstract class Embed_Base extends Service_Base {
 
 		$story = new Story( $data );
 
-		if ( is_feed() ) {
-			$renderer = new Image( $story );
-		} else {
-			$renderer = new Embed( $story, $this->assets, $this->context );
-		}
-
-		return $renderer->render( $attributes );
+		return $this->render_story( $story, $attributes );
 	}
 
 	/**
@@ -182,12 +198,13 @@ abstract class Embed_Base extends Service_Base {
 	 */
 	protected function default_attrs(): array {
 		$attrs = [
-			'align'  => 'none',
-			'height' => 600,
-			'poster' => '',
-			'url'    => '',
-			'title'  => '',
-			'width'  => 360,
+			'align'       => 'none',
+			'height'      => 600,
+			'poster'      => '',
+			'url'         => '',
+			'title'       => '',
+			'width'       => 360,
+			'previewOnly' => false,
 		];
 
 		/**

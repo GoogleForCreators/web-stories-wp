@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@import 'singleton.css';
+
 .web-stories-embed.alignnone,
 .web-stories-embed.alignleft,
 .web-stories-embed.alignright {
