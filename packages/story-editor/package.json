@@ -78,7 +78,7 @@
     "prop-types": "^15.8.1",
     "react-blurhash": "^0.3.0",
     "react-calendar": "^4.0.0",
-    "react-photo-album": "^2.0.0",
+    "react-photo-album": "^2.0.1",
     "react-transition-group": "^4.4.5",
     "react-virtual": "^2.10.4",
     "remove-accents": "^0.4.4",
