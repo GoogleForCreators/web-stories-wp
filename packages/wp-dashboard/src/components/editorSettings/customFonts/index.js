@@ -145,6 +145,7 @@ const FontData = styled.div`
   display: flex;
   font-size: 14px;
   max-width: calc(100% - 32px);
+  align-items: center;
 `;
 
 const StyledText = styled(Text.Paragraph).attrs({

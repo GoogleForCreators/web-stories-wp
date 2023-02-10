@@ -644,12 +644,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "e250d8e924edd7dbcbb36fbc9191a082f071b170"
+                "reference": "2ae2a51a2cf0b9b2c9e875f6635edc2d6f33cd34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/e250d8e924edd7dbcbb36fbc9191a082f071b170",
-                "reference": "e250d8e924edd7dbcbb36fbc9191a082f071b170",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/2ae2a51a2cf0b9b2c9e875f6635edc2d6f33cd34",
+                "reference": "2ae2a51a2cf0b9b2c9e875f6635edc2d6f33cd34",
                 "shasum": ""
             },
             "require": {
@@ -690,7 +690,7 @@
                 "source": "https://github.com/Automattic/VIP-Coding-Standards",
                 "wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
             },
-            "time": "2023-02-05T16:32:16+00:00"
+            "time": "2023-02-09T11:47:50+00:00"
         },
         {
             "name": "brain/monkey",
@@ -2187,18 +2187,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "f47dd299d9a5d588087ec20e50786fad8709a88d"
+                "reference": "601c429ba8d91ef50a2a1bec05a7cd38b88064ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/f47dd299d9a5d588087ec20e50786fad8709a88d",
-                "reference": "f47dd299d9a5d588087ec20e50786fad8709a88d",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/601c429ba8d91ef50a2a1bec05a7cd38b88064ff",
+                "reference": "601c429ba8d91ef50a2a1bec05a7cd38b88064ff",
                 "shasum": ""
             },
             "require-dev": {
                 "nikic/php-parser": "< 4.12.0",
                 "php": "~7.3 || ~8.0",
-                "php-stubs/generator": "^0.8.1",
+                "php-stubs/generator": "^0.8.3",
                 "phpdocumentor/reflection-docblock": "^5.3",
                 "phpstan/phpstan": "^1.2"
             },
@@ -2223,7 +2223,7 @@
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
                 "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.1.1"
             },
-            "time": "2023-02-04T19:31:19+00:00"
+            "time": "2023-02-09T11:10:35+00:00"
         },
         {
             "name": "php-stubs/wordpress-tests-stubs",
@@ -3296,12 +3296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "4c896e1a101ea77ed10cd3d4364f941ef87532b7"
+                "reference": "c0e29643df152bd7fbe3de189f6c2c16c7d4c2a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4c896e1a101ea77ed10cd3d4364f941ef87532b7",
-                "reference": "4c896e1a101ea77ed10cd3d4364f941ef87532b7",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c0e29643df152bd7fbe3de189f6c2c16c7d4c2a2",
+                "reference": "c0e29643df152bd7fbe3de189f6c2c16c7d4c2a2",
                 "shasum": ""
             },
             "conflict": {
@@ -3359,6 +3359,7 @@
                 "catfan/medoo": "<1.7.5",
                 "centreon/centreon": "<22.10-beta.1",
                 "cesnet/simplesamlphp-module-proxystatistics": "<3.1",
+                "cockpit-hq/cockpit": "<2.3.8",
                 "codeception/codeception": "<3.1.3|>=4,<4.1.22",
                 "codeigniter/framework": "<=3.0.6",
                 "codeigniter4/framework": "<4.2.11",
@@ -3864,7 +3865,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-08T22:04:26+00:00"
+            "time": "2023-02-09T20:04:23+00:00"
         },
         {
             "name": "sebastian/cli-parser",
