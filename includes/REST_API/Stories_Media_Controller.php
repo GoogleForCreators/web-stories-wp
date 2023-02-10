@@ -43,6 +43,12 @@ use WP_REST_Response;
  * Stories_Media_Controller class.
  *
  * @phpstan-import-type Links from \Google\Web_Stories\REST_API\Stories_Base_Controller
+ * @phpstan-type ResponseData array{
+ *   media_details: array{
+ *     width?: int,
+ *     height?: int,
+ *   }
+ * }
  */
 class Stories_Media_Controller extends WP_REST_Attachments_Controller implements Service, Delayed, Registerable {
 	/**
@@ -235,6 +241,31 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 */
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
+
+		/**
+		 * Response data.
+		 *
+		 * @var array<string, string|array<string, int|string>|bool> $data
+		 * @phpstan-var ResponseData $data
+		 */
+		$data = $response->get_data();
+
+		$fields = $this->get_fields_for_response( $request );
+
+		if ( rest_is_field_included( 'media_details', $fields ) ) {
+			// Could also be a stdClass if empty.
+			$data['media_details'] = (array) $data['media_details'];
+
+			if ( empty( $data['media_details']['width'] ) ) {
+				$data['media_details']['width'] = 150;
+			}
+
+			if ( empty( $data['media_details']['height'] ) ) {
+				$data['media_details']['height'] = 150;
+			}
+		}
+
+		$response->set_data( $data );
 
 		/**
 		 * Filters an attachment returned from the REST API.
