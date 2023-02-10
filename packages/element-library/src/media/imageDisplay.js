@@ -117,7 +117,7 @@ function ImageDisplay({
     };
   }, [getProxiedUrl, resource, srcSet, srcType, resourceId]);
 
-  const showPlaceholder = srcType !== 'fullsize';
+  const showPlaceholder = srcType !== 'fullsize' || resource.isPlaceholder;
 
   return (
     <MediaDisplay

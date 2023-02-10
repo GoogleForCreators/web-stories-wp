@@ -80,7 +80,7 @@ interface FinishTranscodingProps {
   payload: {
     id: QueueItemId;
     file: File;
-    additionalData: AdditionalData;
+    additionalData?: AdditionalData;
   };
 }
 

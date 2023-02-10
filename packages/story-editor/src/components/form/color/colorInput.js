@@ -232,7 +232,7 @@ const ColorInput = forwardRef(function ColorInput(
   };
 
   // Always hide color picker on unmount - note the double arrows
-  useUnmount(() => () => setPickerOpen(false));
+  useUnmount(() => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
 

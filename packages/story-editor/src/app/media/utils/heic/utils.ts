@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export function isHeic(buffer: ArrayBuffer) {
+  const fourCC = String.fromCharCode(
+    ...Array.from(new Uint8Array(buffer.slice(8, 12)))
+  );
 
-function getCanvasBlob(canvasEl: HTMLCanvasElement, type = 'image/jpegt', quality = 0.82): Promise<Blob | null> {
-  return new Promise((resolve) => {
-    canvasEl.toBlob((blob) => resolve(blob), type, quality);
-  });
+  const validFourCC = [
+    'mif1', // .heic / image/heif
+    'msf1', // .heic / image/heif-sequence
+    'heic', // .heic / image/heic
+    'heix', // .heic / image/heic
+    'hevc', // .heic / image/heic-sequence
+    'hevx', // .heic / image/heic-sequence
+  ];
+
+  return validFourCC.includes(fourCC);
 }
-
-export default getCanvasBlob;

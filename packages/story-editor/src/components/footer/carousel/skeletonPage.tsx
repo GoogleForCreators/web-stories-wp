@@ -56,6 +56,7 @@ function SkeletonPage({ pageId, index }: { pageId: ElementId; index: number }) {
           // Using isHexColorString for extra hardening.
           // See https://github.com/googleforcreators/web-stories-wp/issues/9888.
           if (
+            bgElement &&
             elementIs.media(bgElement) &&
             bgElement.resource.baseColor &&
             isHexColorString(bgElement.resource.baseColor)

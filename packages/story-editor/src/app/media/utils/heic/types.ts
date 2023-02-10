@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,24 @@
  * limitations under the License.
  */
 
-declare module '*.worker.ts' {
-  class WebpackWorker extends Worker {}
+type DecodeRequest = {
+  buffer: ArrayBuffer;
+  action: 'convert';
+  id: string;
+  type?: 'image/jpeg' | 'image/png' | 'image/webp';
+  quality?: number;
+};
 
-  export default WebpackWorker;
-}
+type ErrorResponse = { action: 'error'; error: string; id: string };
+
+type SuccessResponse = {
+  action: 'success';
+  blob?: Blob;
+  buffer: ArrayBuffer;
+  id: string;
+  dimensions: { width: number; height: number };
+};
+
+export type HeicWorkerRequest = DecodeRequest;
+
+export type HeicWorkerResponse = ErrorResponse | SuccessResponse;

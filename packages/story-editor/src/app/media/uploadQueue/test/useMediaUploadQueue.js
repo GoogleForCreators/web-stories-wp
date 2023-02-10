@@ -61,6 +61,13 @@ jest.mock('../../utils/useMediaInfo', () => ({
   })),
 }));
 
+jest.mock('../../utils/heic/useConvertHeic.ts', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    convertHeic: jest.fn(),
+  })),
+}));
+
 const mockUploadFile = jest.fn().mockImplementation((file) =>
   Promise.resolve(
     createResource({

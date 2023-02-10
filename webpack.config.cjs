@@ -69,6 +69,11 @@ const sharedConfig = {
       path: false,
       url: false,
       module: false,
+      crypto: false,
+      util: false,
+      zlib: false,
+      assert: false,
+      stream: false,
     },
   },
   mode,
@@ -93,7 +98,7 @@ const sharedConfig = {
         },
       },
       {
-        test: /\.worker\.js$/,
+        test: /\.worker\.([jt])s$/,
         exclude: /node_modules/,
         use: {
           loader: 'worker-loader',
@@ -103,7 +108,7 @@ const sharedConfig = {
         },
       },
       {
-        test: /\.(j|t)sx?$/,
+        test: /\.([jt])sx?$/,
         exclude: /node_modules/,
         resolve: {
           // Avoid having to provide full file extension for imports.
