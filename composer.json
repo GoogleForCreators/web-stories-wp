@@ -66,7 +66,7 @@
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "cweagans/composer-patches": false,
+      "cweagans/composer-patches": true,
       "mcaskill/composer-exclude-files": true,
       "phpstan/extension-installer": true,
       "composer/installers": true,
