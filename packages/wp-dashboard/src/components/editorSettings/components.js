@@ -72,7 +72,7 @@ export const InlineLink = styled(Link)`
   display: inline-block;
 `;
 
-export const HelperText = styled(Text.Span)`
+export const HelperText = styled(Text.Paragraph)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 

@@ -19,7 +19,7 @@
  */
 import { forwardRef } from '@googleforcreators/react';
 import type { ForwardedRef, PropsWithChildren } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -37,7 +37,7 @@ const Title = styled(Headline)`
 const Content = styled.div`
   grid-area: content;
   margin-bottom: 4px;
-  max-width: 408px;
+  max-width: 600px;
   min-width: 50%;
 `;
 
@@ -47,7 +47,7 @@ const CloseButton = styled(Button)`
   align-self: flex-start;
 `;
 
-const Container = styled.div<{ isDashboard: boolean; backgroundUrl: string }>`
+const Container = styled.div`
   display: grid;
   width: 100%;
   min-height: 60px;
@@ -57,35 +57,28 @@ const Container = styled.div<{ isDashboard: boolean; backgroundUrl: string }>`
   align-items: baseline;
   padding: 6px 8px;
   background-color: ${({ theme }) => theme.colors.gray[5]};
-  background-image: url('${({ backgroundUrl }) => backgroundUrl}');
   border-radius: ${({ theme }) => theme.borders.radius.medium};
 
-  ${({ isDashboard }) =>
-    isDashboard &&
-    css`
-      max-height: 184px;
-      border-radius: 0;
-      grid-template-columns: 1fr 32px;
-      grid-template-rows: 3;
-      grid-column-gap: 0;
-      grid-template-areas: '. closeButton' 'title title' 'content content';
-      text-align: center;
+  max-height: 184px;
+  border-radius: 0;
+  grid-template-columns: 1fr 32px;
+  grid-template-rows: 3;
+  grid-column-gap: 0;
+  grid-template-areas: '. closeButton' 'title title' 'content content';
+  text-align: center;
 
-      ${Title} {
-        padding-left: 0;
-        margin-top: -10px;
-      }
-      ${Content} {
-        margin: 8px auto 18px;
-        max-width: 480px;
-      }
-    `}
+  ${Title} {
+    padding-left: 0;
+    margin-top: -10px;
+  }
+  ${Content} {
+    margin: 8px auto 18px;
+    max-width: 600px;
+  }
 `;
 
 interface BannerProps {
-  backgroundUrl: string;
   closeButtonLabel: string;
-  isDashboard: boolean;
   title: string;
   onClose: () => void;
 }
@@ -93,10 +86,8 @@ interface BannerProps {
 const Banner = forwardRef(
   (
     {
-      backgroundUrl,
       children,
       closeButtonLabel,
-      isDashboard,
       title,
       onClose,
       ...rest
@@ -104,13 +95,8 @@ const Banner = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
-      <Container
-        ref={ref}
-        backgroundUrl={backgroundUrl}
-        isDashboard={isDashboard}
-        {...rest}
-      >
-        <Title as="h2" size={isDashboard ? TextSize.XSmall : TextSize.XXSmall}>
+      <Container ref={ref} {...rest}>
+        <Title as="h2" size={TextSize.XSmall}>
           {title}
         </Title>
         <CloseButton
@@ -127,7 +113,5 @@ const Banner = forwardRef(
     );
   }
 );
-
-Banner.displayName = 'Banner';
 
 export default Banner;

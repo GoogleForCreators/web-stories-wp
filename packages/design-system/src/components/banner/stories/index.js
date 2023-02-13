@@ -21,8 +21,6 @@ import { TextSize } from '../../../theme';
 import { Text, Link } from '../../typography';
 import { Banner } from '..';
 
-const demoBgUrl = 'https://picsum.photos/id/240/1500/160';
-
 export default {
   title: 'DesignSystem/Components/Banner',
   component: Banner,
@@ -39,11 +37,7 @@ export default {
 // eslint-disable-next-line react/prop-types
 export const _default = ({ message, ...args }) => {
   return (
-    <Banner
-      closeButtonLabel={'Dismiss storybook banner'}
-      backgroundUrl={demoBgUrl}
-      {...args}
-    >
+    <Banner closeButtonLabel={'Dismiss storybook banner'} {...args}>
       <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
     </Banner>
   );
@@ -54,7 +48,6 @@ export const EditorBanner = ({ message, ...args }) => {
     <Banner
       closeButtonLabel={'Dismiss storybook banner'}
       onClose={(e) => args.onClose(e)}
-      backgroundUrl={demoBgUrl}
       {...args}
     >
       <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
@@ -73,7 +66,6 @@ export const DashboardBanner = ({ message, ...args }) => {
     <Banner
       closeButtonLabel={'Dismiss storybook banner'}
       onClose={(e) => args.onClose(e)}
-      backgroundUrl={demoBgUrl}
       {...args}
     >
       <Text.Paragraph size={TextSize.XSmall}>
