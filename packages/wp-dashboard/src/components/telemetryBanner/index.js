@@ -44,7 +44,6 @@ import {
 /**
  * Internal dependencies
  */
-import bannerBg from '../../images/analytics-banner-bg.png';
 import useTelemetryOptIn from '../../effects/useTelemetryOptIn';
 import { EDITOR_SETTINGS_ROUTE } from '../../constants';
 
@@ -96,12 +95,10 @@ export const TelemetryOptInBanner = forwardRef(
 
     return visible ? (
       <Banner
-        backgroundUrl={bannerBg}
         closeButtonLabel={__('Dismiss telemetry banner', 'web-stories')}
         onClose={onClose}
         title={title}
         ref={ref}
-        isDashboard
       >
         <Label>
           <Checkbox
@@ -117,12 +114,12 @@ export const TelemetryOptInBanner = forwardRef(
             }}
             ref={checkboxRef}
           />
-          <LabelText aria-checked={checked} size={TextSize.XSmall}>
+          <LabelText aria-checked={checked} size={TextSize.Small}>
             <TranslateWithMarkup
               mapping={{
                 a: (
                   <NavLink
-                    size={TextSize.XSmall}
+                    size={TextSize.Small}
                     href={__(
                       'https://policies.google.com/privacy',
                       'web-stories'
