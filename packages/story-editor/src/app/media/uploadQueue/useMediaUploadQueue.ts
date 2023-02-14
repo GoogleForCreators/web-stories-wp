@@ -47,7 +47,7 @@ import type { ElementId } from '@googleforcreators/elements';
 import { useUploader } from '../../uploader';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useFFmpeg from '../utils/useFFmpeg';
-import { useConvertHeic } from '../utils/heic';
+import { useConvertHeif } from '../utils/heif';
 import useMediaInfo from '../utils/useMediaInfo';
 import getResourceFromLocalFile from '../utils/getResourceFromLocalFile';
 import { useConfig } from '../../config';
@@ -98,7 +98,7 @@ function useMediaUploadQueue() {
     cropVideo: cropResource,
   } = useFFmpeg();
   const { isConsideredOptimized } = useMediaInfo();
-  const { convertHeic } = useConvertHeic();
+  const { convertHeif } = useConvertHeif();
 
   const [state, actions] = useReduction(initialState, reducer);
 
@@ -228,7 +228,7 @@ function useMediaUploadQueue() {
   ]);
 
   // Convert HEIF images to JPEG if possible.
-  const convertHeicItem = useCallback(
+  const convertHeifItem = useCallback(
     async ({ id, file }: QueueItem) => {
       startTranscoding({ id });
 
@@ -237,7 +237,7 @@ function useMediaUploadQueue() {
         : 'image/jpeg';
 
       try {
-        const blob = await convertHeic(id, file, type);
+        const blob = await convertHeif(file, type);
         const ext = getExtensionFromMimeType(blob.type) || 'jpeg';
         const fileName = getFileBasename(file) + '.' + ext;
         const newFile = blobToFile(blob, fileName, type);
@@ -251,7 +251,7 @@ function useMediaUploadQueue() {
       }
     },
     [
-      convertHeic,
+      convertHeif,
       startTranscoding,
       finishTranscoding,
       cancelUploading,
@@ -617,8 +617,7 @@ function useMediaUploadQueue() {
         const { muteVideo, cropVideo, trimData, isAnimatedGif } = item;
 
         if (item.file.type === 'image/heic') {
-          // TODO: HEIC
-          void convertHeicItem(item);
+          void convertHeifItem(item);
           return;
         }
 
@@ -661,7 +660,7 @@ function useMediaUploadQueue() {
     trimVideoItem,
     muteVideoItem,
     cropVideoItem,
-    convertHeicItem,
+    convertHeifItem,
   ]);
 
   // Upload freshly transcoded files to server.

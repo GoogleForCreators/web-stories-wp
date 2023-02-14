@@ -14,24 +14,4 @@
  * limitations under the License.
  */
 
-type DecodeRequest = {
-  buffer: ArrayBuffer;
-  action: 'convert';
-  id: string;
-  type?: 'image/jpeg' | 'image/png' | 'image/webp';
-  quality?: number;
-};
-
-type ErrorResponse = { action: 'error'; error: string; id: string };
-
-type SuccessResponse = {
-  action: 'success';
-  blob?: Blob;
-  buffer: ArrayBuffer;
-  id: string;
-  dimensions: { width: number; height: number };
-};
-
-export type HeicWorkerRequest = DecodeRequest;
-
-export type HeicWorkerResponse = ErrorResponse | SuccessResponse;
+export { default as useConvertHeif } from './useConvertHeif';

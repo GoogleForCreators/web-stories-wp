@@ -61,10 +61,10 @@ jest.mock('../../utils/useMediaInfo', () => ({
   })),
 }));
 
-jest.mock('../../utils/heic/useConvertHeic.ts', () => ({
+jest.mock('../../utils/heif/useConvertHeif.ts', () => ({
   __esModule: true,
   default: jest.fn(() => ({
-    convertHeic: jest.fn(),
+    convertHeif: jest.fn(),
   })),
 }));
 
