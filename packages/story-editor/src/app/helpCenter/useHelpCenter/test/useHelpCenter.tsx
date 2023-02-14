@@ -23,8 +23,7 @@ import type { PropsWithChildren } from 'react';
 /**
  * Internal dependencies
  */
-import APIContext from '../../../api/context';
-import { CurrentUserProvider } from '../../../currentUser';
+import CurrentUserProviderContext from '../../../currentUser/context';
 import { DONE_TIP_ENTRY } from '../../constants';
 import useHelpCenter from '..';
 import HelpCenterProvider from '../../provider';
@@ -37,24 +36,21 @@ function setup() {
     onboarding: {},
     trackingOptin: false,
   };
-  const currentUserPromise = jest.fn(
-    () => new Promise<User>((resolve) => resolve(currentUser))
-  );
-  const apiContextValue = {
+  const currentUserPromise = jest.fn(() => Promise.resolve());
+  const contextValue = {
     state: {
       currentUser,
     },
     actions: {
       updateCurrentUser: currentUserPromise,
-      getCurrentUser: currentUserPromise,
+      toggleWebStoriesMediaOptimization: jest.fn(),
     },
   };
+
   const wrapper = ({ children }: PropsWithChildren<undefined>) => (
-    <APIContext.Provider value={apiContextValue}>
-      <CurrentUserProvider>
-        <HelpCenterProvider>{children}</HelpCenterProvider>
-      </CurrentUserProvider>
-    </APIContext.Provider>
+    <CurrentUserProviderContext.Provider value={contextValue}>
+      <HelpCenterProvider>{children}</HelpCenterProvider>
+    </CurrentUserProviderContext.Provider>
   );
 
   return renderHook(() => useHelpCenter(), { wrapper });
