@@ -109,6 +109,16 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.30.0 =
+
+* New feature: support for drag & drop uploading HEIC/HEIF images to the editor.
+* New feature: filter stories in the Web Stories block by categories and tags.
+* New feature: Support embedding single stories with a poster/preview.
+* Enhancement: improve support for the Query Loop block.
+* Enhancement: Update browser address bar when opening stories in the Web stories block.
+* Fixes an issue with image filters.
+* Bug fixes and performance improvements.
+
 = 1.29.0 =
 
 * Stability and compatibility improvements.
@@ -119,13 +129,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Fixes editor crashes when adding/uploading media.
 * Fixes an issue where non-admin users could not use the author dropdown.
 
-= 1.28.0 =
-
-* New feature: support for changing page advancement settings per individual page.
-* New feature: support for toggling visibility of individual layers.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.30.0 =
+
+This release includes HEIF/HEIC image support, improvements to the Web Stories block, and several bug fixes.
 
 = 1.29.0 =
 
@@ -134,7 +142,3 @@ This release includes several bug fixes and stability improvements.
 = 1.28.1 =
 
 This release fixes an issue where the editor would inadvertently crash when adding media.
-
-= 1.28.0 =
-
-This release includes support for page-level page advancement settings and toggling layer visibility.
