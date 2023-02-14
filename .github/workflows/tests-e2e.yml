@@ -178,6 +178,12 @@ jobs:
       - name: Install libgbm1
         run: sudo apt-get install libgbm1
 
+      - name: Setup Node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
       - name: Install dependencies
         run: npm install puppeteer
         env:
