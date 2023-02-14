@@ -16,7 +16,7 @@
 
 function getCanvasBlob(
   canvasEl: HTMLCanvasElement,
-  type = 'image/jpegt',
+  type: 'image/jpeg' | 'image/png' | 'image/webp' = 'image/jpeg',
   quality = 0.82
 ): Promise<Blob | null> {
   return new Promise((resolve) => {
