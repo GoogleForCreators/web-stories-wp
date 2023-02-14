@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-function getCanvasBlob(canvasEl: HTMLCanvasElement, type = 'image/jpegt', quality = 0.82): Promise<Blob | null> {
+function getCanvasBlob(
+  canvasEl: HTMLCanvasElement,
+  type = 'image/jpegt',
+  quality = 0.82
+): Promise<Blob | null> {
   return new Promise((resolve) => {
     canvasEl.toBlob((blob) => resolve(blob), type, quality);
   });
