@@ -36,16 +36,14 @@ function setup() {
     onboarding: {},
     trackingOptin: false,
   };
-  const currentUserPromise = jest.fn(
-    () => new Promise<User>((resolve) => resolve(currentUser))
-  );
+  const currentUserPromise = jest.fn(() => Promise.resolve());
   const contextValue = {
     state: {
       currentUser,
     },
     actions: {
       updateCurrentUser: currentUserPromise,
-      getCurrentUser: currentUserPromise,
+      toggleWebStoriesMediaOptimization: jest.fn(),
     },
   };
 
