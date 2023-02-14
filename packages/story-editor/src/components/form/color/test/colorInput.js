@@ -164,7 +164,9 @@ describe('<ColorInput />', () => {
 
     fireEvent.click(button);
 
-    const pickerDialog = screen.getByLabelText(/color and gradient picker/i);
+    const pickerDialog = await screen.findByLabelText(
+      /color and gradient picker/i
+    );
     await waitFor(() => expect(pickerDialog).toBeInTheDocument());
   });
 
@@ -183,7 +185,9 @@ describe('<ColorInput />', () => {
 
     fireEvent.click(button);
 
-    const pickerDialog = screen.getByLabelText(/color and gradient picker/i);
+    const pickerDialog = await screen.findByLabelText(
+      /color and gradient picker/i
+    );
     await waitFor(() => expect(pickerDialog).toBeInTheDocument());
   });
 
