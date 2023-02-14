@@ -30,6 +30,7 @@ import {
   PanelRow,
   ToolbarGroup,
   ToolbarButton,
+  ToggleControl,
 } from '@wordpress/components';
 import {
   BlockControls,
@@ -54,6 +55,7 @@ const EmbedControls = (props) => {
     maxHeight,
     poster,
     title,
+    previewOnly,
     setAttributes,
   } = props;
 
@@ -75,6 +77,10 @@ const EmbedControls = (props) => {
     // Move focus back to the Media Upload button.
     posterImageButton.current.focus();
   }, [setAttributes, posterImageButton]);
+
+  const onChangePreviewOnly = useCallback(() => {
+    setAttributes({ previewOnly: !previewOnly });
+  }, [setAttributes, previewOnly]);
 
   const hasPoster = Boolean(poster);
 
@@ -194,6 +200,19 @@ const EmbedControls = (props) => {
               </div>
             </BaseControl>
           </PanelRow>
+          <PanelRow>
+            <BaseControl>
+              <ToggleControl
+                label={__('Display as preview', 'web-stories')}
+                checked={previewOnly}
+                onChange={onChangePreviewOnly}
+                help={__(
+                  'Displays the story poster that opens the story in a lightbox on click',
+                  'web-stories'
+                )}
+              />
+            </BaseControl>
+          </PanelRow>
         </PanelBody>
       </InspectorControls>
     </>
@@ -211,6 +230,7 @@ EmbedControls.propTypes = {
   poster: PropTypes.string,
   title: PropTypes.string,
   setAttributes: PropTypes.func,
+  previewOnly: PropTypes.bool,
 };
 
 export default EmbedControls;

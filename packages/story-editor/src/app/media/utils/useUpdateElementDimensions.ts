@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import type { Resource } from '@googleforcreators/media';
 import type { ElementId, ElementType } from '@googleforcreators/elements';
 
@@ -25,6 +25,7 @@ import type { ElementId, ElementType } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import useStory from '../../story/useStory';
+import getInsertedElementSize from '../../../utils/getInsertedElementSize';
 
 function useUpdateElementDimensions() {
   const { updateElementsByResourceId } = useStory((state) => ({
@@ -47,13 +48,20 @@ function useUpdateElementDimensions() {
             };
           }
 
+          const { width, height } = getInsertedElementSize(
+            el.type,
+            undefined,
+            undefined,
+            {},
+            resource.width / resource.height,
+            resource
+          );
+
           return {
             resource,
             type: resource.type as unknown as ElementType,
-            width: resource.width,
-            height: resource.height,
-            x: PAGE_WIDTH / 2 - resource.width / 2,
-            y: PAGE_HEIGHT / 2 - resource.height / 2,
+            width,
+            height,
           };
         },
       });

@@ -24,15 +24,17 @@ import PropTypes from 'prop-types';
  */
 import { __ } from '@wordpress/i18n';
 import {
-  TextControl,
   PanelBody,
+  RadioControl,
   RangeControl,
   SelectControl,
+  TextControl,
   ToggleControl,
-  RadioControl,
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
 import { useEffect, useRef } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -43,6 +45,7 @@ import {
   LIST_VIEW_TYPE,
 } from '../constants';
 import AuthorSelection from './authorSelection';
+import TaxonomyItem from './taxonomyItem';
 
 /**
  * StoriesInspectorControls props.
@@ -68,7 +71,7 @@ const {
 } = window.webStoriesBlockSettings;
 
 /**
- * LatestStoriesBlockControls component. Used for rendering block controls of the block.
+ * StoriesInspectorControls component. Used for rendering block controls of the block.
  *
  * @param {StoriesInspectorControlsProps} props Component props.
  * @return {*} JSX markup.
@@ -86,12 +89,24 @@ const StoriesInspectorControls = (props) => {
       circleSize,
       imageAlignment,
       fieldState,
+      taxQuery,
     },
     setAttributes,
     showFilters = true,
   } = props;
 
   const firstUpdate = useRef(true);
+
+  const taxonomies = useSelect((select) => {
+    const { getTaxonomies } = select(coreStore);
+    return (
+      getTaxonomies({
+        type: 'web-story',
+        per_page: -1,
+        context: 'view',
+      }) || []
+    );
+  }, []);
 
   useEffect(() => {
     // Set default field state on load.
@@ -238,8 +253,8 @@ const StoriesInspectorControls = (props) => {
             <RangeControl
               label={__('Circle Size', 'web-stories')}
               value={circleSize}
-              onChange={(updatedcircleSize) =>
-                setAttributes({ circleSize: updatedcircleSize })
+              onChange={(updatedCircleSize) =>
+                setAttributes({ circleSize: updatedCircleSize })
               }
               min={80}
               max={200}
@@ -280,6 +295,25 @@ const StoriesInspectorControls = (props) => {
             value={order || 'desc'}
             onChange={(selection) => setAttributes({ order: selection })}
           />
+          {taxonomies.map((taxonomy) => {
+            const termIds = taxQuery?.[taxonomy.slug] || [];
+            const handleChange = (newTermIds) =>
+              setAttributes({
+                taxQuery: {
+                  ...taxQuery,
+                  [taxonomy.slug]: newTermIds,
+                },
+              });
+
+            return (
+              <TaxonomyItem
+                key={taxonomy.slug}
+                taxonomy={taxonomy}
+                termIds={termIds}
+                onChange={handleChange}
+              />
+            );
+          })}
           <AuthorSelection authors={authors} setAttributes={setAttributes} />
           <RangeControl
             label={__('Number of Stories', 'web-stories')}
@@ -309,6 +343,7 @@ StoriesInspectorControls.propTypes = {
     circleSize: PropTypes.number,
     fieldState: PropTypes.object,
     imageAlignment: PropTypes.string,
+    taxQuery: PropTypes.objectOf(PropTypes.number),
   }),
   setAttributes: PropTypes.func.isRequired,
   showFilters: PropTypes.bool,

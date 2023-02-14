@@ -60,6 +60,11 @@ class Editor extends Service_Base implements HasRequirements {
 	public const AMP_VALIDATOR_SCRIPT_HANDLE = 'amp-validator';
 
 	/**
+	 * The libheif script handle.
+	 */
+	public const LIBHEIF_SCRIPT_HANDLE = 'web-stories-libheif';
+
+	/**
 	 * Experiments instance.
 	 *
 	 * @var Experiments Experiments instance.
@@ -229,7 +234,12 @@ class Editor extends Service_Base implements HasRequirements {
 	public function replace_editor( $replace, WP_Post $post ) {
 		if ( $this->story_post_type->get_slug() === get_post_type( $post ) ) {
 
-			$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
+			$script_dependencies = [
+				Tracking::SCRIPT_HANDLE,
+				'postbox',
+				self::AMP_VALIDATOR_SCRIPT_HANDLE,
+				self::LIBHEIF_SCRIPT_HANDLE,
+			];
 
 			// Registering here because the script handle is required for wp_add_inline_script in edit-story.php.
 			$this->assets->register_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
@@ -290,6 +300,15 @@ class Editor extends Service_Base implements HasRequirements {
 		wp_enqueue_script(
 			self::AMP_VALIDATOR_SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/v0/validator_wasm.js',
+			[],
+			WEBSTORIES_VERSION,
+			true
+		);
+
+
+		wp_enqueue_script(
+			self::LIBHEIF_SCRIPT_HANDLE,
+			trailingslashit( WEBSTORIES_CDN_URL ) . 'js/libheif-js@1.14.0/libheif.js',
 			[],
 			WEBSTORIES_VERSION,
 			true

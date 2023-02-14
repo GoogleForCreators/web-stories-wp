@@ -42,19 +42,48 @@ function FetchSelectedStories({
 }) {
   const { isFetchingStories, fetchedStories } = useSelect(
     (select) => {
-      const { getEntityRecords, isResolving } = select(coreStore);
-      const newQuery = {
-        _embed: 'author,wp:featuredmedia',
-        context: 'edit',
-        include: selectedStoryIds,
-        orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
-      };
+      const { getEntityRecords, isResolving, getEntityRecord } =
+        select(coreStore);
+
+      let fetchedStories = [];
+      let isFetchingStories = false;
+
+      if (selectedStoryIds.length === 1) {
+        // getEntityRecords does not seem to be reliable in this case.
+        const singleRecord = getEntityRecord(
+          'postType',
+          'web-story',
+          ...selectedStoryIds
+        );
+        if (singleRecord) {
+          fetchedStories = [singleRecord];
+        }
+
+        isFetchingStories = isResolving(
+          'postType',
+          'web-story',
+          ...selectedStoryIds
+        );
+      } else {
+        const newQuery = {
+          _embed: 'wp:featuredmedia',
+          context: 'view',
+          include: selectedStoryIds,
+          orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
+        };
+
+        isFetchingStories = isResolving('postType', 'web-story', newQuery);
+
+        const records = getEntityRecords('postType', 'web-story', newQuery);
+
+        if (records) {
+          fetchedStories = records;
+        }
+      }
 
       return {
-        fetchedStories:
-          getEntityRecords('postType', 'web-story', newQuery) || [],
-        isFetchingStories:
-          isResolving('postType', 'web-story', newQuery) || false,
+        fetchedStories,
+        isFetchingStories,
       };
     },
     [selectedStoryIds]

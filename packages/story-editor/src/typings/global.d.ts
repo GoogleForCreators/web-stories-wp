@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { default as MediaInfoFactory } from 'mediainfo.js';
+import type { HeifDecoder } from 'libheif-js';
 
 declare global {
   var WEB_STORIES_ENV: string;
@@ -24,13 +24,16 @@ declare global {
   interface Array<T> {
     findLastIndex(
       predicate: (value: T, index: number, obj: T[]) => unknown,
-      thisArg?: any
+      thisArg?: unknown
     ): number;
   }
 
   interface Window {
-    // Made available by useMediaInfo()
-    MediaInfo?: typeof MediaInfoFactory;
+    // Made available by Editor.php
+    // See https://github.com/GoogleForCreators/web-stories-wp/pull/13015
+    libheif: {
+      HeifDecoder: typeof HeifDecoder;
+    };
   }
 }
 

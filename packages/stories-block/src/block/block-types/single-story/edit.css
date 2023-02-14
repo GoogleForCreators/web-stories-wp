@@ -1,6 +1,5 @@
 .block-editor-block-list__block[data-type='web-stories/embed'] .wp-block {
   height: auto;
-  overflow: hidden;
 }
 
 /* Loading Indicator */
@@ -94,10 +93,15 @@
   line-height: 1.25;
 }
 
-.web-stories-embed-size-control__width {
+.block-editor-block-inspector .web-stories-embed-size-control__width,
+.block-editor-block-inspector .web-stories-embed-size-control__height {
+  margin-bottom: 0 !important;
+}
+
+.block-editor-block-inspector .web-stories-embed-size-control__width {
   margin-right: 5px;
 }
 
-.web-stories-embed-size-control__height {
+.block-editor-block-inspector .web-stories-embed-size-control__height {
   margin-left: 5px;
 }

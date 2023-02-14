@@ -39,9 +39,9 @@ function isNum(value: unknown): value is number {
 
 function getInsertedElementSize(
   type: ElementType,
-  width: number,
-  height: number,
-  attrs: object,
+  width?: number,
+  height?: number,
+  attrs = {},
   ratio = 1,
   resource?: Resource
 ) {
