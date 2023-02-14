@@ -31,18 +31,30 @@ describe('FontDeclarations', () => {
         id: 'abc123',
         elements: [
           {
+            id: 'a',
             type: 'text',
             font: {
               family: 'Arial',
               service: 'system',
             },
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'b',
             type: 'text',
             font: {
               family: 'Helvetica',
               service: 'system',
             },
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
         ],
       },
@@ -58,6 +70,7 @@ describe('FontDeclarations', () => {
         id: 'abc123',
         elements: [
           {
+            id: 'a',
             type: 'text',
             font: {
               family: 'Roboto',
@@ -68,8 +81,14 @@ describe('FontDeclarations', () => {
               ],
             },
             content: '<span style="font-style: italic">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'b',
             type: 'text',
             font: {
               family: 'Roboto',
@@ -80,20 +99,37 @@ describe('FontDeclarations', () => {
               ],
             },
             content: '<span style="font-style: italic">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'c',
             type: 'text',
             font: {
               family: 'Lato',
               service: 'fonts.google.com',
             },
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'd',
             type: 'text',
             font: {
               family: 'Lato',
               service: 'fonts.google.com',
             },
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
         ],
       },
@@ -116,6 +152,7 @@ describe('FontDeclarations', () => {
         id: 'abc123',
         elements: [
           {
+            id: 'a',
             type: 'text',
             font: {
               family: 'Architects Daughter',
@@ -123,6 +160,11 @@ describe('FontDeclarations', () => {
               variants: [[0, 400]],
             },
             content: '<span style="font-style: italic">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
         ],
       },
@@ -145,6 +187,7 @@ describe('FontDeclarations', () => {
         id: 'abc123',
         elements: [
           {
+            id: 'a',
             type: 'text',
             font: {
               family: 'Mukta Mahee',
@@ -161,8 +204,14 @@ describe('FontDeclarations', () => {
             },
             content:
               '<span style="font-style: italic;font-weight: 200">Hello World</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'b',
             type: 'text',
             font: {
               family: 'Mukta Mahee',
@@ -179,8 +228,14 @@ describe('FontDeclarations', () => {
             },
             content:
               '<span style="font-style: italic;font-weight: 800">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'c',
             type: 'text',
             font: {
               family: 'Molle',
@@ -188,8 +243,14 @@ describe('FontDeclarations', () => {
               variants: [[1, 400]],
             },
             content: '<span style="font-weight: 400">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'd',
             type: 'text',
             font: {
               family: 'Abel',
@@ -197,8 +258,14 @@ describe('FontDeclarations', () => {
               variants: [[0, 400]],
             },
             content: '<span style="font-weight: 700">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'e',
             type: 'text',
             font: {
               family: 'Alef',
@@ -210,6 +277,11 @@ describe('FontDeclarations', () => {
             },
             content:
               '<span style="font-style: italic;font-weight: 600">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
         ],
       },
@@ -232,6 +304,7 @@ describe('FontDeclarations', () => {
         id: 'abc123',
         elements: [
           {
+            id: 'a',
             type: 'text',
             font: {
               family: 'Roboto',
@@ -242,8 +315,14 @@ describe('FontDeclarations', () => {
               ],
             },
             content: '<span style="font-style: italic">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'b',
             type: 'text',
             font: {
               family: 'Roboto',
@@ -254,28 +333,51 @@ describe('FontDeclarations', () => {
               ],
             },
             content: '<span style="font-style: italic">Hello</span>',
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'c',
             type: 'text',
             font: {
               family: 'Lato',
               service: 'fonts.google.com',
             },
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'd',
             type: 'text',
             font: {
               family: 'Lato',
               service: 'fonts.google.com',
             },
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
           {
+            id: 'e',
             type: 'text',
             font: {
               family: 'Vazir Regular',
               service: 'custom',
               url: 'https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf',
             },
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 50,
+            rotationAngle: 0,
           },
         ],
       },
