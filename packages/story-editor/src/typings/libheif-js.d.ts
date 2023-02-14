@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+declare module 'libheif-js' {
+  interface DecodeResult {
+    img: {
+      is_primary: boolean;
+      thumbnails: number;
+      width: number;
+      height: number;
+    } | null;
+    get_width: () => number;
+    get_height: () => number;
+    is_primary: () => boolean;
+    display: (
+      base: ImageData,
+      callback: (result: ImageData | null) => void
+    ) => void;
+  }
 
-function getCanvasBlob(
-  canvasEl: HTMLCanvasElement,
-  type: 'image/jpeg' | 'image/png' | 'image/webp' = 'image/jpeg',
-  quality = 0.82
-): Promise<Blob | null> {
-  return new Promise((resolve) => {
-    canvasEl.toBlob((blob) => resolve(blob), type, quality);
-  });
+  type DecodeResultType = DecodeResult[];
+
+  class HeifDecoder implements HeifDecoder {
+    constructor();
+    decode(buffer: ArrayBuffer): DecodeResultType;
+  }
 }
-
-export default getCanvasBlob;

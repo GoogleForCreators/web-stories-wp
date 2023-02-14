@@ -57,7 +57,7 @@ function useUploadMedia({
   const {
     actions: { validateFileForUpload },
   } = useUploader();
-  const { showSnackbar } = useSnackbar();
+  const { showSnackbar, removeSnack } = useSnackbar();
   const setPreventUnload = usePreventWindowUnload();
   const {
     state: {
@@ -99,14 +99,22 @@ function useUploadMedia({
 
   useEffect(() => {
     const isDialogDismissed = Boolean(localStore.getItemByKey(storageKey));
+    if (!isDialogDismissed) {
+      return;
+    }
 
-    if (isTranscoding && isDialogDismissed) {
+    if (isTranscoding) {
       showSnackbar({
-        message: __('Video optimization in progress', 'web-stories'),
+        message: __('Optimizing file…', 'web-stories'),
         dismissible: true,
+        key: 'video-optimization',
+      });
+    } else {
+      removeSnack({
+        key: 'video-optimization',
       });
     }
-  }, [isTranscoding, showSnackbar]);
+  }, [isTranscoding, showSnackbar, removeSnack]);
 
   // Add *new* items to the media library and canvas.
   useEffect(() => {
@@ -294,11 +302,12 @@ function useUploadMedia({
           // aren't supported anyway.
           const canTranscode = isTranscodingEnabled && canTranscodeFile(file);
           const isTooLarge = canTranscode && isFileTooLarge(file);
+          const isHeic = file.type === 'image/heic';
 
           try {
             validateFileForUpload({
               file,
-              canTranscodeFile: canTranscode,
+              canTranscodeFile: canTranscode || isHeic,
               isFileTooLarge: isTooLarge,
             });
           } catch (e) {

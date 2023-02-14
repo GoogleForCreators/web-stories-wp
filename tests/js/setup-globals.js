@@ -94,4 +94,17 @@ if (typeof window !== 'undefined') {
   Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
     set: () => {},
   });
+
+  class Worker {
+    constructor(stringUrl) {
+      this.url = stringUrl;
+      this.onmessage = () => {};
+    }
+
+    postMessage(msg) {
+      this.onmessage(msg);
+    }
+  }
+
+  window.Worker = Worker;
 }

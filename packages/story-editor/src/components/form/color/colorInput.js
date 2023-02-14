@@ -24,7 +24,6 @@ import {
   useCallback,
   useState,
   useRef,
-  useUnmount,
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -230,9 +229,6 @@ const ColorInput = forwardRef(function ColorInput(
     onFocus: () => loadReactColor(),
     tabIndex: props.tabIndex,
   };
-
-  // Always hide color picker on unmount - note the double arrows
-  useUnmount(() => () => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
 

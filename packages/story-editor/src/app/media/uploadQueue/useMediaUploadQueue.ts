@@ -29,8 +29,12 @@ import {
   trackError,
   trackEvent,
 } from '@googleforcreators/tracking';
-import type { ResourceId, ImageResource } from '@googleforcreators/media';
 import {
+  ResourceId,
+  ImageResource,
+  getExtensionFromMimeType,
+  getFileBasename,
+  blobToFile,
   createBlob,
   getImageDimensions,
   ResourceType,
@@ -43,8 +47,10 @@ import type { ElementId } from '@googleforcreators/elements';
 import { useUploader } from '../../uploader';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useFFmpeg from '../utils/useFFmpeg';
+import { useConvertHeif } from '../utils/heif';
 import useMediaInfo from '../utils/useMediaInfo';
 import getResourceFromLocalFile from '../utils/getResourceFromLocalFile';
+import { useConfig } from '../../config';
 import * as reducer from './reducer';
 import type {
   BatchId,
@@ -76,6 +82,9 @@ const initialState: QueueState = {
  */
 function useMediaUploadQueue() {
   const {
+    allowedMimeTypes: { image: allowedImageMimeTypes = [] },
+  } = useConfig();
+  const {
     actions: { uploadFile },
   } = useUploader();
   const {
@@ -89,6 +98,7 @@ function useMediaUploadQueue() {
     cropVideo: cropResource,
   } = useFFmpeg();
   const { isConsideredOptimized } = useMediaInfo();
+  const { convertHeif } = useConvertHeif();
 
   const [state, actions] = useReduction(initialState, reducer);
 
@@ -216,6 +226,38 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     replacePlaceholderResource,
   ]);
+
+  // Convert HEIF images to JPEG if possible.
+  const convertHeifItem = useCallback(
+    async ({ id, file }: QueueItem) => {
+      startTranscoding({ id });
+
+      const type = allowedImageMimeTypes.includes('image/webp')
+        ? 'image/webp'
+        : 'image/jpeg';
+
+      try {
+        const blob = await convertHeif(file, type);
+        const ext = getExtensionFromMimeType(blob.type) || 'jpeg';
+        const fileName = getFileBasename(file) + '.' + ext;
+        const newFile = blobToFile(blob, fileName, type);
+        finishTranscoding({ id, file: newFile });
+      } catch (error) {
+        if (error instanceof Error) {
+          // Cancel uploading if there were any errors.
+          cancelUploading({ id, error });
+          void trackError('upload_media', error.message);
+        }
+      }
+    },
+    [
+      convertHeif,
+      startTranscoding,
+      finishTranscoding,
+      cancelUploading,
+      allowedImageMimeTypes,
+    ]
+  );
 
   // Convert animated GIFs to videos if possible.
   const convertGifItem = useCallback(
@@ -511,7 +553,11 @@ function useMediaUploadQueue() {
           prepareItem({ id });
 
           const needsTranscoding =
-            isAnimatedGif || muteVideo || cropVideo || trimData;
+            isAnimatedGif ||
+            muteVideo ||
+            cropVideo ||
+            trimData ||
+            file.type === 'image/heic';
 
           if (needsTranscoding) {
             prepareForTranscoding({ id });
@@ -570,10 +616,15 @@ function useMediaUploadQueue() {
       (item) => {
         const { muteVideo, cropVideo, trimData, isAnimatedGif } = item;
 
+        if (item.file.type === 'image/heic') {
+          void convertHeifItem(item);
+          return;
+        }
+
+        // Prevent simultaneous transcoding processes for videos.
+        // See https://github.com/googleforcreators/web-stories-wp/issues/8779
         const isAlreadyTranscoding = currentTranscodingItem.current !== null;
 
-        // Prevent simultaneous transcoding processes.
-        // See https://github.com/googleforcreators/web-stories-wp/issues/8779
         if (isAlreadyTranscoding) {
           return;
         }
@@ -609,6 +660,7 @@ function useMediaUploadQueue() {
     trimVideoItem,
     muteVideoItem,
     cropVideoItem,
+    convertHeifItem,
   ]);
 
   // Upload freshly transcoded files to server.
