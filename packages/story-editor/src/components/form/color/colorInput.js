@@ -231,7 +231,7 @@ const ColorInput = forwardRef(function ColorInput(
     tabIndex: props.tabIndex,
   };
 
-  // Always hide color picker on unmount - note the double arrows
+  // Always hide color picker on unmount.
   useUnmount(() => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
