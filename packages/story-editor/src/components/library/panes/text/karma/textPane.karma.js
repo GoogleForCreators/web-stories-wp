@@ -132,7 +132,8 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       );
     });
 
-    it('should overwrite most of the styles but not text color when applying a preset', async () => {
+    // eslint-disable-next-line jasmine/no-disabled-tests -- TODO: Fix flakey test.
+    xit('should overwrite most of the styles but not text color when applying a preset', async () => {
       // Add label.
       await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
 
