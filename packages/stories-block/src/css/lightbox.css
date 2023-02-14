@@ -4,7 +4,8 @@
   overflow-y: hidden;
 }
 
-.web-stories-list__lightbox {
+.web-stories-list__lightbox,
+.web-stories-singleton__lightbox {
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -19,16 +20,19 @@
 
 /* amp-lightbox needs to have z-index to render on top of other elements in the page. */
 .web-stories-list__lightbox-wrapper amp-lightbox,
-.web-stories-list__lightbox.show {
+.web-stories-list__lightbox.show,
+.web-stories-singleton__lightbox.show {
   z-index: 999999999;
 }
 
-.web-stories-list__lightbox.show {
+.web-stories-list__lightbox.show,
+.web-stories-singleton__lightbox.show {
   transform: translate(0, 0);
   opacity: 1;
 }
 
-.web-stories-list__lightbox amp-story-player {
+.web-stories-list__lightbox amp-story-player,
+.web-stories-singleton__lightbox amp-story-player {
   width: 100%;
   height: 100%;
 }
@@ -67,6 +71,7 @@
  * because of the 'a' links. Making 'a' absolutely positioned removes them from normal
  * relative flow, removes the space.
  */
+html:not([amp]) .web-stories-singleton__lightbox amp-story-player a,
 html:not([amp])
   .web-stories-list
   .web-stories-list__lightbox
@@ -76,7 +81,8 @@ html:not([amp])
 }
 
 @media all and (min-width: 676px) {
-  .admin-bar .web-stories-list__lightbox {
+  .admin-bar .web-stories-list__lightbox,
+  .admin-bar .web-stories-singleton__lightbox {
     top: 46px;
   }
 
@@ -92,7 +98,8 @@ html:not([amp])
 }
 
 @media all and (min-width: 783px) {
-  .admin-bar .web-stories-list__lightbox {
+  .admin-bar .web-stories-list__lightbox,
+  .admin-bar .web-stories-singleton__lightbox {
     top: 32px;
   }
 }

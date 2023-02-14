@@ -97,6 +97,7 @@
   );
   top: 0;
   left: 0;
+  pointer-events: none;
 }
 
 .web-stories-list__story-content-overlay {

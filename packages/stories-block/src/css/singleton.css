@@ -1,0 +1,120 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.web-stories-singleton.alignnone,
+.web-stories-singleton.alignleft,
+.web-stories-singleton.alignright {
+  display: block;
+  width: 100%;
+}
+
+.web-stories-singleton.aligncenter {
+  text-align: initial;
+}
+
+.web-stories-singleton .wp-block-embed__wrapper {
+  position: relative;
+}
+
+.web-stories-singleton.alignleft .wp-block-embed__wrapper {
+  margin-right: auto;
+}
+
+.web-stories-singleton.alignright .wp-block-embed__wrapper {
+  margin-left: auto;
+}
+
+.web-stories-singleton.alignnone .wp-block-embed__wrapper {
+  max-width: var(--width);
+}
+
+.web-stories-singleton.aligncenter .wp-block-embed__wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--width);
+}
+
+/* Curved corners by default.*/
+.web-stories-singleton-poster {
+  position: relative;
+  aspect-ratio: var(--aspect-ratio);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.web-stories-singleton-poster a {
+  display: block;
+  margin: 0;
+  aspect-ratio: var(--aspect-ratio);
+}
+
+.web-stories-singleton-poster .web-stories-singleton-poster-placeholder {
+  box-sizing: border-box;
+}
+
+/*
+  We want the placeholder to be clickable but hidden from screen readers.
+  This improves the no-js experience.
+  In the block edit component, placeholders are not links.
+*/
+.web-stories-singleton-poster .web-stories-singleton-poster-placeholder a,
+.web-stories-singleton-poster .web-stories-singleton-poster-placeholder span {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+  word-break: normal;
+}
+
+.web-stories-singleton-poster img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.web-stories-singleton-poster::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.web-stories-singleton .web-stories-singleton-overlay {
+  padding: 10px;
+  line-height: var(--ws-overlay-text-lh);
+  position: absolute;
+  bottom: 0;
+  color: var(--ws-overlay-text-color);
+  z-index: 1;
+}

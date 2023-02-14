@@ -32,10 +32,12 @@ use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Embed_Base;
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
+use WP_Block;
 
 /**
  * Latest Stories block class.
@@ -59,7 +61,8 @@ use Google\Web_Stories\Tracking;
  *   order?: string,
  *   archiveLinkLabel?: string,
  *   authors?: int[],
- *   fieldState?: array<string, mixed>
+ *   fieldState?: array<string, mixed>,
+ *   previewOnly?: bool
  * }
  * @phpstan-type BlockAttributesWithDefaults array{
  *   blockType?: string,
@@ -79,7 +82,8 @@ use Google\Web_Stories\Tracking;
  *   order?: string,
  *   archiveLinkLabel?: string,
  *   authors?: int[],
- *   fieldState?: array<string, mixed>
+ *   fieldState?: array<string, mixed>,
+ *   previewOnly?: bool
  * }
  */
 class Web_Stories_Block extends Embed_Base {
@@ -163,13 +167,26 @@ class Web_Stories_Block extends Embed_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
+	 * @param string               $content    Block content.
+	 * @param WP_Block             $block      Block instance.
 	 * @return string Rendered block type output.
 	 *
 	 * @phpstan-param BlockAttributesWithDefaults $attributes
 	 */
-	public function render_block( array $attributes ): string {
+	public function render_block( array $attributes, string $content, WP_Block $block ): string {
 		if ( false === $this->initialize_block_attributes( $attributes ) ) {
 			return '';
+		}
+
+		if ( isset( $block->context['postType'], $block->context['postId'] ) && 'web-story' === $block->context['postType'] && ! empty( $block->context['postId'] ) ) {
+			$attributes = wp_parse_args( $attributes, $this->default_attrs() );
+
+			$attributes['class'] = 'wp-block-web-stories-embed';
+
+			$story = new Story();
+			$story->load_from_post( get_post( $block->context['postId'] ) );
+
+			return $this->render_story( $story, $attributes );
 		}
 
 		if ( ! empty( $attributes['blockType'] )
