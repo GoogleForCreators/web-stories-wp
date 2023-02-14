@@ -314,8 +314,6 @@ class Editor extends Service_Base implements HasRequirements {
 			true
 		);
 
-
-
 		wp_enqueue_script( self::SCRIPT_HANDLE );
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
