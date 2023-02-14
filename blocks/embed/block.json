@@ -3,13 +3,9 @@
   "title": "Web Stories",
   "description": "Embed Web Stories.",
   "category": "embed",
-  "keywords": [
-    "embed",
-    "web stories",
-    "story",
-    "stories"
-  ],
+  "keywords": ["embed", "web stories", "story", "stories"],
   "textdomain": "web-stories",
+  "usesContext": ["postId", "postType", "queryId"],
   "attributes": {
     "blockType": {
       "type": "string"
@@ -78,6 +74,14 @@
     "fieldState": {
       "type": "object",
       "default": {}
+    },
+    "taxQuery": {
+      "type": "object",
+      "default": {}
+    },
+    "previewOnly": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {

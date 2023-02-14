@@ -28,10 +28,15 @@ class Lightbox {
     this.lightboxInitialized = false;
     this.wrapperDiv = wrapperDiv;
     this.instanceId = this.wrapperDiv.dataset.id;
-    this.lightboxElement = document.querySelector(
-      `.ws-lightbox-${this.instanceId} .web-stories-list__lightbox`
-    );
+    this.lightboxElement =
+      document.querySelector(
+        `.ws-lightbox-${this.instanceId} .web-stories-list__lightbox`
+      ) ||
+      document.querySelector(
+        `.ws-lightbox-${this.instanceId} .web-stories-singleton__lightbox`
+      );
     this.player = this.lightboxElement.querySelector('amp-story-player');
+    this.currentLocation = location.href;
 
     if (
       'undefined' === typeof this.player ||
@@ -50,12 +55,22 @@ class Lightbox {
       }
     });
 
+    this.player.addEventListener('navigation', (event) => {
+      const storyObject = this.stories[event.detail.index];
+      if (storyObject) {
+        history.replaceState({}, '', storyObject.href);
+      }
+    });
+
     // Event triggered when user clicks on close (X) button.
     this.player.addEventListener('amp-story-player-close', () => {
       // Rewind the story and pause there upon closing the lightbox.
       this.player.rewind();
       this.player.pause();
       this.player.mute();
+
+      history.replaceState({}, '', this.currentLocation);
+
       this.lightboxElement.classList.toggle('show');
       document.body.classList.toggle('web-stories-lightbox-open');
     });
@@ -68,7 +83,9 @@ class Lightbox {
   }
 
   bindStoryClickListeners() {
-    const cards = this.wrapperDiv.querySelectorAll('.web-stories-list__story');
+    const cards = this.wrapperDiv.querySelectorAll(
+      '.web-stories-list__story,.wp-block-embed__wrapper'
+    );
 
     cards.forEach((card) => {
       card.addEventListener('click', (event) => {
@@ -78,6 +95,9 @@ class Lightbox {
         );
         this.player.show(storyObject.href);
         this.player.play();
+
+        history.replaceState({}, '', storyObject.href);
+
         this.lightboxElement.classList.toggle('show');
         document.body.classList.toggle('web-stories-lightbox-open');
       });
@@ -86,7 +106,9 @@ class Lightbox {
 }
 
 export default function initializeWebStoryLightbox() {
-  const webStoryBlocks = document.getElementsByClassName('web-stories-list');
+  const webStoryBlocks = document.querySelectorAll(
+    '.web-stories-list,.web-stories-singleton'
+  );
   if ('undefined' !== typeof webStoryBlocks) {
     Array.from(webStoryBlocks).forEach((webStoryBlock) => {
       /* eslint-disable-next-line no-new -- we do not store the object as no further computation required. */
