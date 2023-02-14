@@ -28,7 +28,7 @@
     "pretty": true,
     "sourceMap": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
-    "types": ["jest", "jest-extended", "node", "offscreencanvas"]
+    "types": ["jest", "jest-extended", "node"]
   },
   "exclude": [
     "packages/*/dist-*/**",
