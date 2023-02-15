@@ -28,6 +28,8 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
+use function function_exists;
+
 /**
  * Class Plugin_Status.
  */
