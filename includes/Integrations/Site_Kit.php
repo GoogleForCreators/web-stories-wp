@@ -58,14 +58,23 @@ class Site_Kit extends Service_Base {
 	private Context $context;
 
 	/**
+	 * Plugin_Status instance.
+	 *
+	 * @var Plugin_Status Plugin_Status instance.
+	 */
+	private Plugin_Status $plugin_status;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param Analytics $analytics Analytics instance.
-	 * @param Context   $context   Context instance.
+	 * @param Analytics     $analytics     Analytics instance.
+	 * @param Context       $context       Context instance.
+	 * @param Plugin_Status $plugin_status Plugin_Status instance.
 	 */
-	public function __construct( Analytics $analytics, Context $context ) {
-		$this->analytics = $analytics;
-		$this->context   = $context;
+	public function __construct( Analytics $analytics, Context $context, Plugin_Status $plugin_status ) {
+		$this->analytics     = $analytics;
+		$this->context       = $context;
+		$this->plugin_status = $plugin_status;
 	}
 
 	/**
@@ -117,11 +126,7 @@ class Site_Kit extends Service_Base {
 	 * @return array{installed: bool, active: bool, analyticsActive: bool, adsenseActive: bool, analyticsLink: string, adsenseLink: string} Plugin status.
 	 */
 	public function get_plugin_status(): array {
-		if ( ! function_exists( 'get_plugins' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-
-		$is_installed        = \array_key_exists( 'google-site-kit/google-site-kit.php', get_plugins() );
+		$is_installed        = \array_key_exists( 'google-site-kit/google-site-kit.php', $this->plugin_status->get_plugins() );
 		$is_active           = $this->is_plugin_active();
 		$is_analytics_active = $this->is_analytics_module_active();
 		$is_adsense_active   = $this->is_adsense_module_active();

@@ -469,6 +469,16 @@ class Dashboard extends Service_Base {
 		$auto_advance  = $this->settings->get_setting( $this->settings::SETTING_NAME_AUTO_ADVANCE );
 		$page_duration = $this->settings->get_setting( $this->settings::SETTING_NAME_DEFAULT_PAGE_DURATION );
 
+		$plugin_file          = plugin_basename( WEBSTORIES_PLUGIN_FILE );
+		$auto_updates         = (array) get_site_option( 'auto_update_plugins', [] );
+		$auto_updates_enabled = \in_array( $plugin_file, $auto_updates, true );
+		$plugin_updates       = get_site_transient( 'update_plugins' );
+		$needs_update         = \is_object( $plugin_updates ) &&
+								property_exists( $plugin_updates, 'response' ) &&
+								\is_array( $plugin_updates->response ) &&
+								! empty( $plugin_updates->response[ $plugin_file ] );
+		$can_update           = current_user_can( 'update_plugins' );
+
 		$settings = [
 			'isRTL'                   => is_rtl(),
 			'userId'                  => get_current_user_id(),
@@ -504,6 +514,10 @@ class Dashboard extends Service_Base {
 			'plugins'                 => [
 				'siteKit'     => $this->site_kit->get_plugin_status(),
 				'woocommerce' => $this->woocommerce->get_plugin_status(),
+				'web-stories' => [
+					'needsUpdate' => $needs_update && ! $auto_updates_enabled,
+					'updateLink'  => $can_update ? admin_url( 'plugins.php' ) : null,
+				],
 			],
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

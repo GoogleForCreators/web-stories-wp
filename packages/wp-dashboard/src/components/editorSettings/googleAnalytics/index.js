@@ -263,7 +263,6 @@ function GoogleAnalyticsSettings({
                     rel="noreferrer"
                     target="_blank"
                     size={TextSize.Small}
-                    as="a"
                     onClick={onContextClick}
                   />
                 ),

@@ -24,6 +24,7 @@ import { InterfaceSkeleton } from '@googleforcreators/dashboard';
 import { useSyncAdminMenu } from '../../effects';
 import { EditorSettingsProvider, EditorSettings } from '../editorSettings';
 import TelemetryBanner from '../telemetryBanner';
+import UpdateBanner from '../updateBanner';
 import { EDITOR_SETTINGS_ROUTE } from '../../constants';
 
 function Layout() {
@@ -40,6 +41,7 @@ function Layout() {
         ]}
       />
       <TelemetryBanner />
+      <UpdateBanner />
     </EditorSettingsProvider>
   );
 }
