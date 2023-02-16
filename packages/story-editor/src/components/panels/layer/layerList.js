@@ -39,7 +39,7 @@ const ReorderableLayerList = styled(Reorderable).attrs({
   align-items: stretch;
   user-select: ${({ hasUserSelect }) => (hasUserSelect ? 'none' : 'initial')};
   overflow-y: auto;
-  padding-bottom: 4px; // for when panel has scroll
+  padding-bottom: 4px; /* for when panel has scroll */
 `;
 
 function LayerList() {

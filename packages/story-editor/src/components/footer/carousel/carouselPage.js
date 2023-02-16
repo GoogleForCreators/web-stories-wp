@@ -67,6 +67,7 @@ const PageSeparator = styled(ReorderableSeparator)`
     left: ${({ width, margin }) => margin + width / 2}px;
   }
 
+  /* stylelint-disable-next-line no-duplicate-selectors */
   ${ItemContainer}:last-of-type &:last-of-type {
     justify-content: flex-end;
   }

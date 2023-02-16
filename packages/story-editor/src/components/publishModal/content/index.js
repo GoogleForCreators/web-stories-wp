@@ -57,8 +57,9 @@ const _MainStoryInfo = styled.div`
   gap: 34px;
 
   & > section {
-    border: none; // Override the default border that is part of the base panel structure since this is destructured
-    // overriding this way because of how isolated panel is inserted
+    /* Override the default border that is part of the base panel structure since this is destructured */
+    border: none;
+    /* overriding this way because of how isolated panel is inserted */
     & > h2 {
       padding-top: 0;
       padding-bottom: 2px;
