@@ -211,7 +211,6 @@ export default function ArchiveSettings({
                     rel="noreferrer"
                     target="_blank"
                     size={TextSize.Small}
-                    as="a"
                   />
                 ),
                 code: <code />,

@@ -182,6 +182,7 @@ class Plugin extends ServiceBasedPlugin {
 			Experiments::class,
 			Story_Post_Type::class,
 			Injector::class,
+			Integrations\Plugin_Status::class,
 			Integrations\Site_Kit::class,
 			Integrations\WooCommerce::class,
 			Media\Types::class,
