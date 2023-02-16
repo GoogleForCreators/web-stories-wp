@@ -38,6 +38,22 @@ class WooCommerce {
 	protected const PLUGIN = 'woocommerce/woocommerce.php';
 
 	/**
+	 * Plugin_Status instance.
+	 *
+	 * @var Plugin_Status Plugin_Status instance.
+	 */
+	private Plugin_Status $plugin_status;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Plugin_Status $plugin_status Plugin_Status instance.
+	 */
+	public function __construct( Plugin_Status $plugin_status ) {
+		$this->plugin_status = $plugin_status;
+	}
+
+	/**
 	 * Returns the WooCommerce plugin status.
 	 *
 	 * @since 1.21.0
@@ -45,11 +61,7 @@ class WooCommerce {
 	 * @return array{installed: bool, active: bool, canManage: bool, link: string} Plugin status.
 	 */
 	public function get_plugin_status(): array {
-		if ( ! function_exists( 'get_plugins' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-
-		$is_installed = \array_key_exists( self::PLUGIN, get_plugins() );
+		$is_installed = \array_key_exists( self::PLUGIN, $this->plugin_status->get_plugins() );
 		$is_active    = $this->is_plugin_active();
 		$can_manage   = false;
 		$link         = '';
