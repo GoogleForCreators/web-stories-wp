@@ -49,37 +49,37 @@ const Button = styled(dsButton)`
   border-style: solid;
   padding: 0 10px;
   white-space: nowrap;
-  // Handle props-dependent styling in one place
+  /* Handle props-dependent styling in one place */
   ${({ isOpen, hasText, height = buttonHeight, theme }) => css`
     height: ${height}px;
     min-width: ${height}px;
     color: ${theme.colors.fg.primary};
-    border-color: ${
-      isOpen ? theme.colors.bg.secondary : theme.colors.border.defaultNormal
-    };
-    background-color: ${
-      isOpen ? theme.colors.bg.secondary : theme.colors.bg.primary
-    };
-    ${
-      hasText &&
-      css`
-        ${themeHelpers.expandPresetStyles({
-          preset: {
-            ...theme.typography.presets.paragraph[TextSize.Small],
-          },
-          theme,
-        })};
-      `
-    }
-  }`}
+    border-color: ${isOpen
+      ? theme.colors.bg.secondary
+      : theme.colors.border.defaultNormal};
+    background-color: ${isOpen
+      ? theme.colors.bg.secondary
+      : theme.colors.bg.primary};
+    ${hasText &&
+    css`
+      ${themeHelpers.expandPresetStyles({
+        preset: {
+          ...theme.typography.presets.paragraph[TextSize.Small],
+        },
+        theme,
+      })};
+    `}
+  `}
 
-  // This should be sufficient to ensure proper spacing of button content
+  /* This should be sufficient to ensure proper spacing of button content */
   > :not(svg):last-child {
     margin-right: 0;
   }
 
-  // Margin is set to -8px to compensate for empty space
-  // around the actual icon graphic in the svg
+  /*
+   Margin is set to -8px to compensate for empty space
+   around the actual icon graphic in the svg
+  */
   .main-icon {
     height: ${THEME_CONSTANTS.ICON_SIZE}px;
     width: auto;

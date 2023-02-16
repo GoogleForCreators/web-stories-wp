@@ -55,7 +55,7 @@ const ExtraPage = styled.li`
   border-radius: 4px;
   background-color: white;
 
-  // First extra page is at 60% opacity, then 45, 30, and 15
+  /* First extra page is at 60% opacity, then 45, 30, and 15 */
   opacity: ${({ $distance }) => 0.6 - $distance * 0.15};
   transition: opacity 0.2s ease;
   &:hover {

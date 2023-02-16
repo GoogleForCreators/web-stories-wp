@@ -104,10 +104,12 @@ const Image = styled.img`
   width: 100%;
   left: 0;
 
-  // image will always be vertically centered
-  // so we don't need to alter height of image
-  // when it's in the fullbleed ratio and the
-  // thumbnail is in the smaller ratio
+  /*
+   image will always be vertically centered
+   so we don't need to alter height of image
+   when it's in the fullbleed ratio and the
+   thumbnail is in the smaller ratio
+  */
   top: 50%;
   transform: translateY(-50%);
 `;

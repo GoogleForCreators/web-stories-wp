@@ -66,10 +66,10 @@ const FramesPageArea = styled(PageArea)`
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 
 const FocusContainer = styled.div`
-  // begin under header row
+  /* begin under header row */
   grid-row: 2 / -1;
   grid-column: 1 / -1;
-  // show focus border by adding margin
+  /* show focus border by adding margin */
   margin: 5px;
 
   ${themeHelpers.focusableOutlineCSS};

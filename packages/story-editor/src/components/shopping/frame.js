@@ -63,7 +63,6 @@ const PillImage = styled.span`
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 100%;
   flex-shrink: 0;
-  flex-shrink: 0;
   margin-inline-end: 4px;
 `;
 

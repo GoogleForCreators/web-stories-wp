@@ -33,38 +33,37 @@ const CalendarWrapper = styled.div`
         theme,
       })}
     color: ${({ theme }) => theme.colors.fg.primary};
+
+    button {
+      margin: 0;
+      border: 0;
+      outline: none;
+      ${({ theme }) =>
+        themeHelpers.expandPresetStyles({
+          preset: theme.typography.presets.label[TextSize.Small],
+          theme,
+        })}
+      color: ${({ theme }) => theme.colors.fg.primary};
+
+      &:enabled:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   .react-calendar,
   .react-calendar *,
   .react-calendar *:before,
   .react-calendar *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
 
-  .react-calendar button {
-    margin: 0;
-    border: 0;
-    outline: none;
-    ${({ theme }) =>
-      themeHelpers.expandPresetStyles({
-        preset: theme.typography.presets.label[TextSize.Small],
-        theme,
-      })}
-    color: ${({ theme }) => theme.colors.fg.primary};
-
-    &:enabled:hover {
-      cursor: pointer;
-    }
-  }
-
-  .react-calendar__navigation {
+  .react-calendar .react-calendar__navigation {
     display: flex;
     height: 44px;
     margin-bottom: 1em;
 
+    /* stylelint-disable-next-line no-descending-specificity */
     button {
       min-width: 44px;
       background: none;
@@ -101,12 +100,6 @@ const CalendarWrapper = styled.div`
     color: ${({ theme }) => theme.colors.fg.tertiary};
   }
 
-  .react-calendar__year-view .react-calendar__tile,
-  .react-calendar__decade-view .react-calendar__tile,
-  .react-calendar__century-view .react-calendar__tile {
-    padding: 1.2em 0.5em;
-  }
-
   .react-calendar__tile {
     max-width: 100%;
     padding: 10px 6.6667px;
@@ -124,6 +117,13 @@ const CalendarWrapper = styled.div`
         theme.colors.interactiveBg.tertiaryHover};
       color: ${({ theme }) => theme.colors.interactiveFg.active};
     }
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    padding: 1.2em 0.5em;
   }
 
   .react-calendar button.react-calendar__tile--now {

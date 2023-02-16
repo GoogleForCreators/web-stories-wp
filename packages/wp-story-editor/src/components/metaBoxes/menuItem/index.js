@@ -51,24 +51,26 @@ const Button = styled(DesignSystemButton)`
   white-space: nowrap;
   height: 36px;
   min-width: 36px;
-  // Handle props-dependent styling in one place
+  /* Handle props-dependent styling in one place */
   ${({ isOpen, theme }) => css`
     color: ${theme.colors.fg.primary};
-    border-color: ${
-      isOpen ? theme.colors.bg.secondary : theme.colors.border.defaultNormal
-    };
-    background-color: ${
-      isOpen ? theme.colors.bg.secondary : theme.colors.bg.primary
-    };
-  }`}
+    border-color: ${isOpen
+      ? theme.colors.bg.secondary
+      : theme.colors.border.defaultNormal};
+    background-color: ${isOpen
+      ? theme.colors.bg.secondary
+      : theme.colors.bg.primary};
+  `}
 
-  // This should be sufficient to ensure proper spacing of button content
+  /* This should be sufficient to ensure proper spacing of button content */
   > :not(svg):last-child {
     margin-right: 0;
   }
 
-  // Margin is set to -8px to compensate for empty space
-  // around the actual icon graphic in the svg
+  /*
+   Margin is set to -8px to compensate for empty space
+   around the actual icon graphic in the svg
+  */
   svg {
     height: ${THEME_CONSTANTS.ICON_SIZE}px;
     width: auto;

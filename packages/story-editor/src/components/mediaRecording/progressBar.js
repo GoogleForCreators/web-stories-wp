@@ -27,8 +27,6 @@ import useMediaRecording from './useMediaRecording';
 import { MAX_RECORDING_DURATION_IN_SECONDS } from './constants';
 
 const ProgressIndicator = styled.progress`
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   border: none;
   width: 100%;
