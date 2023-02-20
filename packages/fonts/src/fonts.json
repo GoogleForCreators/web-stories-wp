@@ -12739,6 +12739,31 @@
     }
   },
   {
+    "family": "Gajraj One",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1065,
+      "des": -400,
+      "tAsc": 1065,
+      "tDes": -400,
+      "tLGap": 0,
+      "wAsc": 1065,
+      "wDes": 515,
+      "xH": 500,
+      "capH": 665,
+      "yMin": -505,
+      "yMax": 1051,
+      "hAsc": 1065,
+      "hDes": -400,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Galada",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -13428,12 +13453,12 @@
       "tAsc": 892,
       "tDes": -285,
       "tLGap": 0,
-      "wAsc": 892,
-      "wDes": 285,
+      "wAsc": 989,
+      "wDes": 290,
       "xH": 473,
       "capH": 700,
-      "yMin": -285,
-      "yMax": 892,
+      "yMin": -290,
+      "yMax": 989,
       "hAsc": 892,
       "hDes": -285,
       "lGap": 0
@@ -13561,6 +13586,31 @@
       "yMax": 1267,
       "hAsc": 1267,
       "hDes": -526,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Gloock",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 975,
+      "des": -225,
+      "tAsc": 975,
+      "tDes": -225,
+      "tLGap": 0,
+      "wAsc": 1004,
+      "wDes": 363,
+      "xH": 508,
+      "capH": 750,
+      "yMin": -363,
+      "yMax": 1004,
+      "hAsc": 975,
+      "hDes": -225,
       "lGap": 0
     }
   },
@@ -18668,6 +18718,50 @@
     }
   },
   {
+    "family": "Labrada",
+    "fallbacks": ["serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900],
+      [1, 100],
+      [1, 200],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800],
+      [1, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1145,
+      "des": -300,
+      "tAsc": 1145,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 1145,
+      "wDes": 300,
+      "xH": 450,
+      "capH": 640,
+      "yMin": -269,
+      "yMax": 1063,
+      "hAsc": 1145,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Lacquer",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -23457,6 +23551,31 @@
       "yMax": 1167,
       "hAsc": 975,
       "hDes": -350,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Mynerve",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 930,
+      "des": -380,
+      "tAsc": 930,
+      "tDes": -380,
+      "tLGap": 0,
+      "wAsc": 1190,
+      "wDes": 469,
+      "xH": 420,
+      "capH": 670,
+      "yMin": -469,
+      "yMax": 985,
+      "hAsc": 930,
+      "hDes": -380,
       "lGap": 0
     }
   },
@@ -31621,6 +31740,39 @@
     }
   },
   {
+    "family": "Phudu",
+    "fallbacks": ["cursive"],
+    "weights": [300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1025,
+      "des": -200,
+      "tAsc": 1025,
+      "tDes": -200,
+      "tLGap": 0,
+      "wAsc": 1025,
+      "wDes": 210,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -200,
+      "yMax": 1025,
+      "hAsc": 1025,
+      "hDes": -200,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Piazzolla",
     "fallbacks": ["serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -36493,6 +36645,44 @@
     }
   },
   {
+    "family": "Shantell Sans",
+    "fallbacks": ["cursive"],
+    "weights": [300, 400, 500, 600, 700, 800],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1020,
+      "des": -320,
+      "tAsc": 1020,
+      "tDes": -320,
+      "tLGap": 0,
+      "wAsc": 1215,
+      "wDes": 515,
+      "xH": 485,
+      "capH": 700,
+      "yMin": -509,
+      "yMax": 1134,
+      "hAsc": 1020,
+      "hDes": -320,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Shanti",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -40811,12 +41001,12 @@
       "tAsc": 917,
       "tDes": -265,
       "tLGap": 0,
-      "wAsc": 917,
+      "wAsc": 1042,
       "wDes": 265,
       "xH": 650,
       "capH": 650,
       "yMin": -265,
-      "yMax": 917,
+      "yMax": 1041,
       "hAsc": 917,
       "hDes": -265,
       "lGap": 0
