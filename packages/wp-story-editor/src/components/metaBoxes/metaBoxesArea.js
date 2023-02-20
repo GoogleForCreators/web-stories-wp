@@ -135,7 +135,9 @@ function MetaBoxesArea({ location }) {
   });
 
   return (
-    <Wrapper className={`web-stories-meta-boxes-area-${location}`}>
+    <Wrapper
+      className={`web-stories-meta-boxes-area web-stories-meta-boxes-area-${location}`}
+    >
       {isSaving && (
         <Spinner>
           <CircularProgress size={30} />
