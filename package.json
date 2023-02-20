@@ -48,7 +48,7 @@
     "@googleforcreators/story-editor": "*",
     "@jest/types": "^29.3.1",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
-    "@percy/cli": "^1.18.0",
+    "@percy/cli": "^1.20.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@prettier/plugin-xml": "^2.2.0",
     "@rollup/plugin-babel": "^6.0.3",
