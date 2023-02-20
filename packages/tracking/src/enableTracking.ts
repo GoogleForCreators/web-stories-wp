@@ -92,7 +92,10 @@ async function loadTrackingScript(sendPageView = true): Promise<void> {
   // Google Analytics 4 user properties.
   // See https://developers.google.com/analytics/devguides/collection/ga4/persistent-values
   // See https://developers.google.com/analytics/devguides/collection/ga4/user-properties
-  gtag('set', 'user_properties', config.userProperties);
+  gtag('set', 'user_properties', {
+    ...config.userProperties,
+    app_version: config.appVersion,
+  });
 
   gtag('config', config.trackingId, {
     anonymize_ip: true,
