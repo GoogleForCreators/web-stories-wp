@@ -23,8 +23,6 @@ import isTrackingEnabled from './isTrackingEnabled';
 /**
  * Send an Analytics screen_view event.
  *
- * Works for both Universal Analytics and Google Analytics 4.
- *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/screens
  * @see https://developers.google.com/analytics/devguides/collection/ga4/screen-view
  * @param screenName Screen name. Example: 'Explore Templates'.
