@@ -74,6 +74,13 @@ class Analytics extends Service_Base {
 		 * @var string $tracking_id
 		 */
 		$tracking_id = $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID );
+
+		// For some reasons, some sites use the plugin's own tracking ID (as used in the admin)
+		// for their stories. Prevent accidental erroneous tracking in such a case.
+		if ( Tracking::TRACKING_ID === $tracking_id ) {
+			return '';
+		}
+
 		return $tracking_id;
 	}
 
