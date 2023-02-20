@@ -30,6 +30,7 @@ import DocumentPane, {
 } from '../documentPane';
 import { Priority, Design, Accessibility } from '../checklist';
 import { Footer } from '../helpCenter';
+import CrossOriginIsolation from '../crossOriginIsolation';
 
 function Layout() {
   return (
@@ -61,6 +62,7 @@ function Layout() {
       >
         <MetaBoxes />
       </InterfaceSkeleton>
+      <CrossOriginIsolation />
     </MetaBoxesProvider>
   );
 }
