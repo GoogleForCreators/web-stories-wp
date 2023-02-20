@@ -46,7 +46,7 @@ import StoriesPreview from '../../components/storiesPreview';
  * @return {*} JSX markup for the editor.
  */
 function LatestStoriesEdit({ attributes, setAttributes }) {
-  const { numOfStories, order, orderby, archiveLinkLabel, authors } =
+  const { numOfStories, order, orderby, archiveLinkLabel, authors, taxQuery } =
     attributes;
 
   /**
@@ -63,6 +63,7 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
         orderby: orderby || 'modified',
         order: order || 'desc',
         author: authors || undefined,
+        ...taxQuery,
       };
 
       return {
@@ -72,7 +73,7 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
           isResolving('postType', 'web-story', newQuery) || false,
       };
     },
-    [order, orderby, authors]
+    [order, orderby, authors, taxQuery]
   );
 
   const viewAllLabel = archiveLinkLabel
@@ -130,6 +131,7 @@ LatestStoriesEdit.propTypes = {
     authors: PropTypes.array,
     circleSize: PropTypes.number,
     fieldState: PropTypes.object,
+    taxQuery: PropTypes.objectOf(PropTypes.number),
   }),
   setAttributes: PropTypes.func.isRequired,
 };

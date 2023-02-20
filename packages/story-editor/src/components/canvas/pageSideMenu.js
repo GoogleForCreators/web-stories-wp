@@ -48,9 +48,8 @@ const MenusWrapper = styled.section`
   align-items: center;
   justify-content: space-between;
   z-index: ${({ $zIndex }) => $zIndex};
-  pointer-events: auto;
-  min-height: 100%;
   pointer-events: none;
+  min-height: 100%;
   ${({ isZoomed, theme }) =>
     isZoomed &&
     `

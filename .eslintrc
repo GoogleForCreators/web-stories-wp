@@ -318,9 +318,6 @@
         "**/*.ts",
         "**/*.tsx"
       ],
-      "excludedFiles": [
-        "**/*.d.ts"
-      ],
       "plugins": [
         "@typescript-eslint"
       ],
@@ -354,6 +351,7 @@
           }
         ],
         "react/prop-types": "off",
+        "getter-return": "off",
         "jsdoc/check-param-names": "off",
         "jsdoc/require-param": "off",
         "jsdoc/require-param-type": "off",

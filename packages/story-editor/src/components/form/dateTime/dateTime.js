@@ -36,7 +36,6 @@ import TimePicker from './timePicker';
 import DatePicker from './datePicker';
 
 const DateTimeWrapper = styled.div`
-  border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   border: 1px solid ${({ theme }) => theme.colors.divider.primary};

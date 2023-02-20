@@ -30,6 +30,7 @@ jobs:
             dl.google.com:443
             oauth2.googleapis.com:443
             storage.googleapis.com:443
+            raw.githubusercontent.com:443
 
       - name: Authenticate
         uses: google-github-actions/auth@ef5d53e30bbcd8d0836f4288f5e50ff3e086997d

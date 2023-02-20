@@ -25,8 +25,10 @@ import {
   MIN_IMG_WIDTH,
   MIN_IMG_HEIGHT,
   useConfig,
+  StandardViewContentGutter,
 } from '@googleforcreators/dashboard';
 import { preloadImage } from '@googleforcreators/media';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -46,6 +48,8 @@ import useEditorSettings from './useEditorSettings';
 import CustomFontsSettings from './customFonts';
 import Shopping from './shopping';
 import PageAdvancement from './pageAdvancement';
+
+const BodyViewOptionsHeader = styled.div``;
 
 function EditorSettings() {
   const {
@@ -326,6 +330,9 @@ function EditorSettings() {
     <Layout.Provider>
       <Wrapper data-testid="editor-settings">
         <PageHeading heading={__('Settings', 'web-stories')} />
+        <StandardViewContentGutter>
+          <BodyViewOptionsHeader id="body-view-options-header" />
+        </StandardViewContentGutter>
         <Layout.Scrollable>
           <Main>
             {canManageSettings && (

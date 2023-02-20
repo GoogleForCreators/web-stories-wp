@@ -50,7 +50,7 @@ export const EmptyIconSpace = styled.div`
 `;
 
 export const ArrowIconWithTitle = styled(ArrowIcon)`
-  display: ${({ active }) => !active && 'none'};
+  ${({ active }) => !active && 'display: none;'}
   position: absolute;
   top: 16px;
 

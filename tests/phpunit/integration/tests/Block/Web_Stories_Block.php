@@ -21,6 +21,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Block;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Block;
 use WP_Block_Type_Registry;
 
 /**
@@ -63,7 +64,9 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
-			]
+			],
+			'',
+			new WP_Block( [ 'blockName' => 'web-stories/embed' ] )
 		);
 
 		$this->assertStringContainsString( '<amp-story-player', $actual );
@@ -83,7 +86,9 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
-			]
+			],
+			'',
+			new WP_Block( [ 'blockName' => 'web-stories/embed' ] )
 		);
 
 		$this->assertEmpty( $actual );
@@ -103,7 +108,9 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
-			]
+			],
+			'',
+			new WP_Block( [ 'blockName' => 'web-stories/embed' ] )
 		);
 
 		$this->assertStringContainsString( __( 'Web Story', 'web-stories' ), $actual );
@@ -123,7 +130,9 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 				'url'   => 'https://example.com/story.html',
 				'title' => 'Example Story',
 				'align' => 'none',
-			]
+			],
+			'',
+			new WP_Block( [ 'blockName' => 'web-stories/embed' ] )
 		);
 
 		$this->assertStringNotContainsString( '<amp-story-player', $actual );
@@ -147,7 +156,9 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
-			]
+			],
+			'',
+			new WP_Block( [ 'blockName' => 'web-stories/embed' ] )
 		);
 
 		$this->assertStringNotContainsString( '<amp-story-player', $actual );

@@ -1,16 +1,15 @@
 {
   "extends": [
-    "stylelint-config-recommended",
-    "stylelint-config-styled-components",
-    "stylelint-prettier/recommended"
+    "stylelint-config-recommended"
   ],
+  "plugins": ["stylelint-prettier"],
   "customSyntax": "postcss-syntax",
   "rules": {
     "font-family-name-quotes": null,
     "font-family-no-missing-generic-family-keyword": null,
     "font-weight-notation": null,
     "function-name-case": null,
-    "function-whitespace-after": null,
+    "prettier/prettier": true,
     "selector-class-pattern": null,
     "selector-type-no-unknown": [
       true,
@@ -32,5 +31,17 @@
       }
     ],
     "value-keyword-case": null
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", ".ts", ".tsx"],
+      "customSyntax": "postcss-styled-syntax",
+      "rules": {
+        "annotation-no-unknown": null,
+        "block-no-empty": null,
+        "function-no-unknown": null,
+        "no-empty-source": null
+      }
+    }
+  ]
 }

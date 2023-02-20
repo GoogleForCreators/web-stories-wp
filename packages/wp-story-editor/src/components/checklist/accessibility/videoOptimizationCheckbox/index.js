@@ -63,7 +63,6 @@ const CheckboxLabel = styled(Text.Label).attrs({
   size: TextSize.Small,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  margin-bottom: 16px;
   margin-left: 8px;
   margin-bottom: 0;
   line-height: 20px;

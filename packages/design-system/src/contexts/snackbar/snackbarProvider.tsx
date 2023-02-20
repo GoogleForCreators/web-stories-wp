@@ -40,7 +40,11 @@ function SnackbarProvider({
   );
 
   const remove = useCallback(
-    (toRemove: SnackbarNotification | SnackbarNotification[]) => {
+    (
+      toRemove:
+        | Pick<SnackbarNotification, 'key'>
+        | Pick<SnackbarNotification, 'key'>[]
+    ) => {
       setNotifications((currentNotifications) =>
         currentNotifications.filter((item) => {
           if (Array.isArray(toRemove)) {

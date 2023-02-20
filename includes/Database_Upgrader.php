@@ -77,6 +77,7 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 		'3.0.13' => Migrations\Add_Stories_Caps::class,
 		'3.0.14' => Migrations\Add_Media_Source_Page_Template::class,
 		'3.0.15' => Migrations\Add_Media_Source_Recording::class,
+		'3.0.16' => Migrations\Remove_Incorrect_Tracking_Id::class,
 	];
 
 	/**
