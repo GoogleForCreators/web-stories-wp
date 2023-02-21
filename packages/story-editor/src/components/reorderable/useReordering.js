@@ -123,7 +123,7 @@ function useReordering(onPositionChange, numChildren) {
           'Reordering. Press Escape to abort. Release mouse to drop in position %d.',
           'web-stories'
         ),
-        position
+        String(position)
       );
       speak(message);
     }
@@ -134,6 +134,7 @@ function useReordering(onPositionChange, numChildren) {
     currentSeparator,
     setCurrentSeparator,
     handleStartReordering,
+    currentPosition,
   };
 }
 

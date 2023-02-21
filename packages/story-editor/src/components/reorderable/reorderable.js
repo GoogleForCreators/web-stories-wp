@@ -51,6 +51,7 @@ const Reorderable = forwardRef(function Reorderable(
     currentSeparator,
     setCurrentSeparator,
     handleStartReordering,
+    currentPosition,
   } = useReordering(onPositionChange, children.length);
 
   const { startScroll, canScrollEnd, canScrollStart } = useScroll(
@@ -68,6 +69,7 @@ const Reorderable = forwardRef(function Reorderable(
       mode,
       canScrollEnd,
       canScrollStart,
+      currentPosition,
     },
     actions: {
       setCurrentSeparator,

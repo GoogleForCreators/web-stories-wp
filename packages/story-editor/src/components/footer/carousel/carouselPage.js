@@ -31,7 +31,7 @@ import { THUMBNAIL_LINE_WIDTH } from './constants';
 
 const Line = styled.div`
   background: ${({ theme }) => theme.colors.border.selection};
-  height: ${({ height }) => height}px;
+  height: ${({ $height }) => $height}px;
   width: ${THUMBNAIL_LINE_WIDTH}px;
   margin: 0px;
 `;
@@ -46,16 +46,16 @@ const ItemContainer = styled.li.attrs({ role: 'presentation' })`
 const PageSeparator = styled(ReorderableSeparator)`
   position: absolute;
   bottom: 0;
-  left: ${({ width }) => width / 2}px;
-  width: ${({ width, margin }) => width + margin}px;
-  height: ${({ height }) => height}px;
+  left: ${({ $width }) => $width / 2}px;
+  width: ${({ $width, margin }) => $width + margin}px;
+  height: ${({ $height }) => $height}px;
   display: flex;
   justify-content: center;
 
   ${ItemContainer}:first-of-type &:first-of-type,
   ${ItemContainer}:last-of-type &:last-of-type {
-    width: ${({ width, margin }) =>
-      (width + margin + THUMBNAIL_LINE_WIDTH) / 2}px;
+    width: ${({ $width, margin }) =>
+      ($width + margin + THUMBNAIL_LINE_WIDTH) / 2}px;
   }
 
   ${ItemContainer}:first-of-type &:first-of-type {
@@ -64,7 +64,7 @@ const PageSeparator = styled(ReorderableSeparator)`
   }
 
   ${ItemContainer}:first-of-type &:last-of-type {
-    left: ${({ width, margin }) => margin + width / 2}px;
+    left: ${({ $width, margin }) => margin + $width / 2}px;
   }
 
   /* stylelint-disable-next-line no-duplicate-selectors */
@@ -125,11 +125,11 @@ function CarouselPage({ pageId, index }) {
       {index === 0 && (
         <PageSeparator
           position={0}
-          width={pageThumbWidth}
-          height={pageThumbHeight}
+          $width={pageThumbWidth}
+          $height={pageThumbHeight}
           margin={pageThumbMargin}
         >
-          <Line height={pageThumbHeight} />
+          <Line $height={pageThumbHeight} />
         </PageSeparator>
       )}
       <ReorderablePage position={index} margin={pageThumbMargin}>
@@ -160,11 +160,11 @@ function CarouselPage({ pageId, index }) {
       </ReorderablePage>
       <PageSeparator
         position={index + 1}
-        width={pageThumbWidth}
-        height={pageThumbHeight}
+        $width={pageThumbWidth}
+        $height={pageThumbHeight}
         margin={pageThumbMargin}
       >
-        <Line height={pageThumbHeight} />
+        <Line $height={pageThumbHeight} />
       </PageSeparator>
     </ItemContainer>
   );

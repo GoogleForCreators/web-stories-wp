@@ -62,11 +62,18 @@ function ReorderableSeparator({
   const [isTempNested, setIsTempNested] = useState(false);
 
   const { isReordering, setCurrentSeparator } = useReorderable(
-    ({ state, actions }) => ({
-      isReordering: state.isReordering,
-      setCurrentSeparator: actions.setCurrentSeparator,
-    })
+    ({ state, actions }) => {
+      const currentPosition = state.currentPosition?.position;
+      const isNextToCurrentItem =
+        currentPosition === position || currentPosition === position - 1;
+      return {
+        isReordering: state.isReordering && !isNextToCurrentItem,
+        isNextToCurrentItem,
+        setCurrentSeparator: actions.setCurrentSeparator,
+      };
+    }
   );
+
   const handlePointerEnter = useCallback(() => {
     if (!isReordering) {
       return;
