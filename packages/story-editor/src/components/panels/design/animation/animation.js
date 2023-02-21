@@ -115,10 +115,14 @@ function AnimationPanel({
       if (shallowEqual(animation, updatedAnimations[0])) {
         return;
       }
+
+      updateAnimationState({
+        animationState: StoryAnimationState.Reset,
+      });
       pushUpdateForObject(ANIMATION_PROPERTY, animation, null, submitArg);
       playUpdatedAnimation.current = true;
     },
-    [pushUpdateForObject, updatedAnimations]
+    [pushUpdateForObject, updatedAnimations, updateAnimationState]
   );
 
   const handleAddOrUpdateElementEffect = useCallback(
