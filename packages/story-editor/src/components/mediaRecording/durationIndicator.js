@@ -58,7 +58,7 @@ function DurationIndicator() {
 
   return (
     <Tooltip
-      position={Placement.TOP}
+      position={Placement.Top}
       title={sprintf(
         /* translators: %s: number of minutes */
         _n(
@@ -67,7 +67,7 @@ function DurationIndicator() {
           MAX_RECORDING_DURATION_IN_MINUTES,
           'web-stories'
         ),
-        MAX_RECORDING_DURATION_IN_MINUTES
+        String(MAX_RECORDING_DURATION_IN_MINUTES)
       )}
       styleOverride={{ maxWidth: '20em' }}
     >

@@ -282,7 +282,7 @@ export function DesignMenu() {
           initialColor={RED}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={Placement.Top_END}
+          pickerPlacement={Placement.TopStart}
           isInDesignMenu
           shouldCloseOnSelection
           allowsSavedColors
@@ -297,7 +297,7 @@ export function DesignMenu() {
           initialColor={BLUE}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={Placement.Top_END}
+          pickerPlacement={Placement.TopStart}
           isInDesignMenu
           shouldCloseOnSelection
           allowsSavedColors
@@ -313,7 +313,7 @@ export function DesignMenu() {
           initialColor={CYAN}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={Placement.Top_END}
+          pickerPlacement={Placement.TopStart}
           hasInputs={false}
           isInDesignMenu
           shouldCloseOnSelection
@@ -327,7 +327,7 @@ export function DesignMenu() {
           initialColor={RED_GREEN}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={Placement.Top_END}
+          pickerPlacement={Placement.TopStart}
           hasInputs={false}
           isInDesignMenu
           shouldCloseOnSelection
@@ -341,7 +341,7 @@ export function DesignMenu() {
           initialColor={YELLOW}
           // Params below are to the color input component
           maxHeight={362}
-          pickerPlacement={Placement.Top_START}
+          pickerPlacement={Placement.TopStart}
           hasInputs={false}
           isInDesignMenu
           shouldCloseOnSelection
