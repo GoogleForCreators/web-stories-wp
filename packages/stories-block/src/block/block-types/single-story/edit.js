@@ -44,6 +44,7 @@ import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
 import EmbedPreview from './embedPreview';
 import './edit.css';
+import Singleton from './singleton';
 
 const MIN_SIZE = 20;
 
@@ -63,6 +64,7 @@ function StoryEmbedEdit({
     poster,
     title,
     stories = [],
+    previewOnly = false,
   } = attributes;
 
   const { postId, queryId } = context;
@@ -118,7 +120,7 @@ function StoryEmbedEdit({
       const player = new window.AmpStoryPlayer(window, ref.current);
       player.load();
     }
-  }, [showLoadingIndicator, showPlaceholder, isResizable]);
+  }, [showLoadingIndicator, showPlaceholder, isResizable, previewOnly]);
 
   const fetchStoryData = useCallback(
     async (url) => {
@@ -267,17 +269,27 @@ function StoryEmbedEdit({
           maxWidth={Math.floor(maxWidth)}
           minHeight={Math.floor(minHeight)}
           maxHeight={Math.ceil(maxWidth / ratio)}
+          previewOnly={previewOnly}
         />
         <div className={`${className} web-stories-embed align${align}`}>
-          <EmbedPreview
-            url={outerURL}
-            title={title}
-            poster={poster}
-            ref={ref}
-            isSelected={isSelected}
-            width={width}
-            height={height}
-          />
+          {previewOnly ? (
+            <Singleton
+              title={title}
+              poster={poster}
+              width={width}
+              height={height}
+            />
+          ) : (
+            <EmbedPreview
+              url={outerURL}
+              title={title}
+              poster={poster}
+              ref={ref}
+              isSelected={isSelected}
+              width={width}
+              height={height}
+            />
+          )}
         </div>
       </>
     );
@@ -307,6 +319,7 @@ function StoryEmbedEdit({
         maxWidth={Math.floor(maxWidth)}
         minHeight={Math.floor(minHeight)}
         maxHeight={Math.ceil(maxWidth / ratio)}
+        previewOnly={previewOnly}
       />
       <div className={`${className} web-stories-embed align${align}`}>
         <ResizableBox
@@ -335,15 +348,24 @@ function StoryEmbedEdit({
             });
           }}
         >
-          <EmbedPreview
-            url={outerURL}
-            title={title}
-            poster={poster}
-            ref={ref}
-            isSelected={isSelected}
-            width={width}
-            height={height}
-          />
+          {previewOnly ? (
+            <Singleton
+              title={title}
+              poster={poster}
+              width={width}
+              height={height}
+            />
+          ) : (
+            <EmbedPreview
+              url={outerURL}
+              title={title}
+              poster={poster}
+              ref={ref}
+              isSelected={isSelected}
+              width={width}
+              height={height}
+            />
+          )}
         </ResizableBox>
       </div>
     </>
@@ -359,6 +381,7 @@ StoryEmbedEdit.propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
     align: PropTypes.string,
+    previewOnly: PropTypes.bool,
   }),
   setAttributes: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
