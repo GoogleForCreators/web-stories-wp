@@ -24,10 +24,10 @@ import {
   getVideoLength,
   hasVideoGotAudio,
   preloadVideo,
-  Resource,
   seekVideo,
-  VideoResource,
   ResourceType,
+  type Resource,
+  type VideoResource,
 } from '@googleforcreators/media';
 
 type ResourceLike = Pick<

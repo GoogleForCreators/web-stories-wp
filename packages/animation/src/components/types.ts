@@ -35,7 +35,7 @@ import type {
 // The only thing we need concerning elements is the fact, that they're an object
 // with a string id, so this will suffice.
 
-export { ElementId };
+export type { ElementId };
 
 export type ElementAnimationHoister = (
   elementAnimation: WAAPIElementAnimation

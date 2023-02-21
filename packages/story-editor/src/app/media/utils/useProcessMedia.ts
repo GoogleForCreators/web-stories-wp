@@ -21,9 +21,9 @@ import {
   fetchRemoteBlob,
   fetchRemoteFile,
   isAnimatedGif,
-  Resource,
-  ResourceId,
-  VideoResource,
+  type Resource,
+  type ResourceId,
+  type VideoResource,
 } from '@googleforcreators/media';
 import { DANGER_ZONE_HEIGHT } from '@googleforcreators/units';
 import { trackError } from '@googleforcreators/tracking';

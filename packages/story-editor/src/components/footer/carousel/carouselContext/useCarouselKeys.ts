@@ -22,7 +22,7 @@ import {
   useEscapeToBlurEffect,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
-import { duplicatePage, ElementId } from '@googleforcreators/elements';
+import { duplicatePage, type ElementId } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

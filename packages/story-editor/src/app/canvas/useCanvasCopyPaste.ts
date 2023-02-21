@@ -24,7 +24,7 @@ import { useSnackbar } from '@googleforcreators/design-system';
 import {
   elementIs,
   ElementType,
-  TextElement,
+  type TextElement,
 } from '@googleforcreators/elements';
 
 /**
