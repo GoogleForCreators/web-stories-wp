@@ -57,22 +57,53 @@ class Lightbox {
 
     this.player.addEventListener('navigation', (event) => {
       const storyObject = this.stories[event.detail.index];
-      if (storyObject) {
-        history.replaceState({}, '', storyObject.href);
+      if (storyObject && storyObject.href !== document.location.href) {
+        history.pushState({}, '', storyObject.href);
       }
     });
 
+    const player = this.player;
+    const lightboxElement = this.lightboxElement;
+
+    function closeLightbox() {
+      if (!player) {
+        return;
+      }
+
+      // Rewind the story and pause there upon closing the lightbox.
+      player.rewind();
+      player.pause();
+      player.mute();
+
+      lightboxElement.classList.toggle('show');
+      document.body.classList.toggle('web-stories-lightbox-open');
+    }
+
     // Event triggered when user clicks on close (X) button.
     this.player.addEventListener('amp-story-player-close', () => {
-      // Rewind the story and pause there upon closing the lightbox.
-      this.player.rewind();
-      this.player.pause();
-      this.player.mute();
+      history.pushState({}, '', this.currentLocation);
 
-      history.replaceState({}, '', this.currentLocation);
+      closeLightbox();
+    });
 
-      this.lightboxElement.classList.toggle('show');
-      document.body.classList.toggle('web-stories-lightbox-open');
+    window.addEventListener('popstate', () => {
+      const isLightboxOpen = this.lightboxElement.classList.contains('show');
+
+      const storyObject = this.stories.find(
+        (story) => story.href === document.location.href
+      );
+
+      if (storyObject) {
+        if (!isLightboxOpen) {
+          this.lightboxElement.classList.toggle('show');
+          document.body.classList.toggle('web-stories-lightbox-open');
+          this.player.play();
+        }
+
+        this.player.show(storyObject.href);
+      } else if (isLightboxOpen) {
+        closeLightbox();
+      }
     });
   }
 
@@ -96,7 +127,7 @@ class Lightbox {
         this.player.show(storyObject.href);
         this.player.play();
 
-        history.replaceState({}, '', storyObject.href);
+        history.pushState({}, '', storyObject.href);
 
         this.lightboxElement.classList.toggle('show');
         document.body.classList.toggle('web-stories-lightbox-open');
