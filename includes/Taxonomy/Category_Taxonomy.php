@@ -97,6 +97,7 @@ class Category_Taxonomy extends Taxonomy_Base {
 			'labels'                => $labels,
 			'hierarchical'          => true,
 			'public'                => false,
+			'publicly_queryable'    => true,
 			'show_ui'               => true,
 			'show_admin_column'     => true,
 			'rewrite'               => true,

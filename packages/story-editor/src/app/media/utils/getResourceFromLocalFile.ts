@@ -30,11 +30,12 @@ import {
   getVideoLength,
   hasVideoGotAudio,
   preloadVideo,
-  ResourceInput,
-  ResourceType,
   seekVideo,
+  ResourceType,
+  type ResourceInput,
+  type ImageResource,
+  type VideoResource,
 } from '@googleforcreators/media';
-import type { ImageResource, VideoResource } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 
 /**

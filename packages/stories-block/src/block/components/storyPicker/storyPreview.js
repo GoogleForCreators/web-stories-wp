@@ -28,7 +28,7 @@ import {
   __experimentalGetSettings,
   getSettings as __getSettings,
 } from '@wordpress/date';
-import { useMemo } from '@wordpress/element';
+import { RawHTML, useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -80,6 +80,7 @@ function StoryPreview({
   const externalPoster = story.meta['web_stories_poster']?.url;
   const featuredImage = story._embedded?.['wp:featuredmedia']?.[0]?.source_url;
   const posterImage = externalPoster || featuredImage;
+  const storyTitle = story.title.raw || story.title.rendered;
 
   return (
     <div className="web-stories-story-preview-card">
@@ -97,9 +98,9 @@ function StoryPreview({
       </div>
       <div className="web-stories-story-preview-card__label">
         <div className="web-stories-story-preview-card__title">
-          {story.title.rendered === ''
-            ? __('Untitled', 'web-stories')
-            : story.title.rendered}
+          <RawHTML>
+            {storyTitle === '' ? __('Untitled', 'web-stories') : storyTitle}
+          </RawHTML>
         </div>
         {story._embedded?.author?.[0]?.name && (
           <div>{story._embedded?.author?.[0]?.name}</div>

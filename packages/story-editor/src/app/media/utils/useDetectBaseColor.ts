@@ -20,9 +20,9 @@
 import { useCallback, useReduction } from '@googleforcreators/react';
 import {
   getSmallestUrlForWidth,
-  Resource,
-  ResourceId,
-  VideoResource,
+  type Resource,
+  type ResourceId,
+  type VideoResource,
 } from '@googleforcreators/media';
 
 /**

@@ -30,14 +30,14 @@ import {
   trackEvent,
 } from '@googleforcreators/tracking';
 import {
-  ResourceId,
-  ImageResource,
   getExtensionFromMimeType,
   getFileBasename,
   blobToFile,
   createBlob,
   getImageDimensions,
   ResourceType,
+  type ResourceId,
+  type ImageResource,
 } from '@googleforcreators/media';
 import type { ElementId } from '@googleforcreators/elements';
 

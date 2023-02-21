@@ -18,11 +18,11 @@
  * External dependencies
  */
 import {
-  Element,
   ELEMENT_TYPES,
-  Page,
-  ProductElement,
-  ProductData,
+  type Element,
+  type Page,
+  type ProductElement,
+  type ProductData,
 } from '@googleforcreators/elements';
 
 function isProduct(e: Element): e is ProductElement {

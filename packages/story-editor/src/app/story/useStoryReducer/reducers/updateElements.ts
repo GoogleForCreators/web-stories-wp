@@ -18,8 +18,8 @@
  * External dependencies
  */
 import {
-  StoryAnimation,
   StoryAnimationState,
+  type StoryAnimation,
 } from '@googleforcreators/animation';
 import { produce } from 'immer';
 

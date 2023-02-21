@@ -18,7 +18,7 @@
  * External dependencies
  */
 /* eslint-disable no-restricted-imports -- Still used by other packages. */
-import PropTypes, { ValidationMap } from 'prop-types';
+import PropTypes, { type ValidationMap } from 'prop-types';
 /* eslint-enable no-restricted-imports -- Still used by other packages. */
 import { PatternPropType } from '@googleforcreators/patterns';
 import {

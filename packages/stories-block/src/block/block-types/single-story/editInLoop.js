@@ -160,15 +160,24 @@ function StoryEmbedEditInLoop({
           maxHeight={Math.ceil(maxWidth / ratio)}
         />
         <div className={previewClassName}>
-          <EmbedPreview
-            url={story.url}
-            title={story.title}
-            poster={story.poster}
-            ref={ref}
-            isSelected={isSelected}
-            width={width}
-            height={height}
-          />
+          {previewOnly ? (
+            <Singleton
+              title={story.title}
+              poster={story.poster}
+              width={width}
+              height={height}
+            />
+          ) : (
+            <EmbedPreview
+              url={story.url}
+              title={story.title}
+              poster={story.poster}
+              ref={ref}
+              isSelected={isSelected}
+              width={width}
+              height={height}
+            />
+          )}
         </div>
       </>
     );

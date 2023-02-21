@@ -19,7 +19,7 @@
  */
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
-import { createPage, TextElement } from '@googleforcreators/elements';
+import { createPage, type TextElement } from '@googleforcreators/elements';
 import { populateElementFontData } from '@googleforcreators/output';
 
 /**
