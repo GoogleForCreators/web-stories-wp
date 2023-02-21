@@ -23,6 +23,7 @@ jobs:
       - name: Harden Runner
         uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
+          disable-file-monitoring: true
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
@@ -36,7 +37,6 @@ jobs:
         uses: google-github-actions/auth@ef5d53e30bbcd8d0836f4288f5e50ff3e086997d
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
-          create_credentials_file: false
 
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@62d4898025f6041e16b1068643bfc5a696863587
