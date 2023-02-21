@@ -36,7 +36,7 @@
     "jest-environment-puppeteer": "^7.0.0",
     "jest-extended": "^3.2.0",
     "jest-json-schema": "^6.1.0",
-    "jest-puppeteer": "^7.0.0"
+    "jest-puppeteer": "^7.0.1"
   },
   "devDependencies": {
     "@types/expect-puppeteer": "^5.0.2"
