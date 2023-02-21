@@ -204,7 +204,7 @@ function DropDownMenu({
       {(display || isMenuOpen) && (
         <Popup
           anchor={MenuButtonRef}
-          placement={Placement.Bottom_START}
+          placement={Placement.BottomStart}
           isOpen={isMenuOpen}
         >
           <DropDownContainer>

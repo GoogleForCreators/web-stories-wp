@@ -37,7 +37,7 @@ const IconButton = memo(
   ) {
     return (
       <Tooltip
-        placement={Placement.BOTTOM}
+        placement={Placement.Bottom}
         title={hasTooltip ? title : undefined}
       >
         <ToggleButton aria-label={title} ref={ref} tabIndex={-1} {...rest}>

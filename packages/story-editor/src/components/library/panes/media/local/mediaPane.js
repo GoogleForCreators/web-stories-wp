@@ -205,7 +205,7 @@ function MediaPane(props) {
               selectedValue={mediaType?.toString() || FILTER_NONE}
               onMenuItemClick={onFilter}
               options={FILTERS}
-              placement={Placement.Bottom_START}
+              placement={Placement.BottomStart}
             />
             {isSearching && media.length > 0 && (
               <SearchCount>
