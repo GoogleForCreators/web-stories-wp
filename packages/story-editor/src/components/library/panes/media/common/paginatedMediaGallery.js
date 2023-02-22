@@ -25,6 +25,8 @@ import {
   useRef,
   useState,
   useDebouncedCallback,
+  Suspense,
+  lazy,
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -35,7 +37,6 @@ import { Text, TextSize } from '@googleforcreators/design-system';
  */
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import { noop } from '../../../../../utils/noop';
-import MediaGallery from './mediaGallery';
 import {
   MediaGalleryContainer,
   MediaGalleryInnerContainer,
@@ -52,6 +53,46 @@ const StyledText = styled(Text.Span)`
 `;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const MediaGallery = lazy(() =>
+  import(/* webpackChunkName: "chunk-media-gallery" */ './mediaGallery')
+);
+
+function LazyMediaGallery({
+  providerType,
+  canEditMedia,
+  resources,
+  uploadingResources,
+  onInsert,
+}) {
+  return (
+    <Suspense
+      fallback={
+        <MediaGalleryLoadingPill>
+          <StyledText size={TextSize.Small}>
+            {__('Loading…', 'web-stories')}
+          </StyledText>
+        </MediaGalleryLoadingPill>
+      }
+    >
+      <MediaGallery
+        providerType={providerType}
+        canEditMedia={canEditMedia}
+        resources={resources}
+        uploadingResources={uploadingResources}
+        onInsert={onInsert}
+      />
+    </Suspense>
+  );
+}
+
+LazyMediaGallery.propTypes = {
+  providerType: PropTypes.string.isRequired,
+  canEditMedia: PropTypes.bool,
+  resources: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uploadingResources: PropTypes.arrayOf(PropTypes.object),
+  onInsert: PropTypes.func.isRequired,
+};
 
 function PaginatedMediaGallery({
   providerType,
@@ -164,7 +205,7 @@ function PaginatedMediaGallery({
       </MediaGalleryMessage>
     ) : (
       <div style={{ marginBottom: 15 }}>
-        <MediaGallery
+        <LazyMediaGallery
           providerType={providerType}
           canEditMedia={canEditMedia}
           resources={resources}

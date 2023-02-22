@@ -18,8 +18,13 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { Text, LoadingSpinner } from '@googleforcreators/design-system';
+import {
+  Text,
+  LoadingSpinner,
+  useLiveRegion,
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
+import { useEffect } from '@googleforcreators/react';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -38,6 +43,16 @@ const Wrapper = styled.div`
 `;
 
 function ProcessingOverlay() {
+  const speak = useLiveRegion();
+  useEffect(() => {
+    speak(
+      __(
+        'Video trimming in progress. Please wait up to a few minutes depending on output video length.',
+        'web-stories'
+      )
+    );
+  }, [speak]);
+
   return (
     <Wrapper>
       <LoadingSpinner />
