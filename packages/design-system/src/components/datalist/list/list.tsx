@@ -69,7 +69,7 @@ function OptionListWithRef<O extends AbstractOption>(
     primaryLabel,
     priorityOptionGroups = [],
     searchResultsLabel,
-    renderer: OptionRenderer = DefaultRenderer<O>,
+    renderer: OptionRenderer = DefaultRenderer,
     onObserve,
     focusSearch = noop,
     listId,
@@ -296,7 +296,7 @@ const OptionList = memo(forwardRef(OptionListWithRef)) as <
   O extends AbstractOption
 >(
   props: OptionListProps<O> & {
-    ref?: React.ForwardedRef<HTMLDivElement>;
+    ref?: ForwardedRef<HTMLDivElement>;
   }
 ) => ReturnType<typeof OptionListWithRef>;
 

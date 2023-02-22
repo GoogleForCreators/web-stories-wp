@@ -156,7 +156,7 @@ const OptionsContainer = forwardRef(OptionsContainerWithRef) as <
   O extends AbstractOption
 >(
   props: OptionsContainerProps<O> & {
-    ref?: React.ForwardedRef<HTMLDivElement>;
+    ref?: ForwardedRef<HTMLDivElement>;
   }
 ) => ReturnType<typeof OptionsContainerWithRef>;
 
