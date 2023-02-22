@@ -28,8 +28,6 @@ import track from './track';
 /**
  * Send an Analytics tracking event for clicks.
  *
- * Works for both Universal Analytics and Google Analytics 4.
- *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
  * @param event The actual click event.
  * @param eventName The event name (e.g. 'search').

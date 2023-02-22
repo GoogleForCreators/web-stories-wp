@@ -34,9 +34,8 @@ describe('trackScreenView', () => {
   it('adds a tracking event to the dataLayer', async () => {
     config.trackingAllowed = true;
     config.trackingEnabled = true;
-    config.trackingId = 'UA-12345678-1';
 
-    jest.mocked(gtag).mockImplementationOnce((_type, _eventName, eventData) => {
+    jest.mocked(gtag).mockImplementation((_type, _eventName, eventData) => {
       (eventData as ControlParams).event_callback?.();
     });
 
