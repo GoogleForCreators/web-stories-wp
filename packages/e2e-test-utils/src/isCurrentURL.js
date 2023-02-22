@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,21 @@
 /**
  * Internal dependencies
  */
-import createURL from './createURL';
+import createURL from './createURL.js';
 
-async function logoutUser() {
-  await page.goto(createURL('wp-login.php', 'action=logout'));
-  await Promise.all([
-    page.waitForNavigation(),
-    expect(page).toClick('a', { text: 'log out' }),
-  ]);
+/**
+ * Checks if current URL is a WordPress path.
+ *
+ * @param {string}  path  String to be serialized as pathname.
+ * @param {?string} query String to be serialized as query portion of URL.
+ * @return {boolean} Boolean represents whether current URL is or not a WordPress path.
+ */
+function isCurrentURL(path, query = '') {
+  const currentURL = new URL(page.url());
 
-  await expect(page).toMatch(/You are now logged out/i);
+  currentURL.search = query;
+
+  return createURL(path, query) === currentURL.href;
 }
 
-export default logoutUser;
+export default isCurrentURL;

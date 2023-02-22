@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,29 @@
  */
 
 /**
+ * External dependencies
+ */
+import { join } from 'path';
+
+/**
  * Internal dependencies
  */
-import createURL from './createURL';
+import { WP_BASE_URL } from './config';
 
-async function logoutUser() {
-  await page.goto(createURL('wp-login.php', 'action=logout'));
-  await Promise.all([
-    page.waitForNavigation(),
-    expect(page).toClick('a', { text: 'log out' }),
-  ]);
+/**
+ * Creates new URL by parsing base URL, path and query string.
+ *
+ * @param {string}  path String to be serialized as pathname.
+ * @param {?string} query  String to be serialized as query portion of URL.
+ * @return {string} String which represents full URL.
+ */
+function createURL(path, query = '') {
+  const url = new URL(WP_BASE_URL);
 
-  await expect(page).toMatch(/You are now logged out/i);
+  url.pathname = join(url.pathname, path);
+  url.search = query;
+
+  return url.href;
 }
 
-export default logoutUser;
+export default createURL;

@@ -54,7 +54,7 @@ export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';
 export { default as createNewPost } from './createNewPost';
-export { default as createNewTerm } from './createNewTerm.js';
+export { default as createNewTerm } from './createNewTerm';
 export { default as minWPVersionRequired } from './minWPVersionRequired';
 export { default as visitBlockWidgetScreen } from './visitBlockWidgetScreen';
 export { default as insertWidget } from './insertWidget';
@@ -62,14 +62,26 @@ export { default as triggerHighPriorityChecklistSection } from './triggerHighPri
 export { default as disableCheckbox } from './disableCheckbox';
 export { default as enableCheckbox } from './enableCheckbox';
 export { default as takeSnapshot } from './takeSnapshot';
-export { default as loadPostEditor } from './loadPostEditor.js';
+export { default as loadPostEditor } from './loadPostEditor';
 export { default as editStoryWithTitle } from './editStoryWithTitle';
-export {
-  getEditedPostContent,
-  setPostContent,
-  enablePageDialogAccept,
-  setBrowserViewport,
-  insertBlock,
-  createURL,
-  clearLocalStorage,
-} from '@wordpress/e2e-test-utils';
+export { default as createURL } from './createURL';
+
+export function setPostContent(content) {
+  return page.evaluate((_content) => {
+    wp.data
+      .dispatch('core/block-editor')
+      .resetBlocks(wp.blocks.parse(_content));
+  }, content);
+}
+
+export async function clearLocalStorage() {
+  await page.evaluate(() => window.localStorage.clear());
+}
+
+export async function insertBlock() {
+  await page.evaluate(() =>
+    wp.data
+      .dispatch('core/block-editor')
+      .insertBlock(wp.blocks.createBlock('web-stories/embed', {}))
+  );
+}

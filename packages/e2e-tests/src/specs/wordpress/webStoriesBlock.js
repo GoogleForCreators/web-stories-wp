@@ -62,7 +62,7 @@ describe('Web Stories Block', () => {
     await createNewPost({
       showWelcomeGuide: false,
     });
-    await insertBlock('Web Stories');
+    await insertBlock();
 
     await page.waitForSelector('.web-stories-block-configuration-panel');
 
@@ -93,7 +93,7 @@ describe('Web Stories Block', () => {
     await createNewPost({
       showWelcomeGuide: false,
     });
-    await insertBlock('Web Stories');
+    await insertBlock();
 
     await page.waitForSelector('.web-stories-block-configuration-panel');
 
