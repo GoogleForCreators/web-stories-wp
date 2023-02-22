@@ -47,7 +47,7 @@ async function loadTrackingScript(sendPageView = true): Promise<void> {
 
   try {
     await loadScriptTag(
-      `https://www.googletagmanager.com/gtag/js?id=${config.trackingId}&l=${DATA_LAYER}`
+      `https://www.googletagmanager.com/gtag/js?id=${config.trackingIdGA4}&l=${DATA_LAYER}`
     );
   } catch {
     // Loading was not possible, probably because of an ad blocker.
@@ -66,64 +66,25 @@ async function loadTrackingScript(sendPageView = true): Promise<void> {
   // Note: `set` commands need to be placed before `config` commands to ensure
   // those values are passed along with the initial config.
 
-  // Universal Analytics custom dimensions.
-  gtag('set', {
-    custom_map: {
-      dimension1: 'analytics',
-      dimension2: 'adNetwork',
-      dimension3: 'search_order',
-      dimension4: 'search_orderby',
-      dimension5: 'file_size',
-      dimension6: 'file_type',
-      dimension7: 'status',
-      dimension8: 'siteLocale',
-      dimension9: 'userLocale',
-      dimension10: 'userRole',
-      dimension11: 'enabledExperiments',
-      dimension12: 'wpVersion',
-      dimension13: 'phpVersion',
-      dimension14: 'isMultisite',
-      dimension15: 'name',
-      dimension16: 'activePlugins',
-      dimension20: 'serverEnvironment',
-    },
-  });
-
   // Google Analytics 4 user properties.
   // See https://developers.google.com/analytics/devguides/collection/ga4/persistent-values
   // See https://developers.google.com/analytics/devguides/collection/ga4/user-properties
   gtag('set', 'user_properties', {
     ...config.userProperties,
     app_version: config.appVersion,
-  });
-
-  gtag('config', config.trackingId, {
-    anonymize_ip: true,
-    app_name: config.appName,
-    app_version: config.appVersion,
-    send_page_view: sendPageView,
-    // Setting the transport method to 'beacon' lets the hit be sent
-    // using 'navigator.sendBeacon' in browsers that support it.
-    transport_type: 'beacon',
     page_title: pageTitle,
     page_path: pagePath,
-    // Re-using user properties values for the custom dimensions.
-    ...config.userProperties,
   });
 
-  // Support GA4 in parallel.
-  // At some point, only this will remain.
   gtag('config', config.trackingIdGA4, {
     app_name: config.appName,
-    // This doesn't seem to be fully working for web properties.
+    // Not really supported for web properties, but passed for completeness.
     // See https://support.google.com/analytics/answer/9268042
     app_version: config.appVersion,
     send_page_view: sendPageView,
     // Setting the transport method to 'beacon' lets the hit be sent
     // using 'navigator.sendBeacon' in browsers that support it.
     transport_type: 'beacon',
-    page_title: pageTitle,
-    page_path: pagePath,
   });
 }
 

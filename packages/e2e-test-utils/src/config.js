@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-jest.mock('../shared');
+const WP_ADMIN_USER = {
+  username: 'admin',
+  password: 'password',
+};
 
-/**
- * Internal dependencies
- */
-import { config } from '../shared';
-import initializeTracking from '../initializeTracking';
+const {
+  WP_USERNAME = WP_ADMIN_USER.username,
+  WP_PASSWORD = WP_ADMIN_USER.password,
+  WP_BASE_URL = 'http://localhost:8889',
+} = process.env;
 
-describe('initializeTracking', () => {
-  afterEach(() => {
-    config.trackingIdGA4 = '';
-  });
-
-  it('sets app name in config', async () => {
-    config.trackingIdGA4 = '1234567';
-    await initializeTracking('Foo App');
-
-    expect(config.appName).toBe('Foo App');
-  });
-});
+export { WP_ADMIN_USER, WP_USERNAME, WP_PASSWORD, WP_BASE_URL };

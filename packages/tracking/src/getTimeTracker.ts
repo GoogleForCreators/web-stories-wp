@@ -18,12 +18,9 @@
  * Internal dependencies
  */
 import trackEvent from './trackEvent';
-import { config } from './shared';
 
 /**
  * Starts a timer and returns a callback to stop it and send an analytics timing_complete event.
- *
- * Works for both Universal Analytics and Google Analytics 4.
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/user-timings
  * @param eventName The event nae (e.g. 'load_items').
@@ -35,16 +32,8 @@ function getTimeTracker(eventName: string): () => void {
     const after = window.performance.now();
     const value = after - before;
 
-    // Universal Analytics has a special `timing_complete` event which
-    // does not exist in GA4.
-    void trackEvent('timing_complete', {
-      name: eventName,
-      value,
-      send_to: config.trackingId,
-    });
     void trackEvent(eventName, {
       value,
-      send_to: config.trackingIdGA4,
     });
   };
 }

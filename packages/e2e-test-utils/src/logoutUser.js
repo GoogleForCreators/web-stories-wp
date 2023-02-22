@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { createURL } from '@wordpress/e2e-test-utils';
+import createURL from './createURL';
 
 async function logoutUser() {
   await page.goto(createURL('wp-login.php', 'action=logout'));

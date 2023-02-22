@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ruleset name="Web Stories PHP Coding Standards Rules">
-  <config name="minimum_supported_wp_version" value="5.9" />
+  <config name="minimum_supported_wp_version" value="6.0" />
 
   <rule ref="WordPress-Core">
     <type>error</type>
@@ -228,7 +228,10 @@
         <property name="allowFullyQualifiedGlobalConstants" value="true" />
         <property name="allowFallbackGlobalFunctions" value="true" />
         <property name="allowFallbackGlobalConstants" value="true" />
-        <property name="allowFullyQualifiedNameForCollidingClasses" value="true" />
+        <property
+        name="allowFullyQualifiedNameForCollidingClasses"
+        value="true"
+      />
     </properties>
   </rule>
   <!-- Prohibits uses from the same namespace. -->

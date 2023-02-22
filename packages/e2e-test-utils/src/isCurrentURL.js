@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,24 @@
  * limitations under the License.
  */
 
-jest.mock('../shared');
-
 /**
  * Internal dependencies
  */
-import { config } from '../shared';
-import initializeTracking from '../initializeTracking';
+import createURL from './createURL.js';
 
-describe('initializeTracking', () => {
-  afterEach(() => {
-    config.trackingIdGA4 = '';
-  });
+/**
+ * Checks if current URL is a WordPress path.
+ *
+ * @param {string}  path  String to be serialized as pathname.
+ * @param {?string} query String to be serialized as query portion of URL.
+ * @return {boolean} Boolean represents whether current URL is or not a WordPress path.
+ */
+function isCurrentURL(path, query = '') {
+  const currentURL = new URL(page.url());
 
-  it('sets app name in config', async () => {
-    config.trackingIdGA4 = '1234567';
-    await initializeTracking('Foo App');
+  currentURL.search = query;
 
-    expect(config.appName).toBe('Foo App');
-  });
-});
+  return createURL(path, query) === currentURL.href;
+}
+
+export default isCurrentURL;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,30 @@
  * limitations under the License.
  */
 
-jest.mock('../shared');
+/**
+ * External dependencies
+ */
+import { join } from 'path';
 
 /**
  * Internal dependencies
  */
-import { config } from '../shared';
-import initializeTracking from '../initializeTracking';
+import { WP_BASE_URL } from './config';
 
-describe('initializeTracking', () => {
-  afterEach(() => {
-    config.trackingIdGA4 = '';
-  });
+/**
+ * Creates new URL by parsing base URL, path and query string.
+ *
+ * @param {string}  path String to be serialized as pathname.
+ * @param {?string} query  String to be serialized as query portion of URL.
+ * @return {string} String which represents full URL.
+ */
+function createURL(path, query = '') {
+  const url = new URL(WP_BASE_URL);
 
-  it('sets app name in config', async () => {
-    config.trackingIdGA4 = '1234567';
-    await initializeTracking('Foo App');
+  url.pathname = join(url.pathname, path);
+  url.search = query;
 
-    expect(config.appName).toBe('Foo App');
-  });
-});
+  return url.href;
+}
+
+export default createURL;
