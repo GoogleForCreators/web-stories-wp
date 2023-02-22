@@ -115,12 +115,14 @@ function OptionListWithRef<O extends AbstractOption>(
     searchResultsLabel,
   ]);
 
+  const currentListRef = listRef.current;
+
   /*
    * LAZY OPTIONS LOADING
    */
   // Add option when observed entry is seen
   const observer = useMemo(() => {
-    if (!listRef.current) {
+    if (!currentListRef) {
       return null;
     }
     return new window.IntersectionObserver(
@@ -140,12 +142,12 @@ function OptionListWithRef<O extends AbstractOption>(
         }
       },
       {
-        root: listRef.current,
+        root: currentListRef,
         // Gets ~2 extra items below scroll container BoundingBox
         rootMargin: '60px',
       }
     );
-  }, [onObserve, listRef]);
+  }, [onObserve, currentListRef]);
 
   // Observe rendered font options
   useLayoutEffect(() => {
