@@ -15,9 +15,10 @@
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { createURL, isCurrentURL } from '@wordpress/e2e-test-utils';
+import createURL from './createURL';
+import isCurrentURL from './isCurrentURL';
 
 /**
  * Performs log in with specified username and password.

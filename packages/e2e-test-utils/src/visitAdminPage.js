@@ -20,13 +20,19 @@
 import { join } from 'path';
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import {
-  createURL,
-  isCurrentURL,
-  getPageError,
-} from '@wordpress/e2e-test-utils';
+import createURL from './createURL';
+import isCurrentURL from './isCurrentURL';
+
+const REGEXP_PHP_ERROR =
+  /(<b>)?(Fatal error|Recoverable fatal error|Warning|Parse error|Notice|Strict Standards|Deprecated|Unknown error)(<\/b>)?: (.*?) in (.*?) on line (<b>)?\d+(<\/b>)?/;
+
+async function getPageError() {
+  const content = await page.content();
+  const match = content.match(REGEXP_PHP_ERROR);
+  return match ? match[0] : null;
+}
 
 /**
  * Visits admin page/

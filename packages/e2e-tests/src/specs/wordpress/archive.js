@@ -126,7 +126,7 @@ describe('Stories Archive', () => {
         await createNewPost({
           showWelcomeGuide: false,
         });
-        await insertBlock('Web Stories');
+        await insertBlock();
         await page.waitForSelector('.web-stories-block-configuration-panel');
 
         await expect(page).toClick('button', { text: 'Latest Stories' });
