@@ -23,8 +23,6 @@ import track from './track';
 /**
  * Send an Analytics tracking event for exceptions.
  *
- * Works for both Universal Analytics and Google Analytics 4.
- *
  * @see https://developers.google.com/analytics/devguides/collection/ga4/exceptions
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/exceptions
  * @param prefix Error prefixed. Concatenated with description.

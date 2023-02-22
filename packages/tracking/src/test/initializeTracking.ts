@@ -24,11 +24,11 @@ import initializeTracking from '../initializeTracking';
 
 describe('initializeTracking', () => {
   afterEach(() => {
-    config.trackingId = '';
+    config.trackingIdGA4 = '';
   });
 
   it('sets app name in config', async () => {
-    config.trackingId = '1234567';
+    config.trackingIdGA4 = '1234567';
     await initializeTracking('Foo App');
 
     expect(config.appName).toBe('Foo App');

@@ -36,7 +36,7 @@ describe('trackError', () => {
     config.trackingEnabled = true;
     const error = new Error('mock error');
 
-    jest.mocked(gtag).mockImplementationOnce((_type, _eventName, eventData) => {
+    jest.mocked(gtag).mockImplementation((_type, _eventName, eventData) => {
       (eventData as ControlParams).event_callback?.();
     });
     await trackError('test_error', error.message, true);

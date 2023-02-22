@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { config } from './shared';
 import type { EventParameters } from './shared';
 import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
@@ -39,45 +38,6 @@ async function trackEvent(
   eventParameters: EventParameters = {}
 ): Promise<void> {
   if (!(await isTrackingEnabled())) {
-    return Promise.resolve();
-  }
-
-  let gtagEventParameters = {};
-
-  // Universal Analytics backwards compatibility.
-  const { search_type, duration, title_length, unread_count, ...rest } =
-    eventParameters;
-  if (search_type) {
-    gtagEventParameters = {
-      ...rest,
-      event_label: search_type,
-    };
-  } else if (duration) {
-    gtagEventParameters = {
-      ...rest,
-      value: duration,
-    };
-  } else if (title_length) {
-    gtagEventParameters = {
-      ...rest,
-      value: title_length,
-    };
-  } else if (unread_count) {
-    gtagEventParameters = {
-      ...rest,
-      value: unread_count,
-    };
-  }
-
-  if (Object.values(gtagEventParameters).length) {
-    void track(eventName, {
-      ...gtagEventParameters,
-      send_to: config.trackingId,
-    });
-    void track(eventName, {
-      ...eventParameters,
-      send_to: config.trackingIdGA4,
-    });
     return Promise.resolve();
   }
 
