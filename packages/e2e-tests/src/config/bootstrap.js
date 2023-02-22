@@ -21,8 +21,6 @@ import { setDefaultOptions } from 'expect-puppeteer';
 import { matchers } from 'jest-json-schema';
 import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 import {
-  enablePageDialogAccept,
-  setBrowserViewport,
   setCurrentUser,
   trashAllPosts,
   deleteAllMedia,
@@ -149,10 +147,19 @@ setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 2000 });
  */
 async function setupBrowser() {
   // Same as jest-puppeteer.config.cjs and percy.config.yml
-  await setBrowserViewport({
-    width: 1600,
-    height: 1000,
+  const width = 1600;
+  const height = 1000;
+
+  await page.setViewport({
+    width,
+    height,
   });
+
+  await page
+    .mainFrame()
+    .waitForFunction(
+      `window.innerWidth === ${width} && window.innerHeight === ${height}`
+    );
 }
 
 /**
@@ -171,6 +178,12 @@ function capturePageEventsForTearDown() {
 function removePageEvents() {
   pageEvents.forEach(([eventName, handler]) => {
     page.removeListener(eventName, handler);
+  });
+}
+
+function enablePageDialogAccept() {
+  page.on('dialog', async (dialog) => {
+    await dialog.accept();
   });
 }
 

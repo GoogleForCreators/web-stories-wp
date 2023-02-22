@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import createURL from './createURL';
+const WP_ADMIN_USER = {
+  username: 'admin',
+  password: 'password',
+};
 
-async function logoutUser() {
-  await page.goto(createURL('wp-login.php', 'action=logout'));
-  await Promise.all([
-    page.waitForNavigation(),
-    expect(page).toClick('a', { text: 'log out' }),
-  ]);
+const {
+  WP_USERNAME = WP_ADMIN_USER.username,
+  WP_PASSWORD = WP_ADMIN_USER.password,
+  WP_BASE_URL = 'http://localhost:8889',
+} = process.env;
 
-  await expect(page).toMatch(/You are now logged out/i);
-}
-
-export default logoutUser;
+export { WP_ADMIN_USER, WP_USERNAME, WP_PASSWORD, WP_BASE_URL };
