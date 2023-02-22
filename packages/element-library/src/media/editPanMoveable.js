@@ -67,13 +67,7 @@ function EditPanMoveable({
     croppedMedia,
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
-      let { dx, dy } = getKeyboardMovement(key, shiftKey);
-      if (flip?.vertical) {
-        dy = -dy;
-      }
-      if (flip?.horizontal) {
-        dx = -dx;
-      }
+      const { dx, dy } = getKeyboardMovement(key, shiftKey);
       const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - dx);
       const panFocalY = getFocalFromOffset(height, mediaHeight, offsetY - dy);
       setProperties({

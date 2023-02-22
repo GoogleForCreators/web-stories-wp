@@ -48,7 +48,7 @@ const DefaultRenderer = forwardRef(DefaultRendererWithRef) as <
   O extends AbstractOption
 >(
   props: OptionRendererProps<O> & {
-    ref?: React.ForwardedRef<HTMLLIElement>;
+    ref?: ForwardedRef<HTMLLIElement>;
   }
 ) => ReturnType<typeof DefaultRendererWithRef>;
 
