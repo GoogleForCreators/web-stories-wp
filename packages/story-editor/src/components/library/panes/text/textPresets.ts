@@ -42,7 +42,7 @@ const DEFAULT_WIDTH = {
 };
 
 // @todo Once none of the elements are placed randomly, default x can be moved to text/index.js
-const DEFAULT_LEFT_MARGIN = 40;
+const DEFAULT_LEFT_MARGIN = 48;
 
 const DEFAULT_TEXT_BORDER_RADIUS = {
   locked: true,
