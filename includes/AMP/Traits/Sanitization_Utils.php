@@ -71,6 +71,8 @@ trait Sanitization_Utils {
 	 * Removes empty data-tooltip-icon and data-tooltip-text attributes
 	 * to prevent validation issues.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.1.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
@@ -84,13 +86,15 @@ trait Sanitization_Utils {
 		 * @var DOMElement $link The <a> element
 		 */
 		foreach ( $links as $link ) {
-			if ( ! $link->getAttribute( 'target' ) ) {
+			$url = $link->getAttribute( 'href' );
+
+			$is_relative_link = str_starts_with( $url, '#' );
+
+			if ( ! $is_relative_link && ! $link->getAttribute( 'target' ) ) {
 				$link->setAttribute( 'target', '_blank' );
 			}
 
-			$url = $link->getAttribute( 'href' );
-
-			$is_link_to_same_origin = str_starts_with( $url, home_url() );
+			$is_link_to_same_origin = str_starts_with( $url, home_url() ) || $is_relative_link;
 
 			$rel = $link->getAttribute( 'rel' );
 
@@ -119,6 +123,7 @@ trait Sanitization_Utils {
 			// Extra hardening to catch links without a proper protocol.
 			// Matches withProtocol() util in the editor.
 			if (
+				! $is_relative_link &&
 				! str_starts_with( $url, 'http://' ) &&
 				! str_starts_with( $url, 'https://' ) &&
 				! str_starts_with( $url, 'tel:' ) &&
