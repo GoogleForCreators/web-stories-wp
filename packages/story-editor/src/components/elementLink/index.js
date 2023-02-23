@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { LinkType } from '@googleforcreators/elements';
+
 export function getLinkFromElement(element) {
   return element.link || null;
 }
@@ -22,12 +27,16 @@ export function createLink({
   url = '',
   needsProxy = false,
   rel = [],
+  type = LinkType.Regular,
+  pageId = null,
   ...rest
 } = {}) {
   return {
     needsProxy,
     url,
     rel,
+    type,
+    pageId,
     ...rest,
   };
 }

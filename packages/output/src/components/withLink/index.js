@@ -19,11 +19,25 @@
  */
 import PropTypes from 'prop-types';
 import { withProtocol } from '@googleforcreators/url';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import { LinkType, StoryPropTypes } from '@googleforcreators/elements';
 
 function WithLink({ element, children, ...rest }) {
   const link = element.link || {};
-  const { url, icon, desc, rel = [] } = link;
+  const { url, icon, desc, rel = [], type, pageId } = link;
+
+  if (type === LinkType.Branching && pageId) {
+    return (
+      <a
+        href={`#page=${pageId}`}
+        data-tooltip-icon={icon || undefined}
+        data-tooltip-text={desc}
+        {...rest}
+      >
+        {children}
+      </a>
+    );
+  }
+
   if (!url) {
     return children;
   }
