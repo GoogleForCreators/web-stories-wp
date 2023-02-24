@@ -79,8 +79,8 @@ function TextOutputWithUnits({
     dataToPaddingY = dataToStyleY;
   }
   const paddingStyles = {
-    vertical: padding.vertical ? dataToPaddingY(padding.vertical) : 0,
-    horizontal: padding.horizontal ? dataToPaddingX(padding.horizontal) : 0,
+    vertical: padding?.vertical ? dataToPaddingY(padding.vertical) : 0,
+    horizontal: padding?.horizontal ? dataToPaddingX(padding.horizontal) : 0,
   };
 
   const hasPadding = paddingStyles.vertical || paddingStyles.horizontal;
@@ -112,7 +112,7 @@ function TextOutputWithUnits({
     padding: paddingStyle,
   };
 
-  const unitlessPaddingVertical = padding.vertical
+  const unitlessPaddingVertical = padding?.vertical
     ? parseFloat(dataToStyleY(padding.vertical))
     : 0;
   const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
