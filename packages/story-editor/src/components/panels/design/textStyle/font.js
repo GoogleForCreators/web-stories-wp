@@ -126,6 +126,7 @@ function FontControls({
             ref={fontDropdownRef}
             highlightStylesOverride={highlightStylesOverride}
             showDropdownLabel
+            selectedElements={selectedElements}
           />
         </Row>
       )}

@@ -73,9 +73,13 @@ function BorderWidthAndColor() {
     type,
   } = useProperties(['border', 'mask', 'type']);
 
-  const updateSelectedElements = useStory(
-    ({ actions }) => actions.updateSelectedElements
+  const { selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
+    })
   );
+
   // We only allow editing the current border width, if all borders are identical
   const hasUniformBorder =
     border?.left === border?.right &&
@@ -95,12 +99,13 @@ function BorderWidthAndColor() {
   const hasBorderWidth = getHasBorderWidth(border);
 
   const handleWidthChange = (value) => {
-    trackEvent('floating_menu', {
+    void trackEvent('floating_menu', {
       name: 'set_border_width',
       element: type,
     });
 
-    updateSelectedElements({
+    updateElementsById({
+      elementIds: selectedElementIds,
       properties: ({ border: oldBorder }) => ({
         border: {
           locked: true,
@@ -116,12 +121,13 @@ function BorderWidthAndColor() {
   };
 
   const handleColorChange = (value) => {
-    trackEvent('floating_menu', {
+    void trackEvent('floating_menu', {
       name: 'set_border_color',
       element: type,
     });
 
-    updateSelectedElements({
+    updateElementsById({
+      elementIds: selectedElementIds,
       properties: ({ border: oldBorder }) => ({
         border: {
           ...oldBorder,

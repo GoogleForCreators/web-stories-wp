@@ -18,12 +18,14 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
+import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app';
 import useHandlers from '../../utils/useHandlers';
+import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import updateProperties from './updateProperties';
 import getDesignPanelsForSelection from './getDesignPanelsForSelection';
 
@@ -68,13 +70,25 @@ function useDesignPanels() {
     (newPropertiesOrUpdater) => {
       updateElementsById({
         elementIds: selectedElementIds,
-        properties: (currentProperties) => {
-          const update = updateProperties(
-            currentProperties,
+        properties: (element) => {
+          const updates = updateProperties(
+            element,
             newPropertiesOrUpdater,
             /* commitValues */ true
           );
-          return update;
+
+          if (elementIs.text(element)) {
+            const sizeUpdates = getUpdatedSizeAndPosition({
+              ...element,
+              ...updates,
+            });
+            return {
+              ...updates,
+              ...sizeUpdates,
+            };
+          }
+
+          return updates;
         },
       });
     },
