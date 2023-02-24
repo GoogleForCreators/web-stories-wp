@@ -190,7 +190,7 @@ export interface TextElement extends Element {
 
   backgroundTextMode?: string;
   tagName?: 'h1' | 'h2' | 'h3' | 'p';
-  padding: Padding;
+  padding?: Padding;
   marginOffset: number;
   lineHeight: number;
   textAlign: TextAlign;
