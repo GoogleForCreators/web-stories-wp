@@ -173,7 +173,7 @@
     "rtlcss-webpack-plugin": "^4.0.7",
     "source-map-loader": "^4.0.1",
     "styled-components": "^5.3.6",
-    "stylelint": "^15.1.0",
+    "stylelint": "^15.2.0",
     "stylelint-config-recommended": "^10.0.1",
     "stylelint-prettier": "^2.0.0",
     "stylis-plugin-rtl": "^1.0.0",
