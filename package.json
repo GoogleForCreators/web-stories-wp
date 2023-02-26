@@ -108,7 +108,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.21.5",
     "circular-dependency-plugin": "^5.2.2",
-    "core-js": "^3.28.0",
+    "core-js": "^3.29.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
