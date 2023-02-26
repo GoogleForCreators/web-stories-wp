@@ -123,12 +123,12 @@ function DesignPanel({
   const internalSubmitRef = useRef();
   useEffect(() => {
     internalSubmitRef.current = internalSubmit;
-  }, [internalSubmit])
+  }, [internalSubmit]);
 
   const elementUpdatesRef = useRef();
   useEffect(() => {
     elementUpdatesRef.current = elementUpdates;
-  }, [elementUpdates])
+  }, [elementUpdates]);
 
   useEffect(() => {
     setElementUpdates({});
