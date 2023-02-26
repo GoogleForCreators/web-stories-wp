@@ -185,7 +185,7 @@
     "webpack-dev-server": "^4.11.1",
     "webpackbar": "^5.0.2",
     "worker-loader": "^3.0.8",
-    "workspaces-run": "^1.0.1"
+    "workspaces-run": "^1.0.2"
   },
   "overrides": {
     "@axe-core/puppeteer": {
