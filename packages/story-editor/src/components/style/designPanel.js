@@ -120,9 +120,20 @@ function DesignPanel({
     )
   );
 
+  const internalSubmitRef = useRef();
   useEffect(() => {
-    onSubmit();
-  }, [selectedElementIds, onSubmit]);
+    internalSubmitRef.current = internalSubmit;
+  }, [internalSubmit])
+
+  const elementUpdatesRef = useRef();
+  useEffect(() => {
+    elementUpdatesRef.current = elementUpdates;
+  }, [elementUpdates])
+
+  useEffect(() => {
+    setElementUpdates({});
+    internalSubmitRef.current(elementUpdatesRef.current);
+  }, []);
 
   const submit = useCallback(() => {
     // eslint-disable-next-line @wordpress/react-no-unsafe-timeout -- Only depends on the `ref` and thus save from dismount issues.
@@ -192,6 +203,7 @@ function DesignPanel({
 DesignPanel.propTypes = {
   panelType: PropTypes.func.isRequired,
   selectedElements: PropTypes.arrayOf(StoryPropTypes.element).isRequired,
+  selectedElementIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSetProperties: PropTypes.func.isRequired,
   registerSubmitHandler: PropTypes.func.isRequired,
 };

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
-import { elementIs } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
