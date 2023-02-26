@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -48,6 +49,7 @@ const AutoSubmitButton = styled.input.attrs({ type: 'submit' })`
 function DesignPanel({
   panelType,
   selectedElements,
+  selectedElementIds,
   onSetProperties,
   registerSubmitHandler,
   ...rest
@@ -117,6 +119,10 @@ function DesignPanel({
       [internalSubmit, elementUpdates]
     )
   );
+
+  useEffect(() => {
+    onSubmit();
+  }, [selectedElementIds, onSubmit]);
 
   const submit = useCallback(() => {
     // eslint-disable-next-line @wordpress/react-no-unsafe-timeout -- Only depends on the `ref` and thus save from dismount issues.

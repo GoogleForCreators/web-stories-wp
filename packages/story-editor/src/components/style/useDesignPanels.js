@@ -25,7 +25,6 @@ import { elementIs } from '@googleforcreators/elements';
  */
 import { useStory } from '../../app';
 import useHandlers from '../../utils/useHandlers';
-import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import updateProperties from './updateProperties';
 import getDesignPanelsForSelection from './getDesignPanelsForSelection';
 
@@ -77,17 +76,6 @@ function useDesignPanels() {
             /* commitValues */ true
           );
 
-          if (elementIs.text(element)) {
-            const sizeUpdates = getUpdatedSizeAndPosition({
-              ...element,
-              ...updates,
-            });
-            return {
-              ...updates,
-              ...sizeUpdates,
-            };
-          }
-
           return updates;
         },
       });
@@ -127,6 +115,7 @@ function useDesignPanels() {
         onSetProperties,
         deleteSelectedElements,
         selectedElements,
+        selectedElementIds,
         selectedElementAnimations,
         updateAnimationState,
       },
@@ -137,6 +126,7 @@ function useDesignPanels() {
       onSetProperties,
       deleteSelectedElements,
       selectedElements,
+      selectedElementIds,
       selectedElementAnimations,
       updateAnimationState,
     ]
