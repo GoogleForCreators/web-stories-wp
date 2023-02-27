@@ -11,14 +11,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 use stdClass;
 
 final class LazilyInstantiatedServiceTest extends TestCase {
-
-	public function test_it_can_be_instantiated(): void {
-		$callable     = static function (): void {};
-		$lazy_service = new LazilyInstantiatedService( $callable );
-
-		$this->assertInstanceOf( LazilyInstantiatedService::class, $lazy_service );
-	}
-
 	public function test_it_can_return_the_actual_service_it_represents(): void {
 		$callable     = fn() => $this->createMock( Service::class );
 		$lazy_service = new LazilyInstantiatedService( $callable );

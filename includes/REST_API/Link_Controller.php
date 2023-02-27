@@ -29,6 +29,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\REST_API;
 
 use DOMElement;
+use DOMNode;
 use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
@@ -488,7 +489,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		/**
 		 * DOMElement
 		 *
-		 * @var DOMElement $node
+		 * @var DOMElement|DOMNode $node
 		 */
 		$node = $query->item( 0 );
 

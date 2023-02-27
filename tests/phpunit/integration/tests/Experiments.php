@@ -117,7 +117,7 @@ class Experiments extends DependencyInjectedTestCase {
 	public function test_display_experiment_field_enabled(): void {
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
 			->setConstructorArgs( [ $this->injector->make( Settings::class ) ] )
-			->setMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
+			->onlyMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
 			->getMock();
 
 		$this->instance->method( 'get_experiments' )
@@ -151,7 +151,7 @@ class Experiments extends DependencyInjectedTestCase {
 	public function test_display_experiment_field_enabled_by_default(): void {
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
 							->setConstructorArgs( [ $this->injector->make( Settings::class ) ] )
-							->setMethods( [ 'get_experiments' ] )
+							->onlyMethods( [ 'get_experiments' ] )
 							->getMock();
 
 		$this->instance->method( 'get_experiments' )
@@ -214,11 +214,6 @@ class Experiments extends DependencyInjectedTestCase {
 		$this->assertEmpty( $this->instance->get_experiment_statuses( 'foo-bar-baz' ) );
 		$this->assertNotEmpty( $this->instance->get_experiment_statuses( 'dashboard' ) );
 		$this->assertNotEmpty( $this->instance->get_experiment_statuses( 'editor' ) );
-
-		foreach ( $this->instance->get_experiment_statuses( 'editor' ) as $key => $status ) {
-			$this->assertIsString( $key );
-			$this->assertIsBool( $status );
-		}
 	}
 
 	/**
@@ -237,7 +232,7 @@ class Experiments extends DependencyInjectedTestCase {
 	public function test_is_experiment_enabled_default_experiment(): void {
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
 							->setConstructorArgs( [ $this->injector->make( Settings::class ) ] )
-							->setMethods( [ 'get_experiments' ] )
+							->onlyMethods( [ 'get_experiments' ] )
 							->getMock();
 
 		$this->instance->method( 'get_experiments' )
@@ -278,7 +273,7 @@ class Experiments extends DependencyInjectedTestCase {
 
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
 							->setConstructorArgs( [ $this->injector->make( Settings::class ) ] )
-							->setMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
+							->onlyMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
 							->getMock();
 
 		$this->instance->method( 'get_experiments' )

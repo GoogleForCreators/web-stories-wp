@@ -305,11 +305,9 @@ class SVG extends TestCase {
 	 */
 	public function test_wp_check_filetype_and_ext(): void {
 		$this->instance->register();
+
 		$filepath = WEB_STORIES_TEST_DATA_DIR . '/animated.svg';
 		$data     = wp_check_filetype_and_ext( $filepath, $filepath );
-		$this->assertArrayHasKey( 'ext', $data );
-		$this->assertArrayHasKey( 'type', $data );
-		$this->assertArrayHasKey( 'proper_filename', $data );
 
 		$this->assertSame( $data['ext'], 'svg' );
 		$this->assertSame( $data['type'], 'image/svg+xml' );

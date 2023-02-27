@@ -18,16 +18,8 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Infrastructure\ServiceBasedPlugin
  */
 final class ServiceBasedPluginTest extends TestCase {
-
-	public function test_it_can_be_instantiated(): void {
-		$plugin = $this->createMock( ServiceBasedPlugin::class );
-
-		$this->assertInstanceOf( ServiceBasedPlugin::class, $plugin );
-	}
-
 	public function test_it_can_return_its_container(): void {
 		$plugin = $this->getMockBuilder( ServiceBasedPlugin::class )
-			->setMethodsExcept( [ 'get_container' ] )
 			->enableOriginalConstructor()
 			->getMock();
 
@@ -38,7 +30,7 @@ final class ServiceBasedPluginTest extends TestCase {
 
 	public function test_it_can_be_registered(): void {
 		$plugin = $this->getMockBuilder( ServiceBasedPlugin::class )
-			->setMethodsExcept( [ 'register' ] )
+			->onlyMethods( [ 'register_services' ] )
 			->getMock();
 
 		$plugin->expects( $this->once() )->method( 'register_services' );
@@ -51,7 +43,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ true, null, $container ] )
-			->setMethodsExcept( [ 'register', 'register_services' ] )
+			->onlyMethods( [] )
 			->getMock();
 
 		$this->assertCount( 0, $container );
@@ -68,14 +60,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ true, null, $container ] )
-			->setMethods()
-			->setMethodsExcept(
-				[
-					'register',
-					'register_services',
-					'get_service_classes',
-				]
-			)
+			->onlyMethods( [] )
 			->getMock();
 
 		$this->assertCount( 0, $container );
@@ -94,13 +79,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ true, null, $container ] )
-			->setMethodsExcept(
-				[
-					'register',
-					'register_services',
-					'get_service_classes',
-				]
-			)
+			->onlyMethods( [] )
 			->getMock();
 
 		add_filter(
@@ -124,13 +103,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ true, null, $container ] )
-			->setMethodsExcept(
-				[
-					'register',
-					'register_services',
-					'get_service_classes',
-				]
-			)
+			->onlyMethods( [] )
 			->getMock();
 
 		add_filter(
@@ -159,16 +132,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 						->enableOriginalConstructor()
 						->setConstructorArgs( [ true, null, $container ] )
-						->setMethodsExcept(
-							[
-								'collect_missing_requirements',
-								'register',
-								'register_services',
-								'requirements_are_met',
-								'get_container',
-								'get_service_classes',
-							]
-						)
+						->onlyMethods( [] )
 						->getMock();
 
 		$service_callback = static fn( $services ) => array_merge(
@@ -194,16 +158,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 						->enableOriginalConstructor()
 						->setConstructorArgs( [ true, null, $container ] )
-						->setMethodsExcept(
-							[
-								'collect_missing_requirements',
-								'register',
-								'register_services',
-								'requirements_are_met',
-								'get_container',
-								'get_service_classes',
-							]
-						)
+						->onlyMethods( [] )
 						->getMock();
 
 		$service_callback = static fn( $services ) => array_merge(
@@ -240,13 +195,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 						->enableOriginalConstructor()
 						->setConstructorArgs( [ true, null, $container ] )
-						->setMethodsExcept(
-							[
-								'register',
-								'register_services',
-								'get_service_classes',
-							]
-						)
+						->onlyMethods( [] )
 						->getMock();
 
 		$service_callback = static fn() => [ 'service_with_requirements' => DummyServiceWithRequirements::class ];
@@ -262,7 +211,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ true, null, $container ] )
-			->setMethodsExcept( [ 'register', 'register_services' ] )
+			->onlyMethods( [] )
 			->getMock();
 
 		add_filter(
@@ -282,7 +231,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ true, null, $container ] )
-			->setMethodsExcept( [ 'register', 'register_services' ] )
+			->onlyMethods( [] )
 			->getMock();
 
 		add_filter(
@@ -303,13 +252,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->setConstructorArgs( [ false, null, $container ] )
 			->enableOriginalConstructor()
-			->setMethodsExcept(
-				[
-					'register',
-					'register_services',
-					'get_service_classes',
-				]
-			)
+			->onlyMethods( [] )
 			->getMock();
 
 		add_filter(

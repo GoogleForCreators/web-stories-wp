@@ -65,14 +65,11 @@ class Shopping_Vendors {
 	 */
 	public function get_vendor_class( string $name ): ?Product_Query {
 		$vendors = $this->get_vendors();
-		if ( ! isset( $vendors[ $name ] ) || ! isset( $vendors[ $name ]['class'] ) || ! class_exists( $vendors[ $name ]['class'] ) ) {
+
+		if ( ! isset( $vendors[ $name ]['class'] ) || ! class_exists( $vendors[ $name ]['class'] ) ) {
 			return null;
 		}
-		/**
-		 * Product query
-		 *
-		 * @var Product_Query $query
-		 */
+
 		$query = $this->injector->make( $vendors[ $name ]['class'] );
 
 		if ( ! $query instanceof Product_Query ) {

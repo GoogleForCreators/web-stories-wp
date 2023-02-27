@@ -20,12 +20,6 @@ class Second {}
 class Third {}
 
 final class InjectionChainTest extends TestCase {
-	public function test_it_can_be_initialized(): void {
-		$chain = new InjectionChain();
-
-		$this->assertInstanceOf( InjectionChain::class, $chain );
-	}
-
 	public function test_it_accepts_new_resolutions(): void {
 		$chain = ( new InjectionChain() )
 			->add_resolution( Something::class );

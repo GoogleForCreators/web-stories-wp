@@ -599,7 +599,7 @@ class Customizer extends Service_Base implements Conditional {
 		/**
 		 * Theme support configuration.
 		 *
-		 * @var ThemeSupport[] $support
+		 * @var ThemeSupport[]|array<int, false> $support
 		 */
 		$support = get_theme_support( 'web-stories' );
 		$support = isset( $support[0] ) && \is_array( $support[0] ) ? $support[0] : [];

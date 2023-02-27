@@ -214,11 +214,6 @@ class Output_Buffer extends Service_Base implements Conditional {
 			header( 'Content-Type: text/html; charset=utf-8' );
 		}
 
-		/**
-		 * Document.
-		 *
-		 * @var Document $dom Document.
-		 */
 		$dom = Document::fromHtml( $response );
 
 		if ( ! $dom instanceof Document ) {

@@ -228,7 +228,6 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'file_size', $properties );
 		$this->assertArrayHasKey( 'mime_type', $properties );
 		$this->assertArrayHasKey( 'type', $properties );
-		$this->assertIsArray( $properties['type'] );
 		$this->assertArrayHasKey( 'enum', $properties['type'] );
 		$this->assertEqualSets( [ 'audio', 'image', 'video', 'caption' ], $properties['type']['enum'] );
 	}
@@ -451,7 +450,6 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'audio', $mime_types );
 		$this->assertArrayHasKey( 'video', $mime_types );
 		$this->assertArrayHasKey( 'caption', $mime_types );
-		$this->assertArrayHasKey( 'video', $mime_types );
 		$this->assertSame( 'text/vtt', $mime_types['caption'][0] );
 	}
 

@@ -29,6 +29,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\AMP;
 
 use DOMElement;
+use DOMNode;
 use DOMNodeList;
 use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Attribute;
@@ -74,7 +75,7 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 		/**
 		 * DOMElement
 		 *
-		 * @var DOMElement $rel_canonical
+		 * @var DOMElement|DOMNode $rel_canonical
 		 */
 		$rel_canonical = $query instanceof DOMNodeList ? $query->item( 0 ) : null;
 
@@ -87,9 +88,11 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 			}
 		}
 
-		// Ensure link[rel=canonical] has a non-empty href attribute.
-		if ( empty( $rel_canonical->getAttribute( Attribute::HREF ) ) ) {
-			$rel_canonical->setAttribute( Attribute::HREF, (string) $canonical_url );
+		if ( $rel_canonical instanceof DOMElement ) {
+			// Ensure link[rel=canonical] has a non-empty href attribute.
+			if ( empty( $rel_canonical->getAttribute( Attribute::HREF ) ) ) {
+				$rel_canonical->setAttribute( Attribute::HREF, (string) $canonical_url );
+			}
 		}
 	}
 }

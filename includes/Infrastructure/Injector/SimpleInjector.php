@@ -38,7 +38,6 @@ use function array_map;
  */
 final class SimpleInjector implements Injector {
 
-
 	/**
 	 * Special-case index key for handling globally defined named arguments.
 	 */
