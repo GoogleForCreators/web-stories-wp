@@ -22,10 +22,10 @@ import { existsSync, lstatSync, readFileSync } from 'fs';
 /**
  * Returns a list of files that should be ignored based on the .distignore file.
  *
- * @param {string} source Path to the plugin root folder where the .distignore file is expected.
- * @return {string[]} List of files.
+ * @param source Path to the plugin root folder where the .distignore file is expected.
+ * @return List of files.
  */
-function getIgnoredFiles(source) {
+function getIgnoredFiles(source: string): string[] {
   const distignore = source + '/.distignore';
 
   if (!existsSync(distignore)) {
@@ -33,7 +33,7 @@ function getIgnoredFiles(source) {
   }
 
   const maybeIgnoredFiles = readFileSync(distignore, 'utf8').split('\n');
-  const ignoredFiles = [];
+  const ignoredFiles: string[] = [];
 
   for (const line of maybeIgnoredFiles) {
     const file = line.trim();

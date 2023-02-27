@@ -28,11 +28,10 @@ const CDN_URL_CONSTANT_REGEX =
  *
  * Namely, this updates the `WEBSTORIES_CDN_URL` constant in the main plugin file.
  *
- * @param {string} pluginFile Path to the plugin file.
- * @param {string|number} version Desired version number. Either 'main' or an integer.
- * @return {void}
+ * @param pluginFile Path to the plugin file.
+ * @param version Desired version number. Either 'main' or an integer.
  */
-function updateCdnURL(pluginFile, version) {
+function updateCdnURL(pluginFile: string, version: string | number) {
   let pluginFileContent = readFileSync(pluginFile, 'utf8');
 
   pluginFileContent = pluginFileContent.replace(CDN_URL_CONSTANT_REGEX, () => {

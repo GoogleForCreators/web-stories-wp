@@ -26,18 +26,18 @@ const VERSION_CONSTANT_REGEX =
 /**
  * Returns the current version number as found in the main plugin file's header.
  *
- * @param {string} pluginFile Path to the main plugin file.
- * @param {boolean} constant Whether to extract the version from the WEBSTORIES_VERSION constant instead.
- * @return {string} Version number
+ * @param pluginFile Path to the main plugin file.
+ * @param constant Whether to extract the version from the WEBSTORIES_VERSION constant instead.
+ * @return Version number
  */
-function getCurrentVersionNumber(pluginFile, constant = false) {
+function getCurrentVersionNumber(pluginFile: string, constant = false): string {
   const pluginFileContent = readFileSync(pluginFile, 'utf8');
 
   if (!constant) {
-    return pluginFileContent.match(VERSION_REGEX)[1].trim();
+    return pluginFileContent.match(VERSION_REGEX)?.[1]?.trim() as string;
   }
 
-  return pluginFileContent.match(VERSION_CONSTANT_REGEX)[1].trim();
+  return pluginFileContent.match(VERSION_CONSTANT_REGEX)?.[1]?.trim() as string;
 }
 
 export default getCurrentVersionNumber;

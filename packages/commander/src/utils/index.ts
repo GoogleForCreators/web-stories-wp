@@ -14,25 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { readdirSync, unlinkSync } from 'fs';
-
-/**
- * Removes all existing ZIP files in the build folder.
- *
- * @param {string} buildDir Path to the build directory.
- */
-function deleteExistingZipFiles(buildDir) {
-  const fileNamePattern = /^.*\.zip$/;
-  const zipFiles = readdirSync(buildDir).filter((file) =>
-    fileNamePattern.test(file)
-  );
-
-  for (const file of zipFiles) {
-    unlinkSync(`${buildDir}/${file}`);
-  }
-}
-
-export default deleteExistingZipFiles;
+export { default as bundlePlugin } from './bundlePlugin';
+export { default as createBuild } from './createBuild';
+export { default as getCurrentVersionNumber } from './getCurrentVersionNumber';
+export { default as updateVersionNumbers } from './updateVersionNumbers';
+export { default as updateCdnUrl } from './updateCdnUrl';
+export { default as resizeSvgPath } from './resizeSvgPath';
