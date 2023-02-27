@@ -183,6 +183,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
+
 		$response[ self::MEDIA_SOURCE_KEY ] = $this->get_callback_media_source( $response );
 
 		return $response;
@@ -247,6 +248,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		if ( ! \is_array( $args ) ) {
 			return $args;
 		}
+
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
@@ -287,6 +289,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		if ( ! \is_array( $args ) ) {
 			return $args;
 		}
+
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;

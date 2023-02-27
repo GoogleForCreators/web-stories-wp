@@ -57,6 +57,7 @@ use WP_REST_Server;
  *   type: string,
  *   context: string[],
  *   default?: mixed,
+ *   enum?: string[]
  * }
  *
  * @phpstan-type Schema array{

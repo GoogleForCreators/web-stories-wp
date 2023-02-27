@@ -266,15 +266,13 @@ trait Sanitization_Utils {
 		}
 
 		// Then, copy over all attributes.
-		if ( $node->attributes ) {
-			foreach ( $node->attributes as $attr ) {
-				/**
-				 * Attribute.
-				 *
-				 * @var DOMAttr $attr Attribute.
-				 */
-				$new_node->setAttribute( $attr->nodeName, $attr->nodeValue ?? '' );
-			}
+		foreach ( $node->attributes as $attr ) {
+			/**
+			 * Attribute.
+			 *
+			 * @var DOMAttr $attr Attribute.
+			 */
+			$new_node->setAttribute( $attr->nodeName, $attr->nodeValue ?? '' );
 		}
 
 		if ( $node->parentNode ) {
@@ -326,7 +324,7 @@ trait Sanitization_Utils {
 		/**
 		 * The <amp-story> element.
 		 *
-		 * @var DOMElement $story_element The <amp-story> element.
+		 * @var DOMElement|DOMNode $story_element The <amp-story> element.
 		 */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
@@ -361,7 +359,7 @@ trait Sanitization_Utils {
 		/**
 		 * The <amp-story> element.
 		 *
-		 * @var DOMElement $story_element The <amp-story> element.
+		 * @var DOMElement|DOMNode $story_element The <amp-story> element.
 		 */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
@@ -386,7 +384,7 @@ trait Sanitization_Utils {
 		/**
 		 * The <amp-story> element.
 		 *
-		 * @var DOMElement $story_element The <amp-story> element.
+		 * @var DOMElement|DOMNode $story_element The <amp-story> element.
 		 */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 

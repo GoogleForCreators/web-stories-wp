@@ -8,8 +8,10 @@ services:
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
 
-includes:
-	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
+# Re-enable once @var usage for WP_REST_Request is not needed anymore.
+# See https://phpstan.org/blog/phpstan-1-10-comes-with-lie-detector
+#includes:
+#	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
   level: 9

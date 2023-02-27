@@ -442,7 +442,7 @@ class Web_Stories_Block extends Embed_Base {
 			$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
 		}
 
-		if ( ! empty( $attributes['authors'] ) && \is_array( $attributes['authors'] ) ) {
+		if ( ! empty( $attributes['authors'] ) ) {
 			$query_args['author__in'] = $attributes['authors'];
 		}
 

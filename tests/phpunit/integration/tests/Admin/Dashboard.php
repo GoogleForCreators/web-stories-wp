@@ -167,7 +167,7 @@ class Dashboard extends DependencyInjectedTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 
-		$assets = $this->getMockBuilder( Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets = $this->getMockBuilder( Assets::class )->onlyMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
 				[

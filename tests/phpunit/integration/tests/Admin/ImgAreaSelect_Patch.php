@@ -57,7 +57,7 @@ class ImgAreaSelect_Patch extends DependencyInjectedTestCase {
 	 */
 	public function test_script_loader_tag(): void {
 		$assets = $this->getMockBuilder( Assets::class )
-				->setMethods( [ 'get_asset_metadata', 'get_base_url' ] )
+				->onlyMethods( [ 'get_asset_metadata', 'get_base_url' ] )
 				->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
@@ -71,13 +71,13 @@ class ImgAreaSelect_Patch extends DependencyInjectedTestCase {
 		$assets->method( 'get_base_url' )->willReturn( 'http://www.google.com/foo.js' );
 		$context = $this->getMockBuilder( Context::class )
 						->setConstructorArgs( [ $this->injector->make( Story_Post_Type::class ) ] )
-						->setMethods( [ 'is_story_editor' ] )
+						->onlyMethods( [ 'is_story_editor' ] )
 						->getMock();
 		$context->method( 'is_story_editor' )->willReturn( true );
 
 		$this->instance = $this->getMockBuilder( Testee::class )
 						->setConstructorArgs( [ $assets, $context ] )
-						->setMethodsExcept( [ 'script_loader_tag' ] )
+						->onlyMethods( [] )
 						->getMock();
 
 		$tag = '<script src="http://www.example.com/foo.js"></script>';

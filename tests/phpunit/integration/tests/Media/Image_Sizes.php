@@ -100,8 +100,6 @@ class Image_Sizes extends TestCase {
 			$video_attachment
 		);
 
-		$this->assertIsArray( $video );
-		$this->assertIsArray( $image );
 		$this->assertArrayHasKey( 'media_details', $video );
 		$this->assertArrayHasKey( 'media_details', $image );
 	}

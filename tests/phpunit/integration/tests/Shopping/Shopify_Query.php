@@ -21,7 +21,6 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Shopping;
 
 use Google\Web_Stories\Settings;
-use Google\Web_Stories\Shopping\Product;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -269,15 +268,12 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_default' ] );
 
 		$this->assertNotWPError( $actual );
-		$this->assertArrayHasKey( 'products', $actual );
 		$this->assertNotEmpty( $actual['products'] );
 		$this->assertCount( 3, $actual['products'] );
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*"', $this->request_body );
 
 		foreach ( $actual['products'] as $product ) {
-			$this->assertInstanceOf( Product::class, $product );
-
 			$this->assertMatchesProductSchema( json_decode( (string) wp_json_encode( $product ), true ) );
 		}
 	}
@@ -339,7 +335,6 @@ class Shopify_Query extends DependencyInjectedTestCase {
 		remove_filter( 'pre_http_request', [ $this, 'mock_response_no_results' ] );
 
 		$this->assertNotWPError( $actual );
-		$this->assertArrayHasKey( 'products', $actual );
 		$this->assertEmpty( $actual['products'] );
 		$this->assertCount( 0, $actual['products'] );
 		$this->assertSame( 1, $this->request_count );

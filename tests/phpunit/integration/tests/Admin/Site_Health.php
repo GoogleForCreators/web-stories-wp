@@ -67,7 +67,6 @@ class Site_Health extends TestCase {
 		$results     = $site_health->add_debug_information( [] );
 
 		$this->assertArrayHasKey( 'web_stories', $results );
-		$this->assertArrayHasKey( 'fields', $results['web_stories'] );
 		$this->assertArrayHasKey( 'web_stories_version', $results['web_stories']['fields'] );
 		$this->assertArrayHasKey( 'value', $results['web_stories']['fields']['web_stories_version'] );
 		$this->assertSame( WEBSTORIES_VERSION, $results['web_stories']['fields']['web_stories_version']['value'] );

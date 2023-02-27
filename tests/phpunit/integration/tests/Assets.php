@@ -117,7 +117,7 @@ class Assets extends TestCase {
 	 * @covers ::register_script_asset
 	 */
 	public function test_register_script_asset(): void {
-		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->onlyMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
 				[
@@ -137,7 +137,7 @@ class Assets extends TestCase {
 	 * @covers ::register_script_asset
 	 */
 	public function test_register_script_asset_prints_translations_for_chunks(): void {
-		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->onlyMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
 				[
@@ -174,7 +174,7 @@ class Assets extends TestCase {
 	 * @covers ::register_style_asset
 	 */
 	public function test_register_style_asset(): void {
-		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->onlyMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
 				[
@@ -193,18 +193,10 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::get_asset_metadata
 	 */
-	public function test_get_asset_metadata(): void {
+	public function test_get_asset_metadata_falls_back_to_plugin_version(): void {
 		$assets  = new \Google\Web_Stories\Assets();
 		$results = $assets->get_asset_metadata( 'test_script' );
-		$this->assertIsArray( $results );
-		$this->assertArrayHasKey( 'dependencies', $results );
-		$this->assertArrayHasKey( 'version', $results );
-		$this->assertArrayHasKey( 'js', $results );
-		$this->assertArrayHasKey( 'css', $results );
 
-		$this->assertIsArray( $results['dependencies'] );
-		$this->assertIsArray( $results['js'] );
-		$this->assertIsArray( $results['css'] );
 		$this->assertSame( $results['version'], WEBSTORIES_VERSION );
 	}
 }

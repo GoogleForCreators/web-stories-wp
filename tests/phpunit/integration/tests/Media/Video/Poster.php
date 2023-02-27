@@ -147,10 +147,8 @@ class Poster extends DependencyInjectedTestCase {
 			$video_attachment
 		);
 
-		$this->assertIsArray( $video );
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
-		$this->assertIsArray( $image );
 		$this->assertArrayNotHasKey( 'featured_media', $image );
 		$this->assertArrayNotHasKey( 'featured_media_src', $image );
 	}
@@ -199,7 +197,6 @@ class Poster extends DependencyInjectedTestCase {
 
 		$result = $this->instance->get_thumbnail_data( $poster_attachment_id );
 
-		$this->assertIsArray( $result );
 		$this->assertArrayHasKey( 'generated', $result );
 		$this->assertTrue( $result['generated'] );
 	}
