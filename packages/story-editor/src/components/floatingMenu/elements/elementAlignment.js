@@ -28,15 +28,20 @@ import useAlignment from '../../panels/design/alignment/useAlignment';
 import { IconButton, Separator } from './shared';
 
 function ElementAlignment() {
-  const { selectedElements, updateSelectedElements } = useStory(
-    ({ state: { selectedElements }, actions: { updateSelectedElements } }) => ({
-      selectedElements,
-      updateSelectedElements,
+  const { selectedElements, selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElements: state.selectedElements,
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
     })
   );
 
-  const updateElements = (callback) =>
-    updateSelectedElements({ properties: callback });
+  const updateElements = (callback) => {
+    updateElementsById({
+      elementIds: selectedElementIds,
+      properties: callback,
+    });
+  };
 
   const {
     isDistributionEnabled,

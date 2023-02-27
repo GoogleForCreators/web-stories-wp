@@ -27,25 +27,29 @@ import { useStory } from '../../../app';
 import { Color } from './shared';
 
 function ShapeColor() {
-  const { backgroundColor, updateSelectedElements } = useStory(
+  const { backgroundColor, selectedElementIds, updateElementsById } = useStory(
     ({ state, actions }) => ({
       backgroundColor: state.selectedElements[0].backgroundColor,
-      updateSelectedElements: actions.updateSelectedElements,
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
     })
   );
-  const pushUpdate = useCallback(
+
+  const onChange = useCallback(
     (value) => {
-      trackEvent('floating_menu', {
+      void trackEvent('floating_menu', {
         name: 'set_shape_color',
         element: 'shape',
       });
-      updateSelectedElements({
+
+      updateElementsById({
+        elementIds: selectedElementIds,
         properties: () => ({
           backgroundColor: value,
         }),
       });
     },
-    [updateSelectedElements]
+    [selectedElementIds, updateElementsById]
   );
 
   return (
@@ -54,7 +58,7 @@ function ShapeColor() {
       label={__('Shape color', 'web-stories')}
       value={backgroundColor}
       allowsSavedColors
-      onChange={pushUpdate}
+      onChange={onChange}
       hasInputs
       hasEyedropper
       allowsOpacity

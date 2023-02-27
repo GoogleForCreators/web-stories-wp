@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { useStory } from '@googleforcreators/story-editor';
+
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../../../app/story';
 import { Fixture } from '../../../../../karma';
 
 describe('Video Options Panel', () => {
