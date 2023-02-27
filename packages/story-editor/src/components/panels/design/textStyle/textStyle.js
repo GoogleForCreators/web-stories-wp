@@ -86,9 +86,7 @@ function StylePanel(props) {
     width: pageWidth,
     height: pageHeight,
   }));
-  const selectedElementIds = selectedElements.map(
-    (selectedElement) => selectedElement.id
-  );
+  const selectedElementIds = selectedElements.map(({ id }) => id);
   const showContrastWarning = failedElementIds?.some(({ id }) =>
     selectedElementIds.includes(id)
   );

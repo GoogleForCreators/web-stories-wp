@@ -51,20 +51,22 @@ const FONT_SIZE_LABEL = __('Font size', 'web-stories');
 function FontSize() {
   const inputRef = useRef();
   const buttonRef = useRef();
-  const { fontSize, updateSelectedElements } = useStory(
+  const { fontSize, selectedElementIds, updateElementsById } = useStory(
     ({ state, actions }) => ({
       fontSize: state.selectedElements[0].fontSize,
-      updateSelectedElements: actions.updateSelectedElements,
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
     })
   );
 
-  const pushUpdate = useCallback(
+  const onChange = useCallback(
     (update) => {
-      trackEvent('floating_menu', {
+      void trackEvent('floating_menu', {
         name: 'set_font_size',
       });
 
-      updateSelectedElements({
+      updateElementsById({
+        elementIds: selectedElementIds,
         properties: (element) => {
           const updates = updateProperties(element, update, true);
           const sizeUpdates = getUpdatedSizeAndPosition({
@@ -78,7 +80,7 @@ function FontSize() {
         },
       });
     },
-    [updateSelectedElements]
+    [selectedElementIds, updateElementsById]
   );
 
   return (
@@ -93,7 +95,7 @@ function FontSize() {
         aria-label={FONT_SIZE_LABEL}
         isFloat
         value={fontSize}
-        onChange={(evt, value) => pushUpdate({ fontSize: value })}
+        onChange={(evt, value) => onChange({ fontSize: value })}
         min={MIN_MAX.FONT_SIZE.MIN}
         max={MIN_MAX.FONT_SIZE.MAX}
         placeholder={fontSize}

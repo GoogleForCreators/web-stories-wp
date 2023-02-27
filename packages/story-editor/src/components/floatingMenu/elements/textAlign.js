@@ -92,8 +92,11 @@ const ALIGNMENTS = [
 
 function TextAlign() {
   const { textAlign = 'left' } = useProperties(['textAlign']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+  const { selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
+    })
   );
 
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -126,7 +129,8 @@ function TextAlign() {
       name: `set_text_alignment_${value}`,
       element: 'text',
     });
-    updateSelectedElements({
+    updateElementsById({
+      elementIds: selectedElementIds,
       properties: { textAlign: value },
     });
   };

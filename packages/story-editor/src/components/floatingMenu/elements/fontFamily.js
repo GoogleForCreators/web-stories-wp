@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-
 import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../app/story';
 import StoryFontPicker from '../../storyFontPicker';
 
 const StyledFontPicker = styled(StoryFontPicker)`
@@ -36,11 +36,16 @@ const containerStyleOverrides = css`
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
 `;
 function FontFamily() {
+  const { selectedElements } = useStory(({ state }) => ({
+    selectedElements: state.selectedElements,
+  }));
+
   return (
     <StyledFontPicker
       tabIndex={-1}
       listStyleOverrides={listStyleOverrides}
       containerStyleOverrides={containerStyleOverrides}
+      selectedElements={selectedElements}
     />
   );
 }

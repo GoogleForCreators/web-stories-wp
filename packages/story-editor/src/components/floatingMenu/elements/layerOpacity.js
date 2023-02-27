@@ -49,20 +49,24 @@ function LayerOpacity() {
   const inputRef = useRef();
   const buttonRef = useRef();
   const { opacity, type } = useProperties(['opacity', 'type']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+  const { selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
+    })
   );
 
   const handleOpacityChange = (_, value) => {
-    updateSelectedElements({
+    void trackEvent('floating_menu', {
+      name: 'set_opacity',
+      element: type,
+    });
+
+    updateElementsById({
+      elementIds: selectedElementIds,
       properties: () => ({
         opacity: value ?? 100,
       }),
-    });
-
-    trackEvent('floating_menu', {
-      name: 'set_opacity',
-      element: type,
     });
   };
 

@@ -31,8 +31,11 @@ import { Color, useProperties } from './shared';
 
 function TextColor() {
   const { content } = useProperties(['content']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+  const { selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
+    })
   );
 
   const pushUpdate = useCallback(
@@ -41,11 +44,12 @@ function TextColor() {
         name: 'set_text_color',
         element: 'text',
       });
-      updateSelectedElements({
+      updateElementsById({
+        elementIds: selectedElementIds,
         properties: (element) => updateProperties(element, update, true),
       });
     },
-    [updateSelectedElements]
+    [updateElementsById, selectedElementIds]
   );
   const {
     textInfo: { color },
