@@ -7919,6 +7919,31 @@
     }
   },
   {
+    "family": "Climate Crisis",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1070,
+      "des": -260,
+      "tAsc": 1070,
+      "tDes": -260,
+      "tLGap": 0,
+      "wAsc": 1300,
+      "wDes": 320,
+      "xH": 620,
+      "capH": 750,
+      "yMin": -308,
+      "yMax": 1292,
+      "hAsc": 1070,
+      "hDes": -260,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Coda",
     "fallbacks": ["cursive"],
     "weights": [400, 800],
@@ -13791,6 +13816,38 @@
       "yMax": 1054,
       "hAsc": 900,
       "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Golos Text",
+    "fallbacks": ["sans-serif"],
+    "weights": [400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 980,
+      "des": -220,
+      "tAsc": 980,
+      "tDes": -220,
+      "tLGap": 0,
+      "wAsc": 980,
+      "wDes": 230,
+      "xH": 530,
+      "capH": 700,
+      "yMin": -230,
+      "yMax": 955,
+      "hAsc": 980,
+      "hDes": -220,
       "lGap": 0
     }
   },
@@ -21567,7 +21624,7 @@
       "wDes": 250,
       "xH": 600,
       "capH": 800,
-      "yMin": -250,
+      "yMin": -251,
       "yMax": 1088,
       "hAsc": 1000,
       "hDes": -200,
@@ -34658,7 +34715,7 @@
     "family": "Rokkitt",
     "fallbacks": ["serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-    "styles": ["regular"],
+    "styles": ["regular", "italic"],
     "variants": [
       [0, 100],
       [0, 200],
@@ -34668,7 +34725,16 @@
       [0, 600],
       [0, 700],
       [0, 800],
-      [0, 900]
+      [0, 900],
+      [1, 100],
+      [1, 200],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800],
+      [1, 900]
     ],
     "service": "fonts.google.com",
     "metrics": {
@@ -34680,10 +34746,10 @@
       "tLGap": 0,
       "wAsc": 1111,
       "wDes": 324,
-      "xH": 393,
-      "capH": 563,
-      "yMin": -236,
-      "yMax": 953,
+      "xH": 399,
+      "capH": 583,
+      "yMin": -229,
+      "yMax": 937,
       "hAsc": 817,
       "hDes": -320,
       "lGap": 0
