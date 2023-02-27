@@ -22,20 +22,25 @@ import { dirname } from 'path';
 /**
  * Internal dependencies
  */
-import generateZipFile from './generateZipFile.js';
-import deleteExistingZipFiles from './deleteExistingZipFiles.js';
-import getCurrentVersionNumber from './getCurrentVersionNumber.js';
+import generateZipFile from './generateZipFile';
+import deleteExistingZipFiles from './deleteExistingZipFiles';
+import getCurrentVersionNumber from './getCurrentVersionNumber';
 
 /**
  * Main function to bundle the plugin.
  *
- * @param {string} source Path to the source directory.
- * @param {boolean} [composer=false] Create Composer-ready ZIP file without PHP autoloader.
- * @param {string|boolean} zip Whether a ZIP file should be generated. Pass a string to set a custom file name.
- * @param {boolean} [clean] Whether to delete existing ZIP file.
- * @return {string} Path to the build directory or ZIP file.
+ * @param source Path to the source directory.
+ * @param [composer=false] Create Composer-ready ZIP file without PHP autoloader.
+ * @param zip Whether a ZIP file should be generated. Pass a string to set a custom file name.
+ * @param [clean] Whether to delete existing ZIP file.
+ * @return Path to the build directory or ZIP file.
  */
-function bundlePlugin(source, composer = false, zip = true, clean = false) {
+function bundlePlugin(
+  source: string,
+  composer = false,
+  zip: boolean | string = true,
+  clean = false
+): string {
   const pluginFile = `${source}/web-stories.php`;
 
   if (clean) {
@@ -46,7 +51,7 @@ function bundlePlugin(source, composer = false, zip = true, clean = false) {
   const defaultZipName = !composer
     ? `web-stories-${currentVersion}.zip`
     : `web-stories-${currentVersion}-composer.zip`;
-  const zipName = zip === true ? defaultZipName : zip;
+  const zipName = typeof zip === 'string' ? zip : defaultZipName;
   generateZipFile(source, zipName);
   return `${dirname(source)}/${zipName}`;
 }

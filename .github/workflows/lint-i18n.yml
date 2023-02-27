@@ -90,11 +90,16 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
+
       - name: Build plugin
-        run: npm run build:js
+        run: bun run build:js
 
       - name: Bundle regular version
-        run: npm run workflow:build-plugin
+        run: bun run workflow:build-plugin
 
       # Check if as many strings as expected were found.
       # Fail job if `wp i18n make-pot` returns any warnings.

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export default function resizeSvgPath(x, y, path) {
+export default function resizeSvgPath(x: number, y: number, path: string) {
   const coords = path
     .replace(/\s*(-)/g, ' $1')
     .replace(/\s*([A-Za-z,])\s*/g, ' $1 ')

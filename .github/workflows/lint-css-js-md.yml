@@ -70,6 +70,7 @@ jobs:
             api.github.com:443
             github.com:443
             registry.npmjs.org:443
+            bun.sh:443
 
       - name: Checkout
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
@@ -84,6 +85,11 @@ jobs:
         run: npm ci
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
 
       - name: Markdown Lint
         run: npm run lint:md

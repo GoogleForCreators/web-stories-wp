@@ -158,22 +158,27 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
+
       - name: Build plugin
         run: |
-          npm run build:js
-          npm run workflow:version -- --nightly
+          bun run build:js
+          bun run workflow:version -- --nightly
           mkdir -p build/web-stories-regular build/web-stories-dev
 
       - name: Bundle regular version
         run: |
-          npm run workflow:build-plugin -- --zip web-stories.zip
+          bun run workflow:build-plugin -- --zip web-stories.zip
           cp -r build/web-stories/ build/web-stories-regular/
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           npx webpack --env=development
-          npm run workflow:build-plugin -- --zip web-stories-dev.zip
+          bun run workflow:build-plugin -- --zip web-stories-dev.zip
 
       # Upload ZIP file to GCS for use in QA environment.
 
