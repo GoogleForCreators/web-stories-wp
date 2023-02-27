@@ -45,10 +45,11 @@ function useEyeDropperApi({ onChange = noop, handleClose = noop }) {
           ? sRGBHex
           : rgbToColorString(parseToRgb(sRGBHex));
       onChange(getSolidFromHex(hexColor.substring(1)).color);
-      handleClose();
     } catch (e) {
       //eslint-disable-next-line no-console -- Surface error for debugging.
       console.log(e.message);
+    } finally {
+      handleClose();
     }
   }, [eyeDropper, isEyeDropperApiSupported, onChange, handleClose]);
 
