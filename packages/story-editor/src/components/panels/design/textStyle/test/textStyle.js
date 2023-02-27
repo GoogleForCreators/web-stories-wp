@@ -121,8 +121,7 @@ function Wrapper({ selectedElements, children }) {
     },
     actions: {
       updateStory: jest.fn(),
-      updateElementsById: jest.fn(),
-      updateSelectedElements: getAndSetMockUpdateSelectedElements(),
+      updateElementsById: getAndSetMockUpdateSelectedElements(),
     },
   };
   return (

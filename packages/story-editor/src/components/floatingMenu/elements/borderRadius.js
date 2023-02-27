@@ -48,8 +48,12 @@ function BorderRadius() {
     mask,
     type,
   } = useProperties(['borderRadius', 'mask', 'type']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+
+  const { selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
+    })
   );
 
   // Only multi-border elements support border radius
@@ -66,13 +70,14 @@ function BorderRadius() {
     return null;
   }
 
-  const handleChange = (value) => {
-    trackEvent('floating_menu', {
+  const onChange = (value) => {
+    void trackEvent('floating_menu', {
       name: 'set_border_radius',
       element: type,
     });
 
-    updateSelectedElements({
+    updateElementsById({
+      elementIds: selectedElementIds,
       properties: {
         borderRadius: {
           locked: true,
@@ -97,7 +102,7 @@ function BorderRadius() {
         suffix={<Icons.Corner />}
         value={borderRadius.topLeft}
         aria-label={CORNER_LABEL}
-        onChange={(_, value) => handleChange(value)}
+        onChange={(_, value) => onChange(value)}
         onKeyDown={(e) => {
           handleReturnTrappedFocus(e, buttonRef);
         }}

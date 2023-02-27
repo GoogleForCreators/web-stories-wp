@@ -68,13 +68,14 @@ function useDesignPanels() {
     (newPropertiesOrUpdater) => {
       updateElementsById({
         elementIds: selectedElementIds,
-        properties: (currentProperties) => {
-          const update = updateProperties(
-            currentProperties,
+        properties: (element) => {
+          const updates = updateProperties(
+            element,
             newPropertiesOrUpdater,
             /* commitValues */ true
           );
-          return update;
+
+          return updates;
         },
       });
     },
@@ -113,6 +114,7 @@ function useDesignPanels() {
         onSetProperties,
         deleteSelectedElements,
         selectedElements,
+        selectedElementIds,
         selectedElementAnimations,
         updateAnimationState,
       },
@@ -123,6 +125,7 @@ function useDesignPanels() {
       onSetProperties,
       deleteSelectedElements,
       selectedElements,
+      selectedElementIds,
       selectedElementAnimations,
       updateAnimationState,
     ]

@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -48,6 +49,7 @@ const AutoSubmitButton = styled.input.attrs({ type: 'submit' })`
 function DesignPanel({
   panelType,
   selectedElements,
+  selectedElementIds,
   onSetProperties,
   registerSubmitHandler,
   ...rest
@@ -118,6 +120,21 @@ function DesignPanel({
     )
   );
 
+  const internalSubmitRef = useRef();
+  useEffect(() => {
+    internalSubmitRef.current = internalSubmit;
+  }, [internalSubmit]);
+
+  const elementUpdatesRef = useRef();
+  useEffect(() => {
+    elementUpdatesRef.current = elementUpdates;
+  }, [elementUpdates]);
+
+  useEffect(() => {
+    setElementUpdates({});
+    internalSubmitRef.current(elementUpdatesRef.current);
+  }, []);
+
   const submit = useCallback(() => {
     // eslint-disable-next-line @wordpress/react-no-unsafe-timeout -- Only depends on the `ref` and thus save from dismount issues.
     setTimeout(() => {
@@ -186,6 +203,7 @@ function DesignPanel({
 DesignPanel.propTypes = {
   panelType: PropTypes.func.isRequired,
   selectedElements: PropTypes.arrayOf(StoryPropTypes.element).isRequired,
+  selectedElementIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSetProperties: PropTypes.func.isRequired,
   registerSubmitHandler: PropTypes.func.isRequired,
 };

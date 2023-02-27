@@ -178,7 +178,7 @@ function TextOutputWithUnits({
     background: 'none',
   };
 
-  const content = rawContent ? rawContent.replace(/\n$/, '\n\n') : '';
+  const content = rawContent.replace(/\n$/, '\n\n');
 
   // Setting the text color of the entire block to black essentially removes all inline
   // color styling allowing us to apply transparent to all of them.

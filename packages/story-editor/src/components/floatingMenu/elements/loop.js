@@ -33,16 +33,20 @@ const StyledLoopContent = styled(LoopPanelContent)`
 
 function Loop() {
   const { loop } = useProperties(['loop']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+  const { selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
+    })
   );
 
   const handleChange = () => {
-    trackEvent('floating_menu', {
+    void trackEvent('floating_menu', {
       name: 'set_loop',
     });
 
-    updateSelectedElements({
+    updateElementsById({
+      elementIds: selectedElementIds,
       properties: ({ loop: oldLoop }) => ({ loop: !oldLoop }),
     });
   };

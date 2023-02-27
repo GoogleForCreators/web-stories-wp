@@ -33,17 +33,20 @@ import { getCommonValue } from '../panels/shared';
 import FontPicker from '../fontPicker';
 import updateProperties from '../style/updateProperties';
 
-const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
-  const { updateSelectedElements, selectedElements } = useStory(
-    ({ state, actions }) => ({
-      updateSelectedElements: actions.updateSelectedElements,
-      selectedElements: state.selectedElements,
-    })
-  );
+const StoryFontPicker = forwardRef(function StoryFontPicker(
+  { selectedElements, ...rest },
+  ref
+) {
+  const { updateElementsById } = useStory(({ actions }) => ({
+    updateElementsById: actions.updateElementsById,
+  }));
+
+  const selectedElementIds = selectedElements.map(({ id }) => id);
 
   const pushUpdate = useCallback(
     (update, commitValues) => {
-      updateSelectedElements({
+      updateElementsById({
+        elementIds: selectedElementIds,
         properties: (element) => {
           const updates = updateProperties(element, update, commitValues);
           const sizeUpdates = getUpdatedSizeAndPosition({
@@ -57,7 +60,7 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
         },
       });
     },
-    [updateSelectedElements]
+    [updateElementsById, selectedElementIds]
   );
 
   const {
@@ -80,7 +83,7 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
   const onChange = useCallback(
     async (newFont) => {
       const { id, name, value, ...newFontFormatted } = newFont;
-      trackEvent('font_family_changed', { name });
+      void trackEvent('font_family_changed', { name });
 
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
