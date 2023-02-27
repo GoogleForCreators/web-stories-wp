@@ -25,7 +25,7 @@ function getPreviewOpacity(pattern) {
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;
   if (!isSolidPattern) {
     const { alpha = 1 } = pattern;
-    return alpha * 100;
+    return Math.round(alpha * 100);
   }
   const {
     color: { a = 1 },
