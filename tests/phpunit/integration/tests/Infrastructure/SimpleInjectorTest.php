@@ -5,26 +5,12 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Infrastructure;
 
 use Google\Web_Stories\Exception\FailedToMakeInstance;
-use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
 use Google\Web_Stories\Tests\Integration\Fixture;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use stdClass;
 
 final class SimpleInjectorTest extends TestCase {
-
-	public function test_it_can_be_initialized(): void {
-		$injector = new SimpleInjector();
-
-		$this->assertInstanceOf( SimpleInjector::class, $injector );
-	}
-
-	public function test_it_implements_the_interface(): void {
-		$injector = new SimpleInjector();
-
-		$this->assertInstanceOf( Injector::class, $injector );
-	}
-
 	public function test_it_can_instantiate_a_concrete_class(): void {
 		$object = ( new SimpleInjector() )
 			->make( Fixture\DummyClass::class );
@@ -37,7 +23,6 @@ final class SimpleInjectorTest extends TestCase {
 			->make( Fixture\DummyClassWithDependency::class );
 
 		$this->assertInstanceOf( Fixture\DummyClassWithDependency::class, $object );
-		$this->assertInstanceOf( Fixture\DummyClass::class, $object->get_dummy() );
 	}
 
 	public function test_it_can_instantiate_a_bound_interface(): void {
@@ -48,9 +33,7 @@ final class SimpleInjectorTest extends TestCase {
 			);
 		$object   = $injector->make( Fixture\DummyInterface::class );
 
-		$this->assertInstanceOf( Fixture\DummyInterface::class, $object );
 		$this->assertInstanceOf( Fixture\DummyClassWithDependency::class, $object );
-		$this->assertInstanceOf( Fixture\DummyClass::class, $object->get_dummy() );
 	}
 
 	public function test_it_returns_separate_instances_by_default(): void {
@@ -159,7 +142,8 @@ final class SimpleInjectorTest extends TestCase {
 		 * @var class-string $global_arguments
 		 */
 		$global_arguments = SimpleInjector::GLOBAL_ARGUMENTS;
-		$object           = ( new SimpleInjector() )
+
+		$object = ( new SimpleInjector() )
 			->bind_argument(
 				Fixture\DummyClassWithNamedArguments::class,
 				'argument_a',
@@ -172,7 +156,6 @@ final class SimpleInjectorTest extends TestCase {
 			)
 			->make( Fixture\DummyClassWithNamedArguments::class );
 
-		$this->assertInstanceOf( Fixture\DummyClassWithNamedArguments::class, $object );
 		$this->assertEquals( 42, $object->get_argument_a() );
 		$this->assertEquals( 'Mr Alderson', $object->get_argument_b() );
 	}

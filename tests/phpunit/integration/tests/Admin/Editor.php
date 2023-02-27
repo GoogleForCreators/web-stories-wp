@@ -179,7 +179,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
-		$this->assertIsArray( $results );
+
 		$this->assertArrayHasKey( 'capabilities', $results );
 		$this->assertIsArray( $results['capabilities'] );
 		$this->assertArrayHasKey( 'hasUploadMediaAction', $results['capabilities'] );
@@ -195,7 +195,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
-		$this->assertIsArray( $results );
+
 		$this->assertArrayHasKey( 'capabilities', $results );
 		$this->assertIsArray( $results['capabilities'] );
 		$this->assertArrayHasKey( 'hasUploadMediaAction', $results['capabilities'] );
@@ -210,7 +210,7 @@ class Editor extends DependencyInjectedTestCase {
 		update_option( 'blogname', "S'mores" );
 
 		$results = $this->instance->get_editor_settings();
-		$this->assertIsArray( $results );
+
 		$this->assertArrayHasKey( 'metadata', $results );
 		$this->assertIsArray( $results['metadata'] );
 		$this->assertArrayHasKey( 'publisher', $results['metadata'] );

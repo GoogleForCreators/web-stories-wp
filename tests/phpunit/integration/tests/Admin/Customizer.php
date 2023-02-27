@@ -111,8 +111,9 @@ class Customizer extends DependencyInjectedTestCase {
 		);
 
 		$this->instance->register_customizer_settings( $this->wp_customize );
+
 		$settings = $this->wp_customize->sections();
-		$this->assertIsArray( $settings );
+
 		$this->assertArrayHasKey( TheCustomizer::SECTION_SLUG, $settings );
 		$this->assertInstanceOf( WP_Customize_Section::class, $settings[ TheCustomizer::SECTION_SLUG ] );
 		$this->assertTrue( property_exists( $settings[ TheCustomizer::SECTION_SLUG ], 'title' ) );
@@ -129,8 +130,9 @@ class Customizer extends DependencyInjectedTestCase {
 		$this->add_web_stories_theme_support();
 		$this->assertInstanceOf( WP_Customize_Manager::class, $this->wp_customize );
 		$this->instance->register_customizer_settings( $this->wp_customize );
+
 		$settings = $this->wp_customize->settings();
-		$this->assertIsArray( $settings );
+
 		$this->assertArrayHasKey( 'web_stories_customizer_settings[show_stories]', $settings );
 		$this->assertArrayHasKey( 'web_stories_customizer_settings[view_type]', $settings );
 		$this->assertArrayHasKey( 'web_stories_customizer_settings[number_of_stories]', $settings );

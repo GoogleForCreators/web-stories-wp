@@ -29,6 +29,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\REST_API;
 
 use DOMElement;
+use DOMNode;
 use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
@@ -515,7 +516,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		/**
 		 * List of <amp-story> elements.
 		 *
-		 * @var DOMNodeList<DOMElement> $amp_story
+		 * @var DOMNodeList<DOMElement>|false $amp_story
 		 */
 		$amp_story = $doc->xpath->query( '//amp-story' );
 
@@ -549,7 +550,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		/**
 		 * DOMElement
 		 *
-		 * @var DOMElement $node
+		 * @var DOMElement|DOMNode $node
 		 */
 		$node = $query->item( 0 );
 

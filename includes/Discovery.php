@@ -290,7 +290,7 @@ class Discovery extends Service_Base implements HasRequirements {
 		/**
 		 * We're expecting a post object.
 		 *
-		 * @var WP_Post $post
+		 * @var WP_Post|null $post
 		 */
 		$post = get_queried_object();
 
@@ -367,8 +367,8 @@ class Discovery extends Service_Base implements HasRequirements {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $metadata The structured data.
-		 * @param WP_Post $post The current post object.
+		 * @param array        $metadata The structured data.
+		 * @param WP_Post|null $post     The current post object if available.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
 	}
@@ -445,12 +445,11 @@ class Discovery extends Service_Base implements HasRequirements {
 		/**
 		 * We're expecting a post object.
 		 *
-		 * @var WP_Post $post
+		 * @var WP_Post|null $post
 		 */
 		$post = get_queried_object();
 
 		if ( $post instanceof WP_Post ) {
-
 			$story = new Story();
 			$story->load_from_post( $post );
 
@@ -475,8 +474,8 @@ class Discovery extends Service_Base implements HasRequirements {
 		 *
 		 * @since 1.3.0
 		 *
-		 * @param array $metadata The structured data.
-		 * @param WP_Post $post The current post object.
+		 * @param array        $metadata The structured data.
+		 * @param WP_Post|null $post     The current post object if available.
 		 */
 		return apply_filters( 'web_stories_story_open_graph_metadata', $metadata, $post );
 	}
@@ -496,7 +495,7 @@ class Discovery extends Service_Base implements HasRequirements {
 		/**
 		 * We're expecting a post object.
 		 *
-		 * @var WP_Post $post
+		 * @var WP_Post|null $post
 		 */
 		$post = get_queried_object();
 
@@ -515,8 +514,8 @@ class Discovery extends Service_Base implements HasRequirements {
 		 *
 		 * @since 1.3.0
 		 *
-		 * @param array $metadata The structured data.
-		 * @param WP_Post $post The current post object.
+		 * @param array        $metadata The structured data.
+		 * @param WP_Post|null $post     The current post object if available.
 		 */
 		return apply_filters( 'web_stories_story_twitter_metadata', $metadata, $post );
 	}

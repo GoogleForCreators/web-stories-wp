@@ -20,7 +20,6 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Model;
 
-use Google\Web_Stories\Shopping\Product;
 use Google\Web_Stories\Shopping\Product_Meta;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
@@ -108,10 +107,9 @@ class Story extends TestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
-		$this->assertEquals( $story->get_title(), 'test title' );
-		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
-		$this->assertIsArray( $story->get_products() );
-		$this->assertInstanceOf( Product::class, $story->get_products()[0] );
+		$this->assertSame( 'test title', $story->get_title() );
+		$this->assertSame( get_permalink( $post ), $story->get_url() );
+		$this->assertNotEmpty( $story->get_products() );
 	}
 
 

@@ -64,13 +64,11 @@ class Demo_Content {
 	 * @return string Modified content.
 	 */
 	private function update_assets_urls( string $content ): string {
-		$content = str_replace(
+		return str_replace(
 			'https://replaceme.com/',
 			trailingslashit( WEBSTORIES_CDN_URL ),
 			$content
 		);
-
-		return $content;
 	}
 
 	/**
