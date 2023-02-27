@@ -44,7 +44,7 @@ const program = new Command();
 program
   .command('version')
   .description('Bump the version of the plugin')
-  .argument('version', 'The desired version number.')
+  .argument('[version]', 'The desired version number.')
   .option(
     '--nightly',
     'Whether this is a nightly build and thus should append the current revision to the version number.'
@@ -165,7 +165,7 @@ program
 program
   .command('assets-version')
   .description('Change the CDN assets version used by the plugin')
-  .argument('version', 'Assets version. Either `main` or an integer.')
+  .argument('<version>', 'Assets version. Either `main` or an integer.')
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
@@ -190,9 +190,9 @@ program
 program
   .command('normalize-path')
   .description('Normalize SVG paths for shapes')
-  .argument('width', 'Viewbox width')
-  .argument('height', 'Viewbox height')
-  .argument('path', 'Path to normalize')
+  .argument('<width>', 'Viewbox width')
+  .argument('<height>', 'Viewbox height')
+  .argument('<path>', 'Path to normalize')
   .on('--help', () => {
     console.log('');
     console.log('Example:');
