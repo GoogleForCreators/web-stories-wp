@@ -42,6 +42,11 @@ jobs:
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
+
       - name: Update list of Google Fonts
         env:
           GOOGLE_FONTS_API_KEY: ${{ secrets.GOOGLE_FONTS_API_KEY }}

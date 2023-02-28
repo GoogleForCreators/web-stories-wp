@@ -612,7 +612,7 @@
     {
       "files": [
         "packages/commander/**/*.ts",
-        "packages/fonts/scripts/**/*.js",
+        "packages/fonts/scripts/**/*.ts",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
         "packages/text-sets/scripts/**/*.js"
@@ -641,7 +641,7 @@
         "packages/story-editor/src/karma-tests.cjs",
         "packages/eslint-import-resolver/**/*.cjs",
         "packages/jest-resolver/**/*.cjs",
-        "packages/fonts/**/*.js",
+        "packages/fonts/**/*.ts",
         "packages/commander/**/*.ts",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",

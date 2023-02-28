@@ -4,8 +4,5 @@
     "rootDir": "src",
     "declarationDir": "dist-types"
   },
-  "include": ["src/**/*"],
-  "ts-node": {
-    "esm": true
-  }
+  "include": ["src/**/*"]
 }
