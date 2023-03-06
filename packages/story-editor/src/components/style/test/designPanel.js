@@ -80,6 +80,7 @@ describe('DesignPanel', () => {
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={[element1]}
+          selectedElementIds={[element1.id]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />
@@ -96,6 +97,7 @@ describe('DesignPanel', () => {
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={[element1]}
+          selectedElementIds={[element1.id]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />
@@ -137,6 +139,7 @@ describe('DesignPanel', () => {
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={[element1]}
+          selectedElementIds={[element1.id]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />
@@ -186,6 +189,7 @@ describe('DesignPanel', () => {
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={[element1]}
+          selectedElementIds={[element1.id]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />
@@ -223,6 +227,7 @@ describe('DesignPanel', () => {
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={[element1, element2]}
+          selectedElementIds={[element1.id, element2.id]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />
@@ -236,6 +241,7 @@ describe('DesignPanel', () => {
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={[element1, element2]}
+          selectedElementIds={[element1.id, element2.id]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />
@@ -262,6 +268,7 @@ describe('DesignPanel', () => {
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={[element1, element2]}
+          selectedElementIds={[element1.id, element2.id]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />

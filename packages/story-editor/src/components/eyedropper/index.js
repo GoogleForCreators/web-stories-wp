@@ -95,7 +95,6 @@ export default ({ onChange }) => {
               ).then((htmlToImage) => {
                 htmlToImage
                   .toCanvas(fullbleedContainer, {
-                    preferredFontFormat: 'woff2',
                     pixelRatio: 1,
                   })
                   .then((canvas) => {

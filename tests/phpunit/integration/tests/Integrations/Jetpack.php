@@ -188,7 +188,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
 
-		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'mime', $data );
 		$this->assertSame( 'video/mp4', $data['mime'] );
 
@@ -201,7 +200,6 @@ class Jetpack extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'url', $data );
 		$this->assertSame( 'https://videopress.example.com/videos/video.mp4', $data['url'] );
 
-		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'media_details', $data );
 		$this->assertIsArray( $data['media_details'] );
 		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );

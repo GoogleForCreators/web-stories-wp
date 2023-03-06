@@ -99,4 +99,16 @@ class Database_Upgrader extends DependencyInjectedTestCase {
 		$this->assertSame( WEBSTORIES_DB_VERSION, $db_version );
 		$this->assertSame( '0.0.0', $prev_version );
 	}
+
+	public function test_migration_routines_are_sorted_and_in_sync(): void {
+		$versions = array_keys( $this->instance::ROUTINES );
+
+		$versions_sorted = [ ...$versions ];
+		usort( $versions_sorted, static fn( $a, $b ) => version_compare( (string) $a, (string) $b ) );
+
+		$latest_version = end( $versions_sorted );
+
+		$this->assertSame( WEBSTORIES_DB_VERSION, $latest_version );
+		$this->assertSame( $versions, $versions_sorted );
+	}
 }

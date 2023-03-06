@@ -32,11 +32,9 @@ class Demo_Content extends TestCase {
 		/**
 		 * @var array<string, array<string, mixed>> $story
 		 */
-		$story = json_decode( $file_contents, true ); // phpcs:ignore
+		$story = json_decode( $file_contents, true );
 
-		$this->assertIsArray( $story );
 		$this->assertArrayHasKey( 'pages', $story );
-		$this->assertIsArray( $story['pages'] );
 
 		foreach ( $story['pages'] as $page ) {
 			$this->assertIsArray( $page );
@@ -62,7 +60,6 @@ class Demo_Content extends TestCase {
 		$title = $demo->get_title();
 
 		$this->assertNotEmpty( $title );
-		$this->assertIsString( $title );
 	}
 
 	/**

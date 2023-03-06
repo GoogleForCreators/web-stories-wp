@@ -30,7 +30,11 @@
     "commander": "^10.0.0",
     "semver": "^7.3.8"
   },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "@types/semver": "^7.3.13"
+  },
   "bin": {
-    "commander": "./src/index.js"
+    "commander": "./src/index.ts"
   }
 }

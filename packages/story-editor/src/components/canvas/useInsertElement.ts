@@ -20,9 +20,9 @@
 import { useCallback } from '@googleforcreators/react';
 import {
   createNewElement,
-  Element,
   elementIs,
   ElementType,
+  type Element,
 } from '@googleforcreators/elements';
 
 /**

@@ -21,7 +21,7 @@ import { useCallback } from '@googleforcreators/react';
 import {
   hasVideoGotAudio,
   preloadVideo,
-  ResourceId,
+  type ResourceId,
   seekVideo,
 } from '@googleforcreators/media';
 

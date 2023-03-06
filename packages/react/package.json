@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "prop-types": "^15.8.1",
-    "shallow-equal": "^3.0.0",
+    "shallow-equal": "^3.1.0",
     "use-context-selector": "^1.2.11",
     "use-debounce": "^9.0.3",
     "use-reduction": "^2.1.2"

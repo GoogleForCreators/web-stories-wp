@@ -27,15 +27,21 @@ import useProperties from './useProperties';
 
 function useFlip(property: keyof Flip) {
   const { flip, type } = useProperties(['flip', 'type']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+
+  const { selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
+    })
   );
+
   const toggle = () => {
     void trackEvent('floating_menu', {
       name: `set_flip_${property}`,
       element: type as unknown as string,
     });
-    updateSelectedElements({
+    updateElementsById({
+      elementIds: selectedElementIds,
       properties: (oldElement) => ({
         flip: {
           ...oldElement.flip,

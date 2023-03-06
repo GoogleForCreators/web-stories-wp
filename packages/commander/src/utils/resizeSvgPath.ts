@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { MULTIPLE_VALUE } from '../../../constants';
 
-function getPreviewOpacity(pattern) {
-  if (!pattern || pattern === MULTIPLE_VALUE) {
-    return null;
-  }
-  const isSolidPattern = pattern.type === 'solid' || !pattern.type;
-  if (!isSolidPattern) {
-    const { alpha = 1 } = pattern;
-    return Math.round(alpha * 100);
-  }
-  const {
-    color: { a = 1 },
-  } = pattern;
-  return Math.round(a * 100);
+export default function resizeSvgPath(x: number, y: number, path: string) {
+  const coords = path
+    .replace(/\s*(-)/g, ' $1')
+    .replace(/\s*([A-Za-z,])\s*/g, ' $1 ')
+    .split(' ');
+  let coordIndex = 0;
+  return coords.reduce((acc, value) => {
+    const parsed = parseFloat(value);
+    if (!isNaN(parsed)) {
+      const scaled = coordIndex % 2 === 0 ? parsed / x : parsed / y;
+      return `${acc} ${scaled.toFixed(6)}`;
+    }
+    coordIndex = 0;
+    return `${acc} ${value}`;
+  }, '');
 }
-
-export default getPreviewOpacity;

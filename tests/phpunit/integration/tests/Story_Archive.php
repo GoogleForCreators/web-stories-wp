@@ -182,14 +182,11 @@ class Story_Archive extends DependencyInjectedTestCase {
 		wp_delete_post( $archive_page_id );
 
 		$archive = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
-		/**
-		 * @var int $archive_page_id
-		 */
+
 		$archive_page_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertIsString( $archive );
 		$this->assertSame( 'default', $archive );
-		$this->assertIsInt( $archive_page_id );
 		$this->assertSame( 0, $archive_page_id );
 	}
 
@@ -212,7 +209,6 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		$this->assertIsString( $archive );
 		$this->assertSame( 'default', $archive );
-		$this->assertIsInt( $archive_page_id );
 		$this->assertSame( 0, $archive_page_id );
 	}
 
@@ -274,7 +270,6 @@ class Story_Archive extends DependencyInjectedTestCase {
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
-		$this->assertIsArray( $actual );
 		$this->assertEqualSetsWithIndex(
 			[
 				'web_stories_archive_page' => __( 'Web Stories Archive Page', 'web-stories' ),

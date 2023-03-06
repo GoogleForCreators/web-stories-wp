@@ -123,7 +123,7 @@ function ZoomSelector() {
       ariaLabel={__('Zoom Level', 'web-stories')}
       placeholder={placeholder}
       options={ZOOM_OPTIONS}
-      placement={Placement.Top_START}
+      placement={Placement.TopStart}
       onMenuItemClick={handleSetZoom}
       selectedValue={zoomSetting}
       popupFillWidth={false}

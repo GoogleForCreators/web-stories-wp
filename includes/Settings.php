@@ -396,9 +396,9 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param string $key Setting key.
+	 * @param string $key     Setting key.
 	 * @param mixed  $default Optional. Default value to return if the option does not exist.
-	 * @return string|array<int|string,mixed>|bool Setting value.
+	 * @return string|array<int|string,mixed>|bool|int Setting value.
 	 */
 	public function get_setting( string $key, $default = false ) {
 		// Distinguish between `false` as a default, and not passing one, just like WordPress.

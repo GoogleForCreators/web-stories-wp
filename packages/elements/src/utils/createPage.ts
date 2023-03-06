@@ -23,7 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { DEFAULT_PAGE_BACKGROUND_COLOR } from '../constants';
-import { ElementType, Page } from '../types';
+import { ElementType, type Page } from '../types';
 import createNewElement from './createNewElement';
 
 const createPage = (pageProps: Partial<Page> | null = null): Page => {

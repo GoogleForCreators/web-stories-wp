@@ -185,7 +185,7 @@ function InsertionMenu({
       {isMenuOpen && (
         <Popup
           anchor={insertButtonRef}
-          placement={Placement.Bottom_START}
+          placement={Placement.BottomStart}
           isOpen={isMenuOpen}
         >
           <DropDownContainer>

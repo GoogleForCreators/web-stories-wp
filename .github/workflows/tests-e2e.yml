@@ -70,7 +70,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -100,15 +100,20 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
+
       - name: Build plugin
-        run: npm run build:js
+        run: bun run build:js
         env:
           # TODO: remove eventually
           DISABLE_PREVENT: true
           DISABLE_QUICK_TIPS: true
 
       - name: Bundle plugin
-        run: npm run workflow:build-plugin
+        run: bun run workflow:build-plugin
 
       - name: Upload bundle
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
@@ -136,7 +141,7 @@ jobs:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['5.9']
+        wp: ['6.0']
         snapshots: [false]
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
@@ -152,7 +157,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -254,7 +259,7 @@ jobs:
     needs: [e2e, nonce]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           disable-sudo: true
           egress-policy: block

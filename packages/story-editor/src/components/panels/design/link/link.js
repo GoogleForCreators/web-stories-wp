@@ -27,21 +27,28 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@googleforcreators/i18n';
-import { Input, Text, TextSize } from '@googleforcreators/design-system';
+import { __, sprintf } from '@googleforcreators/i18n';
+import {
+  DropDown,
+  Input,
+  Placement,
+  Text,
+  TextSize,
+} from '@googleforcreators/design-system';
 import {
   isValidUrl,
   toAbsoluteUrl,
   withProtocol,
 } from '@googleforcreators/url';
+import { LinkType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { useAPI, useCanvas } from '../../../../app';
+import { useAPI, useCanvas, useStory } from '../../../../app';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
-import { Row, LinkInput, LinkIcon } from '../../../form';
+import { Row, LinkInput, LinkIcon, Switch } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared/styles';
@@ -66,6 +73,10 @@ const Error = styled.span`
   color: ${({ theme }) => theme.colors.fg.negative};
 `;
 
+const StyledSwitch = styled(Switch)`
+  width: 100%;
+`;
+
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const { clearEditing, setDisplayLinkGuidelines, displayLinkGuidelines } =
     useCanvas((state) => ({
@@ -82,13 +93,34 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     })
   );
 
+  const pages = useStory(
+    ({ state }) =>
+      state?.pages
+        ?.map(({ id }, index) => ({
+          value: id,
+          label: sprintf(
+            /* translators: %s: page number. */
+            __('Page %s', 'web-stories'),
+            index + 1
+          ),
+        }))
+        .filter(({ value }) => value !== state.currentPage?.id) || []
+  );
+
   const { hasElementsInAttachmentArea } = useElementsWithLinks();
 
   const defaultLink = useMemo(() => createLink({ icon: null, desc: null }), []);
 
   const linkRaw = useCommonObjectValue(selectedElements, 'link', defaultLink);
   const link = createLink(linkRaw);
-  const { url = '', desc = '', icon, rel = [] } = link;
+  const {
+    url = '',
+    desc = '',
+    icon,
+    rel = [],
+    type: linkType = LinkType.Regular,
+    pageId = null,
+  } = link;
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
   const [isLinkFocused, setIsLinkFocused] = useState(false);
@@ -175,6 +207,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           populateMetadata(urlWithProtocol);
         }
       }
+
       pushUpdateForObject(
         'link',
         properties.url !== ''
@@ -202,7 +235,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   );
 
   const hasLinkSet = Boolean(url?.length);
-  const displayMetaFields = hasLinkSet && !isInvalidUrl;
+  const displayMetaFields =
+    (hasLinkSet && !isInvalidUrl) ||
+    (linkType === LinkType.Branching && pageId);
 
   // If we're focusing on the link input and any of the relevant values changes,
   // Check if we need to hide/display the guidelines.
@@ -223,12 +258,30 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const linkIcon = icon ? getProxiedUrl(link, icon) : null;
 
+  const isMultipleLinkType = MULTIPLE_VALUE === linkType;
+  const isMultiplePageId = MULTIPLE_VALUE === pageId;
   const isMultipleUrl = MULTIPLE_VALUE === url;
   const isMultipleDesc = MULTIPLE_VALUE === desc;
   const isMultipleRel = MULTIPLE_VALUE === rel;
 
   const onChangeRel = useCallback(
     (newRel) => handleChange({ rel: newRel }, true),
+    [handleChange]
+  );
+
+  const onChangeLinkType = useCallback(() => {
+    handleChange(
+      {
+        type:
+          linkType === LinkType.Regular ? LinkType.Branching : LinkType.Regular,
+      },
+      true
+    );
+  }, [handleChange, linkType]);
+  const onChangePageId = useCallback(
+    (_event, value) => {
+      handleChange({ pageId: value }, true);
+    },
     [handleChange]
   );
 
@@ -240,34 +293,60 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       onAnimationEnd={() => resetHighlight()}
       isPersistable={!highlight}
     >
-      <LinkInput
-        ref={(node) => {
-          if (node && highlight?.focus && highlight?.showEffect) {
-            node.addEventListener('keydown', cancelHighlight, { once: true });
-            node.focus();
+      <Row>
+        <StyledSwitch
+          groupLabel={__('Link Type', 'web-stories')}
+          name="link-type-switch"
+          value={linkType === LinkType.Regular}
+          onLabel={__('Link to website', 'web-stories')}
+          offLabel={__('Link to story page', 'web-stories')}
+          disabled={isMultipleLinkType}
+          onChange={onChangeLinkType}
+        />
+      </Row>
+      {linkType === LinkType.Branching ? (
+        <Row>
+          <DropDown
+            ariaLabel={__('Page', 'web-stories')}
+            dropDownLabel={__('Page', 'web-stories')}
+            placeholder={__('Select Page', 'web-stories')}
+            options={pages}
+            placement={Placement.TopStart}
+            onMenuItemClick={onChangePageId}
+            selectedValue={pageId}
+            disabled={!pages.length || isMultiplePageId}
+          />
+        </Row>
+      ) : (
+        <LinkInput
+          ref={(node) => {
+            if (node && highlight?.focus && highlight?.showEffect) {
+              node.addEventListener('keydown', cancelHighlight, { once: true });
+              node.focus();
+            }
+          }}
+          onChange={(value) =>
+            !displayLinkGuidelines &&
+            handleChange({ url: value }, !value /* submit */)
           }
-        }}
-        onChange={(value) =>
-          !displayLinkGuidelines &&
-          handleChange({ url: value }, !value /* submit */)
-        }
-        onBlur={() => {
-          setDisplayLinkGuidelines(false);
-          setIsLinkFocused(false);
-        }}
-        onFocus={() => {
-          setIsLinkFocused(true);
-        }}
-        value={url || ''}
-        placeholder={
-          isMultipleUrl
-            ? MULTIPLE_DISPLAY_VALUE
-            : __('Enter an address to apply a link', 'web-stories')
-        }
-        isIndeterminate={isMultipleUrl}
-        aria-label={__('Element link', 'web-stories')}
-        hasError={displayLinkGuidelines}
-      />
+          onBlur={() => {
+            setDisplayLinkGuidelines(false);
+            setIsLinkFocused(false);
+          }}
+          onFocus={() => {
+            setIsLinkFocused(true);
+          }}
+          value={url || ''}
+          placeholder={
+            isMultipleUrl
+              ? MULTIPLE_DISPLAY_VALUE
+              : __('Enter an address to apply a link', 'web-stories')
+          }
+          isIndeterminate={isMultipleUrl}
+          aria-label={__('Element link', 'web-stories')}
+          hasError={displayLinkGuidelines}
+        />
+      )}
       {displayLinkGuidelines && (
         <Row>
           <Error>
@@ -311,7 +390,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               </IconText>
             </IconInfo>
           </Row>
-          {!isMultipleRel && (
+          {!isMultipleRel && linkType === LinkType.Regular && (
             <LinkRelations onChangeRel={onChangeRel} rel={rel} />
           )}
         </>

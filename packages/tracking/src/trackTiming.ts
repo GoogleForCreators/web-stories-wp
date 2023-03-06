@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import trackEvent from './trackEvent';
-import { config } from './shared';
 
 /**
  * Track event timing for performance measuring.
@@ -34,20 +33,10 @@ function trackTiming(
   label = '',
   eventName = 'click'
 ): void {
-  // Universal Analytics has a special `timing_complete` event which
-  // does not exist in GA4.
-  void trackEvent('timing_complete', {
-    name: eventName,
-    value: time,
-    event_category: category,
-    event_label: label,
-    send_to: config.trackingId,
-  });
   void trackEvent(eventName, {
     value: time,
     event_category: category,
     event_label: label,
-    send_to: config.trackingIdGA4,
   });
 }
 

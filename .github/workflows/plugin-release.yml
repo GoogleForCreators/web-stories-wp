@@ -41,7 +41,7 @@ jobs:
     environment: Production
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -104,7 +104,7 @@ jobs:
     needs: [checks]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -245,7 +245,7 @@ jobs:
       release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -292,6 +292,11 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
+
       - name: Create release branch
         id: release_branch
         run: |
@@ -317,7 +322,7 @@ jobs:
           echo "release_name=${RELEASE_NAME}" >> $GITHUB_OUTPUT
 
       - name: Update assets version
-        run: npm run workflow:assets-version $ASSETS_VERSION
+        run: bun run workflow:assets-version $ASSETS_VERSION
         if: ${{ env.ASSETS_VERSION }}
         env:
           ASSETS_VERSION: ${{ env.ASSETS_VERSION }}
@@ -334,7 +339,7 @@ jobs:
           ASSETS_VERSION: ${{ env.ASSETS_VERSION }}
 
       - name: Update plugin version
-        run: npm run workflow:version $PLUGIN_VERSION
+        run: bun run workflow:version $PLUGIN_VERSION
 
       # Commit the plugin version bump if it was successful.
       # It's also possible that there were no changes, for example if the
@@ -374,16 +379,16 @@ jobs:
           BRANCH: ${{ steps.release_branch.outputs.release_branch }}
 
       - name: Build plugin
-        run: npm run build:js
+        run: bun run build:js
 
       - name: Bundle regular version
-        run: npm run workflow:build-plugin -- --zip web-stories.zip
+        run: bun run workflow:build-plugin -- --zip web-stories.zip
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           npx webpack --env=development
-          npm run workflow:build-plugin -- --zip web-stories-dev.zip
+          bun run workflow:build-plugin -- --zip web-stories-dev.zip
 
       - name: Prepare release artifacts
         run: |
@@ -403,7 +408,7 @@ jobs:
     needs: [build]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -439,7 +444,7 @@ jobs:
     if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -459,6 +464,11 @@ jobs:
         run: npm ci
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        with:
+          bun-version: latest
 
       # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
       - name: Update plugin version
@@ -490,7 +500,7 @@ jobs:
       SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -555,36 +565,3 @@ jobs:
           sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./trunk/readme.txt
           svn commit -m "Releasing version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
-
-  close-release:
-    name: Close ZenHub release
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    needs: [create-release]
-    if: ${{ ! contains(github.event.inputs.version, 'rc') }}
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
-        with:
-          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
-
-      # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
-      # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
-      - name: Close release report
-        id: zenhub_release
-        run: |
-          echo "Getting list of releases from ZenHub"
-
-          RELEASES=$(curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${GITHUB_REPO_ID}/reports/releases")
-          CURRENT_RELEASE=$((echo $RELEASES ) | jq -r "first(.[] | select( .title == \"$PLUGIN_VERSION\" )) | .release_id")
-
-          if [[ -z $CURRENT_RELEASE ]]; then
-            echo "No ZenHub release found. Check whether the release titles match the expected plugin version."
-            exit 1
-          else
-            echo "Closing release report on ZenHub for release: $CURRENT_RELEASE"
-
-            curl -f -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${CURRENT_RELEASE}" -d '{ "state": "closed" }'
-          fi
-        env:
-          ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}

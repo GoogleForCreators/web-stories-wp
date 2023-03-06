@@ -270,7 +270,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @param WP_Post $post    Post object.
 	 */
 	public function clear_user_posts_count( int $post_id, WP_Post $post ): void {
-		if ( ! $post instanceof WP_Post || $this->get_slug() !== $post->post_type ) {
+		if ( $this->get_slug() !== $post->post_type ) {
 			return;
 		}
 

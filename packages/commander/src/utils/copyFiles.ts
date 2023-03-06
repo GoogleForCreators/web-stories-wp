@@ -17,31 +17,27 @@
 /**
  * External dependencies
  */
-import { dirname, basename, join } from 'path';
 import { execFileSync } from 'child_process';
-import { existsSync, unlinkSync } from 'fs';
 
 /**
- * Generates a ZIP file.
+ * Copies all files minuses ignored ones from source to target directory.
  *
- * Ensures the folder in the final ZIP file is always named "web-stories".
- *
- * @param {string} source Full path to the directory that should be zipped.
- * @param {string} zipName Desired file name.
+ * @param source Path to source directory.
+ * @param target Path to target directory.
+ * @param ignoredFiles List of ignored files.
  */
-function generateZipFile(source, zipName) {
-  const cwd = dirname(source); // /full/path/to/build
-  const fullPath = join(source, zipName);
+function copyFiles(source: string, target: string, ignoredFiles: string[]) {
+  const excludeList = ignoredFiles.reduce((acc: string[], file) => {
+    acc.push('--exclude');
+    acc.push(file);
+    return acc;
+  }, []);
 
-  if (existsSync(fullPath)) {
-    unlinkSync(fullPath);
-  }
-
-  const args = ['-rT', zipName, basename(source)];
-  execFileSync('zip', args, {
-    cwd,
+  // Copy plugin folder to temporary location.
+  const args = ['-a', ...excludeList, `${source}/`, `${target}/`];
+  execFileSync('rsync', args, {
     stdio: ['pipe', 'pipe', 'ignore'],
   });
 }
 
-export default generateZipFile;
+export default copyFiles;

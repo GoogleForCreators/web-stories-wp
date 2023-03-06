@@ -19,7 +19,7 @@
  */
 import { useCallback, useRef } from '@googleforcreators/react';
 import type { PropsWithChildren } from 'react';
-import { getAllTemplates, Template } from '@googleforcreators/templates';
+import { getAllTemplates, type Template } from '@googleforcreators/templates';
 
 /**
  * Internal dependencies

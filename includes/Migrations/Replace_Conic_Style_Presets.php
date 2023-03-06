@@ -58,8 +58,9 @@ class Replace_Conic_Style_Presets extends Migrate_Base {
 		 * @phpstan-var StylePresets|null $style_presets
 		 */
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
+
 		// Nothing to do if style presets don't exist.
-		if ( ! $style_presets || ! \is_array( $style_presets ) ) {
+		if ( ! \is_array( $style_presets ) ) {
 			return;
 		}
 

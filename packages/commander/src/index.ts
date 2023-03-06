@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 /*
  * Copyright 2020 Google LLC
  *
@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-console */
-
 /**
  * External dependencies
  */
 import { mkdirSync, rmSync, existsSync } from 'fs';
 import { relative } from 'path';
 import { Command } from 'commander';
-import semver from 'semver';
-const { inc: semverInc } = semver;
+import { inc as semverInc, ReleaseType } from 'semver';
 
 /**
  * Internal dependencies
@@ -36,7 +33,7 @@ import {
   updateVersionNumbers,
   updateCdnUrl,
   resizeSvgPath,
-} from './utils/index.js';
+} from './utils';
 
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
@@ -46,7 +43,8 @@ const program = new Command();
 
 program
   .command('version')
-  .arguments('[version]')
+  .description('Bump the version of the plugin')
+  .argument('[version]', 'The desired version number.')
   .option(
     '--nightly',
     'Whether this is a nightly build and thus should append the current revision to the version number.'
@@ -62,9 +60,6 @@ prepatch, or prerelease. Only one version may be specified.`
     `Identifier to be used to prefix premajor, preminor, prepatch or prerelease version increments.`,
     'alpha'
   )
-  .description('Bump the version of the plugin', {
-    version: 'The desired version number.',
-  })
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
@@ -74,23 +69,37 @@ prepatch, or prerelease. Only one version may be specified.`
     console.log('  # Nightly build');
     console.log('  $ index.js version --nightly');
   })
-  .action((version, { nightly, increment, preid }) => {
-    const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
+  .action(
+    (
+      version: string,
+      {
+        nightly,
+        increment,
+        preid,
+      }: { nightly: boolean; increment: ReleaseType; preid: string }
+    ) => {
+      const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
 
-    const currentVersion = getCurrentVersionNumber(pluginFilePath);
-    let newVersion = version || currentVersion;
+      const currentVersion = getCurrentVersionNumber(pluginFilePath);
+      let newVersion: string | null = version || currentVersion;
 
-    if (increment) {
-      newVersion = semverInc(currentVersion, increment, undefined, preid);
+      if (increment) {
+        newVersion = semverInc(
+          currentVersion,
+          increment,
+          undefined,
+          preid
+        ) as string;
+      }
+
+      updateVersionNumbers(pluginFilePath, newVersion, nightly);
+      const constantVersion = getCurrentVersionNumber(pluginFilePath, true);
+
+      console.log(
+        `Version number successfully updated! New version: ${constantVersion}`
+      );
     }
-
-    updateVersionNumbers(pluginFilePath, newVersion, nightly);
-    const constantVersion = getCurrentVersionNumber(pluginFilePath, true);
-
-    console.log(
-      `Version number successfully updated! New version: ${constantVersion}`
-    );
-  });
+  );
 
 program
   .command('build-plugin')
@@ -121,34 +130,42 @@ program
     );
     console.log('  $ index.js build-plugin --composer --zip web-stories.zip');
   })
-  .action(({ composer, zip, clean }) => {
-    const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
+  .action(
+    ({
+      composer,
+      zip,
+      clean,
+    }: {
+      composer: boolean;
+      zip: string | boolean;
+      clean: boolean;
+    }) => {
+      const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
 
-    // Make sure build directory exists and is empty.
-    if (existsSync(BUILD_DIR)) {
-      rmSync(BUILD_DIR, { recursive: true, force: true });
+      // Make sure build directory exists and is empty.
+      if (existsSync(BUILD_DIR)) {
+        rmSync(BUILD_DIR, { recursive: true, force: true });
+      }
+      mkdirSync(BUILD_DIR, { recursive: true });
+
+      createBuild(PLUGIN_DIR, buildDirPath, composer);
+
+      let build = BUILD_DIR;
+
+      if (zip) {
+        build = bundlePlugin(buildDirPath, composer, zip, clean);
+      }
+
+      console.log(
+        `Plugin successfully built! Location: ${relative(process.cwd(), build)}`
+      );
     }
-    mkdirSync(BUILD_DIR, { recursive: true });
-
-    createBuild(PLUGIN_DIR, buildDirPath, composer);
-
-    let build = BUILD_DIR;
-
-    if (zip) {
-      build = bundlePlugin(buildDirPath, composer, zip, clean);
-    }
-
-    console.log(
-      `Plugin successfully built! Location: ${relative(process.cwd(), build)}`
-    );
-  });
+  );
 
 program
   .command('assets-version')
-  .arguments('<version>')
-  .description('Change the CDN assets version used by the plugin', {
-    version: 'Assets version. Either `main` or an integer.',
-  })
+  .description('Change the CDN assets version used by the plugin')
+  .argument('<version>', 'Assets version. Either `main` or an integer.')
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
@@ -160,7 +177,7 @@ program
     console.log('  # Change assets version for stable release');
     console.log('  $ commander.js assets-version 7');
   })
-  .action((version) => {
+  .action((version: string) => {
     const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
     updateCdnUrl(
       pluginFilePath,
@@ -172,21 +189,17 @@ program
 
 program
   .command('normalize-path')
-  .arguments('<width> <height> <path>')
-  .description('Normalize SVG paths for shapes', {
-    width: 'Viewbox width',
-    height: 'Viewbox height',
-    path: 'Path to normalize',
-  })
+  .description('Normalize SVG paths for shapes')
+  .argument('<width>', 'Viewbox width')
+  .argument('<height>', 'Viewbox height')
+  .argument('<path>', 'Path to normalize')
   .on('--help', () => {
     console.log('');
     console.log('Example:');
     console.log('  $ commander.js normalize-path 392 392 "M10 10"');
   })
-  .action((width, height, path) => {
+  .action((width: string, height: string, path: string) => {
     console.log(resizeSvgPath(Number(width), Number(height), path));
   });
 
 program.parse(process.argv);
-
-/* eslint-enable no-console */

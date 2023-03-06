@@ -32,7 +32,6 @@ interface ConfigParams {
 
 export interface ControlParams {
   groups?: string | string[] | undefined;
-  send_to?: string | string[] | undefined;
   event_callback?: (() => void) | undefined;
   event_timeout?: number | undefined;
 }
@@ -40,7 +39,6 @@ export interface ControlParams {
 export interface EventParameters {
   name?: string;
   value?: string | number;
-  send_to?: string | number;
   search_type?: string;
   duration?: number;
   title_length?: number;
@@ -86,10 +84,6 @@ interface TrackingConfig {
    */
   trackingEnabled?: boolean;
   /**
-   * Tracking ID.
-   */
-  trackingId: string;
-  /**
    * GA4 tracking ID.
    */
   trackingIdGA4: string;
@@ -131,24 +125,17 @@ export const gtag: Gtag = function (): void {
 const DEFAULT_CONFIG = {
   trackingAllowed: false,
   trackingEnabled: false,
-  trackingId: '',
   trackingIdGA4: '',
   userProperties: {},
   appName: '',
 };
 
-const {
-  trackingAllowed,
-  trackingId,
-  trackingIdGA4,
-  appVersion,
-  userProperties,
-} = window.webStoriesTrackingSettings || {};
+const { trackingAllowed, trackingIdGA4, appVersion, userProperties } =
+  window.webStoriesTrackingSettings || {};
 
 export const config: TrackingConfig = {
   ...DEFAULT_CONFIG,
   trackingAllowed,
-  trackingId,
   trackingIdGA4,
   appVersion,
   userProperties,

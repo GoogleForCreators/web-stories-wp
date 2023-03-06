@@ -99,6 +99,7 @@ class Tag_Taxonomy extends Taxonomy_Base implements HasRequirements {
 			'labels'                => $labels,
 			'hierarchical'          => false,
 			'public'                => false,
+			'publicly_queryable'    => true,
 			'show_ui'               => true,
 			'show_admin_column'     => true,
 			'rewrite'               => true,

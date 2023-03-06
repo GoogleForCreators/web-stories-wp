@@ -62,7 +62,8 @@ use WP_Block;
  *   archiveLinkLabel?: string,
  *   authors?: int[],
  *   fieldState?: array<string, mixed>,
- *   previewOnly?: bool
+ *   previewOnly?: bool,
+ *   taxQuery?: array<string, int[]>
  * }
  * @phpstan-type BlockAttributesWithDefaults array{
  *   blockType?: string,
@@ -387,6 +388,8 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Returns arguments to be passed to the WP_Query object initialization.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.5.0
 	 *
 	 * @return array<string, mixed> Query arguments.
@@ -400,6 +403,21 @@ class Web_Stories_Block extends Embed_Base {
 			'suppress_filters' => false,
 			'no_found_rows'    => true,
 		];
+
+		if ( ! empty( $attributes['taxQuery'] ) ) {
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			$query_args['tax_query'] = [];
+			foreach ( $attributes['taxQuery'] as $taxonomy => $terms ) {
+				if ( is_taxonomy_viewable( $taxonomy ) && ! empty( $terms ) ) {
+					// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+					$query_args['tax_query'][] = [
+						'taxonomy'         => $taxonomy,
+						'terms'            => array_filter( array_map( '\intval', $terms ) ),
+						'include_children' => false,
+					];
+				}
+			}
+		}
 
 		// if block type is 'selected-tories'.
 		if ( ! empty( $attributes['blockType'] )
@@ -424,7 +442,7 @@ class Web_Stories_Block extends Embed_Base {
 			$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
 		}
 
-		if ( ! empty( $attributes['authors'] ) && \is_array( $attributes['authors'] ) ) {
+		if ( ! empty( $attributes['authors'] ) ) {
 			$query_args['author__in'] = $attributes['authors'];
 		}
 

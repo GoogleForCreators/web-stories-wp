@@ -33,7 +33,14 @@ import type { ElementType } from './elementType';
 import type { FontMetrics, ProductData } from './data';
 import type { Track } from './media';
 
+export enum LinkType {
+  Regular = 'regular',
+  Branching = 'branching',
+}
+
 export interface Link {
+  type?: LinkType;
+  pageId?: ElementId;
   url: string;
   desc?: string;
   needsProxy?: boolean;
@@ -183,7 +190,7 @@ export interface TextElement extends Element {
 
   backgroundTextMode?: string;
   tagName?: 'h1' | 'h2' | 'h3' | 'p';
-  padding: Padding;
+  padding?: Padding;
   marginOffset: number;
   lineHeight: number;
   textAlign: TextAlign;

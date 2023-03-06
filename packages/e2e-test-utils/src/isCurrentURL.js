@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../constants';
+import createURL from './createURL.js';
 
-function getPreviewOpacity(pattern) {
-  if (!pattern || pattern === MULTIPLE_VALUE) {
-    return null;
-  }
-  const isSolidPattern = pattern.type === 'solid' || !pattern.type;
-  if (!isSolidPattern) {
-    const { alpha = 1 } = pattern;
-    return Math.round(alpha * 100);
-  }
-  const {
-    color: { a = 1 },
-  } = pattern;
-  return Math.round(a * 100);
+/**
+ * Checks if current URL is a WordPress path.
+ *
+ * @param {string}  path  String to be serialized as pathname.
+ * @param {?string} query String to be serialized as query portion of URL.
+ * @return {boolean} Boolean represents whether current URL is or not a WordPress path.
+ */
+function isCurrentURL(path, query = '') {
+  const currentURL = new URL(page.url());
+
+  currentURL.search = query;
+
+  return createURL(path, query) === currentURL.href;
 }
 
-export default getPreviewOpacity;
+export default isCurrentURL;

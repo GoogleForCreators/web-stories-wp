@@ -29,7 +29,7 @@ import type {
   ReducerProviderState,
 } from '../../../types';
 import { INITIAL_STATE } from '../constants';
-import { DispatchType, exposedActions, internalActions } from './actions';
+import { type DispatchType, exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
 /**

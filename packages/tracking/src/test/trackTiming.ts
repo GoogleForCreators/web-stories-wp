@@ -41,24 +41,15 @@ describe('trackTiming', () => {
     config.appName = 'Foo App';
     config.trackingAllowed = true;
     config.trackingEnabled = true;
-    config.trackingId = 'UA-12345678-1';
     config.trackingIdGA4 = 'G-ABC1234567';
 
     trackTiming('page', 50, 'carousel_navigate', 'click');
 
-    expect(trackEvent).toHaveBeenCalledTimes(2);
-    expect(trackEvent).toHaveBeenNthCalledWith(1, 'timing_complete', {
-      name: 'click',
+    expect(trackEvent).toHaveBeenCalledOnce();
+    expect(trackEvent).toHaveBeenNthCalledWith(1, 'click', {
       event_category: 'page',
       event_label: 'carousel_navigate',
       value: 50,
-      send_to: 'UA-12345678-1',
-    });
-    expect(trackEvent).toHaveBeenNthCalledWith(2, 'click', {
-      event_category: 'page',
-      event_label: 'carousel_navigate',
-      value: 50,
-      send_to: 'G-ABC1234567',
     });
   });
 });

@@ -20,8 +20,8 @@
 import { shallowEqual } from '@googleforcreators/react';
 import {
   DEFAULT_PAGE_BACKGROUND_COLOR,
-  DefaultBackgroundElement,
-  Page,
+  type DefaultBackgroundElement,
+  type Page,
 } from '@googleforcreators/elements';
 
 const isEmptyStory = (pages: Page[]) => {

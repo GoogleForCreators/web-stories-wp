@@ -189,9 +189,7 @@ class Preferences extends DependencyInjectedTestCase {
 		);
 
 		$response = rest_get_server()->dispatch( $request );
-		if ( $response instanceof \WP_REST_Response ) {
-			$response = $response->as_error();
-		}
+		$response = $response->as_error();
 
 		$this->assertWPError( $response );
 		$this->assertSame( 'rest_cannot_edit', $response->get_error_code() );
@@ -242,9 +240,7 @@ class Preferences extends DependencyInjectedTestCase {
 		);
 
 		$response = rest_get_server()->dispatch( $request );
-		if ( $response instanceof \WP_REST_Response ) {
-			$response = $response->as_error();
-		}
+		$response = $response->as_error();
 
 		$this->assertWPError( $response );
 		$data = $response->get_error_data();

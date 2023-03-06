@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
-export { default as bundlePlugin } from './bundlePlugin.js';
-export { default as createBuild } from './createBuild.js';
-export { default as getCurrentVersionNumber } from './getCurrentVersionNumber.js';
-export { default as updateVersionNumbers } from './updateVersionNumbers.js';
-export { default as updateCdnUrl } from './updateCdnUrl.js';
-export { default as resizeSvgPath } from './resizeSvgPath.js';
+const WP_ADMIN_USER = {
+  username: 'admin',
+  password: 'password',
+};
+
+const {
+  WP_USERNAME = WP_ADMIN_USER.username,
+  WP_PASSWORD = WP_ADMIN_USER.password,
+  WP_BASE_URL = 'http://localhost:8889',
+} = process.env;
+
+export { WP_ADMIN_USER, WP_USERNAME, WP_PASSWORD, WP_BASE_URL };

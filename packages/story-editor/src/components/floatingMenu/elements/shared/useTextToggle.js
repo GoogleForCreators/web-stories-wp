@@ -26,25 +26,41 @@ import { useCallback } from '@googleforcreators/react';
 import useRichTextFormatting from '../../../panels/design/textStyle/useRichTextFormatting';
 import updateProperties from '../../../style/updateProperties';
 import { useStory } from '../../../../app';
+import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import useProperties from './useProperties';
 
 function useTextToggle({ currentValue, handler, eventName }) {
   const { content } = useProperties(['content']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+
+  const { selectedElementIds, updateElementsById } = useStory(
+    ({ state, actions }) => ({
+      selectedElementIds: state.selectedElementIds,
+      updateElementsById: actions.updateElementsById,
+    })
   );
 
   const pushUpdate = useCallback(
     (update) => {
-      trackEvent('floating_menu', {
+      void trackEvent('floating_menu', {
         name: eventName,
         element: 'text',
       });
-      updateSelectedElements({
-        properties: (element) => updateProperties(element, update, true),
+      updateElementsById({
+        elementIds: selectedElementIds,
+        properties: (element) => {
+          const updates = updateProperties(element, update, true);
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...element,
+            ...updates,
+          });
+          return {
+            ...updates,
+            ...sizeUpdates,
+          };
+        },
       });
     },
-    [updateSelectedElements, eventName]
+    [updateElementsById, selectedElementIds, eventName]
   );
   const { textInfo, handlers } = useRichTextFormatting(
     [{ content, type: 'text' }],

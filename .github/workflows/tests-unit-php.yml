@@ -65,7 +65,7 @@ jobs:
             experimental: false
 
           - php: '7.4'
-            wp: '5.9'
+            wp: '6.0'
             experimental: false
 
           - php: '8.0'
@@ -79,7 +79,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
         with:
           disable-file-monitoring: true
           egress-policy: audit

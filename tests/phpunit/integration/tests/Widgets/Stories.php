@@ -21,7 +21,6 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Tests\Integration\Widgets;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use WP_Widget;
 
 /**
  * Class Stories
@@ -41,13 +40,6 @@ class Stories extends DependencyInjectedTestCase {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Widgets\Stories::class );
-	}
-
-	/**
-	 * Test that object is instance of WP_Widget.
-	 */
-	public function test_instance(): void {
-		$this->assertInstanceOf( WP_Widget::class, $this->instance );
 	}
 
 	/**

@@ -108,14 +108,13 @@ class Tracking extends DependencyInjectedTestCase {
 		/**
 		 * An array of all registered dependencies keyed by handle.
 		 *
-		 * @var _WP_Dependency[] $registered
+		 * @var array<string, _WP_Dependency> $registered
 		 */
 		$registered = wp_scripts()->registered;
 
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertArrayHasKey( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, $registered );
 		$handle = $registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ];
-		$this->assertInstanceOf( '_WP_Dependency', $handle );
 
 		$this->assertEmpty( $handle->src );
 		$after = wp_scripts()->get_data( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'after' );

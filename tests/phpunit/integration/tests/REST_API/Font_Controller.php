@@ -87,7 +87,6 @@ class Font_Controller extends RestTestCase {
 	public function test_get_item_schema(): void {
 		$actual = $this->controller->get_item_schema();
 
-		$this->assertIsArray( $actual );
 		$this->assertCount( 9, array_keys( $actual['properties'] ) );
 		$this->assertArrayHasKey( 'family', $actual['properties'] );
 		$this->assertArrayHasKey( 'fallbacks', $actual['properties'] );
@@ -107,7 +106,6 @@ class Font_Controller extends RestTestCase {
 		$this->controller->register_routes();
 
 		$collection_params = $this->controller->get_collection_params();
-		$this->assertIsArray( $collection_params );
 		$this->assertArrayHasKey( 'search', $collection_params );
 		$this->assertArrayHasKey( 'include', $collection_params );
 		$this->assertArrayHasKey( 'service', $collection_params );
@@ -191,7 +189,6 @@ class Font_Controller extends RestTestCase {
 		$data = $response->get_data();
 
 		$this->assertIsArray( $data );
-		$this->assertIsArray( $data[0] );
 		$this->assertCount( 3, $data );
 		$this->assertIsArray( $data[0] );
 		$this->assertIsArray( $data[1] );

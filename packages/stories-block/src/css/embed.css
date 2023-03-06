@@ -49,11 +49,8 @@
   max-width: var(--width);
 }
 
-.web-stories-embed:not(.web-stories-embed-amp)
-  .wp-block-embed__wrapper::before {
-  content: '';
-  display: block;
-  padding-bottom: calc(var(--aspect-ratio) * 100%);
+.web-stories-embed:not(.web-stories-embed-amp) .wp-block-embed__wrapper {
+  aspect-ratio: var(--aspect-ratio);
 }
 
 .web-stories-embed:not(.web-stories-embed-amp)

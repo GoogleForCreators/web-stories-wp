@@ -22,7 +22,6 @@ import {
   insertStoryTitle,
   withPlugin,
   publishStory,
-  getEditedPostContent,
   loadPostEditor,
   publishPost,
   trashAllPosts,
@@ -62,6 +61,12 @@ async function addPosterImage() {
 }
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
+
+function getEditedPostContent() {
+  return page.evaluate(() =>
+    wp.data.select('core/editor', 'getEditedPostContent')
+  );
+}
 
 describe('Publishing Flow', () => {
   let removeCORSErrorMessage;

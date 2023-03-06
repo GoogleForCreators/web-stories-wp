@@ -39,7 +39,7 @@ const PageList = styled(Reorderable).attrs({
   justify-content: center;
   overflow-x: hidden;
   overflow-y: hidden;
-  width: ${({ width }) => width}px;
+  width: ${({ $width }) => $width}px;
   list-style: none;
   padding: 4px 0;
   margin: -4px 0;
@@ -92,7 +92,7 @@ function CarouselList() {
   return (
     <PageList
       mode="horizontal"
-      width={carouselWidth}
+      $width={carouselWidth}
       ref={setListRef}
       hasOverflow={hasOverflow}
       aria-label={__('Pages List', 'web-stories')}

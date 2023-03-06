@@ -109,10 +109,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param array<string,mixed>|mixed $data                An array of slashed, sanitized, and processed post data.
-	 * @param array<string,mixed>       $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
-	 * @param array<string,mixed>       $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
-	 *                                         originally passed to wp_insert_post().
+	 * @param mixed $data                An array of slashed, sanitized, and processed post data.
+	 * @param mixed $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
+	 * @param mixed $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
+	 *                                   originally passed to wp_insert_post().
 	 * @return array<string,mixed>|mixed Filtered post data.
 	 *
 	 * @phpstan-param PostData $data
@@ -122,8 +122,12 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @phpstan-return ($data is array<T> ? array<T> : mixed)
 	 */
-	public function filter_insert_post_data( $data, array $postarr, array $unsanitized_postarr ) {
-		if ( ! \is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
+	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
+		if ( current_user_can( 'unfiltered_html' ) ) {
+			return $data;
+		}
+
+		if ( ! \is_array( $data ) || ! \is_array( $postarr ) || ! \is_array( $unsanitized_postarr ) ) {
 			return $data;
 		}
 
