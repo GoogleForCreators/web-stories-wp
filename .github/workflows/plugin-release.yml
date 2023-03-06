@@ -293,7 +293,7 @@ jobs:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
         with:
           bun-version: latest
 
@@ -466,7 +466,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@c7179230d018dd38c919d10d3be7fcd666ab3304
+        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
         with:
           bun-version: latest
 
