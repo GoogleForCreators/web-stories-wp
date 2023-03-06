@@ -172,7 +172,7 @@
     "rollup-plugin-web-worker-loader": "^1.6.1",
     "rtlcss-webpack-plugin": "^4.0.7",
     "source-map-loader": "^4.0.1",
-    "styled-components": "^5.3.6",
+    "styled-components": "^5.3.8",
     "stylelint": "^15.2.0",
     "stylelint-config-recommended": "^10.0.1",
     "stylelint-prettier": "^3.0.0",
