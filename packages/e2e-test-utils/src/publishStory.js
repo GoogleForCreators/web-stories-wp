@@ -23,12 +23,12 @@
 async function publishStory(dismiss = true) {
   await expect(page).toClick('button', { text: /^Publish$/ });
   await expect(page).toMatchElement('div[aria-label="Story details"]');
-  await expect(page).toMatch('Story Details');
+  await expect(page).toMatchTextContent('Story Details');
   await expect(page).toClick('div[aria-label="Story details"] button', {
     text: /^Publish$/,
   });
 
-  await expect(page).toMatch('Story published.');
+  await expect(page).toMatchTextContent('Story published.');
 
   await expect(page).toMatchElement('button', { text: /^Dismiss$/ });
 

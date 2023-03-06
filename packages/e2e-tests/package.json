@@ -32,14 +32,11 @@
     "@wordpress/jest-console": "^6.7.0",
     "@wordpress/jest-puppeteer-axe": "^5.7.0",
     "babel-jest": "^29.4.3",
-    "expect-puppeteer": "^7.0.1",
-    "jest-environment-puppeteer": "^7.0.1",
+    "expect-puppeteer": "^8.0.1",
+    "jest-environment-puppeteer": "^8.0.0",
     "jest-extended": "^3.2.4",
     "jest-json-schema": "^6.1.0",
-    "jest-puppeteer": "^7.0.1"
-  },
-  "devDependencies": {
-    "@types/expect-puppeteer": "^5.0.2"
+    "jest-puppeteer": "^8.0.1"
   },
   "peerDependencies": {
     "puppeteer": "*"

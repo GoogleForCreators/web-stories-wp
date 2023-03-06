@@ -51,7 +51,7 @@ describe('Stories Dashboard', () => {
     );
 
     await expect(page).toClick('button', { text: 'Delete Story' });
-    await expect(page).toMatch(/Are you sure you want to delete/);
+    await expect(page).toMatchTextContent(/Are you sure you want to delete/);
 
     await expect(page).toMatchElement(
       '[role="dialog"][aria-label="Dialog to confirm deleting a story"] button',

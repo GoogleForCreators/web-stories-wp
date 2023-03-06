@@ -50,19 +50,19 @@ describe('Telemetry Banner', () => {
   });
 
   it('should render the telemetry opt in banner', async () => {
-    await expect(page).toMatch('Help improve the editor!');
+    await expect(page).toMatchTextContent('Help improve the editor!');
   });
 
   it('should close the banner when the exit button is closed', async () => {
-    await expect(page).toMatch('Help improve the editor!');
+    await expect(page).toMatchTextContent('Help improve the editor!');
     await expect(page).toClick('[aria-label="Dismiss telemetry banner"]');
-    await expect(page).not.toMatch('Help improve the editor!');
+    await expect(page).not.toMatchTextContent('Help improve the editor!');
   });
 
   it('should not display the banner after it has been closed', async () => {
-    await expect(page).toMatch('Help improve the editor!');
+    await expect(page).toMatchTextContent('Help improve the editor!');
     await expect(page).toClick('[aria-label="Dismiss telemetry banner"]');
     await page.reload();
-    await expect(page).not.toMatch('Help improve the editor!');
+    await expect(page).not.toMatchTextContent('Help improve the editor!');
   });
 });

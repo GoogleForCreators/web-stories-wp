@@ -45,7 +45,7 @@ describe('TinyMCE button', () => {
 
     await takeSnapshot(page, 'TinyMCE dialog');
 
-    await expect(page).toMatch('Archive Link Label');
+    await expect(page).toMatchTextContent('Archive Link Label');
 
     await expect(page).toClick('button', { text: 'Insert' });
 
@@ -58,6 +58,6 @@ describe('TinyMCE button', () => {
       (element) => element.value
     );
 
-    expect(textEditorContent).toMatch('[web_stories');
+    expect(textEditorContent).toMatchTextContent('[web_stories');
   });
 });

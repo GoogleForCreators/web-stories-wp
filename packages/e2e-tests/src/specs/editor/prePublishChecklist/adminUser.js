@@ -113,7 +113,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await expect(page).toMatchElement(
       '#pre-publish-checklist[data-isexpanded="true"]'
     );
-    await expect(page).toMatch('Add poster image');
+    await expect(page).toMatchTextContent('Add poster image');
     await takeSnapshot(page, 'Pre-publish Checklist');
   });
 
@@ -125,7 +125,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await expect(page).toClick(
       'div[aria-label="Story details"] button[aria-label^="Checklist"]'
     );
-    await expect(page).toMatch('Add poster image');
+    await expect(page).toMatchTextContent('Add poster image');
 
     await expect(page).toClick('p', { text: 'Document' });
 
@@ -148,7 +148,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
 
     await uploadPosterImage('example-1.jpg');
 
-    await expect(page).not.toMatch('Add poster image');
+    await expect(page).not.toMatchTextContent('Add poster image');
   });
 
   it('should focus on media button when poster image issue card is clicked', async () => {

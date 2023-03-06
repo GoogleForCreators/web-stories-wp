@@ -111,10 +111,10 @@ describe('Publishing Flow', () => {
 
     await loadPostEditor();
 
-    await expect(getEditedPostContent()).resolves.toMatch(
+    await expect(getEditedPostContent()).resolves.toMatchTextContent(
       '<!-- wp:web-stories/embed'
     );
-    await expect(page).not.toMatch(
+    await expect(page).not.toMatchTextContent(
       'This block contains unexpected or invalid content.'
     );
 
@@ -125,7 +125,7 @@ describe('Publishing Flow', () => {
     await page.waitForSelector('amp-story-player');
 
     await expect(page).toMatchElement('amp-story-player');
-    await expect(page).toMatch('Publishing Flow Test');
+    await expect(page).toMatchTextContent('Publishing Flow Test');
 
     const postPermalink = await publishPost();
 
@@ -137,7 +137,7 @@ describe('Publishing Flow', () => {
     });
 
     await expect(page).toMatchElement('amp-story-player');
-    await expect(page).toMatch('Publishing Flow Test');
+    await expect(page).toMatchTextContent('Publishing Flow Test');
   });
 
   it('should guide me towards creating a new post to embed my story without poster', async () => {
@@ -154,10 +154,10 @@ describe('Publishing Flow', () => {
 
     await loadPostEditor();
 
-    await expect(getEditedPostContent()).resolves.toMatch(
+    await expect(getEditedPostContent()).resolves.toMatchTextContent(
       '<!-- wp:web-stories/embed'
     );
-    await expect(page).not.toMatch(
+    await expect(page).not.toMatchTextContent(
       'This block contains unexpected or invalid content.'
     );
   });
@@ -178,7 +178,7 @@ describe('Publishing Flow', () => {
         page.waitForNavigation(),
       ]);
 
-      await expect(page).toMatch('Publishing Flow Test');
+      await expect(page).toMatchTextContent('Publishing Flow Test');
 
       // Switch to HTML mode
       await expect(page).toClick('#content-html');
@@ -188,7 +188,7 @@ describe('Publishing Flow', () => {
         (element) => element.value
       );
 
-      expect(textEditorContent).toMatch('[web_stories_embed');
+      expect(textEditorContent).toMatchTextContent('[web_stories_embed');
 
       await expect(page).toClick('#publish');
 
@@ -207,7 +207,7 @@ describe('Publishing Flow', () => {
 
       await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');
-      await expect(page).toMatch('Publishing Flow Test');
+      await expect(page).toMatchTextContent('Publishing Flow Test');
     });
   });
 });

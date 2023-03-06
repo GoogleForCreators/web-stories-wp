@@ -59,7 +59,7 @@ describe('CORS check', () => {
 
     await page.waitForSelector('.ReactModal__Content');
 
-    await expect(page).toMatch('Unable to load media');
+    await expect(page).toMatchTextContent('Unable to load media');
 
     await takeSnapshot(page, 'Stories editor with CORS dialog');
   });

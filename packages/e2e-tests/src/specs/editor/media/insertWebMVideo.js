@@ -101,7 +101,7 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).toClick('button', { text: 'Select caption' });
 
-    await expect(page).toMatch('test.vtt');
+    await expect(page).toMatchTextContent('test.vtt');
   });
 
   it('should insert a video via media library', async () => {

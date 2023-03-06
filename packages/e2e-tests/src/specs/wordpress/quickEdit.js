@@ -47,7 +47,7 @@ describe('Quick Edit', () => {
 
     await visitAdminPage('edit.php', 'post_type=web-story');
 
-    await expect(page).toMatch(storyTitle);
+    await expect(page).toMatchTextContent(storyTitle);
 
     // Make row actions appear.
     const elmId = await page.evaluate((storytitle) => {
@@ -82,7 +82,7 @@ describe('Quick Edit', () => {
 
     await expect(page).toMatchElement('button', { text: 'Quick Edit' });
 
-    await expect(page).toMatch('Test quick edit – updated.');
+    await expect(page).toMatchTextContent('Test quick edit – updated.');
 
     const [response] = await Promise.all([
       page.waitForNavigation(),

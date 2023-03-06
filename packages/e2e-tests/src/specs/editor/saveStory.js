@@ -80,7 +80,7 @@ describe('Saving Story', () => {
     await insertStoryTitle('Test story 500');
     await expect(page).toClick('button', { text: /^Publish$/ });
     await expect(page).toMatchElement('div[aria-label="Story details"]');
-    await expect(page).toMatch('Story Details');
+    await expect(page).toMatchTextContent('Story Details');
     await expect(page).toClick('div[aria-label="Story details"] button', {
       text: /^Publish$/,
     });

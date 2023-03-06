@@ -119,7 +119,7 @@ describe('Story Details Modal - Admin User', () => {
       const authorDropDownButton = await expect(page).toMatchElement(
         'div[aria-label="Story details"] button[aria-label="Author"]'
       );
-      await expect(authorDropDownButton).toMatch('admin');
+      await expect(authorDropDownButton).toMatchTextContent('admin');
 
       await authorDropDownButton.click();
 
@@ -129,7 +129,7 @@ describe('Story Details Modal - Admin User', () => {
 
       await expect(authorDropDownOptions).toClick('li', { text: 'author' });
 
-      await expect(authorDropDownButton).toMatch('author');
+      await expect(authorDropDownButton).toMatchTextContent('author');
     });
 
     it('should allow searching author', async () => {
@@ -138,7 +138,7 @@ describe('Story Details Modal - Admin User', () => {
       const authorDropDownButton = await expect(page).toMatchElement(
         'div[aria-label="Story details"] button[aria-label="Author"]'
       );
-      await expect(authorDropDownButton).toMatch('admin');
+      await expect(authorDropDownButton).toMatchTextContent('admin');
 
       await authorDropDownButton.click();
 
@@ -175,7 +175,7 @@ describe('Story Details Modal - Admin User', () => {
       await expect(page).toClick('[aria-label="Option List Selector"] li', {
         text: 'author',
       });
-      await expect(authorDropDownButton).toMatch('author');
+      await expect(authorDropDownButton).toMatchTextContent('author');
     });
 
     it('should allow publish date to change', async () => {

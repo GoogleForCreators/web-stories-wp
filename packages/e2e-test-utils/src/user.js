@@ -45,7 +45,7 @@ export async function setCurrentUser(username, password) {
     () => document.querySelector('.display-name')?.textContent || ''
   );
 
-  expect(currentUser).toMatch(username);
+  expect(currentUser).toMatchTextContent(username);
 
   await expect(page).toMatchElement('.display-name', {
     text: username,
