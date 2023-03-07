@@ -63,7 +63,7 @@ function DateTime({
 }) {
   const selectedTime = value ? new Date(value) : new Date();
   const initialHours = selectedTime.getHours();
-  const [localData, setLocalData] = useState({
+  const [localeData, setLocaleData] = useState({
     minutes: selectedTime.getMinutes(),
     am: initialHours < 12 ? 'AM' : 'PM',
     hours: is12Hour ? initialHours % 12 || 12 : initialHours,
@@ -88,8 +88,8 @@ function DateTime({
   return (
     <DateTimeWrapper ref={forwardedRef}>
       <TimePicker
-        localData={localData}
-        setLocalData={setLocalData}
+        localeData={localeData}
+        setLocaleData={setLocaleData}
         onChange={onChange}
         is12Hour={is12Hour}
       />

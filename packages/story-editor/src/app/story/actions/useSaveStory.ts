@@ -117,7 +117,15 @@ function useSaveStory({
             editLink: newEditLink,
             embedPostLink,
             featuredMedia,
+            date: origDate,
+            modified,
           } = data;
+
+          const date =
+            ['draft', 'auto-draft', 'pending'].includes(status) &&
+            (origDate === modified || !origDate)
+              ? null
+              : origDate;
 
           const properties: Partial<Story> = {
             status,
@@ -128,6 +136,9 @@ function useSaveStory({
             embedPostLink,
             featuredMedia,
             revisions,
+            date,
+            origDate,
+            modified,
           };
           updateStory({ properties });
 

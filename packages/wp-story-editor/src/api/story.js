@@ -113,6 +113,8 @@ export function saveStoryById(config, story) {
       '_links',
       'embed_post_link',
       'story_poster',
+      'date',
+      'modified',
     ].join(','),
     _embed: STORY_EMBED,
   });

@@ -44,14 +44,15 @@ const loadCalendar = () =>
   import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar');
 
 function PublishTime() {
-  const { date, modified, status, updateStory } = useStory(
+  const { date, origDate, modified, status, updateStory } = useStory(
     ({
       state: {
-        story: { date, modified, status },
+        story: { date, origDate, modified, status },
       },
       actions: { updateStory },
     }) => ({
       date,
+      origDate,
       modified,
       status,
       updateStory,
@@ -97,12 +98,13 @@ function PublishTime() {
   const floatingDate =
     ['draft', 'pending', 'auto-draft'].includes(status) &&
     (date === modified || date === null);
-  const displayDate = Date.now();
+
   const displayLabel = !floatingDate
-    ? format(date || displayDate, shortDateFormat) +
+    ? format(date || origDate, shortDateFormat) +
       ' ' +
-      formatTime(date || displayDate)
+      formatTime(date || origDate)
     : __('Immediately', 'web-stories');
+
   return (
     <>
       <Row>
@@ -133,7 +135,7 @@ function PublishTime() {
         zIndex={10}
         renderContents={({ propagateDimensionChange }) => (
           <DateTime
-            value={floatingDate ? displayDate : date}
+            value={floatingDate ? origDate : date}
             onChange={(value, close = false) => {
               handleDateChange(value, close);
             }}
