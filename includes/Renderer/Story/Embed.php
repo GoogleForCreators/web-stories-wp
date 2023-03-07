@@ -103,7 +103,7 @@ class Embed {
 
 		$wrapper_style = sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
-			0 !== $args['width'] ? $args['height'] / $args['width'] : 1,
+			0 !== $args['height'] ? $args['width'] / $args['height'] : 1,
 			(int) $args['width'],
 			(int) $args['height']
 		);
