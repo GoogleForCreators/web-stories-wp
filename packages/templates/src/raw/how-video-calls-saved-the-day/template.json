@@ -1801,7 +1801,7 @@
           "fontSize": 22,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">“Enabling remote work. </span><span style=\"font-weight: 500; color: #fff\">One minute I could be in NY, one minute in Italy. </span><span style=\"color: #fff\">✈️✈️✈️ </span><span style=\"font-weight: 500; color: #fff\">Theoretically, anyway.”</span>",

@@ -870,7 +870,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 100; color: #fff; letter-spacing: 0.05em; text-transform: uppercase\">New York Look 1</span>",
@@ -1132,7 +1132,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 100; color: #fff; text-transform: uppercase\">SIMPLE BUT BOLD</span>",
           "borderRadius": {
@@ -1364,7 +1364,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 100; color: #fff; text-transform: uppercase\">EVERYDAY CLASSIC</span>",
           "borderRadius": {

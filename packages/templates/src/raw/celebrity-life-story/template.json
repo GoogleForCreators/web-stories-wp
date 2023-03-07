@@ -109,7 +109,7 @@
           "fontSize": 40,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Logo</span>",
           "borderRadius": {
@@ -167,7 +167,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #020202\">Rise to Fame:</span>\n<span style=\"font-weight: 700; color: #020202\">Meet Jane Popular</span>",
           "borderRadius": {
@@ -230,7 +230,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #020202; text-transform: uppercase\">By Michaela Doe</span>",
           "borderRadius": {
@@ -292,7 +292,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #020202\">July 22, 2020</span>",
           "borderRadius": {
@@ -417,7 +417,7 @@
           "fontSize": 26,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #80ff44\">Ever wonder how Jane Popular rose to astronomical fame? Let’s take a walk down memory lane.</span>",
           "borderRadius": {
@@ -582,7 +582,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #282828; text-transform: uppercase\">The early years</span>",
           "borderRadius": {
@@ -640,7 +640,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #020202\">1985.-1995.</span>",
           "borderRadius": {
@@ -699,7 +699,7 @@
           "fontSize": 26,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #1e1e1e\">The beginning of her ascent to fame started early and young.</span>",
           "borderRadius": {
@@ -852,7 +852,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1985</span>",
           "borderRadius": {
@@ -916,7 +916,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Her career started as a childhood singer.</span>",
           "borderRadius": {
@@ -1095,7 +1095,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1989</span>",
           "borderRadius": {
@@ -1159,7 +1159,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">By age 16, she had already sung backup vocals for 5 Grammy winning singers.</span>",
           "borderRadius": {
@@ -1330,7 +1330,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1992</span>",
           "borderRadius": {
@@ -1394,7 +1394,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">But a sudden career pivot to the silver screen catapulted her early fame. She soon starred in 5 TV shows, and 4 major motion pictures.</span>",
           "borderRadius": {
@@ -1565,7 +1565,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1995</span>",
           "borderRadius": {
@@ -1629,7 +1629,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">First TV appearance with an all-star cast on the show “All Right With Us.”</span>",
           "borderRadius": {
@@ -1802,7 +1802,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #282828; text-transform: uppercase\">The change</span>",
           "borderRadius": {
@@ -1860,7 +1860,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #020202\">1996.-2001.</span>",
           "borderRadius": {
@@ -1918,7 +1918,7 @@
           "fontSize": 26,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #1e1e1e\">Hitting her stride and making her own brand of fame.</span>",
           "borderRadius": {
@@ -2073,7 +2073,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1996</span>",
           "borderRadius": {
@@ -2137,7 +2137,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">She met Quinn Darandino on the set of Kill Will, which set her movie trajectory into acceleration.</span>",
           "borderRadius": {
@@ -2316,7 +2316,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1996</span>",
           "borderRadius": {
@@ -2380,7 +2380,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Starred in 4 consecutive blockbusters by 2012.</span>",
           "borderRadius": {
@@ -2551,7 +2551,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">1997</span>",
           "borderRadius": {
@@ -2615,7 +2615,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">But a real movie star was made when she starred as Lucy Ohio in “Gone By Day.”</span>",
           "borderRadius": {
@@ -2786,7 +2786,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">2003</span>",
           "borderRadius": {
@@ -2850,7 +2850,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Her first Oscar Nomination as Best Supporting Actress in a foreign film.</span>",
           "borderRadius": {
@@ -3021,7 +3021,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #80ff44\">2012</span>",
           "borderRadius": {
@@ -3085,7 +3085,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Back to back blockbusters and Grammy nominations really made 2012 her year.</span>",
           "borderRadius": {
@@ -3238,7 +3238,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #020202\">Read</span>\n<span style=\"font-weight: 700; color: #020202\">more</span>\n<span style=\"font-weight: 700; color: #020202\">stories</span>",
           "borderRadius": {
@@ -3325,7 +3325,7 @@
           "fontSize": 26,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #020202\">Music</span>\n<span style=\"font-weight: 700; color: #020202\">Legacy</span>",
           "borderRadius": {
@@ -3389,7 +3389,7 @@
           "fontSize": 19,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #020202\">The life of Johnny Dash</span>",
           "borderRadius": {
@@ -3481,7 +3481,7 @@
           "fontSize": 26,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #020202\">Hollywood</span>\n<span style=\"font-weight: 700; color: #020202\">Couples</span>",
           "borderRadius": {
@@ -3545,7 +3545,7 @@
           "fontSize": 19,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #020202\">The Ups and Downs</span>",
           "borderRadius": {

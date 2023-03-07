@@ -138,7 +138,7 @@
           "fontSize": 56,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #f6f2ed\">DIY</span>\n<span style=\"color: #f6f2ed\">Budget</span>\n<span style=\"color: #f6f2ed\">Friendly</span>\n<span style=\"color: #ffb555\">at-home</span>\n<span style=\"color: #ffb555\">office</span>",
@@ -200,7 +200,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #ffb555\">Sylvia Tribel · 31 Aug, 2020</span>",
@@ -346,7 +346,7 @@
           "fontSize": 44,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #373737\">What \nwe need</span>",
@@ -513,7 +513,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">Look for a vintage, statement sofa for your seating area. Scour Ebay, or go to garage sales in your town!</span>",
           "borderRadius": {
@@ -639,7 +639,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">Also consider unusual or minimalistic stools. Overstock sites are a great place to find affordable versions.</span>",
           "borderRadius": {
@@ -751,7 +751,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">Vintage chairs are also a great choice. They usually become a focal piece of the office, not just a comfy place to sit.</span>",
           "borderRadius": {
@@ -918,7 +918,7 @@
           "fontSize": 44,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">Do it in just</span>\n<span style=\"color: #373737\">five steps</span>",
           "borderRadius": {
@@ -1153,7 +1153,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">Since all 3 of our design inspiration leans more minimal, we can gracefully incorporate all styles.</span>",
           "borderRadius": {
@@ -1250,7 +1250,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">You can even incorporate comfortable seating. Who says a workspace has to be all work and no play?</span>",
           "borderRadius": {
@@ -1473,7 +1473,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">Incorporate materials that are complementary. That can be woods, metals, or colors that are neutral.</span>",
           "borderRadius": {
@@ -1634,7 +1634,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">You can create your own desk with two sawhorse legs and simple plank of wood, or purchase a minimal wooden desk.</span>",
           "borderRadius": {
@@ -1855,7 +1855,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">Lastly, put the finishing touches on your workspace once all the furniture is assembled and put into place.</span>",
           "borderRadius": {
@@ -2028,7 +2028,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">The Result</span>",
           "borderRadius": {
@@ -2091,7 +2091,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #373737\">A well-rounded, minimal chic office space!</span>",
           "borderRadius": {
@@ -2163,7 +2163,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #f6f2ed\">Voilá !</span>",
           "borderRadius": {
@@ -2299,7 +2299,7 @@
           "fontSize": 32,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #f6f2ed\">Next up</span>",
           "borderRadius": {
@@ -2423,7 +2423,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #f6f2ed\">Build a budget home spa in your bathroom</span>",
           "borderRadius": {
