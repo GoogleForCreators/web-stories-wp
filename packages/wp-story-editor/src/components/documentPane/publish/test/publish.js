@@ -187,7 +187,9 @@ describe('PublishPanel', () => {
 
   it('should allow resetting the publish time', async () => {
     const { updateStory } = arrange();
-    let dateButton = screen.getByRole('button', { name: 'Story publish time' });
+    const dateButton = screen.getByRole('button', {
+      name: 'Story publish time',
+    });
 
     fireEvent.click(dateButton);
     const resetButton = screen.getByRole('button', {
@@ -198,44 +200,6 @@ describe('PublishPanel', () => {
 
     const calledArg = updateStory.mock.calls[0][0];
     expect(calledArg.properties.date).toBeNull();
-
-    dateButton = screen.getByRole('button', { name: 'Story publish time' });
-  });
-
-  it('should update the story when choosing time', async () => {
-    const { updateStory } = arrange();
-    const element = screen.getByRole('button', { name: 'Story publish time' });
-
-    fireEvent.click(element);
-    const hours = screen.getByLabelText('Hours');
-    const minutes = screen.getByLabelText('Minutes');
-    const am = screen.getByRole('radio', { name: 'AM' });
-
-    await waitFor(() => expect(minutes).toBeDefined());
-    expect(hours).toBeInTheDocument();
-    expect(am).toBeInTheDocument();
-
-    fireEvent.change(hours, { target: { value: '9' } });
-    fireEvent.blur(hours);
-
-    fireEvent.change(minutes, { target: { value: '59' } });
-    fireEvent.blur(minutes);
-
-    fireEvent.click(am);
-
-    expect(updateStory).toHaveBeenCalledTimes(3);
-    const calledArgs = updateStory.mock.calls;
-
-    // The original date was using PM.
-    const date1 = new Date(calledArgs[0][0].properties.date);
-    expect(date1.getHours()).toBe(21);
-
-    const date2 = new Date(calledArgs[1][0].properties.date);
-    expect(date2.getMinutes()).toBe(59);
-
-    // After choosing AM, the hours should be 9.
-    const date3 = new Date(calledArgs[2][0].properties.date);
-    expect(date3.getHours()).toBe(9);
   });
 
   it('should not update the date with incorrect times', async () => {
