@@ -349,7 +349,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase\">Fashion Inspiration</span>",
           "borderRadius": {
@@ -466,7 +466,7 @@
           "fontSize": 51,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 200\">Inside</span>\n<span style=\"font-weight: 200\">Jean Legere's</span>\n<span style=\"font-weight: 200\">Closet</span>",
           "borderRadius": {
@@ -782,7 +782,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.28em; text-transform: uppercase\">Alexander McQueen Suit</span>",
           "borderRadius": {
@@ -1369,7 +1369,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase\">Alexander McQueen Suit</span>",
           "borderRadius": {
@@ -1701,7 +1701,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.28em; text-transform: uppercase\">Audemars Piguet Royal</span>",
           "borderRadius": {
@@ -2133,7 +2133,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase\">Audemars Piguet Royal</span>",
           "borderRadius": {
@@ -2465,7 +2465,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.28em; text-transform: uppercase\">Drake's Classic Scarf</span>",
           "borderRadius": {
@@ -2925,7 +2925,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase\">Drake's Classic Scarf</span>",
           "borderRadius": {
@@ -3230,7 +3230,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase\">More style round ups</span>",
           "borderRadius": {
@@ -3420,7 +3420,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 200; letter-spacing: 0.28em\">01</span>",
           "borderRadius": {
@@ -3541,7 +3541,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 200; letter-spacing: 0.28em\">02</span>",
           "borderRadius": {
@@ -3733,7 +3733,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 200; letter-spacing: 0.28em\">03</span>",
           "borderRadius": {

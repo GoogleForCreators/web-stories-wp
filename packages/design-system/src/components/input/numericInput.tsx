@@ -35,6 +35,7 @@ const NumericInput = forwardRef(function NumericInput(
     min,
     value = '',
     isIndeterminate: originalIsIndeterminate,
+    padZero,
     ...props
   }: NumericInputProps,
   ref: ForwardedRef<HTMLInputElement>
@@ -92,7 +93,9 @@ const NumericInput = forwardRef(function NumericInput(
       ref={inputRef}
       onBlur={handleBlur}
       onChange={handleChange}
-      value={String(currentValue)}
+      value={
+        padZero ? String(currentValue).padStart(2, '0') : String(currentValue)
+      }
       isIndeterminate={isIndeterminate && originalIsIndeterminate}
       {...props}
     />

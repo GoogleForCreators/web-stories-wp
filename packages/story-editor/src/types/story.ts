@@ -66,6 +66,8 @@ export interface StorySaveData
 
 // Data that's returned from API after saving.
 export interface StoryReturnData {
+  date: string;
+  modified: string;
   slug: string;
   status: string;
   link: string;

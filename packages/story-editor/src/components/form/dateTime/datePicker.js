@@ -51,7 +51,10 @@ const FallbackCalendar = styled.div`
 
 function DatePicker({ currentDate, onChange, onViewChange }) {
   const nodeRef = useRef();
-  const value = useMemo(() => new Date(currentDate), [currentDate]);
+  const value = useMemo(
+    () => (currentDate ? new Date(currentDate) : new Date()),
+    [currentDate]
+  );
   const handleOnChange = useCallback(
     (newDate) => {
       newDate.setHours(value.getHours());

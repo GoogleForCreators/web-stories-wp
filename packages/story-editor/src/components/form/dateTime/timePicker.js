@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { useEffect, useRef } from '@googleforcreators/react';
+import { NumericInput } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -48,33 +49,20 @@ const InputRow = styled.div`
   display: flex;
 `;
 
-const NumberInput = styled.input`
-  min-height: 30px;
-  box-shadow: 0 0 0 transparent;
-  transition: box-shadow 0.1s linear;
-  border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  height: 28px;
-  vertical-align: middle;
+const NumberInput = styled(NumericInput)`
   background-color: ${({ theme }) => theme.colors.bg.tertiary};
   color: ${({ theme }) => theme.colors.fg.tertiary};
 
-  &:active,
-  &:focus {
-    color: ${({ theme }) => theme.colors.fg.primary};
-    border: 1px solid ${({ theme }) => theme.colors.border.defaultActive};
-  }
-
-  padding: 0;
   margin-right: 4px;
-  text-align: center;
   width: 50%;
   max-width: 50px;
 
-  ::-webkit-inner-spin-button,
-  ::-webkit-outer-spin-button {
-    margin: 0;
-    appearance: none;
+  div {
+    height: 32px;
+  }
+
+  input {
+    text-align: center;
   }
 `;
 
@@ -91,11 +79,11 @@ const StyledSwitch = styled(Switch)`
   width: 100px;
 `;
 
-function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
-  const onChangeEvent = (prop) => (evt) => {
-    setLocalData({
-      ...localData,
-      [prop]: parseInt(evt.target.value),
+function TimePicker({ onChange, is12Hour, localeData, setLocaleData }) {
+  const onChangeEvent = (prop) => (_, value) => {
+    setLocaleData({
+      ...localeData,
+      [prop]: parseInt(value) || localeData[prop],
     });
   };
 
@@ -108,7 +96,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
   };
 
   const getHours = (value) => {
-    const { am } = localData;
+    const { am } = localeData;
     if (!is12Hour) {
       return value;
     }
@@ -116,12 +104,12 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
   };
 
   const changeDate = (newDate, props = {}) => {
-    setLocalData({ ...localData, ...props, date: newDate });
+    setLocaleData({ ...localeData, ...props, date: newDate });
     onChange(newDate.toISOString());
   };
 
   const updateMinutes = () => {
-    const { minutes, date } = localData;
+    const { minutes, date } = localeData;
     const value = parseInt(minutes);
     if (isNaN(value) || value < 0 || value > 59) {
       return;
@@ -134,7 +122,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
   };
 
   const updateHours = () => {
-    const { hours, date } = localData;
+    const { hours, date } = localeData;
     const value = parseInt(hours);
     if (isNaN(value) || value < getMinHours() || value > getMaxHours()) {
       return;
@@ -148,7 +136,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
   };
 
   const updateAmPm = (_evt, useAM) => {
-    const { am, date, hours } = localData;
+    const { am, date, hours } = localeData;
 
     if (am === 'AM' && useAM) {
       return;
@@ -169,7 +157,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
     hours.current.focus();
   }, []);
 
-  const isAM = localData.am === 'AM';
+  const isAM = localeData.am === 'AM';
 
   return (
     <TimeWrapper>
@@ -180,23 +168,23 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
             <NumberInput
               ref={hours}
               aria-label={__('Hours', 'web-stories')}
-              type="number"
               step={1}
               min={getMinHours()}
               max={getMaxHours()}
-              value={parseInt(localData.hours)}
+              value={parseInt(localeData.hours)}
               onChange={onChangeEvent('hours')}
               onBlur={updateHours}
+              padZero
             />
             <TimeSeparator>{':'}</TimeSeparator>
             <NumberInput
               aria-label={__('Minutes', 'web-stories')}
-              type="number"
               min={0}
               max={59}
-              value={parseInt(localData.minutes)}
+              value={parseInt(localeData.minutes)}
               onChange={onChangeEvent('minutes')}
               onBlur={updateMinutes}
+              padZero
             />
           </InputGroup>
           {is12Hour && (
@@ -221,13 +209,13 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
 TimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   is12Hour: PropTypes.bool,
-  localData: PropTypes.shape({
+  localeData: PropTypes.shape({
     am: PropTypes.string.isRequired,
     hours: PropTypes.number.isRequired,
     minutes: PropTypes.number.isRequired,
     date: PropTypes.instanceOf(Date).isRequired,
   }).isRequired,
-  setLocalData: PropTypes.func.isRequired,
+  setLocaleData: PropTypes.func.isRequired,
 };
 
 export default TimePicker;

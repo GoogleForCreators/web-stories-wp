@@ -908,7 +908,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 01 for Animators</span>",
@@ -1148,7 +1148,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:95/100</span>",
@@ -1262,7 +1262,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 01 for Animators</span>",
           "borderRadius": {
@@ -1502,7 +1502,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:92/100</span>",
           "borderRadius": {
@@ -1616,7 +1616,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 01 for Animators</span>",
           "borderRadius": {
@@ -2739,7 +2739,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 02 for Writers</span>",
           "borderRadius": {
@@ -2980,7 +2980,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:97/100</span>",
           "borderRadius": {
@@ -3094,7 +3094,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 02 for Writers</span>",
           "borderRadius": {
@@ -3332,7 +3332,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:98/100</span>",
           "borderRadius": {
@@ -3446,7 +3446,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 01 for Animators</span>",
           "borderRadius": {
@@ -4658,7 +4658,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 03 for Designers</span>",
           "borderRadius": {
@@ -4897,7 +4897,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:94/100</span>",
           "borderRadius": {
@@ -5011,7 +5011,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; 03 for Designers</span>",
           "borderRadius": {
@@ -5249,7 +5249,7 @@
           "fontSize": 16,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #0057ff; text-transform: uppercase\">&gt;&gt;&gt; Score:96/100</span>",
           "borderRadius": {
@@ -5363,7 +5363,7 @@
           "fontSize": 23,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Best laptop...&nbsp;</span>",
           "borderRadius": {
@@ -5494,7 +5494,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f; letter-spacing: 0.1em; text-transform: uppercase\">For Animators</span>",
           "borderRadius": {
@@ -5630,7 +5630,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; Score:95/100</span>",
           "borderRadius": {
@@ -5761,7 +5761,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f; letter-spacing: 0.1em; text-transform: uppercase\">For Writers</span>",
           "borderRadius": {
@@ -5897,7 +5897,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; Score:95/100</span>",
           "borderRadius": {
@@ -6027,7 +6027,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #2f2f2f; letter-spacing: 0.1em; text-transform: uppercase\">For Designers</span>",
           "borderRadius": {
@@ -6163,7 +6163,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #0057ff; letter-spacing: 0.1em; text-transform: uppercase\">&gt;&gt;&gt; Score:95/100</span>",
           "borderRadius": {
@@ -6367,7 +6367,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.1em\">01</span>",
           "borderRadius": {
@@ -6467,7 +6467,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Find the right tablet</span>",
           "borderRadius": {
@@ -6536,7 +6536,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em\">&gt;&gt;&gt;</span>",
           "borderRadius": {
@@ -6604,7 +6604,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff; letter-spacing: 0.1em\">02</span>",
           "borderRadius": {
@@ -6705,7 +6705,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Get savvy on Sketch</span>",
           "borderRadius": {
@@ -6774,7 +6774,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff; letter-spacing: 0.1em\">&gt;&gt;&gt;</span>",
           "borderRadius": {

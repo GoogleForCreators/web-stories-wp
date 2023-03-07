@@ -909,7 +909,7 @@
           "backgroundTextMode": "NONE",
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
-          "textAlign": "initial",
+          "textAlign": "left",
           "id": "566dcf70-af92-4ee1-8a03-e07dab4556b8",
           "content": "<span style=\"color: #211f1e\">Every deck starts with a solid foundation. There are a few ways that a foundation system for a deck can be constructed and we’ll highlight three of them: footing, pier, and pier/footing.</span>",
           "fontSize": 16,
