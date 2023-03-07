@@ -40,7 +40,13 @@ describe('setBackgroundElement', () => {
     const result = setBackgroundElement({ elementId: '123' });
 
     expect(result.pages[0].elements).toStrictEqual([
-      { id: '123', isBackground: true, opacity: 100, resource: {} },
+      {
+        id: '123',
+        isBackground: true,
+        isHidden: false,
+        opacity: 100,
+        resource: {},
+      },
     ]);
   });
   it('should not set opacity for new background elements if none was present', () => {
@@ -63,7 +69,7 @@ describe('setBackgroundElement', () => {
     const result = setBackgroundElement({ elementId: '123' });
 
     expect(result.pages[0].elements).toStrictEqual([
-      { id: '123', isBackground: true, resource: {} },
+      { id: '123', isBackground: true, isHidden: false, resource: {} },
     ]);
   });
 
@@ -90,7 +96,7 @@ describe('setBackgroundElement', () => {
     const result = setBackgroundElement({ elementId: '456' });
 
     expect(result.pages[0].elements).toStrictEqual([
-      { id: '456', isBackground: true, resource: {} },
+      { id: '456', isBackground: true, isHidden: false, resource: {} },
       { id: '789' },
     ]);
   });
@@ -129,7 +135,7 @@ describe('setBackgroundElement', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true, opacity: 100 },
+            { id: '123', isBackground: true, isHidden: false, opacity: 100 },
             { id: '456' },
             { id: '789' },
           ],
@@ -154,7 +160,7 @@ describe('setBackgroundElement', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true, opacity: 100 },
+            { id: '123', isBackground: true, isHidden: false, opacity: 100 },
             { id: '456' },
             { id: '789' },
           ],
@@ -200,7 +206,7 @@ describe('setBackgroundElement', () => {
           isDefaultBackground: true,
         },
         elements: [
-          { id: '789', isBackground: true, resource: {} },
+          { id: '789', isBackground: true, isHidden: false, resource: {} },
           { id: '456' },
         ],
       })
@@ -230,7 +236,7 @@ describe('setBackgroundElement', () => {
     const result = setBackgroundElement({ elementId: '789' });
 
     expect(result.pages[0].elements).toStrictEqual([
-      { id: '789', isBackground: true, resource: {} },
+      { id: '789', isBackground: true, isHidden: false, resource: {} },
       { id: '456' },
     ]);
   });
@@ -258,7 +264,7 @@ describe('setBackgroundElement', () => {
     const result = setBackgroundElement({ elementId: '789' });
 
     expect(result.pages[0].elements).toStrictEqual([
-      { id: '789', isBackground: true, resource: {} },
+      { id: '789', isBackground: true, isHidden: false, resource: {} },
       { id: '456' },
     ]);
     expect(result.selection).toStrictEqual([]);
