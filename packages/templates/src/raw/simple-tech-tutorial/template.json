@@ -65,7 +65,7 @@
           "fontSize": 36,
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "hasHiddenPadding": true,
@@ -135,7 +135,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "hasHiddenPadding": true,
@@ -302,7 +302,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "hasHiddenPadding": true,
@@ -405,7 +405,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 38, "g": 65, "b": 86 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "hasHiddenPadding": true,
@@ -475,7 +475,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #264156\">Check your passwords</span>",
@@ -540,7 +540,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
           "content": "<span style=\"color: #264156\">Run an audit on your existing passwords in Chrome.</span>",
@@ -761,7 +761,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 38, "g": 65, "b": 86 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "hasHiddenPadding": true,
@@ -831,7 +831,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #264156\">Install Noblockers.</span>",
           "borderRadius": {
@@ -896,7 +896,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #264156\">To get even more tracking data about a URL, or to block it, Safari-style, use an extension like </span><span style=\"text-decoration: underline; color: #264156\">Noblockers</span><span style=\"color: #264156\">.</span>",
           "borderRadius": {
@@ -1084,7 +1084,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "hasHiddenPadding": true,
@@ -1178,7 +1178,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 38, "g": 65, "b": 86 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "hasHiddenPadding": true,
@@ -1248,7 +1248,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #264156\">Police Extensions</span>",
           "borderRadius": {
@@ -1313,7 +1313,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #264156\">To police extension permissions, go to Choose More Tools &gt; Extensions from the Chrome menu.</span>",
           "borderRadius": {
@@ -1468,7 +1468,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 38, "g": 65, "b": 86 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "hasHiddenPadding": true,
@@ -1538,7 +1538,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #264156\">Detailed Extensions</span>",
           "borderRadius": {
@@ -1603,7 +1603,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #264156\">Then click Details next to the extension you need.</span>",
           "borderRadius": {
@@ -1760,7 +1760,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #264156\">Other Stories</span>",
           "borderRadius": {
@@ -1825,7 +1825,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #264156\">How to use breakout rooms in Vroom</span>",
           "borderRadius": {
@@ -1891,7 +1891,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #264156\">How to use the Together App for video calls</span>",
           "borderRadius": {

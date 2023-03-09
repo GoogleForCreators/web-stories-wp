@@ -110,7 +110,7 @@
           "fontSize": 140,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.9,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff\">12</span>",
           "borderRadius": {
@@ -175,7 +175,7 @@
           "fontSize": 60,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff\">Hours</span><span style=\"font-weight: 700\"> </span><span style=\"font-weight: 700; color: #160236\">in</span>\n<span style=\"font-weight: 700; color: #160236\">Barcelona</span>",
           "borderRadius": {
@@ -236,7 +236,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #080439; letter-spacing: 0.01em; text-transform: uppercase\">By </span><span style=\"font-weight: 700; color: #080439; letter-spacing: 0.01em; text-transform: uppercase\">Marco Christiansen</span><span style=\"color: #080439; letter-spacing: 0.01em; text-transform: uppercase\"> | Jun 21, 2021</span>",
           "borderRadius": {
@@ -403,7 +403,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">The writter</span>",
           "borderRadius": {
@@ -468,7 +468,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff\">Marco</span>\n<span style=\"font-weight: 700; color: #fff\">Christiansen</span>",
           "borderRadius": {
@@ -579,7 +579,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Author of “Barcelona</span>\n<span style=\"color: #fff\">by Day and Night”</span>",
           "borderRadius": {
@@ -654,7 +654,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Editor at Large for\nConde Nast Traveler</span>",
           "borderRadius": {
@@ -729,7 +729,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff\">Writer for NY Times\nMagazine</span>",
           "borderRadius": {
@@ -908,7 +908,7 @@
           "fontSize": 28,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #080439\">Live the Journey</span>",
           "borderRadius": {
@@ -982,7 +982,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #080439\">Churches and</span>\n<span style=\"color: #080439\">monasteries</span>",
           "borderRadius": {
@@ -1057,7 +1057,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #080439\">Most famous</span>\n<span style=\"color: #080439\">shoping street</span>",
           "borderRadius": {
@@ -1132,7 +1132,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #080439\">Authentic culinary</span>\n<span style=\"color: #080439\">paradise</span>",
           "borderRadius": {
@@ -1302,7 +1302,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 255, "g": 199, "b": 0 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
@@ -1501,7 +1501,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Morning</span>",
           "borderRadius": {
@@ -1567,7 +1567,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff\">Park</span>\n<span style=\"font-weight: 700; color: #fff\">Güell</span>",
           "borderRadius": {
@@ -1740,7 +1740,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 255, "g": 199, "b": 0 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
@@ -1910,7 +1910,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Morning</span>",
           "borderRadius": {
@@ -1976,7 +1976,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">Gaudí</span>\n<span style=\"font-weight: 500; color: #fff\">House</span>\n<span style=\"font-weight: 500; color: #fff\">Museum</span>",
           "borderRadius": {
@@ -2151,7 +2151,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 255, "g": 199, "b": 0 } },
           "lineHeight": 1.5,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
@@ -2316,7 +2316,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Afternoon</span>",
           "borderRadius": {
@@ -2382,7 +2382,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">Art\nNouveau\nFor Days</span>",
           "borderRadius": {
@@ -2557,7 +2557,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 255, "g": 199, "b": 0 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
@@ -2839,7 +2839,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Afternoon</span>",
           "borderRadius": {
@@ -2905,7 +2905,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">Casa</span>\n<span style=\"color: #fff\">Batlló</span>",
           "borderRadius": {
@@ -2966,7 +2966,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 255, "g": 199, "b": 0 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
@@ -3134,7 +3134,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Evening</span>",
           "borderRadius": {
@@ -3200,7 +3200,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">Basílica</span>",
           "borderRadius": {
@@ -3373,7 +3373,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 255, "g": 199, "b": 0 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
@@ -3552,7 +3552,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Evening</span>",
           "borderRadius": {
@@ -3618,7 +3618,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">Bar\nRamón</span>",
           "borderRadius": {
@@ -3791,7 +3791,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 255, "g": 199, "b": 0 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
@@ -4058,7 +4058,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 255, "g": 199, "b": 0 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": false,
             "hasHiddenPadding": true,
@@ -4223,7 +4223,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">Next steps</span>",
           "borderRadius": {
@@ -4289,7 +4289,7 @@
           "fontSize": 42,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">More</span>\n<span style=\"font-weight: 500; color: #fff\">Stories</span>",
           "borderRadius": {
@@ -4355,7 +4355,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #ffc700\">3</span>",
           "borderRadius": {
@@ -4422,7 +4422,7 @@
           "fontSize": 20,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">days in</span>\n<span style=\"font-weight: 500; color: #fff\">East Berlin</span>",
           "borderRadius": {
@@ -4558,7 +4558,7 @@
           "fontSize": 50,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #ffc700\">A</span>",
           "borderRadius": {
@@ -4625,7 +4625,7 @@
           "fontSize": 20,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #fff\">dream week</span>\n<span style=\"color: #fff\">in Amsterdam</span>",
           "borderRadius": {

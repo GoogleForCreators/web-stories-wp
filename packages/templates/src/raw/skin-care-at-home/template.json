@@ -102,7 +102,7 @@
           "fontSize": 35,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.19,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">3 facials</span><span style=\"color: #380e63; text-transform: uppercase\"> </span><span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">you can try at home</span>",
           "borderRadius": {
@@ -171,7 +171,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">JOHN DOE</span>",
           "borderRadius": {
@@ -296,7 +296,7 @@
           "fontSize": 30,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">The </span><span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">Brightening </span><span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">Facial</span>",
           "borderRadius": {
@@ -364,7 +364,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">01</span>",
           "borderRadius": {
@@ -498,7 +498,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Lapis Facial Oil</span>",
           "borderRadius": {
@@ -567,7 +567,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63\">An inflammation-reducing facial oil that we recommend for even the most sensitive skin.</span>",
           "borderRadius": {
@@ -1033,7 +1033,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Rosehip BioRegenerate Oil</span>",
           "borderRadius": {
@@ -1102,7 +1102,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63\">Streamline your routine with this multitasking oil that does it all: conditions &amp; firms.</span>",
           "borderRadius": {
@@ -1568,7 +1568,7 @@
           "fontSize": 30,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">The </span><span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">Clarifying </span><span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">Facial</span>",
           "borderRadius": {
@@ -1636,7 +1636,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">02</span>",
           "borderRadius": {
@@ -1770,7 +1770,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Carrot Seed Facial Oil</span>",
           "borderRadius": {
@@ -1839,7 +1839,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63\">A lightweight, healing vitamin boost that deeply nourishes and reinforces the skin's barrier.</span>",
           "borderRadius": {
@@ -2308,7 +2308,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Avocado, Poppy Seed Oil</span>",
           "borderRadius": {
@@ -2377,7 +2377,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63\">Look for a seed oil that is targeted at clearing out impurities in the skin, especially when used with a clarifying cleanser.</span>",
           "borderRadius": {
@@ -2846,7 +2846,7 @@
           "fontSize": 30,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63\">THE </span><span style=\"font-weight: 700; color: #380e63\">CALMING </span><span style=\"font-weight: 300; color: #380e63\">FACIAL</span>",
           "borderRadius": {
@@ -2914,7 +2914,7 @@
           "fontSize": 14,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">03</span>",
           "borderRadius": {
@@ -3048,7 +3048,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Water-Lock Moisturizer</span>",
           "borderRadius": {
@@ -3117,7 +3117,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63\">Hydrate more and waste less with this refillable, lightweight daily moisturizer.</span>",
           "borderRadius": {
@@ -3586,7 +3586,7 @@
           "fontSize": 24,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63\">Calendula Hydrating Cream</span>",
           "borderRadius": {
@@ -3655,7 +3655,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63\">Like a panic button for cranky skin, this moisturizer instantly soothes irritation.</span>",
           "borderRadius": {
@@ -4124,7 +4124,7 @@
           "fontSize": 30,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 300; color: #380e63; text-transform: uppercase\">The Author:</span>\n<span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">Sandra Lanshin</span>",
           "borderRadius": {
@@ -4193,7 +4193,7 @@
           "fontSize": 18,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 700; color: #380e63; text-transform: uppercase\">Watch next</span>",
           "borderRadius": {

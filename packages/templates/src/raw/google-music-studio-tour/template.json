@@ -142,7 +142,7 @@
           "fontSize": 12,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #fff8ed; letter-spacing: 0.12em; text-transform: uppercase\">Brooklyn Simmons</span>",
           "borderRadius": {
@@ -393,7 +393,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #cdcbc8; letter-spacing: 0.12em\">01</span>",
           "borderRadius": {
@@ -705,7 +705,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #cdcbc8; letter-spacing: 0.12em\">02</span>",
           "borderRadius": {
@@ -983,7 +983,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #cdcbc8; letter-spacing: 0.12em\">03</span>",
           "borderRadius": {
@@ -1327,7 +1327,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #cdcbc8; letter-spacing: 0.12em\">01</span>",
           "borderRadius": {
@@ -1641,7 +1641,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #cdcbc8; letter-spacing: 0.12em\">02</span>",
           "borderRadius": {
@@ -2117,7 +2117,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #cdcbc8; letter-spacing: 0.12em\">01</span>",
           "borderRadius": {
@@ -2505,7 +2505,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.4,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #cdcbc8; letter-spacing: 0.12em\">02</span>",
           "borderRadius": {

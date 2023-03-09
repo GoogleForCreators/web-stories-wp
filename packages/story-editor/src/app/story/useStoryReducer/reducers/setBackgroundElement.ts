@@ -114,6 +114,9 @@ export const setBackgroundElement = (
         if (Object.prototype.hasOwnProperty.call(element, 'opacity')) {
           element.opacity = 100;
         }
+
+        // See https://github.com/GoogleForCreators/web-stories-wp/issues/12778.
+        element.isHidden = false;
       }
     });
 

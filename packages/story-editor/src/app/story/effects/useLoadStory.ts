@@ -123,6 +123,7 @@ function loadStory(
     status,
     author,
     date,
+    origDate,
     modified,
     excerpt,
     slug,

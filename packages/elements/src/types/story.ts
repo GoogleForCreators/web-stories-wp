@@ -59,6 +59,7 @@ export interface Story {
   title: string;
   author: Author;
   date: null | string;
+  origDate: null | string;
   modified: string;
   excerpt: string;
   slug: string;

@@ -71,7 +71,7 @@
           "fontSize": 30,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"font-weight: 500; color: #dbe2e7\">Vintage Chairs: What to look for and how to buy</span>",
           "borderRadius": {
@@ -142,7 +142,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #dbe2e7\">Billy Rogers</span>",
           "borderRadius": {
@@ -284,7 +284,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #313831\">The duo behind Brooklyn’s hip antique furniture store, Lichen, clue us in on what to look for when it comes to vintage seating.</span>",
           "borderRadius": {
@@ -478,7 +478,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #313831\">If you don’t know what era, what style and who it’s made by, don’t sweat it.</span>",
           "borderRadius": {
@@ -948,7 +948,7 @@
           "fontSize": 17,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #313831\">When you find an interesting chair, do you like the curvature? The angles? The lines?</span>",
           "borderRadius": {
@@ -1418,7 +1418,7 @@
           "fontSize": 21,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #313831\">“Try before you buy. See it, smell it, sit on it. And - bargain for it.</span>",
           "borderRadius": {
@@ -1489,7 +1489,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #313831\">Mark Jackson</span>",
           "borderRadius": {
@@ -1584,7 +1584,7 @@
           "fontSize": 21,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #dbe2e7\">Read More:</span>",
           "borderRadius": {
@@ -1706,7 +1706,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #313831\">Make it&nbsp;</span>\n<span style=\"color: #313831\">Mid-Century</span>",
           "borderRadius": {
@@ -1830,7 +1830,7 @@
           "fontSize": 15,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "content": "<span style=\"color: #313831\">How to</span>\n<span style=\"color: #313831\">Re-decorate Your Bathroom on a Budget</span>",
           "borderRadius": {
