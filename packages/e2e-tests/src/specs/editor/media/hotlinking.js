@@ -57,7 +57,7 @@ describe('Media Hotlinking', () => {
     await expect(page).toClick('button[aria-label="Insert by link"]');
 
     await page.waitForSelector('[role="dialog"]');
-    await expect(page).toMatch('Insert external image or video');
+    await expect(page).toMatchTextContent('Insert external image or video');
 
     await page.type('input[type="url"]', IMAGE_URL_LOCAL);
 
@@ -81,7 +81,7 @@ describe('Media Hotlinking', () => {
     ]);
 
     // Dialog should disappear by now.
-    await expect(page).not.toMatch('Insert external image or video');
+    await expect(page).not.toMatchTextContent('Insert external image or video');
 
     await expect(page).toMatchElement(`img[src="${IMAGE_URL_LOCAL}"]`);
   });
@@ -92,7 +92,7 @@ describe('Media Hotlinking', () => {
     await expect(page).toClick('button[aria-label="Insert by link"]');
 
     await page.waitForSelector('[role="dialog"]');
-    await expect(page).toMatch('Insert external image or video');
+    await expect(page).toMatchTextContent('Insert external image or video');
 
     await page.type('input[type="url"]', IMAGE_URL_CORS_PROXY);
 
@@ -116,7 +116,7 @@ describe('Media Hotlinking', () => {
     ]);
 
     // Dialog should disappear by now.
-    await expect(page).not.toMatch('Insert external image or video');
+    await expect(page).not.toMatchTextContent('Insert external image or video');
 
     await page.waitForSelector(
       '[aria-label="Design options for selected element"]'
@@ -142,7 +142,9 @@ describe('Media Hotlinking', () => {
         text: 'Link to a file',
       });
       await page.waitForSelector('[role="dialog"]');
-      await expect(page).toMatch('Use external image as poster image');
+      await expect(page).toMatchTextContent(
+        'Use external image as poster image'
+      );
 
       await page.type('input[type="url"]', IMAGE_URL_LOCAL);
 

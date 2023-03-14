@@ -73,8 +73,8 @@ describe('Admin Menu', () => {
       page.waitForNavigation(),
     ]);
 
-    await expect(page).toMatch('Viewing all');
-    await expect(page).toMatch('templates');
+    await expect(page).toMatchTextContent('Viewing all');
+    await expect(page).toMatchTextContent('templates');
   });
 
   it('should link to "Settings"', async () => {
@@ -90,6 +90,6 @@ describe('Admin Menu', () => {
       page.waitForNavigation(),
     ]);
 
-    await expect(page).toMatch('Google Analytics Tracking ID');
+    await expect(page).toMatchTextContent('Google Analytics Tracking ID');
   });
 });

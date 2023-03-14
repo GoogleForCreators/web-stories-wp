@@ -67,7 +67,7 @@ describe('Publish panel in document tab', () => {
     const authorDropDownButton = await expect(page).toMatchElement(
       'button[aria-label="Author"]'
     );
-    await expect(authorDropDownButton).toMatch('admin');
+    await expect(authorDropDownButton).toMatchTextContent('admin');
 
     await authorDropDownButton.click();
 
@@ -104,6 +104,6 @@ describe('Publish panel in document tab', () => {
     expect(optionListAfterSearch).toHaveLength(1);
 
     await expect(authorDropDownOptions).toClick('li', { text: 'author' });
-    await expect(authorDropDownButton).toMatch('author');
+    await expect(authorDropDownButton).toMatchTextContent('author');
   });
 });

@@ -26,7 +26,7 @@ async function logoutUser() {
     expect(page).toClick('a', { text: 'log out' }),
   ]);
 
-  await expect(page).toMatch(/You are now logged out/i);
+  await expect(page).toMatchTextContent(/You are now logged out/i);
 }
 
 export default logoutUser;

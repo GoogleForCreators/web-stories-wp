@@ -71,7 +71,7 @@ export const getFontList = async () => {
  * @return {Promise<void>}
  */
 export const addCustomFont = async (fontUrl) => {
-  await expect(page).toMatch('Custom Fonts');
+  await expect(page).toMatchTextContent('Custom Fonts');
 
   await expect(page).toClick('label', {
     text: 'Insert Font URL',
@@ -99,7 +99,7 @@ export const addCustomFont = async (fontUrl) => {
  * @return {Promise<void>}
  */
 export const removeCustomFont = async (fontName) => {
-  await expect(page).toMatch('Custom Fonts');
+  await expect(page).toMatchTextContent('Custom Fonts');
 
   const numberOfFonts = await page.evaluate(() => {
     return document.querySelector('div[role=listbox]')?.children?.length || 0;

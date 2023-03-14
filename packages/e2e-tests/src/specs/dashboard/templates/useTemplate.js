@@ -38,7 +38,7 @@ describe('Explore Templates', () => {
     });
     await page.waitForTimeout(100);
 
-    await expect(page).toMatch(/Viewing all (\d+) templates/);
+    await expect(page).toMatchTextContent(/Viewing all (\d+) templates/);
 
     await expect(page).toClick('[data-testid="template-grid-item-1"] button', {
       text: 'See details',

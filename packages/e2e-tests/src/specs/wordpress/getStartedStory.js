@@ -35,7 +35,7 @@ describe('Get Started Story', () => {
       );
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
-      await expect(page).toMatch(
+      await expect(page).toMatchTextContent(
         /Tips to make the most of the Web Stories Editor/i
       );
 
@@ -55,7 +55,7 @@ describe('Get Started Story', () => {
 
       await page.reload();
       await expect(page).toMatchElement('input[placeholder="Add title"]');
-      await expect(page).toMatch(
+      await expect(page).toMatchTextContent(
         /Tips to make the most of the Web Stories Editor/i
       );
     });
@@ -81,7 +81,7 @@ describe('Get Started Story', () => {
       await takeSnapshot(page, 'Get Started Story (Author)');
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
-      await expect(page).toMatch(
+      await expect(page).toMatchTextContent(
         /Tips to make the most of the Web Stories Editor/i
       );
 
@@ -91,7 +91,7 @@ describe('Get Started Story', () => {
 
       await page.reload();
       await expect(page).toMatchElement('input[placeholder="Add title"]');
-      await expect(page).toMatch(
+      await expect(page).toMatchTextContent(
         /Tips to make the most of the Web Stories Editor/i
       );
     });

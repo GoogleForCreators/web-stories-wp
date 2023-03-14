@@ -68,7 +68,7 @@ describe('Web Stories Block', () => {
 
     await expect(page).toClick('button', { text: 'Single Story' });
 
-    await expect(page).toMatch(
+    await expect(page).toMatchTextContent(
       'Select an existing story from your site, or add one with a URL.'
     );
     await expect(page).toClick('button', { text: 'Insert from URL' });
@@ -79,14 +79,14 @@ describe('Web Stories Block', () => {
     );
     await expect(page).toClick('button[aria-label="Embed"]');
 
-    await expect(page).not.toMatch(
+    await expect(page).not.toMatchTextContent(
       'Sorry, this content could not be embedded.'
     );
 
     // Wait a little longer for embed REST API request to come back.
     await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
-    await expect(page).toMatch('Embed Settings');
+    await expect(page).toMatchTextContent('Embed Settings');
   });
 
   it('should insert a new web stories block and select story', async () => {

@@ -36,7 +36,7 @@ describe('SVG', () => {
     await createNewStory();
 
     await expect(page).toClick('button[aria-label="Upload"]');
-    await expect(page).toMatch('Upload to Story');
+    await expect(page).toMatchTextContent('Upload to Story');
     await expect(page).toClick('button', { text: 'Media Library' });
 
     await expect(page).toClick(
@@ -75,7 +75,7 @@ describe('SVG', () => {
       visible: true,
     });
 
-    await expect(page).toMatch('Select as publisher logo');
+    await expect(page).toMatchTextContent('Select as publisher logo');
     await expect(page).toClick('button', { text: 'Media Library' });
 
     await expect(page).not.toMatchElement(

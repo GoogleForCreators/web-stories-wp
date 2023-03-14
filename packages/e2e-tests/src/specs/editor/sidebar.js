@@ -33,7 +33,7 @@ describe('Sidebar', () => {
 
       it('should not display publisher logo upload', async () => {
         await createNewStory();
-        await expect(page).toMatch('Howdy, contributor');
+        await expect(page).toMatchTextContent('Howdy, contributor');
 
         await expect(page).toClick('li[role="tab"]', { text: 'Document' });
         await expect(page).toClick('[aria-label="Publisher Logo"]');

@@ -37,7 +37,7 @@ describe('Site Kit plugin integration', () => {
       it('should see Site Kit specific message', async () => {
         await visitSettings();
 
-        await expect(page).toMatch(
+        await expect(page).toMatchTextContent(
           'Site Kit by Google has already enabled Google Analytics for your Web Stories'
         );
       });
@@ -57,7 +57,7 @@ describe('Site Kit plugin integration', () => {
 
         const editorPage = page;
         const previewPage = await previewStory();
-        await expect(previewPage).toMatch('XXX-YYY');
+        await expect(previewPage).toMatchTextContent('XXX-YYY');
 
         await editorPage.bringToFront();
         await previewPage.close();
@@ -72,7 +72,7 @@ describe('Site Kit plugin integration', () => {
       it('should see Site Kit specific message', async () => {
         await visitSettings();
 
-        await expect(page).toMatch(
+        await expect(page).toMatchTextContent(
           'Site Kit by Google has already enabled Google AdSense for your Web Stories'
         );
       });

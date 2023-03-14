@@ -43,9 +43,9 @@ async function previewStory(waitForStoryDebugView = true) {
   if (waitForStoryDebugView) {
     await previewPage.waitForSelector('.i-amphtml-story-dev-tools-header');
 
-    await expect(previewPage).toMatch(/Preview/i);
-    await expect(previewPage).toMatch(/Debug/i);
-    await expect(previewPage).toMatch(/Add device/i);
+    await expect(previewPage).toMatchTextContent(/Preview/i);
+    await expect(previewPage).toMatchTextContent(/Debug/i);
+    await expect(previewPage).toMatchTextContent(/Add device/i);
   }
 
   return previewPage;

@@ -38,13 +38,13 @@ async function goToMedia3PTab() {
     { text: 'Explore Media' }
   );
 
-  await expect(page).toMatch(
+  await expect(page).toMatchTextContent(
     'Your use of stock content is subject to third party terms'
   );
 
   await expect(page).toClick('button', { text: 'Dismiss' });
 
-  await expect(page).not.toMatch(
+  await expect(page).not.toMatchTextContent(
     'Your use of stock content is subject to third party terms'
   );
 }

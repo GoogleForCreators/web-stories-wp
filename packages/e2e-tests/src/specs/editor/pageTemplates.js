@@ -48,7 +48,7 @@ describe('Page Templates', () => {
     await expect(page).toMatchElement(
       'button[aria-label="Select templates type"]'
     );
-    await expect(page).toMatch('Default templates');
+    await expect(page).toMatchTextContent('Default templates');
 
     await addTextElement();
 
@@ -64,8 +64,8 @@ describe('Page Templates', () => {
     });
 
     // Adding a custom page template automatically switches to the "Saved Templates" view.
-    await expect(page).toMatch('Page Template saved.');
-    await expect(page).toMatch('Saved templates');
+    await expect(page).toMatchTextContent('Page Template saved.');
+    await expect(page).toMatchTextContent('Saved templates');
     await expect(page).toMatchElement(
       '[aria-label="Page Template Options"] [role="listitem"]'
     );

@@ -29,7 +29,7 @@ import {
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-  await expect(page).toMatch('Taxonomies');
+  await expect(page).toMatchTextContent('Taxonomies');
 
   const taxonomyPanel = await page.$('button[aria-label="Taxonomies"]');
 
@@ -318,8 +318,8 @@ describe('Taxonomies', () => {
         await createNewStory();
         await goToAndExpandTaxonomyPanel();
 
-        await expect(page).toMatch('Add New Color');
-        await expect(page).toMatch('Search Verticals');
+        await expect(page).toMatchTextContent('Add New Color');
+        await expect(page).toMatchTextContent('Search Verticals');
 
         await expect(page).toMatchElement('button', {
           text: 'Add New Vertical',
@@ -334,8 +334,8 @@ describe('Taxonomies', () => {
         await createNewStory();
         await goToAndExpandTaxonomyPanel();
 
-        await expect(page).toMatch('Add New Color');
-        await expect(page).toMatch('Search Verticals');
+        await expect(page).toMatchTextContent('Add New Color');
+        await expect(page).toMatchTextContent('Search Verticals');
 
         await expect(page).not.toMatchElement('button', {
           text: 'Add New Vertical',

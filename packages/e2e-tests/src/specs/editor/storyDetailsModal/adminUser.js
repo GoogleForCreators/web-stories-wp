@@ -119,7 +119,7 @@ describe('Story Details Modal - Admin User', () => {
       const authorDropDownButton = await expect(page).toMatchElement(
         'div[aria-label="Story details"] button[aria-label="Author"]'
       );
-      await expect(authorDropDownButton).toMatch('admin');
+      await expect(authorDropDownButton).toMatchTextContent('admin');
 
       await authorDropDownButton.click();
 
@@ -129,27 +129,16 @@ describe('Story Details Modal - Admin User', () => {
 
       await expect(authorDropDownOptions).toClick('li', { text: 'author' });
 
-      await expect(authorDropDownButton).toMatch('author');
+      await expect(authorDropDownButton).toMatchTextContent('author');
     });
 
-    // As if here it's using Jest's original toMatch() matcher instead of
-    // the one from jest-puppeteer.
-    //
-    //     expect(received).toMatch(expected)
-    //
-    //     Matcher error: received value must be a string
-    //
-    //     Received has type:  object
-    //     Received has value: {}
-    //
-    // eslint-disable-next-line jest/no-disabled-tests -- TODO: Fix flakey test.
-    it.skip('should allow searching author', async () => {
+    it('should allow searching author', async () => {
       await openPublishingPanel();
 
       const authorDropDownButton = await expect(page).toMatchElement(
         'div[aria-label="Story details"] button[aria-label="Author"]'
       );
-      await expect(authorDropDownButton).toMatch('admin');
+      await expect(authorDropDownButton).toMatchTextContent('admin');
 
       await authorDropDownButton.click();
 
@@ -186,7 +175,7 @@ describe('Story Details Modal - Admin User', () => {
       await expect(page).toClick('[aria-label="Option List Selector"] li', {
         text: 'author',
       });
-      await expect(authorDropDownButton).toMatch('author');
+      await expect(authorDropDownButton).toMatchTextContent('author');
     });
 
     it('should allow publish date to change', async () => {

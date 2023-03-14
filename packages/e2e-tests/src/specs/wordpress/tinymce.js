@@ -45,7 +45,7 @@ describe('TinyMCE button', () => {
 
     await takeSnapshot(page, 'TinyMCE dialog');
 
-    await expect(page).toMatch('Archive Link Label');
+    await expect(page).toMatchTextContent('Archive Link Label');
 
     await expect(page).toClick('button', { text: 'Insert' });
 

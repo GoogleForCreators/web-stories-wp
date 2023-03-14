@@ -52,7 +52,7 @@ async function deleteAllPublisherLogos() {
       }
     );
 
-    await expect(page).toMatch('Setting saved.');
+    await expect(page).toMatchTextContent('Setting saved.');
   }
   /* eslint-enable no-await-in-loop */
 }
@@ -116,7 +116,7 @@ describe.skip('Publisher Logos', () => {
         ),
       ]);
 
-      await expect(page).toMatch('Setting saved.');
+      await expect(page).toMatchTextContent('Setting saved.');
 
       const updatedPublisherLogos = await page.$$(
         '[role="list"][aria-label="Viewing existing publisher logos"] [role="listitem"]'
@@ -152,7 +152,7 @@ describe.skip('Publisher Logos', () => {
       await page.keyboard.press('Enter');
       await page.keyboard.press('Enter');
 
-      await expect(page).toMatch('Setting saved.');
+      await expect(page).toMatchTextContent('Setting saved.');
 
       const updatedPublisherLogos = await page.$$(
         '[role="list"][aria-label="Viewing existing publisher logos"] [role="listitem"]'
@@ -190,7 +190,7 @@ describe.skip('Publisher Logos', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('Enter');
 
-      await expect(page).toMatch('Setting saved.');
+      await expect(page).toMatchTextContent('Setting saved.');
 
       const updatedPublisherLogos = await page.$$(
         '[role="list"][aria-label="Viewing existing publisher logos"] [role="listitem"]'
