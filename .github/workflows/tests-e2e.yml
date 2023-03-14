@@ -143,6 +143,7 @@ jobs:
         browser: ['chrome']
         wp: ['6.0']
         snapshots: [false]
+        experimental: [false]
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
         include:
@@ -153,6 +154,16 @@ jobs:
           - browser: 'chrome'
             wp: 'latest'
             snapshots: true
+            shard: '2/2'
+          - browser: 'chrome'
+            wp: '6.2-RC1'
+            snapshots: false
+            experimental: true
+            shard: '1/2'
+          - browser: 'chrome'
+            wp: '6.2-RC1'
+            snapshots: false
+            experimental: true
             shard: '2/2'
 
     steps:
