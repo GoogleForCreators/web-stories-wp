@@ -58,6 +58,6 @@ describe('TinyMCE button', () => {
       (element) => element.value
     );
 
-    expect(textEditorContent).toMatchTextContent('[web_stories');
+    expect(textEditorContent).toMatch('[web_stories');
   });
 });

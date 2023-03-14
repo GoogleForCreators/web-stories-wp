@@ -64,7 +64,7 @@ jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 function getEditedPostContent() {
   return page.evaluate(() =>
-    wp.data.select('core/editor', 'getEditedPostContent')
+    wp.data.select('core/editor').getEditedPostContent()
   );
 }
 
@@ -111,7 +111,7 @@ describe('Publishing Flow', () => {
 
     await loadPostEditor();
 
-    await expect(getEditedPostContent()).resolves.toMatchTextContent(
+    await expect(getEditedPostContent()).resolves.toMatch(
       '<!-- wp:web-stories/embed'
     );
     await expect(page).not.toMatchTextContent(
@@ -154,7 +154,7 @@ describe('Publishing Flow', () => {
 
     await loadPostEditor();
 
-    await expect(getEditedPostContent()).resolves.toMatchTextContent(
+    await expect(getEditedPostContent()).resolves.toMatch(
       '<!-- wp:web-stories/embed'
     );
     await expect(page).not.toMatchTextContent(
@@ -188,7 +188,7 @@ describe('Publishing Flow', () => {
         (element) => element.value
       );
 
-      expect(textEditorContent).toMatchTextContent('[web_stories_embed');
+      expect(textEditorContent).toMatch('[web_stories_embed');
 
       await expect(page).toClick('#publish');
 

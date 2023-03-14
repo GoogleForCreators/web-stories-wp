@@ -111,7 +111,7 @@ describe('Inserting WebM Video', () => {
     uploadedFiles.push(fileName);
 
     await page.waitForSelector(
-      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+      `[data-testid="mediaElement-video"] [src*="${fileName}"]`
     );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
@@ -138,7 +138,7 @@ describe('Inserting WebM Video', () => {
     uploadedFiles.push(fileName);
 
     await page.waitForSelector(
-      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+      `[data-testid="mediaElement-video"] [src*="${fileName}"]`
     );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
