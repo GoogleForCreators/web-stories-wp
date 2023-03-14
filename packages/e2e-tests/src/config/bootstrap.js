@@ -119,6 +119,10 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Customizer preview iframe.
   'An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing',
+
+  // Needed because the tinymce package is not yet using React 18.
+  // TODO: Migrate & remove once WordPress 6.2 is minimum.
+  'Warning: ReactDOM.render is no longer supported in React 18',
 ];
 
 export function addAllowedErrorMessage(message) {
