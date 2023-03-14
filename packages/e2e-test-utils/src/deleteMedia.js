@@ -26,7 +26,7 @@ import visitAdminPage from './visitAdminPage';
 async function deleteMedia(fileName) {
   await visitAdminPage('upload.php', 'mode=list');
 
-  await expect(page).toMatch(fileName);
+  await expect(page).toMatchTextContent(fileName);
 
   // Make row actions appear.
   const elementId = await page.evaluate((name) => {
@@ -47,7 +47,7 @@ async function deleteMedia(fileName) {
     page.waitForNavigation(),
   ]);
   await page.waitForSelector(`#message`);
-  await expect(page).toMatch('Media file permanently deleted.');
+  await expect(page).toMatchTextContent('Media file permanently deleted.');
 }
 
 export default deleteMedia;

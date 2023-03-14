@@ -79,5 +79,5 @@ export const setShoppingProvider = async (provider) => {
     text: provider,
   });
 
-  await expect(page).toMatch('Setting saved.');
+  await expect(page).toMatchTextContent('Setting saved.');
 };

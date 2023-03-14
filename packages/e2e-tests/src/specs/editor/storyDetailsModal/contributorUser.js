@@ -71,7 +71,7 @@ describe('Story Details Modal - Contributor User', () => {
     });
     await expect(page).toMatchElement('button', { text: 'Dismiss' });
     await expect(page).not.toMatchElement('div[aria-label="Story details"]');
-    await expect(page).not.toMatch('Story published.');
+    await expect(page).not.toMatchTextContent('Story published.');
   });
 
   it('should not be able to update Story visibility', async () => {
@@ -133,7 +133,9 @@ describe('Story Details Modal - Contributor User', () => {
       });
 
       await page.waitForSelector('[role="dialog"]');
-      await expect(page).toMatch('Use external image as poster image');
+      await expect(page).toMatchTextContent(
+        'Use external image as poster image'
+      );
 
       await page.type('input[type="url"]', IMAGE_URL_LOCAL);
 
@@ -157,7 +159,9 @@ describe('Story Details Modal - Contributor User', () => {
       ]);
 
       // Dialog should disappear by now.
-      await expect(page).not.toMatch('Use external image as poster image');
+      await expect(page).not.toMatchTextContent(
+        'Use external image as poster image'
+      );
 
       await expect(page).toMatchElement(
         '[data-testid="story_preview_featured_media"]'

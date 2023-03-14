@@ -44,7 +44,7 @@ describe('Inserting Media from Dialog', () => {
 
     it('should display permission error dialog', async () => {
       await createNewStory();
-      await expect(page).toMatch('Howdy, contributor');
+      await expect(page).toMatchTextContent('Howdy, contributor');
 
       await expect(page).not.toMatchElement('button[aria-label="Upload"]');
     });

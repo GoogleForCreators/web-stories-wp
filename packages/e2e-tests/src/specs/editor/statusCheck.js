@@ -45,7 +45,7 @@ describe('Status Check', () => {
     it('should not display error dialog', async () => {
       await createNewStory();
 
-      await expect(page).not.toMatch('Unable to save your story');
+      await expect(page).not.toMatchTextContent('Unable to save your story');
     });
   });
 
@@ -55,7 +55,7 @@ describe('Status Check', () => {
     it('should display error dialog', async () => {
       await createNewStory();
 
-      await expect(page).toMatch('Unable to save your story');
+      await expect(page).toMatchTextContent('Unable to save your story');
     });
   });
 
@@ -65,7 +65,7 @@ describe('Status Check', () => {
     it('should display error dialog', async () => {
       await createNewStory();
 
-      await expect(page).toMatch('Unable to save your story');
+      await expect(page).toMatchTextContent('Unable to save your story');
     });
   });
 
@@ -75,7 +75,7 @@ describe('Status Check', () => {
     it('should display error dialog', async () => {
       await createNewStory();
 
-      await expect(page).toMatch('Unable to save your story');
+      await expect(page).toMatchTextContent('Unable to save your story');
     });
   });
 });

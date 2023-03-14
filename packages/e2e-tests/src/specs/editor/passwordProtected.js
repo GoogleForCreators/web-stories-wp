@@ -63,14 +63,18 @@ describe('Password protected stories', () => {
     const editorPage = page;
     const previewPage = await previewStory(false);
 
-    await expect(previewPage).toMatch('Protected: Password protected story');
+    await expect(previewPage).toMatchTextContent(
+      'Protected: Password protected story'
+    );
 
-    await expect(previewPage).not.toMatch('Page not found');
+    await expect(previewPage).not.toMatchTextContent('Page not found');
 
     await previewPage.waitForSelector('input[name="post_password"]');
     await previewPage.focus('input[name="post_password"]');
 
-    await expect(previewPage).toMatch('This content is password protected');
+    await expect(previewPage).toMatchTextContent(
+      'This content is password protected'
+    );
 
     await expect(previewPage).toFill('input[name="post_password"]', 'password');
 

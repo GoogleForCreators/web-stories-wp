@@ -100,7 +100,7 @@ describe('Web Stories Widget', () => {
 
       await expect(page).toClick('button', { text: 'Add a Widget' });
 
-      await expect(page).toMatch('Web Stories');
+      await expect(page).toMatchTextContent('Web Stories');
 
       await page.type('#widgets-search', 'web stories');
 

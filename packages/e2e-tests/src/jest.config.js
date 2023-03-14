@@ -31,8 +31,8 @@ process.env.WP_BASE_URL = WP_BASE_URL;
 export default {
   rootDir: '../../../',
   resolver: '@web-stories-wp/jest-resolver',
-  preset: '<rootDir>/packages/e2e-tests/node_modules/jest-puppeteer',
-  // testEnvironment: '<rootDir>/packages/e2e-tests/src/puppeteerEnvironment.js',
+  preset: 'jest-puppeteer',
+  testEnvironment: '<rootDir>/packages/e2e-tests/src/puppeteerEnvironment.js',
   testMatch: ['**/specs/**/*.[jt]s'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
@@ -48,7 +48,7 @@ export default {
     '<rootDir>/packages/e2e-tests/src/config/bootstrap.js',
     '<rootDir>/packages/e2e-tests/node_modules/@wordpress/jest-puppeteer-axe',
     '<rootDir>/packages/e2e-tests/node_modules/@wordpress/jest-console',
-    '<rootDir>/packages/e2e-tests/node_modules/expect-puppeteer',
+    '<rootDir>/node_modules/expect-puppeteer',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],
 };

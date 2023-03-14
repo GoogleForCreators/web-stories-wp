@@ -107,7 +107,7 @@ describe('Stories Archive', () => {
       await page.goto(archiveLink, {
         waitUntil: 'networkidle2',
       });
-      await expect(page).toMatch(pageContent);
+      await expect(page).toMatchTextContent(pageContent);
     });
   });
 

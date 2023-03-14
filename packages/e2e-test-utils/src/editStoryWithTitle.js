@@ -27,7 +27,7 @@ import visitAdminPage from './visitAdminPage';
  */
 async function editStoryWithTitle(storyTitle) {
   await visitAdminPage('edit.php', 'post_type=web-story');
-  await expect(page).toMatch(storyTitle);
+  await expect(page).toMatchTextContent(storyTitle);
 
   await Promise.all([
     page.waitForNavigation(),

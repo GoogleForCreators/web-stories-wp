@@ -101,7 +101,7 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).toClick('button', { text: 'Select caption' });
 
-    await expect(page).toMatch('test.vtt');
+    await expect(page).toMatchTextContent('test.vtt');
   });
 
   it('should insert a video via media library', async () => {
@@ -111,7 +111,7 @@ describe('Inserting WebM Video', () => {
     uploadedFiles.push(fileName);
 
     await page.waitForSelector(
-      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+      `[data-testid="mediaElement-video"] [src*="${fileName}"]`
     );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
@@ -138,7 +138,7 @@ describe('Inserting WebM Video', () => {
     uploadedFiles.push(fileName);
 
     await page.waitForSelector(
-      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+      `[data-testid="mediaElement-video"] [src*="${fileName}"]`
     );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');

@@ -37,8 +37,8 @@ describe.skip('Plugin Activation', () => {
   });
 
   it('should display a custom message after plugin activation', async () => {
-    await expect(page).toMatch("You're all set!");
-    await expect(page).toMatch('Tell some stories.');
+    await expect(page).toMatchTextContent("You're all set!");
+    await expect(page).toMatchTextContent('Tell some stories.');
 
     await takeSnapshot(page, 'Plugin Activation', { percyCSS });
   });
@@ -49,8 +49,8 @@ describe.skip('Plugin Activation', () => {
     it('should display a custom message after plugin activation', async () => {
       await deactivatePlugin('web-stories');
       await activatePlugin('web-stories');
-      await expect(page).toMatch("You're all set!");
-      await expect(page).toMatch('Tell some stories.');
+      await expect(page).toMatchTextContent("You're all set!");
+      await expect(page).toMatchTextContent('Tell some stories.');
 
       await takeSnapshot(page, 'Plugin Activation on RTL', { percyCSS });
     });
@@ -58,14 +58,14 @@ describe.skip('Plugin Activation', () => {
 
   it('should dismiss plugin activation message', async () => {
     await expect(page).toClick('button', { text: /Dismiss this notice/ });
-    await expect(page).not.toMatch("You're all set!");
-    await expect(page).not.toMatch('Tell some stories.');
+    await expect(page).not.toMatchTextContent("You're all set!");
+    await expect(page).not.toMatchTextContent('Tell some stories.');
   });
 
   it('should not display message when visiting plugins screen a second time', async () => {
     await visitAdminPage('plugins.php');
-    await expect(page).not.toMatch("You're all set!");
-    await expect(page).not.toMatch('Tell some stories.');
+    await expect(page).not.toMatchTextContent("You're all set!");
+    await expect(page).not.toMatchTextContent('Tell some stories.');
   });
 
   it('should lead to the dashboard in success message', async () => {

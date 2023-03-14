@@ -52,7 +52,7 @@ describe('Analytics', () => {
     await page.keyboard.press('Enter');
 
     await page.waitForTimeout(400);
-    await expect(page).toMatch('Setting saved.');
+    await expect(page).toMatchTextContent('Setting saved.');
   });
 
   it('should update the tracking id by clicking the save button and display snackbar confirmation', async () => {
@@ -73,7 +73,7 @@ describe('Analytics', () => {
     await expect(page).toClick('button', { text: 'Save' });
 
     await page.waitForTimeout(400);
-    await expect(page).toMatch('Setting saved.');
+    await expect(page).toMatchTextContent('Setting saved.');
   });
 
   it('should allow the analytics id to be saved as an empty string and display snackbar confirmation', async () => {
@@ -91,7 +91,7 @@ describe('Analytics', () => {
     await expect(page).toClick('button', { text: 'Save' });
 
     await page.waitForTimeout(400);
-    await expect(page).toMatch('Setting saved.');
+    await expect(page).toMatchTextContent('Setting saved.');
   });
 
   it('should not allow an invalid analytics id to be saved', async () => {
@@ -109,8 +109,8 @@ describe('Analytics', () => {
     await expect(page).toClick('button', { text: 'Save' });
 
     await page.waitForTimeout(400);
-    await expect(page).not.toMatch('Setting saved.');
-    await expect(page).toMatch('Invalid ID format');
+    await expect(page).not.toMatchTextContent('Setting saved.');
+    await expect(page).toMatchTextContent('Invalid ID format');
   });
 
   it("should not allow an update of google analytics id when id format doesn't match required format", async () => {
@@ -129,7 +129,7 @@ describe('Analytics', () => {
     await page.keyboard.press('Enter');
 
     await page.waitForTimeout(400);
-    await expect(page).not.toMatch('Setting saved.');
-    await expect(page).toMatch('Invalid ID format');
+    await expect(page).not.toMatchTextContent('Setting saved.');
+    await expect(page).toMatchTextContent('Invalid ID format');
   });
 });

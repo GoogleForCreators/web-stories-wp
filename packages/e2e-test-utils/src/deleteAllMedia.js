@@ -45,7 +45,7 @@ async function deleteAllMedia() {
       page.waitForNavigation(),
     ]);
     await page.waitForSelector(`#message`);
-    await expect(page).toMatch('Media file permanently deleted.');
+    await expect(page).toMatchTextContent('Media file permanently deleted.');
   }
   /*eslint-enable no-await-in-loop*/
 }

@@ -56,9 +56,11 @@ describe('Post Locking', () => {
   it('should be able to open the dashboard with locked story', async () => {
     await visitDashboard();
 
-    await expect(page).toMatch('Test post lock');
+    await expect(page).toMatchTextContent('Test post lock');
     await page.hover('[data-test-id="lock-user-avatar"]');
-    await expect(page).toMatch('test_locker is currently editing this story');
+    await expect(page).toMatchTextContent(
+      'test_locker is currently editing this story'
+    );
     await takeSnapshot(page, 'Stories Dashboard with lock', { percyCSS });
   });
 
@@ -67,7 +69,7 @@ describe('Post Locking', () => {
 
     await page.waitForSelector('.ReactModal__Content');
 
-    await expect(page).toMatch('This story is already being edited');
+    await expect(page).toMatchTextContent('This story is already being edited');
 
     await takeSnapshot(page, 'Stories editor with lock dialog');
   });

@@ -46,7 +46,7 @@ describe('Templates', () => {
       await expect(page).not.toMatchElement(
         'button[aria-label="Select templates type"]'
       );
-      await expect(page).not.toMatch('Default templates');
+      await expect(page).not.toMatchTextContent('Default templates');
     });
   });
 });

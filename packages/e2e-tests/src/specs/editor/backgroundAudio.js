@@ -55,7 +55,7 @@ describe('Background Audio', () => {
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
 
-      await expect(page).toMatch('Background Audio');
+      await expect(page).toMatchTextContent('Background Audio');
 
       // Toggle the panel which is collapsed by default.
       await expect(page).toClick('[aria-label="Background Audio"]');
@@ -80,7 +80,7 @@ describe('Background Audio', () => {
         visible: false,
       });
 
-      await expect(page).toMatch(fileName);
+      await expect(page).toMatchTextContent(fileName);
 
       await expect(page).toMatchElement('button[aria-label="Play"]');
 
@@ -96,7 +96,7 @@ describe('Background Audio', () => {
 
       await expect(page).toClick('li', { text: /^Style$/i });
 
-      await expect(page).toMatch('Page Background Audio');
+      await expect(page).toMatchTextContent('Page Background Audio');
 
       await expect(page).toClick('button', { text: 'Upload an audio file' });
 
@@ -118,7 +118,7 @@ describe('Background Audio', () => {
         visible: false,
       });
 
-      await expect(page).toMatch(fileName);
+      await expect(page).toMatchTextContent(fileName);
 
       await expect(page).toMatchElement('button[aria-label="Play"]');
 
@@ -134,7 +134,7 @@ describe('Background Audio', () => {
 
       await expect(page).toClick('li', { text: /^Style$/i });
 
-      await expect(page).toMatch('Page Background Audio');
+      await expect(page).toMatchTextContent('Page Background Audio');
 
       await expect(page).toClick('button', { text: 'Upload an audio file' });
 
@@ -156,7 +156,7 @@ describe('Background Audio', () => {
         visible: false,
       });
 
-      await expect(page).toMatch(fileName);
+      await expect(page).toMatchTextContent(fileName);
 
       await expect(page).toMatchElement('button[aria-label="Play"]');
 
@@ -172,7 +172,7 @@ describe('Background Audio', () => {
 
       await expect(page).toClick('button', { text: 'Select caption' });
 
-      await expect(page).toMatch('test.vtt');
+      await expect(page).toMatchTextContent('test.vtt');
     });
 
     describe('Hotlink', () => {
@@ -186,12 +186,14 @@ describe('Background Audio', () => {
 
           await expect(page).toClick('li', { text: /^Style$/i });
 
-          await expect(page).toMatch('Page Background Audio');
+          await expect(page).toMatchTextContent('Page Background Audio');
 
           await expect(page).toClick('button', { text: 'Link to audio file' });
 
           await page.waitForSelector('[role="dialog"]');
-          await expect(page).toMatch('Insert external background audio');
+          await expect(page).toMatchTextContent(
+            'Insert external background audio'
+          );
 
           await expect(page).toMatchElement('[role="dialog"]');
 
@@ -202,7 +204,9 @@ describe('Background Audio', () => {
           });
 
           // Dialog should disappear by now.
-          await expect(page).not.toMatch('Insert external background audio');
+          await expect(page).not.toMatchTextContent(
+            'Insert external background audio'
+          );
 
           await page.waitForSelector('audio source[src*="audio.mp3"]');
 
@@ -220,7 +224,7 @@ describe('Background Audio', () => {
 
           await expect(page).toClick('li', { text: /^Style$/i });
 
-          await expect(page).toMatch('Page Background Audio');
+          await expect(page).toMatchTextContent('Page Background Audio');
 
           await expect(page).toClick('button', {
             text: 'Upload an audio file',
@@ -244,7 +248,7 @@ describe('Background Audio', () => {
             visible: false,
           });
 
-          await expect(page).toMatch(fileName);
+          await expect(page).toMatchTextContent(fileName);
 
           await expect(page).toMatchElement('button[aria-label="Play"]');
 
@@ -253,7 +257,7 @@ describe('Background Audio', () => {
           });
 
           await page.waitForSelector('[role="dialog"]');
-          await expect(page).toMatch('Insert external captions');
+          await expect(page).toMatchTextContent('Insert external captions');
 
           await expect(page).toMatchElement('[role="dialog"]');
 
@@ -268,7 +272,7 @@ describe('Background Audio', () => {
             }),
           ]);
 
-          await expect(page).toMatch('test.vtt');
+          await expect(page).toMatchTextContent('test.vtt');
         });
       });
     });
@@ -298,7 +302,7 @@ describe('Background Audio', () => {
 
         await expect(page).toClick('button', { text: 'Select audio file' });
         await page.waitForSelector('.media-modal', { visible: false });
-        await expect(page).toMatch(fileName);
+        await expect(page).toMatchTextContent(fileName);
         await expect(page).toClick('[aria-label="Remove file"]');
         await publishStory();
       });

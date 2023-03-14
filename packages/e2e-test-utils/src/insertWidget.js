@@ -35,6 +35,6 @@ async function insertWidget(name) {
     text: name,
   });
 
-  await expect(page).toMatch('Widget Title');
+  await expect(page).toMatchTextContent('Widget Title');
 }
 export default insertWidget;

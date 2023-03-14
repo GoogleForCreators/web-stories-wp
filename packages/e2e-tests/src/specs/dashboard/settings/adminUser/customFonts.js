@@ -102,7 +102,7 @@ describe('Custom Fonts', () => {
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
 
-    await expect(page).toMatch(
+    await expect(page).toMatchTextContent(
       'A font with the name Open Sans Condensed Light already exists.'
     );
   });

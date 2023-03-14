@@ -55,7 +55,7 @@ export async function toggleExperiments(features, enable) {
   });
 
   await Promise.all([page.waitForNavigation(), page.click('#submit')]);
-  await expect(page).toMatch('Settings saved.');
+  await expect(page).toMatchTextContent('Settings saved.');
   await setCurrentUser(currentUser.username, currentUser.password);
 }
 
