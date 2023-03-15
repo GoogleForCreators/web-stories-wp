@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-function createFileReader(file: File): Promise<FileReader> {
-  const reader = new window.FileReader();
-  return new Promise((resolve, reject) => {
-    reader.onload = () => resolve(reader);
-    reader.onerror = reject;
+function readFile(file: File) {
+  const reader = new FileReader();
+  return new Promise<Uint8Array>((resolve, reject) => {
+    reader.addEventListener('load', () => {
+      resolve(new Uint8Array(reader.result as ArrayBuffer));
+    });
+    reader.addEventListener('error', () => {
+      reject(new Error(`Could not read file ${file.name}`));
+    });
     reader.readAsArrayBuffer(file);
   });
 }
 
-export default createFileReader;
+export default readFile;
