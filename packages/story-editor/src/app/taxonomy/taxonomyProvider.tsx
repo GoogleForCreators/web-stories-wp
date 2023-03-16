@@ -89,7 +89,16 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   useEffect(() => {
     if (terms?.length > 0 && isStoryLoaded) {
       setTermCache((cache: Term[]) => {
-        return cache ? [...new Set([...cache, ...terms])] : terms;
+        const newTermCache = [...cache, ...terms].reduce((acc, currentTerm) => {
+          const x = acc.find((term) => term.id === currentTerm.id);
+          if (!x) {
+            return acc.concat([currentTerm]);
+          } else {
+            return acc;
+          }
+        }, []);
+
+        return cache ? newTermCache : terms;
       });
     }
   }, [terms, isStoryLoaded, setTermCache]);
@@ -99,7 +108,18 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       if (updateStory) {
         const properties = (story: Story) => {
           const currentTerms = story?.terms || [];
-          const newAssignedTerms = [...new Set([...currentTerms, ...newTerms])];
+          const newAssignedTerms = [...currentTerms, ...newTerms].reduce(
+            (acc, currentTerm) => {
+              const x = acc.find((term) => term.id === currentTerm.id);
+              if (!x) {
+                return acc.concat([currentTerm]);
+              } else {
+                return acc;
+              }
+            },
+            []
+          );
+
           return {
             ...story,
             terms: newAssignedTerms,
@@ -158,7 +178,18 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       }
 
       setTermCache((cache: Term[]) => {
-        return cache ? [...new Set([...cache, ...termResults])] : termResults;
+        const newTermCache = [...cache, ...termResults].reduce(
+          (acc, currentTerm) => {
+            const x = acc.find((term) => term.id === currentTerm.id);
+            if (!x) {
+              return acc.concat([currentTerm]);
+            } else {
+              return acc;
+            }
+          },
+          []
+        );
+        return cache ? newTermCache : termResults;
       });
 
       if (addNameToSelection && args.search) {
