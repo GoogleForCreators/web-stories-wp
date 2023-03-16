@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from '@googleforcreators/react';
-import { createBlob, createFileReader } from '@googleforcreators/media';
+import { createBlob, readFile } from '@googleforcreators/media';
 import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
@@ -56,10 +56,8 @@ export const _default = (args) => {
       // this is purely for the sake of storybook demoing
       const newUploads = await Promise.all(
         newPublisherLogos.map(async (file) => {
-          const reader = await createFileReader(file);
-          const src = createBlob(
-            new window.Blob([reader.result], { type: file.type })
-          );
+          const arr = await readFile(file);
+          const src = createBlob(new Blob([arr], { type: file.type }));
           return {
             id: src,
             url: src,
