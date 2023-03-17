@@ -25,7 +25,8 @@ import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
-import { useEntityRecords } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -39,23 +40,24 @@ function FetchSelectedStories({
   setSelectedStories,
   setIsFetching,
 }) {
-  const { records, isResolving, status } = useEntityRecords(
-    'postType',
-    'web-story',
-    {
+  const data = useSelect((select) => {
+    return select(coreStore).getEntityRecords('postType', 'web-story', {
       _embed: 'wp:featuredmedia,author',
       context: 'view',
       include: selectedStoryIds,
-    }
-  );
+      orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
+    });
+  });
 
   useEffect(() => {
-    if (!isResolving && status === 'SUCCESS') {
-      // Done fetching stories
-      setSelectedStories(records);
+    // data is null before a response
+    // has some value after the request
+    // is undefined if the entities requested does not exist
+    if (data !== null && data !== undefined) {
+      setSelectedStories(data);
       setIsFetching(false);
     }
-  }, [isResolving, status, setSelectedStories, setIsFetching, records]);
+  }, [data, setSelectedStories, setIsFetching]);
 
   return (
     <Placeholder
