@@ -40,6 +40,7 @@ import type {
   UpdateStoryProps,
 } from '../../types';
 import cleanForSlug from '../../utils/cleanForSlug';
+import removeDupsFromArray from '../../utils/removeDupsFromArray';
 import { useAPI } from '../api';
 import { useStory } from '../story';
 import Context from './context';
@@ -89,21 +90,9 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   useEffect(() => {
     if (terms?.length > 0 && isStoryLoaded) {
       setTermCache((cache: Term[]) => {
-        const newTermCache = [...cache, ...terms].reduce(
-          (acc: Term[], currentTerm: Term) => {
-            const isCurrentTermAdded = acc.find(
-              (term: Term) => term.id === currentTerm.id
-            );
-            if (!isCurrentTermAdded) {
-              return acc.concat([currentTerm]);
-            } else {
-              return acc;
-            }
-          },
-          []
-        );
-
-        return cache ? newTermCache : terms;
+        return cache
+          ? (removeDupsFromArray([...cache, ...terms], 'id') as Term[])
+          : terms;
       });
     }
   }, [terms, isStoryLoaded, setTermCache]);
@@ -113,23 +102,13 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       if (updateStory) {
         const properties = (story: Story) => {
           const currentTerms = story?.terms || [];
-          const newAssignedTerms = [...currentTerms, ...newTerms].reduce(
-            (acc: Term[], currentTerm: Term) => {
-              const isCurrentTermAdded = acc.find(
-                (term: Term) => term.id === currentTerm.id
-              );
-              if (!isCurrentTermAdded) {
-                return acc.concat([currentTerm]);
-              } else {
-                return acc;
-              }
-            },
-            []
-          );
 
           return {
             ...story,
-            terms: newAssignedTerms,
+            terms: removeDupsFromArray(
+              [...currentTerms, ...newTerms],
+              'id'
+            ) as Term[],
           };
         };
         updateStory({ properties } as UpdateStoryProps);
@@ -185,20 +164,9 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       }
 
       setTermCache((cache: Term[]) => {
-        const newTermCache = [...cache, ...termResults].reduce(
-          (acc: Term[], currentTerm: Term) => {
-            const isCurrentTermAdded = acc.find(
-              (term: Term) => term.id === currentTerm.id
-            );
-            if (!isCurrentTermAdded) {
-              return acc.concat([currentTerm]);
-            } else {
-              return acc;
-            }
-          },
-          []
-        );
-        return cache ? newTermCache : termResults;
+        return cache
+          ? (removeDupsFromArray([...cache, ...termResults], 'id') as Term[])
+          : termResults;
       });
 
       if (addNameToSelection && args.search) {
