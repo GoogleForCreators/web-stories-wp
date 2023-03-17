@@ -24,6 +24,7 @@ import {
   getExtensionFromMimeType,
   getFileBasename,
   blobToFile,
+  readFile,
 } from '@googleforcreators/media';
 
 /**
@@ -149,9 +150,9 @@ function useFFmpeg() {
 
   const getFFmpegInstance = useCallback(
     async (file: File) => {
-      const { createFFmpeg, fetchFile } = await import(
+      const { createFFmpeg } = await import(
         /* webpackChunkName: "chunk-ffmpeg" */
-        /* webpackExports: ["createFFmpeg", "fetchFile"] */
+        /* webpackExports: "createFFmpeg" */
         '@ffmpeg/ffmpeg'
       );
 
@@ -161,7 +162,7 @@ function useFFmpeg() {
       });
       await ffmpeg.load();
 
-      ffmpeg.FS('writeFile', file.name, await fetchFile(file));
+      ffmpeg.FS('writeFile', file.name, await readFile(file));
 
       return ffmpeg;
     },
