@@ -123,7 +123,7 @@ const FillElement = styled.p.attrs(
             fontSize: `${fontSize}px`,
             fontWeight,
             fontFamily: generateFontFamily(font),
-            margin: `${-dataToEditorY(marginOffset / 2)}px 0`,
+            margin: `${dataToEditorY(-marginOffset / 2)} 0`,
             padding: padding || 0,
             lineHeight,
             textAlign,
