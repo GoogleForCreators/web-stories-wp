@@ -89,14 +89,19 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   useEffect(() => {
     if (terms?.length > 0 && isStoryLoaded) {
       setTermCache((cache: Term[]) => {
-        const newTermCache = [...cache, ...terms].reduce((acc, currentTerm) => {
-          const x = acc.find((term) => term.id === currentTerm.id);
-          if (!x) {
-            return acc.concat([currentTerm]);
-          } else {
-            return acc;
-          }
-        }, []);
+        const newTermCache = [...cache, ...terms].reduce(
+          (acc: Term[], currentTerm: Term) => {
+            const isCurrentTermAdded = acc.find(
+              (term: Term) => term.id === currentTerm.id
+            );
+            if (!isCurrentTermAdded) {
+              return acc.concat([currentTerm]);
+            } else {
+              return acc;
+            }
+          },
+          []
+        );
 
         return cache ? newTermCache : terms;
       });
@@ -109,9 +114,11 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
         const properties = (story: Story) => {
           const currentTerms = story?.terms || [];
           const newAssignedTerms = [...currentTerms, ...newTerms].reduce(
-            (acc, currentTerm) => {
-              const x = acc.find((term) => term.id === currentTerm.id);
-              if (!x) {
+            (acc: Term[], currentTerm: Term) => {
+              const isCurrentTermAdded = acc.find(
+                (term: Term) => term.id === currentTerm.id
+              );
+              if (!isCurrentTermAdded) {
                 return acc.concat([currentTerm]);
               } else {
                 return acc;
@@ -179,9 +186,11 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
 
       setTermCache((cache: Term[]) => {
         const newTermCache = [...cache, ...termResults].reduce(
-          (acc, currentTerm) => {
-            const x = acc.find((term) => term.id === currentTerm.id);
-            if (!x) {
+          (acc: Term[], currentTerm: Term) => {
+            const isCurrentTermAdded = acc.find(
+              (term: Term) => term.id === currentTerm.id
+            );
+            if (!isCurrentTermAdded) {
               return acc.concat([currentTerm]);
             } else {
               return acc;
