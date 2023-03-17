@@ -54,7 +54,13 @@ function FetchSelectedStories({
     // has some value after the request
     // is undefined if the entities requested does not exist
     if (data !== null && data !== undefined) {
+      //Entities found
       setSelectedStories(data);
+      setIsFetching(false);
+    }
+    if (data === undefined) {
+      //could not find entities
+      setSelectedStories([]);
       setIsFetching(false);
     }
   }, [data, setSelectedStories, setIsFetching]);
