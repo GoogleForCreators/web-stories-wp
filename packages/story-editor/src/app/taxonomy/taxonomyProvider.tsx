@@ -40,7 +40,6 @@ import type {
   UpdateStoryProps,
 } from '../../types';
 import cleanForSlug from '../../utils/cleanForSlug';
-import removeDupsFromArray from '../../utils/removeDupsFromArray';
 import { useAPI } from '../api';
 import { useStory } from '../story';
 import Context from './context';
@@ -90,9 +89,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   useEffect(() => {
     if (terms?.length > 0 && isStoryLoaded) {
       setTermCache((cache: Term[]) => {
-        return cache
-          ? (removeDupsFromArray([...cache, ...terms], 'id') as Term[])
-          : terms;
+        return cache ? [...new Set([...cache, ...terms])] : terms;
       });
     }
   }, [terms, isStoryLoaded, setTermCache]);
@@ -102,13 +99,10 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       if (updateStory) {
         const properties = (story: Story) => {
           const currentTerms = story?.terms || [];
-
+          const newAssignedTerms = [...new Set([...currentTerms, ...newTerms])];
           return {
             ...story,
-            terms: removeDupsFromArray(
-              [...currentTerms, ...newTerms],
-              'id'
-            ) as Term[],
+            terms: newAssignedTerms,
           };
         };
         updateStory({ properties } as UpdateStoryProps);
@@ -164,9 +158,7 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       }
 
       setTermCache((cache: Term[]) => {
-        return cache
-          ? (removeDupsFromArray([...cache, ...termResults], 'id') as Term[])
-          : termResults;
+        return cache ? [...new Set([...cache, ...termResults])] : termResults;
       });
 
       if (addNameToSelection && args.search) {

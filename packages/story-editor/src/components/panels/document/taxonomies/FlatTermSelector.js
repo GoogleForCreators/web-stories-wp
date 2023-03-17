@@ -147,10 +147,14 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   }, 300);
 
   const tokens = useMemo(() => {
-    return terms
-      .filter((term) => term.taxonomy === taxonomy.slug)
-      .filter((term) => term !== undefined)
-      .map((term) => term.name);
+    return [
+      ...new Set(
+        terms
+          .filter((term) => term.taxonomy === taxonomy.slug)
+          .filter((term) => term !== undefined)
+          .map((term) => term.name)
+      ),
+    ];
   }, [terms, taxonomy]);
 
   const termDisplayTransformer = useCallback(
