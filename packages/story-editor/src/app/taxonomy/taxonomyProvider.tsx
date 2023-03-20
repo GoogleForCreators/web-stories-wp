@@ -95,6 +95,10 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
           };
         };
         updateStory({ properties } as UpdateStoryProps);
+        setTermCache(
+          (cache: Term[]) =>
+            removeDupsFromArray([...cache, ...newTerms], 'id') as Term[]
+        );
       }
     },
     [updateStory]
