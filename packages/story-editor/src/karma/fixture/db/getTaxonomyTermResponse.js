@@ -103,7 +103,7 @@ const tagRestPath = getTaxonomiesResponse.find(
   ({ slug }) => slug === 'web_story_tag'
 ).restPath;
 
-export default function generateResponse(endpoint, _) {
+export default function generateResponse(endpoint) {
   if (endpoint === categoryRestPath) {
     return defaultResponse.filter(
       ({ taxonomy }) => taxonomy === 'web_story_category'
