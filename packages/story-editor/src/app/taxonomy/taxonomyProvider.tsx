@@ -42,12 +42,13 @@ import type {
 import cleanForSlug from '../../utils/cleanForSlug';
 import { useAPI } from '../api';
 import { useStory } from '../story';
+import removeDupsFromArray from '../../utils/removeDupsFromArray';
 import Context from './context';
 
 function TaxonomyProvider(props: PropsWithChildren<unknown>) {
   // Should grab categories on mount
   const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
-  const { updateStory, isStoryLoaded, terms } = useStory(
+  const { updateStory, terms } = useStory(
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
       isStoryLoaded: pages.length > 0,
@@ -83,29 +84,21 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
     })();
   }, [hasTaxonomies, getTaxonomies]);
 
-  // Reference embedded terms in the story and taxonomies
-  // to get the initial selected terms as well as populate
-  // the taxonomy term cache
-  useEffect(() => {
-    if (terms?.length > 0 && isStoryLoaded) {
-      setTermCache((cache: Term[]) => {
-        return cache ? [...new Set([...cache, ...terms])] : terms;
-      });
-    }
-  }, [terms, isStoryLoaded, setTermCache]);
-
   const addTerms = useCallback(
     (newTerms: Term[]) => {
       if (updateStory) {
         const properties = (story: Story) => {
           const currentTerms = story?.terms || [];
-          const newAssignedTerms = [...new Set([...currentTerms, ...newTerms])];
           return {
             ...story,
-            terms: newAssignedTerms,
+            terms: removeDupsFromArray([...currentTerms, ...newTerms], 'id'),
           };
         };
         updateStory({ properties } as UpdateStoryProps);
+        setTermCache(
+          (cache: Term[]) =>
+            removeDupsFromArray([...cache, ...newTerms], 'id') as Term[]
+        );
       }
     },
     [updateStory]
@@ -158,7 +151,9 @@ function TaxonomyProvider(props: PropsWithChildren<unknown>) {
       }
 
       setTermCache((cache: Term[]) => {
-        return cache ? [...new Set([...cache, ...termResults])] : termResults;
+        return cache
+          ? (removeDupsFromArray([...cache, ...termResults], 'id') as Term[])
+          : termResults;
       });
 
       if (addNameToSelection && args.search) {

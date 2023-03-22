@@ -57,6 +57,7 @@ import DocumentPane, {
   PublishModalDocumentPane,
 } from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
+import generateTaxonomiesResponse from './db/getTaxonomyTermResponse';
 
 const React = require('react');
 const { useCallback, useState, useMemo, forwardRef } = React;
@@ -631,8 +632,8 @@ class APIProviderFixture {
    */
   constructor({ mocks = {} } = {}) {
     this._pages = [];
-    // begins at 4 because mocks have children with ids [1, 2, 3]
-    this._termAutoIncrementId = 4;
+    // begins at 100 because may have mocks have children with ids less than 100
+    this._termAutoIncrementId = 100;
 
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
@@ -782,36 +783,9 @@ class APIProviderFixture {
       );
       const deletePageTemplate = useCallback(() => asyncResponse(), []);
 
-      const getTaxonomyTerm = useCallback(
-        (_, args) =>
-          asyncResponse(
-            args.orderby
-              ? [
-                  {
-                    id: this._termAutoIncrementId++,
-                    count: 3,
-                    description: '',
-                    link: '',
-                    name: 'related slug 1',
-                    slug: 'related-slug-1',
-                    taxonomy: 'web_story_tag',
-                    meta: [],
-                  },
-                  {
-                    id: this._termAutoIncrementId++,
-                    count: 2,
-                    description: '',
-                    link: '',
-                    name: 'related slug 2',
-                    slug: 'related-slug-2',
-                    taxonomy: 'web_story_tag',
-                    meta: [],
-                  },
-                ]
-              : []
-          ),
-        []
-      );
+      const getTaxonomyTerm = useCallback((endpoint, args) => {
+        return asyncResponse(generateTaxonomiesResponse(endpoint, args));
+      }, []);
 
       const createTaxonomyTerm = useCallback((_endpoint, data) => {
         return asyncResponse({
