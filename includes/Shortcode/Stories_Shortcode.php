@@ -29,8 +29,8 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Shortcode;
 
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Query as Stories;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Story_Query as Stories;
 
 /**
  * Class Stories_Shortcode
@@ -85,8 +85,8 @@ class Stories_Shortcode extends Service_Base {
 
 		$taxonomies = get_object_taxonomies( Story_Post_Type::POST_TYPE_SLUG );
 
-		for ( $i = 0; $i < count($taxonomies); $i++ ) {
-			$default_pairs[ $taxonomies[ $i ] ] = '';
+		foreach ( $taxonomies as $taxonomy ) {
+			$default_pairs[ $taxonomy ] = '';
 		}
 
 		$attributes = shortcode_atts(
@@ -144,23 +144,25 @@ class Stories_Shortcode extends Service_Base {
 		];
 
 		$taxonomies           = get_object_taxonomies( Story_Post_Type::POST_TYPE_SLUG );
-		$should_add_tax_query = false ;
+		$should_add_tax_query = false;
 
-		for ( $i = 0; $i < count($taxonomies); $i++ ) {
-			$should_add_tax_query = $should_add_tax_query || '' !== $attributes[ $taxonomies[ $i ] ];
+		foreach ( $taxonomies as $taxonomy ) {
+			$should_add_tax_query = $should_add_tax_query || '' !== $attributes[ $taxonomy ];
 		}
 
 		if ( $should_add_tax_query ) {
-			$tax_query = array(
+			$tax_query = [
 				'relation' => 'OR',
-			);
+			];
 
-			for ( $i = 0; $i < count($taxonomies); $i++ ) {
-				array_push( $tax_query, array(
-						'taxonomy' => $taxonomies[ $i ],
+			foreach ( $taxonomies as $taxonomy ) {
+				array_push(
+					$tax_query,
+					[
+						'taxonomy' => $taxonomy,
 						'field'    => 'name',
-						'terms'    => $attributes[ $taxonomies[ $i ] ] ? explode(',',$attributes[ $taxonomies[ $i ] ]) : []
-					),
+						'terms'    => $attributes[ $taxonomy ] ? explode( ',', $attributes[ $taxonomies[ $i ] ] ) : [],
+					],
 				);
 			}
 
