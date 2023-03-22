@@ -132,7 +132,7 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array<string,string|int> $attributes Array of arguments for Story Query.
+	 * @param array<string,int|string> $attributes Array of arguments for Story Query.
 	 * @return array<string,mixed> Array of story arguments to pass to Story_Query.
 	 */
 	private function prepare_story_args( array $attributes ): array {
@@ -161,7 +161,7 @@ class Stories_Shortcode extends Service_Base {
 					[
 						'taxonomy' => $taxonomy,
 						'field'    => 'name',
-						'terms'    => $attributes[ $taxonomy ] ? explode( ',', $attributes[ $taxonomy ] ) : [],
+						'terms'    => $attributes[ $taxonomy ] ? explode( ',', strval($attributes[ $taxonomy ] )) : [],
 					],
 				);
 			}
