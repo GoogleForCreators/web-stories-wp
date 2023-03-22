@@ -81,6 +81,8 @@ class Stories_Shortcode extends Service_Base {
 				'order'              => 'DESC',
 				'orderby'            => 'post_date',
 				'sharp_corners'      => 'false',
+				'categories'         => '',
+				'tags'               => '',
 			],
 			$attrs,
 			self::SHORTCODE_NAME
@@ -96,8 +98,8 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array<string, string|int> $attributes Shortcode attributes.
-	 * @return array<string, string|int|bool> Attributes to pass to Story_Query class.
+	 * @param array<string,string|int> $attributes Shortcode attributes.
+	 * @return array<string,mixed> Attributes to pass to Story_Query class.
 	 *
 	 * @phpstan-return StoryAttributes
 	 */
@@ -127,11 +129,31 @@ class Stories_Shortcode extends Service_Base {
 	 * @return array<string,string|int> Array of story arguments to pass to Story_Query.
 	 */
 	private function prepare_story_args( array $attributes ): array {
-		return [
+		$args =[
 			// Show 100 stories at most to avoid 500 errors.
 			'posts_per_page' => min( (int) $attributes['number_of_stories'], 100 ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 			'order'          => 'ASC' === $attributes['order'] ? 'ASC' : 'DESC',
 			'orderby'        => $attributes['orderby'],
 		];
+
+		$have_categories = $attributes['categories'] or "" != $attributes['categories'];
+		$have_tags = $attributes['tags'] or "" != $attributes['tags'];
+
+		if($have_categories || $have_tags){
+			$args['tax_query'] = array(
+				'relation' => 'OR',
+				array(
+					'taxonomy' => 'web_story_tag',
+					'field'    => 'name',
+					'terms'    => explode(',',$attributes['tags'])
+				),
+				array(
+					'taxonomy' => 'web_story_category',
+					'field'    => 'name',
+					'terms'    => explode(',',$attributes['categories'])
+				),
+			);
+		}
+		return $args;
 	}
 }
