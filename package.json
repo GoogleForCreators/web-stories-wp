@@ -80,7 +80,7 @@
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.4.3",
-    "@types/eslint": "^8.21.2",
+    "@types/eslint": "^8.21.3",
     "@types/eslint-scope": "^3.7.4",
     "@types/estree": "^1.0.0",
     "@types/jest": "^29.4.1",
