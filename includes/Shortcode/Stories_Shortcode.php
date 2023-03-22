@@ -165,7 +165,7 @@ class Stories_Shortcode extends Service_Base {
 					],
 				);
 			}
-
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 			$args['tax_query'] = $tax_query;
 		}
 		return $args;

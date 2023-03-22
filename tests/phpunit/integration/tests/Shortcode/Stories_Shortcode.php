@@ -99,7 +99,7 @@ class Stories_Shortcode extends TestCase {
 			'order'              => 'DESC',
 			'orderby'            => 'post_title',
 			'web_story_tag'      => '',
-			'web_story_category' => ''
+			'web_story_category' => '',
 		];
 
 		$args = $this->call_private_method( [ $stories_shortcode, 'prepare_story_args' ], [ $attributes ] );
