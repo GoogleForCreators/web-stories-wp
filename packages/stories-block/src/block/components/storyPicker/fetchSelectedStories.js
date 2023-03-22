@@ -26,11 +26,11 @@ import { __ } from '@wordpress/i18n';
 import { Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
  */
-import { store as coreStore } from '@wordpress/core-data';
 import LoaderContainer from '../loaderContainer';
 
 function FetchSelectedStories({
@@ -40,59 +40,30 @@ function FetchSelectedStories({
   setSelectedStories,
   setIsFetching,
 }) {
-  const { isFetchingStories, fetchedStories } = useSelect(
-    (select) => {
-      const { getEntityRecords, isResolving, getEntityRecord } =
-        select(coreStore);
-
-      let fetchedStories = [];
-      let isFetchingStories = false;
-
-      if (selectedStoryIds.length === 1) {
-        // getEntityRecords does not seem to be reliable in this case.
-        const singleRecord = getEntityRecord(
-          'postType',
-          'web-story',
-          ...selectedStoryIds
-        );
-        if (singleRecord) {
-          fetchedStories = [singleRecord];
-        }
-
-        isFetchingStories = isResolving(
-          'postType',
-          'web-story',
-          ...selectedStoryIds
-        );
-      } else {
-        const newQuery = {
-          _embed: 'wp:featuredmedia',
-          context: 'view',
-          include: selectedStoryIds,
-          orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
-        };
-
-        isFetchingStories = isResolving('postType', 'web-story', newQuery);
-
-        const records = getEntityRecords('postType', 'web-story', newQuery);
-
-        if (records) {
-          fetchedStories = records;
-        }
-      }
-
-      return {
-        fetchedStories,
-        isFetchingStories,
-      };
-    },
-    [selectedStoryIds]
-  );
+  const data = useSelect((select) => {
+    return select(coreStore).getEntityRecords('postType', 'web-story', {
+      _embed: 'wp:featuredmedia,author',
+      context: 'view',
+      include: selectedStoryIds,
+      orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
+    });
+  });
 
   useEffect(() => {
-    setIsFetching(isFetchingStories);
-    setSelectedStories(fetchedStories);
-  }, [fetchedStories, isFetchingStories, setIsFetching, setSelectedStories]);
+    // data is null before a response
+    // has some value after the request
+    // is undefined if the entities requested does not exist
+    if (data !== null && data !== undefined) {
+      //Entities found
+      setSelectedStories(data);
+      setIsFetching(false);
+    }
+    if (data === undefined) {
+      //could not find entities
+      setSelectedStories([]);
+      setIsFetching(false);
+    }
+  }, [data, setSelectedStories, setIsFetching]);
 
   return (
     <Placeholder

@@ -21,21 +21,21 @@ import { DATA_VERSION } from '@googleforcreators/migration';
 const storyTags = [
   {
     id: 1,
-    link: 'http://localhost:8899/web_story_category/gold/pizza',
+    link: 'http://localhost:8899/web_story_tag/gold/pizza',
     name: 'pizza',
     slug: 'pizza',
     taxonomy: 'web_story_tag',
   },
   {
     id: 2,
-    link: 'http://localhost:8899/web_story_category/burger',
+    link: 'http://localhost:8899/web_story_tag/burger',
     name: 'burger',
     slug: 'burger',
     taxonomy: 'web_story_tag',
   },
   {
     id: 3,
-    link: 'http://localhost:8899/web_story_category/frenchFry',
+    link: 'http://localhost:8899/web_story_tag/frenchFry',
     name: 'frenchFry',
     slug: 'frenchFry',
     taxonomy: 'web_story_tag',

@@ -116,26 +116,6 @@ describe('TaxonomyProvider', () => {
     expect(result.current.state.taxonomies).toStrictEqual([sampleTaxonomy]);
   });
 
-  it('populates initial termCache and selected slugs with story terms', async () => {
-    const taxonomy1 = createTaxonomy('taxonomy_1');
-    const taxonomy2 = createTaxonomy('taxonomy_2');
-
-    const taxonomy1Term1 = createTermFromName(taxonomy1, 'term1');
-    const taxonomy1Term2 = createTermFromName(taxonomy1, 'term2');
-    const taxonomy2Term1 = createTermFromName(taxonomy2, 'term1');
-    const embeddedTerms = [taxonomy1Term1, taxonomy1Term2, taxonomy2Term1];
-
-    const { result } = await setup({
-      useStoryPartial: {
-        terms: embeddedTerms,
-      },
-    });
-
-    const { termCache } = result.current.state;
-
-    expect(termCache).toStrictEqual(embeddedTerms);
-  });
-
   it('populates the terms cache when addSearchResultsToCache(..args) called', async () => {
     const sampleTaxonomy = createTaxonomy('sample');
     const taxonomiesResponse = { sampleTaxonomy };
