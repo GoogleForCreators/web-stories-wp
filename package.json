@@ -34,7 +34,7 @@
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.9.0",
     "@babel/core": "^7.21.0",
-    "@babel/eslint-parser": "^7.19.1",
+    "@babel/eslint-parser": "^7.21.3",
     "@babel/eslint-plugin": "^7.19.1",
     "@babel/preset-env": "^7.19.4",
     "@babel/preset-react": "^7.18.6",
