@@ -161,7 +161,7 @@ class Stories_Shortcode extends Service_Base {
 					[
 						'taxonomy' => $taxonomy,
 						'field'    => 'name',
-						'terms'    => $attributes[ $taxonomy ] ? explode( ',', $attributes[ $taxonomies[ $i ] ] ) : [],
+						'terms'    => $attributes[ $taxonomy ] ? explode( ',', $attributes[ $taxonomy ] ) : [],
 					],
 				);
 			}
