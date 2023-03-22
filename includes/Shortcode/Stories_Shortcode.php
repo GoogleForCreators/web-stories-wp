@@ -129,17 +129,17 @@ class Stories_Shortcode extends Service_Base {
 	 * @return array<string,string|int> Array of story arguments to pass to Story_Query.
 	 */
 	private function prepare_story_args( array $attributes ): array {
-		$args =[
+		$args = [
 			// Show 100 stories at most to avoid 500 errors.
 			'posts_per_page' => min( (int) $attributes['number_of_stories'], 100 ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 			'order'          => 'ASC' === $attributes['order'] ? 'ASC' : 'DESC',
 			'orderby'        => $attributes['orderby'],
 		];
 
-		$have_categories = $attributes['categories'] or "" != $attributes['categories'];
-		$have_tags = $attributes['tags'] or "" != $attributes['tags'];
+		$have_categories = $attributes['categories'] || '' !== $attributes['categories'];
+		$have_tags       = $attributes['tags'] || '' !== $attributes['tags'];
 
-		if($have_categories || $have_tags){
+		if ( $have_categories || $have_tags ) {
 			$args['tax_query'] = array(
 				'relation' => 'OR',
 				array(
