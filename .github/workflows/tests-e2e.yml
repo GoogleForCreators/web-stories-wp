@@ -156,12 +156,12 @@ jobs:
             snapshots: true
             shard: '2/2'
           - browser: 'chrome'
-            wp: '6.2-RC2'
+            wp: '6.2-RC3'
             snapshots: false
             experimental: true
             shard: '1/2'
           - browser: 'chrome'
-            wp: '6.2-RC2'
+            wp: '6.2-RC3'
             snapshots: false
             experimental: true
             shard: '2/2'
