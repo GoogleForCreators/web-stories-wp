@@ -29,6 +29,7 @@ import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
+  Text,
   Headline,
   LoadingSpinner,
   TextSize,
@@ -57,9 +58,17 @@ const PageTemplatesParentContainer = styled.div`
   overflow-y: scroll;
 `;
 
-export const SearchInputContainer = styled.div`
+const SearchInputContainer = styled.div`
   padding: 0 ${PANE_PADDING};
   margin-bottom: 26px;
+`;
+
+const Message = styled(Text.Paragraph).attrs({
+  size: TextSize.Medium,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  padding: 1em;
+  text-align: center;
 `;
 
 function DefaultTemplates({ pageSize }) {
@@ -162,16 +171,19 @@ function DefaultTemplates({ pageSize }) {
             {__('Templates', 'web-stories')}
           </Headline>
         </ActionRow>
-        {!isLoading && pageTemplatesParentRef.current ? (
+
+        {isLoading || !pageTemplatesParentRef.current ? (
+          <LoadingContainer>
+            <LoadingSpinner animationSize={64} numCircles={8} />
+          </LoadingContainer>
+        ) : pageTemplates.length === 0 ? (
+          <Message>{__('No templates found.', 'web-stories')}</Message>
+        ) : (
           <TemplateList
             pageSize={pageSize}
             parentRef={pageTemplatesParentRef}
             pages={filteredPages}
           />
-        ) : (
-          <LoadingContainer>
-            <LoadingSpinner animationSize={64} numCircles={8} />
-          </LoadingContainer>
         )}
       </PageTemplatesParentContainer>
     </>
