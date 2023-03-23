@@ -75,7 +75,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
 
       - name: Setup Node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
@@ -156,12 +156,12 @@ jobs:
             snapshots: true
             shard: '2/2'
           - browser: 'chrome'
-            wp: '6.2-RC2'
+            wp: '6.2-RC3'
             snapshots: false
             experimental: true
             shard: '1/2'
           - browser: 'chrome'
-            wp: '6.2-RC2'
+            wp: '6.2-RC3'
             snapshots: false
             experimental: true
             shard: '2/2'
@@ -183,7 +183,7 @@ jobs:
             auth.docker.io:443
 
       - name: Checkout
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
 
       - name: Download bundle
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
@@ -282,7 +282,7 @@ jobs:
             storage.googleapis.com:443
 
       - name: Checkout
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
 
       - name: Setup Node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c

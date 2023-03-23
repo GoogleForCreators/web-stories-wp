@@ -27,7 +27,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
@@ -38,7 +38,7 @@ jobs:
           mv product.schema.json tests/phpunit/integration/data/schema.json
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04
+        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
           commit-message: Update Product Schema
