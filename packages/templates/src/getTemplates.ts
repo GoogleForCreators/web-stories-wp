@@ -101,12 +101,12 @@ async function loadTemplate(
   } as Template;
 }
 
-async function getTemplates(imageBaseUrl: string, search = '') {
+async function getTemplates(imageBaseUrl: string, search: string) {
   const trackTiming = getTimeTracker('load_templates');
-  const lowercaseSearchTerm = search.toLowerCase();
   let templateNamesToLoad = TEMPLATE_NAMES;
 
-  if (lowercaseSearchTerm !== '') {
+  if (search) {
+    const lowercaseSearchTerm = search.toLowerCase();
     templateNamesToLoad = (await getTemplateMetaData()).reduce(
       (acc: string[], { title, vertical, slug, tags, colors }) => {
         const doesTitleMatch = title
