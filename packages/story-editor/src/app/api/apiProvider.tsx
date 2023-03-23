@@ -33,7 +33,6 @@ function APIProvider({ children }: PropsWithChildren<Record<string, never>>) {
 
   actions.getPageTemplates = useCallback(
     async (searchTerm: string) => {
-      // check if pageTemplates have been loaded yet
       pageTemplates.current = await getAllTemplates({
         cdnURL,
         search: searchTerm,
