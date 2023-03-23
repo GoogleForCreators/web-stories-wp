@@ -30,7 +30,6 @@ import type {
  */
 import { TEMPLATE_NAMES } from './constants';
 import type { RawTemplate, Template } from './types';
-import { getTemplateMetaData } from './getMetaData';
 
 type Data = {
   default: RawTemplate;
@@ -101,65 +100,11 @@ async function loadTemplate(
   } as Template;
 }
 
-async function getTemplates(imageBaseUrl: string, search: string) {
+async function getTemplates(imageBaseUrl: string) {
   const trackTiming = getTimeTracker('load_templates');
-  let templateNamesToLoad = TEMPLATE_NAMES;
-
-  if (search) {
-    const lowercaseSearchTerm = search.toLowerCase();
-    templateNamesToLoad = (await getTemplateMetaData()).reduce(
-      (acc: string[], { title, vertical, slug, tags, colors }) => {
-        const doesTitleMatch = title
-          .toLowerCase()
-          .includes(lowercaseSearchTerm);
-
-        if (doesTitleMatch) {
-          return [...acc, slug];
-        }
-
-        const doesVerticalMatch = vertical
-          .toLowerCase()
-          .includes(lowercaseSearchTerm);
-
-        if (doesVerticalMatch) {
-          return [...acc, slug];
-        }
-
-        let doesTagsMatch = false;
-        tags.forEach((tag) => {
-          if (tag.toLowerCase().includes(lowercaseSearchTerm)) {
-            doesTagsMatch = true;
-            return;
-          }
-        });
-
-        if (doesTagsMatch) {
-          return [...acc, slug];
-        }
-
-        let doesColorsMatch = false;
-        colors.forEach((color) => {
-          if (
-            color.label.toLowerCase().includes(lowercaseSearchTerm) ||
-            color.family.toLowerCase().includes(lowercaseSearchTerm)
-          ) {
-            doesColorsMatch = true;
-            return;
-          }
-        });
-
-        if (doesColorsMatch) {
-          return [...acc, slug];
-        }
-
-        return acc;
-      },
-      []
-    );
-  }
 
   const templates = await Promise.all(
-    templateNamesToLoad.map((title) => {
+    TEMPLATE_NAMES.map((title) => {
       return loadTemplate(title, imageBaseUrl);
     })
   );

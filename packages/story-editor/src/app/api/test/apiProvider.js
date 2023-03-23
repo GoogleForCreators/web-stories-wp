@@ -62,4 +62,32 @@ describe('APIProvider', () => {
 
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
   });
+
+  it('getPageTemplates should memoize the templates if they have already been fetched', async () => {
+    const pageTemplates = [{ id: 'templateid' }];
+    getAllTemplates.mockReturnValue(pageTemplates);
+
+    const cdnURL = 'https://test.url';
+    const { result } = renderApiProvider({
+      configValue: {
+        apiCallbacks: {},
+        cdnURL,
+      },
+    });
+
+    let pageTemplatesResult;
+    await act(async () => {
+      pageTemplatesResult = await result.current.actions.getPageTemplates();
+    });
+
+    expect(getAllTemplates).toHaveBeenCalledOnce();
+    expect(pageTemplatesResult).toStrictEqual(pageTemplates);
+
+    await act(async () => {
+      pageTemplatesResult = await result.current.actions.getPageTemplates();
+    });
+
+    expect(getAllTemplates).toHaveBeenCalledOnce();
+    expect(pageTemplatesResult).toStrictEqual(pageTemplates);
+  });
 });

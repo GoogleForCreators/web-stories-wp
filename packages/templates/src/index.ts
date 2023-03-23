@@ -25,12 +25,10 @@ const memoizedGetTemplates = memoize(getTemplates);
 
 export async function getAllTemplates({
   cdnURL,
-  search,
 }: {
   cdnURL: string;
-  search: string;
 }): Promise<Template[]> {
-  const templates = await memoizedGetTemplates(cdnURL, search);
+  const templates = await memoizedGetTemplates(cdnURL);
 
   const globalConfig = {
     createdBy: 'Google',

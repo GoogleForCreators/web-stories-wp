@@ -27,17 +27,56 @@ import { getAllTemplates, type Template } from '@googleforcreators/templates';
 import { useConfig } from '../config';
 import Context from './context';
 
+const filterTemplates = (templates: Template[], search: string): Template[] => {
+  if (!search) {
+    return templates;
+  }
+  const lowercaseSearchTerm: string = search.toLowerCase();
+
+  return templates.filter(({ title, vertical, tags }) => {
+    const doesTitleMatch = title.toLowerCase().includes(lowercaseSearchTerm);
+    if (doesTitleMatch) {
+      return true;
+    }
+
+    const doesVerticalMatch = vertical
+      .toLowerCase()
+      .includes(lowercaseSearchTerm);
+    if (doesVerticalMatch) {
+      return true;
+    }
+
+    let doesTagsMatch = false;
+    tags.forEach((tag) => {
+      if (tag.toLowerCase().includes(lowercaseSearchTerm)) {
+        doesTagsMatch = true;
+        return;
+      }
+    });
+
+    if (doesTagsMatch) {
+      return true;
+    }
+    return false;
+  });
+};
+
 function APIProvider({ children }: PropsWithChildren<Record<string, never>>) {
   const { apiCallbacks: actions, cdnURL } = useConfig();
   const pageTemplates = useRef<Template[]>([]);
 
   actions.getPageTemplates = useCallback(
-    async (searchTerm: string) => {
-      pageTemplates.current = await getAllTemplates({
-        cdnURL,
-        search: searchTerm,
-      });
-      return pageTemplates.current;
+    async (search: string) => {
+      // check if pageTemplates have been loaded yet
+      if (pageTemplates.current.length === 0) {
+        pageTemplates.current = filterTemplates(
+          await getAllTemplates({
+            cdnURL,
+          }),
+          search
+        );
+      }
+      return filterTemplates(pageTemplates.current, search);
     },
     [cdnURL]
   );
