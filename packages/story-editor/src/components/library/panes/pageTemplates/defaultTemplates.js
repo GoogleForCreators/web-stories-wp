@@ -38,7 +38,8 @@ import {
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { ChipGroup, LoadingContainer } from '../shared';
+import { ChipGroup, LoadingContainer, PANE_PADDING } from '../shared';
+import { SearchInput } from '../../common';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 import TemplateList from './templateList';
@@ -56,25 +57,31 @@ const PageTemplatesParentContainer = styled.div`
   overflow-y: scroll;
 `;
 
+export const SearchInputContainer = styled.div`
+  padding: 0 ${PANE_PADDING};
+  margin-bottom: 26px;
+`;
+
 function DefaultTemplates({ pageSize }) {
   const {
     actions: { getPageTemplates },
   } = useAPI();
   const [pageTemplates, setPageTemplates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // load and process pageTemplates
   useEffect(() => {
     async function loadPageTemplates() {
       setIsLoading(true);
       const trackTiming = getTimeTracker('load_page_templates');
-      setPageTemplates(await getPageTemplates());
+      setPageTemplates(await getPageTemplates(searchTerm));
       setIsLoading(false);
       trackTiming();
     }
 
     loadPageTemplates();
-  }, [getPageTemplates, setPageTemplates]);
+  }, [getPageTemplates, setPageTemplates, searchTerm]);
 
   const pageTemplatesParentRef = useRef();
   const [selectedPageTemplateType, setSelectedPageTemplateType] =
@@ -134,6 +141,14 @@ function DefaultTemplates({ pageSize }) {
 
   return (
     <>
+      <SearchInputContainer>
+        <SearchInput
+          initialValue={searchTerm}
+          placeholder={__('Search', 'web-stories')}
+          onSearch={setSearchTerm}
+          disabled={false}
+        />
+      </SearchInputContainer>
       <ChipGroup
         items={pills}
         selectedItemId={selectedPageTemplateType}

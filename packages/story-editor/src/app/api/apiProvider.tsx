@@ -31,13 +31,17 @@ function APIProvider({ children }: PropsWithChildren<Record<string, never>>) {
   const { apiCallbacks: actions, cdnURL } = useConfig();
   const pageTemplates = useRef<Template[]>([]);
 
-  actions.getPageTemplates = useCallback(async () => {
-    // check if pageTemplates have been loaded yet
-    if (pageTemplates.current.length === 0) {
-      pageTemplates.current = await getAllTemplates({ cdnURL });
-    }
-    return pageTemplates.current;
-  }, [cdnURL]);
+  actions.getPageTemplates = useCallback(
+    async (searchTerm: string) => {
+      // check if pageTemplates have been loaded yet
+      pageTemplates.current = await getAllTemplates({
+        cdnURL,
+        search: searchTerm,
+      });
+      return pageTemplates.current;
+    },
+    [cdnURL]
+  );
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
 }

@@ -100,11 +100,14 @@ async function loadTemplate(
   } as Template;
 }
 
-async function getTemplates(imageBaseUrl: string) {
+async function getTemplates(imageBaseUrl: string, search: string) {
   const trackTiming = getTimeTracker('load_templates');
-
+  const lowercaseSearchTerm = search.toLowerCase();
+  console.log("search",search);
   const templates = await Promise.all(
-    TEMPLATE_NAMES.map((title) => {
+    TEMPLATE_NAMES.filter((TEMPLATE_NAME) =>
+      TEMPLATE_NAME.toLocaleLowerCase().includes(lowercaseSearchTerm)
+    ).map((title) => {
       return loadTemplate(title, imageBaseUrl);
     })
   );
