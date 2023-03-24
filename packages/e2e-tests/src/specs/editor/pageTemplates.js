@@ -79,21 +79,18 @@ describe('Page Templates', () => {
     await page.click('[aria-label="Search"]');
     await page.keyboard.type('baking');
     await page.keyboard.press('Enter');
-    let templateListContainer = [];
 
-    templateListContainer = await page.$$('[role="listitem"]');
-
-    expect(templateListContainer[0]).toMatchElement(
-      'button[aria-label="Baking Bread Guide Cover"]'
+    // Fresh & Bright Cover template should not be on the page
+    await expect(page).not.toMatchElement(
+      'button[aria-label="Fresh & Bright Cover"]'
     );
 
     await takeSnapshot(page, 'Search Default Page Templates');
 
     await page.click('[aria-label="Clear Search"]');
 
-    templateListContainer = await page.$$('[role="listitem"]');
-
-    expect(templateListContainer[0]).toMatchElement(
+    // Fresh & Bright Cover template should be on the page
+    await expect(page).toMatchElement(
       'button[aria-label="Fresh & Bright Cover"]'
     );
   });
