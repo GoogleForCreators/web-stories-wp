@@ -151,8 +151,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
             version: DATA_VERSION,
           },
           featured_media: imageId,
-          title: null,
-          templateName: templateName && 'Untitled',
+          title: templateName !== '' ? templateName : 'Untitled',
         });
 
         // If we already have a data url for the page template, we'll
@@ -177,7 +176,9 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
           dismissable: true,
         });
       }
+
       setShowDefaultTemplates(false);
+      setIsDialogOpen(false);
     },
     [
       isDisabled,
@@ -229,7 +230,6 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
             label={__('Template name', 'web-stories')}
             placeholder="Untitled"
             type="text"
-            required
           />
         </InputWrapper>
       </Dialog>
