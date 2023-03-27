@@ -37,10 +37,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
 import { LoadingContainer } from '../shared';
 import TemplateList from './templateList';
+import DeleteDialog from './deleteDialog';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -137,21 +137,10 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
         </LoadingContainer>
       )}
       {showDialog && (
-        <Dialog
-          isOpen
+        <DeleteDialog
           onClose={() => setShowDialog(false)}
-          title={__('Delete Page Template', 'web-stories')}
-          secondaryText={__('Cancel', 'web-stories')}
-          onPrimary={handleDelete}
-          primaryText={__('Delete', 'web-stories')}
-        >
-          <Text.Paragraph size={TextSize.Small}>
-            {__(
-              'Are you sure you want to delete this template? This action cannot be undone.',
-              'web-stories'
-            )}
-          </Text.Paragraph>
-        </Dialog>
+          onDelete={handleDelete}
+        />
       )}
     </Wrapper>
   );
