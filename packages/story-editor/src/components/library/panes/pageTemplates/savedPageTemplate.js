@@ -21,6 +21,8 @@ import {
   Icons,
   themeHelpers,
   useKeyDownEffect,
+  Text,
+  TextSize,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -50,7 +52,7 @@ import { focusStyle } from '../../../panels/shared/styles';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
-import { ActionButton } from '../shared';
+import { ActionButton, PageTemplateTitleContainer } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import useLibrary from '../../useLibrary';
 
@@ -97,11 +99,15 @@ const DeleteButton = styled(ActionButton)`
   right: 4px;
 `;
 
+const TemplateTitleContainer = styled(PageTemplateTitleContainer)`
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+`;
+
 // This is used for nested roving tab index to detect parent siblings.
 const BUTTON_NESTING_DEPTH = 2;
 
 function SavedPageTemplate(
-  { page, pageSize, handleDelete, index, ...rest },
+  { page, pageSize, handleDelete, index, title = '', ...rest },
   ref
 ) {
   const {
@@ -244,6 +250,13 @@ function SavedPageTemplate(
           </ElementsWrapper>
         )}
         {isActive && <TemplateInsertionOverlay showIcon={false} />}
+        {page.title && (
+          <TemplateTitleContainer isActive={isActive}>
+            <Text.Span size={TextSize.Small}>
+              {title !== '' ? title : 'Untitled'}
+            </Text.Span>
+          </TemplateTitleContainer>
+        )}
         <ActionButton
           ref={insertButtonRef}
           onClick={(e) => {
@@ -281,6 +294,7 @@ SavedPageTemplate.propTypes = {
   pageSize: PageSizePropType.isRequired,
   handleDelete: PropTypes.func,
   index: PropTypes.number,
+  title: PropTypes.string,
 };
 
 SavedPageTemplate.displayName = 'SavedPageTemplate';

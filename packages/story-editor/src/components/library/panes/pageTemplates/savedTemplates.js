@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  LoadingSpinner,
-  Text,
-  TextSize,
-  useSnackbar,
-} from '@googleforcreators/design-system';
+import { LoadingSpinner, useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
