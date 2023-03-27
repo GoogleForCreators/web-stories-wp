@@ -19,12 +19,7 @@
  */
 import { LoadingSpinner, useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import {
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from '@googleforcreators/react';
+import { useCallback, useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -35,7 +30,6 @@ import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
 import { LoadingContainer } from '../shared';
 import TemplateList from './templateList';
-import DeleteDialog from './deleteDialog';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -58,16 +52,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
     }));
 
   const { showSnackbar } = useSnackbar();
-
-  const [showDialog, setShowDialog] = useState(null);
-  const [templateToDelete, setTemplateToDelete] = useState(null);
   const ref = useRef();
-
-  // This is a workaround to force re-rendering for the virtual list to work and the parentRef being assigned correctly.
-  // @todo Look into why does the ref not work as expected otherwise.
-  useLayoutEffect(() => {
-    setShowDialog(false);
-  }, []);
 
   const fetchTemplates = useCallback(() => {
     if (!nextTemplatesToFetch) {
@@ -77,41 +62,24 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
     loadTemplates();
   }, [nextTemplatesToFetch, loadTemplates]);
 
-  const onClickDelete = useCallback(({ templateId }, e) => {
-    e?.stopPropagation();
-    if (templateId) {
-      setShowDialog(true);
-      setTemplateToDelete(templateId);
-    }
-  }, []);
-
   const handleDelete = useCallback(
-    () =>
-      deletePageTemplate(templateToDelete)
-        .then(() => {
-          setSavedTemplates(
-            savedTemplates.filter(
-              ({ templateId }) => templateId !== templateToDelete
-            )
-          );
-          setShowDialog(false);
-        })
-        .catch(() => {
-          showSnackbar({
-            message: __(
-              'Unable to delete the template. Please try again.',
-              'web-stories'
-            ),
-            dismissible: true,
-          });
-        }),
-    [
-      deletePageTemplate,
-      templateToDelete,
-      savedTemplates,
-      showSnackbar,
-      setSavedTemplates,
-    ]
+    async (id) => {
+      try {
+        await deletePageTemplate(id);
+        setSavedTemplates(
+          savedTemplates.filter(({ templateId }) => templateId !== id)
+        );
+      } catch {
+        showSnackbar({
+          message: __(
+            'Unable to delete the template. Please try again.',
+            'web-stories'
+          ),
+          dismissible: true,
+        });
+      }
+    },
+    [deletePageTemplate, savedTemplates, showSnackbar, setSavedTemplates]
   );
 
   return (
@@ -122,7 +90,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
           parentRef={ref}
           pageSize={pageSize}
           pages={savedTemplates}
-          handleDelete={onClickDelete}
+          handleDelete={handleDelete}
           fetchTemplates={fetchTemplates}
           {...rest}
         />
@@ -130,12 +98,6 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
         <LoadingContainer>
           <LoadingSpinner animationSize={64} numCircles={8} />
         </LoadingContainer>
-      )}
-      {showDialog && (
-        <DeleteDialog
-          onClose={() => setShowDialog(false)}
-          onDelete={handleDelete}
-        />
       )}
     </Wrapper>
   );

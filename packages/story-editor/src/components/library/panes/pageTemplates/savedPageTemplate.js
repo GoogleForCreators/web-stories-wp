@@ -20,7 +20,6 @@
 import {
   Icons,
   themeHelpers,
-  useKeyDownEffect,
   Text,
   TextSize,
 } from '@googleforcreators/design-system';
@@ -51,10 +50,10 @@ import { PageSizePropType } from '../../../../propTypes';
 import { focusStyle } from '../../../panels/shared/styles';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
-import useFocusCanvas from '../../../canvas/useFocusCanvas';
 import { ActionButton, PageTemplateTitleContainer } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import useLibrary from '../../useLibrary';
+import DropDownMenu from './dropDownMenu';
 
 const TemplateImage = styled.img`
   width: 100%;
@@ -62,6 +61,7 @@ const TemplateImage = styled.img`
 `;
 
 const PageTemplateWrapper = styled.div`
+  position: relative;
   height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
   cursor: pointer;
@@ -69,14 +69,17 @@ const PageTemplateWrapper = styled.div`
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${focusStyle};
 `;
+
 PageTemplateWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
-const PreviewPageWrapper = styled.div`
+const PreviewPageWrapper = styled.button`
   position: relative;
-  height: ${({ pageSize }) => pageSize.height}px;
-  width: ${({ pageSize }) => pageSize.width}px;
+  padding: 0;
+  border: 0;
+  height: 100%;
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.interactiveBg.secondary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
@@ -94,11 +97,6 @@ const TemplateInsertionOverlay = styled(InsertionOverlay)`
   z-index: 11;
 `;
 
-const DeleteButton = styled(ActionButton)`
-  top: 4px;
-  right: 4px;
-`;
-
 const TemplateTitleContainer = styled(PageTemplateTitleContainer)`
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 `;
@@ -107,7 +105,15 @@ const TemplateTitleContainer = styled(PageTemplateTitleContainer)`
 const BUTTON_NESTING_DEPTH = 2;
 
 function SavedPageTemplate(
-  { page, pageSize, handleDelete, index, title = '', ...rest },
+  {
+    page,
+    pageSize,
+    handleDelete,
+    index,
+    title = '',
+    highlightedTemplate,
+    onClick,
+  },
   ref
 ) {
   const {
@@ -130,10 +136,19 @@ function SavedPageTemplate(
     usePageDataUrls(({ state: { dataUrls } }) => dataUrls[page.id]) ||
     page.pregeneratedPageDataUrl;
   const [isActive, setIsActive] = useState(false);
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const onMenuOpen = useCallback((e) => {
+    e.stopPropagation();
+    setIsMenuOpen(true);
+  }, []);
+  const onMenuCancelled = useCallback(() => {
+    setIsMenuOpen(false);
+  }, []);
+  const onMenuSelected = useCallback(() => {
+    setIsMenuOpen(false);
+    setIsActive(false);
+  }, []);
   useFocusOut(ref, () => setIsActive(false), []);
-
-  const { highlightedTemplate, onClick } = rest;
 
   const makeActive = useCallback(() => setIsActive(true), []);
 
@@ -200,15 +215,9 @@ function SavedPageTemplate(
   }, [imageUrl, queuePageImageGeneration, page, hasUploadMediaAction]);
 
   const insertButtonRef = useRef();
-  const deleteButtonRef = useRef();
   useRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
-  useRovingTabIndex({ ref: deleteButtonRef }, [], BUTTON_NESTING_DEPTH);
-
-  const focusCanvas = useFocusCanvas();
-  useKeyDownEffect(deleteButtonRef, 'tab', focusCanvas, [focusCanvas]);
 
   return (
-    // eslint-disable-next-line styled-components-a11y/click-events-have-key-events,styled-components-a11y/no-noninteractive-element-interactions -- clicking and events need to work on the wrapper AND in the contained buttons as well.
     <PageTemplateWrapper
       pageSize={pageSize}
       role="listitem"
@@ -219,9 +228,12 @@ function SavedPageTemplate(
       isHighlighted={page.id === highlightedTemplate}
       onFocus={makeActive}
       onBlur={makeInactive}
-      onClick={onClick}
     >
-      <PreviewPageWrapper pageSize={pageSize} background={page.backgroundColor}>
+      <PreviewPageWrapper
+        pageSize={pageSize}
+        background={page.backgroundColor}
+        onClick={onClick}
+      >
         {imageUrl ? (
           <TemplateImage
             alt={page.image?.alt || __('Saved Page Template', 'web-stories')}
@@ -257,31 +269,29 @@ function SavedPageTemplate(
             </Text.Span>
           </TemplateTitleContainer>
         )}
-        <ActionButton
-          ref={insertButtonRef}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick(e);
-          }}
-          aria-label={__('Use template', 'web-stories')}
-          $display={isActive}
-          tabIndex={index === 0 ? 0 : -1}
-        >
-          <Icons.PlusFilledSmall />
-        </ActionButton>
-        <DeleteButton
-          ref={deleteButtonRef}
-          $display={isActive}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDelete(page, e);
-          }}
-          aria-label={__('Delete Page Template', 'web-stories')}
-          tabIndex={isActive ? 0 : -1}
-        >
-          <Icons.TrashFilledSmall />
-        </DeleteButton>
       </PreviewPageWrapper>
+      <ActionButton
+        ref={insertButtonRef}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick(e);
+        }}
+        aria-label={__('Use template', 'web-stories')}
+        $display={isActive}
+        tabIndex={index === 0 ? 0 : -1}
+      >
+        <Icons.PlusFilledSmall />
+      </ActionButton>
+      <DropDownMenu
+        display={isActive}
+        isMenuOpen={isMenuOpen}
+        onMenuOpen={onMenuOpen}
+        onMenuCancelled={onMenuCancelled}
+        onMenuSelected={onMenuSelected}
+        onDelete={() => {
+          handleDelete(page.templateId);
+        }}
+      />
     </PageTemplateWrapper>
   );
 }
@@ -289,12 +299,13 @@ function SavedPageTemplate(
 const PageTemplateWithRef = forwardRef(SavedPageTemplate);
 
 SavedPageTemplate.propTypes = {
-  isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
-  handleDelete: PropTypes.func,
+  handleDelete: PropTypes.func.isRequired,
   index: PropTypes.number,
   title: PropTypes.string,
+  highlightedTemplate: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 SavedPageTemplate.displayName = 'SavedPageTemplate';
