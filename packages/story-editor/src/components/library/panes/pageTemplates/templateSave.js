@@ -26,7 +26,6 @@ import {
   TextSize,
   Text,
   useSnackbar,
-  Input,
 } from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 import { DATA_VERSION } from '@googleforcreators/migration';
@@ -40,8 +39,8 @@ import { useStory } from '../../../../app/story';
 import { focusStyle } from '../../../panels/shared/styles';
 import isDefaultPage from '../../../../utils/isDefaultPage';
 import createThumbnailCanvasFromFullbleedCanvas from '../../../../utils/createThumbnailCanvasFromFullbleedCanvas';
-import Dialog from '../../../dialog';
 import Icon from './images/illustration.svg';
+import SaveDialog from './saveDialog';
 
 const StyledText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.secondary};
@@ -99,13 +98,6 @@ const SaveButton = styled.button`
 
   ${focusStyle};
 `;
-
-const InputWrapper = styled.form`
-  margin: 16px 4px;
-  width: 470px;
-  height: 100px;
-`;
-
 function TemplateSave({ setShowDefaultTemplates, updateList }) {
   const {
     actions: { addPageTemplate },
@@ -123,12 +115,9 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
   );
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [templateName, setTemplateName] = useState('');
 
   const handleSaveTemplate = useCallback(
-    async (e) => {
-      e.preventDefault();
-
+    async (templateName) => {
       if (isDisabled) {
         return;
       }
@@ -188,7 +177,6 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       showSnackbar,
       updateList,
       pageCanvasMap,
-      templateName,
     ]
   );
 
@@ -206,33 +194,17 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
           {__('Save current page as template', 'web-stories')}
         </StyledText>
       </SaveButton>
-      <Dialog
-        isOpen={isDialogOpen}
-        title={__('Save Page Template', 'web-stories')}
-        primaryText={__('Save', 'web-stories')}
-        onPrimary={handleSaveTemplate}
-        secondaryText={__('Cancel', 'web-stories')}
-        onSecondary={() => {
-          setIsDialogOpen(false);
-          setTemplateName('');
-        }}
-        onClose={() => {
-          setIsDialogOpen(false);
-          setTemplateName('');
-        }}
-      >
-        <InputWrapper onSubmit={handleSaveTemplate}>
-          <Input
-            onChange={(e) => {
-              setTemplateName(e.target.value);
-            }}
-            value={templateName}
-            label={__('Template name', 'web-stories')}
-            placeholder="Untitled"
-            type="text"
-          />
-        </InputWrapper>
-      </Dialog>
+      {isDialogOpen && (
+        <SaveDialog
+          onClose={() => {
+            setIsDialogOpen(false);
+          }}
+          onSave={async (templateName) => {
+            await handleSaveTemplate(templateName);
+            setIsDialogOpen(false);
+          }}
+        />
+      )}
     </>
   );
 }
