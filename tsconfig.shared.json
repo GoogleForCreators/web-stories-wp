@@ -17,7 +17,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "importsNotUsedAsValues": "error",
+    "verbatimModuleSyntax": true,
     "moduleResolution": "node",
     "esModuleInterop": false,
     "resolveJsonModule": true,
