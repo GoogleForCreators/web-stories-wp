@@ -574,7 +574,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		return static function( $handle ) use ( $url, $url_or_ip ): void {
 			// Just some safeguard in case cURL is not really available,
 			// despite this method being run in the context of WP_Http_Curl.
-			if ( ! function_exists( 'curl_setopt' ) ) {
+			if ( ! \function_exists( '\curl_setopt' ) ) {
 				return;
 			}
 
@@ -610,7 +610,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public function modify_curl_configuration( $handle ): void {
 		// Just some safeguard in case cURL is not really available,
 		// despite this method being run in the context of WP_Http_Curl.
-		if ( ! function_exists( 'curl_setopt' ) ) {
+		if ( ! \function_exists( '\curl_setopt' ) ) {
 			return;
 		}
 
