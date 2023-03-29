@@ -5,8 +5,11 @@
     "declarationDir": "dist-types"
   },
   "references": [
+    { "path": "../date" },
+    { "path": "../elements" },
     { "path": "../i18n" },
     { "path": "../migration" },
+    { "path": "../stickers" },
     { "path": "../tracking" }
   ],
   "include": ["src/**/*"],

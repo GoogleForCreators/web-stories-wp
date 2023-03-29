@@ -124,7 +124,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          npm install puppeteer
+          npm install puppeteer@19.8.0
         env:
           PUPPETEER_PRODUCT: chrome
 

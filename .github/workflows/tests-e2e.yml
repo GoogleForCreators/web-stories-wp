@@ -201,7 +201,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install puppeteer
+        run: npm install puppeteer@19.8.0
         env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
