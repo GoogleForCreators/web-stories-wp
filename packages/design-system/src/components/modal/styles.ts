@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,26 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createGlobalStyle } from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import type { AnimationProviderState, ElementId } from './types';
+import { OVERLAY_CLASS } from './constants';
 
-function generateKeyframesMap(
-  targets: ElementId[],
-  getAnimationParts: AnimationProviderState['actions']['getAnimationParts']
-) {
-  const allKeyframeEntries = targets
-    .map((target) =>
-      getAnimationParts(target).map((part) =>
-        Object.entries(part.generatedKeyframes)
-      )
-    )
-    .flat(2);
-  const keyframesAsMap = new Map(allKeyframeEntries);
-  return Object.fromEntries(keyframesAsMap);
-}
+export const ModalGlobalStyle = createGlobalStyle`
+  .${OVERLAY_CLASS} {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+  }
 
-export default generateKeyframesMap;
+  .${OVERLAY_CLASS}.ReactModal__Overlay--after-open {
+    opacity: 1;
+  }
+
+  .${OVERLAY_CLASS}.ReactModal__Overlay--before-close {
+    opacity: 0;
+  }
+`;

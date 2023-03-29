@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@googleforcreators/date": "*",
+    "@googleforcreators/elements": "*",
     "@googleforcreators/stickers": "*",
     "puppeteer": "*"
   },

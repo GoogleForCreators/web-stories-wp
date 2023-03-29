@@ -87,3 +87,13 @@ export type WAAPIAnimationWrapperProps = PropsWithChildren<{
 export type WrapperProps = PropsWithChildren<{
   target: ElementId;
 }>;
+
+export enum AnimationMachineState {
+  Idle = 'idle',
+  Complete = 'complete',
+}
+
+export enum AnimationMachineTransition {
+  Complete = 'complete',
+  Reset = 'reset',
+}
