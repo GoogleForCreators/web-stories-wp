@@ -49,6 +49,7 @@ jobs:
             api.github.com:443
             github.com:443
             uploads.github.com:443
+            objects.githubusercontent.com:443
 
       - name: Checkout
         uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
