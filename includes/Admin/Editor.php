@@ -506,7 +506,10 @@ class Editor extends Service_Base implements HasRequirements {
 		}
 
 		// Make sure these functions are loaded.
-		if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
+		if (
+			! \function_exists( '\wp_check_post_lock' ) ||
+			! \function_exists( '\wp_set_post_lock' )
+		) {
 			require_once ABSPATH . 'wp-admin/includes/post.php';
 		}
 

@@ -61,7 +61,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_init_analytics_module_active(): void {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+		\define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
@@ -144,7 +144,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_get_site_kit_active_modules_option(): void {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+		\define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
 		$actual_before = $this->call_private_method( [ $this->instance, 'get_site_kit_active_modules_option' ] );
 
@@ -211,7 +211,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_get_plugin_status_plugin_active(): void {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+		\define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
 		$expected = [
 			'installed'       => true,
@@ -235,7 +235,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_get_plugin_status_analytics_module_active(): void {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+		\define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
@@ -262,7 +262,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_get_plugin_status_analytics_module_no_snippet(): void {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+		\define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 
 		$expected = [
@@ -287,7 +287,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_get_plugin_status_adsense_module_active(): void {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+		\define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'adsense' ], false );
 		update_option(
 			'googlesitekit_adsense_settings',
@@ -322,7 +322,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_get_plugin_status_adsense_module_no_snippet(): void {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+		\define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'adsense' ], false );
 
 		$expected = [

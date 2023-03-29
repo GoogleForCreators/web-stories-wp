@@ -361,7 +361,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		$switched_blog = $this->maybe_switch_site( $url );
 
 
-		if ( function_exists( 'wpcom_vip_url_to_postid' ) ) {
+		if ( \function_exists( 'wpcom_vip_url_to_postid' ) ) {
 			$post_id = wpcom_vip_url_to_postid( $url );
 		} else {
 			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
@@ -407,7 +407,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 				) {
 					$slug = $values[2];
 
-					if ( function_exists( 'wpcom_vip_get_page_by_path' ) ) {
+					if ( \function_exists( 'wpcom_vip_get_page_by_path' ) ) {
 						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
 					} else {
 						// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions

@@ -74,11 +74,11 @@ class Context {
 		}
 
 		// Check for `amp_is_request()` first since `is_amp_endpoint()` is deprecated.
-		if ( function_exists( '\amp_is_request' ) ) {
+		if ( \function_exists( '\amp_is_request' ) ) {
 			return amp_is_request();
 		}
 
-		if ( function_exists( '\is_amp_endpoint' ) ) {
+		if ( \function_exists( '\is_amp_endpoint' ) ) {
 			return is_amp_endpoint();
 		}
 
@@ -93,7 +93,7 @@ class Context {
 	 * @return bool Whether we're currently on the story editor screen.
 	 */
 	public function is_story_editor(): bool {
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$screen = \function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen && $this->story_post_type->get_slug() === $screen->post_type;
 	}
@@ -106,7 +106,7 @@ class Context {
 	 * @return bool Whether we're currently on the media upload screen
 	 */
 	public function is_upload_screen(): bool {
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$screen = \function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen && 'upload' === $screen->id;
 	}
@@ -117,7 +117,7 @@ class Context {
 	 * @since 1.15.0
 	 */
 	public function is_block_editor(): bool {
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$screen = \function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen && $screen->is_block_editor();
 	}
@@ -130,7 +130,7 @@ class Context {
 	 * @return string|null Current screen base if available.
 	 */
 	public function get_screen_base(): ?string {
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$screen = \function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen->base ?? null;
 	}
@@ -143,7 +143,7 @@ class Context {
 	 * @return string|null Current screen post type if available.
 	 */
 	public function get_screen_post_type(): ?string {
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$screen = \function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen->post_type ?? null;
 	}

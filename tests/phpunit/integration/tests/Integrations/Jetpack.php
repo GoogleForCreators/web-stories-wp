@@ -64,7 +64,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_register_is_wpcom(): void {
-		define( 'IS_WPCOM', true );
+		\define( 'IS_WPCOM', true );
 
 		$this->instance->register();
 
