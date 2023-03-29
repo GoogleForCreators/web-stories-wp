@@ -35,7 +35,9 @@ export default {
     resolve({
       preferBuiltins: true,
     }),
-    typescript(),
+    typescript({
+      tsconfig: resolvePath(__dirname, 'tsconfig.scripts.json'),
+    }),
     babel({
       babelrc: false,
       extensions: ['.ts'],
