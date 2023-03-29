@@ -57,7 +57,6 @@
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.0",
-    "@rollup/plugin-typescript": "^11.0.0",
     "@rollup/plugin-url": "^8.0.1",
     "@storybook/addon-a11y": "^6.5.16",
     "@storybook/addon-backgrounds": "^6.5.16",

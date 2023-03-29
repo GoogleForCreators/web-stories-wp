@@ -20,7 +20,6 @@
 import { dirname, resolve as resolvePath } from 'path';
 import { fileURLToPath } from 'url';
 import resolve from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
 import { babel } from '@rollup/plugin-babel';
 
 const __dirname = fileURLToPath(dirname(import.meta.url));
@@ -34,9 +33,7 @@ export default {
   plugins: [
     resolve({
       preferBuiltins: true,
-    }),
-    typescript({
-      tsconfig: resolvePath(__dirname, 'tsconfig.scripts.json'),
+      extensions: ['.ts'],
     }),
     babel({
       babelrc: false,

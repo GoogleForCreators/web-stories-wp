@@ -19,15 +19,10 @@
  */
 import { useCallback, useReducer } from '@googleforcreators/react';
 
-export enum AnimationMachineState {
-  Idle = 'idle',
-  Complete = 'complete',
-}
-
-export enum AnimationMachineTransition {
-  Complete = 'complete',
-  Reset = 'reset',
-}
+/**
+ * Internal dependencies
+ */
+import { AnimationMachineState, AnimationMachineTransition } from './types';
 
 const AnimationMachine: Record<
   AnimationMachineState,
