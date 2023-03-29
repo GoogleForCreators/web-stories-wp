@@ -28,8 +28,6 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Integrations;
 
-use function function_exists;
-
 /**
  * Class Plugin_Status.
  */
@@ -47,7 +45,7 @@ class Plugin_Status {
 	 * Constructor.
 	 */
 	public function __construct() {
-		if ( ! function_exists( 'get_plugins' ) ) {
+		if ( ! \function_exists( '\get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 

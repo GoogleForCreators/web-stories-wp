@@ -96,7 +96,7 @@ class New_Relic extends Service_Base implements Conditional {
 	 * @return bool Whether the conditional object is needed.
 	 */
 	public static function is_needed(): bool {
-		return function_exists( '\newrelic_disable_autorum' );
+		return \function_exists( '\newrelic_disable_autorum' );
 	}
 
 	/**

@@ -164,7 +164,7 @@ class Customizer extends Service_Base implements Conditional {
 	 * @return bool Whether the conditional object is needed.
 	 */
 	public static function is_needed(): bool {
-		return ! function_exists( 'wp_is_block_theme' ) || ! wp_is_block_theme();
+		return ! \function_exists( 'wp_is_block_theme' ) || ! wp_is_block_theme();
 	}
 
 	/**
