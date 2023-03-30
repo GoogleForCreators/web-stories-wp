@@ -147,7 +147,10 @@ class Stories_Shortcode extends Service_Base {
 		$should_add_tax_query = false;
 
 		foreach ( $taxonomies as $taxonomy ) {
-			$should_add_tax_query = $should_add_tax_query || '' !== $attributes[ $taxonomy ];
+			if ( $should_add_tax_query || '' !== $attributes[ $taxonomy ] ) {
+				$should_add_tax_query = true;
+				break;
+			}
 		}
 
 		if ( $should_add_tax_query ) {
