@@ -215,6 +215,9 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
         document.activeElement
       );
 
+      // tab to search field
+      await fixture.events.keyboard.press('tab');
+
       // tab to filtering buttons
       await fixture.events.keyboard.press('tab');
       // filter templates by "section"

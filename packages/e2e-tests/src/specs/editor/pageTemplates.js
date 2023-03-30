@@ -72,4 +72,26 @@ describe('Page Templates', () => {
 
     await takeSnapshot(page, 'Page Templates');
   });
+
+  it('should be able search default page templates', async () => {
+    await createNewStory();
+    await page.click('#library-tab-pageTemplates');
+    await page.click('[aria-label="Search"]');
+    await page.keyboard.type('baking');
+    await page.keyboard.press('Enter');
+
+    // Fresh & Bright Cover template should not be on the page
+    await expect(page).not.toMatchElement(
+      'button[aria-label="Fresh & Bright Cover"]'
+    );
+
+    await takeSnapshot(page, 'Search Default Page Templates');
+
+    await page.click('[aria-label="Clear Search"]');
+
+    // Fresh & Bright Cover template should be on the page
+    await expect(page).toMatchElement(
+      'button[aria-label="Fresh & Bright Cover"]'
+    );
+  });
 });

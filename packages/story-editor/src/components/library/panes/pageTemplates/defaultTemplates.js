@@ -29,6 +29,7 @@ import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
+  Text,
   Headline,
   LoadingSpinner,
   TextSize,
@@ -38,7 +39,8 @@ import {
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { ChipGroup, LoadingContainer } from '../shared';
+import { ChipGroup, LoadingContainer, PANE_PADDING } from '../shared';
+import { SearchInput } from '../../common';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 import TemplateList from './templateList';
@@ -56,25 +58,39 @@ const PageTemplatesParentContainer = styled.div`
   overflow-y: scroll;
 `;
 
+const SearchInputContainer = styled.div`
+  padding: 0 ${PANE_PADDING};
+  margin-bottom: 26px;
+`;
+
+const Message = styled(Text.Paragraph).attrs({
+  size: TextSize.Medium,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  padding: 1em;
+  text-align: center;
+`;
+
 function DefaultTemplates({ pageSize }) {
   const {
     actions: { getPageTemplates },
   } = useAPI();
   const [pageTemplates, setPageTemplates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // load and process pageTemplates
   useEffect(() => {
     async function loadPageTemplates() {
       setIsLoading(true);
       const trackTiming = getTimeTracker('load_page_templates');
-      setPageTemplates(await getPageTemplates());
+      setPageTemplates(await getPageTemplates(searchTerm));
       setIsLoading(false);
       trackTiming();
     }
 
     loadPageTemplates();
-  }, [getPageTemplates, setPageTemplates]);
+  }, [getPageTemplates, setPageTemplates, searchTerm]);
 
   const pageTemplatesParentRef = useRef();
   const [selectedPageTemplateType, setSelectedPageTemplateType] =
@@ -134,6 +150,14 @@ function DefaultTemplates({ pageSize }) {
 
   return (
     <>
+      <SearchInputContainer>
+        <SearchInput
+          initialValue={searchTerm}
+          placeholder={__('Search', 'web-stories')}
+          onSearch={setSearchTerm}
+          disabled={false}
+        />
+      </SearchInputContainer>
       <ChipGroup
         items={pills}
         selectedItemId={selectedPageTemplateType}
@@ -147,16 +171,19 @@ function DefaultTemplates({ pageSize }) {
             {__('Templates', 'web-stories')}
           </Headline>
         </ActionRow>
-        {!isLoading && pageTemplatesParentRef.current ? (
+
+        {isLoading || !pageTemplatesParentRef.current ? (
+          <LoadingContainer>
+            <LoadingSpinner animationSize={64} numCircles={8} />
+          </LoadingContainer>
+        ) : pageTemplates.length === 0 ? (
+          <Message>{__('No page templates found.', 'web-stories')}</Message>
+        ) : (
           <TemplateList
             pageSize={pageSize}
             parentRef={pageTemplatesParentRef}
             pages={filteredPages}
           />
-        ) : (
-          <LoadingContainer>
-            <LoadingSpinner animationSize={64} numCircles={8} />
-          </LoadingContainer>
         )}
       </PageTemplatesParentContainer>
     </>
