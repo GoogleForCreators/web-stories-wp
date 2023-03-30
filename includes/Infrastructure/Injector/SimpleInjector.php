@@ -422,7 +422,7 @@ final class SimpleInjector implements Injector {
 			$value = $this->argument_mappings[ $class ][ $name ];
 
 			// Closures are immediately resolved, to provide lazy resolution.
-			if ( is_callable( $value ) ) {
+			if ( \is_callable( $value ) ) {
 				$value = $value( $class, $parameter, $arguments );
 			}
 

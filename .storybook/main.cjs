@@ -33,7 +33,18 @@ module.exports = {
   ],
   addons: [
     '@storybook/addon-a11y/register',
-    '@storybook/addon-essentials',
+    {
+      name: '@storybook/addon-essentials',
+      options: {
+        actions: true,
+        backgrounds: true,
+        controls: false,
+        // See https://github.com/hipstersmoothie/react-docgen-typescript-plugin/issues/83
+        docs: false,
+        viewport: true,
+        toolbars: true,
+      },
+    },
     '@storybook/addon-storysource/register',
   ],
   framework: '@storybook/react',

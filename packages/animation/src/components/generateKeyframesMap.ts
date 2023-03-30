@@ -19,7 +19,7 @@
  */
 import type { AnimationProviderState, ElementId } from './types';
 
-export function generateKeyframesMap(
+function generateKeyframesMap(
   targets: ElementId[],
   getAnimationParts: AnimationProviderState['actions']['getAnimationParts']
 ) {

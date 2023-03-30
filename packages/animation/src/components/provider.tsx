@@ -42,7 +42,8 @@ import type {
   StoryAnimationMap,
 } from './types';
 import Context from './context';
-import useAnimationMachine, { AnimationMachineState } from './animationMachine';
+import { AnimationMachineState } from './types';
+import useAnimationMachine from './animationMachine';
 
 const createOnFinishPromise = (animation: Animation) => {
   return new Promise((resolve) => {
