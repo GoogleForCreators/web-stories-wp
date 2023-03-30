@@ -177,7 +177,7 @@ function DefaultTemplates({ pageSize }) {
             <LoadingSpinner animationSize={64} numCircles={8} />
           </LoadingContainer>
         ) : pageTemplates.length === 0 ? (
-          <Message>{__('No templates found.', 'web-stories')}</Message>
+          <Message>{__('No page templates found.', 'web-stories')}</Message>
         ) : (
           <TemplateList
             pageSize={pageSize}

@@ -34,30 +34,11 @@ const filterTemplates = (templates: Template[], search: string): Template[] => {
   const lowercaseSearchTerm: string = search.toLowerCase();
 
   return templates.filter(({ title, vertical, tags }) => {
-    const doesTitleMatch = title.toLowerCase().includes(lowercaseSearchTerm);
-    if (doesTitleMatch) {
-      return true;
-    }
-
-    const doesVerticalMatch = vertical
-      .toLowerCase()
-      .includes(lowercaseSearchTerm);
-    if (doesVerticalMatch) {
-      return true;
-    }
-
-    let doesTagsMatch = false;
-    tags.forEach((tag) => {
-      if (tag.toLowerCase().includes(lowercaseSearchTerm)) {
-        doesTagsMatch = true;
-        return;
-      }
-    });
-
-    if (doesTagsMatch) {
-      return true;
-    }
-    return false;
+    return (
+      title.toLowerCase().includes(lowercaseSearchTerm) ||
+      vertical.toLowerCase().includes(lowercaseSearchTerm) ||
+      tags.some((tag) => tag.toLowerCase().includes(lowercaseSearchTerm))
+    );
   });
 };
 
