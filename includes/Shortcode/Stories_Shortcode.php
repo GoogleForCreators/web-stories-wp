@@ -155,7 +155,7 @@ class Stories_Shortcode extends Service_Base {
 
 		if ( $should_add_tax_query ) {
 			$tax_query = [
-				'relation' => 'OR'
+				'relation' => 'OR',
 			];
 
 			foreach ( $taxonomies as $taxonomy ) {
