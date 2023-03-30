@@ -61,12 +61,13 @@ function transformResponse(template) {
   };
 }
 
-export function getCustomPageTemplates(config, page = 1) {
+export function getCustomPageTemplates(config, page = 1, search) {
   const perPage = 100;
   const path = addQueryArgs(config.api.pageTemplates, {
     context: 'edit',
     per_page: perPage,
     page,
+    search,
     _web_stories_envelope: true,
     _fields: TEMPLATE_FIELDS,
     _embed: TEMPLATE_EMBED,

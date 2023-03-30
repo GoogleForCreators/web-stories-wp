@@ -36,15 +36,21 @@ import { trackError } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
-import { Pane } from '../shared';
+import { Pane, PANE_PADDING } from '../shared';
 import { Select } from '../../../form';
 import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
 import { useConfig } from '../../../../app/config';
+import { SearchInput } from '../../common';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
 import TemplateSave from './templateSave';
+
+const SearchInputContainer = styled.div`
+  padding: 0 ${PANE_PADDING};
+  margin-bottom: 26px;
+`;
 
 export const StyledPane = styled(Pane)`
   height: 100%;
@@ -102,6 +108,7 @@ function PageTemplatesPane(props) {
   );
 
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const updateTemplatesList = useCallback(
@@ -115,7 +122,7 @@ function PageTemplatesPane(props) {
     [setSavedTemplates]
   );
 
-  const loadTemplates = useCallback(() => {
+  const loadTemplates = useCallback(async () => {
     // if nextTemplatesToFetch is false, we must not perform an API call
     // with page=false.
     if (!nextTemplatesToFetch) {
@@ -123,43 +130,47 @@ function PageTemplatesPane(props) {
     }
 
     setIsLoading(true);
-    getCustomPageTemplates(nextTemplatesToFetch)
-      .then(({ templates, hasMore }) => {
-        const updatedTemplates = templates.map(
-          ({ version, templateId, ...page }) => {
-            const template = {
-              pages: [page],
-            };
+    try {
+      const { templates, hasMore } = await getCustomPageTemplates(
+        nextTemplatesToFetch,
+        searchTerm
+      );
+      const updatedTemplates = templates.map(
+        ({ version, templateId, ...page }) => {
+          const template = {
+            pages: [page],
+          };
 
-            // Older page templates unfortunately don't have a version.
-            // This is just a reasonable fallback, as 25 was the data version
-            // when custom page templates were first introduced.
-            const migratedTemplate = migrate(template, version || 25);
-            return {
-              templateId,
-              version: DATA_VERSION,
-              ...migratedTemplate.pages[0],
-            };
-          }
-        );
-        setSavedTemplates((_savedTemplates) => [
-          ...(_savedTemplates || []),
-          ...updatedTemplates,
-        ]);
-
-        if (!hasMore) {
-          setNextTemplatesToFetch(false);
-        } else {
-          setNextTemplatesToFetch(nextTemplatesToFetch + 1);
+          // Older page templates unfortunately don't have a version.
+          // This is just a reasonable fallback, as 25 was the data version
+          // when custom page templates were first introduced.
+          const migratedTemplate = migrate(template, version || 25);
+          return {
+            templateId,
+            version: DATA_VERSION,
+            ...migratedTemplate.pages[0],
+          };
         }
-      })
-      .catch((err) => {
-        trackError('saved_templates', err.message);
+      );
+      setSavedTemplates((_savedTemplates) => [
+        ...(_savedTemplates || []),
+        ...updatedTemplates,
+      ]);
+
+      if (!hasMore) {
         setNextTemplatesToFetch(false);
-        setSavedTemplates((_savedTemplates) => _savedTemplates ?? []);
-      })
-      .finally(() => setIsLoading(false));
+      } else {
+        setNextTemplatesToFetch(nextTemplatesToFetch + 1);
+      }
+    } catch (err) {
+      trackError('saved_templates', err.message);
+      setNextTemplatesToFetch(false);
+      setSavedTemplates((_savedTemplates) => _savedTemplates ?? []);
+    } finally {
+      setIsLoading(false);
+    }
   }, [
+    searchTerm,
     getCustomPageTemplates,
     nextTemplatesToFetch,
     setSavedTemplates,
@@ -180,7 +191,7 @@ function PageTemplatesPane(props) {
     if (!savedTemplates && !showDefaultTemplates) {
       loadTemplates();
     }
-  }, [savedTemplates, loadTemplates, showDefaultTemplates]);
+  }, [loadTemplates, showDefaultTemplates, savedTemplates]);
 
   useEffect(() => {
     let timeout = null;
@@ -241,12 +252,27 @@ function PageTemplatesPane(props) {
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
         ) : (
-          <SavedTemplates
-            pageSize={pageSize}
-            highlightedTemplate={highlightedTemplate}
-            loadTemplates={loadTemplates}
-            isLoading={isLoading}
-          />
+          <>
+            <SearchInputContainer>
+              <SearchInput
+                initialValue={searchTerm}
+                placeholder={__('Search', 'web-stories')}
+                onSearch={(str) => {
+                  setSavedTemplates([]);
+                  setNextTemplatesToFetch(1);
+                  setSearchTerm(str);
+                }}
+                disabled={false}
+              />
+            </SearchInputContainer>
+
+            <SavedTemplates
+              pageSize={pageSize}
+              highlightedTemplate={highlightedTemplate}
+              loadTemplates={loadTemplates}
+              isLoading={isLoading}
+            />
+          </>
         )}
       </PaneInner>
     </StyledPane>

@@ -39,7 +39,14 @@ const Wrapper = styled.div`
   min-height: 96px;
 `;
 
-function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
+function SavedTemplates({
+  searchTerm,
+  setSearchTerm,
+  pageSize,
+  loadTemplates,
+  isLoading,
+  ...rest
+}) {
   const {
     actions: { deletePageTemplate },
   } = useAPI();
@@ -59,7 +66,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
       return;
     }
 
-    loadTemplates();
+    loadTemplates('test');
   }, [nextTemplatesToFetch, loadTemplates]);
 
   const handleDelete = useCallback(
@@ -104,6 +111,8 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
 }
 
 SavedTemplates.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
+  setSearchTerm: PropTypes.func.isRequired,
   pageSize: PropTypes.object.isRequired,
   loadTemplates: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
