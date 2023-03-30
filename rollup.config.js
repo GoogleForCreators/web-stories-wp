@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { resolve as resolvePath, dirname } from 'path';
-import { existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -26,7 +25,6 @@ import { babel } from '@rollup/plugin-babel';
 import url from '@rollup/plugin-url';
 import json from '@rollup/plugin-json';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
-import typescript from '@rollup/plugin-typescript';
 import svgr from '@svgr/rollup';
 import terser from '@rollup/plugin-terser';
 import del from 'rollup-plugin-delete';
@@ -40,6 +38,7 @@ const plugins = [
   resolve({
     browser: true, // To correctly import browser version of @ffmpeg/ffmpeg for example.
     preferBuiltins: true,
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.json'],
   }),
   babel({
     babelrc: false,
@@ -207,27 +206,8 @@ async function config(cliArgs) {
 
     const sourceDir = dirname(resolvePath(pkg.dir, pkg.config.source));
 
-    const tsconfig = resolvePath(pkg.dir, 'tsconfig.json');
-    const hasTypeScript = existsSync(tsconfig);
-    const tsPlugin = typescript({
-      tsconfig,
-      // Override config from tsconfig.shared.json to not emit declarations.
-      compilerOptions: {
-        declaration: false,
-        declarationDir: null,
-        declarationMap: false,
-        composite: false,
-        emitDeclarationOnly: false,
-        sourceMap: false,
-      },
-    });
-
     if (entriesToBuild.includes('es')) {
       const _plugins = [];
-
-      if (hasTypeScript) {
-        _plugins.push(tsPlugin);
-      }
 
       const moduleDir = dirname(resolvePath(pkg.dir, pkg.config.module));
       _plugins.push(
@@ -260,10 +240,6 @@ async function config(cliArgs) {
 
     if (entriesToBuild.includes('cjs')) {
       const _plugins = [];
-
-      if (hasTypeScript) {
-        _plugins.push(tsPlugin);
-      }
 
       const mainDir = dirname(resolvePath(pkg.dir, pkg.config.main));
       _plugins.push(

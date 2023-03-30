@@ -156,7 +156,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * @return WP_REST_Response|WP_Error Response object on success.
 	 */
 	public function update_item( $request ) {
-		if ( ! function_exists( 'wp_set_post_lock' ) ) {
+		if ( ! \function_exists( '\wp_set_post_lock' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/post.php';
 		}
 

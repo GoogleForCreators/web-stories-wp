@@ -21,7 +21,7 @@
 import { mkdirSync, rmSync, existsSync } from 'fs';
 import { relative } from 'path';
 import { Command } from 'commander';
-import { inc as semverInc, ReleaseType } from 'semver';
+import { inc as semverInc, type ReleaseType } from 'semver';
 
 /**
  * Internal dependencies

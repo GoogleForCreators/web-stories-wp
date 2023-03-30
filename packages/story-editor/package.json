@@ -2,7 +2,7 @@
   "name": "@googleforcreators/story-editor",
   "description": "The core Web Stories editor web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202302061326",
+  "version": "0.1.202303271448",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -72,7 +72,7 @@
     "flagged": "^2.0.8",
     "history": "^5.3.0",
     "html-to-image": "1.10.8",
-    "immer": "^9.0.19",
+    "immer": "^9.0.21",
     "mediainfo.js": "^0.1.9",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
@@ -83,7 +83,7 @@
     "react-virtual": "^2.10.4",
     "remove-accents": "^0.4.4",
     "sat": "^0.9.0",
-    "styled-components": "^5.3.8",
+    "styled-components": "^5.3.9",
     "stylis-plugin-rtl": "^1.0.0",
     "uuid": "^9.0.0"
   },

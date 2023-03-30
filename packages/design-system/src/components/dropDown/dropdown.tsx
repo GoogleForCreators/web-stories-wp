@@ -39,8 +39,6 @@ import DropDownSelect from './select';
 import useDropDown from './useDropDown';
 import type { DropDownProps } from './types';
 
-export { DropDownSelect };
-
 const DropDown = forwardRef(function DropDown(
   {
     ariaLabel,

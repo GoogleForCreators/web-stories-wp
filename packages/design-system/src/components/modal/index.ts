@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-export {
-  default as Modal,
-  BODY_CLASS,
-  CONTENT_CLASS,
-  OVERLAY_CLASS,
-  ModalGlobalStyle,
-} from './modal';
+export { default as Modal } from './modal';
+export { ModalGlobalStyle } from './styles';
+export { BODY_CLASS, CONTENT_CLASS, OVERLAY_CLASS } from './constants';
