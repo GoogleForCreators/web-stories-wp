@@ -119,7 +119,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			} elseif ( 'publish' === $post->post_status ) {
 				$view_link = get_permalink( $post );
 			} else {
-				if ( ! function_exists( 'get_sample_permalink' ) ) {
+				if ( ! \function_exists( 'get_sample_permalink' ) ) {
 					require_once ABSPATH . 'wp-admin/includes/post.php';
 				}
 

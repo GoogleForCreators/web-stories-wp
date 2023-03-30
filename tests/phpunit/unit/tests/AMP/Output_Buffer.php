@@ -50,7 +50,7 @@ class Output_Buffer extends TestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_is_needed_amp_lower_version(): void {
-		define( 'AMP__VERSION', '0.0.1' );
+		\define( 'AMP__VERSION', '0.0.1' );
 		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
 	}
 
@@ -60,7 +60,7 @@ class Output_Buffer extends TestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_is_needed_amp_same_version(): void {
-		define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
+		\define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
 		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
 	}
 
@@ -70,7 +70,7 @@ class Output_Buffer extends TestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_is_needed_amp_same_version_did_amp_init(): void {
-		define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
+		\define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
 		do_action( 'amp_init' );
 		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
 	}
@@ -81,7 +81,7 @@ class Output_Buffer extends TestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_is_needed_amp_higher_version(): void {
-		define( 'AMP__VERSION', '99.9.9' );
+		\define( 'AMP__VERSION', '99.9.9' );
 		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
 	}
 
@@ -91,7 +91,7 @@ class Output_Buffer extends TestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_is_needed_amp_higher_version_did_amp_init(): void {
-		define( 'AMP__VERSION', '99.9.9' );
+		\define( 'AMP__VERSION', '99.9.9' );
 		do_action( 'amp_init' );
 		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
 	}
@@ -102,7 +102,7 @@ class Output_Buffer extends TestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_is_needed_amp_properly_initialized(): void {
-		define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
+		\define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
 		do_action( 'amp_init' );
 
 		Monkey\Functions\stubs(

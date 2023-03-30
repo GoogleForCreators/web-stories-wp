@@ -20,31 +20,13 @@
 import { useContextReact as useContext } from '@googleforcreators/react';
 import type { ComponentProps, CSSProperties } from 'react';
 import ReactModal from 'react-modal';
-import { createGlobalStyle, ThemeContext } from 'styled-components';
+import { ThemeContext } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import type { Theme } from '../../theme';
-
-export const BODY_CLASS = 'WebStories_ReactModal__Body--open';
-export const CONTENT_CLASS = 'WebStories_ReactModal__Content';
-export const OVERLAY_CLASS = 'WebStories_ReactModal__Overlay';
-
-export const ModalGlobalStyle = createGlobalStyle`
-  .${OVERLAY_CLASS} {
-    opacity: 0;
-    transition: opacity 0.1s ease-out;
-  }
-
-  .${OVERLAY_CLASS}.ReactModal__Overlay--after-open {
-    opacity: 1;
-  }
-
-  .${OVERLAY_CLASS}.ReactModal__Overlay--before-close {
-    opacity: 0;
-  }
-`;
+import { BODY_CLASS, CONTENT_CLASS, OVERLAY_CLASS } from './constants';
 
 const customStyles = {
   overlay: (theme: Theme) =>

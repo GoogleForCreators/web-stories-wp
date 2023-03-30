@@ -1,9 +1,5 @@
-<?php
-
-declare(strict_types = 1);
-
-/**
- * Copyright 2020 Google LLC
+/*
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +14,27 @@ declare(strict_types = 1);
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\Integrations;
-
-use Google\Web_Stories\Integrations\New_Relic as New_Relic_Integration;
-use Google\Web_Stories\Tests\Integration\TestCase;
+/**
+ * External dependencies
+ */
+import { createGlobalStyle } from 'styled-components';
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Integrations\New_Relic
+ * Internal dependencies
  */
-class New_Relic extends TestCase {
-	/**
-	 * @covers ::is_needed
-	 */
-	public function test_is_needed(): void {
-		$this->assertSame( \function_exists( '\newrelic_disable_autorum' ), New_Relic_Integration::is_needed() );
-	}
-}
+import { OVERLAY_CLASS } from './constants';
+
+export const ModalGlobalStyle = createGlobalStyle`
+  .${OVERLAY_CLASS} {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+  }
+
+  .${OVERLAY_CLASS}.ReactModal__Overlay--after-open {
+    opacity: 1;
+  }
+
+  .${OVERLAY_CLASS}.ReactModal__Overlay--before-close {
+    opacity: 0;
+  }
+`;
