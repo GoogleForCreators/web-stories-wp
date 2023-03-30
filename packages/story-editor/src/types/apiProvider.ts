@@ -139,7 +139,7 @@ export interface APICallbacks {
   getMediaForCorsCheck?: () => Promise<Resource[]>;
   getMutedMediaById?: (id: ResourceId) => Promise<VideoResource>;
   getOptimizedMediaById?: (id: ResourceId) => Promise<Resource>;
-  getPageTemplates?: () => Promise<Template[]>;
+  getPageTemplates?: (search: string) => Promise<Template[]>;
   getPosterMediaById?: (id: ResourceId) => Promise<Resource>;
   getProducts?: () => Promise<ProductData[]>;
   getProxyUrl?: (src: string) => string;
