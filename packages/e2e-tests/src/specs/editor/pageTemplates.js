@@ -63,6 +63,14 @@ describe('Page Templates', () => {
       text: 'Save current page as template',
     });
 
+    await page.waitForSelector('[role="dialog"]');
+
+    // Add a name for the template
+    await page.type('input[placeholder="Untitled"]', 'Test template');
+
+    // Close dialog
+    await page.keyboard.press('Enter');
+
     // Adding a custom page template automatically switches to the "Saved Templates" view.
     await expect(page).toMatchTextContent('Page Template saved.');
     await expect(page).toMatchTextContent('Saved templates');

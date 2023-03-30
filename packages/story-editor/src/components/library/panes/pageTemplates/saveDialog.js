@@ -66,6 +66,7 @@ function SaveDialog({ onClose, onSave }) {
           onChange={(e) => {
             setTemplateName(e.target.value);
           }}
+          ariaLabel={__('Template name field', 'web-stories')}
           value={templateName}
           label={__('Template name', 'web-stories')}
           placeholder="Untitled"
