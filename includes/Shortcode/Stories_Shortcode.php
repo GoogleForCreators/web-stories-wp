@@ -151,19 +151,17 @@ class Stories_Shortcode extends Service_Base {
 		}
 
 		if ( $should_add_tax_query ) {
+			$i         = 0;
 			$tax_query = [
 				'relation' => 'OR',
 			];
 
 			foreach ( $taxonomies as $taxonomy ) {
-				array_push(
-					$tax_query,
-					[
-						'taxonomy' => $taxonomy,
-						'field'    => 'name',
-						'terms'    => $attributes[ $taxonomy ] ? explode( ',', (string) $attributes[ $taxonomy ] ) : [],
-					],
-				);
+				$tax_query[ $i++ ] = [
+					'taxonomy' => $taxonomy,
+					'field'    => 'name',
+					'terms'    => $attributes[ $taxonomy ] ? array_map( 'trim', explode( ',', (string) $attributes[ $taxonomy ] ) ) : [],
+				];
 			}
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 			$args['tax_query'] = $tax_query;
