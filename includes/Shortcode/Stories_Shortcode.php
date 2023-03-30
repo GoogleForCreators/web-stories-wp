@@ -154,13 +154,12 @@ class Stories_Shortcode extends Service_Base {
 		}
 
 		if ( $should_add_tax_query ) {
-			$i         = 0;
 			$tax_query = [
-				'relation' => 'OR',
+				'relation' => 'OR'
 			];
 
 			foreach ( $taxonomies as $taxonomy ) {
-				$tax_query[ $i++ ] = [
+				$tax_query[] = [
 					'taxonomy' => $taxonomy,
 					'field'    => 'name',
 					'terms'    => $attributes[ $taxonomy ] ? array_map( 'trim', explode( ',', (string) $attributes[ $taxonomy ] ) ) : [],
