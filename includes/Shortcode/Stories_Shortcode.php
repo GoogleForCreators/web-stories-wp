@@ -147,7 +147,7 @@ class Stories_Shortcode extends Service_Base {
 		$should_add_tax_query = false;
 
 		foreach ( $taxonomies as $taxonomy ) {
-			if ( $should_add_tax_query || '' !== $attributes[ $taxonomy ] ) {
+			if ( '' !== $attributes[ $taxonomy ] ) {
 				$should_add_tax_query = true;
 				break;
 			}
