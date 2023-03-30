@@ -19,6 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { Input } from '@googleforcreators/design-system';
+import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -37,27 +38,38 @@ const InputWrapper = styled.form`
  * Display a dialog for when a user wants to rename a template.
  *
  * @param {Function} props.onClose Callback to toggle dialog display on close.
- * @param {Function} props.onSave Callback to save template. Template name will be the argument
+ * @param {Function} props.onUpdateName Callback to save template. Template name will be the argument
+ * @param {string} props.previousName Previous name of the template
  * @return {null|*} The dialog element.
  */
 
-function SaveDialog({ onClose }) {
+function RenameDialog({ onClose, onUpdateName, previousName = '' }) {
+  const [templateName, setTemplateName] = useState(previousName);
   return (
     <Dialog
       isOpen
       title={__('Rename Page Template', 'web-stories')}
       primaryText={__('Save', 'web-stories')}
-      onPrimary={() => {}}
+      onPrimary={() => {
+        onUpdateName(templateName);
+      }}
       secondaryText={__('Cancel', 'web-stories')}
       onSecondary={onClose}
       onClose={onClose}
     >
-      <InputWrapper onSubmit={() => {}}>
+      <InputWrapper
+        onSubmit={(e) => {
+          e.preventDefault();
+          onUpdateName(templateName);
+        }}
+      >
         <Input
-          onChange={() => {}}
-          value={'templateName'}
+          onChange={(e) => {
+            setTemplateName(e.target.value);
+          }}
+          value={templateName}
           label={__('Template name', 'web-stories')}
-          placeholder="Untitled"
+          placeholder={previousName}
           type="text"
         />
       </InputWrapper>
@@ -65,8 +77,10 @@ function SaveDialog({ onClose }) {
   );
 }
 
-SaveDialog.propTypes = {
+RenameDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onUpdateName: PropTypes.func.isRequired,
+  previousName: PropTypes.string,
 };
 
-export default SaveDialog;
+export default RenameDialog;

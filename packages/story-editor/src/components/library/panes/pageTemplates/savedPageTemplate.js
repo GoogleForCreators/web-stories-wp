@@ -140,14 +140,19 @@ function SavedPageTemplate(
   const onMenuOpen = useCallback((e) => {
     e.stopPropagation();
     setIsMenuOpen(true);
+    setIsActive(false);
   }, []);
+
   const onMenuCancelled = useCallback(() => {
     setIsMenuOpen(false);
+    setIsActive(false);
   }, []);
+
   const onMenuSelected = useCallback(() => {
     setIsMenuOpen(false);
     setIsActive(false);
   }, []);
+
   useFocusOut(ref, () => setIsActive(false), []);
 
   const makeActive = useCallback(() => setIsActive(true), []);
@@ -155,6 +160,22 @@ function SavedPageTemplate(
   const makeInactive = useCallback(() => {
     setIsActive(false);
   }, []);
+
+  const updateTemplateName = useCallback(
+    async (newName) => {
+      const res = await updatePageTemplate(page.templateId, {
+        title: newName,
+      });
+
+      updateSavedTemplate({
+        templateId: page.templateId,
+        title: res.title,
+      });
+      setIsMenuOpen(false);
+      setIsActive(false);
+    },
+    [updatePageTemplate, updateSavedTemplate, page.templateId]
+  );
 
   const imageUrl = page.image?.url || pageDataUrl;
   const shouldPostBlob =
@@ -291,6 +312,8 @@ function SavedPageTemplate(
         onDelete={() => {
           handleDelete(page.templateId);
         }}
+        previousName={page.title.rendered}
+        onUpdateName={updateTemplateName}
       />
     </PageTemplateWrapper>
   );

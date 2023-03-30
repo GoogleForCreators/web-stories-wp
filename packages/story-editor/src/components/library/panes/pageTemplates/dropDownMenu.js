@@ -73,7 +73,6 @@ const MENU_OPTIONS = {
  * Get a More icon that displays a dropdown menu on click.
  *
  * @param {Object} props Component props.
- * @param {Object} props.resource Selected media element's resource object.
  * @param {boolean} props.display Whether the more icon should be displayed.
  * @param {boolean} props.isMenuOpen If the dropdown menu is open.
  * @param {Function} props.onMenuOpen Callback for when menu is opened.
@@ -81,6 +80,8 @@ const MENU_OPTIONS = {
  * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
  * @param {Function} props.setParentActive Sets the parent element active.
  * @param {Function} props.onDelete Deletes template.
+ * @param {Function} props.onUpdateName updates template name.
+ * @param {string} props.previousName Previous name of the template.
  * @return {null|*} Element or null if should not display the More icon.
  */
 function DropDownMenu({
@@ -91,6 +92,8 @@ function DropDownMenu({
   onMenuSelected,
   setParentActive = noop,
   onDelete,
+  onUpdateName,
+  previousName,
 }) {
   const groups = [
     {
@@ -191,7 +194,16 @@ function DropDownMenu({
       {showDeleteDialog && (
         <DeleteDialog onClose={onDeleteDialogClose} onDelete={onDelete} />
       )}
-      {showRenameDialog && <RenameDialog onClose={onRenameDialogClose} />}
+      {showRenameDialog && (
+        <RenameDialog
+          onClose={onRenameDialogClose}
+          onUpdateName={(name) => {
+            onUpdateName(name);
+            onRenameDialogClose();
+          }}
+          previousName={previousName}
+        />
+      )}
     </MenuContainer>
   );
 }
@@ -203,7 +215,9 @@ DropDownMenu.propTypes = {
   onMenuCancelled: PropTypes.func.isRequired,
   onMenuSelected: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onUpdateName: PropTypes.func.isRequired,
   setParentActive: PropTypes.func,
+  previousName: PropTypes.string,
 };
 
 export default DropDownMenu;
