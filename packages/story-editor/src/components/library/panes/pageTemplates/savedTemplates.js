@@ -19,7 +19,12 @@
  */
 import { LoadingSpinner, useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useRef } from '@googleforcreators/react';
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -61,12 +66,19 @@ function SavedTemplates({
   const { showSnackbar } = useSnackbar();
   const ref = useRef();
 
+  // This is a workaround to force re-rendering for the virtual list to work and the parentRef being assigned correctly.
+  // @todo Look into why does the ref not work as expected otherwise.
+  const [, update] = useState(null);
+  useLayoutEffect(() => {
+    update(false);
+  }, []);
+
   const fetchTemplates = useCallback(() => {
     if (!nextTemplatesToFetch) {
       return;
     }
 
-    loadTemplates('test');
+    loadTemplates();
   }, [nextTemplatesToFetch, loadTemplates]);
 
   const handleDelete = useCallback(
