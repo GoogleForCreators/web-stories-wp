@@ -419,6 +419,9 @@ Arguments
 - `page` :
     - type: `number `
     - description: Page number for a set of template.
+- `searchTerm`
+    - type: `string`
+    - description: Search string entered by the user.
 
 
 Expected response
@@ -648,7 +651,7 @@ Arguments
         - description: Media type requested by the user. One of `image`, `video` or `gif`
     - `searchTerm`
         - type: `string`
-        - description: Search string enter by the user.
+        - description: Search string entered by the user.
     - `pagingNum`
         - type: `string`
         - description: Page number
