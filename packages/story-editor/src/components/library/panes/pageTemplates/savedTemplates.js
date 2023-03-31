@@ -88,6 +88,10 @@ function SavedTemplates({
         setSavedTemplates(
           savedTemplates.filter(({ templateId }) => templateId !== id)
         );
+        showSnackbar({
+          message: __('Page Template deleted.', 'web-stories'),
+          dismissable: true,
+        });
       } catch {
         showSnackbar({
           message: __(

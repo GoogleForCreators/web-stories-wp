@@ -22,6 +22,7 @@ import {
   themeHelpers,
   Text,
   TextSize,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -126,6 +127,8 @@ function SavedPageTemplate(
     actions: { uploadFile },
   } = useUploader();
 
+  const { showSnackbar } = useSnackbar();
+
   const { updateSavedTemplate } = useLibrary((state) => ({
     updateSavedTemplate: state.actions.updateSavedTemplate,
   }));
@@ -163,18 +166,32 @@ function SavedPageTemplate(
 
   const updateTemplateName = useCallback(
     async (newName) => {
-      const res = await updatePageTemplate(page.templateId, {
-        title: newName,
-      });
+      try {
+        const res = await updatePageTemplate(page.templateId, {
+          title: newName,
+        });
 
-      updateSavedTemplate({
-        templateId: page.templateId,
-        title: res.title,
-      });
-      setIsMenuOpen(false);
-      setIsActive(false);
+        updateSavedTemplate({
+          templateId: page.templateId,
+          title: res.title,
+        });
+        setIsMenuOpen(false);
+        setIsActive(false);
+        showSnackbar({
+          message: __('Page Template renamed.', 'web-stories'),
+          dismissible: true,
+        });
+      } catch {
+        showSnackbar({
+          message: __(
+            'Unable to rename the template. Please try again.',
+            'web-stories'
+          ),
+          dismissible: true,
+        });
+      }
     },
-    [updatePageTemplate, updateSavedTemplate, page.templateId]
+    [updatePageTemplate, updateSavedTemplate, page.templateId, showSnackbar]
   );
 
   const imageUrl = page.image?.url || pageDataUrl;
