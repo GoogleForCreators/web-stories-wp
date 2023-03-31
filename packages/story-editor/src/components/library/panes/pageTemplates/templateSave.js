@@ -184,7 +184,9 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
     <>
       <SaveButton
         aria-disabled={isDisabled}
-        onClick={() => setIsDialogOpen(true)}
+        onClick={() => {
+          !isDisabled && setIsDialogOpen(true);
+        }}
         $isDisabled={isDisabled}
       >
         <IconWrapper>
