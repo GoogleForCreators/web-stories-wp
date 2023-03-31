@@ -84,6 +84,16 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
       await fixture.events.sleep(200);
+
+      await fixture.events.click(
+        fixture.screen.getByPlaceholderText('Untitled')
+      );
+
+      await fixture.events.keyboard.type('Template name');
+      await fixture.events.keyboard.press('Enter');
+
+      await fixture.events.sleep(200);
+
       const message = fixture.screen.getByRole('alert', { hidden: true });
       expect(message.textContent).toBe('Page Template saved.');
 
