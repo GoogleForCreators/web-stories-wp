@@ -103,7 +103,7 @@ describe('Page Templates', () => {
     );
   });
 
-  it.only('should be able search saved page templates', async () => {
+  it('should be able search saved page templates', async () => {
     await createNewStory();
     await page.click('#library-tab-pageTemplates');
     await createNewStory();

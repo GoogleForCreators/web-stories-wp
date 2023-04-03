@@ -140,7 +140,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
             version: DATA_VERSION,
           },
           featured_media: imageId,
-          title: templateName !== '' ? templateName : 'Untitled',
+          title: templateName !== '' ? templateName : __('Untitled', 'web-stories'),
         });
 
         // If we already have a data url for the page template, we'll

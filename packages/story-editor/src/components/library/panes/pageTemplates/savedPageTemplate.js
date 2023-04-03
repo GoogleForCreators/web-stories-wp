@@ -262,7 +262,7 @@ function SavedPageTemplate(
       ref={ref}
       onPointerEnter={makeActive}
       onPointerLeave={makeInactive}
-      aria-label={page?.title?.rendered || 'Untitled'}
+      aria-label={page?.title?.rendered || __('Untitled', 'web-stories')}
       isHighlighted={page.id === highlightedTemplate}
       onFocus={makeActive}
       onBlur={makeInactive}
@@ -303,7 +303,7 @@ function SavedPageTemplate(
         {page.title && (
           <TemplateTitleContainer isActive={isActive}>
             <Text.Span size={TextSize.Small}>
-              {title !== '' ? title : 'Untitled'}
+              {title !== '' ? title : __('Untitled', 'web-stories')}
             </Text.Span>
           </TemplateTitleContainer>
         )}
