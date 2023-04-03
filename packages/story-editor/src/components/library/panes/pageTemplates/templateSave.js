@@ -140,7 +140,8 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
             version: DATA_VERSION,
           },
           featured_media: imageId,
-          title: templateName !== '' ? templateName : __('Untitled', 'web-stories'),
+          title:
+            templateName !== '' ? templateName : __('Untitled', 'web-stories'),
         });
 
         // If we already have a data url for the page template, we'll
@@ -185,7 +186,9 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       <SaveButton
         aria-disabled={isDisabled}
         onClick={() => {
-          !isDisabled && setIsDialogOpen(true);
+          if (!isDisabled) {
+            setIsDialogOpen(true);
+          }
         }}
         $isDisabled={isDisabled}
       >
