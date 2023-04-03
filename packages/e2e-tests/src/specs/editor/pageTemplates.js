@@ -103,24 +103,51 @@ describe('Page Templates', () => {
     );
   });
 
-  it('should be able search saved page templates', async () => {
+  it.only('should be able search saved page templates', async () => {
     await createNewStory();
     await page.click('#library-tab-pageTemplates');
-    const buttonText = await page.evaluate(() => {
-      return document.querySelector('[aria-label="Select templates type"]')
-        .textContent;
+    await createNewStory();
+
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+    // Use keyboard to open Page Templates panel.
+    await page.focus('ul[aria-label="Element Library Selection"] li');
+    await page.keyboard.press('ArrowLeft');
+    await page.keyboard.press('Enter');
+
+    await expect(page).toMatchElement('button[aria-disabled="true"]', {
+      text: 'Save current page as template',
+    });
+    await expect(page).toMatchElement(
+      'button[aria-label="Select templates type"]'
+    );
+    await expect(page).toMatchTextContent('Default templates');
+
+    await addTextElement();
+
+    // Go back to the templates panel.
+    await page.click('#library-tab-pageTemplates');
+
+    await expect(page).toMatchElement('button[aria-disabled="false"]', {
+      text: 'Save current page as template',
     });
 
-    //eslint-disable-next-line jest/no-conditional-in-test
-    if (buttonText !== 'Saved templates') {
-      await page.click('[aria-label="Select templates type"]');
-      await page.click('#dropDownMenuItem-saved');
-    }
+    await expect(page).toClick('button', {
+      text: 'Save current page as template',
+    });
+
+    await page.waitForSelector('[role="dialog"]');
+
+    // Add a name for the template
+    await page.type('input[placeholder="Untitled"]', 'Test template');
+
+    // Close dialog
+    await page.keyboard.press('Enter');
 
     await page.click('[aria-label="Search"]');
     await page.keyboard.type('Test Template');
     await page.keyboard.press('Enter');
 
-    await expect(page).toMatchElement('[aria-label="Test Template"]');
+    await expect(page).toMatchElement('[aria-label="Test template"]');
   });
 });
