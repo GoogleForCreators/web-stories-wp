@@ -40,7 +40,7 @@ import { focusStyle } from '../../../panels/shared/styles';
 import isDefaultPage from '../../../../utils/isDefaultPage';
 import createThumbnailCanvasFromFullbleedCanvas from '../../../../utils/createThumbnailCanvasFromFullbleedCanvas';
 import Icon from './images/illustration.svg';
-import SaveDialog from './saveDialog';
+import NameDialog from './nameDialog';
 
 const StyledText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.secondary};
@@ -200,7 +200,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
         </StyledText>
       </SaveButton>
       {isDialogOpen && (
-        <SaveDialog
+        <NameDialog
           onClose={() => {
             setIsDialogOpen(false);
           }}
@@ -208,6 +208,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
             await handleSaveTemplate(templateName);
             setIsDialogOpen(false);
           }}
+          title={__('Save Page Template', 'web-stories')}
         />
       )}
     </>

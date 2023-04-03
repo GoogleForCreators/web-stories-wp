@@ -41,7 +41,7 @@ import {
 import { ActionButton } from '../shared';
 import DropDownKeyEvents from '../../../panels/utils/dropDownKeyEvents';
 import DeleteDialog from './deleteDialog';
-import RenameDialog from './renameDialog';
+import NameDialog from './nameDialog';
 
 const MoreButton = styled(ActionButton)`
   top: 4px;
@@ -195,13 +195,14 @@ function DropDownMenu({
         <DeleteDialog onClose={onDeleteDialogClose} onDelete={onDelete} />
       )}
       {showRenameDialog && (
-        <RenameDialog
+        <NameDialog
           onClose={onRenameDialogClose}
           onUpdateName={(name) => {
             onUpdateName(name);
             onRenameDialogClose();
           }}
-          previousName={previousName}
+          title={__('Rename Page Template', 'web-stories')}
+          placeholder={previousName}
         />
       )}
     </MenuContainer>

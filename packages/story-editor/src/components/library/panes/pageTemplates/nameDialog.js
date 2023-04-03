@@ -39,19 +39,25 @@ const InputWrapper = styled.form`
  *
  * @param {Object} props Component props.
  * @param {Function} props.onClose Callback to toggle dialog display on close.
- * @param {Function} props.onUpdateName Callback to save template. Template name will be the argument
- * @param {string} props.previousName Previous name of the template
+ * @param {Function} props.onSave Callback to save template. Template name will be the argument
+ * @param {string} props.title Previous name of the template
+ * @param {string} props.placeholder Previous name of the template
  * @return {null|*} The dialog element.
  */
-function RenameDialog({ onClose, onUpdateName, previousName = '' }) {
-  const [templateName, setTemplateName] = useState(previousName);
+function NameDialog({
+  onClose,
+  onSave,
+  title,
+  placeholder = __('Untitled', 'web-stories'),
+}) {
+  const [templateName, setTemplateName] = useState(placeholder);
   return (
     <Dialog
       isOpen
-      title={__('Rename Page Template', 'web-stories')}
+      title={title}
       primaryText={__('Save', 'web-stories')}
       onPrimary={() => {
-        onUpdateName(templateName);
+        onSave(templateName);
       }}
       secondaryText={__('Cancel', 'web-stories')}
       onSecondary={onClose}
@@ -60,7 +66,7 @@ function RenameDialog({ onClose, onUpdateName, previousName = '' }) {
       <InputWrapper
         onSubmit={(e) => {
           e.preventDefault();
-          onUpdateName(templateName);
+          onSave(templateName);
         }}
       >
         <Input
@@ -69,7 +75,7 @@ function RenameDialog({ onClose, onUpdateName, previousName = '' }) {
           }}
           value={templateName}
           label={__('Template name', 'web-stories')}
-          placeholder={previousName}
+          placeholder={placeholder}
           type="text"
         />
       </InputWrapper>
@@ -77,10 +83,11 @@ function RenameDialog({ onClose, onUpdateName, previousName = '' }) {
   );
 }
 
-RenameDialog.propTypes = {
+NameDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
-  onUpdateName: PropTypes.func.isRequired,
-  previousName: PropTypes.string,
+  onSave: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
-export default RenameDialog;
+export default NameDialog;
