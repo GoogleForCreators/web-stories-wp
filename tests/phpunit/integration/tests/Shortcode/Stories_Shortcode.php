@@ -95,9 +95,11 @@ class Stories_Shortcode extends TestCase {
 	public function test_max_number_for_stories(): void {
 		$stories_shortcode = new Testee();
 		$attributes        = [
-			'number_of_stories' => 1_000_000,
-			'order'             => 'DESC',
-			'orderby'           => 'post_title',
+			'number_of_stories'  => 1_000_000,
+			'order'              => 'DESC',
+			'orderby'            => 'post_title',
+			'web_story_tag'      => '',
+			'web_story_category' => '',
 		];
 
 		$args = $this->call_private_method( [ $stories_shortcode, 'prepare_story_args' ], [ $attributes ] );

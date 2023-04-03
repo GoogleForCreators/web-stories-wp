@@ -29,6 +29,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Shortcode;
 
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query as Stories;
 
 /**
@@ -64,24 +65,32 @@ class Stories_Shortcode extends Service_Base {
 	 * @return string Story markup.
 	 */
 	public function render_stories( array $attrs ): string {
+		$default_pairs = [
+			'view'               => 'circles',
+			'number_of_columns'  => 1,
+			'title'              => 'false',
+			'excerpt'            => 'false',
+			'author'             => 'false',
+			'date'               => 'false',
+			'archive_link'       => 'false',
+			'archive_link_label' => __( 'View all stories', 'web-stories' ),
+			'image_alignment'    => 'left',
+			'class'              => '',
+			'circle_size'        => 150,
+			'number_of_stories'  => 10,
+			'order'              => 'DESC',
+			'orderby'            => 'post_date',
+			'sharp_corners'      => 'false',
+		];
+
+		$taxonomies = get_object_taxonomies( Story_Post_Type::POST_TYPE_SLUG );
+
+		foreach ( $taxonomies as $taxonomy ) {
+			$default_pairs[ $taxonomy ] = '';
+		}
+
 		$attributes = shortcode_atts(
-			[
-				'view'               => 'circles',
-				'number_of_columns'  => 1,
-				'title'              => 'false',
-				'excerpt'            => 'false',
-				'author'             => 'false',
-				'date'               => 'false',
-				'archive_link'       => 'false',
-				'archive_link_label' => __( 'View all stories', 'web-stories' ),
-				'image_alignment'    => 'left',
-				'class'              => '',
-				'circle_size'        => 150,
-				'number_of_stories'  => 10,
-				'order'              => 'DESC',
-				'orderby'            => 'post_date',
-				'sharp_corners'      => 'false',
-			],
+			$default_pairs,
 			$attrs,
 			self::SHORTCODE_NAME
 		);
@@ -96,8 +105,8 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array<string, string|int> $attributes Shortcode attributes.
-	 * @return array<string, string|int|bool> Attributes to pass to Story_Query class.
+	 * @param array<string,string|int> $attributes Shortcode attributes.
+	 * @return array<string,string|int> Attributes to pass to Story_Query class.
 	 *
 	 * @phpstan-return StoryAttributes
 	 */
@@ -123,15 +132,42 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array<string,string|int> $attributes Array of arguments for Story Query.
-	 * @return array<string,string|int> Array of story arguments to pass to Story_Query.
+	 * @param array<string,int|string> $attributes Array of arguments for Story Query.
+	 * @return array<string,mixed> Array of story arguments to pass to Story_Query.
 	 */
 	private function prepare_story_args( array $attributes ): array {
-		return [
+		$args = [
 			// Show 100 stories at most to avoid 500 errors.
 			'posts_per_page' => min( (int) $attributes['number_of_stories'], 100 ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 			'order'          => 'ASC' === $attributes['order'] ? 'ASC' : 'DESC',
 			'orderby'        => $attributes['orderby'],
 		];
+
+		$taxonomies           = get_object_taxonomies( Story_Post_Type::POST_TYPE_SLUG );
+		$should_add_tax_query = false;
+
+		foreach ( $taxonomies as $taxonomy ) {
+			if ( '' !== $attributes[ $taxonomy ] ) {
+				$should_add_tax_query = true;
+				break;
+			}
+		}
+
+		if ( $should_add_tax_query ) {
+			$tax_query = [
+				'relation' => 'OR',
+			];
+
+			foreach ( $taxonomies as $taxonomy ) {
+				$tax_query[] = [
+					'taxonomy' => $taxonomy,
+					'field'    => 'name',
+					'terms'    => $attributes[ $taxonomy ] ? array_map( 'trim', explode( ',', (string) $attributes[ $taxonomy ] ) ) : [],
+				];
+			}
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			$args['tax_query'] = $tax_query;
+		}
+		return $args;
 	}
 }
