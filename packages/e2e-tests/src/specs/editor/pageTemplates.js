@@ -102,4 +102,25 @@ describe('Page Templates', () => {
       'button[aria-label="Fresh & Bright Cover"]'
     );
   });
+
+  it('should be able search saved page templates', async () => {
+    await createNewStory();
+    await page.click('#library-tab-pageTemplates');
+    const buttonText = await page.evaluate(() => {
+      return document.querySelector('[aria-label="Select templates type"]')
+        .textContent;
+    });
+
+    //eslint-disable-next-line jest/no-conditional-in-test
+    if (buttonText !== 'Saved templates') {
+      await page.click('[aria-label="Select templates type"]');
+      await page.click('#dropDownMenuItem-saved');
+    }
+
+    await page.click('[aria-label="Search"]');
+    await page.keyboard.type('Test Template');
+    await page.keyboard.press('Enter');
+
+    await expect(page).toMatchElement('[aria-label="Test Template"]');
+  });
 });

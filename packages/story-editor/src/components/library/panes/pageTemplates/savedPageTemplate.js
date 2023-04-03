@@ -262,7 +262,7 @@ function SavedPageTemplate(
       ref={ref}
       onPointerEnter={makeActive}
       onPointerLeave={makeInactive}
-      aria-label={page.title}
+      aria-label={page?.title?.rendered || 'Untitled'}
       isHighlighted={page.id === highlightedTemplate}
       onFocus={makeActive}
       onBlur={makeInactive}
