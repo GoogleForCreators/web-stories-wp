@@ -28,20 +28,20 @@ import styled from 'styled-components';
  */
 import Dialog from '../../../dialog';
 
-/**
- * Display a confirmation dialog for when a user wants to delete a template.
- *
- * @param {Function} props.onClose Callback to toggle dialog display on close.
- * @param {Function} props.onSave Callback to save template. Template name will be the argument
- * @return {null|*} The dialog element.
- */
-
 const InputWrapper = styled.form`
   margin: 16px 4px;
   width: 470px;
   height: 100px;
 `;
 
+/**
+ * Display a confirmation dialog for when a user wants to delete a template.
+ *
+ * @param {Object} props Component props.
+ * @param {Function} props.onClose Callback to toggle dialog display on close.
+ * @param {Function} props.onSave Callback to save template. Template name will be the argument
+ * @return {null|*} The dialog element.
+ */
 function SaveDialog({ onClose, onSave }) {
   const [templateName, setTemplateName] = useState('');
   return (

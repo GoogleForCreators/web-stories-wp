@@ -29,6 +29,7 @@ import Dialog from '../../../dialog';
 /**
  * Display a confirmation dialog for when a user wants to delete a template.
  *
+ * @param {Object} props Component props.
  * @param {Function} props.onClose Callback to toggle dialog display on close.
  * @param {Function} props.onDelete Callback to delete template.
  * @return {null|*} The dialog element.

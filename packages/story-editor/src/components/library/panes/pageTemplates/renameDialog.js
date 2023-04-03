@@ -37,12 +37,12 @@ const InputWrapper = styled.form`
 /**
  * Display a dialog for when a user wants to rename a template.
  *
+ * @param {Object} props Component props.
  * @param {Function} props.onClose Callback to toggle dialog display on close.
  * @param {Function} props.onUpdateName Callback to save template. Template name will be the argument
  * @param {string} props.previousName Previous name of the template
  * @return {null|*} The dialog element.
  */
-
 function RenameDialog({ onClose, onUpdateName, previousName = '' }) {
   const [templateName, setTemplateName] = useState(previousName);
   return (
