@@ -65,7 +65,7 @@ const menuStylesOverride = css`
 `;
 
 const MENU_OPTIONS = {
-  RENAME: 'Rename',
+  RENAME: 'rename',
   DELETE: 'delete',
 };
 
@@ -100,7 +100,7 @@ function DropDownMenu({
       options: [
         {
           label: __('Rename Template', 'web-stories'),
-          value: MENU_OPTIONS.EDIT,
+          value: MENU_OPTIONS.RENAME,
         },
         {
           label: __('Delete Template', 'web-stories'),
@@ -126,7 +126,7 @@ function DropDownMenu({
     evt.stopPropagation();
     onMenuSelected();
     switch (value) {
-      case MENU_OPTIONS.EDIT:
+      case MENU_OPTIONS.RENAME:
         setShowRenameDialog(true);
         break;
       case MENU_OPTIONS.DELETE:
