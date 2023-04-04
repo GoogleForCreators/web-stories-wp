@@ -4,7 +4,7 @@ on:
   # Only the default branch is supported.
   branch_protection_rule:
   schedule:
-    - cron: '0 12 * * 1'
+    - cron: '0 12 1 * *'
   push:
     branches: [main]
 
