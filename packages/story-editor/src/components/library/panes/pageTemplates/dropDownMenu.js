@@ -197,7 +197,7 @@ function DropDownMenu({
       {showRenameDialog && (
         <NameDialog
           onClose={onRenameDialogClose}
-          onUpdateName={(name) => {
+          onSave={(name) => {
             onUpdateName(name);
             onRenameDialogClose();
           }}
