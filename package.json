@@ -72,7 +72,7 @@
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
     "@stylelint/postcss-css-in-js": "^0.38.0",
-    "@svgr/rollup": "^6.5.1",
+    "@svgr/rollup": "^7.0.0",
     "@svgr/webpack": "^7.0.0",
     "@testing-library/dom": "^9.0.1",
     "@testing-library/jest-dom": "^5.16.5",
