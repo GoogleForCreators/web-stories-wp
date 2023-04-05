@@ -90,7 +90,6 @@ class Discovery extends Service_Base implements HasRequirements {
 		add_action( 'web_stories_story_head', 'feed_links', 2 );
 		add_action( 'web_stories_story_head', 'feed_links_extra', 3 );
 		add_action( 'web_stories_story_head', 'rsd_link' );
-		add_action( 'web_stories_story_head', 'wlwmanifest_link' );
 		add_action( 'web_stories_story_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_generator' );
 		add_action( 'web_stories_story_head', 'rel_canonical' );
