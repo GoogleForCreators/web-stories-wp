@@ -106,15 +106,7 @@ const TemplateTitleContainer = styled(PageTemplateTitleContainer)`
 const BUTTON_NESTING_DEPTH = 2;
 
 function SavedPageTemplate(
-  {
-    page,
-    pageSize,
-    handleDelete,
-    index,
-    title = '',
-    highlightedTemplate,
-    onClick,
-  },
+  { page, pageSize, handleDelete, index, title, highlightedTemplate, onClick },
   ref
 ) {
   const {
@@ -262,7 +254,7 @@ function SavedPageTemplate(
       ref={ref}
       onPointerEnter={makeActive}
       onPointerLeave={makeInactive}
-      aria-label={page?.title?.rendered || __('Untitled', 'web-stories')}
+      aria-label={title}
       isHighlighted={page.id === highlightedTemplate}
       onFocus={makeActive}
       onBlur={makeInactive}
@@ -300,13 +292,9 @@ function SavedPageTemplate(
           </ElementsWrapper>
         )}
         {isActive && <TemplateInsertionOverlay showIcon={false} />}
-        {page.title && (
-          <TemplateTitleContainer isActive={isActive}>
-            <Text.Span size={TextSize.Small}>
-              {title !== '' ? title : __('Untitled', 'web-stories')}
-            </Text.Span>
-          </TemplateTitleContainer>
-        )}
+        <TemplateTitleContainer isActive={isActive}>
+          <Text.Span size={TextSize.Small}>{title}</Text.Span>
+        </TemplateTitleContainer>
       </PreviewPageWrapper>
       <ActionButton
         ref={insertButtonRef}
@@ -329,7 +317,7 @@ function SavedPageTemplate(
         onDelete={() => {
           handleDelete(page.templateId);
         }}
-        previousName={page.title.rendered}
+        previousName={title}
         onUpdateName={updateTemplateName}
       />
     </PageTemplateWrapper>
