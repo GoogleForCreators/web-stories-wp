@@ -52,10 +52,10 @@ export default class PageTemplates extends Container {
     return this.getByRole('button', { name: 'Save current page as template' });
   }
 
-  deleteBtnByIndex(index) {
-    const deleteButtons = this.getAllByRole('button', {
-      name: 'Delete Page Template',
+  moreBtnByIndex(index) {
+    const moreButtons = this.getAllByRole('button', {
+      name: 'More',
     });
-    return deleteButtons[index];
+    return moreButtons[index];
   }
 }

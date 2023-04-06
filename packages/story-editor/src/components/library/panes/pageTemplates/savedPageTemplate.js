@@ -20,7 +20,9 @@
 import {
   Icons,
   themeHelpers,
-  useKeyDownEffect,
+  Text,
+  TextSize,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -49,10 +51,10 @@ import { PageSizePropType } from '../../../../propTypes';
 import { focusStyle } from '../../../panels/shared/styles';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
-import useFocusCanvas from '../../../canvas/useFocusCanvas';
-import { ActionButton } from '../shared';
+import { ActionButton, PageTemplateTitleContainer } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import useLibrary from '../../useLibrary';
+import DropDownMenu from './dropDownMenu';
 
 const TemplateImage = styled.img`
   width: 100%;
@@ -60,6 +62,7 @@ const TemplateImage = styled.img`
 `;
 
 const PageTemplateWrapper = styled.div`
+  position: relative;
   height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
   cursor: pointer;
@@ -67,14 +70,17 @@ const PageTemplateWrapper = styled.div`
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${focusStyle};
 `;
+
 PageTemplateWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
-const PreviewPageWrapper = styled.div`
+const PreviewPageWrapper = styled.button`
   position: relative;
-  height: ${({ pageSize }) => pageSize.height}px;
-  width: ${({ pageSize }) => pageSize.width}px;
+  padding: 0;
+  border: 0;
+  height: 100%;
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.interactiveBg.secondary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
@@ -92,16 +98,15 @@ const TemplateInsertionOverlay = styled(InsertionOverlay)`
   z-index: 11;
 `;
 
-const DeleteButton = styled(ActionButton)`
-  top: 4px;
-  right: 4px;
+const TemplateTitleContainer = styled(PageTemplateTitleContainer)`
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 `;
 
 // This is used for nested roving tab index to detect parent siblings.
 const BUTTON_NESTING_DEPTH = 2;
 
 function SavedPageTemplate(
-  { page, pageSize, handleDelete, index, ...rest },
+  { page, pageSize, handleDelete, index, title, highlightedTemplate, onClick },
   ref
 ) {
   const {
@@ -114,6 +119,8 @@ function SavedPageTemplate(
     actions: { uploadFile },
   } = useUploader();
 
+  const { showSnackbar } = useSnackbar();
+
   const { updateSavedTemplate } = useLibrary((state) => ({
     updateSavedTemplate: state.actions.updateSavedTemplate,
   }));
@@ -124,16 +131,60 @@ function SavedPageTemplate(
     usePageDataUrls(({ state: { dataUrls } }) => dataUrls[page.id]) ||
     page.pregeneratedPageDataUrl;
   const [isActive, setIsActive] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const onMenuOpen = useCallback((e) => {
+    e.stopPropagation();
+    setIsMenuOpen(true);
+    setIsActive(false);
+  }, []);
+
+  const onMenuCancelled = useCallback(() => {
+    setIsMenuOpen(false);
+    setIsActive(false);
+  }, []);
+
+  const onMenuSelected = useCallback(() => {
+    setIsMenuOpen(false);
+    setIsActive(false);
+  }, []);
 
   useFocusOut(ref, () => setIsActive(false), []);
-
-  const { highlightedTemplate, onClick } = rest;
 
   const makeActive = useCallback(() => setIsActive(true), []);
 
   const makeInactive = useCallback(() => {
     setIsActive(false);
   }, []);
+
+  const updateTemplateName = useCallback(
+    async (newName) => {
+      try {
+        const res = await updatePageTemplate(page.templateId, {
+          title: newName,
+        });
+
+        updateSavedTemplate({
+          templateId: page.templateId,
+          title: res.title,
+        });
+        setIsMenuOpen(false);
+        setIsActive(false);
+        showSnackbar({
+          message: __('Page Template renamed.', 'web-stories'),
+          dismissible: true,
+        });
+      } catch {
+        showSnackbar({
+          message: __(
+            'Unable to rename the template. Please try again.',
+            'web-stories'
+          ),
+          dismissible: true,
+        });
+      }
+    },
+    [updatePageTemplate, updateSavedTemplate, page.templateId, showSnackbar]
+  );
 
   const imageUrl = page.image?.url || pageDataUrl;
   const shouldPostBlob =
@@ -194,28 +245,25 @@ function SavedPageTemplate(
   }, [imageUrl, queuePageImageGeneration, page, hasUploadMediaAction]);
 
   const insertButtonRef = useRef();
-  const deleteButtonRef = useRef();
   useRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
-  useRovingTabIndex({ ref: deleteButtonRef }, [], BUTTON_NESTING_DEPTH);
-
-  const focusCanvas = useFocusCanvas();
-  useKeyDownEffect(deleteButtonRef, 'tab', focusCanvas, [focusCanvas]);
 
   return (
-    // eslint-disable-next-line styled-components-a11y/click-events-have-key-events,styled-components-a11y/no-noninteractive-element-interactions -- clicking and events need to work on the wrapper AND in the contained buttons as well.
     <PageTemplateWrapper
       pageSize={pageSize}
       role="listitem"
       ref={ref}
       onPointerEnter={makeActive}
       onPointerLeave={makeInactive}
-      aria-label={page.title}
+      aria-label={title}
       isHighlighted={page.id === highlightedTemplate}
       onFocus={makeActive}
       onBlur={makeInactive}
-      onClick={onClick}
     >
-      <PreviewPageWrapper pageSize={pageSize} background={page.backgroundColor}>
+      <PreviewPageWrapper
+        pageSize={pageSize}
+        background={page.backgroundColor}
+        onClick={onClick}
+      >
         {imageUrl ? (
           <TemplateImage
             alt={page.image?.alt || __('Saved Page Template', 'web-stories')}
@@ -244,31 +292,36 @@ function SavedPageTemplate(
           </ElementsWrapper>
         )}
         {isActive && <TemplateInsertionOverlay showIcon={false} />}
-        <ActionButton
-          ref={insertButtonRef}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick(e);
-          }}
-          aria-label={__('Use template', 'web-stories')}
-          $display={isActive}
-          tabIndex={index === 0 ? 0 : -1}
-        >
-          <Icons.PlusFilledSmall />
-        </ActionButton>
-        <DeleteButton
-          ref={deleteButtonRef}
-          $display={isActive}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDelete(page, e);
-          }}
-          aria-label={__('Delete Page Template', 'web-stories')}
-          tabIndex={isActive ? 0 : -1}
-        >
-          <Icons.TrashFilledSmall />
-        </DeleteButton>
+        <TemplateTitleContainer isActive={isActive}>
+          <Text.Span size={TextSize.Small}>
+            {title || __('Untitled', 'web-stories')}
+          </Text.Span>
+        </TemplateTitleContainer>
       </PreviewPageWrapper>
+      <ActionButton
+        ref={insertButtonRef}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick(e);
+        }}
+        aria-label={__('Use template', 'web-stories')}
+        $display={isActive}
+        tabIndex={index === 0 ? 0 : -1}
+      >
+        <Icons.PlusFilledSmall />
+      </ActionButton>
+      <DropDownMenu
+        display={isActive}
+        isMenuOpen={isMenuOpen}
+        onMenuOpen={onMenuOpen}
+        onMenuCancelled={onMenuCancelled}
+        onMenuSelected={onMenuSelected}
+        onDelete={() => {
+          handleDelete(page.templateId);
+        }}
+        previousName={title}
+        onUpdateName={updateTemplateName}
+      />
     </PageTemplateWrapper>
   );
 }
@@ -276,11 +329,13 @@ function SavedPageTemplate(
 const PageTemplateWithRef = forwardRef(SavedPageTemplate);
 
 SavedPageTemplate.propTypes = {
-  isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
-  handleDelete: PropTypes.func,
+  handleDelete: PropTypes.func.isRequired,
   index: PropTypes.number,
+  title: PropTypes.string,
+  highlightedTemplate: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 SavedPageTemplate.displayName = 'SavedPageTemplate';

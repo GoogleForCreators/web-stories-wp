@@ -47,8 +47,13 @@ describe('pageTemplates', () => {
             {
               id: 123,
               story_data: { id: 'page-id', elements: [{ id: 'foo' }] },
+              title: { raw: 'abc', rendered: 'abc' },
             },
-            { id: 456, story_data: [] },
+            {
+              id: 456,
+              story_data: [],
+              title: { raw: 'abc-1', rendered: 'abc-1' },
+            },
           ],
         })
       );
@@ -72,6 +77,7 @@ describe('pageTemplates', () => {
               isExternal: false,
             },
             templateId: 123,
+            title: { raw: 'abc', rendered: 'abc' },
           },
           {
             elements: [],
@@ -85,6 +91,7 @@ describe('pageTemplates', () => {
               isExternal: false,
             },
             templateId: 456,
+            title: { raw: 'abc-1', rendered: 'abc-1' },
           },
         ],
       });
