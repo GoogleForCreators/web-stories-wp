@@ -193,6 +193,7 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 				'item_link_description'    => _x( 'A link to a page template.', 'navigation link block description', 'web-stories' ),
 			],
 			'supports'              => [
+				'title',
 				'thumbnail', // Used for preview images in the editor.
 			],
 			'capabilities'          => $capabilities,

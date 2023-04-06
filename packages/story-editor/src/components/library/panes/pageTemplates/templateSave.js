@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useMemo } from '@googleforcreators/react';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import {
   BUTTON_TRANSITION_TIMING,
@@ -40,6 +40,7 @@ import { focusStyle } from '../../../panels/shared/styles';
 import isDefaultPage from '../../../../utils/isDefaultPage';
 import createThumbnailCanvasFromFullbleedCanvas from '../../../../utils/createThumbnailCanvasFromFullbleedCanvas';
 import Icon from './images/illustration.svg';
+import NameDialog from './nameDialog';
 
 const StyledText = styled(Text.Span)`
   color: ${({ theme }) => theme.colors.fg.secondary};
@@ -97,7 +98,6 @@ const SaveButton = styled.button`
 
   ${focusStyle};
 `;
-
 function TemplateSave({ setShowDefaultTemplates, updateList }) {
   const {
     actions: { addPageTemplate },
@@ -113,10 +113,11 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
     () => currentPage && isDefaultPage(currentPage),
     [currentPage]
   );
-  const handleSaveTemplate = useCallback(
-    async (e) => {
-      e.preventDefault();
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleSaveTemplate = useCallback(
+    async (templateName) => {
       if (isDisabled) {
         return;
       }
@@ -139,7 +140,8 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
             version: DATA_VERSION,
           },
           featured_media: imageId,
-          title: null,
+          title:
+            templateName !== '' ? templateName : __('Untitled', 'web-stories'),
         });
 
         // If we already have a data url for the page template, we'll
@@ -164,7 +166,9 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
           dismissable: true,
         });
       }
+
       setShowDefaultTemplates(false);
+      setIsDialogOpen(false);
     },
     [
       isDisabled,
@@ -178,18 +182,38 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
   );
 
   return (
-    <SaveButton
-      aria-disabled={isDisabled}
-      onClick={handleSaveTemplate}
-      $isDisabled={isDisabled}
-    >
-      <IconWrapper>
-        <Icon aria-hidden />
-      </IconWrapper>
-      <StyledText size={TextSize.Small}>
-        {__('Save current page as template', 'web-stories')}
-      </StyledText>
-    </SaveButton>
+    <>
+      <SaveButton
+        aria-disabled={isDisabled}
+        onClick={() => {
+          if (!isDisabled) {
+            setIsDialogOpen(true);
+          }
+        }}
+        $isDisabled={isDisabled}
+      >
+        <IconWrapper>
+          <Icon aria-hidden />
+        </IconWrapper>
+        <StyledText size={TextSize.Small}>
+          {__('Save current page as template', 'web-stories')}
+        </StyledText>
+      </SaveButton>
+      {isDialogOpen && (
+        <NameDialog
+          onClose={() => {
+            setIsDialogOpen(false);
+          }}
+          onSave={async (templateName) => {
+            await handleSaveTemplate(templateName);
+            setIsDialogOpen(false);
+          }}
+          title={__('Save Page Template', 'web-stories')}
+          placeholder={__('Untitled', 'web-stories')}
+          previousInput={''}
+        />
+      )}
+    </>
   );
 }
 

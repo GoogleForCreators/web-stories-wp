@@ -103,6 +103,7 @@ const savedPageTemplate = {
   backgroundColor: { color: { r: 255, g: 255, b: 255 } },
   type: 'page',
   id: 'c8265226-4c4c-4827-b860-61506be619b6',
+  title: { rendered: 'Template name', raw: 'Template name' },
 };
 
 export default savedPageTemplate;

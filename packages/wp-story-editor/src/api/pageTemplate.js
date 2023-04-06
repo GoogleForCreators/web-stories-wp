@@ -27,6 +27,7 @@ import apiFetch from '@wordpress/api-fetch';
 const TEMPLATE_FIELDS = [
   'id',
   'story_data',
+  'title',
   // _web_stories_envelope will add these fields, we need them too.
   'body',
   'headers',
@@ -40,6 +41,7 @@ function transformResponse(template) {
     _embedded: embedded = {},
     id: templateId,
     story_data = {},
+    title,
   } = template;
   const image = {
     id: embedded?.['wp:featuredmedia']?.[0].id || 0,
@@ -49,16 +51,23 @@ function transformResponse(template) {
     needsProxy: false,
     isExternal: false,
   };
-
-  return { id: templateId, elements: [], ...story_data, templateId, image };
+  return {
+    id: templateId,
+    elements: [],
+    ...story_data,
+    templateId,
+    image,
+    title,
+  };
 }
 
-export function getCustomPageTemplates(config, page = 1) {
+export function getCustomPageTemplates(config, page = 1, search) {
   const perPage = 100;
   const path = addQueryArgs(config.api.pageTemplates, {
     context: 'edit',
     per_page: perPage,
     page,
+    search,
     _web_stories_envelope: true,
     _fields: TEMPLATE_FIELDS,
     _embed: TEMPLATE_EMBED,

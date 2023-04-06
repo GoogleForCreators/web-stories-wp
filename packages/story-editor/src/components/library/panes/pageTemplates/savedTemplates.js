@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  LoadingSpinner,
-  Text,
-  TextSize,
-  useSnackbar,
-} from '@googleforcreators/design-system';
+import { LoadingSpinner, useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
@@ -37,7 +32,6 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
 import { LoadingContainer } from '../shared';
 import TemplateList from './templateList';
@@ -50,7 +44,14 @@ const Wrapper = styled.div`
   min-height: 96px;
 `;
 
-function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
+function SavedTemplates({
+  searchTerm,
+  setSearchTerm,
+  pageSize,
+  loadTemplates,
+  isLoading,
+  ...rest
+}) {
   const {
     actions: { deletePageTemplate },
   } = useAPI();
@@ -63,15 +64,13 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
     }));
 
   const { showSnackbar } = useSnackbar();
-
-  const [showDialog, setShowDialog] = useState(null);
-  const [templateToDelete, setTemplateToDelete] = useState(null);
   const ref = useRef();
 
   // This is a workaround to force re-rendering for the virtual list to work and the parentRef being assigned correctly.
   // @todo Look into why does the ref not work as expected otherwise.
+  const [, update] = useState(null);
   useLayoutEffect(() => {
-    setShowDialog(false);
+    update(false);
   }, []);
 
   const fetchTemplates = useCallback(() => {
@@ -82,41 +81,28 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
     loadTemplates();
   }, [nextTemplatesToFetch, loadTemplates]);
 
-  const onClickDelete = useCallback(({ templateId }, e) => {
-    e?.stopPropagation();
-    if (templateId) {
-      setShowDialog(true);
-      setTemplateToDelete(templateId);
-    }
-  }, []);
-
   const handleDelete = useCallback(
-    () =>
-      deletePageTemplate(templateToDelete)
-        .then(() => {
-          setSavedTemplates(
-            savedTemplates.filter(
-              ({ templateId }) => templateId !== templateToDelete
-            )
-          );
-          setShowDialog(false);
-        })
-        .catch(() => {
-          showSnackbar({
-            message: __(
-              'Unable to delete the template. Please try again.',
-              'web-stories'
-            ),
-            dismissible: true,
-          });
-        }),
-    [
-      deletePageTemplate,
-      templateToDelete,
-      savedTemplates,
-      showSnackbar,
-      setSavedTemplates,
-    ]
+    async (id) => {
+      try {
+        await deletePageTemplate(id);
+        setSavedTemplates(
+          savedTemplates.filter(({ templateId }) => templateId !== id)
+        );
+        showSnackbar({
+          message: __('Page Template deleted.', 'web-stories'),
+          dismissable: true,
+        });
+      } catch {
+        showSnackbar({
+          message: __(
+            'Unable to delete the template. Please try again.',
+            'web-stories'
+          ),
+          dismissible: true,
+        });
+      }
+    },
+    [deletePageTemplate, savedTemplates, showSnackbar, setSavedTemplates]
   );
 
   return (
@@ -127,7 +113,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
           parentRef={ref}
           pageSize={pageSize}
           pages={savedTemplates}
-          handleDelete={onClickDelete}
+          handleDelete={handleDelete}
           fetchTemplates={fetchTemplates}
           {...rest}
         />
@@ -136,28 +122,13 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
           <LoadingSpinner animationSize={64} numCircles={8} />
         </LoadingContainer>
       )}
-      {showDialog && (
-        <Dialog
-          isOpen
-          onClose={() => setShowDialog(false)}
-          title={__('Delete Page Template', 'web-stories')}
-          secondaryText={__('Cancel', 'web-stories')}
-          onPrimary={handleDelete}
-          primaryText={__('Delete', 'web-stories')}
-        >
-          <Text.Paragraph size={TextSize.Small}>
-            {__(
-              'Are you sure you want to delete this template? This action cannot be undone.',
-              'web-stories'
-            )}
-          </Text.Paragraph>
-        </Dialog>
-      )}
     </Wrapper>
   );
 }
 
 SavedTemplates.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
+  setSearchTerm: PropTypes.func.isRequired,
   pageSize: PropTypes.object.isRequired,
   loadTemplates: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
