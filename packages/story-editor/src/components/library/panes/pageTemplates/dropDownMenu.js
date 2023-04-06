@@ -202,7 +202,8 @@ function DropDownMenu({
             onRenameDialogClose();
           }}
           title={__('Rename Page Template', 'web-stories')}
-          placeholder={previousName}
+          placeholder={previousName || __('Untitled', 'web-stories')}
+          previousInput={previousName || ''}
         />
       )}
     </MenuContainer>

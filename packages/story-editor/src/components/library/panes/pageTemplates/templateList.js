@@ -134,7 +134,7 @@ function TemplateList({
               handleDelete={handleDelete}
               onFocus={() => handleFocus(page.id)}
               index={index}
-              title={page?.title?.raw || __('Untitled', 'web-stories')}
+              title={page?.title?.raw}
               {...rest}
             />
           ))

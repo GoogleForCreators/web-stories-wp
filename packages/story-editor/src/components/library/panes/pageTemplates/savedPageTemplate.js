@@ -293,7 +293,9 @@ function SavedPageTemplate(
         )}
         {isActive && <TemplateInsertionOverlay showIcon={false} />}
         <TemplateTitleContainer isActive={isActive}>
-          <Text.Span size={TextSize.Small}>{title}</Text.Span>
+          <Text.Span size={TextSize.Small}>
+            {title || __('Untitled', 'web-stories')}
+          </Text.Span>
         </TemplateTitleContainer>
       </PreviewPageWrapper>
       <ActionButton

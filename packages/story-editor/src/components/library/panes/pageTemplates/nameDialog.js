@@ -41,16 +41,12 @@ const InputWrapper = styled.form`
  * @param {Function} props.onClose Callback to toggle dialog display on close.
  * @param {Function} props.onSave Callback to save template. Template name will be the argument
  * @param {string} props.title Previous name of the template
- * @param {string} props.placeholder Previous name of the template
+ * @param {string} props.placeholder Placeholder input text.
+ * @param {string} props.previousInput Prefill input text.
  * @return {null|*} The dialog element.
  */
-function NameDialog({
-  onClose,
-  onSave,
-  title,
-  placeholder = __('Untitled', 'web-stories'),
-}) {
-  const [templateName, setTemplateName] = useState(placeholder);
+function NameDialog({ onClose, onSave, title, placeholder, previousInput }) {
+  const [templateName, setTemplateName] = useState(previousInput);
   return (
     <Dialog
       isOpen
@@ -88,6 +84,7 @@ NameDialog.propTypes = {
   onSave: PropTypes.func.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
+  previousInput: PropTypes.string,
 };
 
 export default NameDialog;

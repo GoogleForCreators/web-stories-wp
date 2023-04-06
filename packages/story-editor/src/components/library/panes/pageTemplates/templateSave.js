@@ -209,6 +209,8 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
             setIsDialogOpen(false);
           }}
           title={__('Save Page Template', 'web-stories')}
+          placeholder={__('Untitled', 'web-stories')}
+          previousInput={''}
         />
       )}
     </>
