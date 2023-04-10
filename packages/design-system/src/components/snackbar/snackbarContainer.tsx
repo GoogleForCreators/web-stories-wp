@@ -18,6 +18,7 @@
  */
 import type { FC, ComponentProps } from 'react';
 import {
+  createRef,
   useCallback,
   useEffect,
   useMemo,
@@ -78,7 +79,6 @@ const ChildContainer = styled.div`
   &.react-snackbar-alert__snackbar-container-enter {
     max-height: 0px;
     opacity: 0;
-    transition: all 300ms ease-out;
   }
 
   &.react-snackbar-alert__snackbar-container-enter-active {
@@ -89,7 +89,6 @@ const ChildContainer = styled.div`
 
   &.react-snackbar-alert__snackbar-container-exit {
     opacity: 1;
-    transition: all 300ms ease-out;
   }
 
   &.react-snackbar-alert__snackbar-container-exit-active {
@@ -157,7 +156,6 @@ function SnackbarContainer({
       }
     });
   }, [notifications, speak]);
-  const nodeRefs = useRef<Record<string, HTMLElement>>({});
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
@@ -174,6 +172,7 @@ function SnackbarContainer({
           } = notification;
 
           const id = notification.id || ids[index];
+          const ref = createRef<HTMLDivElement>();
 
           return (
             <CSSTransition
@@ -181,16 +180,10 @@ function SnackbarContainer({
               key={id}
               timeout={300}
               unmountOnExit
-              nodeRef={{ current: nodeRefs.current?.[id] }}
+              nodeRef={ref}
               classNames="react-snackbar-alert__snackbar-container"
             >
-              <ChildContainer
-                ref={(el) => {
-                  if (el) {
-                    nodeRefs.current[id] = el;
-                  }
-                }}
-              >
+              <ChildContainer ref={ref}>
                 <Component
                   {...notificationProps}
                   aria-hidden
