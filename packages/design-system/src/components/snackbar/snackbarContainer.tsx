@@ -77,13 +77,11 @@ function getSnackbarXPos({ placement }: { placement: SnackbarPlacement }) {
 
 const ChildContainer = styled.div`
   &.react-snackbar-alert__snackbar-container-enter {
-    max-height: 0px;
     opacity: 0;
   }
 
   &.react-snackbar-alert__snackbar-container-enter-active {
     opacity: 1;
-    max-height: 100px;
     transition: all 300ms ease-out;
   }
 
@@ -93,7 +91,7 @@ const ChildContainer = styled.div`
 
   &.react-snackbar-alert__snackbar-container-exit-active {
     opacity: 0;
-    transition: all 300ms ease-out;
+    transition: all 100ms ease-out;
   }
 `;
 
@@ -112,7 +110,7 @@ function SnackbarContainer({
   notifications = [],
   onRemove,
   placement = SnackbarPlacement.Bottom,
-  max = 10,
+  max = 1,
 }: SnackbarContainerProps) {
   const speak = useLiveRegion('assertive');
   const announcedNotifications = useRef(new Set());
@@ -133,10 +131,7 @@ function SnackbarContainer({
 
   useEffect(() => {
     if (typeof max === 'number' && notifications.length > max) {
-      const timeout = setTimeout(() => {
-        onRemove?.(notifications.slice(0, notifications.length - max));
-      }, 300);
-      return () => clearTimeout(timeout);
+      onRemove?.(notifications.slice(0, notifications.length - max));
     }
     return undefined;
   }, [max, notifications, onRemove]);
@@ -159,48 +154,47 @@ function SnackbarContainer({
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
-        {orderedNotifications.map((notification, index) => {
-          const {
-            actionLabel,
-            dismissible,
-            message,
-            onAction,
-            preventActionDismiss,
-            preventAutoDismiss,
-            timeout,
-            ...notificationProps
-          } = notification;
-
-          const id = notification.id || ids[index];
-          const ref = createRef<HTMLDivElement>();
-
-          return (
-            <CSSTransition
-              in
-              key={id}
-              timeout={300}
-              unmountOnExit
-              nodeRef={ref}
-              classNames="react-snackbar-alert__snackbar-container"
-            >
-              <ChildContainer ref={ref}>
-                <Component
-                  {...notificationProps}
-                  aria-hidden
-                  placement={placement}
-                  onDismiss={handleDismiss(notification)}
-                  onAction={onAction}
-                  actionLabel={actionLabel}
-                  message={message}
-                  showCloseButton={dismissible}
-                  removeMessageTimeInterval={timeout}
-                  isPreventAutoDismiss={preventAutoDismiss}
-                  isPreventActionDismiss={preventActionDismiss}
-                />
-              </ChildContainer>
-            </CSSTransition>
-          );
-        })}
+        {orderedNotifications[0] &&
+          (() => {
+            const {
+              actionLabel,
+              dismissible,
+              message,
+              onAction,
+              preventActionDismiss,
+              preventAutoDismiss,
+              timeout,
+              ...notificationProps
+            } = orderedNotifications[0];
+            const id = orderedNotifications[0].id || ids[0];
+            const ref = createRef<HTMLDivElement>();
+            return (
+              <CSSTransition
+                in
+                key={id}
+                timeout={300}
+                unmountOnExit
+                nodeRef={ref}
+                classNames="react-snackbar-alert__snackbar-container"
+              >
+                <ChildContainer ref={ref}>
+                  <Component
+                    {...notificationProps}
+                    aria-hidden
+                    placement={placement}
+                    onDismiss={handleDismiss(orderedNotifications[0])}
+                    onAction={onAction}
+                    actionLabel={actionLabel}
+                    message={message}
+                    showCloseButton={dismissible}
+                    removeMessageTimeInterval={timeout}
+                    isPreventAutoDismiss={preventAutoDismiss}
+                    isPreventActionDismiss={preventActionDismiss}
+                  />
+                </ChildContainer>
+              </CSSTransition>
+            );
+          })()}
       </TransitionGroup>
     </StyledContainer>
   );
