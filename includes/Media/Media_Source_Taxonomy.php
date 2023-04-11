@@ -379,6 +379,23 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		 *   [ [ any ], [ existing ], [ tax queries] ]
 		 * ]
 		 */
+		if(empty($tax_query)) {
+			return [
+				[
+					'taxonomy' => $this->taxonomy_slug,
+					'field'    => 'slug',
+					'terms'    => [
+						self::TERM_POSTER_GENERATION,
+						self::TERM_SOURCE_VIDEO,
+						self::TERM_SOURCE_IMAGE,
+						self::TERM_PAGE_TEMPLATE,
+					],
+					'operator' => 'NOT IN',
+				],
+			];
+		}
+
+
 		array_unshift(
 			$tax_query,
 			[
