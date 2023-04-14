@@ -183,7 +183,7 @@ function PlaybackMedia() {
         {
           baseOptions: {
             modelAssetPath:
-              'https://storage.googleapis.com/mediapipe-assets/deeplabv3.tflite?generation=1661875711618421',
+              'https://storage.googleapis.com/mediapipe-tasks/image_segmenter/selfie_segm_128_128_3.tflite',
           },
           runningMode: 'VIDEO',
         }
