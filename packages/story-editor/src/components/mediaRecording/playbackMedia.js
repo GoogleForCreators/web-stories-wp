@@ -175,7 +175,7 @@ function PlaybackMedia() {
       );
 
       const vision = await FilesetResolver.forVisionTasks(
-        'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm'
+        'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.1.0-alpha-8/wasm'
       );
 
       selfieSegmentation.current = await ImageSegmenter.createFromOptions(
