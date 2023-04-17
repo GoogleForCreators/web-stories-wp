@@ -108,22 +108,18 @@ function PlaybackMedia() {
     context.save();
 
     const segmentationMask = new Uint8ClampedArray(
-      streamNode.videoWidth * streamNode.videoHeight * 4
+      canvas.width * canvas.height * 4
     );
     const mask = masks[0];
     for (let i = 0; i < mask.length; i++) {
       const isBackround = mask[i] === 0;
-      segmentationMask[i * 4] = isBackround ? 255 : 0;
-      segmentationMask[i * 4 + 1] = isBackround ? 255 : 0;
-      segmentationMask[i * 4 + 2] = isBackround ? 255 : 0;
-      segmentationMask[i * 4 + 3] = isBackround ? 255 : 0;
+      segmentationMask[i * 4] = isBackround ? 0 : 255;
+      segmentationMask[i * 4 + 1] = isBackround ? 0 : 255;
+      segmentationMask[i * 4 + 2] = isBackround ? 0 : 255;
+      segmentationMask[i * 4 + 3] = isBackround ? 0 : 255;
     }
     const segmentationMaskBitMap = await createImageBitmap(
-      new ImageData(
-        segmentationMask,
-        streamNode.videoWidth,
-        streamNode.videoHeight
-      )
+      new ImageData(segmentationMask, canvas.width, canvas.height)
     );
 
     if (!canvasBlur) {
@@ -131,7 +127,7 @@ function PlaybackMedia() {
 
       blur(context, BACKGROUND_BLUR_PX);
 
-      context.globalCompositeOperation = 'destination-in';
+      context.globalCompositeOperation = 'destination-out';
       context.drawImage(
         segmentationMaskBitMap,
         0,
@@ -143,7 +139,7 @@ function PlaybackMedia() {
       context.drawImage(streamNode, 0, 0, canvas.width, canvas.height);
     } else {
       context.globalCompositeOperation = 'copy';
-      context.filter = 'none';
+      context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
       context.drawImage(
         segmentationMaskBitMap,
         0,
@@ -153,11 +149,11 @@ function PlaybackMedia() {
       );
 
       context.globalCompositeOperation = 'source-in';
-      context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
+      context.filter = `none`;
       context.drawImage(streamNode, 0, 0, canvas.width, canvas.height);
 
       context.globalCompositeOperation = 'destination-over';
-      context.filter = 'none';
+      context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
       context.drawImage(streamNode, 0, 0, canvas.width, canvas.height);
     }
 
