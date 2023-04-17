@@ -106,7 +106,7 @@ jobs:
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
       - name: Setup PHP 8.0
-        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d
+        uses: shivammathur/setup-php@1fdc5e773bb54b5aa541c73679d6e9acc692d0cd
         with:
           php-version: '8.0'
           tools: composer
@@ -120,7 +120,7 @@ jobs:
         run: rm -rf vendor/*
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d
+        uses: shivammathur/setup-php@1fdc5e773bb54b5aa541c73679d6e9acc692d0cd
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql
