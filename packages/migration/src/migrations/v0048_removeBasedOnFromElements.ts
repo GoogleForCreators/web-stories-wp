@@ -44,7 +44,7 @@ function fixBrokenPage({ elements, ...rest }: PageV47): PageV48 {
       (element) =>
         objectWithout(element, ['basedOn']) as Omit<UnionElementV47, 'basedOn'>
     ),
-    rest,
+    ...rest,
   };
 }
 
