@@ -1968,8 +1968,5 @@
       "backgroundColor": { "color": { "r": 26, "g": 26, "b": 26 } },
       "pageTemplateType": "list"
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ] 
 }
