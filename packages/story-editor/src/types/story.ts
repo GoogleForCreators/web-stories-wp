@@ -24,6 +24,7 @@ import type {
   Story,
   TextElement,
   Term,
+  Element,
 } from '@googleforcreators/elements';
 import type { Pattern } from '@googleforcreators/patterns';
 
@@ -34,6 +35,12 @@ interface FeaturedMedia {
   url: string;
   needsProxy: boolean;
   isExternal: boolean;
+}
+
+export type ElementSaveData = Omit<Element, 'basedOn'>;
+
+export interface PageSaveData extends Omit<Page, 'elements'> {
+  elements: ElementSaveData[];
 }
 
 // Data required by API callbacks for saving a story.
@@ -59,7 +66,7 @@ export interface StorySaveData
   storyId?: number;
   content: string;
   products: ProductData[];
-  pages: Page[];
+  pages: PageSaveData[];
   // Term IDs.
   web_story_data?: number[];
 }
