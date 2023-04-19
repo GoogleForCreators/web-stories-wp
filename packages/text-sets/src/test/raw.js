@@ -70,9 +70,9 @@ describe('Raw text set files', () => {
         )
       );
 
-      expect(textSetData.current).toBeNull();
-      expect(textSetData.selection).toStrictEqual([]);
-      expect(textSetData.story.globalStoryStyles).toBeUndefined();
+      expect(textSetData.current).toBeUndefined()();
+      expect(textSetData.selection).toBeUndefined()();
+      expect(textSetData.story).toBeUndefined();
     });
 
     it('should not contain invisible characters', () => {
