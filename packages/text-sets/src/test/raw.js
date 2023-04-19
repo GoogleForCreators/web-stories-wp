@@ -70,8 +70,8 @@ describe('Raw text set files', () => {
         )
       );
 
-      expect(textSetData.current).toBeUndefined()();
-      expect(textSetData.selection).toBeUndefined()();
+      expect(textSetData.current).toBeUndefined();
+      expect(textSetData.selection).toBeUndefined();
       expect(textSetData.story).toBeUndefined();
     });
 
