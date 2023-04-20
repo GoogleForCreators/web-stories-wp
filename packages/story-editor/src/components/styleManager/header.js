@@ -86,11 +86,7 @@ function Header({
           <StyledButton
             {...buttonProps}
             variant={ButtonVariant.Rectangle}
-            aria-label={
-              isEditMode
-                ? __('Exit edit mode', 'web-stories')
-                : __('Edit styles', 'web-stories')
-            }
+            aria-label={__('Exit edit mode', 'web-stories')}
           >
             {__('Done', 'web-stories')}
           </StyledButton>
@@ -98,11 +94,7 @@ function Header({
           <StyledButton
             {...buttonProps}
             variant={ButtonVariant.Square}
-            aria-label={
-              isEditMode
-                ? __('Exit edit mode', 'web-stories')
-                : __('Edit styles', 'web-stories')
-            }
+            aria-label={__('Exit edit mode', 'web-stories')}
           >
             <Icons.Pencil />
           </StyledButton>
