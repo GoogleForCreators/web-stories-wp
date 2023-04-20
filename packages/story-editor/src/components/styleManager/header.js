@@ -92,7 +92,7 @@ function Header({
                 : __('Edit styles', 'web-stories')
             }
           >
-            {__('DoneDone', 'web-stories')}
+            {__('Done', 'web-stories')}
           </StyledButton>
         ) : (
           <StyledButton

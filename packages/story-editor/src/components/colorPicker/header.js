@@ -84,18 +84,33 @@ function Header({
     <Wrapper>
       {children}
       <Actions>
-        {hasPresets && (
-          <StyledButton
-            {...buttonProps}
-            aria-label={
-              isEditMode
-                ? __('Exit edit mode', 'web-stories')
-                : __('Edit colors', 'web-stories')
-            }
-          >
-            {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
-          </StyledButton>
-        )}
+        {hasPresets ? (
+          isEditMode ? (
+            <StyledButton
+              {...buttonProps}
+              variant={ButtonVariant.Rectangle}
+              aria-label={
+                isEditMode
+                  ? __('Exit edit mode', 'web-stories')
+                  : __('Edit styles', 'web-stories')
+              }
+            >
+              {__('Done', 'web-stories')}
+            </StyledButton>
+          ) : (
+            <StyledButton
+              {...buttonProps}
+              variant={ButtonVariant.Square}
+              aria-label={
+                isEditMode
+                  ? __('Exit edit mode', 'web-stories')
+                  : __('Edit styles', 'web-stories')
+              }
+            >
+              <Icons.Pencil />
+            </StyledButton>
+          )
+        ) : null}
         <StyledButton
           aria-label={__('Close', 'web-stories')}
           onClick={handleClose}
