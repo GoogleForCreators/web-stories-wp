@@ -71,7 +71,6 @@ function Header({
   const buttonProps = {
     type: ButtonType.Tertiary,
     size: ButtonSize.Small,
-    variant: ButtonVariant.Square,
     onClick: (evt) => {
       evt.stopPropagation();
       setIsEditMode(!isEditMode);
@@ -83,16 +82,31 @@ function Header({
     <Wrapper>
       {children}
       <Actions>
-        <StyledButton
-          {...buttonProps}
-          aria-label={
-            isEditMode
-              ? __('Exit edit mode', 'web-stories')
-              : __('Edit styles', 'web-stories')
-          }
-        >
-          {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
-        </StyledButton>
+        {isEditMode ? (
+          <StyledButton
+            {...buttonProps}
+            variant={ButtonVariant.Rectangle}
+            aria-label={
+              isEditMode
+                ? __('Exit edit mode', 'web-stories')
+                : __('Edit styles', 'web-stories')
+            }
+          >
+            {__('DoneDone', 'web-stories')}
+          </StyledButton>
+        ) : (
+          <StyledButton
+            {...buttonProps}
+            variant={ButtonVariant.Square}
+            aria-label={
+              isEditMode
+                ? __('Exit edit mode', 'web-stories')
+                : __('Edit styles', 'web-stories')
+            }
+          >
+            <Icons.Pencil />
+          </StyledButton>
+        )}
         <StyledButton
           aria-label={__('Close', 'web-stories')}
           onClick={handleClose}
