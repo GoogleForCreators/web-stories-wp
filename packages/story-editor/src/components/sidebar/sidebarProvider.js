@@ -36,6 +36,7 @@ import { useStory } from '../../app/story';
 import { states, useHighlights } from '../../app/highlights';
 import Library from '../library';
 import Style from '../style';
+import { useMediaRecording } from '../mediaRecording';
 import { DOCUMENT, STYLE, PUBLISH_MODAL_DOCUMENT, INSERT } from './constants';
 import Context from './context';
 
@@ -78,6 +79,10 @@ function SidebarProvider({ sidebarTabs, children }) {
   }, [highlightedTab]);
 
   const sidebarRef = useRef(null);
+
+  const { isInRecordingMode } = useMediaRecording(({ state }) => ({
+    isInRecordingMode: state.isInRecordingMode,
+  }));
 
   const [tab, setTab] = useState(INSERT);
   const [users, setUsers] = useState([]);
@@ -183,6 +188,7 @@ function SidebarProvider({ sidebarTabs, children }) {
       users,
       sidebarContentHeight,
       usersLoadingState,
+      isDisabled: isInRecordingMode,
     },
     refs: {
       sidebar: sidebarRef,

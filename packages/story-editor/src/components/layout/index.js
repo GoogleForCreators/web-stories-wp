@@ -74,19 +74,19 @@ function Layout({ header, footer = {}, sidebarTabs, children }) {
       <LayoutProvider>
         <ChecklistCheckpointProvider>
           <HighlightsProvider>
-            <SidebarProvider sidebarTabs={sidebarTabs}>
-              <Editor zIndex={3}>
-                <CanvasProvider>
-                  <RightClickMenuProvider>
-                    <MediaRecordingProvider>
+            <MediaRecordingProvider>
+              <SidebarProvider sidebarTabs={sidebarTabs}>
+                <Editor zIndex={3}>
+                  <CanvasProvider>
+                    <RightClickMenuProvider>
                       <Workspace header={header} footer={footer} />
                       <RightClickMenu />
-                    </MediaRecordingProvider>
-                  </RightClickMenuProvider>
-                </CanvasProvider>
-                {children}
-              </Editor>
-            </SidebarProvider>
+                    </RightClickMenuProvider>
+                  </CanvasProvider>
+                  {children}
+                </Editor>
+              </SidebarProvider>
+            </MediaRecordingProvider>
           </HighlightsProvider>
         </ChecklistCheckpointProvider>
       </LayoutProvider>

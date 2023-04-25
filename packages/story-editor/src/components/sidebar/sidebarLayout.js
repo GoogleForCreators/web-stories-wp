@@ -46,6 +46,7 @@ const SidebarContainer = styled.div`
   height: 100%;
   padding: 0;
   overflow: auto;
+  pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'auto')};
 `;
 
 const UnjustifiedTabView = styled(TabView)`
@@ -53,22 +54,30 @@ const UnjustifiedTabView = styled(TabView)`
 `;
 
 function SidebarLayout() {
-  const { tab, tabRefs, setSidebarContentNode, setTab, sidebar, tabs } =
-    useSidebar(
-      ({
-        state: { tab, tabRefs },
-        actions: { setSidebarContentNode, setTab },
-        refs: { sidebar },
-        data: { tabs },
-      }) => ({
-        tab,
-        tabRefs,
-        setSidebarContentNode,
-        setTab,
-        sidebar,
-        tabs,
-      })
-    );
+  const {
+    tab,
+    tabRefs,
+    setSidebarContentNode,
+    setTab,
+    sidebar,
+    tabs,
+    isDisabled,
+  } = useSidebar(
+    ({
+      state: { tab, tabRefs, isDisabled },
+      actions: { setSidebarContentNode, setTab },
+      refs: { sidebar },
+      data: { tabs },
+    }) => ({
+      tab,
+      tabRefs,
+      setSidebarContentNode,
+      setTab,
+      sidebar,
+      tabs,
+      isDisabled,
+    })
+  );
 
   const { resetHighlight } = useHighlights((state) => ({
     resetHighlight: state.onFocusOut,
@@ -97,7 +106,7 @@ function SidebarLayout() {
         getAriaControlsId={getTabId}
         shortcut="mod+option+3"
       />
-      <SidebarContainer ref={setSidebarContentNode}>
+      <SidebarContainer ref={setSidebarContentNode} isDisabled={isDisabled}>
         <SidebarContent />
       </SidebarContainer>
     </Layout>
