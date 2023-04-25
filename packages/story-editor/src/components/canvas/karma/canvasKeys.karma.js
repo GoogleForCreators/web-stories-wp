@@ -124,6 +124,9 @@ describe('Canvas Keyboard Shortcuts', () => {
     await fixture.events.click(
       fixture.screen.getByRole('option', { name: /^"Fade In" Effect$/ })
     );
+
+    // Synthetic delay to make the dropdown behave correctly
+    await fixture.events.sleep(200);
     // click to close
     await fixture.events.click(effectChooser, { clickCount: 1 });
     const duration = fixture.screen.getByLabelText('Duration');
