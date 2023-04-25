@@ -99,6 +99,7 @@ export function UnsplashAttribution() {
       target={'_blank'}
       rel={'noreferrer'}
       aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
+      tabIndex={-1}
     >
       <AttributionPill aria-hidden>
         <Text size={TextSize.XSmall}>{__('Powered by', 'web-stories')}</Text>
@@ -115,6 +116,7 @@ export function CoverrAttribution() {
       target={'_blank'}
       rel={'noreferrer'}
       aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
+      tabIndex={-1}
     >
       <AttributionPill aria-hidden>
         <Text size={TextSize.XSmall}>{__('Powered by', 'web-stories')}</Text>
@@ -131,6 +133,7 @@ export function TenorAttribution() {
       target={'_blank'}
       rel={'noreferrer'}
       aria-label={getAriaLabel(MEDIA_PROVIDER.tenor)}
+      tabIndex={-1}
     >
       <AttributionPill aria-hidden>
         <TenorLogo />
