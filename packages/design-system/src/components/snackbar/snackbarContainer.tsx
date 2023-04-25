@@ -154,47 +154,46 @@ function SnackbarContainer({
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
-        {orderedNotifications[0] &&
-          (() => {
-            const {
-              actionLabel,
-              dismissible,
-              message,
-              onAction,
-              preventActionDismiss,
-              preventAutoDismiss,
-              timeout,
-              ...notificationProps
-            } = orderedNotifications[0];
-            const id = orderedNotifications[0].id || ids[0];
-            const ref = createRef<HTMLDivElement>();
-            return (
-              <CSSTransition
-                in
-                key={id}
-                timeout={300}
-                unmountOnExit
-                nodeRef={ref}
-                classNames="react-snackbar-alert__snackbar-container"
-              >
-                <ChildContainer ref={ref}>
-                  <Component
-                    {...notificationProps}
-                    aria-hidden
-                    placement={placement}
-                    onDismiss={handleDismiss(orderedNotifications[0])}
-                    onAction={onAction}
-                    actionLabel={actionLabel}
-                    message={message}
-                    showCloseButton={dismissible}
-                    removeMessageTimeInterval={timeout}
-                    isPreventAutoDismiss={preventAutoDismiss}
-                    isPreventActionDismiss={preventActionDismiss}
-                  />
-                </ChildContainer>
-              </CSSTransition>
-            );
-          })()}
+        {orderedNotifications.map((notification) => {
+          const {
+            actionLabel,
+            dismissible,
+            message,
+            onAction,
+            preventActionDismiss,
+            preventAutoDismiss,
+            timeout,
+            ...notificationProps
+          } = notification;
+          const id = notification.id || ids[0];
+          const ref = createRef<HTMLDivElement>();
+          return (
+            <CSSTransition
+              in
+              key={id}
+              timeout={300}
+              unmountOnExit
+              nodeRef={ref}
+              classNames="react-snackbar-alert__snackbar-container"
+            >
+              <ChildContainer ref={ref}>
+                <Component
+                  {...notificationProps}
+                  aria-hidden
+                  placement={placement}
+                  onDismiss={handleDismiss(notification)}
+                  onAction={onAction}
+                  actionLabel={actionLabel}
+                  message={message}
+                  showCloseButton={dismissible}
+                  removeMessageTimeInterval={timeout}
+                  isPreventAutoDismiss={preventAutoDismiss}
+                  isPreventActionDismiss={preventActionDismiss}
+                />
+              </ChildContainer>
+            </CSSTransition>
+          );
+        })}
       </TransitionGroup>
     </StyledContainer>
   );
