@@ -111,7 +111,7 @@ function useUploadMedia({
       });
     } else {
       removeSnack({
-        id: 'video-optimization',
+        key: 'video-optimization',
       });
     }
   }, [isTranscoding, showSnackbar, removeSnack]);
