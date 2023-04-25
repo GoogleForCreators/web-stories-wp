@@ -63,9 +63,7 @@ function useMultiSelectionDrag({
       nodesById[id].contains(inputEvent.target)
     );
     if (clickedElement) {
-      setTimeout(() => {
-        handleSelectElement(clickedElement, inputEvent);
-      }, 0);
+      handleSelectElement(clickedElement, inputEvent);
     }
     // Click was handled.
     return true;
