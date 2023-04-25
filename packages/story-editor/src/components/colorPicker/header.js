@@ -97,7 +97,7 @@ function Header({
             <StyledButton
               {...buttonProps}
               variant={ButtonVariant.Square}
-              aria-label={__('Edit styles', 'web-stories')}
+              aria-label={__('Edit colors', 'web-stories')}
             >
               <Icons.Pencil />
             </StyledButton>
