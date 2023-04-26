@@ -29,7 +29,7 @@ import SAT from 'sat';
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas } from '../../../app';
+import { useStory, useCanvas, useTransform } from '../../../app';
 import useElementPolygon from '../../../utils/useElementPolygon';
 
 function useFullbleedMediaAsBackground() {
@@ -51,6 +51,9 @@ function useFullbleedMediaAsBackground() {
       fullbleedContainer,
     })
   );
+  const { clearTransforms } = useTransform((state) => ({
+    clearTransforms: state.actions.clearTransforms,
+  }));
   const { showSnackbar } = useSnackbar();
   const getElementPolygon = useElementPolygon();
 
@@ -89,6 +92,7 @@ function useFullbleedMediaAsBackground() {
         );
         setIsBackgroundSnackbarMessageDismissed(true);
       }
+      clearTransforms();
     }
   };
 
