@@ -49,6 +49,5 @@ export interface SnackbarNotification {
   preventAutoDismiss?: boolean;
   timeout?: number;
   thumbnail?: SnackbarNotificationThumbnail;
-  key?: string;
   id?: string;
 }
