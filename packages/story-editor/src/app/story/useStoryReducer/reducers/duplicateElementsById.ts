@@ -72,7 +72,6 @@ export const duplicateElementsById = (
     const { element, elementAnimations } = duplicateElement({
       element: elementToDuplicate,
       animations: page.animations,
-      existingElements: page.elements,
     });
 
     if (!hasDeletedSomething) {

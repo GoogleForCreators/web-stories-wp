@@ -40,6 +40,7 @@ const duplicatePage = (oldPage: Page) => {
         const { element, elementAnimations } = duplicateElement({
           element: oldElement,
           animations: oldAnimations,
+          shouldOffset: false,
         });
         return {
           elements: [...elements, element],

@@ -129,7 +129,7 @@ function useCanvasGlobalKeys() {
       }
       const { elements, animations, groups } = processPastedElements(
         content,
-        currentPage
+        selectedElements
       );
 
       const newProductsFromElements = elements
@@ -183,7 +183,13 @@ function useCanvasGlobalKeys() {
 
       return addPastedElements(elements, animations, groups);
     },
-    [addPastedElements, currentPage, showSnackbar, currentPageProductIds]
+    [
+      addPastedElements,
+      currentPage,
+      showSnackbar,
+      currentPageProductIds,
+      selectedElements,
+    ]
   );
 
   const pasteHandler = useCallback(

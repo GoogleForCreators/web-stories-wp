@@ -58,7 +58,8 @@ function getOffsetCoordinates(originX: number, originY: number) {
 interface DuplicateElementArgs {
   element: Element;
   animations?: StoryAnimation[];
-  existingElements?: Element[];
+  shouldOffset?: boolean;
+  basePosition?: { x: number; y: number };
 }
 interface DuplicateElementReturn {
   element: Element;
@@ -67,25 +68,21 @@ interface DuplicateElementReturn {
 function duplicateElement({
   element,
   animations = [],
-  existingElements = [],
+  shouldOffset = true,
+  basePosition,
 }: DuplicateElementArgs): DuplicateElementReturn {
   const { type, ...attrs } = element;
   const duplicatedElement = createNewElement(type, attrs);
   duplicatedElement.basedOn = element.id;
 
-  existingElements.forEach((existingElement) => {
-    if (
-      existingElement.id === duplicatedElement.basedOn ||
-      existingElement.basedOn === duplicatedElement.basedOn
-    ) {
-      const pastedXY = getOffsetCoordinates(
-        duplicatedElement.x,
-        duplicatedElement.y
-      );
-      duplicatedElement.x = pastedXY.x;
-      duplicatedElement.y = pastedXY.y;
-    }
-  });
+  if (shouldOffset) {
+    const pastedXY = getOffsetCoordinates(
+      basePosition?.x ?? element.x,
+      basePosition?.y ?? element.y
+    );
+    duplicatedElement.x = pastedXY.x;
+    duplicatedElement.y = pastedXY.y;
+  }
 
   const duplicatedAnimations = animations
     .filter((animation) => animation.targets.includes(element.id))

@@ -50,7 +50,7 @@ interface Payload {
  */
 export function processPastedElements(
   content: DocumentFragment,
-  currentPage: Page
+  selectedElements: Element[]
 ): ProcessPastedElementsReturn {
   let foundElementsAndAnimations: ProcessPastedElementsReturn = {
     animations: [],
@@ -76,7 +76,8 @@ export function processPastedElements(
           elements,
           animations,
         }: { elements: Element[]; animations: StoryAnimation[] },
-        payloadElement: Element
+        payloadElement: Element,
+        ind
       ) => {
         const { element, elementAnimations } = duplicateElement({
           element: {
@@ -84,7 +85,10 @@ export function processPastedElements(
             id: payloadElement.basedOn as string,
           },
           animations: payload.animations,
-          existingElements: currentPage.elements,
+          basePosition: {
+            x: selectedElements[ind]?.x ?? 0,
+            y: selectedElements[ind]?.y ?? 0,
+          },
         });
 
         return {
