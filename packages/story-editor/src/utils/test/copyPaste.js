@@ -122,7 +122,7 @@ describe('copyPaste utils', () => {
       template.innerHTML = innerHTML;
     });
 
-    it('should detect elements as expected', () => {
+    it.only('should detect elements as expected', () => {
       const { elements: processedElements } = processPastedElements(
         template.content,
         {

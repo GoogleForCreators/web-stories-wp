@@ -49,8 +49,7 @@ interface Payload {
  * Processes pasted content to find story elements.
  */
 export function processPastedElements(
-  content: DocumentFragment,
-  selectedElements: Element[]
+  content: DocumentFragment
 ): ProcessPastedElementsReturn {
   let foundElementsAndAnimations: ProcessPastedElementsReturn = {
     animations: [],
@@ -76,8 +75,7 @@ export function processPastedElements(
           elements,
           animations,
         }: { elements: Element[]; animations: StoryAnimation[] },
-        payloadElement: Element,
-        ind
+        payloadElement: Element
       ) => {
         const { element, elementAnimations } = duplicateElement({
           element: {
@@ -85,10 +83,7 @@ export function processPastedElements(
             id: payloadElement.basedOn as string,
           },
           animations: payload.animations,
-          basePosition: {
-            x: selectedElements[ind]?.x ?? 0,
-            y: selectedElements[ind]?.y ?? 0,
-          },
+          shouldOffset: false,
         });
 
         return {
