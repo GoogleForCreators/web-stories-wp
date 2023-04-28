@@ -126,7 +126,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     continue-on-error: ${{ matrix.experimental == true }}
-    needs: [build, nonce]
+    needs: [build]
     strategy:
       fail-fast: false
       matrix:

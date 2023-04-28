@@ -45,7 +45,6 @@ jobs:
     name: Karma
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: nonce
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3
