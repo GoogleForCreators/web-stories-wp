@@ -107,11 +107,11 @@ function useUploadMedia({
       showSnackbar({
         message: __('Optimizing file…', 'web-stories'),
         dismissible: true,
-        key: 'video-optimization',
+        id: 'video-optimization',
       });
     } else {
       removeSnack({
-        key: 'video-optimization',
+        id: 'video-optimization',
       });
     }
   }, [isTranscoding, showSnackbar, removeSnack]);
