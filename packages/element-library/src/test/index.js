@@ -94,7 +94,6 @@ describe('Element', () => {
         expect.objectContaining({
           ...oldElement,
           id: expect.not.stringMatching(new RegExp(`/^${oldElement.id}$/`)),
-          basedOn: oldElement.id,
         })
       );
     });
@@ -114,7 +113,6 @@ describe('Element', () => {
         expect.objectContaining({
           ...oldElement,
           id: expect.not.stringMatching(new RegExp(`/^${oldElement.id}$/`)),
-          basedOn: oldElement.id,
           x: expect.any(Number),
           y: expect.any(Number),
         })

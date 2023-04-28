@@ -78,10 +78,7 @@ export function processPastedElements(
         payloadElement: Element
       ) => {
         const { element, elementAnimations } = duplicateElement({
-          element: {
-            ...payloadElement,
-            id: payloadElement.basedOn as string,
-          },
+          element: payloadElement,
           animations: payload.animations,
           shouldOffset: false,
         });
@@ -142,7 +139,6 @@ export function addElementsToClipboard(
       ...(elementIs.defaultBackground(element)
         ? { backgroundColor: page.backgroundColor }
         : null),
-      basedOn: element.id,
       id: undefined,
     })),
     animations,

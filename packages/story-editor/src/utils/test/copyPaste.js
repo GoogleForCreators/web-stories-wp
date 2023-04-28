@@ -57,7 +57,6 @@ describe('copyPaste utils', () => {
     content: 'Fill in some text',
     x: 91,
     y: 23,
-    basedOn: 'text',
     width: 100,
     height: 100,
     color: createSolid(0, 0, 0),
@@ -71,7 +70,6 @@ describe('copyPaste utils', () => {
     y: 41,
     width: 220,
     height: 202,
-    basedOn: 'image',
     resource: {
       type: 'image',
       mimeType: '',
@@ -92,7 +90,6 @@ describe('copyPaste utils', () => {
     mask: {
       type: 'rectangle',
     },
-    basedOn: 'shape',
     isBackground: true,
     backgroundColor: createSolid(1, 1, 1),
   };
@@ -122,7 +119,7 @@ describe('copyPaste utils', () => {
       template.innerHTML = innerHTML;
     });
 
-    it.only('should detect elements as expected', () => {
+    it('should detect elements as expected', () => {
       const { elements: processedElements } = processPastedElements(
         template.content,
         {

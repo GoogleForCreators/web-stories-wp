@@ -73,7 +73,6 @@ function duplicateElement({
 }: DuplicateElementArgs): DuplicateElementReturn {
   const { type, ...attrs } = element;
   const duplicatedElement = createNewElement(type, attrs);
-  duplicatedElement.basedOn = element.id;
 
   if (shouldOffset) {
     const pastedXY = getOffsetCoordinates(
