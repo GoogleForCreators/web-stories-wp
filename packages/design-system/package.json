@@ -42,7 +42,7 @@
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
-    "@types/react-modal": "^3.13.1",
+    "@types/react-modal": "^3.16.0",
     "big.js": "^6.2.1",
     "mousetrap": "^1.6.5",
     "polished": "^4.2.2",
