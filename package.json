@@ -173,7 +173,7 @@
     "source-map-loader": "^4.0.1",
     "styled-components": "^5.3.9",
     "stylelint": "^15.6.0",
-    "stylelint-config-recommended": "^11.0.0",
+    "stylelint-config-recommended": "^12.0.0",
     "stylelint-prettier": "^3.0.0",
     "stylis-plugin-rtl": "^1.0.0",
     "terser-webpack-plugin": "^5.3.7",
