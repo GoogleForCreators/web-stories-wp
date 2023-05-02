@@ -58,8 +58,7 @@ export function getOffsetCoordinates(originX: number, originY: number) {
 interface DuplicateElementArgs {
   element: Element;
   animations?: StoryAnimation[];
-  shouldOffset?: boolean;
-  basePosition?: { x: number; y: number };
+  currentElements?: Element[];
 }
 interface DuplicateElementReturn {
   element: Element;
@@ -68,17 +67,15 @@ interface DuplicateElementReturn {
 function duplicateElement({
   element,
   animations = [],
-  shouldOffset = true,
-  basePosition,
+  currentElements = [],
 }: DuplicateElementArgs): DuplicateElementReturn {
   const { type, ...attrs } = element;
   const duplicatedElement = createNewElement(type, attrs);
 
-  if (shouldOffset) {
-    const pastedXY = getOffsetCoordinates(
-      basePosition?.x ?? element.x,
-      basePosition?.y ?? element.y
-    );
+  // update position with an offset if copied element is on canvas
+  if (currentElements.map(({ id }) => id).includes(element.id)) {
+    // use provided base position to
+    const pastedXY = getOffsetCoordinates(element.x, element.y);
     duplicatedElement.x = pastedXY.x;
     duplicatedElement.y = pastedXY.y;
   }

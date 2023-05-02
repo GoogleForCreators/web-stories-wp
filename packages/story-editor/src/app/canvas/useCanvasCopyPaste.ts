@@ -25,7 +25,6 @@ import {
   elementIs,
   ElementType,
   type TextElement,
-  getOffsetCoordinates,
 } from '@googleforcreators/elements';
 
 /**
@@ -128,21 +127,10 @@ function useCanvasGlobalKeys() {
       if (!currentPage) {
         return false;
       }
-      const { elements, animations, groups } = processPastedElements(content);
-
-      //calculate offset for staggering while pasting
-      elements.forEach((element) => {
-        selectedElements.forEach((selectedElement) => {
-          if (element.id === selectedElement.id) {
-            const {pastedX, pastedY } = getOffsetCoordinates(
-              selectedElement.x,
-              selectedElement.y
-            );
-            element.x = pastedX;
-            element.y = pastedY;
-          }
-        });
-      });
+      const { elements, animations, groups } = processPastedElements(
+        content,
+        currentPage
+      );
 
       const newProductsFromElements = elements
         .filter(elementIs.product)
@@ -195,13 +183,7 @@ function useCanvasGlobalKeys() {
 
       return addPastedElements(elements, animations, groups);
     },
-    [
-      addPastedElements,
-      currentPage,
-      showSnackbar,
-      currentPageProductIds,
-      selectedElements,
-    ]
+    [addPastedElements, currentPage, showSnackbar, currentPageProductIds]
   );
 
   const pasteHandler = useCallback(

@@ -60,6 +60,7 @@ describe('copyPaste utils', () => {
     width: 100,
     height: 100,
     color: createSolid(0, 0, 0),
+    id: '1',
   };
   const IMAGE_ELEMENT = {
     ...getDefinitionForType('image').defaultAttributes,
@@ -77,6 +78,7 @@ describe('copyPaste utils', () => {
       width: 1,
       height: 1,
     },
+    id: '2',
   };
 
   const SHAPE_ELEMENT = {
@@ -92,11 +94,12 @@ describe('copyPaste utils', () => {
     },
     isBackground: true,
     backgroundColor: createSolid(1, 1, 1),
+    id: '3',
   };
 
   const ANIMATION = {
     type: 'BOUNCE',
-    targets: ['shape'],
+    targets: ['3'],
     duration: 1000,
     delay: 0,
   };
@@ -158,10 +161,14 @@ describe('copyPaste utils', () => {
       const currentPage = {
         elements: [
           {
-            id: 'text',
+            id: '1',
+            x: 91,
+            y: 23,
           },
           {
-            id: 'image',
+            id: '2',
+            x: PAGE_WIDTH,
+            y: 41,
           },
         ],
       };
