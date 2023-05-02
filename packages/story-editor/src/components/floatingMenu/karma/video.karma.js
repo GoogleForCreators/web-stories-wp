@@ -24,7 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
-import { focusFloatingMenu, tabToCanvasFocusContainer } from './utils';
+import { focusFloatingMenu } from './utils';
 
 describe('Video Design Menu: Keyboard Navigation', () => {
   let fixture;
