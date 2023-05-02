@@ -138,7 +138,6 @@ export function addElementsToClipboard(
       ...(elementIs.defaultBackground(element)
         ? { backgroundColor: page.backgroundColor }
         : null),
-      id: undefined,
     })),
     animations,
     groups,
