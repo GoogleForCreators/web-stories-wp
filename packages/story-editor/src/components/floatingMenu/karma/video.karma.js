@@ -47,7 +47,7 @@ describe('Video Design Menu: Keyboard Navigation', () => {
     fixture.restore();
   });
 
-  fit('should navigate into and out of floating menu by keyboard', async () => {
+  it('should navigate into and out of floating menu by keyboard', async () => {
     const elementUpdates = {
       opacity: {
         keyboard: '60',
