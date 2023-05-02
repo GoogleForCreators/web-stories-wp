@@ -89,6 +89,7 @@ describe('Element', () => {
       };
       const { element } = duplicateElement({
         element: oldElement,
+        shouldOffset: false,
       });
       expect(element).toStrictEqual(
         expect.objectContaining({

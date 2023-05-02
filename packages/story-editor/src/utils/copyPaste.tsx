@@ -80,7 +80,6 @@ export function processPastedElements(
         const { element, elementAnimations } = duplicateElement({
           element: payloadElement,
           animations: payload.animations,
-          shouldOffset: false,
         });
 
         return {

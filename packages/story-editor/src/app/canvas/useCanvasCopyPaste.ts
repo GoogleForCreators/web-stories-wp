@@ -134,12 +134,12 @@ function useCanvasGlobalKeys() {
       elements.forEach((element) => {
         selectedElements.forEach((selectedElement) => {
           if (element.id === selectedElement.id) {
-            const pastedXY = getOffsetCoordinates(
+            const {pastedX, pastedY } = getOffsetCoordinates(
               selectedElement.x,
               selectedElement.y
             );
-            element.x = pastedXY.x;
-            element.y = pastedXY.y;
+            element.x = pastedX;
+            element.y = pastedY;
           }
         });
       });
