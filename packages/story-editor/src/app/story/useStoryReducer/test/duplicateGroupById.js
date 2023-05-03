@@ -25,7 +25,7 @@ import { elementTypes } from '@googleforcreators/element-library';
  */
 import { setupReducer } from './_utils';
 
-describe.only('duplicateGroupById', () => {
+describe('duplicateGroupById', () => {
   beforeAll(() => {
     elementTypes.forEach(registerElementType);
   });
