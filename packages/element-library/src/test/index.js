@@ -108,7 +108,7 @@ describe('Element', () => {
       };
       const { element } = duplicateElement({
         element: oldElement,
-        existingElements: [oldElement],
+        currentElements: [oldElement],
       });
       expect(element).toStrictEqual(
         expect.objectContaining({

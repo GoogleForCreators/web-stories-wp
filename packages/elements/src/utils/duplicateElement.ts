@@ -52,7 +52,8 @@ export function getOffsetCoordinates(originX: number, originY: number) {
  * @param args - named arguments
  * @param args.element - story element to be coppied
  * @param args.animations - set of existing animations
- * @param args.existingElements - set of existing story elements
+ * @param args.currentElements - set of existing story elements
+ * @param args.offsetBase - a point from which offset will be applied
  * @return cloned story element and associated cloned animations
  */
 interface DuplicateElementArgs {
