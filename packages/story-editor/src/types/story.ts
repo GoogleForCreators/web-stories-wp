@@ -37,7 +37,7 @@ interface FeaturedMedia {
   isExternal: boolean;
 }
 
-export type ElementSaveData = Omit<Element, 'basedOn'>;
+export type ElementSaveData = Element;
 
 export interface PageSaveData extends Omit<Page, 'elements'> {
   elements: ElementSaveData[];

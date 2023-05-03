@@ -23,13 +23,7 @@ import type { Page, Story, TaxonomySlug } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import objectPick from '../../../utils/objectPick';
-import objectWithout from '../../../utils/objectWithout';
-import type {
-  StorySaveData,
-  MetaData,
-  Flags,
-  ElementSaveData,
-} from '../../../types';
+import type { StorySaveData, MetaData, Flags } from '../../../types';
 import getAllProducts from './getAllProducts';
 import { cleanElementFontProperties } from './cleanElementFontProperties';
 import { getStoryFontsFromPages } from './getStoryFontsFromPages';
@@ -71,15 +65,7 @@ function getStoryPropsToSave({
   // see: https://github.com/GoogleForCreators/web-stories-wp/issues/12261
   const cleandFonts = getStoryFontsFromPages(pages);
   // clean up text elements to remove font properties from individual elements
-  const fontCleanedPages = cleanElementFontProperties(pages);
-
-  //removes basedOn prop from elements
-  const cleanedPages = fontCleanedPages.map(({ elements, ...rest }) => ({
-    elements: elements.map(
-      (element) => objectWithout(element, ['basedOn']) as ElementSaveData
-    ),
-    ...rest,
-  }));
+  const cleanedPages = cleanElementFontProperties(pages);
 
   const products = getAllProducts(cleanedPages);
   const content = getStoryMarkup(
