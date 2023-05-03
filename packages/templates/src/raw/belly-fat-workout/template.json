@@ -316,7 +316,6 @@
           "height": 68,
           "marginOffset": -18.9,
           "type": "text",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "26858498-5688-45aa-b8db-7ee40c925d81",
           "x": 51,
           "y": 459,
@@ -380,7 +379,6 @@
           "height": 90,
           "marginOffset": 5.69318181818182,
           "type": "text",
-          "basedOn": "511adafd-261e-40dd-bc57-83f71f8cac6a",
           "id": "09d161b2-9e38-4b24-ad38-1dc8e19132b4",
           "x": 51,
           "y": 522
@@ -523,7 +521,6 @@
           "width": 310,
           "height": 117,
           "marginOffset": -18.9,
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "b25c087d-5036-4bb0-9b3b-09ef24e20076",
           "x": 51,
           "y": 465,
@@ -534,7 +531,6 @@
           "x": 51,
           "y": 583,
           "id": "3d1aa735-2127-48d7-927a-4b54866b24e4",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -589,7 +585,6 @@
           "x": 51,
           "y": 392,
           "id": "f7370472-ec38-4b15-b9be-9545e4b27331",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -755,7 +750,6 @@
           "width": 446,
           "height": 306,
           "sticker": { "type": "homeWorkoutSectionSeparator" },
-          "basedOn": "bad04e66-3686-49a6-89dc-a673f2669b2b",
           "id": "1e67f834-8a69-441f-a640-d8d963982e75",
           "x": -17,
           "y": 384
@@ -807,7 +801,6 @@
           "width": 310,
           "height": 68,
           "marginOffset": -18.9,
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "892648f8-1887-4623-a5ba-d125d4563c1a",
           "x": 51,
           "y": 514,
@@ -853,7 +846,6 @@
           "x": 51,
           "y": 583,
           "id": "e5a3ba83-9e64-4978-8d61-540895ce8f62",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 8x</span>",
           "borderRadius": {
             "locked": true,
@@ -918,7 +910,6 @@
           "x": 51,
           "y": 391,
           "id": "6f3d0683-411d-461e-88b6-4660ca29c6d8",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">2</span>",
           "borderRadius": {
             "locked": true,
@@ -1039,7 +1030,6 @@
           "width": 446,
           "height": 306,
           "sticker": { "type": "homeWorkoutSectionSeparator" },
-          "basedOn": "bad04e66-3686-49a6-89dc-a673f2669b2b",
           "id": "4891ce42-8347-452f-afcb-9e16d9572940",
           "x": -17,
           "y": 384
@@ -1091,7 +1081,6 @@
           "width": 310,
           "height": 117,
           "marginOffset": -18.9,
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "26862c80-fc12-4ad0-91c2-b727f6857a44",
           "x": 51,
           "y": 465,
@@ -1138,7 +1127,6 @@
           "x": 51,
           "y": 583,
           "id": "31803504-4ba8-4cca-9b39-67caaebff486",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 16x</span>",
           "borderRadius": {
             "locked": true,
@@ -1203,7 +1191,6 @@
           "x": 51,
           "y": 392,
           "id": "fcd0d318-243a-472b-a24f-69afa50b25d1",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">3</span>",
           "borderRadius": {
             "locked": true,
@@ -1323,7 +1310,6 @@
           "width": 446,
           "height": 306,
           "sticker": { "type": "homeWorkoutSectionSeparator" },
-          "basedOn": "bad04e66-3686-49a6-89dc-a673f2669b2b",
           "id": "80c4d764-ca75-4959-987d-3eb02b2729b8",
           "x": -17,
           "y": 384
@@ -1375,7 +1361,6 @@
           "width": 310,
           "height": 117,
           "marginOffset": -18.9,
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "b0261658-f0f5-464e-a555-8d40395706ea",
           "x": 51,
           "y": 465,
@@ -1422,7 +1407,6 @@
           "x": 51,
           "y": 583,
           "id": "9af14d2b-7061-4c72-a67e-64ee4906533b",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 8x</span>",
           "borderRadius": {
             "locked": true,
@@ -1487,7 +1471,6 @@
           "x": 51,
           "y": 392,
           "id": "c9054608-a576-469c-9172-ffe0883f5211",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">4</span>",
           "borderRadius": {
             "locked": true,
@@ -1608,7 +1591,6 @@
           "width": 446,
           "height": 306,
           "sticker": { "type": "homeWorkoutSectionSeparator" },
-          "basedOn": "bad04e66-3686-49a6-89dc-a673f2669b2b",
           "id": "3b65c35e-f567-486d-9726-924b8ec7f548",
           "x": -17,
           "y": 384
@@ -1660,7 +1642,6 @@
           "width": 310,
           "height": 68,
           "marginOffset": -18.9,
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "c1c133cc-284f-4467-964a-3e4740427276",
           "x": 51,
           "y": 514,
@@ -1707,7 +1688,6 @@
           "x": 51,
           "y": 583,
           "id": "6784c4ae-6f96-423e-bbab-fad7982f870b",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 8x</span>",
           "borderRadius": {
             "locked": true,
@@ -1772,7 +1752,6 @@
           "x": 51,
           "y": 392,
           "id": "804b84ce-167f-4dde-a0bc-0806b41c5832",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">5</span>",
           "borderRadius": {
             "locked": true,
@@ -1893,7 +1872,6 @@
           "width": 446,
           "height": 306,
           "sticker": { "type": "homeWorkoutSectionSeparator" },
-          "basedOn": "bad04e66-3686-49a6-89dc-a673f2669b2b",
           "id": "ae169475-d791-45bb-8d10-8644248f957e",
           "x": -17,
           "y": 384
@@ -1945,7 +1923,6 @@
           "width": 310,
           "height": 117,
           "marginOffset": -18.9,
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "19820766-a470-451b-bf66-08b40c53bbe7",
           "x": 51,
           "y": 465,
@@ -1992,7 +1969,6 @@
           "x": 51,
           "y": 583,
           "id": "fd4f4ceb-ff05-4e0e-bfbb-7c956beac753",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 16x</span>",
           "borderRadius": {
             "locked": true,
@@ -2057,7 +2033,6 @@
           "x": 51,
           "y": 392,
           "id": "6096276e-9e15-434c-af8e-6b2658837382",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">6</span>",
           "borderRadius": {
             "locked": true,
@@ -2178,7 +2153,6 @@
           "width": 446,
           "height": 306,
           "sticker": { "type": "homeWorkoutSectionSeparator" },
-          "basedOn": "bad04e66-3686-49a6-89dc-a673f2669b2b",
           "id": "5c7a909d-ab2e-4810-b5c5-e05ed9d8b5b7",
           "x": -17,
           "y": 384
@@ -2230,7 +2204,6 @@
           "width": 310,
           "height": 117,
           "marginOffset": -18.9,
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "e32e2a3b-f55d-47d0-8061-e2423b2d2ce8",
           "x": 51,
           "y": 465,
@@ -2277,7 +2250,6 @@
           "x": 51,
           "y": 583,
           "id": "c45bac82-3050-4cb0-9d5c-098f3a085cb9",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #d6fd56; text-transform: uppercase\">repeat: 10x</span>",
           "borderRadius": {
             "locked": true,
@@ -2342,7 +2314,6 @@
           "x": 51,
           "y": 393,
           "id": "e379e224-fcf6-402d-8c6a-75ceb3ccfcc4",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"font-weight: 800; color: #d6fd56\">7</span>",
           "borderRadius": {
             "locked": true,
@@ -2637,7 +2608,6 @@
           "width": 310,
           "height": 129,
           "marginOffset": -18.9,
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "id": "b81a0d70-c939-4d77-80c9-37f0b0eb35b1",
           "x": 50,
           "y": 0,
@@ -2682,7 +2652,6 @@
           "x": 238,
           "y": 220,
           "id": "df2e9106-0be7-491c-884e-3fd4aadcf9e0",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "content": "<span style=\"color: #fff; text-transform: uppercase\">Full Body Workout for Beach Body</span>",
           "borderRadius": {
             "locked": true,
@@ -2780,7 +2749,6 @@
           "x": 241,
           "y": 358,
           "id": "a6aee34c-b1a4-4baf-bc56-3f5f196a63ef",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -2874,7 +2842,6 @@
           "x": 238,
           "y": 496,
           "id": "620c1daa-49d1-4552-b2b6-ff7a1aa2259e",
-          "basedOn": "14150f8a-687f-4e56-bb86-d08bdf7c145d",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,

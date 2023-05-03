@@ -369,7 +369,6 @@
           "content": "<span style=\"font-weight: 600; text-transform: uppercase\">Find Your Roots</span>",
           "width": 332,
           "height": 43,
-          "basedOn": "5866ef82-08bf-40fa-87b2-89e2270aeda6",
           "id": "6fd28db6-2c6b-46c0-ae0b-707af1d36f3f",
           "x": 40,
           "y": 359,
@@ -430,7 +429,6 @@
           "content": "Have you ever felt like you're living in a house but not a home? If yes, you're not alone! Creating a space that looks as good as it feels isn't easy, and it's often not just about what you put in it. Introducing plants not only brightens a space, they form a ritual of care.",
           "width": 332,
           "height": 172,
-          "basedOn": "0706b1b6-fc33-4e21-a9a2-64ba4507ff30",
           "id": "d93c3f60-5073-4e36-9c0f-aeffe4205266",
           "x": 40,
           "y": 412,
@@ -446,7 +444,6 @@
           "width": 32,
           "height": 4,
           "mask": { "type": "rectangle" },
-          "basedOn": "6596c712-bc3a-4e5b-8438-74ee1b941b65",
           "id": "87936ffe-2e44-44d5-8f4a-93f28a4e5cfc",
           "x": 40,
           "y": 339
@@ -528,7 +525,6 @@
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.04em\">Change Focus</span>",
           "width": 331,
           "height": 36,
-          "basedOn": "6fd28db6-2c6b-46c0-ae0b-707af1d36f3f",
           "id": "ad27512c-2018-404f-9cdd-007a89cb8288",
           "x": 40,
           "y": 362,
@@ -583,7 +579,6 @@
           "content": "We all have goals, but keeping your attention only on the destination means you miss the journey. Instead of seeing your daily life as a means to an end, take a step back and identify the place you've already arrived. Gratefulness practices help you focus in on what's important.",
           "width": 332,
           "height": 171,
-          "basedOn": "d93c3f60-5073-4e36-9c0f-aeffe4205266",
           "id": "dba6a0b2-7487-4ee4-bd05-6c6aeb6b246e",
           "x": 40,
           "y": 410,
@@ -660,7 +655,6 @@
           "content": "<span style=\"font-weight: 500; text-transform: uppercase\">Start Simple</span>",
           "width": 332,
           "height": 38,
-          "basedOn": "6fd28db6-2c6b-46c0-ae0b-707af1d36f3f",
           "id": "598702ed-bbd1-4744-8e8d-4a1f00ba41b5",
           "x": 40,
           "y": 372,
@@ -713,7 +707,6 @@
           "content": "Getting started with minimalism is easy; if you don't love it and you don't use it, let it go. There isn't a science, you don't need a style, you just need to start noticing. Keep track of what stands out and if it leaves you wit positive or negative feelings.",
           "width": 332,
           "height": 156,
-          "basedOn": "d93c3f60-5073-4e36-9c0f-aeffe4205266",
           "id": "b72f7521-ac44-48be-857b-92c41b4c959d",
           "x": 40,
           "y": 420
@@ -728,7 +721,6 @@
           "width": 332,
           "height": 1,
           "mask": { "type": "rectangle" },
-          "basedOn": "87936ffe-2e44-44d5-8f4a-93f28a4e5cfc",
           "id": "5708edac-534f-4341-9870-33a7688d0d5a",
           "x": 40,
           "y": 355
@@ -806,7 +798,6 @@
           "content": "Before the bean",
           "width": 332,
           "height": 34,
-          "basedOn": "5866ef82-08bf-40fa-87b2-89e2270aeda6",
           "id": "2bbf9a2d-cc99-4c08-b6d2-0662761f12bc",
           "x": 40,
           "y": 354
@@ -860,7 +851,6 @@
           "content": "Humans need water! Before coffee the most common way to drink water safely was by fermenting it, usually by brewing beer. Humanity spent most of it's early industry years a little tipsy. Introducing coffee morphed the type of buzz we began our day with.",
           "width": 332,
           "height": 170,
-          "basedOn": "0706b1b6-fc33-4e21-a9a2-64ba4507ff30",
           "id": "02a14cfc-5936-462f-a79e-ffca46c2dd7f",
           "x": 40,
           "y": 405,
@@ -942,7 +932,6 @@
           "content": "<span style=\"font-weight: 900; color: rgba(0,0,0,0.15)\">Always recess</span>",
           "width": 332,
           "height": 54,
-          "basedOn": "ae3d8b77-a89a-441e-a735-24d256ab1e3d",
           "id": "c05092f4-7822-416c-98a6-44858a1a9069",
           "x": 44,
           "y": 357
@@ -999,7 +988,6 @@
           "content": "<span style=\"font-weight: 900\">Always recess</span>",
           "width": 332,
           "height": 54,
-          "basedOn": "2bbf9a2d-cc99-4c08-b6d2-0662761f12bc",
           "id": "ae3d8b77-a89a-441e-a735-24d256ab1e3d",
           "x": 40,
           "y": 353
@@ -1063,7 +1051,6 @@
           "content": "Every kid's favorite subject in school is recess! Why shouldn't it be? Who doesn't like designated time to hang with your friends, meet new ones, and play fun games? Read on to find out how bring the benefits recess brings to students into your office.",
           "width": 332,
           "height": 163,
-          "basedOn": "02a14cfc-5936-462f-a79e-ffca46c2dd7f",
           "id": "1cbbe1a0-99b7-4fac-9eb5-18dbfc50272d",
           "x": 40,
           "y": 409,
@@ -1148,7 +1135,6 @@
           "content": "<span style=\"font-weight: 300\">Breezy beauty</span>",
           "width": 332,
           "height": 41,
-          "basedOn": "ae3d8b77-a89a-441e-a735-24d256ab1e3d",
           "id": "ee1c31cf-c782-4cd7-9bd9-7ebc08f01fed",
           "x": 40,
           "y": 363,
@@ -1199,7 +1185,6 @@
           "content": "The lazy life is all about maximum reward with minimum effort. But when it comes to hair, where's the balance between effortless style and no style effort? Well, we've done the work for you! Read on for our best hairstyle hacks.",
           "width": 332,
           "height": 144,
-          "basedOn": "1cbbe1a0-99b7-4fac-9eb5-18dbfc50272d",
           "id": "f2d01d29-e755-4634-b346-e0a2682f159d",
           "x": 40,
           "y": 413,
@@ -1239,7 +1224,6 @@
           "width": 288,
           "height": 4,
           "mask": { "type": "rectangle" },
-          "basedOn": "75226e27-dd58-497e-86c1-451cc604df83",
           "id": "da5457e6-a055-402e-bf12-7ad0b482c2fd",
           "x": 61.5,
           "y": 373
@@ -1254,7 +1238,6 @@
           "width": 288,
           "height": 4,
           "mask": { "type": "rectangle" },
-          "basedOn": "340f8e9e-6be4-4af0-b15a-d9e16210dbb4",
           "id": "1a697864-c11c-47c3-8ac8-c2d032530544",
           "x": 61.5,
           "y": 382
@@ -1269,7 +1252,6 @@
           "width": 288,
           "height": 4,
           "mask": { "type": "rectangle" },
-          "basedOn": "41cee8be-66ca-4fa7-bbdb-307b6225dc61",
           "id": "c48a35bf-0386-4138-b065-24831d69b92d",
           "x": 60,
           "y": 507
@@ -1284,7 +1266,6 @@
           "width": 288,
           "height": 4,
           "mask": { "type": "rectangle" },
-          "basedOn": "4c15a10d-8e6a-4300-9f69-e74f21f989d8",
           "id": "da49cb47-73d1-4830-993e-f7aa9d51e2ac",
           "x": 60,
           "y": 498
@@ -1348,7 +1329,6 @@
           "content": "<span style=\"font-weight: 300\">10</span>",
           "width": 66,
           "height": 99,
-          "basedOn": "bbf0f087-de38-48be-8328-f701742741f3",
           "id": "bce65336-1bbb-40d6-bb61-7d19c9bbd777",
           "x": 61,
           "y": 393
@@ -1393,7 +1373,6 @@
           "content": "<span style=\"color: #e6cc47\">Christmas</span>",
           "width": 187,
           "height": 74,
-          "basedOn": "0638d9e1-7a53-464f-88ba-eee68fec6402",
           "id": "a4153098-8497-4247-ba31-a3283e244183",
           "x": 151,
           "y": 401
@@ -1457,7 +1436,6 @@
           "content": "<span style=\"letter-spacing: 0.04em; text-transform: uppercase\">Recommended Gifts</span>",
           "width": 190,
           "height": 24,
-          "basedOn": "a0c7a5dc-cf6b-41db-82d6-dfa76b0f2e39",
           "id": "dc744d4c-1e81-420b-a596-dbc4b489d9b2",
           "x": 151,
           "y": 462
@@ -1496,7 +1474,6 @@
           "width": 332,
           "height": 278,
           "mask": { "type": "rectangle" },
-          "basedOn": "6273ca64-422d-4c19-a40f-6dd95199d8a5",
           "id": "1902e4f1-5d9c-4d14-9e6a-718a1a3b6797",
           "x": 39,
           "y": 304
@@ -1541,7 +1518,6 @@
           "content": "<span style=\"color: #fff\">black friday</span>",
           "width": 332,
           "height": 180,
-          "basedOn": "674454ef-6c76-4036-b518-6e370d6d5fbb",
           "id": "7704e046-0510-47ac-aabe-c65908a5e879",
           "x": 40,
           "y": 328
@@ -1593,7 +1569,6 @@
           "content": "<span style=\"font-weight: 700; color: #ff5858; letter-spacing: 0.02em; text-transform: uppercase\">Sale</span>",
           "width": 160,
           "height": 64,
-          "basedOn": "01c1b3ce-5989-4c18-984e-ec32872f5a1c",
           "id": "b13c515e-8d27-4bfe-bc2b-06ab72d27d34",
           "x": 121,
           "y": 508
@@ -1681,7 +1656,6 @@
           "content": "<span style=\"font-weight: 700; color: #00c2ff; letter-spacing: 0.04em; text-transform: uppercase\">TV Show</span>",
           "width": 180,
           "height": 50,
-          "basedOn": "18e0cf3d-5bbb-48de-bc8c-c2eae97b7a13",
           "id": "31551cfe-d34a-465b-bd2d-1395c0916edc",
           "x": 116,
           "y": 294
@@ -1726,7 +1700,6 @@
           "content": "<span style=\"color: #00c2ff; letter-spacing: 0.04em; text-transform: uppercase\">Pop</span>\n<span style=\"color: #00c2ff; letter-spacing: 0.04em; text-transform: uppercase\">Quiz</span>",
           "width": 332,
           "height": 180,
-          "basedOn": "d93a1e4f-ed44-4d0d-b469-02c29b4f2ec0",
           "id": "b27aae73-7930-462a-a725-d5298785fcf1",
           "x": 40,
           "y": 352
@@ -1791,7 +1764,6 @@
           "width": 332,
           "height": 51,
           "marginOffset": 5.578125,
-          "basedOn": "2153261e-4fa3-429c-9b2c-a2a609160b47",
           "id": "efaa436a-2d3b-4695-a966-90a6faae1878",
           "x": 40,
           "y": 540
@@ -1873,7 +1845,6 @@
           "content": "<span style=\"font-weight: 900; color: #ffd600\">Week Trip </span><span style=\"font-weight: 900; color: #f69e4c\">to Hawaii</span>",
           "width": 322,
           "height": 131,
-          "basedOn": "93282c93-f013-496e-96c7-659d83b92bcc",
           "id": "24d77029-a48d-4e60-8c5e-7c94d7333f86",
           "x": 45,
           "y": 366
@@ -1918,7 +1889,6 @@
           "content": "<span style=\"color: #39999f\">Surf all day!</span>",
           "width": 322,
           "height": 47,
-          "basedOn": "24d7bfb2-b299-4535-af04-4c74ec93b0c5",
           "id": "beeac3d7-6f8e-48bf-920d-2fa25861fb54",
           "x": 45,
           "y": 505
@@ -1978,7 +1948,6 @@
           "content": "<span style=\"font-weight: 700; color: #4dbd58; letter-spacing: 0.02em; text-transform: uppercase\">A Quick Recap to Our</span>",
           "width": 322,
           "height": 24,
-          "basedOn": "a0baa814-5743-4cf2-9cb7-46196ae8c3c8",
           "id": "de3317df-e660-4d45-80aa-942e2a30d1b2",
           "x": 45,
           "y": 334
@@ -2053,7 +2022,6 @@
           "content": "<span style=\"font-weight: 800; letter-spacing: 0.04em\">Build an IoT System</span>",
           "width": 332,
           "height": 114,
-          "basedOn": "95c8c691-ddf6-4f63-a773-f5bad729070b",
           "id": "413baa21-b89b-4df8-9756-1ade6e8e268b",
           "x": 40,
           "y": 354
@@ -2108,7 +2076,6 @@
           "content": "<span style=\"font-weight: 700\">Make your life easier</span>\n<span style=\"font-weight: 700\">with automations</span>",
           "width": 332,
           "height": 52,
-          "basedOn": "3ae35c4a-1133-4ab2-8108-45ce52d5f94e",
           "id": "baddeb36-483e-442f-aab0-d3b8076c4ba9",
           "x": 40,
           "y": 480
@@ -2176,7 +2143,6 @@
           "content": "highlights of",
           "width": 266,
           "height": 30,
-          "basedOn": "27022462-2c4c-4bf7-ae50-656024a8d1e3",
           "id": "7472564d-c9a0-475f-b23b-cecf0629c7b0",
           "x": 73,
           "y": 344
@@ -2222,7 +2188,6 @@
           "width": 332,
           "height": 113,
           "marginOffset": 8.300000000000011,
-          "basedOn": "d3cce763-731c-42d0-b09e-f692f9a24efa",
           "id": "e5a66644-3349-4c9b-a076-710f9dd6c404",
           "x": 40,
           "y": 382
@@ -2268,7 +2233,6 @@
           "width": 191,
           "height": 31,
           "marginOffset": 8.5,
-          "basedOn": "cf24002b-2536-4885-aa57-1cbf59e76ad4",
           "id": "caf051db-232a-4a3d-8fac-210178b958bd",
           "x": 111,
           "y": 511
@@ -2307,7 +2271,6 @@
           "width": 412,
           "height": 412,
           "mask": { "type": "rectangle" },
-          "basedOn": "3a51ba12-b986-4524-8916-5cf1de243552",
           "id": "19b1fe3c-dd3e-4272-a2e2-04d6d18e6051",
           "x": 0,
           "y": 236
@@ -2352,7 +2315,6 @@
           "content": "<span style=\"color: #ffe600\">highlights of</span>",
           "width": 266,
           "height": 31,
-          "basedOn": "d3f120a7-021e-4e9c-b246-3766bc6016fd",
           "id": "b36ef221-ee84-431c-95a5-aa291bac6001",
           "x": 73,
           "y": 344
@@ -2398,7 +2360,6 @@
           "width": 332,
           "height": 113,
           "marginOffset": 8.300000000000011,
-          "basedOn": "fe0b42f3-54f1-401a-867b-57556c8dc7c9",
           "id": "2645f9cb-7054-437c-86ed-f979ffaeeeb8",
           "x": 40,
           "y": 382
@@ -2444,7 +2405,6 @@
           "width": 191,
           "height": 32,
           "marginOffset": 8.5,
-          "basedOn": "1964a9d5-ccd5-4d70-8080-8e5a1e511d04",
           "id": "565d5249-cdfb-4ac2-942d-a892ea08cedd",
           "x": 110.5,
           "y": 511

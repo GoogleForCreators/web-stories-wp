@@ -271,7 +271,6 @@
           },
           "width": 131,
           "height": 21,
-          "basedOn": "87486d08-73e9-4ed8-8d18-3fdc0c7bd51b",
           "id": "33a1ce8a-1602-41d0-abf3-99c96e9a58d7",
           "x": 47,
           "y": 607
@@ -752,7 +751,6 @@
           },
           "width": 86,
           "height": 24,
-          "basedOn": "3f2f6921-a444-4bcf-b83c-26c0e8f6642c",
           "id": "6ad918bb-886c-4dad-b1d9-b610a5d0b952",
           "x": 197,
           "y": 538,
@@ -823,7 +821,6 @@
           },
           "width": 142,
           "height": 30,
-          "basedOn": "4693cff4-e8dd-4569-b27a-16c25301af7d",
           "id": "3e345ce0-9c02-46fd-a38b-1df95c555957",
           "x": 197,
           "y": 567,
@@ -953,7 +950,6 @@
             "bottomLeft": 120,
             "locked": true
           },
-          "basedOn": "b75958ad-f27d-4a49-a159-034521643cbd",
           "id": "e5e8ace3-c6f2-4dce-9956-e20fd2b1b617",
           "x": -150,
           "y": -114
@@ -1357,7 +1353,6 @@
           },
           "width": 86,
           "height": 24,
-          "basedOn": "3f2f6921-a444-4bcf-b83c-26c0e8f6642c",
           "id": "1f161ac6-656f-40c6-ab44-2fbe7f517405",
           "x": 197,
           "y": 538,
@@ -1428,7 +1423,6 @@
           },
           "width": 142,
           "height": 31,
-          "basedOn": "4693cff4-e8dd-4569-b27a-16c25301af7d",
           "id": "b6a2777a-cd6c-4a74-8977-d89d956a342d",
           "x": 197,
           "y": 567,
@@ -1626,7 +1620,6 @@
             "bottomLeft": 120,
             "locked": true
           },
-          "basedOn": "e5e8ace3-c6f2-4dce-9956-e20fd2b1b617",
           "id": "858585e5-669a-4054-bf91-e71f8cc6c399",
           "x": -150,
           "y": -114
@@ -1959,7 +1952,6 @@
           },
           "width": 96,
           "height": 24,
-          "basedOn": "3f2f6921-a444-4bcf-b83c-26c0e8f6642c",
           "id": "e60f1beb-5a0e-479b-9412-52aefa868e8f",
           "x": 197,
           "y": 538,
@@ -2030,7 +2022,6 @@
           },
           "width": 181,
           "height": 30,
-          "basedOn": "4693cff4-e8dd-4569-b27a-16c25301af7d",
           "id": "4a2ae072-fcc5-44ba-a8e4-58cdfad212e1",
           "x": 197,
           "y": 567,
@@ -2223,7 +2214,6 @@
             "bottomLeft": 120,
             "locked": true
           },
-          "basedOn": "858585e5-669a-4054-bf91-e71f8cc6c399",
           "id": "652d9673-d5ca-4db6-831e-d8fe40160ad2",
           "x": -150,
           "y": -114
@@ -2299,7 +2289,6 @@
             "locked": true
           },
           "type": "shape",
-          "basedOn": "d91c0a8f-3852-4f50-bd7d-9a24f408c45c",
           "id": "d0f9a832-6edd-404d-b901-fbd26bd133b0",
           "x": -137,
           "y": 649,
@@ -2322,7 +2311,6 @@
             "locked": true
           },
           "type": "shape",
-          "basedOn": "d0f9a832-6edd-404d-b901-fbd26bd133b0",
           "id": "f6dba06f-74c8-47e3-b2b9-1daa894954e5",
           "x": 202,
           "y": -130,
@@ -2394,7 +2382,6 @@
           },
           "width": 341,
           "height": 126,
-          "basedOn": "256ed426-a1b3-4507-a6a0-4aa0d3dcbe78",
           "id": "c5c1927a-a461-4655-abcf-558d60946e60",
           "x": 47,
           "y": 70,
@@ -2509,7 +2496,6 @@
           },
           "width": 112,
           "height": 31,
-          "basedOn": "c5c1927a-a461-4655-abcf-558d60946e60",
           "id": "3517ae98-6e41-466f-b4b7-1450e61662df",
           "x": 189,
           "y": 242,
@@ -2581,7 +2567,6 @@
           },
           "width": 144,
           "height": 38,
-          "basedOn": "3517ae98-6e41-466f-b4b7-1450e61662df",
           "id": "ca30a640-6708-42d0-a226-9daa57069a88",
           "x": 189,
           "y": 275,
@@ -2604,7 +2589,6 @@
             "bottomLeft": 10,
             "locked": true
           },
-          "basedOn": "7eeb17d7-d26e-4476-b2ec-52e2e6a42447",
           "id": "17ffcd54-b88d-4307-8fd8-e8759f3f7915",
           "x": 71,
           "y": 362,
@@ -2690,7 +2674,6 @@
           },
           "width": 112,
           "height": 31,
-          "basedOn": "3517ae98-6e41-466f-b4b7-1450e61662df",
           "id": "de3a2c4e-0e2c-4806-8c0a-482ebf71c625",
           "x": 189,
           "y": 354,
@@ -2762,7 +2745,6 @@
           },
           "width": 112,
           "height": 57,
-          "basedOn": "ca30a640-6708-42d0-a226-9daa57069a88",
           "id": "6db24f9a-c2c9-40ba-a6d4-255015e1e9cb",
           "x": 189,
           "y": 391,
@@ -2785,7 +2767,6 @@
             "bottomLeft": 10,
             "locked": true
           },
-          "basedOn": "17ffcd54-b88d-4307-8fd8-e8759f3f7915",
           "id": "1299e382-b9b7-4cc5-b4c3-283c1cd22dcf",
           "x": 71,
           "y": 482,
@@ -2871,7 +2852,6 @@
           },
           "width": 112,
           "height": 31,
-          "basedOn": "de3a2c4e-0e2c-4806-8c0a-482ebf71c625",
           "id": "2d97fc7c-c3a8-4a95-bfe4-bac6cc74e7af",
           "x": 188,
           "y": 482,
@@ -2943,7 +2923,6 @@
           },
           "width": 135,
           "height": 57,
-          "basedOn": "6db24f9a-c2c9-40ba-a6d4-255015e1e9cb",
           "id": "e2ff0591-7b07-4312-a4d2-03b29372d003",
           "x": 187,
           "y": 517,
@@ -3125,7 +3104,6 @@
             "locked": true
           },
           "type": "shape",
-          "basedOn": "f6dba06f-74c8-47e3-b2b9-1daa894954e5",
           "id": "384412ef-2fba-466a-b867-ff0aeb243fe8",
           "x": 279,
           "y": -141
@@ -3196,7 +3174,6 @@
           },
           "width": 140,
           "height": 28,
-          "basedOn": "3517ae98-6e41-466f-b4b7-1450e61662df",
           "id": "0ce7cd0e-c641-4ea3-9df8-1ff400fcd1f4",
           "x": 136,
           "y": 14
@@ -3305,7 +3282,6 @@
           },
           "width": 131,
           "height": 38,
-          "basedOn": "0ce7cd0e-c641-4ea3-9df8-1ff400fcd1f4",
           "id": "cad091f8-9d55-4101-a087-d311f81ee04e",
           "x": 63,
           "y": 242,
@@ -3331,7 +3307,6 @@
             "bottomLeft": 7,
             "locked": true
           },
-          "basedOn": "824ed88e-636d-4bb0-921e-c7169f43ed6c",
           "id": "48b1d0dd-1982-4d62-bbe4-a2dae9d6347e",
           "x": 218,
           "y": 206,
@@ -3418,7 +3393,6 @@
           },
           "width": 131,
           "height": 38,
-          "basedOn": "cad091f8-9d55-4101-a087-d311f81ee04e",
           "id": "783bcbab-9cf3-4023-89ae-b251e1e33168",
           "x": 219,
           "y": 370,
@@ -3444,7 +3418,6 @@
             "bottomLeft": 7,
             "locked": true
           },
-          "basedOn": "48b1d0dd-1982-4d62-bbe4-a2dae9d6347e",
           "id": "a5731d92-fe49-4742-a696-f92d9094c56f",
           "x": 63,
           "y": 340,
@@ -3531,7 +3504,6 @@
           },
           "width": 131,
           "height": 38,
-          "basedOn": "783bcbab-9cf3-4023-89ae-b251e1e33168",
           "id": "f39454d6-f499-4d27-96a8-6bce103371d5",
           "x": 63,
           "y": 498,

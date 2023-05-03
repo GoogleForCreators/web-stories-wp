@@ -166,7 +166,6 @@ const page = {
       mask: {
         type: 'star',
       },
-      basedOn: '81d3fd2e-2acf-4af1-95fa-373c647621f5',
       id: 'd2a7bed9-b81b-4f65-9bc5-17a14471e178',
       x: 258,
       y: 136,
@@ -195,7 +194,6 @@ const page = {
       mask: {
         type: 'star',
       },
-      basedOn: 'd2a7bed9-b81b-4f65-9bc5-17a14471e178',
       id: '318a9c26-2d6e-43b5-99c0-f6f249c22f6a',
       x: 34,
       y: 330,
