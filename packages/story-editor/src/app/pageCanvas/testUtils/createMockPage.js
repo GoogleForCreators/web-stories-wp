@@ -36,7 +36,6 @@ function createMockPage() {
         type: 'shape',
         id: '21e59f86-f8e8-44d4-bf33-6fb25259fdf3',
         isDefaultBackground: true,
-        basedOn: '37b01e6c-d289-4e86-a897-310a69040040',
       },
       {
         opacity: 100,
@@ -64,7 +63,6 @@ function createMockPage() {
         mask: {
           type: 'rectangle',
         },
-        basedOn: 'ad88d25d-80cd-4f15-b44f-9bc2b030644a',
         id: 'a90d42b7-b1ac-4616-9979-76ed3b70115b',
       },
       {
@@ -93,7 +91,6 @@ function createMockPage() {
         mask: {
           type: 'rectangle',
         },
-        basedOn: '3172eb85-e95d-4742-94ee-4d4969e85fe4',
         id: 'ebfbdd1c-cc6f-4a16-a630-0d8f055e792d',
       },
       {
@@ -122,7 +119,6 @@ function createMockPage() {
         mask: {
           type: 'rectangle',
         },
-        basedOn: '0ed4e3c1-7efb-48bf-b8af-da92adb7e6a8',
         id: '686bd91e-0c1a-4344-ae67-f6e9fe2eb6da',
       },
     ],
@@ -165,7 +161,6 @@ function createMockPage() {
       type: 'shape',
       id: '61df41e7-b2dc-4ed0-8c5e-91cd08261d1e',
       isDefaultBackground: true,
-      basedOn: '696809e0-6749-4292-b28a-a8e633a994f4',
     },
     image: {
       id: 769,
