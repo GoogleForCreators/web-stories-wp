@@ -44,13 +44,15 @@ interface Payload {
   items?: Element[];
   groups?: Groups;
   animations?: StoryAnimation[];
+  selectedElements?: Element[];
 }
 /**
  * Processes pasted content to find story elements.
  */
 export function processPastedElements(
   content: DocumentFragment,
-  currentPage: Page
+  currentPage: Page,
+  selectedElements?: Element[]
 ): ProcessPastedElementsReturn {
   let foundElementsAndAnimations: ProcessPastedElementsReturn = {
     animations: [],
@@ -76,12 +78,21 @@ export function processPastedElements(
           elements,
           animations,
         }: { elements: Element[]; animations: StoryAnimation[] },
-        payloadElement: Element
+        payloadElement: Element,
+        ind: number
       ) => {
+        const offsetBase =
+          selectedElements && selectedElements[ind]
+            ? {
+                x: selectedElements[ind].x,
+                y: selectedElements[ind].y,
+              }
+            : undefined;
         const { element, elementAnimations } = duplicateElement({
           element: payloadElement,
           animations: payload.animations,
           currentElements: currentPage.elements,
+          offsetBase,
         });
 
         return {
