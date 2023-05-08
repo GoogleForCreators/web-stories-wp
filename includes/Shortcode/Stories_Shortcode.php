@@ -64,7 +64,7 @@ class Stories_Shortcode extends Service_Base {
 	 * @param array<string,string|int>|string $attrs Shortcode attributes.
 	 * @return string Story markup.
 	 */
-	public function render_stories( mixed $attrs ): string {
+	public function render_stories( $attrs ): string {
 		$default_pairs = [
 			'view'               => 'circles',
 			'number_of_columns'  => 1,
