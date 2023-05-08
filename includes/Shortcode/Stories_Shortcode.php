@@ -61,10 +61,10 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array<string,string|int> $attrs Shortcode attributes.
+	 * @param array<string,string|int>|string $attrs Shortcode attributes.
 	 * @return string Story markup.
 	 */
-	public function render_stories( array $attrs ): string {
+	public function render_stories( $attrs ): string {
 		$default_pairs = [
 			'view'               => 'circles',
 			'number_of_columns'  => 1,
@@ -87,6 +87,11 @@ class Stories_Shortcode extends Service_Base {
 
 		foreach ( $taxonomies as $taxonomy ) {
 			$default_pairs[ $taxonomy ] = '';
+		}
+
+		// Initialize '$attrs' when not an array OR is an empty string.
+		if ( empty( $attrs ) || ! is_array( $attrs) ) {
+			$attrs = [];
 		}
 
 		$attributes = shortcode_atts(
