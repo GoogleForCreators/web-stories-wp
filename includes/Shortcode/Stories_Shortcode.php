@@ -90,7 +90,7 @@ class Stories_Shortcode extends Service_Base {
 		}
 
 		// Initialize '$attrs' when not an array OR is an empty string.
-		if ( empty( $attrs ) || ! is_array( $attrs) ) {
+		if ( empty( $attrs ) || ! \is_array( $attrs ) ) {
 			$attrs = [];
 		}
 
