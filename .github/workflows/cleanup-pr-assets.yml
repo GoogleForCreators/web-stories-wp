@@ -34,7 +34,7 @@ jobs:
             raw.githubusercontent.com:443
 
       - name: Authenticate
-        uses: google-github-actions/auth@e8df18b60c5dd38ba618c121b779307266153fbf
+        uses: google-github-actions/auth@35b0e87d162680511bf346c299f71c9c5c379033
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
