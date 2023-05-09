@@ -83,7 +83,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -128,7 +128,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -183,7 +183,7 @@ jobs:
       # Upload ZIP file to GCS for use in QA environment.
 
       - name: Authenticate
-        uses: google-github-actions/auth@e8df18b60c5dd38ba618c121b779307266153fbf
+        uses: google-github-actions/auth@35b0e87d162680511bf346c299f71c9c5c379033
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
@@ -230,7 +230,7 @@ jobs:
           github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Create or update comment on PR with links to plugin builds
-        uses: peter-evans/create-or-update-comment@3383acd359705b10cb1eeef05c0e88c056ea4666
+        uses: peter-evans/create-or-update-comment@ca08ebd5dc95aa0cd97021e9708fcd6b87138c9b
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
