@@ -42,7 +42,7 @@
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
-    "@types/react-modal": "^3.13.1",
+    "@types/react-modal": "^3.16.0",
     "big.js": "^6.2.1",
     "mousetrap": "^1.6.5",
     "polished": "^4.2.2",
@@ -59,6 +59,6 @@
     "@types/big.js": "^6.1.6",
     "@types/react-transition-group": "^4.4.5",
     "@types/styled-components": "^5.1.26",
-    "use-debounce": "^9.0.3"
+    "use-debounce": "^9.0.4"
   }
 }
