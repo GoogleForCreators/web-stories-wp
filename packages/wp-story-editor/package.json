@@ -44,7 +44,7 @@
     "@wordpress/dom-ready": "^3.24.0",
     "flagged": "^2.0.8",
     "polished": "^4.2.2",
-    "react-calendar": "^4.0.0",
+    "react-calendar": "^4.2.1",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
