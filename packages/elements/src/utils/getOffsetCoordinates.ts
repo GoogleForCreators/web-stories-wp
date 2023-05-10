@@ -26,7 +26,7 @@ import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
  * @param originY Original Y.
  * @return Coordinates.
  */
-export function getOffsetCoordinates(originX: number, originY: number) {
+export default function getOffsetCoordinates(originX: number, originY: number) {
   const placementDiff = 30;
   const allowedBorderDistance = 20;
   const x = originX + placementDiff;

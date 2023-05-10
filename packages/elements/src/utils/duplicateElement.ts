@@ -24,7 +24,7 @@ import type { StoryAnimation } from '@googleforcreators/animation';
  */
 import type { Element } from '../types';
 import createNewElement from './createNewElement';
-import { getOffsetCoordinates } from './getOffsetCoordinates';
+import getOffsetCoordinates from './getOffsetCoordinates';
 
 /**
  * returns a copy of element and element's animations as well
