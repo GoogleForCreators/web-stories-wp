@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import type { StoryAnimation } from '@googleforcreators/animation';
 
 /**
@@ -25,24 +24,7 @@ import type { StoryAnimation } from '@googleforcreators/animation';
  */
 import type { Element } from '../types';
 import createNewElement from './createNewElement';
-
-/**
- * Gets x, y values for cloned element, ensuring it's not added out of the page.
- *
- * @param originX Original X.
- * @param originY Original Y.
- * @return Coordinates.
- */
-export function getOffsetCoordinates(originX: number, originY: number) {
-  const placementDiff = 30;
-  const allowedBorderDistance = 20;
-  const x = originX + placementDiff;
-  const y = originY + placementDiff;
-  return {
-    x: PAGE_WIDTH - x > allowedBorderDistance ? x : placementDiff,
-    y: PAGE_HEIGHT - y > allowedBorderDistance ? y : placementDiff,
-  };
-}
+import { getOffsetCoordinates } from './getOffsetCoordinates';
 
 /**
  * returns a copy of element and element's animations as well
