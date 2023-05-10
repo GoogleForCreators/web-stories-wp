@@ -79,13 +79,13 @@ export function processPastedElements(
           animations,
         }: { elements: Element[]; animations: StoryAnimation[] },
         payloadElement: Element,
-        ind: number
+        index: number
       ) => {
         const offsetBase =
-          selectedElements && selectedElements[ind]
+          selectedElements && selectedElements[index]
             ? {
-                x: selectedElements[ind].x,
-                y: selectedElements[ind].y,
+                x: selectedElements[index].x,
+                y: selectedElements[index].y,
               }
             : undefined;
         const { element, elementAnimations } = duplicateElement({
