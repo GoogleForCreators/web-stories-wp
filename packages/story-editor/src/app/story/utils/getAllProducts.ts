@@ -22,17 +22,17 @@ import {
   type Element,
   type ProductElement,
   type ProductData,
+  type Page,
 } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import type { PageSaveData } from '../../../types';
 
 function isProduct(e: Element): e is ProductElement {
   return 'product' in e;
 }
-function getAllProducts(pages: PageSaveData[]): ProductData[] {
+function getAllProducts(pages: Page[]): ProductData[] {
   const products: ProductData[] = [];
   const productIds: string[] = [];
   pages.forEach(({ elements }) =>
