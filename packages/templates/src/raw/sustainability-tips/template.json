@@ -130,7 +130,6 @@
           "x": 44,
           "y": 180,
           "id": "428f9e6b-3dc3-4221-aa36-9241bfd2c6bb",
-          "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -201,7 +200,6 @@
           "x": 44,
           "y": 201,
           "id": "53fb1d2d-1abe-40a8-84b8-b32bacf81c70",
-          "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -458,7 +456,6 @@
           "x": 44,
           "y": 70,
           "id": "61c44b93-02eb-4a20-b21a-cb4c259c7348",
-          "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 1</span>",
           "borderRadius": {
             "locked": true,
@@ -828,7 +825,6 @@
           "x": 44,
           "y": 70,
           "id": "49253ce9-7504-4c5e-acc7-b1e5b951fc51",
-          "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 2</span>",
           "borderRadius": {
             "locked": true,
@@ -909,7 +905,6 @@
           "width": 586,
           "height": 351,
           "sticker": { "type": "cloudBanner" },
-          "basedOn": "8222f5cf-0c35-4a2c-86b5-de59899d4efd",
           "id": "c651a97a-27ce-453d-809b-c71dff8cc029",
           "x": -58,
           "y": 466
@@ -1201,7 +1196,6 @@
           "x": 44,
           "y": 70,
           "id": "dc633e84-886f-48a3-963e-bd5241f94461",
-          "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 3</span>",
           "borderRadius": {
             "locked": true,
@@ -1282,7 +1276,6 @@
           "width": 586,
           "height": 351,
           "sticker": { "type": "cloudBanner" },
-          "basedOn": "8222f5cf-0c35-4a2c-86b5-de59899d4efd",
           "id": "8de3373e-8c7f-4308-aaa6-0bf2f66cc061",
           "x": -58,
           "y": 422
@@ -1572,7 +1565,6 @@
           "x": 44,
           "y": 70,
           "id": "7798aae7-f9a7-458e-833d-1c28ba12176b",
-          "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 4</span>",
           "borderRadius": {
             "locked": true,
@@ -1653,7 +1645,6 @@
           "width": 586,
           "height": 351,
           "sticker": { "type": "cloudBanner" },
-          "basedOn": "8de3373e-8c7f-4308-aaa6-0bf2f66cc061",
           "id": "c6a55251-32a4-455b-b41d-69cdca45e161",
           "x": -58,
           "y": 422
@@ -1943,7 +1934,6 @@
           "x": 44,
           "y": 70,
           "id": "c97ef15e-0806-497e-9612-eaed8e22bba8",
-          "basedOn": "a95e0ba7-ccc1-462e-879b-d705947194ec",
           "content": "<span style=\"font-weight: 500; color: #bb7c48; text-transform: uppercase\">Tip 5</span>",
           "borderRadius": {
             "locked": true,
@@ -2016,7 +2006,6 @@
           "width": 586,
           "height": 351,
           "sticker": { "type": "cloudBanner" },
-          "basedOn": "8de3373e-8c7f-4308-aaa6-0bf2f66cc061",
           "id": "bc26b204-0a5f-4fba-8072-0024b53e5a33",
           "x": -58,
           "y": 422
@@ -2206,7 +2195,6 @@
           "width": 307,
           "height": 111,
           "type": "text",
-          "basedOn": "274d0498-d63d-49e2-b49e-44e531a640c5",
           "id": "0225d77f-d1d1-4e77-b334-0fb8888c9c01",
           "x": 47,
           "y": 486
@@ -2277,7 +2265,6 @@
           "width": 307,
           "height": 23,
           "type": "text",
-          "basedOn": "f1e453af-9648-48fa-98f7-f71096f8575d",
           "id": "18137c6a-cded-4510-abfc-833ff59855de",
           "x": 47,
           "y": 66
@@ -2348,7 +2335,6 @@
           "width": 325,
           "height": 33,
           "type": "text",
-          "basedOn": "61c44b93-02eb-4a20-b21a-cb4c259c7348",
           "id": "ecacbfe0-4372-4eba-b804-28c5e8e83b88",
           "x": 47,
           "y": 28
@@ -2406,8 +2392,5 @@
       "id": "49a34cbc-7b00-447b-992d-bd60c5d10636",
       "pageTemplateType": null
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ] 
 }

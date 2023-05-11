@@ -187,7 +187,6 @@
           "width": 35,
           "height": 34,
           "marginOffset": 10.5,
-          "basedOn": "aeb95c22-6cac-46fe-91c5-909e97fad173",
           "id": "e38c860f-ac6a-430b-a615-43be6d2ccbdb",
           "x": 40,
           "y": 355
@@ -269,7 +268,6 @@
           "content": "<span style=\"font-weight: 600\">Know before you go</span>",
           "width": 284,
           "height": 27,
-          "basedOn": "19240e57-e3d3-4974-80a5-c45381f162de",
           "id": "da1954aa-db03-473d-92a9-87c906083942",
           "x": 88,
           "y": 359
@@ -328,7 +326,6 @@
           "width": 39,
           "height": 27,
           "marginOffset": 10.5,
-          "basedOn": "aeb95c22-6cac-46fe-91c5-909e97fad173",
           "id": "973e1776-967c-4be9-8c40-67ea0a7073ce",
           "x": 40,
           "y": 358
@@ -386,7 +383,6 @@
           "content": "San Francisco is America's most walkable city with wide weather forecast. Come prepared with layers and comfortable shoes.",
           "width": 284,
           "height": 100,
-          "basedOn": "25dc99de-cd5f-4589-a654-80a1d4ae9fcb",
           "id": "2c3dd807-05dd-432c-9c91-cecee9b175d1",
           "x": 88,
           "y": 392
@@ -474,7 +470,6 @@
           "content": "<span style=\"font-weight: 700; text-transform: uppercase\">Green Soul Mates</span>",
           "width": 276,
           "height": 26,
-          "basedOn": "19240e57-e3d3-4974-80a5-c45381f162de",
           "id": "8909982a-9b45-435d-b833-c5d865b19ca5",
           "x": 96,
           "y": 347
@@ -535,7 +530,6 @@
           "width": 39,
           "height": 64,
           "marginOffset": 10.5,
-          "basedOn": "aeb95c22-6cac-46fe-91c5-909e97fad173",
           "id": "1f559bf2-dc73-466c-9884-f2d2f5d10b6a",
           "x": 40,
           "y": 347
@@ -595,7 +589,6 @@
           "content": "Before you adopt a plant, identify places in your home you'd like to keep one. Balancing light, air flow, and water needs are essential to keeping a happy and healthy plant.",
           "width": 276,
           "height": 153,
-          "basedOn": "25dc99de-cd5f-4589-a654-80a1d4ae9fcb",
           "id": "21723eac-86c9-40e8-8fdc-67d9e30c893c",
           "x": 96,
           "y": 382,
@@ -678,7 +671,6 @@
           "content": "<span style=\"font-weight: 700\">Keep a journal</span>",
           "width": 284,
           "height": 26,
-          "basedOn": "8909982a-9b45-435d-b833-c5d865b19ca5",
           "id": "7fc212fd-8dca-4e45-8f2c-1bd4b7d3402d",
           "x": 88,
           "y": 366
@@ -737,7 +729,6 @@
           "width": 32,
           "height": 25,
           "marginOffset": 3.34,
-          "basedOn": "1f559bf2-dc73-466c-9884-f2d2f5d10b6a",
           "id": "8b20a587-4c93-4910-acc3-bc5dc061e94f",
           "x": 40,
           "y": 366
@@ -795,7 +786,6 @@
           "content": "Start writing your thoughts down. Studies have found that regular journaling increases happiness and helps manage stressful situations.",
           "width": 284,
           "height": 94,
-          "basedOn": "21723eac-86c9-40e8-8fdc-67d9e30c893c",
           "id": "c26327a3-7df0-4d77-afa3-5cd3ef6ea069",
           "x": 88,
           "y": 392,
@@ -873,7 +863,6 @@
           "width": 28,
           "height": 39,
           "marginOffset": 10.5,
-          "basedOn": "973e1776-967c-4be9-8c40-67ea0a7073ce",
           "id": "449e1d3f-e38d-483a-af21-c8843ff10ee4",
           "x": 40,
           "y": 355
@@ -925,7 +914,6 @@
           "content": "No more impulse buys! Everything you want goes into a tracking sheet. Set a date to go over your wish list and decide if you still feel strongly about a potential purchase.",
           "width": 284,
           "height": 125,
-          "basedOn": "2c3dd807-05dd-432c-9c91-cecee9b175d1",
           "id": "317fba41-6497-4a49-a31e-4160cb8492fa",
           "x": 88,
           "y": 403
@@ -977,7 +965,6 @@
           "content": "<span style=\"font-weight: 300; text-transform: uppercase\">Set Rules</span>",
           "width": 284,
           "height": 40,
-          "basedOn": "8909982a-9b45-435d-b833-c5d865b19ca5",
           "id": "f6a78147-8b58-4236-a7e3-4e1fe1737fb2",
           "x": 88,
           "y": 355
@@ -1055,7 +1042,6 @@
           "content": "<span style=\"font-weight: 700\">Tiny but mighty</span>",
           "width": 290,
           "height": 24,
-          "basedOn": "da1954aa-db03-473d-92a9-87c906083942",
           "id": "bbbf66b2-75e8-4e0f-96bf-ed06a1c0c6f9",
           "x": 82,
           "y": 362
@@ -1120,7 +1106,6 @@
           "width": 34,
           "height": 28,
           "marginOffset": 10.5,
-          "basedOn": "973e1776-967c-4be9-8c40-67ea0a7073ce",
           "id": "8be77026-0a06-4a30-a392-3c272589d477",
           "x": 40,
           "y": 361
@@ -1174,7 +1159,6 @@
           "content": "The coffee bean is a humble plant, but it created big waves. Trade routes and tourist destinations followed the brew all over the world!",
           "width": 332,
           "height": 99,
-          "basedOn": "2c3dd807-05dd-432c-9c91-cecee9b175d1",
           "id": "aaa3dbb0-9520-4446-8273-e07b705dc311",
           "x": 40,
           "y": 397
@@ -1255,7 +1239,6 @@
           "content": "<span style=\"font-weight: 700\">Avoid forced fun</span>",
           "width": 284,
           "height": 41,
-          "basedOn": "8909982a-9b45-435d-b833-c5d865b19ca5",
           "id": "12573e26-0ff2-426a-9244-810b189786b2",
           "x": 88,
           "y": 349
@@ -1270,7 +1253,6 @@
           "width": 40,
           "height": 40,
           "mask": { "type": "circle" },
-          "basedOn": "518ab49d-c5ec-426e-bbd2-e06feb8d6755",
           "id": "ea30dc49-eda0-49b2-a0b5-eed876a6a8f6",
           "x": 36,
           "y": 349
@@ -1349,7 +1331,6 @@
           "width": 26,
           "height": 29,
           "marginOffset": 10.5,
-          "basedOn": "1f559bf2-dc73-466c-9884-f2d2f5d10b6a",
           "id": "41dad828-61eb-42a3-b2c5-9b77ff8c34c7",
           "x": 39,
           "y": 351
@@ -1413,7 +1394,6 @@
           "content": "Be careful about mandatory outings or activities. Instead, look where fun is happening naturally and try to grow it! Is your team gathering in the break room? Make sure there's enough chairs for everyone!",
           "width": 284,
           "height": 167,
-          "basedOn": "21723eac-86c9-40e8-8fdc-67d9e30c893c",
           "id": "db4af893-534a-49ee-8f07-5ff834627bcf",
           "x": 88,
           "y": 392
@@ -1452,7 +1432,6 @@
           "width": 40,
           "height": 1,
           "mask": { "type": "rectangle" },
-          "basedOn": "5fcead31-df1a-4fda-8f96-e467bf1da6fd",
           "id": "e2d89223-1625-4e60-913b-49f1f6e3222f",
           "x": 39.5,
           "y": 379.5
@@ -1467,7 +1446,6 @@
           "width": 40,
           "height": 1,
           "mask": { "type": "rectangle" },
-          "basedOn": "e2d89223-1625-4e60-913b-49f1f6e3222f",
           "id": "8bff60f7-0b7b-4725-9d55-73746f44543b",
           "x": 39.5,
           "y": 340.5
@@ -1482,7 +1460,6 @@
           "width": 1,
           "height": 40,
           "mask": { "type": "rectangle" },
-          "basedOn": "5fcead31-df1a-4fda-8f96-e467bf1da6fd",
           "id": "b1218f3f-b7d9-41bc-b803-b36452cb3dd9",
           "x": 39.5,
           "y": 340.5
@@ -1497,7 +1474,6 @@
           "width": 1,
           "height": 40,
           "mask": { "type": "rectangle" },
-          "basedOn": "b1218f3f-b7d9-41bc-b803-b36452cb3dd9",
           "id": "b77923f6-920e-4134-bb5f-3bd3d124532d",
           "x": 78.5,
           "y": 340.5
@@ -1617,7 +1593,6 @@
           "content": "<span style=\"font-weight: 300\">Braids and bobby pins</span>",
           "width": 276,
           "height": 32,
-          "basedOn": "12573e26-0ff2-426a-9244-810b189786b2",
           "id": "78190b80-771a-443b-a30e-744e8ceb500a",
           "x": 96,
           "y": 346
@@ -1667,7 +1642,6 @@
           "content": "A quick fishtail braid or fringe twist transforms your look in seconds! Pulling hair away from your face and into a plait embraces the mood and transforms a bad hair day into an effortless style.",
           "width": 276,
           "height": 177,
-          "basedOn": "db4af893-534a-49ee-8f07-5ff834627bcf",
           "id": "019520da-e6c9-4a42-ab0d-eb3a81e5d4e4",
           "x": 96,
           "y": 392,
@@ -1743,7 +1717,6 @@
           "width": 332,
           "height": 155,
           "marginOffset": 21.65625,
-          "basedOn": "2325e812-ac61-41b5-84b6-b307f7638e63",
           "id": "a4c10384-278e-48a5-a16c-ccb9a2002dba",
           "x": 40,
           "y": 342
@@ -1792,7 +1765,6 @@
           "content": "<span style=\"font-weight: 300; color: #444; letter-spacing: 0.02em\">Quick Tutorial for Beginners</span>",
           "width": 332,
           "height": 33,
-          "basedOn": "be70352c-fbed-4b24-90f0-330e03e8beff",
           "id": "c6758347-f6c5-4225-a276-e1853ecff8eb",
           "x": 40,
           "y": 518
@@ -1804,8 +1776,5 @@
       "fonts": ["Dancing Script", "Roboto Condensed"],
       "id": "f3ff9526-189a-4eb5-8e5b-1b38228a562b"
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ] 
 }

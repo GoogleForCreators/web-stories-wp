@@ -122,11 +122,6 @@ const getResourceFileName = (src) => {
  * which are not used and adding handy placeholder strings for easy replacement
  * of template names.
  *
- * Sets following properties,
- * current: null,
- * selection: [],
- * story: {},
- *
  * Resource ids and posterIds are reset to 0 and replaces the resource URL with
  * replaceable path.
  *
@@ -137,9 +132,6 @@ const getResourceFileName = (src) => {
 const prepareTemplate = (state) => {
   const newState = {
     ...state,
-    current: null,
-    selection: [],
-    story: {},
     pages: state.pages.map((page) => ({
       ...page,
       elements: page.elements.map((element) => {

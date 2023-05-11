@@ -57,10 +57,10 @@ describe('copyPaste utils', () => {
     content: 'Fill in some text',
     x: 91,
     y: 23,
-    basedOn: 'text',
     width: 100,
     height: 100,
     color: createSolid(0, 0, 0),
+    id: '1',
   };
   const IMAGE_ELEMENT = {
     ...getDefinitionForType('image').defaultAttributes,
@@ -71,7 +71,6 @@ describe('copyPaste utils', () => {
     y: 41,
     width: 220,
     height: 202,
-    basedOn: 'image',
     resource: {
       type: 'image',
       mimeType: '',
@@ -79,6 +78,7 @@ describe('copyPaste utils', () => {
       width: 1,
       height: 1,
     },
+    id: '2',
   };
 
   const SHAPE_ELEMENT = {
@@ -92,14 +92,14 @@ describe('copyPaste utils', () => {
     mask: {
       type: 'rectangle',
     },
-    basedOn: 'shape',
     isBackground: true,
     backgroundColor: createSolid(1, 1, 1),
+    id: '3',
   };
 
   const ANIMATION = {
     type: 'BOUNCE',
-    targets: ['shape'],
+    targets: ['3'],
     duration: 1000,
     delay: 0,
   };
@@ -161,10 +161,14 @@ describe('copyPaste utils', () => {
       const currentPage = {
         elements: [
           {
-            id: 'text',
+            id: '1',
+            x: 91,
+            y: 23,
           },
           {
-            id: 'image',
+            id: '2',
+            x: PAGE_WIDTH,
+            y: 41,
           },
         ],
       };

@@ -68,11 +68,10 @@ export const duplicateElementsById = (
     if (elementToDuplicate.type === ELEMENT_TYPES.PRODUCT) {
       return;
     }
-
     const { element, elementAnimations } = duplicateElement({
       element: elementToDuplicate,
       animations: page.animations,
-      existingElements: page.elements,
+      currentElements: page?.elements,
     });
 
     if (!hasDeletedSomething) {

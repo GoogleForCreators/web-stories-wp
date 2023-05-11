@@ -61,7 +61,6 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "rectangle" },
-          "basedOn": "8b097584-d872-4e06-b105-f47cb20afb54",
           "id": "68ad66b4-73dd-42af-a7b2-788d497715b6",
           "x": 146,
           "y": -41,
@@ -92,7 +91,6 @@
           "focalX": 46.09509754221782,
           "focalY": 38.593312922305515,
           "mask": { "type": "rectangle" },
-          "basedOn": "8b097584-d872-4e06-b105-f47cb20afb54",
           "id": "e2bd22c7-c501-4bf7-b70c-56529bf2aa12",
           "x": 276,
           "y": -41,
@@ -339,7 +337,6 @@
           "focalX": 50,
           "focalY": 36.851851851851855,
           "mask": { "type": "rectangle" },
-          "basedOn": "e2bd22c7-c501-4bf7-b70c-56529bf2aa12",
           "id": "5294bc6f-8e55-4ab9-a15a-c9cd66f69377",
           "x": 0,
           "y": 402,
@@ -424,7 +421,6 @@
           "focalX": 47.65866050947544,
           "focalY": 64.84761203059782,
           "mask": { "type": "rectangle" },
-          "basedOn": "fe0beabc-15fd-47f1-8ee9-bd1435094386",
           "id": "af589b5c-56cc-48bd-a128-17f1e8c95b03",
           "x": 245,
           "y": 0,
@@ -489,7 +485,6 @@
           },
           "width": 316,
           "height": 67,
-          "basedOn": "46770d7c-7dd1-47ed-900a-6e94d96613d5",
           "id": "5f4960f4-2aef-4dfd-ad1c-f07418aafa74",
           "x": 59,
           "y": 406,
@@ -561,7 +556,6 @@
           "width": 288,
           "height": 74,
           "type": "text",
-          "basedOn": "4c7354f1-dd91-4f62-97a5-749c71014a29",
           "id": "990a67d8-aa6c-4a76-8d13-5413d7de8367",
           "x": 48,
           "y": 541
@@ -745,7 +739,6 @@
           },
           "width": 291,
           "height": 35,
-          "basedOn": "5f4960f4-2aef-4dfd-ad1c-f07418aafa74",
           "id": "b2e2d092-0fb7-4f91-9119-4f25ae140168",
           "x": 73,
           "y": 0
@@ -807,7 +800,6 @@
           "width": 310,
           "height": 85,
           "type": "text",
-          "basedOn": "4c7354f1-dd91-4f62-97a5-749c71014a29",
           "id": "aabc53ef-8ad8-44f8-9847-dec873d1c2f2",
           "x": 47,
           "y": 530
@@ -987,7 +979,6 @@
           },
           "width": 291,
           "height": 99,
-          "basedOn": "5f4960f4-2aef-4dfd-ad1c-f07418aafa74",
           "id": "b514a18a-a050-464e-9157-bc1cf6bcd79f",
           "x": 73,
           "y": 0,
@@ -1049,7 +1040,6 @@
           },
           "width": 317,
           "height": 62,
-          "basedOn": "4c7354f1-dd91-4f62-97a5-749c71014a29",
           "id": "b99a38b7-afa1-45f4-9cd8-37f6da8cd804",
           "x": 47,
           "y": 552,
@@ -1108,7 +1098,6 @@
           "focalX": 46.91415633550373,
           "focalY": 50.07807894915997,
           "mask": { "type": "rectangle" },
-          "basedOn": "e8861c0e-76cf-42cd-817c-ab755cd123a5",
           "id": "60560392-fb01-49e2-aed2-6853093c3dac",
           "x": 116,
           "y": 2,
@@ -1139,7 +1128,6 @@
           "focalX": 70.22338421108417,
           "focalY": 45.92409822919098,
           "mask": { "type": "rectangle" },
-          "basedOn": "d4de106c-c47e-4c5e-87e8-87e9c4871a60",
           "id": "c467a303-2129-432b-8981-0bd66055766a",
           "x": 245,
           "y": 2,
@@ -1204,7 +1192,6 @@
           },
           "width": 316,
           "height": 67,
-          "basedOn": "5f4960f4-2aef-4dfd-ad1c-f07418aafa74",
           "id": "a0062be3-99ee-4d16-a4ae-72efeae71ef4",
           "x": 59,
           "y": 406,
@@ -1276,7 +1263,6 @@
           "width": 302,
           "height": 48,
           "type": "text",
-          "basedOn": "990a67d8-aa6c-4a76-8d13-5413d7de8367",
           "id": "0bb7eb89-89ee-424d-afee-90f5435d926c",
           "x": 48,
           "y": 566
@@ -1407,7 +1393,6 @@
           "width": 26,
           "height": 16,
           "marginOffset": 3.9375,
-          "basedOn": "a4f7b221-79be-43b2-a44c-d55209950151",
           "id": "ae99cc69-ba6e-4ccc-8344-e366c3d154d4",
           "x": 47,
           "y": 2
@@ -1459,7 +1444,6 @@
           },
           "width": 291,
           "height": 35,
-          "basedOn": "b2e2d092-0fb7-4f91-9119-4f25ae140168",
           "id": "34227a5c-95bf-4f51-8029-c5c2975e0ea8",
           "x": 73,
           "y": 0
@@ -1521,7 +1505,6 @@
           "width": 310,
           "height": 40,
           "type": "text",
-          "basedOn": "aabc53ef-8ad8-44f8-9847-dec873d1c2f2",
           "id": "ca542a10-381d-4da0-b23f-90a5b6ba56d5",
           "x": 47,
           "y": 574
@@ -1651,7 +1634,6 @@
           "height": 17,
           "marginOffset": 3.9375,
           "type": "text",
-          "basedOn": "94fa6b8e-33f1-4068-a102-406f9eb20b79",
           "id": "593cd0f5-ca4b-4996-bdd7-e21d339fea23",
           "x": 47,
           "y": 2
@@ -1703,7 +1685,6 @@
           "width": 291,
           "height": 35,
           "type": "text",
-          "basedOn": "b514a18a-a050-464e-9157-bc1cf6bcd79f",
           "id": "7f17809e-d78a-46f6-a14a-27e554e7a226",
           "x": 73,
           "y": 0
@@ -1765,7 +1746,6 @@
           "width": 317,
           "height": 84,
           "type": "text",
-          "basedOn": "b99a38b7-afa1-45f4-9cd8-37f6da8cd804",
           "id": "80b59767-1d71-435a-972c-1b068da01329",
           "x": 47,
           "y": 552
@@ -1823,7 +1803,6 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "rectangle" },
-          "basedOn": "5294bc6f-8e55-4ab9-a15a-c9cd66f69377",
           "id": "8608de5a-0391-4467-818e-84fd52a6505c",
           "x": 0,
           "y": -57,
@@ -1913,7 +1892,6 @@
           "width": 309,
           "height": 259,
           "type": "text",
-          "basedOn": "4c7354f1-dd91-4f62-97a5-749c71014a29",
           "id": "eb8aedab-d7b9-4bd7-be31-39c2c33591d9",
           "x": 48,
           "y": 273
@@ -1960,7 +1938,6 @@
           "focalX": 62.71604941708372,
           "focalY": 56.31464877471317,
           "mask": { "type": "rectangle" },
-          "basedOn": "60560392-fb01-49e2-aed2-6853093c3dac",
           "id": "863fc5be-dc84-4e09-a833-9647924518ea",
           "x": 116,
           "y": 2,
@@ -1991,7 +1968,6 @@
           "focalX": 32.692210914183164,
           "focalY": 50.07807894915997,
           "mask": { "type": "rectangle" },
-          "basedOn": "c467a303-2129-432b-8981-0bd66055766a",
           "id": "e1a254ab-7664-4f67-a944-1b5c85266491",
           "x": 245,
           "y": 2,
@@ -2056,7 +2032,6 @@
           },
           "width": 316,
           "height": 99,
-          "basedOn": "a0062be3-99ee-4d16-a4ae-72efeae71ef4",
           "id": "7d51bd62-a5ff-4993-b9aa-59e5ac30b45b",
           "x": 48,
           "y": 406,
@@ -2128,7 +2103,6 @@
           "width": 285,
           "height": 48,
           "type": "text",
-          "basedOn": "0bb7eb89-89ee-424d-afee-90f5435d926c",
           "id": "fc64ee2d-fabc-44f8-891d-757cc471def0",
           "x": 48,
           "y": 567
@@ -2258,7 +2232,6 @@
           "width": 26,
           "height": 16,
           "marginOffset": 3.9375,
-          "basedOn": "ae99cc69-ba6e-4ccc-8344-e366c3d154d4",
           "id": "9b8f0f29-5ed7-43e3-9fa1-d41edcba0bf4",
           "x": 47,
           "y": 2
@@ -2310,7 +2283,6 @@
           },
           "width": 291,
           "height": 35,
-          "basedOn": "34227a5c-95bf-4f51-8029-c5c2975e0ea8",
           "id": "0b17e829-a14a-41dd-b817-38459aceff55",
           "x": 73,
           "y": 0
@@ -2372,7 +2344,6 @@
           "width": 310,
           "height": 40,
           "type": "text",
-          "basedOn": "ca542a10-381d-4da0-b23f-90a5b6ba56d5",
           "id": "91475c79-52d8-48d1-8037-ea66f3b7cd39",
           "x": 47,
           "y": 574
@@ -2503,7 +2474,6 @@
           "height": 17,
           "marginOffset": 3.9375,
           "type": "text",
-          "basedOn": "593cd0f5-ca4b-4996-bdd7-e21d339fea23",
           "id": "3c9f8bdf-af22-4224-9449-6250cf03625a",
           "x": 47,
           "y": 2
@@ -2555,7 +2525,6 @@
           "width": 291,
           "height": 99,
           "type": "text",
-          "basedOn": "7f17809e-d78a-46f6-a14a-27e554e7a226",
           "id": "60ea80dc-8e71-442e-9288-90e0939f6f0c",
           "x": 73,
           "y": 0
@@ -2617,7 +2586,6 @@
           "width": 317,
           "height": 62,
           "type": "text",
-          "basedOn": "80b59767-1d71-435a-972c-1b068da01329",
           "id": "b9183775-1286-4d24-9d4b-7203cbfc70f5",
           "x": 47,
           "y": 552
@@ -2708,7 +2676,6 @@
           },
           "width": 316,
           "height": 35,
-          "basedOn": "b2e2d092-0fb7-4f91-9119-4f25ae140168",
           "id": "4dbdec34-61d6-4926-aaed-cb70458c6aac",
           "x": 48,
           "y": 0,
@@ -2727,7 +2694,6 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "rectangle" },
-          "basedOn": "e1a254ab-7664-4f67-a944-1b5c85266491",
           "id": "4866035a-b5d7-4943-93a9-d80e93f0d713",
           "x": 48,
           "y": 61,
@@ -2792,7 +2758,6 @@
           "width": 101,
           "height": 46,
           "type": "text",
-          "basedOn": "4dbdec34-61d6-4926-aaed-cb70458c6aac",
           "id": "3e5704c9-5ae7-41ee-86a5-6145515356c6",
           "x": 48,
           "y": 297
@@ -2863,7 +2828,6 @@
           "width": 101,
           "height": 100,
           "type": "text",
-          "basedOn": "eb8aedab-d7b9-4bd7-be31-39c2c33591d9",
           "id": "0b56a1ba-e87a-49b5-8642-30fcf5b597e3",
           "x": 48,
           "y": 353
@@ -2881,7 +2845,6 @@
           "focalX": 50,
           "focalY": 50,
           "mask": { "type": "rectangle" },
-          "basedOn": "4866035a-b5d7-4943-93a9-d80e93f0d713",
           "id": "061fdd0d-ce29-4f92-8fc4-b0b8022442c5",
           "x": 225,
           "y": 234,
@@ -2946,7 +2909,6 @@
           "width": 111,
           "height": 46,
           "type": "text",
-          "basedOn": "3e5704c9-5ae7-41ee-86a5-6145515356c6",
           "id": "530b0fcb-1cc8-4450-a80f-3ed3766b8eaa",
           "x": 223,
           "y": 472
@@ -3017,7 +2979,6 @@
           "width": 114,
           "height": 74,
           "type": "text",
-          "basedOn": "0b56a1ba-e87a-49b5-8642-30fcf5b597e3",
           "id": "6085d84b-f864-453a-9eb5-4f815a5232d8",
           "x": 223,
           "y": 529
@@ -3078,8 +3039,5 @@
       "id": "76a17872-128b-4f38-af96-2525ef6ef367",
       "pageTemplateType": "list"
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ] 
 }
