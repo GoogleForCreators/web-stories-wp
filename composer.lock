@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7f24f7d45f457a52d089e0e59512a54",
+    "content-hash": "26fd3a307526a3ef51e517b2568313c0",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -5211,7 +5211,7 @@
         },
         {
             "name": "swissspidy/phpstan-no-private",
-            "version": "dev-main",
+            "version": "v0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swissspidy/phpstan-no-private.git",
@@ -5236,7 +5236,6 @@
                 "slevomat/coding-standard": "^8.8.0",
                 "squizlabs/php_codesniffer": "^3.5.3"
             },
-            "default-branch": true,
             "type": "phpstan-extension",
             "extra": {
                 "phpstan": {
@@ -5257,7 +5256,7 @@
             "description": "PHPStan rules for detecting usage of pseudo-private functions, classes, and methods.",
             "support": {
                 "issues": "https://github.com/swissspidy/phpstan-no-private/issues",
-                "source": "https://github.com/swissspidy/phpstan-no-private/tree/main"
+                "source": "https://github.com/swissspidy/phpstan-no-private/tree/v0.1.0"
             },
             "time": "2023-05-14T12:29:14+00:00"
         },
@@ -6871,8 +6870,7 @@
     "stability-flags": {
         "ampproject/amp-wp": 20,
         "automattic/vipwpcs": 20,
-        "roave/security-advisories": 20,
-        "swissspidy/phpstan-no-private": 20
+        "roave/security-advisories": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
