@@ -251,7 +251,7 @@ function Search({
           placement={placement}
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
-          offsetOverride={true}
+          ignoreMaxOffsetY
         >
           <Menu
             activeValue={activeOption?.value}
