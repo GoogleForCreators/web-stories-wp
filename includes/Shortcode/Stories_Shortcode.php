@@ -93,7 +93,7 @@ class Stories_Shortcode extends Service_Base {
 		if ( empty( $attrs ) || ! \is_array( $attrs ) ) {
 			$attrs = [];
 		}
-
+		
 		$attributes = shortcode_atts(
 			$default_pairs,
 			$attrs,
