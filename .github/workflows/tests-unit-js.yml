@@ -87,7 +87,7 @@ jobs:
           npm ci
           npx rollup --config packages/migration/rollup.config.js
         env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Download AMP validator JS
         id: amp_validator
