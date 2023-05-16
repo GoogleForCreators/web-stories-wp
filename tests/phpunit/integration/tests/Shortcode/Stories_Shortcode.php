@@ -98,7 +98,7 @@ class Stories_Shortcode extends TestCase {
 		$stories_shortcode = new Testee();
 		$actual            = $stories_shortcode->render_stories( '' );
 
-		$this->assertSame( '', $actual );
+		$this->assertSame( true, strpos( $actual, 'web-stories-list' ) );
 	}
 
 	/**
