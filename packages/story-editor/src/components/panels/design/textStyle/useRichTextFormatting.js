@@ -186,7 +186,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
   useGlobalKeyDownEffect(
     { key: ['mod+b', 'mod+u', 'mod+i'] },
     ({ key }) => {
-      if (!hasText) {
+      if (!hasText()) {
         return;
       }
       switch (key) {
