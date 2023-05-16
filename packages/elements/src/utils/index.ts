@@ -21,4 +21,5 @@ export { default as isElementBelowLimit } from './isElementBelowLimit';
 export { default as getTransformFlip } from './getTransformFlip';
 export { default as getLayerName } from './getLayerName';
 export { default as duplicateElement } from './duplicateElement';
+export { default as getOffsetCoordinates } from './getOffsetCoordinates';
 export { default as elementIs } from './elementIs';

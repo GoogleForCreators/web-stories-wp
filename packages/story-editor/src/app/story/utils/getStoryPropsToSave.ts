@@ -66,6 +66,7 @@ function getStoryPropsToSave({
   const cleandFonts = getStoryFontsFromPages(pages);
   // clean up text elements to remove font properties from individual elements
   const cleanedPages = cleanElementFontProperties(pages);
+
   const products = getAllProducts(cleanedPages);
   const content = getStoryMarkup(
     { ...story, fonts: cleandFonts },
