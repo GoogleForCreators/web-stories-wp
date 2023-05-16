@@ -85,6 +85,7 @@ const DEFAULT_PADDING = {
 
 const textElement = {
   id: '1',
+  type: 'text',
   textAlign: 'normal',
   fontSize: 30,
   lineHeight: 1,

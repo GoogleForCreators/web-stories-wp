@@ -178,10 +178,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
     };
   }, [hasCurrentEditor, selectionActions, push, clearEditing, queuePush]);
 
-  const hasText = useCallback(() => {
-    const texts = selectedElements.filter(({ type }) => type === 'text');
-    return texts.length > 0;
-  }, [selectedElements]);
+  const hasText = selectedElements.find(({ type }) => type === 'text');
 
   useGlobalKeyDownEffect(
     { key: ['mod+b', 'mod+u', 'mod+i'] },
