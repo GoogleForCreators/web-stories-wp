@@ -31,7 +31,7 @@
     "semver": "^7.3.8"
   },
   "devDependencies": {
-    "@types/node": "^20.1.1",
+    "@types/node": "^20.1.4",
     "@types/semver": "^7.3.13"
   },
   "bin": {
