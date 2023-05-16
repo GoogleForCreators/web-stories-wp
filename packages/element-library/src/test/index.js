@@ -89,12 +89,12 @@ describe('Element', () => {
       };
       const { element } = duplicateElement({
         element: oldElement,
+        shouldOffset: false,
       });
       expect(element).toStrictEqual(
         expect.objectContaining({
           ...oldElement,
           id: expect.not.stringMatching(new RegExp(`/^${oldElement.id}$/`)),
-          basedOn: oldElement.id,
         })
       );
     });
@@ -108,13 +108,12 @@ describe('Element', () => {
       };
       const { element } = duplicateElement({
         element: oldElement,
-        existingElements: [oldElement],
+        currentElements: [oldElement],
       });
       expect(element).toStrictEqual(
         expect.objectContaining({
           ...oldElement,
           id: expect.not.stringMatching(new RegExp(`/^${oldElement.id}$/`)),
-          basedOn: oldElement.id,
           x: expect.any(Number),
           y: expect.any(Number),
         })

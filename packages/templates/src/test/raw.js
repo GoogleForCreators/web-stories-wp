@@ -134,9 +134,9 @@ describe('raw template files', () => {
 
     // @see https://github.com/googleforcreators/web-stories-wp/issues/7227
     it('should not contain extraneous properties', () => {
-      expect(templateData.current).toBeNull();
-      expect(templateData.selection).toStrictEqual([]);
-      expect(templateData.story.globalStoryStyles).toBeUndefined();
+      expect(templateData.current).toBeUndefined();
+      expect(templateData.selection).toBeUndefined();
+      expect(templateData.story).toBeUndefined();
     });
 
     it('should only contain videos marked as optimized', () => {

@@ -468,7 +468,6 @@
           },
           "width": 20,
           "height": 30,
-          "basedOn": "1259e77a-6aca-4f1e-b9b1-7538938e4f74",
           "id": "48f1a8fc-827f-4bd7-ac0a-ed55096e7b78",
           "x": 194,
           "y": 350
@@ -649,7 +648,6 @@
           },
           "width": 44,
           "height": 24,
-          "basedOn": "530b11bf-555b-47bb-8d3c-cb2d72dc9169",
           "id": "1259e77a-6aca-4f1e-b9b1-7538938e4f74",
           "x": 183,
           "y": 550,
@@ -751,7 +749,6 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "basedOn": "52b42674-7b59-4205-9196-2276cf77b377",
           "id": "a99a598c-91af-4406-a409-2747b117bf12",
           "x": -290.5,
           "y": 397.5
@@ -1153,7 +1150,6 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "basedOn": "0cc7a75b-97ea-4e05-8175-8619710e4711",
           "id": "8b25f662-0591-4482-b901-feb11b07e6fb",
           "x": -27.5,
           "y": -82,
@@ -1252,7 +1248,6 @@
           },
           "width": 20,
           "height": 30,
-          "basedOn": "1259e77a-6aca-4f1e-b9b1-7538938e4f74",
           "id": "4e4f1657-b3d1-482b-94a3-1ae032550d4f",
           "x": 196,
           "y": 350,
@@ -1433,7 +1428,6 @@
           },
           "width": 44,
           "height": 24,
-          "basedOn": "530b11bf-555b-47bb-8d3c-cb2d72dc9169",
           "id": "6a034b77-e600-49f2-8452-5093f4e43595",
           "x": 185,
           "y": 550,
@@ -1537,7 +1531,6 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "basedOn": "a99a598c-91af-4406-a409-2747b117bf12",
           "id": "e5cd5289-1c22-4e6a-a82e-36ac37c513d2",
           "x": -289.5,
           "y": 411.5
@@ -1597,7 +1590,6 @@
           },
           "width": 324,
           "height": 211,
-          "basedOn": "aa0a3a83-2b78-4368-bb2d-2eba6ceb3cf7",
           "id": "beac2df8-847c-471a-be2b-5c28272047da",
           "x": 48,
           "y": 354,
@@ -1939,7 +1931,6 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "basedOn": "0cc7a75b-97ea-4e05-8175-8619710e4711",
           "id": "0cbfcc06-9e54-4dc3-9f0b-4ba94bfb4e32",
           "x": -27.5,
           "y": -82,
@@ -2038,7 +2029,6 @@
           },
           "width": 20,
           "height": 30,
-          "basedOn": "1259e77a-6aca-4f1e-b9b1-7538938e4f74",
           "id": "55769b1d-a9a4-41b2-b59a-c26bb9542f0e",
           "x": 196,
           "y": 350,
@@ -2219,7 +2209,6 @@
           },
           "width": 44,
           "height": 24,
-          "basedOn": "530b11bf-555b-47bb-8d3c-cb2d72dc9169",
           "id": "e8ce1801-48bb-4818-a733-dd68475c479a",
           "x": 185,
           "y": 550,
@@ -2324,7 +2313,6 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "basedOn": "a99a598c-91af-4406-a409-2747b117bf12",
           "id": "d54e6eef-c8c8-46a8-b673-969920b7ed71",
           "x": -289.5,
           "y": 412.5
@@ -2383,7 +2371,6 @@
           },
           "width": 316,
           "height": 211,
-          "basedOn": "aa0a3a83-2b78-4368-bb2d-2eba6ceb3cf7",
           "id": "30e0117e-0b3e-4f60-b564-4b6e059a341b",
           "x": 48,
           "y": 354,
@@ -2725,7 +2712,6 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "basedOn": "0cc7a75b-97ea-4e05-8175-8619710e4711",
           "id": "c0b46049-38f2-466c-b317-18df5b3d1ddf",
           "x": -27.5,
           "y": -82,
@@ -2785,7 +2771,6 @@
           },
           "width": 20,
           "height": 30,
-          "basedOn": "1259e77a-6aca-4f1e-b9b1-7538938e4f74",
           "id": "42e6fd19-b453-4cfb-a9ef-976c3f187c8c",
           "x": 196,
           "y": 350,
@@ -2966,7 +2951,6 @@
           },
           "width": 44,
           "height": 24,
-          "basedOn": "530b11bf-555b-47bb-8d3c-cb2d72dc9169",
           "id": "8a6b264d-f57d-4835-8084-d7c6ab904466",
           "x": 185,
           "y": 550,
@@ -3108,7 +3092,6 @@
             "ratio": 1,
             "supportsBorder": true
           },
-          "basedOn": "a99a598c-91af-4406-a409-2747b117bf12",
           "id": "e6b8257c-fc13-4af9-b899-78e002b6297d",
           "x": -289.5,
           "y": 413.5
@@ -3167,7 +3150,6 @@
           },
           "width": 316,
           "height": 183,
-          "basedOn": "aa0a3a83-2b78-4368-bb2d-2eba6ceb3cf7",
           "id": "7295ae08-99ad-4121-8e2d-d3af5168b95f",
           "x": 48,
           "y": 386,
@@ -3531,7 +3513,6 @@
           "width": 166,
           "height": 103,
           "type": "text",
-          "basedOn": "a532098d-7c38-4a95-8acc-99b1aecfea76",
           "id": "55b718d7-5953-4f81-adad-6c5b6cf3b87a",
           "x": 122,
           "y": 10
@@ -3626,7 +3607,6 @@
           "width": 166,
           "height": 58,
           "type": "text",
-          "basedOn": "0d87c15d-0c0e-4806-a469-f72a57593bca",
           "id": "35202050-6f6b-42c1-a6cb-5979366a58d3",
           "x": 123,
           "y": 453
@@ -3728,8 +3708,5 @@
       "id": "ce1b993b-e400-429d-86c8-0236ff5cec5d",
       "pageTemplateType": null
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ]
 }

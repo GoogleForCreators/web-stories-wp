@@ -402,7 +402,7 @@ describe('Right Click Menu integration', () => {
     pages[0].elements.forEach((elem, index) => {
       // ids won't match
       const { id, ...originalElement } = elem;
-      const { id: newId, basedOn, ...newElement } = pages[1].elements[index];
+      const { id: newId, ...newElement } = pages[1].elements[index];
 
       expect(originalElement).toEqual(newElement);
     });
@@ -422,8 +422,6 @@ describe('Right Click Menu integration', () => {
         expect(element1[property]).not.toEqual(element2[property]);
       }
     }
-
-    expect(element2.basedOn).toBe(element1.id);
   }
 
   describe('menu visibility', () => {
