@@ -211,7 +211,7 @@ describe('Grid view', () => {
       );
       expect(filterableTagTemplate).toBeDefined();
 
-      // As per PR#13301, it is required to edit search-input to get clearInout to be active 
+      // As per PR#13301, it is required to edit search-input to get clearInout to be active
       await fixture.events.focus(searchInput);
       await fixture.events.keyboard.type('Test Tag...');
 
