@@ -158,7 +158,7 @@ function Search({
   );
 
   const handleClearInput = useCallback(() => {
-    setInputState("");
+    setInputState('');
     onClear?.();
     handleReturnToInput?.();
   }, [handleReturnToInput, setInputState, onClear]);

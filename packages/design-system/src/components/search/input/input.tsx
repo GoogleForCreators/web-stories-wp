@@ -17,8 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, forwardRef } from '@googleforcreators/react';
-import { type ForwardedRef, type ComponentPropsWithoutRef, useState } from 'react';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  forwardRef,
+} from '@googleforcreators/react';
+import type { ForwardedRef, ComponentPropsWithoutRef } from 'react';
 
 /**
  * Internal dependencies
@@ -84,18 +89,21 @@ const SearchInput = forwardRef(
       [handleTabClear]
     );
 
-    const handleOnInput = useCallback((value: string) => {
-      if (value === '') {
-        setIsEmptyValue(true);
-      } else {
-        setIsEmptyValue(false);
-      }
-      if (isOpen) {
-        setInputChanged(true);
-      } else {
-        setInputChanged(false);
-      }
-    }, [isOpen]);
+    const handleOnInput = useCallback(
+      (value: string) => {
+        if (value === '') {
+          setIsEmptyValue(true);
+        } else {
+          setIsEmptyValue(false);
+        }
+        if (isOpen) {
+          setInputChanged(true);
+        } else {
+          setInputChanged(false);
+        }
+      },
+      [isOpen]
+    );
 
     return (
       <InputContainer className={className}>
@@ -128,7 +136,7 @@ const SearchInput = forwardRef(
           type="button"
           isVisible={activeInput && inputChanged}
           tabIndex={0}
-          aria-label={activeInput  && inputChanged? ariaClearLabel : ''}
+          aria-label={activeInput && inputChanged ? ariaClearLabel : ''}
           onClick={handleClearInput}
           onKeyDown={onClearButtonKeyDown}
         >
@@ -138,7 +146,11 @@ const SearchInput = forwardRef(
         <ChevronDecoration
           disabled={disabled}
           aria-hidden={(activeInput && inputChanged) || isEmptyValue}
-          isVisible={(!activeInput || !inputChanged) && !isEmptyValue && inputValue.length > 0}
+          isVisible={
+            (!activeInput || !inputChanged) &&
+            !isEmptyValue &&
+            inputValue.length > 0
+          }
         >
           <ChevronIcon $isMenuOpen={isOpen} data-testid="chevron-search-icon" />
         </ChevronDecoration>
