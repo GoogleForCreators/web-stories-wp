@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo, forwardRef } from '@googleforcreators/react';
-import type { ForwardedRef, ComponentPropsWithoutRef } from 'react';
+import { type ForwardedRef, type ComponentPropsWithoutRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -62,6 +62,8 @@ const SearchInput = forwardRef(
     }: SearchInputProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
+    const [inputChanged, setInputChanged] = useState(false);
+    const [isEmptyValue, setIsEmptyValue] = useState(false);
     // Avoid conditional rendering in this input because rerendering will remove the focus styling
 
     const activeInput = useMemo(
@@ -82,12 +84,26 @@ const SearchInput = forwardRef(
       [handleTabClear]
     );
 
+    const handleOnInput = useCallback((value: string) => {
+      if (value === '') {
+        setIsEmptyValue(true);
+      } else {
+        setIsEmptyValue(false);
+      }
+      if (isOpen) {
+        setInputChanged(true);
+      } else {
+        setInputChanged(false);
+      }
+    }, [isOpen]);
+
     return (
       <InputContainer className={className}>
         <Input
           aria-disabled={disabled}
           autoComplete="off"
           disabled={disabled}
+          onInput={(event) => handleOnInput(event.currentTarget.value)}
           ref={ref}
           type="search"
           value={inputValue}
@@ -110,9 +126,9 @@ const SearchInput = forwardRef(
 
         <ClearButton
           type="button"
-          isVisible={activeInput}
+          isVisible={activeInput && inputChanged}
           tabIndex={0}
-          aria-label={activeInput ? ariaClearLabel : ''}
+          aria-label={activeInput  && inputChanged? ariaClearLabel : ''}
           onClick={handleClearInput}
           onKeyDown={onClearButtonKeyDown}
         >
@@ -121,8 +137,8 @@ const SearchInput = forwardRef(
 
         <ChevronDecoration
           disabled={disabled}
-          aria-hidden={activeInput}
-          isVisible={!activeInput && inputValue.length > 0}
+          aria-hidden={(activeInput && inputChanged) || isEmptyValue}
+          isVisible={(!activeInput || !inputChanged) && !isEmptyValue && inputValue.length > 0}
         >
           <ChevronIcon $isMenuOpen={isOpen} data-testid="chevron-search-icon" />
         </ChevronDecoration>
