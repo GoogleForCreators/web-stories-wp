@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26fd3a307526a3ef51e517b2568313c0",
+    "content-hash": "ab4fd7e9003c12ae394f20919baa6dab",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -5211,16 +5211,16 @@
         },
         {
             "name": "swissspidy/phpstan-no-private",
-            "version": "v0.1.0",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swissspidy/phpstan-no-private.git",
-                "reference": "820302fa92b87f19e22bd03edd613ecc5a4b1aac"
+                "reference": "cc945c5154f2e7786da17ee0cfe6e772133c98aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swissspidy/phpstan-no-private/zipball/820302fa92b87f19e22bd03edd613ecc5a4b1aac",
-                "reference": "820302fa92b87f19e22bd03edd613ecc5a4b1aac",
+                "url": "https://api.github.com/repos/swissspidy/phpstan-no-private/zipball/cc945c5154f2e7786da17ee0cfe6e772133c98aa",
+                "reference": "cc945c5154f2e7786da17ee0cfe6e772133c98aa",
                 "shasum": ""
             },
             "require": {
@@ -5256,9 +5256,9 @@
             "description": "PHPStan rules for detecting usage of pseudo-private functions, classes, and methods.",
             "support": {
                 "issues": "https://github.com/swissspidy/phpstan-no-private/issues",
-                "source": "https://github.com/swissspidy/phpstan-no-private/tree/v0.1.0"
+                "source": "https://github.com/swissspidy/phpstan-no-private/tree/v0.2.0"
             },
-            "time": "2023-05-14T12:29:14+00:00"
+            "time": "2023-05-22T09:48:41+00:00"
         },
         {
             "name": "symfony/config",
