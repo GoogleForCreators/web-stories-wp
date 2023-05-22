@@ -91,16 +91,8 @@ const SearchInput = forwardRef(
 
     const handleOnInput = useCallback(
       (value: string) => {
-        if (value === '') {
-          setIsEmptyValue(true);
-        } else {
-          setIsEmptyValue(false);
-        }
-        if (isOpen) {
-          setInputChanged(true);
-        } else {
-          setInputChanged(false);
-        }
+        setIsEmptyValue(value === '');
+        setInputChanged(isOpen);
       },
       [isOpen]
     );
