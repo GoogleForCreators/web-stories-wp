@@ -93,7 +93,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
         with:
-          bun-version: latest
+          bun-version: '0.5.9'
 
       - name: Build plugin
         run: bun run build:js
