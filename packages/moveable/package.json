@@ -42,7 +42,7 @@
     "@types/styled-components": "^5.1.26",
     "prop-types": "^15.7.2",
     "react-moveable": "^0.50.4",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.10"
   },
   "devDependencies": {}
 }
