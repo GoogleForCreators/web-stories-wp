@@ -102,6 +102,6 @@
     "libheif-js": "^1.15.1",
     "mockdate": "^3.0.5",
     "react": "^17.0.2",
-    "react-moveable": "^0.50.4"
+    "react-moveable": "^0.50.7"
   }
 }
