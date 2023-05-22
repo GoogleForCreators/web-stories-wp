@@ -211,6 +211,10 @@ describe('Grid view', () => {
       );
       expect(filterableTagTemplate).toBeDefined();
 
+      // As per PR#13301, it is required to edit search-input to get clearInput to be active
+      await fixture.events.focus(searchInput);
+      await fixture.events.keyboard.type('Test Tag...');
+
       // Clear input
       const clearInput = fixture.screen.getByLabelText('Clear Search');
       await fixture.events.click(clearInput);
