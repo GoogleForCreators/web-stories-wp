@@ -52,7 +52,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@prettier/plugin-xml": "^2.2.0",
     "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-dynamic-import-vars": "^2.0.3",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
