@@ -413,16 +413,16 @@
         },
         {
             "name": "mcaskill/composer-exclude-files",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mcaskill/composer-plugin-exclude-files.git",
-                "reference": "09967da1121734e124941feac5c4aff35f348614"
+                "reference": "f7dd8dbb0b1bf9b0269db07e05460f81066cf22b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/09967da1121734e124941feac5c4aff35f348614",
-                "reference": "09967da1121734e124941feac5c4aff35f348614",
+                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/f7dd8dbb0b1bf9b0269db07e05460f81066cf22b",
+                "reference": "f7dd8dbb0b1bf9b0269db07e05460f81066cf22b",
                 "shasum": ""
             },
             "require": {
@@ -459,9 +459,9 @@
             "description": "Exclude files from autoload_files.php",
             "support": {
                 "issues": "https://github.com/mcaskill/composer-plugin-exclude-files/issues",
-                "source": "https://github.com/mcaskill/composer-plugin-exclude-files/tree/v3.0.0"
+                "source": "https://github.com/mcaskill/composer-plugin-exclude-files/tree/v3.0.1"
             },
-            "time": "2022-09-12T13:52:12+00:00"
+            "time": "2023-05-24T17:29:24+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
