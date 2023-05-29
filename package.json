@@ -38,7 +38,7 @@
     "@babel/eslint-plugin": "^7.19.1",
     "@babel/preset-env": "^7.21.5",
     "@babel/preset-react": "^7.22.3",
-    "@babel/preset-typescript": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.5",
     "@googleforcreators/dashboard": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/fonts": "*",
