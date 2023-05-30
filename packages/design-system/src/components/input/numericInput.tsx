@@ -51,6 +51,7 @@ const NumericInput = forwardRef(function NumericInput(
   } = useNumericInput({
     allowEmpty,
     isFloat,
+    padZero,
     onChange,
     max,
     min,
@@ -88,14 +89,23 @@ const NumericInput = forwardRef(function NumericInput(
     [handleBlur]
   );
 
+  // Holds filteredValue that may have leading padZero when required.
+  let paddedValue = '';
+  const maxPad = (max !== undefined) ? String(max).length : 0;
+  if (maxPad >= String(currentValue).length) {
+    // Add padding Zero when length is less than maxPad.
+    paddedValue = padZero ? String(currentValue).padStart(maxPad, '0') : String(currentValue);
+  } else {
+    // Remove any leading Zero when maxPad is exceeded.
+    paddedValue = String(currentValue).replace(/^0+/, '');
+  }
+
   return (
     <Input
       ref={inputRef}
       onBlur={handleBlur}
       onChange={handleChange}
-      value={
-        padZero ? String(currentValue).padStart(2, '0') : String(currentValue)
-      }
+      value={paddedValue}
       isIndeterminate={isIndeterminate && originalIsIndeterminate}
       {...props}
     />

@@ -35,6 +35,7 @@ import type { UseNumericInputProps } from './types';
 const useNumericInput = ({
   allowEmpty,
   isFloat,
+  padZero,
   max,
   min,
   onChange,
@@ -47,8 +48,8 @@ const useNumericInput = ({
   const revertToOriginal = useRef(false);
   const [currentValue, setCurrentValue] = useState(value);
   const options = useMemo(
-    () => ({ allowEmpty, isFloat, max, min }),
-    [allowEmpty, isFloat, max, min]
+    () => ({ allowEmpty, isFloat, padZero, max, min }),
+    [allowEmpty, isFloat, padZero, max, min]
   );
 
   /**
@@ -81,8 +82,39 @@ const useNumericInput = ({
    * Set internal state
    */
   const handleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
-    setCurrentValue(ev.target.value);
-  }, []);
+    // Do not process non-numeric keys.
+    if (!isNaN(+ev.target.value.trim())) {
+      // Return minimum number when string is empty.
+      if (ev.target.value === '') {
+        setCurrentValue(min);
+        onChange(ev, Number(min));
+
+        // Do not process further.
+        return;
+      }
+
+      // Restricts inputted string to be between min and max.
+      let parsedValue = (options.isFloat) ? parseFloat(ev.target.value) : parseInt(ev.target.value);
+      if (min !== undefined && max !== undefined && (parsedValue < min || parsedValue > max)) {
+        if (parsedValue < min) {
+          setCurrentValue(min);
+          onChange(ev, Number(min));
+        } else if (parsedValue > max) {
+          setCurrentValue(ev.target.value.trim().charAt(ev.target.value.trim().length - 1));
+          onChange(ev, Number(ev.target.value.trim().charAt(ev.target.value.trim().length - 1)));
+        }
+
+        // Do not process further.
+        return;
+      }
+
+      // Determine maximum padding according to the number of characters in max number. 
+      const maxPad = (max !== undefined) ? String(max).length : 0;
+      const paddedValue = (!ev.target.value.endsWith('.') && options.padZero) ? String(parsedValue).padStart(maxPad, '0') : ev.target.value.trim();
+      setCurrentValue(paddedValue);
+      onChange(ev, Number(paddedValue));
+    }
+  }, [options, onChange]);
 
   /**
    * Increment or decrement value using keyboard input

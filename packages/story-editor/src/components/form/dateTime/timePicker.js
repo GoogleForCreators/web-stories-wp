@@ -81,9 +81,10 @@ const StyledSwitch = styled(Switch)`
 
 function TimePicker({ onChange, is12Hour, localeData, setLocaleData }) {
   const onChangeEvent = (prop) => (_, value) => {
+    const filteredValue = (value !== undefined && value !== null) ? parseInt(value) : localeData[prop];
     setLocaleData({
       ...localeData,
-      [prop]: parseInt(value) || localeData[prop],
+      [prop]: filteredValue,
     });
   };
 
