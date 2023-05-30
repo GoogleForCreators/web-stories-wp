@@ -29,8 +29,8 @@ import Context from './context';
  */
 
 /**
- * Context value consumer to select a fragment of the enire media context value
- * (local and media3p) that's provided from {@link MediaProvider}.
+ * Context value consumer to select a fragment of the entire media context value
+ * (local and media3p) that's provided from MediaProvider.
  *
  * @param {function(MediaContext):Object?} selector Returns a fragment of the
  * media context value that the caller is interested in. If no selector is
