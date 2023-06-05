@@ -5102,16 +5102,16 @@
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "6.2.0",
+            "version": "6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
-                "reference": "a6f49e86ca8468d07efd6ca2947af9636436c82a"
+                "reference": "2fd202ff7b315fa074343aadb98cd3a62fea1d6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/a6f49e86ca8468d07efd6ca2947af9636436c82a",
-                "reference": "a6f49e86ca8468d07efd6ca2947af9636436c82a",
+                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/2fd202ff7b315fa074343aadb98cd3a62fea1d6c",
+                "reference": "2fd202ff7b315fa074343aadb98cd3a62fea1d6c",
                 "shasum": ""
             },
             "require-dev": {
@@ -5143,9 +5143,9 @@
             ],
             "support": {
                 "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.2.0"
+                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.2.1"
             },
-            "time": "2023-03-31T00:20:37+00:00"
+            "time": "2023-04-01T00:20:59+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
