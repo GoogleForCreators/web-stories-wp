@@ -34,7 +34,7 @@
     "babel-jest": "^29.5.0",
     "expect-puppeteer": "^9.0.0",
     "jest-environment-puppeteer": "^9.0.0",
-    "jest-extended": "^3.2.4",
+    "jest-extended": "^4.0.0",
     "jest-json-schema": "^6.1.0",
     "jest-puppeteer": "^9.0.0"
   },
