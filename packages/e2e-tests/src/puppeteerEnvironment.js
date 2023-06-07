@@ -19,13 +19,13 @@
  */
 import { mkdirSync, writeFileSync } from 'fs';
 import util from 'node:util';
-import { PuppeteerEnvironment as OriginalEnvironment } from 'jest-environment-puppeteer';
+import JestPuppeteer from 'jest-environment-puppeteer';
 
 const ARTIFACTS_PATH =
   process.env.E2E_ARTIFACTS_PATH ||
   (process.env.GITHUB_WORKSPACE || process.cwd()) + '/build/e2e-artifacts';
 
-class PuppeteerEnvironment extends OriginalEnvironment {
+class PuppeteerEnvironment extends JestPuppeteer.TestEnvironment {
   async setup() {
     await super.setup();
 
