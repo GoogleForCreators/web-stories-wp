@@ -68,7 +68,36 @@ class HTML {
 		$markup = $this->print_analytics( $markup );
 		$markup = $this->print_social_share( $markup );
 
+		// Add missing doctype for amp.
+		if ( self::is_amp_endpoint() ) {
+			if ( strtolower( substr( $markup, 0, 10 ) ) !== "<!doctype " ) {
+				$markup = "<!DOCTYPE html>" . $markup;
+			}
+		}
 		return $markup;
+	}
+
+	/**
+	 * Check if is an AMP request.
+	 *
+	 * @since 1.33.0
+	 * 
+	 * @return bool
+	 */
+	public static function is_amp_endpoint() {
+		global $wp;
+
+		if ( function_exists( 'amp_is_request' ) && amp_is_request() ) {
+			return true;
+		}
+
+		if ( isset( $wp ) ) {
+			if ( function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint() ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
