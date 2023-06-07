@@ -19,7 +19,7 @@
  */
 import { mkdirSync, writeFileSync } from 'fs';
 import util from 'node:util';
-import OriginalEnvironment from 'jest-environment-puppeteer';
+import { PuppeteerEnvironment as OriginalEnvironment } from 'jest-environment-puppeteer';
 
 const ARTIFACTS_PATH =
   process.env.E2E_ARTIFACTS_PATH ||
