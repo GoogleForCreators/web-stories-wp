@@ -88,6 +88,20 @@ class Stories_Shortcode extends TestCase {
 	}
 
 	/**
+	 * Should not fail on empty/blank string attribute.
+	 *
+	 * @covers ::render_stories
+	 * @covers ::prepare_story_attrs
+	 * @covers ::prepare_story_args
+	 */
+	public function test_empty_attribute_in_shortcode(): void {
+		$stories_shortcode = new Testee();
+		$actual            = $stories_shortcode->render_stories( '' );
+
+		$this->assertTrue( strpos( $actual, 'web-stories-list' ) > -1 );
+	}
+
+	/**
 	 * Stories should not be greater than 100.
 	 *
 	 * @covers ::prepare_story_args

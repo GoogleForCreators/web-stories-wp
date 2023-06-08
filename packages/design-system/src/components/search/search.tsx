@@ -158,7 +158,7 @@ function Search({
   );
 
   const handleClearInput = useCallback(() => {
-    setInputState(undefined);
+    setInputState('');
     onClear?.();
     handleReturnToInput?.();
   }, [handleReturnToInput, setInputState, onClear]);
@@ -251,6 +251,7 @@ function Search({
           placement={placement}
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
+          ignoreMaxOffsetY
         >
           <Menu
             activeValue={activeOption?.value}

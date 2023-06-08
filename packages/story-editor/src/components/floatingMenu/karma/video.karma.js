@@ -24,7 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
-import { focusFloatingMenu, tabToCanvasFocusContainer } from './utils';
+import { focusFloatingMenu } from './utils';
 
 describe('Video Design Menu: Keyboard Navigation', () => {
   let fixture;
@@ -67,8 +67,6 @@ describe('Video Design Menu: Keyboard Navigation', () => {
 
     // Escape out of the canvas elements focus trap
     await fixture.events.keyboard.press('esc');
-
-    await tabToCanvasFocusContainer(focusContainer, fixture);
     await fixture.events.keyboard.press('Enter');
     await fixture.events.keyboard.press('Tab');
 
@@ -121,6 +119,7 @@ describe('Video Design Menu: Keyboard Navigation', () => {
     // Tab from dismiss to color picker
     await fixture.events.keyboard.press('tab');
     // Tab from color picker into swatches
+    await fixture.events.keyboard.press('tab');
     await fixture.events.keyboard.press('tab');
     // Navigate down one row and to the right once
     await fixture.events.keyboard.press('ArrowDown');

@@ -29,7 +29,7 @@ export const Paths = {
 };
 
 /**
- * The supported order_by values for {@link listMedia}.
+ * The supported order_by values for listMedia.
  *
  * @enum {string}
  */
@@ -39,7 +39,7 @@ const ListMediaOrderBy = {
 };
 
 /**
- * The supported order_by values for {@link listCategories}.
+ * The supported order_by values for listCategories.
  *
  * @enum {string}
  */

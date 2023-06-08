@@ -73,7 +73,6 @@ export const duplicateGroup = (
     const { element, elementAnimations } = duplicateElement({
       element: oldElement,
       animations: page.animations,
-      existingElements: page.elements,
     });
 
     element.groupId = groupId;
