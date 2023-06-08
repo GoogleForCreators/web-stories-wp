@@ -232,6 +232,11 @@ class HTML {
 
 		$output = (string) ob_get_clean();
 
+		// Add latest script of the 'amp-story-auto-analytics' when not available.
+		if ( !empty( $output ) && str_contains( $output, 'amp-story-auto-analytics') ) {
+			$content = str_replace( 'custom-element="amp-story"></script>', 'custom-element="amp-story"></script>' . '<script async="" src="https://cdn.ampproject.org/v0/amp-story-auto-analytics-latest.js" custom-element="amp-story-auto-analytics"></script>', $content );
+		}
+
 		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
 	}
 
