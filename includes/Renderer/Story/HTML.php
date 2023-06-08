@@ -67,37 +67,26 @@ class HTML {
 		$markup = wp_replace_insecure_home_url( $markup );
 		$markup = $this->print_analytics( $markup );
 		$markup = $this->print_social_share( $markup );
+		$markup = $this->fix_missing_doctype( $markup );
 
-		// Add missing doctype for amp.
-		if ( self::is_amp_endpoint() ) {
-			if ( strtolower( substr( $markup, 0, 10 ) ) !== "<!doctype " ) {
-				$markup = "<!DOCTYPE html>" . $markup;
-			}
-		}
 		return $markup;
 	}
 
 	/**
-	 * Check if is an AMP request.
+	 * Adds doctype for amp, if missing.
 	 *
 	 * @since 1.33.0
-	 * 
-	 * @return bool
+	 *
+	 * @param string $content Story markup.
+	 * @return string Filtered content
 	 */
-	public static function is_amp_endpoint() {
-		global $wp;
-
+	public function fix_missing_doctype( string $content ): string {
 		if ( function_exists( 'amp_is_request' ) && amp_is_request() ) {
-			return true;
-		}
-
-		if ( isset( $wp ) ) {
-			if ( function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint() ) {
-				return true;
+			if ( strtolower( substr( $content, 0, 10 ) ) !== "<!doctype " ) {
+				$content = "<!DOCTYPE html>" . $content;
 			}
 		}
-
-		return false;
+		return $content;
 	}
 
 	/**
