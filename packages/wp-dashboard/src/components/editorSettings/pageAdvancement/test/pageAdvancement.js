@@ -68,7 +68,7 @@ describe('Editor Settings: <PageAdvancementSetting />', () => {
     const switchButton = screen.queryByLabelText('Manual');
     fireEvent.click(switchButton);
 
-    expect(onChange).toHaveBeenCalledOnceWith({ autoAdvance: false });
+    expect(onChange).toHaveBeenCalledExactlyOnceWith({ autoAdvance: false });
   });
 
   it('should update page duration setting', () => {

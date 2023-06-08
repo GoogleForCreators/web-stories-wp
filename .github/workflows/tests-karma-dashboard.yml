@@ -47,7 +47,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -61,6 +61,7 @@ jobs:
             storage.googleapis.com:443
             uploader.codecov.io:443
             www.gravatar.com:443
+            54.185.253.63:443
 
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
@@ -95,7 +96,7 @@ jobs:
           DISABLE_ERROR_BOUNDARIES: true
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d
         with:
           file: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests

@@ -42,7 +42,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -73,7 +73,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@cb8f453143149404c7fd670b5f37c91d395b3054
+        uses: shivammathur/setup-php@c5fc0d8281aba02c7fda07d3a70cc5371548067d
         with:
           php-version: '8.0'
           coverage: none
@@ -83,7 +83,7 @@ jobs:
         run: |
           npm ci
         env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Install PHP dependencies
         uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
@@ -93,7 +93,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
         with:
-          bun-version: latest
+          bun-version: '0.5.9'
 
       - name: Build plugin
         run: bun run build:js

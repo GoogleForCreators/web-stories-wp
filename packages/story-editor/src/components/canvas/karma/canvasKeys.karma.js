@@ -126,7 +126,7 @@ describe('Canvas Keyboard Shortcuts', () => {
     );
 
     // Synthetic delay to make the dropdown behave correctly
-    await fixture.events.sleep(200);
+    await fixture.events.sleep(400);
     // click to close
     await fixture.events.click(effectChooser, { clickCount: 1 });
     const duration = fixture.screen.getByLabelText('Duration');

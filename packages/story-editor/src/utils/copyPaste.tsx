@@ -44,13 +44,15 @@ interface Payload {
   items?: Element[];
   groups?: Groups;
   animations?: StoryAnimation[];
+  selectedElements?: Element[];
 }
 /**
  * Processes pasted content to find story elements.
  */
 export function processPastedElements(
   content: DocumentFragment,
-  currentPage: Page
+  currentPage: Page,
+  selectedElements?: Element[]
 ): ProcessPastedElementsReturn {
   let foundElementsAndAnimations: ProcessPastedElementsReturn = {
     animations: [],
@@ -76,15 +78,21 @@ export function processPastedElements(
           elements,
           animations,
         }: { elements: Element[]; animations: StoryAnimation[] },
-        payloadElement: Element
+        payloadElement: Element,
+        index: number
       ) => {
+        const offsetBase =
+          selectedElements && selectedElements[index]
+            ? {
+                x: selectedElements[index].x,
+                y: selectedElements[index].y,
+              }
+            : undefined;
         const { element, elementAnimations } = duplicateElement({
-          element: {
-            ...payloadElement,
-            id: payloadElement.basedOn as string,
-          },
+          element: payloadElement,
           animations: payload.animations,
-          existingElements: currentPage.elements,
+          currentElements: currentPage.elements,
+          offsetBase,
         });
 
         return {
@@ -143,8 +151,6 @@ export function addElementsToClipboard(
       ...(elementIs.defaultBackground(element)
         ? { backgroundColor: page.backgroundColor }
         : null),
-      basedOn: element.id,
-      id: undefined,
     })),
     animations,
     groups,
