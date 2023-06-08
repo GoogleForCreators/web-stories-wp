@@ -82,8 +82,8 @@ class HTML {
 	 */
 	public function fix_missing_doctype( string $content ): string {
 		if ( function_exists( 'amp_is_request' ) && amp_is_request() ) {
-			if ( strtolower( substr( $content, 0, 10 ) ) !== "<!doctype " ) {
-				$content = "<!DOCTYPE html>" . $content;
+			if ( strtolower( substr( $content, 0, 10 ) ) !== '<!doctype ' ) {
+				$content = '<!DOCTYPE html>' . $content;
 			}
 		}
 		return $content;
