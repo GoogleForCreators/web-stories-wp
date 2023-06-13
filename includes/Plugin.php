@@ -70,6 +70,7 @@ class Plugin extends ServiceBasedPlugin {
 		'amp_story_player_assets'      => AMP_Story_Player_Assets::class,
 		'adsense'                      => AdSense::class,
 		'ad_manager'                   => Ad_Manager::class,
+		'mgid'                         => Mgid::class,
 		'admin'                        => Admin\Admin::class,
 		'analytics'                    => Analytics::class,
 		'coi'                          => Admin\Cross_Origin_Isolation::class,

@@ -35,6 +35,7 @@ const transformSettingResponse = (response) => ({
   adSensePublisherId: response.web_stories_adsense_publisher_id,
   adSenseSlotId: response.web_stories_adsense_slot_id,
   adManagerSlotId: response.web_stories_ad_manager_slot_id,
+  mgidWidgetId: response.web_stories_mgid_widget_id,
   adNetwork: response.web_stories_ad_network,
   videoCache: response.web_stories_video_cache,
   dataRemoval: response.web_stories_data_removal,
@@ -74,6 +75,7 @@ export function updateSettings(apiPath, queryParams) {
     adSensePublisherId,
     adSenseSlotId,
     adManagerSlotId,
+    mgidWidgetId,
     adNetwork,
     videoCache,
     dataRemoval,
@@ -106,6 +108,10 @@ export function updateSettings(apiPath, queryParams) {
 
   if (adManagerSlotId !== undefined) {
     query.web_stories_ad_manager_slot_id = adManagerSlotId;
+  }
+
+  if (mgidWidgetId !== undefined) {
+    query.web_stories_mgid_widget_id = mgidWidgetId;
   }
 
   if (adNetwork !== undefined) {

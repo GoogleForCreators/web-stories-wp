@@ -36,6 +36,7 @@ import { AD_NETWORK_TYPE } from '../../../constants';
 import AdNetworkSettings from './adNetwork';
 import GoogleAdManagerSettings from './googleAdManager';
 import GoogleAdSenseSettings from './googleAdSense';
+import MgidSettings from './mgid';
 
 export const TEXT = {
   SECTION_HEADING: __('Monetization', 'web-stories'),
@@ -67,6 +68,7 @@ function AdManagement({
   publisherId,
   adSenseSlotId,
   adManagerSlotId,
+  mgidWidgetId,
   siteKitStatus,
 }) {
   const { adsenseActive, installed, adsenseLink } = siteKitStatus;
@@ -91,6 +93,12 @@ function AdManagement({
   const handleUpdateAdManagerSlotId = useCallback(
     (newAdManagerSlotId) =>
       updateSettings({ adManagerSlotId: newAdManagerSlotId }),
+    [updateSettings]
+  );
+
+  const handleUpdateMgidWidgetId = useCallback(
+    (newMgidWidgetId) =>
+      updateSettings({ mgidWidgetId: newMgidWidgetId }),
     [updateSettings]
   );
 
@@ -187,6 +195,12 @@ function AdManagement({
               slotId={adManagerSlotId}
             />
           )}
+          {AD_NETWORK_TYPE.MGID === adNetwork && (
+            <MgidSettings
+              handleUpdate={handleUpdateMgidWidgetId}
+              widgetId={mgidWidgetId}
+            />
+          )}
         </div>
       )}
     </MultilineForm>
@@ -199,6 +213,7 @@ AdManagement.propTypes = {
   publisherId: PropTypes.string,
   adSenseSlotId: PropTypes.string,
   adManagerSlotId: PropTypes.string,
+  mgidWidgetId: PropTypes.string,
   siteKitStatus: PropTypes.shape({
     installed: PropTypes.bool,
     active: PropTypes.bool,

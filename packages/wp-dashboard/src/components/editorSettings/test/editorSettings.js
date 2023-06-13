@@ -102,6 +102,7 @@ function createProviderValues({
   adSensePublisherId = '',
   adSenseSlotId = '',
   adManagerSlotId = '',
+  mgidWidgetId = '',
   adNetwork = AD_NETWORK_TYPE.NONE,
   publisherLogos,
 }) {
@@ -134,6 +135,7 @@ function createProviderValues({
           adSensePublisherId,
           adSenseSlotId,
           adManagerSlotId,
+          mgidWidgetId,
           adNetwork,
           error: {},
           archive: 'default',
@@ -316,6 +318,32 @@ describe('Editor Settings: <Editor Settings />', () => {
 
     const helperLink = screen.getByText(
       (_, node) => node.textContent === 'how to monetize your Web Stories',
+      {
+        selector: 'a',
+      }
+    );
+    expect(helperLink).toBeInTheDocument();
+  });
+
+  it('should render settings page with MGID', () => {
+    const { container } = renderEditorSettings({
+      googleAnalyticsId: 'UA-098909-05',
+      usingLegacyAnalytics: false,
+      canUploadFiles: true,
+      canManageSettings: true,
+      isLoading: false,
+      adSensePublisherId: '123',
+      adSenseSlotId: '456',
+      adManagerSlotId: '',
+      mgidWidgetId: '1234567890',
+      adNetwork: AD_NETWORK_TYPE.MGID,
+      publisherLogos: [],
+    });
+
+    setAppElement(container);
+
+    const helperLink = screen.getByText(
+      (_, node) => node.textContent === 'generate revenue with Web Stories',
       {
         selector: 'a',
       }

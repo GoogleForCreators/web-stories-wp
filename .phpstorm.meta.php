@@ -13,6 +13,7 @@ namespace PHPSTORM_META {
 			'amp_story_player_assets'      => \Google\Web_Stories\AMP_Story_Player_Assets::class,
 			'adsense'                      => \Google\Web_Stories\AdSense::class,
 			'ad_manager'                   => \Google\Web_Stories\Ad_Manager::class,
+			'mgid'                         => \Google\Web_Stories\Mgid::class,
 			'admin'                        => \Google\Web_Stories\Admin\Admin::class,
 			'admin.revisions'              => \Google\Web_Stories\Admin\Revisions::class,
 			'analytics'                    => \Google\Web_Stories\Analytics::class,
