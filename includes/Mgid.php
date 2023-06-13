@@ -1,10 +1,10 @@
 <?php
 /**
- * Class Ad_Manager
+ * Class Mgid
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @copyright 2020 Google LLC
+ * @copyright 2023 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
@@ -44,7 +44,7 @@ class Mgid extends Service_Base implements HasRequirements {
 	/**
 	 * Analytics constructor.
 	 *
-	 * @since 1.12.0
+	 * @since 1.33.0
 	 *
 	 * @param Settings $settings Settings instance.
 	 * @return void
@@ -56,7 +56,7 @@ class Mgid extends Service_Base implements HasRequirements {
 	/**
 	 * Initializes all hooks.
 	 *
-	 * @since 1.3.0
+	 * @since 1.33.0
 	 */
 	public function register(): void {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_mgid_tag' ] );
@@ -67,7 +67,7 @@ class Mgid extends Service_Base implements HasRequirements {
 	 *
 	 * Needed because settings needs to be registered first.
 	 *
-	 * @since 1.13.0
+	 * @since 1.33.0
 	 *
 	 * @return string[] List of required services.
 	 */
@@ -78,7 +78,7 @@ class Mgid extends Service_Base implements HasRequirements {
 	/**
 	 * Prints the <amp-story-auto-ads> tag for single stories.
 	 *
-	 * @since 1.32.0
+	 * @since 1.33.0
 	 */
 	public function print_mgid_tag(): void {
 		$widget  = $this->get_widget_id();
@@ -98,7 +98,7 @@ class Mgid extends Service_Base implements HasRequirements {
 		/**
 		 * Filters MGID configuration passed to `<amp-story-auto-ads>`.
 		 *
-		 * @since 1.10.0
+		 * @since 1.33.0
 		 *
 		 * @param array $settings MGID configuration.
 		 * @param string $widget MGID Widget ID.
@@ -117,15 +117,15 @@ class Mgid extends Service_Base implements HasRequirements {
 	/**
 	 * Returns the MGID Widget ID.
 	 *
-	 * @since 1.32.0
+	 * @since 1.33.0
 	 *
-	 * @return string Widget ID.
+	 * @return int Widget ID.
 	 */
-	private function get_widget_id(): string {
+	private function get_widget_id(): int {
 		/**
 		 * Widget ID.
 		 *
-		 * @var string
+		 * @var int
 		 */
 		return $this->settings->get_setting( $this->settings::SETTING_NAME_MGID_WIDGET_ID );
 	}
@@ -133,7 +133,7 @@ class Mgid extends Service_Base implements HasRequirements {
 	/**
 	 * Returns if MGID is enabled.
 	 *
-	 * @since 1.32.0
+	 * @since 1.33.0
 	 */
 	private function is_enabled(): bool {
 		return ( 'mgid' === $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ) );

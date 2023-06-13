@@ -241,7 +241,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 			self::SETTING_NAME_MGID_WIDGET_ID,
 			[
 				'description'  => __( 'MGID Widget ID', 'web-stories' ),
-				'type'         => 'string',
+				'type'         => 'integer',
 				'default'      => '',
 				'show_in_rest' => true,
 			]
@@ -483,6 +483,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 		delete_option( self::SETTING_NAME_ADSENSE_PUBLISHER_ID );
 		delete_option( self::SETTING_NAME_ADSENSE_SLOT_ID );
 		delete_option( self::SETTING_NAME_AD_MANAGER_SLOT_ID );
+		delete_option( self::SETTING_NAME_MGID_WIDGET_ID );
 		delete_option( self::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 		delete_option( self::SETTING_NAME_PUBLISHER_LOGOS );
 		delete_option( self::SETTING_NAME_VIDEO_CACHE );
