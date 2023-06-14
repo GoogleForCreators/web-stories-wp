@@ -67,26 +67,8 @@ class HTML {
 		$markup = wp_replace_insecure_home_url( $markup );
 		$markup = $this->print_analytics( $markup );
 		$markup = $this->print_social_share( $markup );
-		$markup = $this->fix_missing_doctype( $markup );
 
 		return $markup;
-	}
-
-	/**
-	 * Adds doctype for amp, if missing.
-	 *
-	 * @since 1.33.0
-	 *
-	 * @param string $content Story markup.
-	 * @return string Filtered content
-	 */
-	public function fix_missing_doctype( string $content ): string {
-		if ( function_exists( 'amp_is_request' ) && amp_is_request() ) {
-			if ( strtolower( substr( $content, 0, 10 ) ) !== '<!doctype ' ) {
-				$content = '<!DOCTYPE html>' . $content;
-			}
-		}
-		return $content;
 	}
 
 	/**
@@ -231,11 +213,6 @@ class HTML {
 		do_action( 'web_stories_print_analytics' );
 
 		$output = (string) ob_get_clean();
-
-		// Add latest script of the 'amp-story-auto-analytics' when not available.
-		if ( !empty( $output ) && str_contains( $output, 'amp-story-auto-analytics') ) {
-			$content = str_replace( 'custom-element="amp-story"></script>', 'custom-element="amp-story"></script>' . '<script async="" src="https://cdn.ampproject.org/v0/amp-story-auto-analytics-latest.js" custom-element="amp-story-auto-analytics"></script>', $content );
-		}
 
 		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
 	}
