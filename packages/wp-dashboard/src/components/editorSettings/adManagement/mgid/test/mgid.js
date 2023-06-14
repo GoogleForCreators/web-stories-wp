@@ -42,10 +42,7 @@ describe('Editor Settings: MGID <Mgid />', () => {
 
   it('should render a visually hidden label for MGID input', () => {
     renderWithProviders(
-      <MgidSettings
-        widgetId={mgidWidgetIdtId}
-        handleUpdate={mockUpdate}
-      />
+      <MgidSettings widgetId={mgidWidgetIdtId} handleUpdate={mockUpdate} />
     );
 
     const label = screen.getByLabelText(TEXT.WIDGET_ID_LABEL);
@@ -54,10 +51,7 @@ describe('Editor Settings: MGID <Mgid />', () => {
 
   it('should call mockUpdate when enter is keyed on input', () => {
     const { rerender } = renderWithProviders(
-      <MgidSettings
-        widgetId={mgidWidgetIdtId}
-        handleUpdate={mockUpdate}
-      />
+      <MgidSettings widgetId={mgidWidgetIdtId} handleUpdate={mockUpdate} />
     );
 
     const input = screen.getByRole('textbox');
@@ -69,10 +63,7 @@ describe('Editor Settings: MGID <Mgid />', () => {
 
     // rerender to get updated mgidWidgetIdtId prop
     rerender(
-      <MgidSettings
-        widgetId={mgidWidgetIdtId}
-        handleUpdate={mockUpdate}
-      />
+      <MgidSettings widgetId={mgidWidgetIdtId} handleUpdate={mockUpdate} />
     );
 
     expect(mockUpdate).toHaveBeenCalledOnce();
@@ -82,10 +73,7 @@ describe('Editor Settings: MGID <Mgid />', () => {
 
     // rerender to get updated mgidWidgetId prop
     rerender(
-      <MgidSettings
-        widgetId={mgidWidgetIdtId}
-        handleUpdate={mockUpdate}
-      />
+      <MgidSettings widgetId={mgidWidgetIdtId} handleUpdate={mockUpdate} />
     );
 
     expect(mockUpdate).toHaveBeenCalledTimes(2);
@@ -99,10 +87,7 @@ describe('Editor Settings: MGID <Mgid />', () => {
 
   it('should call mockUpdate when the save button is clicked', () => {
     const { rerender } = renderWithProviders(
-      <MgidSettings
-        widgetId={mgidWidgetIdtId}
-        handleUpdate={mockUpdate}
-      />
+      <MgidSettings widgetId={mgidWidgetIdtId} handleUpdate={mockUpdate} />
     );
 
     const input = screen.getByRole('textbox');
@@ -116,10 +101,7 @@ describe('Editor Settings: MGID <Mgid />', () => {
 
     // rerender to get updated mgidWidgetId prop
     rerender(
-      <MgidSettings
-        widgetId={mgidWidgetIdtId}
-        handleUpdate={mockUpdate}
-      />
+      <MgidSettings widgetId={mgidWidgetIdtId} handleUpdate={mockUpdate} />
     );
 
     expect(mockUpdate).toHaveBeenCalledOnce();
@@ -130,10 +112,7 @@ describe('Editor Settings: MGID <Mgid />', () => {
 
     // rerender to get updated mgidWidgetId prop
     rerender(
-      <MgidSettings
-        widgetId={mgidWidgetIdtId}
-        handleUpdate={mockUpdate}
-      />
+      <MgidSettings widgetId={mgidWidgetIdtId} handleUpdate={mockUpdate} />
     );
 
     expect(mockUpdate).toHaveBeenCalledTimes(2);

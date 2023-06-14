@@ -69,7 +69,7 @@ class Settings extends DependencyInjectedTestCase {
 		add_option( $this->instance::SETTING_NAME_AD_MANAGER_SLOT_ID, 'baz' );
 		add_option( $this->instance::SETTING_NAME_ADSENSE_PUBLISHER_ID, 'baz' );
 		add_option( $this->instance::SETTING_NAME_ADSENSE_SLOT_ID, 'baz' );
-		add_option( $this->instance::SETTING_NAME_MGID_WIDGET_ID, 'baz' );
+		add_option( $this->instance::SETTING_NAME_MGID_WIDGET_ID, 1234567 );
 		add_option( $this->instance::SETTING_NAME_EXPERIMENTS, [ 'foo' => 'bar' ] );
 		add_option( $this->instance::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 123 );
 		add_option( $this->instance::SETTING_NAME_PUBLISHER_LOGOS, [ 123, 567 ] );

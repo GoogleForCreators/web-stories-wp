@@ -97,8 +97,7 @@ function AdManagement({
   );
 
   const handleUpdateMgidWidgetId = useCallback(
-    (newMgidWidgetId) =>
-      updateSettings({ mgidWidgetId: newMgidWidgetId }),
+    (newMgidWidgetId) => updateSettings({ mgidWidgetId: newMgidWidgetId }),
     [updateSettings]
   );
 

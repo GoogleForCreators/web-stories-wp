@@ -15,8 +15,7 @@
  */
 
 // Example: 1234567
-const mgidWidgetIdFormatRegex =
-  /^\d{7,20}$/;
+const mgidWidgetIdFormatRegex = /^\d{7,20}$/;
 
 export default function validateMgidWidgetIdFormat(value = '') {
   return Boolean(value.toLowerCase().match(mgidWidgetIdFormatRegex));

@@ -101,7 +101,7 @@ class Mgid extends Service_Base implements HasRequirements {
 		 * @since 1.33.0
 		 *
 		 * @param array $settings MGID configuration.
-		 * @param string $widget MGID Widget ID.
+		 * @param int $widget MGID Widget ID.
 		 */
 		$configuration = apply_filters( 'web_stories_mgid_configuration', $configuration, $widget );
 
@@ -127,7 +127,7 @@ class Mgid extends Service_Base implements HasRequirements {
 		 *
 		 * @var int
 		 */
-		return $this->settings->get_setting( $this->settings::SETTING_NAME_MGID_WIDGET_ID );
+		return (int) $this->settings->get_setting( $this->settings::SETTING_NAME_MGID_WIDGET_ID );
 	}
 
 	/**

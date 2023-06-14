@@ -141,7 +141,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
 
     const helperLink = screen.getByText(
       (_, node) =>
-        node.textContent === 'generate revenue with Web Stories',
+        node.textContent === 'monetizing Web Stories with MGID Native Solution',
       {
         selector: 'a',
       }

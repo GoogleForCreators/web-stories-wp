@@ -343,7 +343,8 @@ describe('Editor Settings: <Editor Settings />', () => {
     setAppElement(container);
 
     const helperLink = screen.getByText(
-      (_, node) => node.textContent === 'generate revenue with Web Stories',
+      (_, node) =>
+        node.textContent === 'monetizing Web Stories with MGID Native Solution',
       {
         selector: 'a',
       }

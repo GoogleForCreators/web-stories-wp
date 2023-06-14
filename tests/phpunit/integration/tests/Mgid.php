@@ -32,7 +32,7 @@ class Mgid extends DependencyInjectedTestCase {
 		parent::set_up();
 
 		update_option( Settings::SETTING_NAME_AD_NETWORK, 'mgid' );
-		update_option( Settings::SETTING_NAME_MGID_WIDGET_ID, '123456789' );
+		update_option( Settings::SETTING_NAME_MGID_WIDGET_ID, 123456789 );
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Mgid::class );
 	}
@@ -58,7 +58,7 @@ class Mgid extends DependencyInjectedTestCase {
 	 */
 	public function test_get_widget_id(): void {
 		$result = $this->call_private_method( [ $this->instance, 'get_widget_id' ] );
-		$this->assertSame( '123456789', $result );
+		$this->assertSame( 123456789, $result );
 	}
 
 	/**

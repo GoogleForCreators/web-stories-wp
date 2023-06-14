@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import {validateAdManagerSlotIdFormat, validateMgidWidgetIdFormat} from '../../utils';
+import { validateMgidWidgetIdFormat } from '../../utils';
 import {
   InlineForm,
   SaveButton,
