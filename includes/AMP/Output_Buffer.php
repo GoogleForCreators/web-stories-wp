@@ -119,8 +119,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 * @return int Registration action priority to use.
 	 */
 	public static function get_registration_action_priority(): int {
-		// phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
-		return \defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
+		return PHP_INT_MIN;
 	}
 
 	/**
