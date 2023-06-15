@@ -83,9 +83,7 @@ class New_Relic extends Service_Base implements Conditional {
 	 */
 	public static function get_registration_action_priority(): int {
 		// Run at the same time as the output buffering.
-
-		// phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
-		return \defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
+		return PHP_INT_MIN;
 	}
 
 	/**
