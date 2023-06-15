@@ -100,6 +100,7 @@ jobs:
             media3p.googleapis.com:443
             stories.local:80
             54.185.253.63:443
+            34.104.35.123:443
 
       - name: Checkout
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
