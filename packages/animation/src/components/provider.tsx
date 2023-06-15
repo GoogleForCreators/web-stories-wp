@@ -228,7 +228,9 @@ function Provider({
         // Note that we could use `getComputedTiming` above instead, but the typings
         // in @types/web-animations-js aren't completely correct for that return.
         const actualDuration = typeof duration === 'string' ? 0 : duration;
-        const animationEndTime = delay + actualDuration;
+        // TODO: Address case where duration can be of type CSSNumericValue.
+
+        const animationEndTime = delay + (actualDuration as number);
         animation.currentTime =
           time === 'end'
             ? animationEndTime
