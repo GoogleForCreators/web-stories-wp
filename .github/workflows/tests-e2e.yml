@@ -162,6 +162,7 @@ jobs:
             docker.io:443
             registry-1.docker.io:443
             auth.docker.io:443
+            34.104.35.123:443
 
       - name: Checkout
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
