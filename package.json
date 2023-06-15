@@ -82,7 +82,7 @@
     "@types/eslint": "^8.40.1",
     "@types/eslint-scope": "^3.7.4",
     "@types/estree": "^1.0.1",
-    "@types/jest": "^29.5.1",
+    "@types/jest": "^29.5.2",
     "@types/jsdom": "^21.1.1",
     "@types/node": "^20.2.5",
     "@types/styled-components": "^5.1.26",
