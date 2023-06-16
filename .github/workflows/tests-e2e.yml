@@ -132,7 +132,7 @@ jobs:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['6.0']
+        wp: ['6.1']
         snapshots: [false]
         experimental: [false]
         # We want to split up the tests into 2 parts running in parallel.
@@ -162,6 +162,7 @@ jobs:
             docker.io:443
             registry-1.docker.io:443
             auth.docker.io:443
+            34.104.35.123:443
 
       - name: Checkout
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9

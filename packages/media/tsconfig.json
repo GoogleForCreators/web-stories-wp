@@ -9,5 +9,6 @@
     { "path": "../tracking" },
     { "path": "../units" }
   ],
+  "files": ["../../node_modules/jest-extended/types/index.d.ts"],
   "include": ["src/**/*"]
 }
