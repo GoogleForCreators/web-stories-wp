@@ -51,6 +51,9 @@ export const TEXT = {
 };
 
 function MgidSettings({ widgetId: mgidWidgetId, handleUpdate }) {
+  // fix null error
+  mgidWidgetId = mgidWidgetId ?? '';
+
   const [widgetId, setWidgetId] = useState(mgidWidgetId);
   const [widgetIdInputError, setWidgetIdInputError] = useState('');
   const canSaveWidgetId = widgetId !== mgidWidgetId && !widgetIdInputError;

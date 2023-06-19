@@ -88,7 +88,7 @@ class Settings extends DependencyInjectedTestCase {
 		$this->assertSame( '', get_option( $this->instance::SETTING_NAME_AD_MANAGER_SLOT_ID ) );
 		$this->assertSame( '', get_option( $this->instance::SETTING_NAME_ADSENSE_PUBLISHER_ID ) );
 		$this->assertSame( '', get_option( $this->instance::SETTING_NAME_ADSENSE_SLOT_ID ) );
-		$this->assertSame( 0, get_option( $this->instance::SETTING_NAME_MGID_WIDGET_ID ) );
+		$this->assertSame( null, get_option( $this->instance::SETTING_NAME_MGID_WIDGET_ID ) );
 		$this->assertSame( [], get_option( $this->instance::SETTING_NAME_EXPERIMENTS ) );
 		$this->assertSame( 0, get_option( $this->instance::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
 		$this->assertSame( [], get_option( $this->instance::SETTING_NAME_PUBLISHER_LOGOS ) );

@@ -242,7 +242,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 			[
 				'description'  => __( 'MGID Widget ID', 'web-stories' ),
 				'type'         => 'integer',
-				'default'      => 0,
+				'default'      => null,
 				'show_in_rest' => true,
 			]
 		);
