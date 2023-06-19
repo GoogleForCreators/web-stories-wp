@@ -25,6 +25,7 @@ namespace PHPSTORM_META {
 			'embed_shortcode'              => \Google\Web_Stories\Shortcode\Embed_Shortcode::class,
 			'experiments'                  => \Google\Web_Stories\Experiments::class,
 			'integrations.amp'             => \Google\Web_Stories\Integrations\AMP::class,
+			'integrations.ezoic'           => \Google\Web_Stories\Integrations\Ezoic::class,
 			'integrations.jetpack'         => \Google\Web_Stories\Integrations\Jetpack::class,
 			'integrations.newrelic'        => \Google\Web_Stories\Integrations\New_Relic::class,
 			'integrations.nextgen_gallery' => \Google\Web_Stories\Integrations\NextGen_Gallery::class,

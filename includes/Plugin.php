@@ -81,6 +81,7 @@ class Plugin extends ServiceBasedPlugin {
 		'embed_shortcode'              => Shortcode\Embed_Shortcode::class,
 		'experiments'                  => Experiments::class,
 		'integrations.amp'             => Integrations\AMP::class,
+		'integrations.ezoic'           => Integrations\Ezoic::class,
 		'integrations.jetpack'         => Integrations\Jetpack::class,
 		'integrations.newrelic'        => Integrations\New_Relic::class,
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
