@@ -77,17 +77,6 @@ class Ezoic extends Service_Base {
 	}
 
 	/**
-	 * Determines whether Ezoic is installed and active.
-	 *
-	 * @since 1.33.0
-	 *
-	 * @return bool Whether Ezoic is installed and active.
-	 */
-	protected function is_plugin_installed_active(): bool {
-		return \defined( 'EZOIC_INTEGRATION_VERSION' );
-	}
-
-	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.33.0
@@ -103,10 +92,8 @@ class Ezoic extends Service_Base {
 	 *
 	 * @since 1.33.0
 	 *
-	 * @param array|mixed $gtag_opt Array of gtag configuration options.
-	 * @return array|mixed Modified configuration options.
-	 *
-	 * @phpstan-param GtagOpt $gtag_opt
+	 * @param string $content HTML document response collected by Ezoic Output Buffer.
+	 * @return string AMP document response.
 	 */
 	public function process_ez_buffered_final_content( $content ) {
 		if ( $this->context->is_web_story() ) {
@@ -143,5 +130,16 @@ class Ezoic extends Service_Base {
 			"\n" .
 			// translators: 1: error message. 2: location.
 			sprintf( esc_html__( 'Error message: %1$s (%2$s)', 'web-stories' ), $throwable->getMessage(), $throwable->getFile() . ':' . $throwable->getLine() );
+	}
+
+	/**
+	 * Determines whether Ezoic is installed and active.
+	 *
+	 * @since 1.33.0
+	 *
+	 * @return bool Whether Ezoic is installed and active.
+	 */
+	protected function is_plugin_installed_active(): bool {
+		return \defined( 'EZOIC_INTEGRATION_VERSION' );
 	}
 }
