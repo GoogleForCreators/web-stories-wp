@@ -95,7 +95,7 @@ class Ezoic extends Service_Base {
 	 * @param string $content HTML document response collected by Ezoic Output Buffer.
 	 * @return string AMP document response.
 	 */
-	public function process_ez_buffered_final_content( $content ) {
+	public function process_ez_buffered_final_content( string $content ): string {
 		if ( $this->context->is_web_story() ) {
 			// Enforce UTF-8 encoding as it is a requirement for AMP.
 			if ( ! headers_sent() ) {
