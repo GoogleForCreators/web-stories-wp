@@ -27,6 +27,7 @@ export default {
     publisherId: 'publisher Id',
     adSenseSlotId: 'ad sense slot id',
     adManagerSlotId: 'ad manager slot id',
+    mgidWidgetId: 'mgid widget id',
     installed: false,
     active: false,
     adsenseActive: false,

@@ -45,6 +45,10 @@ export const TEXT = {
     'Learn how to <a>enable programmatic demand in Web Stories</a> through Ad Manager.',
     'web-stories'
   ),
+  HELPER_MESSAGE_MGID: __(
+    'Learn how to start <a>monetizing Web Stories with MGID Native Solution</a>',
+    'web-stories'
+  ),
   HELPER_LINK_ADSENSE: __(
     'https://support.google.com/adsense/answer/10175505',
     'web-stories'
@@ -55,6 +59,10 @@ export const TEXT = {
   ),
   HELPER_LINK_ADMANAGER: __(
     'https://support.google.com/admanager/answer/9416436',
+    'web-stories'
+  ),
+  HELPER_LINK_MGID: __(
+    'https://help.mgid.com/generate-revenue-with-amp-web-stories?utm_source=wp-plugin&utm_medium=web-stories-by-google',
     'web-stories'
   ),
 };
@@ -72,6 +80,10 @@ const OPTIONS = [
     label: __('Google Ad Manager', 'web-stories'),
     value: AD_NETWORK_TYPE.ADMANAGER,
   },
+  {
+    label: __('MGID', 'web-stories'),
+    value: AD_NETWORK_TYPE.MGID,
+  },
 ];
 
 function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
@@ -88,6 +100,10 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
       return TEXT.HELPER_MESSAGE_ADSENSE;
     }
 
+    if (AD_NETWORK_TYPE.MGID === adNetwork) {
+      return TEXT.HELPER_MESSAGE_MGID;
+    }
+
     return null;
   }, [adNetwork]);
 
@@ -98,6 +114,10 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
 
     if (AD_NETWORK_TYPE.ADSENSE === adNetwork) {
       return TEXT.HELPER_LINK_ADSENSE;
+    }
+
+    if (AD_NETWORK_TYPE.MGID === adNetwork) {
+      return TEXT.HELPER_LINK_MGID;
     }
 
     return null;
