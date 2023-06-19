@@ -31,6 +31,7 @@ namespace Google\Web_Stories\Integrations;
 use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
 use Google\Web_Stories\Context;
+use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Exception\SanitizationException;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
@@ -39,7 +40,7 @@ use Throwable;
 /**
  * Class Ezoic.
  */
-class Ezoic extends Service_Base {
+class Ezoic extends Service_Base implements Conditional {
 	/**
 	 * Sanitization instance.
 	 *
@@ -82,9 +83,18 @@ class Ezoic extends Service_Base {
 	 * @since 1.33.0
 	 */
 	public function register(): void {
-		if ( $this->is_plugin_installed_active() ) {
-			add_filter( 'ez_buffered_final_content', [ $this, 'process_ez_buffered_final_content' ] );
-		}
+		add_filter( 'ez_buffered_final_content', [ $this, 'process_ez_buffered_final_content' ] );
+	}
+
+	/**
+	 * Check whether the Ezoic integration is currently needed.
+	 *
+	 * @since 1.33.0
+	 *
+	 * @return bool Whether Ezoic integration is currently needed.
+	 */
+	public static function is_needed(): bool {
+		return \defined( 'EZOIC_INTEGRATION_VERSION' );
 	}
 
 	/**
@@ -130,16 +140,5 @@ class Ezoic extends Service_Base {
 			"\n" .
 			// translators: 1: error message. 2: location.
 			sprintf( esc_html__( 'Error message: %1$s (%2$s)', 'web-stories' ), $throwable->getMessage(), $throwable->getFile() . ':' . $throwable->getLine() );
-	}
-
-	/**
-	 * Determines whether Ezoic is installed and active.
-	 *
-	 * @since 1.33.0
-	 *
-	 * @return bool Whether Ezoic is installed and active.
-	 */
-	protected function is_plugin_installed_active(): bool {
-		return \defined( 'EZOIC_INTEGRATION_VERSION' );
 	}
 }
