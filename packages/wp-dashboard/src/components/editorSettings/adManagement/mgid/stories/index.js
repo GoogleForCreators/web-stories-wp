@@ -15,22 +15,21 @@
  */
 
 /**
- * Environment variables
+ * Internal dependencies
  */
-const {
-  PUPPETEER_DEVTOOLS = false,
-  PUPPETEER_HEADLESS = 'new',
-  PUPPETEER_PRODUCT = 'chrome',
-  PUPPETEER_SLOWMO = 0,
-} = process.env;
+import Mgid from '..';
 
-module.exports = {
-  launch: {
-    devtools: PUPPETEER_DEVTOOLS === 'true',
-    headless: PUPPETEER_HEADLESS !== 'false' ? PUPPETEER_HEADLESS : false,
-    slowMo: Number(PUPPETEER_SLOWMO) || 0,
-    product: PUPPETEER_PRODUCT,
-    args: ['--window-size=1600,1000'], // Same as in percy.config.yml.
+export default {
+  title: 'Dashboard/Views/EditorSettings/AdManagement/Mgid',
+  component: Mgid,
+  args: {
+    widgetId: '',
   },
-  exitOnPageError: false,
+  argTypes: {
+    handleUpdate: { action: 'update mgid' },
+  },
+};
+
+export const _default = (args) => {
+  return <Mgid {...args} />;
 };

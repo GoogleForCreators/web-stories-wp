@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * Environment variables
- */
-const {
-  PUPPETEER_DEVTOOLS = false,
-  PUPPETEER_HEADLESS = 'new',
-  PUPPETEER_PRODUCT = 'chrome',
-  PUPPETEER_SLOWMO = 0,
-} = process.env;
+// Example: 1234567
+const mgidWidgetIdFormatRegex = /^\d{7,20}$/;
 
-module.exports = {
-  launch: {
-    devtools: PUPPETEER_DEVTOOLS === 'true',
-    headless: PUPPETEER_HEADLESS !== 'false' ? PUPPETEER_HEADLESS : false,
-    slowMo: Number(PUPPETEER_SLOWMO) || 0,
-    product: PUPPETEER_PRODUCT,
-    args: ['--window-size=1600,1000'], // Same as in percy.config.yml.
-  },
-  exitOnPageError: false,
-};
+export default function validateMgidWidgetIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(mgidWidgetIdFormatRegex));
+}

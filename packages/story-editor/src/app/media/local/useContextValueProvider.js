@@ -42,7 +42,7 @@ import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
  * Context fragment provider for local media.
- * This is called from {@link MediaProvider} to provide the media global state.
+ * This is called from MediaProvider to provide the media global state.
  *
  * @param {LocalMediaReducerState} reducerState The 'local' fragment of the
  * state returned from `useMediaReducer`

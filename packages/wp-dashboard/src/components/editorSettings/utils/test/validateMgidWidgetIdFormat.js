@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,23 @@
  */
 
 /**
- * Environment variables
+ * Internal dependencies
  */
-const {
-  PUPPETEER_DEVTOOLS = false,
-  PUPPETEER_HEADLESS = 'new',
-  PUPPETEER_PRODUCT = 'chrome',
-  PUPPETEER_SLOWMO = 0,
-} = process.env;
+import { validateMgidWidgetIdFormat } from '..';
 
-module.exports = {
-  launch: {
-    devtools: PUPPETEER_DEVTOOLS === 'true',
-    headless: PUPPETEER_HEADLESS !== 'false' ? PUPPETEER_HEADLESS : false,
-    slowMo: Number(PUPPETEER_SLOWMO) || 0,
-    product: PUPPETEER_PRODUCT,
-    args: ['--window-size=1600,1000'], // Same as in percy.config.yml.
-  },
-  exitOnPageError: false,
-};
+const idsToValidate = [
+  ['1234567890', true],
+  ['123456', false],
+  ['123456789012345678901', false],
+  ['widgetId12345', false],
+];
+
+describe('validateMgidWidgetIdFormat', () => {
+  it.each(idsToValidate)(
+    'should take " %s " and return as %p MGID widget id format',
+    (slotId, expected) => {
+      const bool = validateMgidWidgetIdFormat(slotId);
+      expect(bool).toBe(expected);
+    }
+  );
+});
