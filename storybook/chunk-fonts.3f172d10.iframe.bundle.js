@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkweb_stories_wp=globalThis.webpackChunkweb_stories_wp||[]).push([[3766],{"./packages/fonts/src/fonts.json":module=>{module.exports=[]}}]);
