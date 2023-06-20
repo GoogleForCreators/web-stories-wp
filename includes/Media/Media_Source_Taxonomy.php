@@ -379,40 +379,25 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		 *   [ [ any ], [ existing ], [ tax queries] ]
 		 * ]
 		 */
-		if(empty($tax_query)) {
-			return [
-				[
-					'taxonomy' => $this->taxonomy_slug,
-					'field'    => 'slug',
-					'terms'    => [
-						self::TERM_POSTER_GENERATION,
-						self::TERM_SOURCE_VIDEO,
-						self::TERM_SOURCE_IMAGE,
-						self::TERM_PAGE_TEMPLATE,
-					],
-					'operator' => 'NOT IN',
+		$new_tax_query = [
+			'relation' => 'AND',
+			[
+				'taxonomy' => $this->taxonomy_slug,
+				'field'    => 'slug',
+				'terms'    => [
+					self::TERM_POSTER_GENERATION,
+					self::TERM_SOURCE_VIDEO,
+					self::TERM_SOURCE_IMAGE,
+					self::TERM_PAGE_TEMPLATE,
 				],
-			];
+				'operator' => 'NOT IN',
+			],
+		];
+
+		if ( ! empty( $tax_query ) ) {
+			$new_tax_query[] = [ $tax_query ];
 		}
 
-
-		array_unshift(
-			$tax_query,
-			[
-				[
-					'taxonomy' => $this->taxonomy_slug,
-					'field'    => 'slug',
-					'terms'    => [
-						self::TERM_POSTER_GENERATION,
-						self::TERM_SOURCE_VIDEO,
-						self::TERM_SOURCE_IMAGE,
-						self::TERM_PAGE_TEMPLATE,
-					],
-					'operator' => 'NOT IN',
-				],
-			]
-		);
-
-		return $tax_query;
+		return $new_tax_query;
 	}
 }
