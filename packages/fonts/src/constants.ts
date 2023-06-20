@@ -46,7 +46,7 @@ export const CURATED_FONT_NAMES: string[] = [
   'PT Sans',
   'PT Serif',
   'Roboto Mono',
-  'Source Sans Pro',
+  'Source Sans 3',
   'Ubuntu',
   'Anton',
   'BioRhyme',
