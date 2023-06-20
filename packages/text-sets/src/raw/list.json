@@ -527,7 +527,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -588,7 +588,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -649,7 +649,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -710,7 +710,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -771,7 +771,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4464,7 +4464,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4525,7 +4525,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4586,7 +4586,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4647,7 +4647,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4708,7 +4708,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4769,7 +4769,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4830,7 +4830,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4891,7 +4891,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -4952,7 +4952,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5013,7 +5013,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5074,7 +5074,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5135,7 +5135,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5196,7 +5196,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5257,7 +5257,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5318,7 +5318,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5379,7 +5379,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5440,7 +5440,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -5501,7 +5501,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 600, 700, 900],
@@ -5558,7 +5558,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],

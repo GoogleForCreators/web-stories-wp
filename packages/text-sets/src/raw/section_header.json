@@ -309,7 +309,7 @@
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
@@ -370,7 +370,7 @@
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Source Serif 4",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
             "weights": [200, 300, 400, 500, 600, 700, 800, 900],
