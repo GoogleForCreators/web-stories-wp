@@ -37,7 +37,7 @@
     "@babel/eslint-parser": "^7.21.8",
     "@babel/eslint-plugin": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
-    "@babel/preset-react": "^7.22.3",
+    "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.21.5",
     "@googleforcreators/dashboard": "*",
     "@googleforcreators/design-system": "*",
@@ -181,7 +181,7 @@
     "webpack": "^5.84.1",
     "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^5.1.1",
-    "webpack-dev-server": "^4.15.0",
+    "webpack-dev-server": "^4.15.1",
     "webpackbar": "^5.0.2",
     "worker-loader": "^3.0.8",
     "workspaces-run": "^1.0.2"
