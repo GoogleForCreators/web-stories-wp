@@ -84,11 +84,11 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
 
 		// Hide video posters from Media grid view.
-		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
+		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ], PHP_INT_MAX );
 		// Hide video posters from Media list view.
-		add_action( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
+		add_action( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ], PHP_INT_MAX );
 		// Hide video posters from web-stories/v1/media REST API requests.
-		add_filter( 'web_stories_rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ] );
+		add_filter( 'web_stories_rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], PHP_INT_MAX );
 	}
 
 	/**

@@ -57,7 +57,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 			)
 		);
 		$this->assertSame(
-			10,
+			PHP_INT_MAX,
 			has_filter(
 				'ajax_query_attachments_args',
 				[
@@ -66,9 +66,9 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				]
 			)
 		);
-		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $this->instance, 'filter_generated_media_attachments' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'pre_get_posts', [ $this->instance, 'filter_generated_media_attachments' ] ) );
 		$this->assertSame(
-			10,
+			PHP_INT_MAX,
 			has_filter(
 				'web_stories_rest_attachment_query',
 				[
