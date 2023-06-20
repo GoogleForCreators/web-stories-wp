@@ -29,7 +29,7 @@ export const CURATED_FONT_NAMES: string[] = [
   'Raleway',
   'Roboto',
   'Roboto Condensed',
-  'Source Serif Pro',
+  'Source Serif 4',
   'Titillium Web',
   'Work Sans',
   'Alegreya',
