@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-node-resolve": "^15.1.0",
     "rollup": "^2.79.1"
   },
   "scripts": {

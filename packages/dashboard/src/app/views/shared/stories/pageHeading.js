@@ -52,17 +52,19 @@ const InnerContent = styled.div`
   height: 50%;
 `;
 
-export const _default = (args) => {
-  return (
-    <NavProvider>
-      <LeftRail />
-      <PageHeading
-        searchOptions={[]}
-        handleSearchChange={(value) => args.handleSearchChange(value)}
-        {...args}
-      >
-        <InnerContent />
-      </PageHeading>
-    </NavProvider>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <NavProvider>
+        <LeftRail />
+        <PageHeading
+          searchOptions={[]}
+          handleSearchChange={(value) => args.handleSearchChange(value)}
+          {...args}
+        >
+          <InnerContent />
+        </PageHeading>
+      </NavProvider>
+    );
+  },
 };

@@ -32,6 +32,8 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return <GoogleAdSense {...args} />;
+export const _default = {
+  render: function Render(args) {
+    return <GoogleAdSense {...args} />;
+  },
 };

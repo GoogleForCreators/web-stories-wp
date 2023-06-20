@@ -41,19 +41,21 @@ const IconsList = styled.ul`
   }
 `;
 
-export const _default = () => {
-  return (
-    <IconsList>
-      {Object.keys(Icons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = Icons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <IconsList>
+        {Object.keys(Icons).map((iconName) => {
+          // eslint-disable-next-line import/namespace
+          const Icon = Icons[iconName];
+          return (
+            <li key={iconName}>
+              <Icon />
+              {iconName}
+            </li>
+          );
+        })}
+      </IconsList>
+    );
+  },
 };

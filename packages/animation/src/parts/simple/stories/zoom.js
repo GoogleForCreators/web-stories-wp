@@ -63,68 +63,72 @@ const defaultStyles = {
   overflow: 'hidden',
 };
 
-export const _default = () => {
-  return (
-    <StoryAnimation.AnimationProvider animations={animations}>
-      <PlayButton />
-      {elements.map(({ id, src, ...style }) => (
-        <div
-          key={id}
-          style={{
-            marginBottom: '20px',
-            ...defaultStyles,
-          }}
-        >
-          <StoryAnimation.WAAPIWrapper target={id}>
-            <img
-              alt=""
-              style={{
-                width: '100%',
-                height: '100%',
-                ...style,
-              }}
-              src={src}
-            />
-          </StoryAnimation.WAAPIWrapper>
-        </div>
-      ))}
-    </StoryAnimation.AnimationProvider>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <StoryAnimation.AnimationProvider animations={animations}>
+        <PlayButton />
+        {elements.map(({ id, src, ...style }) => (
+          <div
+            key={id}
+            style={{
+              marginBottom: '20px',
+              ...defaultStyles,
+            }}
+          >
+            <StoryAnimation.WAAPIWrapper target={id}>
+              <img
+                alt=""
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  ...style,
+                }}
+                src={src}
+              />
+            </StoryAnimation.WAAPIWrapper>
+          </div>
+        ))}
+      </StoryAnimation.AnimationProvider>
+    );
+  },
 };
 
-export const AMPStory = () => {
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      {[1, 2].map((pageId) => (
-        <amp-story-page key={pageId} id={`page-${pageId}`}>
-          <StoryAnimation.AnimationProvider animations={animations}>
-            <StoryAnimation.AMPAnimations />
-
-            <amp-story-grid-layer template="vertical">
-              {elements.map(({ id, src, ...style }) => (
-                <div key={id} style={defaultStyles}>
-                  <StoryAnimation.AMPWrapper target={id}>
-                    <img
-                      alt=""
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        ...style,
-                      }}
-                      src={src}
-                    />
-                  </StoryAnimation.AMPWrapper>
-                </div>
-              ))}
-            </amp-story-grid-layer>
-          </StoryAnimation.AnimationProvider>
+export const AMPStory = {
+  render: function Render() {
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
+          <p style={{ textAlign: 'center', color: '#fff' }}>
+            {'Empty first page'}
+          </p>
         </amp-story-page>
-      ))}
-    </AMPStoryWrapper>
-  );
+        {[1, 2].map((pageId) => (
+          <amp-story-page key={pageId} id={`page-${pageId}`}>
+            <StoryAnimation.AnimationProvider animations={animations}>
+              <StoryAnimation.AMPAnimations />
+
+              <amp-story-grid-layer template="vertical">
+                {elements.map(({ id, src, ...style }) => (
+                  <div key={id} style={defaultStyles}>
+                    <StoryAnimation.AMPWrapper target={id}>
+                      <img
+                        alt=""
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          ...style,
+                        }}
+                        src={src}
+                      />
+                    </StoryAnimation.AMPWrapper>
+                  </div>
+                ))}
+              </amp-story-grid-layer>
+            </StoryAnimation.AnimationProvider>
+          </amp-story-page>
+        ))}
+      </AMPStoryWrapper>
+    );
+  },
 };

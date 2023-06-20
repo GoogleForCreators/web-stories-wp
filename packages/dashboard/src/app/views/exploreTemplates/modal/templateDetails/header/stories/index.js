@@ -39,12 +39,14 @@ const StorybookLayoutContainer = styled.div`
   height: 100vh;
 `;
 
-export const _default = (args) => {
-  return (
-    <Layout.Provider>
-      <StorybookLayoutContainer>
-        <Header templateActions={{ ...args }} canCreateStory />
-      </StorybookLayoutContainer>
-    </Layout.Provider>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Header templateActions={{ ...args }} canCreateStory />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    );
+  },
 };

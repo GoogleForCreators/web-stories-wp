@@ -41,23 +41,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  nonce:
-    name: Percy Nonce
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ env.result }}
-    steps:
-      - id: nonce
-        run: echo "result=${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)" >> $GITHUB_ENV
-
   karma:
     name: Karma
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: nonce
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1f99358870fe1c846a3ccba386cc2b2246836776
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -67,14 +57,15 @@ jobs:
             fonts.googleapis.com:443
             fonts.gstatic.com:443
             github.com:443
-            percy.io:443
             registry.npmjs.org:443
             storage.googleapis.com:443
             uploader.codecov.io:443
             www.gravatar.com:443
+            54.185.253.63:443
+            34.104.35.123:443
 
       - name: Checkout
-        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
 
       - name: Setup Node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
@@ -100,70 +91,13 @@ jobs:
           CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
           echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
 
-      - name: Run integration tests with Percy
-        run: |
-          npx percy exec --quiet --parallel --config=percy.config.karma.yml -- \
-            npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage --shard=$SHARD || \
-          npx percy exec --quiet --parallel --config=percy.config.karma.yml -- \
-            npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000 --shard=$SHARD
-        env:
-          DISABLE_ERROR_BOUNDARIES: true
-          SHARD: ${{ matrix.shard }}
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_DASHBOARD }}
-          PERCY_BROWSER_EXECUTABLE: ${{ env.chromium_path }}
-          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
-        if: github.event.pull_request.draft == false
-
       - name: Run integration tests
         run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000
         env:
           DISABLE_ERROR_BOUNDARIES: true
-        if: github.event.pull_request.draft == true
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d
         with:
           file: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests
-
-  percy:
-    name: Percy
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    if: >
-      always() &&
-      github.event.pull_request.draft == false &&
-      github.event.pull_request.head.repo.fork == false &&
-      github.event.pull_request.user.login != 'dependabot[bot]'
-    needs: [karma, nonce]
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@1f99358870fe1c846a3ccba386cc2b2246836776
-        with:
-          disable-sudo: true
-          disable-file-monitoring: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-            percy.io:443
-            registry.npmjs.org:443
-            storage.googleapis.com:443
-
-      - name: Checkout
-        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
-
-      - name: Setup Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm install @percy/cli
-
-      - name: Finalize Percy build
-        run: npx percy build:finalize
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_DASHBOARD }}
-          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}

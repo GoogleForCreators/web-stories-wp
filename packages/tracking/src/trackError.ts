@@ -27,7 +27,7 @@ import track from './track';
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/exceptions
  * @param prefix Error prefixed. Concatenated with description.
  * @param description The error description.
- * @param [fatal=false] Report whether there is a fatal error.
+ * @param [fatal] Report whether there is a fatal error.
  * @return Promise that always resolves.
  */
 async function trackError(

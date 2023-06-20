@@ -42,10 +42,12 @@ const storyContext = {
   },
 };
 
-export const _default = () => {
-  return (
-    <StoryContext.Provider value={storyContext}>
-      <PostPublishDialog />
-    </StoryContext.Provider>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <StoryContext.Provider value={storyContext}>
+        <PostPublishDialog />
+      </StoryContext.Provider>
+    );
+  },
 };

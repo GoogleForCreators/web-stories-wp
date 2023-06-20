@@ -57,65 +57,69 @@ const elements = [
   { id: 'e4', color: 'green', width: '150px' },
 ];
 
-export const _default = () => {
-  return (
-    <StoryAnimation.AnimationProvider animations={animations}>
-      <PlayButton />
-      {elements.map(({ id, color, width }) => (
-        <div key={id} style={{ position: 'relative', width, height: '50px' }}>
-          <StoryAnimation.WAAPIWrapper target={id}>
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                backgroundColor: color,
-              }}
-            />
-          </StoryAnimation.WAAPIWrapper>
-        </div>
-      ))}
-    </StoryAnimation.AnimationProvider>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <StoryAnimation.AnimationProvider animations={animations}>
+        <PlayButton />
+        {elements.map(({ id, color, width }) => (
+          <div key={id} style={{ position: 'relative', width, height: '50px' }}>
+            <StoryAnimation.WAAPIWrapper target={id}>
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: color,
+                }}
+              />
+            </StoryAnimation.WAAPIWrapper>
+          </div>
+        ))}
+      </StoryAnimation.AnimationProvider>
+    );
+  },
 };
 
-export const AMPStory = () => {
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      {[1, 2].map((pageId) => (
-        <amp-story-page key={pageId} id={`page-${pageId}`}>
-          <StoryAnimation.AnimationProvider animations={animations}>
-            <StoryAnimation.AMPAnimations />
-
-            <amp-story-grid-layer template="vertical">
-              {elements.map(({ id, color, width }) => (
-                <div
-                  key={id}
-                  style={{
-                    position: 'relative',
-                    height: '50px',
-                    width,
-                  }}
-                >
-                  <StoryAnimation.AMPWrapper target={id}>
-                    <div
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: color,
-                      }}
-                    />
-                  </StoryAnimation.AMPWrapper>
-                </div>
-              ))}
-            </amp-story-grid-layer>
-          </StoryAnimation.AnimationProvider>
+export const _AMPStory = {
+  render: function Render() {
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
+          <p style={{ textAlign: 'center', color: '#fff' }}>
+            {'Empty first page'}
+          </p>
         </amp-story-page>
-      ))}
-    </AMPStoryWrapper>
-  );
+        {[1, 2].map((pageId) => (
+          <amp-story-page key={pageId} id={`page-${pageId}`}>
+            <StoryAnimation.AnimationProvider animations={animations}>
+              <StoryAnimation.AMPAnimations />
+
+              <amp-story-grid-layer template="vertical">
+                {elements.map(({ id, color, width }) => (
+                  <div
+                    key={id}
+                    style={{
+                      position: 'relative',
+                      height: '50px',
+                      width,
+                    }}
+                  >
+                    <StoryAnimation.AMPWrapper target={id}>
+                      <div
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: color,
+                        }}
+                      />
+                    </StoryAnimation.AMPWrapper>
+                  </div>
+                ))}
+              </amp-story-grid-layer>
+            </StoryAnimation.AnimationProvider>
+          </amp-story-page>
+        ))}
+      </AMPStoryWrapper>
+    );
+  },
 };

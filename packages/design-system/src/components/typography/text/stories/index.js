@@ -44,77 +44,97 @@ export default {
   },
 };
 
-export const _default = (args) => (
-  <>
-    {textTextSizes.map((presetSize) => (
-      <Text.Paragraph key={`${presetSize}_text`} size={presetSize} {...args}>
-        {presetSize} <br />
-        {
-          'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
-        }
-      </Text.Paragraph>
-    ))}
-  </>
-);
-
-export const Bold = (args) => (
-  <>
-    {textTextSizes.map((presetSize) => (
-      <Text.Paragraph
-        key={`${presetSize}_text_bold`}
-        size={presetSize}
-        isBold
-        {...args}
-      >
-        {presetSize} <br />
-        {'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'}
-      </Text.Paragraph>
-    ))}
-  </>
-);
-
-export const Label = (args) => (
-  <>
-    <Headline as="h1">{'Label'}</Headline>
-    {textTextSizes.map((presetSize) => {
-      return (
-        theme.typography.presets.label[presetSize] && (
-          <Text.Label
-            key={`${presetSize}_text_link`}
+export const _default = {
+  render: function Render(args) {
+    return (
+      <>
+        {textTextSizes.map((presetSize) => (
+          <Text.Paragraph
+            key={`${presetSize}_text`}
             size={presetSize}
             {...args}
           >
-            {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
-            <br />
-          </Text.Label>
-        )
-      );
-    })}
-    <br />
-    <Headline as="h1">{'Label - Disabled'}</Headline>
-    {textTextSizes.map((presetSize) => {
-      return (
-        theme.typography.presets.label[presetSize] && (
-          <Text
-            key={`${presetSize}_text_link_disabled`}
-            size={presetSize}
-            as="label"
-            disabled
-            {...args}
-          >
-            {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
-            <br />
-          </Text>
-        )
-      );
-    })}
-  </>
-);
-Label.args = {
-  isBold: false,
+            {presetSize} <br />
+            {
+              'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
+            }
+          </Text.Paragraph>
+        ))}
+      </>
+    );
+  },
 };
-Label.parameters = {
-  controls: {
-    include: ['isBold'],
+
+export const Bold = {
+  render: function Render(args) {
+    return (
+      <>
+        {textTextSizes.map((presetSize) => (
+          <Text.Paragraph
+            key={`${presetSize}_text_bold`}
+            size={presetSize}
+            isBold
+            {...args}
+          >
+            {presetSize} <br />
+            {
+              'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'
+            }
+          </Text.Paragraph>
+        ))}
+      </>
+    );
+  },
+};
+
+export const Label = {
+  render: function Render(args) {
+    return (
+      <>
+        <Headline as="h1">{'Label'}</Headline>
+        {textTextSizes.map((presetSize) => {
+          return (
+            theme.typography.presets.label[presetSize] && (
+              <Text.Label
+                key={`${presetSize}_text_link`}
+                size={presetSize}
+                {...args}
+              >
+                {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
+                <br />
+              </Text.Label>
+            )
+          );
+        })}
+        <br />
+        <Headline as="h1">{'Label - Disabled'}</Headline>
+        {textTextSizes.map((presetSize) => {
+          return (
+            theme.typography.presets.label[presetSize] && (
+              <Text
+                key={`${presetSize}_text_link_disabled`}
+                size={presetSize}
+                as="label"
+                disabled
+                {...args}
+              >
+                {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
+                <br />
+              </Text>
+            )
+          );
+        })}
+      </>
+    );
+  },
+
+  args: {
+    isBold: false,
+  },
+
+  parameters: {
+    controls: {
+      include: ['isBold'],
+    },
   },
 };

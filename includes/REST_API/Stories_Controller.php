@@ -215,7 +215,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$schema['properties']['style_presets'] = [
 			'description' => __( 'Style presets used by all stories', 'web-stories' ),
 			'type'        => 'object',
-			'context'     => [ 'view', 'edit' ],
+			'context'     => [ 'edit' ],
 		];
 
 		$schema['properties']['preview_link'] = [

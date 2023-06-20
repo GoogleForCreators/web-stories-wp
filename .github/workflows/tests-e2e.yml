@@ -70,12 +70,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1f99358870fe1c846a3ccba386cc2b2246836776
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
 
       - name: Setup Node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
@@ -84,7 +84,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d
+        uses: shivammathur/setup-php@4bd44f22a98a19e0950cbad5f31095157cc9621b
         with:
           php-version: '8.0'
           coverage: none
@@ -93,7 +93,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Install PHP dependencies
         uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
@@ -103,7 +103,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
         with:
-          bun-version: latest
+          bun-version: '0.5.9'
 
       - name: Build plugin
         run: bun run build:js
@@ -121,27 +121,18 @@ jobs:
           name: web-stories
           path: build/web-stories
 
-  nonce:
-    name: Percy Nonce
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ env.result }}
-    steps:
-      - id: nonce
-        run: echo "result=${{ github.run_id }}-${{ github.run_attempt }}-$(date +%s)" >> $GITHUB_ENV
-
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     continue-on-error: ${{ matrix.experimental == true }}
-    needs: [build, nonce]
+    needs: [build]
     strategy:
       fail-fast: false
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['6.0']
+        wp: ['6.1']
         snapshots: [false]
         experimental: [false]
         # We want to split up the tests into 2 parts running in parallel.
@@ -158,7 +149,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1f99358870fe1c846a3ccba386cc2b2246836776
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -171,9 +162,10 @@ jobs:
             docker.io:443
             registry-1.docker.io:443
             auth.docker.io:443
+            34.104.35.123:443
 
       - name: Checkout
-        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
 
       - name: Download bundle
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
@@ -215,24 +207,12 @@ jobs:
           AMP_VALIDATOR_FILE="${RUNNER_TEMP}/validator_wasm.js"
           echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
-      - name: Run E2E tests with percy
-        run: npm run test:e2e:percy -- -- --shard=$SHARD
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
-          WP_VERSION: ${{ matrix.wp }}
-          PERCY_BROWSER_EXECUTABLE: ${{ env.chromium_path }}
-          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
-          SHARD: ${{ matrix.shard }}
-          AMP_VALIDATOR_FILE: ${{ env.validator_file }}
-        if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
-
       - name: Run E2E tests
         run: npm run test:e2e -- --shard=$SHARD
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}
           AMP_VALIDATOR_FILE: ${{ env.validator_file }}
-        if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
         run: npm run env:stop
@@ -247,44 +227,3 @@ jobs:
           name: failures-artifacts
           path: build/e2e-artifacts
           if-no-files-found: ignore
-
-  percy:
-    name: Percy
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    if: >
-      always() &&
-      github.event.pull_request.draft == false &&
-      github.event.pull_request.head.repo.fork == false &&
-      github.event.pull_request.user.login != 'dependabot[bot]'
-    needs: [e2e, nonce]
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@1f99358870fe1c846a3ccba386cc2b2246836776
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-            percy.io:443
-            registry.npmjs.org:443
-            storage.googleapis.com:443
-
-      - name: Checkout
-        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
-
-      - name: Setup Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm install @percy/cli
-
-      - name: Finalize Percy build
-        run: npx percy build:finalize
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
-          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}

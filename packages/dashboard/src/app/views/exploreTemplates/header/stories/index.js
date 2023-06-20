@@ -58,48 +58,54 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const filter = {
-    value: args.filterValue,
-  };
-  const sort = {
-    value: args.sortValue,
-    set: args.setSort,
-  };
-  const search = {
-    keyword: args.keyword,
-    setKeyword: args.setKeyword,
-  };
-  const view = {
-    style: args.style,
-    pageSize: { width: 210, height: 316 },
-  };
-  const page = {
-    value: 1,
-    set: args.setPage,
-    requestNextPage: args.requestNextPage,
-  };
+export const _default = {
+  render: function Render(args) {
+    const filter = {
+      value: args.filterValue,
+    };
+    const sort = {
+      value: args.sortValue,
+      set: args.setSort,
+    };
+    const search = {
+      keyword: args.keyword,
+      setKeyword: args.setKeyword,
+    };
+    const view = {
+      style: args.style,
+      pageSize: { width: 210, height: 316 },
+    };
+    const page = {
+      value: 1,
+      set: args.setPage,
+      requestNextPage: args.requestNextPage,
+    };
 
-  const defaultProps = {
-    allPagesFetched: false,
-    isLoading: false,
-    page: page,
-    search: search,
-    templates: formattedTemplatesArray,
-    sort: sort,
-    filter: filter,
-    view: view,
-    totalTemplates: 3,
-  };
-  return (
-    <FlagsProvider features={args.enableInProgressTemplateActions}>
-      <Layout.Provider>
-        <Header {...args} {...defaultProps} />
-      </Layout.Provider>
-    </FlagsProvider>
-  );
+    const defaultProps = {
+      allPagesFetched: false,
+      isLoading: false,
+      page: page,
+      search: search,
+      templates: formattedTemplatesArray,
+      sort: sort,
+      filter: filter,
+      view: view,
+      totalTemplates: 3,
+    };
+    return (
+      <FlagsProvider features={args.enableInProgressTemplateActions}>
+        <Layout.Provider>
+          <Header {...args} {...defaultProps} />
+        </Layout.Provider>
+      </FlagsProvider>
+    );
+  },
 };
-export const ActiveSearch = _default.bind({});
-ActiveSearch.args = {
-  keyword: 'demo search',
+
+export const ActiveSearch = {
+  render: _default,
+
+  args: {
+    keyword: 'demo search',
+  },
 };

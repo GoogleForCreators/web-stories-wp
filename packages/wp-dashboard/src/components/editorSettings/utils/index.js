@@ -17,6 +17,7 @@ export { default as validateAdManagerSlotIdFormat } from './validateAdManagerSlo
 export { default as validateAdSensePublisherIdFormat } from './validateAdSensePublisherIdFormat';
 export { default as validateAdSenseSlotIdFormat } from './validateAdSenseSlotIdFormat';
 export { default as validateGoogleAnalyticsIdFormat } from './validateGoogleAnalyticsIdFormat';
+export { default as validateMgidWidgetIdFormat } from './validateMgidWidgetIdFormat';
 export {
   default as isValidShopifyHost,
   hostPattern,

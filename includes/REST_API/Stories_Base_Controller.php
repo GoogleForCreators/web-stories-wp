@@ -134,7 +134,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		if ( ! empty( $schema['properties']['story_data'] ) && rest_is_field_included( 'story_data', $fields ) ) {
 			$post_story_data    = json_decode( $post->post_content_filtered, true );
-			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
+			$data['story_data'] = post_password_required( $post ) ? (object) [] : rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
 		/**
@@ -184,7 +184,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			return $original_post;
 		}
 
-		if ( ! $this->check_read_permission( $original_post ) ) {
+		if ( ! $this->check_update_permission( $original_post ) ) {
 			return new \WP_Error(
 				'rest_cannot_create',
 				__( 'Sorry, you are not allowed to duplicate this story.', 'web-stories' ),

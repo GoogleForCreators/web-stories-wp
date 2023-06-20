@@ -20,10 +20,14 @@
 import {
   ELEMENT_TYPES,
   type Element,
-  type Page,
   type ProductElement,
   type ProductData,
+  type Page,
 } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
 
 function isProduct(e: Element): e is ProductElement {
   return 'product' in e;

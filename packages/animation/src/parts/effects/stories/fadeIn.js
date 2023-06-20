@@ -46,60 +46,62 @@ const defaultStyles = {
   height: '50px',
 };
 
-export const _default = () => {
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      <amp-story-page id={`page-1`}>
-        <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Fade In'}</p>
-
-        <amp-story-grid-layer template="horizontal">
-          <div
-            animate-in="fade-in"
-            animate-in-duration="1s"
-            style={{
-              backgroundColor: 'red',
-              ...defaultStyles,
-            }}
-          />
-          <div
-            animate-in="fade-in"
-            animate-in-duration="2.5s"
-            style={{
-              backgroundColor: 'orange',
-              ...defaultStyles,
-            }}
-          />
-        </amp-story-grid-layer>
-      </amp-story-page>
-      <amp-story-page id={`page-2`}>
-        <StoryAnimation.AnimationProvider animations={animations}>
-          <StoryAnimation.AMPAnimations />
+export const _default = {
+  render: function Render() {
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
           <p style={{ textAlign: 'center', color: '#fff' }}>
-            {'Custom Fade In Effect'}
+            {'Empty first page'}
           </p>
+        </amp-story-page>
+        <amp-story-page id={`page-1`}>
+          <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Fade In'}</p>
 
           <amp-story-grid-layer template="horizontal">
-            {elements.map(({ id, color }) => (
-              <div key={id} style={defaultStyles}>
-                <StoryAnimation.AMPWrapper target={id}>
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: color,
-                    }}
-                  />
-                </StoryAnimation.AMPWrapper>
-              </div>
-            ))}
+            <div
+              animate-in="fade-in"
+              animate-in-duration="1s"
+              style={{
+                backgroundColor: 'red',
+                ...defaultStyles,
+              }}
+            />
+            <div
+              animate-in="fade-in"
+              animate-in-duration="2.5s"
+              style={{
+                backgroundColor: 'orange',
+                ...defaultStyles,
+              }}
+            />
           </amp-story-grid-layer>
-        </StoryAnimation.AnimationProvider>
-      </amp-story-page>
-    </AMPStoryWrapper>
-  );
+        </amp-story-page>
+        <amp-story-page id={`page-2`}>
+          <StoryAnimation.AnimationProvider animations={animations}>
+            <StoryAnimation.AMPAnimations />
+            <p style={{ textAlign: 'center', color: '#fff' }}>
+              {'Custom Fade In Effect'}
+            </p>
+
+            <amp-story-grid-layer template="horizontal">
+              {elements.map(({ id, color }) => (
+                <div key={id} style={defaultStyles}>
+                  <StoryAnimation.AMPWrapper target={id}>
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: color,
+                      }}
+                    />
+                  </StoryAnimation.AMPWrapper>
+                </div>
+              ))}
+            </amp-story-grid-layer>
+          </StoryAnimation.AnimationProvider>
+        </amp-story-page>
+      </AMPStoryWrapper>
+    );
+  },
 };

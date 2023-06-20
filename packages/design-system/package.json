@@ -42,23 +42,23 @@
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
-    "@types/react-modal": "^3.13.1",
+    "@types/react-modal": "^3.16.0",
     "big.js": "^6.2.1",
     "mousetrap": "^1.6.5",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "react-modal": "^3.16.1",
     "react-transition-group": "^4.4.5",
-    "styled-components": "^5.3.9",
+    "styled-components": "^5.3.11",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-essentials": "^7.0.22",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/big.js": "^6.1.6",
-    "@types/react-transition-group": "^4.4.5",
+    "@types/react-transition-group": "^4.4.6",
     "@types/styled-components": "^5.1.26",
-    "use-debounce": "^9.0.3"
+    "use-debounce": "^9.0.4"
   }
 }

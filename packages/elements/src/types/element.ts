@@ -96,7 +96,6 @@ export interface Element extends ElementBox {
   groupId?: string;
   border?: Border;
   borderRadius?: BorderRadius;
-  basedOn?: ElementId;
   layerName?: string;
   isLocked?: boolean;
   isHidden?: boolean;

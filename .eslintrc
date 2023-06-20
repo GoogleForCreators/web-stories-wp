@@ -238,6 +238,11 @@
     }],
     "jsdoc/require-returns": "error",
     "jsdoc/require-param-description": "error",
+    "jsdoc/tag-lines": [
+      "error",
+      "any",
+      { "startLines": 1 }
+    ],
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/require-description": "error",
@@ -327,6 +332,7 @@
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
+        "warnOnUnsupportedTypeScriptVersion": false,
         "project": [
           "./packages/*/tsconfig.json"
         ]

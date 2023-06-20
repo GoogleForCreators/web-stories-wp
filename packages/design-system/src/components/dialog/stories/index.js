@@ -51,128 +51,23 @@ const InvertedWrapper = styled.div`
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
 `;
-// eslint-disable-next-line react/prop-types
-export const _default = ({ message, onClick, ...args }) => {
-  const [toggleDialog, setToggleDialog] = useState(false);
+export const _default = {
+  render: function Render({ message, onClick, ...args }) {
+    const [toggleDialog, setToggleDialog] = useState(false);
 
-  const ActionsNode = (
-    <Button
-      size={ButtonSize.Small}
-      type={ButtonType.Primary}
-      onClick={() => {
-        onClick('button');
-        setToggleDialog(!toggleDialog);
-      }}
-    >
-      {'Primary'}
-    </Button>
-  );
-  return (
-    <InvertedWrapper>
-      <Button
-        size={ButtonSize.Small}
-        type={ButtonType.Primary}
-        onClick={() => setToggleDialog(!toggleDialog)}
-      >
-        {'Toggle Dialog'}
-      </Button>
-      <Dialog
-        onClose={() => {
-          onClick('close dialog');
-          setToggleDialog(!toggleDialog);
-        }}
-        isOpen={toggleDialog}
-        contentLabel={'Dialog content Label for modal'}
-        actions={ActionsNode}
-        {...args}
-      >
-        <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
-      </Dialog>
-    </InvertedWrapper>
-  );
-};
-
-// eslint-disable-next-line react/prop-types
-export const With2Actions = ({ message, onClick, ...args }) => {
-  const [toggleDialog, setToggleDialog] = useState(false);
-
-  const ActionsNode = (
-    <>
-      <Button
-        size={ButtonSize.Small}
-        type={ButtonType.Tertiary}
-        onClick={() => {
-          onClick('cancel button');
-          setToggleDialog(!toggleDialog);
-        }}
-      >
-        {'Secondary'}
-      </Button>
+    const ActionsNode = (
       <Button
         size={ButtonSize.Small}
         type={ButtonType.Primary}
         onClick={() => {
-          onClick('primary button');
+          onClick('button');
+          setToggleDialog(!toggleDialog);
         }}
       >
         {'Primary'}
       </Button>
-    </>
-  );
-  return (
-    <InvertedWrapper>
-      <Button
-        size={ButtonSize.Small}
-        type={ButtonType.Primary}
-        onClick={() => setToggleDialog(!toggleDialog)}
-      >
-        {'Toggle Dialog'}
-      </Button>
-      <Dialog
-        onClose={() => {
-          onClick('close dialog clicked');
-          setToggleDialog(!toggleDialog);
-        }}
-        isOpen={toggleDialog}
-        contentLabel={'Dialog content Label for modal'}
-        actions={ActionsNode}
-        {...args}
-      >
-        <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
-      </Dialog>
-    </InvertedWrapper>
-  );
-};
-
-// eslint-disable-next-line react/prop-types
-export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
-  const [toggleDialog, setToggleDialog] = useState(false);
-
-  const ActionsNode = (
-    <>
-      <Button
-        size={ButtonSize.Small}
-        type={ButtonType.Tertiary}
-        onClick={() => {
-          onClick('cancel button ');
-          setToggleDialog(!toggleDialog);
-        }}
-      >
-        {'Secondary'}
-      </Button>
-      <Button
-        size={ButtonSize.Small}
-        type={ButtonType.Primary}
-        onClick={() => {
-          onClick('primary button ');
-        }}
-      >
-        {'Primary'}
-      </Button>
-    </>
-  );
-  return (
-    <DarkThemeProvider>
+    );
+    return (
       <InvertedWrapper>
         <Button
           size={ButtonSize.Small}
@@ -194,6 +89,114 @@ export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
           <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
         </Dialog>
       </InvertedWrapper>
-    </DarkThemeProvider>
-  );
+    );
+  },
+};
+
+export const With2Actions = {
+  render: function Render({ message, onClick, ...args }) {
+    const [toggleDialog, setToggleDialog] = useState(false);
+
+    const ActionsNode = (
+      <>
+        <Button
+          size={ButtonSize.Small}
+          type={ButtonType.Tertiary}
+          onClick={() => {
+            onClick('cancel button');
+            setToggleDialog(!toggleDialog);
+          }}
+        >
+          {'Secondary'}
+        </Button>
+        <Button
+          size={ButtonSize.Small}
+          type={ButtonType.Primary}
+          onClick={() => {
+            onClick('primary button');
+          }}
+        >
+          {'Primary'}
+        </Button>
+      </>
+    );
+    return (
+      <InvertedWrapper>
+        <Button
+          size={ButtonSize.Small}
+          type={ButtonType.Primary}
+          onClick={() => setToggleDialog(!toggleDialog)}
+        >
+          {'Toggle Dialog'}
+        </Button>
+        <Dialog
+          onClose={() => {
+            onClick('close dialog clicked');
+            setToggleDialog(!toggleDialog);
+          }}
+          isOpen={toggleDialog}
+          contentLabel={'Dialog content Label for modal'}
+          actions={ActionsNode}
+          {...args}
+        >
+          <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
+        </Dialog>
+      </InvertedWrapper>
+    );
+  },
+};
+
+export const With2ActionsDarkTheme = {
+  render: function Render({ message, onClick, ...args }) {
+    const [toggleDialog, setToggleDialog] = useState(false);
+
+    const ActionsNode = (
+      <>
+        <Button
+          size={ButtonSize.Small}
+          type={ButtonType.Tertiary}
+          onClick={() => {
+            onClick('cancel button ');
+            setToggleDialog(!toggleDialog);
+          }}
+        >
+          {'Secondary'}
+        </Button>
+        <Button
+          size={ButtonSize.Small}
+          type={ButtonType.Primary}
+          onClick={() => {
+            onClick('primary button ');
+          }}
+        >
+          {'Primary'}
+        </Button>
+      </>
+    );
+    return (
+      <DarkThemeProvider>
+        <InvertedWrapper>
+          <Button
+            size={ButtonSize.Small}
+            type={ButtonType.Primary}
+            onClick={() => setToggleDialog(!toggleDialog)}
+          >
+            {'Toggle Dialog'}
+          </Button>
+          <Dialog
+            onClose={() => {
+              onClick('close dialog');
+              setToggleDialog(!toggleDialog);
+            }}
+            isOpen={toggleDialog}
+            contentLabel={'Dialog content Label for modal'}
+            actions={ActionsNode}
+            {...args}
+          >
+            <Text.Paragraph size={TextSize.Small}>{message}</Text.Paragraph>
+          </Dialog>
+        </InvertedWrapper>
+      </DarkThemeProvider>
+    );
+  },
 };

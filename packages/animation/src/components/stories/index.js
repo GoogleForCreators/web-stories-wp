@@ -80,170 +80,174 @@ const animations = [
   },
 ];
 
-export function _default() {
-  const [state, setState] = useState(0);
-  return (
-    <StoryAnimation.AnimationProvider
-      animations={animations}
-      onWAAPIFinish={() => {
-        setState((v) => v + 1);
-      }}
-    >
-      <PlayButton />
-      <SquareWrapper>
-        <StoryAnimation.WAAPIWrapper target="some-id">
-          <ColorSquare id="some-id" color={state % 2 ? 'tomato' : 'green'} />
-        </StoryAnimation.WAAPIWrapper>
-      </SquareWrapper>
-    </StoryAnimation.AnimationProvider>
-  );
-}
-
-export function AMPStory() {
-  const pages = [
-    {
-      id: 'first-page',
-      animations: [
-        {
-          id: 'ir',
-          targets: ['el1'],
-          type: AnimationType.Bounce,
-          duration: 1000,
-        },
-      ],
-    },
-    {
-      id: 'second-page',
-      animations: [
-        {
-          id: 'a5',
-          targets: ['el2'],
-          type: AnimationType.Bounce,
-          duration: 2000,
-        },
-      ],
-    },
-    {
-      id: 'third-page',
-      animations: [
-        { id: 'a1', targets: ['el3'], type: AnimationType.Bounce },
-        {
-          id: 'a2',
-          targets: ['el4'],
-          type: AnimationType.Bounce,
-          delay: 100,
-        },
-        {
-          id: 'a3',
-          targets: ['el5'],
-          type: AnimationType.Bounce,
-          delay: 300,
-        },
-        {
-          id: 'a4',
-          targets: ['el6'],
-          type: AnimationType.Bounce,
-          delay: 500,
-        },
-      ],
-      elements: [
-        { id: 'el3', color: 'red', width: '50px' },
-        { id: 'el4', color: 'orange', width: '100px' },
-        { id: 'el5', color: 'blue', width: '200px' },
-        { id: 'el6', color: 'green', width: '150px' },
-      ],
-    },
-  ];
-
-  return (
-    <div style={{ width: '100%', height: '640px' }}>
-      <amp-story
-        standalone
-        title="My Story"
-        publisher="The AMP Team"
-        publisher-logo-src="https://example.com/logo/1x1.png"
-        poster-portrait-src="https://example.com/my-story/poster/3x4.jpg"
+export const _default = {
+  render: function Render() {
+    const [state, setState] = useState(0);
+    return (
+      <StoryAnimation.AnimationProvider
+        animations={animations}
+        onWAAPIFinish={() => {
+          setState((v) => v + 1);
+        }}
       >
-        <amp-story-page id={'p0'}>
-          <amp-img
-            src="https://picsum.photos/id/58/300"
-            width="300"
-            height="300"
-          />
-        </amp-story-page>
-        <amp-story-page id={pages[0].id}>
-          <StoryAnimation.AnimationProvider animations={pages[0].animations}>
-            <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimations />
+        <PlayButton />
+        <SquareWrapper>
+          <StoryAnimation.WAAPIWrapper target="some-id">
+            <ColorSquare id="some-id" color={state % 2 ? 'tomato' : 'green'} />
+          </StoryAnimation.WAAPIWrapper>
+        </SquareWrapper>
+      </StoryAnimation.AnimationProvider>
+    );
+  },
+};
 
-            <StoryAnimation.AMPWrapper
-              target="el1"
-              style={{ width: '300px', height: '300px' }}
-            >
-              <amp-img
-                src="https://picsum.photos/id/237/300"
-                width="300"
-                height="300"
-              />
-            </StoryAnimation.AMPWrapper>
-          </StoryAnimation.AnimationProvider>
-        </amp-story-page>
-        <amp-story-page id={pages[1].id}>
-          <StoryAnimation.AnimationProvider animations={pages[1].animations}>
-            <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimations />
+export const AMPStory = {
+  render: function Render() {
+    const pages = [
+      {
+        id: 'first-page',
+        animations: [
+          {
+            id: 'ir',
+            targets: ['el1'],
+            type: AnimationType.Bounce,
+            duration: 1000,
+          },
+        ],
+      },
+      {
+        id: 'second-page',
+        animations: [
+          {
+            id: 'a5',
+            targets: ['el2'],
+            type: AnimationType.Bounce,
+            duration: 2000,
+          },
+        ],
+      },
+      {
+        id: 'third-page',
+        animations: [
+          { id: 'a1', targets: ['el3'], type: AnimationType.Bounce },
+          {
+            id: 'a2',
+            targets: ['el4'],
+            type: AnimationType.Bounce,
+            delay: 100,
+          },
+          {
+            id: 'a3',
+            targets: ['el5'],
+            type: AnimationType.Bounce,
+            delay: 300,
+          },
+          {
+            id: 'a4',
+            targets: ['el6'],
+            type: AnimationType.Bounce,
+            delay: 500,
+          },
+        ],
+        elements: [
+          { id: 'el3', color: 'red', width: '50px' },
+          { id: 'el4', color: 'orange', width: '100px' },
+          { id: 'el5', color: 'blue', width: '200px' },
+          { id: 'el6', color: 'green', width: '150px' },
+        ],
+      },
+    ];
 
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '100%',
-              }}
-            >
+    return (
+      <div style={{ width: '100%', height: '640px' }}>
+        <amp-story
+          standalone
+          title="My Story"
+          publisher="The AMP Team"
+          publisher-logo-src="https://example.com/logo/1x1.png"
+          poster-portrait-src="https://example.com/my-story/poster/3x4.jpg"
+        >
+          <amp-story-page id={'p0'}>
+            <amp-img
+              src="https://picsum.photos/id/58/300"
+              width="300"
+              height="300"
+            />
+          </amp-story-page>
+          <amp-story-page id={pages[0].id}>
+            <StoryAnimation.AnimationProvider animations={pages[0].animations}>
+              <StoryAnimation.AMPKeyframes />
+              <StoryAnimation.AMPAnimations />
+
               <StoryAnimation.AMPWrapper
-                target="el2"
+                target="el1"
                 style={{ width: '300px', height: '300px' }}
               >
                 <amp-img
-                  src="https://picsum.photos/id/17/300"
+                  src="https://picsum.photos/id/237/300"
                   width="300"
                   height="300"
                 />
               </StoryAnimation.AMPWrapper>
-            </div>
-          </StoryAnimation.AnimationProvider>
-        </amp-story-page>
-        <amp-story-page id={pages[2].id}>
-          <StoryAnimation.AnimationProvider animations={pages[2].animations}>
-            <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimations />
+            </StoryAnimation.AnimationProvider>
+          </amp-story-page>
+          <amp-story-page id={pages[1].id}>
+            <StoryAnimation.AnimationProvider animations={pages[1].animations}>
+              <StoryAnimation.AMPKeyframes />
+              <StoryAnimation.AMPAnimations />
 
-            <amp-story-grid-layer template="vertical">
-              {pages[2].elements.map((element) => (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                }}
+              >
                 <StoryAnimation.AMPWrapper
-                  key={element.id}
-                  target={element.id}
-                  style={{
-                    width: element.width,
-                    height: '50px',
-                    marginBottom: '10px',
-                  }}
+                  target="el2"
+                  style={{ width: '300px', height: '300px' }}
                 >
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: element.color,
-                    }}
+                  <amp-img
+                    src="https://picsum.photos/id/17/300"
+                    width="300"
+                    height="300"
                   />
                 </StoryAnimation.AMPWrapper>
-              ))}
-            </amp-story-grid-layer>
-          </StoryAnimation.AnimationProvider>
-        </amp-story-page>
-      </amp-story>
-    </div>
-  );
-}
+              </div>
+            </StoryAnimation.AnimationProvider>
+          </amp-story-page>
+          <amp-story-page id={pages[2].id}>
+            <StoryAnimation.AnimationProvider animations={pages[2].animations}>
+              <StoryAnimation.AMPKeyframes />
+              <StoryAnimation.AMPAnimations />
+
+              <amp-story-grid-layer template="vertical">
+                {pages[2].elements.map((element) => (
+                  <StoryAnimation.AMPWrapper
+                    key={element.id}
+                    target={element.id}
+                    style={{
+                      width: element.width,
+                      height: '50px',
+                      marginBottom: '10px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: element.color,
+                      }}
+                    />
+                  </StoryAnimation.AMPWrapper>
+                ))}
+              </amp-story-grid-layer>
+            </StoryAnimation.AnimationProvider>
+          </amp-story-page>
+        </amp-story>
+      </div>
+    );
+  },
+};

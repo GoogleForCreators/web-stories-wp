@@ -47,83 +47,85 @@ const animations = [
   { id: '1', targets: ['e1'], type: AnimationType.EffectDrop },
 ];
 
-export const _default = () => {
-  const elementBoxes = elements.map((element) => ({
-    ...element,
-    ...getBox(element, 100, 100),
-  }));
+export const _default = {
+  render: function Render() {
+    const elementBoxes = elements.map((element) => ({
+      ...element,
+      ...getBox(element, 100, 100),
+    }));
 
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      <amp-story-page id="page-1">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'AMP Drop Effect'}
-        </p>
-        <amp-story-grid-layer
-          template="vertical"
-          aspect-ration={AMP_STORY_ASPECT_RATIO}
-        >
-          <div
-            animate-in="drop"
-            style={{
-              position: 'absolute',
-              height: '50px',
-              width: '50px',
-              top: 'calc(100% - 50px)',
-              left: 'calc(50% - 25px)',
-              backgroundColor: 'red',
-            }}
-          />
-        </amp-story-grid-layer>
-      </amp-story-page>
-      <amp-story-page id="page-2">
-        <StoryAnimation.AnimationProvider
-          animations={animations}
-          elements={elements}
-        >
-          <StoryAnimation.AMPAnimations />
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
           <p style={{ textAlign: 'center', color: '#fff' }}>
-            {'Custom Drop Effect'}
+            {'Empty first page'}
           </p>
-
+        </amp-story-page>
+        <amp-story-page id="page-1">
+          <p style={{ textAlign: 'center', color: '#fff' }}>
+            {'AMP Drop Effect'}
+          </p>
           <amp-story-grid-layer
             template="vertical"
             aspect-ration={AMP_STORY_ASPECT_RATIO}
           >
-            <div className="page-fullbleed-area">
-              <div className="page-safe-area">
-                {elementBoxes.map((elem) => (
-                  <div
-                    key={elem.id}
-                    style={{
-                      position: 'absolute',
-                      top: `${elem.y}%`,
-                      left: `${elem.x}%`,
-                      width: `${elem.width}%`,
-                      height: `${elem.height}%`,
-                    }}
-                  >
-                    <StoryAnimation.AMPWrapper target={elem.id}>
-                      <div
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          backgroundColor: elem.color,
-                        }}
-                      />
-                    </StoryAnimation.AMPWrapper>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <div
+              animate-in="drop"
+              style={{
+                position: 'absolute',
+                height: '50px',
+                width: '50px',
+                top: 'calc(100% - 50px)',
+                left: 'calc(50% - 25px)',
+                backgroundColor: 'red',
+              }}
+            />
           </amp-story-grid-layer>
-        </StoryAnimation.AnimationProvider>
-      </amp-story-page>
-    </AMPStoryWrapper>
-  );
+        </amp-story-page>
+        <amp-story-page id="page-2">
+          <StoryAnimation.AnimationProvider
+            animations={animations}
+            elements={elements}
+          >
+            <StoryAnimation.AMPAnimations />
+            <p style={{ textAlign: 'center', color: '#fff' }}>
+              {'Custom Drop Effect'}
+            </p>
+
+            <amp-story-grid-layer
+              template="vertical"
+              aspect-ration={AMP_STORY_ASPECT_RATIO}
+            >
+              <div className="page-fullbleed-area">
+                <div className="page-safe-area">
+                  {elementBoxes.map((elem) => (
+                    <div
+                      key={elem.id}
+                      style={{
+                        position: 'absolute',
+                        top: `${elem.y}%`,
+                        left: `${elem.x}%`,
+                        width: `${elem.width}%`,
+                        height: `${elem.height}%`,
+                      }}
+                    >
+                      <StoryAnimation.AMPWrapper target={elem.id}>
+                        <div
+                          style={{
+                            height: '100%',
+                            width: '100%',
+                            backgroundColor: elem.color,
+                          }}
+                        />
+                      </StoryAnimation.AMPWrapper>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </amp-story-grid-layer>
+          </StoryAnimation.AnimationProvider>
+        </amp-story-page>
+      </AMPStoryWrapper>
+    );
+  },
 };

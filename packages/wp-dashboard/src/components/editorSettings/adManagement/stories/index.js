@@ -27,6 +27,7 @@ export default {
     publisherId: 'publisher Id',
     adSenseSlotId: 'ad sense slot id',
     adManagerSlotId: 'ad manager slot id',
+    mgidWidgetId: 'mgid widget id',
     installed: false,
     active: false,
     adsenseActive: false,
@@ -46,16 +47,18 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <AdManagement
-      siteKitStatus={{
-        installed: args.installed,
-        active: args.active,
-        adsenseActive: args.adsenseActive,
-        adsenseLink: args.adsenseLink,
-      }}
-      {...args}
-    />
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <AdManagement
+        siteKitStatus={{
+          installed: args.installed,
+          active: args.active,
+          adsenseActive: args.adsenseActive,
+          adsenseLink: args.adsenseLink,
+        }}
+        {...args}
+      />
+    );
+  },
 };

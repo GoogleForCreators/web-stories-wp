@@ -2,6 +2,9 @@
 
 declare(strict_types = 1);
 
+use function Yoast\WPTestUtils\WPIntegration\bootstrap_it;
+use function Yoast\WPTestUtils\WPIntegration\get_path_to_wp_test_dir;
+
 /*
  * Copyright 2021 Google LLC
  *
@@ -29,7 +32,7 @@ declare(strict_types = 1);
 
 require_once dirname( __DIR__, 3 ) . '/vendor/yoast/wp-test-utils/src/WPIntegration/bootstrap-functions.php';
 
-$_tests_dir = Yoast\WPTestUtils\WPIntegration\get_path_to_wp_test_dir();
+$_tests_dir = get_path_to_wp_test_dir();
 
 define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', dirname( __DIR__, 2 ) . '/vendor/yoast/phpunit-polyfills' );
 
@@ -45,7 +48,7 @@ function _manually_load_plugin(): void {
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
-Yoast\WPTestUtils\WPIntegration\bootstrap_it();
+bootstrap_it();
 
 define( 'WEB_STORIES_TEST_DATA_DIR', __DIR__ . '/data' );
 

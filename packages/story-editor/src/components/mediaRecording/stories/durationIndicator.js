@@ -33,14 +33,19 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <MediaRecordingContext.Provider
-      value={{
-        state: { ...args, status: args.isRecording ? 'recording' : 'stopped' },
-      }}
-    >
-      <DurationIndicator />
-    </MediaRecordingContext.Provider>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <MediaRecordingContext.Provider
+        value={{
+          state: {
+            ...args,
+            status: args.isRecording ? 'recording' : 'stopped',
+          },
+        }}
+      >
+        <DurationIndicator />
+      </MediaRecordingContext.Provider>
+    );
+  },
 };

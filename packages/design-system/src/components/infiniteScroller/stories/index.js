@@ -62,40 +62,42 @@ const Item = styled.div`
 
 const generateArray = (n) => new Array(n).fill(<span>{'Demo Item'}</span>);
 
-export const _default = (args) => {
-  const [currentCount, setCurrentCount] = useState(5);
-  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [dummyData, setDummyData] = useState(generateArray(currentCount));
+export const _default = {
+  render: function Render(args) {
+    const [currentCount, setCurrentCount] = useState(5);
+    const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [dummyData, setDummyData] = useState(generateArray(currentCount));
 
-  useEffect(() => {
-    setDummyData(generateArray(currentCount));
-    if (currentCount === 30) {
-      setIsAllDataLoaded(true);
+    useEffect(() => {
+      setDummyData(generateArray(currentCount));
+      if (currentCount === 30) {
+        setIsAllDataLoaded(true);
+      }
+      setIsLoading(false);
+    }, [currentCount]);
+
+    if (dummyData.length > 0) {
+      return (
+        <>
+          {dummyData.map((data, index) => (
+            //eslint-disable-next-line react/no-array-index-key
+            <Item key={index}>
+              {data} {index}
+            </Item>
+          ))}
+          <InfiniteScroller
+            onLoadMore={() => {
+              setIsLoading(true);
+              setCurrentCount(currentCount + 5);
+            }}
+            isLoading={isLoading}
+            canLoadMore={!isAllDataLoaded}
+            {...args}
+          />
+        </>
+      );
     }
-    setIsLoading(false);
-  }, [currentCount]);
-
-  if (dummyData.length > 0) {
-    return (
-      <>
-        {dummyData.map((data, index) => (
-          //eslint-disable-next-line react/no-array-index-key
-          <Item key={index}>
-            {data} {index}
-          </Item>
-        ))}
-        <InfiniteScroller
-          onLoadMore={() => {
-            setIsLoading(true);
-            setCurrentCount(currentCount + 5);
-          }}
-          isLoading={isLoading}
-          canLoadMore={!isAllDataLoaded}
-          {...args}
-        />
-      </>
-    );
-  }
-  return null;
+    return null;
+  },
 };

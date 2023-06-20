@@ -42,21 +42,23 @@ const Container = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.standard.black};
 `;
 
-export const _default = () => {
-  const [value, setValue] = useState('https://test.com');
-  const onChange = (newValue) => {
-    setValue(newValue);
-  };
-  return (
-    <Container>
-      <LinkInput
-        hint={__('Type an address to add a link', 'web-stories')}
-        onChange={onChange}
-        onFocus={() => {}}
-        value={value}
-        clear
-        aria-label={__('Test URL', 'web-stories')}
-      />
-    </Container>
-  );
+export const _default = {
+  render: function Render() {
+    const [value, setValue] = useState('https://test.com');
+    const onChange = (newValue) => {
+      setValue(newValue);
+    };
+    return (
+      <Container>
+        <LinkInput
+          hint={__('Type an address to add a link', 'web-stories')}
+          onChange={onChange}
+          onFocus={() => {}}
+          value={value}
+          clear
+          aria-label={__('Test URL', 'web-stories')}
+        />
+      </Container>
+    );
+  },
 };

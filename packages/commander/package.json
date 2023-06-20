@@ -27,12 +27,12 @@
   },
   "type": "module",
   "dependencies": {
-    "commander": "^10.0.0",
-    "semver": "^7.3.8"
+    "commander": "^11.0.0",
+    "semver": "^7.5.2"
   },
   "devDependencies": {
-    "@types/node": "^18.15.3",
-    "@types/semver": "^7.3.13"
+    "@types/node": "^20.2.5",
+    "@types/semver": "^7.5.0"
   },
   "bin": {
     "commander": "./src/index.ts"

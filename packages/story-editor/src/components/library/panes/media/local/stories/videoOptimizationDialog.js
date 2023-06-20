@@ -36,26 +36,28 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  // Reset local storage for improved testablity.
-  const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
-  localStore.setItemByKey(storageKey, false);
+export const _default = {
+  render: function Render(args) {
+    // Reset local storage for improved testablity.
+    const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
+    localStore.setItemByKey(storageKey, false);
 
-  const mediaValue = {
-    local: {
-      state: { isTranscoding: true },
-    },
-  };
+    const mediaValue = {
+      local: {
+        state: { isTranscoding: true },
+      },
+    };
 
-  const userValue = {
-    actions: { updateCurrentUser: args.updateCurrentUser },
-  };
+    const userValue = {
+      actions: { updateCurrentUser: args.updateCurrentUser },
+    };
 
-  return (
-    <CurrentUserContext.Provider value={userValue}>
-      <MediaContext.Provider value={mediaValue}>
-        <VideoOptimizationDialog />
-      </MediaContext.Provider>
-    </CurrentUserContext.Provider>
-  );
+    return (
+      <CurrentUserContext.Provider value={userValue}>
+        <MediaContext.Provider value={mediaValue}>
+          <VideoOptimizationDialog />
+        </MediaContext.Provider>
+      </CurrentUserContext.Provider>
+    );
+  },
 };

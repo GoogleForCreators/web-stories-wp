@@ -39,16 +39,20 @@ export default {
   },
 };
 
-export const _default = (args) => (
-  <>
-    {displayTextSizes.map((presetSize) => (
-      <div key={`${presetSize}_display`}>
-        <Text.Paragraph size={'small'}>{presetSize}</Text.Paragraph>
+export const _default = {
+  render: function Render(args) {
+    return (
+      <>
+        {displayTextSizes.map((presetSize) => (
+          <div key={`${presetSize}_display`}>
+            <Text.Paragraph size={'small'}>{presetSize}</Text.Paragraph>
 
-        <Display size={presetSize} {...args}>
-          {'The Quick Brown Fox Jumps Over the Lazy Dog'} <br />
-        </Display>
-      </div>
-    ))}
-  </>
-);
+            <Display size={presetSize} {...args}>
+              {'The Quick Brown Fox Jumps Over the Lazy Dog'} <br />
+            </Display>
+          </div>
+        ))}
+      </>
+    );
+  },
+};

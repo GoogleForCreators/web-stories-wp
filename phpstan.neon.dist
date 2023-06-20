@@ -22,6 +22,9 @@ parameters:
     -
       message: '/^Parameter #2 \$args of method WP_Customize_Manager::add_setting\(\)/'
       path: includes/Admin/Customizer.php
+    -
+      message: '/^Casting class ReflectionType to string is deprecated.$/'
+      path: includes/Infrastructure/Injector/SimpleInjector.php
   paths:
     - includes/
     - tests/phpunit/integration/includes

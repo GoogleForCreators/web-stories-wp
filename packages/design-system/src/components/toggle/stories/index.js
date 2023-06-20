@@ -63,75 +63,35 @@ const Row = styled.div`
   }
 `;
 
-export const _default = (args) => {
-  const [inputState, setInputState] = useState({
-    oneLight: false,
-    twoLight: true,
-    threeLight: false,
-    fourLight: true,
-    oneDark: false,
-    twoDark: true,
-    threeDark: false,
-    fourDark: true,
-  });
+export const _default = {
+  render: function Render(args) {
+    const [inputState, setInputState] = useState({
+      oneLight: false,
+      twoLight: true,
+      threeLight: false,
+      fourLight: true,
+      oneDark: false,
+      twoDark: true,
+      threeDark: false,
+      fourDark: true,
+    });
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.checked;
+    const handleChange = (event) => {
+      const name = event.target.name;
+      const value = event.target.checked;
 
-    args.onChange(`${name} is: ${value}`);
-    setInputState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+      args.onChange(`${name} is: ${value}`);
+      setInputState((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
 
-  return (
-    <>
-      <Headline as="h1">{'Toggle'}</Headline>
-      <br />
-      <Container>
-        <Row>
-          <Text.Paragraph>{'Normal'}</Text.Paragraph>
-          <Text.Paragraph>{'Normal'}</Text.Paragraph>
-          <Text.Paragraph>{'Disabled'}</Text.Paragraph>
-          <Text.Paragraph>{'Disabled'}</Text.Paragraph>
-        </Row>
-        <Row>
-          <Toggle
-            id="one-light"
-            aria-label="toggle-one-light"
-            name="oneLight"
-            checked={inputState.oneLight}
-            onChange={handleChange}
-          />
-          <Toggle
-            id="two-light"
-            aria-label="toggle-two-light"
-            name="twoLight"
-            checked={inputState.twoLight}
-            onChange={handleChange}
-          />
-          <Toggle
-            id="three-light"
-            aria-label="toggle-three-light"
-            name="threeLight"
-            checked={inputState.threeLight}
-            onChange={handleChange}
-            disabled
-          />
-          <Toggle
-            id="four-light"
-            aria-label="toggle-four-light"
-            name="fourLight"
-            checked={inputState.fourLight}
-            onChange={handleChange}
-            disabled
-          />
-        </Row>
-      </Container>
-      <DarkThemeProvider>
-        <Container darkMode>
+    return (
+      <>
+        <Headline as="h1">{'Toggle'}</Headline>
+        <br />
+        <Container>
           <Row>
             <Text.Paragraph>{'Normal'}</Text.Paragraph>
             <Text.Paragraph>{'Normal'}</Text.Paragraph>
@@ -140,38 +100,80 @@ export const _default = (args) => {
           </Row>
           <Row>
             <Toggle
-              id="one-dark"
-              aria-label="toggle-one-dark"
-              name="oneDark"
-              checked={inputState.oneDark}
+              id="one-light"
+              aria-label="toggle-one-light"
+              name="oneLight"
+              checked={inputState.oneLight}
               onChange={handleChange}
             />
             <Toggle
-              id="two-dark"
-              aria-label="toggle-two-dark"
-              name="twoDark"
-              checked={inputState.twoDark}
+              id="two-light"
+              aria-label="toggle-two-light"
+              name="twoLight"
+              checked={inputState.twoLight}
               onChange={handleChange}
             />
             <Toggle
-              id="three-dark"
-              aria-label="toggle-three-dark"
-              name="threeDark"
-              checked={inputState.threeDark}
+              id="three-light"
+              aria-label="toggle-three-light"
+              name="threeLight"
+              checked={inputState.threeLight}
               onChange={handleChange}
               disabled
             />
             <Toggle
-              id="four-dark"
-              aria-label="toggle-four-dark"
-              name="fourDark"
-              checked={inputState.fourDark}
+              id="four-light"
+              aria-label="toggle-four-light"
+              name="fourLight"
+              checked={inputState.fourLight}
               onChange={handleChange}
               disabled
             />
           </Row>
         </Container>
-      </DarkThemeProvider>
-    </>
-  );
+        <DarkThemeProvider>
+          <Container darkMode>
+            <Row>
+              <Text.Paragraph>{'Normal'}</Text.Paragraph>
+              <Text.Paragraph>{'Normal'}</Text.Paragraph>
+              <Text.Paragraph>{'Disabled'}</Text.Paragraph>
+              <Text.Paragraph>{'Disabled'}</Text.Paragraph>
+            </Row>
+            <Row>
+              <Toggle
+                id="one-dark"
+                aria-label="toggle-one-dark"
+                name="oneDark"
+                checked={inputState.oneDark}
+                onChange={handleChange}
+              />
+              <Toggle
+                id="two-dark"
+                aria-label="toggle-two-dark"
+                name="twoDark"
+                checked={inputState.twoDark}
+                onChange={handleChange}
+              />
+              <Toggle
+                id="three-dark"
+                aria-label="toggle-three-dark"
+                name="threeDark"
+                checked={inputState.threeDark}
+                onChange={handleChange}
+                disabled
+              />
+              <Toggle
+                id="four-dark"
+                aria-label="toggle-four-dark"
+                name="fourDark"
+                checked={inputState.fourDark}
+                onChange={handleChange}
+                disabled
+              />
+            </Row>
+          </Container>
+        </DarkThemeProvider>
+      </>
+    );
+  },
 };

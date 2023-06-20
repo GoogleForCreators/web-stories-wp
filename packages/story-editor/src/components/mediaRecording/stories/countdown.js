@@ -32,10 +32,12 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <MediaRecordingContext.Provider value={{ state: { ...args } }}>
-      <Countdown />
-    </MediaRecordingContext.Provider>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <MediaRecordingContext.Provider value={{ state: { ...args } }}>
+        <Countdown />
+      </MediaRecordingContext.Provider>
+    );
+  },
 };

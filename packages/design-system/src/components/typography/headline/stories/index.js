@@ -39,15 +39,19 @@ export default {
   },
 };
 
-export const _default = (args) => (
-  <>
-    {headlineTextSizes.map((presetSize) => (
-      <div key={`${presetSize}_headline`}>
-        <Text.Paragraph size={'small'}>{presetSize}</Text.Paragraph>
-        <Headline size={presetSize} {...args}>
-          {'The Quick Brown Fox Jumps Over the Lazy Dog'}
-        </Headline>
-      </div>
-    ))}
-  </>
-);
+export const _default = {
+  render: function Render(args) {
+    return (
+      <>
+        {headlineTextSizes.map((presetSize) => (
+          <div key={`${presetSize}_headline`}>
+            <Text.Paragraph size={'small'}>{presetSize}</Text.Paragraph>
+            <Headline size={presetSize} {...args}>
+              {'The Quick Brown Fox Jumps Over the Lazy Dog'}
+            </Headline>
+          </div>
+        ))}
+      </>
+    );
+  },
+};

@@ -47,59 +47,61 @@ export default {
   },
 };
 
-export const _default = () => {
-  const filters = [
-    {
-      value: 'a',
-      filter: {
-        type: 'radial',
-        size: { w: 0.8, h: 0.5 },
-        stops: [
-          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
-          { color: { r: 0, g: 0, b: 0, a: 0.7 }, position: 1 },
-        ],
-        alpha: 0.6,
+export const _default = {
+  render: function Render() {
+    const filters = [
+      {
+        value: 'a',
+        filter: {
+          type: 'radial',
+          size: { w: 0.8, h: 0.5 },
+          stops: [
+            { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
+            { color: { r: 0, g: 0, b: 0, a: 0.7 }, position: 1 },
+          ],
+          alpha: 0.6,
+        },
+        label: __('Radial', 'web-stories'),
+        helper: __('This is the best option', 'web-stories'),
+        isToggled: true,
       },
-      label: __('Radial', 'web-stories'),
-      helper: __('This is the best option', 'web-stories'),
-      isToggled: true,
-    },
-    {
-      value: 'b',
-      filter: {
-        type: 'linear',
-        rotation: 0,
-        stops: [
-          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
-          { color: { r: 0, g: 0, b: 0, a: 0.7 }, position: 1 },
-        ],
-        alpha: 0.9,
+      {
+        value: 'b',
+        filter: {
+          type: 'linear',
+          rotation: 0,
+          stops: [
+            { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
+            { color: { r: 0, g: 0, b: 0, a: 0.7 }, position: 1 },
+          ],
+          alpha: 0.9,
+        },
+        label: __('Linear', 'web-stories'),
+        helper: __('Also a good option', 'web-stories'),
       },
-      label: __('Linear', 'web-stories'),
-      helper: __('Also a good option', 'web-stories'),
-    },
-    {
-      value: 'c',
-      filter: null,
-      label: _x('None', 'filter', 'web-stories'),
-    },
-  ];
-  const [value, setValue] = useState('a');
+      {
+        value: 'c',
+        filter: null,
+        label: _x('None', 'filter', 'web-stories'),
+      },
+    ];
+    const [value, setValue] = useState('a');
 
-  return (
-    <StyledRow>
-      {filters.map(({ value: toggleValue, ...rest }) => {
-        return (
-          <FilterToggle
-            {...rest}
-            key={toggleValue}
-            isToggled={toggleValue === value}
-            onClick={() => setValue(toggleValue)}
-          >
-            <img src={dummyImage} alt={rest.label} />
-          </FilterToggle>
-        );
-      })}
-    </StyledRow>
-  );
+    return (
+      <StyledRow>
+        {filters.map(({ value: toggleValue, ...rest }) => {
+          return (
+            <FilterToggle
+              {...rest}
+              key={toggleValue}
+              isToggled={toggleValue === value}
+              onClick={() => setValue(toggleValue)}
+            >
+              <img src={dummyImage} alt={rest.label} />
+            </FilterToggle>
+          );
+        })}
+      </StyledRow>
+    );
+  },
 };

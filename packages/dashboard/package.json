@@ -52,12 +52,12 @@
     "flagged": "^2.0.8",
     "history": "^5.3.0",
     "prop-types": "^15.8.1",
-    "styled-components": "^5.3.9",
+    "styled-components": "^5.3.11",
     "stylis-plugin-rtl": "^1.0.0"
   },
   "devDependencies": {
     "@googleforcreators/karma-fixture": "*",
-    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-essentials": "^7.0.22",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.4.3",

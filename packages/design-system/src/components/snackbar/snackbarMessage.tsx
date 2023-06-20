@@ -59,6 +59,8 @@ const MessageContainer = styled.div<{
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   z-index: ${({ customZIndex }) => customZIndex || DEFAULT_MESSAGE_Z_INDEX};
   pointer-events: auto;
+  position: absolute;
+  bottom: 0;
 `;
 
 const Message = styled(Text.Paragraph)<{

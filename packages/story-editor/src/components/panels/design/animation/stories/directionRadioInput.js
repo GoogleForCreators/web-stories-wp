@@ -39,38 +39,44 @@ const Panel = styled.div`
   background-color: #1c1c1c;
 `;
 
-export const _default = () => {
-  return (
-    <Panel>
-      <DirectionRadioInput
-        directions={Object.values(AnimationDirection)}
-        defaultChecked={AnimationDirection.TopToBottom}
-      />
-    </Panel>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <Panel>
+        <DirectionRadioInput
+          directions={Object.values(AnimationDirection)}
+          defaultChecked={AnimationDirection.TopToBottom}
+        />
+      </Panel>
+    );
+  },
 };
 
-export const WithRotation = () => {
-  return (
-    <Panel>
-      <DirectionRadioInput
-        directions={[Rotation.Clockwise, Rotation.CounterClockwise]}
-        defaultChecked={Rotation.Clockwise}
-      />
-    </Panel>
-  );
+export const WithRotation = {
+  render: function Render() {
+    return (
+      <Panel>
+        <DirectionRadioInput
+          directions={[Rotation.Clockwise, Rotation.CounterClockwise]}
+          defaultChecked={Rotation.Clockwise}
+        />
+      </Panel>
+    );
+  },
 };
 
-export const Scale = () => {
-  const [value, setValue] = useState(ScaleDirection.ScaleIn);
-  return (
-    <Panel>
-      <DirectionRadioInput
-        value={value}
-        onChange={({ target }) => setValue(target.value)}
-        directions={[ScaleDirection.ScaleIn, ScaleDirection.ScaleOut]}
-        defaultChecked={ScaleDirection.ScaleIn}
-      />
-    </Panel>
-  );
+export const Scale = {
+  render: function Render() {
+    const [value, setValue] = useState(ScaleDirection.ScaleIn);
+    return (
+      <Panel>
+        <DirectionRadioInput
+          value={value}
+          onChange={({ target }) => setValue(target.value)}
+          directions={[ScaleDirection.ScaleIn, ScaleDirection.ScaleOut]}
+          defaultChecked={ScaleDirection.ScaleIn}
+        />
+      </Panel>
+    );
+  },
 };

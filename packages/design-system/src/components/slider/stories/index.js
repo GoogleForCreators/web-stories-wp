@@ -50,32 +50,34 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const [lightValue, setLightValue] = useState(0);
-  const [darkValue, setDarkValue] = useState(0);
+export const _default = {
+  render: function Render(args) {
+    const [lightValue, setLightValue] = useState(0);
+    const [darkValue, setDarkValue] = useState(0);
 
-  return (
-    <>
-      <Container>
-        <Text.Paragraph>{'Percentage:'}</Text.Paragraph>
-        <Slider
-          {...args}
-          handleChange={setLightValue}
-          value={lightValue}
-          suffix="%"
-        />
-      </Container>
-      <DarkThemeProvider>
+    return (
+      <>
         <Container>
-          <Text.Paragraph>{'Milliseconds:'}</Text.Paragraph>
+          <Text.Paragraph>{'Percentage:'}</Text.Paragraph>
           <Slider
             {...args}
-            handleChange={setDarkValue}
-            value={darkValue}
-            suffix="ms"
+            handleChange={setLightValue}
+            value={lightValue}
+            suffix="%"
           />
         </Container>
-      </DarkThemeProvider>
-    </>
-  );
+        <DarkThemeProvider>
+          <Container>
+            <Text.Paragraph>{'Milliseconds:'}</Text.Paragraph>
+            <Slider
+              {...args}
+              handleChange={setDarkValue}
+              value={darkValue}
+              suffix="ms"
+            />
+          </Container>
+        </DarkThemeProvider>
+      </>
+    );
+  },
 };

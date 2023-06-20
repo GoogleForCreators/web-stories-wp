@@ -59,71 +59,72 @@ const Row = styled.div`
   }
 `;
 
-// eslint-disable-next-line react/prop-types
-export const _default = ({ handleOnChange, ...args }) => {
-  const [inputState, setInputState] = useState({
-    oneLight: {
-      color: {
-        r: 255,
-        g: 255,
-        b: 255,
+export const _default = {
+  render: function Render({ handleOnChange, ...args }) {
+    const [inputState, setInputState] = useState({
+      oneLight: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+        },
       },
-    },
-    oneDark: {
-      color: {
-        r: 0,
-        g: 0,
-        b: 0,
+      oneDark: {
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
       },
-    },
-  });
+    });
 
-  const handleChange = (event) => {
-    handleOnChange(event);
-    if (!event?.target) {
-      return;
-    }
-    const name = event.target.name;
-    const value = event.target.value;
+    const handleChange = (event) => {
+      handleOnChange(event);
+      if (!event?.target) {
+        return;
+      }
+      const name = event.target.name;
+      const value = event.target.value;
 
-    setInputState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+      setInputState((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
 
-  return (
-    <>
-      <Headline as="h1">{'Hex Input'}</Headline>
-      <br />
-      <Container>
-        <Row>
-          <HexInput
-            aria-label="input-one"
-            id="one-light"
-            name="oneLight"
-            value={inputState.oneLight}
-            onChange={handleChange}
-            placeholder="placeholder"
-            {...args}
-          />
-        </Row>
-      </Container>
-      <DarkThemeProvider>
-        <Container darkMode>
+    return (
+      <>
+        <Headline as="h1">{'Hex Input'}</Headline>
+        <br />
+        <Container>
           <Row>
             <HexInput
-              aria-label="input-four"
-              id="one-dark"
-              name="oneDark"
-              value={inputState.oneDark}
+              aria-label="input-one"
+              id="one-light"
+              name="oneLight"
+              value={inputState.oneLight}
               onChange={handleChange}
               placeholder="placeholder"
               {...args}
             />
           </Row>
         </Container>
-      </DarkThemeProvider>
-    </>
-  );
+        <DarkThemeProvider>
+          <Container darkMode>
+            <Row>
+              <HexInput
+                aria-label="input-four"
+                id="one-dark"
+                name="oneDark"
+                value={inputState.oneDark}
+                onChange={handleChange}
+                placeholder="placeholder"
+                {...args}
+              />
+            </Row>
+          </Container>
+        </DarkThemeProvider>
+      </>
+    );
+  },
 };

@@ -55,78 +55,84 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <Dialog {...args}>
-      <Text.Paragraph size={TextSize.Small}>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-        }
-      </Text.Paragraph>
-    </Dialog>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <Dialog {...args}>
+        <Text.Paragraph size={TextSize.Small}>
+          {
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+          }
+        </Text.Paragraph>
+      </Dialog>
+    );
+  },
 };
 
-// eslint-disable-next-line react/prop-types
-export const WithCustomAction = ({ onClickButton, onConfirmed, ...args }) => {
-  return (
-    <Dialog
-      actions={
-        <>
-          <Button
-            type={ButtonType.Tertiary}
-            size={ButtonSize.Small}
-            onClick={onClickButton}
-          >
-            {'Dismiss'}
-          </Button>
-          <ButtonAsLink
-            type={ButtonType.Primary}
-            size={ButtonSize.Small}
-            href={args.href}
-            onClick={onConfirmed}
-          >
-            {'Add to new post'}
-          </ButtonAsLink>
-        </>
-      }
-      {...args}
-    >
-      <Text.Paragraph size={TextSize.Small}>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+export const WithCustomAction = {
+  render: ({ onClickButton, onConfirmed, ...args }) => {
+    return (
+      <Dialog
+        actions={
+          <>
+            <Button
+              type={ButtonType.Tertiary}
+              size={ButtonSize.Small}
+              onClick={onClickButton}
+            >
+              {'Dismiss'}
+            </Button>
+            <ButtonAsLink
+              type={ButtonType.Primary}
+              size={ButtonSize.Small}
+              href={args.href}
+              onClick={onConfirmed}
+            >
+              {'Add to new post'}
+            </ButtonAsLink>
+          </>
         }
-      </Text.Paragraph>
-    </Dialog>
-  );
-};
-WithCustomAction.args = {
-  isOpen: true,
-  title: 'my dialog title',
-  href: 'https://example.com',
-};
-WithCustomAction.argTypes = {
-  onClose: {
-    action: 'closed',
+        {...args}
+      >
+        <Text.Paragraph size={TextSize.Small}>
+          {
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+          }
+        </Text.Paragraph>
+      </Dialog>
+    );
   },
-  onClickButton: {
-    action: 'closed',
-    name: 'dismiss click',
+
+  args: {
+    isOpen: true,
+    title: 'my dialog title',
+    href: 'https://example.com',
   },
-  onConfirmed: {
-    action: 'confirmed',
-    name: 'confirm click',
+
+  argTypes: {
+    onClose: {
+      action: 'closed',
+    },
+    onClickButton: {
+      action: 'closed',
+      name: 'dismiss click',
+    },
+    onConfirmed: {
+      action: 'confirmed',
+      name: 'confirm click',
+    },
   },
-};
-WithCustomAction.parameters = {
-  controls: {
-    include: [
-      'isOpen',
-      'title',
-      'href',
-      'onClose',
-      'dismiss click',
-      'confirm click',
-    ],
+
+  parameters: {
+    controls: {
+      include: [
+        'isOpen',
+        'title',
+        'href',
+        'onClose',
+        'dismiss click',
+        'confirm click',
+      ],
+    },
   },
 };

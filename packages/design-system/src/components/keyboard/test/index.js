@@ -41,7 +41,7 @@ const keys = {
  * @param {HookResult<boolean>} result Hook result.
  * @param {Node} node Node.
  * @param {Object<{key: string, which: number}>} key Key object.
- * @param {boolean} [shouldRegister=true] Whether the key press is registered by
+ * @param {boolean} [shouldRegister] Whether the key press is registered by
  * the hook.
  */
 function testIsKeyPressed(result, node, { key, which }, shouldRegister = true) {

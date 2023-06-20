@@ -33,10 +33,12 @@ const Container = styled.div`
   height: 100vh;
   margin: -50px 10px 0;
 `;
-export const _default = () => {
-  return (
-    <Container>
-      <ShortcutMenu />
-    </Container>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <Container>
+        <ShortcutMenu />
+      </Container>
+    );
+  },
 };

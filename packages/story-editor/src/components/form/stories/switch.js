@@ -44,23 +44,25 @@ const Container = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.standard.black};
 `;
 
-export const _default = (args) => {
-  const [value, setValue] = useState(true);
+export const _default = {
+  render: function Render(args) {
+    const [value, setValue] = useState(true);
 
-  const handleChange = (evt, newValue) => {
-    args.handleChange(`${newValue ? 'On' : 'Off'}`, evt);
-    setValue(newValue);
-  };
+    const handleChange = (evt, newValue) => {
+      args.handleChange(`${newValue ? 'On' : 'Off'}`, evt);
+      setValue(newValue);
+    };
 
-  return (
-    <Container>
-      <Switch
-        groupLabel="Switch"
-        name="test-switch"
-        value={value}
-        onChange={handleChange}
-        {...args}
-      />
-    </Container>
-  );
+    return (
+      <Container>
+        <Switch
+          groupLabel="Switch"
+          name="test-switch"
+          value={value}
+          onChange={handleChange}
+          {...args}
+        />
+      </Container>
+    );
+  },
 };

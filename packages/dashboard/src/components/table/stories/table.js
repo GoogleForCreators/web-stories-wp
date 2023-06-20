@@ -58,26 +58,28 @@ const tableData = [
   },
 ];
 
-export const _default = (args) => {
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHeaderCell>{args.tableHeaderPrimary}</TableHeaderCell>
-          <TableHeaderCell>{args.tableHeaderSecondary}</TableHeaderCell>
-          <TableHeaderCell>{args.tableHeaderTertiary}</TableHeaderCell>
-        </TableRow>
-      </TableHeader>
-
-      <TableBody>
-        {tableData.map((data) => (
-          <TableRow key={data.id}>
-            <TableCell>{data.title}</TableCell>
-            <TableCell>{data.author.name}</TableCell>
-            <TableCell>{data.date}</TableCell>
+export const _default = {
+  render: function Render(args) {
+    return (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderCell>{args.tableHeaderPrimary}</TableHeaderCell>
+            <TableHeaderCell>{args.tableHeaderSecondary}</TableHeaderCell>
+            <TableHeaderCell>{args.tableHeaderTertiary}</TableHeaderCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  );
+        </TableHeader>
+
+        <TableBody>
+          {tableData.map((data) => (
+            <TableRow key={data.id}>
+              <TableCell>{data.title}</TableCell>
+              <TableCell>{data.author.name}</TableCell>
+              <TableCell>{data.date}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    );
+  },
 };

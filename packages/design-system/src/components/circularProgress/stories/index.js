@@ -28,9 +28,11 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const size = args.size;
-  const thickness = args.thickness;
+export const _default = {
+  render: function Render(args) {
+    const size = args.size;
+    const thickness = args.thickness;
 
-  return <CircularProgress size={size} thickness={thickness} />;
+    return <CircularProgress size={size} thickness={thickness} />;
+  },
 };

@@ -27,15 +27,19 @@ export default {
 
 const textTextSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 
-export const _default = () => (
-  <>
-    {textTextSizes.map((presetSize) => (
-      <List key={`${presetSize}_text_list`} size={presetSize}>
-        <li>{`${presetSize} - 1`}</li>
-        <li>{`${presetSize} - 2`}</li>
-        <li>{`${presetSize} - 3`}</li>
-        <li>{`${presetSize} - 4`}</li>
-      </List>
-    ))}
-  </>
-);
+export const _default = {
+  render: function Render() {
+    return (
+      <>
+        {textTextSizes.map((presetSize) => (
+          <List key={`${presetSize}_text_list`} size={presetSize}>
+            <li>{`${presetSize} - 1`}</li>
+            <li>{`${presetSize} - 2`}</li>
+            <li>{`${presetSize} - 3`}</li>
+            <li>{`${presetSize} - 4`}</li>
+          </List>
+        ))}
+      </>
+    );
+  },
+};

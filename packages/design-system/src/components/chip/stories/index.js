@@ -57,18 +57,20 @@ const CHIP_STATES = [
   },
 ];
 
-export const _default = (args) => {
-  const chips = CHIP_STATES.map(({ name, ...state }) => (
-    <Chip key={name} onClick={() => args.onClick(name)} {...state}>
-      {name}
-    </Chip>
-  ));
-  return (
-    <>
-      <Container>{chips}</Container>
-      <ThemeProvider theme={theme}>
+export const _default = {
+  render: function Render(args) {
+    const chips = CHIP_STATES.map(({ name, ...state }) => (
+      <Chip key={name} onClick={() => args.onClick(name)} {...state}>
+        {name}
+      </Chip>
+    ));
+    return (
+      <>
         <Container>{chips}</Container>
-      </ThemeProvider>
-    </>
-  );
+        <ThemeProvider theme={theme}>
+          <Container>{chips}</Container>
+        </ThemeProvider>
+      </>
+    );
+  },
 };

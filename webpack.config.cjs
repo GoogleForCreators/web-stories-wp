@@ -69,6 +69,8 @@ const sharedConfig = {
       path: false,
       url: false,
       module: false,
+      assert: false,
+      perf_hooks: false,
     },
   },
   mode,

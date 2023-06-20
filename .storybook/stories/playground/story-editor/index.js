@@ -35,18 +35,20 @@ export default {
   title: 'Playground/Stories Editor',
 };
 
-export const _default = () => {
-  const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
-  const story = content ? JSON.parse(content) : {};
-  const apiCallbacks = { saveStoryById, getMedia, getFonts };
+export const _default = {
+  render: function Render() {
+    const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
+    const story = content ? JSON.parse(content) : {};
+    const apiCallbacks = { saveStoryById, getMedia, getFonts };
 
-  elementTypes.forEach(registerElementType);
+    elementTypes.forEach(registerElementType);
 
-  return (
-    <div style={{ height: '100vh' }}>
-      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
-        <InterfaceSkeleton header={<HeaderLayout />} />
-      </StoryEditor>
-    </div>
-  );
+    return (
+      <div style={{ height: '100vh' }}>
+        <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+          <InterfaceSkeleton header={<HeaderLayout />} />
+        </StoryEditor>
+      </div>
+    );
+  },
 };

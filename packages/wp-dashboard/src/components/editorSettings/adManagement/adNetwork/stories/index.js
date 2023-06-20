@@ -35,6 +35,8 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return <AdNetwork {...args} />;
+export const _default = {
+  render: function Render(args) {
+    return <AdNetwork {...args} />;
+  },
 };

@@ -69,25 +69,27 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <MediaRecordingContext.Provider
-      value={{
-        state: {
-          hasAudio: true,
-          isSettingsOpen: true,
-          ...args,
-        },
-        actions: {
-          setAudioInput: noop,
-          setVideoInput: noop,
-          clearMediaStream: noop,
-          clearMediaBlob: noop,
-          ...args,
-        },
-      }}
-    >
-      <SettingsModal />
-    </MediaRecordingContext.Provider>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <MediaRecordingContext.Provider
+        value={{
+          state: {
+            hasAudio: true,
+            isSettingsOpen: true,
+            ...args,
+          },
+          actions: {
+            setAudioInput: noop,
+            setVideoInput: noop,
+            clearMediaStream: noop,
+            clearMediaBlob: noop,
+            ...args,
+          },
+        }}
+      >
+        <SettingsModal />
+      </MediaRecordingContext.Provider>
+    );
+  },
 };

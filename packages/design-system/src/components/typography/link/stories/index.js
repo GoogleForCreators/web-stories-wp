@@ -27,20 +27,24 @@ export default {
 
 const textTextSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 
-export const _default = () => (
-  <>
-    {textTextSizes.map((presetSize) => (
-      <Link
-        key={`${presetSize}_text_link`}
-        size={presetSize}
-        href="https://example.com"
-      >
-        {`${presetSize} - Click here for more information`}
-        <br />
-      </Link>
-    ))}
-  </>
-);
+export const _default = {
+  render: function Render() {
+    return (
+      <>
+        {textTextSizes.map((presetSize) => (
+          <Link
+            key={`${presetSize}_text_link`}
+            size={presetSize}
+            href="https://example.com"
+          >
+            {`${presetSize} - Click here for more information`}
+            <br />
+          </Link>
+        ))}
+      </>
+    );
+  },
+};
 
 export const ExternalLink = () => (
   <Link href="https://example.com" target="_blank" rel="noreferrer">

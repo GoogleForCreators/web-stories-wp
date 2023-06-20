@@ -37,7 +37,7 @@ import {
   storyReducer,
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
-} from '../reducer/stories';
+} from '../reducer/story';
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 

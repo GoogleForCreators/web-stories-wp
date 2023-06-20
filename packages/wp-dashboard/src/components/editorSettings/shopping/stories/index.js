@@ -40,6 +40,8 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return <Shopping {...args} />;
+export const _default = {
+  render: function Render(args) {
+    return <Shopping {...args} />;
+  },
 };

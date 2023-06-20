@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "opentype.js": "^1.3.4",
-    "undici": "^5.21.0"
+    "undici": "^5.22.1"
   },
   "scripts": {
     "update-fonts": "node ./scripts/cli.js ./src/fonts.json"

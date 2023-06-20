@@ -108,23 +108,25 @@ const useClearHash = () => {
   }
 };
 
-export const _default = () => {
-  useClearHash();
+export const _default = {
+  render: function Render() {
+    useClearHash();
 
-  const config = {
-    newStoryURL: linkHrefTo('Playground/Stories Editor', 'default'),
-    apiCallbacks: {
-      fetchStories,
-      getTaxonomies,
-      getTaxonomyTerms,
-      getAuthors,
-    },
-  };
+    const config = {
+      newStoryURL: linkHrefTo('Playground/Stories Editor', 'default'),
+      apiCallbacks: {
+        fetchStories,
+        getTaxonomies,
+        getTaxonomyTerms,
+        getAuthors,
+      },
+    };
 
-  return (
-    <Dashboard config={config}>
-      <GlobalStyle />
-      <InterfaceSkeleton />
-    </Dashboard>
-  );
+    return (
+      <Dashboard config={config}>
+        <GlobalStyle />
+        <InterfaceSkeleton />
+      </Dashboard>
+    );
+  },
 };
