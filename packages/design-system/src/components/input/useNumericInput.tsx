@@ -85,7 +85,7 @@ const useNumericInput = ({
     // Do not process non-numeric keys.
     if (!isNaN(+ev.target.value.trim())) {
       // Return minimum number when string is empty.
-      if (ev.target.value === '') {
+      if (ev.target.value === '' && min !== undefined) {
         setCurrentValue(min);
         onChange(ev, Number(min));
 
