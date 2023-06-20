@@ -23,26 +23,22 @@ import {
   useEffect,
   createPortal,
   useState,
-  useCallback,
 } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
-import {
-  Banner,
-  Link,
-  localStore,
-  Text,
-} from '@googleforcreators/design-system';
+import { Banner, Link, Text } from '@googleforcreators/design-system';
 import {
   APP_ROUTES,
-  useRouteHistory,
+  resolveRoute,
   useConfig,
+  useRouteHistory,
 } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
  */
-import useTelemetryOptIn from '../../effects/useTelemetryOptIn';
+import { trackClick } from '@googleforcreators/tracking';
 import { EDITOR_SETTINGS_ROUTE } from '../../constants';
+import useEditorSettings from '../editorSettings/useEditorSettings.js';
 
 const StyledBanner = styled(Banner)`
   background: ${({ theme }) => theme.colors.interactiveBg.brandNormal};
@@ -61,84 +57,89 @@ const StyledLink = styled(Link)`
   }
 `;
 
-function NoLink({ children }) {
-  return children;
-}
-
-// The value associated with this key indicates if the user has interacted with
-// the banner previously. If they have, we do not show the banner again for 2 days.
-const LOCAL_STORAGE_KEY = 'web_stories_update_banner_closed';
-
-function getStateFromLocalStorage() {
-  const storageValue = localStore.getItemByKey(LOCAL_STORAGE_KEY);
-
-  if (!storageValue) {
-    return true;
-  }
-
-  if (new Date().getTime() > storageValue) {
-    localStore.setItemByKey(LOCAL_STORAGE_KEY, null);
-    return true;
-  }
-
-  return false;
-}
-
-function UpdateBannerContainer() {
-  const { bannerVisible: hasTelemetryBanner } = useTelemetryOptIn();
+function GoogleAnalytics4BannerContainer() {
   const {
-    plugins: { 'web-stories': webStories = {} },
+    plugins: { siteKit = {} },
   } = useConfig();
-  const { needsUpdate, updateLink } = webStories;
+
+  const isUsingUniversalAnalytics = useEditorSettings(
+    ({
+      state: {
+        settings: { googleAnalyticsId },
+      },
+    }) => googleAnalyticsId?.toLowerCase().startsWith('ua-')
+  );
+
+  const { currentPath } = useRouteHistory(({ state: { currentPath } }) => ({
+    currentPath,
+  }));
 
   const ref = useRef();
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    setIsVisible(getStateFromLocalStorage() && needsUpdate);
-  }, [needsUpdate]);
-
-  const onClose = useCallback(() => {
-    const dayInMs = 8.64e7;
-    const expiry = new Date().getTime() + 2 * dayInMs;
-    localStore.setItemByKey(LOCAL_STORAGE_KEY, expiry);
-    setIsVisible(false);
-  }, []);
-
-  if (!isVisible) {
+  if (siteKit.analyticsActive) {
     return null;
   }
 
-  if (hasTelemetryBanner) {
-    return null;
+  if (!isUsingUniversalAnalytics) {
+    // return null;
   }
 
-  const UpdateLink = updateLink ? StyledLink : NoLink;
+  if (currentPath === EDITOR_SETTINGS_ROUTE) {
+    return null;
+  }
 
   return (
     <StyledBanner
-      closeButtonLabel={__('Dismiss update notification', 'web-stories')}
-      onClose={onClose}
-      title={__('Update available.', 'web-stories')}
+      title={__('Update your Google Analytics configuration.', 'web-stories')}
       ref={ref}
     >
       <Text.Paragraph>
         <TranslateWithMarkup
           mapping={{
-            a: <UpdateLink href={updateLink} />,
+            a: (
+              <Link
+                href={__(
+                  'https://support.google.com/analytics/answer/11583528?hl=en',
+                  'web-stories'
+                )}
+                rel="noreferrer"
+                target="_blank"
+                onClick={(evt) => trackClick(evt, 'click_ua_deprecation_docs')}
+              />
+            ),
+            a2: (
+              <Link
+                href={__(
+                  'https://support.google.com/analytics/answer/10089681?hl=en',
+                  'web-stories'
+                )}
+                rel="noreferrer"
+                target="_blank"
+                onClick={(evt) => trackClick(evt, 'click_ga4_docs')}
+              />
+            ),
           }}
         >
           {__(
-            'A new version of the plugin is available. <a>Please update now</a>.',
+            'As <a>previously announced</a>, Universal Analytics will stop processing new visits starting <b>July 1, 2023</b>. We recommend switching to <a2>Google Analytics 4</a2> (GA4), our analytics product of record.',
             'web-stories'
           )}
+        </TranslateWithMarkup>
+      </Text.Paragraph>
+      <Text.Paragraph>
+        <TranslateWithMarkup
+          mapping={{
+            a: <StyledLink href={resolveRoute(EDITOR_SETTINGS_ROUTE)} />,
+          }}
+        >
+          {__('<a>Update your settings now</a>.', 'web-stories')}
         </TranslateWithMarkup>
       </Text.Paragraph>
     </StyledBanner>
   );
 }
 
-export default function UpdateBanner() {
+export default function GoogleAnalytics4Banner() {
   const { currentPath, hasAvailableRoutes } = useRouteHistory(({ state }) => ({
     currentPath: state.currentPath,
     hasAvailableRoutes: state.availableRoutes.length > 0,
@@ -167,5 +168,5 @@ export default function UpdateBanner() {
     return null;
   }
 
-  return createPortal(<UpdateBannerContainer />, headerEl.current);
+  return createPortal(<GoogleAnalytics4BannerContainer />, headerEl.current);
 }

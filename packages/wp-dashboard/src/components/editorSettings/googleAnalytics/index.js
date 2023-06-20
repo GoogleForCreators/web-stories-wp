@@ -31,6 +31,9 @@ import {
   ButtonType,
   TextSize,
   NotificationBubble,
+  Icons,
+  Text,
+  Link,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
@@ -63,8 +66,8 @@ export const TEXT = {
   CONTEXT_LINK:
     'https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/',
   SECTION_HEADING: __('Google Analytics', 'web-stories'),
-  PLACEHOLDER: __('Enter your Google Analytics Tracking ID', 'web-stories'),
-  ARIA_LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
+  PLACEHOLDER: __('Enter your Google Analytics Measurement ID', 'web-stories'),
+  ARIA_LABEL: __('Enter your Google Analytics Measurement ID', 'web-stories'),
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
   SITE_KIT_NOT_INSTALLED: __(
@@ -80,6 +83,27 @@ export const TEXT = {
     'web-stories'
   ),
 };
+
+const WarningContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  margin: 14px auto;
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  padding: 8px;
+`;
+
+const WarningIcon = styled(Icons.ExclamationOutline)`
+  width: 32px;
+  height: 100%;
+  color: ${({ theme }) => theme.colors.status.warning};
+`;
+
+const Message = styled(Text.Paragraph).attrs({
+  size: TextSize.Small,
+})`
+  max-width: calc(100% - 40px);
+`;
 
 function GoogleAnalyticsSettings({
   googleAnalyticsId,
@@ -222,57 +246,99 @@ function GoogleAnalyticsSettings({
           </>
         )}
       </div>
-      {analyticsActive ? (
-        <div>
+      <div>
+        {analyticsActive ? (
           <TextInputHelperText size={TextSize.Small}>
             {TEXT.SITE_KIT_IN_USE}
           </TextInputHelperText>
-        </div>
-      ) : (
-        <div>
-          <InlineForm>
-            <VisuallyHiddenLabel htmlFor="gaTrackingId">
-              {TEXT.ARIA_LABEL}
-            </VisuallyHiddenLabel>
-            <SettingsTextInput
-              aria-label={TEXT.ARIA_LABEL}
-              id="gaTrackingId"
-              value={analyticsId}
-              onChange={onUpdateAnalyticsId}
-              onKeyDown={handleOnKeyDown}
-              placeholder={TEXT.PLACEHOLDER}
-              hasError={Boolean(inputError)}
-              hint={inputError}
-              disabled={analyticsActive}
-            />
-            <SaveButton
-              type={ButtonType.Secondary}
-              size={ButtonSize.Small}
-              disabled={disableSaveButton}
-              onClick={handleOnSave}
-            >
-              {TEXT.SUBMIT_BUTTON}
-            </SaveButton>
-          </InlineForm>
-          <TextInputHelperText size={TextSize.Small}>
-            <TranslateWithMarkup
-              mapping={{
-                a: (
-                  <InlineLink
-                    href={TEXT.CONTEXT_LINK}
-                    rel="noreferrer"
-                    target="_blank"
-                    size={TextSize.Small}
-                    onClick={onContextClick}
-                  />
-                ),
-              }}
-            >
-              {TEXT.CONTEXT}
-            </TranslateWithMarkup>
-          </TextInputHelperText>
-        </div>
-      )}
+        ) : (
+          <>
+            <InlineForm>
+              <VisuallyHiddenLabel htmlFor="gaTrackingId">
+                {TEXT.ARIA_LABEL}
+              </VisuallyHiddenLabel>
+              <SettingsTextInput
+                aria-label={TEXT.ARIA_LABEL}
+                id="gaTrackingId"
+                value={analyticsId}
+                onChange={onUpdateAnalyticsId}
+                onKeyDown={handleOnKeyDown}
+                placeholder={TEXT.PLACEHOLDER}
+                hasError={Boolean(inputError)}
+                hint={inputError}
+                disabled={analyticsActive}
+              />
+              <SaveButton
+                type={ButtonType.Secondary}
+                size={ButtonSize.Small}
+                disabled={disableSaveButton}
+                onClick={handleOnSave}
+              >
+                {TEXT.SUBMIT_BUTTON}
+              </SaveButton>
+            </InlineForm>
+            <TextInputHelperText size={TextSize.Small}>
+              <TranslateWithMarkup
+                mapping={{
+                  a: (
+                    <InlineLink
+                      href={TEXT.CONTEXT_LINK}
+                      rel="noreferrer"
+                      target="_blank"
+                      size={TextSize.Small}
+                      onClick={onContextClick}
+                    />
+                  ),
+                }}
+              >
+                {TEXT.CONTEXT}
+              </TranslateWithMarkup>
+            </TextInputHelperText>
+            {!googleAnalyticsId || googleAnalyticsId.startsWith('UA-') ? (
+              <WarningContainer>
+                <WarningIcon aria-hidden />
+                <Message>
+                  <TranslateWithMarkup
+                    mapping={{
+                      a: (
+                        <Link
+                          href={__(
+                            'https://support.google.com/analytics/answer/11583528?hl=en',
+                            'web-stories'
+                          )}
+                          rel="noreferrer"
+                          target="_blank"
+                          size={TextSize.Small}
+                          onClick={(evt) =>
+                            trackClick(evt, 'click_ua_deprecation_docs')
+                          }
+                        />
+                      ),
+                      a2: (
+                        <Link
+                          href={__(
+                            'https://support.google.com/analytics/answer/10089681?hl=en',
+                            'web-stories'
+                          )}
+                          rel="noreferrer"
+                          target="_blank"
+                          size={TextSize.Small}
+                          onClick={(evt) => trackClick(evt, 'click_ga4_docs')}
+                        />
+                      ),
+                    }}
+                  >
+                    {__(
+                      'As <a>previously announced</a>, Universal Analytics will stop processing new visits starting <b>July 1, 2023</b>. We recommend switching to <a2>Google Analytics 4</a2> (GA4), our analytics product of record.',
+                      'web-stories'
+                    )}
+                  </TranslateWithMarkup>
+                </Message>
+              </WarningContainer>
+            ) : null}
+          </>
+        )}
+      </div>
     </SettingForm>
   );
 }
