@@ -294,32 +294,34 @@ const Container = styled.div`
   width: 300px;
 `;
 
-export const _default = (args) => {
-  const mediaValue = {
-    local: {
-      state: {
-        isCurrentResourceProcessing: () => false,
-        isCurrentResourceUploading: () => false,
+export const _default = {
+  render: function Render(args) {
+    const mediaValue = {
+      local: {
+        state: {
+          isCurrentResourceProcessing: () => false,
+          isCurrentResourceUploading: () => false,
+        },
+        actions: {
+          uploadMedia: noop,
+        },
       },
-      actions: {
-        uploadMedia: noop,
-      },
-    },
-  };
+    };
 
-  return (
-    <Container>
-      <MediaContext.Provider value={mediaValue}>
-        <LayoutProvider>
-          <CanvasProvider>
-            <MediaGallery
-              resources={resources}
-              providerType={'unsplash'}
-              {...args}
-            />
-          </CanvasProvider>
-        </LayoutProvider>
-      </MediaContext.Provider>
-    </Container>
-  );
+    return (
+      <Container>
+        <MediaContext.Provider value={mediaValue}>
+          <LayoutProvider>
+            <CanvasProvider>
+              <MediaGallery
+                resources={resources}
+                providerType={'unsplash'}
+                {...args}
+              />
+            </CanvasProvider>
+          </LayoutProvider>
+        </MediaContext.Provider>
+      </Container>
+    );
+  },
 };

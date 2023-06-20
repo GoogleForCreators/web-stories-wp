@@ -38,7 +38,7 @@ const VERSION_CONSTANT_REGEX =
  *
  * @param pluginFile Path to the plugin file.
  * @param version Desired version number.
- * @param [nightly=false] Whether this is a nightly build or not.
+ * @param [nightly] Whether this is a nightly build or not.
  */
 function updateVersionNumbers(
   pluginFile: string,

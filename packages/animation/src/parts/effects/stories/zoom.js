@@ -59,79 +59,81 @@ const defaultStyles = {
   height: '320px',
 };
 
-export const _default = () => {
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      <amp-story-page id={`page-1`}>
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'AMP Zoom In/Out'}
-        </p>
-
-        <amp-story-grid-layer template="vertical">
-          <div style={defaultStyles}>
-            <amp-img
-              animate-in="zoom-in"
-              scale-start="0.25"
-              scale-end="1"
-              animate-in-duration="4s"
-              layout="fixed"
-              src="https://picsum.photos/720/320?image=1026"
-              width="720"
-              height="320"
-            />
-          </div>
-
-          <div
-            style={{
-              ...defaultStyles,
-              top: '50%',
-            }}
-          >
-            <amp-img
-              animate-in="zoom-out"
-              scale-start="1"
-              scale-end="0.25"
-              animate-in-duration="4s"
-              src="https://picsum.photos/720/320?image=1026"
-              width="720"
-              height="320"
-            />
-          </div>
-        </amp-story-grid-layer>
-      </amp-story-page>
-      <amp-story-page id={`page-2`}>
-        <StoryAnimation.AnimationProvider animations={animations}>
-          <StoryAnimation.AMPAnimations />
+export const _default = {
+  render: function Render() {
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
           <p style={{ textAlign: 'center', color: '#fff' }}>
-            {'Custom Zoom In/Out Effect'}
+            {'Empty first page'}
+          </p>
+        </amp-story-page>
+        <amp-story-page id={`page-1`}>
+          <p style={{ textAlign: 'center', color: '#fff' }}>
+            {'AMP Zoom In/Out'}
           </p>
 
           <amp-story-grid-layer template="vertical">
-            {elements.map(({ id }, index) => (
-              <div
-                key={id}
-                style={{
-                  ...defaultStyles,
-                  top: `${index * 50}%`,
-                }}
-              >
-                <StoryAnimation.AMPWrapper target={id}>
-                  <amp-img
-                    src="https://picsum.photos/720/320?image=1026"
-                    width="720"
-                    height="320"
-                  />
-                </StoryAnimation.AMPWrapper>
-              </div>
-            ))}
+            <div style={defaultStyles}>
+              <amp-img
+                animate-in="zoom-in"
+                scale-start="0.25"
+                scale-end="1"
+                animate-in-duration="4s"
+                layout="fixed"
+                src="https://picsum.photos/720/320?image=1026"
+                width="720"
+                height="320"
+              />
+            </div>
+
+            <div
+              style={{
+                ...defaultStyles,
+                top: '50%',
+              }}
+            >
+              <amp-img
+                animate-in="zoom-out"
+                scale-start="1"
+                scale-end="0.25"
+                animate-in-duration="4s"
+                src="https://picsum.photos/720/320?image=1026"
+                width="720"
+                height="320"
+              />
+            </div>
           </amp-story-grid-layer>
-        </StoryAnimation.AnimationProvider>
-      </amp-story-page>
-    </AMPStoryWrapper>
-  );
+        </amp-story-page>
+        <amp-story-page id={`page-2`}>
+          <StoryAnimation.AnimationProvider animations={animations}>
+            <StoryAnimation.AMPAnimations />
+            <p style={{ textAlign: 'center', color: '#fff' }}>
+              {'Custom Zoom In/Out Effect'}
+            </p>
+
+            <amp-story-grid-layer template="vertical">
+              {elements.map(({ id }, index) => (
+                <div
+                  key={id}
+                  style={{
+                    ...defaultStyles,
+                    top: `${index * 50}%`,
+                  }}
+                >
+                  <StoryAnimation.AMPWrapper target={id}>
+                    <amp-img
+                      src="https://picsum.photos/720/320?image=1026"
+                      width="720"
+                      height="320"
+                    />
+                  </StoryAnimation.AMPWrapper>
+                </div>
+              ))}
+            </amp-story-grid-layer>
+          </StoryAnimation.AnimationProvider>
+        </amp-story-page>
+      </AMPStoryWrapper>
+    );
+  },
 };

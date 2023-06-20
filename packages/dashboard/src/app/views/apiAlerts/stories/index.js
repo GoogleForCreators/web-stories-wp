@@ -55,57 +55,59 @@ const templateErrors = [
   { message: 'I am the last preloaded error for templates in this storybook.' },
 ];
 
-export const _default = () => {
-  const [storyError, setStoryError] = useState();
-  const [storyErrorIndexToAdd, setStoryErrorIndexToAdd] = useState(0);
-  const [templateError, setTemplateError] = useState();
-  const [templateErrorIndexToAdd, setTemplateErrorIndexToAdd] = useState(0);
+export const _default = {
+  render: function Render() {
+    const [storyError, setStoryError] = useState();
+    const [storyErrorIndexToAdd, setStoryErrorIndexToAdd] = useState(0);
+    const [templateError, setTemplateError] = useState();
+    const [templateErrorIndexToAdd, setTemplateErrorIndexToAdd] = useState(0);
 
-  return (
-    <ApiContext.Provider
-      value={{
-        state: {
-          stories: { error: storyError },
-          templates: { error: templateError },
-          settings: { error: {} },
-          media: { error: {} },
-        },
-      }}
-    >
-      <Button
-        type={ButtonType.Primary}
-        onClick={() => {
-          setStoryErrorIndexToAdd(storyErrorIndexToAdd + 1);
-          setStoryError({
-            ...storyErrors[storyErrorIndexToAdd],
-            id: Date.now(),
-          });
+    return (
+      <ApiContext.Provider
+        value={{
+          state: {
+            stories: { error: storyError },
+            templates: { error: templateError },
+            settings: { error: {} },
+            media: { error: {} },
+          },
         }}
-        isDisabled={storyErrorIndexToAdd > storyErrors.length - 1}
       >
-        {storyErrorIndexToAdd > storyErrors.length - 1
-          ? 'No more practice story alerts'
-          : 'Add practice story alert'}
-      </Button>
-      <br />
-      <Button
-        type={ButtonType.Primary}
-        onClick={() => {
-          setTemplateErrorIndexToAdd(templateErrorIndexToAdd + 1);
-          setTemplateError({
-            ...templateErrors[templateErrorIndexToAdd],
-            id: Date.now(),
-          });
-        }}
-        isDisabled={templateErrorIndexToAdd > templateErrors.length - 1}
-      >
-        {templateErrorIndexToAdd > templateErrors.length - 1
-          ? 'No more practice template alerts'
-          : 'Add practice template alert'}
-      </Button>
-      <SnackbarProvider>
-        <SnackbarView />
-      </SnackbarProvider>
-    </ApiContext.Provider>
-  );
+        <Button
+          type={ButtonType.Primary}
+          onClick={() => {
+            setStoryErrorIndexToAdd(storyErrorIndexToAdd + 1);
+            setStoryError({
+              ...storyErrors[storyErrorIndexToAdd],
+              id: Date.now(),
+            });
+          }}
+          isDisabled={storyErrorIndexToAdd > storyErrors.length - 1}
+        >
+          {storyErrorIndexToAdd > storyErrors.length - 1
+            ? 'No more practice story alerts'
+            : 'Add practice story alert'}
+        </Button>
+        <br />
+        <Button
+          type={ButtonType.Primary}
+          onClick={() => {
+            setTemplateErrorIndexToAdd(templateErrorIndexToAdd + 1);
+            setTemplateError({
+              ...templateErrors[templateErrorIndexToAdd],
+              id: Date.now(),
+            });
+          }}
+          isDisabled={templateErrorIndexToAdd > templateErrors.length - 1}
+        >
+          {templateErrorIndexToAdd > templateErrors.length - 1
+            ? 'No more practice template alerts'
+            : 'Add practice template alert'}
+        </Button>
+        <SnackbarProvider>
+          <SnackbarView />
+        </SnackbarProvider>
+      </ApiContext.Provider>
+    );
+  },
 };

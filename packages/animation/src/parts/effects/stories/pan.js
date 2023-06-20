@@ -29,10 +29,8 @@ import {
   AMP_STORY_ASPECT_RATIO,
 } from '../../../storybookUtils';
 
-const EFFECT_NAME = 'Pan';
-
 export default {
-  title: `Animations/Effects/${EFFECT_NAME}`,
+  title: 'Animations/Effects/Pan',
 };
 
 const SAMPLE_SRC_1 = 'https://picsum.photos/1120/746?image=1025';
@@ -70,76 +68,76 @@ const animations = [
 
 const elements = [{ id: 'e1', x: 50, y: 100, width: 296, height: 198 }];
 
-export const _default = () => {
-  const elementBoxes = elements.map((element) => ({
-    ...element,
-    ...getBox(element, 100, 100),
-  }));
+export const _default = {
+  render: function Render() {
+    const elementBoxes = elements.map((element) => ({
+      ...element,
+      ...getBox(element, 100, 100),
+    }));
 
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      <amp-story-page id={`page-1`}>
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {`AMP ${EFFECT_NAME}`}
-        </p>
-
-        <amp-story-grid-layer
-          template="vertical"
-          aspect-ratio={AMP_STORY_ASPECT_RATIO}
-        >
-          <amp-img
-            animate-in="pan-left"
-            animate-in-duration="5s"
-            src={SAMPLE_SRC_1}
-            width="296px"
-            height="198px"
-          />
-        </amp-story-grid-layer>
-      </amp-story-page>
-      {animations.map((animation) => (
-        <amp-story-page key={animation.id} id={`page-${animation.id}`}>
-          <StoryAnimation.AnimationProvider
-            animations={[animation]}
-            elements={elements}
-          >
-            <StoryAnimation.AMPAnimations />
-            <p style={{ textAlign: 'center', color: '#fff' }}>
-              {`Custom ${EFFECT_NAME} Effect`}
-            </p>
-
-            <amp-story-grid-layer
-              template="vertical"
-              aspect-ratio={AMP_STORY_ASPECT_RATIO}
-            >
-              <div className="page-fullbleed-area">
-                <div className="page-safe-area">
-                  {elementBoxes.map(({ id, x, y, width, height }) => (
-                    <div
-                      key={id}
-                      style={{
-                        position: 'absolute',
-                        top: `${y}%`,
-                        left: `${x}%`,
-                        width: `${width}%`,
-                        height: `${height}%`,
-                      }}
-                    >
-                      <StoryAnimation.AMPWrapper target={id}>
-                        <img alt="" src={SAMPLE_SRC_1} width="100%" />
-                      </StoryAnimation.AMPWrapper>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </amp-story-grid-layer>
-          </StoryAnimation.AnimationProvider>
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
+          <p style={{ textAlign: 'center', color: '#fff' }}>
+            {'Empty first page'}
+          </p>
         </amp-story-page>
-      ))}
-    </AMPStoryWrapper>
-  );
+        <amp-story-page id={`page-1`}>
+          <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP PAN'}</p>
+
+          <amp-story-grid-layer
+            template="vertical"
+            aspect-ratio={AMP_STORY_ASPECT_RATIO}
+          >
+            <amp-img
+              animate-in="pan-left"
+              animate-in-duration="5s"
+              src={SAMPLE_SRC_1}
+              width="296px"
+              height="198px"
+            />
+          </amp-story-grid-layer>
+        </amp-story-page>
+        {animations.map((animation) => (
+          <amp-story-page key={animation.id} id={`page-${animation.id}`}>
+            <StoryAnimation.AnimationProvider
+              animations={[animation]}
+              elements={elements}
+            >
+              <StoryAnimation.AMPAnimations />
+              <p style={{ textAlign: 'center', color: '#fff' }}>
+                {'Custom Pan Effect'}
+              </p>
+
+              <amp-story-grid-layer
+                template="vertical"
+                aspect-ratio={AMP_STORY_ASPECT_RATIO}
+              >
+                <div className="page-fullbleed-area">
+                  <div className="page-safe-area">
+                    {elementBoxes.map(({ id, x, y, width, height }) => (
+                      <div
+                        key={id}
+                        style={{
+                          position: 'absolute',
+                          top: `${y}%`,
+                          left: `${x}%`,
+                          width: `${width}%`,
+                          height: `${height}%`,
+                        }}
+                      >
+                        <StoryAnimation.AMPWrapper target={id}>
+                          <img alt="" src={SAMPLE_SRC_1} width="100%" />
+                        </StoryAnimation.AMPWrapper>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </amp-story-grid-layer>
+            </StoryAnimation.AnimationProvider>
+          </amp-story-page>
+        ))}
+      </AMPStoryWrapper>
+    );
+  },
 };

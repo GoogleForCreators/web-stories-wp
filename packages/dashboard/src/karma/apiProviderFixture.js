@@ -26,7 +26,7 @@ import { uniqueEntriesByKey } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import ApiContext from '../app/api/context';
-import { defaultStoriesState } from '../app/reducer/stories';
+import { defaultStoriesState } from '../app/reducer/story';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTaxonomiesArray from '../dataUtils/formattedTaxonomiesArray';
 import formattedTaxonomyTermsObject from '../dataUtils/formattedTaxonomyTermsObject';

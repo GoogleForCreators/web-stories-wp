@@ -17,7 +17,7 @@
 /**
  * Publishes the story in the editor.
  *
- * @param {boolean} [dismiss=true] Whether to dismiss the success dialog.
+ * @param {boolean} [dismiss] Whether to dismiss the success dialog.
  * @return {Promise<void>}
  */
 async function publishStory(dismiss = true) {

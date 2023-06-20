@@ -71,81 +71,83 @@ const defaultStyles = {
   height: '50px',
 };
 
-export const _default = () => {
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      <amp-story-page id={`page-1`}>
-        <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Pulse'}</p>
-
-        <amp-story-grid-layer template="vertical">
-          <div
-            animate-in="pulse"
-            animate-in-delay="0.5s"
-            style={{
-              backgroundColor: 'red',
-              ...defaultStyles,
-            }}
-          />
-          <div
-            animate-in="pulse"
-            animate-in-delay="1.0s"
-            style={{
-              backgroundColor: 'orange',
-              ...defaultStyles,
-            }}
-          />
-          <div
-            animate-in="pulse"
-            animate-in-delay="1.5s"
-            style={{
-              backgroundColor: 'blue',
-              ...defaultStyles,
-            }}
-          />
-          <div
-            animate-in="pulse"
-            animate-in-delay="2.0s"
-            style={{
-              backgroundColor: 'yellow',
-              ...defaultStyles,
-            }}
-          />
-        </amp-story-grid-layer>
-      </amp-story-page>
-      <amp-story-page id={`page-2`}>
-        <StoryAnimation.AnimationProvider animations={animations}>
-          <StoryAnimation.AMPAnimations />
+export const _default = {
+  render: function Render() {
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
           <p style={{ textAlign: 'center', color: '#fff' }}>
-            {'Custom Pulse Effect'}
+            {'Empty first page'}
           </p>
-          <p style={{ textAlign: 'center', color: '#fff' }}>
-            {
-              'Only first element reflects amp-story preset, rest highlight greater configurability'
-            }
-          </p>
+        </amp-story-page>
+        <amp-story-page id={`page-1`}>
+          <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Pulse'}</p>
 
           <amp-story-grid-layer template="vertical">
-            {elements.map(({ id, color }) => (
-              <div key={id} style={defaultStyles}>
-                <StoryAnimation.AMPWrapper target={id}>
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: color,
-                    }}
-                  />
-                </StoryAnimation.AMPWrapper>
-              </div>
-            ))}
+            <div
+              animate-in="pulse"
+              animate-in-delay="0.5s"
+              style={{
+                backgroundColor: 'red',
+                ...defaultStyles,
+              }}
+            />
+            <div
+              animate-in="pulse"
+              animate-in-delay="1.0s"
+              style={{
+                backgroundColor: 'orange',
+                ...defaultStyles,
+              }}
+            />
+            <div
+              animate-in="pulse"
+              animate-in-delay="1.5s"
+              style={{
+                backgroundColor: 'blue',
+                ...defaultStyles,
+              }}
+            />
+            <div
+              animate-in="pulse"
+              animate-in-delay="2.0s"
+              style={{
+                backgroundColor: 'yellow',
+                ...defaultStyles,
+              }}
+            />
           </amp-story-grid-layer>
-        </StoryAnimation.AnimationProvider>
-      </amp-story-page>
-    </AMPStoryWrapper>
-  );
+        </amp-story-page>
+        <amp-story-page id={`page-2`}>
+          <StoryAnimation.AnimationProvider animations={animations}>
+            <StoryAnimation.AMPAnimations />
+            <p style={{ textAlign: 'center', color: '#fff' }}>
+              {'Custom Pulse Effect'}
+            </p>
+            <p style={{ textAlign: 'center', color: '#fff' }}>
+              {
+                'Only first element reflects amp-story preset, rest highlight greater configurability'
+              }
+            </p>
+
+            <amp-story-grid-layer template="vertical">
+              {elements.map(({ id, color }) => (
+                <div key={id} style={defaultStyles}>
+                  <StoryAnimation.AMPWrapper target={id}>
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: color,
+                      }}
+                    />
+                  </StoryAnimation.AMPWrapper>
+                </div>
+              ))}
+            </amp-story-grid-layer>
+          </StoryAnimation.AnimationProvider>
+        </amp-story-page>
+      </AMPStoryWrapper>
+    );
+  },
 };

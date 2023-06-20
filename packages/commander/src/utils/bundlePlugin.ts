@@ -30,7 +30,7 @@ import getCurrentVersionNumber from './getCurrentVersionNumber';
  * Main function to bundle the plugin.
  *
  * @param source Path to the source directory.
- * @param [composer=false] Create Composer-ready ZIP file without PHP autoloader.
+ * @param [composer] Create Composer-ready ZIP file without PHP autoloader.
  * @param zip Whether a ZIP file should be generated. Pass a string to set a custom file name.
  * @param [clean] Whether to delete existing ZIP file.
  * @return Path to the build directory or ZIP file.

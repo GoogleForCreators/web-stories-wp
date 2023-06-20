@@ -25,7 +25,7 @@ import getIgnoredFiles from './getIgnoredFiles';
  *
  * @param source Path to the source directory.
  * @param target Path to target directory.
- * @param [composer=false] Create Composer-ready ZIP file without PHP autoloader.
+ * @param [composer] Create Composer-ready ZIP file without PHP autoloader.
  */
 function createBuild(source: string, target: string, composer = false) {
   const ignoredFiles = getIgnoredFiles(source);

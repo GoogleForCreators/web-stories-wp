@@ -47,16 +47,18 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <AdManagement
-      siteKitStatus={{
-        installed: args.installed,
-        active: args.active,
-        adsenseActive: args.adsenseActive,
-        adsenseLink: args.adsenseLink,
-      }}
-      {...args}
-    />
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <AdManagement
+        siteKitStatus={{
+          installed: args.installed,
+          active: args.active,
+          adsenseActive: args.adsenseActive,
+          adsenseLink: args.adsenseLink,
+        }}
+        {...args}
+      />
+    );
+  },
 };

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { storyReducer, ACTION_TYPES } from '../stories';
+import { storyReducer, ACTION_TYPES } from '../story';
 import { STORY_STATUS } from '../../../constants';
 import { ERRORS } from '../../textContent';
 

@@ -34,42 +34,44 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const [addedFonts, setAddedFonts] = useState(rawCustomFonts);
-  const demoId = useRef(4);
+export const _default = {
+  render: function Render(args) {
+    const [addedFonts, setAddedFonts] = useState(rawCustomFonts);
+    const demoId = useRef(4);
 
-  const handleAddFont = useCallback(
-    ({ url }) => {
-      args.onSubmit(url);
+    const handleAddFont = useCallback(
+      ({ url }) => {
+        args.onSubmit(url);
 
-      // For storybook demo only.
-      const fontData = {
-        id: demoId,
-        family: `Demo font ${demoId.current}`,
-        url,
-      };
-      setAddedFonts([fontData, ...addedFonts]);
-      demoId.current = demoId.current + 1;
-    },
-    [addedFonts, args]
-  );
+        // For storybook demo only.
+        const fontData = {
+          id: demoId,
+          family: `Demo font ${demoId.current}`,
+          url,
+        };
+        setAddedFonts([fontData, ...addedFonts]);
+        demoId.current = demoId.current + 1;
+      },
+      [addedFonts, args]
+    );
 
-  const deleteFont = useCallback(
-    (toDelete) => {
-      args.onDelete(toDelete);
+    const deleteFont = useCallback(
+      (toDelete) => {
+        args.onDelete(toDelete);
 
-      setAddedFonts((currentFonts) => {
-        return currentFonts.filter(({ id }) => id !== toDelete);
-      });
-    },
-    [args]
-  );
+        setAddedFonts((currentFonts) => {
+          return currentFonts.filter(({ id }) => id !== toDelete);
+        });
+      },
+      [args]
+    );
 
-  return (
-    <CustomFontsSettings
-      addCustomFont={handleAddFont}
-      customFonts={addedFonts}
-      deleteCustomFont={deleteFont}
-    />
-  );
+    return (
+      <CustomFontsSettings
+        addCustomFont={handleAddFont}
+        customFonts={addedFonts}
+        deleteCustomFont={deleteFont}
+      />
+    );
+  },
 };

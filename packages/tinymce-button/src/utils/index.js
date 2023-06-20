@@ -30,7 +30,7 @@ import store from '../store';
  * @param {Object} args Arguments.
  * @param {Object} args.fieldObj Field object.
  * @param {Object} args.field Field.
- * @param {boolean} [args.hidden=false] Whether the field is hidden.
+ * @param {boolean} [args.hidden] Whether the field is hidden.
  * @return {void}
  */
 export const updateViewSettings = ({ fieldObj, field, hidden = false }) => {

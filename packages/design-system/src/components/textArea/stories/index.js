@@ -60,128 +60,129 @@ const Row = styled.div`
   }
 `;
 
-// eslint-disable-next-line react/prop-types
-export const _default = ({ onHandleChange, ...args }) => {
-  const [inputState, setInputState] = useState({
-    oneLight: 'Light mode text',
-    twoLight: 'disabled',
-    threeLight: 'disabled',
-    fourLight: 'limited',
-    oneDark: 'Dark mode text',
-    twoDark: '',
-    threeDark: '',
-    fourDark: '',
-  });
+export const _default = {
+  render: function Render({ onHandleChange, ...args }) {
+    const [inputState, setInputState] = useState({
+      oneLight: 'Light mode text',
+      twoLight: 'disabled',
+      threeLight: 'disabled',
+      fourLight: 'limited',
+      oneDark: 'Dark mode text',
+      twoDark: '',
+      threeDark: '',
+      fourDark: '',
+    });
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const handleChange = (event) => {
+      const name = event.target.name;
+      const value = event.target.value;
 
-    onHandleChange(`${name} changed to: ${value}`);
-    setInputState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+      onHandleChange(`${name} changed to: ${value}`);
+      setInputState((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
 
-  return (
-    <>
-      <Headline as="h1">{'Textarea'}</Headline>
-      <br />
-      <Container>
-        <Row>
-          <div>
-            <Text.Paragraph isBold>{'Normal'}</Text.Paragraph>
-            <TextArea
-              aria-label="input-one"
-              id="one-light"
-              name="oneLight"
-              value={inputState.oneLight}
-              onChange={handleChange}
-              {...args}
-            />
-          </div>
-          <div>
-            <Text.Paragraph isBold>{'Error'}</Text.Paragraph>
-            <TextArea
-              aria-label="input-two"
-              id="two-light"
-              name="twoLight"
-              value={inputState.twoLight}
-              onChange={handleChange}
-              {...args}
-              hasError
-            />
-          </div>
-          <div>
-            <Text.Paragraph isBold>{'Disabled'}</Text.Paragraph>
-            <TextArea
-              aria-label="disabled-input-one"
-              id="three-light"
-              name="threeLight"
-              value={inputState.threeLight}
-              onChange={handleChange}
-              {...args}
-              disabled
-            />
-          </div>
-          <div>
-            <Text.Paragraph isBold>{'With Counter'}</Text.Paragraph>
-            <TextArea
-              aria-label="input-four"
-              id="four-light"
-              name="fourLight"
-              value={inputState.fourLight}
-              onChange={handleChange}
-              {...args}
-              showCount
-              maxLength={20}
-            />
-          </div>
-        </Row>
-      </Container>
-      <DarkThemeProvider>
-        <Container darkMode>
+    return (
+      <>
+        <Headline as="h1">{'Textarea'}</Headline>
+        <br />
+        <Container>
           <Row>
-            <TextArea
-              aria-label="input-four"
-              id="one-dark"
-              name="oneDark"
-              value={inputState.oneDark}
-              onChange={handleChange}
-              {...args}
-            />
-            <TextArea
-              aria-label="input-five"
-              id="two-dark"
-              name="twoDark"
-              value={inputState.twoDark}
-              onChange={handleChange}
-              {...args}
-              hasError
-            />
-            <TextArea
-              aria-label="disabled-input-two"
-              id="three-dark"
-              name="threeDark"
-              value={inputState.threeDark}
-              onChange={handleChange}
-              {...args}
-              disabled
-            />
-            <TextArea
-              aria-label="input-four"
-              id="four-dark"
-              name="fourDark"
-              value={inputState.fourDark}
-              onChange={handleChange}
-              {...args}
-              showCount
-              maxLength={200}
-            />
+            <div>
+              <Text.Paragraph isBold>{'Normal'}</Text.Paragraph>
+              <TextArea
+                aria-label="input-one"
+                id="one-light"
+                name="oneLight"
+                value={inputState.oneLight}
+                onChange={handleChange}
+                {...args}
+              />
+            </div>
+            <div>
+              <Text.Paragraph isBold>{'Error'}</Text.Paragraph>
+              <TextArea
+                aria-label="input-two"
+                id="two-light"
+                name="twoLight"
+                value={inputState.twoLight}
+                onChange={handleChange}
+                {...args}
+                hasError
+              />
+            </div>
+            <div>
+              <Text.Paragraph isBold>{'Disabled'}</Text.Paragraph>
+              <TextArea
+                aria-label="disabled-input-one"
+                id="three-light"
+                name="threeLight"
+                value={inputState.threeLight}
+                onChange={handleChange}
+                {...args}
+                disabled
+              />
+            </div>
+            <div>
+              <Text.Paragraph isBold>{'With Counter'}</Text.Paragraph>
+              <TextArea
+                aria-label="input-four"
+                id="four-light"
+                name="fourLight"
+                value={inputState.fourLight}
+                onChange={handleChange}
+                {...args}
+                showCount
+                maxLength={20}
+              />
+            </div>
           </Row>
         </Container>
-      </DarkThemeProvider>
-    </>
-  );
+        <DarkThemeProvider>
+          <Container darkMode>
+            <Row>
+              <TextArea
+                aria-label="input-four"
+                id="one-dark"
+                name="oneDark"
+                value={inputState.oneDark}
+                onChange={handleChange}
+                {...args}
+              />
+              <TextArea
+                aria-label="input-five"
+                id="two-dark"
+                name="twoDark"
+                value={inputState.twoDark}
+                onChange={handleChange}
+                {...args}
+                hasError
+              />
+              <TextArea
+                aria-label="disabled-input-two"
+                id="three-dark"
+                name="threeDark"
+                value={inputState.threeDark}
+                onChange={handleChange}
+                {...args}
+                disabled
+              />
+              <TextArea
+                aria-label="input-four"
+                id="four-dark"
+                name="fourDark"
+                value={inputState.fourDark}
+                onChange={handleChange}
+                {...args}
+                showCount
+                maxLength={200}
+              />
+            </Row>
+          </Container>
+        </DarkThemeProvider>
+      </>
+    );
+  },
 };

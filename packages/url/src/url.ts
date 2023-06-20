@@ -36,7 +36,7 @@ export function isValidUrl(url: string): boolean {
  * Prepends a protocol (default https) to a URL that doesn't have one
  *
  * @param url URL.
- * @param [protocol=https] default protocol to prepend
+ * @param [protocol] default protocol to prepend
  * @return the url with the protocol prepended to it
  */
 export function withProtocol(

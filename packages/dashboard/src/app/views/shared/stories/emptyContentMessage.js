@@ -26,6 +26,8 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return <EmptyContentMessage>{args.message}</EmptyContentMessage>;
+export const _default = {
+  render: function Render(args) {
+    return <EmptyContentMessage>{args.message}</EmptyContentMessage>;
+  },
 };

@@ -34,70 +34,83 @@ export default {
   },
 };
 
-// eslint-disable-next-line react/prop-types
-export const _default = ({ message, ...args }) => {
-  return (
-    <Banner closeButtonLabel={'Dismiss storybook banner'} {...args}>
-      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
-    </Banner>
-  );
+export const _default = {
+  render: ({ message, ...args }) => {
+    return (
+      <Banner closeButtonLabel={'Dismiss storybook banner'} {...args}>
+        <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
+      </Banner>
+    );
+  },
 };
-// eslint-disable-next-line react/prop-types
-export const EditorBanner = ({ message, ...args }) => {
-  return (
-    <Banner
-      closeButtonLabel={'Dismiss storybook banner'}
-      onClose={(e) => args.onClose(e)}
-      {...args}
-    >
-      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
-    </Banner>
-  );
+
+export const EditorBanner = {
+  render: ({ message, ...args }) => {
+    return (
+      <Banner
+        closeButtonLabel={'Dismiss storybook banner'}
+        onClose={(e) => args.onClose(e)}
+        {...args}
+      >
+        <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
+      </Banner>
+    );
+  },
+
+  args: {
+    title: 'Animations are here!',
+    isDashboard: false,
+    message:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  },
 };
-EditorBanner.args = {
-  title: 'Animations are here!',
-  isDashboard: false,
-  message:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+
+export const DashboardBanner = {
+  render: ({ message, ...args }) => {
+    return (
+      <Banner
+        closeButtonLabel={'Dismiss storybook banner'}
+        onClose={(e) => args.onClose(e)}
+        {...args}
+      >
+        <Text.Paragraph size={TextSize.XSmall}>
+          {message}
+          <Link
+            size={TextSize.XSmall}
+            href="https://policies.google.com/privacy"
+          >
+            {'Google Privacy Policy'}
+          </Link>
+        </Text.Paragraph>
+      </Banner>
+    );
+  },
+
+  args: {
+    title: 'Help improve the editor!',
+    isDashboard: true,
+    message:
+      'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with ',
+  },
 };
-// eslint-disable-next-line react/prop-types
-export const DashboardBanner = ({ message, ...args }) => {
-  return (
-    <Banner
-      closeButtonLabel={'Dismiss storybook banner'}
-      onClose={(e) => args.onClose(e)}
-      {...args}
-    >
-      <Text.Paragraph size={TextSize.XSmall}>
-        {message}
-        <Link size={TextSize.XSmall} href="https://policies.google.com/privacy">
-          {'Google Privacy Policy'}
-        </Link>
-      </Text.Paragraph>
-    </Banner>
-  );
-};
-DashboardBanner.args = {
-  title: 'Help improve the editor!',
-  isDashboard: true,
-  message:
-    'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with ',
-};
-// eslint-disable-next-line react/prop-types
-export const BannerNoBackgroundImage = ({ message, ...args }) => {
-  return (
-    <Banner
-      closeButtonLabel={'Dismiss storybook banner'}
-      onClose={(e) => args.onClose(e)}
-      {...args}
-    >
-      <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
-    </Banner>
-  );
-};
-BannerNoBackgroundImage.args = {
-  title: 'New Feature!',
-  isDashboard: true,
-  message:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+
+export const BannerNoBackgroundImage = {
+  render: ({ message, ...args }) => {
+    return (
+      <Banner
+        closeButtonLabel={'Dismiss storybook banner'}
+        onClose={(e) => args.onClose(e)}
+        {...args}
+      >
+        <Text.Paragraph size={TextSize.XSmall}>{message}</Text.Paragraph>
+      </Banner>
+    );
+  },
+
+  args: {
+    title: 'New Feature!',
+    isDashboard: true,
+    message:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  },
 };

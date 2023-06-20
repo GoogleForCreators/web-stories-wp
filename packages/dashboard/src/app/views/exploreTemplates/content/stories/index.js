@@ -66,47 +66,53 @@ export default {
     },
   },
 };
-export const _default = (args) => {
-  const { pageSize } = usePagePreviewSize({
-    isGrid: true,
-  });
-  const templateActions = {
-    handleDetailsToggle: args.handleDetailsToggle,
-    switchToTemplateByOffset: args.switchToTemplateByOffset,
-  };
-  const page = {
-    set: args.set,
-    requestNextPage: args.requestNextPage,
-    value: args.pageValue,
-  };
-  const search = {
-    setKeyword: args.setKeyword,
-    keyword: args.searchKeyword,
-  };
-  const view = {
-    pageSize,
-    style: args.viewStyle,
-  };
 
-  const defaultNestedProps = {
-    templateActions,
-    page,
-    search,
-    view,
-  };
+export const _default = {
+  render: function Render(args) {
+    const { pageSize } = usePagePreviewSize({
+      isGrid: true,
+    });
+    const templateActions = {
+      handleDetailsToggle: args.handleDetailsToggle,
+      switchToTemplateByOffset: args.switchToTemplateByOffset,
+    };
+    const page = {
+      set: args.set,
+      requestNextPage: args.requestNextPage,
+      value: args.pageValue,
+    };
+    const search = {
+      setKeyword: args.setKeyword,
+      keyword: args.searchKeyword,
+    };
+    const view = {
+      pageSize,
+      style: args.viewStyle,
+    };
 
-  return (
-    <Layout.Provider>
-      <StorybookLayoutContainer>
-        <Content {...args} {...defaultNestedProps} />
-      </StorybookLayoutContainer>
-    </Layout.Provider>
-  );
+    const defaultNestedProps = {
+      templateActions,
+      page,
+      search,
+      view,
+    };
+
+    return (
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content {...args} {...defaultNestedProps} />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    );
+  },
 };
 
-export const NoSearchResults = _default.bind({});
-NoSearchResults.args = {
-  allPagesFetched: true,
-  totalTemplates: 0,
-  searchKeyword: 'polar bears',
+export const NoSearchResults = {
+  render: _default,
+
+  args: {
+    allPagesFetched: true,
+    totalTemplates: 0,
+    searchKeyword: 'polar bears',
+  },
 };

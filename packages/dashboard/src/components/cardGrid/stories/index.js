@@ -42,21 +42,23 @@ const Card = styled.div`
   background-color: orange;
 `;
 
-export const _default = (args) => {
-  const StorybookGridItem = (
-    <CardGridItem>
-      <Card>{args.message}</Card>
-    </CardGridItem>
-  );
+export const _default = {
+  render: function Render(args) {
+    const StorybookGridItem = (
+      <CardGridItem>
+        <Card>{args.message}</Card>
+      </CardGridItem>
+    );
 
-  const itemArray = new Array(12).fill(StorybookGridItem);
+    const itemArray = new Array(12).fill(StorybookGridItem);
 
-  return (
-    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
-      {itemArray.map((gridItem, index) => (
-        //eslint-disable-next-line react/no-array-index-key
-        <div key={index}>{gridItem}</div>
-      ))}
-    </CardGrid>
-  );
+    return (
+      <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
+        {itemArray.map((gridItem, index) => (
+          //eslint-disable-next-line react/no-array-index-key
+          <div key={index}>{gridItem}</div>
+        ))}
+      </CardGrid>
+    );
+  },
 };

@@ -37,6 +37,8 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return <PostTakeOverDialog {...args} />;
+export const _default = {
+  render: function Render(args) {
+    return <PostTakeOverDialog {...args} />;
+  },
 };

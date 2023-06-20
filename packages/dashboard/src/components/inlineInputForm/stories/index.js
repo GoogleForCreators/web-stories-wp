@@ -40,12 +40,16 @@ export default {
   },
 };
 
-export const _default = (args) => (
-  <InlineInputForm
-    onEditComplete={(newValue) => args.onEditComplete(newValue)}
-    value={'some input value'}
-    id={'898989'}
-    label="my hidden input label"
-    {...args}
-  />
-);
+export const _default = {
+  render: function Render(args) {
+    return (
+      <InlineInputForm
+        onEditComplete={(newValue) => args.onEditComplete(newValue)}
+        value={'some input value'}
+        id={'898989'}
+        label="my hidden input label"
+        {...args}
+      />
+    );
+  },
+};

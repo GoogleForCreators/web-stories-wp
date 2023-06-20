@@ -73,44 +73,46 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const filter = {
-    status: args.status,
-    value: args.statusValue,
-    set: args.setFilter,
-  };
-  const sort = {
-    value: args.value,
-    direction: args.direction,
-    set: args.setSort,
-    setDirection: args.setDirection,
-  };
-  const search = {
-    keyword: args.keyword,
-    setKeyword: args.setKeyword,
-  };
-  const view = {
-    style: args.style,
-    toggleStyle: args.toggleStyle,
-    pageSize: { width: 309, height: 206 },
-  };
-  const totalStoriesByStatus = {
-    all: args.all,
-    draft: args.draft,
-    publish: args.publish,
-  };
+export const _default = {
+  render: function Render(args) {
+    const filter = {
+      status: args.status,
+      value: args.statusValue,
+      set: args.setFilter,
+    };
+    const sort = {
+      value: args.value,
+      direction: args.direction,
+      set: args.setSort,
+      setDirection: args.setDirection,
+    };
+    const search = {
+      keyword: args.keyword,
+      setKeyword: args.setKeyword,
+    };
+    const view = {
+      style: args.style,
+      toggleStyle: args.toggleStyle,
+      pageSize: { width: 309, height: 206 },
+    };
+    const totalStoriesByStatus = {
+      all: args.all,
+      draft: args.draft,
+      publish: args.publish,
+    };
 
-  const defaultProps = {
-    filter,
-    view,
-    search,
-    stories: formattedStoriesArray,
-    sort,
-    totalStoriesByStatus,
-  };
-  return (
-    <Layout.Provider>
-      <Header {...args} {...defaultProps} />
-    </Layout.Provider>
-  );
+    const defaultProps = {
+      filter,
+      view,
+      search,
+      stories: formattedStoriesArray,
+      sort,
+      totalStoriesByStatus,
+    };
+    return (
+      <Layout.Provider>
+        <Header {...args} {...defaultProps} />
+      </Layout.Provider>
+    );
+  },
 };

@@ -99,15 +99,18 @@ PillContainer.propTypes = {
   prefix: PropTypes.string.isRequired,
 };
 
-// Override light theme because this component is only set up for dark theme right now given fg and bg coloring
-export const _default = (args) => (
-  <>
-    <PillContainer prefix="Light" {...args} />
-    <ThemeProvider theme={theme}>
-      <PillContainer prefix="Dark" {...args} />
-    </ThemeProvider>
-  </>
-);
+export const _default = {
+  render: function Render(args) {
+    return (
+      <>
+        <PillContainer prefix="Light" {...args} />
+        <ThemeProvider theme={theme}>
+          <PillContainer prefix="Dark" {...args} />
+        </ThemeProvider>
+      </>
+    );
+  },
+};
 
 const PILL_OPTIONS = [
   { id: 1, label: 'George' },
@@ -130,15 +133,19 @@ function PillGroupContainer(args) {
   );
 }
 
-// Override light theme because this component is only set up for dark theme right now given fg and bg coloring
-export const PillGroups = (args) => (
-  <>
-    <PillGroupContainer {...args} />
-    <ThemeProvider theme={theme}>
-      <PillGroupContainer {...args} />
-    </ThemeProvider>
-  </>
-);
-PillGroups.parameters = {
-  controls: { include: [], hideNoControlsWarning: true },
+export const PillGroups = {
+  render: function Render(args) {
+    return (
+      <>
+        <PillGroupContainer {...args} />
+        <ThemeProvider theme={theme}>
+          <PillGroupContainer {...args} />
+        </ThemeProvider>
+      </>
+    );
+  },
+
+  parameters: {
+    controls: { include: [], hideNoControlsWarning: true },
+  },
 };

@@ -53,76 +53,77 @@ const Container = styled.div`
   }
 `;
 
-// eslint-disable-next-line react/prop-types
-export const _default = ({ onHandleChange, ...args }) => {
-  const [switchState, setSwitchState] = useState({
-    radioOne: true,
-    radioTwo: false,
-    radioOneDisabled: true,
-    radioTwoDisabled: false,
-  });
+export const _default = {
+  render: function Render({ onHandleChange, ...args }) {
+    const [switchState, setSwitchState] = useState({
+      radioOne: true,
+      radioTwo: false,
+      radioOneDisabled: true,
+      radioTwoDisabled: false,
+    });
 
-  const handleChange = (evt, value) => {
-    const name = evt?.target?.name;
+    const handleChange = (evt, value) => {
+      const name = evt?.target?.name;
 
-    onHandleChange(name);
-    setSwitchState((currentState) => ({
-      ...currentState,
-      [name]: value,
-    }));
-  };
+      onHandleChange(name);
+      setSwitchState((currentState) => ({
+        ...currentState,
+        [name]: value,
+      }));
+    };
 
-  return (
-    <>
-      <Headline as="h1">{'Switch'}</Headline>
-      <Container>
-        <div>
-          <Text.Paragraph>{'Normal'}</Text.Paragraph>
-          <Switch
-            name="radioOne"
-            groupLabel="radio one"
-            onChange={handleChange}
-            value={switchState.radioOne}
-            {...args}
-          />
-        </div>
-        <div>
-          <Text.Paragraph>{'Disabled Switch'}</Text.Paragraph>
-          <Switch
-            name="radioOneDisabled"
-            groupLabel="radio one disabled"
-            onChange={handleChange}
-            value={switchState.radioOneDisabled}
-            disabled
-            {...args}
-          />
-        </div>
-      </Container>
-      <DarkThemeProvider>
+    return (
+      <>
+        <Headline as="h1">{'Switch'}</Headline>
         <Container>
           <div>
             <Text.Paragraph>{'Normal'}</Text.Paragraph>
             <Switch
-              name="radioTwo"
-              groupLabel="radio two"
+              name="radioOne"
+              groupLabel="radio one"
               onChange={handleChange}
-              value={switchState.radioTwo}
+              value={switchState.radioOne}
               {...args}
             />
           </div>
           <div>
             <Text.Paragraph>{'Disabled Switch'}</Text.Paragraph>
             <Switch
-              name="radioTwoDisabled"
-              groupLabel="radio two disabled"
+              name="radioOneDisabled"
+              groupLabel="radio one disabled"
               onChange={handleChange}
-              value={switchState.radioTwoDisabled}
+              value={switchState.radioOneDisabled}
               disabled
               {...args}
             />
           </div>
         </Container>
-      </DarkThemeProvider>
-    </>
-  );
+        <DarkThemeProvider>
+          <Container>
+            <div>
+              <Text.Paragraph>{'Normal'}</Text.Paragraph>
+              <Switch
+                name="radioTwo"
+                groupLabel="radio two"
+                onChange={handleChange}
+                value={switchState.radioTwo}
+                {...args}
+              />
+            </div>
+            <div>
+              <Text.Paragraph>{'Disabled Switch'}</Text.Paragraph>
+              <Switch
+                name="radioTwoDisabled"
+                groupLabel="radio two disabled"
+                onChange={handleChange}
+                value={switchState.radioTwoDisabled}
+                disabled
+                {...args}
+              />
+            </div>
+          </Container>
+        </DarkThemeProvider>
+      </>
+    );
+  },
 };

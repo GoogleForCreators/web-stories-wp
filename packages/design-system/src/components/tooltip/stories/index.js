@@ -88,168 +88,183 @@ const Color = styled.div`
   background-color: red;
 `;
 
-export const _default = (args) => (
-  <ThemeProvider theme={theme}>
-    <Container>
-      <Tooltip
-        hasTail={args.hasTail}
-        placement={args.placement}
-        shortcut={args.colorShortcut}
-        title={args.colorTitle}
-      >
-        <Color />
-      </Tooltip>
+export const _default = {
+  render: function Render(args) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Tooltip
+            hasTail={args.hasTail}
+            placement={args.placement}
+            shortcut={args.colorShortcut}
+            title={args.colorTitle}
+          >
+            <Color />
+          </Tooltip>
 
-      <Tooltip
-        hasTail={args.hasTail}
-        placement={args.placement}
-        shortcut={args.iconShortcut}
-        title={args.iconTitle}
-      >
-        <Button type={ButtonType.Primary} variant={ButtonVariant.Icon}>
-          <Table aria-hidden />
-        </Button>
-      </Tooltip>
+          <Tooltip
+            hasTail={args.hasTail}
+            placement={args.placement}
+            shortcut={args.iconShortcut}
+            title={args.iconTitle}
+          >
+            <Button type={ButtonType.Primary} variant={ButtonVariant.Icon}>
+              <Table aria-hidden />
+            </Button>
+          </Tooltip>
 
-      <Tooltip
-        hasTail={args.hasTail}
-        placement={args.placement}
-        shortcut={args.buttonShortcut}
-        title={args.buttonTitle}
-      >
-        <Button type={ButtonType.Primary} size={ButtonSize.Small}>
-          {'I am just a normal button'}
-        </Button>
-      </Tooltip>
-    </Container>
-  </ThemeProvider>
-);
+          <Tooltip
+            hasTail={args.hasTail}
+            placement={args.placement}
+            shortcut={args.buttonShortcut}
+            title={args.buttonTitle}
+          >
+            <Button type={ButtonType.Primary} size={ButtonSize.Small}>
+              {'I am just a normal button'}
+            </Button>
+          </Tooltip>
+        </Container>
+      </ThemeProvider>
+    );
+  },
+};
 
-export const LightMode = (args) => (
-  <Container>
-    <Tooltip
-      hasTail={args.hasTail}
-      placement={args.placement}
-      shortcut={args.colorShortcut}
-      title={args.colorTitle}
-    >
-      <Color />
-    </Tooltip>
+export const LightMode = {
+  render: function Render(args) {
+    return (
+      <Container>
+        <Tooltip
+          hasTail={args.hasTail}
+          placement={args.placement}
+          shortcut={args.colorShortcut}
+          title={args.colorTitle}
+        >
+          <Color />
+        </Tooltip>
 
-    <Tooltip
-      hasTail={args.hasTail}
-      placement={args.placement}
-      shortcut={args.iconShortcut}
-      title={args.iconTitle}
-    >
-      <Button type={ButtonType.Primary} variant={ButtonVariant.Icon}>
-        <Table aria-hidden />
-      </Button>
-    </Tooltip>
+        <Tooltip
+          hasTail={args.hasTail}
+          placement={args.placement}
+          shortcut={args.iconShortcut}
+          title={args.iconTitle}
+        >
+          <Button type={ButtonType.Primary} variant={ButtonVariant.Icon}>
+            <Table aria-hidden />
+          </Button>
+        </Tooltip>
 
-    <Tooltip
-      hasTail={args.hasTail}
-      placement={args.placement}
-      shortcut={args.buttonShortcut}
-      title={args.buttonTitle}
-    >
-      <Button type={ButtonType.Primary} size={ButtonSize.Small}>
-        {'I am just a normal button'}
-      </Button>
-    </Tooltip>
-  </Container>
-);
+        <Tooltip
+          hasTail={args.hasTail}
+          placement={args.placement}
+          shortcut={args.buttonShortcut}
+          title={args.buttonTitle}
+        >
+          <Button type={ButtonType.Primary} size={ButtonSize.Small}>
+            {'I am just a normal button'}
+          </Button>
+        </Tooltip>
+      </Container>
+    );
+  },
+};
 
 const tooltipTitles = [
   'initial tooltip title',
   'secondary tooltip title but quite a bit longer',
 ];
 
-export const TooltipWithChangingTextOnClick = (args) => {
-  const [currentTooltipIndex, setCurrentTooltipIndex] = useState(0);
+export const TooltipWithChangingTextOnClick = {
+  render: function Render(args) {
+    const [currentTooltipIndex, setCurrentTooltipIndex] = useState(0);
 
-  const handleTooltipTextChange = useCallback(() => {
-    setCurrentTooltipIndex((existingIndex) => (existingIndex === 1 ? 0 : 1));
-  }, []);
+    const handleTooltipTextChange = useCallback(() => {
+      setCurrentTooltipIndex((existingIndex) => (existingIndex === 1 ? 0 : 1));
+    }, []);
 
-  return (
-    <Container>
-      <Text>{'Click button to change tooltip title.'}</Text>
-      <Tooltip
-        hasTail={args.hasTail}
-        placement={args.placement}
-        shortcut={args.iconShortcut}
-        title={tooltipTitles[currentTooltipIndex]}
-      >
-        <Button
-          type={ButtonType.Primary}
-          size={ButtonSize.Small}
-          onClick={handleTooltipTextChange}
+    return (
+      <Container>
+        <Text>{'Click button to change tooltip title.'}</Text>
+        <Tooltip
+          hasTail={args.hasTail}
+          placement={args.placement}
+          shortcut={args.iconShortcut}
+          title={tooltipTitles[currentTooltipIndex]}
         >
-          {'Switch view'}
-        </Button>
-      </Tooltip>
-    </Container>
-  );
-};
-TooltipWithChangingTextOnClick.parameters = {
-  controls: {
-    include: ['hasTail', 'placement', 'Shortcut for icon'],
+          <Button
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
+            onClick={handleTooltipTextChange}
+          >
+            {'Switch view'}
+          </Button>
+        </Tooltip>
+      </Container>
+    );
+  },
+
+  parameters: {
+    controls: {
+      include: ['hasTail', 'placement', 'Shortcut for icon'],
+    },
   },
 };
 
-export const TooltipWithChangingTextOnInterval = (args) => {
-  const [currentTooltipIndex, setCurrentTooltipIndex] = useState(0);
-  const [isTooltipIntervalActive, setIsTooltipIntervalActive] = useState(false);
+export const TooltipWithChangingTextOnInterval = {
+  render: function Render(args) {
+    const [currentTooltipIndex, setCurrentTooltipIndex] = useState(0);
+    const [isTooltipIntervalActive, setIsTooltipIntervalActive] =
+      useState(false);
 
-  useEffect(() => {
-    let interval;
-    if (isTooltipIntervalActive) {
-      interval = setInterval(
-        () =>
-          setCurrentTooltipIndex((existingIndex) =>
-            existingIndex === 1 ? 0 : 1
-          ),
-        1000
-      );
-    }
+    useEffect(() => {
+      let interval;
+      if (isTooltipIntervalActive) {
+        interval = setInterval(
+          () =>
+            setCurrentTooltipIndex((existingIndex) =>
+              existingIndex === 1 ? 0 : 1
+            ),
+          1000
+        );
+      }
 
-    return () => interval && clearInterval(interval);
-  }, [isTooltipIntervalActive]);
+      return () => interval && clearInterval(interval);
+    }, [isTooltipIntervalActive]);
 
-  const handleToggleButtonFocus = useCallback(
-    () =>
-      setIsTooltipIntervalActive((currentActiveState) => !currentActiveState),
-    []
-  );
+    const handleToggleButtonFocus = useCallback(
+      () =>
+        setIsTooltipIntervalActive((currentActiveState) => !currentActiveState),
+      []
+    );
 
-  return (
-    <Container>
-      <Text>
-        {
-          'Place focus on button to begin updating tooltip text with interval behind the scenes, remove focus to stop.'
-        }
-      </Text>
-      <Tooltip
-        hasTail={args.hasTail}
-        placement={args.placement}
-        shortcut={args.iconShortcut}
-        title={tooltipTitles[currentTooltipIndex]}
-      >
-        <Button
-          type={ButtonType.Primary}
-          size={ButtonSize.Small}
-          onFocus={handleToggleButtonFocus}
-          onBlur={handleToggleButtonFocus}
+    return (
+      <Container>
+        <Text>
+          {
+            'Place focus on button to begin updating tooltip text with interval behind the scenes, remove focus to stop.'
+          }
+        </Text>
+        <Tooltip
+          hasTail={args.hasTail}
+          placement={args.placement}
+          shortcut={args.iconShortcut}
+          title={tooltipTitles[currentTooltipIndex]}
         >
-          {'Switch view'}
-        </Button>
-      </Tooltip>
-    </Container>
-  );
-};
-TooltipWithChangingTextOnInterval.parameters = {
-  controls: {
-    include: ['hasTail', 'placement', 'Shortcut for icon'],
+          <Button
+            type={ButtonType.Primary}
+            size={ButtonSize.Small}
+            onFocus={handleToggleButtonFocus}
+            onBlur={handleToggleButtonFocus}
+          >
+            {'Switch view'}
+          </Button>
+        </Tooltip>
+      </Container>
+    );
+  },
+
+  parameters: {
+    controls: {
+      include: ['hasTail', 'placement', 'Shortcut for icon'],
+    },
   },
 };

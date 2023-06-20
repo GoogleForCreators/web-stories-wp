@@ -34,7 +34,8 @@ export default {
   },
 };
 
-// eslint-disable-next-line react/prop-types
-export const _default = ({ insertElement, ...args }) => {
-  return <HotlinkModal {...args} />;
+export const _default = {
+  render: ({ insertElement, ...args }) => {
+    return <HotlinkModal {...args} />;
+  },
 };

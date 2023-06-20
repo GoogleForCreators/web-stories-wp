@@ -64,15 +64,17 @@ const Container = styled.div`
   width: 276px;
   margin: 25vh 30px 0;
 `;
-export const _default = (args) => {
-  return (
-    <Container>
-      <EffectChooserDropdown
-        onAnimationSelected={(sender) => args.onAnimationSelected(sender)}
-        onNoEffectSelected={() => args.onNoEffectSelected}
-        disabledTypeOptionsMap={[]}
-        {...args}
-      />
-    </Container>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <Container>
+        <EffectChooserDropdown
+          onAnimationSelected={(sender) => args.onAnimationSelected(sender)}
+          onNoEffectSelected={() => args.onNoEffectSelected}
+          disabledTypeOptionsMap={[]}
+          {...args}
+        />
+      </Container>
+    );
+  },
 };

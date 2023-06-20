@@ -50,24 +50,26 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const apiValue = {
-    actions: args.updateMedia,
-  };
-  const mediaValue = {
-    local: {
-      actions: args.updateMediaElement,
-    },
-  };
-  const snackbarValue = { showSnackbar: args.showSnackbar };
+export const _default = {
+  render: function Render(args) {
+    const apiValue = {
+      actions: args.updateMedia,
+    };
+    const mediaValue = {
+      local: {
+        actions: args.updateMediaElement,
+      },
+    };
+    const snackbarValue = { showSnackbar: args.showSnackbar };
 
-  return (
-    <SnackbarContext.Provider value={snackbarValue}>
-      <MediaContext.Provider value={mediaValue}>
-        <ApiContext.Provider value={apiValue}>
-          <MediaEditDialog resource={args.resource} onClose={args.onClose} />
-        </ApiContext.Provider>
-      </MediaContext.Provider>
-    </SnackbarContext.Provider>
-  );
+    return (
+      <SnackbarContext.Provider value={snackbarValue}>
+        <MediaContext.Provider value={mediaValue}>
+          <ApiContext.Provider value={apiValue}>
+            <MediaEditDialog resource={args.resource} onClose={args.onClose} />
+          </ApiContext.Provider>
+        </MediaContext.Provider>
+      </SnackbarContext.Provider>
+    );
+  },
 };

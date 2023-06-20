@@ -37,7 +37,7 @@ function loadScriptTag(url: string): Promise<Event> {
 /**
  * Loads the Analytics tracking script.
  *
- * @param [sendPageView=true] Whether to send a page view event or not upon loading.
+ * @param [sendPageView] Whether to send a page view event or not upon loading.
  * @return Promise.
  */
 async function loadTrackingScript(sendPageView = true): Promise<void> {

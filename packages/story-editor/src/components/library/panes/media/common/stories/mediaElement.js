@@ -74,106 +74,117 @@ export default {
   },
 };
 
-export const _Image = (args) => {
-  const resource = args.resource;
-  const snackbarValue = { showSnackbar: args.showSnackbar };
-  const mediaValue = {
-    local: {
+export const _Image = {
+  render: function Render(args) {
+    const resource = args.resource;
+    const snackbarValue = { showSnackbar: args.showSnackbar };
+    const mediaValue = {
+      local: {
+        actions: {
+          deleteMediaElement: args.deleteMediaElement,
+          updateMediaElement: args.updateMediaElement,
+        },
+        state: {
+          isCurrentResourceProcessing: args.isCurrentResourceProcessing,
+          isCurrentResourceUploading: args.isCurrentResourceUploading,
+        },
+      },
+    };
+    const apiValue = {
       actions: {
-        deleteMediaElement: args.deleteMediaElement,
-        updateMediaElement: args.updateMediaElement,
+        deleteMedia: args.deleteMedia,
+        updateMedia: args.updateMedia,
       },
-      state: {
-        isCurrentResourceProcessing: args.isCurrentResourceProcessing,
-        isCurrentResourceUploading: args.isCurrentResourceUploading,
-      },
-    },
-  };
-  const apiValue = {
-    actions: {
-      deleteMedia: args.deleteMedia,
-      updateMedia: args.updateMedia,
-    },
-  };
+    };
 
-  return (
-    <SnackbarContext.Provider value={snackbarValue}>
-      <MediaContext.Provider value={mediaValue}>
-        <ApiContext.Provider value={apiValue}>
-          <CanvasProvider>
-            <Column>
-              <MediaElement
-                index={0}
-                resource={resource}
-                width={150}
-                onInsert={args.onInsert}
-              />
-            </Column>
-          </CanvasProvider>
-        </ApiContext.Provider>
-      </MediaContext.Provider>
-    </SnackbarContext.Provider>
-  );
+    return (
+      <SnackbarContext.Provider value={snackbarValue}>
+        <MediaContext.Provider value={mediaValue}>
+          <ApiContext.Provider value={apiValue}>
+            <CanvasProvider>
+              <Column>
+                <MediaElement
+                  index={0}
+                  resource={resource}
+                  width={150}
+                  onInsert={args.onInsert}
+                />
+              </Column>
+            </CanvasProvider>
+          </ApiContext.Provider>
+        </MediaContext.Provider>
+      </SnackbarContext.Provider>
+    );
+  },
 };
 
-export const _Image_With_Attribution = _Image.bind({});
-_Image_With_Attribution.args = {
-  resource: {
-    id: 123,
-    type: 'image',
-    mimeType: 'image/png',
-    creationDate: '2019-11-13T18:15:52Z',
-    src: testImage,
-    width: 910,
-    height: 675,
-    alt: 'my image',
-    sizes: {},
-    attribution: {
-      author: {
-        displayName: 'Some Author',
-        url: 'http://www.google.com',
+export const _Image_With_Attribution = {
+  render: _Image,
+
+  args: {
+    resource: {
+      id: 123,
+      type: 'image',
+      mimeType: 'image/png',
+      creationDate: '2019-11-13T18:15:52Z',
+      src: testImage,
+      width: 910,
+      height: 675,
+      alt: 'my image',
+      sizes: {},
+      attribution: {
+        author: {
+          displayName: 'Some Author',
+          url: 'http://www.google.com',
+        },
       },
     },
   },
 };
 
-export const _Video = _Image.bind({});
-_Video.args = {
-  resource: {
-    id: 456,
-    type: 'video',
-    mimeType: 'video/mp4',
-    title: 'My Video :)',
-    creationDate: '2019-11-13T18:15:52Z',
-    src: testVideo,
-    width: 640,
-    height: 480,
-    poster: testPoster,
-    lengthFormatted: '0:26',
-    alt: 'my video',
-    sizes: {},
+export const _Video = {
+  render: _Image,
+
+  args: {
+    resource: {
+      id: 456,
+      type: 'video',
+      mimeType: 'video/mp4',
+      title: 'My Video :)',
+      creationDate: '2019-11-13T18:15:52Z',
+      src: testVideo,
+      width: 640,
+      height: 480,
+      poster: testPoster,
+      lengthFormatted: '0:26',
+      alt: 'my video',
+      sizes: {},
+    },
   },
 };
 
-export const _Video_With_Attribution = _Image.bind({});
-_Video_With_Attribution.args = {
-  resource: {
-    id: 456,
-    type: 'video',
-    mimeType: 'video/mp4',
-    title: 'My Video :)',
-    creationDate: '2019-11-13T18:15:52Z',
-    src: testVideo,
-    width: 640,
-    height: 480,
-    poster: testPoster,
-    lengthFormatted: '0:26',
-    alt: 'my video',
-    sizes: {},
-    attribution: {
-      author: {
-        displayName: 'Some Author',
-        url: 'http://www.google.com',
+export const _Video_With_Attribution = {
+  render: _Image,
+
+  args: {
+    resource: {
+      id: 456,
+      type: 'video',
+      mimeType: 'video/mp4',
+      title: 'My Video :)',
+      creationDate: '2019-11-13T18:15:52Z',
+      src: testVideo,
+      width: 640,
+      height: 480,
+      poster: testPoster,
+      lengthFormatted: '0:26',
+      alt: 'my video',
+      sizes: {},
+      attribution: {
+        author: {
+          displayName: 'Some Author',
+          url: 'http://www.google.com',
+        },
       },
     },
   },

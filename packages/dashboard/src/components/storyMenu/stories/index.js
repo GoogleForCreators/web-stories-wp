@@ -42,20 +42,22 @@ export default {
   component: StoryMenu,
 };
 
-export const _default = () => {
-  const [contextMenuId, setContextMenuId] = useState(-1);
-  return (
-    <Container>
-      <p>{'Hover over me to see menu button'}</p>
-      <StoryMenu
-        onMoreButtonSelected={setContextMenuId}
-        contextMenuId={contextMenuId}
-        onMenuItemSelected={() => {
-          setContextMenuId(-1);
-        }}
-        menuItems={STORY_CONTEXT_MENU_ITEMS}
-        story={{ id: 1, status: 'publish', title: 'Sample Story' }}
-      />
-    </Container>
-  );
+export const _default = {
+  render: function Render() {
+    const [contextMenuId, setContextMenuId] = useState(-1);
+    return (
+      <Container>
+        <p>{'Hover over me to see menu button'}</p>
+        <StoryMenu
+          onMoreButtonSelected={setContextMenuId}
+          contextMenuId={contextMenuId}
+          onMenuItemSelected={() => {
+            setContextMenuId(-1);
+          }}
+          menuItems={STORY_CONTEXT_MENU_ITEMS}
+          story={{ id: 1, status: 'publish', title: 'Sample Story' }}
+        />
+      </Container>
+    );
+  },
 };

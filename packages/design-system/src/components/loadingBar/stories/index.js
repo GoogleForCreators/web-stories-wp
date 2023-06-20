@@ -41,11 +41,13 @@ const Container = styled.div`
   border-radius: 4px;
   background-color: gray;
 `;
-export const _default = (args) => {
-  const showLoadingBar = args.showLoadingBar;
-  return (
-    <Container>
-      {showLoadingBar && <LoadingBar loadingMessage={args.message} />}
-    </Container>
-  );
+export const _default = {
+  render: function Render(args) {
+    const showLoadingBar = args.showLoadingBar;
+    return (
+      <Container>
+        {showLoadingBar && <LoadingBar loadingMessage={args.message} />}
+      </Container>
+    );
+  },
 };

@@ -40,66 +40,68 @@ const element = {
   height: 50,
 };
 
-export const _default = () => {
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      <amp-story-page id={`page-1`}>
-        <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Twirl In'}</p>
-
-        <amp-story-grid-layer template="vertical">
-          <div
-            animate-in="twirl-in"
-            style={{
-              position: 'absolute',
-              top: `calc(50% - ${element.height / 2}px)`,
-              left: `calc(50% - ${element.width / 2}px)`,
-              width: element.width,
-              height: element.height,
-              backgroundColor: element.color,
-            }}
-          />
-        </amp-story-grid-layer>
-      </amp-story-page>
-      <amp-story-page id={`page-2`}>
-        <StoryAnimation.AnimationProvider animations={animations}>
-          <StoryAnimation.AMPAnimations />
+export const _default = {
+  render: function Render() {
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
           <p style={{ textAlign: 'center', color: '#fff' }}>
-            {'Custom Twirl In Effect'}
+            {'Empty first page'}
           </p>
+        </amp-story-page>
+        <amp-story-page id={`page-1`}>
+          <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Twirl In'}</p>
 
           <amp-story-grid-layer template="vertical">
-            <div className="page-fullbleed-area">
-              <div className="page-safe-area">
-                <div
-                  key={element.id}
-                  style={{
-                    position: 'absolute',
-                    top: `calc(50% - ${element.height / 2}px)`,
-                    left: `calc(50% - ${element.width / 2}px)`,
-                    width: element.width,
-                    height: element.height,
-                  }}
-                >
-                  <StoryAnimation.AMPWrapper target={element.id}>
-                    <div
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: element.color,
-                      }}
-                    />
-                  </StoryAnimation.AMPWrapper>
+            <div
+              animate-in="twirl-in"
+              style={{
+                position: 'absolute',
+                top: `calc(50% - ${element.height / 2}px)`,
+                left: `calc(50% - ${element.width / 2}px)`,
+                width: element.width,
+                height: element.height,
+                backgroundColor: element.color,
+              }}
+            />
+          </amp-story-grid-layer>
+        </amp-story-page>
+        <amp-story-page id={`page-2`}>
+          <StoryAnimation.AnimationProvider animations={animations}>
+            <StoryAnimation.AMPAnimations />
+            <p style={{ textAlign: 'center', color: '#fff' }}>
+              {'Custom Twirl In Effect'}
+            </p>
+
+            <amp-story-grid-layer template="vertical">
+              <div className="page-fullbleed-area">
+                <div className="page-safe-area">
+                  <div
+                    key={element.id}
+                    style={{
+                      position: 'absolute',
+                      top: `calc(50% - ${element.height / 2}px)`,
+                      left: `calc(50% - ${element.width / 2}px)`,
+                      width: element.width,
+                      height: element.height,
+                    }}
+                  >
+                    <StoryAnimation.AMPWrapper target={element.id}>
+                      <div
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: element.color,
+                        }}
+                      />
+                    </StoryAnimation.AMPWrapper>
+                  </div>
                 </div>
               </div>
-            </div>
-          </amp-story-grid-layer>
-        </StoryAnimation.AnimationProvider>
-      </amp-story-page>
-    </AMPStoryWrapper>
-  );
+            </amp-story-grid-layer>
+          </StoryAnimation.AnimationProvider>
+        </amp-story-page>
+      </AMPStoryWrapper>
+    );
+  },
 };
