@@ -196,8 +196,8 @@ class Assets extends TestCase {
 		 */
 		$registered = wp_styles()->registered;
 		
-		$test_style_metadata     = $registered[ 'test_style' ]->extra;
-		$fake_css_chunk_metadata = $registered[ 'fake_css_chunk' ]->extra;
+		$test_style_metadata     = $registered['test_style']->extra;
+		$fake_css_chunk_metadata = $registered['fake_css_chunk']->extra;
 		
 		$this->assertArrayHasKey( 'path', $test_style_metadata );
 		$this->assertArrayHasKey( 'path', $fake_css_chunk_metadata );
