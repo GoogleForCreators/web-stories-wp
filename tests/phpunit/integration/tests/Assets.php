@@ -194,7 +194,7 @@ class Assets extends TestCase {
 		 *
 		 * @var array<string, _WP_Dependency> $registered
 		 */
-		$registered = wp_scripts()->registered;
+		$registered = wp_styles()->registered;
 		
 		$test_style_metadata     = $registered[ 'test_style' ]->extra;
 		$fake_css_chunk_metadata = $registered[ 'fake_css_chunk' ]->extra;
