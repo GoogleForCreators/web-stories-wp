@@ -57,7 +57,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 			)
 		);
 		$this->assertSame(
-			10,
+			PHP_INT_MAX,
 			has_filter(
 				'ajax_query_attachments_args',
 				[
@@ -66,9 +66,9 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				]
 			)
 		);
-		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $this->instance, 'filter_generated_media_attachments' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'pre_get_posts', [ $this->instance, 'filter_generated_media_attachments' ] ) );
 		$this->assertSame(
-			10,
+			PHP_INT_MAX,
 			has_filter(
 				'web_stories_rest_attachment_query',
 				[
@@ -215,13 +215,12 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 
 		$expected = [
 			'tax_query' => [
+				'relation' => 'AND',
 				[
-					[
-						'taxonomy' => $tax_slug,
-						'field'    => 'slug',
-						'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-						'operator' => 'NOT IN',
-					],
+					'taxonomy' => $tax_slug,
+					'field'    => 'slug',
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+					'operator' => 'NOT IN',
 				],
 			],
 		];
@@ -240,19 +239,22 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 
 		$expected = [
 			'tax_query' => [
+				'relation' => 'AND',
 				[
-					[
-						'taxonomy' => $tax_slug,
-						'field'    => 'slug',
-						'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-						'operator' => 'NOT IN',
-					],
+					'taxonomy' => $tax_slug,
+					'field'    => 'slug',
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+					'operator' => 'NOT IN',
 				],
 				[
-					'taxonomy' => 'category',
-					'field'    => 'slug',
-					'terms'    => [ 'uncategorized' ],
-					'operator' => 'NOT IN',
+					[
+						[
+							'taxonomy' => 'category',
+							'field'    => 'slug',
+							'terms'    => [ 'uncategorized' ],
+							'operator' => 'NOT IN',
+						],
+					],
 				],
 			],
 		];
@@ -323,19 +325,22 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	public function test_filter_generated_media_attachmentss(): void {
 
 		$expected = [
+			'relation' => 'AND',
 			[
-				[
-					'taxonomy' => $this->instance->get_taxonomy_slug(),
-					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-					'operator' => 'NOT IN',
-				],
+				'taxonomy' => $this->instance->get_taxonomy_slug(),
+				'field'    => 'slug',
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+				'operator' => 'NOT IN',
 			],
 			[
-				'taxonomy' => 'category',
-				'field'    => 'slug',
-				'terms'    => [ 'uncategorized' ],
-				'operator' => 'NOT IN',
+				[
+					[
+						'taxonomy' => 'category',
+						'field'    => 'slug',
+						'terms'    => [ 'uncategorized' ],
+						'operator' => 'NOT IN',
+					],
+				],
 			],
 		];
 
@@ -370,13 +375,12 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 
 		$expected = [
 			'tax_query' => [
+				'relation' => 'AND',
 				[
-					[
-						'taxonomy' => $tax_slug,
-						'field'    => 'slug',
-						'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-						'operator' => 'NOT IN',
-					],
+					'taxonomy' => $tax_slug,
+					'field'    => 'slug',
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+					'operator' => 'NOT IN',
 				],
 			],
 		];
