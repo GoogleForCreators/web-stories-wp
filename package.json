@@ -103,7 +103,7 @@
     "ajv-formats": "^2.1.1",
     "babel-jest": "^29.5.0",
     "babel-loader": "^9.1.2",
-    "babel-plugin-styled-components": "^2.1.3",
+    "babel-plugin-styled-components": "^2.1.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.21.9",
     "circular-dependency-plugin": "^5.2.2",
