@@ -219,6 +219,7 @@ jobs:
         id: get-comment-body
         # Setting a multi-line output requires escaping line-feeds. See <https://github.community/t/set-output-truncates-multiline-strings/16852/3>.
         run: |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo 'COMMENT_BODY<<EOF' >> $GITHUB_ENV
           echo 'Plugin builds for ${{ github.event.pull_request.head.sha }} are ready :bellhop_bell:!' >> $GITHUB_ENV
           echo '- Download [development build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip?${{ github.sha }})' >> $GITHUB_ENV
