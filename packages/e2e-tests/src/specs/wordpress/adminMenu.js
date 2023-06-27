@@ -90,6 +90,6 @@ describe('Admin Menu', () => {
       page.waitForNavigation(),
     ]);
 
-    await expect(page).toMatchTextContent('Google Analytics Tracking ID');
+    await expect(page).toMatchTextContent('Google Analytics Measurement ID');
   });
 });
