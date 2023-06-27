@@ -81,7 +81,7 @@ function GoogleAnalytics4BannerContainer() {
   }
 
   if (!isUsingUniversalAnalytics) {
-    // return null;
+    return null;
   }
 
   if (currentPath === EDITOR_SETTINGS_ROUTE) {
