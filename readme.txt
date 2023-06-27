@@ -134,7 +134,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.33.0 =
 
-This release includes Google Analytics 4 (GA4) support improved compatibility with Ezoic, support for MGID ads, and several bug fixes.
+This release includes Google Analytics 4 (GA4) support, improved compatibility with Ezoic, support for MGID ads, and several bug fixes.
 
 = 1.32.0 =
 
