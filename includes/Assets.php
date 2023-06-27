@@ -207,7 +207,9 @@ class Assets {
 			return;
 		}
 
-		$base_style_path = $this->get_base_url( 'assets/css/' );
+		$base_style_url  = $this->get_base_url( 'assets/css/' );
+		$base_style_path = $this->get_base_path( 'assets/css/' );
+		$ext             = is_rtl() ? '-rtl.css' : '.css';
 
 		// Register any chunks of $style_handle first.
 		$asset = $this->get_asset_metadata( $style_handle );
@@ -216,22 +218,25 @@ class Assets {
 		foreach ( $asset['css'] as $style_chunk ) {
 			$this->register_style(
 				$style_chunk,
-				$base_style_path . $style_chunk . '.css',
+				$base_style_url . $style_chunk . '.css',
 				[],
 				$chunk_version
 			);
+
+			wp_style_add_data( $style_chunk, 'path', $base_style_path . $style_chunk . $ext );
 		}
 		$style_dependencies = [ ...$style_dependencies, ...$asset['css'] ];
 
 		$entry_version = $asset['version'];
 		$this->register_style(
 			$style_handle,
-			$base_style_path . $style_handle . '.css',
+			$base_style_url . $style_handle . '.css',
 			$style_dependencies,
 			$entry_version
 		);
 
 		wp_style_add_data( $style_handle, 'rtl', 'replace' );
+		wp_style_add_data( $style_handle, 'path', $base_style_path . $style_handle . $ext );
 	}
 
 	/**

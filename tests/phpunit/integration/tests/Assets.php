@@ -188,6 +188,19 @@ class Assets extends TestCase {
 		$assets->register_style_asset( 'test_style' );
 		$this->assertTrue( wp_style_is( 'test_style', 'registered' ) );
 		$this->assertTrue( wp_style_is( 'fake_css_chunk', 'registered' ) );
+				
+		/**
+		 * An array of all registered dependencies keyed by handle.
+		 *
+		 * @var array<string, _WP_Dependency> $registered
+		 */
+		$registered = wp_styles()->registered;
+		
+		$test_style_metadata     = $registered['test_style']->extra;
+		$fake_css_chunk_metadata = $registered['fake_css_chunk']->extra;
+		
+		$this->assertArrayHasKey( 'path', $test_style_metadata );
+		$this->assertArrayHasKey( 'path', $fake_css_chunk_metadata );
 	}
 
 	/**

@@ -4,7 +4,7 @@ Contributors:      google
 Tested up to:      6.2
 Requires at least: 6.0
 Stable tag:        V.V.V
-License:           Apache License 2.0
+License:           Apache-2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
 Tags:              web stories, stories, amp, storytelling, google
 
