@@ -30,7 +30,7 @@
     "@googleforcreators/tracking": "*",
     "@wordpress/element": "^4.20.0",
     "@wordpress/i18n": "^4.24.0",
-    "flagged": "^2.0.8",
+    "flagged": "^2.0.9",
     "polished": "^4.2.2",
     "styled-components": "^5.3.11",
     "stylis-plugin-rtl": "^1.0.0"
