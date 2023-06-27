@@ -372,6 +372,11 @@
 				" />
       </property>
     </properties>
+
+    <!-- Prevent false positives for WordPress-style array annotations. -->
+    <exclude
+      name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectAnnotationsGroup"
+    />
   </rule>
 
   <!-- Show details about violated sniffs -->
