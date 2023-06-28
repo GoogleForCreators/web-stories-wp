@@ -19,7 +19,8 @@
  */
 import { visitSettings } from '@web-stories-wp/e2e-test-utils';
 
-const INPUT_SELECTOR = '[aria-label="Enter your Google Analytics Tracking ID"]';
+const INPUT_SELECTOR =
+  '[aria-label="Enter your Google Analytics Measurement ID"]';
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
