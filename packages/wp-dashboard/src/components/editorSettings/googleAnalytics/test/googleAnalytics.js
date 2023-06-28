@@ -23,6 +23,11 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import GoogleAnalyticsSettings, { TEXT } from '..';
 import { renderWithProviders } from '../../../../testUtils';
+import { trackClick } from '@googleforcreators/tracking';
+
+jest.mock('@googleforcreators/tracking', () => ({
+  trackClick: jest.fn((event, eventName)=>{})
+}));
 
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
   let googleAnalyticsId;
@@ -211,5 +216,39 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     fireEvent.click(button);
 
     expect(mockUpdate).toHaveBeenCalledTimes(2);
+  });
+
+  it('should call trackClick on clicking when links shown in the GA4 warning are clicked', () => {
+    const { rerender } = renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    const linkPA = screen.getByText('previously announced').parentElement;
+    const linkGA4 = screen.getByText('Google Analytics 4').parentElement;
+
+    fireEvent.change(input, { target: { value: 'UA-098754-33' } });
+    fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
+    fireEvent.click(linkPA);
+    fireEvent.click(linkGA4);
+    
+    // rerender to get updated googleAnalyticsId and show GA4 warning.
+    rerender(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
+      />
+    );
+
+    expect(trackClick).toHaveBeenCalledTimes(2);
+    expect(trackClick).toHaveBeenCalledWith(expect.anything(), 'click_ua_deprecation_docs');
+    expect(trackClick).toHaveBeenCalledWith(expect.anything(), 'click_ga4_docs');
   });
 });
