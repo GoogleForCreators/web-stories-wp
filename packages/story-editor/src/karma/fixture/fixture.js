@@ -902,9 +902,9 @@ class APIProviderFixture {
             value: TEXT_ELEMENT_DEFAULT_FONT.family,
           },
           {
-            name: 'Source Serif Pro',
-            value: 'Source Serif Pro',
-            family: 'Source Serif Pro',
+            name: 'Source Serif 4',
+            value: 'Source Serif 4',
+            family: 'Source Serif 4',
             fallbacks: ['serif'],
             weights: [200, 300, 400, 600, 700, 900],
             styles: ['italic', 'regular'],

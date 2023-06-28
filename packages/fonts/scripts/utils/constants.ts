@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import type { Font, FontMetrics, FontStyle, FontWeight } from './types';
+
 const DEFAULT_ATTRIBUTES = {
-  weights: [400, 700],
-  styles: ['italic', 'regular'],
+  weights: [400, 700] as FontWeight[],
+  styles: ['italic', 'regular'] as FontStyle[],
   service: 'system',
 };
 
-export const SYSTEM_FONTS = [
+export const SYSTEM_FONTS: Font[] = [
   {
     family: 'Arial',
     fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
@@ -40,7 +45,7 @@ export const SYSTEM_FONTS = [
       hAsc: 1854,
       hDes: -434,
       lGap: 67,
-    },
+    } as FontMetrics,
     ...DEFAULT_ATTRIBUTES,
   },
   {
