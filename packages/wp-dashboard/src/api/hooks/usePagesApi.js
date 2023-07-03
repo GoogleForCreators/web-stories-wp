@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { stripHTML } from '@googleforcreators/dom';
 import { useCallback } from '@googleforcreators/react';
 import { useConfig } from '@googleforcreators/dashboard';
 
@@ -39,7 +40,7 @@ export default function usePagesApi() {
         const { title, link } = await getPageByIdCallback(pagesApiPath, id);
 
         return {
-          title: title.rendered,
+          title: stripHTML(title.rendered),
           link,
         };
       } catch (e) {
@@ -56,7 +57,7 @@ export default function usePagesApi() {
 
         return response.map(({ id, title }) => ({
           value: id,
-          label: title.rendered,
+          label: stripHTML(title.rendered),
         }));
       } catch (e) {
         return [];
