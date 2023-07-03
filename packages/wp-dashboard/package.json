@@ -30,7 +30,7 @@
     "@googleforcreators/dashboard": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
-    "@googleforcreators/dom": "^0.1.202306211149",
+    "@googleforcreators/dom": "*",
     "@googleforcreators/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
