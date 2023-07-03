@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { stripHTML } from '@googleforcreators/dom';
 import { useCallback } from '@googleforcreators/react';
 import { useConfig } from '@googleforcreators/dashboard';
 
@@ -33,30 +34,20 @@ export default function usePagesApi() {
     api: { pages: pagesApiPath },
   } = useConfig();
 
-  /**
-   * Un-escapes HTML characters.
-   */
-  const decodeHTMLContent = useCallback((escapedString) => {
-    return escapedString.replace(
-      /&#(\d+);/g,
-      (match, escapedCharacter) => `${String.fromCharCode(escapedCharacter)}`
-    );
-  }, []);
-
   const getPageById = useCallback(
     async (id) => {
       try {
         const { title, link } = await getPageByIdCallback(pagesApiPath, id);
 
         return {
-          title: decodeHTMLContent(title.rendered),
+          title: stripHTML(title.rendered),
           link,
         };
       } catch (e) {
         return null;
       }
     },
-    [pagesApiPath, decodeHTMLContent]
+    [pagesApiPath]
   );
 
   const searchPages = useCallback(
@@ -66,13 +57,13 @@ export default function usePagesApi() {
 
         return response.map(({ id, title }) => ({
           value: id,
-          label: decodeHTMLContent(title.rendered),
+          label: stripHTML(title.rendered),
         }));
       } catch (e) {
         return [];
       }
     },
-    [pagesApiPath, decodeHTMLContent]
+    [pagesApiPath]
   );
 
   return {
