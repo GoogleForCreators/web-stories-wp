@@ -37,7 +37,10 @@ export default function usePagesApi() {
    * Un-escapes HTML characters.
    */
   const decodeHTMLContent = useCallback((escapedString) => {
-    return escapedString.replace(/&#(\d+);/g, ((match, escapedCharacter) => `${String.fromCharCode(escapedCharacter)}`));
+    return escapedString.replace(
+      /&#(\d+);/g,
+      (match, escapedCharacter) => `${String.fromCharCode(escapedCharacter)}`
+    );
   }, []);
 
   const getPageById = useCallback(
@@ -53,7 +56,7 @@ export default function usePagesApi() {
         return null;
       }
     },
-    [pagesApiPath]
+    [pagesApiPath, decodeHTMLContent]
   );
 
   const searchPages = useCallback(
@@ -69,7 +72,7 @@ export default function usePagesApi() {
         return [];
       }
     },
-    [pagesApiPath]
+    [pagesApiPath, decodeHTMLContent]
   );
 
   return {
