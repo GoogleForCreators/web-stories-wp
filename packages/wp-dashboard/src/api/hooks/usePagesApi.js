@@ -33,13 +33,20 @@ export default function usePagesApi() {
     api: { pages: pagesApiPath },
   } = useConfig();
 
+  /**
+   * Un-escapes HTML characters.
+   */
+  const decodeHTMLContent = useCallback((escapedString) => {
+    return escapedString.replace(/&#(\d+);/g, ((match, escapedCharacter) => `${String.fromCharCode(escapedCharacter)}`));
+  }, []);
+
   const getPageById = useCallback(
     async (id) => {
       try {
         const { title, link } = await getPageByIdCallback(pagesApiPath, id);
 
         return {
-          title: title.rendered,
+          title: decodeHTMLContent(title.rendered),
           link,
         };
       } catch (e) {
@@ -56,7 +63,7 @@ export default function usePagesApi() {
 
         return response.map(({ id, title }) => ({
           value: id,
-          label: title.rendered,
+          label: decodeHTMLContent(title.rendered),
         }));
       } catch (e) {
         return [];
