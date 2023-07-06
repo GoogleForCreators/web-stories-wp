@@ -10,7 +10,7 @@
  * Author: Google
  * Author URI: https://opensource.google.com/
  * Version: 1.34.0-alpha.0
- * Requires at least: 6.0
+ * Requires at least: 6.1
  * Requires PHP: 7.4
  * Text Domain: web-stories
  * License: Apache License 2.0
