@@ -270,7 +270,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * @param WP_REST_Request                     $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
-	public function prepare_item_for_response( $item, $request ) {
+	public function prepare_item_for_response( $item, $request ) { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$fields = $this->get_fields_for_response( $request );
 		$schema = $this->get_item_schema();
 
