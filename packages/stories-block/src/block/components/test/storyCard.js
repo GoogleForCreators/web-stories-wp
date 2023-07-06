@@ -28,11 +28,6 @@ jest.mock('@wordpress/date', () => ({
   /* eslint-disable no-unused-vars */
   format: (format, dateTo) => date,
   dateI18n: (format, dateTo) => 'November 18, 2020',
-  __experimentalGetSettings: () => ({
-    formats: {
-      date: 'F j, Y',
-    },
-  }),
   getSettings: () => ({
     formats: {
       date: 'F j, Y',
