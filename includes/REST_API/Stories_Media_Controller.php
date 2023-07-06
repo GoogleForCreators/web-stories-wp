@@ -115,9 +115,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		add_filter( 'posts_results', [ $this, 'prime_post_caches' ] );
 		$response = parent::get_items( $request );
-		remove_filter( 'posts_results', [ $this, 'prime_post_caches' ] );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
 			/**
@@ -192,23 +190,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$response->set_data( $data );
 
 		return $response;
-	}
-
-	/**
-	 * Prime post caches for attachments and parents.
-	 *
-	 * @since 1.20.0
-	 *
-	 * @param WP_Post[] $posts Array of post objects.
-	 * @return mixed Array of posts.
-	 */
-	public function prime_post_caches( $posts ) {
-		$post_ids = $this->get_attached_post_ids( $posts );
-		if ( ! empty( $post_ids ) ) {
-			_prime_post_caches( $post_ids );
-		}
-
-		return $posts;
 	}
 
 	/**
@@ -372,23 +353,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		}
 
 		return $this->get_post( $attachment_id );
-	}
-
-	/**
-	 * Get an array of attached post objects.
-	 *
-	 * @since 1.20.0
-	 *
-	 * @param WP_Post[] $posts Array of post objects.
-	 * @return int[] Array of post ids.
-	 */
-	protected function get_attached_post_ids( array $posts ): array {
-		// Post thumbnail should not be need to be primed once WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/c2de42b9adec84397b4c3e5895809f01880a241a.
-		$thumb_ids = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
-		// Post parent should not be need to be primed once WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/9a488568a027b3b84fbac7b4d25cf43f86dd7a13.
-		$parent_ids = array_filter( wp_list_pluck( $posts, 'post_parent' ) );
-
-		return array_unique( [ ...$thumb_ids, ...$parent_ids ] );
 	}
 
 	/**

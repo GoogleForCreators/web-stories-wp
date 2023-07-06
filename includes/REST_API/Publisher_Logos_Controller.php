@@ -426,9 +426,9 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 		 */
 		$response = rest_ensure_response( $data );
 
-		// Make preparing links optional after WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/b7bae6936a9ad54f85bad7e5a73a9d110190d927.
-		$links = $this->prepare_links( $post );
-		$response->add_links( $links );
+		if ( rest_is_field_included( '_links', $fields ) || rest_is_field_included( '_embedded', $fields ) ) {
+			$response->add_links( $this->prepare_links( $post ) );
+		}
 
 		return $response;
 	}
