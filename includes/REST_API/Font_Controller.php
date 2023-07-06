@@ -253,6 +253,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Prepares a single post output for response.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.16.0
 	 *
 	 * @param WP_Post         $item    Post object.
