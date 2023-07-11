@@ -38,7 +38,7 @@ import type { SetStyleCallback, StyleGetter } from './types';
  */
 export function getPrefixStyleForCharacter(
   styles: OrderedSet<string>,
-  prefix: string | typeof NONE
+  prefix: string
 ): string {
   const list = styles.toArray();
   const matcher = (style: string) => style && style.startsWith(prefix);

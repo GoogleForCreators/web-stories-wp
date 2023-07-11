@@ -46,12 +46,12 @@ type LocaleDayPeriod =
 
 type LocaleUnit = Era | Quarter | Month | Day | LocaleDayPeriod;
 
-type LocalizeUnitIndex<U extends LocaleUnit | number> = U extends LocaleUnit
+type LocalizeUnitIndex<U extends LocaleUnit> = U extends LocaleUnit
   ? LocalizeUnitValuesIndex<LocalizeUnitValues<U>>
   : number;
 
 type LocalizeFn<
-  Result extends LocaleUnit | number,
+  Result extends LocaleUnit,
   ArgCallback extends
     | BuildLocalizeFnArgCallback<Result>
     | undefined = undefined,
@@ -126,7 +126,7 @@ type LocalizePeriodValuesMap<U extends LocaleUnit> = {
   [pattern in LocalePatternWidth]?: LocalizeUnitValues<U>;
 };
 
-type BuildLocalizeFnArgCallback<Result extends LocaleUnit | number> = (
+type BuildLocalizeFnArgCallback<Result extends LocaleUnit> = (
   value: Result
 ) => LocalizeUnitIndex<Result>;
 

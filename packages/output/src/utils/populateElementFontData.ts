@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import type { Page, FontData } from '@googleforcreators/elements';
-import { elementIs } from '@googleforcreators/elements';
+import type { FontData, Page } from '@googleforcreators/elements';
+import { elementIs, ElementType } from '@googleforcreators/elements';
 
 type Fonts = Record<string, FontData>;
 function populateElementFontProperties(
@@ -33,7 +33,7 @@ function populateElementFontProperties(
     elements: elements.map((element) => {
       if (
         elementIs.text(element) &&
-        element.type === 'text' &&
+        element.type === ElementType.Text &&
         Boolean(element.font?.family)
       ) {
         return { ...element, font: fonts[element.font?.family] };

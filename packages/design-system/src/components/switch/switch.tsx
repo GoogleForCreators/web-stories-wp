@@ -192,7 +192,7 @@ const Switch = forwardRef(function Switch(
 
   const handleChange = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
-      onChange(evt, evt.target.value === Value.On);
+      onChange(evt, (evt.target.value as Value) === Value.On);
     },
     [onChange]
   );
