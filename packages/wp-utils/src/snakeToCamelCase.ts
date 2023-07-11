@@ -34,7 +34,7 @@ export function snakeToCamelCase(string = ''): string {
     );
 }
 
-type ObjectOrPrimitive = SnakeOrCamelCaseObject | unknown;
+type ObjectOrPrimitive = unknown;
 
 interface SnakeOrCamelCaseObject {
   [key: string]: ObjectOrPrimitive;

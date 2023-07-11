@@ -24,9 +24,9 @@ import {
   getVideoLength,
   hasVideoGotAudio,
   preloadVideo,
-  seekVideo,
-  ResourceType,
   type Resource,
+  ResourceType,
+  seekVideo,
   type VideoResource,
 } from '@googleforcreators/media';
 
@@ -71,7 +71,7 @@ async function getResourceFromUrl(resourceLike: ResourceLike) {
 
   // Only need to fetch metadata if not already provided.
 
-  if (type === 'video' && videoHasMissingMetadata) {
+  if (type === ResourceType.Video && videoHasMissingMetadata) {
     const video = await preloadVideo(src);
     await seekVideo(video);
 
@@ -86,7 +86,7 @@ async function getResourceFromUrl(resourceLike: ResourceLike) {
     additionalData.isMuted = !hasVideoGotAudio(video);
   }
 
-  if (type === 'image' && !hasDimensions) {
+  if (type === ResourceType.Image && !hasDimensions) {
     const dimensions = await getImageDimensions(src);
     additionalData.width = dimensions.width;
     additionalData.height = dimensions.height;
