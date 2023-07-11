@@ -16,27 +16,37 @@ updates:
     labels:
       - Dependencies
       - JavaScript
+    groups:
+      wp-packages:
+        patterns:
+          - '@wordpress/*'
+        exclude-patterns:
+          - '@wordpress/element'
+      storybook:
+        patterns:
+          - 'storybook'
+          - '@storybook/*'
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
     ignore:
       # styled-components is not yet compatible.
       - dependency-name: 'stylis-plugin-rtl'
         versions:
           - '>= 2'
 
-      # Package is ESM-only, can't use it just yet.
-      - dependency-name: 'markdown-table'
+      # Not all plugins are compatible yet
+      - dependency-name: 'rollup'
         versions:
           - '>= 3'
 
-      # Package is ESM-only, can't use it just yet.
-      - dependency-name: 'got'
+      # We have not yet upgraded to React 18.
+      - dependency-name: 'react'
         versions:
-          - '>= 12'
-
-      # Best updated manually as they have very frequent updates.
-      - dependency-name: '@storybook/*'
-
-      # Best updated manually as they have very frequent updates.
-      - dependency-name: '@wordpress/*'
+          - '>= 118'
+      - dependency-name: 'react-dom'
+        versions:
+          - '>= 118'
 
   - package-ecosystem: composer
     directory: '/'
