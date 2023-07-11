@@ -72,46 +72,81 @@ body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
 @keyframes spin-progress {
   0%,
   100% {
-    box-shadow: 0em -1.14em 0em 0em #cbacff, 0.8em -0.8em 0 0em #dfcdfe,
-      1.14em 0em 0 0em #dfcdfe, 0.8em 0.8em 0 0em #dfcdfe,
-      0em 1.14em 0 0em #dfcdfe, -0.8em 0.8em 0 0em #dfcdfe,
-      -1.14em 0em 0 0em #dfcdfe, -0.8em -0.8em 0 0em #dfcdfe;
+    box-shadow:
+      0em -1.14em 0em 0em #cbacff,
+      0.8em -0.8em 0 0em #dfcdfe,
+      1.14em 0em 0 0em #dfcdfe,
+      0.8em 0.8em 0 0em #dfcdfe,
+      0em 1.14em 0 0em #dfcdfe,
+      -0.8em 0.8em 0 0em #dfcdfe,
+      -1.14em 0em 0 0em #dfcdfe,
+      -0.8em -0.8em 0 0em #dfcdfe;
   }
   12.5% {
-    box-shadow: 0em -1.14em 0em 0em #dfcdfe, 0.8em -0.8em 0 0em #dfcdfe,
-      1.14em 0em 0 0em #cbacff, 0.8em 0.8em 0 0em #dfcdfe,
-      0em 1.14em 0 0em #dfcdfe, -0.8em 0.8em 0 0em #dfcdfe,
-      -1.14em 0em 0 0em #dfcdfe, -0.8em -0.8em 0 0em #dfcdfe;
+    box-shadow:
+      0em -1.14em 0em 0em #dfcdfe,
+      0.8em -0.8em 0 0em #dfcdfe,
+      1.14em 0em 0 0em #cbacff,
+      0.8em 0.8em 0 0em #dfcdfe,
+      0em 1.14em 0 0em #dfcdfe,
+      -0.8em 0.8em 0 0em #dfcdfe,
+      -1.14em 0em 0 0em #dfcdfe,
+      -0.8em -0.8em 0 0em #dfcdfe;
   }
   37.5% {
-    box-shadow: 0em -1.14em 0em 0em #dfcdfe, 0.8em -0.8em 0 0em #dfcdfe,
-      1.14em 0em 0 0em #dfcdfe, 0.8em 0.8em 0 0em #cbacff,
-      0em 1.14em 0 0em #dfcdfe, -0.8em 0.8em 0 0em #dfcdfe,
-      -1.14em 0em 0 0em #dfcdfe, -0.8em -0.8em 0 0em #dfcdfe;
+    box-shadow:
+      0em -1.14em 0em 0em #dfcdfe,
+      0.8em -0.8em 0 0em #dfcdfe,
+      1.14em 0em 0 0em #dfcdfe,
+      0.8em 0.8em 0 0em #cbacff,
+      0em 1.14em 0 0em #dfcdfe,
+      -0.8em 0.8em 0 0em #dfcdfe,
+      -1.14em 0em 0 0em #dfcdfe,
+      -0.8em -0.8em 0 0em #dfcdfe;
   }
   50% {
-    box-shadow: 0em -1.14em 0em 0em #dfcdfe, 0.8em -0.8em 0 0em #dfcdfe,
-      1.14em 0em 0 0em #dfcdfe, 0.8em 0.8em 0 0em #dfcdfe,
-      0em 1.14em 0 0em #cbacff, -0.8em 0.8em 0 0em #dfcdfe,
-      -1.14em 0em 0 0em #dfcdfe, -0.8em -0.8em 0 0em #dfcdfe;
+    box-shadow:
+      0em -1.14em 0em 0em #dfcdfe,
+      0.8em -0.8em 0 0em #dfcdfe,
+      1.14em 0em 0 0em #dfcdfe,
+      0.8em 0.8em 0 0em #dfcdfe,
+      0em 1.14em 0 0em #cbacff,
+      -0.8em 0.8em 0 0em #dfcdfe,
+      -1.14em 0em 0 0em #dfcdfe,
+      -0.8em -0.8em 0 0em #dfcdfe;
   }
   62.5% {
-    box-shadow: 0em -1.14em 0em 0em #dfcdfe, 0.8em -0.8em 0 0em #dfcdfe,
-      1.14em 0em 0 0em #dfcdfe, 0.8em 0.8em 0 0em #dfcdfe,
-      0em 1.14em 0 0em #dfcdfe, -0.8em 0.8em 0 0em #cbacff,
-      -1.14em 0em 0 0em #dfcdfe, -0.8em -0.8em 0 0em #dfcdfe;
+    box-shadow:
+      0em -1.14em 0em 0em #dfcdfe,
+      0.8em -0.8em 0 0em #dfcdfe,
+      1.14em 0em 0 0em #dfcdfe,
+      0.8em 0.8em 0 0em #dfcdfe,
+      0em 1.14em 0 0em #dfcdfe,
+      -0.8em 0.8em 0 0em #cbacff,
+      -1.14em 0em 0 0em #dfcdfe,
+      -0.8em -0.8em 0 0em #dfcdfe;
   }
   75% {
-    box-shadow: 0em -1.14em 0em 0em #dfcdfe, 0.8em -0.8em 0 0em #dfcdfe,
-      1.14em 0em 0 0em #dfcdfe, 0.8em 0.8em 0 0em #dfcdfe,
-      0em 1.14em 0 0em #dfcdfe, -0.8em 0.8em 0 0em #dfcdfe,
-      -1.14em 0em 0 0em #cbacff, -0.8em -0.8em 0 0em #dfcdfe;
+    box-shadow:
+      0em -1.14em 0em 0em #dfcdfe,
+      0.8em -0.8em 0 0em #dfcdfe,
+      1.14em 0em 0 0em #dfcdfe,
+      0.8em 0.8em 0 0em #dfcdfe,
+      0em 1.14em 0 0em #dfcdfe,
+      -0.8em 0.8em 0 0em #dfcdfe,
+      -1.14em 0em 0 0em #cbacff,
+      -0.8em -0.8em 0 0em #dfcdfe;
   }
   87.5% {
-    box-shadow: 0em -1.14em 0em 0em #dfcdfe, 0.8em -0.8em 0 0em #dfcdfe,
-      1.14em 0em 0 0em #dfcdfe, 0.8em 0.8em 0 0em #dfcdfe,
-      0em 1.14em 0 0em #dfcdfe, -0.8em 0.8em 0 0em #dfcdfe,
-      -1.14em 0em 0 0em #dfcdfe, -0.8em -0.8em 0 0em #cbacff;
+    box-shadow:
+      0em -1.14em 0em 0em #dfcdfe,
+      0.8em -0.8em 0 0em #dfcdfe,
+      1.14em 0em 0 0em #dfcdfe,
+      0.8em 0.8em 0 0em #dfcdfe,
+      0em 1.14em 0 0em #dfcdfe,
+      -0.8em 0.8em 0 0em #dfcdfe,
+      -1.14em 0em 0 0em #dfcdfe,
+      -0.8em -0.8em 0 0em #cbacff;
   }
 }
 body.web-story_page_stories-dashboard
