@@ -37,7 +37,9 @@ import InsertionOverlay from '../../shared/insertionOverlay';
 const styledTiles = css`
   width: 100%;
   cursor: pointer;
-  transition: 0.2s transform, 0.15s opacity;
+  transition:
+    0.2s transform,
+    0.15s opacity;
   border-radius: 4px;
   opacity: 0;
   object-fit: cover;

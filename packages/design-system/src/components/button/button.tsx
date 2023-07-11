@@ -80,7 +80,8 @@ const base = css<ElementProps>`
     color: ${({ theme }) => theme.colors.fg.disable};
   }
 
-  transition: background-color ${BUTTON_TRANSITION_TIMING},
+  transition:
+    background-color ${BUTTON_TRANSITION_TIMING},
     color ${BUTTON_TRANSITION_TIMING};
 `;
 

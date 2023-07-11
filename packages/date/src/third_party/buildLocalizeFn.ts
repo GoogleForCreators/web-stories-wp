@@ -52,7 +52,9 @@ type LocalizeUnitIndex<U extends LocaleUnit | number> = U extends LocaleUnit
 
 type LocalizeFn<
   Result extends LocaleUnit | number,
-  ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined = undefined
+  ArgCallback extends
+    | BuildLocalizeFnArgCallback<Result>
+    | undefined = undefined,
 > = (
   value: ArgCallback extends undefined
     ? Result
@@ -77,7 +79,7 @@ type LocalizeDayValues = readonly [
   string,
   string,
   string,
-  string
+  string,
 ];
 
 type LocalizeMonthValues = readonly [
@@ -92,7 +94,7 @@ type LocalizeMonthValues = readonly [
   string,
   string,
   string,
-  string
+  string,
 ];
 
 type LocalizeUnitValuesIndex<Values extends LocalizeUnitValues<any>> =
@@ -130,7 +132,7 @@ type BuildLocalizeFnArgCallback<Result extends LocaleUnit | number> = (
 
 type BuildLocalizeFnArgs<
   Result extends LocaleUnit,
-  ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined
+  ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined,
 > = {
   values: LocalizePeriodValuesMap<Result>;
   defaultWidth: LocalePatternWidth;
@@ -142,7 +144,7 @@ type BuildLocalizeFnArgs<
 
 export default function buildLocalizeFn<
   Result extends LocaleUnit,
-  ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined
+  ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined,
 >(
   args: BuildLocalizeFnArgs<Result, ArgCallback>
 ): LocalizeFn<Result, ArgCallback> {

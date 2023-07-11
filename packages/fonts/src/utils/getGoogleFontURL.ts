@@ -37,16 +37,19 @@ function getGoogleFontURL(fonts: Font[], display: 'swap' | 'auto' = 'swap') {
   for (const { family: familyName, variants = [] } of fonts) {
     // [ [ 1, 400 ], [ 0, 700 ] ] -> [ ital, wght ]
     const axes: string[] = variants
-      .reduce((acc, [fontStyle, fontWeight]) => {
-        // Uses axis names as listed on https://developers.google.com/web/fundamentals/design-and-ux/typography/variable-fonts.
-        if (fontStyle === 1 && !acc.includes('ital')) {
-          acc.push('ital');
-        }
-        if (fontWeight && fontWeight !== 400 && !acc.includes('wght')) {
-          acc.push('wght');
-        }
-        return acc;
-      }, [] as Array<'ital' | 'wght'>)
+      .reduce(
+        (acc, [fontStyle, fontWeight]) => {
+          // Uses axis names as listed on https://developers.google.com/web/fundamentals/design-and-ux/typography/variable-fonts.
+          if (fontStyle === 1 && !acc.includes('ital')) {
+            acc.push('ital');
+          }
+          if (fontWeight && fontWeight !== 400 && !acc.includes('wght')) {
+            acc.push('wght');
+          }
+          return acc;
+        },
+        [] as Array<'ital' | 'wght'>
+      )
       .sort(); // Need to be sorted alphabetically.
 
     let family = familyName;

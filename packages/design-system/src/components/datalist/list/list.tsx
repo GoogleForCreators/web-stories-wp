@@ -295,7 +295,7 @@ function OptionListWithRef<O extends AbstractOption>(
 // accept a generic type argument.
 // @see https://fettblog.eu/typescript-react-generic-forward-refs/
 const OptionList = memo(forwardRef(OptionListWithRef)) as <
-  O extends AbstractOption
+  O extends AbstractOption,
 >(
   props: OptionListProps<O> & {
     ref?: ForwardedRef<HTMLDivElement>;

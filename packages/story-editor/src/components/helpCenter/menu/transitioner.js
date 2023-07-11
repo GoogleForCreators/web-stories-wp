@@ -54,7 +54,8 @@ const Manager = styled.div`
   opacity: 0.6;
   transform-origin: 50% 50%;
   transform: scale(0.96);
-  transition: transform ${DURATION}ms ${BEZIER.default},
+  transition:
+    transform ${DURATION}ms ${BEZIER.default},
     opacity ${DURATION}ms ${BEZIER.default};
   z-index: ${Z_INDEX.MENU};
 
