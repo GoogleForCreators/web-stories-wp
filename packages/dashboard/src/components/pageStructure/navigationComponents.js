@@ -70,7 +70,9 @@ export const NavLink = styled(Link)(
     color: ${theme.colors.fg.secondary};
 
     * {
-      transition: color 0.25s linear, stroke 0.25s linear;
+      transition:
+        color 0.25s linear,
+        stroke 0.25s linear;
     }
 
     ${active && activeLinkCss};

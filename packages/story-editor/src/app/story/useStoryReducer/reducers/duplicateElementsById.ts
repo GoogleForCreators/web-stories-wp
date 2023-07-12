@@ -19,8 +19,8 @@
  */
 import {
   duplicateElement,
-  ELEMENT_TYPES,
   elementIs,
+  ElementType,
 } from '@googleforcreators/elements';
 import { produce } from 'immer';
 
@@ -65,7 +65,7 @@ export const duplicateElementsById = (
       return;
     }
 
-    if (elementToDuplicate.type === ELEMENT_TYPES.PRODUCT) {
+    if (elementToDuplicate.type === ElementType.Product) {
       return;
     }
     const { element, elementAnimations } = duplicateElement({

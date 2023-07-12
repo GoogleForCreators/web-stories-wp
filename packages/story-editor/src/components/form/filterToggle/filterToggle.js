@@ -84,7 +84,8 @@ const Button = styled.button(
     }
 
     &:active > ${Overlay} {
-      box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary},
+      box-shadow:
+        0px 0px 0 2px ${theme.colors.bg.secondary},
         0px 0px 0 3px ${theme.colors.fg.primary};
     }
 
@@ -95,7 +96,8 @@ const Button = styled.button(
       }
     }
 
-    transition: background-color ${BUTTON_TRANSITION_TIMING},
+    transition:
+      background-color ${BUTTON_TRANSITION_TIMING},
       color ${BUTTON_TRANSITION_TIMING};
   `
 );

@@ -40,10 +40,9 @@ const _FocusTrapButton = styled(Button).attrs({ type: ButtonType.Primary })`
     background-color: transparent;
   }
 
-  ${({ styleOverride }) =>
-    css`
-      ${styleOverride}
-    `}
+  ${({ styleOverride }) => css`
+    ${styleOverride}
+  `}
 `;
 _FocusTrapButton.propTypes = {
   styleOverride: PropTypes.array,

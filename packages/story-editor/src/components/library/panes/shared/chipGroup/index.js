@@ -58,7 +58,9 @@ const Section = styled.div`
   align-items: flex-start;
   flex: 0 1 auto;
   position: relative;
-  transition: height 0.2s, min-height 0.2s;
+  transition:
+    height 0.2s,
+    min-height 0.2s;
 `;
 
 // This hides the pills unless expanded

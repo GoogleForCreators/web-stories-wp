@@ -358,7 +358,9 @@
 
 .web-stories-story-preview-card__poster
   .web-stories-story-preview-card__overlay:focus {
-  box-shadow: 0 0 3px 3px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, 0.8);
+  box-shadow:
+    0 0 3px 3px #5b9dd9,
+    0 0 2px 1px rgba(30, 140, 190, 0.8);
 }
 
 .web-stories-story-preview-card__poster
@@ -378,7 +380,9 @@
   .item-selected-icon
   svg {
   background-color: #ccc;
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 0 0 1px #fff,
+    0 0 0 2px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   color: #000;
   padding: 3px;

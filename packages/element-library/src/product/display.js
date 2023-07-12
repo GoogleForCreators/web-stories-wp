@@ -116,7 +116,8 @@ const ShoppingTagDot = styled.div`
 
   @media (prefers-reduced-motion: no-preference) {
     &:before {
-      animation: ${animateInSequenceBefore} 2s forwards,
+      animation:
+        ${animateInSequenceBefore} 2s forwards,
         ${pulseDotBefore} 2.5s 1.5s infinite;
     }
   }
@@ -137,7 +138,8 @@ const ShoppingTagDot = styled.div`
 
   @media (prefers-reduced-motion: no-preference) {
     &:after {
-      animation: ${animateInSequenceAfter} 2s forwards,
+      animation:
+        ${animateInSequenceAfter} 2s forwards,
         ${pulseDotAfter} 2.5s calc(1.5s * 1.2) infinite;
     }
   }

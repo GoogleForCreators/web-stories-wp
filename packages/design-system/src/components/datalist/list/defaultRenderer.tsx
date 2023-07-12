@@ -45,7 +45,7 @@ function DefaultRendererWithRef<O extends AbstractOption>(
 // accept a generic type argument.
 // @see https://fettblog.eu/typescript-react-generic-forward-refs/
 const DefaultRenderer = forwardRef(DefaultRendererWithRef) as <
-  O extends AbstractOption
+  O extends AbstractOption,
 >(
   props: OptionRendererProps<O> & {
     ref?: ForwardedRef<HTMLLIElement>;
