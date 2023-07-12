@@ -28,41 +28,18 @@ async function visitBlockWidgetScreen() {
 
   // Disable welcome guide if it is enabled.
   const isWelcomeGuideActive = await page.evaluate(() => {
-    // WordPress 6.0
-    if (wp.data.select('core/preferences')) {
-      return Boolean(
-        wp.data
-          .select('core/preferences')
-          .get('core/edit-widgets', 'welcomeGuide')
-      );
-    }
-
-    // WordPress 5.9
-    if (wp.data.select('core/interface')) {
-      return wp.data
-        .select('core/interface')
-        ?.isFeatureActive?.('core/edit-widgets', 'welcomeGuide');
-    }
-
-    return false;
+    return Boolean(
+      wp.data
+        .select('core/preferences')
+        .get('core/edit-widgets', 'welcomeGuide')
+    );
   });
 
   if (isWelcomeGuideActive) {
     await page.evaluate(() => {
-      // WordPress 6.0
-      if (wp.data.select('core/preferences')) {
-        wp.data
-          .dispatch('core/preferences')
-          .toggle('core/edit-widgets', 'welcomeGuide');
-        return;
-      }
-
-      // WordPress 5.9
-      if (wp.data.dispatch('core/interface')) {
-        wp.data
-          .dispatch('core/interface')
-          ?.toggleFeature?.('core/edit-widgets', 'welcomeGuide');
-      }
+      wp.data
+        .dispatch('core/preferences')
+        .toggle('core/edit-widgets', 'welcomeGuide');
     });
   }
 }
