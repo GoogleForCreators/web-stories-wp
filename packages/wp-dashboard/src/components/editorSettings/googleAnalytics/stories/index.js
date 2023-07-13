@@ -46,16 +46,18 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <GoogleAnalyticsSettings
-      siteKitStatus={{
-        installed: args.installed,
-        active: args.active,
-        analyticsActive: args.analyticsActive,
-        analyticsLink: args.analyticsLink,
-      }}
-      {...args}
-    />
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <GoogleAnalyticsSettings
+        siteKitStatus={{
+          installed: args.installed,
+          active: args.active,
+          analyticsActive: args.analyticsActive,
+          analyticsLink: args.analyticsLink,
+        }}
+        {...args}
+      />
+    );
+  },
 };

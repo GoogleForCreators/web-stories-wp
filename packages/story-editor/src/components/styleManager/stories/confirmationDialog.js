@@ -31,6 +31,8 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return <ConfirmationDialog {...args} />;
+export const _default = {
+  render: function Render(args) {
+    return <ConfirmationDialog {...args} />;
+  },
 };

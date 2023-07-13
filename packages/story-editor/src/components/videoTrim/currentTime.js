@@ -34,7 +34,8 @@ const StyledSlider = styled(Slider)`
   border-radius: 6px;
   border-width: 0;
   background-color: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
-  box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3),
+  box-shadow:
+    0px 1px 2px rgba(60, 64, 67, 0.3),
     0px 1px 3px 1px rgba(60, 64, 67, 0.15);
 `;
 

@@ -47,15 +47,17 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <Container>
-      <FileUpload
-        acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
-        id={'898989'}
-        ariaLabel={'Click to upload a file'}
-        {...args}
-      />
-    </Container>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <Container>
+        <FileUpload
+          acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
+          id={'898989'}
+          ariaLabel={'Click to upload a file'}
+          {...args}
+        />
+      </Container>
+    );
+  },
 };

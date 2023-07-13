@@ -113,7 +113,9 @@ const FontsList = styled.div`
 const DeleteButton = styled(Button)`
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s, opacity ease-in-out 300ms;
+  transition:
+    visibility 0s,
+    opacity ease-in-out 300ms;
   &:focus {
     ${({ theme }) => themeHelpers.focusCSS(theme.colors.border.focus)}
   }

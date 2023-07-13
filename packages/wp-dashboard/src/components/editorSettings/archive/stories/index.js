@@ -42,21 +42,23 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <FlagsProvider>
-      <ArchiveSettings
-        archiveURL={'http://www.example.com/web-stories'}
-        defaultArchiveURL={'http://www.example.com/web-stories'}
-        archivePageId={0}
-        getPageById={() => ({ value: 1, label: 'Page 1' })}
-        searchPages={() => [
-          { value: 1, label: 'Page 1' },
-          { value: 1, label: 'Page 2' },
-          { value: 1, label: 'Page 3' },
-        ]}
-        {...args}
-      />
-    </FlagsProvider>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <FlagsProvider>
+        <ArchiveSettings
+          archiveURL={'http://www.example.com/web-stories'}
+          defaultArchiveURL={'http://www.example.com/web-stories'}
+          archivePageId={0}
+          getPageById={() => ({ value: 1, label: 'Page 1' })}
+          searchPages={() => [
+            { value: 1, label: 'Page 1' },
+            { value: 1, label: 'Page 2' },
+            { value: 1, label: 'Page 3' },
+          ]}
+          {...args}
+        />
+      </FlagsProvider>
+    );
+  },
 };

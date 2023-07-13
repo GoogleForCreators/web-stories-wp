@@ -66,7 +66,8 @@ export const Handle = styled(Slider)`
   border-radius: 6px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3),
+  box-shadow:
+    0px 1px 2px rgba(60, 64, 67, 0.3),
     0px 1px 3px 1px rgba(60, 64, 67, 0.15);
   cursor: col-resize;
 

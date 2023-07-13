@@ -33,13 +33,15 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const colors = [
-    { label: 'Red', color: 'red' },
-    { label: 'Blue', color: 'blue' },
-    { label: 'Green', color: 'green' },
-    { label: 'White', color: 'white' },
-  ];
+export const _default = {
+  render: function Render(args) {
+    const colors = [
+      { label: 'Red', color: 'red' },
+      { label: 'Blue', color: 'blue' },
+      { label: 'Green', color: 'green' },
+      { label: 'White', color: 'white' },
+    ];
 
-  return <ColorList colors={colors} {...args} />;
+    return <ColorList colors={colors} {...args} />;
+  },
 };

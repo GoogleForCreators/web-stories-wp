@@ -22,23 +22,23 @@ import { writeFileSync } from 'fs';
 /**
  * Internal dependencies
  */
-import { SYSTEM_FONTS } from './constants.js';
-import normalizeFont from './normalizeFont.js';
-import getFontMetrics from './getFontMetrics.js';
+import { SYSTEM_FONTS } from './constants';
+import normalizeFont from './normalizeFont';
+import getFontMetrics from './getFontMetrics';
+import type { RawFont } from './types';
 
 const GOOGLE_WEB_FONTS_API = 'https://www.googleapis.com/webfonts/v1/webfonts';
 
 /**
  * Main function to build the fonts list.
  *
- * @param {string} targetFile Path to the target file to be written.
- * @return {void}
+ * @param targetFile Path to the target file to be written.
  */
-async function buildFonts(targetFile) {
+async function buildFonts(targetFile: string) {
   const url = new URL(GOOGLE_WEB_FONTS_API);
   url.searchParams.append('fields', 'items');
   url.searchParams.append('prettyPrint', 'false');
-  url.searchParams.append('key', process.env.GOOGLE_FONTS_API_KEY);
+  url.searchParams.append('key', process.env.GOOGLE_FONTS_API_KEY ?? '');
 
   const response = await fetch(url.toString());
 
@@ -46,14 +46,14 @@ async function buildFonts(targetFile) {
     return;
   }
 
-  const rawFonts = await response.json();
+  const rawFonts = (await response.json()) as { items: RawFont[] };
 
   if (!Object.prototype.hasOwnProperty.call(rawFonts, 'items')) {
     return;
   }
 
   const googleFonts = await Promise.all(
-    rawFonts.items.map(async (font) => {
+    rawFonts.items.map(async (font: RawFont) => {
       const normalizedFont = normalizeFont(font);
 
       const fontFileURL =
@@ -65,7 +65,7 @@ async function buildFonts(targetFile) {
       try {
         fontMetrics = await getFontMetrics(fontFileURL);
       } catch (err) {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- Surface error for debugging.
         console.error(
           `Error loading font metrics for "${font.family}" (${fontFileURL})`,
           err

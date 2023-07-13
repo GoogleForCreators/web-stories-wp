@@ -19,10 +19,11 @@
  */
 import { migrate } from '@googleforcreators/migration';
 import type { Element } from '@googleforcreators/elements';
+import { ElementType } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import type { MinMax, TextSetData, TextSet, TextSets } from './types';
+import type { MinMax, TextSet, TextSetData, TextSets } from './types';
 import { TextSetType } from './types';
 
 function updateMinMax(minMax: MinMax, element: Element): MinMax {
@@ -50,7 +51,9 @@ async function loadTextSet(name: string) {
       maxY: 0,
     };
 
-    const textElements = page.elements.filter(({ type }) => type === 'text');
+    const textElements = page.elements.filter(
+      ({ type }) => type === ElementType.Text
+    );
     textElements.forEach((element) => updateMinMax(minMax, element));
 
     return [

@@ -479,10 +479,10 @@ describe('Text Style Panel', () => {
             DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 3
           );
 
-          await fixture.events.keyboard.type('Source Serif Pro');
+          await fixture.events.keyboard.type('Source Serif 4');
           // Ensure the debounced callback has taken effect.
           await fixture.events.sleep(TIMEOUT);
-          option = fixture.screen.getByText('Source Serif Pro');
+          option = fixture.screen.getByText('Source Serif 4');
           await fixture.events.click(option);
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
@@ -522,12 +522,12 @@ describe('Text Style Panel', () => {
         });
 
         it('should display the selected recent font with a tick', async () => {
-          const option = fixture.screen.getByText('Source Serif Pro');
+          const option = fixture.screen.getByText('Source Serif 4');
           await fixture.events.click(option);
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           const selected = fixture.screen.getAllByRole('option', {
-            name: 'Selected Source Serif Pro',
+            name: 'Selected Source Serif 4',
           });
           // One from the recent fonts and one from the general list.
           expect(selected.length).toBe(2);

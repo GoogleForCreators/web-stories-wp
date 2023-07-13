@@ -839,56 +839,22 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 
-		$this->assertNotWPError( $attachment_id );
 		$this->assertNotWPError( $publisher_logo_id );
 
-		set_post_thumbnail( $original_id, $attachment_id );
 		update_post_meta( $original_id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
 
 		$posts = [ get_post( $original_id ) ];
 
 		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
-		$this->assertEqualSets( [ $attachment_id, $publisher_logo_id ], $result );
+		$this->assertEqualSets( [ $publisher_logo_id ], $result );
 	}
 
 	/**
 	 * @covers ::get_attached_post_ids
 	 */
 	public function test_get_attached_post_ids_empty(): void {
-		$posts = [];
-
-		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
-		$this->assertEqualSets( [], $result );
-	}
-
-
-	/**
-	 * @covers ::get_attached_user_ids
-	 */
-	public function test_get_attached_user_ids(): void {
-		$original_id = self::factory()->post->create(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
-				'post_excerpt' => 'Example excerpt',
-				'post_author'  => self::$user_id,
-				'post_status'  => 'private',
-			]
-		);
-
-		$posts = [ get_post( $original_id ) ];
-
-		$result = $this->call_private_method( [ $this->controller, 'get_attached_user_ids' ], [ $posts ] );
-		$this->assertEqualSets( [ self::$user_id ], $result );
-	}
-
-	/**
-	 * @covers ::get_attached_user_ids
-	 */
-	public function test_get_attached_user_ids_empty(): void {
 		$posts = [];
 
 		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );

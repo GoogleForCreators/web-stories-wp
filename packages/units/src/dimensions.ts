@@ -91,7 +91,7 @@ export function dataToFontSizeY(v: number, pageHeight: number): string {
  *
  * @param x The value to be converted.
  * @param pageWidth The basis value for the page's width in the "editor" space.
- * @param [withRounding=true] Whether the dataPixels rounding should occur.
+ * @param [withRounding] Whether the dataPixels rounding should occur.
  * @return The value in the "data" space.
  */
 export function editorToDataX(
@@ -112,7 +112,7 @@ export function editorToDataX(
  *
  * @param y The value to be converted.
  * @param pageHeight The basis value for the page's height in the "editor" space.
- * @param [withRounding=true] Whether the dataPixels rounding should occur.
+ * @param [withRounding] Whether the dataPixels rounding should occur.
  * @return The value in the "data" space.
  */
 export function editorToDataY(

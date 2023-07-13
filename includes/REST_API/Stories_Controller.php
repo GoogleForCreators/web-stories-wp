@@ -320,15 +320,10 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_Post[] $posts Array of post objects.
 	 * @return WP_Post[] Array of posts.
 	 */
-	public function prime_post_caches( $posts ): array {
+	public function prime_post_caches( array $posts ): array {
 		$post_ids = $this->get_attached_post_ids( $posts );
 		if ( ! empty( $post_ids ) ) {
 			_prime_post_caches( $post_ids );
-		}
-		// Should not be need once WP 6.1 is min required version. https://github.com/WordPress/wordpress-develop/commit/aff6a79b27d529b92e499018433d01d695457b09.
-		$user_ids = $this->get_attached_user_ids( $posts );
-		if ( ! empty( $user_ids ) ) {
-			cache_users( $user_ids );
 		}
 
 		return $posts;
@@ -428,27 +423,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_Post[] $posts Array of post objects.
 	 * @return int[] Array of post ids.
 	 */
-	protected function get_attached_user_ids( array $posts ): array {
-		$author_ids = wp_list_pluck( $posts, 'post_author' );
-		$author_ids = array_map( 'absint', $author_ids );
-
-		return array_unique( array_filter( $author_ids ) );
-	}
-
-	/**
-	 * Get an array of attached post objects.
-	 *
-	 * @since 1.22.0
-	 *
-	 * @param WP_Post[] $posts Array of post objects.
-	 * @return int[] Array of post ids.
-	 */
 	protected function get_attached_post_ids( array $posts ): array {
-		// Post thumbnail should not be needed be primed once WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/c2de42b9adec84397b4c3e5895809f01880a241a.
-		$thumb_ids     = array_filter( array_map( 'get_post_thumbnail_id', $posts ) );
-		$publisher_ids = array_filter( array_map( [ $this, 'get_publisher_logo_id' ], $posts ) );
-
-		return array_unique( [ ...$thumb_ids, ...$publisher_ids ] );
+		return array_unique( array_filter( array_map( [ $this, 'get_publisher_logo_id' ], $posts ) ) );
 	}
 
 	/**

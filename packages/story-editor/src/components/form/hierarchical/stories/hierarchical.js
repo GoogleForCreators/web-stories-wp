@@ -49,40 +49,42 @@ const OPTIONS = [
   { id: 5, label: 'zebra fish', checked: true },
 ];
 
-export const _default = () => {
-  const [options, setOptions] = useState(OPTIONS);
-  const [searchText, setSearchText] = useState('');
+export const _default = {
+  render: function Render() {
+    const [options, setOptions] = useState(OPTIONS);
+    const [searchText, setSearchText] = useState('');
 
-  const filteredOptions = useMemo(
-    () => makeFlatOptionTree(options, searchText),
-    [options, searchText]
-  );
+    const filteredOptions = useMemo(
+      () => makeFlatOptionTree(options, searchText),
+      [options, searchText]
+    );
 
-  const handleInputChange = useCallback((val) => setSearchText(val), []);
+    const handleInputChange = useCallback((val) => setSearchText(val), []);
 
-  const handleChange = useCallback((evt, { id, checked }) => {
-    setOptions((currentOptions) => {
-      const index = currentOptions.findIndex((option) => option.id === id);
+    const handleChange = useCallback((evt, { id, checked }) => {
+      setOptions((currentOptions) => {
+        const index = currentOptions.findIndex((option) => option.id === id);
 
-      return [
-        ...currentOptions.slice(0, index),
-        { ...currentOptions[index], checked },
-        ...currentOptions.slice(index + 1),
-      ];
-    });
-  }, []);
+        return [
+          ...currentOptions.slice(0, index),
+          { ...currentOptions[index], checked },
+          ...currentOptions.slice(index + 1),
+        ];
+      });
+    }, []);
 
-  return (
-    <Wrapper>
-      <Hierarchical
-        inputValue={searchText}
-        onInputChange={handleInputChange}
-        label="Categories"
-        placeholder="Start Typing"
-        noOptionsText="No results found"
-        options={filteredOptions}
-        onChange={handleChange}
-      />
-    </Wrapper>
-  );
+    return (
+      <Wrapper>
+        <Hierarchical
+          inputValue={searchText}
+          onInputChange={handleInputChange}
+          label="Categories"
+          placeholder="Start Typing"
+          noOptionsText="No results found"
+          options={filteredOptions}
+          onChange={handleChange}
+        />
+      </Wrapper>
+    );
+  },
 };

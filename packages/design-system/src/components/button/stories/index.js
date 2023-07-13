@@ -146,15 +146,21 @@ const ButtonCombosToDisplay = (args) => (
   </Container>
 );
 
-export const DarkTheme = (args) => {
-  return (
-    <DarkThemeProvider>
-      <ButtonCombosToDisplay {...args} />
-    </DarkThemeProvider>
-  );
+export const DarkTheme = {
+  render: function Render(args) {
+    return (
+      <DarkThemeProvider>
+        <ButtonCombosToDisplay {...args} />
+      </DarkThemeProvider>
+    );
+  },
 };
 
-export const LightTheme = (args) => <ButtonCombosToDisplay {...args} />;
+export const LightTheme = {
+  render: function Render(args) {
+    return <ButtonCombosToDisplay {...args} />;
+  },
+};
 
 const TOGGLE_VARIANTS = [ButtonVariant.Circle, ButtonVariant.Square];
 const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
@@ -197,53 +203,62 @@ ToggleButtonContainer.propTypes = {
   type: PropTypes.oneOf(Object.values(ButtonType)),
 };
 
-export const ToggleButtons = () => {
-  const [isToggled, setToggled] = useState(false);
-  const swapToggled = useCallback(() => setToggled((b) => !b), []);
-  return (
-    <>
-      <ToggleButtonContainer isToggled={isToggled} swapToggled={swapToggled} />
-      <DarkThemeProvider>
+export const ToggleButtons = {
+  render: function Render() {
+    const [isToggled, setToggled] = useState(false);
+    const swapToggled = useCallback(() => setToggled((b) => !b), []);
+    return (
+      <>
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
         />
-      </DarkThemeProvider>
-      <ToggleButtonContainer
-        isToggled={isToggled}
-        swapToggled={swapToggled}
-        type={ButtonType.Quaternary}
-      />
-      <DarkThemeProvider>
+        <DarkThemeProvider>
+          <ToggleButtonContainer
+            isToggled={isToggled}
+            swapToggled={swapToggled}
+          />
+        </DarkThemeProvider>
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
           type={ButtonType.Quaternary}
         />
-      </DarkThemeProvider>
-    </>
-  );
-};
-ToggleButtons.parameters = { controls: { include: [] } };
+        <DarkThemeProvider>
+          <ToggleButtonContainer
+            isToggled={isToggled}
+            swapToggled={swapToggled}
+            type={ButtonType.Quaternary}
+          />
+        </DarkThemeProvider>
+      </>
+    );
+  },
 
-export const PrebakedButtons = (args) => {
-  const [isLocked, setLocked] = useState(false);
-  const swapLocked = useCallback(() => setLocked((b) => !b), []);
-  return (
-    <>
-      <Container>
-        <Row>
-          <LockToggle isLocked={isLocked} onClick={swapLocked} {...args} />
-        </Row>
-      </Container>
-      <DarkThemeProvider>
+  parameters: { controls: { include: [] } },
+};
+
+export const PrebakedButtons = {
+  render: function Render(args) {
+    const [isLocked, setLocked] = useState(false);
+    const swapLocked = useCallback(() => setLocked((b) => !b), []);
+    return (
+      <>
         <Container>
           <Row>
             <LockToggle isLocked={isLocked} onClick={swapLocked} {...args} />
           </Row>
         </Container>
-      </DarkThemeProvider>
-    </>
-  );
+        <DarkThemeProvider>
+          <Container>
+            <Row>
+              <LockToggle isLocked={isLocked} onClick={swapLocked} {...args} />
+            </Row>
+          </Container>
+        </DarkThemeProvider>
+      </>
+    );
+  },
+
+  parameters: { controls: { include: [] } },
 };
-PrebakedButtons.parameters = { controls: { include: [] } };

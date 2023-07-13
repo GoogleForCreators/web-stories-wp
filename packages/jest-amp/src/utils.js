@@ -98,7 +98,7 @@ const ERRORS_TO_IGNORE = [
  *
  * @see https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer#incomplete-markup
  * @param {string} string Input string.
- * @param {boolean} [optimize=true] Whether to use AMP Optimizer on the input string.
+ * @param {boolean} [optimize] Whether to use AMP Optimizer on the input string.
  * @return {Promise<[]>} List of AMP validation errors.
  */
 async function getAMPValidationErrors(string, optimize = true) {

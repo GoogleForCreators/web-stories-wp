@@ -32,7 +32,7 @@ import buildFonts from '../buildFonts';
 import getFontMetrics from '../getFontMetrics';
 
 jest.mock('fs');
-jest.mock('../getFontMetrics.js');
+jest.mock('../getFontMetrics');
 
 const ABEZEE_FONT_METRICS = {
   upm: 1,

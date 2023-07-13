@@ -63,179 +63,209 @@ export default {
   },
 };
 
-export const _default = (args) => (
-  <ThemeProvider theme={theme}>
-    <Container>
+export const _default = {
+  render: function Render(args) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Container>
+          <SnackbarContainer
+            notifications={[
+              {
+                'aria-label':
+                  'this is my aria label giving my message context for screen reader users',
+                ...args,
+              },
+            ]}
+          />
+        </Container>
+      </ThemeProvider>
+    );
+  },
+};
+
+export const LightThemeDefault = {
+  render: function Render(args) {
+    return <SnackbarContainer notifications={[{ ...args }]} />;
+  },
+};
+
+export const Action = {
+  render: function Render(args) {
+    return (
       <SnackbarContainer
         notifications={[
           {
-            'aria-label':
-              'this is my aria label giving my message context for screen reader users',
+            ...args,
+            timeout: 80000,
+          },
+        ]}
+      />
+    );
+  },
+
+  args: {
+    actionLabel: 'Retry',
+  },
+};
+
+export const EarlyDismissWithAction = {
+  render: function Render(args) {
+    return (
+      <SnackbarContainer
+        notifications={[
+          {
+            timeout: 80000,
             ...args,
           },
         ]}
       />
-    </Container>
-  </ThemeProvider>
-);
+    );
+  },
 
-export const LightThemeDefault = (args) => (
-  <SnackbarContainer notifications={[{ ...args }]} />
-);
-
-export const Action = (args) => (
-  <SnackbarContainer
-    notifications={[
-      {
-        ...args,
-        timeout: 80000,
-      },
-    ]}
-  />
-);
-Action.args = {
-  actionLabel: 'Retry',
+  args: {
+    actionLabel: 'Retry',
+  },
 };
 
-export const EarlyDismissWithAction = (args) => (
-  <SnackbarContainer
-    notifications={[
-      {
-        timeout: 80000,
-        ...args,
-      },
-    ]}
-  />
-);
-EarlyDismissWithAction.args = {
-  actionLabel: 'Retry',
+export const NoActionWithRemoveMessageTimingOverride = {
+  render: function Render(args) {
+    return (
+      <SnackbarContainer
+        notifications={[
+          {
+            timeout: 80000,
+            ...args,
+          },
+        ]}
+      />
+    );
+  },
 };
 
-export const NoActionWithRemoveMessageTimingOverride = (args) => (
-  <SnackbarContainer
-    notifications={[
-      {
-        timeout: 80000,
-        ...args,
-      },
-    ]}
-  />
-);
+export const LongMessage = {
+  render: function Render(args) {
+    return <SnackbarContainer notifications={[{ ...args }]} />;
+  },
 
-export const LongMessage = (args) => (
-  <SnackbarContainer notifications={[{ ...args }]} />
-);
-LongMessage.args = {
-  actionLabel: 'Retry',
-  message:
-    'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.',
+  args: {
+    actionLabel: 'Retry',
+    message:
+      'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.',
+  },
 };
 
-// eslint-disable-next-line react/prop-types
-export const ThumbnailMessage = ({ successBool, landscapeBool, ...args }) => {
-  const success = successBool;
-  const landscape = landscapeBool;
+export const ThumbnailMessage = {
+  render: ({ successBool, landscapeBool, ...args }) => {
+    const success = successBool;
+    const landscape = landscapeBool;
 
-  return (
-    <DarkThemeProvider>
-      <Container>
-        <SnackbarContainer
-          notifications={[
-            {
-              thumbnail: {
-                src: `https://picsum.photos/${landscape ? '90/60' : '60/90'}`,
-                alt: 'test',
-                status: success
-                  ? ThumbnailStatus.Success
-                  : ThumbnailStatus.Error,
+    return (
+      <DarkThemeProvider>
+        <Container>
+          <SnackbarContainer
+            notifications={[
+              {
+                thumbnail: {
+                  src: `https://picsum.photos/${landscape ? '90/60' : '60/90'}`,
+                  alt: 'test',
+                  status: success
+                    ? ThumbnailStatus.Success
+                    : ThumbnailStatus.Error,
+                },
+                ...args,
               },
-              ...args,
-            },
-          ]}
-        />
-      </Container>
-    </DarkThemeProvider>
-  );
+            ]}
+          />
+        </Container>
+      </DarkThemeProvider>
+    );
+  },
+
+  args: {
+    actionLabel: 'Retry',
+    message: 'Optimization failed. Try uploading a different file.',
+    successBool: true,
+    landscapeBool: true,
+  },
 };
-ThumbnailMessage.args = {
-  actionLabel: 'Retry',
-  message: 'Optimization failed. Try uploading a different file.',
-  successBool: true,
-  landscapeBool: true,
-};
 
-export const ShowSnackbarByClickingButton = ({
-  // eslint-disable-next-line react/prop-types
-  onAction,
-  // eslint-disable-next-line react/prop-types
-  onDismiss,
-  ...args
-}) => {
-  const [messageQueue, setMessageQueue] = useState([]);
+export const ShowSnackbarByClickingButton = {
+  render: function Render({
+    // eslint-disable-next-line react/prop-types
+    onAction,
+    // eslint-disable-next-line react/prop-types
+    onDismiss,
+    ...args
+  }) {
+    const [messageQueue, setMessageQueue] = useState([]);
 
-  const handleRemoveMessage = ({ id }) => {
-    setMessageQueue((currentMessages) => {
-      const index = currentMessages.findIndex((message) => message.key === id);
+    const handleRemoveMessage = ({ id }) => {
+      setMessageQueue((currentMessages) => {
+        const index = currentMessages.findIndex(
+          (message) => message.key === id
+        );
 
-      return [
-        ...currentMessages.slice(0, index),
-        ...currentMessages.slice(index + 1),
-      ];
-    });
-  };
+        return [
+          ...currentMessages.slice(0, index),
+          ...currentMessages.slice(index + 1),
+        ];
+      });
+    };
 
-  const handleOnDismiss = (evt, notification) => {
-    onDismiss(evt);
-    handleRemoveMessage(notification);
-  };
+    const handleOnDismiss = (evt, notification) => {
+      onDismiss(evt);
+      handleRemoveMessage(notification);
+    };
 
-  const handleAddSnackbarToQueue = () => {
-    const newId = uuidv4();
-    const randomMessage =
-      buttonText[Math.floor(Math.random() * buttonText.length)];
+    const handleAddSnackbarToQueue = () => {
+      const newId = uuidv4();
+      const randomMessage =
+        buttonText[Math.floor(Math.random() * buttonText.length)];
 
-    setMessageQueue((currentMessages) => {
-      const hasAction = Boolean(Math.round(Math.random()));
+      setMessageQueue((currentMessages) => {
+        const hasAction = Boolean(Math.round(Math.random()));
 
-      let notification = {
-        id: newId,
-        'aria-label':
-          'this is my aria label giving my message context for screen reader users',
+        let notification = {
+          id: newId,
+          'aria-label':
+            'this is my aria label giving my message context for screen reader users',
 
-        customZIndex: args.customZIndex,
-        dismissible: args.dismissible,
-        preventAutoDismiss: args.preventAutoDismiss,
-        message: randomMessage,
-        onDismiss: (evt) => handleOnDismiss(evt, { id: newId }),
-        timeout: 5000,
-      };
-
-      if (hasAction) {
-        notification = {
-          ...notification,
-          actionLabel: args.actionLabel,
-          onAction,
-          actionHelpText: args.actionHelpText,
+          customZIndex: args.customZIndex,
+          dismissible: args.dismissible,
+          preventAutoDismiss: args.preventAutoDismiss,
+          message: randomMessage,
+          onDismiss: (evt) => handleOnDismiss(evt, { id: newId }),
+          timeout: 5000,
         };
-      }
 
-      return [...currentMessages, notification];
-    });
-  };
+        if (hasAction) {
+          notification = {
+            ...notification,
+            actionLabel: args.actionLabel,
+            onAction,
+            actionHelpText: args.actionHelpText,
+          };
+        }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Container>
-        <Button type={ButtonType.Primary} onClick={handleAddSnackbarToQueue}>
-          {'Show Snackbar'}
-        </Button>
-        <SnackbarContainer notifications={messageQueue} />
-      </Container>
-    </ThemeProvider>
-  );
-};
-ShowSnackbarByClickingButton.args = {
-  actionLabel: 'Undo',
-  actionHelpText: 'Click this button to get instant cheese',
-  preventAutoDismiss: false,
+        return [...currentMessages, notification];
+      });
+    };
+
+    return (
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Button type={ButtonType.Primary} onClick={handleAddSnackbarToQueue}>
+            {'Show Snackbar'}
+          </Button>
+          <SnackbarContainer notifications={messageQueue} />
+        </Container>
+      </ThemeProvider>
+    );
+  },
+
+  args: {
+    actionLabel: 'Undo',
+    actionHelpText: 'Click this button to get instant cheese',
+    preventAutoDismiss: false,
+  },
 };

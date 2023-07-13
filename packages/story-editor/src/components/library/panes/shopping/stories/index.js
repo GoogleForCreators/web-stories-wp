@@ -114,27 +114,31 @@ export default {
   },
 };
 
-export const PageWithProducts = (args) => {
-  return (
-    <ConfigContext.Provider value={configValue}>
-      <Container>
-        <ProductList
-          {...args}
-          onPageProducts={[
-            { elementId: '123', product: { productId: 'sb-38' } },
-          ]}
-        />
-      </Container>
-    </ConfigContext.Provider>
-  );
+export const PageWithProducts = {
+  render: function Render(args) {
+    return (
+      <ConfigContext.Provider value={configValue}>
+        <Container>
+          <ProductList
+            {...args}
+            onPageProducts={[
+              { elementId: '123', product: { productId: 'sb-38' } },
+            ]}
+          />
+        </Container>
+      </ConfigContext.Provider>
+    );
+  },
 };
 
-export const _default = (args) => {
-  return (
-    <ConfigContext.Provider value={configValue}>
-      <Container>
-        <ProductList {...args} />
-      </Container>
-    </ConfigContext.Provider>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <ConfigContext.Provider value={configValue}>
+        <Container>
+          <ProductList {...args} />
+        </Container>
+      </ConfigContext.Provider>
+    );
+  },
 };

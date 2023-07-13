@@ -24,13 +24,15 @@ export default {
   title: 'Dashboard/Components/LeftRail',
 };
 
-export const _default = () => {
-  return (
-    <AppFrame>
-      <NavProvider>
-        <LeftRail />
-        <PageContent />
-      </NavProvider>
-    </AppFrame>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <AppFrame>
+        <NavProvider>
+          <LeftRail />
+          <PageContent />
+        </NavProvider>
+      </AppFrame>
+    );
+  },
 };

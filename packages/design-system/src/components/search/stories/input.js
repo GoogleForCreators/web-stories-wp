@@ -55,28 +55,30 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-export const _default = (args) => {
-  const StorybookInput = (
-    <SearchInput
-      aria-label={'my aria label'}
-      listId={'my-list-id'}
-      name={'my-input-id'}
-      {...args}
-    />
-  );
+export const _default = {
+  render: function Render(args) {
+    const StorybookInput = (
+      <SearchInput
+        aria-label={'my aria label'}
+        listId={'my-list-id'}
+        name={'my-input-id'}
+        {...args}
+      />
+    );
 
-  return (
-    <>
-      <Container>
-        <Text.Paragraph>{'Light Mode'}</Text.Paragraph>
-        {StorybookInput}
-      </Container>
-      <DarkThemeProvider>
+    return (
+      <>
         <Container>
-          <Text.Paragraph>{'Dark Mode'}</Text.Paragraph>
+          <Text.Paragraph>{'Light Mode'}</Text.Paragraph>
           {StorybookInput}
         </Container>
-      </DarkThemeProvider>
-    </>
-  );
+        <DarkThemeProvider>
+          <Container>
+            <Text.Paragraph>{'Dark Mode'}</Text.Paragraph>
+            {StorybookInput}
+          </Container>
+        </DarkThemeProvider>
+      </>
+    );
+  },
 };

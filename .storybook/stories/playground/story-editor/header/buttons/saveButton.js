@@ -18,9 +18,9 @@
  */
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
   useSnackbar,
 } from '@googleforcreators/design-system';
 import { useStory } from '@googleforcreators/story-editor';
@@ -51,9 +51,9 @@ function SaveButton() {
   // @todo Make the app state persistent.
   return (
     <Button
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      type={BUTTON_TYPES.PRIMARY}
-      size={BUTTON_SIZES.SMALL}
+      variant={ButtonVariant.Rectangle}
+      type={ButtonType.Primary}
+      size={ButtonSize.Small}
       onClick={handleSaveButton}
       disabled={isSaving}
     >

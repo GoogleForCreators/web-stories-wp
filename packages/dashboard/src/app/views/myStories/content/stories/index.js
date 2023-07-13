@@ -108,70 +108,80 @@ const StorybookLayoutContainer = styled.div`
   margin-top: 40px;
   height: 100vh;
 `;
-export const _default = (args) => {
-  const { pageSize } = usePagePreviewSize({
-    isGrid: args.isGrid,
-    thumbnailMode: args.thumbnailMode,
-  });
-  const filter = {
-    status: args.filterStatus,
-    value: args.statusValue,
-    set: args.setFilter,
-  };
-  const sort = {
-    value: args.sortValue,
-    direction: args.direction,
-    set: args.setSort,
-    setDirection: args.setDirection,
-  };
-  const search = {
-    keyword: args.keyword,
-    setKeyword: args.setKeyword,
-  };
-  const view = {
-    style: args.style,
-    toggleStyle: args.toggleStyle,
-    pageSize,
-  };
-  const page = {
-    value: 1,
-    set: args.setPage,
-    requestNextPage: args.requestNextPage,
-  };
-  const storyActions = {
-    duplicateStory: args.duplicateStory,
-    trashStory: args.trashStory,
-    updateStory: args.updateStory,
-  };
 
-  const defaultProps = {
-    allPagesFetched: args.allPagesFetched,
-    filter: filter,
-    isLoading: args.isLoading,
-    page: page,
-    search: search,
-    sort: sort,
-    stories: args.stories,
-    storyActions: storyActions,
-    view: view,
-  };
-  return (
-    <SnackbarProvider>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content {...args} {...defaultProps} />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
-    </SnackbarProvider>
-  );
+export const _default = {
+  render: function Render(args) {
+    const { pageSize } = usePagePreviewSize({
+      isGrid: args.isGrid,
+      thumbnailMode: args.thumbnailMode,
+    });
+    const filter = {
+      status: args.filterStatus,
+      value: args.statusValue,
+      set: args.setFilter,
+    };
+    const sort = {
+      value: args.sortValue,
+      direction: args.direction,
+      set: args.setSort,
+      setDirection: args.setDirection,
+    };
+    const search = {
+      keyword: args.keyword,
+      setKeyword: args.setKeyword,
+    };
+    const view = {
+      style: args.style,
+      toggleStyle: args.toggleStyle,
+      pageSize,
+    };
+    const page = {
+      value: 1,
+      set: args.setPage,
+      requestNextPage: args.requestNextPage,
+    };
+    const storyActions = {
+      duplicateStory: args.duplicateStory,
+      trashStory: args.trashStory,
+      updateStory: args.updateStory,
+    };
+
+    const defaultProps = {
+      allPagesFetched: args.allPagesFetched,
+      filter: filter,
+      isLoading: args.isLoading,
+      page: page,
+      search: search,
+      sort: sort,
+      stories: args.stories,
+      storyActions: storyActions,
+      view: view,
+    };
+    return (
+      <SnackbarProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content {...args} {...defaultProps} />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </SnackbarProvider>
+    );
+  },
 };
 
-export const NoStories = _default.bind({});
-NoStories.args = {
-  stories: [],
+export const NoStories = {
+  render: _default,
+
+  args: {
+    stories: [],
+  },
 };
-export const NoSearchResult = _default.bind({});
-NoSearchResult.args = {
-  stories: [],
-  keyword: 'koalas',
+
+export const NoSearchResult = {
+  render: _default,
+
+  args: {
+    stories: [],
+    keyword: 'koalas',
+  },
 };

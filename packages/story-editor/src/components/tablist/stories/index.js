@@ -61,617 +61,619 @@ const Container = styled.div`
   }
 `;
 
-export const _default = () => {
-  const [openPanel, setOpenPanel] = useState(false);
+export const _default = {
+  render: function Render() {
+    const [openPanel, setOpenPanel] = useState(false);
 
-  const handleClick = (title) => () => {
-    setOpenPanel((currentlyOpenPanel) => {
-      if (currentlyOpenPanel === title) {
-        return null;
-      }
+    const handleClick = (title) => () => {
+      setOpenPanel((currentlyOpenPanel) => {
+        if (currentlyOpenPanel === title) {
+          return null;
+        }
 
-      return title;
-    });
-  };
+        return title;
+      });
+    };
 
-  return (
-    <Container>
-      <Text.Paragraph>
-        {'Scroll Down or collapse actions bar to see the tabs'}
-      </Text.Paragraph>
-      <Tablist aria-label={'Pre publish checklist example'}>
-        <TablistPanel
-          title={'High Priority'}
-          isExpanded={openPanel === 'highPriority'}
-          onClick={handleClick('highPriority')}
-          badgeCount={3}
-          status={PANEL_STATES.DANGER}
-        >
-          <ChecklistCard
-            title="Add video captions"
-            footer={
-              <DefaultFooterText.Paragraph>
-                {
-                  'Keep the audience engaged even when they can’t listen to the audio. '
-                }
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
-            thumbnailCount={1}
-            thumbnails={
-              <Thumbnail
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />
-            }
-          />
-          <ChecklistCard
-            title="Add video captions"
-            footer={
-              <DefaultFooterText.Paragraph>
-                {
-                  'Keep the audience engaged even when they can’t listen to the audio. '
-                }
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={3}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-            ]}
-          />
-          <ChecklistCard
-            title="Videos not optimized"
-            cta={
-              <>
-                <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
-                  {'Optimize all videos'}
-                </DefaultCtaButton>
-                <CheckboxCta
-                  id="demo-optimize"
-                  aria-label="check this box to optimize videos by default"
+    return (
+      <Container>
+        <Text.Paragraph>
+          {'Scroll Down or collapse actions bar to see the tabs'}
+        </Text.Paragraph>
+        <Tablist aria-label={'Pre publish checklist example'}>
+          <TablistPanel
+            title={'High Priority'}
+            isExpanded={openPanel === 'highPriority'}
+            onClick={handleClick('highPriority')}
+            badgeCount={3}
+            status={PANEL_STATES.DANGER}
+          >
+            <ChecklistCard
+              title="Add video captions"
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {
+                    'Keep the audience engaged even when they can’t listen to the audio. '
+                  }
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
+              thumbnailCount={1}
+              thumbnails={
+                <Thumbnail
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />
+              }
+            />
+            <ChecklistCard
+              title="Add video captions"
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {
+                    'Keep the audience engaged even when they can’t listen to the audio. '
+                  }
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={3}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+              ]}
+            />
+            <ChecklistCard
+              title="Videos not optimized"
+              cta={
+                <>
+                  <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                    {'Optimize all videos'}
+                  </DefaultCtaButton>
+                  <CheckboxCta
+                    id="demo-optimize"
+                    aria-label="check this box to optimize videos by default"
+                  >
+                    {'Enable auto optimization'}
+                  </CheckboxCta>
+                </>
+              }
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {'Unoptimized video may cause playback issues. '}
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={6}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
                 >
-                  {'Enable auto optimization'}
-                </CheckboxCta>
-              </>
-            }
-            footer={
-              <DefaultFooterText.Paragraph>
-                {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={6}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={4}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-            ]}
-          />
-        </TablistPanel>
-        <TablistPanel
-          title={'Style'}
-          isExpanded={openPanel === 'design'}
-          onClick={handleClick('design')}
-          badgeCount={1}
-        >
-          <ChecklistCard
-            title="Videos not optimized"
-            cta={
-              <>
-                <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
-                  {'Optimize all videos'}
-                </DefaultCtaButton>
-                <CheckboxCta
-                  id="demo-optimize"
-                  aria-label="check this box to optimize videos by default"
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
                 >
-                  {'Enable auto optimization'}
-                </CheckboxCta>
-              </>
-            }
-            footer={
-              <DefaultFooterText.Paragraph>
-                {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={6}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={4}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-            ]}
-          />
-        </TablistPanel>
-        <TablistPanel
-          title={'Accessibility'}
-          isExpanded={openPanel === 'accessibility'}
-          onClick={handleClick('accessibility')}
-          badgeCount={9}
-        >
-          <ChecklistCard
-            title="Add video captions"
-            footer={
-              <DefaultFooterText.Paragraph>
-                {
-                  'Keep the audience engaged even when they can’t listen to the audio. '
-                }
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
-            thumbnailCount={1}
-            thumbnails={
-              <Thumbnail
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />
-            }
-          />
-          <ChecklistCard
-            title="Add video captions"
-            footer={
-              <DefaultFooterText.Paragraph>
-                {
-                  'Keep the audience engaged even when they can’t listen to the audio. '
-                }
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={3}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-            ]}
-          />
-          <ChecklistCard
-            title="Videos not optimized"
-            cta={
-              <>
-                <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
-                  {'Optimize all videos'}
-                </DefaultCtaButton>
-                <CheckboxCta
-                  id="demo-optimize"
-                  aria-label="check this box to optimize videos by default"
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
                 >
-                  {'Enable auto optimization'}
-                </CheckboxCta>
-              </>
-            }
-            footer={
-              <DefaultFooterText.Paragraph>
-                {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={6}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={4}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-            ]}
-          />
-          <ChecklistCard
-            title="Add video captions"
-            footer={
-              <DefaultFooterText.Paragraph>
-                {
-                  'Keep the audience engaged even when they can’t listen to the audio. '
-                }
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
-            thumbnailCount={1}
-            thumbnails={
-              <Thumbnail
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />
-            }
-          />
-          <ChecklistCard
-            title="Add video captions"
-            footer={
-              <DefaultFooterText.Paragraph>
-                {
-                  'Keep the audience engaged even when they can’t listen to the audio. '
-                }
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={3}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-            ]}
-          />
-          <ChecklistCard
-            title="Videos not optimized"
-            cta={
-              <>
-                <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
-                  {'Optimize all videos'}
-                </DefaultCtaButton>
-                <CheckboxCta
-                  id="demo-optimize"
-                  aria-label="check this box to optimize videos by default"
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={4}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
                 >
-                  {'Enable auto optimization'}
-                </CheckboxCta>
-              </>
-            }
-            footer={
-              <DefaultFooterText.Paragraph>
-                {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={6}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={4}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-            ]}
-          />
-          <ChecklistCard
-            title="Add video captions"
-            footer={
-              <DefaultFooterText.Paragraph>
-                {
-                  'Keep the audience engaged even when they can’t listen to the audio. '
-                }
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
-            thumbnailCount={1}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-            ]}
-          />
-          <ChecklistCard
-            title="Add video captions"
-            footer={
-              <DefaultFooterText.Paragraph>
-                {
-                  'Keep the audience engaged even when they can’t listen to the audio. '
-                }
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={3}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />,
-            ]}
-          />
-          <ChecklistCard
-            title="Videos not optimized"
-            cta={
-              <>
-                <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
-                  {'Optimize all videos'}
-                </DefaultCtaButton>
-                <CheckboxCta
-                  id="demo-optimize"
-                  aria-label="check this box to optimize videos by default"
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+              ]}
+            />
+          </TablistPanel>
+          <TablistPanel
+            title={'Style'}
+            isExpanded={openPanel === 'design'}
+            onClick={handleClick('design')}
+            badgeCount={1}
+          >
+            <ChecklistCard
+              title="Videos not optimized"
+              cta={
+                <>
+                  <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                    {'Optimize all videos'}
+                  </DefaultCtaButton>
+                  <CheckboxCta
+                    id="demo-optimize"
+                    aria-label="check this box to optimize videos by default"
+                  >
+                    {'Enable auto optimization'}
+                  </CheckboxCta>
+                </>
+              }
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {'Unoptimized video may cause playback issues. '}
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={6}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
                 >
-                  {'Enable auto optimization'}
-                </CheckboxCta>
-              </>
-            }
-            footer={
-              <DefaultFooterText.Paragraph>
-                {'Unoptimized video may cause playback issues. '}
-                <Link href="/demo" size={TextSize.XSmall}>
-                  {'Learn more'}
-                </Link>
-              </DefaultFooterText.Paragraph>
-            }
-            cardType={CARD_TYPE.MULTIPLE_ISSUE}
-            thumbnailCount={6}
-            thumbnails={[
-              <Thumbnail
-                key={1}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={2}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={3}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-              <Thumbnail
-                key={4}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              >
-                <BaseTooltip title="Optimize">
-                  <StyledVideoOptimizationIcon />
-                </BaseTooltip>
-              </Thumbnail>,
-            ]}
-          />
-        </TablistPanel>
-      </Tablist>
-    </Container>
-  );
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={4}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+              ]}
+            />
+          </TablistPanel>
+          <TablistPanel
+            title={'Accessibility'}
+            isExpanded={openPanel === 'accessibility'}
+            onClick={handleClick('accessibility')}
+            badgeCount={9}
+          >
+            <ChecklistCard
+              title="Add video captions"
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {
+                    'Keep the audience engaged even when they can’t listen to the audio. '
+                  }
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
+              thumbnailCount={1}
+              thumbnails={
+                <Thumbnail
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />
+              }
+            />
+            <ChecklistCard
+              title="Add video captions"
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {
+                    'Keep the audience engaged even when they can’t listen to the audio. '
+                  }
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={3}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+              ]}
+            />
+            <ChecklistCard
+              title="Videos not optimized"
+              cta={
+                <>
+                  <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                    {'Optimize all videos'}
+                  </DefaultCtaButton>
+                  <CheckboxCta
+                    id="demo-optimize"
+                    aria-label="check this box to optimize videos by default"
+                  >
+                    {'Enable auto optimization'}
+                  </CheckboxCta>
+                </>
+              }
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {'Unoptimized video may cause playback issues. '}
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={6}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={4}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+              ]}
+            />
+            <ChecklistCard
+              title="Add video captions"
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {
+                    'Keep the audience engaged even when they can’t listen to the audio. '
+                  }
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
+              thumbnailCount={1}
+              thumbnails={
+                <Thumbnail
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />
+              }
+            />
+            <ChecklistCard
+              title="Add video captions"
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {
+                    'Keep the audience engaged even when they can’t listen to the audio. '
+                  }
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={3}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+              ]}
+            />
+            <ChecklistCard
+              title="Videos not optimized"
+              cta={
+                <>
+                  <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                    {'Optimize all videos'}
+                  </DefaultCtaButton>
+                  <CheckboxCta
+                    id="demo-optimize"
+                    aria-label="check this box to optimize videos by default"
+                  >
+                    {'Enable auto optimization'}
+                  </CheckboxCta>
+                </>
+              }
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {'Unoptimized video may cause playback issues. '}
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={6}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={4}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+              ]}
+            />
+            <ChecklistCard
+              title="Add video captions"
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {
+                    'Keep the audience engaged even when they can’t listen to the audio. '
+                  }
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
+              thumbnailCount={1}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+              ]}
+            />
+            <ChecklistCard
+              title="Add video captions"
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {
+                    'Keep the audience engaged even when they can’t listen to the audio. '
+                  }
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={3}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />,
+              ]}
+            />
+            <ChecklistCard
+              title="Videos not optimized"
+              cta={
+                <>
+                  <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                    {'Optimize all videos'}
+                  </DefaultCtaButton>
+                  <CheckboxCta
+                    id="demo-optimize"
+                    aria-label="check this box to optimize videos by default"
+                  >
+                    {'Enable auto optimization'}
+                  </CheckboxCta>
+                </>
+              }
+              footer={
+                <DefaultFooterText.Paragraph>
+                  {'Unoptimized video may cause playback issues. '}
+                  <Link href="/demo" size={TextSize.XSmall}>
+                    {'Learn more'}
+                  </Link>
+                </DefaultFooterText.Paragraph>
+              }
+              cardType={CARD_TYPE.MULTIPLE_ISSUE}
+              thumbnailCount={6}
+              thumbnails={[
+                <Thumbnail
+                  key={1}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={2}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={3}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+                <Thumbnail
+                  key={4}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <BaseTooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </BaseTooltip>
+                </Thumbnail>,
+              ]}
+            />
+          </TablistPanel>
+        </Tablist>
+      </Container>
+    );
+  },
 };

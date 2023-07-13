@@ -74,53 +74,57 @@ const defaultStyles = {
   height: '100px',
 };
 
-export const _default = () => {
-  return (
-    <StoryAnimation.AnimationProvider animations={animations}>
-      <PlayButton />
-      {elements.map(({ id, text }) => (
-        <div
-          key={id}
-          style={{
-            position: 'relative',
-            ...defaultStyles,
-            marginBottom: '20px',
-          }}
-        >
-          <StoryAnimation.WAAPIWrapper target={id}>
-            {text}
-          </StoryAnimation.WAAPIWrapper>
-        </div>
-      ))}
-    </StoryAnimation.AnimationProvider>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <StoryAnimation.AnimationProvider animations={animations}>
+        <PlayButton />
+        {elements.map(({ id, text }) => (
+          <div
+            key={id}
+            style={{
+              position: 'relative',
+              ...defaultStyles,
+              marginBottom: '20px',
+            }}
+          >
+            <StoryAnimation.WAAPIWrapper target={id}>
+              {text}
+            </StoryAnimation.WAAPIWrapper>
+          </div>
+        ))}
+      </StoryAnimation.AnimationProvider>
+    );
+  },
 };
 
-export const AMPStory = () => {
-  return (
-    <AMPStoryWrapper>
-      <amp-story-page id="page-0">
-        <p style={{ textAlign: 'center', color: '#fff' }}>
-          {'Empty first page'}
-        </p>
-      </amp-story-page>
-      {[1, 2].map((pageId) => (
-        <amp-story-page key={pageId} id={`page-${pageId}`}>
-          <StoryAnimation.AnimationProvider animations={animations}>
-            <StoryAnimation.AMPAnimations />
-
-            <amp-story-grid-layer template="vertical">
-              {elements.map(({ id, text }) => (
-                <div key={id} style={defaultStyles}>
-                  <StoryAnimation.AMPWrapper target={id}>
-                    {text}
-                  </StoryAnimation.AMPWrapper>
-                </div>
-              ))}
-            </amp-story-grid-layer>
-          </StoryAnimation.AnimationProvider>
+export const _AMPStory = {
+  render: function Render() {
+    return (
+      <AMPStoryWrapper>
+        <amp-story-page id="page-0">
+          <p style={{ textAlign: 'center', color: '#fff' }}>
+            {'Empty first page'}
+          </p>
         </amp-story-page>
-      ))}
-    </AMPStoryWrapper>
-  );
+        {[1, 2].map((pageId) => (
+          <amp-story-page key={pageId} id={`page-${pageId}`}>
+            <StoryAnimation.AnimationProvider animations={animations}>
+              <StoryAnimation.AMPAnimations />
+
+              <amp-story-grid-layer template="vertical">
+                {elements.map(({ id, text }) => (
+                  <div key={id} style={defaultStyles}>
+                    <StoryAnimation.AMPWrapper target={id}>
+                      {text}
+                    </StoryAnimation.AMPWrapper>
+                  </div>
+                ))}
+              </amp-story-grid-layer>
+            </StoryAnimation.AnimationProvider>
+          </amp-story-page>
+        ))}
+      </AMPStoryWrapper>
+    );
+  },
 };

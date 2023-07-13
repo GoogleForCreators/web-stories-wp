@@ -253,6 +253,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Prepares a single post output for response.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.16.0
 	 *
 	 * @param WP_Post         $item    Post object.
@@ -313,19 +315,21 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		 */
 		$response = rest_ensure_response( $data );
 
-		// Make preparing links optional after WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/b7bae6936a9ad54f85bad7e5a73a9d110190d927.
-		$links = $this->prepare_links( $post );
-		$response->add_links( $links );
+		if ( rest_is_field_included( '_links', $fields ) || rest_is_field_included( '_embedded', $fields ) ) {
+			$links = $this->prepare_links( $post );
+			$response->add_links( $links );
 
-		if ( ! empty( $links['self']['href'] ) ) {
-			$actions = $this->get_available_actions( $post, $request );
+			if ( ! empty( $links['self']['href'] ) ) {
+				$actions = $this->get_available_actions( $post, $request );
 
-			$self = $links['self']['href'];
+				$self = $links['self']['href'];
 
-			foreach ( $actions as $rel ) {
-				$response->add_link( $rel, $self );
+				foreach ( $actions as $rel ) {
+					$response->add_link( $rel, $self );
+				}
 			}
 		}
+
 
 		return $response;
 	}

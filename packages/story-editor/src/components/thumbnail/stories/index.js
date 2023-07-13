@@ -60,23 +60,25 @@ const StyledVideoOptimizationIcon = styled(Icons.GearWithGauge)`
   }
 `;
 
-export const _default = (args) => {
-  const thumbnails = Object.values(THUMBNAIL_TYPES).map((thumbnailType) => (
-    <Thumbnail
-      key={`${thumbnailType}_key`}
-      type={thumbnailType}
-      displayBackground={THUMBNAIL_BG[thumbnailType]}
-      {...args}
-      aria-label={args.ariaLabel}
-      onClick={() => args.onClick(thumbnailType)}
-    >
-      {thumbnailType === THUMBNAIL_TYPES.VIDEO && (
-        <BaseTooltip title="test tooltip">
-          <StyledVideoOptimizationIcon />
-        </BaseTooltip>
-      )}
-    </Thumbnail>
-  ));
+export const _default = {
+  render: function Render(args) {
+    const thumbnails = Object.values(THUMBNAIL_TYPES).map((thumbnailType) => (
+      <Thumbnail
+        key={`${thumbnailType}_key`}
+        type={thumbnailType}
+        displayBackground={THUMBNAIL_BG[thumbnailType]}
+        {...args}
+        aria-label={args.ariaLabel}
+        onClick={() => args.onClick(thumbnailType)}
+      >
+        {thumbnailType === THUMBNAIL_TYPES.VIDEO && (
+          <BaseTooltip title="test tooltip">
+            <StyledVideoOptimizationIcon />
+          </BaseTooltip>
+        )}
+      </Thumbnail>
+    ));
 
-  return <Container>{thumbnails}</Container>;
+    return <Container>{thumbnails}</Container>;
+  },
 };

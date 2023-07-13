@@ -17,20 +17,37 @@
 /**
  * External dependencies
  */
+const { readFileSync } = require('fs');
 const webpack = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const { loadCsf } = require('@storybook/csf-tools');
 
+/** @type { import('@storybook/react-webpack5').StorybookConfig } */
 module.exports = {
   stories: [
-    './stories/**/*.js',
-    '../packages/dashboard/src/**/stories/*.@(js|mdx)',
-    '../packages/story-editor/src/**/stories/*.@(js|mdx)',
-    '../packages/wp-dashboard/src/**/stories/*.@(js|mdx)',
-    '../packages/wp-story-editor/src/**/stories/*.@(js|mdx)',
-    '../packages/activation-notice/src/**/stories/*.@(js|mdx)',
-    '../packages/design-system/src/**/stories/*.@(js|mdx)',
-    '../packages/animation/src/**/stories/*.@(js|mdx)',
+    './stories/playground/*/(index|preview).js',
+    '../packages/dashboard/src/**/stories/index.js',
+    '../packages/story-editor/src/**/stories/index.js',
+    '../packages/wp-dashboard/src/**/stories/index.js',
+    '../packages/wp-story-editor/src/**/stories/index.js',
+    '../packages/activation-notice/src/**/stories/index.js',
+    '../packages/design-system/src/**/stories/index.js',
+    '../packages/animation/src/**/stories/*.js',
   ],
+  storyIndexers: (indexers) => {
+    const indexer = (fileName, opts) => {
+      const code = readFileSync(fileName, { encoding: 'utf-8' });
+      return loadCsf(code, { ...opts, fileName }).parse();
+    };
+
+    return [
+      {
+        test: /stories\/.*\.js$/,
+        indexer,
+      },
+      ...(indexers || []),
+    ];
+  },
   addons: [
     '@storybook/addon-a11y/register',
     {
@@ -45,19 +62,24 @@ module.exports = {
         toolbars: true,
       },
     },
-    '@storybook/addon-storysource/register',
+    '@storybook/addon-storysource',
   ],
-  framework: '@storybook/react',
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
+  },
   core: {
-    builder: 'webpack5',
     disableTelemetry: true,
   },
+  docs: {
+    disabled: true,
+  },
   //eslint-disable-next-line require-await -- Negligible.
-  webpackFinal: async (config) => {
+  webpackFinal: async (webpackConfig) => {
     // webpack < 5 used to include polyfills for node.js core modules by default.
     // Prevent ModuleNotFoundError for this dependency.
-    config.resolve = {
-      ...config.resolve,
+    webpackConfig.resolve = {
+      ...webpackConfig.resolve,
       // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
       // This should be sync'd with the config in `webpack.config.cjs`.
       exportsFields: ['customExports', 'exports'],
@@ -68,13 +90,14 @@ module.exports = {
         url: false,
         module: false,
         assert: false,
+        perf_hooks: false,
       },
     };
 
     // Avoid having to provide full file extension for imports.
     // See https://webpack.js.org/configuration/module/#resolvefullyspecified
 
-    config.module.rules = config.module.rules.map((rule) => ({
+    webpackConfig.module.rules = webpackConfig.module.rules.map((rule) => ({
       ...rule,
       resolve: {
         ...rule.resolve,
@@ -83,7 +106,7 @@ module.exports = {
     }));
 
     // These should be sync'd with the config in `webpack.config.cjs`.
-    config.plugins.push(
+    webpackConfig.plugins.push(
       new webpack.DefinePlugin({
         WEB_STORIES_CI: JSON.stringify(process.env.CI),
         WEB_STORIES_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -103,8 +126,7 @@ module.exports = {
     );
 
     // These should be sync'd with the config in `webpack.config.cjs`.
-
-    config.plugins.push(
+    webpackConfig.plugins.push(
       new webpack.DefinePlugin({
         WEB_STORIES_CI: JSON.stringify(process.env.CI),
         WEB_STORIES_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -123,7 +145,7 @@ module.exports = {
       })
     );
 
-    config.plugins.push(
+    webpackConfig.plugins.push(
       new CircularDependencyPlugin({
         // exclude detection of files based on a RegExp
         exclude: /a\.js|node_modules/,
@@ -138,10 +160,20 @@ module.exports = {
     );
 
     // Ensure SVGR is the only loader used for files with .svg extension.
-    const assetRule = config.module.rules.find(({ test }) => test.test('.svg'));
+    const assetRule = webpackConfig.module.rules.find(({ test }) => {
+      if (!test) {
+        return false;
+      }
+
+      if (Array.isArray(test)) {
+        return test.every((t) => t.test('.svg'));
+      }
+
+      return test.test('.svg');
+    });
     assetRule.exclude = /\.svg/;
 
-    config.module.rules.unshift(
+    webpackConfig.module.rules.unshift(
       {
         test: /\.svg$/,
         // Use asset SVG and SVGR together.
@@ -223,7 +255,6 @@ module.exports = {
         },
       }
     );
-
-    return config;
+    return webpackConfig;
   },
 };

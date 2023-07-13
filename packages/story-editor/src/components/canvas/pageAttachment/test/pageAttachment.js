@@ -108,7 +108,7 @@ describe('PageAttachment', () => {
     // The guiding line is always displayed right before the page attachment, on the same level.
     // eslint-disable-next-line testing-library/no-node-access
     const guideline = pageAttachment.previousSibling;
-    expect(guideline).toBeDefined();
+    expect(guideline).toBeInTheDocument();
     const style = window.getComputedStyle(guideline);
     // Verify the background was added for displaying dashed line.
     expect(style.backgroundSize).toBe('16px 0.5px');

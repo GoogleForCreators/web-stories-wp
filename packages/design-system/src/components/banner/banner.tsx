@@ -47,25 +47,33 @@ const CloseButton = styled(Button)`
   align-self: flex-start;
 `;
 
+const CloseButtonPlaceholder = styled.div`
+  grid-area: closeButton;
+  justify-self: end;
+  align-self: flex-start;
+  width: 32px;
+  height: 32px;
+`;
+
 const Container = styled.div`
   display: grid;
   width: 100%;
   min-height: 60px;
-  grid-template-columns: 104px 1fr auto;
-  grid-column-gap: 32px;
-  grid-template-areas: 'title content closeButton';
   align-items: baseline;
   padding: 6px 8px;
   background-color: ${({ theme }) => theme.colors.gray[5]};
   border-radius: ${({ theme }) => theme.borders.radius.medium};
 
   max-height: 184px;
-  border-radius: 0;
   grid-template-columns: 1fr 32px;
   grid-template-rows: 3;
   grid-column-gap: 0;
   grid-template-areas: '. closeButton' 'title title' 'content content';
   text-align: center;
+
+  & + & {
+    margin-top: 18px;
+  }
 
   ${Title} {
     padding-left: 0;
@@ -80,7 +88,7 @@ const Container = styled.div`
 interface BannerProps {
   closeButtonLabel: string;
   title: string;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const Banner = forwardRef(
@@ -99,15 +107,19 @@ const Banner = forwardRef(
         <Title as="h2" size={TextSize.XSmall}>
           {title}
         </Title>
-        <CloseButton
-          type={ButtonType.Tertiary}
-          variant={ButtonVariant.Square}
-          size={ButtonSize.Small}
-          aria-label={closeButtonLabel}
-          onClick={onClose}
-        >
-          <Cross aria-hidden />
-        </CloseButton>
+        {onClose ? (
+          <CloseButton
+            type={ButtonType.Tertiary}
+            variant={ButtonVariant.Square}
+            size={ButtonSize.Small}
+            aria-label={closeButtonLabel}
+            onClick={onClose}
+          >
+            <Cross aria-hidden />
+          </CloseButton>
+        ) : (
+          <CloseButtonPlaceholder />
+        )}
         <Content>{children}</Content>
       </Container>
     );

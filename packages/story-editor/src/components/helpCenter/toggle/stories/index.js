@@ -44,18 +44,20 @@ const Bg = styled.div`
   padding: 50px;
 `;
 
-export const Toggle = (args) => {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <ThemeProvider theme={dsTheme}>
-      <ThemeGlobals.Styles />
-      <Bg>
-        <HelpCenterToggle
-          isOpen={isOpen}
-          onClick={() => setIsOpen((v) => !v)}
-          {...args}
-        />
-      </Bg>
-    </ThemeProvider>
-  );
+export const Toggle = {
+  render: function Render(args) {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+      <ThemeProvider theme={dsTheme}>
+        <ThemeGlobals.Styles />
+        <Bg>
+          <HelpCenterToggle
+            isOpen={isOpen}
+            onClick={() => setIsOpen((v) => !v)}
+            {...args}
+          />
+        </Bg>
+      </ThemeProvider>
+    );
+  },
 };

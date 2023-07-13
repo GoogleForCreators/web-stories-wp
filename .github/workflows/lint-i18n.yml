@@ -42,7 +42,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -67,7 +67,7 @@ jobs:
         run: wp package list
 
       - name: Setup Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
+        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8
         with:
           node-version-file: '.nvmrc'
           cache: npm

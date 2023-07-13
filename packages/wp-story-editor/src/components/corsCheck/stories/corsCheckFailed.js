@@ -30,6 +30,8 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return <CorsCheckFailed {...args} />;
+export const _default = {
+  render: function Render(args) {
+    return <CorsCheckFailed {...args} />;
+  },
 };

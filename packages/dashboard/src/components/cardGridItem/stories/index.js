@@ -41,12 +41,14 @@ const Card = styled.div`
   background-color: orange;
 `;
 
-export const _default = (args) => {
-  return (
-    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
-      <CardGridItem>
-        <Card>{args.message}</Card>
-      </CardGridItem>
-    </CardGrid>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
+        <CardGridItem>
+          <Card>{args.message}</Card>
+        </CardGridItem>
+      </CardGrid>
+    );
+  },
 };

@@ -58,218 +58,222 @@ const Container = styled.div`
   }
 `;
 
-export const _default = () => {
-  const getThumbnails = (numOfThumbnails) => {
-    const thumbnails = [];
-    let index = 0;
-    while (numOfThumbnails > index) {
-      thumbnails.push(
-        <Thumbnail
-          key={index}
-          type={THUMBNAIL_TYPES.IMAGE}
-          displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-          aria-label="my helper text describing this thumbnail image"
-        >
-          <BaseTooltip title="Optimize">
-            <StyledVideoOptimizationIcon />
-          </BaseTooltip>
-        </Thumbnail>
-      );
-      index++;
-    }
-    return thumbnails;
-  };
+export const _default = {
+  render: function Render() {
+    const getThumbnails = (numOfThumbnails) => {
+      const thumbnails = [];
+      let index = 0;
+      while (numOfThumbnails > index) {
+        thumbnails.push(
+          <Thumbnail
+            key={index}
+            type={THUMBNAIL_TYPES.IMAGE}
+            displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+            aria-label="my helper text describing this thumbnail image"
+          >
+            <BaseTooltip title="Optimize">
+              <StyledVideoOptimizationIcon />
+            </BaseTooltip>
+          </Thumbnail>
+        );
+        index++;
+      }
+      return thumbnails;
+    };
 
-  return (
-    <Container>
-      <div>
-        <Text.Paragraph>{'Single Issue'}</Text.Paragraph>
-        <ChecklistCard
-          title="Add video captions"
-          footer={
-            <DefaultFooterText>
-              {
-                'Keep the audience engaged even when they can’t listen to the audio. '
-              }
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </DefaultFooterText>
-          }
-          cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
-          thumbnailCount={1}
-          thumbnails={getThumbnails(1)}
-        />
-      </div>
-      <div>
-        <Text.Paragraph>{'Single Issue - No CTA'}</Text.Paragraph>
-        <ChecklistCard
-          title="Add video captions"
-          footer={
-            <DefaultFooterText>
-              {
-                'Keep the audience engaged even when they can’t listen to the audio. '
-              }
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </DefaultFooterText>
-          }
-          thumbnailCount={1}
-          thumbnails={getThumbnails(1)}
-        />
-      </div>
-      <div>
-        <Text.Paragraph>{'Single Issue - No Thumbnail'}</Text.Paragraph>
-        <ChecklistCard
-          title="Increase size of publisher logo to at least 96x96px"
-          footer={
-            <DefaultFooterText>
-              {'Maintain a 1:1 aspect ratio. '}
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </DefaultFooterText>
-          }
-          cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
-        />
-      </div>
-      <div>
-        <Text.Paragraph>{'Single Issue - No Thumbnail or CTA'}</Text.Paragraph>
-        <ChecklistCard
-          title="Add Web Story title"
-          footer={
-            <DefaultFooterText>
-              {'Keep title under 40 characters. '}
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </DefaultFooterText>
-          }
-        />
-      </div>
-      <div>
-        <Text.Paragraph>
-          {'Single Issue - No Thumbnail with a list'}
-        </Text.Paragraph>
-        <ChecklistCard
-          title="Add Web Story poster image"
-          footer={
-            <CardListWrapper>
-              <List>
-                <li>{'Use as a representation of the story.'}</li>
-                <li>{'Avoid images with embedded text.'}</li>
-                <li>{"Use an image that's at least 640x853px."}</li>
-                <li>{'Maintain a 3:4 aspect ratio.'}</li>
-              </List>
+    return (
+      <Container>
+        <div>
+          <Text.Paragraph>{'Single Issue'}</Text.Paragraph>
+          <ChecklistCard
+            title="Add video captions"
+            footer={
+              <DefaultFooterText>
+                {
+                  'Keep the audience engaged even when they can’t listen to the audio. '
+                }
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
+            thumbnailCount={1}
+            thumbnails={getThumbnails(1)}
+          />
+        </div>
+        <div>
+          <Text.Paragraph>{'Single Issue - No CTA'}</Text.Paragraph>
+          <ChecklistCard
+            title="Add video captions"
+            footer={
+              <DefaultFooterText>
+                {
+                  'Keep the audience engaged even when they can’t listen to the audio. '
+                }
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            thumbnailCount={1}
+            thumbnails={getThumbnails(1)}
+          />
+        </div>
+        <div>
+          <Text.Paragraph>{'Single Issue - No Thumbnail'}</Text.Paragraph>
+          <ChecklistCard
+            title="Increase size of publisher logo to at least 96x96px"
+            footer={
+              <DefaultFooterText>
+                {'Maintain a 1:1 aspect ratio. '}
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
+          />
+        </div>
+        <div>
+          <Text.Paragraph>
+            {'Single Issue - No Thumbnail or CTA'}
+          </Text.Paragraph>
+          <ChecklistCard
+            title="Add Web Story title"
+            footer={
+              <DefaultFooterText>
+                {'Keep title under 40 characters. '}
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+          />
+        </div>
+        <div>
+          <Text.Paragraph>
+            {'Single Issue - No Thumbnail with a list'}
+          </Text.Paragraph>
+          <ChecklistCard
+            title="Add Web Story poster image"
+            footer={
+              <CardListWrapper>
+                <List>
+                  <li>{'Use as a representation of the story.'}</li>
+                  <li>{'Avoid images with embedded text.'}</li>
+                  <li>{"Use an image that's at least 640x853px."}</li>
+                  <li>{'Maintain a 3:4 aspect ratio.'}</li>
+                </List>
 
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </CardListWrapper>
-          }
-          cta={<DefaultCtaButton>{'Upload'}</DefaultCtaButton>}
-        />
-      </div>
-      <div>
-        <Text.Paragraph>{'Multiple Issues - No CTA'}</Text.Paragraph>
-        <ChecklistCard
-          title="Add video captions"
-          footer={
-            <DefaultFooterText>
-              {
-                'Keep the audience engaged even when they can’t listen to the audio. '
-              }
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </DefaultFooterText>
-          }
-          cardType={CARD_TYPE.MULTIPLE_ISSUE}
-          thumbnailCount={3}
-          thumbnails={getThumbnails(3)}
-        />
-      </div>
-      <div>
-        <Text.Paragraph>{'Multiple Issues'}</Text.Paragraph>
-        <ChecklistCard
-          title="Add video captions"
-          cta={<DefaultCtaButton>{'Fix everything'}</DefaultCtaButton>}
-          footer={
-            <DefaultFooterText>
-              {
-                'Keep the audience engaged even when they can’t listen to the audio. '
-              }
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </DefaultFooterText>
-          }
-          cardType={CARD_TYPE.MULTIPLE_ISSUE}
-          thumbnailCount={3}
-          thumbnails={getThumbnails(3)}
-        />
-      </div>
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </CardListWrapper>
+            }
+            cta={<DefaultCtaButton>{'Upload'}</DefaultCtaButton>}
+          />
+        </div>
+        <div>
+          <Text.Paragraph>{'Multiple Issues - No CTA'}</Text.Paragraph>
+          <ChecklistCard
+            title="Add video captions"
+            footer={
+              <DefaultFooterText>
+                {
+                  'Keep the audience engaged even when they can’t listen to the audio. '
+                }
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cardType={CARD_TYPE.MULTIPLE_ISSUE}
+            thumbnailCount={3}
+            thumbnails={getThumbnails(3)}
+          />
+        </div>
+        <div>
+          <Text.Paragraph>{'Multiple Issues'}</Text.Paragraph>
+          <ChecklistCard
+            title="Add video captions"
+            cta={<DefaultCtaButton>{'Fix everything'}</DefaultCtaButton>}
+            footer={
+              <DefaultFooterText>
+                {
+                  'Keep the audience engaged even when they can’t listen to the audio. '
+                }
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cardType={CARD_TYPE.MULTIPLE_ISSUE}
+            thumbnailCount={3}
+            thumbnails={getThumbnails(3)}
+          />
+        </div>
 
-      <div>
-        <Text.Paragraph>{'Multiple Issues - 4'}</Text.Paragraph>
-        <ChecklistCard
-          title="Videos not optimized"
-          cta={
-            <>
-              <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
-                {'Optimize all videos'}
-              </DefaultCtaButton>
-              <CheckboxCta
-                id="demo-optimize"
-                aria-label="check this box to optimize videos by default"
-              >
-                {'Enable auto optimization'}
-              </CheckboxCta>
-            </>
-          }
-          footer={
-            <DefaultFooterText>
-              {'Unoptimized video may cause playback issues. '}
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </DefaultFooterText>
-          }
-          cardType={CARD_TYPE.MULTIPLE_ISSUE}
-          thumbnailCount={4}
-          thumbnails={getThumbnails(4)}
-        />
-      </div>
+        <div>
+          <Text.Paragraph>{'Multiple Issues - 4'}</Text.Paragraph>
+          <ChecklistCard
+            title="Videos not optimized"
+            cta={
+              <>
+                <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                  {'Optimize all videos'}
+                </DefaultCtaButton>
+                <CheckboxCta
+                  id="demo-optimize"
+                  aria-label="check this box to optimize videos by default"
+                >
+                  {'Enable auto optimization'}
+                </CheckboxCta>
+              </>
+            }
+            footer={
+              <DefaultFooterText>
+                {'Unoptimized video may cause playback issues. '}
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cardType={CARD_TYPE.MULTIPLE_ISSUE}
+            thumbnailCount={4}
+            thumbnails={getThumbnails(4)}
+          />
+        </div>
 
-      <div>
-        <Text.Paragraph>{'Video Optimization - more than 4'}</Text.Paragraph>
-        <ChecklistCard
-          title="Videos not optimized"
-          cta={
-            <>
-              <DefaultCtaButton>{'Optimize all videos'}</DefaultCtaButton>
-              <CheckboxCta
-                id="demo-optimize"
-                aria-label="check this box to optimize videos by default"
-              >
-                {'Enable auto optimization'}
-              </CheckboxCta>
-            </>
-          }
-          footer={
-            <DefaultFooterText>
-              {'Unoptimized video may cause playback issues. '}
-              <Link href="/demo" size={TextSize.XSmall}>
-                {'Learn more'}
-              </Link>
-            </DefaultFooterText>
-          }
-          cardType={CARD_TYPE.MULTIPLE_ISSUE}
-          thumbnailCount={6}
-          thumbnails={getThumbnails(6)}
-        />
-      </div>
-    </Container>
-  );
+        <div>
+          <Text.Paragraph>{'Video Optimization - more than 4'}</Text.Paragraph>
+          <ChecklistCard
+            title="Videos not optimized"
+            cta={
+              <>
+                <DefaultCtaButton>{'Optimize all videos'}</DefaultCtaButton>
+                <CheckboxCta
+                  id="demo-optimize"
+                  aria-label="check this box to optimize videos by default"
+                >
+                  {'Enable auto optimization'}
+                </CheckboxCta>
+              </>
+            }
+            footer={
+              <DefaultFooterText>
+                {'Unoptimized video may cause playback issues. '}
+                <Link href="/demo" size={TextSize.XSmall}>
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cardType={CARD_TYPE.MULTIPLE_ISSUE}
+            thumbnailCount={6}
+            thumbnails={getThumbnails(6)}
+          />
+        </div>
+      </Container>
+    );
+  },
 };

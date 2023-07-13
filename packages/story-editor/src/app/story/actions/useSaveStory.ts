@@ -90,19 +90,20 @@ function useSaveStory({
       // Wrapping everything in a Promise so we can catch
       // errors caused by getStoryPropsToSave() / getStoryMarkup().
       return Promise.resolve()
-        .then(() =>
-          saveStoryById?.({
-            storyId,
-            ...getStoryPropsToSave({
-              story,
-              pages,
-              metadata,
-              flags,
-            }),
-            // Saving an auto-draft should create a draft by default.
-            status: 'auto-draft' === story.status ? 'draft' : story.status,
-            ...props,
-          })
+        .then(
+          () =>
+            saveStoryById?.({
+              storyId,
+              ...getStoryPropsToSave({
+                story,
+                pages,
+                metadata,
+                flags,
+              }),
+              // Saving an auto-draft should create a draft by default.
+              status: 'auto-draft' === story.status ? 'draft' : story.status,
+              ...props,
+            })
         )
         .then((data) => {
           if (!data) {

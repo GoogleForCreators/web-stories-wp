@@ -59,45 +59,97 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-// eslint-disable-next-line react/prop-types
-export const _default = ({ onChange, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState(basicDropDownOptions[2]);
+export const _default = {
+  render: function Render({ onChange, ...args }) {
+    const [selectedValue, setSelectedValue] = useState(basicDropDownOptions[2]);
 
-  const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState('');
 
-  const options = useMemo(() => {
-    if (!inputValue || inputValue.length === 0) {
-      return basicDropDownOptions;
-    }
+    const options = useMemo(() => {
+      if (!inputValue || inputValue.length === 0) {
+        return basicDropDownOptions;
+      }
 
-    return basicDropDownOptions.filter(
-      ({ label, value }) =>
-        label
-          .toString()
-          .toLowerCase()
-          .startsWith(inputValue.toLowerCase().trim()) ||
-        value
-          .toString()
-          .toLowerCase()
-          .startsWith(inputValue.toLowerCase().trim())
+      return basicDropDownOptions.filter(
+        ({ label, value }) =>
+          label
+            .toString()
+            .toLowerCase()
+            .startsWith(inputValue.toLowerCase().trim()) ||
+          value
+            .toString()
+            .toLowerCase()
+            .startsWith(inputValue.toLowerCase().trim())
+      );
+    }, [inputValue]);
+
+    const handleSearchValueChange = useCallback(
+      (value) => {
+        onChange(value);
+        setInputValue(value);
+      },
+      [onChange]
     );
-  }, [inputValue]);
 
-  const handleSearchValueChange = useCallback(
-    (value) => {
-      onChange(value);
-      setInputValue(value);
-    },
-    [onChange]
-  );
+    const handleOnClear = useCallback(() => {
+      setInputValue('');
+      setSelectedValue(null);
+    }, []);
 
-  const handleOnClear = useCallback(() => {
-    setInputValue('');
-    setSelectedValue(null);
-  }, []);
+    return (
+      <DarkThemeProvider>
+        <Container>
+          <Search
+            handleSearchValueChange={handleSearchValueChange}
+            onClear={handleOnClear}
+            options={options}
+            selectedValue={selectedValue}
+            {...args}
+          />
+        </Container>
+      </DarkThemeProvider>
+    );
+  },
+};
 
-  return (
-    <DarkThemeProvider>
+export const LightTheme = {
+  render: function Render({ onChange, ...args }) {
+    const [selectedValue, setSelectedValue] = useState();
+
+    const [inputValue, setInputValue] = useState('');
+
+    const options = useMemo(() => {
+      if (!inputValue || inputValue.length === 0) {
+        return [];
+      }
+
+      return basicDropDownOptions.filter(
+        ({ label, value }) =>
+          label
+            .toString()
+            .toLowerCase()
+            .startsWith(inputValue.toLowerCase().trim()) ||
+          value
+            .toString()
+            .toLowerCase()
+            .startsWith(inputValue.toLowerCase().trim())
+      );
+    }, [inputValue]);
+
+    const handleSearchValueChange = useCallback(
+      (value) => {
+        onChange(value);
+        setInputValue(value);
+      },
+      [onChange]
+    );
+
+    const handleOnClear = useCallback(() => {
+      setInputValue('');
+      setSelectedValue(null);
+    }, []);
+
+    return (
       <Container>
         <Search
           handleSearchValueChange={handleSearchValueChange}
@@ -107,56 +159,6 @@ export const _default = ({ onChange, ...args }) => {
           {...args}
         />
       </Container>
-    </DarkThemeProvider>
-  );
-};
-
-// eslint-disable-next-line react/prop-types
-export const LightTheme = ({ onChange, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState();
-
-  const [inputValue, setInputValue] = useState('');
-
-  const options = useMemo(() => {
-    if (!inputValue || inputValue.length === 0) {
-      return [];
-    }
-
-    return basicDropDownOptions.filter(
-      ({ label, value }) =>
-        label
-          .toString()
-          .toLowerCase()
-          .startsWith(inputValue.toLowerCase().trim()) ||
-        value
-          .toString()
-          .toLowerCase()
-          .startsWith(inputValue.toLowerCase().trim())
     );
-  }, [inputValue]);
-
-  const handleSearchValueChange = useCallback(
-    (value) => {
-      onChange(value);
-      setInputValue(value);
-    },
-    [onChange]
-  );
-
-  const handleOnClear = useCallback(() => {
-    setInputValue('');
-    setSelectedValue(null);
-  }, []);
-
-  return (
-    <Container>
-      <Search
-        handleSearchValueChange={handleSearchValueChange}
-        onClear={handleOnClear}
-        options={options}
-        selectedValue={selectedValue}
-        {...args}
-      />
-    </Container>
-  );
+  },
 };

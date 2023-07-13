@@ -61,7 +61,9 @@ export const LeftRailContainer = styled.nav.attrs({
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.colors.bg.primary};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
-  transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
+  transition:
+    transform 0.25s ${BEZIER.outCubic},
+    opacity 0.25s linear;
 
   @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     padding-left: 0;

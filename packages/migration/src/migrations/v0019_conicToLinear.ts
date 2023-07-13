@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import type { Linear, Pattern } from '../types/pattern';
+import { type Linear, type Pattern, PatternTypeV0 } from '../types/pattern';
 import type {
   GifElementV18,
   ImageElementV18,
@@ -109,7 +109,7 @@ function updateElement(element: UnionElementV18): UnionElementV19 {
         },
       };
     }
-    if (backgroundColor.type === 'conic') {
+    if (backgroundColor.type === PatternTypeV0.Conic) {
       return {
         ...element,
         backgroundColor: {

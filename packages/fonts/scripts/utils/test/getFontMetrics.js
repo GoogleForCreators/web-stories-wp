@@ -36,7 +36,6 @@ describe('getFontMetrics', () => {
         ok: true,
         arrayBuffer: () =>
           Promise.resolve(
-            // eslint-disable-next-line no-undef
             readFileSync(join(__dirname, '/fixtures/abezee.ttf'))
           ),
       };

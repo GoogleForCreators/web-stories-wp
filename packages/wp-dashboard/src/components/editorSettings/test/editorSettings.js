@@ -225,7 +225,7 @@ describe('Editor Settings: <Editor Settings />', () => {
     expect(googleAnalyticsHeading).toBeInTheDocument();
 
     const input = screen.getByRole('textbox', {
-      name: 'Enter your Google Analytics Tracking ID',
+      name: 'Enter your Google Analytics Measurement ID',
     });
     expect(input).toBeInTheDocument();
 

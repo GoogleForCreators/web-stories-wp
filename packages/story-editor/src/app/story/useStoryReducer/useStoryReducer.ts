@@ -60,7 +60,7 @@ function useStoryReducer(partial: Partial<ReducerState>): ReducerProviderState {
   } as ReducerState);
   const { internal, api } = useMemo(() => {
     const wrapWithDispatch = <
-      T extends Record<string, (props: DispatchType) => unknown>
+      T extends Record<string, (props: DispatchType) => unknown>,
     >(
       actions: T
     ) =>

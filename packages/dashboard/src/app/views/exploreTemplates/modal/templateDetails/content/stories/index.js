@@ -34,12 +34,16 @@ export default {
   },
 };
 
-export const _default = (args) => (
-  <DetailsContent
-    activeTemplateIndex={8}
-    isRTL={false}
-    filteredTemplatesLength={12}
-    template={formattedTemplatesArray[1]}
-    {...args}
-  />
-);
+export const _default = {
+  render: function Render(args) {
+    return (
+      <DetailsContent
+        activeTemplateIndex={8}
+        isRTL={false}
+        filteredTemplatesLength={12}
+        template={formattedTemplatesArray[1]}
+        {...args}
+      />
+    );
+  },
+};

@@ -49,18 +49,20 @@ export default {
     },
   },
 };
-export const _default = (args) => {
-  return (
-    <StoryGridView
-      stories={formattedStoriesArray}
-      storyMenu={{
-        handleMenuToggle: args.handleMenuToggle,
-        contextMenuId: -1,
-        menuItems: STORY_CONTEXT_MENU_ITEMS,
-        handleMenuItemSelected: args.handleMenuItemSelected,
-      }}
-      pageSize={STORYBOOK_PAGE_SIZE}
-      {...args}
-    />
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <StoryGridView
+        stories={formattedStoriesArray}
+        storyMenu={{
+          handleMenuToggle: args.handleMenuToggle,
+          contextMenuId: -1,
+          menuItems: STORY_CONTEXT_MENU_ITEMS,
+          handleMenuItemSelected: args.handleMenuItemSelected,
+        }}
+        pageSize={STORYBOOK_PAGE_SIZE}
+        {...args}
+      />
+    );
+  },
 };

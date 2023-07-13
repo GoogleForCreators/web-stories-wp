@@ -41,7 +41,7 @@ const customStyles = {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-    } as const),
+    }) as const,
   content: {
     overflow: 'auto',
     outline: 'none',
