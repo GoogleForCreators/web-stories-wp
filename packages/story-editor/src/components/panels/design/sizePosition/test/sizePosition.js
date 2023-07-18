@@ -278,7 +278,7 @@ describe('panels/SizePosition', () => {
 
       // Note: With PR#13339, value will be changed to zero when empty value is provided.
       fireEvent.keyDown(inputWidth, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalled();
+      expect(pushUpdate).toHaveBeenCalledOnce();
     });
 
     it('should update to zero height if empty value is submitted', () => {
@@ -288,7 +288,7 @@ describe('panels/SizePosition', () => {
 
       // Note: With PR#13339, value will be changed to zero when empty value is provided.
       fireEvent.keyDown(inputHeight, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalled();
+      expect(pushUpdate).toHaveBeenCalledOnce();
     });
 
     it('should update lock ratio to false for element', () => {

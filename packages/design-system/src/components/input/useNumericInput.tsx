@@ -96,33 +96,18 @@ const useNumericInput = ({
 
             // Do not process further.
             return;
-          } else if (min !== undefined) {
-            setCurrentValue(min);
-
-            if (updateOnChange) {
-              onChange(ev, Number(min));
-            }
-
-            // Do not process further.
-            return;
           }
         }
 
-        // Restricts inputted string to be between min and max.
+        // Restricts inputted string to be <= max.
         const parsedValue = options.isFloat
           ? parseFloat(ev.target.value)
           : parseInt(ev.target.value);
         if (
-          min !== undefined &&
           max !== undefined &&
-          (parsedValue < min || parsedValue > max)
+          parsedValue > max
         ) {
-          if (parsedValue < min) {
-            setCurrentValue(min);
-            if (updateOnChange) {
-              onChange(ev, Number(min));
-            }
-          } else if (parsedValue > max) {
+          if (parsedValue > max) {
             setCurrentValue(
               ev.target.value.trim().charAt(ev.target.value.trim().length - 1)
             );
@@ -130,7 +115,9 @@ const useNumericInput = ({
               onChange(
                 ev,
                 Number(
-                  ev.target.value.trim().charAt(ev.target.value.trim().length - 1)
+                  ev.target.value
+                    .trim()
+                    .charAt(ev.target.value.trim().length - 1)
                 )
               );
             }
@@ -152,7 +139,7 @@ const useNumericInput = ({
         }
       }
     },
-    [max, min, onChange, options, updateOnChange]
+    [allowEmpty, max, onChange, options, updateOnChange]
   );
 
   /**

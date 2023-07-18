@@ -300,7 +300,7 @@ describe('Panels/TextStyle', () => {
 
       // Note: With PR#13339, if empty value is provided, it will set min value.
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith({"fontSize": 8}, true);
+      expect(pushUpdate).toHaveBeenCalledWith({ fontSize: 8 }, true);
     });
 
     it('should set the text bold when the key command is pressed', () => {
