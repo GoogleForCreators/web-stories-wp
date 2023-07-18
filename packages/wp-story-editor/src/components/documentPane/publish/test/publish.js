@@ -202,21 +202,45 @@ describe('PublishPanel', () => {
     expect(calledArg.properties.date).toBeNull();
   });
 
-  it('should not update the date with incorrect times', async () => {
+  it('should not update the date with incorrect hour', async () => {
     const { updateStory } = arrange();
     const element = screen.getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
     const hours = screen.getByLabelText('Hours');
-    const minutes = screen.getByLabelText('Minutes');
 
+    // With PR#13339, Valid value for hour is from 1 to 12.
+    // Value 30 is invalid for hour and will be discarded which resulted in 0 hour.
+    // 0 is an invalid hour and won't fire onChange thus hour remains unchanged.
     fireEvent.change(hours, { target: { value: '30' } });
     fireEvent.blur(hours);
 
+    await waitFor(() => {
+      expect(updateStory).not.toHaveBeenCalled();
+    });
+  });
+
+  it('should update the date with incorrect minutes by resetting to zero', async () => {
+    const { updateStory } = arrange();
+    const element = screen.getByRole('button', { name: 'Story publish time' });
+
+    fireEvent.click(element);
+    const minutes = screen.getByLabelText('Minutes');
+
+    // With PR#13339, Valid value for minute is from 0 to 59.
+    // Value 130 is invalid for minute and will be discarded which resulted in 0 minute.
+    // 0 is a valid minute and will trigger fire onChange; thus updateStory will be called once.
     fireEvent.change(minutes, { target: { value: '130' } });
     fireEvent.blur(minutes);
 
-    await waitFor(() => expect(updateStory).toHaveBeenCalledTimes(0));
+    await waitFor(() => {
+      expect(updateStory).toHaveBeenCalledOnce();
+
+      const calledArg = updateStory.mock.calls[0][0];
+      const updatedDate = new Date(calledArg.properties.date);
+
+      expect(updatedDate.getMinutes()).toBe(0); // Should be updated to the zero.
+    });
   });
 
   it('should open the calendar via keyboard events', async () => {
