@@ -81,40 +81,59 @@ const useNumericInput = ({
   /**
    * Set internal state
    */
-  const handleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
-    // Do not process non-numeric keys.
-    if (!isNaN(+ev.target.value.trim())) {
-      // Return minimum number when string is empty.
-      if (ev.target.value === '' && min !== undefined) {
-        setCurrentValue(min);
-        onChange(ev, Number(min));
-
-        // Do not process further.
-        return;
-      }
-
-      // Restricts inputted string to be between min and max.
-      let parsedValue = (options.isFloat) ? parseFloat(ev.target.value) : parseInt(ev.target.value);
-      if (min !== undefined && max !== undefined && (parsedValue < min || parsedValue > max)) {
-        if (parsedValue < min) {
+  const handleChange = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
+      // Do not process non-numeric keys.
+      if (!isNaN(Number(ev.target.value.trim()))) {
+        // Return minimum number when string is empty.
+        if (ev.target.value === '' && min !== undefined) {
           setCurrentValue(min);
           onChange(ev, Number(min));
-        } else if (parsedValue > max) {
-          setCurrentValue(ev.target.value.trim().charAt(ev.target.value.trim().length - 1));
-          onChange(ev, Number(ev.target.value.trim().charAt(ev.target.value.trim().length - 1)));
+
+          // Do not process further.
+          return;
         }
 
-        // Do not process further.
-        return;
-      }
+        // Restricts inputted string to be between min and max.
+        const parsedValue = options.isFloat
+          ? parseFloat(ev.target.value)
+          : parseInt(ev.target.value);
+        if (
+          min !== undefined &&
+          max !== undefined &&
+          (parsedValue < min || parsedValue > max)
+        ) {
+          if (parsedValue < min) {
+            setCurrentValue(min);
+            onChange(ev, Number(min));
+          } else if (parsedValue > max) {
+            setCurrentValue(
+              ev.target.value.trim().charAt(ev.target.value.trim().length - 1)
+            );
+            onChange(
+              ev,
+              Number(
+                ev.target.value.trim().charAt(ev.target.value.trim().length - 1)
+              )
+            );
+          }
 
-      // Determine maximum padding according to the number of characters in max number. 
-      const maxPad = (max !== undefined) ? String(max).length : 0;
-      const paddedValue = (!ev.target.value.endsWith('.') && options.padZero) ? String(parsedValue).padStart(maxPad, '0') : ev.target.value.trim();
-      setCurrentValue(paddedValue);
-      onChange(ev, Number(paddedValue));
-    }
-  }, [options, onChange]);
+          // Do not process further.
+          return;
+        }
+
+        // Determine maximum padding according to the number of characters in max number.
+        const maxPad = max !== undefined ? String(max).length : 0;
+        const paddedValue =
+          !ev.target.value.endsWith('.') && options.padZero
+            ? String(parsedValue).padStart(maxPad, '0')
+            : ev.target.value.trim();
+        setCurrentValue(paddedValue);
+        onChange(ev, Number(paddedValue));
+      }
+    },
+    [max, min, onChange, options]
+  );
 
   /**
    * Increment or decrement value using keyboard input
