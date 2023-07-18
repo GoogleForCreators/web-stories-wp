@@ -91,15 +91,19 @@ const NumericInput = forwardRef(function NumericInput(
 
   // Holds filteredValue that may have leading padZero when required.
   let paddedValue = '';
-  const maxPad = max !== undefined ? String(max).length : 0;
-  if (maxPad >= String(currentValue).length) {
-    // Add padding Zero when length is less than maxPad.
-    paddedValue = padZero
-      ? String(currentValue).padStart(maxPad, '0')
-      : String(currentValue);
+  if(max != undefined) {
+    const maxPad = max !== undefined ? String(max).length : 0;
+    if (maxPad >= String(currentValue).length) {
+      // Add padding Zero when length is less than maxPad.
+      paddedValue = padZero
+        ? String(currentValue).padStart(maxPad, '0')
+        : String(currentValue);
+    } else {
+      // Remove any leading Zero when maxPad is exceeded.
+      paddedValue = String(currentValue).replace(/^0+/, '');
+    }
   } else {
-    // Remove any leading Zero when maxPad is exceeded.
-    paddedValue = String(currentValue).replace(/^0+/, '');
+    paddedValue = String(currentValue);
   }
 
   return (

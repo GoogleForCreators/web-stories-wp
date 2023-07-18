@@ -293,12 +293,14 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdate).toHaveBeenCalledWith({ fontSize: 32 }, true);
     });
 
-    it('should not update font size if empty string is submitted', () => {
+    it('should set minimum font size if empty string is submitted', () => {
       const { pushUpdate } = arrange([textElement]);
       const input = screen.getByRole('textbox', { name: 'Font size' });
       fireEvent.change(input, { target: { value: '' } });
+
+      // Note: With PR#13339, if empty value is provided, it will set min value.
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).not.toHaveBeenCalled();
+      expect(pushUpdate).toHaveBeenCalledWith({"fontSize": 8}, true);
     });
 
     it('should set the text bold when the key command is pressed', () => {

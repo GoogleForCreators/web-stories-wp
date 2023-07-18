@@ -34,6 +34,7 @@ import type { UseNumericInputProps } from './types';
 
 const useNumericInput = ({
   allowEmpty,
+  updateOnChange,
   isFloat,
   padZero,
   max,
@@ -86,12 +87,25 @@ const useNumericInput = ({
       // Do not process non-numeric keys.
       if (!isNaN(Number(ev.target.value.trim()))) {
         // Return minimum number when string is empty.
-        if (ev.target.value === '' && min !== undefined) {
-          setCurrentValue(min);
-          onChange(ev, Number(min));
+        if (ev.target.value === '') {
+          if (allowEmpty) {
+            setCurrentValue('');
+            if (updateOnChange) {
+              onChange(ev, '');
+            }
 
-          // Do not process further.
-          return;
+            // Do not process further.
+            return;
+          } else if (min !== undefined) {
+            setCurrentValue(min);
+
+            if (updateOnChange) {
+              onChange(ev, Number(min));
+            }
+
+            // Do not process further.
+            return;
+          }
         }
 
         // Restricts inputted string to be between min and max.
@@ -105,17 +119,21 @@ const useNumericInput = ({
         ) {
           if (parsedValue < min) {
             setCurrentValue(min);
-            onChange(ev, Number(min));
+            if (updateOnChange) {
+              onChange(ev, Number(min));
+            }
           } else if (parsedValue > max) {
             setCurrentValue(
               ev.target.value.trim().charAt(ev.target.value.trim().length - 1)
             );
-            onChange(
-              ev,
-              Number(
-                ev.target.value.trim().charAt(ev.target.value.trim().length - 1)
-              )
-            );
+            if (updateOnChange) {
+              onChange(
+                ev,
+                Number(
+                  ev.target.value.trim().charAt(ev.target.value.trim().length - 1)
+                )
+              );
+            }
           }
 
           // Do not process further.
@@ -129,10 +147,12 @@ const useNumericInput = ({
             ? String(parsedValue).padStart(maxPad, '0')
             : ev.target.value.trim();
         setCurrentValue(paddedValue);
-        onChange(ev, Number(paddedValue));
+        if (updateOnChange) {
+          onChange(ev, Number(paddedValue));
+        }
       }
     },
-    [max, min, onChange, options]
+    [max, min, onChange, options, updateOnChange]
   );
 
   /**

@@ -271,20 +271,24 @@ describe('panels/SizePosition', () => {
       expect(input.placeholder).toBe('Auto');
     });
 
-    it('should not update width if empty value is submitted', () => {
+    it('should update to zero width if empty value is submitted', () => {
       const { pushUpdate } = renderSizePosition([defaultImage]);
       const inputWidth = screen.getByRole('textbox', { name: 'Width' });
       fireEvent.change(inputWidth, { target: { value: '' } });
+
+      // Note: With PR#13339, value will be changed to zero when empty value is provided.
       fireEvent.keyDown(inputWidth, { key: 'Enter', which: 13 });
-      expect(pushUpdate).not.toHaveBeenCalled();
+      expect(pushUpdate).toHaveBeenCalled();
     });
 
-    it('should not update height if empty value is submitted', () => {
+    it('should update to zero height if empty value is submitted', () => {
       const { pushUpdate } = renderSizePosition([defaultImage]);
       const inputHeight = screen.getByRole('textbox', { name: 'Height' });
       fireEvent.change(inputHeight, { target: { value: '' } });
+
+      // Note: With PR#13339, value will be changed to zero when empty value is provided.
       fireEvent.keyDown(inputHeight, { key: 'Enter', which: 13 });
-      expect(pushUpdate).not.toHaveBeenCalled();
+      expect(pushUpdate).toHaveBeenCalled();
     });
 
     it('should update lock ratio to false for element', () => {
@@ -471,7 +475,8 @@ describe('panels/SizePosition', () => {
     it('should update height with lock ratio and extrapolated size and reset to max allowed', () => {
       const { pushUpdate, submit } = renderSizePosition([image]);
       const input = screen.getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '2000' } });
+      // Note: With PR#13339, value 200 is accepted but 2000 will be reverted to 0.
+      fireEvent.change(input, { target: { value: '1000' } });
       fireEvent.blur(input);
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({

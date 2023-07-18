@@ -177,6 +177,7 @@ function TimePicker({ onChange, is12Hour, localeData, setLocaleData }) {
               max={getMaxHours()}
               value={parseInt(localeData.hours)}
               onChange={onChangeEvent('hours')}
+              updateOnChange
               onBlur={updateHours}
               padZero
             />
@@ -187,6 +188,7 @@ function TimePicker({ onChange, is12Hour, localeData, setLocaleData }) {
               max={59}
               value={parseInt(localeData.minutes)}
               onChange={onChangeEvent('minutes')}
+              updateOnChange
               onBlur={updateMinutes}
               padZero
             />
