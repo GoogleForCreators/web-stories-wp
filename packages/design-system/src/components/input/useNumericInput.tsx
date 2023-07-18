@@ -103,10 +103,7 @@ const useNumericInput = ({
         const parsedValue = options.isFloat
           ? parseFloat(ev.target.value)
           : parseInt(ev.target.value);
-        if (
-          max !== undefined &&
-          parsedValue > max
-        ) {
+        if (max !== undefined && parsedValue > max) {
           if (parsedValue > max) {
             setCurrentValue(
               ev.target.value.trim().charAt(ev.target.value.trim().length - 1)

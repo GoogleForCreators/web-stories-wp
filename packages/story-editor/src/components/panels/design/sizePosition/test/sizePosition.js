@@ -271,24 +271,20 @@ describe('panels/SizePosition', () => {
       expect(input.placeholder).toBe('Auto');
     });
 
-    it('should update to zero width if empty value is submitted', () => {
+    it('should not update width if empty value is submitted', () => {
       const { pushUpdate } = renderSizePosition([defaultImage]);
       const inputWidth = screen.getByRole('textbox', { name: 'Width' });
       fireEvent.change(inputWidth, { target: { value: '' } });
-
-      // Note: With PR#13339, value will be changed to zero when empty value is provided.
       fireEvent.keyDown(inputWidth, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledOnce();
+      expect(pushUpdate).not.toHaveBeenCalled();
     });
 
-    it('should update to zero height if empty value is submitted', () => {
+    it('should not update height if empty value is submitted', () => {
       const { pushUpdate } = renderSizePosition([defaultImage]);
       const inputHeight = screen.getByRole('textbox', { name: 'Height' });
       fireEvent.change(inputHeight, { target: { value: '' } });
-
-      // Note: With PR#13339, value will be changed to zero when empty value is provided.
       fireEvent.keyDown(inputHeight, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledOnce();
+      expect(pushUpdate).not.toHaveBeenCalled();
     });
 
     it('should update lock ratio to false for element', () => {
