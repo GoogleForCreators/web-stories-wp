@@ -235,10 +235,11 @@ describe('PublishPanel', () => {
 
     await waitFor(() => {
       expect(updateStory).toHaveBeenCalledOnce();
+    });
 
+    await waitFor(() => {
       const calledArg = updateStory.mock.calls[0][0];
       const updatedDate = new Date(calledArg.properties.date);
-
       expect(updatedDate.getMinutes()).toBe(0); // Should be updated to the zero.
     });
   });
