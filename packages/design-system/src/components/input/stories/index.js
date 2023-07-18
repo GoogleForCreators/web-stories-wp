@@ -205,7 +205,7 @@ export const _default = {
 };
 
 export const Numeric = {
-  render: function Render({ handleOnChange, ...args }) {
+  render: function Render({ handleOnChange }) {
     const [inputState, setInputState] = useState({
       oneLight: 600,
       twoLight: 0,
@@ -273,7 +273,7 @@ export const Numeric = {
                 aria-label="input-three"
                 hint="92.0°F to 100°F"
                 id="three-light"
-                isFloat={true}
+                isFloat
                 max={100.0}
                 min={92.0}
                 name="threeLight"
@@ -335,7 +335,7 @@ export const Numeric = {
                 aria-label="input-three"
                 hint="-1.5 to 1.5"
                 id="three-light"
-                isFloat={true}
+                isFloat
                 max={1.5}
                 min={-1.5}
                 name="threeDark"
