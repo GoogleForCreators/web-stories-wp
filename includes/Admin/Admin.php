@@ -128,10 +128,10 @@ class Admin extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string|mixed $content Default post content.
-	 * @param WP_Post      $post    Post object.
+	 * @param WP_Post|null $post    Post object.
 	 * @return string|mixed Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public function prefill_post_content( $content, WP_Post $post ) {
+	public function prefill_post_content( $content, $post ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
