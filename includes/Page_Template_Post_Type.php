@@ -191,6 +191,7 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 				'name_admin_bar'           => _x( 'Page Template', 'add new on admin bar', 'web-stories' ),
 				'item_link'                => _x( 'Page Template Link', 'navigation link block title', 'web-stories' ),
 				'item_link_description'    => _x( 'A link to a page template.', 'navigation link block description', 'web-stories' ),
+				'item_trashed'             => __( 'Page Template trashed.', 'web-stories' ),
 			],
 			'supports'              => [
 				'title',
