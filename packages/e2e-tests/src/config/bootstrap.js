@@ -123,10 +123,6 @@ const ALLOWED_ERROR_MESSAGES = [
   // Needed because the tinymce package is not yet using React 18.
   // TODO: Migrate & remove once WordPress 6.2 is minimum.
   'Warning: ReactDOM.render is no longer supported in React 18',
-
-  // Web Stories block AMP validation test emits this warning from the validator.
-  // Can be safely ignored.
-  'data-ampdevmode',
 ];
 
 export function addAllowedErrorMessage(message) {
