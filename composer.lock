@@ -86,17 +86,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "3007b1387f0ace236b25f70a63829c092cdd547f"
+                "reference": "2bc6c1205ad83b372aec764614564e46f120c70e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/3007b1387f0ace236b25f70a63829c092cdd547f",
-                "reference": "3007b1387f0ace236b25f70a63829c092cdd547f",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/2bc6c1205ad83b372aec764614564e46f120c70e",
+                "reference": "2bc6c1205ad83b372aec764614564e46f120c70e",
                 "shasum": ""
             },
             "require": {
                 "ampproject/amp-toolbox": "0.11.3",
-                "cweagans/composer-patches": "~1.0",
+                "cweagans/composer-patches": "^1.0",
                 "ext-curl": "*",
                 "ext-date": "*",
                 "ext-dom": "*",
@@ -118,7 +118,7 @@
                 "mustache/mustache": "^2",
                 "php-stubs/wordpress-stubs": "^6.0.0",
                 "phpcompatibility/phpcompatibility-wp": "2.1.4",
-                "phpdocumentor/reflection": "~3.0",
+                "phpdocumentor/reflection": "^3.0",
                 "roave/security-advisories": "dev-latest",
                 "sirbrillig/phpcs-variable-analysis": "2.11.16",
                 "wp-cli/export-command": "^2.0",
@@ -195,7 +195,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2023-06-09T16:28:04+00:00"
+            "time": "2023-07-18T18:54:39+00:00"
         },
         {
             "name": "cweagans/composer-patches",
