@@ -22,6 +22,7 @@ import {
   getSmallestUrlForWidth,
   type Resource,
   type ResourceId,
+  ResourceType,
   type VideoResource,
 } from '@googleforcreators/media';
 
@@ -152,7 +153,7 @@ function useDetectBaseColor({
         imageSrc = resource.poster;
       }
 
-      if (type === 'image') {
+      if (type === ResourceType.Image) {
         imageSrc = getSmallestUrlForWidth(0, resource);
       } else if (!isExternal) {
         try {

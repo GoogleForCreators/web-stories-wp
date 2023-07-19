@@ -84,7 +84,7 @@ interface TrackingConfig {
    */
   trackingEnabled?: boolean;
   /**
-   * GA4 tracking ID.
+   * GA4 measurement ID.
    */
   trackingIdGA4: string;
   /**

@@ -84,7 +84,7 @@ function getStateFromLocalStorage() {
   return false;
 }
 
-export function UpdateBannerContainer() {
+function UpdateBannerContainer() {
   const { bannerVisible: hasTelemetryBanner } = useTelemetryOptIn();
   const {
     plugins: { 'web-stories': webStories = {} },

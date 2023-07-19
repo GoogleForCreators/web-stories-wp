@@ -25,7 +25,7 @@ import initializeErrorReporting from './initializeErrorReporting';
  * Initializes tracking.
  *
  * @param appName Name of the application, e.g. 'Dashboard' or 'Editor'.
- * @param [sendPageView=true] Whether to send an initial page view event upon loading.
+ * @param [sendPageView] Whether to send an initial page view event upon loading.
  * @return Promise.
  */
 async function initializeTracking(appName: string, sendPageView = true) {

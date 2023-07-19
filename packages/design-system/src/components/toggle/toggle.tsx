@@ -72,7 +72,10 @@ const Circle = styled.span(
       background-color: ${theme.colors.fg.secondary};
       border-radius: ${theme.borders.radius.round};
       cursor: pointer;
-      transition: background-color 0.3s, border-color 0.3s, left 0.15s;
+      transition:
+        background-color 0.3s,
+        border-color 0.3s,
+        left 0.15s;
     }
   `
 );
@@ -140,7 +143,8 @@ const ToggleContainer = styled.div(
       &:focus-visible {
         ~ ${Background} {
           outline: none;
-          box-shadow: 0 0 0 5px ${theme.colors.bg.primary},
+          box-shadow:
+            0 0 0 5px ${theme.colors.bg.primary},
             0 0 0 7px ${theme.colors.border.focus};
         }
       }

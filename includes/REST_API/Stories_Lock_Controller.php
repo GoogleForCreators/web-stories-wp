@@ -261,13 +261,16 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	/**
 	 * Prepares a single lock output for response.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.6.0
 	 *
 	 * @param array{time?: int, user?: int}|false $item Lock value, default to false is not set.
 	 * @param WP_REST_Request                     $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
-	public function prepare_item_for_response( $item, $request ) {
+	public function prepare_item_for_response( $item, $request ) { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$fields = $this->get_fields_for_response( $request );
 		$schema = $this->get_item_schema();
 
@@ -344,8 +347,9 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		 */
 		$post_id = $request['id'];
 
-		// Make preparing links optional after WP 6.1 is min version. See https://github.com/WordPress/wordpress-develop/commit/b7bae6936a9ad54f85bad7e5a73a9d110190d927.
-		$response->add_links( $this->prepare_links( $item, $post_id ) );
+		if ( rest_is_field_included( '_links', $fields ) || rest_is_field_included( '_embedded', $fields ) ) {
+			$response->add_links( $this->prepare_links( $item, $post_id ) );
+		}
 
 		$post_type = $this->story_post_type->get_slug();
 

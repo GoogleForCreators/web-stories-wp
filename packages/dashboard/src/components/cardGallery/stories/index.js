@@ -62,10 +62,12 @@ export default {
 const CardGalleryContainer = styled.div`
   padding: 20px;
 `;
-export const _default = (args) => {
-  return (
-    <CardGalleryContainer>
-      <CardGallery galleryPosters={demoPosterGroup} {...args} />
-    </CardGalleryContainer>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <CardGalleryContainer>
+        <CardGallery galleryPosters={demoPosterGroup} {...args} />
+      </CardGalleryContainer>
+    );
+  },
 };

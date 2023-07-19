@@ -40,6 +40,7 @@ export const AD_NETWORK_TYPE = {
   NONE: 'none',
   ADSENSE: 'adsense',
   ADMANAGER: 'admanager',
+  MGID: 'mgid',
 };
 
 export const ARCHIVE_TYPE = {

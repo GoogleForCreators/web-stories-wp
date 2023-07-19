@@ -62,19 +62,12 @@ const Row = styled.div`
   }
 `;
 
-export const _default = (args) => {
-  return (
-    <>
-      <Headline>{'Notification Bubble'}</Headline>
-      <br />
-      <Container>
-        <Row>
-          {VARIANT_OPTIONS.map((variant) => (
-            <NotificationBubble key={variant} variant={variant} {...args} />
-          ))}
-        </Row>
-      </Container>
-      <DarkThemeProvider>
+export const _default = {
+  render: function Render(args) {
+    return (
+      <>
+        <Headline>{'Notification Bubble'}</Headline>
+        <br />
         <Container>
           <Row>
             {VARIANT_OPTIONS.map((variant) => (
@@ -82,7 +75,16 @@ export const _default = (args) => {
             ))}
           </Row>
         </Container>
-      </DarkThemeProvider>
-    </>
-  );
+        <DarkThemeProvider>
+          <Container>
+            <Row>
+              {VARIANT_OPTIONS.map((variant) => (
+                <NotificationBubble key={variant} variant={variant} {...args} />
+              ))}
+            </Row>
+          </Container>
+        </DarkThemeProvider>
+      </>
+    );
+  },
 };

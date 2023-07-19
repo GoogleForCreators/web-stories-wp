@@ -50,7 +50,8 @@ const Controller = styled.div`
   ${({ placement }) => placement}: 0px;
   opacity: 0;
   transform: translateX(-20px);
-  transition: opacity ${DURATION}ms ${BEZIER.default},
+  transition:
+    opacity ${DURATION}ms ${BEZIER.default},
     transform ${DURATION}ms ${BEZIER.default};
   ${({ state }) => transitionStyles[state]}
 `;

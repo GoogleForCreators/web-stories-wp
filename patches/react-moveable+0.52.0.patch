@@ -1,10 +1,10 @@
 diff --git a/node_modules/react-moveable/declaration/makeMoveable.d.ts b/node_modules/react-moveable/declaration/makeMoveable.d.ts
-index e7706fd..a28c4ab 100644
+index 9948a7f..a28c4ab 100644
 --- a/node_modules/react-moveable/declaration/makeMoveable.d.ts
 +++ b/node_modules/react-moveable/declaration/makeMoveable.d.ts
 @@ -1,3 +1,4 @@
 +import { IObject } from "@daybrush/utils";
  import { Able } from "./types";
  import { InitialMoveable } from "./InitialMoveable";
--export declare function makeMoveable<T = {}>(ables: Array<Able<T>>): typeof InitialMoveable & (new (...args: any[]) => InitialMoveable<T>);
+-export declare function makeMoveable<T extends Record<string, any> = {}>(ables: Array<Able<T>>): typeof InitialMoveable & (new (...args: any[]) => InitialMoveable<T>);
 +export declare function makeMoveable<T extends IObject<any> = {}>(ables: Array<Able<T>>): typeof InitialMoveable & (new (...args: any[]) => InitialMoveable<T>);

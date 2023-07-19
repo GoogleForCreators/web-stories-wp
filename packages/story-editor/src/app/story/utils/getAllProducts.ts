@@ -18,12 +18,16 @@
  * External dependencies
  */
 import {
-  ELEMENT_TYPES,
   type Element,
+  ElementType,
   type Page,
-  type ProductElement,
   type ProductData,
+  type ProductElement,
 } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
 
 function isProduct(e: Element): e is ProductElement {
   return 'product' in e;
@@ -38,7 +42,7 @@ function getAllProducts(pages: Page[]): ProductData[] {
       }
       const { product, type } = element;
       if (
-        type === ELEMENT_TYPES.PRODUCT &&
+        type === ElementType.Product &&
         product &&
         !productIds.includes(product.productId)
       ) {

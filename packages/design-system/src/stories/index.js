@@ -76,64 +76,66 @@ const ColorBlock = styled.span`
   background-color: ${({ color }) => color};
 `;
 
-export const _default = () => {
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
-  const activeTheme = useMemo(
-    () => (isDarkTheme ? dark : light),
-    [isDarkTheme]
-  );
-  const { Small } = TextSize;
-  return (
-    <div>
-      <FixedButton
-        type={ButtonType.Primary}
-        onClick={() => setIsDarkTheme(!isDarkTheme)}
-      >{`Toggle to ${isDarkTheme ? 'light' : 'dark'} theme`}</FixedButton>
-      {Object.keys(activeTheme).map((themeSection) => (
-        <Row key={themeSection} beginLightDark={themeSection === 'fg'}>
-          <Headline as="h2">{themeSection}</Headline>
-          {Object.keys(activeTheme[themeSection]).map((sectionValue) => {
-            if (typeof activeTheme[themeSection][sectionValue] === 'object') {
-              return (
-                <Row key={`${themeSection} - ${sectionValue}`}>
-                  <Headline as="h3" size={Small}>
-                    {`${themeSection} - ${sectionValue}`}
-                  </Headline>
-                  {Object.keys(activeTheme[themeSection][sectionValue]).map(
-                    (nestedSection) => {
-                      return (
-                        <Container
-                          key={`${themeSection}_${sectionValue}_${nestedSection}`}
-                        >
-                          <ColorBlock
-                            color={
-                              activeTheme[themeSection][sectionValue][
-                                nestedSection
-                              ]
-                            }
-                          />
-                          <Text.Paragraph
-                            size={Small}
-                          >{`${themeSection}.${sectionValue}.${nestedSection} (${activeTheme[themeSection][sectionValue][nestedSection]})`}</Text.Paragraph>
-                        </Container>
-                      );
-                    }
-                  )}
-                </Row>
-              );
-            }
+export const _default = {
+  render: function Render() {
+    const [isDarkTheme, setIsDarkTheme] = useState(true);
+    const activeTheme = useMemo(
+      () => (isDarkTheme ? dark : light),
+      [isDarkTheme]
+    );
+    const { Small } = TextSize;
+    return (
+      <div>
+        <FixedButton
+          type={ButtonType.Primary}
+          onClick={() => setIsDarkTheme(!isDarkTheme)}
+        >{`Toggle to ${isDarkTheme ? 'light' : 'dark'} theme`}</FixedButton>
+        {Object.keys(activeTheme).map((themeSection) => (
+          <Row key={themeSection} beginLightDark={themeSection === 'fg'}>
+            <Headline as="h2">{themeSection}</Headline>
+            {Object.keys(activeTheme[themeSection]).map((sectionValue) => {
+              if (typeof activeTheme[themeSection][sectionValue] === 'object') {
+                return (
+                  <Row key={`${themeSection} - ${sectionValue}`}>
+                    <Headline as="h3" size={Small}>
+                      {`${themeSection} - ${sectionValue}`}
+                    </Headline>
+                    {Object.keys(activeTheme[themeSection][sectionValue]).map(
+                      (nestedSection) => {
+                        return (
+                          <Container
+                            key={`${themeSection}_${sectionValue}_${nestedSection}`}
+                          >
+                            <ColorBlock
+                              color={
+                                activeTheme[themeSection][sectionValue][
+                                  nestedSection
+                                ]
+                              }
+                            />
+                            <Text.Paragraph
+                              size={Small}
+                            >{`${themeSection}.${sectionValue}.${nestedSection} (${activeTheme[themeSection][sectionValue][nestedSection]})`}</Text.Paragraph>
+                          </Container>
+                        );
+                      }
+                    )}
+                  </Row>
+                );
+              }
 
-            return (
-              <Container key={`${themeSection}_${sectionValue}`}>
-                <ColorBlock color={activeTheme[themeSection][sectionValue]} />
-                <Text.Paragraph
-                  size={Small}
-                >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text.Paragraph>
-              </Container>
-            );
-          })}
-        </Row>
-      ))}
-    </div>
-  );
+              return (
+                <Container key={`${themeSection}_${sectionValue}`}>
+                  <ColorBlock color={activeTheme[themeSection][sectionValue]} />
+                  <Text.Paragraph
+                    size={Small}
+                  >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text.Paragraph>
+                </Container>
+              );
+            })}
+          </Row>
+        ))}
+      </div>
+    );
+  },
 };

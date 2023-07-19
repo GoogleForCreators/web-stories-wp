@@ -2,7 +2,7 @@
   "name": "@googleforcreators/masks",
   "description": "Masks package for story-editor elements",
   "private": false,
-  "version": "0.1.202303271448",
+  "version": "0.1.202306211149",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -43,7 +43,7 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
     "prop-types": "^15.8.0",
-    "styled-components": "^5.3.9",
+    "styled-components": "^5.3.11",
     "uuid": "^9.0.0"
   },
   "devDependencies": {}

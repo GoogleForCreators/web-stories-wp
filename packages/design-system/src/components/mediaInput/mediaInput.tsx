@@ -92,24 +92,23 @@ const menuStyleOverride = css`
 `;
 
 const Button = styled(DefaultButton)<{ showImage?: boolean }>(
-  ({ showImage }) =>
+  ({ showImage }) => css`
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryNormal};
+    position: relative;
+
+    ${showImage &&
     css`
+      position: absolute;
+      bottom: -8px;
+      right: -8px;
+    `}
+
+    &:hover {
       background-color: ${({ theme }) =>
-        theme.colors.interactiveBg.secondaryNormal};
-      position: relative;
-
-      ${showImage &&
-      css`
-        position: absolute;
-        bottom: -8px;
-        right: -8px;
-      `}
-
-      &:hover {
-        background-color: ${({ theme }) =>
-          theme.colors.interactiveBg.secondaryHover};
-      }
-    `
+        theme.colors.interactiveBg.secondaryHover};
+    }
+  `
 );
 
 const MediaOptions = {

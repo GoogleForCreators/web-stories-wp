@@ -60,6 +60,7 @@ function EditorSettings() {
     adSensePublisherId,
     adSenseSlotId,
     adManagerSlotId,
+    mgidWidgetId,
     adNetwork,
     uploadMedia,
     newlyCreatedMediaIds,
@@ -105,6 +106,7 @@ function EditorSettings() {
           adSensePublisherId,
           adSenseSlotId,
           adManagerSlotId,
+          mgidWidgetId,
           adNetwork,
           videoCache,
           dataRemoval,
@@ -128,6 +130,7 @@ function EditorSettings() {
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
+      mgidWidgetId,
       adNetwork,
       uploadMedia,
       isMediaLoading,
@@ -397,6 +400,7 @@ function EditorSettings() {
                   publisherId={adSensePublisherId}
                   adSenseSlotId={adSenseSlotId}
                   adManagerSlotId={adManagerSlotId}
+                  mgidWidgetId={mgidWidgetId}
                   siteKitStatus={siteKit}
                 />
                 <Shopping

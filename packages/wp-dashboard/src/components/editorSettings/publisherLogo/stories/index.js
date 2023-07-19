@@ -46,54 +46,56 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const [uploadedContent, setUploadedContent] = useState(rawPublisherLogos);
+export const _default = {
+  render: function Render(args) {
+    const [uploadedContent, setUploadedContent] = useState(rawPublisherLogos);
 
-  const handleAddLogos = useCallback(
-    async (newPublisherLogos) => {
-      args.onAddLogos(newPublisherLogos);
+    const handleAddLogos = useCallback(
+      async (newPublisherLogos) => {
+        args.onAddLogos(newPublisherLogos);
 
-      // this is purely for the sake of storybook demoing
-      const newUploads = await Promise.all(
-        newPublisherLogos.map(async (file) => {
-          const arr = await readFile(file);
-          const src = createBlob(new Blob([arr], { type: file.type }));
-          return {
-            id: src,
-            url: src,
-            title: file.name,
-          };
-        })
-      );
-      setUploadedContent((existingUploads) => [
-        ...existingUploads,
-        ...newUploads,
-      ]);
-    },
-    [args]
-  );
-
-  const handleRemoveLogo = useCallback(
-    (deleteLogo) => {
-      args.onRemoveLogo(deleteLogo);
-
-      setUploadedContent((existingUploadedContent) => {
-        return existingUploadedContent.filter(
-          (uploadedLogo) => uploadedLogo.id !== deleteLogo.id
+        // this is purely for the sake of storybook demoing
+        const newUploads = await Promise.all(
+          newPublisherLogos.map(async (file) => {
+            const arr = await readFile(file);
+            const src = createBlob(new Blob([arr], { type: file.type }));
+            return {
+              id: src,
+              url: src,
+              title: file.name,
+            };
+          })
         );
-      });
-    },
-    [args]
-  );
+        setUploadedContent((existingUploads) => [
+          ...existingUploads,
+          ...newUploads,
+        ]);
+      },
+      [args]
+    );
 
-  return (
-    <ConfigProvider config={{ allowedImageMimeTypes: {} }}>
-      <PublisherLogoSettings
-        onAddLogos={handleAddLogos}
-        onRemoveLogo={handleRemoveLogo}
-        publisherLogos={uploadedContent}
-        {...args}
-      />
-    </ConfigProvider>
-  );
+    const handleRemoveLogo = useCallback(
+      (deleteLogo) => {
+        args.onRemoveLogo(deleteLogo);
+
+        setUploadedContent((existingUploadedContent) => {
+          return existingUploadedContent.filter(
+            (uploadedLogo) => uploadedLogo.id !== deleteLogo.id
+          );
+        });
+      },
+      [args]
+    );
+
+    return (
+      <ConfigProvider config={{ allowedImageMimeTypes: {} }}>
+        <PublisherLogoSettings
+          onAddLogos={handleAddLogos}
+          onRemoveLogo={handleRemoveLogo}
+          publisherLogos={uploadedContent}
+          {...args}
+        />
+      </ConfigProvider>
+    );
+  },
 };

@@ -53,24 +53,26 @@ const Container = styled.div`
 `;
 
 const [tip] = Object.values(TIPS);
-export const QuickTip = (args) => {
-  const [toggled, setToggled] = useState(true);
-  return (
-    <ThemeProvider theme={dsTheme}>
-      <ThemeGlobals.Styles />
-      <button onClick={() => setToggled((v) => !v)}>{'toggleTips'}</button>
-      <Bg>
-        <Container>
-          <TransitionGroup component={null}>
-            <HelpCenterQuickTip
-              key={toggled ? 'key1' : 'key2'}
-              title={tip.title}
-              description={tip.description}
-              {...args}
-            />
-          </TransitionGroup>
-        </Container>
-      </Bg>
-    </ThemeProvider>
-  );
+export const QuickTip = {
+  render: function Render(args) {
+    const [toggled, setToggled] = useState(true);
+    return (
+      <ThemeProvider theme={dsTheme}>
+        <ThemeGlobals.Styles />
+        <button onClick={() => setToggled((v) => !v)}>{'toggleTips'}</button>
+        <Bg>
+          <Container>
+            <TransitionGroup component={null}>
+              <HelpCenterQuickTip
+                key={toggled ? 'key1' : 'key2'}
+                title={tip.title}
+                description={tip.description}
+                {...args}
+              />
+            </TransitionGroup>
+          </Container>
+        </Bg>
+      </ThemeProvider>
+    );
+  },
 };

@@ -56,90 +56,95 @@ window.wp.media = {
 
 const { ipad, ipad10p, ipad12p } = INITIAL_VIEWPORTS;
 
-export const parameters = {
-  a11y: {
-    element: '#root',
-    config: {},
-    options: {},
-    manual: true,
-  },
-  viewport: {
-    viewports: {
-      ipad,
-      ipad10p,
-      ipad12p,
+/** @type { import('@storybook/react').Preview } */
+const preview = {
+  parameters: {
+    a11y: {
+      element: '#root',
+      config: {},
+      options: {},
+      manual: true,
+    },
+    viewport: {
+      viewports: {
+        ipad,
+        ipad10p,
+        ipad12p,
+      },
+    },
+    backgrounds: {
+      default: 'Light',
+      values: [
+        { name: 'Light', value: '#fff', default: true },
+        { name: 'Dark', value: 'rgba(0, 0, 0, 0.9)', default: true },
+      ],
     },
   },
-  backgrounds: {
-    default: 'Light',
-    values: [
-      { name: 'Light', value: '#fff', default: true },
-      { name: 'Dark', value: 'rgba(0, 0, 0, 0.9)', default: true },
-    ],
-  },
-};
 
-export const decorators = [
-  (Story, context) => {
-    const { id } = context;
-    // TODO(#10380): Replacement add-on for RTL feature
-    const isRTL = false;
+  decorators: [
+    (Story, context) => {
+      const { id } = context;
+      // TODO(#10380): Replacement add-on for RTL feature
+      const isRTL = false;
 
-    const isDesignSystemStorybook = id.startsWith('designsystem');
-    const isDashboardStorybook = id.startsWith('dashboard');
+      const isDesignSystemStorybook = id.startsWith('designsystem');
+      const isDashboardStorybook = id.startsWith('dashboard');
 
-    if (isDashboardStorybook) {
-      return (
-        <ThemeProvider
-          theme={{
-            ...designSystemTheme,
-            colors: lightMode,
-          }}
-        >
-          <DashboardConfigProvider
-            config={{
-              api: { stories: 'stories' },
-              apiCallbacks: {
-                getUser: () => Promise.resolve({ id: 1 }),
-              },
-              editStoryURL: 'editStory',
-              isRTL,
-              styleConstants: {
-                topOffset: 0,
-              },
+      if (isDashboardStorybook) {
+        return (
+          <ThemeProvider
+            theme={{
+              ...designSystemTheme,
+              colors: lightMode,
             }}
           >
-            <ApiProvider>
-              <DashboardGlobalStyle />
-              <ModalGlobalStyle />
-              <DashboardKeyboardOnlyOutline />
-              {Story()}
-            </ApiProvider>
-          </DashboardConfigProvider>
-        </ThemeProvider>
-      );
-    }
+            <DashboardConfigProvider
+              config={{
+                api: { stories: 'stories' },
+                apiCallbacks: {
+                  getUser: () => Promise.resolve({ id: 1 }),
+                },
+                editStoryURL: 'editStory',
+                isRTL,
+                styleConstants: {
+                  topOffset: 0,
+                },
+              }}
+            >
+              <ApiProvider>
+                <DashboardGlobalStyle />
+                <ModalGlobalStyle />
+                <DashboardKeyboardOnlyOutline />
+                {Story()}
+              </ApiProvider>
+            </DashboardConfigProvider>
+          </ThemeProvider>
+        );
+      }
 
-    if (isDesignSystemStorybook) {
-      // override darkMode colors
-      const dsTheme = { ...designSystemTheme, colors: lightMode };
+      if (isDesignSystemStorybook) {
+        // override darkMode colors
+        const dsTheme = { ...designSystemTheme, colors: lightMode };
+        return (
+          <ThemeProvider theme={dsTheme}>
+            <ThemeGlobals.Styles />
+            <ModalGlobalStyle />
+            {Story()}
+          </ThemeProvider>
+        );
+      }
+
       return (
-        <ThemeProvider theme={dsTheme}>
-          <ThemeGlobals.Styles />
-          <ModalGlobalStyle />
-          {Story()}
+        <ThemeProvider theme={designSystemTheme}>
+          <EditorConfigProvider config={{ isRTL }}>
+            <CropMoveableGlobalStyle />
+            <ModalGlobalStyle />
+            {Story()}
+          </EditorConfigProvider>
         </ThemeProvider>
       );
-    }
+    },
+  ],
+};
 
-    return (
-      <ThemeProvider theme={designSystemTheme}>
-        <EditorConfigProvider config={{ isRTL }}>
-          <CropMoveableGlobalStyle />
-          <ModalGlobalStyle />
-          {Story()}
-        </EditorConfigProvider>
-      </ThemeProvider>
-    );
-  },
-];
+export default preview;

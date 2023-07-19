@@ -238,6 +238,11 @@
     }],
     "jsdoc/require-returns": "error",
     "jsdoc/require-param-description": "error",
+    "jsdoc/tag-lines": [
+      "error",
+      "any",
+      { "startLines": 1 }
+    ],
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/require-description": "error",
@@ -323,16 +328,16 @@
       ],
       "extends": [
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+        "plugin:@typescript-eslint/recommended-type-checked"
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
+        "warnOnUnsupportedTypeScriptVersion": false,
         "project": [
           "./packages/*/tsconfig.json"
         ]
       },
       "rules": {
-        "@typescript-eslint/no-duplicate-imports": "error",
         "@typescript-eslint/no-shadow": ["error",
           {
             "ignoreOnInitialization": true
@@ -606,7 +611,7 @@
     {
       "files": [
         "packages/commander/**/*.ts",
-        "packages/fonts/scripts/**/*.js",
+        "packages/fonts/scripts/**/*.ts",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
         "packages/text-sets/scripts/**/*.js"
@@ -635,7 +640,7 @@
         "packages/story-editor/src/karma-tests.cjs",
         "packages/eslint-import-resolver/**/*.cjs",
         "packages/jest-resolver/**/*.cjs",
-        "packages/fonts/**/*.js",
+        "packages/fonts/**/*.ts",
         "packages/commander/**/*.ts",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",

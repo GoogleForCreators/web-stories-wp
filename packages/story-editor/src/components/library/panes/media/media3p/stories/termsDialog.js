@@ -38,6 +38,8 @@ export default {
   component: TermsDialog,
 };
 
-export const _default = () => {
-  return <TermsDialog />;
+export const _default = {
+  render: function Render() {
+    return <TermsDialog />;
+  },
 };

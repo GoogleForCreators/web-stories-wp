@@ -49,35 +49,37 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <ConfigContext.Provider
-      value={{
-        capabilities: {
-          hasUploadMediaAction: true,
-        },
-      }}
-    >
-      <StoryContext.Provider
+export const _default = {
+  render: function Render(args) {
+    return (
+      <ConfigContext.Provider
         value={{
-          state: {
-            story: {},
-            selectedElements: [
-              {
-                type: args.selectedElementType,
-                flip: 'horizontal',
-                resource: {},
-                id: 'some-element-id',
-              },
-            ],
+          capabilities: {
+            hasUploadMediaAction: true,
           },
-          actions: { updateSelectedElements: () => {} },
         }}
       >
-        <EditLayerFocusManager>
-          <FloatingMenu {...args} />
-        </EditLayerFocusManager>
-      </StoryContext.Provider>
-    </ConfigContext.Provider>
-  );
+        <StoryContext.Provider
+          value={{
+            state: {
+              story: {},
+              selectedElements: [
+                {
+                  type: args.selectedElementType,
+                  flip: 'horizontal',
+                  resource: {},
+                  id: 'some-element-id',
+                },
+              ],
+            },
+            actions: { updateSelectedElements: () => {} },
+          }}
+        >
+          <EditLayerFocusManager>
+            <FloatingMenu {...args} />
+          </EditLayerFocusManager>
+        </StoryContext.Provider>
+      </ConfigContext.Provider>
+    );
+  },
 };

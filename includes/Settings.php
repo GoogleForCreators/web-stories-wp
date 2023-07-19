@@ -85,6 +85,11 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	public const SETTING_NAME_AD_MANAGER_SLOT_ID = 'web_stories_ad_manager_slot_id';
 
 	/**
+	 * MGID Widget ID setting name.
+	 */
+	public const SETTING_NAME_MGID_WIDGET_ID = 'web_stories_mgid_widget_id';
+
+	/**
 	 * Active publisher logo setting name.
 	 */
 	public const SETTING_NAME_ACTIVE_PUBLISHER_LOGO = 'web_stories_active_publisher_logo';
@@ -225,6 +230,17 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 			self::SETTING_NAME_AD_MANAGER_SLOT_ID,
 			[
 				'description'  => __( 'Google Ad Manager Slot ID', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => '',
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_MGID_WIDGET_ID,
+			[
+				'description'  => __( 'MGID Widget ID', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => '',
 				'show_in_rest' => true,
@@ -467,6 +483,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 		delete_option( self::SETTING_NAME_ADSENSE_PUBLISHER_ID );
 		delete_option( self::SETTING_NAME_ADSENSE_SLOT_ID );
 		delete_option( self::SETTING_NAME_AD_MANAGER_SLOT_ID );
+		delete_option( self::SETTING_NAME_MGID_WIDGET_ID );
 		delete_option( self::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 		delete_option( self::SETTING_NAME_PUBLISHER_LOGOS );
 		delete_option( self::SETTING_NAME_VIDEO_CACHE );

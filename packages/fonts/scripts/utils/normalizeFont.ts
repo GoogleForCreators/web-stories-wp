@@ -17,32 +17,11 @@
 /**
  * Internal dependencies
  */
-import getFontFallback from './getFontFallback.js';
+import getFontFallback from './getFontFallback';
+import type { Font, RawFont } from './types';
 
-//eslint-disable-next-line security/detect-unsafe-regex
+// eslint-disable-next-line security/detect-unsafe-regex
 const FONT_VARIANT_PATTERN = /(?<weight>\d+)?(?<style>\D+)?/;
-
-/**
- * Raw font object.
- *
- * @typedef {Object} RawFont font object
- * @property {string} family Font family.
- * @property {string} category Font family.
- * @property {Array<string>} variants Font variants.
- * @property {Object<*>} fonts Font URLs.
- */
-
-/**
- * Font object.
- *
- * @typedef {Font} Font Font object.
- * @property {string} family Font family.
- * @property {Array<string>} fallbacks Font fallbacks.
- * @property {Array<number>} weights Font weights.
- * @property {Array<string>} styles Font styles.
- * @property {Array<Array<number, number>>} variants Font variants.
- * @property {string} service Font provider.
- */
 
 /**
  * Normalizes font objects for later use.
@@ -50,10 +29,10 @@ const FONT_VARIANT_PATTERN = /(?<weight>\d+)?(?<style>\D+)?/;
  * Drops unnecessary fields, and splits provided variants list
  * into weights, styles, and variants tuples.
  *
- * @param {RawFont} font Font object.
- * @return {Font} Normalized font object.
+ * @param font Font object.
+ * @return Normalized font object.
  */
-function normalizeFont(font) {
+function normalizeFont(font: RawFont) {
   const variants = [];
   const weights = [];
   const styles = [];
@@ -63,13 +42,13 @@ function normalizeFont(font) {
   for (const variant of initialVariants) {
     const found = variant.match(FONT_VARIANT_PATTERN);
 
-    const weight = found.groups.weight || false;
+    const weight = found?.groups?.weight;
 
     if (weight) {
       weights.push(Number(weight));
     }
 
-    const style = found.groups.style || false;
+    const style = found?.groups?.style;
 
     if (style) {
       if ('regular' === style || !weight) {
@@ -95,7 +74,7 @@ function normalizeFont(font) {
     styles: [...new Set(styles)],
     variants,
     service: 'fonts.google.com',
-  };
+  } as Font;
 }
 
 export default normalizeFont;

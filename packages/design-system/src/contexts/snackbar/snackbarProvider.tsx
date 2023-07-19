@@ -42,15 +42,15 @@ function SnackbarProvider({
   const remove = useCallback(
     (
       toRemove:
-        | Pick<SnackbarNotification, 'key'>
-        | Pick<SnackbarNotification, 'key'>[]
+        | Pick<SnackbarNotification, 'id'>
+        | Pick<SnackbarNotification, 'id'>[]
     ) => {
       setNotifications((currentNotifications) =>
         currentNotifications.filter((item) => {
           if (Array.isArray(toRemove)) {
-            return !toRemove.find(({ key }) => key === item.key);
+            return !toRemove.find(({ id }) => id === item.id);
           }
-          return item.key !== toRemove.key;
+          return item.id !== toRemove.id;
         })
       );
     },

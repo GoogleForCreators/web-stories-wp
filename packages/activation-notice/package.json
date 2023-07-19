@@ -32,11 +32,11 @@
     "@wordpress/i18n": "^4.24.0",
     "flagged": "^2.0.8",
     "polished": "^4.2.2",
-    "styled-components": "^5.3.9",
+    "styled-components": "^5.3.11",
     "stylis-plugin-rtl": "^1.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-essentials": "^7.0.22",
     "@testing-library/react": "^12.1.5"
   }
 }

@@ -45,7 +45,7 @@ type Settings = {
     string,
     string,
     string,
-    string
+    string,
   ];
   monthsShort?: readonly [
     string,
@@ -59,7 +59,7 @@ type Settings = {
     string,
     string,
     string,
-    string
+    string,
   ];
   weekdays?: readonly [string, string, string, string, string, string, string];
   weekdaysShort?: readonly [
@@ -69,7 +69,7 @@ type Settings = {
     string,
     string,
     string,
-    string
+    string,
   ];
   weekdaysInitials?: readonly [
     string,
@@ -78,7 +78,7 @@ type Settings = {
     string,
     string,
     string,
-    string
+    string,
   ];
 };
 

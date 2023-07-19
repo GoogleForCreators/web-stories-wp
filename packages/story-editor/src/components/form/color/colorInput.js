@@ -103,7 +103,8 @@ const ColorButton = styled(Preview).attrs(buttonAttrs)`
   background: transparent;
 
   &:focus {
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.bg.primary},
+    box-shadow:
+      0 0 0 2px ${({ theme }) => theme.colors.bg.primary},
       0 0 0 4px ${({ theme }) => theme.colors.border.focus};
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
   }

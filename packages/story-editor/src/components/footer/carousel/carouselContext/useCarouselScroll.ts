@@ -85,8 +85,8 @@ function useCarouselScroll({
   );
 
   const scrollByPx = carouselWidth;
-  const isAtStart = isRTL ? 1 === ratio : 0 === ratio;
-  const isAtEnd = isRTL ? 0 === ratio : 1 === ratio;
+  const isAtStart = isRTL ? 0 === ratio : 0 === ratio;
+  const isAtEnd = isRTL ? -1 === ratio : 1 === ratio;
 
   const canScrollBack = hasOverflow && !isAtStart;
   const canScrollForward = hasOverflow && !isAtEnd;

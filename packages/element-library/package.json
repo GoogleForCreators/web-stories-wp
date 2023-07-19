@@ -2,7 +2,7 @@
   "name": "@googleforcreators/element-library",
   "description": "A library of all elements used in story-editor",
   "private": false,
-  "version": "0.1.202303271448",
+  "version": "0.1.202306211149",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -54,7 +54,7 @@
     "polished": "^4.2.2",
     "prop-types": "^15.7.2",
     "react-transition-group": "^4.4.5",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.11"
   },
   "devDependencies": {}
 }

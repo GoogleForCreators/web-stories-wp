@@ -34,6 +34,8 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return <LoadingSpinner {...args} />;
+export const _default = {
+  render: function Render(args) {
+    return <LoadingSpinner {...args} />;
+  },
 };

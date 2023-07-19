@@ -54,7 +54,6 @@
           "x": 117,
           "y": -250,
           "id": "9c7df34e-1209-4a82-a973-20154a455d87",
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -102,7 +101,6 @@
           "x": 216,
           "y": 609,
           "id": "62fca869-b824-4364-ae38-21932b519f27",
-          "basedOn": "0e2c1625-4aac-4476-8b1d-84c9fbfd90b7",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -124,7 +122,6 @@
           "width": 57,
           "height": 9,
           "mask": { "type": "rectangle" },
-          "basedOn": "0e2c1625-4aac-4476-8b1d-84c9fbfd90b7",
           "id": "7e7f69f3-472e-42cf-863f-989c27ece528",
           "x": 104,
           "y": 609,
@@ -140,7 +137,6 @@
           "width": 57,
           "height": 9,
           "mask": { "type": "rectangle" },
-          "basedOn": "7e7f69f3-472e-42cf-863f-989c27ece528",
           "id": "e13185ca-4f74-4957-b149-6a0939ee4950",
           "x": 47,
           "y": 609,
@@ -205,7 +201,6 @@
             "bottomLeft": 0,
             "locked": false
           },
-          "basedOn": "31dab9ec-0e5f-4d20-a77a-e883fc2e74d1",
           "id": "a4ceb8ab-764a-4611-8c2a-1585fde0329b",
           "x": 47,
           "y": -10,
@@ -443,7 +438,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.2 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "3869addd-d01a-41d8-a631-36ed17b0fd34",
           "x": -177,
           "y": 39,
@@ -476,7 +470,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.2 } }
           },
-          "basedOn": "9c7df34e-1209-4a82-a973-20154a455d87",
           "id": "01881a70-d4c4-4bb6-8714-1cdb19159ad1",
           "x": 29,
           "y": -36,
@@ -553,7 +546,6 @@
           },
           "width": 353,
           "height": 222,
-          "basedOn": "c8a77205-6c1e-4c60-8c50-0a359acfbcb7",
           "id": "c2d0f8f7-b86a-4e92-b421-635887ec7869",
           "x": 29,
           "y": 414
@@ -655,7 +647,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "8b4eb9cf-865f-441b-9e4d-8a3111d7b552",
           "x": -153,
           "y": 131,
@@ -688,7 +679,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "basedOn": "01881a70-d4c4-4bb6-8714-1cdb19159ad1",
           "id": "85ec672f-cc6d-48f5-9198-dddee8abd4fb",
           "x": 229,
           "y": 448,
@@ -728,7 +718,6 @@
             "bottomLeft": 0,
             "locked": false
           },
-          "basedOn": "a4ceb8ab-764a-4611-8c2a-1585fde0329b",
           "id": "74e1254b-bc03-4b9d-a351-44972f1f5324",
           "x": 47,
           "y": -130,
@@ -810,7 +799,6 @@
           },
           "width": 294,
           "height": 43,
-          "basedOn": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf",
           "id": "0fd3cc0e-a22b-49cb-94ae-101d68438d57",
           "x": 47,
           "y": 439
@@ -881,7 +869,6 @@
           },
           "width": 243,
           "height": 79,
-          "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "id": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "x": 47,
           "y": 489
@@ -890,7 +877,6 @@
           "x": 47,
           "y": 401,
           "id": "c694ec71-8620-4c06-991c-5868ba576dbd",
-          "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -1045,7 +1031,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.1 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "f29059fe-cbf9-49bb-90de-c58f85326dc9",
           "x": 110,
           "y": 131,
@@ -1078,7 +1063,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.1 } }
           },
-          "basedOn": "9c7df34e-1209-4a82-a973-20154a455d87",
           "id": "c01b6a06-08f3-4381-be34-f42db440d26c",
           "x": 117,
           "y": -250,
@@ -1101,7 +1085,6 @@
             "bottomLeft": 60,
             "locked": false
           },
-          "basedOn": "74e1254b-bc03-4b9d-a351-44972f1f5324",
           "id": "64d31899-54e8-4e0d-bcb3-9469a6283a48",
           "x": 29,
           "y": -183,
@@ -1214,7 +1197,6 @@
           },
           "width": 84,
           "height": 17,
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "x": 223,
           "y": 317,
@@ -1224,7 +1206,6 @@
           "x": 223,
           "y": 342,
           "id": "bd127e29-8544-4966-9c46-abccfdf8ea6a",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -1296,7 +1277,6 @@
           "x": 57,
           "y": 446,
           "id": "604134a1-d8e8-4f30-b4e0-19febd833791",
-          "basedOn": "c9107a3c-b492-41be-ac0d-758504fd36ad",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -1338,7 +1318,6 @@
           "x": 223,
           "y": 455,
           "id": "33778ea4-a7d6-4885-afd0-e378049b1a9e",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -1410,7 +1389,6 @@
           "x": 222,
           "y": 481,
           "id": "d0946301-9eea-4de3-8e32-61cf1b5ecb9d",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -1482,7 +1460,6 @@
           "x": 47,
           "y": -4,
           "id": "cae57128-b8d9-4f3c-a0a1-cb93d7f3c9de",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -1627,7 +1604,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "6fa5bcc1-f3d8-4ef1-aab6-31d3daff5e06",
           "x": -153,
           "y": 131,
@@ -1660,7 +1636,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "basedOn": "01881a70-d4c4-4bb6-8714-1cdb19159ad1",
           "id": "39655dcb-c49f-4428-a1b7-b6b55a89a0ee",
           "x": 229,
           "y": 448,
@@ -1701,7 +1676,6 @@
             "bottomLeft": 0,
             "locked": false
           },
-          "basedOn": "a4ceb8ab-764a-4611-8c2a-1585fde0329b",
           "id": "32c61414-e9cc-45ca-8a1b-b6c4903d474e",
           "x": 47,
           "y": -130,
@@ -1783,7 +1757,6 @@
           },
           "width": 294,
           "height": 43,
-          "basedOn": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf",
           "id": "a6c52001-a70d-4d54-9fd5-5a2a4d29a676",
           "x": 47,
           "y": 439,
@@ -1854,7 +1827,6 @@
           },
           "width": 274,
           "height": 108,
-          "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "id": "a946962e-b0ae-4b08-9cf6-28547453f3cc",
           "x": 47,
           "y": 489,
@@ -1918,7 +1890,6 @@
           "x": 47,
           "y": 401,
           "id": "faa16b91-1010-403e-a964-a1ea9cfc8070",
-          "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 2</span>",
           "borderRadius": {
             "locked": true,
@@ -2019,7 +1990,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.1 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "dcedd70c-ee4e-490c-90b1-07ca6a17a714",
           "x": 110,
           "y": 131,
@@ -2052,7 +2022,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.1 } }
           },
-          "basedOn": "9c7df34e-1209-4a82-a973-20154a455d87",
           "id": "5f69e607-0710-4fee-b098-d1041d363a8d",
           "x": 117,
           "y": -250,
@@ -2075,7 +2044,6 @@
             "bottomLeft": 60,
             "locked": false
           },
-          "basedOn": "74e1254b-bc03-4b9d-a351-44972f1f5324",
           "id": "1655cf00-79c7-407b-a8b7-69fa5df30ded",
           "x": 29,
           "y": -183,
@@ -2187,7 +2155,6 @@
           },
           "width": 84,
           "height": 37,
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "87ba7d25-84a3-4a49-a9cc-cb4b5d835e7f",
           "x": 223,
           "y": 290,
@@ -2252,7 +2219,6 @@
           "x": 225,
           "y": 335,
           "id": "a26f74d2-d0ce-4415-831f-cb89121a17d8",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Track your sleep and monitor your movement.</span>",
           "borderRadius": {
             "locked": true,
@@ -2275,7 +2241,6 @@
           "x": 57,
           "y": 446,
           "id": "7a353b4d-69be-4127-ab3b-1388223380f9",
-          "basedOn": "c9107a3c-b492-41be-ac0d-758504fd36ad",
           "width": 136,
           "height": 107,
           "scale": 115,
@@ -2365,7 +2330,6 @@
           "x": 223,
           "y": 455,
           "id": "100f8d9c-97e4-4e40-ab0a-a44675606f11",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Auto Ring</span>",
           "borderRadius": {
             "locked": true,
@@ -2437,7 +2401,6 @@
           "x": 222,
           "y": 481,
           "id": "0a96264e-c16d-46ad-8d31-32078648a8d1",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Track your sleep and your waking productivity.</span>",
           "borderRadius": {
             "locked": true,
@@ -2505,7 +2468,6 @@
           "x": 47,
           "y": -4,
           "id": "eca5be61-27ff-42fa-a2aa-5c65d11491aa",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #f5f4ee\">Best</span>\n<span style=\"font-weight: 300; color: #f5f4ee\">Mindfulness</span>\n<span style=\"font-weight: 300; color: #f5f4ee\">Apps</span>",
           "borderRadius": {
             "locked": true,
@@ -2600,7 +2562,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "0dcdf7f8-1c67-4927-b639-1d315728a3d8",
           "x": -153,
           "y": 131,
@@ -2633,7 +2594,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "basedOn": "01881a70-d4c4-4bb6-8714-1cdb19159ad1",
           "id": "21873cb8-7195-4b34-acc9-d150e0fd53da",
           "x": 229,
           "y": 448,
@@ -2674,7 +2634,6 @@
             "bottomLeft": 0,
             "locked": false
           },
-          "basedOn": "a4ceb8ab-764a-4611-8c2a-1585fde0329b",
           "id": "f9eec32d-0546-4985-aca9-1c5a693b8e15",
           "x": 47,
           "y": -130,
@@ -2756,7 +2715,6 @@
           },
           "width": 294,
           "height": 76,
-          "basedOn": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf",
           "id": "a5d9ab76-e2de-48c9-9278-c816e7de19b9",
           "x": 47,
           "y": 439,
@@ -2827,7 +2785,6 @@
           },
           "width": 243,
           "height": 51,
-          "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "id": "cee59c11-98af-4b62-b994-26c835f7261f",
           "x": 47,
           "y": 523,
@@ -2891,7 +2848,6 @@
           "x": 47,
           "y": 401,
           "id": "4cac393e-db45-4d98-8d69-148218f4d990",
-          "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 3</span>",
           "borderRadius": {
             "locked": true,
@@ -2992,7 +2948,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.1 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "f72e3cab-d2e8-41d9-abb0-9ebcad4668e6",
           "x": 110,
           "y": 131,
@@ -3025,7 +2980,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.1 } }
           },
-          "basedOn": "9c7df34e-1209-4a82-a973-20154a455d87",
           "id": "24b8f1c4-dc6a-4ad1-8e46-b0d838136d30",
           "x": 117,
           "y": -250,
@@ -3048,7 +3002,6 @@
             "bottomLeft": 60,
             "locked": false
           },
-          "basedOn": "74e1254b-bc03-4b9d-a351-44972f1f5324",
           "id": "b5e4bf11-878b-4639-acec-9dd17ca50714",
           "x": 29,
           "y": -183,
@@ -3160,7 +3113,6 @@
           },
           "width": 87,
           "height": 37,
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "703c5e62-ccf4-4942-ada6-f4d073642914",
           "x": 223,
           "y": 290,
@@ -3225,7 +3177,6 @@
           "x": 223,
           "y": 335,
           "id": "e6cfd7b3-a0b2-4e1a-adaf-8dc35d608181",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">These are your #1 powerhouse greens.</span>",
           "borderRadius": {
             "locked": true,
@@ -3248,7 +3199,6 @@
           "x": 57,
           "y": 446,
           "id": "0fa903a4-8f1e-4cc3-977b-690bf103b210",
-          "basedOn": "c9107a3c-b492-41be-ac0d-758504fd36ad",
           "width": 136,
           "height": 107,
           "scale": 132,
@@ -3338,7 +3288,6 @@
           "x": 223,
           "y": 455,
           "id": "8858ce0a-1566-44ef-a136-8230812ed6ad",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Tomatoes</span>",
           "borderRadius": {
             "locked": true,
@@ -3410,7 +3359,6 @@
           "x": 222,
           "y": 481,
           "id": "911a0d6f-a200-462c-a692-fa61fce57f21",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Eat them raw or cooked. They’re great for energy.</span>",
           "borderRadius": {
             "locked": true,
@@ -3478,7 +3426,6 @@
           "x": 47,
           "y": -4,
           "id": "b14d1d3b-ffef-4f72-bc91-97f78984d651",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Best</span>\n<span style=\"font-weight: 300; color: #fff\">Vitamin-Loaded</span>\n<span style=\"font-weight: 300; color: #fff\">Food</span>\n<span style=\"font-weight: 300; color: #fff\">Options</span>",
           "borderRadius": {
             "locked": true,
@@ -3573,7 +3520,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "95fdd935-299a-4975-9e56-031d98bceab9",
           "x": -153,
           "y": 131,
@@ -3606,7 +3552,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
           },
-          "basedOn": "01881a70-d4c4-4bb6-8714-1cdb19159ad1",
           "id": "2e72f5a3-4f8d-48a7-a72c-3d8abe0cd969",
           "x": 229,
           "y": 448,
@@ -3647,7 +3592,6 @@
             "bottomLeft": 0,
             "locked": false
           },
-          "basedOn": "a4ceb8ab-764a-4611-8c2a-1585fde0329b",
           "id": "68eea36b-c563-43f3-9109-b68b513f2ee7",
           "x": 47,
           "y": -58,
@@ -3729,7 +3673,6 @@
           },
           "width": 294,
           "height": 43,
-          "basedOn": "eaf87cb8-e9e2-4bfc-8880-dcecd7fd1ddf",
           "id": "bcdda95e-4253-45e2-b2f6-4edf1725a92f",
           "x": 47,
           "y": 439,
@@ -3800,7 +3743,6 @@
           },
           "width": 256,
           "height": 80,
-          "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "id": "7e26dfe0-3594-45de-87e7-15da45884e37",
           "x": 47,
           "y": 489,
@@ -3864,7 +3806,6 @@
           "x": 47,
           "y": 401,
           "id": "6d000e40-1624-4ebe-82bc-ee5772773d11",
-          "basedOn": "73929614-83f4-446e-883c-376f0fbdb2be",
           "content": "<span style=\"font-weight: 500; color: #272727; text-transform: uppercase\">Tip 4</span>",
           "borderRadius": {
             "locked": true,
@@ -3965,7 +3906,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.1 } }
           },
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "id": "9355719e-eeaa-4d7e-95e2-5e053b0389a8",
           "x": 110,
           "y": 131,
@@ -3998,7 +3938,6 @@
             "lockedWidth": true,
             "color": { "color": { "r": 255, "g": 255, "b": 255, "a": 0.1 } }
           },
-          "basedOn": "9c7df34e-1209-4a82-a973-20154a455d87",
           "id": "311f5ee9-6176-4e02-af0e-d4d1a23d884b",
           "x": 117,
           "y": -250,
@@ -4021,7 +3960,6 @@
             "bottomLeft": 60,
             "locked": false
           },
-          "basedOn": "74e1254b-bc03-4b9d-a351-44972f1f5324",
           "id": "e10cd290-a090-440e-9fe3-d5ec15a5f611",
           "x": 29,
           "y": -183,
@@ -4133,7 +4071,6 @@
           },
           "width": 117,
           "height": 37,
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "id": "2c6c86d3-f394-4de8-8a82-6303134e8d03",
           "x": 223,
           "y": 290,
@@ -4198,7 +4135,6 @@
           "x": 224,
           "y": 334,
           "id": "533013ae-d961-4d45-b416-4bc74a688835",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">A classic NY tea shop that never goes out of style.</span>",
           "borderRadius": {
             "locked": true,
@@ -4221,7 +4157,6 @@
           "x": 57,
           "y": 446,
           "id": "87b1d4ce-b4fe-4543-bca9-6f9e54d3776c",
-          "basedOn": "c9107a3c-b492-41be-ac0d-758504fd36ad",
           "width": 136,
           "height": 107,
           "scale": 153,
@@ -4311,7 +4246,6 @@
           "x": 225,
           "y": 455,
           "id": "be43cfd2-77d6-402a-b727-eaa974cbfcef",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Cha An</span>",
           "borderRadius": {
             "locked": true,
@@ -4383,7 +4317,6 @@
           "x": 222,
           "y": 481,
           "id": "036397e6-36ce-41a6-b381-c9c47c3eb0fb",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Take a trip to Japan in NY and explore unique teas.</span>",
           "borderRadius": {
             "locked": true,
@@ -4451,7 +4384,6 @@
           "x": 47,
           "y": -4,
           "id": "3beb3cc9-a05c-44db-aab6-72e1ea9e9c4d",
-          "basedOn": "08cf8b1d-35e8-412a-8db9-c657d0ccf92e",
           "content": "<span style=\"font-weight: 300; color: #fff\">Best</span>\n<span style=\"font-weight: 300; color: #fff\">exercise</span>\n<span style=\"font-weight: 300; color: #fff\">options</span>\n<span style=\"font-weight: 300; color: #fff\">in NYC</span>",
           "borderRadius": {
             "locked": true,
@@ -4563,7 +4495,6 @@
           "x": 117,
           "y": -250,
           "id": "90b1a60b-9621-42ed-a244-c6f715144457",
-          "basedOn": "270cd27c-03e7-4f73-82b5-5e72204452e2",
           "width": 265,
           "height": 357,
           "mask": { "type": "rectangle" },
@@ -4647,7 +4578,6 @@
           },
           "width": 218,
           "height": 164,
-          "basedOn": "cae57128-b8d9-4f3c-a0a1-cb93d7f3c9de",
           "id": "003a97fd-898a-4c6b-955f-40ad905be703",
           "x": 47,
           "y": -4
@@ -4759,7 +4689,6 @@
           },
           "width": 84,
           "height": 17,
-          "basedOn": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "id": "b9b2aa64-41af-4b5a-96bf-e966d11eef1b",
           "x": 51,
           "y": 226,
@@ -4769,7 +4698,6 @@
           "x": 221,
           "y": 300,
           "id": "ee483ac1-a82d-4de8-83c6-105db178f697",
-          "basedOn": "23e38af0-2e54-4f7f-bf69-719b840d5855",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -4811,7 +4739,6 @@
           "x": 51,
           "y": 326,
           "id": "6983adf5-845c-46a0-a135-dd92fd3eca9a",
-          "basedOn": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -4883,7 +4810,6 @@
           "x": 221,
           "y": 400,
           "id": "f32bb246-4fc5-4ead-ac50-9e6d5d015a99",
-          "basedOn": "23e38af0-2e54-4f7f-bf69-719b840d5855",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -4925,7 +4851,6 @@
           "x": 51,
           "y": 416,
           "id": "4fc4880d-2486-4097-9ff8-5c8644dcc1d2",
-          "basedOn": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -4997,7 +4922,6 @@
           "x": 221,
           "y": 500,
           "id": "c2b1b798-b8a4-489b-a6a6-3b20d9efd03c",
-          "basedOn": "23e38af0-2e54-4f7f-bf69-719b840d5855",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -5038,7 +4962,6 @@
           "x": 51,
           "y": 517,
           "id": "dc828d32-d0de-405a-a4ba-414bdb727d5b",
-          "basedOn": "7d978541-31ae-49b6-9da9-80bce2fbbccd",
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
@@ -5169,8 +5092,5 @@
         }
       }
     }
-  ],
-  "current": null,
-  "selection": [],
-  "story": {}
+  ]
 }

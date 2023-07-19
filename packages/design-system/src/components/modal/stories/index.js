@@ -37,96 +37,98 @@ export default {
   },
 };
 
-// eslint-disable-next-line react/prop-types
-export const _default = ({ onClose }) => {
-  const [toggleModal, setToggleModal] = useState(false);
-  return (
-    <>
-      <Headline as="h1">{'Lorem ipsum dolor'}</Headline>
-      <Text.Paragraph>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-        }
-      </Text.Paragraph>
-      <Button
-        size={ButtonSize.Small}
-        type={ButtonType.Primary}
-        onClick={() => setToggleModal(!toggleModal)}
-      >
-        {'Toggle Modal'}
-      </Button>
+export const _default = {
+  render: function Render({ onClose }) {
+    const [toggleModal, setToggleModal] = useState(false);
+    return (
+      <>
+        <Headline as="h1">{'Lorem ipsum dolor'}</Headline>
+        <Text.Paragraph>
+          {
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+          }
+        </Text.Paragraph>
+        <Button
+          size={ButtonSize.Small}
+          type={ButtonType.Primary}
+          onClick={() => setToggleModal(!toggleModal)}
+        >
+          {'Toggle Modal'}
+        </Button>
 
-      <Modal
-        ariaHideApp={false} // this is ONLY for storybook to eliminate a warning, we set the app id in the root index of dashboard
-        contentLabel={'my storybook modal label'}
-        aria={{
-          labelledby: 'additional Headline for aria - optional',
-          describedby: 'additional described by for aria - optional',
-        }}
-        isOpen={toggleModal}
-        onClose={() => {
-          onClose();
-          setToggleModal(!toggleModal);
-        }}
-      >
-        <div>
-          <Headline as="h2">{'Ut enim ad minim veniam'}</Headline>
-          <Text.Paragraph>
-            {
-              'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-            }
-          </Text.Paragraph>
-        </div>
-      </Modal>
-    </>
-  );
+        <Modal
+          ariaHideApp={false} // this is ONLY for storybook to eliminate a warning, we set the app id in the root index of dashboard
+          contentLabel={'my storybook modal label'}
+          aria={{
+            labelledby: 'additional Headline for aria - optional',
+            describedby: 'additional described by for aria - optional',
+          }}
+          isOpen={toggleModal}
+          onClose={() => {
+            onClose();
+            setToggleModal(!toggleModal);
+          }}
+        >
+          <div>
+            <Headline as="h2">{'Ut enim ad minim veniam'}</Headline>
+            <Text.Paragraph>
+              {
+                'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              }
+            </Text.Paragraph>
+          </div>
+        </Modal>
+      </>
+    );
+  },
 };
 
-// eslint-disable-next-line react/prop-types
-export const OverriddenStyles = ({ onClose }) => {
-  const [toggleModal, setToggleModal] = useState(false);
+export const OverriddenStyles = {
+  render: function Render({ onClose }) {
+    const [toggleModal, setToggleModal] = useState(false);
 
-  return (
-    <>
-      <Headline as="h1">{'Lorem ipsum dolor'}</Headline>
-      <Text.Paragraph>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-        }
-      </Text.Paragraph>
-      <Button
-        size={ButtonSize.Small}
-        type={ButtonType.Primary}
-        onClick={() => setToggleModal(!toggleModal)}
-      >
-        {'Toggle Modal'}
-      </Button>
+    return (
+      <>
+        <Headline as="h1">{'Lorem ipsum dolor'}</Headline>
+        <Text.Paragraph>
+          {
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+          }
+        </Text.Paragraph>
+        <Button
+          size={ButtonSize.Small}
+          type={ButtonType.Primary}
+          onClick={() => setToggleModal(!toggleModal)}
+        >
+          {'Toggle Modal'}
+        </Button>
 
-      <Modal
-        ariaHideApp={false} // this is ONLY for storybook to eliminate a warning, we set the app id in the root index of dashboard
-        isOpen={toggleModal}
-        onClose={() => {
-          onClose();
-          setToggleModal(!toggleModal);
-        }}
-        contentStyles={{
-          backgroundColor: 'salmon',
-          borderRadius: '5px',
-          padding: '10px 20px',
-        }}
-        overlayStyles={{
-          backgroundColor: 'rgba(255, 255, 255, 0.75)',
-        }}
-      >
-        <div>
-          <Headline as="h2">{'Ut enim ad minim veniam'}</Headline>
-          <Text.Paragraph>
-            {
-              'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-            }
-          </Text.Paragraph>
-        </div>
-      </Modal>
-    </>
-  );
+        <Modal
+          ariaHideApp={false} // this is ONLY for storybook to eliminate a warning, we set the app id in the root index of dashboard
+          isOpen={toggleModal}
+          onClose={() => {
+            onClose();
+            setToggleModal(!toggleModal);
+          }}
+          contentStyles={{
+            backgroundColor: 'salmon',
+            borderRadius: '5px',
+            padding: '10px 20px',
+          }}
+          overlayStyles={{
+            backgroundColor: 'rgba(255, 255, 255, 0.75)',
+          }}
+        >
+          <div>
+            <Headline as="h2">{'Ut enim ad minim veniam'}</Headline>
+            <Text.Paragraph>
+              {
+                'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              }
+            </Text.Paragraph>
+          </div>
+        </Modal>
+      </>
+    );
+  },
 };

@@ -20,7 +20,7 @@
  */
 function uniqueEntriesByKey<
   O extends Record<string, unknown>,
-  K extends keyof O
+  K extends keyof O,
 >(entries: O[], key: K) {
   const map = new Map<unknown, O>();
   entries.forEach((entry) => {

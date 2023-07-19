@@ -413,6 +413,36 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_item_for_response
+	 */
+	public function test_get_item_no_story_data_for_password_protected_post(): void {
+		$this->controller->register_routes();
+
+		$story = self::factory()->post->create(
+			[
+				'post_type'     => Story_Post_Type::POST_TYPE_SLUG,
+				'post_status'   => 'publish',
+				'post_password' => 'Top Secret',
+				'post_author'   => self::$user_id,
+			]
+		);
+
+		wp_set_current_user( self::$author_id );
+
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+
+		$data = $response->get_data();
+
+		$this->assertIsArray( $data );
+		$this->assertArrayHasKey( 'story_data', $data );
+		$this->assertIsObject( $data['story_data'] );
+		$this->assertEmpty( (array) $data['story_data'] );
+	}
+
+	/**
+	 * @covers ::get_item
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::get_available_actions
 	 */
 	public function test_get_available_actions(): void {
@@ -809,56 +839,22 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
-		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 
-		$this->assertNotWPError( $attachment_id );
 		$this->assertNotWPError( $publisher_logo_id );
 
-		set_post_thumbnail( $original_id, $attachment_id );
 		update_post_meta( $original_id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, $publisher_logo_id );
 
 		$posts = [ get_post( $original_id ) ];
 
 		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
-		$this->assertEqualSets( [ $attachment_id, $publisher_logo_id ], $result );
+		$this->assertEqualSets( [ $publisher_logo_id ], $result );
 	}
 
 	/**
 	 * @covers ::get_attached_post_ids
 	 */
 	public function test_get_attached_post_ids_empty(): void {
-		$posts = [];
-
-		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
-		$this->assertEqualSets( [], $result );
-	}
-
-
-	/**
-	 * @covers ::get_attached_user_ids
-	 */
-	public function test_get_attached_user_ids(): void {
-		$original_id = self::factory()->post->create(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
-				'post_excerpt' => 'Example excerpt',
-				'post_author'  => self::$user_id,
-				'post_status'  => 'private',
-			]
-		);
-
-		$posts = [ get_post( $original_id ) ];
-
-		$result = $this->call_private_method( [ $this->controller, 'get_attached_user_ids' ], [ $posts ] );
-		$this->assertEqualSets( [ self::$user_id ], $result );
-	}
-
-	/**
-	 * @covers ::get_attached_user_ids
-	 */
-	public function test_get_attached_user_ids_empty(): void {
 		$posts = [];
 
 		$result = $this->call_private_method( [ $this->controller, 'get_attached_post_ids' ], [ $posts ] );
@@ -1070,7 +1066,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::create_item
 	 */
-	public function test_create_item_duplicate_id_permission(): void {
+	public function test_create_item_duplicate_id_no_permission_for_private_post(): void {
 		$this->controller->register_routes();
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
@@ -1094,6 +1090,48 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		set_post_thumbnail( $original_id, $attachment_id );
 
 		wp_set_current_user( self::$contributor_id );
+		$this->kses_int();
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
+		$request->set_body_params(
+			[
+				'original_id' => $original_id,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$this->assertErrorResponse( 'rest_cannot_create', $response, 403 );
+	}
+
+
+	/**
+	 * @covers ::create_item
+	 */
+	public function test_create_item_duplicate_id_no_permission_for_password_protected_post(): void {
+		$this->controller->register_routes();
+
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
+		$original_id            = self::factory()->post->create(
+			[
+				'post_type'             => Story_Post_Type::POST_TYPE_SLUG,
+				'post_content'          => $unsanitized_content,
+				'post_title'            => 'Example title',
+				'post_excerpt'          => 'Example excerpt',
+				'post_author'           => self::$user_id,
+				'post_status'           => 'publish',
+				'post_password'         => 'Top Secret',
+				'post_content_filtered' => $unsanitized_story_data,
+			]
+		);
+
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
+
+		$this->assertNotWPError( $attachment_id );
+
+		set_post_thumbnail( $original_id, $attachment_id );
+
+		wp_set_current_user( self::$author_id );
 		$this->kses_int();
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );

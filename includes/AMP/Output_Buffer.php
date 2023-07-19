@@ -119,8 +119,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 * @return int Registration action priority to use.
 	 */
 	public static function get_registration_action_priority(): int {
-		// phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
-		return \defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
+		return PHP_INT_MIN;
 	}
 
 	/**
@@ -151,7 +150,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @see Sanitization::finish_output_buffering()
+	 * @see Output_Buffer::finish_output_buffering()
 	 */
 	public function start_output_buffering(): void {
 		if ( ! $this->context->is_web_story() ) {
@@ -167,8 +166,8 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @see Sanitization::start_output_buffering()
-	 * @see Sanitization::finish_output_buffering()
+	 * @see Output_Buffer::start_output_buffering()
+	 * @see Output_Buffer::finish_output_buffering()
 	 *
 	 * @return bool Whether output buffering has started.
 	 */
@@ -181,7 +180,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @see Sanitization::start_output_buffering()
+	 * @see Output_Buffer::start_output_buffering()
 	 *
 	 * @param string $response Buffered Response.
 	 * @return string Processed Response.

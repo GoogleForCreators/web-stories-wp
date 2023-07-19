@@ -44,33 +44,39 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const apiValue = {
-    actions: {
-      deleteMedia: args.deleteMedia,
-    },
-  };
-  const mediaValue = {
-    local: {
-      actions: { deleteMediaElement: args.deleteMediaElement },
-    },
-  };
-  const storyContext = {
-    actions: {
-      deleteElementsByResourceId: args.deleteElementsByResourceId,
-    },
-  };
-  const snackbarValue = { showSnackbar: args.showSnackbar };
+export const _default = {
+  render: function Render(args) {
+    const apiValue = {
+      actions: {
+        deleteMedia: args.deleteMedia,
+      },
+    };
+    const mediaValue = {
+      local: {
+        actions: { deleteMediaElement: args.deleteMediaElement },
+      },
+    };
+    const storyContext = {
+      actions: {
+        deleteElementsByResourceId: args.deleteElementsByResourceId,
+      },
+    };
+    const snackbarValue = { showSnackbar: args.showSnackbar };
 
-  return (
-    <SnackbarContext.Provider value={snackbarValue}>
-      <MediaContext.Provider value={mediaValue}>
-        <ApiContext.Provider value={apiValue}>
-          <StoryContext.Provider value={storyContext}>
-            <DeleteDialog mediaId={123} type={'image'} onClose={args.onClose} />
-          </StoryContext.Provider>
-        </ApiContext.Provider>
-      </MediaContext.Provider>
-    </SnackbarContext.Provider>
-  );
+    return (
+      <SnackbarContext.Provider value={snackbarValue}>
+        <MediaContext.Provider value={mediaValue}>
+          <ApiContext.Provider value={apiValue}>
+            <StoryContext.Provider value={storyContext}>
+              <DeleteDialog
+                mediaId={123}
+                type={'image'}
+                onClose={args.onClose}
+              />
+            </StoryContext.Provider>
+          </ApiContext.Provider>
+        </MediaContext.Provider>
+      </SnackbarContext.Provider>
+    );
+  },
 };

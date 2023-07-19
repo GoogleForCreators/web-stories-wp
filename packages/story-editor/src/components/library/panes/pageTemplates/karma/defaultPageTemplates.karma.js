@@ -27,7 +27,7 @@ import { useStory } from '../../../../../app/story';
 import formattedTemplatesArray from '../../../../../dataUtils/formattedTemplatesArray';
 
 function getComparableElement(fullElement) {
-  const { id, basedOn, ...partialElement } = fullElement;
+  const { id, ...partialElement } = fullElement;
   if (partialElement.isDefaultBackground) {
     const { backgroundColor, ...defaultBackgroundElement } = partialElement;
     return defaultBackgroundElement;

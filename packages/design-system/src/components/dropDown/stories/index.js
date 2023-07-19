@@ -98,19 +98,43 @@ const styleOverrideForAnimationEffectMenu = css`
   }
 `;
 
-// eslint-disable-next-line react/prop-types
-export const _default = ({ onMenuItemClick, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState(
-    basicDropDownOptions[2].value
-  );
-  return (
-    <DarkThemeProvider>
+export const _default = {
+  render: function Render({ onMenuItemClick, ...args }) {
+    const [selectedValue, setSelectedValue] = useState(
+      basicDropDownOptions[2].value
+    );
+    return (
+      <DarkThemeProvider>
+        <Container>
+          <Text.Paragraph>
+            {
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus luctus ex eu maximus. Nam cursus nulla massa, vel porta nisi mattis et. Vivamus vitae massa nulla. Sed enim velit, iaculis ut pharetra vitae, sagittis et dui. In sollicitudin lectus vel rhoncus auctor. Morbi pulvinar nisl sed mi fringilla, vitae bibendum felis egestas.'
+            }
+          </Text.Paragraph>
+          <DropDown
+            emptyText={'No options available'}
+            options={basicDropDownOptions}
+            selectedValue={selectedValue}
+            onMenuItemClick={(_, newValue) => {
+              onMenuItemClick(newValue);
+              setSelectedValue(newValue);
+            }}
+            {...args}
+          />
+        </Container>
+      </DarkThemeProvider>
+    );
+  },
+};
+
+export const LightTheme = {
+  render: function Render({ onMenuItemClick, ...args }) {
+    const [selectedValue, setSelectedValue] = useState(
+      basicDropDownOptions[2].value
+    );
+
+    return (
       <Container>
-        <Text.Paragraph>
-          {
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus luctus ex eu maximus. Nam cursus nulla massa, vel porta nisi mattis et. Vivamus vitae massa nulla. Sed enim velit, iaculis ut pharetra vitae, sagittis et dui. In sollicitudin lectus vel rhoncus auctor. Morbi pulvinar nisl sed mi fringilla, vitae bibendum felis egestas.'
-          }
-        </Text.Paragraph>
         <DropDown
           emptyText={'No options available'}
           options={basicDropDownOptions}
@@ -122,112 +146,94 @@ export const _default = ({ onMenuItemClick, ...args }) => {
           {...args}
         />
       </Container>
-    </DarkThemeProvider>
-  );
-};
-
-// eslint-disable-next-line react/prop-types
-export const LightTheme = ({ onMenuItemClick, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState(
-    basicDropDownOptions[2].value
-  );
-
-  return (
-    <Container>
-      <DropDown
-        emptyText={'No options available'}
-        options={basicDropDownOptions}
-        selectedValue={selectedValue}
-        onMenuItemClick={(_, newValue) => {
-          onMenuItemClick(newValue);
-          setSelectedValue(newValue);
-        }}
-        {...args}
-      />
-    </Container>
-  );
+    );
+  },
 };
 
 const shortenedOptions = [...basicDropDownOptions.slice(0, 3)];
 
-// eslint-disable-next-line react/prop-types
-export const ShortMenu = ({ onMenuItemClick, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+export const ShortMenu = {
+  render: function Render({ onMenuItemClick, ...args }) {
+    const [selectedValue, setSelectedValue] = useState(null);
 
-  return (
-    <Container>
-      <DropDown
-        emptyText={'No options available'}
-        options={shortenedOptions}
-        selectedValue={selectedValue}
-        onMenuItemClick={(_, newValue) => {
-          onMenuItemClick(newValue);
-          setSelectedValue(newValue);
-        }}
-        {...args}
-      />
-    </Container>
-  );
+    return (
+      <Container>
+        <DropDown
+          emptyText={'No options available'}
+          options={shortenedOptions}
+          selectedValue={selectedValue}
+          onMenuItemClick={(_, newValue) => {
+            onMenuItemClick(newValue);
+            setSelectedValue(newValue);
+          }}
+          {...args}
+        />
+      </Container>
+    );
+  },
 };
 
-// eslint-disable-next-line react/prop-types
-export const NoOptionsMenu = ({ onMenuItemClick, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+export const NoOptionsMenu = {
+  render: function Render({ onMenuItemClick, ...args }) {
+    const [selectedValue, setSelectedValue] = useState(null);
 
-  return (
-    <Container>
-      <DropDown
-        emptyText={'No options available'}
-        options={[]}
-        selectedValue={selectedValue}
-        onMenuItemClick={(_, newValue) => {
-          onMenuItemClick(newValue);
-          setSelectedValue(newValue);
-        }}
-        {...args}
-      />
-    </Container>
-  );
+    return (
+      <Container>
+        <DropDown
+          emptyText={'No options available'}
+          options={[]}
+          selectedValue={selectedValue}
+          onMenuItemClick={(_, newValue) => {
+            onMenuItemClick(newValue);
+            setSelectedValue(newValue);
+          }}
+          {...args}
+        />
+      </Container>
+    );
+  },
 };
 
-// eslint-disable-next-line react/prop-types
-export const ReallyLongLabelsMenu = ({ onMenuItemClick, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+export const ReallyLongLabelsMenu = {
+  render: function Render({ onMenuItemClick, ...args }) {
+    const [selectedValue, setSelectedValue] = useState(null);
 
-  return (
-    <Container narrow>
-      <DropDown
-        emptyText={'No options available'}
-        options={reallyLongOptions}
-        selectedValue={selectedValue}
-        onMenuItemClick={(_, newValue) => {
-          onMenuItemClick(newValue);
-          setSelectedValue(newValue);
-        }}
-        {...args}
-      />
-    </Container>
-  );
+    return (
+      <Container narrow>
+        <DropDown
+          emptyText={'No options available'}
+          options={reallyLongOptions}
+          selectedValue={selectedValue}
+          onMenuItemClick={(_, newValue) => {
+            onMenuItemClick(newValue);
+            setSelectedValue(newValue);
+          }}
+          {...args}
+        />
+      </Container>
+    );
+  },
 };
 
-// eslint-disable-next-line react/prop-types
-export const SubMenus = ({ onMenuItemClick, ...args }) => {
-  const [selectedValue, setSelectedValue] = useState('dog-2');
+export const SubMenus = {
+  render: function Render({ onMenuItemClick, ...args }) {
+    const [selectedValue, setSelectedValue] = useState('dog-2');
 
-  return (
-    <Container>
-      <DropDown
-        emptyText={'No options available'}
-        options={nestedDropDownOptions}
-        selectedValue={selectedValue}
-        onMenuItemClick={(_, newValue) => {
-          onMenuItemClick(newValue);
-          setSelectedValue(newValue);
-        }}
-        {...args}
-      />
-    </Container>
-  );
+    return (
+      <Container>
+        <DropDown
+          emptyText={'No options available'}
+          options={nestedDropDownOptions}
+          selectedValue={selectedValue}
+          onMenuItemClick={(_, newValue) => {
+            onMenuItemClick(newValue);
+            setSelectedValue(newValue);
+          }}
+          {...args}
+        />
+      </Container>
+    );
+  },
 };
 
 const RenderItemOverride = forwardRef(
@@ -247,28 +253,27 @@ RenderItemOverride.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-export const OverriddenAnimationProofOfConcept = ({
+export const OverriddenAnimationProofOfConcept = {
   // eslint-disable-next-line react/prop-types
-  onMenuItemClick,
-  ...args
-}) => {
-  const [selectedValue, setSelectedValue] = useState(null);
-  return (
-    <DarkThemeProvider>
-      <Container>
-        <DropDown
-          emptyText={'No options available'}
-          options={effectChooserOptions}
-          selectedValue={selectedValue}
-          onMenuItemClick={(event, newValue) => {
-            onMenuItemClick(newValue);
-            setSelectedValue(newValue);
-          }}
-          menuStylesOverride={styleOverrideForAnimationEffectMenu}
-          renderItem={RenderItemOverride}
-          {...args}
-        />
-      </Container>
-    </DarkThemeProvider>
-  );
+  render: function Render({ onMenuItemClick, ...args }) {
+    const [selectedValue, setSelectedValue] = useState(null);
+    return (
+      <DarkThemeProvider>
+        <Container>
+          <DropDown
+            emptyText={'No options available'}
+            options={effectChooserOptions}
+            selectedValue={selectedValue}
+            onMenuItemClick={(event, newValue) => {
+              onMenuItemClick(newValue);
+              setSelectedValue(newValue);
+            }}
+            menuStylesOverride={styleOverrideForAnimationEffectMenu}
+            renderItem={RenderItemOverride}
+            {...args}
+          />
+        </Container>
+      </DarkThemeProvider>
+    );
+  },
 };

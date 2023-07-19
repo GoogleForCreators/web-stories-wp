@@ -52,6 +52,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        mgidWidgetId=""
         siteKitStatus={defaultSiteKitStatus}
       />
     );
@@ -79,6 +80,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        mgidWidgetId=""
         siteKitStatus={defaultSiteKitStatus}
       />
     );
@@ -103,6 +105,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        mgidWidgetId=""
         siteKitStatus={defaultSiteKitStatus}
       />
     );
@@ -120,6 +123,32 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
     expect(helperLink).toBeInTheDocument();
   });
 
+  it('should render ad network settings and link MGID', () => {
+    renderWithProviders(
+      <AdManagement
+        adNetwork={AD_NETWORK_TYPE.MGID}
+        updateSettings={mockUpdate}
+        publisherId=""
+        adSenseSlotId=""
+        adManagerSlotId=""
+        mgidWidgetId=""
+        siteKitStatus={defaultSiteKitStatus}
+      />
+    );
+
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
+    expect(sectionHeader).toBeInTheDocument();
+
+    const helperLink = screen.getByText(
+      (_, node) =>
+        node.textContent === 'monetizing Web Stories with MGID Native Solution',
+      {
+        selector: 'a',
+      }
+    );
+    expect(helperLink).toBeInTheDocument();
+  });
+
   it('should render adsense message when site kit is installed', () => {
     renderWithProviders(
       <AdManagement
@@ -128,6 +157,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', () =>
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        mgidWidgetId=""
         siteKitStatus={{
           ...defaultSiteKitStatus,
           active: true,

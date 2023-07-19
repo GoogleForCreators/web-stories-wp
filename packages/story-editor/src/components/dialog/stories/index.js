@@ -45,22 +45,28 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  return (
-    <Dialog {...args}>
-      <Text.Paragraph size={TextSize.Small}>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-        }
-      </Text.Paragraph>
-    </Dialog>
-  );
-};
-export const WithCustomAction = _default.bind({});
-WithCustomAction.args = {
-  primaryRest: {
-    href: 'https://example.com',
+export const _default = {
+  render: function Render(args) {
+    return (
+      <Dialog {...args}>
+        <Text.Paragraph size={TextSize.Small}>
+          {
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+          }
+        </Text.Paragraph>
+      </Dialog>
+    );
   },
-  primaryText: 'primary button',
-  secondaryText: 'secondary button',
+};
+
+export const WithCustomAction = {
+  render: _default,
+
+  args: {
+    primaryRest: {
+      href: 'https://example.com',
+    },
+    primaryText: 'primary button',
+    secondaryText: 'secondary button',
+  },
 };

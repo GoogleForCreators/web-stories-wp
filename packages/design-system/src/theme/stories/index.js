@@ -62,26 +62,28 @@ const Content = styled.div`
   border-radius: 4px;
 `;
 
-export const _default = () => {
-  const ids = useMemo(() => new Array(20).fill(0).map(() => uuidv4()), []);
+export const _default = {
+  render: function Render() {
+    const ids = useMemo(() => new Array(20).fill(0).map(() => uuidv4()), []);
 
-  return (
-    <>
-      <Headline as="h2">{'Scrollbar'}</Headline>
-      <Container>
-        <ScrollContainer>
-          {ids.map((id) => (
-            <Content key={id} />
-          ))}
-        </ScrollContainer>
-        <DarkThemeProvider>
+    return (
+      <>
+        <Headline as="h2">{'Scrollbar'}</Headline>
+        <Container>
           <ScrollContainer>
             {ids.map((id) => (
               <Content key={id} />
             ))}
           </ScrollContainer>
-        </DarkThemeProvider>
-      </Container>
-    </>
-  );
+          <DarkThemeProvider>
+            <ScrollContainer>
+              {ids.map((id) => (
+                <Content key={id} />
+              ))}
+            </ScrollContainer>
+          </DarkThemeProvider>
+        </Container>
+      </>
+    );
+  },
 };

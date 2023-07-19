@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import {
-  ChevronDown as Chevron,
+  ChevronDownSmall,
   CrossSmall as Clear,
   Magnifier as Search,
 } from '../../../icons';
@@ -138,6 +138,7 @@ export const ChevronDecoration = styled.div<{
 }>`
   ${BaseDecorationContainer};
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'collapsed')};
   height: 100%;
   ${({ disabled, theme }) =>
     disabled &&
@@ -147,7 +148,7 @@ export const ChevronDecoration = styled.div<{
     `}
 `;
 
-export const ChevronIcon = styled(Chevron)<{ $isMenuOpen?: boolean }>`
+export const ChevronIcon = styled(ChevronDownSmall)<{ $isMenuOpen?: boolean }>`
   width: 32px;
   height: auto;
   margin: auto;

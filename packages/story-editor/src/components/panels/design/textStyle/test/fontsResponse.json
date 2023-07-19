@@ -381,8 +381,8 @@
     ]
   },
   {
-    "name": "Source Serif Pro",
-    "value": "Source Serif Pro",
+    "name": "Source Serif 4",
+    "value": "Source Serif 4",
     "fallbacks": ["serif"],
     "service": "fonts.google.com",
     "weights": [400, 600, 700],

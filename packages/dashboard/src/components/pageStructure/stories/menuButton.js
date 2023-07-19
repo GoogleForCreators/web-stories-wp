@@ -35,12 +35,14 @@ const Status = () => {
   return <span>{`Sidebar Visible: ${String(state.sideBarVisible)}`}</span>;
 };
 
-export const _default = (args) => {
-  return (
-    <NavProvider>
-      <NavMenuButton {...args} />
-      <br />
-      <Status />
-    </NavProvider>
-  );
+export const _default = {
+  render: function Render(args) {
+    return (
+      <NavProvider>
+        <NavMenuButton {...args} />
+        <br />
+        <Status />
+      </NavProvider>
+    );
+  },
 };

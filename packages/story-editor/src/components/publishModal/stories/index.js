@@ -71,104 +71,106 @@ export default {
   },
 };
 
-export const _default = (args) => {
-  const {
-    canPublish,
-    checkpoint,
-    isSaving,
-    hasChecklist,
-    hasUploadMediaAction,
-    hasFeaturedMedia,
-    hasPublisherLogo,
-    hasPriorityIssues,
-    handleReviewChecklist,
-    publisher,
-    storyStatus,
-  } = args;
-  const [inputValues, setInputValues] = useState({
-    excerpt: '',
-    title: '',
-    link: 'http://sample.com/post_type=web-story&p=274',
-  });
+export const _default = {
+  render: function Render(args) {
+    const {
+      canPublish,
+      checkpoint,
+      isSaving,
+      hasChecklist,
+      hasUploadMediaAction,
+      hasFeaturedMedia,
+      hasPublisherLogo,
+      hasPriorityIssues,
+      handleReviewChecklist,
+      publisher,
+      storyStatus,
+    } = args;
+    const [inputValues, setInputValues] = useState({
+      excerpt: '',
+      title: '',
+      link: 'http://sample.com/post_type=web-story&p=274',
+    });
 
-  const handleUpdateStory = useCallback(({ properties }) => {
-    setInputValues((prevVal) => ({
-      ...prevVal,
-      ...properties,
-    }));
-  }, []);
-  return (
-    <ConfigContext.Provider
-      value={{
-        metadata: {
-          publisher: publisher,
-        },
-        capabilities: {
-          hasUploadMediaAction: hasUploadMediaAction,
-        },
-      }}
-    >
-      <StoryContext.Provider
+    const handleUpdateStory = useCallback(({ properties }) => {
+      setInputValues((prevVal) => ({
+        ...prevVal,
+        ...properties,
+      }));
+    }, []);
+    return (
+      <ConfigContext.Provider
         value={{
-          actions: { updateStory: handleUpdateStory },
-          state: {
-            capabilities: { publish: canPublish },
-            meta: { isSaving: isSaving },
-            story: {
-              ...inputValues,
-              permalinkConfig: {
-                prefix: 'http://sample.com/',
-                suffix: '',
-              },
-              featuredMedia: {
-                url: hasFeaturedMedia ? 'http://placekitten.com/230/342' : '',
-                height: 333,
-                width: 250,
-              },
-              publisherLogo: {
-                url: hasPublisherLogo ? 'http://placekitten.com/158/96' : '',
-                height: 96,
-                width: 158,
-              },
-              status: storyStatus,
-            },
+          metadata: {
+            publisher: publisher,
+          },
+          capabilities: {
+            hasUploadMediaAction: hasUploadMediaAction,
           },
         }}
       >
-        <SidebarContext.Provider
+        <StoryContext.Provider
           value={{
-            actions: {
-              loadUsers: () => {},
-            },
-            data: {
-              modalSidebarTab: {
-                title: 'document panel',
-                DocumentPane: MockDocumentPane,
-              },
-            },
+            actions: { updateStory: handleUpdateStory },
             state: {
-              users: {},
-              sidebarContentHeight: 600,
+              capabilities: { publish: canPublish },
+              meta: { isSaving: isSaving },
+              story: {
+                ...inputValues,
+                permalinkConfig: {
+                  prefix: 'http://sample.com/',
+                  suffix: '',
+                },
+                featuredMedia: {
+                  url: hasFeaturedMedia ? 'http://placekitten.com/230/342' : '',
+                  height: 333,
+                  width: 250,
+                },
+                publisherLogo: {
+                  url: hasPublisherLogo ? 'http://placekitten.com/158/96' : '',
+                  height: 96,
+                  width: 158,
+                },
+                status: storyStatus,
+              },
             },
           }}
         >
-          <ChecklistCountProvider hasChecklist={hasChecklist}>
-            <CheckpointContext.Provider
-              value={{
-                actions: {
-                  handleReviewChecklist: handleReviewChecklist,
+          <SidebarContext.Provider
+            value={{
+              actions: {
+                loadUsers: () => {},
+              },
+              data: {
+                modalSidebarTab: {
+                  title: 'document panel',
+                  DocumentPane: MockDocumentPane,
                 },
-                state: {
-                  hasHighPriorityIssues: hasPriorityIssues,
-                  checkpoint: checkpoint,
-                },
-              }}
-            >
-              <PublishModal {...args} />
-            </CheckpointContext.Provider>
-          </ChecklistCountProvider>
-        </SidebarContext.Provider>
-      </StoryContext.Provider>
-    </ConfigContext.Provider>
-  );
+              },
+              state: {
+                users: {},
+                sidebarContentHeight: 600,
+              },
+            }}
+          >
+            <ChecklistCountProvider hasChecklist={hasChecklist}>
+              <CheckpointContext.Provider
+                value={{
+                  actions: {
+                    handleReviewChecklist: handleReviewChecklist,
+                  },
+                  state: {
+                    hasHighPriorityIssues: hasPriorityIssues,
+                    checkpoint: checkpoint,
+                  },
+                }}
+              >
+                <PublishModal {...args} />
+              </CheckpointContext.Provider>
+            </ChecklistCountProvider>
+          </SidebarContext.Provider>
+        </StoryContext.Provider>
+      </ConfigContext.Provider>
+    );
+  },
 };

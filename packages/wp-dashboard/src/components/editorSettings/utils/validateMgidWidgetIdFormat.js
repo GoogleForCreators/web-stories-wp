@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,9 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-console */
+// Example: 1234567
+const mgidWidgetIdFormatRegex = /^\d{7,20}$/;
 
-/**
- * Internal dependencies
- */
-import buildFonts from './utils/buildFonts.js';
-
-if (!process.env.GOOGLE_FONTS_API_KEY) {
-  throw new Error('Google Fonts API key missing!');
+export default function validateMgidWidgetIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(mgidWidgetIdFormatRegex));
 }
-
-const args = process.argv.slice(2);
-const file = args[0] ? args[0] : undefined;
-
-if (!file) {
-  throw new Error('File path was not provided');
-}
-
-await buildFonts(file);
-
-console.log('Web fonts updated!');
-
-/* eslint-enable no-console */

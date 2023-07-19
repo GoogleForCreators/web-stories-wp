@@ -196,14 +196,12 @@ describe('duplicateGroupById', () => {
           { id: '345', type: 'shape', border: { width: 3 }, groupId: 'g1' },
           expect.objectContaining({
             id: expect.any(String),
-            basedOn: '234',
             type: 'shape',
             border: { width: 1 },
             groupId: 'g3',
           }),
           expect.objectContaining({
             id: expect.any(String),
-            basedOn: '345',
             type: 'shape',
             border: { width: 3 },
             groupId: 'g3',
@@ -274,14 +272,12 @@ describe('duplicateGroupById', () => {
           { id: '345', type: 'shape', border: { width: 3 }, groupId: 'g1' },
           expect.objectContaining({
             id: expect.any(String),
-            basedOn: '234',
             type: 'shape',
             border: { width: 1 },
             groupId: 'g3',
           }),
           expect.objectContaining({
             id: expect.any(String),
-            basedOn: '345',
             type: 'shape',
             border: { width: 3 },
             groupId: 'g3',

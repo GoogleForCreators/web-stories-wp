@@ -37,11 +37,13 @@ const Container = styled.div`
   background-color: blue;
   opacity: 0.25;
 `;
-export const _default = () => {
-  return (
-    <Layout.Provider>
-      <Container />
-      <ScrollToTop />
-    </Layout.Provider>
-  );
+export const _default = {
+  render: function Render() {
+    return (
+      <Layout.Provider>
+        <Container />
+        <ScrollToTop />
+      </Layout.Provider>
+    );
+  },
 };

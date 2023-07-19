@@ -25,6 +25,7 @@ import { useSyncAdminMenu } from '../../effects';
 import { EditorSettingsProvider, EditorSettings } from '../editorSettings';
 import TelemetryBanner from '../telemetryBanner';
 import UpdateBanner from '../updateBanner';
+import GoogleAnalytics4Banner from '../ga4Banner';
 import { EDITOR_SETTINGS_ROUTE } from '../../constants';
 
 function Layout() {
@@ -42,6 +43,7 @@ function Layout() {
       />
       <TelemetryBanner />
       <UpdateBanner />
+      <GoogleAnalytics4Banner />
     </EditorSettingsProvider>
   );
 }

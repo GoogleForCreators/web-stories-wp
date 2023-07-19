@@ -114,17 +114,19 @@ TabDisplay.propTypes = {
   tabs: PropTypes.array.isRequired,
 };
 
-export const _default = () => {
-  return (
-    <Wrapper>
-      <TabDisplay TabsComponent={TabView} tabs={ICON_TABS} />
-      <TabDisplay TabsComponent={UnjustifiedTabView} tabs={TEXT_TABS} />
-    </Wrapper>
-  );
-};
+export const _default = {
+  render: () => {
+    return (
+      <Wrapper>
+        <TabDisplay TabsComponent={TabView} tabs={ICON_TABS} />
+        <TabDisplay TabsComponent={UnjustifiedTabView} tabs={TEXT_TABS} />
+      </Wrapper>
+    );
+  },
 
-_default.parameters = {
-  backgrounds: {
-    default: 'Dark',
+  parameters: {
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };

@@ -31,6 +31,8 @@ export default {
   component: TaxonomiesPanel,
 };
 
-export const _default = () => {
-  return <Taxonomies />;
+export const _default = {
+  render: function Render() {
+    return <Taxonomies />;
+  },
 };

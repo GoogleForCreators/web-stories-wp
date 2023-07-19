@@ -30,6 +30,8 @@ export default {
 };
 
 // TODO (#10380): Support RTL using something like @pxblue/storybook-rtl-addon;
-export const _default = (args) => {
-  return <App config={args} {...args} />;
+export const _default = {
+  render: function Render(args) {
+    return <App config={args} {...args} />;
+  },
 };

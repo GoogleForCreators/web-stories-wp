@@ -47,21 +47,25 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-export const _default = (args) => (
-  <Container>
-    <ToggleButton
-      label="Help"
-      MainIcon={Icons.QuestionMarkOutline}
-      onClick={() => args.helpCenterClick()}
-      aria-owns="my popupId"
-      {...args}
-    />
-    <ToggleButton
-      label="Checklist"
-      MainIcon={Icons.Checkbox}
-      onClick={() => args.checklistClicked()}
-      aria-owns="my popupId"
-      {...args}
-    />
-  </Container>
-);
+export const _default = {
+  render: function Render(args) {
+    return (
+      <Container>
+        <ToggleButton
+          label="Help"
+          MainIcon={Icons.QuestionMarkOutline}
+          onClick={() => args.helpCenterClick()}
+          aria-owns="my popupId"
+          {...args}
+        />
+        <ToggleButton
+          label="Checklist"
+          MainIcon={Icons.Checkbox}
+          onClick={() => args.checklistClicked()}
+          aria-owns="my popupId"
+          {...args}
+        />
+      </Container>
+    );
+  },
+};

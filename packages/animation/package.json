@@ -2,7 +2,7 @@
   "name": "@googleforcreators/animation",
   "description": "Web Stories editor animation library.",
   "private": false,
-  "version": "0.1.202303271448",
+  "version": "0.1.202306211149",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -45,7 +45,7 @@
     "@googleforcreators/units": "*",
     "flagged": "^2.0.8",
     "prop-types": "^15.8.1",
-    "styled-components": "^5.3.9",
+    "styled-components": "^5.3.11",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
