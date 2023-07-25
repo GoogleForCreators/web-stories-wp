@@ -160,4 +160,14 @@ class Embed_Shortcode extends DependencyInjectedTestCase {
 		$this->assertStringNotContainsString( '<amp-story-player', $actual );
 		$this->assertStringContainsString( '<img', $actual );
 	}
+
+	/**
+	 * Should not fail on empty/blank string attribute.
+	 *
+	 * @covers ::render_shortcode
+	 */
+	public function test_empty_attribute_in_shortcode(): void {
+		$actual = $this->instance->render_shortcode( '', '' );
+		$this->assertTrue( strpos( $actual, 'wp-shortcode-web-stories-embed' ) > -1 );
+	}
 }
