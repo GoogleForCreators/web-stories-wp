@@ -365,6 +365,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
 				'item_link'                => _x( 'Story Link', 'navigation link block title', 'web-stories' ),
 				'item_link_description'    => _x( 'A link to a story.', 'navigation link block description', 'web-stories' ),
+				'item_trashed'             => __( 'Story trashed.', 'web-stories' ),
 			],
 			'menu_icon'             => $this->get_post_type_icon(),
 			'supports'              => [
