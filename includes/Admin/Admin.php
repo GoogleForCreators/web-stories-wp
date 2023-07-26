@@ -132,9 +132,8 @@ class Admin extends Service_Base {
 	 * @return string|mixed Pre-filled post content if applicable, or the default content otherwise.
 	 */
 	public function prefill_post_content( $content, ?WP_Post $post ) {
-		// When $post is NULL, set -1 to suppress phpstan error: Parameter #1 $post of function use_block_editor_for_post expects int|WP_Post, WP_Post|null given.
-		if ( \is_null( $post ) ) {
-			$post = -1;
+		if ( ! $post ) {
+			return $content;
 		}
 
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
