@@ -93,7 +93,9 @@ const NumericInput = forwardRef(function NumericInput(
 
   // Holds filteredValue that may have leading padZero when required.
   let paddedValue = '';
-  if (max !== undefined) {
+  if (currentValue === '' || currentValue === '-') {
+    paddedValue = String(currentValue);
+  } else if (currentValue !== '' && max !== undefined) {
     const maxPad = String(max).length;
     if (maxPad >= String(currentValue).length) {
       // Add padding Zero when length is less than maxPad.
@@ -104,8 +106,6 @@ const NumericInput = forwardRef(function NumericInput(
       // Remove any leading Zero when maxPad is exceeded.
       paddedValue = String(currentValue).replace(/^0+/, '');
     }
-  } else {
-    paddedValue = String(currentValue);
   }
 
   return (

@@ -81,10 +81,12 @@ const StyledSwitch = styled(Switch)`
 
 function TimePicker({ onChange, is12Hour, localeData, setLocaleData }) {
   const onChangeEvent = (prop) => (_, value) => {
-    const filteredValue =
+    let filteredValue =
       value !== undefined && value !== null
         ? parseInt(value)
         : localeData[prop];
+    filteredValue = isNaN(filteredValue) ? '' : filteredValue;
+    filteredValue = filteredValue === '' && value === '-' ? '-' : filteredValue;
     setLocaleData({
       ...localeData,
       [prop]: filteredValue,
@@ -175,22 +177,20 @@ function TimePicker({ onChange, is12Hour, localeData, setLocaleData }) {
               step={1}
               min={getMinHours()}
               max={getMaxHours()}
-              value={parseInt(localeData.hours)}
+              value={localeData.hours}
               onChange={onChangeEvent('hours')}
               updateOnChange
               onBlur={updateHours}
-              padZero
             />
             <TimeSeparator>{':'}</TimeSeparator>
             <NumberInput
               aria-label={__('Minutes', 'web-stories')}
               min={0}
               max={59}
-              value={parseInt(localeData.minutes)}
+              value={localeData.minutes}
               onChange={onChangeEvent('minutes')}
               updateOnChange
               onBlur={updateMinutes}
-              padZero
             />
           </InputGroup>
           {is12Hour && (

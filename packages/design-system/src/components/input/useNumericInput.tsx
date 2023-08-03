@@ -84,8 +84,13 @@ const useNumericInput = ({
    */
   const handleChange = useCallback(
     (ev: ChangeEvent<HTMLInputElement>) => {
-      // Do not process non-numeric keys.
-      if (!isNaN(Number(ev.target.value.trim()))) {
+      if (ev.target.value.trim() === '') {
+        onChange(ev, '');
+
+        // Do not process further.
+        return;
+      } else if (!isNaN(Number(ev.target.value.trim()))) {
+        // Do not process non-numeric keys.
         // Return minimum number when string is empty.
         if (ev.target.value === '') {
           if (allowEmpty) {
@@ -134,6 +139,8 @@ const useNumericInput = ({
         if (updateOnChange) {
           onChange(ev, Number(paddedValue));
         }
+      } else if (ev.target.value.trim() === '-') {
+        onChange(ev, ev.target.value.trim());
       }
     },
     [allowEmpty, max, onChange, options, updateOnChange]
