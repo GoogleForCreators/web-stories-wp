@@ -37,6 +37,6 @@
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.22",
-    "@testing-library/react": "^12.1.5"
+    "@testing-library/react": "^14.0.0"
   }
 }

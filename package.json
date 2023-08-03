@@ -162,7 +162,9 @@
     "prettier": "^3.0.0",
     "puppeteer": "^20.8.1",
     "react": "^17.0.2",
+    "react-18": "npm:react@^18.0.0",
     "react-dom": "^17.0.2",
+    "react-dom-18": "npm:react-dom@^18.0.0",
     "react-refresh": "^0.14.0",
     "react-test-renderer": "^17.0.2",
     "rollup": "^2.79.1",
@@ -193,6 +195,18 @@
     },
     "@typescript-eslint/parser": "$@typescript-eslint/parser",
     "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+    "@web-stories-wp/activation-notice": {
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0"
+    },
+    "@web-stories-wp/stories-block": {
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0"
+    },
+    "@web-stories-wp/tinymce-button": {
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0"
+    },
     "date-fns": "^2.30.0",
     "eslint-plugin-jsdoc": "$eslint-plugin-jsdoc",
     "eslint-plugin-prettier": "$eslint-plugin-prettier",
