@@ -573,6 +573,11 @@ class Font_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
+		// Ensure our per_page parameter overrides any provided posts_per_page filter.
+		if ( isset( $registered['per_page'] ) ) {
+			$args['posts_per_page'] = $request['per_page'];
+		}
+
 		// Force search to be case-insensitive.
 
 		// Force the post_type argument, since it's not a user input variable.

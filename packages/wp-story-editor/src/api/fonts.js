@@ -45,6 +45,7 @@ export function getFonts(config, { include: _include, search, service }) {
   let path = addQueryArgs(`${config.api.fonts}`, {
     search,
     service,
+    per_page: 100,
   });
   const include = getIncludeQueryArgs(_include);
   if (include.length > 0) {
