@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "2bc6c1205ad83b372aec764614564e46f120c70e"
+                "reference": "1aa9a63bd0e996f90f5401535e68abf3e3457308"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/2bc6c1205ad83b372aec764614564e46f120c70e",
-                "reference": "2bc6c1205ad83b372aec764614564e46f120c70e",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/1aa9a63bd0e996f90f5401535e68abf3e3457308",
+                "reference": "1aa9a63bd0e996f90f5401535e68abf3e3457308",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2023-07-18T18:54:39+00:00"
+            "time": "2023-08-03T19:55:07+00:00"
         },
         {
             "name": "cweagans/composer-patches",
