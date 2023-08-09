@@ -23,7 +23,7 @@ import {
   useState,
   useFocusOut,
 } from '@googleforcreators/react';
-import { format, formatTime, is12Hour } from '@googleforcreators/date';
+import { format, formatTime, is12Hour, hasLeadingZeros } from '@googleforcreators/date';
 import { __ } from '@googleforcreators/i18n';
 import {
   DropDownSelect,
@@ -59,6 +59,7 @@ function PublishTime() {
     })
   );
   const use12HourFormat = is12Hour();
+  const useLeadingZeros = hasLeadingZeros();
 
   /* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
   const shortDateFormat = __('d/m/Y', 'web-stories');
@@ -141,6 +142,7 @@ function PublishTime() {
             }}
             onViewChange={() => propagateDimensionChange()}
             is12Hour={use12HourFormat}
+            hasLeadingZeros={useLeadingZeros}
             forwardedRef={dateTimeNode}
             onClose={() => setShowDatePicker(false)}
             canReset={

@@ -57,6 +57,7 @@ function DateTime({
   onChange,
   onViewChange,
   is12Hour = true,
+  hasLeadingZeros,
   forwardedRef,
   onClose,
   canReset = false,
@@ -92,6 +93,7 @@ function DateTime({
         setLocaleData={setLocaleData}
         onChange={onChange}
         is12Hour={is12Hour}
+        hasLeadingZeros={hasLeadingZeros}
       />
       <DatePicker
         currentDate={value}
