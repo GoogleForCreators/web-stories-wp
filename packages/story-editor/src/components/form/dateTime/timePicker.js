@@ -79,7 +79,13 @@ const StyledSwitch = styled(Switch)`
   width: 100px;
 `;
 
-function TimePicker({ onChange, is12Hour, hasLeadingZeros, localeData, setLocaleData }) {
+function TimePicker({
+  onChange,
+  is12Hour,
+  hasLeadingZeros,
+  localeData,
+  setLocaleData,
+}) {
   const onChangeEvent = (prop) => (_, value) => {
     let filteredValue =
       value !== undefined && value !== null
@@ -217,6 +223,7 @@ function TimePicker({ onChange, is12Hour, hasLeadingZeros, localeData, setLocale
 TimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   is12Hour: PropTypes.bool,
+  hasLeadingZeros: PropTypes.bool,
   localeData: PropTypes.shape({
     am: PropTypes.string.isRequired,
     hours: PropTypes.number.isRequired,

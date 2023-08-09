@@ -122,6 +122,7 @@ DateTime.propTypes = {
   onClose: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   is12Hour: PropTypes.bool,
+  hasLeadingZeros: PropTypes.bool,
   forwardedRef: PropTypes.object,
   canReset: PropTypes.bool,
 };
