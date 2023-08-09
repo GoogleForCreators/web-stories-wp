@@ -26,7 +26,7 @@ function hasLeadingZeros() {
   if (!timeFormat) {
     return true;
   }
-debugger;
+
   return /h(?!\\)/.test(
     timeFormat
       .toLowerCase() // Test only for the lower case "h".
