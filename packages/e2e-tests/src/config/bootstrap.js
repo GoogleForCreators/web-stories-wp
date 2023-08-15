@@ -123,6 +123,10 @@ const ALLOWED_ERROR_MESSAGES = [
   // Needed because the tinymce package is not yet using React 18.
   // TODO: Migrate & remove once WordPress 6.2 is minimum.
   'Warning: ReactDOM.render is no longer supported in React 18',
+
+  // Coming from <amp-story-player>
+  // See https://github.com/ampproject/amphtml/blob/413457c3598f8c6694ca4ee7b83a5d84f9b9f00c/src/amp-story-player/amp-story-player-impl.js#L562
+  "Unrecognized feature: 'web-share'",
 ];
 
 export function addAllowedErrorMessage(message) {
