@@ -126,6 +126,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * Returns information about the given story.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
