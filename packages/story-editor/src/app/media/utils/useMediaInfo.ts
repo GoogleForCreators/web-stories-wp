@@ -169,7 +169,6 @@ function useMediaInfo() {
       try {
         const { default: MediaInfoFactory } = await import(
           /* webpackChunkName: "chunk-mediainfo" */
-          /* webpackExports: "default" */
           'mediainfo.js'
         );
 

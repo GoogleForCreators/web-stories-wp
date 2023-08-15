@@ -151,7 +151,6 @@ function useFFmpeg() {
     async (file: File) => {
       const { createFFmpeg } = await import(
         /* webpackChunkName: "chunk-ffmpeg" */
-        /* webpackExports: "createFFmpeg" */
         '@ffmpeg/ffmpeg'
       );
 
