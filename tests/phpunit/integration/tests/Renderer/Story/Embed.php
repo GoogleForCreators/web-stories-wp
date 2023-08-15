@@ -38,6 +38,8 @@ class Embed extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$story = new Story();
 		$story->load_from_post( $post );
 
@@ -63,6 +65,8 @@ class Embed extends DependencyInjectedTestCase {
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
@@ -113,6 +117,8 @@ class Embed extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -121,6 +127,7 @@ class Embed extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		$this->assertNotWPError( $poster_attachment_id );
 
 		set_post_thumbnail( $post->ID, $poster_attachment_id );

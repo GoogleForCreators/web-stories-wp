@@ -450,7 +450,11 @@ class Sanitization extends DependencyInjectedTestCase {
 	public function test_is_amp_dev_mode_authenticated_user_admin_bar_showing(): void {
 		add_filter( 'show_admin_bar', '__return_true' );
 
-		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+		$user_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
+
+		$this->assertNotWPError( $user_id );
+
+		wp_set_current_user( $user_id );
 
 		$this->assertTrue( is_admin_bar_showing() );
 		$this->assertTrue( is_user_logged_in() );

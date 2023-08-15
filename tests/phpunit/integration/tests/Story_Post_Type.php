@@ -181,6 +181,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$this->assertSame( '', $post->post_title );
 	}
 
@@ -358,6 +360,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		add_post_meta( $post->ID, \Google\Web_Stories\Story_Post_Type::POSTER_META_KEY, [] );
 		add_post_meta( $post->ID, \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_META_KEY, 123 );

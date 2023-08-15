@@ -119,7 +119,11 @@ class Muting extends DependencyInjectedTestCase {
 	 * @covers ::get_callback_is_muted
 	 */
 	public function test_rest_api_init(): void {
-		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+		$user_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
+
+		$this->assertNotWPError( $user_id );
+
+		wp_set_current_user( $user_id );
 
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
@@ -165,7 +169,11 @@ class Muting extends DependencyInjectedTestCase {
 	 * @covers ::update_callback_is_muted
 	 */
 	public function test_update_callback_is_muted(): void {
-		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+		$user_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
+
+		$this->assertNotWPError( $user_id );
+
+		wp_set_current_user( $user_id );
 
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[

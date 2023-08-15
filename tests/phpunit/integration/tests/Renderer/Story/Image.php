@@ -24,6 +24,8 @@ class Image extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$story = new Story();
 		$story->load_from_post( $post );
 
@@ -48,6 +50,8 @@ class Image extends TestCase {
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
@@ -97,6 +101,8 @@ class Image extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -105,7 +111,9 @@ class Image extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		$this->assertNotWPError( $poster_attachment_id );
+
 		$poster_attachment = get_post( $poster_attachment_id );
 		$this->assertNotNull( $poster_attachment );
 

@@ -381,6 +381,8 @@ class Font_Controller extends RestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post_id );
+
 		$request = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/fonts/' . $post_id );
 
 		$response = rest_get_server()->dispatch( $request );

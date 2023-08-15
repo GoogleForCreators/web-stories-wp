@@ -56,6 +56,8 @@ class HTML extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$actual = $this->setup_renderer( $post );
 
 		$this->assertStringStartsWith( '<!DOCTYPE html>', $actual );
@@ -76,6 +78,8 @@ class HTML extends TestCase {
 				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body><amp-story></amp-story></body></html>",
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$actual = $this->setup_renderer( $post );
 
@@ -104,6 +108,8 @@ class HTML extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$actual = $this->setup_renderer( $post );
 
 		$this->assertStringContainsString( 'FOO', $actual );
@@ -130,6 +136,8 @@ class HTML extends TestCase {
 				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body><amp-story></amp-story></body></html>",
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$actual = $this->setup_renderer( $post );
 

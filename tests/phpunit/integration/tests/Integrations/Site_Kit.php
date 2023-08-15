@@ -112,6 +112,8 @@ class Site_Kit extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $story_id );
+
 		$this->go_to( (string) get_permalink( $story_id ) );
 
 		$analytics = $this->createMock( Analytics::class );

@@ -322,6 +322,9 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$permalink = (string) get_permalink( self::$story_id );
 
 		$blog_id = self::factory()->blog->create();
+
+		$this->assertNotWPError( $blog_id );
+
 		add_user_to_blog( $blog_id, self::$admin, 'administrator' );
 		switch_to_blog( $blog_id );
 

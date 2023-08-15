@@ -23,8 +23,14 @@ parameters:
       message: '/^Parameter #2 \$args of method WP_Customize_Manager::add_setting\(\)/'
       path: includes/Admin/Customizer.php
     -
-      message: '/^Casting class ReflectionType to string is deprecated.$/'
+      message: '/^Casting class ReflectionType to string is deprecated\.$/'
       path: includes/Infrastructure/Injector/SimpleInjector.php
+    -
+      message: '/\(int\) does not accept int\|WP_Error\.$/'
+      path: tests/phpunit/integration/tests
+    -
+      message: '/^Parameter #1 \$post of function set_post_thumbnail expects int\|WP_Post, int\|WP_Error given\.$/'
+      path: tests/phpunit/integration/tests
   paths:
     - includes/
     - tests/phpunit/integration/includes

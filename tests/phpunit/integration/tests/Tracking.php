@@ -263,6 +263,8 @@ class Tracking extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $user_id );
+
 		wp_set_current_user( $user_id );
 
 		global $current_user;

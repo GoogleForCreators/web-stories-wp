@@ -31,8 +31,11 @@ class Stories_Terms_Controller extends RestTestCase {
 	 * @covers ::prepare_links
 	 */
 	public function test_prepare_links(): void {
-		$slug     = self::$taxonomy_object->get_taxonomy_slug();
-		$term_id  = self::factory()->term->create( [ 'taxonomy' => $slug ] );
+		$slug    = self::$taxonomy_object->get_taxonomy_slug();
+		$term_id = self::factory()->term->create( [ 'taxonomy' => $slug ] );
+
+		$this->assertNotWPError( $term_id );
+
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/' . $slug . '/' . $term_id );
 		$response = rest_get_server()->dispatch( $request );
 		$links    = $response->get_links();
