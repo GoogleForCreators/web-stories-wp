@@ -129,8 +129,11 @@ export default {
       ],
       moduleNameMapper: {
         ...sharedConfig.moduleNameMapper,
-        '^react$': 'react-18',
-        '^react-dom(/.*)$': 'react-dom-18$1',
+        // Hacky way to grab a version of React 18 we know is installed.
+        '^react$':
+          '<rootDir>/packages/stories-block/node_modules/react/index.js',
+        '^react-dom(/.*)$':
+          '<rootDir>/packages/stories-block/node_modules/react-dom/$1',
       },
       testMatch: [
         '<rootDir>/packages/activation-notice/**/test/**/*.{js,jsx,ts,tsx}',
