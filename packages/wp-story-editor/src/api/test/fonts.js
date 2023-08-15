@@ -64,7 +64,7 @@ describe('Fonts API Callbacks', () => {
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({
         path: expect.stringContaining(
-          '?include[]=Roboto%20Mono&include[]=Roboto%20Serif'
+          'include[]=Roboto%20Mono&include[]=Roboto%20Serif'
         ),
       })
     );
