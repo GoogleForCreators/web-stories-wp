@@ -768,14 +768,6 @@
     },
     {
       "files": [
-        "packages/activation-notice/**/*.tsx"
-      ],
-      "rules":{
-        "import/no-named-as-default": "off"
-      }
-    },
-    {
-      "files": [
         "packages/**/*.js"
       ],
       "excludedFiles": [
@@ -808,6 +800,32 @@
     },
     {
       "files": [
+        "packages/activation-notice/**/*.tsx"
+      ],
+      "rules":{
+        "no-restricted-imports": "off",
+        "import/no-named-as-default": "off",
+        "@typescript-eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "react",
+                "message": "Use @wordpress/element instead.",
+                "allowTypeImports": true
+              },
+              {
+                "name": "react-dom",
+                "message": "Use @wordpress/element instead.",
+                "allowTypeImports": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "packages/tinymce-button/src/**/*.js"
       ],
       "globals": {
@@ -824,6 +842,14 @@
         "react/prop-types": "off",
         "eslint-comments/no-unused-disable": "off",
         "eslint-comments/require-description": "off"
+      }
+    },
+    {
+      "files": [
+        ".storybook/stories/**/*"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies" : "off"
       }
     },
     {
