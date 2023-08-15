@@ -846,6 +846,7 @@
     },
     {
       "files": [
+        "__mocks__/**/*",
         ".storybook/stories/**/*"
       ],
       "rules": {
