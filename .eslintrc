@@ -718,7 +718,7 @@
         "packages/**/*.js"
       ],
       "excludedFiles": [
-        "packages/activation-notice/**/*.js",
+        "packages/activation-notice/**/*.tsx",
         "packages/i18n/**/*.js",
         "packages/stories-block/**/*.js",
         "packages/tinymce-button/**/*.js"
@@ -739,7 +739,7 @@
     },
     {
       "files": [
-        "packages/activation-notice/**/*.js",
+        "packages/activation-notice/**/*.tsx",
         "packages/stories-block/**/*.js",
         "packages/tinymce-button/**/*.js"
       ],
@@ -768,12 +768,20 @@
     },
     {
       "files": [
+        "packages/activation-notice/**/*.tsx"
+      ],
+      "rules":{
+        "import/no-named-as-default": "off"
+      }
+    },
+    {
+      "files": [
         "packages/**/*.js"
       ],
       "excludedFiles": [
         ".storybook/preview.js",
         "__mocks__/**/*.js",
-        "packages/activation-notice/**/*.js",
+        "packages/activation-notice/**/*.tsx",
         "packages/react/**/*.js",
         "packages/dashboard/src/karma/fixture.js",
         "packages/story-editor/src/karma/fixture/fixture.js",
