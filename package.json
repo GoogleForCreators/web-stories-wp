@@ -161,7 +161,6 @@
     "postcss-syntax": "^0.36.2",
     "prettier": "^3.0.0",
     "puppeteer": "^20.8.1",
-    "react-18": "npm:react@^18.0.0",
     "react-refresh": "^0.14.0",
     "react-test-renderer": "^17.0.2",
     "rollup": "^2.79.1",
