@@ -175,6 +175,9 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$admin_id,
 			]
 		);
+
+		$this->assertNotWPError( $post_id );
+
 		$result2 = $this->call_private_method(
 			[ $this->controller, 'user_posts_count_public' ],
 			[

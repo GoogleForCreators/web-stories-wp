@@ -88,6 +88,9 @@ class Capabilities extends DependencyInjectedTestCase {
 	 */
 	public function test_add_caps_to_roles_multisite(): void {
 		$blog_id = self::factory()->blog->create();
+
+		$this->assertNotWPError( $blog_id );
+
 		switch_to_blog( $blog_id );
 
 		$this->instance->add_caps_to_roles();

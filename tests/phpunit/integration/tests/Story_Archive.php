@@ -176,6 +176,8 @@ class Story_Archive extends DependencyInjectedTestCase {
 	public function test_on_remove_archive_page_trash(): void {
 		$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 
+		$this->assertNotWPError( $archive_page_id );
+
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, $archive_page_id );
 
@@ -195,6 +197,8 @@ class Story_Archive extends DependencyInjectedTestCase {
 	 */
 	public function test_on_remove_archive_page_delete(): void {
 		$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
+
+		$this->assertNotWPError( $archive_page_id );
 
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, $archive_page_id );

@@ -57,6 +57,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$actual = $this->prepare_response( $post );
 
 		$this->assertStringContainsString( 'transformed="self;v=1"', $actual );
@@ -75,6 +77,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 				'post_content' => '<html><head></head><body><amp-story standalone="" title="Example Story"  poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$this->go_to( (string) get_permalink( $post ) );
 
@@ -99,6 +103,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story"  poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 
@@ -139,6 +145,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$this->go_to( (string) get_permalink( $post ) );
 
 		$actual = $this->prepare_response( $post );
@@ -161,6 +169,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$this->go_to( (string) get_permalink( $post ) );
 
@@ -186,6 +196,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$this->go_to( (string) get_permalink( $post ) );
 
 		set_post_thumbnail( $post->ID, $attachment_id );
@@ -209,6 +221,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$this->go_to( (string) get_permalink( $post ) );
 
 		$actual = $this->prepare_response( $post );
@@ -226,6 +240,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png"></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$this->go_to( (string) get_permalink( $post ) );
 

@@ -72,7 +72,7 @@ class Admin extends DependencyInjectedTestCase {
 			]
 		);
 
-		self::$post_id = $factory->post->create( [] );
+		self::$post_id = $factory->post->create();
 
 		/**
 		 * @var int $poster_attachment_id
@@ -149,6 +149,8 @@ class Admin extends DependencyInjectedTestCase {
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $story_id );
 
 		$_GET['from-web-story'] = $story_id;
 		$current_post           = get_post( self::$post_id );
@@ -229,7 +231,6 @@ class Admin extends DependencyInjectedTestCase {
 
 		$current_post = get_post( self::$post_id );
 		$this->assertNotNull( $current_post );
-		$result = $this->instance->prefill_post_content( 'current', $current_post );
 
 		$original_title = $current_post->post_title;
 
@@ -258,7 +259,10 @@ class Admin extends DependencyInjectedTestCase {
 	 * @covers ::media_states
 	 */
 	public function test_media_states_no_active_logo(): void {
-		$post   = self::factory()->post->create_and_get( [] );
+		$post = self::factory()->post->create_and_get();
+
+		$this->assertNotWPError( $post );
+
 		$result = $this->instance->media_states( [], $post );
 		$this->assertIsArray( $result );
 		$this->assertEqualSets( [], $result );
@@ -268,7 +272,10 @@ class Admin extends DependencyInjectedTestCase {
 	 * @covers ::media_states
 	 */
 	public function test_media_states_with_active_logo(): void {
-		$post = self::factory()->post->create_and_get( [] );
+		$post = self::factory()->post->create_and_get();
+
+		$this->assertNotWPError( $post );
+
 		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
 		$result = $this->instance->media_states( [], $post );
 		$this->assertIsArray( $result );

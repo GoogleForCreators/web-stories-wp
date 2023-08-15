@@ -72,6 +72,8 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $story );
+
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story/' . $story . '/autosaves' );
 		$request->set_body_params(
 			[

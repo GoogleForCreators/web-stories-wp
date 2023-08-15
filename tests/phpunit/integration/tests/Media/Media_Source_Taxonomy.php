@@ -92,7 +92,11 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	 * @covers ::rest_api_init
 	 */
 	public function test_rest_api_init(): void {
-		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+		$user_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
+
+		$this->assertNotWPError( $user_id );
+
+		wp_set_current_user( $user_id );
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
