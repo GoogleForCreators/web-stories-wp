@@ -48,7 +48,7 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	/**
 	 * Always ensure we have a style[amp-boilerplate] and a noscript>style[amp-boilerplate].
 	 *
-	 * The AMP boilerplate styles should appear at the end of the head:
+	 * The AMP boilerplate ({@link https://amp.dev/documentation/guides-and-tutorials/stories/learn/spec/amp-boilerplate}) styles should appear at the end of the head:
 	 * "Finally, specify the AMP boilerplate code. By putting the boilerplate code last, it prevents custom styles from
 	 * accidentally overriding the boilerplate css rules."
 	 *
@@ -56,7 +56,6 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @link https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/?format=websites
 	 * @link https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/optimize_amp/#optimize-the-amp-runtime-loading
 	 */
 	protected function ensure_boilerplate_is_present(): void {

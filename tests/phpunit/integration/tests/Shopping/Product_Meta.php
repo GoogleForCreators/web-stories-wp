@@ -58,6 +58,9 @@ class Product_Meta extends DependencyInjectedTestCase {
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
+
 		update_post_meta( $post->ID, $this->instance::PRODUCTS_POST_META_KEY, [ 'foo' => 'bar' ] );
 		$this->instance->on_plugin_uninstall();
 

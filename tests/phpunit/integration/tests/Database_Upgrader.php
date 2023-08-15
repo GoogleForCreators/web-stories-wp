@@ -89,6 +89,8 @@ class Database_Upgrader extends DependencyInjectedTestCase {
 	public function test_sets_missing_options_on_site_initialization(): void {
 		$blog_id = self::factory()->blog->create();
 
+		$this->assertNotWPError( $blog_id );
+
 		switch_to_blog( $blog_id );
 
 		$db_version   = get_option( $this->instance::OPTION );

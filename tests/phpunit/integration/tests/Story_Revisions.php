@@ -178,6 +178,8 @@ class Story_Revisions extends DependencyInjectedTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $story );
+
 		$actual = $this->instance->filter_revision_fields(
 			$fields,
 			[

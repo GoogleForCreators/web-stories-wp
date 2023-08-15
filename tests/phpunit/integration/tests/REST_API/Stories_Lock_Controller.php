@@ -84,13 +84,17 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
-		$story    = self::factory()->post->create(
+
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
@@ -124,14 +128,16 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$author_id );
 
-		$post_id = self::factory()->post->create(
+		$story = self::factory()->post->create(
 			[
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $post_id . '/lock' );
+		$this->assertNotWPError( $story );
+
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_post_invalid_id', $response, 404 );
 	}
@@ -143,13 +149,16 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_item_no_perm(): void {
 		$this->controller->register();
 
-		$story    = self::factory()->post->create(
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_cannot_edit', $response, 401 );
@@ -163,13 +172,17 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$subscriber );
-		$story    = self::factory()->post->create(
+
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
@@ -185,13 +198,16 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
-		$story    = self::factory()->post->create(
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
@@ -222,13 +238,17 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
-		$story    = self::factory()->post->create(
+
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
@@ -257,6 +277,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
+
 		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
@@ -264,6 +285,8 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
@@ -283,6 +306,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
+
 		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
@@ -290,6 +314,8 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::DELETABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
@@ -312,13 +338,17 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
-		$story    = self::factory()->post->create(
+
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 
@@ -343,13 +373,17 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
-		$story    = self::factory()->post->create(
+
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 
@@ -365,13 +399,16 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	public function test_get_lock(): void {
 		$this->controller->register();
 
-		$story    = self::factory()->post->create(
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
 
 		update_post_meta( $story, '_edit_lock', $new_lock );

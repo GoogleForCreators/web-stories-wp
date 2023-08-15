@@ -305,6 +305,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $story );
+
 		$view_link = get_preview_post_link( $story );
 		$edit_link = get_edit_post_link( $story, 'rest-api' );
 
@@ -336,6 +338,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$user_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		wp_set_current_user( 0 );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
@@ -356,7 +361,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
-		$story   = self::factory()->post->create(
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
@@ -364,6 +369,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$user_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
@@ -393,7 +401,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$user_id );
 
-		$story    = self::factory()->post->create(
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
@@ -401,6 +409,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$user_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$new_lock = ( time() - 100 ) . ':' . self::$user_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
@@ -428,6 +439,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $story );
+
 		wp_set_current_user( self::$author_id );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
@@ -450,7 +463,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		wp_set_current_user( self::$user_id );
 
-		$story    = self::factory()->post->create(
+		$story = self::factory()->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
@@ -458,6 +471,9 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$user_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
+
 		$new_lock = ( time() - 100 ) . ':' . self::$user_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
@@ -522,6 +538,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $story );
+
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
@@ -548,6 +566,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$user_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
 
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
 
@@ -609,6 +629,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $story );
+
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
 
 		$this->assertNotWPError( $attachment_id );
@@ -665,6 +687,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $story );
+
 		add_post_meta(
 			$story,
 			Story_Post_Type::POSTER_META_KEY,
@@ -711,6 +735,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 				'post_author' => self::$user_id,
 			]
 		);
+
+		$this->assertNotWPError( $story );
 
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg' );
 
@@ -839,6 +865,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $original_id );
+
 		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 
 		$this->assertNotWPError( $publisher_logo_id );
@@ -956,6 +984,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $original_id );
+
 		$attachment_id     = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 		$publisher_logo_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 
@@ -1025,6 +1055,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $original_id );
 
 		update_post_meta( $original_id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, 'wibble' );
 		update_post_meta( $original_id, Story_Post_Type::POSTER_META_KEY, -1 );
@@ -1083,6 +1114,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $original_id );
+
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 
 		$this->assertNotWPError( $attachment_id );
@@ -1125,6 +1158,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 			]
 		);
 
+		$this->assertNotWPError( $original_id );
+
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg' );
 
 		$this->assertNotWPError( $attachment_id );
@@ -1163,6 +1198,8 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 			]
 		);
+
+		$this->assertNotWPError( $story );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_body_params(

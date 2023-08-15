@@ -54,6 +54,8 @@ class Story extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
@@ -72,6 +74,8 @@ class Story extends TestCase {
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		add_post_meta(
 			$post->ID,
@@ -125,6 +129,8 @@ class Story extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => WEB_STORIES_TEST_DATA_DIR . '/paint.jpeg',
@@ -166,6 +172,8 @@ class Story extends TestCase {
 			]
 		);
 
+		$this->assertNotWPError( $post );
+
 		add_post_meta(
 			$post->ID,
 			Story_Post_Type::POSTER_META_KEY,
@@ -198,6 +206,8 @@ class Story extends TestCase {
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
+
+		$this->assertNotWPError( $post );
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[

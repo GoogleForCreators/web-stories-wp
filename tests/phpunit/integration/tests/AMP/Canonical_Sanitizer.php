@@ -45,11 +45,14 @@ class Canonical_Sanitizer extends TestCase {
 		// Needed so that the user is allowed to preview drafts.
 		wp_set_current_user( self::$user_id );
 
-		$post_id   = self::factory()->post->create(
+		$post_id = self::factory()->post->create(
 			[
 				'post_status' => 'draft',
 			]
 		);
+
+		$this->assertNotWPError( $post_id );
+
 		$canonical = get_permalink( $post_id );
 
 		$source = '<html><head><title>Example</title></head><body><p>Hello World</p></body></html>';

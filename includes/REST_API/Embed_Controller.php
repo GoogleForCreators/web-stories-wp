@@ -126,6 +126,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * Returns information about the given story.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
@@ -192,6 +194,26 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		 *
 		 * @param array<string,mixed> $args Arguments used for the HTTP request
 		 * @param string $url The attempted URL.
+		 *
+		 * @phpstan-param array{
+		 *   method?: string,
+		 *   timeout?: float,
+		 *   redirection?: int,
+		 *   httpversion?: string,
+		 *   user-agent?: string,
+		 *   reject_unsafe_urls?: bool,
+		 *   blocking?: bool,
+		 *   headers?: string|array,
+		 *   cookies?: array,
+		 *   body?: string|array,
+		 *   compress?: bool,
+		 *   decompress?: bool,
+		 *   sslverify?: bool,
+		 *   sslcertificates?: string,
+		 *   stream?: bool,
+		 *   filename?: string,
+		 *   limit_response_size?: int,
+		 * } $args
 		 */
 		$args = apply_filters( 'web_stories_embed_data_request_args', $args, $url );
 
