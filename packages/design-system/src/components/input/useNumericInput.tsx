@@ -60,20 +60,36 @@ const useNumericInput = ({
     (ev: unknown) => {
       let newValue = parseInput(oldValue.current, options);
 
-      if (!revertToOriginal.current) {
+      if (!revertToOriginal.current && newValue !== null) {
         const parsedValue = parseInput(currentValue, options);
 
         if (parsedValue !== null) {
           newValue = parsedValue;
         }
+      } else if (currentValue !== null) {
+        newValue = parseInput(currentValue, options);
       }
 
       revertToOriginal.current = false;
       if (newValue !== null) {
+        // Set newly updated value.
         setCurrentValue(newValue);
         if (newValue !== oldValue.current) {
           onChange(ev, newValue);
         }
+      } else if (min !== undefined) {
+        // When new value is null and min is defined, set it to min value.
+        setCurrentValue(min);
+        onChange(ev, min);
+      } else if (!allowEmpty) {
+        // When above condition do not meet and empty values are not allowed, set value to `0`.
+        // TODO (@AnuragVasanwala): Improve this logic by considering min and max boundary.
+        setCurrentValue('0');
+        onChange(ev, '0');
+      } else {
+        // When none of the above condition met, set empty value.
+        setCurrentValue('');
+        onChange(ev, '');
       }
     },
     [currentValue, onChange, options]
@@ -84,12 +100,16 @@ const useNumericInput = ({
    */
   const handleChange = useCallback(
     (ev: ChangeEvent<HTMLInputElement>) => {
-      if (ev.target.value.trim() === '') {
-        onChange(ev, '');
+      const trimmedTargetValue = ev.target.value.trim();
+      if (trimmedTargetValue === '') {
+        setCurrentValue('');
+        if (updateOnChange) {
+          onChange(ev, '');
+        }
 
         // Do not process further.
         return;
-      } else if (!isNaN(Number(ev.target.value.trim()))) {
+      } else if (!isNaN(Number(trimmedTargetValue))) {
         // Do not process non-numeric keys.
         // Return minimum number when string is empty.
         if (ev.target.value === '') {
@@ -111,7 +131,7 @@ const useNumericInput = ({
         if (max !== undefined && parsedValue > max) {
           if (parsedValue > max) {
             setCurrentValue(
-              ev.target.value.trim().charAt(ev.target.value.trim().length - 1)
+              trimmedTargetValue.charAt(trimmedTargetValue.length - 1)
             );
             if (updateOnChange) {
               onChange(
@@ -119,7 +139,7 @@ const useNumericInput = ({
                 Number(
                   ev.target.value
                     .trim()
-                    .charAt(ev.target.value.trim().length - 1)
+                    .charAt(trimmedTargetValue.length - 1)
                 )
               );
             }
@@ -134,13 +154,16 @@ const useNumericInput = ({
         const paddedValue =
           !ev.target.value.endsWith('.') && options.padZero
             ? String(parsedValue).padStart(maxPad, '0')
-            : ev.target.value.trim();
+            : trimmedTargetValue;
         setCurrentValue(paddedValue);
         if (updateOnChange) {
           onChange(ev, Number(paddedValue));
         }
-      } else if (ev.target.value.trim() === '-') {
-        onChange(ev, ev.target.value.trim());
+      } else if (trimmedTargetValue === '-') {
+        setCurrentValue(trimmedTargetValue);
+        if (updateOnChange) {
+          onChange(ev, trimmedTargetValue);
+        }
       }
     },
     [allowEmpty, max, onChange, options, updateOnChange]
@@ -174,6 +197,7 @@ const useNumericInput = ({
             : Big(newValue).minus(diff).toNumber();
       }
 
+      setCurrentValue(newValue);
       onChange(ev, Number(newValue));
     },
     [currentValue, max, min, onChange, options]

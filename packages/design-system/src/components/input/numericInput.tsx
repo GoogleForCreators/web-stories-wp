@@ -91,11 +91,24 @@ const NumericInput = forwardRef(function NumericInput(
     [handleBlur]
   );
 
+  // Convert Numeric value to String for padding processing.
+  value = String(value);
+
   // Holds filteredValue that may have leading padZero when required.
-  let paddedValue = '';
-  if (currentValue === '' || currentValue === '-') {
+  let paddedValue = String(currentValue);
+
+  if (value !== '' && (currentValue === '' || currentValue === '-')) {
+    // When textbox is cleared or `-` sign is entered, pass it.
     paddedValue = String(currentValue);
+  } else if (!allowEmpty && value === '' && currentValue === '') {
+    // When allowEmpty is not allowed and currentValue & value are empty, set new value to '0'.
+    // TODO (@AnuragVasanwala): Improve this logic by considering min and max boundary.
+    paddedValue = '0';
+  } else if (allowEmpty && value === '') {
+    // When allowEmpty is applied and value is empty string, pass it.
+    paddedValue = '';
   } else if (currentValue !== '' && max !== undefined) {
+    // Add appropriate padding when necessary.
     const maxPad = String(max).length;
     if (maxPad >= String(currentValue).length) {
       // Add padding Zero when length is less than maxPad.
