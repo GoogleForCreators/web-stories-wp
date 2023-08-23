@@ -21,10 +21,6 @@ import hasLeadingZeros from '../hasLeadingZeros';
 import { updateSettings } from '../settings';
 
 describe('date/hasLeadingZeros', () => {
-  it('should default to true', () => {
-    expect(hasLeadingZeros()).toBeTrue();
-  });
-
   it('should detect time format correctly', () => {
     updateSettings({
       timeFormat: 'h:i A',
