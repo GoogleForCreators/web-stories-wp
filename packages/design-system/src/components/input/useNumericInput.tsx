@@ -92,7 +92,7 @@ const useNumericInput = ({
         onChange(ev, '');
       }
     },
-    [currentValue, onChange, options]
+    [allowEmpty, currentValue, min, onChange, options]
   );
 
   /**
@@ -137,9 +137,7 @@ const useNumericInput = ({
               onChange(
                 ev,
                 Number(
-                  ev.target.value
-                    .trim()
-                    .charAt(trimmedTargetValue.length - 1)
+                  ev.target.value.trim().charAt(trimmedTargetValue.length - 1)
                 )
               );
             }
