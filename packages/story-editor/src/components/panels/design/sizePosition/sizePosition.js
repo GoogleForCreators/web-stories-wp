@@ -323,7 +323,7 @@ function SizePositionPanel(props) {
         </Area>
         <Area area="h">
           <NumericInput
-            allowEmpty={disableHeight ? true : false}
+            allowEmpty={disableHeight}
             suffix={_x('H', 'The Height dimension', 'web-stories')}
             value={disableHeight ? '' : height}
             disabled={disableHeight}
