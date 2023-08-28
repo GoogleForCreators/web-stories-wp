@@ -37,9 +37,7 @@ use InvalidArgumentException;
  *
  * @since 1.6.0
  */
-final class InvalidService
-	extends InvalidArgumentException
-	implements WebStoriesException {
+final class InvalidService extends InvalidArgumentException implements WebStoriesException {
 
 	/**
 	 * Create a new instance of the exception for a service class name that is

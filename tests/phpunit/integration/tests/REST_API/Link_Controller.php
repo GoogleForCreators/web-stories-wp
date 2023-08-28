@@ -79,7 +79,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	 * @return array{response: array<string, mixed>, body?: string}|WP_Error|mixed Response data.
 	 */
 	public function mock_http_request( $preempt, $r, string $url ) {
-		++ $this->request_count;
+		++$this->request_count;
 
 		if ( false !== strpos( $url, self::URL_INVALID ) ) {
 			return $preempt;

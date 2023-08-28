@@ -139,16 +139,16 @@ class Story_Revisions extends Service_Base {
 	 *
 	 * @since 1.25.0
 	 *
-	 * @param array[]|mixed $return       Array of revision UI fields. Each item is an array of id, name, and diff.
+	 * @param array[]|mixed $fields       Array of revision UI fields. Each item is an array of id, name, and diff.
 	 * @param WP_Post|false $compare_from The revision post to compare from or false if dealing with the first revision.
 	 * @param WP_Post       $compare_to   The revision post to compare to.
 	 * @return array[]|mixed Filtered array of revision UI fields.
 	 *
 	 * @phpstan-return array<int, RevisionField[]>|mixed
 	 */
-	public function filter_revision_ui_diff( $return, $compare_from, WP_Post $compare_to ) {
-		if ( ! \is_array( $return ) ) {
-			return $return;
+	public function filter_revision_ui_diff( $fields, $compare_from, WP_Post $compare_to ) {
+		if ( ! \is_array( $fields ) ) {
+			return $fields;
 		}
 
 		$parent = get_post_parent( $compare_to );
@@ -157,7 +157,7 @@ class Story_Revisions extends Service_Base {
 			! $parent instanceof WP_Post ||
 			$this->story_post_type->get_slug() !== $parent->post_type
 		) {
-			return $return;
+			return $fields;
 		}
 
 		$player_from = '';
@@ -185,7 +185,7 @@ class Story_Revisions extends Service_Base {
 		 * @phpstan-var RevisionField $field
 		 * @var array $field
 		 */
-		foreach ( $return as $field ) {
+		foreach ( $fields as $field ) {
 			if ( 'post_title' === $field['id'] ) {
 				$fields_to_return[] = $field;
 			}
@@ -215,7 +215,7 @@ class Story_Revisions extends Service_Base {
 			}
 		}
 
-		return $return;
+		return $fields;
 	}
 
 	/**

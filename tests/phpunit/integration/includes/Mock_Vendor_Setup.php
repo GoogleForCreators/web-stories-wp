@@ -35,7 +35,7 @@ trait Mock_Vendor_Setup {
 	 * @param array<string, array<string,string>> $unused
 	 * @return array<string, array<string,string>>
 	 */
-	public function add_mock_vendor( array $unused ): array {
+	public function add_mock_vendor( array $unused ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 		return [
 			'none'    => [
 				'label' => 'None',

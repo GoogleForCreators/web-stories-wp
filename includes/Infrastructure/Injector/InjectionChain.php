@@ -55,14 +55,14 @@ final class InjectionChain {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $class Class to add to injection chain.
+	 * @param string $class_name Class to add to injection chain.
 	 * @return self Modified injection chain.
 	 *
-	 * @phpstan-param class-string<T> $class
+	 * @phpstan-param class-string<T> $class_name
 	 */
-	public function add_to_chain( string $class ): self {
+	public function add_to_chain( string $class_name ): self {
 		$new_chain          = clone $this;
-		$new_chain->chain[] = $class;
+		$new_chain->chain[] = $class_name;
 
 		return $new_chain;
 	}
@@ -137,10 +137,10 @@ final class InjectionChain {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $class Class to check.
+	 * @param string $class_name Class to check.
 	 * @return bool Whether the given class is already part of the chain.
 	 */
-	public function is_in_chain( string $class ): bool {
-		return \in_array( $class, $this->chain, true );
+	public function is_in_chain( string $class_name ): bool {
+		return \in_array( $class_name, $this->chain, true );
 	}
 }

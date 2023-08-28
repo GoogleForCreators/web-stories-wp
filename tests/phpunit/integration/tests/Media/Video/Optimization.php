@@ -111,5 +111,4 @@ class Optimization extends TestCase {
 		$this->instance->on_plugin_uninstall();
 		$this->assertSame( '', get_post_meta( $video_attachment_id, $this->instance::OPTIMIZED_ID_POST_META_KEY, true ) );
 	}
-
 }

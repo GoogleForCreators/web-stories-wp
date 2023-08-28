@@ -97,6 +97,4 @@ class Single extends Service_Base {
 
 		return $show;
 	}
-
-
 }

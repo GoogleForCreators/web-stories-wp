@@ -37,21 +37,21 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 *
-	 * @param callable|array $callable Object instance or class string to call the method of.
+	 * @param callable|array $callback Object instance or class string to call the method of.
 	 * @param array          $args     Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
 	 *
 	 * @template C
 	 * @template A
 	 *
-	 * @phpstan-param callable(A): C $callable
+	 * @phpstan-param callable(A): C $callback
 	 * @phpstan-param array<A> $args
 	 * @phpstan-return C
 	 */
-	protected function call_private_method( $callable, array $args = [] ) {
-		$method = ( new ReflectionClass( $callable[0] ) )->getMethod( $callable[1] );
+	protected function call_private_method( $callback, array $args = [] ) {
+		$method = ( new ReflectionClass( $callback[0] ) )->getMethod( $callback[1] );
 		$method->setAccessible( true );
-		return $method->invokeArgs( $callable[0], $args );
+		return $method->invokeArgs( $callback[0], $args );
 	}
 
 	/**
@@ -59,7 +59,7 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the class could not be reflected upon.
 	 *
-	 * @param callable|array $callable Object instance or class string to call the method of.
+	 * @param callable|array $callback Object instance or class string to call the method of.
 	 * @param array          $args     Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
 	 *
@@ -67,11 +67,11 @@ trait Private_Access {
 	 * @template A
 	 *
 	 * @phpstan-param array<A> $args
-	 * @phpstan-param callable(A): C $callable
+	 * @phpstan-param callable(A): C $callback
 	 * @phpstan-return C
 	 */
-	protected function call_private_static_method( $callable, array $args = [] ) {
-		$method = ( new ReflectionClass( $callable[0] ) )->getMethod( $callable[1] );
+	protected function call_private_static_method( $callback, array $args = [] ) {
+		$method = ( new ReflectionClass( $callback[0] ) )->getMethod( $callback[1] );
 		$method->setAccessible( true );
 		return $method->invokeArgs( null, $args );
 	}
@@ -81,14 +81,14 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 *
-	 * @param object|string $object        Object instance or class string to set the property of.
+	 * @param object|string $instance      Object instance or class string to set the property of.
 	 * @param string        $property_name Name of the property to set.
 	 * @param mixed         $value         Value to set the property to.
 	 */
-	protected function set_private_property( $object, string $property_name, $value ): void {
-		$property = ( new ReflectionClass( $object ) )->getProperty( $property_name );
+	protected function set_private_property( $instance, string $property_name, $value ): void {
+		$property = ( new ReflectionClass( $instance ) )->getProperty( $property_name );
 		$property->setAccessible( true );
-		$property->setValue( $object, $value );
+		$property->setValue( $instance, $value );
 	}
 
 	/**
@@ -96,14 +96,14 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 *
-	 * @param object|string $object        Object instance or class string to get the property of.
+	 * @param object|string $instance      Object instance or class string to get the property of.
 	 * @param string        $property_name Name of the property to get.
 	 * @return mixed Return value of the property.
 	 */
-	protected function get_private_property( $object, string $property_name ) {
-		$property = ( new ReflectionClass( $object ) )->getProperty( $property_name );
+	protected function get_private_property( $instance, string $property_name ) {
+		$property = ( new ReflectionClass( $instance ) )->getProperty( $property_name );
 		$property->setAccessible( true );
-		return $property->getValue( $object );
+		return $property->getValue( $instance );
 	}
 
 	/**
@@ -111,12 +111,12 @@ trait Private_Access {
 	 *
 	 * @throws ReflectionException If the class could not be reflected upon.
 	 *
-	 * @param string $class         Class string to get the property of.
+	 * @param string $class_name    Class string to get the property of.
 	 * @param string $property_name Name of the property to get.
 	 * @return mixed Return value of the property.
 	 */
-	protected function get_static_private_property( string $class, string $property_name ) {
-		$properties = ( new ReflectionClass( $class ) )->getStaticProperties();
+	protected function get_static_private_property( string $class_name, string $property_name ) {
+		$properties = ( new ReflectionClass( $class_name ) )->getStaticProperties();
 		return \array_key_exists( $property_name, $properties ) ? $properties[ $property_name ] : null;
 	}
 }

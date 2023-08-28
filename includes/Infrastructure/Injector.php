@@ -117,10 +117,10 @@ interface Injector extends Service {
 	 *
 	 * @param string   $interface_or_class Interface or class to delegate the
 	 *                                     instantiation of.
-	 * @param callable $callable           Callable to use for instantiation.
+	 * @param callable $callback           Callable to use for instantiation.
 	 *
 	 * @phpstan-param class-string<T> $interface_or_class Interface or class to delegate the
 	 *                                                    instantiation of.
 	 */
-	public function delegate( string $interface_or_class, callable $callable ): Injector;
+	public function delegate( string $interface_or_class, callable $callback ): Injector;
 }

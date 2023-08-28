@@ -137,8 +137,8 @@ class Site_Kit extends Service_Base {
 		$settings       = admin_url( 'admin.php?page=googlesitekit-settings' );
 
 		if ( $is_active ) {
-			$dashboard_capability = current_user_can( 'googlesitekit_view_dashboard' );
-			$settings_capability  = current_user_can( 'googlesitekit_manage_options' );
+			$dashboard_capability = current_user_can( 'googlesitekit_view_dashboard' ); // phpcs:ignore WordPress.WP.Capabilities.Unknown
+			$settings_capability  = current_user_can( 'googlesitekit_manage_options' ); // phpcs:ignore WordPress.WP.Capabilities.Unknown
 
 			// If analytics is active and current user can view dashboard.
 			if ( $is_analytics_active && $dashboard_capability ) {

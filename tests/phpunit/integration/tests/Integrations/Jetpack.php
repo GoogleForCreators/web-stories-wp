@@ -236,9 +236,9 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @dataProvider data_format_milliseconds
 	 * @covers ::format_milliseconds
 	 */
-	public function test_format_milliseconds( $milliseconds, string $string ): void {
+	public function test_format_milliseconds( $milliseconds, string $content ): void {
 		$result = $this->call_private_method( [ $this->instance, 'format_milliseconds' ], [ $milliseconds ] );
-		$this->assertSame( $result, $string );
+		$this->assertSame( $result, $content );
 	}
 
 	/**

@@ -450,18 +450,18 @@ class Stories_Controller extends Stories_Base_Controller {
 			return $response;
 		}
 
-		if ( current_user_can( $post_type->cap->edit_posts ) ) {
+		if ( current_user_can( $post_type->cap->edit_posts ) ) { // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 			$statuses['draft']   = 'draft';
 			$statuses['future']  = 'future';
 			$statuses['pending'] = 'pending';
 		}
 
-		if ( current_user_can( $post_type->cap->publish_posts ) ) {
+		if ( current_user_can( $post_type->cap->publish_posts ) ) { // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 			$statuses['private'] = 'private';
 		}
 
-		$edit_others_posts  = current_user_can( $post_type->cap->edit_others_posts );
-		$edit_private_posts = current_user_can( $post_type->cap->edit_private_posts );
+		$edit_others_posts  = current_user_can( $post_type->cap->edit_others_posts ); // phpcs:ignore WordPress.WP.Capabilities.Undetermined
+		$edit_private_posts = current_user_can( $post_type->cap->edit_private_posts ); // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 
 		$statuses_count = [ 'all' => 0 ];
 		$total_posts    = 0;

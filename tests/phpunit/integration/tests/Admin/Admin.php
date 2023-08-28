@@ -104,7 +104,6 @@ class Admin extends DependencyInjectedTestCase {
 		$this->assertSame( 99, has_filter( 'admin_body_class', [ $this->instance, 'admin_body_class' ] ) );
 		$this->assertSame( 10, has_filter( 'default_content', [ $this->instance, 'prefill_post_content' ] ) );
 		$this->assertSame( 10, has_filter( 'default_title', [ $this->instance, 'prefill_post_title' ] ) );
-
 	}
 
 	/**

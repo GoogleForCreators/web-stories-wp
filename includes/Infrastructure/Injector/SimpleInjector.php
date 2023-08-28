@@ -201,12 +201,12 @@ final class SimpleInjector implements Injector {
 	 * @since 1.6.0
 	 *
 	 * @param string   $interface_or_class Interface or class to delegate the instantiation of.
-	 * @param callable $callable           Callable to use for instantiation.
+	 * @param callable $callback           Callable to use for instantiation.
 	 *
 	 * @phpstan-param class-string<T> $interface_or_class Interface or class to delegate the instantiation of.
 	 */
-	public function delegate( string $interface_or_class, callable $callable ): Injector {
-		$this->delegates[ $interface_or_class ] = $callable;
+	public function delegate( string $interface_or_class, callable $callback ): Injector {
+		$this->delegates[ $interface_or_class ] = $callback;
 
 		return $this;
 	}
@@ -350,20 +350,20 @@ final class SimpleInjector implements Injector {
 	 * @since 1.6.0
 	 *
 	 * @param InjectionChain       $injection_chain Injection chain to track resolutions.
-	 * @param string               $class Name of the class to resolve the arguments for.
-	 * @param ReflectionParameter  $parameter Parameter to resolve.
-	 * @param array<string, mixed> $arguments Associative array of directly provided arguments.
+	 * @param string               $class_name      Name of the class to resolve the arguments for.
+	 * @param ReflectionParameter  $parameter       Parameter to resolve.
+	 * @param array<string, mixed> $arguments       Associative array of directly provided arguments.
 	 * @return mixed Resolved value of the argument.
 	 */
 	private function resolve_argument(
 		InjectionChain $injection_chain,
-		string $class,
+		string $class_name,
 		ReflectionParameter $parameter,
 		array $arguments
 	) {
 		if ( ! $parameter->hasType() ) {
 			return $this->resolve_argument_by_name(
-				$class,
+				$class_name,
 				$parameter,
 				$arguments
 			);
@@ -374,7 +374,7 @@ final class SimpleInjector implements Injector {
 		// In PHP 8.0, the isBuiltin method was removed from the parent {@see ReflectionType} class.
 		if ( null === $type || ( $type instanceof ReflectionNamedType && $type->isBuiltin() ) ) {
 			return $this->resolve_argument_by_name(
-				$class,
+				$class_name,
 				$parameter,
 				$arguments
 			);
@@ -399,13 +399,13 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @throws FailedToMakeInstance If the argument could not be resolved.
 	 *
-	 * @param string               $class Class to resolve the argument for.
-	 * @param ReflectionParameter  $parameter Argument to resolve by name.
-	 * @param array<string, mixed> $arguments Associative array of directly provided arguments.
+	 * @param string               $class_name Class to resolve the argument for.
+	 * @param ReflectionParameter  $parameter  Argument to resolve by name.
+	 * @param array<string, mixed> $arguments  Associative array of directly provided arguments.
 	 * @return mixed Resolved value of the argument.
 	 */
 	private function resolve_argument_by_name(
-		string $class,
+		string $class_name,
 		ReflectionParameter $parameter,
 		array $arguments
 	) {
@@ -417,13 +417,13 @@ final class SimpleInjector implements Injector {
 		}
 
 		// Check if we have mapped this argument for the specific class.
-		if ( \array_key_exists( $class, $this->argument_mappings )
-			&& \array_key_exists( $name, $this->argument_mappings[ $class ] ) ) {
-			$value = $this->argument_mappings[ $class ][ $name ];
+		if ( \array_key_exists( $class_name, $this->argument_mappings )
+			&& \array_key_exists( $name, $this->argument_mappings[ $class_name ] ) ) {
+			$value = $this->argument_mappings[ $class_name ][ $name ];
 
 			// Closures are immediately resolved, to provide lazy resolution.
 			if ( \is_callable( $value ) ) {
-				$value = $value( $class, $parameter, $arguments );
+				$value = $value( $class_name, $parameter, $arguments );
 			}
 
 			return $value;
@@ -444,7 +444,7 @@ final class SimpleInjector implements Injector {
 		}
 
 		// Out of options, fail with an exception.
-		throw FailedToMakeInstance::for_unresolved_argument( $name, $class );
+		throw FailedToMakeInstance::for_unresolved_argument( $name, $class_name );
 	}
 
 	/**
@@ -452,12 +452,12 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $class Class to check for a shared instance.
+	 * @param string $class_name Class to check for a shared instance.
 	 * @return bool Whether a shared instance exists.
 	 */
-	private function has_shared_instance( string $class ): bool {
-		return \array_key_exists( $class, $this->shared_instances )
-			&& null !== $this->shared_instances[ $class ];
+	private function has_shared_instance( string $class_name ): bool {
+		return \array_key_exists( $class_name, $this->shared_instances )
+			&& null !== $this->shared_instances[ $class_name ];
 	}
 
 	/**
@@ -467,15 +467,15 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @throws FailedToMakeInstance If an uninstantiated shared instance is requested.
 	 *
-	 * @param string $class Class to get the shared instance for.
+	 * @param string $class_name Class to get the shared instance for.
 	 * @return T Shared instance.
 	 *
-	 * @phpstan-param class-string<T> $class Class to get the shared instance for.
+	 * @phpstan-param class-string<T> $class_name Class to get the shared instance for.
 	 * @phpstan-return T Shared instance.
 	 */
-	private function get_shared_instance( string $class ) {
-		if ( ! $this->has_shared_instance( $class ) ) {
-			throw FailedToMakeInstance::for_uninstantiated_shared_instance( $class );
+	private function get_shared_instance( string $class_name ) {
+		if ( ! $this->has_shared_instance( $class_name ) ) {
+			throw FailedToMakeInstance::for_uninstantiated_shared_instance( $class_name );
 		}
 
 
@@ -484,7 +484,7 @@ final class SimpleInjector implements Injector {
 		 *
 		 * @var T $instance
 		 */
-		$instance = $this->shared_instances[ $class ];
+		$instance = $this->shared_instances[ $class_name ];
 
 		return $instance;
 	}
@@ -494,11 +494,11 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $class Class to check for a delegate.
+	 * @param string $class_name Class to check for a delegate.
 	 * @return bool Whether a delegate exists.
 	 */
-	private function has_delegate( string $class ): bool {
-		return \array_key_exists( $class, $this->delegates );
+	private function has_delegate( string $class_name ): bool {
+		return \array_key_exists( $class_name, $this->delegates );
 	}
 
 	/**
@@ -508,15 +508,15 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @throws FailedToMakeInstance If an invalid delegate is requested.
 	 *
-	 * @param string $class Class to get the delegate for.
+	 * @param string $class_name Class to get the delegate for.
 	 * @return callable Delegate.
 	 */
-	private function get_delegate( string $class ): callable {
-		if ( ! $this->has_delegate( $class ) ) {
-			throw FailedToMakeInstance::for_invalid_delegate( $class );
+	private function get_delegate( string $class_name ): callable {
+		if ( ! $this->has_delegate( $class_name ) ) {
+			throw FailedToMakeInstance::for_invalid_delegate( $class_name );
 		}
 
-		return $this->delegates[ $class ];
+		return $this->delegates[ $class_name ];
 	}
 
 	/**
@@ -526,15 +526,15 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @throws FailedToMakeInstance If the class could not be reflected.
 	 *
-	 * @param string|class-string $class Class to get the reflection for.
+	 * @param string|class-string $class_name Class to get the reflection for.
 	 * @return ReflectionClass Class reflection.
 	 */
-	private function get_class_reflection( string $class ): ReflectionClass {
-		if ( ! class_exists( $class ) ) {
-			throw FailedToMakeInstance::for_unreflectable_class( $class );
+	private function get_class_reflection( string $class_name ): ReflectionClass {
+		if ( ! class_exists( $class_name ) ) {
+			throw FailedToMakeInstance::for_unreflectable_class( $class_name );
 		}
 
 		// There should be no ReflectionException happening because of the class existence check above.
-		return new ReflectionClass( $class );
+		return new ReflectionClass( $class_name );
 	}
 }

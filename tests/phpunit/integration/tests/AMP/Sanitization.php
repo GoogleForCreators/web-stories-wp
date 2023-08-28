@@ -485,7 +485,7 @@ class Sanitization extends DependencyInjectedTestCase {
 		// Make sure the style and validating sanitizers are always at the end, even after filtering.
 		add_filter(
 			'web_stories_amp_sanitizers',
-			static function( $sanitizers ) {
+			static function ( $sanitizers ) {
 				$sanitizers['Even_After_Validating_Sanitizer'] = [];
 				return $sanitizers;
 			}
@@ -526,6 +526,7 @@ class Sanitization extends DependencyInjectedTestCase {
 		$sanitizers = $this->call_private_method( [ $this->instance, 'get_sanitizers' ] );
 		$this->assertFalse( is_admin_bar_showing() );
 		$this->assertTrue( $this->call_private_method( [ $this->instance, 'is_amp_dev_mode' ] ) );
+		$this->assertIsArray( $sanitizers );
 		$this->assertArrayHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 		$this->assertEquals( AMP_Dev_Mode_Sanitizer::class, current( array_keys( $sanitizers ) ) );
 		$this->assertEquals(

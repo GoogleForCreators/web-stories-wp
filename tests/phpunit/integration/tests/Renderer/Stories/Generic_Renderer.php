@@ -60,7 +60,6 @@ class Generic_Renderer extends TestCase {
 				'post_content' => 'Example content',
 			]
 		);
-
 	}
 
 	/**

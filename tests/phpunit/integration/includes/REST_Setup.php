@@ -39,7 +39,8 @@ use WP_REST_Response;
  * trait REST_Setup
  */
 trait REST_Setup {
-	use Capabilities_Setup, Kses_Setup;
+	use Capabilities_Setup;
+	use Kses_Setup;
 
 	protected function set_up_rest(): void {
 		/** @var \WP_REST_Server $wp_rest_server */

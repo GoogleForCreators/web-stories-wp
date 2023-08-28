@@ -117,7 +117,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 		if (
 			! empty( $request['capabilities'] ) &&
 			[ $edit_posts ] === $request['capabilities'] &&
-			current_user_can( $edit_posts )
+			current_user_can( $edit_posts ) // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 		) {
 			unset( $request['capabilities'] );
 		}
@@ -152,7 +152,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 			! isset( $request['has_published_posts'] ) &&
 			! empty( $request['capabilities'] ) &&
 			[ $edit_posts ] === $request['capabilities'] &&
-			current_user_can( $edit_posts )
+			current_user_can( $edit_posts ) // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 		) {
 			add_filter( 'rest_user_query', [ $this, 'filter_query_args' ] );
 			$response = parent::get_items( $request );

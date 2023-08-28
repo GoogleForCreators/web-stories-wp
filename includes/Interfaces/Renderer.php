@@ -61,5 +61,4 @@ interface Renderer {
 	 * @return mixed
 	 */
 	public function render_single_story_content();
-
 }

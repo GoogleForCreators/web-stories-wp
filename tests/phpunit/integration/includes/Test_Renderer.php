@@ -44,5 +44,4 @@ class Test_Renderer extends Renderer {
 	public function render( array $args = [] ): string {
 		return '';
 	}
-
 }

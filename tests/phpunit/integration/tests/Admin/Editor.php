@@ -272,5 +272,4 @@ class Editor extends DependencyInjectedTestCase {
 		$use_block_editor = $this->instance->filter_use_block_editor_for_post_type( true, $this->story_post_type->get_slug() );
 		$this->assertFalse( $use_block_editor );
 	}
-
 }
