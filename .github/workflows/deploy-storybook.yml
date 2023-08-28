@@ -34,25 +34,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
-        with:
-          path: main
 
       - name: Setup Node
         uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8
         with:
           node-version-file: '.nvmrc'
           cache: npm
-          working-directory: ./main
 
       - name: Install dependencies
         run: npm ci
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
-        working-directory: ./main
 
       - name: Build storyook
         run: npm run storybook:build
-        working-directory: ./main
 
       - name: Checkout gh-pages
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
@@ -63,7 +58,7 @@ jobs:
 
       - name: Move storybook assets
         run: |
-          mv main/build/storybook/* gh-pages/storybook/
+          mv build/storybook/* gh-pages/storybook/
 
       - name: Commit updates
         run: |
