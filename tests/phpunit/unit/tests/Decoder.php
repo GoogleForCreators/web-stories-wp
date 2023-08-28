@@ -28,12 +28,12 @@ class Decoder extends TestCase {
 	 * @dataProvider get_encoded_data
 	 * @covers ::base64_decode
 	 */
-	public function test_base64_decode( string $encoded, string $string ): void {
+	public function test_base64_decode( string $encoded, string $content ): void {
 
 		$decoder = new \Google\Web_Stories\Decoder();
 		$actual  = $decoder->base64_decode( $encoded );
 
-		$this->assertSame( $string, $actual );
+		$this->assertSame( $content, $actual );
 	}
 
 	/**
@@ -75,5 +75,4 @@ class Decoder extends TestCase {
 			],
 		];
 	}
-
 }

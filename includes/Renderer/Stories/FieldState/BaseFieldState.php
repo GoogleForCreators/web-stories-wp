@@ -209,5 +209,4 @@ class BaseFieldState implements FieldState {
 	protected function prepare_field( array $args ): BaseField {
 		return new BaseField( $args );
 	}
-
 }

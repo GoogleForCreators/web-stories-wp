@@ -34,9 +34,7 @@ use Google\Web_Stories\Infrastructure\ServiceContainer;
  *
  * @since 1.6.0
  */
-final class SimpleServiceContainer
-	extends ArrayObject
-	implements ServiceContainer {
+final class SimpleServiceContainer extends ArrayObject implements ServiceContainer {
 
 	/**
 	 * Find a service of the container by its identifier and return it.
@@ -50,7 +48,7 @@ final class SimpleServiceContainer
 	 */
 	public function get( string $id ): Service {
 		if ( ! $this->has( $id ) ) {
-			throw InvalidService::from_service_id( $id );
+			throw InvalidService::from_service_id( $id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**

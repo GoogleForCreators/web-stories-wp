@@ -99,27 +99,27 @@ class Admin extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string|mixed $class Current classes.
-	 * @return string|mixed $class List of Classes.
+	 * @param string|mixed $class_name Current classes.
+	 * @return string|mixed List of Classes.
 	 */
-	public function admin_body_class( $class ) {
+	public function admin_body_class( $class_name ) {
 		if ( ! $this->context->is_story_editor() ) {
-			return $class;
+			return $class_name;
 		}
 
 		// Default WordPress posts list table screen and dashboard.
 		if ( 'post' !== $this->context->get_screen_base() ) {
-			return $class;
+			return $class_name;
 		}
 
-		$class .= ' edit-story';
+		$class_name .= ' edit-story';
 
 		// Overrides regular WordPress behavior by collapsing the admin menu by default.
-		if ( ! str_contains( $class, 'folded' ) ) {
-			$class .= ' folded';
+		if ( ! str_contains( $class_name, 'folded' ) ) {
+			$class_name .= ' folded';
 		}
 
-		return $class;
+		return $class_name;
 	}
 
 	/**

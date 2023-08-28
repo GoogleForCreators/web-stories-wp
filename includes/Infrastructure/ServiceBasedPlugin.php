@@ -360,29 +360,29 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
-	 * @param class-string                   $class    Service FQCN of the service with requirements.
-	 * @param array<string, class-string<S>> $services List of services to be registered.
+	 * @param class-string                   $class_name    Service FQCN of the service with requirements.
+	 * @param array<string, class-string<S>> $services      List of services to be registered.
 	 * @return int The registration action priority for the service.
 	 *
-	 * @phpstan-param class-string<S> $class Service FQCN of the service with requirements.
+	 * @phpstan-param class-string<S> $class_name Service FQCN of the service with requirements.
 	 */
-	protected function get_registration_action_priority( string $class, array &$services ): int {
+	protected function get_registration_action_priority( string $class_name, array &$services ): int {
 		$priority = 10;
 
-		if ( is_a( $class, Delayed::class, true ) ) {
-			$priority = $class::get_registration_action_priority();
+		if ( is_a( $class_name, Delayed::class, true ) ) {
+			$priority = $class_name::get_registration_action_priority();
 		}
 
-		if ( ! is_a( $class, HasRequirements::class, true ) ) {
+		if ( ! is_a( $class_name, HasRequirements::class, true ) ) {
 			return $priority;
 		}
 
 		/**
 		 * Service class.
 		 *
-		 * @phpstan-var class-string<H&S> $class
+		 * @phpstan-var class-string<H&S> $class_name
 		 */
-		$missing_requirements = $this->collect_missing_requirements( $class, $services );
+		$missing_requirements = $this->collect_missing_requirements( $class_name, $services );
 
 		foreach ( $missing_requirements as $missing_requirement ) {
 			if ( is_a( $missing_requirement, Delayed::class, true ) ) {
@@ -415,15 +415,15 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
-	 * @param string                         $id       Service ID of the service with requirements.
-	 * @param class-string                   $class    Service FQCN of the service with requirements.
-	 * @param array<string, class-string<S>> $services List of services to be registered.
+	 * @param string                         $id         Service ID of the service with requirements.
+	 * @param class-string                   $class_name Service FQCN of the service with requirements.
+	 * @param array<string, class-string<S>> $services   List of services to be registered.
 	 * @return bool Whether the requirements for the service has been met.
 	 *
-	 * @phpstan-param class-string<H&S> $class Service FQCN of the service with requirements.
+	 * @phpstan-param class-string<H&S> $class_name Service FQCN of the service with requirements.
 	 */
-	protected function requirements_are_met( string $id, string $class, array &$services ): bool {
-		$missing_requirements = $this->collect_missing_requirements( $class, $services );
+	protected function requirements_are_met( string $id, string $class_name, array &$services ): bool {
+		$missing_requirements = $this->collect_missing_requirements( $class_name, $services );
 
 		if ( empty( $missing_requirements ) ) {
 			return true;
@@ -449,7 +449,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 				 * A: priority 12
 				 */
 
-				$priority = $this->get_registration_action_priority( $class, $services );
+				$priority = $this->get_registration_action_priority( $class_name, $services );
 
 				/*
 				 * The current service depends on another service that is Delayed and hasn't been registered yet
@@ -466,12 +466,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 				add_action(
 					$action,
-					function () use ( $id, $class, $services ): void {
-						if ( ! $this->requirements_are_met( $id, $class, $services ) ) {
+					function () use ( $id, $class_name, $services ): void {
+						if ( ! $this->requirements_are_met( $id, $class_name, $services ) ) {
 							return;
 						}
 
-						$this->schedule_potential_service_registration( $id, $class );
+						$this->schedule_potential_service_registration( $id, $class_name );
 					},
 					$priority
 				);
@@ -489,7 +489,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		 * Note: Moving the service to the end of the service map advances the internal array pointer to the next service.
 		 */
 		unset( $services[ $id ] );
-		$services[ $id ] = $class;
+		$services[ $id ] = $class_name;
 
 		return false;
 	}
@@ -501,19 +501,19 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
-	 * @param class-string                   $class    Service FQCN of the service with requirements.
-	 * @param array<string, class-string<S>> $services List of services to register.
+	 * @param class-string                   $class_name    Service FQCN of the service with requirements.
+	 * @param array<string, class-string<S>> $services      List of services to register.
 	 * @return array<string, class-string<S>> List of missing requirements as a $service_id => $service_class mapping.
 	 *
-	 * @phpstan-param class-string<H&S> $class Service FQCN of the service with requirements.
+	 * @phpstan-param class-string<H&S> $class_name Service FQCN of the service with requirements.
 	 */
-	protected function collect_missing_requirements( string $class, array $services ): array {
+	protected function collect_missing_requirements( string $class_name, array $services ): array {
 		/**
 		 * Requirements.
 		 *
 		 * @var string[] $requirements
 		 */
-		$requirements = $class::get_requirements();
+		$requirements = $class_name::get_requirements();
 
 		/**
 		 * Missing requirements.
@@ -525,7 +525,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		foreach ( $requirements as $requirement ) {
 			// Bail if it requires a service that is not recognized.
 			if ( ! \array_key_exists( $requirement, $services ) ) {
-				throw InvalidService::from_service_id( $requirement );
+				throw InvalidService::from_service_id( $requirement ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			if ( $this->get_container()->has( $requirement ) ) {
@@ -601,28 +601,28 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.12.0
 	 *
 	 * @param string       $id ID of the service to register.
-	 * @param class-string $class Class of the service to register.
+	 * @param class-string $class_name Class of the service to register.
 	 *
-	 * @phpstan-param class-string<(D&S)|S> $class Class of the service to register.
+	 * @phpstan-param class-string<(D&S)|S> $class_name Class of the service to register.
 	 */
-	protected function schedule_potential_service_registration( string $id, string $class ): void {
-		if ( is_a( $class, Delayed::class, true ) ) {
-			$action   = $class::get_registration_action();
-			$priority = $class::get_registration_action_priority();
+	protected function schedule_potential_service_registration( string $id, string $class_name ): void {
+		if ( is_a( $class_name, Delayed::class, true ) ) {
+			$action   = $class_name::get_registration_action();
+			$priority = $class_name::get_registration_action_priority();
 
 			if ( did_action( $action ) ) {
-				$this->maybe_register_service( $id, $class );
+				$this->maybe_register_service( $id, $class_name );
 			} else {
 				add_action(
 					$action,
-					function () use ( $id, $class ): void {
-						$this->maybe_register_service( $id, $class );
+					function () use ( $id, $class_name ): void {
+						$this->maybe_register_service( $id, $class_name );
 					},
 					$priority
 				);
 			}
 		} else {
-			$this->maybe_register_service( $id, $class );
+			$this->maybe_register_service( $id, $class_name );
 		}
 	}
 
@@ -631,24 +631,24 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $id    ID of the service to register.
-	 * @param string $class Class of the service to register.
+	 * @param string $id         ID of the service to register.
+	 * @param string $class_name Class of the service to register.
 	 *
-	 * @phpstan-param class-string<S> $class Class of the service to register.
+	 * @phpstan-param class-string<S> $class_name Class of the service to register.
 	 */
-	protected function maybe_register_service( string $id, string $class ): void {
+	protected function maybe_register_service( string $id, string $class_name ): void {
 		// Ensure we don't register the same service more than once.
 		if ( $this->service_container->has( $id ) ) {
 			return;
 		}
 
 		// Only instantiate services that are actually needed.
-		if ( is_a( $class, Conditional::class, true )
-			&& ! $class::is_needed() ) {
+		if ( is_a( $class_name, Conditional::class, true )
+			&& ! $class_name::is_needed() ) {
 			return;
 		}
 
-		$service = $this->instantiate_service( $class );
+		$service = $this->instantiate_service( $class_name );
 
 		$this->service_container->put( $id, $service );
 
@@ -664,12 +664,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @throws InvalidService If the service could not be properly instantiated.
 	 *
-	 * @param class-string|object $class Service class to instantiate.
+	 * @param class-string|object $class_name Service class to instantiate.
 	 * @return Service Instantiated service.
 	 *
-	 * @phpstan-param class-string<S> $class Service class to instantiate.
+	 * @phpstan-param class-string<S> $class_name Service class to instantiate.
 	 */
-	protected function instantiate_service( $class ): Service {
+	protected function instantiate_service( $class_name ): Service {
 		/*
 		 * If the service is not registerable, we default to lazily instantiated
 		 * services here for some basic optimization.
@@ -677,17 +677,17 @@ abstract class ServiceBasedPlugin implements Plugin {
 		 * The services will be properly instantiated once they are retrieved
 		 * from the service container.
 		 */
-		if ( ! is_a( $class, Registerable::class, true ) ) {
+		if ( ! is_a( $class_name, Registerable::class, true ) ) {
 			return new LazilyInstantiatedService(
-				fn() => $this->injector->make( $class )
+				fn() => $this->injector->make( $class_name )
 			);
 		}
 
 		// The service needs to be registered, so instantiate right away.
-		$service = $this->injector->make( $class );
+		$service = $this->injector->make( $class_name );
 
 		if ( ! $service instanceof Service ) {
-			throw InvalidService::from_service( $service );
+			throw InvalidService::from_service( $service ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		return $service;

@@ -422,7 +422,7 @@ QUERY;
 		$after = '';
 		if ( $page > 1 ) {
 			// Loop around all the pages, getting the endCursor of each page, until you get the last one.
-			for ( $i = 1; $i < $page; $i ++ ) {
+			for ( $i = 1; $i < $page; $i++ ) {
 				$result = $this->get_remote_products( $search_term, $after, $per_page, $orderby, $order );
 				if ( is_wp_error( $result ) ) {
 					return $result;

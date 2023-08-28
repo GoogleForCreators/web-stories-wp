@@ -36,7 +36,7 @@ class Story_Sanitizer extends TestCase {
 
 		Monkey\Functions\stubs(
 			[
-				'get_bloginfo' => static function( $show ) {
+				'get_bloginfo' => static function ( $show ) {
 					switch ( $show ) {
 						case 'charset':
 							return 'UTF-8';

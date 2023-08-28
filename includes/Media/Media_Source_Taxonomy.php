@@ -217,12 +217,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string  $value  Value to update.
-	 * @param WP_Post $object Object to update on.
+	 * @param string  $value Value to update.
+	 * @param WP_Post $post  Object to update on.
 	 * @return true|\WP_Error
 	 */
-	public function update_callback_media_source( string $value, WP_Post $object ) {
-		$check = wp_set_object_terms( $object->ID, $value, $this->taxonomy_slug );
+	public function update_callback_media_source( string $value, WP_Post $post ) {
+		$check = wp_set_object_terms( $post->ID, $value, $this->taxonomy_slug );
 		if ( is_wp_error( $check ) ) {
 			return $check;
 		}

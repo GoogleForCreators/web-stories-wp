@@ -43,7 +43,7 @@ class Mock_Vendor implements Product_Query {
 	 */
 	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
 		$products = [];
-		for ( $x = 0; $x < $per_page; $x ++ ) {
+		for ( $x = 0; $x < $per_page; $x++ ) {
 			$products[] = new Product(
 				[
 					'id'             => wp_unique_id(),

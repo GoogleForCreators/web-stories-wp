@@ -160,7 +160,6 @@ class Renderer extends TestCase {
 		$output = $this->call_private_method( [ $renderer, 'get_view_type' ] );
 
 		$this->assertEquals( 'grid', $output );
-
 	}
 
 	/**
@@ -334,7 +333,6 @@ class Renderer extends TestCase {
 		$this->assertStringContainsString( 'web-stories-list__archive-link', $output );
 		$this->assertStringContainsString( $archive_link, $output );
 		$this->assertStringContainsString( 'View all stories', $output );
-
 	}
 
 	/**

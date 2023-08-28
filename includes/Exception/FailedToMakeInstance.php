@@ -39,9 +39,7 @@ use RuntimeException;
  *
  * @since 1.6.0
  */
-final class FailedToMakeInstance
-	extends RuntimeException
-	implements WebStoriesException {
+final class FailedToMakeInstance extends RuntimeException implements WebStoriesException {
 
 	// These constants are public so you can use them to find out what exactly
 	// happened when you catch a "FailedToMakeInstance" exception.
@@ -87,12 +85,12 @@ final class FailedToMakeInstance
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $interface Interface that was left unresolved.
+	 * @param string $interface_name Interface that was left unresolved.
 	 */
-	public static function for_unresolved_interface( string $interface ): self {
+	public static function for_unresolved_interface( string $interface_name ): self {
 		$message = \sprintf(
 			'Could not resolve the interface "%s" to an instantiable class, probably forgot to bind an implementation.',
-			$interface
+			$interface_name
 		);
 
 		return new self( $message, self::UNRESOLVED_INTERFACE );
@@ -124,14 +122,14 @@ final class FailedToMakeInstance
 	 *
 	 * @param string $argument_name Name of the argument that could not be
 	 *                              resolved.
-	 * @param string $class         Class that had the argument in its
+	 * @param string $class_name    Class that had the argument in its
 	 *                              constructor.
 	 */
-	public static function for_unresolved_argument( string $argument_name, string $class ): self {
+	public static function for_unresolved_argument( string $argument_name, string $class_name ): self {
 		$message = \sprintf(
 			'Could not resolve the argument "%s" while trying to instantiate the class "%s".',
 			$argument_name,
-			$class
+			$class_name
 		);
 
 		return new self( $message, self::UNRESOLVED_ARGUMENT );
@@ -143,12 +141,12 @@ final class FailedToMakeInstance
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $class Class that was not yet instantiated.
+	 * @param string $class_name Class that was not yet instantiated.
 	 */
-	public static function for_uninstantiated_shared_instance( string $class ): self {
+	public static function for_uninstantiated_shared_instance( string $class_name ): self {
 		$message = \sprintf(
 			'Could not retrieve the shared instance for "%s" as it was not instantiated yet.',
-			$class
+			$class_name
 		);
 
 		return new self( $message, self::UNINSTANTIATED_SHARED_INSTANCE );
@@ -160,12 +158,12 @@ final class FailedToMakeInstance
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $class Class for which there is no delegate.
+	 * @param string $class_name Class for which there is no delegate.
 	 */
-	public static function for_invalid_delegate( string $class ): self {
+	public static function for_invalid_delegate( string $class_name ): self {
 		$message = \sprintf(
 			'Could not retrieve a delegate for "%s", none was defined.',
-			$class
+			$class_name
 		);
 
 		return new self( $message, self::INVALID_DELEGATE );

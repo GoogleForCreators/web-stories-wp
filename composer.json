@@ -35,7 +35,7 @@
     "sniccowp/php-scoper-wordpress-excludes": "^6.0",
     "swissspidy/phpstan-no-private": "^v0.2.0",
     "szepeviktor/phpstan-wordpress": "^v1.1.3",
-    "wp-coding-standards/wpcs": "^2.3",
+    "wp-coding-standards/wpcs": "^3.0.0",
     "yoast/wp-test-utils": "^1.0.0"
   },
   "suggest": {

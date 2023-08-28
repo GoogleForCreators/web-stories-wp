@@ -148,5 +148,4 @@ class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {
 			'false' => [ false ],
 		];
 	}
-
 }

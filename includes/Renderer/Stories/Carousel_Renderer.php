@@ -107,7 +107,7 @@ class Carousel_Renderer extends Renderer {
 					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>">
 						<?php
 						array_map(
-							function() {
+							function () {
 								$this->render_single_story_content();
 								$this->next();
 							},
@@ -130,7 +130,7 @@ class Carousel_Renderer extends Renderer {
 					>
 						<?php
 						array_map(
-							function() {
+							function () {
 								$this->render_single_story_content();
 								$this->next();
 							},
@@ -171,5 +171,4 @@ class Carousel_Renderer extends Renderer {
 			],
 		];
 	}
-
 }

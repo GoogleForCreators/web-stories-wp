@@ -103,9 +103,9 @@ final class SimpleInjectorTest extends TestCase {
 		$injector = ( new SimpleInjector() )
 			->delegate(
 				Fixture\DummyInterface::class,
-				static function ( $class ) {
+				static function ( $class_name ) {
 					$object             = new stdClass();
-					$object->class_name = $class;
+					$object->class_name = $class_name;
 					return $object;
 				}
 			);
@@ -124,9 +124,9 @@ final class SimpleInjectorTest extends TestCase {
 			)
 			->delegate(
 				Fixture\DummyClassWithDependency::class,
-				static function ( $class ) {
+				static function ( $class_name ) {
 					$object             = new stdClass();
-					$object->class_name = $class;
+					$object->class_name = $class_name;
 					return $object;
 				}
 			);
@@ -165,7 +165,7 @@ final class SimpleInjectorTest extends TestCase {
 		$injector->bind_argument(
 			Fixture\DummyClassWithNamedArguments::class,
 			'argument_a',
-			static fn( $class, $parameter, $arguments ) => $arguments['number']
+			static fn( $class_name, $parameter, $arguments ) => $arguments['number']
 		);
 
 		$object = $injector->make( Fixture\DummyClassWithNamedArguments::class, [ 'number' => 123 ] );

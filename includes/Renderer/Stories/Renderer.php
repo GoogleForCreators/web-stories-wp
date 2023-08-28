@@ -211,7 +211,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @retrun void
 	 */
 	public function next(): void {
-		++ $this->position;
+		++$this->position;
 	}
 
 	/**
@@ -430,7 +430,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	public function render_stories_with_lightbox_amp(): void {
 		// Have to ignore this as the escaping functions are stripping off 'amp-bind' custom attribute '[class]'.
 		echo $this->lightbox_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated with properly escaped data.
-
 	}
 
 	/**
@@ -508,7 +507,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</a>
 		</div>
 		<?php
-
 	}
 
 	/**
@@ -593,7 +591,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 *
 		 * @since 1.5.0
 		 *
-		 * @param string $class Single story classes.
+		 * @param string $classes Single story classes.
 		 */
 		return apply_filters( 'web_stories_renderer_single_story_classes', $classes );
 	}
@@ -616,7 +614,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 *
 		 * @since 1.5.0
 		 *
-		 * @param string $class Single story classes.
+		 * @param string $story_styles Single story classes.
 		 */
 		return apply_filters( 'web_stories_renderer_container_styles', $story_styles );
 	}

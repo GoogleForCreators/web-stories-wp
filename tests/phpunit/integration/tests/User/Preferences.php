@@ -160,6 +160,7 @@ class Preferences extends DependencyInjectedTestCase {
 		$this->assertTrue( $data['meta'][ \Google\Web_Stories\User\Preferences::OPTIN_META_KEY ] );
 		$this->assertTrue( $data['meta'][ \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY ] );
 		$this->assertArrayHasKey( 'hello', $data['meta'][ \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY ] );
+		$this->assertIsArray( $data['meta'][ \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY ] );
 		$this->assertEqualSets( [ 'hello' => 'world' ], $data['meta'][ \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY ] );
 	}
 

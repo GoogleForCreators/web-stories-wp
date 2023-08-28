@@ -37,9 +37,7 @@ use InvalidArgumentException;
  *
  * @since 1.6.0
  */
-final class InvalidEventProperties
-	extends InvalidArgumentException
-	implements WebStoriesException {
+final class InvalidEventProperties extends InvalidArgumentException implements WebStoriesException {
 
 	/**
 	 * Create a new instance of the exception for a properties value that has

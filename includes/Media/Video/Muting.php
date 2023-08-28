@@ -183,11 +183,11 @@ class Muting extends Service_Base implements HasMeta, PluginUninstallAware {
 	 * @since 1.10.0
 	 *
 	 * @param mixed   $value  Value to updated.
-	 * @param WP_Post $object Post object to be updated.
+	 * @param WP_Post $post   Post object to be updated.
 	 * @return true|WP_Error
 	 */
-	public function update_callback_is_muted( $value, WP_Post $object ) {
-		$object_id = $object->ID;
+	public function update_callback_is_muted( $value, WP_Post $post ) {
+		$object_id = $post->ID;
 		$name      = self::IS_MUTED_REST_API_KEY;
 		$meta_key  = self::IS_MUTED_POST_META_KEY;
 

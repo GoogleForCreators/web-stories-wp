@@ -675,5 +675,4 @@ class Stories extends WP_Widget {
 
 		return (string) ob_get_clean();
 	}
-
 }

@@ -40,9 +40,9 @@ class Mock_Vendor_Invalid {
 	 * @param string $order       Order sort attribute ascending or descending.
 	 * @return array{products: array<Product>, has_next_page: bool}|WP_Error
 	 */
-	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) {
+	public function get_search( string $search_term, int $page = 1, int $per_page = 100, string $orderby = 'date', string $order = 'desc' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		$products = [];
-		for ( $x = 0; $x < $per_page; $x ++ ) {
+		for ( $x = 0; $x < $per_page; $x++ ) {
 			$products[] = new Product(
 				[
 					'id'             => wp_unique_id(),

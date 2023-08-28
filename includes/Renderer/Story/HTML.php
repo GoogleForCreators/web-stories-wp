@@ -115,7 +115,7 @@ class HTML {
 	protected function fix_malformed_script_link_tags( string $content ): string {
 		$replaced_content = preg_replace_callback(
 			'/<a[^>]+href="(?P<href>[^"]+)"[^>]*>\1<\/a>/m',
-			static function( $matches ) {
+			static function ( $matches ) {
 				if ( str_starts_with( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
 					$script_url = $matches['href'];
 

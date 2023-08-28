@@ -166,7 +166,6 @@ class Customizer extends DependencyInjectedTestCase {
 
 		$this->assertNotEmpty( $output->errors );
 		$this->assertNotEmpty( $output->errors['invalid_number'] );
-
 	}
 
 	/**
@@ -186,7 +185,6 @@ class Customizer extends DependencyInjectedTestCase {
 
 		$this->assertNotEmpty( $output->errors );
 		$this->assertNotEmpty( $output->errors['invalid_number'] );
-
 	}
 
 	/**

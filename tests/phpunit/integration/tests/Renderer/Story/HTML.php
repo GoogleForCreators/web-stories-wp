@@ -160,7 +160,7 @@ class HTML extends TestCase {
 
 		add_action(
 			'web_stories_print_analytics',
-			static function(): void {
+			static function (): void {
 				echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics>';
 			}
 		);

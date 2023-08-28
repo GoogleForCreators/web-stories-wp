@@ -216,5 +216,4 @@ abstract class Embed_Base extends Service_Base {
 		 */
 		return apply_filters( 'web_stories_embed_default_attributes', $attrs );
 	}
-
 }
