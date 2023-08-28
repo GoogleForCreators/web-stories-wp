@@ -42,7 +42,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: npm
-        working-directory: ./main
+          working-directory: ./main
 
       - name: Install dependencies
         run: npm ci
