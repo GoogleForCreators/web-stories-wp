@@ -58,6 +58,7 @@ jobs:
 
       - name: Move storybook assets
         run: |
+          rm -rf gh-pages/storybook/*
           mv build/storybook/* gh-pages/storybook/
 
       - name: Commit updates
