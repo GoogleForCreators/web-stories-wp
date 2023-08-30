@@ -57,7 +57,6 @@ class Carousel_Renderer extends TestCase {
 				'post_content' => 'Example content',
 			]
 		);
-
 	}
 
 	/**
@@ -122,7 +121,5 @@ class Carousel_Renderer extends TestCase {
 		$this->assertStringContainsString( 'web-stories-list alignnone is-view-type-carousel', $output );
 		$this->assertStringContainsString( 'web-stories-list__story', $output );
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
-
 	}
-
 }

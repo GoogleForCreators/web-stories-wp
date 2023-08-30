@@ -96,7 +96,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @return mixed|WP_Error Response data.
 	 */
 	public function mock_http_request( $preempt, $r, string $url ) {
-		++ $this->request_count;
+		++$this->request_count;
 
 		if ( false !== strpos( $url, self::URL_INVALID ) ) {
 			return $preempt;

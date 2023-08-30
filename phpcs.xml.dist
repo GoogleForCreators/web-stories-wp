@@ -4,11 +4,15 @@
 
   <rule ref="WordPress-Core">
     <type>error</type>
-    <exclude name="Generic.Arrays.DisallowShortArraySyntax" />
-    <exclude name="WordPress.PHP.DisallowShortTernary" />
+    <exclude name="Universal.Arrays.DisallowShortArraySyntax" />
+    <exclude name="Universal.Operators.DisallowShortTernary" />
     <exclude
       name="WordPress.NamingConventions.ValidPostTypeSlug.NotStringLiteral"
     />
+  </rule>
+
+  <rule ref="PSR12.Files.FileHeader.IncorrectOrder">
+    <exclude-pattern>*</exclude-pattern>
   </rule>
 
   <rule ref="WordPress-Docs">
@@ -37,6 +41,10 @@
     <exclude-pattern>tests/*</exclude-pattern>
   </rule>
 
+  <rule ref="WordPress.Security.EscapeOutput.OutputNotEscaped">
+    <exclude-pattern>includes/Infrastructure/Injector/SimpleInjector.php</exclude-pattern>
+  </rule>
+
   <rule ref="WordPress.WP.AlternativeFunctions">
      <exclude-pattern>tests/*</exclude-pattern>
   </rule>
@@ -60,7 +68,7 @@
 
   <rule ref="WordPress.NamingConventions.ValidVariableName">
     <properties>
-      <property name="customPropertiesWhitelist" type="array">
+      <property name="allowed_custom_properties" type="array">
         <element value="childNodes" />
         <element value="tagName" />
         <element value="textContent" />

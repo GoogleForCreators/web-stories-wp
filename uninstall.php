@@ -91,4 +91,3 @@ function web_stories_uninstall(): void {
 	$ws_plugin->on_site_uninstall();
 }
 add_action( 'shutdown', 'web_stories_uninstall' );
-

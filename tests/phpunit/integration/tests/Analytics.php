@@ -69,6 +69,7 @@ class Analytics extends DependencyInjectedTestCase {
 		foreach ( $actual['triggers'] as $trigger_config ) {
 			$this->assertIsArray( $trigger_config );
 			$this->assertArrayHasKey( 'vars', $trigger_config );
+			$this->assertIsArray( $trigger_config['vars'] );
 			$this->assertArrayHasKey( 'send_to', $trigger_config['vars'] );
 			$this->assertSame( $tracking_id, $trigger_config['vars']['send_to'] );
 

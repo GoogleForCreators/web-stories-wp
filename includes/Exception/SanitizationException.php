@@ -37,9 +37,7 @@ use RuntimeException;
  *
  * @since 1.10.0
  */
-final class SanitizationException
-	extends RuntimeException
-	implements WebStoriesException {
+final class SanitizationException extends RuntimeException implements WebStoriesException {
 
 	/**
 	 * Create a new instance of the exception for a document that cannot be parsed.

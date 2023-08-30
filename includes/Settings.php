@@ -412,11 +412,11 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param string $key     Setting key.
-	 * @param mixed  $default Optional. Default value to return if the option does not exist.
+	 * @param string $key           Setting key.
+	 * @param mixed  $default_value Optional. Default value to return if the option does not exist.
 	 * @return string|array<int|string,mixed>|bool|int Setting value.
 	 */
-	public function get_setting( string $key, $default = false ) {
+	public function get_setting( string $key, $default_value = false ) {
 		// Distinguish between `false` as a default, and not passing one, just like WordPress.
 		$passed_default = \func_num_args() > 1;
 
@@ -426,8 +426,8 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 			 *
 			 * @var string|array<int|string,mixed>|bool
 			 */
-			$option = get_option( $key, $default );
-			if ( $option === $default ) {
+			$option = get_option( $key, $default_value );
+			if ( $option === $default_value ) {
 				return $option;
 			}
 		} else {

@@ -57,6 +57,7 @@ function DateTime({
   onChange,
   onViewChange,
   is12Hour = true,
+  hasLeadingZeros,
   forwardedRef,
   onClose,
   canReset = false,
@@ -92,6 +93,7 @@ function DateTime({
         setLocaleData={setLocaleData}
         onChange={onChange}
         is12Hour={is12Hour}
+        hasLeadingZeros={hasLeadingZeros}
       />
       <DatePicker
         currentDate={value}
@@ -120,6 +122,7 @@ DateTime.propTypes = {
   onClose: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   is12Hour: PropTypes.bool,
+  hasLeadingZeros: PropTypes.bool,
   forwardedRef: PropTypes.object,
   canReset: PropTypes.bool,
 };

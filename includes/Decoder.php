@@ -57,16 +57,16 @@ class Decoder {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param string $string String to decode.
+	 * @param string $content String to decode.
 	 * @return string Decoded string.
 	 */
-	public function base64_decode( string $string ): string {
-		if ( str_starts_with( $string, '__WEB_STORIES_ENCODED__' ) ) {
-			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
+	public function base64_decode( string $content ): string {
+		if ( str_starts_with( $content, '__WEB_STORIES_ENCODED__' ) ) {
+			$content = str_replace( '__WEB_STORIES_ENCODED__', '', $content );
 
-			return urldecode( base64_decode( $string ) );
+			return urldecode( base64_decode( $content ) );
 		}
 
-		return $string;
+		return $content;
 	}
 }

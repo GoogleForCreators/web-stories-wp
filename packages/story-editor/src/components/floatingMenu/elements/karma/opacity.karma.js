@@ -84,6 +84,8 @@ describe('Design Menu: Opacity Input', () => {
       useStory(({ state }) => state.currentPage.elements[1].opacity)
     );
 
-    expect(finalOpacity).toBe(100);
+    // With PR#13339, For value > max will be automatically updated to be in valid range.
+    // For example: Value 20 is valid but 234 will be reverted to 34 (leading number will be discarded).
+    expect(finalOpacity).toBe(0);
   });
 });

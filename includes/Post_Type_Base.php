@@ -239,7 +239,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		$capability_name = $this->get_cap_name( $cap );
 		$capability      = false;
 		if ( $capability_name ) {
-			$capability = current_user_can( $capability_name );
+			$capability = current_user_can( $capability_name ); // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 		}
 
 		return $capability;

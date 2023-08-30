@@ -1,18 +1,7 @@
-## Context
-
-<!-- What do we want to achieve with this PR? Why did we write this code? -->
-
 ## Summary
 
 <!-- A brief description of what this PR does. -->
 
-## Relevant Technical Choices
-
-<!-- Please describe your changes. -->
-
-## To-do
-
-<!-- A list of things that need to be addressed in this PR or follow-up changes. -->
 
 ## User-facing changes
 
@@ -56,7 +45,7 @@ This PR can be tested by following these steps:
 
 <!-- Check these after PR creation -->
 
-- [ ] This PR addresses an existing issue and I have linked this PR to it in ZenHub
+- [ ] This PR addresses an existing issue and I have linked this PR to it
 - [ ] I have tested this code to the best of my abilities
 - [ ] I have verified accessibility to the best of my abilities ([docs](https://github.com/googleforcreators/web-stories-wp/blob/main/docs/accessibility-testing.md))
 - [ ] I have verified i18n and l10n (translation, right-to-left layout) to the best of my abilities

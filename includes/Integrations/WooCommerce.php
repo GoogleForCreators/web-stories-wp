@@ -67,7 +67,7 @@ class WooCommerce {
 		$link         = '';
 
 		if ( $is_active ) {
-			$can_manage = current_user_can( 'manage_woocommerce' );
+			$can_manage = current_user_can( 'manage_woocommerce' ); // phpcs:ignore WordPress.WP.Capabilities.Unknown
 			if ( $can_manage ) {
 				$link = admin_url( 'admin.php?page=wc-admin' );
 			}

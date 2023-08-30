@@ -130,5 +130,4 @@ class Story_Query extends TestCase {
 		$story_args = self::$testee->get_story_attributes();
 		$this->assertEqualSetsWithIndex( self::$default_story_args, $story_args );
 	}
-
 }

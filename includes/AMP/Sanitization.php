@@ -101,7 +101,7 @@ class Sanitization {
 	 * @param array{node?: DOMElement|DOMNode} $data Additional data, including the node.
 	 * @return bool Whether the validation error should be sanitized.
 	 */
-	public function validation_error_callback( array $error, array $data = [] ): bool {
+	public function validation_error_callback( array $error, array $data = [] ): bool { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		/**
 		 * Filters whether the validation error should be sanitized.
 		 *

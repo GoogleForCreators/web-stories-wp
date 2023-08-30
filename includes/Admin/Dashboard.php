@@ -239,11 +239,18 @@ class Dashboard extends Service_Base {
 
 		$settings = $this->get_dashboard_settings();
 
+		/**
+		 * The edit_posts capability.
+		 *
+		 * @var string $edit_posts
+		 */
+		$edit_posts = $this->story_post_type->get_cap_name( 'edit_posts' );
+
 		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
 			__( 'Dashboard', 'web-stories' ),
 			__( 'Dashboard', 'web-stories' ),
-			'edit_web-stories',
+			$edit_posts, // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 			'stories-dashboard',
 			[ $this, 'render' ],
 			0
@@ -254,7 +261,7 @@ class Dashboard extends Service_Base {
 				$parent,
 				__( 'Explore Templates', 'web-stories' ),
 				__( 'Explore Templates', 'web-stories' ),
-				'edit_web-stories',
+				$edit_posts, // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 				'stories-dashboard#/templates-gallery',
 				'__return_null',
 				1
@@ -265,7 +272,7 @@ class Dashboard extends Service_Base {
 			$parent,
 			__( 'Settings', 'web-stories' ),
 			__( 'Settings', 'web-stories' ),
-			'edit_web-stories',
+			$edit_posts, // phpcs:ignore WordPress.WP.Capabilities.Undetermined
 			'stories-dashboard#/editor-settings',
 			'__return_null',
 			20

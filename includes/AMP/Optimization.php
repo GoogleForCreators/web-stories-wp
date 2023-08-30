@@ -75,7 +75,7 @@ class Optimization {
 
 			$error_messages = array_filter(
 				array_map(
-					static function( Error $error ) {
+					static function ( Error $error ) {
 						// Hidden because amp-story is a render-delaying extension.
 						if ( 'CannotRemoveBoilerplate' === $error->getCode() ) {
 							return '';

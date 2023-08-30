@@ -29,6 +29,7 @@ use Google\Web_Stories\Tests\Integration\Mock_Vendor_Setup;
  */
 class Shopping_Vendors extends DependencyInjectedTestCase {
 	use Mock_Vendor_Setup;
+
 	/**
 	 * Test instance.
 	 */

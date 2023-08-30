@@ -110,6 +110,7 @@ describe('PageAdvancementPanel', () => {
     expect(updateStory).toHaveBeenCalledOnce();
 
     fireEvent.change(input, {
+      // Note: With PR#13339, if value exceeds max, it will remove leading character to get value into the valid range.
       target: { value: '21' },
     });
     fireEvent.blur(input);
@@ -117,7 +118,7 @@ describe('PageAdvancementPanel', () => {
     await waitFor(() =>
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          defaultPageDuration: 20,
+          defaultPageDuration: 1,
         },
       })
     );

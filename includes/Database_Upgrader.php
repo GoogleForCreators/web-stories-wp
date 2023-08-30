@@ -169,18 +169,18 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param class-string $class           The Class to call.
+	 * @param class-string $class_name The Class to call.
 	 * @param string       $version         The new version.
 	 * @param string       $current_version The current set version.
 	 */
-	protected function run_upgrade_routine( string $class, string $version, string $current_version ): void {
+	protected function run_upgrade_routine( string $class_name, string $version, string $current_version ): void {
 		if ( version_compare( $current_version, $version, '<' ) ) {
 			/**
 			 * Instance of a migration class.
 			 *
 			 * @var Migration $routine
 			 */
-			$routine = $this->injector->make( $class );
+			$routine = $this->injector->make( $class_name );
 			$routine->migrate();
 		}
 	}

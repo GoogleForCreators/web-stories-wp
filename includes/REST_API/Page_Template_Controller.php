@@ -159,7 +159,10 @@ class Page_Template_Controller extends Stories_Base_Controller {
 
 		$post_type = get_post_type_object( $this->post_type );
 
-		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
+		if (
+			! $post_type ||
+			! current_user_can( $post_type->cap->edit_posts ) // phpcs:ignore WordPress.WP.Capabilities.Undetermined
+		) {
 			return new \WP_Error(
 				'rest_forbidden_context',
 				__( 'Sorry, you are not allowed to edit page templates.', 'web-stories' ),
@@ -187,7 +190,10 @@ class Page_Template_Controller extends Stories_Base_Controller {
 
 		$post_type = get_post_type_object( $this->post_type );
 
-		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
+		if (
+			! $post_type ||
+			! current_user_can( $post_type->cap->edit_posts ) // phpcs:ignore WordPress.WP.Capabilities.Undetermined
+		) {
 			return new \WP_Error(
 				'rest_forbidden_context',
 				__( 'Sorry, you are not allowed to edit page templates.', 'web-stories' ),

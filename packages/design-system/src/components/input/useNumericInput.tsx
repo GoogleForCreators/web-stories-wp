@@ -34,7 +34,9 @@ import type { UseNumericInputProps } from './types';
 
 const useNumericInput = ({
   allowEmpty,
+  updateOnChange,
   isFloat,
+  padZero,
   max,
   min,
   onChange,
@@ -47,8 +49,8 @@ const useNumericInput = ({
   const revertToOriginal = useRef(false);
   const [currentValue, setCurrentValue] = useState(value);
   const options = useMemo(
-    () => ({ allowEmpty, isFloat, max, min }),
-    [allowEmpty, isFloat, max, min]
+    () => ({ allowEmpty, isFloat, padZero, max, min }),
+    [allowEmpty, isFloat, padZero, max, min]
   );
 
   /**
@@ -58,31 +60,112 @@ const useNumericInput = ({
     (ev: unknown) => {
       let newValue = parseInput(oldValue.current, options);
 
-      if (!revertToOriginal.current) {
+      if (!revertToOriginal.current && newValue !== null) {
         const parsedValue = parseInput(currentValue, options);
 
         if (parsedValue !== null) {
           newValue = parsedValue;
         }
+      } else if (currentValue !== null) {
+        newValue = parseInput(currentValue, options);
       }
 
       revertToOriginal.current = false;
       if (newValue !== null) {
+        // Set newly updated value.
         setCurrentValue(newValue);
         if (newValue !== oldValue.current) {
           onChange(ev, newValue);
         }
+      } else if (min !== undefined) {
+        // When new value is null and min is defined, set it to min value.
+        setCurrentValue(min);
+        onChange(ev, min);
+      } else if (!allowEmpty) {
+        // When above condition do not meet and empty values are not allowed, set value to `0`.
+        // TODO (@AnuragVasanwala): Improve this logic by considering min and max boundary.
+        setCurrentValue('0');
+        onChange(ev, '0');
+      } else {
+        // When none of the above condition met, set empty value.
+        setCurrentValue('');
+        onChange(ev, '');
       }
     },
-    [currentValue, onChange, options]
+    [allowEmpty, currentValue, min, onChange, options]
   );
 
   /**
    * Set internal state
    */
-  const handleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
-    setCurrentValue(ev.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
+      const trimmedTargetValue = ev.target.value.trim();
+      if (trimmedTargetValue === '') {
+        setCurrentValue('');
+        if (updateOnChange && allowEmpty) {
+          onChange(ev, '');
+        }
+
+        // Do not process further.
+        return;
+      } else if (!isNaN(Number(trimmedTargetValue))) {
+        // Do not process non-numeric keys.
+        // Return minimum number when string is empty.
+        if (ev.target.value === '') {
+          if (allowEmpty) {
+            setCurrentValue('');
+            if (updateOnChange) {
+              onChange(ev, '');
+            }
+
+            // Do not process further.
+            return;
+          }
+        }
+
+        // Restricts inputted string to be <= max.
+        const parsedValue = options.isFloat
+          ? parseFloat(ev.target.value)
+          : parseInt(ev.target.value);
+        if (max !== undefined && parsedValue > max) {
+          if (parsedValue > max) {
+            setCurrentValue(
+              trimmedTargetValue.charAt(trimmedTargetValue.length - 1)
+            );
+            if (updateOnChange) {
+              onChange(
+                ev,
+                Number(
+                  ev.target.value.trim().charAt(trimmedTargetValue.length - 1)
+                )
+              );
+            }
+          }
+
+          // Do not process further.
+          return;
+        }
+
+        // Determine maximum padding according to the number of characters in max number.
+        const maxPad = max !== undefined ? String(max).length : 0;
+        const paddedValue =
+          !ev.target.value.endsWith('.') && options.padZero
+            ? String(parsedValue).padStart(maxPad, '0')
+            : trimmedTargetValue;
+        setCurrentValue(paddedValue);
+        if (updateOnChange) {
+          onChange(ev, Number(paddedValue));
+        }
+      } else if (trimmedTargetValue === '-') {
+        setCurrentValue(trimmedTargetValue);
+        if (updateOnChange) {
+          onChange(ev, trimmedTargetValue);
+        }
+      }
+    },
+    [allowEmpty, max, onChange, options, updateOnChange]
+  );
 
   /**
    * Increment or decrement value using keyboard input
@@ -112,6 +195,7 @@ const useNumericInput = ({
             : Big(newValue).minus(diff).toNumber();
       }
 
+      setCurrentValue(newValue);
       onChange(ev, Number(newValue));
     },
     [currentValue, max, min, onChange, options]

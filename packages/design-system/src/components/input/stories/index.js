@@ -205,14 +205,16 @@ export const _default = {
 };
 
 export const Numeric = {
-  render: function Render({ handleOnChange, ...args }) {
+  render: function Render({ handleOnChange }) {
     const [inputState, setInputState] = useState({
       oneLight: 600,
       twoLight: 0,
-      threeLight: 1234,
+      threeLight: 96.2,
+      disabledOneLight: 1234,
       oneDark: 0,
-      twoDark: 7890,
-      threeDark: 0,
+      twoDark: 100,
+      threeDark: -1.5,
+      disabledOneDark: 0,
     });
 
     const handleChange = (ev, value) => {
@@ -234,37 +236,67 @@ export const Numeric = {
             <Text.Paragraph isBold>
               {'Normal'}
               <NumericInput
+                allowEmpty={false}
                 aria-label="input-one"
+                hint="0 to 600"
                 id="one-light"
+                isFloat={false}
+                label="Label"
+                max={600}
+                min={0}
                 name="oneLight"
-                value={inputState.oneLight}
                 onChange={handleChange}
-                {...args}
+                value={inputState.oneLight}
               />
             </Text.Paragraph>
             <Text.Paragraph isBold>
               {'Unit and Suffix'}
               <NumericInput
+                allowEmpty={false}
                 aria-label="input-two"
+                hint="0ms to 100ms"
                 id="two-light"
+                isFloat={false}
+                max={100}
+                min={0}
                 name="twoLight"
-                value={inputState.twoLight}
                 onChange={handleChange}
-                {...args}
-                unit="ms"
                 suffix="Duration"
+                unit="ms"
+                value={inputState.twoLight}
+              />
+            </Text.Paragraph>
+            <Text.Paragraph isBold>
+              {'Floating Point'}
+              <NumericInput
+                allowEmpty={false}
+                aria-label="input-three"
+                hint="92.0°F to 100°F"
+                id="three-light"
+                isFloat
+                max={100.0}
+                min={92.0}
+                name="threeLight"
+                onChange={handleChange}
+                suffix="Body Temp"
+                unit="°F"
+                value={inputState.threeLight}
               />
             </Text.Paragraph>
             <Text.Paragraph isBold>
               {'Disabled'}
               <NumericInput
+                allowEmpty={false}
                 aria-label="disabled-input-one"
-                id="three-light"
-                name="threeLight"
-                value={inputState.threeLight}
-                onChange={handleChange}
-                {...args}
                 disabled
+                hint="0 to 1234"
+                id="three-light"
+                isFloat={false}
+                max={1234}
+                min={0}
+                name="threeLight"
+                onChange={handleChange}
+                value={inputState.disabledOneLight}
               />
             </Text.Paragraph>
           </Row>
@@ -273,43 +305,60 @@ export const Numeric = {
           <Container>
             <Row>
               <NumericInput
+                allowEmpty={false}
                 aria-label="input-three"
+                hint="-10 to 10"
                 id="one-dark"
+                isFloat={false}
+                max={10}
+                min={-10}
                 name="oneDark"
+                onChange={handleChange}
                 value={inputState.oneDark}
-                onChange={handleChange}
-                {...args}
               />
               <NumericInput
+                allowEmpty={false}
                 aria-label="input-four"
+                hint="-10° to 250°"
                 id="two-dark"
+                isFloat={false}
+                max={250}
+                min={-10}
                 name="twoDark"
-                value={inputState.twoDark}
                 onChange={handleChange}
-                {...args}
-                unit="°"
                 suffix="Temp"
+                unit="°"
+                value={inputState.twoDark}
               />
               <NumericInput
-                aria-label="disabled-input-two"
-                id="three-dark"
+                allowEmpty={false}
+                aria-label="input-three"
+                hint="-1.5 to 1.5"
+                id="three-light"
+                isFloat
+                max={1.5}
+                min={-1.5}
                 name="threeDark"
-                value={inputState.threeDark}
                 onChange={handleChange}
-                {...args}
+                value={inputState.threeDark}
+              />
+              <NumericInput
+                allowEmpty={false}
+                aria-label="disabled-input-two"
                 disabled
+                hint="-10 to 10"
+                id="three-dark"
+                isFloat={false}
+                max={10}
+                min={-10}
+                name="threeDark"
+                onChange={handleChange}
+                value={inputState.disabledOneDark}
               />
             </Row>
           </Container>
         </DarkThemeProvider>
       </>
     );
-  },
-
-  args: {
-    min: 0,
-    max: 100,
-    allowEmpty: false,
-    isFloat: false,
   },
 };

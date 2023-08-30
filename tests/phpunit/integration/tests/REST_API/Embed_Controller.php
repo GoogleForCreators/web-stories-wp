@@ -111,7 +111,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 	 * @return array{response: array<string, mixed>, body?: string} Response data.
 	 */
 	public function mock_http_request( $preempt, $r, string $url ): array {
-		++ $this->request_count;
+		++$this->request_count;
 
 		if ( false !== strpos( $url, self::VALID_URL_EMPTY_DOCUMENT ) ) {
 			return [

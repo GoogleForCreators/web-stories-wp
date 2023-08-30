@@ -56,4 +56,3 @@ class BaseField extends TestCase {
 		$this->assertTrue( self::$testee->show() );
 	}
 }
-

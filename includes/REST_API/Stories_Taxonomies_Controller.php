@@ -96,7 +96,10 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 		 * @var WP_Taxonomy $value
 		 */
 		foreach ( $taxonomies as $tax_type => $value ) {
-			if ( empty( $value->show_in_rest ) || ( 'edit' === $request['context'] && ! current_user_can( $value->cap->assign_terms ) ) ) {
+			if (
+				empty( $value->show_in_rest ) ||
+				( 'edit' === $request['context'] && ! current_user_can( $value->cap->assign_terms ) ) // phpcs:ignore WordPress.WP.Capabilities.Undetermined
+			) {
 				continue;
 			}
 

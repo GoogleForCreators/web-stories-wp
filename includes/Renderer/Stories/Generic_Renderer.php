@@ -82,7 +82,7 @@ class Generic_Renderer extends Renderer {
 			<div class="web-stories-list__inner-wrapper" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
 				array_map(
-					function() {
+					function () {
 						$this->render_single_story_content();
 						$this->next();
 					},
@@ -107,5 +107,4 @@ class Generic_Renderer extends Renderer {
 		 */
 		return apply_filters( "web_stories_{$view_type}_renderer_stories_content", $content );
 	}
-
 }
