@@ -111,8 +111,9 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.34.0 =
 
-* Enhancement: compatibility with WordPress 6.3.
+* Enhancement: compatibility with WordPress 6.3. New minimum version required is 6.1.
 * Enhancement: improved plugin compatibility to reduce validation errors.
+* Enhancement: improved behavior of numeric input fields such as in the date picker.
 * Various smaller bug fixes.
 
 = 1.33.0 =
