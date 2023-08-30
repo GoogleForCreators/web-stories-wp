@@ -126,8 +126,8 @@ const NumericInput = forwardRef(function NumericInput(
     <Input
       ref={inputRef}
       onBlur={(ev) => {
-        onBlur?.(ev);    // Executes callback when supplied via props.
-        handleBlur(ev);  // Calls handleBlur which is responsible for maintaining value while moving focus to another element.
+        onBlur?.(ev); // Executes callback when supplied via props.
+        handleBlur(ev); // Calls handleBlur which is responsible for maintaining value while moving focus to another element.
       }}
       onChange={(ev) => {
         if (updateOnChange) {
