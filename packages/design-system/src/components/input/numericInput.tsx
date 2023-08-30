@@ -30,6 +30,7 @@ const NumericInput = forwardRef(function NumericInput(
   {
     allowEmpty,
     isFloat,
+    onBlur,
     onChange,
     updateOnChange,
     max,
@@ -124,8 +125,16 @@ const NumericInput = forwardRef(function NumericInput(
   return (
     <Input
       ref={inputRef}
-      onBlur={handleBlur}
-      onChange={handleChange}
+      onBlur={(ev) => {
+        onBlur?.(ev);    // Executes callback when supplied via props.
+        handleBlur(ev);  // Calls handleBlur which is responsible for maintaining value while moving focus to another element.
+      }}
+      onChange={(ev) => {
+        if (updateOnChange) {
+          onChange?.(ev); // Executes callback when supplied via props.
+        }
+        handleChange(ev); // Calls handleChange which is responsible for changing value.
+      }}
       value={paddedValue}
       isIndeterminate={isIndeterminate && originalIsIndeterminate}
       {...props}

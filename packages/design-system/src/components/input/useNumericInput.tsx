@@ -103,7 +103,7 @@ const useNumericInput = ({
       const trimmedTargetValue = ev.target.value.trim();
       if (trimmedTargetValue === '') {
         setCurrentValue('');
-        if (updateOnChange) {
+        if (updateOnChange && allowEmpty) {
           onChange(ev, '');
         }
 
