@@ -31,6 +31,7 @@ export interface AbstractNumericInputProps extends ParseInputProps {
   onChange: (evt: unknown, val: InputValue) => void;
   value: InputValue;
   padZero?: boolean;
+  updateOnChange?: boolean;
 }
 
 export interface UseNumericInputProps extends AbstractNumericInputProps {

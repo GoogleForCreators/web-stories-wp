@@ -228,7 +228,7 @@ describe('useNumericInput', () => {
             onChange: mockOnChange,
             max,
             min,
-            value: 1,
+            value: 0,
           })
         );
 

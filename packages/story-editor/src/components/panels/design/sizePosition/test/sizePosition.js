@@ -471,7 +471,8 @@ describe('panels/SizePosition', () => {
     it('should update height with lock ratio and extrapolated size and reset to max allowed', () => {
       const { pushUpdate, submit } = renderSizePosition([image]);
       const input = screen.getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '2000' } });
+      // Note: With PR#13339, value 200 is accepted but 2000 will be reverted to 0.
+      fireEvent.change(input, { target: { value: '1000' } });
       fireEvent.blur(input);
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({
