@@ -33,7 +33,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
       - name: Setup Node
         uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8
@@ -50,7 +50,7 @@ jobs:
         run: npm run storybook:build
 
       - name: Checkout gh-pages
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
         with:
           ref: gh-pages
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
