@@ -257,6 +257,31 @@
     }
   },
   {
+    "family": "ADLaM Display",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2140,
+      "des": -532,
+      "tAsc": 2140,
+      "tDes": -532,
+      "tLGap": 0,
+      "wAsc": 2140,
+      "wDes": 532,
+      "xH": 1118,
+      "capH": 1434,
+      "yMin": -526,
+      "yMax": 2034,
+      "hAsc": 2140,
+      "hDes": -532,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Advent Pro",
     "fallbacks": ["sans-serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -2436,7 +2461,7 @@
   },
   {
     "family": "Arbutus",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -5083,7 +5108,7 @@
   },
   {
     "family": "Bevan",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular", "italic"],
     "variants": [
@@ -5111,7 +5136,7 @@
   },
   {
     "family": "BhuTuka Expanded One",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -5302,8 +5327,8 @@
       "wDes": 730,
       "xH": 1200,
       "capH": 1600,
-      "yMin": -411,
-      "yMax": 2220,
+      "yMin": -414,
+      "yMax": 2302,
       "hAsc": 1968,
       "hDes": -426,
       "lGap": 0
@@ -5750,7 +5775,7 @@
   },
   {
     "family": "Black And White Picture",
-    "fallbacks": ["sans-serif"],
+    "fallbacks": ["cursive"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -6249,6 +6274,39 @@
       "yMax": 1077,
       "hAsc": 1077,
       "hDes": -281,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bricolage Grotesque",
+    "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700, 800],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 930,
+      "des": -270,
+      "tAsc": 930,
+      "tDes": -270,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 400,
+      "xH": 517,
+      "capH": 660,
+      "yMin": -340,
+      "yMax": 1126,
+      "hAsc": 930,
+      "hDes": -270,
       "lGap": 0
     }
   },
@@ -10572,7 +10630,7 @@
       "xH": 472,
       "capH": 731,
       "yMin": -237,
-      "yMax": 1057,
+      "yMax": 1074,
       "hAsc": 1027,
       "hDes": -237,
       "lGap": 0
@@ -13865,8 +13923,8 @@
       "wDes": 420,
       "xH": 550,
       "capH": 700,
-      "yMin": -330,
-      "yMax": 1078,
+      "yMin": -328,
+      "yMax": 1132,
       "hAsc": 968,
       "hDes": -226,
       "lGap": 0
@@ -14629,7 +14687,7 @@
   },
   {
     "family": "Graduate",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -15969,7 +16027,7 @@
   },
   {
     "family": "Hubballi",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -16786,7 +16844,7 @@
       "xH": 1046,
       "capH": 1400,
       "yMin": -502,
-      "yMax": 2014,
+      "yMax": 2025,
       "hAsc": 1900,
       "hDes": -500,
       "lGap": 0
@@ -18710,7 +18768,7 @@
   },
   {
     "family": "Khmer",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -18961,7 +19019,7 @@
   },
   {
     "family": "Koh Santepheap",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [100, 300, 400, 700, 900],
     "styles": ["regular"],
     "variants": [
@@ -21578,7 +21636,7 @@
   },
   {
     "family": "M PLUS 1 Code",
-    "fallbacks": ["sans-serif"],
+    "fallbacks": ["monospace"],
     "weights": [100, 200, 300, 400, 500, 600, 700],
     "styles": ["regular"],
     "variants": [
@@ -21878,7 +21936,7 @@
   },
   {
     "family": "Maiden Orange",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -22808,7 +22866,7 @@
       "xH": 960,
       "capH": 960,
       "yMin": -91,
-      "yMax": 963,
+      "yMax": 985,
       "hAsc": 1056,
       "hDes": -96,
       "lGap": 0
@@ -23482,7 +23540,7 @@
   },
   {
     "family": "Mirza",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400, 500, 600, 700],
     "styles": ["regular"],
     "variants": [
@@ -23982,8 +24040,8 @@
       "wDes": 318,
       "xH": 518,
       "capH": 682,
-      "yMin": -312,
-      "yMax": 1122,
+      "yMin": -262,
+      "yMax": 1113,
       "hAsc": 982,
       "hDes": -300,
       "lGap": 0
@@ -24232,7 +24290,7 @@
   },
   {
     "family": "Moulpali",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -24704,8 +24762,8 @@
       "wDes": 445,
       "xH": 510,
       "capH": 700,
-      "yMin": -322,
-      "yMax": 1110,
+      "yMin": -381,
+      "yMax": 1109,
       "hAsc": 1145,
       "hDes": -445,
       "lGap": 0
@@ -24867,7 +24925,7 @@
   },
   {
     "family": "Nanum Gothic Coding",
-    "fallbacks": ["monospace"],
+    "fallbacks": ["cursive"],
     "weights": [400, 700],
     "styles": ["regular"],
     "variants": [
@@ -24949,7 +25007,7 @@
   },
   {
     "family": "Narnoor",
-    "fallbacks": ["serif"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -27031,14 +27089,17 @@
   {
     "family": "Noto Sans HK",
     "fallbacks": ["sans-serif"],
-    "weights": [100, 300, 400, 500, 700, 900],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
     "styles": ["regular"],
     "variants": [
       [0, 100],
+      [0, 200],
       [0, 300],
       [0, 400],
       [0, 500],
+      [0, 600],
       [0, 700],
+      [0, 800],
       [0, 900]
     ],
     "service": "fonts.google.com",
@@ -27079,7 +27140,7 @@
       "xH": 536,
       "capH": 714,
       "yMin": -276,
-      "yMax": 900,
+      "yMax": 995,
       "hAsc": 1069,
       "hDes": -293,
       "lGap": 0
@@ -27129,7 +27190,7 @@
       "xH": 536,
       "capH": 760,
       "yMin": -352,
-      "yMax": 770,
+      "yMax": 995,
       "hAsc": 1069,
       "hDes": -352,
       "lGap": 0
@@ -27428,14 +27489,17 @@
   {
     "family": "Noto Sans KR",
     "fallbacks": ["sans-serif"],
-    "weights": [100, 300, 400, 500, 700, 900],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
     "styles": ["regular"],
     "variants": [
       [0, 100],
+      [0, 200],
       [0, 300],
       [0, 400],
       [0, 500],
+      [0, 600],
       [0, 700],
+      [0, 800],
       [0, 900]
     ],
     "service": "fonts.google.com",
@@ -27781,12 +27845,12 @@
       "tAsc": 724,
       "tDes": -423,
       "tLGap": 0,
-      "wAsc": 724,
+      "wAsc": 995,
       "wDes": 423,
       "xH": 536,
       "capH": 694,
       "yMin": -403,
-      "yMax": 724,
+      "yMax": 995,
       "hAsc": 724,
       "hDes": -423,
       "lGap": 0
@@ -27910,8 +27974,8 @@
       "wDes": 293,
       "xH": 536,
       "capH": 714,
-      "yMin": -21,
-      "yMax": 714,
+      "yMin": -241,
+      "yMax": 995,
       "hAsc": 1069,
       "hDes": -293,
       "lGap": 0
@@ -29005,14 +29069,17 @@
   {
     "family": "Noto Sans SC",
     "fallbacks": ["sans-serif"],
-    "weights": [100, 300, 400, 500, 700, 900],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
     "styles": ["regular"],
     "variants": [
       [0, 100],
+      [0, 200],
       [0, 300],
       [0, 400],
       [0, 500],
+      [0, 600],
       [0, 700],
+      [0, 800],
       [0, 900]
     ],
     "service": "fonts.google.com",
@@ -29682,14 +29749,17 @@
   {
     "family": "Noto Sans TC",
     "fallbacks": ["sans-serif"],
-    "weights": [100, 300, 400, 500, 700, 900],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
     "styles": ["regular"],
     "variants": [
       [0, 100],
+      [0, 200],
       [0, 300],
       [0, 400],
       [0, 500],
+      [0, 600],
       [0, 700],
+      [0, 800],
       [0, 900]
     ],
     "service": "fonts.google.com",
@@ -30653,7 +30723,7 @@
   },
   {
     "family": "Noto Serif Khitan Small Script",
-    "fallbacks": ["sans-serif"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -31721,7 +31791,7 @@
   },
   {
     "family": "Nuosu SIL",
-    "fallbacks": ["serif"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -32502,8 +32572,8 @@
       "wDes": 250,
       "xH": 515,
       "capH": 690,
-      "yMin": -207,
-      "yMax": 957,
+      "yMin": -208,
+      "yMax": 969,
       "hAsc": 790,
       "hDes": -210,
       "lGap": 250
@@ -32616,7 +32686,7 @@
   },
   {
     "family": "Padyakke Expanded One",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -33177,7 +33247,7 @@
   },
   {
     "family": "Peralta",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -34681,6 +34751,31 @@
     }
   },
   {
+    "family": "Pushster",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -250,
+      "tAsc": 1000,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 490,
+      "xH": 500,
+      "capH": 748,
+      "yMin": -490,
+      "yMax": 1000,
+      "hAsc": 1000,
+      "hDes": -250,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Qahiri",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -35558,8 +35653,8 @@
       "wDes": 305,
       "xH": 492,
       "capH": 700,
-      "yMin": -254,
-      "yMax": 1002,
+      "yMin": -264,
+      "yMax": 1004,
       "hAsc": 1018,
       "hDes": -305,
       "lGap": 0
@@ -37406,6 +37501,36 @@
     }
   },
   {
+    "family": "Ruwudu",
+    "fallbacks": ["serif"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 867,
+      "des": -741,
+      "tAsc": 867,
+      "tDes": -741,
+      "tLGap": 0,
+      "wAsc": 1500,
+      "wDes": 1200,
+      "xH": 430,
+      "capH": 660,
+      "yMin": -840,
+      "yMax": 1223,
+      "hAsc": 867,
+      "hDes": -741,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Rye",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -37545,8 +37670,8 @@
       "wDes": 439,
       "xH": 510,
       "capH": 688,
-      "yMin": -393,
-      "yMax": 1162,
+      "yMin": -398,
+      "yMax": 1167,
       "hAsc": 1135,
       "hDes": -439,
       "lGap": 0
@@ -38546,7 +38671,7 @@
   },
   {
     "family": "Share",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["sans-serif"],
     "weights": [400, 700],
     "styles": ["regular", "italic"],
     "variants": [
@@ -38838,7 +38963,7 @@
   },
   {
     "family": "Siemreap",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -40625,7 +40750,7 @@
   },
   {
     "family": "Stint Ultra Condensed",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -40650,7 +40775,7 @@
   },
   {
     "family": "Stint Ultra Expanded",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -41493,10 +41618,10 @@
       "tLGap": 0,
       "wAsc": 958,
       "wDes": 475,
-      "xH": 488,
+      "xH": 485,
       "capH": 626,
       "yMin": -394,
-      "yMax": 866,
+      "yMax": 857,
       "hAsc": 958,
       "hDes": -475,
       "lGap": 0
@@ -42879,7 +43004,7 @@
   },
   {
     "family": "Unbounded",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["sans-serif"],
     "weights": [200, 300, 400, 500, 600, 700, 800, 900],
     "styles": ["regular"],
     "variants": [
@@ -43296,7 +43421,7 @@
   },
   {
     "family": "Vast Shadow",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -43598,7 +43723,7 @@
   },
   {
     "family": "Voces",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -43945,8 +44070,43 @@
     }
   },
   {
-    "family": "Wellfleet",
+    "family": "Wavefont",
     "fallbacks": ["cursive"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1200,
+      "des": -200,
+      "tAsc": 1200,
+      "tDes": -200,
+      "tLGap": 0,
+      "wAsc": 1200,
+      "wDes": 200,
+      "xH": 0,
+      "capH": 0,
+      "yMin": -44,
+      "yMax": 1270,
+      "hAsc": 1200,
+      "hDes": -200,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Wellfleet",
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -44268,8 +44428,8 @@
       "wDes": 279,
       "xH": 500,
       "capH": 700,
-      "yMin": -235,
-      "yMax": 1063,
+      "yMin": -263,
+      "yMax": 1072,
       "hAsc": 735,
       "hDes": -200,
       "lGap": 57
@@ -45248,7 +45408,7 @@
   },
   {
     "family": "Zilla Slab Highlight",
-    "fallbacks": ["cursive"],
+    "fallbacks": ["serif"],
     "weights": [400, 700],
     "styles": ["regular"],
     "variants": [
