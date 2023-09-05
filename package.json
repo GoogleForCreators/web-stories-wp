@@ -98,7 +98,7 @@
     "@web-stories-wp/karma-puppeteer-launcher": "*",
     "@wordpress/babel-plugin-import-jsx-pragma": "^4.21.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^4.21.0",
-    "@wordpress/eslint-plugin": "^14.11.0",
+    "@wordpress/eslint-plugin": "^15.1.0",
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^2.1.1",
     "babel-jest": "^29.6.1",
