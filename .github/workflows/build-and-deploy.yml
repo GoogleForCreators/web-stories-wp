@@ -104,7 +104,7 @@ jobs:
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
+        uses: oven-sh/setup-bun@a1800f471a0bc25cddac36bb13e6f436ddf341d7
 
       - name: Bundle size check
         uses: preactjs/compressed-size-action@8119d3d31b6e57b167e09c81dfa877eada3bcb35
@@ -134,7 +134,7 @@ jobs:
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
+        uses: oven-sh/setup-bun@a1800f471a0bc25cddac36bb13e6f436ddf341d7
 
       - name: Setup PHP
         uses: shivammathur/setup-php@72ae4ccbe57f82bbe08411e84e2130bd4ba1c10f

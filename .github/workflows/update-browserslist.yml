@@ -32,7 +32,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
+        uses: oven-sh/setup-bun@a1800f471a0bc25cddac36bb13e6f436ddf341d7
 
       - name: Update db
         run: bunx browserslist@latest --update-db
