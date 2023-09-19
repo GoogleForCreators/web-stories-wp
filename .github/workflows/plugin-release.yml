@@ -268,11 +268,8 @@ jobs:
           rm -rf assets_version.txt
         continue-on-error: true
 
-      - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
       - name: Setup PHP
         uses: shivammathur/setup-php@72ae4ccbe57f82bbe08411e84e2130bd4ba1c10f
@@ -282,8 +279,7 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        run: |
-          npm ci
+        run: npm install
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
@@ -291,9 +287,6 @@ jobs:
         uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
       - name: Create release branch
         id: release_branch
@@ -385,7 +378,7 @@ jobs:
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          npx webpack --env=development
+          bunx webpack --env=development
           bun run workflow:build-plugin -- --zip web-stories-dev.zip
 
       - name: Prepare release artifacts
@@ -452,23 +445,17 @@ jobs:
           ref: main
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
-      - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_DOWNLOAD: true
-
       - name: Setup Bun
         uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
+      - name: Install dependencies
+        run: bun install
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: true
+
       # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
       - name: Update plugin version
-        run: npm run workflow:version -- --increment preminor --preid alpha
+        run: bun run workflow:version -- --increment preminor --preid alpha
 
       - name: Commit changes
         run: |

@@ -103,11 +103,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
-      - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
       - name: Bundle size check
         uses: preactjs/compressed-size-action@8119d3d31b6e57b167e09c81dfa877eada3bcb35
@@ -136,11 +133,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
-      - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
       - name: Setup PHP
         uses: shivammathur/setup-php@72ae4ccbe57f82bbe08411e84e2130bd4ba1c10f
@@ -150,7 +144,7 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
@@ -159,8 +153,6 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
       - name: Build plugin
         run: |
           bun run build:js
@@ -175,7 +167,7 @@ jobs:
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          npx webpack --env=development
+          bunx webpack --env=development
           bun run workflow:build-plugin -- --zip web-stories-dev.zip
 
       # Upload ZIP file to GCS for use in QA environment.

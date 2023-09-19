@@ -66,11 +66,8 @@ jobs:
       - name: List packages
         run: wp package list
 
-      - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
       - name: Setup PHP
         uses: shivammathur/setup-php@72ae4ccbe57f82bbe08411e84e2130bd4ba1c10f
@@ -80,8 +77,7 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        run: |
-          npm ci
+        run: bun install
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
@@ -89,9 +85,6 @@ jobs:
         uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
       - name: Build plugin
         run: bun run build:js

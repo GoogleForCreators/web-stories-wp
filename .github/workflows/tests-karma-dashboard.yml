@@ -67,17 +67,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
-      - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
       # TODO: Remove need for `npm install puppeteer`.
       - name: Install dependencies
         run: |
-          npm ci
-          npm install puppeteer
+          bun install
+          bun install puppeteer
         env:
           PUPPETEER_PRODUCT: chrome
 
@@ -92,7 +89,7 @@ jobs:
           echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
 
       - name: Run integration tests
-        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000
+        run: bun run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || bun run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000
         env:
           DISABLE_ERROR_BOUNDARIES: true
 

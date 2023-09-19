@@ -69,11 +69,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
-      - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
 
       - name: Setup Jest cache
         uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
@@ -84,8 +81,8 @@ jobs:
       # Rollup is needed for tests in `packages/migration/src` expecting `module.js`
       - name: Install dependencies
         run: |
-          npm ci
-          npx rollup --config packages/migration/rollup.config.js
+          bun install
+          bunx rollup --config packages/migration/rollup.config.js
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
@@ -97,7 +94,7 @@ jobs:
           echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
       - name: Run JavaScript unit tests
-        run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
+        run: bun run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
           SHARD: ${{ matrix.shard }}
           AMP_VALIDATOR_FILE: ${{ env.validator_file }}
