@@ -134,8 +134,8 @@ jobs:
 
       - name: Run integration tests
         run: |
-          bun run test:karma:story-editor -- --headless --viewport=1600:1000 --coverage --shard=$SHARD || \
-          bun run test:karma:story-editor:retry-failed -- --headless --viewport=1600:1000 --shard=$SHARD
+          bunx karma start karma-story-editor.config.cjs --single-run --headless --viewport=1600:1000 --coverage --shard=$SHARD || \
+          bunx karma start karma-story-editor.config.cjs --single-run --retry-failed --headless --viewport=1600:1000 --shard=$SHARD
         env:
           DISABLE_ERROR_BOUNDARIES: true
           SHARD: ${{ matrix.shard }}

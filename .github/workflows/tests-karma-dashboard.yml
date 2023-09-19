@@ -95,7 +95,9 @@ jobs:
           echo "chromium_path=${CHROMIUM}" >> $GITHUB_ENV
 
       - name: Run integration tests
-        run: bun run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || bun run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000
+        run: |
+          bunx karma start karma-dashboard.config.cjs --single-run --headless --viewport=1600:1000 --coverage || \
+          bunx karma start karma-dashboard.config.cjs --single-run --retry-failed --headless --viewport=1600:1000
         env:
           DISABLE_ERROR_BOUNDARIES: true
 
