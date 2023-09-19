@@ -94,7 +94,7 @@ jobs:
           echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
       - name: Run JavaScript unit tests
-        run: bunx jest --config=tests/js/jest.config.js--runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
+        run: bunx jest --config=tests/js/jest.config.js --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
           SHARD: ${{ matrix.shard }}
           AMP_VALIDATOR_FILE: ${{ env.validator_file }}
