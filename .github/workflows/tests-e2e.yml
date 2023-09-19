@@ -171,8 +171,14 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@a1800f471a0bc25cddac36bb13e6f436ddf341d7
 
+      - name: Setup Node
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
       - name: Install dependencies
-        run: bun install puppeteer
+        run: npm install puppeteer
         env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
@@ -197,11 +203,12 @@ jobs:
           echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
       - name: Run E2E tests
-        run: bun run test:e2e -- --shard=$SHARD
+        run: npx jest --runInBand --config=packages/e2e-tests/src/jest.config.js --shard=$SHARD
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}
           AMP_VALIDATOR_FILE: ${{ env.validator_file }}
+          JEST_PUPPETEER_CONFIG: jest-puppeteer.config.cjs
 
       - name: Stop Docker environment
         run: bun run env:stop
