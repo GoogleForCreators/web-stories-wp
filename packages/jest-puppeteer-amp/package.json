@@ -28,6 +28,6 @@
   "type": "module",
   "main": "./src/index.js",
   "dependencies": {
-    "@web-stories-wp/jest-amp": "*"
+    "@web-stories-wp/jest-amp": "file:../jest-amp"
   }
 }

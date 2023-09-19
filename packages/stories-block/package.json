@@ -30,8 +30,8 @@
     "*.css"
   ],
   "dependencies": {
-    "@googleforcreators/tracking": "*",
-    "@web-stories-wp/glider": "*",
+    "@googleforcreators/tracking": "file:../tracking",
+    "@web-stories-wp/glider": "file:../glider",
     "@wordpress/api-fetch": "^6.21.0",
     "@wordpress/block-editor": "^10.5.0",
     "@wordpress/blocks": "^11.21.0",

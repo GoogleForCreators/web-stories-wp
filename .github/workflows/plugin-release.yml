@@ -294,8 +294,6 @@ jobs:
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
-        with:
-          bun-version: '0.5.9'
 
       - name: Create release branch
         id: release_branch
@@ -467,8 +465,6 @@ jobs:
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@4573031972107e0af692492ee967d9022deafd7b
-        with:
-          bun-version: '0.5.9'
 
       # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
       - name: Update plugin version

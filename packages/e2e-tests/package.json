@@ -26,9 +26,9 @@
   },
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/e2e-test-utils": "*",
-    "@web-stories-wp/jest-puppeteer-amp": "*",
-    "@web-stories-wp/jest-resolver": "*",
+    "@web-stories-wp/e2e-test-utils": "file:../e2e-test-utils",
+    "@web-stories-wp/jest-puppeteer-amp": "file:../jest-puppeteer-amp",
+    "@web-stories-wp/jest-resolver": "file:../jest-resolver",
     "@wordpress/jest-console": "^6.7.0",
     "@wordpress/jest-puppeteer-axe": "^5.7.0",
     "babel-jest": "^29.5.0",

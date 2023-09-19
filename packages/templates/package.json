@@ -38,14 +38,14 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/i18n": "*",
-    "@googleforcreators/migration": "*",
-    "@googleforcreators/tracking": "*"
+    "@googleforcreators/i18n": "file:../i18n",
+    "@googleforcreators/migration": "file:../migration",
+    "@googleforcreators/tracking": "file:../tracking"
   },
   "devDependencies": {
-    "@googleforcreators/date": "*",
-    "@googleforcreators/elements": "*",
-    "@googleforcreators/stickers": "*",
+    "@googleforcreators/date": "file:../date",
+    "@googleforcreators/elements": "file:../elements",
+    "@googleforcreators/stickers": "file:../stickers",
     "puppeteer": "*"
   },
   "scripts": {

@@ -27,7 +27,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@ampproject/toolbox-optimizer": "^2.9.0",
-    "@googleforcreators/react": "*",
+    "@googleforcreators/react": "file:../react",
     "amphtml-validator": "1.0.35",
     "prop-types": "^15.8.1"
   }

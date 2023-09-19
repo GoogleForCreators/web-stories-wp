@@ -38,8 +38,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/elements": "*",
-    "@googleforcreators/migration": "*"
+    "@googleforcreators/elements": "file:../elements",
+    "@googleforcreators/migration": "file:../migration"
   },
   "devDependencies": {
     "puppeteer": "*"

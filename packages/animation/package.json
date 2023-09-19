@@ -39,10 +39,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/i18n": "*",
-    "@googleforcreators/media": "*",
-    "@googleforcreators/react": "*",
-    "@googleforcreators/units": "*",
+    "@googleforcreators/i18n": "file:../i18n",
+    "@googleforcreators/media": "file:../media",
+    "@googleforcreators/react": "file:../react",
+    "@googleforcreators/units": "file:../units",
     "flagged": "^2.0.8",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.11",

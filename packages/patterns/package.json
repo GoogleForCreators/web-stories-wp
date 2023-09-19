@@ -38,7 +38,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@googleforcreators/i18n": "*",
+    "@googleforcreators/i18n": "file:../i18n",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1"
   },

@@ -37,23 +37,23 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/animation": "*",
-    "@googleforcreators/design-system": "*",
-    "@googleforcreators/elements": "*",
-    "@googleforcreators/fonts": "*",
-    "@googleforcreators/i18n": "*",
-    "@googleforcreators/masks": "*",
-    "@googleforcreators/media": "*",
-    "@googleforcreators/patterns": "*",
-    "@googleforcreators/react": "*",
-    "@googleforcreators/rich-text": "*",
-    "@googleforcreators/units": "*",
-    "@googleforcreators/url": "*",
+    "@googleforcreators/animation": "file:../animation",
+    "@googleforcreators/design-system": "file:../design-system",
+    "@googleforcreators/elements": "file:../elements",
+    "@googleforcreators/fonts": "file:../fonts",
+    "@googleforcreators/i18n": "file:../i18n",
+    "@googleforcreators/masks": "file:../masks",
+    "@googleforcreators/media": "file:../media",
+    "@googleforcreators/patterns": "file:../patterns",
+    "@googleforcreators/react": "file:../react",
+    "@googleforcreators/rich-text": "file:../rich-text",
+    "@googleforcreators/units": "file:../units",
+    "@googleforcreators/url": "file:../url",
     "prop-types": "^15.8.0"
   },
   "devDependencies": {
-    "@googleforcreators/element-library": "*",
-    "@googleforcreators/test-utils": "*",
+    "@googleforcreators/element-library": "file:../element-library",
+    "@googleforcreators/test-utils": "file:../test-utils",
     "@testing-library/react": "^12.1.5",
     "flagged": "^2.0.8"
   }

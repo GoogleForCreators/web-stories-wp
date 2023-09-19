@@ -27,7 +27,7 @@
   "main": "./src/index.tsx",
   "types": "dist-types/index.d.ts",
   "dependencies": {
-    "@googleforcreators/tracking": "*",
+    "@googleforcreators/tracking": "file:../tracking",
     "@wordpress/element": "^4.20.0",
     "@wordpress/i18n": "^4.24.0",
     "flagged": "^2.0.8",

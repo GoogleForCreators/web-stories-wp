@@ -37,11 +37,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/design-system": "*",
-    "@googleforcreators/elements": "*",
-    "@googleforcreators/i18n": "*",
-    "@googleforcreators/react": "*",
-    "@googleforcreators/units": "*",
+    "@googleforcreators/design-system": "file:../design-system",
+    "@googleforcreators/elements": "file:../elements",
+    "@googleforcreators/i18n": "file:../i18n",
+    "@googleforcreators/react": "file:../react",
+    "@googleforcreators/units": "file:../units",
     "prop-types": "^15.8.0",
     "styled-components": "^5.3.11",
     "uuid": "^9.0.0"

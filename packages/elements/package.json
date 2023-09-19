@@ -37,11 +37,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/animation": "*",
-    "@googleforcreators/i18n": "*",
-    "@googleforcreators/media": "*",
-    "@googleforcreators/patterns": "*",
-    "@googleforcreators/units": "*",
+    "@googleforcreators/animation": "file:../animation",
+    "@googleforcreators/i18n": "file:../i18n",
+    "@googleforcreators/media": "file:../media",
+    "@googleforcreators/patterns": "file:../patterns",
+    "@googleforcreators/units": "file:../units",
     "prop-types": "^15.7.2",
     "uuid": "^9.0.0"
   },
