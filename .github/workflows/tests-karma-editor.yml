@@ -108,11 +108,17 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@a1800f471a0bc25cddac36bb13e6f436ddf341d7
 
+      - name: Setup Node
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
       # TODO: Remove need for `npm install puppeteer`.
       - name: Install dependencies
         run: |
           bun install
-          bun install puppeteer
+          npm install puppeteer
         env:
           PUPPETEER_PRODUCT: chrome
 
