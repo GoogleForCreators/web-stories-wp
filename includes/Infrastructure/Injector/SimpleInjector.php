@@ -279,8 +279,8 @@ final class SimpleInjector implements Injector {
 		if ( $injection_chain->is_in_chain( $interface_or_class ) ) {
 			// Circular reference detected, aborting.
 			throw FailedToMakeInstance::for_circular_reference(
-				$interface_or_class,
-				$injection_chain
+				$interface_or_class, // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				$injection_chain // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			);
 		}
 
@@ -340,7 +340,7 @@ final class SimpleInjector implements Injector {
 	 */
 	private function ensure_is_instantiable( ReflectionClass $reflection ): void {
 		if ( ! $reflection->isInstantiable() ) {
-			throw FailedToMakeInstance::for_unresolved_interface( $reflection->getName() );
+			throw FailedToMakeInstance::for_unresolved_interface( $reflection->getName() ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 	}
 
@@ -444,7 +444,7 @@ final class SimpleInjector implements Injector {
 		}
 
 		// Out of options, fail with an exception.
-		throw FailedToMakeInstance::for_unresolved_argument( $name, $class_name );
+		throw FailedToMakeInstance::for_unresolved_argument( $name, $class_name ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 	}
 
 	/**
@@ -475,7 +475,7 @@ final class SimpleInjector implements Injector {
 	 */
 	private function get_shared_instance( string $class_name ) {
 		if ( ! $this->has_shared_instance( $class_name ) ) {
-			throw FailedToMakeInstance::for_uninstantiated_shared_instance( $class_name );
+			throw FailedToMakeInstance::for_uninstantiated_shared_instance( $class_name ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 
 
@@ -513,7 +513,7 @@ final class SimpleInjector implements Injector {
 	 */
 	private function get_delegate( string $class_name ): callable {
 		if ( ! $this->has_delegate( $class_name ) ) {
-			throw FailedToMakeInstance::for_invalid_delegate( $class_name );
+			throw FailedToMakeInstance::for_invalid_delegate( $class_name ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 
 		return $this->delegates[ $class_name ];
@@ -531,7 +531,7 @@ final class SimpleInjector implements Injector {
 	 */
 	private function get_class_reflection( string $class_name ): ReflectionClass {
 		if ( ! class_exists( $class_name ) ) {
-			throw FailedToMakeInstance::for_unreflectable_class( $class_name );
+			throw FailedToMakeInstance::for_unreflectable_class( $class_name ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 
 		// There should be no ReflectionException happening because of the class existence check above.

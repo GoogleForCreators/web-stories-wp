@@ -525,7 +525,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		foreach ( $requirements as $requirement ) {
 			// Bail if it requires a service that is not recognized.
 			if ( ! \array_key_exists( $requirement, $services ) ) {
-				throw InvalidService::from_service_id( $requirement ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				throw InvalidService::from_service_id( $requirement ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			}
 
 			if ( $this->get_container()->has( $requirement ) ) {
@@ -687,7 +687,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		$service = $this->injector->make( $class_name );
 
 		if ( ! $service instanceof Service ) {
-			throw InvalidService::from_service( $service ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			throw InvalidService::from_service( $service ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 
 		return $service;
