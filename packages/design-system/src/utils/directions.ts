@@ -20,6 +20,8 @@ export enum Direction {
   Left = 'left',
 }
 
+export type CornerDirection = keyof typeof CORNER_DIRECTIONS;
+
 export const CORNER_DIRECTIONS = {
   [`${Direction.Top}_${Direction.Left}`]: `${Direction.Top}_${Direction.Left}`,
   [`${Direction.Top}_${Direction.Right}`]: `${Direction.Top}_${Direction.Right}`,

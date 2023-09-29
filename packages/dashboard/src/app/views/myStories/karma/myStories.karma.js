@@ -311,9 +311,8 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       // Wait for the debounce
       await fixture.events.sleep(500);
 
-      const storyElements = await fixture.screen.findAllByTestId(
-        /^story-context-menu-/
-      );
+      const storyElements =
+        await fixture.screen.findAllByTestId(/^story-context-menu-/);
 
       expect(storyElements.length).toEqual(
         Object.values(stories).filter(({ title }) =>

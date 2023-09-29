@@ -46,20 +46,23 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
     expect(alert).toBeInTheDocument();
   });
 
-  it(`should trigger mockHandleDismiss after ${AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX}ms`, async () => {
-    jest.useFakeTimers();
-    jest.setTimeout(AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX + 500);
+  it(
+    `should trigger mockHandleDismiss after ${AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX}ms`,
+    async () => {
+      jest.useFakeTimers();
 
-    renderWithProviders(
-      <SnackbarMessage
-        message="this is an error"
-        aria-label="aria label for my alert"
-        onDismiss={mockHandleDismiss}
-      />
-    );
-    jest.runAllTimers();
-    await waitFor(() => expect(mockHandleDismiss).toHaveBeenCalledOnce());
-  });
+      renderWithProviders(
+        <SnackbarMessage
+          message="this is an error"
+          aria-label="aria label for my alert"
+          onDismiss={mockHandleDismiss}
+        />
+      );
+      jest.runAllTimers();
+      await waitFor(() => expect(mockHandleDismiss).toHaveBeenCalledOnce());
+    },
+    AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX + 500
+  );
 
   it('should call mockHandleDismiss when the close button is clicked', () => {
     renderWithProviders(

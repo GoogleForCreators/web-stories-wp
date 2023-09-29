@@ -203,9 +203,8 @@ describe('Grid view', () => {
         fixture.screen.getAllByTestId(/^template-grid-item-/);
       expect(testTagGridItems.length).toBe(1);
       // See that we have the right grid item
-      const filterableTagTemplateId = await getTemplateIdByTitle(
-        'Filterable By Tag'
-      );
+      const filterableTagTemplateId =
+        await getTemplateIdByTitle('Filterable By Tag');
       const filterableTagTemplate = fixture.screen.getByTestId(
         new RegExp(`^template-grid-item-${filterableTagTemplateId}$`)
       );

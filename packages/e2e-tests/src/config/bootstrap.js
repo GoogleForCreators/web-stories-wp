@@ -28,9 +28,8 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
-async function clearSessionStorage() {
-  await page.evaluate(() => window.sessionStorage.clear());
-}
+// The Jest timeout is increased because these tests are a bit slow
+jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 
 expect.extend({
   toBeValidAMP,
@@ -144,9 +143,6 @@ export function addAllowedErrorMessage(message) {
  */
 const pageEvents = [];
 
-// The Jest timeout is increased because these tests are a bit slow
-jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
-
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 2000 });
 
@@ -248,6 +244,10 @@ function observeConsoleLogging() {
      **/
     console[logFunction](text);
   });
+}
+
+async function clearSessionStorage() {
+  await page.evaluate(() => window.sessionStorage.clear());
 }
 
 /**

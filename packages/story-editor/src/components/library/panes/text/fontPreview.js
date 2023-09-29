@@ -187,9 +187,8 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
         ...element,
         ...position,
       };
-      insertOpts.accessibleColors = await calculateAccessibleTextColors(
-        newElement
-      );
+      insertOpts.accessibleColors =
+        await calculateAccessibleTextColors(newElement);
     }
     insertPreset(newElement, insertOpts);
     trackEvent('insert_text_preset', { name: title });

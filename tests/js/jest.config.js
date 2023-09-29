@@ -34,7 +34,7 @@ const sharedConfig = {
   setupFiles: ['core-js'],
   // Do not transform any node_modules except use-reduction
   // See https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
-  transformIgnorePatterns: ['/node_modules/(?!(use-reduction)/)'],
+  transformIgnorePatterns: ['/node_modules/(?!(use-reduction|lib0)/)'],
   testEnvironment: 'jsdom',
   testMatch: ['**/test/**/*.{js,jsx,ts,tsx}'],
   globals: {
@@ -146,11 +146,7 @@ export default {
       ...sharedConfig,
       displayName: 'WP (node)',
       testEnvironment: 'node',
-      testMatch: [
-        '<rootDir>/packages/commander/**/test/**/*.[jt]s',
-        '<rootDir>/packages/e2e-test-utils/**/test/**/*.[jt]s',
-        '<rootDir>/packages/e2e-tests/**/test/**/*.[jt]s',
-      ],
+      testMatch: ['<rootDir>/packages/commander/**/test/**/*.[jt]s'],
     },
   ],
 };
