@@ -23,7 +23,7 @@ import { initializeTracking } from '@googleforcreators/tracking';
 /**
  * WordPress dependencies
  */
-import { StrictMode, render } from '@wordpress/element';
+import { StrictMode, createRoot } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -62,15 +62,20 @@ const initialize = (
 ) => {
   const appElement = document.getElementById(id);
 
+  if (!appElement) {
+    return;
+  }
+
   void initializeTracking('Plugin Activation');
 
-  render(
+  const root = createRoot(appElement);
+
+  root.render(
     <FlagsProvider features={flags}>
       <StrictMode>
         <App config={config} />
       </StrictMode>
-    </FlagsProvider>,
-    appElement
+    </FlagsProvider>
   );
 };
 

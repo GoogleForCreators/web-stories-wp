@@ -62,7 +62,7 @@ final class LazilyInstantiatedService implements Service {
 		$service       = $instantiation();
 
 		if ( ! $service instanceof Service ) {
-			throw InvalidService::from_service( $service ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			throw InvalidService::from_service( $service ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 
 		return $service;

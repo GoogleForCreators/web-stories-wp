@@ -718,7 +718,7 @@
         "packages/**/*.js"
       ],
       "excludedFiles": [
-        "packages/activation-notice/**/*.js",
+        "packages/activation-notice/**/*.tsx",
         "packages/i18n/**/*.js",
         "packages/stories-block/**/*.js",
         "packages/tinymce-button/**/*.js"
@@ -739,7 +739,7 @@
     },
     {
       "files": [
-        "packages/activation-notice/**/*.js",
+        "packages/activation-notice/**/*.tsx",
         "packages/stories-block/**/*.js",
         "packages/tinymce-button/**/*.js"
       ],
@@ -773,7 +773,7 @@
       "excludedFiles": [
         ".storybook/preview.js",
         "__mocks__/**/*.js",
-        "packages/activation-notice/**/*.js",
+        "packages/activation-notice/**/*.tsx",
         "packages/react/**/*.js",
         "packages/dashboard/src/karma/fixture.js",
         "packages/story-editor/src/karma/fixture/fixture.js",
@@ -800,6 +800,32 @@
     },
     {
       "files": [
+        "packages/activation-notice/**/*.tsx"
+      ],
+      "rules":{
+        "no-restricted-imports": "off",
+        "import/no-named-as-default": "off",
+        "@typescript-eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "react",
+                "message": "Use @wordpress/element instead.",
+                "allowTypeImports": true
+              },
+              {
+                "name": "react-dom",
+                "message": "Use @wordpress/element instead.",
+                "allowTypeImports": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "packages/tinymce-button/src/**/*.js"
       ],
       "globals": {
@@ -816,6 +842,15 @@
         "react/prop-types": "off",
         "eslint-comments/no-unused-disable": "off",
         "eslint-comments/require-description": "off"
+      }
+    },
+    {
+      "files": [
+        "__mocks__/**/*",
+        ".storybook/stories/**/*"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies" : "off"
       }
     },
     {

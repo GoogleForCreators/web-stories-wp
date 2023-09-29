@@ -11,6 +11,7 @@ tests export-ignore
 .* export-ignore
 *.config.cjs export-ignore
 *.config.test.cjs export-ignore
+*.lockb binary diff=lockb
 bun.lockb export-ignore
 codecov.yml export-ignore
 package.json export-ignore

@@ -1,6 +1,5 @@
 {
   "references": [
-    { "path": "packages/activation-notice" },
     { "path": "packages/animation" },
     { "path": "packages/commander" },
     { "path": "packages/dashboard" },

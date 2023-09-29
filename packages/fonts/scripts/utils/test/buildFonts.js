@@ -31,6 +31,8 @@ import { SYSTEM_FONTS } from '../constants';
 import buildFonts from '../buildFonts';
 import getFontMetrics from '../getFontMetrics';
 
+jest.spyOn(global, 'fetch').mockImplementation();
+
 jest.mock('fs');
 jest.mock('../getFontMetrics');
 

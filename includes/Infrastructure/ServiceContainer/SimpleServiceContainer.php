@@ -48,7 +48,7 @@ final class SimpleServiceContainer extends ArrayObject implements ServiceContain
 	 */
 	public function get( string $id ): Service {
 		if ( ! $this->has( $id ) ) {
-			throw InvalidService::from_service_id( $id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			throw InvalidService::from_service_id( $id ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 
 		/**

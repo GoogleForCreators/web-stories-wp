@@ -25,15 +25,15 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/components": "^22.1.0",
-    "@wordpress/compose": "^5.20.0",
-    "@wordpress/data": "^7.6.0",
-    "@wordpress/dom-ready": "^3.24.0",
-    "@wordpress/element": "^4.20.0",
-    "@wordpress/i18n": "^4.24.0",
+    "@wordpress/components": "^25.4.0",
+    "@wordpress/compose": "^6.15.0",
+    "@wordpress/data": "^9.8.0",
+    "@wordpress/dom-ready": "^3.38.0",
+    "@wordpress/element": "^5.15.0",
+    "@wordpress/i18n": "^4.38.0",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.5"
+    "@testing-library/react": "^14.0.0"
   }
 }

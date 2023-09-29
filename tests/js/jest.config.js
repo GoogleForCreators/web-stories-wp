@@ -23,23 +23,15 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('@jest/types').Config} */
-export default {
-  rootDir: '../../',
+const sharedConfig = {
+  rootDir: '.',
   resolver: '@web-stories-wp/jest-resolver',
-  transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest',
-  },
   moduleNameMapper: {
     '\\.svg': join(__dirname, '/svgrMock.js'),
     '\\.css': join(__dirname, '/styleMock.js'),
     '\\.png': join(__dirname, '/imageMock.js'),
   },
-  setupFiles: [
-    '<rootDir>/tests/js/setup-globals',
-    '<rootDir>/tests/js/setup-mocks',
-    'jest-canvas-mock',
-    'core-js',
-  ],
+  setupFiles: ['core-js'],
   // Do not transform any node_modules except use-reduction
   // See https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
   transformIgnorePatterns: ['/node_modules/(?!(use-reduction)/)'],
@@ -69,6 +61,14 @@ export default {
     'types.js',
     'rollup.config.js',
   ],
+  modulePathIgnorePatterns: [
+    '<rootDir>/build',
+    '<rootDir>/vendor',
+    '/dist-types/',
+  ],
+};
+
+export default {
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
@@ -80,15 +80,77 @@ export default {
     '!**/testUtils/**',
     '!**/stories/**',
   ],
-  modulePathIgnorePatterns: [
-    '<rootDir>/build',
-    '<rootDir>/vendor',
-    '/dist-types/',
-  ],
   reporters: [
     [
       'jest-silent-reporter',
       { useDots: true, showWarnings: true, showPaths: true },
     ],
+  ],
+  projects: [
+    {
+      ...sharedConfig,
+      displayName: 'Core (jsdom)',
+      transform: {
+        '^.+\\.[jt]sx?$': 'babel-jest',
+      },
+      setupFiles: [
+        ...sharedConfig.setupFiles,
+        '<rootDir>/tests/js/setup-globals',
+        '<rootDir>/tests/js/setup-mocks',
+        'jest-canvas-mock',
+      ],
+      testMatch: ['<rootDir>/packages/**/test/**/*.{js,jsx,ts,tsx}'],
+      testPathIgnorePatterns: [
+        ...sharedConfig.testPathIgnorePatterns,
+        '<rootDir>/packages/*/scripts',
+        '<rootDir>/packages/activation-notice',
+        '<rootDir>/packages/stories-block',
+        '<rootDir>/packages/tinymce-button',
+        '<rootDir>/packages/widget',
+        '<rootDir>/packages/e2e-test-utils',
+        '<rootDir>/packages/e2e-tests',
+      ],
+    },
+    {
+      ...sharedConfig,
+      displayName: 'Core (node)',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/packages/*/scripts/**/test/**/*.{js,ts}'],
+    },
+    {
+      ...sharedConfig,
+      displayName: 'WP (jsdom)',
+      transform: {
+        '^.+\\.[jt]sx?$': 'babel-jest',
+      },
+      setupFiles: [
+        ...sharedConfig.setupFiles,
+        '<rootDir>/tests/js/setup-globals',
+      ],
+      moduleNameMapper: {
+        ...sharedConfig.moduleNameMapper,
+        // Hacky way to grab a version of React 18 we know is installed.
+        '^react$':
+          '<rootDir>/packages/stories-block/node_modules/react/index.js',
+        '^react-dom(/.*)$':
+          '<rootDir>/packages/stories-block/node_modules/react-dom/$1',
+      },
+      testMatch: [
+        '<rootDir>/packages/activation-notice/**/test/**/*.{js,jsx,ts,tsx}',
+        '<rootDir>/packages/stories-block/**/test/**/*.{js,jsx,ts,tsx}',
+        '<rootDir>/packages/tinymce-button/**/test/**/*.{js,jsx,ts,tsx}',
+        '<rootDir>/packages/widget/**/test/**/*.{js,jsx,ts,tsx}',
+      ],
+    },
+    {
+      ...sharedConfig,
+      displayName: 'WP (node)',
+      testEnvironment: 'node',
+      testMatch: [
+        '<rootDir>/packages/commander/**/test/**/*.[jt]s',
+        '<rootDir>/packages/e2e-test-utils/**/test/**/*.[jt]s',
+        '<rootDir>/packages/e2e-tests/**/test/**/*.[jt]s',
+      ],
+    },
   ],
 };
