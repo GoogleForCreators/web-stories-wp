@@ -44,8 +44,8 @@ add_filter(
 
 add_filter(
 	'get_avatar_url',
-	static function () {
-		return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+	static function ( $url ) {
+		return set_url_scheme( $url, 'https' );
 	},
 	1
 );
