@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
+import isPropValid from '@emotion/is-prop-valid';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
-import type { StylisPlugin } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 
@@ -39,7 +39,8 @@ function App({ config }: AppProps) {
 
   return (
     <StyleSheetManager
-      stylisPlugins={isRTL ? [stylisRTLPlugin as unknown as StylisPlugin] : []}
+      stylisPlugins={isRTL ? [stylisRTLPlugin] : []}
+      shouldForwardProp={isPropValid}
     >
       <ThemeProvider theme={theme}>
         <ConfigProvider config={config}>

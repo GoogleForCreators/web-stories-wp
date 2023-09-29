@@ -29,6 +29,8 @@ import { readFileSync } from 'fs';
  */
 import getFontMetrics from '../getFontMetrics';
 
+jest.spyOn(global, 'fetch').mockImplementation();
+
 describe('getFontMetrics', () => {
   it('should return font metrics', async () => {
     global.fetch.mockImplementationOnce(() => {
