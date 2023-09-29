@@ -30,13 +30,22 @@
 
 namespace Google\Web_Stories\E2E\BlockDirectory;
 
+// Hat tip https://github.com/norcross/airplane-mode
+
 add_filter(
 	'get_avatar',
 	static function ( $avatar, $id_or_email, $size, $default, $alt ) {
-		// Hat tip https://github.com/norcross/airplane-mode
 		$image  = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 		return "<img alt='{$alt}' src='{$image}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' style='background:#eee;' />";
 	},
 	1,
 	5
+);
+
+add_filter(
+	'get_avatar_url',
+	static function () {
+		return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+	},
+	1
 );
