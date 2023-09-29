@@ -199,9 +199,8 @@ describe('Animation Panel', () => {
     );
 
     // A warning should be displayed per AMP spec - animations are disabled on first page
-    const contrastWarning = await fixture.screen.findByTestId(
-      'warningContainer'
-    );
+    const contrastWarning =
+      await fixture.screen.findByTestId('warningContainer');
 
     await expectAsync(contrastWarning).toHaveNoViolations();
   });
@@ -291,9 +290,8 @@ describe('Animation Panel', () => {
     expect(delay.disabled).toBeTrue();
 
     // A warning should be displayed per AMP spec - animations are disabled on first page
-    const contrastWarning = await fixture.screen.findByTestId(
-      'warningContainer'
-    );
+    const contrastWarning =
+      await fixture.screen.findByTestId('warningContainer');
     await expectAsync(contrastWarning).toHaveNoViolations();
   });
 });

@@ -45,6 +45,6 @@
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@types/mime": "^3.0.1"
+    "@types/mime": "^3.0.2"
   }
 }

@@ -36,10 +36,14 @@ module.exports = {
   ],
   storyIndexers: (indexers) => {
     const indexer = (fileName, opts) => {
-      const code = readFileSync(fileName, { encoding: 'utf-8' });
-      return loadCsf(code, { ...opts, fileName }).parse();
+      const code = readFileSync(fileName, {
+        encoding: 'utf-8',
+      });
+      return loadCsf(code, {
+        ...opts,
+        fileName,
+      }).parse();
     };
-
     return [
       {
         test: /stories\/.*\.js$/,
@@ -73,6 +77,7 @@ module.exports = {
   },
   docs: {
     disabled: true,
+    autodocs: true,
   },
   //eslint-disable-next-line require-await -- Negligible.
   webpackFinal: async (webpackConfig) => {
@@ -144,7 +149,6 @@ module.exports = {
         ),
       })
     );
-
     webpackConfig.plugins.push(
       new CircularDependencyPlugin({
         // exclude detection of files based on a RegExp
@@ -164,15 +168,12 @@ module.exports = {
       if (!test) {
         return false;
       }
-
       if (Array.isArray(test)) {
         return test.every((t) => t.test('.svg'));
       }
-
       return test.test('.svg');
     });
     assetRule.exclude = /\.svg/;
-
     webpackConfig.module.rules.unshift(
       {
         test: /\.svg$/,

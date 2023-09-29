@@ -19,7 +19,7 @@
  */
 import { useState } from '@googleforcreators/react';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 
 /**
  * Internal dependencies
@@ -55,8 +55,6 @@ function TelemetryBannerTestContainer(props) {
     />
   );
 }
-
-/* eslint-disable testing-library/no-await-sync-events -- See https://github.com/testing-library/eslint-plugin-testing-library/issues/567 */
 
 describe('TelemetryBanner', () => {
   it('should render visible with the checkbox unchecked', () => {
@@ -133,5 +131,3 @@ describe('TelemetryBanner', () => {
     expect(checkbox).toBeChecked();
   });
 });
-
-/* eslint-enable testing-library/no-await-sync-events */

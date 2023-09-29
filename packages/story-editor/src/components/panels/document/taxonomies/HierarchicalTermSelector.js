@@ -286,7 +286,6 @@ function HierarchicalTermSelector({
           {showAddNewCategory ? (
             <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
               <Input
-                autoFocus
                 name={taxonomy.labels.newItemName}
                 label={taxonomy.labels.newItemName}
                 value={newCategoryName}

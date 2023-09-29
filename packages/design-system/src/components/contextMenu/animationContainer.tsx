@@ -24,11 +24,16 @@ import {
 } from '@googleforcreators/react';
 import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 import styled, { css } from 'styled-components';
+
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../theme/constants';
-import { CORNER_DIRECTIONS, Direction } from '../../utils/directions';
+import {
+  CORNER_DIRECTIONS,
+  Direction,
+  type CornerDirection,
+} from '../../utils/directions';
 import { Popover, Shadow } from './styled';
 
 const PERCENTAGE_OFFSET = {
@@ -257,7 +262,11 @@ function AnimationContainer({
         ? Direction.Top
         : Direction.Bottom;
 
-    setAlign(CORNER_DIRECTIONS[`${alignVertical}_${alignHorizontal}`]);
+    setAlign(
+      CORNER_DIRECTIONS[
+        `${alignVertical}_${alignHorizontal}`
+      ] as CornerDirection
+    );
   }, [isOpen]);
 
   useEffect(() => {

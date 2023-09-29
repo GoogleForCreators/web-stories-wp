@@ -168,6 +168,9 @@ wp theme install twentytwenty --activate --force --quiet
 echo -e $(status_message "Disable block directory and remote patterns...")
 wp plugin activate web-stories-test-plugins/disable-block-directory --quiet
 
+echo -e $(status_message "Disable Gravatar...")
+wp plugin activate web-stories-test-plugins/disable-gravatar --quiet
+
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")
 wp rewrite structure '%postname%' --hard --quiet
