@@ -1,0 +1,28 @@
+diff --git a/node_modules/expect-puppeteer/dist/index.js b/node_modules/expect-puppeteer/dist/index.js
+index 9db58ab..e1718b8 100644
+--- a/node_modules/expect-puppeteer/dist/index.js
++++ b/node_modules/expect-puppeteer/dist/index.js
+@@ -4,13 +4,13 @@ const checkIsPuppeteerInstance = (instance)=>{
+     return Boolean(instance?.constructor?.name && typeof instance === "object" && "$" in instance);
+ };
+ const checkIsPage = (instance)=>{
+-    return checkIsPuppeteerInstance(instance) && instance?.constructor?.name === "CDPPage";
++    return checkIsPuppeteerInstance(instance) && (instance?.constructor?.name === "CDPPage" || instance?.constructor?.name === "CdpPage");
+ };
+ const checkIsFrame = (instance)=>{
+     return checkIsPuppeteerInstance(instance) && instance?.constructor?.name === "Frame";
+ };
+ const checkIsElementHandle = (instance)=>{
+-    return checkIsPuppeteerInstance(instance) && instance?.constructor?.name === "CDPElementHandle";
++    return checkIsPuppeteerInstance(instance) && (instance?.constructor?.name === "CDPElementHandle" || instance?.constructor?.name === "CdpElementHandle");
+ };
+ const getContext = async (instance, pageFunction)=>{
+     if (checkIsFrame(instance) || checkIsPage(instance)) {
+@@ -485,6 +485,7 @@ const expectPuppeteerInstance = (actual)=>{
+     if (checkIsElementHandle(actual)) {
+         return createExpect(actual, elementHandleMatchers);
+     }
++    console.log(actual, actual?.constructor?.name);
+     throw new Error(`${actual} is not supported`);
+ };
+ const expectPuppeteer = (actual)=>{
