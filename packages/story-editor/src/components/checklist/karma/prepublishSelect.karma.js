@@ -331,8 +331,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await fixture.events.click(thumbnail);
       await fixture.events.sleep(500);
 
-      const mediaButton = await fixture.editor.sidebar.designPanel
-        .videoAccessibility.posterMenuButton;
+      const mediaButton =
+        await fixture.editor.sidebar.designPanel.videoAccessibility
+          .posterMenuButton;
       expect(mediaButton.contains(document.activeElement)).toBeTrue();
 
       await fixture.snapshot(
@@ -372,8 +373,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       // press enter on video preview in card
       await fixture.events.keyboard.press('Enter');
 
-      const mediaButton = await fixture.editor.sidebar.designPanel
-        .videoAccessibility.posterMenuButton;
+      const mediaButton =
+        await fixture.editor.sidebar.designPanel.videoAccessibility
+          .posterMenuButton;
       expect(mediaButton.contains(document.activeElement)).toBeTrue();
 
       await fixture.snapshot(

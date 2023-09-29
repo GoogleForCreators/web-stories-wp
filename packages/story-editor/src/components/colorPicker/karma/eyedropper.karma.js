@@ -113,9 +113,8 @@ describe('Eyedropper', () => {
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
     // The bots are a little too fast, wait for eyedropper
     await fixture.events.sleep(500);
-    const eyeDropperLayer = await fixture.screen.findByTestId(
-      'eyedropperLayer'
-    );
+    const eyeDropperLayer =
+      await fixture.screen.findByTestId('eyedropperLayer');
     expect(eyeDropperLayer).toBeTruthy();
 
     const imageOnCanvas = (await getElements(fixture))[1];

@@ -53,9 +53,8 @@ describe('Text Panel: Contrast Warning', () => {
       await fixture.screen.findByRole('option', { name: '#fff' })
     );
 
-    const contrastWarning = await fixture.screen.findByTestId(
-      'warningContainer'
-    );
+    const contrastWarning =
+      await fixture.screen.findByTestId('warningContainer');
     await expectAsync(contrastWarning).toHaveNoViolations();
   });
 
