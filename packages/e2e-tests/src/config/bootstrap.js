@@ -28,6 +28,11 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Environment variables
+ */
+const { PUPPETEER_TIMEOUT, EXPECT_PUPPETEER_TIMEOUT } = process.env;
+
 // The Jest timeout is increased because these tests are a bit slow
 jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 
@@ -36,11 +41,6 @@ expect.extend({
 });
 
 expect.extend(matchers);
-
-/**
- * Environment variables
- */
-const { PUPPETEER_TIMEOUT, EXPECT_PUPPETEER_TIMEOUT } = process.env;
 
 /**
  * Set of console logging types observed to protect against unexpected yet
