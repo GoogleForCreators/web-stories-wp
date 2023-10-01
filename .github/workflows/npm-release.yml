@@ -77,7 +77,7 @@ jobs:
       # Verifies that packages can be installed without issues.
       - name: Install published packages
         run: |
-          PUBLIC_PACKAGES=$(jq -r 'select(.private == false) | .name' $(find packages -name "package.json"))
+          PUBLIC_PACKAGES=$(jq -r 'select(.private == false) | .name' $(find packages  -maxdepth 2 -name "package.json"))
           TMPDIR=${TMPDIR-/tmp}
           TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
           TEST_DIR=${TEST_DIR-$TMPDIR/packages-test}
