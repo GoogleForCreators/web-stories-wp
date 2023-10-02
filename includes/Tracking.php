@@ -237,6 +237,10 @@ class Tracking extends Service_Base {
 			'adNetwork'          => $ad_network,
 			'analytics'          => $analytics,
 			'activePlugins'      => implode( ',', $active_plugins ),
+			// This doesn't seem to be fully working for web properties.
+			// So we send it as both app_version and a user property.
+			// See https://support.google.com/analytics/answer/9268042.
+			'pluginVersion'      => WEBSTORIES_VERSION,
 		];
 	}
 }
