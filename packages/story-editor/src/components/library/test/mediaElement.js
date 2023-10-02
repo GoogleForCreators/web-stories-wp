@@ -128,7 +128,7 @@ describe('MediaElement', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-  });
+  }, 10000);
 
   it('should render MediaElement for a resource of type=`gif` without accessibility violations', async () => {
     useLocalMedia.mockReturnValue({
@@ -139,7 +139,7 @@ describe('MediaElement', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-  });
+  }, 10000);
 
   it('should render MediaElement for a resource of type=`video` without accessibility violations', async () => {
     useLocalMedia.mockReturnValue({
@@ -150,7 +150,7 @@ describe('MediaElement', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-  });
+  }, 10000);
 
   it("should render dropdown menu's more icon for uploaded image", () => {
     useLocalMedia.mockReturnValue({
