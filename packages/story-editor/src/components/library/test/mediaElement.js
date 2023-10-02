@@ -118,24 +118,39 @@ describe('MediaElement', () => {
   beforeEach(() => {
     useLocalMedia.mockReturnValue(mockedReturnValue);
   });
-  it.each`
-    type       | resource
-    ${'image'} | ${IMAGE_RESOURCE}
-    ${'video'} | ${VIDEO_RESOURCE}
-    ${'gif'}   | ${GIF_RESOURCE}
-  `(
-    'should render MediaElement for a resource of type=`$type` without accessibility violations',
-    async ({ resource }) => {
-      useLocalMedia.mockReturnValue({
-        ...mockedReturnValue,
-        canTranscodeResource: () => true,
-      });
-      const { container } = renderMediaElement(resource, 'local');
 
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
-    }
-  );
+  it('should render MediaElement for a resource of type=`image` without accessibility violations', async () => {
+    useLocalMedia.mockReturnValue({
+      ...mockedReturnValue,
+      canTranscodeResource: () => true,
+    });
+    const { container } = renderMediaElement(IMAGE_RESOURCE, 'local');
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('should render MediaElement for a resource of type=`gif` without accessibility violations', async () => {
+    useLocalMedia.mockReturnValue({
+      ...mockedReturnValue,
+      canTranscodeResource: () => true,
+    });
+    const { container } = renderMediaElement(GIF_RESOURCE, 'local');
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('should render MediaElement for a resource of type=`video` without accessibility violations', async () => {
+    useLocalMedia.mockReturnValue({
+      ...mockedReturnValue,
+      canTranscodeResource: () => true,
+    });
+    const { container } = renderMediaElement(VIDEO_RESOURCE, 'local');
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 
   it("should render dropdown menu's more icon for uploaded image", () => {
     useLocalMedia.mockReturnValue({
