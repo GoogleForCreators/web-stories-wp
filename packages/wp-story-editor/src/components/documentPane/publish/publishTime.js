@@ -102,7 +102,7 @@ function PublishTime() {
 
   // Floating date means an unset date so that the story publish date will match the time it will get published.
   const floatingDate =
-    ['draft', 'pending', 'auto-draft'].includes(status) &&
+    ['draft', 'pending', 'auto-draft', 'future'].includes(status) &&
     (date === modified || date === null);
 
   const displayLabel = !floatingDate
@@ -151,7 +151,7 @@ function PublishTime() {
             forwardedRef={dateTimeNode}
             onClose={() => setShowDatePicker(false)}
             canReset={
-              ['draft', 'pending', 'auto-draft'].includes(status) &&
+              ['draft', 'pending', 'auto-draft', 'future'].includes(status) &&
               !floatingDate
             }
           />
