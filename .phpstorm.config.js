@@ -51,7 +51,6 @@ System.config({
     '@web-stories-wp/e2e-test-utils': './packages/e2e-test-utils/src',
     '@web-stories-wp/eslint-import-resolver': './packages/eslint-import-resolver/src',
     '@web-stories-wp/glider': './packages/glider/src',
-    '@web-stories-wp/imgareaselect': './packages/imgareaselect/src',
     '@web-stories-wp/jest-amp': './packages/jest-amp/src',
     '@web-stories-wp/jest-puppeteer-amp': './packages/jest-puppeteer-amp/src',
     '@web-stories-wp/jest-resolver': './packages/jest-resolver/src',

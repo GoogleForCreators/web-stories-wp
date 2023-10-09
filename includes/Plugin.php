@@ -90,7 +90,6 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
 		'integrations.shortpixel'      => Integrations\ShortPixel::class,
-		'imgareaselect_patch'          => Admin\ImgAreaSelect_Patch::class,
 		'kses'                         => KSES::class,
 		'font_post_type'               => Font_Post_Type::class,
 		'page_template_post_type'      => Page_Template_Post_Type::class,
