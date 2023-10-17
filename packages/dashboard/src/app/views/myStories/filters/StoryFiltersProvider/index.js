@@ -45,7 +45,7 @@ export const filterContext = createContext({
  * Keeps track of the current filters state.
  *
  * Each filter will have its own logic associated with
- * initilization and how to query terms.
+ * initialization and how to query terms.
  *
  * state.filters should be used for UI.
  * state.filtersObject should hold the key value pairs associated with filtering query params
@@ -58,7 +58,7 @@ export const filterContext = createContext({
  */
 
 export default function StoryFiltersProvider({ children }) {
-  // each filter type will have its own logic for initilizing and querying
+  // each filter type will have its own logic for initializing and querying
   const initializeTaxonomyFilters = useTaxonomyFilters();
   const initializeAuthorFilter = useAuthorFilter();
 

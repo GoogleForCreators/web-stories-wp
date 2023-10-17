@@ -72,10 +72,10 @@ const wrapWithDispatch = (actionFnOrActionObject, dispatch) => {
 /**
  * The media state reducer and action dispatcher functions.
  *
- * @param {Function} reducer The reducer, which may be overriden for unit
+ * @param {Function} reducer The reducer, which may be overridden for unit
  * testing purposes
  * @param {Object} actionsToWrap The action dispatcher functions, that are
- * wrapped with the `dispatch` function and may be overriden for unit testing
+ * wrapped with the `dispatch` function and may be overridden for unit testing
  * purposes
  * @return {MediaReducer} Media reducer object.
  */

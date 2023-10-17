@@ -184,7 +184,7 @@ module.exports = function (config) {
     // Sharding configuration for CI.
     // We trick karma-parallel into using only 1 browser (parallelOptions.executors === 1)
     // while using a custom strategy that splits up the tests into multiple shards (config.executors > 1).
-    // This allows us to run ony a subset of the tests like so:
+    // This allows us to run only a subset of the tests like so:
     // npm run test:karma:story-editor -- --headless --shard=1/3 # Run the first of 3 desired shards.
     parallelOptions: {
       shardStrategy: config.shard ? 'custom' : 'round-robin',

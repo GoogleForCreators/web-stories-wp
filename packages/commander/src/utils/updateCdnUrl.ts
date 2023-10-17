@@ -24,7 +24,7 @@ const CDN_URL_CONSTANT_REGEX =
   /define\(\s*'WEBSTORIES_CDN_URL',\s*'([^']*)'\s*\);/;
 
 /**
- * Updates CDN URL in thhe main plugin file.
+ * Updates CDN URL in the main plugin file.
  *
  * Namely, this updates the `WEBSTORIES_CDN_URL` constant in the main plugin file.
  *

@@ -47,7 +47,7 @@ export function AnimationZoom({
   // If supplied a transformOrigin, AMP doesn't allow us to set
   // the transformOrigin property from the keyframes since it is
   // an unanimatable property. To account for this we calculate a
-  // counter translate based off the scale change that mimicks the
+  // counter translate based off the scale change that mimics the
   // element scaling from a particular origin.
   if (transformOrigin) {
     // transformOrigin default is `50% 50%` so we account for

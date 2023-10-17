@@ -41,7 +41,7 @@ import { isStyle, getVariable } from './util';
 
 /*
  * Color uses PREFIX-XXXXXXXX where XXXXXXXX is the 8 digit
- * hex represenation of the RGBA color.
+ * hex representation of the RGBA color.
  */
 const styleToColor = (style: string): Pattern =>
   getSolidFromHex(getVariable(style, COLOR));

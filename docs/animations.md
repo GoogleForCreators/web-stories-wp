@@ -22,7 +22,7 @@ const sampleAnimationObject = {
 };
 ```
 
-These objects are managed within the story reducer and passed to the animation provider. The animation provider then generates animations by passing this data to the function `AnimationPart(..)` located in `packages/animation/src/parts/index.js`. `AnimationPart(..)` maps the animations instanciation args to a generator function that will generate keyframes, WAAPI animation targets, AMP animation targets, etc.
+These objects are managed within the story reducer and passed to the animation provider. The animation provider then generates animations by passing this data to the function `AnimationPart(..)` located in `packages/animation/src/parts/index.js`. `AnimationPart(..)` maps the animations instantiation args to a generator function that will generate keyframes, WAAPI animation targets, AMP animation targets, etc.
 
 ### Animation Parts & Animation Effects
 
@@ -69,13 +69,13 @@ Target DOM elements are applied to story element components through animation wr
 
 ### Single Animation Target
 
-In early specs for animations, we allowed a single animation to have mutliple targets (be applied to mulitple elements), since then, we have changed this spec to only allow an animation to have a single target element. This new spec is manually enforced in the editor code between the story reducer and the animation effect chooser. 
+In early specs for animations, we allowed a single animation to have multiple targets (be applied to multiple elements), since then, we have changed this spec to only allow an animation to have a single target element. This new spec is manually enforced in the editor code between the story reducer and the animation effect chooser. 
 
 Remnants of this scope change can be seen in the serializable animation objects held in the story reducer state. These animations still take an array of targets even though that array should only ever hold one target while in use in the editor.
 
 ### Early Timeline Prototype
 
-For the intial animation & template implementation we were supporting very complex animations for the templates. Creating these template animations necessitated an internal timeline tool to compose animation parts manually on each template. Since then, we've simplified animations for users and tried to make them parallel the AMP Story Animation presets
+For the initial animation & template implementation we were supporting very complex animations for the templates. Creating these template animations necessitated an internal timeline tool to compose animation parts manually on each template. Since then, we've simplified animations for users and tried to make them parallel the AMP Story Animation presets
 
 If we do introduce an animation timeline to the editor in the future, here's the reference to the PR where we took out the internal timeline tool:
 [#7067](https://github.com/GoogleForCreators/web-stories-wp/pull/7067)

@@ -45,7 +45,7 @@ export default {
   },
   argTypes: {
     onMenuItemClick: { action: 'onMenuItemClick' },
-    onDismissMenu: { action: 'onDismissMenu occured' },
+    onDismissMenu: { action: 'onDismissMenu occurred' },
   },
 };
 

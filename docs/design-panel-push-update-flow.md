@@ -40,7 +40,7 @@ flowchart TB
                     A[pushUpdate or pushUpdateForObject] --> |update, submit| B[[setElementUpdates - Add update to update queue]]
                     B -->|submit == false| C[elementUpdates - locally stored updates]
                     B --> |submit == true| D[submit]
-                    D --> J[[setTimout to dispatch 'submit' event]]
+                    D --> J[[setTimeout to dispatch 'submit' event]]
                 end
             end
         end

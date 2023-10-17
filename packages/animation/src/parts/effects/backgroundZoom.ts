@@ -71,7 +71,7 @@ export function EffectBackgroundZoom(
   const normalizedDelta = progress(50, { MIN: 0, MAX: BG_MAX_SCALE });
   // Interpret the normalized delta into the compounded scale coordinate space.
   const delta = lerp(normalizedDelta, { MIN: 0, MAX: range.MAX });
-  // Apply the interpretted fixed delta to the elements scale
+  // Apply the interpreted fixed delta to the elements scale
   const zoomFrom =
     1 + (zoomDirection === ScaleDirection.ScaleOut ? 1 : -1) * delta;
 

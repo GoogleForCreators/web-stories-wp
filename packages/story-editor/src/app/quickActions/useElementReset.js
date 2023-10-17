@@ -67,8 +67,8 @@ function useElementReset() {
 
       if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
         // this is the only place where we're updating both animations and other
-        // properties on an element. updateElementsById only accepts if you upate
-        // one or the other, so we're upating animations if needed here separately
+        // properties on an element. updateElementsById only accepts if you update
+        // one or the other, so we're updating animations if needed here separately
         updateElementsById({
           elementIds: [elementId],
           properties: (currentProperties) =>

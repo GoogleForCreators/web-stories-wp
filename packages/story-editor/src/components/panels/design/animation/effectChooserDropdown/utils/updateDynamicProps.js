@@ -24,7 +24,7 @@ import {
 } from '@googleforcreators/animation';
 
 const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
-  // we don't want to have a disbaled direction initially selected either.
+  // we don't want to have a disabled direction initially selected either.
   const panDirection =
     animation.panDirection && !disabledOptions.includes(animation.panDirection)
       ? animation.panDirection
@@ -36,7 +36,7 @@ const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
     case BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value:
       return {
         ...animation,
-        // Defautl zoomDirection to scale in unless disabled
+        // Default zoomDirection to scale in unless disabled
         zoomDirection: disabledOptions.includes(ScaleDirection.ScaleIn)
           ? ScaleDirection.ScaleOut
           : ScaleDirection.ScaleIn,

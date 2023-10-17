@@ -40,18 +40,18 @@ function insertStop(stops, newPosition) {
   }
 
   // Find the two stops surrounding the new stop
-  const preceeding = stops[followingIndex - 1];
+  const preceding = stops[followingIndex - 1];
   const following = stops[followingIndex];
 
-  // Find the ratio the new stop is from the preceeding stop
-  const diffNewToPreceeding = newPosition - preceeding.position;
-  const diffFollowingToPreceeding = following.position - preceeding.position;
-  const ratio = diffNewToPreceeding / diffFollowingToPreceeding;
+  // Find the ratio the new stop is from the preceding stop
+  const diffNewTopreceding = newPosition - preceding.position;
+  const diffFollowingTopreceding = following.position - preceding.position;
+  const ratio = diffNewTopreceding / diffFollowingTopreceding;
 
   // Mix the two colors by that amount:
   const {
     color: { r: pr, g: pg, b: pb, a: pa = 1 },
-  } = preceeding;
+  } = preceding;
   const {
     color: { r: fr, g: fg, b: fb, a: fa = 1 },
   } = following;

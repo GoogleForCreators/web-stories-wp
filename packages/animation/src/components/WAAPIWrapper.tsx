@@ -76,7 +76,7 @@ function WAAPIWrapper({ children, target }: WrapperProps) {
   // and not generate a new subtree of DOM nodes:
   // https://github.com/facebook/react/issues/3965
   //
-  // To Accomodate for this, we're setting a max of 3 levels deep. All stories built recently should
+  // To Accommodate for this, we're setting a max of 3 levels deep. All stories built recently should
   // only have 1 animation per element, however this allows for backward compatibility with old stories
   // created from legacy templates that use stacked animation parts on single elements
   return (

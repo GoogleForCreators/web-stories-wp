@@ -43,7 +43,7 @@ Once expensive renders are identified in the flame graph from the React Profilin
 
 ## Using Context Performantly
 
-All of our context is held using the [use-context-selector](https://github.com/dai-shi/use-context-selector) package, and we have a small layer around it that allows it to use shallow equality vs referencial equality to detect if a component should re-render based on the return value of its selector. You can see this code in `packages/react/src/useContextSelector.js`.
+All of our context is held using the [use-context-selector](https://github.com/dai-shi/use-context-selector) package, and we have a small layer around it that allows it to use shallow equality vs referential equality to detect if a component should re-render based on the return value of its selector. You can see this code in `packages/react/src/useContextSelector.js`.
 
 As a general rule of thumb, it is best practice to pull only essential data needed for your component through a selector when using `useContextSelector(...)`. This practice helps eliminate empty/extraneous renders induced from context. [Read more about it here](https://github.com/GoogleForCreators/web-stories-wp/issues/2662#issuecomment-1011372651).
 
@@ -51,6 +51,6 @@ As a general rule of thumb, it is best practice to pull only essential data need
 
 There is always a chance for performance regressions as features get altered and added. The main regression to watch out for in the story editor is where a component is rendered for every element in state. Examples of this include the Display Layer, the Frames Layer, the Layer Panel. It should be verified that not every instance of said component re-renders when only one or a few of those element components needs updating. All these components are prone to large performance regressions if hooks or props pass data around unwisely.
 
-It would be beneficial to audit these components from time to time in the react profiler. An audit can be as simple as recording an update to selection, or updating the position of a single element. If the react flame graph indicates that this is causing every element to re-render vs only the effected elements, a large performance regression has occured.
+It would be beneficial to audit these components from time to time in the react profiler. An audit can be as simple as recording an update to selection, or updating the position of a single element. If the react flame graph indicates that this is causing every element to re-render vs only the effected elements, a large performance regression has occurred.
 
 Be sure to check for this regression on PRs that effect display elements, frame elements, layers in the layers panel, or any story state hooks.

@@ -19,7 +19,7 @@ In order to be able to add new assets, you have to [install Git LFS](https://doc
 
 You can download it from [git-lfs.github.com](https://git-lfs.github.com/) (or use `brew install git-lfs` if you're on Mac).
 
-Verify that the installation was succcessful:
+Verify that the installation was successful:
 
 ```bash
 $ git lfs install

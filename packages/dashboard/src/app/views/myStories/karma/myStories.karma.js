@@ -354,7 +354,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       // key down to the bottom of the available search options
       // plus once more beyond available search options to make sure focus stays intact
       for (let iter = 0; iter < activeListItems.length + 1; iter++) {
-        // disable eslint to prevet overlapping .act calls
+        // disable eslint to prevent overlapping .act calls
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('down');
       }
