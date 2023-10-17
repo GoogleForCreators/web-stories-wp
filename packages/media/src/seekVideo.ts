@@ -36,7 +36,7 @@ function seekVideo(video: HTMLVideoElement, offset = 0.99): Promise<void> {
       }, THREE_SECONDS);
     });
     video.addEventListener('error', reject);
-    video.addEventListener('sought', () => resolve(), { once: true });
+    video.addEventListener('seeked', () => resolve(), { once: true });
 
     video.currentTime = offset;
   });
