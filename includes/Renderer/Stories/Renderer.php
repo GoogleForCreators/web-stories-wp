@@ -208,7 +208,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @retrun void
+	 * @return void
 	 */
 	public function next(): void {
 		++$this->position;

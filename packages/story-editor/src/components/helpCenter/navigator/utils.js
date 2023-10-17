@@ -53,7 +53,7 @@ export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
   // change to the animated property. This prevents any
   // content flash.
   //
-  // Only way to guarentee the frame after styles
+  // Only way to guarantee the frame after styles
   // get applied is to do 2 frames from now.
   let id = requestAnimationFrame(() => {
     id = requestAnimationFrame(() => {

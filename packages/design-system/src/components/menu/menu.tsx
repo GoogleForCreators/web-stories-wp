@@ -70,15 +70,15 @@ function Menu({
       return;
     }
 
-    const highlighedOptionEl = optionsRef.current[focusedIndex];
-    if (!highlighedOptionEl) {
+    const highlightedOptionEl = optionsRef.current[focusedIndex];
+    if (!highlightedOptionEl) {
       return;
     }
 
-    highlighedOptionEl.focus();
+    highlightedOptionEl.focus();
     listEl.scrollTo?.(
       0,
-      highlighedOptionEl.offsetTop - listEl.clientHeight / 2
+      highlightedOptionEl.offsetTop - listEl.clientHeight / 2
     );
   }, [focusedIndex, isMenuFocused]);
 

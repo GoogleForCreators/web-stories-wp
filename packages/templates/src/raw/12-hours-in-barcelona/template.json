@@ -401,7 +401,7 @@
           "lineHeight": 1,
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">The writter</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.01em; text-transform: uppercase\">The writer</span>",
           "borderRadius": {
             "locked": true,
             "topLeft": 2,
@@ -3031,7 +3031,7 @@
             "width": 330,
             "height": 494,
             "id": 0,
-            "alt": "Interior of a railway staion like building",
+            "alt": "Interior of a railway station like building",
             "sizes": [],
             "isOptimized": false,
             "baseColor": "#1f1f1b",

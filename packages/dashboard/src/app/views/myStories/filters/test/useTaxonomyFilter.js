@@ -90,7 +90,7 @@ jest.mock('../../../../api/useApi', () => {
 });
 
 describe('useTaxonomyFilters', () => {
-  it('should initilize the hierarchial taxonomy filters data only', async () => {
+  it('should initialize the hierarchial taxonomy filters data only', async () => {
     const {
       result: { current: initializeTaxonomyFilters },
     } = renderHook(() => useTaxonomyFilters());
@@ -114,21 +114,21 @@ describe('useTaxonomyFilters', () => {
   });
 
   describe('initializeTaxonomyFilters', () => {
-    let initailize;
+    let initialize;
     beforeEach(async () => {
       const {
         result: { current: initializeTaxonomyFilters },
       } = renderHook(() => useTaxonomyFilters());
 
-      initailize = initializeTaxonomyFilters;
+      initialize = initializeTaxonomyFilters;
 
       // flush promise queue
       await act(() => Promise.resolve());
     });
 
-    it('should initilize taxonomy filters data', async () => {
+    it('should initialize taxonomy filters data', async () => {
       // initialize filters
-      const filters = await initailize();
+      const filters = await initialize();
       expect(filters).toHaveLength(2);
 
       const filter1 = filters.at(0);
@@ -139,7 +139,7 @@ describe('useTaxonomyFilters', () => {
     });
 
     it('should use the correct taxonomy for getPrimaryOptions and query', async () => {
-      const filters = await initailize();
+      const filters = await initialize();
       const filter1 = filters.at(0);
       const filter2 = filters.at(1);
 

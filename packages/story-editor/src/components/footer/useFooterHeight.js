@@ -28,7 +28,7 @@ import {
 import { FOOTER_TOP_MARGIN } from './constants';
 
 function useFooterHeight() {
-  // Footer heigth is exclusively determined by the carousel height + some fixed top margin
+  // Footer height is exclusively determined by the carousel height + some fixed top margin
   const { carouselState } = useLayout(({ state: { carouselState } }) => ({
     carouselState,
   }));

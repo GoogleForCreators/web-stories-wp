@@ -80,7 +80,7 @@ export const PopupContainer = styled.div<{
         widthProp.width = `${width}px`;
       }
     }
-    // if maxWidth is given and the width propery hasn't been set
+    // if maxWidth is given and the width property hasn't been set
     // set the PopupContainers max-width
     if (maxWidth && !widthProp.width) {
       widthProp.maxWidth = `${maxWidth}px`;

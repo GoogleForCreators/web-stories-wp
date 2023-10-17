@@ -33,14 +33,14 @@ describe('help center toggle <Toggle />', () => {
     expect(toggle).toBeInTheDocument();
   });
 
-  it('should have propper aria attributes when closed', () => {
+  it('should have proper aria attributes when closed', () => {
     renderWithProviders(<Toggle />);
 
     const toggle = screen.getByRole('button');
     expect(toggle).toHaveAttribute('aria-haspopup');
   });
 
-  it('should have propper aria attributes when open', () => {
+  it('should have proper aria attributes when open', () => {
     const popupId = 'id-for-popup';
     renderWithProviders(<Toggle isOpen popupId={popupId} />);
 

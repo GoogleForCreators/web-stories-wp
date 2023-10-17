@@ -289,7 +289,7 @@ Arguments
             - description: Title of the template which will be default title for story.
         - `tags`
             - type: `Array<string>`            
-            - description: set of words tht describe the template.
+            - description: set of words that describe the template.
         - `colors`
             - type: `Array<Object>`            
             - description: Set of colors which are mostly used in template.
@@ -313,7 +313,7 @@ Arguments
             - description: Version of the template used for migration.
         - `pages`
             - type: `array<Page>`
-            - description: Each attay item corrresponds to each page in template.[ page object ](../story-editor/integration-layer-api/api-callbacks.md/#page-object-shape)
+            - description: Each attay item corresponds to each page in template.[ page object ](../story-editor/integration-layer-api/api-callbacks.md/#page-object-shape)
         - `postersByPage`
             - type: `array<Object>`
             - description: Each object consisting of the URL for the page poster.

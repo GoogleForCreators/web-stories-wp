@@ -134,7 +134,7 @@ class AMP extends DependencyInjectedTestCase {
 				[ false, '', [], $div_anchor ],
 				false,
 			],
-			'Corecct node'              => [
+			'Correct node'              => [
 				[ false, '', [], $player_anchor ],
 				true,
 			],

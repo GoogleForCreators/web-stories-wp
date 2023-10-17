@@ -1781,7 +1781,7 @@
           "textAlign": "left",
           "type": "text",
           "id": "96fea994-b71e-442f-b611-16d73f520016",
-          "content": "<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Sweat</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Resistent</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Earbuds</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Sweat</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Resistant</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Earbuds</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },

@@ -784,7 +784,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		}
 
 		/**
-		 * Argument mape.
+		 * Argument map.
 		 *
 		 * @var array<class-string, array<string|callable|class-string>> $arguments
 		 */

@@ -184,7 +184,7 @@ function WithDropTarget({
         // reaching the frame through zIndex
         active={activeDropTargetId === element.id}
       >
-        {/** Suble indicator that the element is a drop target */}
+        {/** Subtle indicator that the element is a drop target */}
         <DropTargetPath
           {...pathProps}
           strokeWidth="3"

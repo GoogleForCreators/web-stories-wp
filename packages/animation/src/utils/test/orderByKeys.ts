@@ -47,7 +47,7 @@ describe('orderByKeys', () => {
     expect(Object.keys(result)).toStrictEqual(propertyOrder);
   });
 
-  it('maintains object equality if keys include property ouside of object', () => {
+  it('maintains object equality if keys include property outside of object', () => {
     const propertyOrder = ['a', 'b', 'c', 'd', 'e'];
     const input = {
       b: 0,

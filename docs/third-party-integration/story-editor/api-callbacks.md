@@ -346,7 +346,7 @@ Expected response
                             - type: `number`
                             - required: Yes
                             - description: Length of the audio file in seconds.
-                        - `lengthFormated`
+                        - `lengthFormatted`
                             - type: `string`
                             - required: Yes
                             - description: Length of the audio file formatted as MM:SS.

@@ -34,7 +34,7 @@ export default function useDashboardResultsLabel({
   const resultsLabel = useMemo(() => {
     const numResults = totalResults ?? 0;
     const defaultLabel = RESULT_LABELS[view]?.[currentFilter] || '';
-    const interprettedDefaultLabel =
+    const interpretedDefaultLabel =
       typeof defaultLabel === 'function'
         ? defaultLabel(numResults)
         : defaultLabel;
@@ -44,7 +44,7 @@ export default function useDashboardResultsLabel({
           _n('%s result', '%s results', numResults, 'web-stories'),
           sprintf('<strong>%s</strong>', numResults)
         )
-      : interprettedDefaultLabel;
+      : interpretedDefaultLabel;
   }, [isActiveSearch, totalResults, view, currentFilter]);
 
   return resultsLabel;
