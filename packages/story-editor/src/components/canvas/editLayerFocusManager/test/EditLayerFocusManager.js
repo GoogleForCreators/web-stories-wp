@@ -118,7 +118,7 @@ describe('EditLayerFocusManager', () => {
     TestFocusGroup = FocusGroup;
   });
 
-  it('focuses first element in focus group with enterFocusGoup', () => {
+  it('focuses first element in focus group with enterFocusGroup', () => {
     const { unmount } = render(<TestFocusGroup />);
 
     // enter focus group

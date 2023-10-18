@@ -47,7 +47,7 @@ function usePageSnapshot() {
   /**
    * Takes a story page and returns a canvas from the cache if
    * the requested page matches the cache, returns null if there's
-   * a mismatch with the exisitng cache.
+   * a mismatch with the existing cache.
    *
    * This function maintains a stable reference throughout the life of this hook.
    *

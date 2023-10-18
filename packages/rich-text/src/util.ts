@@ -53,7 +53,7 @@ export function getFilteredState(
   );
 }
 
-function getStateFromCommmand(command: string, oldEditorState: EditorState) {
+function getStateFromCommand(command: string, oldEditorState: EditorState) {
   switch (command) {
     case 'bold':
       return weightFormatter.setters.toggleBold(oldEditorState);
@@ -81,7 +81,7 @@ function getStateFromCommmand(command: string, oldEditorState: EditorState) {
 export const getHandleKeyCommandFromState =
   (setEditorState: (state: EditorState) => void) =>
   (command: string, currentEditorState: EditorState) => {
-    const newEditorState = getStateFromCommmand(command, currentEditorState);
+    const newEditorState = getStateFromCommand(command, currentEditorState);
     if (newEditorState) {
       setEditorState(newEditorState);
       return 'handled';

@@ -37,7 +37,7 @@ function getNewStopPosition(stops, currentStopIndex) {
     return 0;
   }
 
-  // Other insert new stop half-way betweeen current and next
+  // Other insert new stop half-way between current and next
   // (or current and previous if last).
   const preStop = isLastStopFocussed
     ? stops[currentStopIndex - 1]

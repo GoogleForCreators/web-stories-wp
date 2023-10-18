@@ -99,7 +99,7 @@ function EditablePreview({ label = '', value = '', width, format, onChange }) {
   ]);
 
   const handleOnBlur = (evt) => {
-    // Ignore reason: There's no practical way to simulate the else occuring
+    // Ignore reason: There's no practical way to simulate the else occurring
     // istanbul ignore else
     if (!evt.currentTarget.contains(evt.relatedTarget)) {
       disableEditing();

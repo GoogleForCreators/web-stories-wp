@@ -24,7 +24,7 @@ import LayoutProvider from '../provider';
 import useLayoutContext from '../useLayoutContext';
 
 describe('useLayoutContext()', () => {
-  it('should throw an error if used oustide Layout.Provider', () => {
+  it('should throw an error if used outside Layout.Provider', () => {
     expect(() => {
       const {
         // eslint-disable-next-line no-unused-vars

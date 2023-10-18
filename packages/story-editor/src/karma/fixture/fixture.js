@@ -1179,7 +1179,7 @@ class APIProviderFixture {
  * Wraps a fixture response in a promise. May additionally add `act()` calls as
  * needed.
  *
- * @param {*} value The reponse value.
+ * @param {*} value The response value.
  * @return {!Promise} The promise of the response.
  */
 function asyncResponse(value) {

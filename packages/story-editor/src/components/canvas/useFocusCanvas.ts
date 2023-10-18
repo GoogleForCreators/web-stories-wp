@@ -22,7 +22,7 @@ import { useCallback } from '@googleforcreators/react';
 function useFocusCanvas() {
   /**
    * @param {boolean} force When true, the focus will always be
-   * transfered to the canvas. Otherwise, the focus will only be transfered
+   * transferred to the canvas. Otherwise, the focus will only be transferred
    * when no other editor input is holding it.
    */
   const focusCanvas = useCallback((force = true) => {

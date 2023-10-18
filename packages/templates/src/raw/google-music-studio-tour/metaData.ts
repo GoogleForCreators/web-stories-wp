@@ -53,7 +53,7 @@ export default {
     },
   ],
   description: __(
-    'This template’s formal yet friendly appearance will let you create stories that are informational but also fun to watch. Present office and studio tours, showcase desk setups, inspire your audience with interior ideas, or do something else entirely. The possiblities are endless.',
+    'This template’s formal yet friendly appearance will let you create stories that are informational but also fun to watch. Present office and studio tours, showcase desk setups, inspire your audience with interior ideas, or do something else entirely. The possibilities are endless.',
     'web-stories'
   ),
   vertical: _x('Technology', 'template vertical', 'web-stories'),

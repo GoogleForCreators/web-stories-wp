@@ -133,7 +133,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
        - Resets `sizes` property for images to `[]`.
        - Resets all `id` and `posterId` to 0 for image and video type resources.
 
-      NOTE: Check all resource URLs and properties are set properly before commiting the template.
+      NOTE: Check all resource URLs and properties are set properly before committing the template.
       
 2. Create a new file `metaData.js` in your newly created `<template_name>` directory. Your `<template_name>/metaData.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, `creationDate`, etc. 
 
@@ -270,7 +270,7 @@ export const MASKS = [
     showInLibrary: true, // mark this as true if you would like the shape to be user facing
     name: _x('Ring', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.RING],
-    ratio: 392 / 392, // <Width of svg viewbox coppied from illustrator> / <Height>
+    ratio: 392 / 392, // <Width of svg viewbox copied from illustrator> / <Height>
   },
   }
 ];

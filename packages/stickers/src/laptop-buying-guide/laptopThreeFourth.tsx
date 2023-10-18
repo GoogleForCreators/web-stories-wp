@@ -25,7 +25,7 @@ import type { StickerProps, Sticker } from '../types';
 
 const title = _x('Laptop 3/4', 'sticker name', 'web-stories');
 
-function LaptopRatingsThreeFouth({ style }: StickerProps) {
+function LaptopRatingsThreeFourth({ style }: StickerProps) {
   return (
     <svg
       style={style}
@@ -78,6 +78,6 @@ function LaptopRatingsThreeFouth({ style }: StickerProps) {
 
 export default {
   aspectRatio: 42 / 26,
-  svg: LaptopRatingsThreeFouth,
+  svg: LaptopRatingsThreeFourth,
   title,
 } as Sticker;

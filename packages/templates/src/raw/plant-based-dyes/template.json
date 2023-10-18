@@ -1083,7 +1083,7 @@
       "pageTemplateType": "section",
       "groups": {
         "fa51342f-94c8-4e59-aa23-cca44e346091": {
-          "name": "Backgrond",
+          "name": "Background",
           "isLocked": false,
           "isCollapsed": true
         }
@@ -3477,7 +3477,7 @@
           "lineHeight": 1.1,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 700; font-style: italic; color: #f9e46c\">I mean, can you believe how easy that is? Water + Avocado + Fabric + Heat = the most gorgeous pink. The popular &nbsp;millenial pink!</span>",
+          "content": "<span style=\"font-weight: 700; font-style: italic; color: #f9e46c\">I mean, can you believe how easy that is? Water + Avocado + Fabric + Heat = the most gorgeous pink. The popular &nbsp;millennial pink!</span>",
           "borderRadius": {
             "locked": true,
             "topLeft": 2,

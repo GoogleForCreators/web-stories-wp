@@ -339,7 +339,7 @@ class Product implements JsonSerializable {
 	 *
 	 * @since 1.26.0
 	 *
-	 * @param string $details Deatils.
+	 * @param string $details Details.
 	 */
 	protected function set_details( string $details ): void {
 		$this->details = $details;

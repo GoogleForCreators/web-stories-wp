@@ -57,7 +57,7 @@ describe('getPreviewStyle', () => {
     const pattern = { type: 'linear', alpha: 0.7 };
     const result = getPreviewStyle(pattern);
     expect(result).toStrictEqual({ backgroundColor: 'red' });
-    // Note the absense of alpha below
+    // Note the absence of alpha below
     expect(generatePatternStylesMock).toHaveBeenCalledWith({ type: 'linear' });
   });
 
