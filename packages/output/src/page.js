@@ -197,13 +197,13 @@ function OutputPage({
           aspect-ratio={ASPECT_RATIO}
           class="grid-layer align-bottom"
         >
-          <div className="captions-area">
+          {/* `backgroundColor` is added only for testing purpose. */}
+          <div className="captions-area" style={{ backgroundColor: 'blue' }}>
             {videoCaptions.map((captionId) => (
               <amp-story-captions
                 key={captionId}
                 id={captionId}
-                layout="fixed-height"
-                height="100"
+                layout="container"
               />
             ))}
           </div>

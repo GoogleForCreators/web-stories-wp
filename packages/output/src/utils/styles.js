@@ -135,6 +135,7 @@ function CustomStyles() {
               amp-story-grid-layer.align-bottom {
                 align-content: end;
                 padding: 0;
+                max-height: calc(100vh - 148px);
               }
 
               .captions-area {
