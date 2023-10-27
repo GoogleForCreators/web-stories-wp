@@ -200,9 +200,10 @@ function OutputPage({
           <div className="captions-area">
             {videoCaptions.map((captionId) => (
               <amp-story-captions
-                key={captionId}
                 id={captionId}
+                key={captionId}
                 layout="container" // "container" layout will only occupy required height.
+                style-preset="default"
               />
             ))}
           </div>
