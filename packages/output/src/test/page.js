@@ -1621,9 +1621,9 @@ describe('Page output', () => {
       await expect(captions).toBeInTheDocument();
       expect(captions).toMatchInlineSnapshot(`
       <amp-story-captions
-        height="100"
         id="el-baz-captions"
-        layout="fixed-height"
+        layout="container"
+        style-preset="default"
       />
       `);
     });
