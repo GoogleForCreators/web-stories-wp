@@ -135,7 +135,13 @@ function CustomStyles() {
               amp-story-grid-layer.align-bottom {
                 align-content: end;
                 padding: 0;
-                max-height: calc(100vh - 148px);
+                /* 
+                  AMP CTA Layer will exactly occupy 74px regardless of any device.
+                  To space out captions 74px from the BOTTOM (AMP CTA Layer),
+                  74px from the TOP should also be spaced out and thus: 2 * 74px
+                  will be the desired max-height.
+                */
+                max-height: calc(100vh - (2 * 74px));
               }
 
               .captions-area {
