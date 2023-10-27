@@ -375,7 +375,6 @@ class Sanitization extends DependencyInjectedTestCase {
 			'amp-powr-player'              => 'v0/amp-powr-player-0.1.js',
 			'amp-reach-player'             => 'v0/amp-reach-player-0.1.js',
 			'amp-recaptcha-input'          => 'v0/amp-recaptcha-input-0.1.js',
-			'amp-redbull-player'           => 'v0/amp-redbull-player-0.1.js',
 			'amp-reddit'                   => 'v0/amp-reddit-0.1.js',
 			'amp-render'                   => 'v0/amp-render-1.0.js',
 			'amp-riddle-quiz'              => 'v0/amp-riddle-quiz-0.1.js',
@@ -418,6 +417,8 @@ class Sanitization extends DependencyInjectedTestCase {
 			'amp-wordpress-embed'          => 'v0/amp-wordpress-embed-1.0.js',
 			'amp-yotpo'                    => 'v0/amp-yotpo-0.1.js',
 			'amp-youtube'                  => 'v0/amp-youtube-0.1.js',
+			'amp-slikeplayer'              => 'v0/amp-slikeplayer-0.1.js',
+			'amp-story-audio-sticker'      => 'v0/amp-story-audio-sticker-0.1.js',
 		];
 
 		foreach ( $sources as $extension => $src ) {
