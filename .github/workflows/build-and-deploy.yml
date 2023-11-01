@@ -232,7 +232,7 @@ jobs:
           github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Create or update comment on PR with links to plugin builds
-        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa
+        uses: peter-evans/create-or-update-comment@23ff15729ef2fc348714a3bb66d2f655ca9066f2
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
