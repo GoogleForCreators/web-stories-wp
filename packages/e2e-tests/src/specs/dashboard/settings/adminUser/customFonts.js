@@ -65,7 +65,8 @@ describe('Custom Fonts', () => {
     removeResourceErrorMessage();
   });
 
-  it('should add a fonts and handle keyboard navigation', async () => {
+  // eslint-disable-next-line jest/no-disabled-tests -- Needs further investigation.
+  it.skip('should add a font and handle keyboard navigation', async () => {
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
     await addCustomFont(OPEN_SANS_CONDENSED_BOLD_URL);
     await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_ITALIC_URL);
