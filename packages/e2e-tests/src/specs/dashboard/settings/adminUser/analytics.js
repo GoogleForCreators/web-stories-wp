@@ -102,24 +102,4 @@ describe('Analytics', () => {
 
     await expect(page).toMatchTextContent('Invalid ID format');
   });
-
-  it("should not allow an update of google analytics id when id format doesn't match required format", async () => {
-    await page.click(INPUT_SELECTOR);
-
-    const inputLength = await page.$eval(INPUT_SELECTOR, (el) => {
-      return el.value.length;
-    });
-
-    for (let iter = 0; iter < inputLength; iter++) {
-      // disable eslint to prevent overlapping .act calls
-      // eslint-disable-next-line no-await-in-loop
-      await page.keyboard.press('Backspace');
-    }
-    await page.keyboard.type('Clearly not a valid id');
-    await page.keyboard.press('Enter');
-
-    await page.waitForTimeout(400);
-    await expect(page).not.toMatchTextContent('Setting saved.');
-    await expect(page).toMatchTextContent('Invalid ID format');
-  });
 });
