@@ -100,6 +100,7 @@ export const TelemetryOptInBanner = forwardRef(
         title={title}
         ref={ref}
       >
+        {/* eslint-disable-next-line styled-components-a11y/label-has-associated-control -- False positive */}
         <Label>
           <Checkbox
             id="telemetry-banner-opt-in"
