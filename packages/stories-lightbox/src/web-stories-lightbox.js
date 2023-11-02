@@ -58,7 +58,6 @@ class Lightbox {
     this.player.addEventListener('navigation', (event) => {
       const storyObject = this.stories[event.detail.index];
       if (storyObject && storyObject.href !== document.location.href) {
-        //history.pushState({}, '', storyObject.href);
         this.storyContentReady(storyObject, () => {
           history.pushState({}, '', storyObject.href);
         });
@@ -122,7 +121,7 @@ class Lightbox {
     );
 
     cards.forEach((card) => {
-      card.addEventListener('click', async (event) => {
+      card.addEventListener('click', (event) => {
         event.preventDefault();
         const storyObject = this.stories.find(
           (story) => story.href === card.querySelector('a').href
