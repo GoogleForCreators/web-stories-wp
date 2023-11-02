@@ -43,8 +43,8 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "rollup": "^2.79.1"
   },
   "scripts": {
