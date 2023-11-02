@@ -58,7 +58,10 @@ class Lightbox {
     this.player.addEventListener('navigation', (event) => {
       const storyObject = this.stories[event.detail.index];
       if (storyObject && storyObject.href !== document.location.href) {
-        history.pushState({}, '', storyObject.href);
+        //history.pushState({}, '', storyObject.href);
+        this.storyContentReady(storyObject, () => {
+          history.pushState({}, '', storyObject.href);
+        });
       }
     });
 
@@ -119,7 +122,7 @@ class Lightbox {
     );
 
     cards.forEach((card) => {
-      card.addEventListener('click', (event) => {
+      card.addEventListener('click', async (event) => {
         event.preventDefault();
         const storyObject = this.stories.find(
           (story) => story.href === card.querySelector('a').href
@@ -127,12 +130,33 @@ class Lightbox {
         this.player.show(storyObject.href);
         this.player.play();
 
-        history.pushState({}, '', storyObject.href);
+        this.storyContentReady(storyObject, () => {
+          history.pushState({}, '', storyObject.href);
+        });
 
         this.lightboxElement.classList.toggle('show');
         document.body.classList.toggle('web-stories-lightbox-open');
       });
     });
+  }
+
+  /**
+   * Executes supplied `callback` after the story is fully loaded into player.
+   *
+   * @param {*} storyObject Story object to check for. Reference: https://github.com/ampproject/amphtml/blob/4ce3cd79520dbeaf5ed5364cbff58d3d71dee40e/src/amp-story-player/amp-story-player-impl.js#L115-L129.
+   * @param {*} callback Callback to execute when story is loaded fully.
+   * @param {number} maxRetries Number of tries to check for.
+   */
+  storyContentReady(storyObject, callback, maxRetries = 5) {
+    const stateIntervalObj = setInterval(() => {
+      if (storyObject.storyContentLoaded === true) {
+        window.clearInterval(stateIntervalObj);
+        callback();
+      }
+      if (!--maxRetries) {
+        window.clearInterval(stateIntervalObj);
+      }
+    }, 250);
   }
 }
 
