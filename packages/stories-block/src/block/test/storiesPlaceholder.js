@@ -27,6 +27,7 @@ import StoriesLoading from '../components/storiesLoading';
 describe('StoriesLoading', () => {
   it('should display spinner', () => {
     render(<StoriesLoading />);
-    expect(screen.getByText('Loading Stories…')).toBeInTheDocument();
+    // Text occurs twice, once within the placeholder and once in the a11y-speak-region.
+    expect(screen.getAllByText('Loading Stories…')[0]).toBeInTheDocument();
   });
 });
