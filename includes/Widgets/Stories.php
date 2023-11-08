@@ -115,10 +115,10 @@ class Stories extends WP_Widget {
 	 *
 	 * @param array<string,string>          $args Widget args.
 	 * @param array<string,string|int|bool> $instance Widget instance.
-	 *
-     * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	 * @phpstan-return void
 	 */
 	public function widget( $args, $instance ): void {
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $args['before_widget'];
 
 		$instance = wp_parse_args( $instance, $this->default_values() );
@@ -161,6 +161,8 @@ class Stories extends WP_Widget {
 		echo $story_query->render();
 
 		echo $args['after_widget'];
+
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -509,12 +511,12 @@ class Stories extends WP_Widget {
 		);
 		?>
 	<p class="<?php echo esc_attr( $args['wrapper_class'] ); ?>">
-		<?php echo $this->label( $args ); ?>
+		<?php echo $this->label( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 		<select
 			class="<?php echo esc_attr( (string) $args['classname'] ); ?>"
-			id="<?php echo $this->get_field_id( $args['id'] ); ?>"
-			name="<?php echo $this->get_field_name( $args['name'] ); ?>"
+			id="<?php echo esc_attr( $this->get_field_id( $args['id'] ) ); ?>"
+			name="<?php echo esc_attr( $this->get_field_name( $args['name'] ) ); ?>"
 		>
 			<?php
 
@@ -555,7 +557,7 @@ class Stories extends WP_Widget {
 		);
 		?>
 		<div class="<?php echo esc_attr( $args['wrapper_class'] ); ?>">
-			<?php echo $this->label( $args ); ?>
+			<?php echo $this->label( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<p>
 				<?php
 				foreach ( $args['options'] as $key => $type ) {
@@ -564,8 +566,8 @@ class Stories extends WP_Widget {
 						<input
 							type="radio"
 							class="<?php echo esc_attr( (string) $args['classname'] ); ?>"
-							id="<?php echo $this->get_field_id( $args['id'] . '-' . $key ); ?>"
-							name="<?php echo $this->get_field_name( $args['name'] ); ?>"
+							id="<?php echo esc_attr( $this->get_field_id( $args['id'] . '-' . $key ) ); ?>"
+							name="<?php echo esc_attr( $this->get_field_name( $args['name'] ) ); ?>"
 							value="<?php echo esc_attr( $key ); ?>"
 							<?php checked( $key, $args['selected'], true ); ?>
 						/>
@@ -610,7 +612,7 @@ class Stories extends WP_Widget {
 
 			<?php
 			if ( $args['label_before'] ) {
-				echo $this->label( $args );
+				echo $this->label( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			$extra_attrs = '';
@@ -630,20 +632,20 @@ class Stories extends WP_Widget {
 			<input
 				class="<?php echo esc_attr( (string) $args['classname'] ); ?>"
 				type="<?php echo esc_attr( (string) $args['type'] ); ?>"
-				id="<?php echo $this->get_field_id( $args['id'] ); ?>"
-				name="<?php echo $this->get_field_name( $args['name'] ); ?>"
-				value="<?php echo 'checkbox' === $args['type'] ? 1 : $args['value']; ?>"
+				id="<?php echo esc_attr( $this->get_field_id( $args['id'] ) ); ?>"
+				name="<?php echo esc_attr( $this->get_field_name( $args['name'] ) ); ?>"
+				value="<?php echo esc_attr( 'checkbox' === $args['type'] ? 1 : $args['value'] ); ?>"
 				<?php
 				if ( 'checkbox' === $args['type'] ) {
 					checked( 1, $args['value'], true );
 				}
 				?>
-				<?php echo $extra_attrs; ?>
+				<?php echo $extra_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			/>
 
 			<?php
 			if ( ! $args['label_before'] ) {
-				echo $this->label( $args );
+				echo $this->label( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 
