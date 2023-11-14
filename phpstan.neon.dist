@@ -34,9 +34,6 @@ parameters:
     -
       message: '/^Call to deprecated method _get_first_available_transport\(\)/'
       path: includes/REST_API/Hotlinking_Controller.php
-    -
-      message: '/^Return type \(void\) of method Google\\Web_Stories\\Widgets\\Stories::widget\(\) should be compatible/'
-      path: includes/Widgets/Stories.php
   paths:
     - includes/
     - tests/phpunit/integration/includes

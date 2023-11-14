@@ -115,7 +115,6 @@ class Stories extends WP_Widget {
 	 *
 	 * @param array<string,string>          $args Widget args.
 	 * @param array<string,string|int|bool> $instance Widget instance.
-	 * @phpstan-return void
 	 */
 	public function widget( $args, $instance ): void {
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
