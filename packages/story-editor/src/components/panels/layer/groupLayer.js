@@ -79,7 +79,6 @@ function GroupLayer({ groupId }) {
   );
 
   // Destructuring with default values in case groups[groupId] is undefined
-  // Check if groups and groups[groupId] exist before destructuring
   const {
     name = '',
     isLocked = false,
