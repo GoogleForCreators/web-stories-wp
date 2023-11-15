@@ -78,7 +78,21 @@ function GroupLayer({ groupId }) {
     })
   );
 
-  const { name, isLocked, isCollapsed } = groups[groupId];
+  const DEFAULT_NAME = 'Undefined Layer';
+  const DEFAULT_IS_LOCKED = false;
+  const DEFAULT_IS_COLLAPSED = false;
+
+  // Destructuring with default values in case groups[groupId] is undefined
+  let {
+    name = DEFAULT_NAME,
+    isLocked = DEFAULT_IS_LOCKED,
+    isCollapsed = DEFAULT_IS_COLLAPSED,
+  } = {};
+
+  // Check if groups and groups[groupId] exist before destructuring
+  if (groups && groups[groupId]) {
+    ({ name, isLocked, isCollapsed } = groups[groupId]);
+  }
 
   const { isSelected, handleClick } = useGroupSelection(groupId);
 

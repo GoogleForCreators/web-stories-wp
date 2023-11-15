@@ -49,7 +49,20 @@ function GroupLayerActions({ groupId }) {
     ),
   }));
 
-  const group = groups[groupId];
+  const DEFAULT_NAME = 'Undefined Layer';
+  const DEFAULT_IS_LOCKED = false;
+  const DEFAULT_IS_COLLAPSED = false;
+
+  let group = {
+    name: DEFAULT_NAME,
+    isLocked: DEFAULT_IS_LOCKED,
+    isCollapsed: DEFAULT_IS_COLLAPSED,
+  };
+
+  if (groups && groups[groupId]) {
+    group = groups[groupId];
+  }
+
   const allLayersHidden = groupLayers.every((layer) => layer.isHidden);
 
   const visibilityTitle = allLayersHidden
