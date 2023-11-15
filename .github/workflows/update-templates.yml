@@ -22,17 +22,17 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
+        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65
         with:
           node-version-file: '.nvmrc'
           cache: npm

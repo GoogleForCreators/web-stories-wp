@@ -77,7 +77,6 @@ module.exports = {
   },
   docs: {
     disabled: true,
-    autodocs: true,
   },
   //eslint-disable-next-line require-await -- Negligible.
   webpackFinal: async (webpackConfig) => {

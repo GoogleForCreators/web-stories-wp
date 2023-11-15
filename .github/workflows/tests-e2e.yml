@@ -70,15 +70,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
+        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -101,7 +101,7 @@ jobs:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@bd26ebd2c71c1f353895b3992d78cafe0a0eaf91
+        uses: oven-sh/setup-bun@830e319e28724678162e88b9145a9b43f22f1a8e
         with:
           bun-version: '0.5.9'
 
@@ -146,20 +146,10 @@ jobs:
             wp: 'latest'
             snapshots: true
             shard: '2/2'
-          - browser: 'chrome'
-            wp: '6.4-RC2'
-            snapshots: false
-            shard: '1/2'
-            experimental: true
-          - browser: 'chrome'
-            wp: '6.4-RC2'
-            snapshots: false
-            shard: '2/2'
-            experimental: true
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
+        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -175,7 +165,7 @@ jobs:
             34.104.35.123:443
 
       - name: Checkout
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Download bundle
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
@@ -187,7 +177,7 @@ jobs:
         run: sudo apt-get install libgbm1
 
       - name: Setup Node
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65
         with:
           node-version-file: '.nvmrc'
           cache: npm
