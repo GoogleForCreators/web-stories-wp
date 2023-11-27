@@ -101,7 +101,7 @@ jobs:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@830e319e28724678162e88b9145a9b43f22f1a8e
+        uses: oven-sh/setup-bun@e900e6b10896cd3a94ded8f5d6094c6547532020
         with:
           bun-version: latest
 
