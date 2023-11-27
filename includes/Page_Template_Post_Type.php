@@ -160,7 +160,7 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 			'labels'                => [
 				'name'                     => _x( 'Page Templates', 'post type general name', 'web-stories' ),
 				'singular_name'            => _x( 'Page Template', 'post type singular name', 'web-stories' ),
-				'add_new'                  => _x( 'Add New', 'page template', 'web-stories' ),
+				'add_new'                  => __( 'Add New Page Template', 'web-stories' ),
 				'add_new_item'             => __( 'Add New Page Template', 'web-stories' ),
 				'edit_item'                => __( 'Edit Page Template', 'web-stories' ),
 				'new_item'                 => __( 'New Page Template', 'web-stories' ),
