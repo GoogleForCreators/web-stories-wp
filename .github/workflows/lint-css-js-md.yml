@@ -90,7 +90,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@830e319e28724678162e88b9145a9b43f22f1a8e
         with:
-          bun-version: '0.5.9'
+          bun-version: latest
 
       - name: Markdown Lint
         run: npm run lint:md
