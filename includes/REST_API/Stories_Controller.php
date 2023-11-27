@@ -79,13 +79,10 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string, web_stories_demo?: bool}> $request
 	 */
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
 		if ( 'auto-draft' === $post->post_status && wp_validate_boolean( $request['web_stories_demo'] ) ) {
@@ -349,6 +346,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string, _embed?: string|string[], _web_stories_envelope?: bool}> $request
 	 */
 	public function get_items( $request ) {
 		add_filter( "rest_{$this->post_type}_query", [ $this, 'filter_query' ], 100, 1 );
@@ -373,11 +372,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		if ( $request['_web_stories_envelope'] ) {
-			/**
-			 * Embed directive.
-			 *
-			 * @var string|string[] $embed
-			 */
 			$embed    = $request['_embed'];
 			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );

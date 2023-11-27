@@ -172,7 +172,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array|mixed $response   Array of prepared attachment data.
+	 * @param array<string, mixed>|mixed $response   Array of prepared attachment data.
 	 * @return array|mixed $response Filtered attachment data.
 	 *
 	 * @template T

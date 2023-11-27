@@ -201,8 +201,8 @@ class Tracking extends Service_Base {
 		 * @var null|WP_User $current_user
 		 */
 		$current_user = wp_get_current_user();
-		$roles        = $current_user instanceof WP_User ? $current_user->roles : [];
-		$role         = ! empty( $roles ) && \is_array( $roles ) ? array_shift( $roles ) : '';
+		$roles        = $current_user instanceof WP_User ? array_values( $current_user->roles ) : [];
+		$role         = ! empty( $roles ) ? array_shift( $roles ) : '';
 		$experiments  = implode( ',', $this->experiments->get_enabled_experiments() );
 
 		$active_plugins = [];

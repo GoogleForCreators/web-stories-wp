@@ -113,6 +113,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string}> $request
 	 */
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
@@ -137,11 +139,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$data['story_data'] = post_password_required( $post ) ? (object) [] : rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
@@ -167,13 +164,10 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
+	 *
+	 * @phpstan-param WP_REST_Request<array{original_id?: int}> $request
 	 */
 	public function create_item( $request ) {
-		/**
-		 * Original post ID.
-		 *
-		 * @var int $original_id
-		 */
 		$original_id = ! empty( $request['original_id'] ) ? $request['original_id'] : null;
 		if ( ! $original_id ) {
 			return parent::create_item( $request );

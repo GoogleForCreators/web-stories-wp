@@ -98,7 +98,7 @@ class Site_Kit extends Service_Base {
 	 * @param array|mixed $gtag_opt Array of gtag configuration options.
 	 * @return array|mixed Modified configuration options.
 	 *
-	 * @phpstan-param GtagOpt $gtag_opt
+	 * @phpstan-param GtagOpt|mixed $gtag_opt
 	 */
 	public function filter_site_kit_gtag_opt( $gtag_opt ) {
 		if (
