@@ -50,13 +50,13 @@ function AnimationToggle() {
   const tooltip = isFirstPage
     ? __('Animations Disabled', 'web-stories')
     : isPlaying
-    ? __('Stop', 'web-stories')
-    : __('Play', 'web-stories');
+      ? __('Stop', 'web-stories')
+      : __('Play', 'web-stories');
   const label = isFirstPage
     ? __('Page Animations Disabled', 'web-stories')
     : isPlaying
-    ? __('Stop Page Animations', 'web-stories')
-    : __('Play Page Animations', 'web-stories');
+      ? __('Stop Page Animations', 'web-stories')
+      : __('Play Page Animations', 'web-stories');
   const shortcut = isFirstPage ? null : 'mod+enter';
   const Icon = isPlaying ? Icons.StopOutline : Icons.PlayOutline;
 

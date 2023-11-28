@@ -59,8 +59,8 @@ type LocalizeFn<
   value: ArgCallback extends undefined
     ? Result
     : Result extends Quarter
-    ? Quarter
-    : LocalizeUnitIndex<Result>,
+      ? Quarter
+      : LocalizeUnitIndex<Result>,
   options?: {
     width?: LocalePatternWidth;
     context?: 'formatting' | 'standalone';
@@ -101,26 +101,26 @@ type LocalizeUnitValuesIndex<Values extends LocalizeUnitValues<any>> =
   Values extends Record<LocaleDayPeriod, string>
     ? string
     : Values extends LocalizeEraValues
-    ? Era
-    : Values extends LocalizeQuarterValues
-    ? Quarter
-    : Values extends LocalizeDayValues
-    ? Day
-    : Values extends LocalizeMonthValues
-    ? Month
-    : never;
+      ? Era
+      : Values extends LocalizeQuarterValues
+        ? Quarter
+        : Values extends LocalizeDayValues
+          ? Day
+          : Values extends LocalizeMonthValues
+            ? Month
+            : never;
 
 type LocalizeUnitValues<U extends LocaleUnit> = U extends LocaleDayPeriod
   ? Record<LocaleDayPeriod, string>
   : U extends Era
-  ? LocalizeEraValues
-  : U extends Quarter
-  ? LocalizeQuarterValues
-  : U extends Day
-  ? LocalizeDayValues
-  : U extends Month
-  ? LocalizeMonthValues
-  : never;
+    ? LocalizeEraValues
+    : U extends Quarter
+      ? LocalizeQuarterValues
+      : U extends Day
+        ? LocalizeDayValues
+        : U extends Month
+          ? LocalizeMonthValues
+          : never;
 
 type LocalizePeriodValuesMap<U extends LocaleUnit> = {
   [pattern in LocalePatternWidth]?: LocalizeUnitValues<U>;
