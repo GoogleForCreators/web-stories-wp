@@ -34,7 +34,7 @@ module.exports = {
     '../packages/animation/src/**/stories/*.js',
   ],
   experimental_indexers: (indexers) => {
-    const createIndex = async (fileName, opts) => {
+    const createIndex = (fileName, opts) => {
       const code = readFileSync(fileName, {
         encoding: 'utf-8',
       });
