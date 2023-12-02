@@ -63,7 +63,6 @@
     "@storybook/addon-docs": "^7.6.3",
     "@storybook/addon-essentials": "^7.6.3",
     "@storybook/addon-links": "^7.6.3",
-    "@storybook/addon-storysource": "^7.6.3",
     "@storybook/addon-viewport": "^7.6.3",
     "@storybook/client-api": "^7.6.3",
     "@storybook/client-logger": "^7.6.3",

@@ -17,7 +17,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { BaseTooltip, Icons } from '@googleforcreators/design-system';
+import {
+  Tooltip as BaseTooltip,
+  Icons,
+} from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */

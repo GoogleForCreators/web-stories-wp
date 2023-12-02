@@ -29,25 +29,24 @@ module.exports = {
     '../packages/dashboard/src/**/stories/index.js',
     '../packages/story-editor/src/**/stories/index.js',
     '../packages/wp-dashboard/src/**/stories/index.js',
-    '../packages/wp-story-editor/src/**/stories/index.js',
     '../packages/activation-notice/src/**/stories/index.js',
     '../packages/design-system/src/**/stories/index.js',
     '../packages/animation/src/**/stories/*.js',
   ],
-  storyIndexers: (indexers) => {
-    const indexer = (fileName, opts) => {
+  experimental_indexers: (indexers) => {
+    const createIndex = async (fileName, opts) => {
       const code = readFileSync(fileName, {
         encoding: 'utf-8',
       });
       return loadCsf(code, {
         ...opts,
         fileName,
-      }).parse();
+      }).parse().indexInputs;
     };
     return [
       {
         test: /stories\/.*\.js$/,
-        indexer,
+        createIndex,
       },
       ...(indexers || []),
     ];
@@ -66,7 +65,6 @@ module.exports = {
         toolbars: true,
       },
     },
-    '@storybook/addon-storysource',
   ],
   framework: {
     name: '@storybook/react-webpack5',
