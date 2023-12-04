@@ -49,22 +49,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Install WP-CLI
-        run: |
-          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-          chmod +x wp-cli.phar
-          mkdir -p bin
-          mv wp-cli.phar bin/wp
-          echo "${PWD}/bin" >> $GITHUB_PATH
-
-      - name: WP-CLI Info
-        run: wp cli info
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: latest
+          coverage: none
+          tools: wp-cli
 
       - name: Install latest version of i18n-command
         run: wp package install wp-cli/i18n-command:dev-main
-
-      - name: List packages
-        run: wp package list
 
       - name: Setup Node
         uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65
