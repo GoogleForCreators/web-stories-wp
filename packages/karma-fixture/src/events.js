@@ -175,7 +175,7 @@ class Keyboard {
    * - press KeyB
    * - up Meta
    *
-   * @param {string} shortcut Keybord shortcut.
+   * @param {string} shortcut Keyboard shortcut.
    * @return {!Promise} Yields when the event is processed.
    */
   shortcut(shortcut) {

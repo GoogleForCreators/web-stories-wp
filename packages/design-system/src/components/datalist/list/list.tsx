@@ -215,13 +215,13 @@ function OptionListWithRef<O extends AbstractOption>(
       return;
     }
 
-    const highlighedOptionEl = optionsRef.current[focusIndex];
-    if (!highlighedOptionEl) {
+    const highlightedOptionEl = optionsRef.current[focusIndex];
+    if (!highlightedOptionEl) {
       return;
     }
 
-    highlighedOptionEl.focus();
-    listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
+    highlightedOptionEl.focus();
+    listEl.scrollTo(0, highlightedOptionEl.offsetTop - listEl.clientHeight / 2);
   }, [focusIndex, filteredOptions, keyword, onClose, listRef]);
 
   /*

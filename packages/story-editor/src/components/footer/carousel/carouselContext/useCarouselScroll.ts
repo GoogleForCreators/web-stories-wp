@@ -144,7 +144,7 @@ function useCarouselScroll({
     const { scrollLeft } = listElement;
 
     // If scrolled to the start, what is the min index of the first visible page
-    // in order for the current page to be at the very end of the current scoll
+    // in order for the current page to be at the very end of the current scroll
     const minVisiblePageIndex = Math.max(
       0,
       currentPageIndex - showablePages + 1

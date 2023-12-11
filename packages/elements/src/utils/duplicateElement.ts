@@ -32,7 +32,7 @@ import getOffsetCoordinates from './getOffsetCoordinates';
  * on any existing element on the page.
  *
  * @param args - named arguments
- * @param args.element - story element to be coppied
+ * @param args.element - story element to be copied
  * @param args.animations - set of existing animations
  * @param args.currentElements - set of existing story elements
  * @param args.offsetBase - a point from which offset will be applied

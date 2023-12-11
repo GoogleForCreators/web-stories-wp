@@ -33,16 +33,18 @@ function PostPublishDialog() {
     embedPostLink: confirmURL,
     link: storyURL,
     isFreshlyPublished,
+    status,
   } = useStory(
     ({
       state: {
-        story: { embedPostLink, link },
+        story: { embedPostLink, link, status },
         meta: { isFreshlyPublished },
       },
     }) => ({
       embedPostLink,
       link,
       isFreshlyPublished,
+      status,
     })
   );
 
@@ -61,12 +63,19 @@ function PostPublishDialog() {
 
   const primaryText = confirmURL ? __('Add to new post', 'web-stories') : '';
 
+  const dialogTitle =
+    status === 'private'
+      ? __('Story published privately.', 'web-stories')
+      : status === 'future'
+        ? __('Story scheduled.', 'web-stories')
+        : __('Story published.', 'web-stories');
+
   return (
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
       // Same as item_published post type label.
-      title={__('Story published.', 'web-stories')}
+      title={dialogTitle}
       secondaryText={__('Dismiss', 'web-stories')}
       primaryText={primaryText}
       onPrimary={onAddToPostClick}
@@ -87,10 +96,15 @@ function PostPublishDialog() {
             ),
           }}
         >
-          {__(
-            'Your story has been successfully published! <a>View story</a>.',
-            'web-stories'
-          )}
+          {status === 'future'
+            ? __(
+                'Your story has been successfully scheduled! <a>View story</a>.',
+                'web-stories'
+              )
+            : __(
+                'Your story has been successfully published! <a>View story</a>.',
+                'web-stories'
+              )}
         </TranslateWithMarkup>
       </Text.Paragraph>
       {confirmURL && (

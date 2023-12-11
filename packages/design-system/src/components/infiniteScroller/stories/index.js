@@ -30,7 +30,7 @@ export default {
   component: InfiniteScroller,
   args: {
     loadingAriaMessage:
-      'Data is loading - please note, interesection observers and storybook do not play nicely in firefox.',
+      'Data is loading - please note, intersection observers and storybook do not play nicely in firefox.',
     allDataLoadedMessage: 'all data is loaded',
     allDataLoadedAriaMessage: 'all data is loaded',
   },

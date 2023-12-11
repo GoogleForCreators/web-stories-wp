@@ -23,7 +23,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16 || >= 18",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18 || >= 20",
     "npm": ">= 7.3"
   },
   "customExports": {
@@ -43,7 +43,7 @@
     "@googleforcreators/media": "file:../media",
     "@googleforcreators/react": "file:../react",
     "@googleforcreators/units": "file:../units",
-    "flagged": "^2.0.8",
+    "flagged": "^2.0.10",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.11",
     "uuid": "^9.0.0"

@@ -196,7 +196,7 @@ const TO_RADIANS = Math.PI / 180;
  * @param {Object} arguments The arguments
  * @param {Element} arguments.bgImage The background element
  * @param {{ width: number, height: number }} arguments.bgBox The containing box of the background image - needed for calculating canvas translations for rotated elements
- * @param {{ x: number, y: number, width: number, height: number }} arguments.overlapBox The position and size of the text element relative to the scaled and roated background image
+ * @param {{ x: number, y: number, width: number, height: number }} arguments.overlapBox The position and size of the text element relative to the scaled and rotated background image
  * @return {Promise<Object>} Resolves to the dominant color of the background image in the overlap box area
  */
 async function getOverlapBgColor({ bgImage, bgBox, overlapBox }) {

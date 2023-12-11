@@ -128,7 +128,7 @@
  * error
  * @property {FetchMediaStartFn} fetchMediaStart action when fetching media
  * starts
- * @property {FetchMediaSuccessFn} fetchMediaSucccess action when fetching media
+ * @property {FetchMediaSuccessFn} fetchMediaSuccess action when fetching media
  * is successful
  * @property {ResetFiltersFn} resetFilters action to reset filters
  * @property {ResetWithFetchFn} resetWithFetch resets the filter in the state,

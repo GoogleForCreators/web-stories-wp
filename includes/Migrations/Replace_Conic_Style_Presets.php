@@ -52,7 +52,7 @@ class Replace_Conic_Style_Presets extends Migrate_Base {
 	 */
 	public function migrate(): void {
 		/**
-		 * List of style presest.
+		 * List of style presets.
 		 *
 		 * @var array|null $style_presets
 		 * @phpstan-var StylePresets|null $style_presets

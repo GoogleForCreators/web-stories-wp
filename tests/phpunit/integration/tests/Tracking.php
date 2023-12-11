@@ -170,6 +170,7 @@ class Tracking extends DependencyInjectedTestCase {
 		$this->assertArrayHasKey( 'analytics', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'serverEnvironment', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'activePlugins', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'pluginVersion', $settings['userProperties'] );
 		$this->assertSame( get_locale(), $settings['userProperties']['siteLocale'] );
 		$this->assertSame( get_user_locale(), $settings['userProperties']['userLocale'] );
 		$this->assertSame( wp_get_environment_type(), $settings['userProperties']['serverEnvironment'] );
@@ -177,6 +178,7 @@ class Tracking extends DependencyInjectedTestCase {
 		$this->assertSame( get_bloginfo( 'version' ), $settings['userProperties']['wpVersion'] );
 		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
 		$this->assertSame( 'enableFoo,enableBar', $settings['userProperties']['enabledExperiments'] );
+		$this->assertSame( WEBSTORIES_VERSION, $settings['userProperties']['pluginVersion'] );
 		$this->assertIsString( $settings['userProperties']['wpVersion'] );
 		$this->assertIsString( $settings['userProperties']['phpVersion'] );
 		$this->assertIsInt( $settings['userProperties']['isMultisite'] );
@@ -184,6 +186,7 @@ class Tracking extends DependencyInjectedTestCase {
 		$this->assertIsString( $settings['userProperties']['analytics'] );
 		$this->assertIsString( $settings['userProperties']['activePlugins'] );
 		$this->assertIsString( $settings['userProperties']['serverEnvironment'] );
+		$this->assertIsString( $settings['userProperties']['pluginVersion'] );
 	}
 
 	/**

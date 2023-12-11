@@ -26,7 +26,7 @@ import { addQueryArgs } from '@googleforcreators/url';
 /**
  * Get products.
  *
- * @param {Object} config Configuation object.
+ * @param {Object} config Configuration object.
  * @param {string} search Search term.
  * @return {Promise} Request promise.
  */

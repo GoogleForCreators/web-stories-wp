@@ -49,7 +49,12 @@ function GroupLayerActions({ groupId }) {
     ),
   }));
 
-  const group = groups[groupId];
+  const group = groups?.[groupId] || {
+    name: '',
+    isLocked: false,
+    isCollapsed: false,
+  };
+
   const allLayersHidden = groupLayers.every((layer) => layer.isHidden);
 
   const visibilityTitle = allLayersHidden

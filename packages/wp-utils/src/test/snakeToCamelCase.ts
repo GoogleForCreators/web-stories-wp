@@ -60,7 +60,7 @@ describe('snakeToCamelCaseObjectKeys', () => {
           level_two_item_one: {
             level_three_item_one: 22,
           },
-          leveTwoItemTwo: 'string',
+          levelTwoItemTwo: 'string',
         },
         random: 'string',
       },
@@ -74,7 +74,7 @@ describe('snakeToCamelCaseObjectKeys', () => {
           levelTwoItemOne: {
             levelThreeItemOne: 22,
           },
-          leveTwoItemTwo: 'string',
+          levelTwoItemTwo: 'string',
         },
         random: 'string',
       },

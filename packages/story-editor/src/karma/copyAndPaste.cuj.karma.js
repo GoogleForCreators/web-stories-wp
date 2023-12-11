@@ -293,7 +293,7 @@ describe('Background Copy & Paste', () => {
 
     // iterate through children with process
     await sequencedForEach(effectChooser.children, async (_, i) => {
-      // need to regrab the button because we're openeing
+      // need to regrab the button because we're opening
       // and closing effect chooser causing karma ids to change
       const effectButton = fixture.screen.getByRole('listbox', {
         name: /Animation: Effect Chooser Option List Selector/,

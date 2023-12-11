@@ -86,9 +86,11 @@ trait Private_Access {
 	 * @param mixed         $value         Value to set the property to.
 	 */
 	protected function set_private_property( $instance, string $property_name, $value ): void {
-		$property = ( new ReflectionClass( $instance ) )->getProperty( $property_name );
+		$reflection_class = new ReflectionClass( $instance );
+		$property         = $reflection_class->getProperty( $property_name );
 		$property->setAccessible( true );
-		$property->setValue( $instance, $value );
+
+		$property->isStatic() ? $reflection_class->setStaticPropertyValue( $property_name, $value ) : $property->setValue( $instance, $value );
 	}
 
 	/**

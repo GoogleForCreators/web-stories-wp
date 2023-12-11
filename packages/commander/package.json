@@ -22,16 +22,16 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16 || >= 18",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18 || >= 20",
     "npm": ">= 7.3"
   },
   "type": "module",
   "dependencies": {
-    "commander": "^11.0.0",
+    "commander": "^11.1.0",
     "semver": "^7.5.4"
   },
   "devDependencies": {
-    "@types/node": "^20.3.2",
+    "@types/node": "^20.8.0",
     "@types/semver": "^7.5.0"
   },
   "bin": {

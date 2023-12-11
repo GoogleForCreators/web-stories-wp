@@ -135,6 +135,13 @@ function CustomStyles() {
               amp-story-grid-layer.align-bottom {
                 align-content: end;
                 padding: 0;
+                /* 
+                  AMP CTA Layer will exactly occupy 74px regardless of any device.
+                  To space out captions 74px from the BOTTOM (AMP CTA Layer),
+                  74px from the TOP should also be spaced out and thus: 2 * 74px
+                  will be the desired max-height.
+                */
+                max-height: calc(100vh - (2 * 74px));
               }
 
               .captions-area {
@@ -144,22 +151,6 @@ function CustomStyles() {
               amp-story-captions {
                 margin-bottom: 16px;
                 text-align: center;
-              }
-
-              amp-story-captions span {
-                display: inline-block;
-                margin: 0;
-                padding: 6px 12px;
-                vertical-align: middle;
-                border-radius: 15px;
-                background: rgba(11, 11, 11, 0.6);
-                color: rgba(255, 255, 255, 1);
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;;
-                font-size: calc(4 * var(--story-page-vw));
-                line-height: 1.4;
-                word-break: break-word;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
               }
               `,
       }}

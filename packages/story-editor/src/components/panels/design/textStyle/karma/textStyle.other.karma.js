@@ -53,7 +53,7 @@ describe('Text Style Panel', () => {
       await fixture.events.click(
         fixture.editor.sidebar.designPanel.textStyle.collapse
       );
-      // Expect the inputs not to be visible since tha panel is collapsed.
+      // Expect the inputs not to be visible since the panel is collapsed.
       expect(
         () => fixture.editor.sidebar.designPanel.textStyle.lineHeight
       ).toThrow();

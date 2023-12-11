@@ -20,17 +20,17 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16 || >= 18",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18 || >= 20",
     "npm": ">= 7.3"
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/components": "^25.8.0",
-    "@wordpress/compose": "^6.19.0",
-    "@wordpress/data": "^9.12.0",
-    "@wordpress/dom-ready": "^3.42.0",
-    "@wordpress/element": "^5.19.0",
-    "@wordpress/i18n": "^4.42.0",
+    "@wordpress/components": "^25.13.0",
+    "@wordpress/compose": "^6.24.0",
+    "@wordpress/data": "^9.17.0",
+    "@wordpress/dom-ready": "^3.47.0",
+    "@wordpress/element": "^5.24.0",
+    "@wordpress/i18n": "^4.47.0",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {

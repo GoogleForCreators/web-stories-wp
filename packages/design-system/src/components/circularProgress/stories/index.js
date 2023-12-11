@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import CircularProgress from '..';
+import CircularProgress from '../circular';
 
 export default {
   title: 'Stories Editor/Components/Circular Progress',

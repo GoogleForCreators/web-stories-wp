@@ -1,8 +1,8 @@
 === Web Stories ===
 
 Contributors:      google
-Tested up to:      6.3
-Requires at least: 6.1
+Tested up to:      6.4
+Requires at least: 6.2
 Stable tag:        V.V.V
 License:           Apache-2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
@@ -109,6 +109,13 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.35.0 =
+
+* Enhancement: compatibility with WordPress 6.4. New minimum version required is 6.2.
+* Enhancement: improve captions appearance when there is also a call-to-action.
+* Fixed: resolved an issue with stories not appearing in the lightbox.
+* Various smaller bug fixes.
+
 = 1.34.0 =
 
 * Enhancement: compatibility with WordPress 6.3. New minimum version required is 6.1.
@@ -123,14 +130,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Enhancement: support for the MGID ad platform.
 * Bug fixes and performance improvements.
 
-= 1.32.0 =
-
-* New feature: support searching saved and default page templates in the editor.
-* New feature: support naming saved page templates in the editor.
-* Enhancement: filter stories in the Web Stories shortcode by categories and tags.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.35.0 =
+
+This release includes improved compatibility with WordPress 6.4 and several bug fixes.
 
 = 1.34.0 =
 
@@ -139,7 +143,3 @@ This release includes improved compatibility with WordPress 6.3 and plugins like
 = 1.33.0 =
 
 This release includes Google Analytics 4 (GA4) support, improved compatibility with Ezoic, support for MGID ads, and several bug fixes.
-
-= 1.32.0 =
-
-This release includes support for naming and searching page templates in the editor, and several bug fixes and stability improvements.

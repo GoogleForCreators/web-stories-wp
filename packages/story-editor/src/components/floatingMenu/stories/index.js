@@ -43,7 +43,7 @@ export default {
         'selectionIdentifier',
         'visuallyHidden',
         'ref',
-        'handelDismiss',
+        'handleDismiss',
       ],
     },
   },

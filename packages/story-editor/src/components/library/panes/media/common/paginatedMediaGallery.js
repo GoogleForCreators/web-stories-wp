@@ -54,8 +54,8 @@ const StyledText = styled(Text.Span)`
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const MediaGallery = lazy(() =>
-  import(/* webpackChunkName: "chunk-media-gallery" */ './mediaGallery')
+const MediaGallery = lazy(
+  () => import(/* webpackChunkName: "chunk-media-gallery" */ './mediaGallery')
 );
 
 function LazyMediaGallery({

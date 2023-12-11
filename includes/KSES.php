@@ -571,7 +571,8 @@ class KSES extends Service_Base implements HasRequirements {
 				'title'                => true,
 			],
 			'amp-story-captions'            => [
-				'height' => true,
+				'height'       => true,
+				'style-preset' => true,
 			],
 			'amp-story-shopping-attachment' => [
 				'cta-text' => true,

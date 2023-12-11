@@ -21,7 +21,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16 || >= 18",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18 || >= 20",
     "npm": ">= 7.3"
   },
   "type": "module",
@@ -29,14 +29,13 @@
     "@web-stories-wp/e2e-test-utils": "file:../e2e-test-utils",
     "@web-stories-wp/jest-puppeteer-amp": "file:../jest-puppeteer-amp",
     "@web-stories-wp/jest-resolver": "file:../jest-resolver",
-    "@wordpress/jest-console": "^7.13.0",
-    "@wordpress/jest-puppeteer-axe": "^6.13.0",
+    "@wordpress/jest-console": "^7.18.0",
     "babel-jest": "^29.5.0",
-    "expect-puppeteer": "^9.0.0",
-    "jest-environment-puppeteer": "^9.0.0",
-    "jest-extended": "^4.0.0",
+    "expect-puppeteer": "^9.0.1",
+    "jest-environment-puppeteer": "^9.0.1",
+    "jest-extended": "^4.0.2",
     "jest-json-schema": "^6.1.0",
-    "jest-puppeteer": "^9.0.0"
+    "jest-puppeteer": "^9.0.1"
   },
   "peerDependencies": {
     "puppeteer": "*"

@@ -21,7 +21,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 12 || >= 14 || >= 16 || >= 18",
+    "node": ">= 12 || >= 14 || >= 16 || >= 18 || >= 20",
     "npm": ">= 7.3"
   },
   "main": "./src/index.tsx",
@@ -29,9 +29,9 @@
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.1",
     "@googleforcreators/tracking": "file:../tracking",
-    "@wordpress/element": "^5.19.0",
-    "@wordpress/i18n": "^4.42.0",
-    "flagged": "^2.0.8",
+    "@wordpress/element": "^5.24.0",
+    "@wordpress/i18n": "^4.47.0",
+    "flagged": "^2.0.10",
     "polished": "^4.2.2",
     "styled-components": "^6.0.7",
     "stylis-plugin-rtl": "^2.1.1"

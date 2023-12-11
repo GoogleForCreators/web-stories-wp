@@ -55,32 +55,32 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        php: ['8.1', '8.2']
+        php: ['8.1', '8.0']
         wp: ['latest']
         coverage: [false]
         experimental: [false]
         include:
-          - php: '8.0'
+          - php: '8.2'
             wp: 'latest'
             coverage: true
             experimental: false
 
           - php: '7.4'
-            wp: '6.1'
+            wp: '6.2'
             experimental: false
 
-          - php: '8.0'
+          - php: '8.2'
             wp: 'latest'
             random: true
             experimental: true
 
-          - php: '8.2'
+          - php: '8.3'
             wp: 'trunk'
             experimental: true
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -100,17 +100,17 @@ jobs:
             dl.cloudsmith.io:443
 
       - name: Checkout
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@a1800f471a0bc25cddac36bb13e6f436ddf341d7
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       # PHP-Scoper only works on PHP 7.4+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
       - name: Setup PHP 8.0
-        uses: shivammathur/setup-php@72ae4ccbe57f82bbe08411e84e2130bd4ba1c10f
+        uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
         with:
           php-version: '8.0'
           tools: composer
@@ -124,7 +124,7 @@ jobs:
         run: rm -rf vendor/*
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@72ae4ccbe57f82bbe08411e84e2130bd4ba1c10f
+        uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql

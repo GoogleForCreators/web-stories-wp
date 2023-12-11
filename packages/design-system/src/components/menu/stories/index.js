@@ -32,7 +32,7 @@ import {
   nestedDropDownOptions,
   reallyLongOptions,
 } from '../../../storybookUtils/sampleData';
-import { getOptions } from '../utils';
+import { getGroups } from '../utils';
 
 export default {
   title: 'DesignSystem/Components/Menu',
@@ -45,7 +45,7 @@ export default {
   },
   argTypes: {
     onMenuItemClick: { action: 'onMenuItemClick' },
-    onDismissMenu: { action: 'onDismissMenu occured' },
+    onDismissMenu: { action: 'onDismissMenu occurred' },
   },
 };
 
@@ -92,10 +92,10 @@ const styleOverrideForAnimationEffectMenu = css`
   }
 `;
 
-const _basicDropDownOptions = getOptions(basicDropDownOptions);
-const _effectChooserOptions = getOptions(effectChooserOptions);
-const _nestedDropDownOptions = getOptions(nestedDropDownOptions);
-const _reallyLongOptions = getOptions(reallyLongOptions);
+const _basicDropDownOptions = getGroups(basicDropDownOptions);
+const _effectChooserOptions = getGroups(effectChooserOptions);
+const _nestedDropDownOptions = getGroups(nestedDropDownOptions);
+const _reallyLongOptions = getGroups(reallyLongOptions);
 
 export const _default = {
   render: function Render({ onMenuItemClick, ...args }) {

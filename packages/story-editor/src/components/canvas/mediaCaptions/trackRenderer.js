@@ -55,7 +55,7 @@ function TrackRenderer({ elementId, trackIndex }) {
 
   // To mimic the responsive `amp-story-captions span` styling on the frontend.
   const fontSize = pageWidth * 0.04;
-  const height = pageHeight * 0.2;
+  const height = pageHeight * 0.3;
 
   const [track, setTrack] = useState(null);
   const [videoTime, setVideoTime] = useState(0);

@@ -26,7 +26,8 @@ import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { theme } from '../../../theme';
 import { Table } from '../../../icons';
 import { Button, ButtonSize, ButtonType, ButtonVariant } from '../../button';
-import { BaseTooltip as Tooltip, Placement } from '..';
+import { Placement } from '../../popup';
+import { Tooltip } from '..';
 import { Text } from '../../typography';
 
 export default {
