@@ -48,6 +48,7 @@ web-stories-scraper
 .stylelintrc
 .test_artifacts
 babel.config.cjs
+bun.lockb
 codecov.yml
 composer.lock
 CONTRIBUTING.md
