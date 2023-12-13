@@ -65,7 +65,8 @@ function arrange(extraStylePresets, extraStateProps, extraStoryPresets) {
       ...extraStateProps,
       story: {
         globalStoryStyles: {
-          ...{ colors: [], textStyles: [] },
+          colors: [],
+          textStyles: [],
           ...extraStylePresets,
         },
         currentStoryStyles: {

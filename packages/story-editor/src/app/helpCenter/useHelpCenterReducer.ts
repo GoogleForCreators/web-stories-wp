@@ -182,7 +182,7 @@ export const getInitial = (
       (payload: Pick<HelpCenterState, 'readTips'>) =>
       (state: HelpCenterState) => ({
         readTips: {
-          ...(payload?.readTips ?? {}),
+          ...payload?.readTips,
           ...state.readTips,
         },
         isHydrated: true,

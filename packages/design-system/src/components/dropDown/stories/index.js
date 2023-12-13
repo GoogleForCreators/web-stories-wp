@@ -150,7 +150,7 @@ export const LightTheme = {
   },
 };
 
-const shortenedOptions = [...basicDropDownOptions.slice(0, 3)];
+const shortenedOptions = basicDropDownOptions.slice(0, 3);
 
 export const ShortMenu = {
   render: function Render({ onMenuItemClick, ...args }) {
