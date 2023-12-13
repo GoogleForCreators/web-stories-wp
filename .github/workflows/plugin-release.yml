@@ -289,9 +289,6 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
-
       - name: Create release branch
         id: release_branch
         run: |
@@ -456,9 +453,6 @@ jobs:
         run: bun install
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
       - name: Update plugin version
