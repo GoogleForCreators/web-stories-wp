@@ -88,7 +88,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@e900e6b10896cd3a94ded8f5d6094c6547532020
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
         with:
           bun-version: latest
 

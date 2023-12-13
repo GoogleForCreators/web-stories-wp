@@ -160,7 +160,7 @@ jobs:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@e900e6b10896cd3a94ded8f5d6094c6547532020
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
         with:
           bun-version: latest
 
@@ -189,7 +189,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@e30db14379863a8c79331b04a9969f4c1e225e0b
+        uses: google-github-actions/setup-gcloud@825196879a077b7efa50db2e88409f44de4635c2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
