@@ -308,7 +308,7 @@ class Editor extends Service_Base implements HasRequirements {
 
 		wp_enqueue_script(
 			self::LIBHEIF_SCRIPT_HANDLE,
-			trailingslashit( WEBSTORIES_CDN_URL ) . 'js/libheif-js@1.14.0/libheif.js',
+			trailingslashit( WEBSTORIES_CDN_URL ) . 'js/libheif-js@1.17.1/libheif.js',
 			[],
 			WEBSTORIES_VERSION,
 			true
