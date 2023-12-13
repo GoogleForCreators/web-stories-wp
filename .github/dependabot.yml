@@ -7,6 +7,10 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - Dependencies
+    groups:
+      github-actions:
+        patterns:
+          - '*'
 
   - package-ecosystem: npm
     directory: '/'
