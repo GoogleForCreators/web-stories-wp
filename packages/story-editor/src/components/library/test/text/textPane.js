@@ -113,7 +113,8 @@ describe('TextPane', () => {
         selectedElements: [],
         story: {
           globalStoryStyles: {
-            ...{ colors: [], textStyles: [] },
+            colors: [],
+            textStyles: [],
           },
           currentStoryStyles: {
             colors: [],

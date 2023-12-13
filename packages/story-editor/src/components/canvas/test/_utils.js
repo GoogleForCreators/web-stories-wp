@@ -75,7 +75,7 @@ export function TestFrameElement({
       selectedElementIds: [],
       ...(inputStoryContext && inputStoryContext.state),
       currentPage: {
-        ...(inputStoryContext.state?.currentPage || {}),
+        ...inputStoryContext.state?.currentPage,
         elements: [
           element,
           ...(inputStoryContext.state?.currentPage?.elements || []),

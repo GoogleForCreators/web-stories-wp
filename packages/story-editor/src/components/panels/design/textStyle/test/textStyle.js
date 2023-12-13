@@ -113,7 +113,8 @@ function Wrapper({ selectedElements, children }) {
       selectedElements: selectedElements,
       story: {
         globalStoryStyles: {
-          ...{ colors: [], textStyles: [] },
+          colors: [],
+          textStyles: [],
         },
         currentStoryStyles: {
           colors: [],

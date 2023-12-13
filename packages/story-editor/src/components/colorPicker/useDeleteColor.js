@@ -50,7 +50,7 @@ function useDeleteColor({ onEmpty = noop }) {
       updateStory({
         properties: {
           globalStoryStyles: {
-            ...(globalStoryStyles || {}),
+            ...globalStoryStyles,
             colors: updatedColors,
           },
         },
