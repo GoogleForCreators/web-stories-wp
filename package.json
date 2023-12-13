@@ -168,9 +168,6 @@
     "workspaces-run": "^1.0.2"
   },
   "overrides": {
-    "@axe-core/puppeteer": {
-      "puppeteer": "$puppeteer"
-    },
     "@typescript-eslint/parser": "$@typescript-eslint/parser",
     "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
     "date-fns": "^2.30.0",
