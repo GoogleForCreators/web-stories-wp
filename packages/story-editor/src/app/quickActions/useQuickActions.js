@@ -21,6 +21,7 @@ import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { Icons, Placement } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { ElementType } from '@googleforcreators/elements';
+import { AUDIO_STICKER_DEFAULT_PRESET } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -37,7 +38,7 @@ import useTextActions from './useTextActions';
 import useMediaActions from './useMediaActions';
 import useForegroundActions from './useForegroundActions';
 
-const { Bucket, LetterTPlus, Media } = Icons;
+const { Bucket, LetterTPlus, Media, AudioSticker } = Icons;
 
 /**
  * Determines the quick actions to display in the quick
@@ -150,8 +151,21 @@ const useQuickActions = () => {
     [handleMouseDown]
   );
 
+  const hasAudioAnywhere = useStory(
+    ({ state }) =>
+      state.story.backgroundAudio ||
+      state.pages.some((page) => {
+        return (
+          page.backgroundAudio ||
+          page.elements
+            .filter((element) => element.type === ElementType.Video)
+            .some((element) => !element.resource.isMuted)
+        );
+      })
+  );
+
   const noElementSelectedActions = useMemo(() => {
-    return [
+    const actions = [
       {
         Icon: Bucket,
         label: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
@@ -195,6 +209,19 @@ const useQuickActions = () => {
         ...actionMenuProps,
       },
     ];
+
+    if (hasAudioAnywhere) {
+      actions.push({
+        Icon: AudioSticker,
+        label: ACTIONS.INSERT_AUDIO_STICKER.text,
+        onClick: () => {
+          insertElement('audio_sticker', AUDIO_STICKER_DEFAULT_PRESET);
+        },
+        ...actionMenuProps,
+      });
+    }
+
+    return actions;
   }, [
     actionMenuProps,
     backgroundElement,
@@ -202,6 +229,7 @@ const useQuickActions = () => {
     handleFocusPageBackground,
     setHighlights,
     insertElement,
+    hasAudioAnywhere,
   ]);
 
   const foregroundCommonActions = useForegroundActions({

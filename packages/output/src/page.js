@@ -135,6 +135,12 @@ function OutputPage({
     videoCaptions.push(`el-${id}-captions`);
   }
 
+  const audioStickers = elements.filter(
+    ({ type }) => type === ELEMENT_TYPES.AUDIO_STICKER
+  );
+
+  const hasAudioStickers = audioStickers.length > 0;
+
   return (
     <amp-story-page
       id={id}
@@ -209,6 +215,26 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       )}
+
+      {
+        // TODO (@AnuragVasanwala): Need to move this logic to sticker's output.js.
+        hasAudioStickers && (
+          <amp-story-grid-layer
+            template="vertical"
+            aspect-ratio={ASPECT_RATIO}
+            class="grid-layer"
+          >
+            {audioStickers.map((element) => (
+              <amp-story-audio-sticker
+                size={element.size}
+                sticker={element.sticker}
+                sticker-style={element.style}
+                key={element.id}
+              />
+            ))}
+          </amp-story-grid-layer>
+        )
+      }
 
       {/* <amp-story-page-outlink> needs to be the last child element */}
       {hasPageAttachment && <Outlink {...pageAttachment} />}

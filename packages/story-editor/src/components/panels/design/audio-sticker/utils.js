@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,25 @@
  * limitations under the License.
  */
 
-// TODO (@AnuragVasanwala): Fix ESLint issue.
-export {
-  AUDIO_STICKERS,
-  AUDIO_STICKER_WIDTH_PRESETS,
+/**
+ * External dependencies
+ */
+import {
   AUDIO_STICKER_ASPECT_RATIOS,
-  AUDIO_STICKER_DEFAULT_PRESET,
-  AUDIO_STICKER_STYLES,
-} from './audio-sticker/constants';
+  AUDIO_STICKER_WIDTH_PRESETS,
+} from '@googleforcreators/element-library';
 
-export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
-};
+export function getDimensionsForAudioSticker(type, size) {
+  let width, height;
+  if (size === 'small') {
+    width =
+      AUDIO_STICKER_WIDTH_PRESETS.SMALL * AUDIO_STICKER_ASPECT_RATIOS[type];
+    height = AUDIO_STICKER_WIDTH_PRESETS.SMALL;
+  } else {
+    width =
+      AUDIO_STICKER_WIDTH_PRESETS.LARGE * AUDIO_STICKER_ASPECT_RATIOS[type];
+    height = AUDIO_STICKER_WIDTH_PRESETS.LARGE;
+  }
+
+  return { width, height };
+}

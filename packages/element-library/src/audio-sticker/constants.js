@@ -1,0 +1,100 @@
+/*
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**
+ * External dependencies
+ */
+import { PanelTypes } from '@googleforcreators/design-system';
+/**
+ * Internal dependencies
+ */
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import headphoneCat from './sticker-images/headphone-cat/headphone-cat-pretap.png';
+import tapePlayer from './sticker-images/tape-player/tape-player-pretap.png';
+import loudSpeaker from './sticker-images/loud-speaker/loud-speaker-posttap.png';
+import audioCloud from './sticker-images/audio-cloud/audio-cloud-posttap.png';
+
+export const hasEditMode = false;
+export const hasEditModeIfLocked = false;
+export const hasEditModeMoveable = false;
+export const editModeGrayout = false;
+
+export const hasDesignMenu = true;
+
+export const hasDuplicateMenu = false;
+
+export const isMedia = false;
+
+export const canFlip = true;
+
+export const isMaskable = false;
+
+export const isAspectAlwaysLocked = false;
+
+export const resizeRules = {
+  vertical: false,
+  horizontal: false,
+  diagonal: false,
+};
+
+export const AUDIO_STICKERS = {
+  'headphone-cat': headphoneCat,
+  'tape-player': tapePlayer,
+  'loud-speaker': loudSpeaker,
+  'audio-cloud': audioCloud,
+};
+
+export const AUDIO_STICKER_WIDTH_PRESETS = {
+  SMALL: 120,
+  LARGE: 180,
+};
+
+export const AUDIO_STICKER_ASPECT_RATIOS = {
+  'headphone-cat': 1.24,
+  'tape-player': 1.18,
+  'loud-speaker': 1,
+  'audio-cloud': 1.54,
+};
+
+export const AUDIO_STICKER_DEFAULT_PRESET = {
+  x: 100,
+  y: 100,
+  width:
+    AUDIO_STICKER_WIDTH_PRESETS.SMALL *
+    AUDIO_STICKER_ASPECT_RATIOS['headphone-cat'],
+  height: AUDIO_STICKER_WIDTH_PRESETS.SMALL,
+  sticker: 'headphone-cat',
+  size: 'small',
+};
+
+export const AUDIO_STICKER_STYLES = {
+  none: '',
+  outline: 'border: 2px solid white; border-radius: 20px',
+  dropshadow: 'filter: drop-shadow(0 0 0.75rem crimson);',
+};
+
+export const defaultAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
+  size: 'small',
+  sticker: 'headphone-cat',
+  style: 'none',
+  lockDimensions: true,
+};
+
+export const panels = [
+  PanelTypes.ElementAlignment,
+  PanelTypes.AudioSticker,
+  PanelTypes.Animation,
+];

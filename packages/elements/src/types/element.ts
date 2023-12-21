@@ -194,3 +194,10 @@ export interface TextElement extends Element {
   lineHeight: number;
   textAlign: TextAlign;
 }
+
+export interface AudioStickerElement extends Element {
+  type: ElementType.AudioSticker;
+  sticker: string;
+  size: string;
+  style: string;
+}

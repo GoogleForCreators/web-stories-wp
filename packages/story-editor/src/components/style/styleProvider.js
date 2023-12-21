@@ -33,6 +33,7 @@ import VideoSelectionIcon from './icons/videoSelectionIcon';
 import ShapeSelectionIcon from './icons/shapeSelectionIcon';
 import MultiSelectionIcon from './icons/multiSelectionIcon';
 import ProductSelectionIcon from './icons/productSelectionIcon';
+import AudioStickerSelectionIcon from './icons/audioStickerSelectionIcon';
 
 const STYLE_TAB_IDS = new Set([SELECTION.id, LINK.id, ANIMATION.id]);
 
@@ -84,6 +85,9 @@ function StyleProvider({ children }) {
     }
     if (icons[0] === 'product') {
       selectionIcon = ProductSelectionIcon;
+    }
+    if (icons[0] === 'audio_sticker') {
+      selectionIcon = AudioStickerSelectionIcon;
     }
   } else {
     selectionIcon = MultiSelectionIcon;

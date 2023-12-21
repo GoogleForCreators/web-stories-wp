@@ -29,6 +29,7 @@ import * as videoElement from './video';
 import * as gifElement from './gif';
 import * as stickerElement from './sticker';
 import * as productElement from './product';
+import * as audioStickerElement from './audio-sticker';
 
 const elementTypes = [
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },
@@ -41,6 +42,11 @@ const elementTypes = [
     type: 'product',
     name: __('Product', 'web-stories'),
     ...productElement,
+  },
+  {
+    type: 'audio_sticker',
+    name: __('Audio Sticker', 'web-stories'),
+    ...audioStickerElement,
   },
 ];
 

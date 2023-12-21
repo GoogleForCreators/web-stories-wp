@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+function AudioStickerOutput() {
+  // TODO (@AnuragVasanwala): Need to move this logic here from 'packages/output/src/page.js'.
+  return <div>{'AudioStickerOutput'}</div>;
+}
 
-// TODO (@AnuragVasanwala): Fix ESLint issue.
-export {
-  AUDIO_STICKERS,
-  AUDIO_STICKER_WIDTH_PRESETS,
-  AUDIO_STICKER_ASPECT_RATIOS,
-  AUDIO_STICKER_DEFAULT_PRESET,
-  AUDIO_STICKER_STYLES,
-} from './audio-sticker/constants';
-
-export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
-};
+export default AudioStickerOutput;

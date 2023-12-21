@@ -15,6 +15,7 @@
  */
 
 export { default as AnimationPanel } from './animation';
+export { default as AudioStickerPanel } from './audio-sticker';
 export { default as BorderStylePanel } from './border';
 export { default as CaptionsPanel } from './captions';
 export { default as ElementAlignmentPanel } from './alignment';
@@ -23,7 +24,9 @@ export { default as ImageAccessibilityPanel } from './imageAccessibility';
 export { default as LinkPanel } from './link';
 export { default as PageAdvancementPanel } from './pageAdvancement';
 export { default as PageAttachmentPanel } from './pageAttachment';
+export { default as PageBackgroundAudioPanel } from './pageBackgroundAudio';
 export { default as PageBackgroundPanel } from './pageBackground';
+export { default as ProductPanel } from './product';
 export { default as ShapeStylePanel } from './shapeStyle';
 export { default as SizePositionPanel } from './sizePosition';
 export { default as TextAccessibilityPanel } from './textAccessibility';
@@ -31,5 +34,3 @@ export { default as TextStylePanel } from './textStyle';
 export { default as VideoAccessibilityPanel } from './videoAccessibility';
 export { default as VideoOptionsPanel } from './videoOptions';
 export { default as VideoSegmentPanel } from './videoSegment';
-export { default as PageBackgroundAudioPanel } from './pageBackgroundAudio';
-export { default as ProductPanel } from './product';

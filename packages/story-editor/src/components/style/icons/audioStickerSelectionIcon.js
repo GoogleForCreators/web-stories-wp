@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-// TODO (@AnuragVasanwala): Fix ESLint issue.
-export {
-  AUDIO_STICKERS,
-  AUDIO_STICKER_WIDTH_PRESETS,
-  AUDIO_STICKER_ASPECT_RATIOS,
-  AUDIO_STICKER_DEFAULT_PRESET,
-  AUDIO_STICKER_STYLES,
-} from './audio-sticker/constants';
+/**
+ * External dependencies
+ */
+import { __ } from '@googleforcreators/i18n';
+import { Icons } from '@googleforcreators/design-system';
 
-export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
-};
+function AudioStickerSelectionIcon() {
+  return (
+    <Icons.AudioSticker title={__('Audio Sticker selection', 'web-stories')} />
+  );
+}
+
+export default AudioStickerSelectionIcon;
