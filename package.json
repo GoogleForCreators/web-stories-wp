@@ -166,7 +166,7 @@
     "rtlcss-webpack-plugin": "^4.0.7",
     "source-map-loader": "^4.0.1",
     "storybook": "^7.6.4",
-    "styled-components": "^5.3.11",
+    "styled-components": "^6.1.6",
     "stylelint": "^15.11.0",
     "stylelint-config-recommended": "^13.0.0",
     "stylelint-prettier": "^4.1.0",
