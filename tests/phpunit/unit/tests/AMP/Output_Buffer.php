@@ -110,7 +110,7 @@ class Output_Buffer extends TestCase {
 				'get_post'              => static fn() => null,
 				'amp_is_available'      => static fn() => true,
 				'amp_is_enabled'        => static fn() => true,
-				'amp_is_post_supported' => static fn( $post ) => true,
+				'amp_is_post_supported' => static fn() => true,
 			]
 		);
 
