@@ -44,7 +44,7 @@ const elementTypes = [
     ...productElement,
   },
   {
-    type: 'audio_sticker',
+    type: 'audioSticker',
     name: __('Audio Sticker', 'web-stories'),
     ...audioStickerElement,
   },
