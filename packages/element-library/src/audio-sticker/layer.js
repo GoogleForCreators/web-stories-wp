@@ -18,10 +18,8 @@
  */
 import { __ } from '@googleforcreators/i18n';
 
-function getAudioStickerLayerText(element) {
-  const { alt } = element?.resource || {};
-
-  return alt || __('Audio Sticker', 'web-stories');
+function getAudioStickerLayerText() {
+  return __('Audio Sticker', 'web-stories');
 }
 
 export default getAudioStickerLayerText;
