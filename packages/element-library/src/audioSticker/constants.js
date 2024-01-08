@@ -17,6 +17,8 @@
  * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+
 /**
  * Internal dependencies
  */
@@ -41,7 +43,7 @@ export const canFlip = true;
 
 export const isMaskable = false;
 
-export const isAspectAlwaysLocked = false;
+export const isAspectAlwaysLocked = true;
 
 export const resizeRules = {
   vertical: false,
@@ -56,33 +58,25 @@ export const AUDIO_STICKERS = {
   'audio-cloud': audioCloud,
 };
 
-export const AUDIO_STICKER_WIDTH_PRESETS = {
-  SMALL: 120,
-  LARGE: 180,
-};
-
-export const AUDIO_STICKER_ASPECT_RATIOS = {
-  'headphone-cat': 1.24,
-  'tape-player': 1.18,
-  'loud-speaker': 1,
-  'audio-cloud': 1.54,
-};
-
-export const AUDIO_STICKER_DEFAULT_PRESET = {
-  x: 100,
-  y: 100,
-  width:
-    AUDIO_STICKER_WIDTH_PRESETS.SMALL *
-    AUDIO_STICKER_ASPECT_RATIOS['headphone-cat'],
-  height: AUDIO_STICKER_WIDTH_PRESETS.SMALL,
-  sticker: 'headphone-cat',
-  size: 'small',
-};
-
 export const AUDIO_STICKER_STYLES = {
   none: '',
-  outline: 'border: 2px solid white; border-radius: 20px',
-  dropshadow: 'filter: drop-shadow(0 0 0.75rem crimson);',
+  outline: 'border: 4px solid white; border-radius: 20px',
+  dropshadow: 'filter: drop-shadow(2px 2px 10px white)',
+};
+
+export const AUDIO_STICKER_LABELS = {
+  'headphone-cat': {
+    label: __('Headphone Cat', 'web-stories'),
+  },
+  'tape-player': {
+    label: __('Tape Player', 'web-stories'),
+  },
+  'loud-speaker': {
+    label: __('Loud Speaker', 'web-stories'),
+  },
+  'audio-cloud': {
+    label: __('Audio Cloud', 'web-stories'),
+  },
 };
 
 export const defaultAttributes = {

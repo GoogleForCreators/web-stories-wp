@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,25 @@
  * limitations under the License.
  */
 
-export {
-  AUDIO_STICKERS,
-  AUDIO_STICKER_STYLES,
-  AUDIO_STICKER_LABELS,
-} from './audioSticker/constants';
+export const AUDIO_STICKER_WIDTH_PRESETS = {
+  SMALL: 120,
+  LARGE: 180,
+};
 
-export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
+export const AUDIO_STICKER_ASPECT_RATIOS = {
+  'headphone-cat': 1.24,
+  'tape-player': 1.18,
+  'loud-speaker': 1,
+  'audio-cloud': 1.54,
+};
+
+export const AUDIO_STICKER_DEFAULT_PRESET = {
+  x: 100,
+  y: 100,
+  width:
+    AUDIO_STICKER_WIDTH_PRESETS.SMALL *
+    AUDIO_STICKER_ASPECT_RATIOS['headphone-cat'],
+  height: AUDIO_STICKER_WIDTH_PRESETS.SMALL,
+  sticker: 'headphone-cat',
+  size: 'small',
 };
