@@ -135,7 +135,7 @@ function CustomStyles() {
               amp-story-grid-layer.align-bottom {
                 align-content: end;
                 padding: 0;
-                /* 
+                /*
                   AMP CTA Layer will exactly occupy 74px regardless of any device.
                   To space out captions 74px from the BOTTOM (AMP CTA Layer),
                   74px from the TOP should also be spaced out and thus: 2 * 74px
@@ -151,6 +151,10 @@ function CustomStyles() {
               amp-story-captions {
                 margin-bottom: 16px;
                 text-align: center;
+              }
+
+              amp-story-grid-layer .i-amphtml-amp-story-audio-sticker-tap-hint {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
               }
               `,
       }}

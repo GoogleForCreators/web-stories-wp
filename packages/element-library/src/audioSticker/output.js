@@ -27,7 +27,9 @@ function AudioStickerOutput({ element }) {
       sticker-style={
         element.style && element.style !== 'none' ? element.style : undefined
       }
-      key={element.id}
+      style={{
+        height: '100%',
+      }}
     />
   );
 }
