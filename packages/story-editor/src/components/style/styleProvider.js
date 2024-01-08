@@ -117,11 +117,23 @@ function StyleProvider({ children }) {
     ({ type }) => type === 'product'
   );
 
-  if (!isBackgroundSelected && !hasProductsSelected) {
+  const hasAudioStickersSelected = selectedElements.some(
+    ({ type }) => type === 'audioSticker'
+  );
+
+  if (
+    !isBackgroundSelected &&
+    !hasProductsSelected &&
+    !hasAudioStickersSelected
+  ) {
     state.data.tabs.push(LINK);
   }
 
-  if (!selectedElements[0]?.isDefaultBackground && !hasProductsSelected) {
+  if (
+    !selectedElements[0]?.isDefaultBackground &&
+    !hasProductsSelected &&
+    !hasAudioStickersSelected
+  ) {
     state.data.tabs.push(ANIMATION);
   }
 

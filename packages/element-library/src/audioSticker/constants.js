@@ -87,8 +87,4 @@ export const defaultAttributes = {
   lockDimensions: true,
 };
 
-export const panels = [
-  PanelTypes.ElementAlignment,
-  PanelTypes.AudioSticker,
-  PanelTypes.Animation,
-];
+export const panels = [PanelTypes.ElementAlignment, PanelTypes.AudioSticker];
