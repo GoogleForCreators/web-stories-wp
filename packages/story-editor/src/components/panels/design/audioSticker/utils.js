@@ -15,12 +15,12 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
 import {
   AUDIO_STICKER_ASPECT_RATIOS,
   AUDIO_STICKER_WIDTH_PRESETS,
-} from '@googleforcreators/element-library';
+} from '../../../../constants';
 
 export function getDimensionsForAudioSticker(type, size) {
   let width, height;

@@ -21,7 +21,6 @@ import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { Icons, Placement } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { ElementType } from '@googleforcreators/elements';
-import { AUDIO_STICKER_DEFAULT_PRESET } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -32,6 +31,7 @@ import { useStory } from '../story';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../components/mediaRecording';
+import { AUDIO_STICKER_DEFAULT_PRESET } from '../../constants';
 import { getResetProperties } from './utils';
 import { ACTIONS } from './constants';
 import useTextActions from './useTextActions';
