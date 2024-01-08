@@ -17,73 +17,38 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from '@googleforcreators/react';
-import { useTransformHandler } from '@googleforcreators/transform';
-import { shouldDisplayBorder } from '@googleforcreators/masks';
 import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
+import { elementFillContent } from '../shared';
 import {
-  elementFillContent,
-  elementWithBackgroundColor,
-  elementWithBorder,
-} from '../shared';
-import { AUDIO_STICKERS, AUDIO_STICKER_STYLES } from './constants';
-
-/**
- * Internal dependencies
- */
+  AUDIO_STICKERS,
+  AUDIO_STICKER_STYLES,
+  AUDIO_STICKER_LABELS,
+} from './constants';
 
 const Element = styled.img`
   ${elementFillContent}
-  ${elementWithBackgroundColor}
-  ${elementWithBorder}
   ${({ stickerStyle }) => AUDIO_STICKER_STYLES[stickerStyle]}
 `;
 
 function AudioStickerDisplay({ element }) {
   const {
-    id,
-    border,
     width: elementWidth,
     height: elementHeight,
     sticker,
     style,
   } = element;
 
-  const ref = useRef(null);
-
-  useTransformHandler(id, (transform) => {
-    // Since outside border is applied directly to the element, we need to
-    // adjust the size of the element according to the border width.
-    if (ref.current) {
-      if (transform) {
-        const { resize } = transform;
-        if (resize && resize[0] !== 0 && resize[1] !== 0) {
-          const [width, height] = resize;
-          if (shouldDisplayBorder(element)) {
-            ref.current.style.width = width + border.left + border.right + 'px';
-            ref.current.style.height =
-              height + border.top + border.bottom + 'px';
-          }
-        }
-      } else {
-        ref.current.style.width = '';
-        ref.current.style.height = '';
-      }
-    }
-  });
-
   return (
     <Element
       src={AUDIO_STICKERS[sticker]}
       stickerStyle={style}
-      ref={ref}
       height={elementHeight}
       width={elementWidth}
-      alt="audio-sticker"
+      alt={AUDIO_STICKER_LABELS[sticker].label}
     />
   );
 }
