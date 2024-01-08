@@ -153,6 +153,10 @@ function CustomStyles() {
                 text-align: center;
               }
 
+              amp-story-audio-sticker {
+                height: 100%;
+              }
+
               amp-story-grid-layer .i-amphtml-amp-story-audio-sticker-tap-hint {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
               }
