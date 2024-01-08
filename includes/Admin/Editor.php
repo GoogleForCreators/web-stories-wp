@@ -265,11 +265,11 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool|mixed $use_block_editor  Whether the post type can be edited or not. Default true.
-	 * @param string     $post_type         The post type being checked.
+	 * @param bool|mixed $use_block_editor Whether the post type can be edited or not. Default true.
+	 * @param mixed      $post_type        The post type being checked.
 	 * @return false|mixed Whether to use the block editor.
 	 */
-	public function filter_use_block_editor_for_post_type( $use_block_editor, string $post_type ) {
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
 		if ( $this->story_post_type->get_slug() === $post_type ) {
 			return false;
 		}
