@@ -27,7 +27,7 @@ export const ELEMENT_TYPES = {
   GIF: 'gif',
   STICKER: 'sticker',
   PRODUCT: 'product',
-  AUDIO_STICKER: 'audio_sticker',
+  AUDIO_STICKER: 'audioSticker',
 } as const;
 
 export const MEDIA_ELEMENT_TYPES = [

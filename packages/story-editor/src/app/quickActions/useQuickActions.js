@@ -215,7 +215,7 @@ const useQuickActions = () => {
         Icon: AudioSticker,
         label: ACTIONS.INSERT_AUDIO_STICKER.text,
         onClick: () => {
-          insertElement('audio_sticker', AUDIO_STICKER_DEFAULT_PRESET);
+          insertElement('audioSticker', AUDIO_STICKER_DEFAULT_PRESET);
         },
         ...actionMenuProps,
       });

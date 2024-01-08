@@ -31,7 +31,7 @@ import Sticker from './sticker';
 import Text from './text';
 import Video from './video';
 import Product from './product';
-import AudioSticker from './audio_sticker';
+import AudioSticker from './audioSticker';
 
 const FloatingMenuSelector = memo(function FloatingMenuSelector({
   selectedElementType,

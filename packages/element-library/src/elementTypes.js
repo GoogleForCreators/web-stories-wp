@@ -29,7 +29,7 @@ import * as videoElement from './video';
 import * as gifElement from './gif';
 import * as stickerElement from './sticker';
 import * as productElement from './product';
-import * as audioStickerElement from './audio-sticker';
+import * as audioStickerElement from './audioSticker';
 
 const elementTypes = [
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },

@@ -86,7 +86,7 @@ function StyleProvider({ children }) {
     if (icons[0] === 'product') {
       selectionIcon = ProductSelectionIcon;
     }
-    if (icons[0] === 'audio_sticker') {
+    if (icons[0] === 'audioSticker') {
       selectionIcon = AudioStickerSelectionIcon;
     }
   } else {

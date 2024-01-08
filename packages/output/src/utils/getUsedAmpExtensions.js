@@ -79,7 +79,7 @@ const getUsedAmpExtensions = (pages) => {
         case 'product':
           extensions.push(ampStoryShopping);
           break;
-        case 'audio_sticker':
+        case 'audioSticker':
           extensions.push(ampStoryAudioSticker);
           break;
         default:

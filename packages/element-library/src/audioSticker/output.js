@@ -13,9 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function AudioStickerOutput() {
-  // TODO (@AnuragVasanwala): Need to move this logic here from 'packages/output/src/page.js'.
-  return <div>{'AudioStickerOutput'}</div>;
+
+/**
+ * External dependencies
+ */
+import { StoryPropTypes } from '@googleforcreators/elements';
+
+function AudioStickerOutput({ element }) {
+  return (
+    <amp-story-audio-sticker
+      size={element.size}
+      sticker={element.sticker}
+      sticker-style={
+        element.style && element.style !== 'none' ? element.style : undefined
+      }
+      key={element.id}
+    />
+  );
 }
+
+AudioStickerOutput.propTypes = {
+  element: StoryPropTypes.elements.audioSticker.isRequired,
+};
 
 export default AudioStickerOutput;

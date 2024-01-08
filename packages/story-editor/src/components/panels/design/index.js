@@ -15,7 +15,7 @@
  */
 
 export { default as AnimationPanel } from './animation';
-export { default as AudioStickerPanel } from './audio-sticker';
+export { default as AudioStickerPanel } from './audioSticker';
 export { default as BorderStylePanel } from './border';
 export { default as CaptionsPanel } from './captions';
 export { default as ElementAlignmentPanel } from './alignment';

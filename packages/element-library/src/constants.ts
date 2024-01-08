@@ -21,7 +21,7 @@ export {
   AUDIO_STICKER_ASPECT_RATIOS,
   AUDIO_STICKER_DEFAULT_PRESET,
   AUDIO_STICKER_STYLES,
-} from './audio-sticker/constants';
+} from './audioSticker/constants';
 
 export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
   scale: 100,

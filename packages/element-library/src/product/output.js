@@ -36,7 +36,7 @@ function ProductOutput({ element }) {
 }
 
 ProductOutput.propTypes = {
-  element: StoryPropTypes.elements.shape.isRequired,
+  element: StoryPropTypes.elements.product.isRequired,
 };
 
 export default ProductOutput;
