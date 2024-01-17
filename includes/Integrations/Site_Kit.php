@@ -78,6 +78,7 @@ class Site_Kit extends Service_Base {
 	 * @param Analytics     $analytics     Analytics instance.
 	 * @param Context       $context       Context instance.
 	 * @param Plugin_Status $plugin_status Plugin_Status instance.
+	 * @param Settings      $settings      Settings instance.
 	 */
 	public function __construct( Analytics $analytics, Context $context, Plugin_Status $plugin_status, Settings $settings ) {
 		$this->analytics     = $analytics;
