@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
