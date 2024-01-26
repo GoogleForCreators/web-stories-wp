@@ -68,7 +68,7 @@
     "@pioug/colorthief": "^3.0.1",
     "@wmik/use-media-recorder": "^1.6.5-beta.0",
     "blurhash": "^2.0.5",
-    "classnames": "^2.3.2",
+    "classnames": "^2.5.1",
     "flagged": "^2.0.10",
     "history": "^5.3.0",
     "html-to-image": "1.10.8",
