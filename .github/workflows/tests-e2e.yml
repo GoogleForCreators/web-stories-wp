@@ -220,10 +220,18 @@ jobs:
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
+      - name: Get artifact name
+        if: always()
+        run: |
+          ARTIFACT_NAME=${ARTIFACT_NAME//\//-}
+          echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> $GITHUB_ENV
+        env:
+          ARTIFACT_NAME: failures-artifacts-${{ matrix.wp }}-${{ matrix.shard }}
+
       - name: Upload artifacts
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         if: always()
         with:
-          name: failures-artifacts
+          name: ${{ env.ARTIFACT_NAME }}
           path: build/e2e-artifacts
           if-no-files-found: ignore
