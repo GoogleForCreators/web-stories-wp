@@ -80,15 +80,23 @@ export const TEXT = {
     'web-stories'
   ),
   SITE_KIT_IN_USE: __(
-    'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
+    '<b>Note: </b>Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
     'web-stories'
   ),
+  ANALYTICS_DROPDOWN_LABEL: __('Analytics Type', 'web-stories'),
+  ANALYTICS_DROPDOWN_PLACEHOLDER: __('Select Analytics Type', 'web-stories'),
 };
 
 const ANALYTICS_DROPDOWN_OPTIONS = [
-  { value: 'site-kit', label: 'Use Site Kit for analytics (default)' },
-  { value: 'web-stories', label: 'Use only Web Stories for analytics' },
-  { value: 'both', label: 'Use both' },
+  {
+    value: 'site-kit',
+    label: __('Use Site Kit for analytics (default)', 'web-stories'),
+  },
+  {
+    value: 'web-stories',
+    label: __('Use only Web Stories for analytics', 'web-stories'),
+  },
+  { value: 'both', label: __('Use both', 'web-stories') },
 ];
 
 const DropdownContainer = styled.div`
@@ -288,6 +296,7 @@ function GoogleAnalyticsSettings({
             placeholder={TEXT.PLACEHOLDER}
             hasError={Boolean(inputError)}
             hint={inputError}
+            disabled={analyticsActive}
           />
           <SaveButton
             type={ButtonType.Secondary}
@@ -318,16 +327,13 @@ function GoogleAnalyticsSettings({
         {analyticsActive && (
           <>
             <TextInputHelperText size={TextSize.Small}>
-              <TranslateWithMarkup>
-                {__('<b>Note: </b>', 'web-stories')}
-              </TranslateWithMarkup>
-              {TEXT.SITE_KIT_IN_USE}
+              <TranslateWithMarkup>{TEXT.SITE_KIT_IN_USE}</TranslateWithMarkup>
             </TextInputHelperText>
             <DropdownContainer>
               <DropDown
                 id="analyticsType"
-                ariaLabel={__('Analytics Type', 'web-stories')}
-                placeholder={__('Select Analytics Type', 'web-stories')}
+                ariaLabel={TEXT.ANALYTICS_DROPDOWN_LABEL}
+                placeholder={TEXT.ANALYTICS_DROPDOWN_PLACEHOLDER}
                 options={ANALYTICS_DROPDOWN_OPTIONS}
                 onMenuItemClick={(_, newValue) => {
                   onUpdateAnalyticsHandler(newValue);
