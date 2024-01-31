@@ -76,7 +76,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     expect(label).toBeInTheDocument();
   });
 
-  it('should not display any input field when analytics module is active', () => {
+  it('should display input field and dropdown when analytics module is active', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -91,7 +91,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     );
 
     const input = screen.queryByRole('textbox');
-    expect(input).not.toBeInTheDocument();
+    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
+    expect(input).toBeInTheDocument();
+    expect(dropdown).toBeInTheDocument();
   });
 
   it('should allow the input to be active when Site Kit is installed but analytics module is not active', () => {
