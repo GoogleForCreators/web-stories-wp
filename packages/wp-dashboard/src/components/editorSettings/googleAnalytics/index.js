@@ -36,6 +36,7 @@ import {
   Link,
   DropDown,
 } from '@googleforcreators/design-system';
+import { GOOGLE_ANALYTICS_HANDLER_TYPE } from '../../../constants/settings';
 import styled from 'styled-components';
 
 /**
@@ -89,14 +90,17 @@ export const TEXT = {
 
 const ANALYTICS_DROPDOWN_OPTIONS = [
   {
-    value: 'site-kit',
+    value: GOOGLE_ANALYTICS_HANDLER_TYPE.SITE_KIT,
     label: __('Use Site Kit for analytics (default)', 'web-stories'),
   },
   {
-    value: 'web-stories',
+    value: GOOGLE_ANALYTICS_HANDLER_TYPE.WEB_STORIES,
     label: __('Use only Web Stories for analytics', 'web-stories'),
   },
-  { value: 'both', label: __('Use both', 'web-stories') },
+  {
+    value: GOOGLE_ANALYTICS_HANDLER_TYPE.BOTH,
+    label: __('Use both', 'web-stories'),
+  },
 ];
 
 const DropdownContainer = styled.div`
@@ -326,9 +330,13 @@ function GoogleAnalyticsSettings({
         </TextInputHelperText>
         {analyticsActive && (
           <>
-            <TextInputHelperText size={TextSize.Small}>
-              <TranslateWithMarkup>{TEXT.SITE_KIT_IN_USE}</TranslateWithMarkup>
-            </TextInputHelperText>
+            {analyticsHandler === GOOGLE_ANALYTICS_HANDLER_TYPE.SITE_KIT && (
+              <TextInputHelperText size={TextSize.Small}>
+                <TranslateWithMarkup>
+                  {TEXT.SITE_KIT_IN_USE}
+                </TranslateWithMarkup>
+              </TextInputHelperText>
+            )}
             <DropdownContainer>
               <DropDown
                 id="analyticsType"
