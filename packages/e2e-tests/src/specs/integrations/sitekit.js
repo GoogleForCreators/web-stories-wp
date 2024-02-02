@@ -27,6 +27,15 @@ import {
   trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
+const DROPDOWN_LABELS = {
+  SITE_KIT: 'Use Site Kit for analytics (default)',
+  WEB_STORIES: 'Use only Web Stories for analytics',
+  BOTH: 'Use both',
+};
+
+const SITE_KIT_MESSAGE =
+  'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.';
+
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Site Kit plugin integration', () => {
@@ -34,12 +43,30 @@ describe('Site Kit plugin integration', () => {
     withPlugin('e2e-tests-site-kit-analytics-mock');
 
     describe('Dashboard', () => {
-      it('should see Site Kit specific message', async () => {
+      beforeAll(async () => {
         await visitSettings();
+        await page.click('button[aria-label="Analytics Type"]');
+      });
 
-        await expect(page).toMatchTextContent(
-          'Site Kit by Google has already enabled Google Analytics for your Web Stories'
-        );
+      it('should Site Kit specific message on selecting Site Kit', async () => {
+        await expect(page).toClick('[role="listbox"] li', {
+          text: DROPDOWN_LABELS.SITE_KIT,
+        });
+        await expect(page).toMatchTextContent(SITE_KIT_MESSAGE);
+      });
+
+      it('should not see Site Kit specific message on selecting web stories', async () => {
+        await expect(page).toClick('[role="listbox"] li', {
+          text: DROPDOWN_LABELS.WEB_STORIES,
+        });
+        await expect(page).not.toMatchTextContent(SITE_KIT_MESSAGE);
+      });
+
+      it('should not see Site Kit specific message on selecting both', async () => {
+        await expect(page).toClick('[role="listbox"] li', {
+          text: DROPDOWN_LABELS.BOTH,
+        });
+        await expect(page).not.toMatchTextContent(SITE_KIT_MESSAGE);
       });
     });
 
@@ -69,7 +96,7 @@ describe('Site Kit plugin integration', () => {
     withPlugin('e2e-tests-site-kit-adsense-mock');
 
     describe('Dashboard', () => {
-      it('should see Site Kit specific message', async () => {
+      it('should see Google AdSense specific message', async () => {
         await visitSettings();
 
         await expect(page).toMatchTextContent(
