@@ -41,7 +41,7 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/tracking": "*",
     "@googleforcreators/units": "*",
-    "mime": "^4.0.0",
+    "mime": "^3.0.0",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {

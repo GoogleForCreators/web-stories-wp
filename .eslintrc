@@ -649,7 +649,7 @@
       ],
       "extends": [
         "plugin:node/recommended",
-        "plugin:security/recommended"
+        "plugin:security/recommended-legacy"
       ],
       "plugins": [
         "security"

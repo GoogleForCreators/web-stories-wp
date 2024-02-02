@@ -116,7 +116,7 @@ jobs:
         run: bun run workflow:build-plugin
 
       - name: Upload bundle
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: web-stories
           path: build/web-stories
@@ -168,7 +168,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Download bundle
-        uses: actions/download-artifact@f44cd7b40bfd40b6aa1cc1b9b5b7bf03d3c67110
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935
         with:
           name: web-stories
 
@@ -220,10 +220,18 @@ jobs:
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
+      - name: Get artifact name
+        if: always()
+        run: |
+          ARTIFACT_NAME=${ARTIFACT_NAME//\//-}
+          echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> $GITHUB_ENV
+        env:
+          ARTIFACT_NAME: failures-artifacts-${{ matrix.wp }}-${{ matrix.shard }}
+
       - name: Upload artifacts
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         if: always()
         with:
-          name: failures-artifacts
+          name: ${{ env.ARTIFACT_NAME }}
           path: build/e2e-artifacts
           if-no-files-found: ignore

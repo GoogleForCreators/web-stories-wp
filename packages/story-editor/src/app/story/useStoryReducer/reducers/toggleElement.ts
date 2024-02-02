@@ -56,8 +56,9 @@ export const toggleElement = (
   const isBackgroundElement = backgroundElementId === elementId;
   const hasExistingSelection = draft.selection.length > 0;
 
-  const elementGroupId = currentPage.elements.find(({ id }) => id === elementId)
-    ?.groupId;
+  const elementGroupId = currentPage.elements.find(
+    ({ id }) => id === elementId
+  )?.groupId;
   let allIds = [elementId];
 
   if (elementGroupId && withLinked) {

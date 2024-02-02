@@ -16199,6 +16199,31 @@
     }
   },
   {
+    "family": "Honk",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 1800,
+      "des": -640,
+      "tAsc": 1800,
+      "tDes": -640,
+      "tLGap": 0,
+      "wAsc": 1800,
+      "wDes": 640,
+      "xH": 970,
+      "capH": 1200,
+      "yMin": -418,
+      "yMax": 1597,
+      "hAsc": 1800,
+      "hDes": -640,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Hubballi",
     "fallbacks": ["sans-serif"],
     "weights": [400],
@@ -37610,6 +37635,31 @@
     }
   },
   {
+    "family": "Rubik Glitch Pop",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 935,
+      "des": -250,
+      "tAsc": 935,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 946,
+      "wDes": 360,
+      "xH": 520,
+      "capH": 700,
+      "yMin": -305,
+      "yMax": 946,
+      "hAsc": 935,
+      "hDes": -250,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Rubik Iso",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -38133,12 +38183,12 @@
       "tAsc": 688,
       "tDes": -397,
       "tLGap": 0,
-      "wAsc": 688,
+      "wAsc": 704,
       "wDes": 397,
       "xH": 500,
       "capH": 500,
       "yMin": -397,
-      "yMax": 688,
+      "yMax": 704,
       "hAsc": 688,
       "hDes": -397,
       "lGap": 0
@@ -39950,6 +40000,31 @@
       "yMax": 2281,
       "hAsc": 2263,
       "hDes": -432,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Sixtyfour",
+    "fallbacks": ["monospace"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1024,
+      "asc": 896,
+      "des": -128,
+      "tAsc": 896,
+      "tDes": -128,
+      "tLGap": 0,
+      "wAsc": 1024,
+      "wDes": 256,
+      "xH": 640,
+      "capH": 896,
+      "yMin": -256,
+      "yMax": 1024,
+      "hAsc": 896,
+      "hDes": -128,
       "lGap": 0
     }
   },
@@ -45070,6 +45145,31 @@
       "yMax": 1100,
       "hAsc": 930,
       "hDes": -243,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Workbench",
+    "fallbacks": ["monospace"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1024,
+      "asc": 896,
+      "des": -128,
+      "tAsc": 896,
+      "tDes": -128,
+      "tLGap": 0,
+      "wAsc": 1024,
+      "wDes": 256,
+      "xH": 640,
+      "capH": 896,
+      "yMin": -256,
+      "yMax": 1024,
+      "hAsc": 896,
+      "hDes": -128,
       "lGap": 0
     }
   },
