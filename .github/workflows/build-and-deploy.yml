@@ -104,7 +104,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Node
-        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -137,7 +137,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Node
-        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -184,7 +184,7 @@ jobs:
       # Upload ZIP file to GCS for use in QA environment.
 
       - name: Authenticate
-        uses: google-github-actions/auth@5a50e581162a13f4baa8916d01180d2acbc04363
+        uses: google-github-actions/auth@a6e2e39c0a0331da29f7fd2c2a20a427e8d3ad1f
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
@@ -248,7 +248,7 @@ jobs:
       # Deploy to staging site if on main branch.
 
       - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@d4b9b8ff72958532804b70bbe600ad43b36d5f2e
+        uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387
         with:
           ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
