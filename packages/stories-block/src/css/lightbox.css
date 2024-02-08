@@ -16,6 +16,7 @@
   height: 100%;
   opacity: 0;
   transform: translate(0, -100vh);
+  z-index: -999999999;
 }
 
 /* amp-lightbox needs to have z-index to render on top of other elements in the page. */
@@ -72,15 +73,12 @@
  * relative flow, removes the space.
  */
 html:not([amp]) .web-stories-singleton__lightbox amp-story-player a,
-html:not([amp])
-  .web-stories-list
-  .web-stories-list__lightbox
-  amp-story-player
-  a {
+html:not([amp]) .web-stories-list .web-stories-list__lightbox amp-story-player a {
   position: absolute;
 }
 
 @media all and (min-width: 676px) {
+
   .admin-bar .web-stories-list__lightbox,
   .admin-bar .web-stories-singleton__lightbox {
     top: 46px;
@@ -98,6 +96,7 @@ html:not([amp])
 }
 
 @media all and (min-width: 783px) {
+
   .admin-bar .web-stories-list__lightbox,
   .admin-bar .web-stories-singleton__lightbox {
     top: 32px;
