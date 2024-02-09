@@ -23,9 +23,9 @@ namespace Google\Web_Stories\Tests\Integration\Integrations;
 use Google\Web_Stories\Analytics;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Integrations\Plugin_Status;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Settings;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Site_Kit
