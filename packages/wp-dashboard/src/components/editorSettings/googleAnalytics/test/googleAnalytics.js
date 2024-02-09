@@ -16,14 +16,13 @@
 /**
  * External dependencies
  */
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import GoogleAnalyticsSettings, { TEXT, ANALYTICS_DROPDOWN_OPTIONS } from '..';
 import { renderWithProviders } from '../../../../testUtils';
-import { describe } from 'node:test';
 
 const DROPDOWN_LABELS = {
   SITE_KIT: 'Use Site Kit for analytics (default)',
@@ -33,12 +32,6 @@ const DROPDOWN_LABELS = {
 
 const SITE_KIT_MESSAGE =
   'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.';
-
-const SITE_KIT_MESSAGE_TEST_DATA = [
-  ['show', DROPDOWN_LABELS.SITE_KIT, true],
-  ['not show', DROPDOWN_LABELS.WEB_STORIES, false],
-  ['not show', DROPDOWN_LABELS.BOTH, false],
-];
 
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
   let googleAnalyticsId;
@@ -249,37 +242,80 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     expect(mockUpdate).toHaveBeenCalledTimes(2);
   });
 
-  it.each(SITE_KIT_MESSAGE_TEST_DATA)(
-    'should %s specific message on selecting %s',
-    (_, optionLabel, shouldDisplayMessage) => {
-      renderWithProviders(
-        <GoogleAnalyticsSettings
-          googleAnalyticsId={googleAnalyticsId}
-          handleUpdateAnalyticsId={mockUpdate}
-          siteKitStatus={{
-            ...defaultSiteKitStatus,
-            analyticsActive: true,
-          }}
-          usingLegacyAnalytics={false}
-          handleUpdateGoogleAnalyticsHandler={
-            mockHandleUpdateGoogleAnalyticsHandler
-          }
-        />
-      );
+  it(`should show Site Kit specific message on selecting ${DROPDOWN_LABELS.SITE_KIT}`, () => {
+    renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={{
+          ...defaultSiteKitStatus,
+          analyticsActive: true,
+        }}
+        usingLegacyAnalytics={false}
+        handleUpdateGoogleAnalyticsHandler={
+          mockHandleUpdateGoogleAnalyticsHandler
+        }
+      />
+    );
 
-      const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
-      fireEvent.click(dropdown);
+    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
+    fireEvent.click(dropdown);
 
-      const optionElement = screen.getByText(optionLabel);
-      fireEvent.click(optionElement);
+    const optionElement = screen.getByText(DROPDOWN_LABELS.SITE_KIT);
+    fireEvent.click(optionElement);
 
-      if (shouldDisplayMessage) {
-        expect(screen.queryByText(SITE_KIT_MESSAGE)).toBeInTheDocument();
-      } else {
-        expect(screen.queryByText(SITE_KIT_MESSAGE)).not.toBeInTheDocument();
-      }
-    }
-  );
+    expect(screen.getByText(SITE_KIT_MESSAGE)).toBeInTheDocument();
+  });
+
+  it(`should not show Site Kit specific message on selecting ${DROPDOWN_LABELS.WEB_STORIES}`, () => {
+    renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={{
+          ...defaultSiteKitStatus,
+          analyticsActive: true,
+        }}
+        usingLegacyAnalytics={false}
+        handleUpdateGoogleAnalyticsHandler={
+          mockHandleUpdateGoogleAnalyticsHandler
+        }
+      />
+    );
+
+    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
+    fireEvent.click(dropdown);
+
+    const optionElement = screen.getByText(DROPDOWN_LABELS.WEB_STORIES);
+    fireEvent.click(optionElement);
+
+    expect(screen.queryByText(SITE_KIT_MESSAGE)).not.toBeInTheDocument();
+  });
+
+  it(`should not show Site Kit specific message on selecting ${DROPDOWN_LABELS.BOTH}`, () => {
+    renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={{
+          ...defaultSiteKitStatus,
+          analyticsActive: true,
+        }}
+        usingLegacyAnalytics={false}
+        handleUpdateGoogleAnalyticsHandler={
+          mockHandleUpdateGoogleAnalyticsHandler
+        }
+      />
+    );
+
+    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
+    fireEvent.click(dropdown);
+
+    const optionElement = screen.getByText(DROPDOWN_LABELS.BOTH);
+    fireEvent.click(optionElement);
+
+    expect(screen.queryByText(SITE_KIT_MESSAGE)).not.toBeInTheDocument();
+  });
 
   it('should call handleUpdateGoogleAnalyticsHandler when the dropdown value changes', () => {
     renderWithProviders(

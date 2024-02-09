@@ -36,7 +36,10 @@ import {
   Link,
   DropDown,
 } from '@googleforcreators/design-system';
-import { GOOGLE_ANALYTICS_HANDLER_TYPE } from '../../../constants/settings';
+
+/**
+ * External dependencies
+ */
 import styled from 'styled-components';
 
 /**
@@ -54,6 +57,7 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
+import { GOOGLE_ANALYTICS_HANDLER_TYPE } from '../../../constants/settings';
 
 const StyledNotificationBubble = styled(NotificationBubble)`
   display: inline-block;
