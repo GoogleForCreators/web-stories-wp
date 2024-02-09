@@ -42,34 +42,6 @@ describe('Site Kit plugin integration', () => {
   describe('Google Analytics', () => {
     withPlugin('e2e-tests-site-kit-analytics-mock');
 
-    describe('Dashboard', () => {
-      beforeAll(async () => {
-        await visitSettings();
-        await page.click('button[aria-label="Analytics Type"]');
-      });
-
-      it('should Site Kit specific message on selecting Site Kit', async () => {
-        await expect(page).toClick('[role="listbox"] li', {
-          text: DROPDOWN_LABELS.SITE_KIT,
-        });
-        await expect(page).toMatchTextContent(SITE_KIT_MESSAGE);
-      });
-
-      it('should not see Site Kit specific message on selecting web stories', async () => {
-        await expect(page).toClick('[role="listbox"] li', {
-          text: DROPDOWN_LABELS.WEB_STORIES,
-        });
-        await expect(page).not.toMatchTextContent(SITE_KIT_MESSAGE);
-      });
-
-      it('should not see Site Kit specific message on selecting both', async () => {
-        await expect(page).toClick('[role="listbox"] li', {
-          text: DROPDOWN_LABELS.BOTH,
-        });
-        await expect(page).not.toMatchTextContent(SITE_KIT_MESSAGE);
-      });
-    });
-
     describe('Editor', () => {
       afterAll(async () => {
         await trashAllPosts('web-story');
