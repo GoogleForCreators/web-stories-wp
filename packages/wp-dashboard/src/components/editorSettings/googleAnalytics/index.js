@@ -88,7 +88,7 @@ export const TEXT = {
   ANALYTICS_DROPDOWN_PLACEHOLDER: __('Select Analytics Type', 'web-stories'),
 };
 
-const ANALYTICS_DROPDOWN_OPTIONS = [
+export const ANALYTICS_DROPDOWN_OPTIONS = [
   {
     value: GOOGLE_ANALYTICS_HANDLER_TYPE.SITE_KIT,
     label: __('Use Site Kit for analytics (default)', 'web-stories'),
