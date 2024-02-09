@@ -27,15 +27,6 @@ import {
   trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
-const DROPDOWN_LABELS = {
-  SITE_KIT: 'Use Site Kit for analytics (default)',
-  WEB_STORIES: 'Use only Web Stories for analytics',
-  BOTH: 'Use both',
-};
-
-const SITE_KIT_MESSAGE =
-  'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.';
-
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 describe('Site Kit plugin integration', () => {
