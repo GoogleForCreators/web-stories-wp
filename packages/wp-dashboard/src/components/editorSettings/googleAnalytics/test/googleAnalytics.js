@@ -16,17 +16,34 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import GoogleAnalyticsSettings, { TEXT } from '..';
+import GoogleAnalyticsSettings, { TEXT, ANALYTICS_DROPDOWN_OPTIONS } from '..';
 import { renderWithProviders } from '../../../../testUtils';
+import { describe } from 'node:test';
+
+const DROPDOWN_LABELS = {
+  SITE_KIT: 'Use Site Kit for analytics (default)',
+  WEB_STORIES: 'Use only Web Stories for analytics',
+  BOTH: 'Use both',
+};
+
+const SITE_KIT_MESSAGE =
+  'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.';
+
+const SITE_KIT_MESSAGE_TEST_DATA = [
+  ['show', DROPDOWN_LABELS.SITE_KIT, true],
+  ['not show', DROPDOWN_LABELS.WEB_STORIES, false],
+  ['not show', DROPDOWN_LABELS.BOTH, false],
+];
 
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
   let googleAnalyticsId;
   let mockUpdate;
+  let mockHandleUpdateGoogleAnalyticsHandler;
   const defaultSiteKitStatus = {
     installed: false,
     analyticsActive: false,
@@ -38,6 +55,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     mockUpdate = jest.fn((id) => {
       googleAnalyticsId = id;
     });
+    mockHandleUpdateGoogleAnalyticsHandler = jest.fn();
   });
 
   afterEach(() => {
@@ -76,7 +94,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     expect(label).toBeInTheDocument();
   });
 
-  it('should display input field and dropdown when analytics module is active', () => {
+  it('should display input field when analytics module is active', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -91,8 +109,24 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     );
 
     const input = screen.queryByRole('textbox');
-    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
     expect(input).toBeInTheDocument();
+  });
+
+  it('should display analytics type dropdown when analytics module is active', () => {
+    renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={{
+          ...defaultSiteKitStatus,
+          active: true,
+          analyticsActive: true,
+        }}
+        usingLegacyAnalytics={false}
+      />
+    );
+
+    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
     expect(dropdown).toBeInTheDocument();
   });
 
@@ -213,5 +247,65 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     fireEvent.click(button);
 
     expect(mockUpdate).toHaveBeenCalledTimes(2);
+  });
+
+  it.each(SITE_KIT_MESSAGE_TEST_DATA)(
+    'should %s specific message on selecting %s',
+    (_, optionLabel, shouldDisplayMessage) => {
+      renderWithProviders(
+        <GoogleAnalyticsSettings
+          googleAnalyticsId={googleAnalyticsId}
+          handleUpdateAnalyticsId={mockUpdate}
+          siteKitStatus={{
+            ...defaultSiteKitStatus,
+            analyticsActive: true,
+          }}
+          usingLegacyAnalytics={false}
+          handleUpdateGoogleAnalyticsHandler={
+            mockHandleUpdateGoogleAnalyticsHandler
+          }
+        />
+      );
+
+      const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
+      fireEvent.click(dropdown);
+
+      const optionElement = screen.getByText(optionLabel);
+      fireEvent.click(optionElement);
+
+      if (shouldDisplayMessage) {
+        expect(screen.queryByText(SITE_KIT_MESSAGE)).toBeInTheDocument();
+      } else {
+        expect(screen.queryByText(SITE_KIT_MESSAGE)).not.toBeInTheDocument();
+      }
+    }
+  );
+
+  it('should call handleUpdateGoogleAnalyticsHandler when the dropdown value changes', () => {
+    renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={{
+          ...defaultSiteKitStatus,
+          analyticsActive: true,
+        }}
+        usingLegacyAnalytics={false}
+        handleUpdateGoogleAnalyticsHandler={
+          mockHandleUpdateGoogleAnalyticsHandler
+        }
+      />
+    );
+
+    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
+    fireEvent.click(dropdown);
+
+    ANALYTICS_DROPDOWN_OPTIONS.forEach((option) => {
+      const optionElement = screen.getByText(option.label);
+      fireEvent.click(optionElement);
+      expect(mockHandleUpdateGoogleAnalyticsHandler).toHaveBeenCalledWith(
+        option.value
+      );
+    });
   });
 });
