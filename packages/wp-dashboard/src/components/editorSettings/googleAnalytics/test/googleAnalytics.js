@@ -30,8 +30,7 @@ const DROPDOWN_LABELS = {
   BOTH: 'Use both',
 };
 
-const SITE_KIT_MESSAGE =
-  'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.';
+const SITE_KIT_MESSAGE = TEXT.SITE_KIT_IN_USE.replace('<b>Note: </b>', '');
 
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
   let googleAnalyticsId;
@@ -242,79 +241,21 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     expect(mockUpdate).toHaveBeenCalledTimes(2);
   });
 
-  it(`should show Site Kit specific message on selecting ${DROPDOWN_LABELS.SITE_KIT}`, () => {
+  it('should display Site Kit message when analytics module is active', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={{
           ...defaultSiteKitStatus,
+          active: true,
           analyticsActive: true,
         }}
         usingLegacyAnalytics={false}
-        handleUpdateGoogleAnalyticsHandler={
-          mockHandleUpdateGoogleAnalyticsHandler
-        }
       />
     );
-
-    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
-    fireEvent.click(dropdown);
-
-    const optionElement = screen.getByText(DROPDOWN_LABELS.SITE_KIT);
-    fireEvent.click(optionElement);
 
     expect(screen.getByText(SITE_KIT_MESSAGE)).toBeInTheDocument();
-  });
-
-  it(`should not show Site Kit specific message on selecting ${DROPDOWN_LABELS.WEB_STORIES}`, () => {
-    renderWithProviders(
-      <GoogleAnalyticsSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdateAnalyticsId={mockUpdate}
-        siteKitStatus={{
-          ...defaultSiteKitStatus,
-          analyticsActive: true,
-        }}
-        usingLegacyAnalytics={false}
-        handleUpdateGoogleAnalyticsHandler={
-          mockHandleUpdateGoogleAnalyticsHandler
-        }
-      />
-    );
-
-    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
-    fireEvent.click(dropdown);
-
-    const optionElement = screen.getByText(DROPDOWN_LABELS.WEB_STORIES);
-    fireEvent.click(optionElement);
-
-    expect(screen.queryByText(SITE_KIT_MESSAGE)).not.toBeInTheDocument();
-  });
-
-  it(`should not show Site Kit specific message on selecting ${DROPDOWN_LABELS.BOTH}`, () => {
-    renderWithProviders(
-      <GoogleAnalyticsSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdateAnalyticsId={mockUpdate}
-        siteKitStatus={{
-          ...defaultSiteKitStatus,
-          analyticsActive: true,
-        }}
-        usingLegacyAnalytics={false}
-        handleUpdateGoogleAnalyticsHandler={
-          mockHandleUpdateGoogleAnalyticsHandler
-        }
-      />
-    );
-
-    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
-    fireEvent.click(dropdown);
-
-    const optionElement = screen.getByText(DROPDOWN_LABELS.BOTH);
-    fireEvent.click(optionElement);
-
-    expect(screen.queryByText(SITE_KIT_MESSAGE)).not.toBeInTheDocument();
   });
 
   it('should call handleUpdateGoogleAnalyticsHandler when the dropdown value changes', () => {
@@ -397,7 +338,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     expect(input).toBeEnabled();
   });
 
-  it(`should allow the Google Analytics ID input on selecting ${DROPDOWN_LABELS.BOTH}`, () => {
+  it(`should allow the Google Analytics ID input to be active on selecting ${DROPDOWN_LABELS.BOTH}`, () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
