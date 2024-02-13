@@ -85,7 +85,7 @@ export const TEXT = {
     'web-stories'
   ),
   SITE_KIT_IN_USE: __(
-    '<b>Note: </b>Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
+    '<b>Note: </b>If Site Kit is active, it will be used to set up Google Analytics by default. However, you can customize the behavior in case you need more flexibility.',
     'web-stories'
   ),
   ANALYTICS_DROPDOWN_LABEL: __('Analytics Type', 'web-stories'),
@@ -337,13 +337,9 @@ function GoogleAnalyticsSettings({
         </TextInputHelperText>
         {analyticsActive && (
           <>
-            {analyticsHandler === GOOGLE_ANALYTICS_HANDLER_TYPE.SITE_KIT && (
-              <TextInputHelperText size={TextSize.Small}>
-                <TranslateWithMarkup>
-                  {TEXT.SITE_KIT_IN_USE}
-                </TranslateWithMarkup>
-              </TextInputHelperText>
-            )}
+            <TextInputHelperText size={TextSize.Small}>
+              <TranslateWithMarkup>{TEXT.SITE_KIT_IN_USE}</TranslateWithMarkup>
+            </TextInputHelperText>
             <DropdownContainer>
               <DropDown
                 id="analyticsType"
