@@ -36,10 +36,6 @@ import {
   Link,
   DropDown,
 } from '@googleforcreators/design-system';
-
-/**
- * External dependencies
- */
 import styled from 'styled-components';
 
 /**
@@ -304,7 +300,6 @@ function GoogleAnalyticsSettings({
             placeholder={TEXT.PLACEHOLDER}
             hasError={Boolean(inputError)}
             hint={inputError}
-            disabled={analyticsActive}
           />
           <SaveButton
             type={ButtonType.Secondary}
