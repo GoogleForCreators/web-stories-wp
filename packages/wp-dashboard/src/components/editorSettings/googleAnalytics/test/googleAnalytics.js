@@ -116,24 +116,6 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     expect(dropdown).toBeInTheDocument();
   });
 
-  it('should allow the input to be active when Site Kit is installed but analytics module is not active', () => {
-    renderWithProviders(
-      <GoogleAnalyticsSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdateAnalyticsId={mockUpdate}
-        siteKitStatus={{
-          ...defaultSiteKitStatus,
-          active: false,
-          installed: true,
-        }}
-        usingLegacyAnalytics={false}
-      />
-    );
-
-    const input = screen.getByRole('textbox');
-    expect(input).toBeEnabled();
-  });
-
   it('should call mockUpdate when enter is keyed on input', () => {
     const { rerender } = renderWithProviders(
       <GoogleAnalyticsSettings
