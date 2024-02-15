@@ -304,10 +304,7 @@ function GoogleAnalyticsSettings({
             placeholder={TEXT.PLACEHOLDER}
             hasError={Boolean(inputError)}
             hint={inputError}
-            disabled={
-              analyticsActive &&
-              analyticsHandler === GOOGLE_ANALYTICS_HANDLER_TYPE.SITE_KIT
-            }
+            disabled={analyticsActive}
           />
           <SaveButton
             type={ButtonType.Secondary}
