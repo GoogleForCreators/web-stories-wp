@@ -42,6 +42,7 @@ export const defaultAttributes = {
     horizontal: 0,
     locked: true,
   },
+  textColor: createSolid(0, 0, 0),
 };
 
 export const hasEditMode = true;

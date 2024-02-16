@@ -193,4 +193,5 @@ export interface TextElement extends Element {
   marginOffset: number;
   lineHeight: number;
   textAlign: TextAlign;
+  textColor: Solid;
 }
