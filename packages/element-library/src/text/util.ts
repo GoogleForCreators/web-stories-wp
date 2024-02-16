@@ -24,6 +24,7 @@ import type {
   TextElement,
   TextElementFont,
 } from '@googleforcreators/elements';
+import { generatePatternStyles, type Pattern } from '@googleforcreators/patterns';
 
 type DataToStyle = (prop: number) => string;
 interface Props {
@@ -108,9 +109,8 @@ export const getHighlightLineheight = (
   if (verticalPadding === 0) {
     return `${lineHeight}em`;
   }
-  return `calc(${lineHeight}em ${verticalPadding > 0 ? '+' : '-'} ${
-    2 * Math.abs(verticalPadding)
-  }${unit})`;
+  return `calc(${lineHeight}em ${verticalPadding > 0 ? '+' : '-'} ${2 * Math.abs(verticalPadding)
+    }${unit})`;
 };
 
 export function calcFontMetrics(element: TextElement) {
@@ -141,4 +141,20 @@ export function calcFontMetrics(element: TextElement) {
     contentAreaPx,
     lineBoxPx,
   };
+}
+
+export function generateTextColorCSS(textColor: Pattern) {
+  if (!textColor) return '';
+
+  const patternStyles = generatePatternStyles(textColor);
+
+  const css = textColor.type ? `
+    background: ${patternStyles.backgroundImage};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  ` : `
+    color: ${patternStyles.backgroundColor};
+  `;
+
+  return css;
 }
