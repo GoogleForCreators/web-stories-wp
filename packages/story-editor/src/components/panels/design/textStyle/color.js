@@ -25,25 +25,35 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { Color, Row } from '../../../form';
 import useRichTextFormatting from './useRichTextFormatting';
+import useCommonColorValue from '../../shared/useCommonColorValue';
 
 function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
   const {
     textInfo: { color },
-    handlers: { handleSetColor },
   } = useRichTextFormatting(selectedElements, pushUpdate);
+
+  const textColor = useCommonColorValue(selectedElements, 'textColor');
 
   return (
     <Row>
       <Color
         data-testid="text.color"
-        value={color}
-        onChange={handleSetColor}
+        value={textColor || color}
+        onChange={(value) => {
+          pushUpdate(
+            {
+              textColor: value,
+            },
+            true
+          );
+        }}
         allowsSavedColors
         label={__('Text color', 'web-stories')}
         labelId="text-color-label"
         changedStyle="color"
         ref={textColorRef}
         hasEyedropper
+        allowsGradient
       />
     </Row>
   );
