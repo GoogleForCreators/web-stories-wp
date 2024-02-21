@@ -54,3 +54,9 @@ export const SHOPPING_PROVIDER_TYPE = {
   WOOCOMMERCE: 'woocommerce',
   SHOPIFY: 'shopify',
 };
+
+export const GOOGLE_ANALYTICS_HANDLER_TYPE = {
+  SITE_KIT: 'site-kit',
+  WEB_STORIES: 'web-stories',
+  BOTH: 'both',
+};
