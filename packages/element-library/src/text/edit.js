@@ -61,7 +61,6 @@ import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   calcFontMetrics,
   generateParagraphTextStyle,
-  generateTextColorCSS,
   getHighlightLineheight,
 } from './util';
 
@@ -100,8 +99,7 @@ const EditTextBox = styled(TextBox)(
     hasHighlightBackgroundTextMode && {
       paddingTop: 0,
       paddingBottom: 0,
-    },
-  ({ textColor }) => generateTextColorCSS(textColor)
+    }
 );
 
 const Highlight = styled.span`
@@ -138,7 +136,6 @@ function TextEdit({
     borderRadius,
     opacity,
     height: elementHeight,
-    textColor,
     ...rest
   } = element;
   const { font } = rest;
@@ -188,7 +185,6 @@ function TextEdit({
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE && {
       backgroundColor: null,
     }),
-    textColor,
   };
 
   const { padding: _, ...highlightTextProps } = textProps;
