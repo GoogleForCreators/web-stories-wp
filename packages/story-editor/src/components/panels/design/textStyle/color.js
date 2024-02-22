@@ -19,38 +19,39 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
+import { hasGradient, createSolid } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
  */
 import { Color, Row } from '../../../form';
 import useRichTextFormatting from './useRichTextFormatting';
-import useCommonColorValue from '../../shared/useCommonColorValue';
 
 function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
   const {
-    textInfo: { color },
+    textInfo: { color, gradientColor },
+    handlers: { handleSetColor, handleSetGradientColor },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
-  const textColor = useCommonColorValue(selectedElements, 'textColor');
+  const onColorChange = (colorValue) => {
+    if (hasGradient(colorValue)) {
+      handleSetColor(createSolid(0, 0, 0));
+      handleSetGradientColor(colorValue);
+    } else {
+      handleSetGradientColor(createSolid(0, 0, 0));
+      handleSetColor(colorValue);
+    }
+  };
 
   return (
     <Row>
       <Color
         data-testid="text.color"
-        value={textColor || color}
-        onChange={(value) => {
-          pushUpdate(
-            {
-              textColor: value,
-            },
-            true
-          );
-        }}
+        value={hasGradient(gradientColor) ? gradientColor : color}
+        onChange={onColorChange}
         allowsSavedColors
         label={__('Text color', 'web-stories')}
         labelId="text-color-label"
-        changedStyle="color"
         ref={textColorRef}
         hasEyedropper
         allowsGradient

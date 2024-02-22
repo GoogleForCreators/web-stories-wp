@@ -20,6 +20,7 @@
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import { hasGradient, createSolid } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -51,22 +52,33 @@ function TextColor() {
     },
     [updateElementsById, selectedElementIds]
   );
+
+  const onColorChange = (color) => {
+    if (hasGradient(color)) {
+      handleSetColor(createSolid(0, 0, 0));
+      handleSetGradientColor(color);
+    } else {
+      handleSetGradientColor(createSolid(0, 0, 0));
+      handleSetColor(color);
+    }
+  };
+
   const {
-    textInfo: { color },
-    handlers: { handleSetColor },
+    textInfo: { color, gradientColor },
+    handlers: { handleSetColor, handleSetGradientColor },
   } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
 
   return (
     <Color
       tabIndex={-1}
       label={__('Text color', 'web-stories')}
-      value={color}
       allowsSavedColors
-      onChange={handleSetColor}
+      value={hasGradient(gradientColor) ? gradientColor : color}
+      onChange={onColorChange}
       hasInputs={false}
       hasEyedropper
       allowsOpacity
-      allowsGradient={false}
+      allowsGradient
     />
   );
 }
