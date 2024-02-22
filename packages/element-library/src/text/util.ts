@@ -24,7 +24,6 @@ import type {
   TextElement,
   TextElementFont,
 } from '@googleforcreators/elements';
-import { generatePatternStyles, type Pattern } from '@googleforcreators/patterns';
 
 type DataToStyle = (prop: number) => string;
 interface Props {
@@ -141,20 +140,4 @@ export function calcFontMetrics(element: TextElement) {
     contentAreaPx,
     lineBoxPx,
   };
-}
-
-export function generateTextColorCSS(textColor: Pattern) {
-  if (!textColor) return '';
-
-  const patternStyles = generatePatternStyles(textColor);
-
-  const css = textColor.type ? `
-    background: ${patternStyles.backgroundImage};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  ` : `
-    color: ${patternStyles.backgroundColor};
-  `;
-
-  return css;
 }
