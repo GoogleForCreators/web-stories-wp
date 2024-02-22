@@ -151,6 +151,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleClickUppercase: selectionActions.toggleUppercaseInSelection,
         handleSetLetterSpacing: selectionActions.setLetterSpacingInSelection,
         handleSetColor: selectionActions.setColorInSelection,
+        handleSetGradientColor: selectionActions.setGradientColorInSelection,
         // when editing, resetting font weight needs to save before resetting
         handleResetFontWeight: async (weight) => {
           // clear editing to save any pending updates
@@ -173,6 +174,8 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       handleSetLetterSpacing: (letterSpacing) =>
         push(htmlFormatters.setLetterSpacing, letterSpacing),
       handleSetColor: (color) => push(htmlFormatters.setColor, color),
+      handleSetGradientColor: (color) =>
+        push(htmlFormatters.setGradientColor, color),
       handleResetFontWeight: (weight) =>
         push(htmlFormatters.setFontWeight, weight),
     };
