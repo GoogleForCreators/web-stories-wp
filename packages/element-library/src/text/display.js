@@ -51,7 +51,6 @@ import {
   generateParagraphTextStyle,
   calcFontMetrics,
   generateFontFamily,
-  generateTextColorCSS,
 } from './util';
 
 const OutsideBorder = styled.div`
@@ -137,7 +136,6 @@ const FillElement = styled.p.attrs(
   ${elementFillContent}
   ${({ previewMode }) => !previewMode && elementWithFont}
   ${({ previewMode }) => !previewMode && elementWithTextParagraphStyle}
-  ${({ textColor }) => generateTextColorCSS(textColor)}
 `;
 
 const Background = styled.div`
@@ -156,7 +154,6 @@ function TextDisplay({
     backgroundTextMode,
     border,
     borderRadius,
-    textColor,
     ...rest
   },
   previewMode,
@@ -165,6 +162,7 @@ function TextDisplay({
   const ref = useRef(null);
   const outerBorderRef = useRef(null);
   const bgRef = useRef(null);
+  const fgRef = useRef(null);
 
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
@@ -198,7 +196,6 @@ function TextDisplay({
     ),
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
-    textColor,
   };
   useEffect(() => {
     maybeEnqueueFontStyle([{ ...fontFaceSetConfigs, font }]);
@@ -208,8 +205,8 @@ function TextDisplay({
   const refWithBorder = isHighLight ? outerBorderRef : bgRef;
 
   useTransformHandler(id, (transform) => {
-    // Ref is set in case of high-light mode only.
-    const target = ref?.current;
+    // Ref is set in case of high-light mode only, use the fgRef if that's missing.
+    const target = ref?.current || fgRef.current;
     if (!target) {
       return;
     }
@@ -286,6 +283,7 @@ function TextDisplay({
           <HighlightElement {...props}>
             <MarginedElement {...props}>
               <ForegroundSpan
+                ref={fgRef}
                 {...props}
                 dangerouslySetInnerHTML={{
                   __html: content,
@@ -310,6 +308,7 @@ function TextDisplay({
       height={elementHeight}
     >
       <FillElement
+        ref={fgRef}
         dangerouslySetInnerHTML={{
           __html: content,
         }}
