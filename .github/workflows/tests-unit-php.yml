@@ -43,7 +43,7 @@ jobs:
     timeout-minutes: 20
     services:
       mysql:
-        image: mariadb:latest
+        image: mariadb:lts
         env:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
           MARIADB_DATABASE: wordpress_test
@@ -80,7 +80,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -178,7 +178,7 @@ jobs:
         if: ${{ matrix.random }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d
+        uses: codecov/codecov-action@e0b68c6749509c5f83f984dd99a76a1c1a231044
         with:
           file: build/logs/*.xml
         if: ${{ matrix.coverage }}

@@ -13,7 +13,7 @@
     "ext-mbstring": "*",
     "ampproject/amp-toolbox": "*",
     "ampproject/amp-wp": "dev-develop",
-    "enshrined/svg-sanitize": "^0.16.0",
+    "enshrined/svg-sanitize": "^0.17.0",
     "mcaskill/composer-exclude-files": "^3.0",
     "symfony/polyfill-mbstring": "^1.18"
   },
@@ -33,8 +33,8 @@
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^8.0.0",
     "sniccowp/php-scoper-wordpress-excludes": "^6.0",
-    "swissspidy/phpstan-no-private": "^v0.2.0",
-    "szepeviktor/phpstan-wordpress": "^v1.1.3",
+    "swissspidy/phpstan-no-private": "^0.2.0",
+    "szepeviktor/phpstan-wordpress": "^1.1.3",
     "wp-coding-standards/wpcs": "^3.0.0",
     "yoast/wp-test-utils": "^1.0.0"
   },
@@ -52,28 +52,28 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "Google\\Web_Stories\\": "includes",
       "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
-      "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
+      "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src",
+      "Google\\Web_Stories\\": "includes"
     }
   },
   "autoload-dev": {
     "psr-4": {
+      "Google\\Web_Stories\\PHPStan\\": "tests/phpstan/src",
       "Google\\Web_Stories\\Tests\\Integration\\": "tests/phpunit/integration/includes",
-      "Google\\Web_Stories\\Tests\\Unit\\": "tests/phpunit/unit/includes",
       "Google\\Web_Stories\\Tests\\Shared\\": "tests/phpunit/shared",
-      "Google\\Web_Stories\\PHPStan\\": "tests/phpstan/src"
+      "Google\\Web_Stories\\Tests\\Unit\\": "tests/phpunit/unit/includes"
     }
   },
   "config": {
     "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true,
-      "cweagans/composer-patches": true,
-      "mcaskill/composer-exclude-files": true,
-      "phpstan/extension-installer": true,
+      "civicrm/composer-downloads-plugin": true,
       "composer/installers": true,
+      "cweagans/composer-patches": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
       "ergebnis/composer-normalize": true,
-      "civicrm/composer-downloads-plugin": true
+      "mcaskill/composer-exclude-files": true,
+      "phpstan/extension-installer": true
     },
     "discard-changes": true,
     "platform": {
