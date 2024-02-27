@@ -42,7 +42,7 @@ function StickerSize({ selectedElements, pushUpdate }) {
   }));
 
   const onSizeChange = useCallback(
-    (event, isSmall) => {
+    (_, isSmall) => {
       const stickerSize = isSmall ? 'small' : 'large';
       const { width, height } = getDimensionsForAudioSticker(type, stickerSize);
 

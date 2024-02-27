@@ -33,7 +33,7 @@ import { SimplePanel } from '../../panel';
 import { states, useHighlights } from '../../../../app/highlights';
 import styles from '../../../../app/highlights/styles';
 
-const AudioStickerStylePreset = {
+export const AudioStickerStylePreset = {
   none: {
     label: __('None', 'web-stories'),
   },
@@ -62,7 +62,6 @@ function StickerStyle({ selectedElements, pushUpdate }) {
 
   const onStickerStyleChange = useCallback(
     (stickerStyle) => {
-      //   const { width, height } = getDimensionsForAudioSticker(stickerType, size);
       pushUpdate(
         {
           style: stickerStyle,
@@ -77,7 +76,7 @@ function StickerStyle({ selectedElements, pushUpdate }) {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
-      name="audioStickerType"
+      name="audioStickerStyle"
       title={__('Style', 'web-stories')}
       isPersistable={!highlight}
       aria-labelledby={null}

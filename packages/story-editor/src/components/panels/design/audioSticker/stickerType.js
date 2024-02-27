@@ -29,9 +29,8 @@ import { Row, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { states, useHighlights } from '../../../../app/highlights';
 import styles from '../../../../app/highlights/styles';
-import { getDimensionsForAudioSticker } from './utils';
 
-const AudioStickerPreset = {
+export const AudioStickerPreset = {
   'headphone-cat': {
     label: __('Headphone Cat', 'web-stories'),
   },
@@ -52,7 +51,6 @@ const StickerImage = styled.img`
 
 function StickerType({ selectedElements, pushUpdate }) {
   const stickerObj = selectedElements[0];
-  const size = stickerObj.size;
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: state[states.Style],
@@ -61,18 +59,14 @@ function StickerType({ selectedElements, pushUpdate }) {
 
   const onStickerTypeChange = useCallback(
     (stickerType) => {
-      const { width, height } = getDimensionsForAudioSticker(stickerType, size);
-
       pushUpdate(
         {
-          width: width,
-          height: height,
           sticker: stickerType,
         },
         true
       );
     },
-    [pushUpdate, size]
+    [pushUpdate]
   );
 
   return (
@@ -91,9 +85,9 @@ function StickerType({ selectedElements, pushUpdate }) {
           return (
             <FilterToggle
               key={type}
-              element={selectedElements[0]}
+              element={stickerObj}
               label={label}
-              isToggled={type === selectedElements[0].sticker}
+              isToggled={type === stickerObj.sticker}
               onClick={() => {
                 onStickerTypeChange(type);
               }}
