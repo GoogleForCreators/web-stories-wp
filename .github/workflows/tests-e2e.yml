@@ -96,7 +96,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
+        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -168,7 +168,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Download bundle
-        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
+        uses: actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427
         with:
           name: web-stories
 
