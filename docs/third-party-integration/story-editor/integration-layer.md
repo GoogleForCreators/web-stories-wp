@@ -597,6 +597,61 @@ const Editor = () => {
 };
 ```
 
+## Enabling Shopping Tab
+Shopping Tab inserts an attachment with a draggable drawer that links to the product url. By default the shopping tab is disabled in StoryEditor config. To enable shopping you need to make a couple of changes
+- In StoryEditor config, add `isShoppingEnabled: true` and `shoppingProvider: 'None'`. If you have a shopping provider like woocommerce or shoppify you can add 'Woocommerce' or 'Shoppify' instead of 'None'.
+```jsx
+<StoryEditor
+    config={{
+        apiCallbacks,
+        autoSaveInterval: 10,
+        capabilities: { hasUploadMediaAction:true, 
+        canManageSettings: true, },
+        MediaUpload,
+        isShoppingEnabled: true,
+        shoppingProvider: 'None'
+    }}
+    initialEdits={{ story }}>
+    <InterfaceSkeleton header={<StoryEditorHeader />}
+        sidebarTabs={{
+            document: {
+                title: 'Document',
+                Pane: DocumentPane,
+            },
+        }}
+    />
+</StoryEditor>
+```
+-Provide getProducts in apiCallbacks
+Example: 
+```jsx
+const getProducts = () => {
+  const products = [
+    {
+      productId: "1",
+      productBrand: "Nike",
+      productDetails: "Random Nike sneaker",
+      productImages: [
+        {
+          alt: "Image",
+          url: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/4f37fca8-6bce-43e7-ad07-f57ae3c13142/air-force-1-07-shoes-WrLlWX.png",
+        },
+      ],
+      productPrice: 1000,
+      productPriceCurrency: "INR",
+      productTitle: "Nike Sneaker",
+      productUrl:
+        "https://www.nike.com/in/t/air-force-1-07-shoes-WrLlWX/315122-111",
+    },
+  ];
+  return Promise.resolve({ products });
+};
+
+export default getProducts;
+```
+By configuring these you wil see a shopping bag icon which will hold products you return from the getProducts function. Clicking on the product will insert an attachment. 
+Note: The draggable will only be functional in the preview of the story. You first need to save the story and preview it to see the attachment. 
+
 ## Sidebar Tabs
 
 ### Document Pane
