@@ -46,7 +46,7 @@ const colorToStyle = (color: Gradient): string =>
 
 function elementToStyle(element: HTMLElement): string | null {
   const isSpan = element.tagName.toLowerCase() === 'span';
-  const rawBackground = element.style.background;
+  const rawBackground = element.style.backgroundImage;
   const hasBackground = Boolean(rawBackground);
 
   if (isSpan && hasBackground) {
@@ -73,10 +73,11 @@ function stylesToCSS(styles: DraftInlineStyle): null | CSSProperties {
     return null;
   }
 
-  const css = generatePatternStyles(color);
+  const { backgroundImage } = generatePatternStyles(color);
 
   return {
-    background: css.backgroundImage,
+    backgroundImage,
+    backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
   };
