@@ -70,7 +70,7 @@ function parseGradient(style: string, gradient: string): Gradient {
   const { startColor, endColor } = getColorRange(matches);
 
   if (gradient === GRADIENT.LINEAR) {
-    const rotationMatch = style.match(/-?\d+(\.\d+)?turn/);
+    const rotationMatch = style.match(/0(\.((25|5|75)))?turn/);
     return {
       type: PatternType.Linear,
       stops: [
