@@ -19,7 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { hasGradient, createSolid } from '@googleforcreators/patterns';
+import {
+  hasGradient,
+  createSolid,
+  DEFAULT_GRADIENT,
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -38,7 +42,7 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
       handleSetColor(createSolid(0, 0, 0));
       handleSetGradientColor(colorValue);
     } else {
-      handleSetGradientColor(createSolid(0, 0, 0));
+      handleSetGradientColor(DEFAULT_GRADIENT);
       handleSetColor(colorValue);
     }
   };

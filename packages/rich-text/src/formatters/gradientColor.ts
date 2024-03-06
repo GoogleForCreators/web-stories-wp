@@ -24,7 +24,11 @@ import {
   isPatternEqual,
   getColorFromGradientStyle,
 } from '@googleforcreators/patterns';
-import type { Gradient, Pattern } from '@googleforcreators/patterns';
+import {
+  type Gradient,
+  type Pattern,
+  DEFAULT_GRADIENT,
+} from '@googleforcreators/patterns';
 import type { EditorState, DraftInlineStyle } from 'draft-js';
 import type { CSSProperties } from 'react';
 
@@ -96,7 +100,7 @@ function getColor(editorState: EditorState): Pattern | '((MULTIPLE))' {
 }
 
 function setColor(editorState: EditorState, color: Gradient) {
-  const isBlack = isPatternEqual(createSolid(0, 0, 0), color);
+  const isBlack = isPatternEqual(DEFAULT_GRADIENT, color);
   const shouldSetStyle = () => !isBlack;
   const getStyleToSet = () => colorToStyle(color);
   return togglePrefixStyle(

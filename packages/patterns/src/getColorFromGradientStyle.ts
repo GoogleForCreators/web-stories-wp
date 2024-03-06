@@ -19,7 +19,7 @@
 import createSolidFromString from './createSolidFromString';
 import { PatternType, type Gradient, type Linear } from './types';
 
-const DEFAULT_GRADIENT: Linear = {
+export const DEFAULT_GRADIENT: Linear = {
   type: PatternType.Linear,
   stops: [
     {
@@ -32,9 +32,9 @@ const DEFAULT_GRADIENT: Linear = {
     },
     {
       color: {
-        r: 0,
-        g: 0,
-        b: 0,
+        r: 1,
+        g: 1,
+        b: 1,
       },
       position: 1,
     },

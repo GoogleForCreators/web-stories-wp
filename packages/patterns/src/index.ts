@@ -31,4 +31,7 @@ export { default as hasOpacity } from './hasOpacity';
 export { default as isPatternEqual } from './isPatternEqual';
 export { default as isHexColorString } from './isHexColorString';
 export { default as getGradientStyleFromColor } from './getGradientStyleFromColor';
-export { default as getColorFromGradientStyle } from './getColorFromGradientStyle';
+export {
+  default as getColorFromGradientStyle,
+  DEFAULT_GRADIENT,
+} from './getColorFromGradientStyle';
