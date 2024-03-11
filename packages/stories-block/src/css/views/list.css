@@ -102,3 +102,10 @@
     overflow: hidden;
   }
 }
+
+@media all and (max-width: 675px) {
+  .carousel > .glider-track > .web-stories-list__story {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
