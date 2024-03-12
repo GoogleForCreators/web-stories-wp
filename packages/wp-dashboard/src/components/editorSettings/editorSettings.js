@@ -85,6 +85,7 @@ function EditorSettings() {
     shopifyAccessToken,
     autoAdvance,
     defaultPageDuration,
+    googleAnalyticsHandler,
   } = useEditorSettings(
     ({
       actions: {
@@ -117,6 +118,7 @@ function EditorSettings() {
           shopifyAccessToken,
           autoAdvance,
           defaultPageDuration,
+          googleAnalyticsHandler,
         },
         media: { isLoading: isMediaLoading, newlyCreatedMediaIds },
         publisherLogos: { publisherLogos },
@@ -155,6 +157,7 @@ function EditorSettings() {
       shopifyAccessToken,
       autoAdvance,
       defaultPageDuration,
+      googleAnalyticsHandler,
     })
   );
 
@@ -329,6 +332,12 @@ function EditorSettings() {
     [setPublisherLogoAsDefault]
   );
 
+  const handleUpdateGoogleAnalyticsHandler = useCallback(
+    (newGoogleAnalyticsHandler) =>
+      updateSettings({ googleAnalyticsHandler: newGoogleAnalyticsHandler }),
+    [updateSettings]
+  );
+
   return (
     <Layout.Provider>
       <Wrapper data-testid="editor-settings">
@@ -346,6 +355,10 @@ function EditorSettings() {
                   usingLegacyAnalytics={usingLegacyAnalytics}
                   handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
                   siteKitStatus={siteKit}
+                  googleAnalyticsHandler={googleAnalyticsHandler}
+                  handleUpdateGoogleAnalyticsHandler={
+                    handleUpdateGoogleAnalyticsHandler
+                  }
                 />
                 <PublisherLogoSettings
                   onAddLogos={handleAddLogos}

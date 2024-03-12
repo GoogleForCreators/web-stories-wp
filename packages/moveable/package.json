@@ -2,7 +2,7 @@
   "name": "@googleforcreators/moveable",
   "description": "Provides a wrapper around react-moveable.",
   "private": false,
-  "version": "0.1.202309041201",
+  "version": "0.1.202401011233",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -41,7 +41,7 @@
     "@googleforcreators/react": "*",
     "@types/styled-components": "^5.1.26",
     "prop-types": "^15.7.2",
-    "react-moveable": "^0.52.0",
+    "react-moveable": "^0.56.0",
     "styled-components": "^5.3.11"
   },
   "devDependencies": {}

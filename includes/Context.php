@@ -95,7 +95,7 @@ class Context {
 	public function is_story_editor(): bool {
 		$screen = \function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
-		return $screen && $this->story_post_type->get_slug() === $screen->post_type;
+		return $screen && $this->story_post_type->get_slug() === $screen->post_type && 'post' === $screen->base;
 	}
 
 	/**

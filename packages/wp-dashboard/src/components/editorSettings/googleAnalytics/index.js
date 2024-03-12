@@ -34,6 +34,7 @@ import {
   Icons,
   Text,
   Link,
+  DropDown,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
@@ -52,6 +53,7 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
+import { GOOGLE_ANALYTICS_HANDLER_TYPE } from '../../../constants/settings';
 
 const StyledNotificationBubble = styled(NotificationBubble)`
   display: inline-block;
@@ -79,10 +81,31 @@ export const TEXT = {
     'web-stories'
   ),
   SITE_KIT_IN_USE: __(
-    'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
+    '<b>Note: </b>If Site Kit is active, it will be used to set up Google Analytics by default. However, you can customize the behavior in case you need more flexibility.',
     'web-stories'
   ),
+  ANALYTICS_DROPDOWN_LABEL: __('Analytics Type', 'web-stories'),
+  ANALYTICS_DROPDOWN_PLACEHOLDER: __('Select Analytics Type', 'web-stories'),
 };
+
+export const ANALYTICS_DROPDOWN_OPTIONS = [
+  {
+    value: GOOGLE_ANALYTICS_HANDLER_TYPE.SITE_KIT,
+    label: __('Use Site Kit for analytics (default)', 'web-stories'),
+  },
+  {
+    value: GOOGLE_ANALYTICS_HANDLER_TYPE.WEB_STORIES,
+    label: __('Use only Web Stories for analytics', 'web-stories'),
+  },
+  {
+    value: GOOGLE_ANALYTICS_HANDLER_TYPE.BOTH,
+    label: __('Use both', 'web-stories'),
+  },
+];
+
+const DropdownContainer = styled.div`
+  padding-top: 12px;
+`;
 
 const WarningContainer = styled.div`
   display: flex;
@@ -111,8 +134,13 @@ function GoogleAnalyticsSettings({
   usingLegacyAnalytics,
   handleMigrateLegacyAnalytics,
   siteKitStatus = {},
+  googleAnalyticsHandler,
+  handleUpdateGoogleAnalyticsHandler,
 }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
+  const [analyticsHandler, setAnalyticsHandler] = useState(
+    googleAnalyticsHandler
+  );
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
@@ -122,6 +150,10 @@ function GoogleAnalyticsSettings({
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
   }, [googleAnalyticsId]);
+
+  useEffect(() => {
+    setAnalyticsHandler(googleAnalyticsHandler);
+  }, [googleAnalyticsHandler]);
 
   const onUpdateAnalyticsId = useCallback((event) => {
     const { value } = event.target;
@@ -135,6 +167,14 @@ function GoogleAnalyticsSettings({
 
     setInputError(TEXT.INPUT_ERROR);
   }, []);
+
+  const onUpdateAnalyticsHandler = useCallback(
+    (value) => {
+      setAnalyticsHandler(value);
+      handleUpdateGoogleAnalyticsHandler(value);
+    },
+    [handleUpdateGoogleAnalyticsHandler]
+  );
 
   const handleOnSave = useCallback(() => {
     if (canSave) {
@@ -247,97 +287,107 @@ function GoogleAnalyticsSettings({
         )}
       </div>
       <div>
-        {analyticsActive ? (
-          <TextInputHelperText size={TextSize.Small}>
-            {TEXT.SITE_KIT_IN_USE}
-          </TextInputHelperText>
-        ) : (
+        <InlineForm>
+          <VisuallyHiddenLabel htmlFor="gaTrackingId">
+            {TEXT.ARIA_LABEL}
+          </VisuallyHiddenLabel>
+          <SettingsTextInput
+            aria-label={TEXT.ARIA_LABEL}
+            id="gaTrackingId"
+            value={analyticsId}
+            onChange={onUpdateAnalyticsId}
+            onKeyDown={handleOnKeyDown}
+            placeholder={TEXT.PLACEHOLDER}
+            hasError={Boolean(inputError)}
+            hint={inputError}
+          />
+          <SaveButton
+            type={ButtonType.Secondary}
+            size={ButtonSize.Small}
+            disabled={disableSaveButton}
+            onClick={handleOnSave}
+          >
+            {TEXT.SUBMIT_BUTTON}
+          </SaveButton>
+        </InlineForm>
+        <TextInputHelperText size={TextSize.Small}>
+          <TranslateWithMarkup
+            mapping={{
+              a: (
+                <InlineLink
+                  href={TEXT.CONTEXT_LINK}
+                  rel="noreferrer"
+                  target="_blank"
+                  size={TextSize.Small}
+                  onClick={onContextClick}
+                />
+              ),
+            }}
+          >
+            {TEXT.CONTEXT}
+          </TranslateWithMarkup>
+        </TextInputHelperText>
+        {analyticsActive && (
           <>
-            <InlineForm>
-              <VisuallyHiddenLabel htmlFor="gaTrackingId">
-                {TEXT.ARIA_LABEL}
-              </VisuallyHiddenLabel>
-              <SettingsTextInput
-                aria-label={TEXT.ARIA_LABEL}
-                id="gaTrackingId"
-                value={analyticsId}
-                onChange={onUpdateAnalyticsId}
-                onKeyDown={handleOnKeyDown}
-                placeholder={TEXT.PLACEHOLDER}
-                hasError={Boolean(inputError)}
-                hint={inputError}
-                disabled={analyticsActive}
-              />
-              <SaveButton
-                type={ButtonType.Secondary}
-                size={ButtonSize.Small}
-                disabled={disableSaveButton}
-                onClick={handleOnSave}
-              >
-                {TEXT.SUBMIT_BUTTON}
-              </SaveButton>
-            </InlineForm>
             <TextInputHelperText size={TextSize.Small}>
+              <TranslateWithMarkup>{TEXT.SITE_KIT_IN_USE}</TranslateWithMarkup>
+            </TextInputHelperText>
+            <DropdownContainer>
+              <DropDown
+                id="analyticsType"
+                ariaLabel={TEXT.ANALYTICS_DROPDOWN_LABEL}
+                placeholder={TEXT.ANALYTICS_DROPDOWN_PLACEHOLDER}
+                options={ANALYTICS_DROPDOWN_OPTIONS}
+                onMenuItemClick={(_, newValue) => {
+                  onUpdateAnalyticsHandler(newValue);
+                }}
+                selectedValue={analyticsHandler}
+              />
+            </DropdownContainer>
+          </>
+        )}
+        {!googleAnalyticsId || googleAnalyticsId.startsWith('UA-') ? (
+          <WarningContainer>
+            <WarningIcon aria-hidden />
+            <Message>
               <TranslateWithMarkup
                 mapping={{
                   a: (
-                    <InlineLink
-                      href={TEXT.CONTEXT_LINK}
+                    <Link
+                      href={__(
+                        'https://support.google.com/analytics/answer/11583528?hl=en',
+                        'web-stories'
+                      )}
                       rel="noreferrer"
                       target="_blank"
                       size={TextSize.Small}
-                      onClick={onContextClick}
+                      onClick={(evt) =>
+                        trackClick(evt, 'click_ua_deprecation_docs')
+                      }
+                    />
+                  ),
+                  a2: (
+                    <Link
+                      href={__(
+                        'https://support.google.com/analytics/answer/10089681?hl=en',
+                        'web-stories'
+                      )}
+                      rel="noreferrer"
+                      target="_blank"
+                      size={TextSize.Small}
+                      onClick={(evt) => trackClick(evt, 'click_ga4_docs')}
                     />
                   ),
                 }}
               >
-                {TEXT.CONTEXT}
+                {__(
+                  'As <a>previously announced</a>, Universal Analytics will stop processing new visits starting <b>July 1, 2023</b>. We recommend switching to <a2>Google Analytics 4</a2> (GA4), our analytics product of record.',
+                  'web-stories'
+                )}
               </TranslateWithMarkup>
-            </TextInputHelperText>
-            {!googleAnalyticsId || googleAnalyticsId.startsWith('UA-') ? (
-              <WarningContainer>
-                <WarningIcon aria-hidden />
-                <Message>
-                  <TranslateWithMarkup
-                    mapping={{
-                      a: (
-                        <Link
-                          href={__(
-                            'https://support.google.com/analytics/answer/11583528?hl=en',
-                            'web-stories'
-                          )}
-                          rel="noreferrer"
-                          target="_blank"
-                          size={TextSize.Small}
-                          onClick={(evt) =>
-                            trackClick(evt, 'click_ua_deprecation_docs')
-                          }
-                        />
-                      ),
-                      a2: (
-                        <Link
-                          href={__(
-                            'https://support.google.com/analytics/answer/10089681?hl=en',
-                            'web-stories'
-                          )}
-                          rel="noreferrer"
-                          target="_blank"
-                          size={TextSize.Small}
-                          onClick={(evt) => trackClick(evt, 'click_ga4_docs')}
-                        />
-                      ),
-                    }}
-                  >
-                    {__(
-                      'As <a>previously announced</a>, Universal Analytics will stop processing new visits starting <b>July 1, 2023</b>. We recommend switching to <a2>Google Analytics 4</a2> (GA4), our analytics product of record.',
-                      'web-stories'
-                    )}
-                  </TranslateWithMarkup>
-                </Message>
-              </WarningContainer>
-            ) : null}
-          </>
-        )}
+            </Message>
+          </WarningContainer>
+        ) : null}
       </div>
     </SettingForm>
   );
@@ -355,6 +405,8 @@ GoogleAnalyticsSettings.propTypes = {
     analyticsActive: PropTypes.bool,
     analyticsLink: PropTypes.string,
   }),
+  googleAnalyticsHandler: PropTypes.string,
+  handleUpdateGoogleAnalyticsHandler: PropTypes.func,
 };
 
 export default GoogleAnalyticsSettings;

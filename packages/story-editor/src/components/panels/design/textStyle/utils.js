@@ -30,7 +30,7 @@ export function applyHiddenPadding(element) {
   return element?.padding?.hasHiddenPadding
     ? element.padding
     : {
-        ...(element.padding ?? {}),
+        ...element.padding,
         hasHiddenPadding: true,
         ...['vertical', 'horizontal'].reduce((padding, axis) => {
           padding[axis] =
@@ -51,7 +51,7 @@ export function applyHiddenPadding(element) {
 export function removeHiddenPadding(element) {
   return element?.padding?.hasHiddenPadding
     ? {
-        ...(element.padding ?? {}),
+        ...element.padding,
         hasHiddenPadding: false,
         ...['vertical', 'horizontal'].reduce((padding, axis) => {
           padding[axis] =

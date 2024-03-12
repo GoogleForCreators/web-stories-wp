@@ -67,8 +67,8 @@ function PostPublishDialog() {
     status === 'private'
       ? __('Story published privately.', 'web-stories')
       : status === 'future'
-      ? __('Story scheduled.', 'web-stories')
-      : __('Story published.', 'web-stories');
+        ? __('Story scheduled.', 'web-stories')
+        : __('Story published.', 'web-stories');
 
   return (
     <Dialog

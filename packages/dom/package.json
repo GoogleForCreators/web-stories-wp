@@ -2,7 +2,7 @@
   "name": "@googleforcreators/dom",
   "description": "DOM utility package for Web Stories editor",
   "private": false,
-  "version": "0.1.202309041201",
+  "version": "0.1.202401011233",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"

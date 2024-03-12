@@ -2,7 +2,7 @@
   "name": "@googleforcreators/element-library",
   "description": "A library of all elements used in story-editor",
   "private": false,
-  "version": "0.1.202309041201",
+  "version": "0.1.202401011233",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -50,7 +50,7 @@
     "@googleforcreators/stickers": "*",
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
-    "classnames": "^2.3.2",
+    "classnames": "^2.5.1",
     "polished": "^4.2.2",
     "prop-types": "^15.7.2",
     "react-transition-group": "^4.4.5",

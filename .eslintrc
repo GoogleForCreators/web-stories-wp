@@ -332,9 +332,10 @@
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
+        "EXPERIMENTAL_useProjectService": true,
         "warnOnUnsupportedTypeScriptVersion": false,
         "project": [
-          "./packages/*/tsconfig.json"
+          ".tsconfig.json"
         ]
       },
       "rules": {
@@ -648,7 +649,7 @@
       ],
       "extends": [
         "plugin:node/recommended",
-        "plugin:security/recommended"
+        "plugin:security/recommended-legacy"
       ],
       "plugins": [
         "security"

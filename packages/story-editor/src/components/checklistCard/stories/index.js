@@ -23,7 +23,7 @@ import {
   Text,
   Link,
   List,
-  BaseTooltip,
+  Tooltip as BaseTooltip,
 } from '@googleforcreators/design-system';
 
 /**

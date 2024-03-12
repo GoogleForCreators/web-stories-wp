@@ -33,16 +33,6 @@ describe('Site Kit plugin integration', () => {
   describe('Google Analytics', () => {
     withPlugin('e2e-tests-site-kit-analytics-mock');
 
-    describe('Dashboard', () => {
-      it('should see Site Kit specific message', async () => {
-        await visitSettings();
-
-        await expect(page).toMatchTextContent(
-          'Site Kit by Google has already enabled Google Analytics for your Web Stories'
-        );
-      });
-    });
-
     describe('Editor', () => {
       afterAll(async () => {
         await trashAllPosts('web-story');
@@ -69,7 +59,7 @@ describe('Site Kit plugin integration', () => {
     withPlugin('e2e-tests-site-kit-adsense-mock');
 
     describe('Dashboard', () => {
-      it('should see Site Kit specific message', async () => {
+      it('should see Google AdSense specific message', async () => {
         await visitSettings();
 
         await expect(page).toMatchTextContent(

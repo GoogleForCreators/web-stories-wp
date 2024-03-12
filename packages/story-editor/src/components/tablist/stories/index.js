@@ -20,23 +20,26 @@ import styled from 'styled-components';
 import {
   TextSize,
   Link,
-  BaseTooltip,
+  Tooltip as BaseTooltip,
   Text,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
 import { useState } from '@googleforcreators/react';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
-import { CARD_TYPE } from '../../checklistCard/constants';
 import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
-import { DefaultCtaButton } from '../../checklistCard/defaultCtaButton';
-import { DefaultFooterText } from '../../checklistCard/defaultFooterText';
 import { Tablist } from '../styles';
 import TablistPanel from '../tablistPanel';
 import { CheckboxCta } from '../../checklistCard/checkboxCta';
-import { ChecklistCard } from '../../checklistCard';
+import {
+  ChecklistCard,
+  CARD_TYPE,
+  DefaultCtaButton,
+  DefaultFooterText,
+} from '../../checklistCard';
 import { PANEL_STATES } from '../constants';
 
 export default {
