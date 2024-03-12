@@ -38,8 +38,8 @@ function ToggleButton({ isToggled = false, type, ...rest }: ToggleProps) {
     type === ButtonType.Quaternary
       ? type
       : isToggled
-      ? ButtonType.Secondary
-      : ButtonType.Tertiary;
+        ? ButtonType.Secondary
+        : ButtonType.Tertiary;
   return (
     <Button
       {...rest}

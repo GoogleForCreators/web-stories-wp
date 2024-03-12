@@ -193,8 +193,8 @@ function DevTools() {
   const storyData = isDummyResources
     ? replaceResourcesWithDummy(reducerStateSlice)[0]
     : isTemplate
-    ? prepareTemplate(reducerStateSlice)
-    : reducerStateSlice;
+      ? prepareTemplate(reducerStateSlice)
+      : reducerStateSlice;
 
   const toggleDummyResources = () => setIsDummyResources((v) => !v);
   const toggleTemplate = () => setIsTemplate((v) => !v);

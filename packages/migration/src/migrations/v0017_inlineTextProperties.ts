@@ -115,8 +115,8 @@ function convertInlineBold(
     typeof fontWeight === 'number' && fontWeight !== 400
       ? fontWeight
       : isBold
-      ? 700
-      : null;
+        ? 700
+        : null;
 
   if (globalWeight) {
     // In that case, strip any inline bold from the text and wrap everything in a span with correct style

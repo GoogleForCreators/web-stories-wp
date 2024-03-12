@@ -20,7 +20,7 @@
  * External dependencies
  */
 import { fireEvent } from '@testing-library/react';
-import { renderHook, cleanup, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -63,8 +63,6 @@ function testIsKeyPressed(result, node, { key, which }, shouldRegister = true) {
 }
 
 describe('keyboard/index.js', () => {
-  afterEach(cleanup);
-
   describe('useIsKeyPressed', () => {
     it('should initialize and then register key up and down events', () => {
       const container = document.createElement('div');

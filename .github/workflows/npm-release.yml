@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Node
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -48,9 +48,9 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@830e319e28724678162e88b9145a9b43f22f1a8e
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
         with:
-          bun-version: '0.5.9'
+          bun-version: latest
 
       - name: Bundle packages
         run: bun run workflow:bundle-packages
@@ -102,7 +102,7 @@ jobs:
     needs: [dry-run]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -113,7 +113,7 @@ jobs:
 
       # See go/npm-publish
       - name: Setup Node
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -126,9 +126,9 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@830e319e28724678162e88b9145a9b43f22f1a8e
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
         with:
-          bun-version: '0.5.9'
+          bun-version: latest
 
       - name: Bundle packages
         run: bun run workflow:bundle-packages

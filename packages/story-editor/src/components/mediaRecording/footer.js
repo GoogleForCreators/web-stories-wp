@@ -479,8 +479,8 @@ function Footer() {
           {isInserting
             ? __('Inserting…', 'web-stories')
             : hasVideo
-            ? __('Insert', 'web-stories')
-            : __('Insert page background audio', 'web-stories')}
+              ? __('Insert', 'web-stories')
+              : __('Insert page background audio', 'web-stories')}
         </InsertButton>
       </>
     );

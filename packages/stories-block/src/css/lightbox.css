@@ -16,6 +16,7 @@
   height: 100%;
   opacity: 0;
   transform: translate(0, -100vh);
+  z-index: -999999999;
 }
 
 /* amp-lightbox needs to have z-index to render on top of other elements in the page. */

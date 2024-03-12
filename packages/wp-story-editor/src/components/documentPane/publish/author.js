@@ -108,8 +108,8 @@ function Author() {
     placeholder: hasError
       ? __('Could not load users', 'web-stories')
       : isLoading
-      ? __('Loading…', 'web-stories')
-      : '',
+        ? __('Loading…', 'web-stories')
+        : '',
     disabled: isLoading || hasError || isSaving,
     primaryOptions: isLoading ? [] : visibleOptions,
     zIndex: 10,

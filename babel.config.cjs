@@ -32,7 +32,7 @@ module.exports = function (api) {
           shippedProposals: true,
           targets,
           useBuiltIns: 'usage',
-          corejs: '3.33.2',
+          corejs: '3.35.1',
         },
       ],
       [

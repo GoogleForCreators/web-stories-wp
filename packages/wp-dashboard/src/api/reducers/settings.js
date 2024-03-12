@@ -20,6 +20,7 @@ import {
   AD_NETWORK_TYPE,
   ARCHIVE_TYPE,
   SHOPPING_PROVIDER_TYPE,
+  GOOGLE_ANALYTICS_HANDLER_TYPE,
 } from '../../constants';
 
 export const ACTION_TYPES = {
@@ -49,6 +50,7 @@ export const defaultSettingsState = {
   shopifyAccessToken: '',
   autoAdvance: true,
   defaultPageDuration: 7,
+  googleAnalyticsHandler: GOOGLE_ANALYTICS_HANDLER_TYPE.SITE_KIT,
 };
 
 function settingsReducer(state, action) {
@@ -89,6 +91,7 @@ function settingsReducer(state, action) {
         shopifyAccessToken: action.payload.shopifyAccessToken,
         autoAdvance: action.payload.autoAdvance,
         defaultPageDuration: action.payload.defaultPageDuration,
+        googleAnalyticsHandler: action.payload.googleAnalyticsHandler,
       };
     }
 

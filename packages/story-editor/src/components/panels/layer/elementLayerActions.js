@@ -54,8 +54,8 @@ function ElementLayerActions({ element }) {
           ? __('Group is Locked', 'web-stories')
           : __('Group is Unlocked', 'web-stories')
         : isLocked
-        ? __('Unlock Layer', 'web-stories')
-        : __('Lock Layer', 'web-stories'),
+          ? __('Unlock Layer', 'web-stories')
+          : __('Lock Layer', 'web-stories'),
     [isLocked, isNested]
   );
   const visibilityTitle = isHidden

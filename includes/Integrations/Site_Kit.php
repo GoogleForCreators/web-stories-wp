@@ -31,6 +31,7 @@ namespace Google\Web_Stories\Integrations;
 use Google\Web_Stories\Analytics;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Settings;
 
 /**
  * Class Site_Kit.
@@ -65,16 +66,25 @@ class Site_Kit extends Service_Base {
 	private Plugin_Status $plugin_status;
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private Settings $settings;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Analytics     $analytics     Analytics instance.
 	 * @param Context       $context       Context instance.
 	 * @param Plugin_Status $plugin_status Plugin_Status instance.
+	 * @param Settings      $settings      Settings instance.
 	 */
-	public function __construct( Analytics $analytics, Context $context, Plugin_Status $plugin_status ) {
+	public function __construct( Analytics $analytics, Context $context, Plugin_Status $plugin_status, Settings $settings ) {
 		$this->analytics     = $analytics;
 		$this->context       = $context;
 		$this->plugin_status = $plugin_status;
+		$this->settings      = $settings;
 	}
 
 	/**
@@ -85,7 +95,19 @@ class Site_Kit extends Service_Base {
 	public function register(): void {
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
 
-		if ( $this->is_analytics_module_active() ) {
+		$handler = $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_HANDLER );
+
+		if ( 'web-stories' === $handler ) {
+			add_filter(
+				'googlesitekit_analytics-4_tag_amp_blocked',
+				function ( $blocked ) {
+					if ( $this->context->is_web_story() ) {
+						return true;
+					}
+					return $blocked;
+				}
+			);
+		} elseif ( 'site-kit' === $handler && $this->is_analytics_module_active() ) {
 			remove_action( 'web_stories_print_analytics', [ $this->analytics, 'print_analytics_tag' ] );
 		}
 	}
