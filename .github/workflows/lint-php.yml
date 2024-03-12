@@ -41,7 +41,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -68,7 +68,7 @@ jobs:
         run: composer --no-interaction validate --no-check-all
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
+        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 

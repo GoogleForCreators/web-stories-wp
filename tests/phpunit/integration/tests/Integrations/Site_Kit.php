@@ -23,6 +23,7 @@ namespace Google\Web_Stories\Tests\Integration\Integrations;
 use Google\Web_Stories\Analytics;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Integrations\Plugin_Status;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
@@ -130,7 +131,8 @@ class Site_Kit extends DependencyInjectedTestCase {
 		$this->instance = new \Google\Web_Stories\Integrations\Site_Kit(
 			$analytics,
 			$this->injector->make( Context::class ),
-			$this->injector->make( Plugin_Status::class )
+			$this->injector->make( Plugin_Status::class ),
+			$this->injector->make( Settings::class ),
 		);
 		$actual         = $this->instance->filter_site_kit_gtag_opt( $gtag );
 

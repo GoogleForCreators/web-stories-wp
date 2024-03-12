@@ -43,7 +43,7 @@ jobs:
     timeout-minutes: 20
     services:
       mysql:
-        image: mariadb:latest
+        image: mariadb:lts
         env:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
           MARIADB_DATABASE: wordpress_test
@@ -80,7 +80,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -116,7 +116,7 @@ jobs:
           tools: composer
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
+        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -132,7 +132,7 @@ jobs:
           tools: composer, cs2pr
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
+        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
@@ -181,7 +181,7 @@ jobs:
         if: ${{ matrix.random }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab
         with:
           file: build/logs/*.xml
         if: ${{ matrix.coverage }}

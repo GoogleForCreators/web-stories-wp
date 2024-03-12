@@ -145,6 +145,11 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	public const SETTING_NAME_DEFAULT_PAGE_DURATION = 'web_stories_default_page_duration';
 
 	/**
+	 * GA Tracking Handler.
+	 */
+	public const SETTING_NAME_TRACKING_HANDLER = 'web_stories_ga_tracking_handler';
+
+	/**
 	 * Shopping_Vendors instance.
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
@@ -403,6 +408,22 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 				'show_in_rest' => true,
 			]
 		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_TRACKING_HANDLER,
+			[
+				'description'  => __( 'Tracking Handler', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => 'site-kit',
+				'show_in_rest' => [
+					'schema' => [
+						'type' => 'string',
+						'enum' => [ 'site-kit', 'web-stories', 'both' ],
+					],
+				],
+			]
+		);
 	}
 
 	/**
@@ -495,6 +516,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 		delete_option( self::SETTING_NAME_SHOPIFY_ACCESS_TOKEN );
 		delete_option( self::SETTING_NAME_DEFAULT_PAGE_DURATION );
 		delete_option( self::SETTING_NAME_AUTO_ADVANCE );
+		delete_option( self::SETTING_NAME_TRACKING_HANDLER );
 	}
 
 	/**
