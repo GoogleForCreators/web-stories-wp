@@ -37,8 +37,8 @@ import { CircularProgress } from '@googleforcreators/design-system';
 import CalendarWrapper from './calendarWrapper';
 import { getCalendarType } from './utils';
 
-const Calendar = lazy(() =>
-  import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
+const Calendar = lazy(
+  () => import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
 );
 
 const FallbackCalendar = styled.div`

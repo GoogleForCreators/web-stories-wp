@@ -68,6 +68,7 @@ function LibraryPanes() {
       case MEDIA.id:
         return showMediaPane ? (
           <MediaPane
+            key={id}
             css={mediaHighlights?.showEffect && styles.FLASH}
             {...paneProps}
           />
@@ -75,23 +76,25 @@ function LibraryPanes() {
       case MEDIA3P.id:
         return (
           <Media3pPane
+            key={id}
             {...paneProps}
             css={media3pHighlights?.showEffect && styles.FLASH}
           />
         );
       case SHAPES.id:
-        return <ShapesPane {...paneProps} />;
+        return <ShapesPane key={id} {...paneProps} />;
       case TEXT.id:
         return (
           <TextPane
+            key={id}
             css={textHighlights?.showEffect && styles.FLASH}
             {...paneProps}
           />
         );
       case PAGE_TEMPLATES.id:
-        return <PageTemplatesPane {...paneProps} />;
+        return <PageTemplatesPane key={id} {...paneProps} />;
       case SHOPPING.id:
-        return <ShoppingPane {...paneProps} />;
+        return <ShoppingPane key={id} {...paneProps} />;
       default:
         return null;
     }

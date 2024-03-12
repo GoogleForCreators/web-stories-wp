@@ -46,6 +46,7 @@ const transformSettingResponse = (response) => ({
   shopifyAccessToken: response.web_stories_shopify_access_token,
   autoAdvance: Boolean(response.web_stories_auto_advance),
   defaultPageDuration: response.web_stories_default_page_duration,
+  googleAnalyticsHandler: response.web_stories_ga_tracking_handler,
 });
 
 /**
@@ -86,6 +87,7 @@ export function updateSettings(apiPath, queryParams) {
     shopifyAccessToken,
     autoAdvance,
     defaultPageDuration,
+    googleAnalyticsHandler,
   } = queryParams;
 
   const query = {};
@@ -152,6 +154,10 @@ export function updateSettings(apiPath, queryParams) {
 
   if (defaultPageDuration !== undefined) {
     query.web_stories_default_page_duration = defaultPageDuration;
+  }
+
+  if (googleAnalyticsHandler !== undefined) {
+    query.web_stories_ga_tracking_handler = googleAnalyticsHandler;
   }
 
   const path = addQueryArgs(apiPath, query);

@@ -64,8 +64,8 @@ function FloatingMenuLayer() {
         selectedElements.length === 1 && !selectedElements[0].isBackground
           ? selectedElements[0]?.type
           : selectedElements.length > 1
-          ? SELECTED_ELEMENT_TYPES.MULTIPLE
-          : SELECTED_ELEMENT_TYPES.NONE,
+            ? SELECTED_ELEMENT_TYPES.MULTIPLE
+            : SELECTED_ELEMENT_TYPES.NONE,
       selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
     })
   );

@@ -238,8 +238,8 @@ function Input({
           ].map((tag) =>
             tag === INPUT_KEY ? (
               <TextInput
-                {...props}
                 key={INPUT_KEY}
+                {...props}
                 value={value}
                 onKeyDown={handleKeyDown}
                 onChange={handleChange}

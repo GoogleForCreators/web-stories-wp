@@ -123,7 +123,7 @@ const reducer = {
 
 function calculateViewportProperties(
   workspaceSize: WorkspaceSize,
-  zoomSetting: string,
+  zoomSetting: ZoomSetting,
   zoomLevel: number
 ) {
   // Calculate page size based on zoom setting

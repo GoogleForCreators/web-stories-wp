@@ -97,9 +97,9 @@ Glider.prototype.scrollItem = function (slide, dot, e) {
           backwards && !scrollLeft
             ? this.slides.length
             : !backwards &&
-              scrollLeft + this.containerWidth >= Math.floor(this.trackWidth)
-            ? 0
-            : slide;
+                scrollLeft + this.containerWidth >= Math.floor(this.trackWidth)
+              ? 0
+              : slide;
       }
     }
 

@@ -58,7 +58,7 @@ function Cue({ cue, videoTime, height }) {
   return (
     <CueWrapper $height={height}>
       <Section>
-        {[...html.childNodes].map((node) => {
+        {html.childNodes.map((node) => {
           if (node.target === 'timestamp') {
             return null;
           } else {

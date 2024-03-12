@@ -52,7 +52,7 @@ export const GeneralAnimationPropTypes = {
 
 export const AnimationProps = {
   id: PropTypes.string.isRequired,
-  type: PropTypes.oneOf([...Object.values(AnimationType)]),
+  type: PropTypes.oneOf(Object.values(AnimationType)),
   targets: PropTypes.arrayOf(PropTypes.string),
   ...GeneralAnimationPropTypes,
 };

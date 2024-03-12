@@ -92,8 +92,8 @@ export const _default = {
         {filters.map(({ value: toggleValue, ...rest }) => {
           return (
             <FilterToggle
-              {...rest}
               key={toggleValue}
+              {...rest}
               isToggled={toggleValue === value}
               onClick={() => setValue(toggleValue)}
             >
