@@ -93,7 +93,6 @@ interface AmpStoryCaptions {
   key: string;
   id: string;
   layout: AmpLayout;
-  height: string;
 }
 
 declare module 'react' {

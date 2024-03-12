@@ -17,15 +17,14 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import { AnimationProvider, AMPAnimations } from '@googleforcreators/animation';
 import {
-  StoryPropTypes,
   isElementBelowLimit,
   type Page,
   elementIs,
+  type Element,
 } from '@googleforcreators/elements';
 
 /**
@@ -68,7 +67,9 @@ function OutputPage({
   const [backgroundElement, ...otherElements] = elements;
 
   // If the background element has base color set, it's media, use that.
-  const baseColor = backgroundElement?.resource?.baseColor;
+  const baseColor = elementIs.media(backgroundElement)
+    ? backgroundElement?.resource?.baseColor
+    : undefined;
   const backgroundStyles = baseColor
     ? { backgroundColor: baseColor }
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
@@ -89,14 +90,14 @@ function OutputPage({
     : undefined;
 
   const tagNamesMap = getTextElementTagNames(
-    otherElements.filter(({ type }) => 'text' === type)
+    otherElements.filter(elementIs.text)
   );
 
   const regularElements = otherElements.map((element) => {
     // Check if we need to change anything in this element
 
     // Text elements need a tag name
-    const needsTagName = 'text' === element.type;
+    const needsTagName = elementIs.text(element);
     // Invalid links must be removed
     // TODO: this should come from the pre-publish checklist in the future.
     const hasIllegalLink = pageAttachment?.url && isElementBelowLimit(element);
@@ -108,8 +109,8 @@ function OutputPage({
     }
 
     // At least one change needed, create shallow clone and modify that
-    const newElement = { ...element };
-    if (needsTagName) {
+    const newElement: Element = { ...element };
+    if (elementIs.text(newElement)) {
       newElement.tagName = tagNamesMap.get(element.id);
     }
     if (hasIllegalLink) {
@@ -133,7 +134,7 @@ function OutputPage({
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
   const backgroundAudioSrc = backgroundAudio?.resource?.src;
-  const hasBackgroundAudioCaptions = backgroundAudio?.tracks?.length > 0;
+  const hasBackgroundAudioCaptions = Boolean(backgroundAudio?.tracks?.length);
   const hasNonLoopingBackgroundAudio =
     false === backgroundAudio?.loop && backgroundAudio?.resource?.length;
   const needsEnhancedBackgroundAudio =
@@ -165,7 +166,7 @@ function OutputPage({
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
                 <OutputElement element={backgroundElement} flags={flags} />
-                {backgroundElement.overlay && (
+                {elementIs.overlayable(backgroundElement) && (
                   <div
                     className="page-background-overlay-area"
                     style={generatePatternStyles(backgroundElement.overlay)}
@@ -226,12 +227,5 @@ function OutputPage({
     </amp-story-page>
   );
 }
-
-OutputPage.propTypes = {
-  page: StoryPropTypes.page.isRequired,
-  defaultAutoAdvance: PropTypes.bool,
-  defaultPageDuration: PropTypes.number,
-  flags: PropTypes.object,
-};
 
 export default OutputPage;

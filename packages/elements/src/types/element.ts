@@ -134,6 +134,8 @@ export interface VideoElement extends SequenceMediaElement {
   type: ElementType.Video;
   tracks: Track[];
   resource: VideoResource;
+  poster?: string;
+  loop?: boolean;
 }
 
 export interface GifElement extends SequenceMediaElement {

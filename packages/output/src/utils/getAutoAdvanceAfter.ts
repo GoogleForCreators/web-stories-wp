@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
+import {
+  getTotalDuration,
+  type StoryAnimation,
+} from '@googleforcreators/animation';
 import type {
   BackgroundAudio,
   Element,

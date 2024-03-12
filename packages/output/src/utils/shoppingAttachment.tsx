@@ -18,11 +18,11 @@
  * External dependencies
  */
 import type {
-  ShoppingAttachment,
+  ShoppingAttachment as ShoppingAttachmentType,
   ProductData,
 } from '@googleforcreators/elements';
 
-type ShoppingAttachmentProps = Partial<ShoppingAttachment> & {
+type ShoppingAttachmentProps = Partial<ShoppingAttachmentType> & {
   products: ProductData[];
 };
 

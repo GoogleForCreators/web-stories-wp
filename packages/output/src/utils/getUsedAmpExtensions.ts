@@ -64,7 +64,7 @@ const getUsedAmpExtensions = (pages: Page[]) => {
   };
 
   for (const { elements, backgroundAudio } of pages) {
-    if (backgroundAudio?.resource?.src && backgroundAudio?.tracks?.length > 0) {
+    if (backgroundAudio?.resource?.src && backgroundAudio?.tracks?.length) {
       extensions.push(ampVideo);
       extensions.push(ampStoryCaptions);
     }

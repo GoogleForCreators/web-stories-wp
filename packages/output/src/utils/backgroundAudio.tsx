@@ -17,10 +17,13 @@
 /**
  * External dependencies
  */
-import type { BackgroundAudio, ElementId } from '@googleforcreators/elements';
+import type {
+  BackgroundAudio as BackgroundAudioType,
+  ElementId,
+} from '@googleforcreators/elements';
 
 interface BackgroundAudioProps {
-  backgroundAudio: BackgroundAudio;
+  backgroundAudio: BackgroundAudioType;
   id: ElementId;
 }
 
@@ -34,7 +37,7 @@ function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioProps) {
     loop: loop ? 'loop' : undefined,
     id: `page-${id}-background-audio`,
     // Actual <amp-story-captions> output happens in OutputPage.
-    'captions-id':hasTracks ? `el-${id}-captions` : undefined,
+    'captions-id': hasTracks ? `el-${id}-captions` : undefined,
     // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track#attr-src
     // and https://github.com/GoogleForCreators/web-stories-wp/issues/11479
     crossorigin: hasTracks ? 'anonymous' : undefined,
