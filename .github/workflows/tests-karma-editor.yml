@@ -142,3 +142,4 @@ jobs:
         with:
           file: build/logs/karma-coverage/story-editor/lcov.info
           flags: karmatests
+          token: ${{ secrets.CODECOV_TOKEN }}
