@@ -154,7 +154,7 @@ const useQuickActions = () => {
   const hasAudioAnywhere = useStory(
     ({ state }) =>
       state.story?.backgroundAudio ||
-      state.pages.some((page) => {
+      state.pages?.some((page) => {
         return (
           page.backgroundAudio ||
           page.elements
