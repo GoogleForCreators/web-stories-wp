@@ -433,13 +433,52 @@ describe('Panels/TextStyle', () => {
     it('should set color', () => {
       const { pushUpdate } = arrange([textElement]);
       act(() => mockControls['text.color'].onChange(createSolid(0, 255, 0)));
-      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const updatingFunction = pushUpdate.mock.calls[1][0];
       const resultOfUpdating = updatingFunction({
         content: 'Hello world',
       });
       expect(resultOfUpdating).toStrictEqual(
         {
           content: '<span style="color: #0f0">Hello world</span>',
+        },
+        true
+      );
+    });
+
+    it('should set gradient color', () => {
+      const { pushUpdate } = arrange([textElement]);
+      act(() =>
+        mockControls['text.color'].onChange({
+          type: 'linear',
+          stops: [
+            {
+              color: {
+                r: 0,
+                g: 0,
+                b: 0,
+              },
+              position: 0,
+            },
+            {
+              color: {
+                r: 1,
+                g: 1,
+                b: 1,
+              },
+              position: 1,
+            },
+          ],
+          rotation: 0.5,
+        })
+      );
+      const updatingFunction = pushUpdate.mock.calls[1][0];
+      const resultOfUpdating = updatingFunction({
+        content: 'Hello world',
+      });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content:
+            '<span style="background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">Hello world</span>',
         },
         true
       );
@@ -460,14 +499,15 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should set color with multi selection, different values', () => {
+    it('should set color with multi selection, mixed values', () => {
       const textWithColor1 = {
         ...textElement,
         content: '<span style="color: rgb(0, 0, 255)">Hello world</span>',
       };
       const textWithColor2 = {
         ...textElement,
-        content: '<span style="color: rgb(0, 255, 255)">Hello world</span>',
+        content:
+          '<span style="background-image: linear-gradient(0.5turn, #111 0%, #eee 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">Hello world</span>',
       };
       arrange([textWithColor1, textWithColor2]);
       expect(mockControls['text.color'].value).toStrictEqual(MULTIPLE_VALUE);
