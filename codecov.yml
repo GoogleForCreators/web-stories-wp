@@ -69,6 +69,7 @@ comment: false
 ignore:
   - bin
   - tests
+  - .phpstorm.meta.php
   - scoper.inc.php
   - web-stories.php
   - uninstall.php

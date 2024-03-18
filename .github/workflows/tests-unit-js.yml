@@ -107,3 +107,4 @@ jobs:
         with:
           file: build/logs/lcov.info
           flags: unittests
+          token: ${{ secrets.CODECOV_TOKEN }}
