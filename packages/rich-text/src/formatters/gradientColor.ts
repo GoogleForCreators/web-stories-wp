@@ -23,8 +23,6 @@ import {
   getGradientStyleFromColor,
   isPatternEqual,
   getColorFromGradientStyle,
-} from '@googleforcreators/patterns';
-import {
   type Gradient,
   type Pattern,
   DEFAULT_GRADIENT,
