@@ -20,7 +20,11 @@
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { hasGradient, createSolid } from '@googleforcreators/patterns';
+import {
+  hasGradient,
+  createSolid,
+  DEFAULT_GRADIENT,
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -59,7 +63,7 @@ function TextColor() {
       handleSetColor(createSolid(0, 0, 0));
       handleSetGradientColor(color);
     } else {
-      handleSetGradientColor(createSolid(0, 0, 0));
+      handleSetGradientColor(DEFAULT_GRADIENT);
       handleSetColor(color);
     }
   };
