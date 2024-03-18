@@ -33,7 +33,7 @@ const formatters: Formatter[] = [
   colorFormatter,
   letterSpacingFormatter,
   uppercaseFormatter,
-  gradientColorFormatter
+  gradientColorFormatter,
 ];
 
 export default formatters;
