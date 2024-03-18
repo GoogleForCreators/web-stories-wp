@@ -28,6 +28,7 @@ import { hasGradient, createSolid } from '@googleforcreators/patterns';
 import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
 import updateProperties from '../../style/updateProperties';
 import { useStory } from '../../../app';
+import { MULTIPLE_VALUE } from '../../../constants';
 import { Color, useProperties } from './shared';
 
 function TextColor() {
@@ -68,12 +69,19 @@ function TextColor() {
     handlers: { handleSetColor, handleSetGradientColor },
   } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
 
+  const colorInputValue =
+    gradientColor === MULTIPLE_VALUE
+      ? MULTIPLE_VALUE
+      : hasGradient(gradientColor)
+        ? gradientColor
+        : color;
+
   return (
     <Color
       tabIndex={-1}
       label={__('Text color', 'web-stories')}
       allowsSavedColors
-      value={hasGradient(gradientColor) ? gradientColor : color}
+      value={colorInputValue}
       onChange={onColorChange}
       hasInputs={false}
       hasEyedropper

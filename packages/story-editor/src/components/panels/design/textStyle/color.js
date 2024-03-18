@@ -29,6 +29,7 @@ import {
  * Internal dependencies
  */
 import { Color, Row } from '../../../form';
+import { MULTIPLE_VALUE } from '../../../../constants';
 import useRichTextFormatting from './useRichTextFormatting';
 
 function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
@@ -47,11 +48,18 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
     }
   };
 
+  const colorInputValue =
+    gradientColor === MULTIPLE_VALUE
+      ? MULTIPLE_VALUE
+      : hasGradient(gradientColor)
+        ? gradientColor
+        : color;
+
   return (
     <Row>
       <Color
         data-testid="text.color"
-        value={hasGradient(gradientColor) ? gradientColor : color}
+        value={colorInputValue}
         onChange={onColorChange}
         allowsSavedColors
         label={__('Text color', 'web-stories')}
