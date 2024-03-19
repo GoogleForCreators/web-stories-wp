@@ -24,8 +24,10 @@ import { PatternType, type Gradient } from './types';
 export default function getColorFromGradientStyle(style: string): Gradient {
   if (style.includes(GRADIENT.LINEAR)) {
     return parseGradient(style, GRADIENT.LINEAR);
+  } else if (style.includes(GRADIENT.RADIAL)) {
+    return parseGradient(style, GRADIENT.RADIAL);
   }
-  return parseGradient(style, GRADIENT.RADIAL);
+  throw new Error('Invalid style string passed.');
 }
 
 function parseGradient(style: string, gradient: string): Gradient {
