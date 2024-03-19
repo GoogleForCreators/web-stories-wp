@@ -177,7 +177,7 @@ describe('Design Menu: Text Styles', () => {
       await setLinearGradient();
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        '<span style="background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">Fill in some text</span>'
+        '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">Fill in some text</span>'
       );
     });
 
@@ -185,7 +185,7 @@ describe('Design Menu: Text Styles', () => {
       await setRadialGradient();
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        '<span style="background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">Fill in some text</span>'
+        '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">Fill in some text</span>'
       );
     });
 
@@ -217,7 +217,7 @@ describe('Design Menu: Text Styles', () => {
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        'Fill <span style="background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">in</span> some text'
+        'Fill <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">in</span> some text'
       );
     });
 
@@ -232,7 +232,7 @@ describe('Design Menu: Text Styles', () => {
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        'Fill <span style="background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">in</span> some text'
+        'Fill <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">in</span> some text'
       );
     });
 
@@ -250,7 +250,7 @@ describe('Design Menu: Text Styles', () => {
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        '<span style="color: #ff7096">Fill</span> <span style="background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">in</span> some text'
+        '<span style="color: #ff7096">Fill</span> <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">in</span> some text'
       );
     });
 
@@ -267,7 +267,7 @@ describe('Design Menu: Text Styles', () => {
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        '<span style="color: #ff7096">Fill</span> <span style="background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">in</span> some text'
+        '<span style="color: #ff7096">Fill</span> <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">in</span> some text'
       );
     });
 
@@ -284,7 +284,7 @@ describe('Design Menu: Text Styles', () => {
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        '<span style="background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">Fill</span> <span style="background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">in</span> some text'
+        '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">Fill</span> <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">in</span> some text'
       );
     });
 
@@ -305,7 +305,7 @@ describe('Design Menu: Text Styles', () => {
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        '<span style="background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">Fill</span> <span style="background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">in</span> <span style="color: #ff7096">some</span> text'
+        '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">Fill</span> <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">in</span> <span style="color: #ff7096">some</span> text'
       );
     });
   });

@@ -478,7 +478,7 @@ describe('Panels/TextStyle', () => {
       expect(resultOfUpdating).toStrictEqual(
         {
           content:
-            '<span style="background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent">Hello world</span>',
+            '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">Hello world</span>',
         },
         true
       );
