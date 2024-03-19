@@ -78,10 +78,10 @@ function stylesToCSS(styles: DraftInlineStyle): null | CSSProperties {
   const { backgroundImage } = generatePatternStyles(color);
 
   return {
-    backgroundImage,
-    backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
+    backgroundImage,
+    backgroundClip: 'text',
   };
 }
 
