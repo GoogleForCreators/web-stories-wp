@@ -101,3 +101,4 @@ jobs:
         with:
           file: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests
+          token: ${{ secrets.CODECOV_TOKEN }}
