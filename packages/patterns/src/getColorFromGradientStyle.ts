@@ -13,45 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
+import { DEFAULT_GRADIENT, GRADIENT, GRADIENT_REGEX } from './constants';
 import createSolidFromString from './createSolidFromString';
-import { PatternType, type Gradient, type Linear } from './types';
-
-export const DEFAULT_GRADIENT: Linear = {
-  type: PatternType.Linear,
-  stops: [
-    {
-      color: {
-        r: 0,
-        g: 0,
-        b: 0,
-      },
-      position: 0,
-    },
-    {
-      color: {
-        r: 1,
-        g: 1,
-        b: 1,
-      },
-      position: 1,
-    },
-  ],
-};
-
-const GRADIENT = {
-  LINEAR: 'linear-gradient',
-  RADIAL: 'radial-gradient',
-};
-
-const REGEX = {
-  [GRADIENT.LINEAR]:
-    /linear-gradient\((?:-?\d*\.?\d+turn,\s*)?(?:rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),?\s*(\d*\.?\d+)?\)|#([0-9a-fA-F]{6}))\s*0%,\s*(?:rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),?\s*(\d*\.?\d+)?\)|#([0-9a-fA-F]{6}))\s*100%\)/,
-  [GRADIENT.RADIAL]:
-    /radial-gradient\((?:rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),?\s*(\d*\.?\d+)?\)|#([0-9a-fA-F]{6}))\s*0%,\s*(?:rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),?\s*(\d*\.?\d+)?\)|#([0-9a-fA-F]{6}))\s*100%\)/,
-};
+import { PatternType, type Gradient } from './types';
 
 export default function getColorFromGradientStyle(style: string): Gradient {
   if (style.includes(GRADIENT.LINEAR)) {
@@ -61,7 +29,7 @@ export default function getColorFromGradientStyle(style: string): Gradient {
 }
 
 function parseGradient(style: string, gradient: string): Gradient {
-  const regex = REGEX[gradient];
+  const regex = GRADIENT_REGEX[gradient];
   const matches = style.match(regex);
   if (!matches) {
     return DEFAULT_GRADIENT;
