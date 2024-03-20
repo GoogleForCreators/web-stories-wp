@@ -42,47 +42,29 @@ class Types extends TestCase {
 	 * @group ms-excluded
 	 */
 	public function test_get_allowed_mime_types(): void {
-		if ( $this->supportsWebP() ) {
-			$expected = [
-				'image'   => [
-					'image/webp',
-					'image/png',
-					'image/jpeg',
-					'image/gif',
-				],
-				'audio'   => [
-					'audio/mpeg',
-					'audio/aac',
-					'audio/wav',
-					'audio/ogg',
-				],
-				'caption' => [ 'text/vtt' ],
-				'vector'  => [],
-				'video'   => [
-					'video/mp4',
-					'video/webm',
-				],
-			];
-		} else {
-			$expected = [
-				'image'   => [
-					'image/png',
-					'image/jpeg',
-					'image/gif',
-				],
-				'audio'   => [
-					'audio/mpeg',
-					'audio/aac',
-					'audio/wav',
-					'audio/ogg',
-				],
-				'caption' => [ 'text/vtt' ],
-				'vector'  => [],
-				'video'   => [
-					'video/mp4',
-					'video/webm',
-				],
-			];
+		$expected = [
+			'image'   => [
+				'image/webp',
+				'image/png',
+				'image/jpeg',
+				'image/gif',
+			],
+			'audio'   => [
+				'audio/mpeg',
+				'audio/aac',
+				'audio/wav',
+				'audio/ogg',
+			],
+			'caption' => [ 'text/vtt' ],
+			'vector'  => [],
+			'video'   => [
+				'video/mp4',
+				'video/webm',
+			],
+		];
+
+		if ( $this->supports_avif() ) {
+			$expected['image'][] = 'image/avif';
 		}
 
 		$actual = $this->instance->get_allowed_mime_types();
@@ -95,45 +77,28 @@ class Types extends TestCase {
 	 * @covers ::get_allowed_mime_types
 	 */
 	public function test_get_allowed_mime_types_multisite(): void {
-		if ( $this->supportsWebP() ) {
-			$expected = [
-				'image'   => [
-					'image/webp',
-					'image/png',
-					'image/jpeg',
-					'image/gif',
-				],
-				'audio'   => [
-					'audio/mpeg',
-					'audio/wav',
-					'audio/ogg',
-				],
-				'caption' => [ 'text/vtt' ],
-				'vector'  => [],
-				'video'   => [
-					'video/mp4',
-					'video/webm',
-				],
-			];
-		} else {
-			$expected = [
-				'image'   => [
-					'image/png',
-					'image/jpeg',
-					'image/gif',
-				],
-				'audio'   => [
-					'audio/mpeg',
-					'audio/wav',
-					'audio/ogg',
-				],
-				'caption' => [ 'text/vtt' ],
-				'vector'  => [],
-				'video'   => [
-					'video/mp4',
-					'video/webm',
-				],
-			];
+		$expected = [
+			'image'   => [
+				'image/webp',
+				'image/png',
+				'image/jpeg',
+				'image/gif',
+			],
+			'audio'   => [
+				'audio/mpeg',
+				'audio/wav',
+				'audio/ogg',
+			],
+			'caption' => [ 'text/vtt' ],
+			'vector'  => [],
+			'video'   => [
+				'video/mp4',
+				'video/webm',
+			],
+		];
+
+		if ( $this->supports_avif() ) {
+			$expected['image'][] = 'image/avif';
 		}
 
 		$actual = $this->instance->get_allowed_mime_types();
@@ -150,9 +115,14 @@ class Types extends TestCase {
 		$this->assertEqualSets( [ 'webm' ], $actual );
 	}
 
-	protected function supportsWebP(): bool {
+	/**
+	 * Check whether the current WordPress version supports AVIF.
+	 *
+	 * AVIF support was added in WordPress 6.5
+	 */
+	protected function supports_avif(): bool {
 		$mime_type = array_values( wp_get_mime_types() );
 
-		return \in_array( 'image/webp', $mime_type, true );
+		return \in_array( 'image/avif', $mime_type, true );
 	}
 }
