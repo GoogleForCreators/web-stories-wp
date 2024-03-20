@@ -21,12 +21,15 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import GoogleAnalyticsSettings, { TEXT } from '..';
+import GoogleAnalyticsSettings, { TEXT, ANALYTICS_DROPDOWN_OPTIONS } from '..';
 import { renderWithProviders } from '../../../../testUtils';
+
+const SITE_KIT_MESSAGE = TEXT.SITE_KIT_IN_USE.replace('<b>Note: </b>', '');
 
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
   let googleAnalyticsId;
   let mockUpdate;
+  let mockHandleUpdateGoogleAnalyticsHandler;
   const defaultSiteKitStatus = {
     installed: false,
     analyticsActive: false,
@@ -38,6 +41,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     mockUpdate = jest.fn((id) => {
       googleAnalyticsId = id;
     });
+    mockHandleUpdateGoogleAnalyticsHandler = jest.fn();
   });
 
   afterEach(() => {
@@ -76,7 +80,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     expect(label).toBeInTheDocument();
   });
 
-  it('should not display any input field when analytics module is active', () => {
+  it('should display input field when analytics module is active', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -91,25 +95,25 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     );
 
     const input = screen.queryByRole('textbox');
-    expect(input).not.toBeInTheDocument();
+    expect(input).toBeInTheDocument();
   });
 
-  it('should allow the input to be active when Site Kit is installed but analytics module is not active', () => {
+  it('should display analytics type dropdown when analytics module is active', () => {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={{
           ...defaultSiteKitStatus,
-          active: false,
-          installed: true,
+          active: true,
+          analyticsActive: true,
         }}
         usingLegacyAnalytics={false}
       />
     );
 
-    const input = screen.getByRole('textbox');
-    expect(input).toBeEnabled();
+    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
+    expect(dropdown).toBeInTheDocument();
   });
 
   it('should call mockUpdate when enter is keyed on input', () => {
@@ -211,5 +215,50 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', () => {
     fireEvent.click(button);
 
     expect(mockUpdate).toHaveBeenCalledTimes(2);
+  });
+
+  it('should display Site Kit message when analytics module is active', () => {
+    renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={{
+          ...defaultSiteKitStatus,
+          active: true,
+          analyticsActive: true,
+        }}
+        usingLegacyAnalytics={false}
+      />
+    );
+
+    expect(screen.getByText(SITE_KIT_MESSAGE)).toBeInTheDocument();
+  });
+
+  it('should call handleUpdateGoogleAnalyticsHandler when the dropdown value changes', () => {
+    renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdateAnalyticsId={mockUpdate}
+        siteKitStatus={{
+          ...defaultSiteKitStatus,
+          analyticsActive: true,
+        }}
+        usingLegacyAnalytics={false}
+        handleUpdateGoogleAnalyticsHandler={
+          mockHandleUpdateGoogleAnalyticsHandler
+        }
+      />
+    );
+
+    const dropdown = screen.getByLabelText(TEXT.ANALYTICS_DROPDOWN_LABEL);
+    fireEvent.click(dropdown);
+
+    ANALYTICS_DROPDOWN_OPTIONS.forEach((option) => {
+      const optionElement = screen.getByText(option.label);
+      fireEvent.click(optionElement);
+      expect(mockHandleUpdateGoogleAnalyticsHandler).toHaveBeenCalledWith(
+        option.value
+      );
+    });
   });
 });
