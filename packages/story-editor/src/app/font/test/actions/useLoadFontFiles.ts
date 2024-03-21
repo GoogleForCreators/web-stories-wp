@@ -28,7 +28,7 @@ import useLoadFontFiles from '../../actions/useLoadFontFiles';
 const DEFAULT_FONT = {
   font: {
     family: 'Font',
-    service: FontService.Custom,
+    service: FontService.GoogleFonts,
     url: 'https://fonts.example.com/font.ttf',
   },
   fontWeight: 400,
