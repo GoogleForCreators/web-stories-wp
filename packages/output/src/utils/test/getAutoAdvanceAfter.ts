@@ -23,9 +23,9 @@ import type {
   BackgroundAudio,
   Element,
   VideoElement,
+  ShapeElement,
 } from '@googleforcreators/elements';
 import { ElementType, registerElementType } from '@googleforcreators/elements';
-import type { ShapeElement } from '@googleforcreators/element-library';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -234,7 +234,12 @@ describe('getAutoAdvanceAfter', () => {
 
   it('should return animation time non-looping media', () => {
     const elements: Element[] = [
-      { id: '123', type: 'video', loop: false, resource: { length: 5 } },
+      {
+        id: '123',
+        type: 'video',
+        loop: false,
+        resource: { length: 5 },
+      } as VideoElement,
       { id: '456', x: 0, y: 0, type: ElementType.Shape } as ShapeElement,
     ];
 

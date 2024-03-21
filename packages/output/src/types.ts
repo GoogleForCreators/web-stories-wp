@@ -23,13 +23,17 @@
  */
 import type { Page, Story as FullStory } from '@googleforcreators/elements';
 
-export type Story = Pick<FullStory, 'featuredMedia' | 'link' |
-'title' |
-'fonts' |
-'autoAdvance' |
-'defaultPageDuration' |
-'backgroundAudio' |
-'publisherLogo'>;
+export type Story = Pick<
+  FullStory,
+  | 'featuredMedia'
+  | 'link'
+  | 'title'
+  | 'fonts'
+  | 'autoAdvance'
+  | 'defaultPageDuration'
+  | 'backgroundAudio'
+  | 'publisherLogo'
+>;
 
 export interface StoryMetadata {
   publisher?: string;

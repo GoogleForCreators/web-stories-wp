@@ -33,16 +33,6 @@ function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioProps) {
 
   const hasTracks = tracks?.length && tracks?.length > 0;
 
-  const videoProps = {
-    loop: loop ? 'loop' : undefined,
-    id: `page-${id}-background-audio`,
-    // Actual <amp-story-captions> output happens in OutputPage.
-    'captions-id': hasTracks ? `el-${id}-captions` : undefined,
-    // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track#attr-src
-    // and https://github.com/GoogleForCreators/web-stories-wp/issues/11479
-    crossorigin: hasTracks ? 'anonymous' : undefined,
-  };
-
   const sourceProps = {
     type: mimeType,
     src,
@@ -51,7 +41,7 @@ function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioProps) {
   return (
     <amp-story-grid-layer template="fill">
       <amp-video
-        autoPlay="autoplay"
+        autoplay="autoplay"
         // Not using "nodisplay" here, because it might cause the audio to
         // not actually load at all.
         // The good thing is that even with a layout, there's nothing visible
@@ -60,7 +50,13 @@ function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioProps) {
         width="1"
         height="1"
         poster=""
-        {...videoProps}
+        id={`page-${id}-background-audio`}
+        loop={loop ? 'loop' : undefined}
+        // Actual <amp-story-captions> output happens in OutputPage.
+        captions-id={hasTracks ? `el-${id}-captions` : undefined}
+        // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track#attr-src
+        // and https://github.com/GoogleForCreators/web-stories-wp/issues/11479
+        crossOrigin={hasTracks ? 'anonymous' : undefined}
       >
         <source {...sourceProps} />
         {tracks &&

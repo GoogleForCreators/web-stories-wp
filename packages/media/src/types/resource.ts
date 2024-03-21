@@ -75,7 +75,7 @@ export interface Resource {
   /** BlurHash. */
   blurHash?: string;
   /** Whether the resource externally hosted. */
-  isExternal: boolean;
+  isExternal?: boolean;
   /** Whether the resource is a placeholder. */
   isPlaceholder?: boolean;
   /** Whether the resource needs a CORS proxy. */

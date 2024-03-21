@@ -143,6 +143,10 @@ export interface GifElement extends SequenceMediaElement {
   resource: GifResource;
 }
 
+export interface ImageElement extends MediaElement {
+  type: ElementType.Image;
+}
+
 export interface OverlayableElement extends Element {
   overlay?: Pattern | null;
 }
@@ -176,9 +180,13 @@ export interface TextElement extends Element {
   fontSize: number;
 
   backgroundTextMode?: string;
-  tagName?: 'h1' | 'h2' | 'h3' | 'p';
+  tagName?: 'h1' | 'h2' | 'h3' | 'p' | 'auto';
   padding?: Padding;
   marginOffset: number;
   lineHeight: number;
   textAlign: TextAlign;
+}
+
+export interface ShapeElement extends Element {
+  type: ElementType.Shape;
 }

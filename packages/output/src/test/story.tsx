@@ -20,11 +20,15 @@
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { ElementType, registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
+import {
+  AnimationType,
+  type StoryAnimation,
+} from '@googleforcreators/animation';
+import { ResourceType } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
-import { AnimationType, StoryAnimation } from '@googleforcreators/animation';
 import StoryOutput from '../story';
 
 describe('Story output', () => {
@@ -175,6 +179,7 @@ describe('Story output', () => {
         autoAdvance: false,
         backgroundAudio: {
           resource: {
+            type: ResourceType.Audio,
             src: 'https://example.com/audio.mp3',
             id: 123,
             mimeType: 'audio/mpeg',
@@ -507,6 +512,7 @@ describe('Story output', () => {
           autoAdvance: false,
           backgroundAudio: {
             resource: {
+              type: ResourceType.Audio,
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',

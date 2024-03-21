@@ -36,6 +36,7 @@ import {
   createBlob,
   getImageDimensions,
   ResourceType,
+  resourceIs,
   type ResourceId,
   type ImageResource,
 } from '@googleforcreators/media';
@@ -140,7 +141,7 @@ function useMediaUploadQueue() {
         .map(async ({ id, file, resource }) => {
           if (
             !resource.isPlaceholder ||
-            (resource.type === ResourceType.Video && resource.poster)
+            (resourceIs.video(resource) && resource.poster)
           ) {
             return;
           }
@@ -440,11 +441,7 @@ function useMediaUploadQueue() {
 
       // If we don't have a poster yet (e.g. after converting a GIF),
       // try to generate one now.
-      if (
-        resource.type === ResourceType.Video &&
-        !resource.poster &&
-        !posterFile
-      ) {
+      if (resourceIs.video(resource) && !resource.poster && !posterFile) {
         try {
           posterFile = await getFirstFrameOfVideo(file);
         } catch {
@@ -571,8 +568,7 @@ function useMediaUploadQueue() {
 
             if (
               item.additionalData.mediaSource !== 'recording' &&
-              resource &&
-              resource.type === ResourceType.Video &&
+              resourceIs.video(resource) &&
               (await isConsideredOptimized(resource, file))
             ) {
               // Do not override pre-existing mediaSource if provided,
@@ -914,7 +910,11 @@ function useMediaUploadQueue() {
      * not already uploading.
      */
     const canTranscodeResource = (resource?: QueueItemResource) => {
-      const { isExternal, id, src = '' } = resource || {};
+      if (!resource) {
+        return false;
+      }
+
+      const { isExternal, id, src = '' } = resource;
 
       return (
         isExternal === false &&

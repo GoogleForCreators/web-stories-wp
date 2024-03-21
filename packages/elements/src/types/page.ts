@@ -68,5 +68,5 @@ export interface Page {
   advancement?: {
     autoAdvance?: boolean;
     pageDuration?: number;
-  }
+  };
 }

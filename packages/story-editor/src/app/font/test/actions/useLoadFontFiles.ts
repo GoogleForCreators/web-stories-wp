@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+import { FontService } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -27,7 +28,8 @@ import useLoadFontFiles from '../../actions/useLoadFontFiles';
 const DEFAULT_FONT = {
   font: {
     family: 'Font',
-    service: 'fonts.google.com',
+    service: FontService.Custom,
+    url: 'https://fonts.example.com/font.ttf',
   },
   fontWeight: 400,
   fontStyle: 'normal',
@@ -37,7 +39,7 @@ const DEFAULT_FONT = {
 const CUSTOM_FONT = {
   font: {
     family: 'Bar Regular',
-    service: 'custom',
+    service: FontService.Custom,
     url: 'https://fonts.example.com/bar.ttf',
   },
   fontWeight: 400,

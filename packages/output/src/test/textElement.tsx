@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
 import { AnimationProvider } from '@googleforcreators/animation';
 import {
   registerElementType,
@@ -36,10 +35,6 @@ import { DEFAULT_TEXT } from './_utils/constants';
 function WrapAnimation({ children }: PropsWithChildren<unknown>) {
   return <AnimationProvider animations={[]}>{children}</AnimationProvider>;
 }
-
-WrapAnimation.propTypes = {
-  children: PropTypes.node,
-};
 
 const TEXT_WITH_COLOR = {
   ...DEFAULT_TEXT,

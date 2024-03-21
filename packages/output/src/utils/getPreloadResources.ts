@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { elementIs, type Page } from '@googleforcreators/elements';
+import { elementIs, ElementType, type Page } from '@googleforcreators/elements';
 
 interface PreloadResource {
   url: string;
@@ -27,7 +27,7 @@ interface PreloadResource {
 /**
  * Goes through all pages in a story to find the resources that should be preloaded.
  *
- * Currently this includes the first page's background image/video.
+ * Currently, this includes the first page's background image/video.
  *
  * @param pages List of pages.
  * @return List of preload resources.
@@ -44,17 +44,19 @@ function getPreloadResources(pages: Page[]) {
     .filter(elementIs.backgroundable);
 
   for (const element of mediaElements) {
-    const { type, resource, isBackground } = element;
+    const { type, isBackground } = element;
     if (!isBackground) {
       continue;
     }
 
     // resource?.output?.src is used only for GIF resources.
-    const src = elementIs.gif(element) ? resource?.output?.src : resource.src;
+    const src = elementIs.gif(element)
+      ? element.resource?.output?.src
+      : element.resource.src;
 
     preloadResources.push({
       url: src,
-      type: 'image' === type ? 'image' : 'video',
+      type: type === ElementType.Image ? 'image' : 'video',
     });
   }
 

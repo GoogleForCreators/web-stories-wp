@@ -76,7 +76,7 @@ function getTextElementTagNames(elements: Element[]) {
 
         return tagNamesMap;
       },
-      new Map()
+      new Map<string, 'h1' | 'h2' | 'h3' | 'p'>()
     );
 }
 

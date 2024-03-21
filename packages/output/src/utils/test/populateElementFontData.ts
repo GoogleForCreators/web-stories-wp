@@ -19,8 +19,8 @@
  */
 import {
   ElementType,
-  FontData,
   FontService,
+  type FontData,
   type Page,
   type TextElement,
 } from '@googleforcreators/elements';

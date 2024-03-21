@@ -36,12 +36,13 @@ interface AmpHTMLHtmlElement
 
 interface AmpVideo
   extends React.DetailedHTMLProps<
-    React.VideoHTMLAttributes<HTMLVideoElement>,
+    Omit<React.VideoHTMLAttributes<HTMLVideoElement>, 'loop'>,
     HTMLVideoElement
   > {
   layout: AmpLayout;
   'captions-id'?: string;
   autoplay?: 'autoplay';
+  loop?: 'loop';
 }
 
 interface AmpImg

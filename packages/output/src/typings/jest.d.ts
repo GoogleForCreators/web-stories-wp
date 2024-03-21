@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+// eslint-disable-next-line import/no-extraneous-dependencies -- Installed in main package.json.
 import 'jest-extended';
+// eslint-disable-next-line import/no-extraneous-dependencies -- Installed in main package.json.
 import '@testing-library/jest-dom';
 
 declare global {

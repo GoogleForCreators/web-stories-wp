@@ -73,7 +73,13 @@ function OutputStory({
           content="width=device-width,minimum-scale=1,initial-scale=1"
         />
         {ampExtensions.map(({ name, src }) => (
-          <script key={src} async="async" src={src} custom-element={name} />
+          <script
+            key={src}
+            // @ts-expect-error -- To ensure valid AMP on the frontend.
+            async="async"
+            src={src}
+            custom-element={name}
+          />
         ))}
         <FontDeclarations pages={pages} />
         {preloadResources.map(({ url, type }) => (

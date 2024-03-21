@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,29 @@
 /**
  * Internal dependencies
  */
-import type { Resource } from './resource';
+import type {
+  AudioResource,
+  ImageResource,
+  Resource,
+  VideoResource,
+} from './types';
+import { ResourceType } from './types';
 
-export interface AudioResource
-  extends Pick<
-    Resource,
-    'type' | 'id' | 'src' | 'mimeType' | 'isExternal' | 'isPlaceholder'
-  > {
-  /** Length in seconds. */
-  length: number;
-  /** The formatted length, e.g. "01:17". */
-  lengthFormatted: string;
+function isImage(
+  resource: Resource | AudioResource
+): resource is ImageResource {
+  return resource && resource.type === ResourceType.Image;
 }
+
+function isVideo(
+  resource: Resource | AudioResource
+): resource is VideoResource {
+  return resource && resource.type === ResourceType.Video;
+}
+
+const resourceIs = {
+  image: isImage,
+  video: isVideo,
+};
+
+export default resourceIs;

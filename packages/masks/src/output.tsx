@@ -37,6 +37,8 @@ interface WithMaskProps {
   fill?: boolean;
   children: ReactNode;
   skipDefaultMask?: boolean;
+  className?: string;
+  id?: string;
 }
 
 export default function WithMask({

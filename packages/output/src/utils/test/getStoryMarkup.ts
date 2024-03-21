@@ -47,6 +47,9 @@ describe('getStoryMarkup', () => {
       slug: 'story',
       link: 'https://example.com',
       publisherLogo: {
+        id: 1234,
+        height: 96,
+        width: 96,
         url: 'https://example.com',
       },
       defaultPageDuration: 7,

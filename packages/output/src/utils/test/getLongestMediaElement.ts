@@ -17,16 +17,14 @@
  * External dependencies
  */
 import {
-  Element,
+  type Element,
+  type TextElement,
+  type VideoElement,
+  type ImageElement,
   ElementType,
   registerElementType,
-  TextElement,
-  VideoElement,
 } from '@googleforcreators/elements';
-import {
-  elementTypes,
-  type ImageElement,
-} from '@googleforcreators/element-library';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies

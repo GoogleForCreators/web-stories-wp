@@ -17,8 +17,13 @@
 /**
  * External dependencies
  */
-import type { Page, BackgroundableElement } from '@googleforcreators/elements';
-import type { ImageElement } from '@googleforcreators/element-library';
+import {
+  type Page,
+  type BackgroundableElement,
+  type ImageElement,
+  ElementType,
+} from '@googleforcreators/elements';
+import { ResourceType } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -27,30 +32,28 @@ import getPreloadResources from '../getPreloadResources';
 
 const IMAGE_ELEMENT: ImageElement = {
   id: 'baz',
-  type: 'image',
-  mimeType: 'image/png',
+  type: ElementType.Image,
   scale: 1,
-  origRatio: 9 / 16,
   x: 50,
   y: 100,
   height: 1920,
   width: 1080,
   rotationAngle: 0,
-  loop: true,
   resource: {
-    type: 'image',
+    type: ResourceType.Image,
     mimeType: 'image/png',
     id: 123,
     src: 'https://example.com/image.png',
-    poster: 'https://example.com/poster.png',
     height: 1920,
     width: 1080,
+    alt: '',
+    isExternal: true,
   },
 };
 
 const VIDEO_ELEMENT = {
   id: '123',
-  type: 'video',
+  type: ElementType.Video,
   mimeType: 'video/mp4',
   scale: 1,
   origRatio: 9 / 16,
@@ -74,7 +77,7 @@ const VIDEO_ELEMENT = {
 
 const GIF_ELEMENT = {
   id: '048426c8-69ae-4e04-80f1-8f3fd4434261',
-  type: 'gif',
+  type: ElementType.Gif,
   opacity: 100,
   x: 65,
   y: 196,

@@ -17,16 +17,16 @@
 /**
  * External dependencies
  */
-import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
+import { getFontCSS, getGoogleFontURL } from '@googleforcreators/fonts';
 import { getFontVariants } from '@googleforcreators/rich-text';
-import { elementIs, FontService } from '@googleforcreators/elements';
 import type {
   CustomFontData,
-  GoogleFontData,
   FontFamily,
   FontVariant,
+  GoogleFontData,
   Page,
 } from '@googleforcreators/elements';
+import { elementIs, FontService } from '@googleforcreators/elements';
 
 const hasTuple = (tuples: FontVariant[], tuple: FontVariant) =>
   tuples.some((val) => val[0] === tuple[0] && val[1] === tuple[1]);
@@ -59,14 +59,18 @@ function FontDeclarations({ pages }: { pages: Page[] }) {
         continue;
       }
 
-      const serviceMap = map.get(service) || new Map();
+      const serviceMap =
+        map.get(service) || new Map<string, GoogleFontData | CustomFontData>();
       map.set(service, serviceMap);
 
-      const fontObj = serviceMap.get(family) || {
-        family,
-        variants: [],
-        url: 'url' in font ? font.url : null,
-      };
+      const fontObj =
+        serviceMap.get(family) ||
+        ({
+          family,
+          variants: [],
+          url: 'url' in font ? font.url : null,
+          service: FontService.Custom,
+        } as CustomFontData);
 
       const contentVariants = getFontVariants(content);
 
@@ -77,7 +81,7 @@ function FontDeclarations({ pages }: { pages: Page[] }) {
         // The second item is the numeric font weight.
         // Example: [1, 700] for italic + bold
         for (const variant of contentVariants) {
-          // Use closest variant as fallback and let browser do the math if needed.
+          // Use the closest variant as fallback and let browser do the math if needed.
           // Examples:
           // - If only [ [ 0, 200 ], [ 0, 400 ] ] exist, and
           //   [ 1, 200] was requested, fall back to [ 0, 200 ].
@@ -85,6 +89,8 @@ function FontDeclarations({ pages }: { pages: Page[] }) {
           //   [ 1, 800] was requested, fall back to [ 0, 800 ].
           // - If only [ [ 1, 400 ] ] exist, and
           //   [ 0, 400] was requested, fall back to [ 1, 400 ].
+
+          fontObj.variants ??= [];
 
           const newVariant = getNearestTuple(variants, variant);
           const fontObjHasVariant = hasTuple(fontObj.variants, newVariant);

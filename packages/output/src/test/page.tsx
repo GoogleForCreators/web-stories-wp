@@ -22,11 +22,11 @@ import { render } from '@testing-library/react';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import { MaskTypes } from '@googleforcreators/masks';
 import {
-  BackgroundableElement,
+  type BackgroundableElement,
+  type MediaElement,
+  type PageAttachment,
+  type ProductData,
   ElementType,
-  MediaElement,
-  PageAttachment,
-  ProductData,
   registerElementType,
 } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
@@ -40,8 +40,11 @@ import {
 /**
  * Internal dependencies
  */
-import { AnimationType, StoryAnimation } from '@googleforcreators/animation';
-import { Resource, ResourceType } from '@googleforcreators/media';
+import {
+  AnimationType,
+  type StoryAnimation,
+} from '@googleforcreators/animation';
+import { type Resource, ResourceType } from '@googleforcreators/media';
 import PageOutput from '../page';
 
 jest.mock('flagged');
@@ -184,7 +187,7 @@ describe('Page output', () => {
       expect(layer.firstElementChild).toHaveClass('page-fullbleed-area', {
         exact: true,
       });
-      expect(layer.firstElementChild.firstElementChild).toHaveClass(
+      expect(layer.firstElementChild?.firstElementChild).toHaveClass(
         'page-safe-area',
         { exact: true }
       );
@@ -745,7 +748,7 @@ describe('Page output', () => {
         'https://example.test/example.jpg'
       );
       expect(pageOutlink).toHaveAttribute('theme', 'dark');
-      expect(pageOutlink.firstChild).toHaveAttribute(
+      expect(pageOutlink?.firstChild).toHaveAttribute(
         'href',
         'https://example.test'
       );
@@ -822,11 +825,12 @@ describe('Page output', () => {
 
       const { container } = render(<PageOutput {...props} flags={{}} />);
       const pageOutlink = container.querySelector('amp-story-page-outlink');
+      expect(pageOutlink).not.toBeNull();
       expect(pageOutlink).toBeInTheDocument();
       expect(pageOutlink).toHaveTextContent('Click me!');
       expect(pageOutlink).not.toHaveAttribute('cta-image');
 
-      const pageOutATag = pageOutlink.querySelector('a');
+      const pageOutATag = pageOutlink?.querySelector('a');
       expect(pageOutATag).toBeInTheDocument();
       expect(pageOutATag).toHaveAttribute('rel', 'nofollow');
     });
@@ -982,7 +986,7 @@ describe('Page output', () => {
       const page = container.querySelector('amp-story-page');
       const pageOutlink = container.querySelector('amp-story-page-outlink');
       expect(pageOutlink).toBeInTheDocument();
-      expect(page.lastChild).toBe(pageOutlink);
+      expect(page?.lastChild).toBe(pageOutlink);
     });
   });
 
@@ -1460,6 +1464,7 @@ describe('Page output', () => {
           backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
+              type: ResourceType.Audio,
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
@@ -1492,6 +1497,7 @@ describe('Page output', () => {
           backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
+              type: ResourceType.Audio,
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
@@ -1562,6 +1568,7 @@ describe('Page output', () => {
           backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
+              type: ResourceType.Audio,
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
@@ -1596,6 +1603,7 @@ describe('Page output', () => {
           backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
+              type: ResourceType.Audio,
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
@@ -2020,6 +2028,7 @@ describe('Page output', () => {
           backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
+              type: ResourceType.Audio,
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
@@ -2050,6 +2059,7 @@ describe('Page output', () => {
           backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
+              type: ResourceType.Audio,
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
@@ -2090,6 +2100,7 @@ describe('Page output', () => {
           backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           backgroundAudio: {
             resource: {
+              type: ResourceType.Audio,
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
@@ -2169,5 +2180,3 @@ describe('Page output', () => {
     });
   });
 });
-
-/* eslint-enable testing-library/no-node-access, testing-library/no-container */
