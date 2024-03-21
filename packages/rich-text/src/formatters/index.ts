@@ -22,6 +22,7 @@ import weightFormatter from './weight';
 import italicFormatter from './italic';
 import underlineFormatter from './underline';
 import colorFormatter from './color';
+import gradientColorFormatter from './gradientColor';
 import letterSpacingFormatter from './letterSpacing';
 import uppercaseFormatter from './uppercase';
 
@@ -32,6 +33,7 @@ const formatters: Formatter[] = [
   colorFormatter,
   letterSpacingFormatter,
   uppercaseFormatter,
+  gradientColorFormatter,
 ];
 
 export default formatters;

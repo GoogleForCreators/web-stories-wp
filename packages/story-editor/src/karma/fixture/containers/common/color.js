@@ -66,7 +66,7 @@ class ColorPicker extends Container {
   }
 
   get hexInput() {
-    return this.getByRole('textbox', { name: /Edit hex value/i });
+    return this.getByRole('button', { name: /Edit hex value/i });
   }
 
   get opacityButton() {
@@ -125,6 +125,18 @@ class ColorPicker extends Container {
 
   defaultColor(name) {
     return this.getByRole('option', { name });
+  }
+
+  get linearGradientPickerButton() {
+    return this.getByRole('button', { name: /Linear gradient pattern type/i });
+  }
+
+  get radialGradientPickerButton() {
+    return this.getByRole('button', { name: /Radial gradient pattern type/i });
+  }
+
+  get gradientStopEndButton() {
+    return this.getByRole('button', { name: /Gradient stop at 100%/i });
   }
 
   // @todo: add accessors for remaining options

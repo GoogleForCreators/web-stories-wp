@@ -51,6 +51,92 @@ describe('Design Menu: Text Styles', () => {
     return storyContext.state.selectedElements[0];
   };
 
+  const setLinearGradient = async () => {
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.button
+    );
+
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.picker.custom
+    );
+
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.picker
+        .linearGradientPickerButton
+    );
+  };
+
+  const setRadialGradient = async () => {
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.button
+    );
+
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.picker.custom
+    );
+
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.picker
+        .radialGradientPickerButton
+    );
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.picker
+        .radialGradientPickerButton
+    );
+
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.picker.gradientStopEndButton
+    );
+
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.picker.hexInput
+    );
+    await fixture.events.keyboard.type('b05151');
+    await new Promise((r) => setTimeout(r, 100));
+  };
+
+  const addText = async () => {
+    // Enter edit-mode
+    await fixture.events.keyboard.press('Enter');
+    await fixture.screen.findByTestId('textEditor');
+
+    // Increase the font size for making sure setting selection works as expected.
+    await fixture.events.click(fixture.editor.canvas.designMenu.fontSize, {
+      clickCount: 3,
+    });
+    await fixture.events.keyboard.type('30');
+    await fixture.events.keyboard.press('tab');
+  };
+
+  const closeColorPicker = async () => {
+    const colorPicker = fixture.screen.queryByRole('dialog', {
+      name: /Color and gradient picker/,
+    });
+    const dismissPicker = within(colorPicker).queryByRole('button', {
+      name: 'Close',
+    });
+    await fixture.events.click(dismissPicker);
+  };
+
+  const setSolidColor = async () => {
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.button
+    );
+
+    await fixture.events.click(
+      fixture.editor.canvas.designMenu.fontColor.picker.defaultColor('#ff7096')
+    );
+  };
+
+  const exitEditMode = async () => {
+    // Click on background to exit edit mode.
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      '10%',
+      '10%'
+    );
+  };
+
   it('should allow whole number font sizes', async () => {
     const fontSize = fixture.editor.canvas.designMenu.fontSize;
 
@@ -80,60 +166,37 @@ describe('Design Menu: Text Styles', () => {
   describe('Text Color', () => {
     const { setSelection } = initHelpers(data);
     it('should allow changing text color from the design menu', async () => {
-      await fixture.events.click(
-        fixture.editor.canvas.designMenu.fontColor.button
-      );
-
-      await fixture.events.click(
-        fixture.editor.canvas.designMenu.fontColor.picker.defaultColor(
-          '#ff7096'
-        )
-      );
-
+      await setSolidColor();
       const element = await getSelectedElement();
       expect(element.content).toBe(
         '<span style="color: #ff7096">Fill in some text</span>'
       );
     });
 
-    it('should allow changing text color for a selection from the design menu', async () => {
-      // Enter edit-mode
-      await fixture.events.keyboard.press('Enter');
-      await fixture.screen.findByTestId('textEditor');
+    it('should allow changing linear gradient text color from the design menu', async () => {
+      await setLinearGradient();
+      const element = await getSelectedElement();
+      expect(element.content).toBe(
+        '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">Fill in some text</span>'
+      );
+    });
 
-      // Increase the font size for making sure setting selection works as expected.
-      await fixture.events.click(fixture.editor.canvas.designMenu.fontSize, {
-        clickCount: 3,
-      });
-      await fixture.events.keyboard.type('30');
-      await fixture.events.keyboard.press('tab');
+    it('should allow changing radial gradient text color from the design menu', async () => {
+      await setRadialGradient();
+      const element = await getSelectedElement();
+      expect(element.content).toBe(
+        '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">Fill in some text</span>'
+      );
+    });
+
+    it('should allow changing text color for a selection from the design menu', async () => {
+      await addText();
 
       // Select character 6 and 7 (the part "in" in "Fill in some text")
       await setSelection(5, 7);
-      await fixture.events.click(
-        fixture.editor.canvas.designMenu.fontColor.button
-      );
-
-      await fixture.events.click(
-        fixture.editor.canvas.designMenu.fontColor.picker.defaultColor(
-          '#ff7096'
-        )
-      );
-
-      const colorPicker = fixture.screen.queryByRole('dialog', {
-        name: /Color and gradient picker/,
-      });
-      const dismissPicker = within(colorPicker).queryByRole('button', {
-        name: 'Close',
-      });
-      await fixture.events.click(dismissPicker);
-
-      // Click on background to exit edit mode.
-      await fixture.events.mouse.clickOn(
-        fixture.editor.canvas.framesLayer.frames[0].node,
-        '10%',
-        '10%'
-      );
+      await setSolidColor();
+      await closeColorPicker();
+      await exitEditMode();
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
@@ -141,6 +204,109 @@ describe('Design Menu: Text Styles', () => {
       );
 
       await fixture.snapshot('Mixed color value in the floating menu');
+    });
+
+    it('should allow changing linear gradient color for a selection from the design menu', async () => {
+      await addText();
+
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
+      await setSelection(5, 7);
+      await setLinearGradient();
+      await closeColorPicker();
+      await exitEditMode();
+
+      const element = await getSelectedElement();
+      expect(element.content).toBe(
+        'Fill <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">in</span> some text'
+      );
+    });
+
+    it('should allow changing radial gradient color for a selection from the design menu', async () => {
+      await addText();
+
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
+      await setSelection(5, 7);
+      await setRadialGradient();
+      await closeColorPicker();
+      await exitEditMode();
+
+      const element = await getSelectedElement();
+      expect(element.content).toBe(
+        'Fill <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">in</span> some text'
+      );
+    });
+
+    it('should allow adding solid and linear gradient color for a selection from the design menu', async () => {
+      await addText();
+
+      await setSelection(0, 4);
+      await setSolidColor();
+
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
+      await setSelection(5, 7);
+      await setLinearGradient();
+      await closeColorPicker();
+      await exitEditMode();
+
+      const element = await getSelectedElement();
+      expect(element.content).toBe(
+        '<span style="color: #ff7096">Fill</span> <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">in</span> some text'
+      );
+    });
+
+    it('should allow adding solid and radial gradient color for a selection from the design menu', async () => {
+      await addText();
+      await setSelection(0, 4);
+      await setSolidColor();
+
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
+      await setSelection(5, 7);
+      await setRadialGradient();
+      await closeColorPicker();
+      await exitEditMode();
+
+      const element = await getSelectedElement();
+      expect(element.content).toBe(
+        '<span style="color: #ff7096">Fill</span> <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">in</span> some text'
+      );
+    });
+
+    it('should allow adding linear and radial gradient color for a selection from the design menu', async () => {
+      await addText();
+      await setSelection(0, 4);
+      await setLinearGradient();
+
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
+      await setSelection(5, 7);
+      await setRadialGradient();
+      await closeColorPicker();
+      await exitEditMode();
+
+      const element = await getSelectedElement();
+      expect(element.content).toBe(
+        '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">Fill</span> <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">in</span> some text'
+      );
+    });
+
+    it('should allow adding solid, linear and radial gradient color for a selection from the design menu', async () => {
+      await addText();
+      await setSelection(0, 4);
+      await setLinearGradient();
+
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
+      await setSelection(5, 7);
+      await setRadialGradient();
+
+      await setSelection(8, 12);
+      await setSolidColor();
+
+      await closeColorPicker();
+      await exitEditMode();
+
+      const element = await getSelectedElement();
+      expect(element.content).toBe(
+        '<span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(0.5turn, #000 0%, #010101 100%); background-clip: text">Fill</span> <span style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: radial-gradient(#b05151 0%, #010101 100%); background-clip: text">in</span> <span style="color: #ff7096">some</span> text'
+      );
     });
   });
 
@@ -179,16 +345,7 @@ describe('Design Menu: Text Styles', () => {
     });
 
     it('should allow format a selection of a text from the design menu', async () => {
-      // Enter edit-mode
-      await fixture.events.keyboard.press('Enter');
-      await fixture.screen.findByTestId('textEditor');
-
-      // Increase the font size for making sure setting selection works as expected.
-      await fixture.events.click(fixture.editor.canvas.designMenu.fontSize, {
-        clickCount: 3,
-      });
-      await fixture.events.keyboard.type('30');
-      await fixture.events.keyboard.press('tab');
+      await addText();
 
       // Select character 6 and 7 (the part "in" in "Fill in some text")
       await setSelection(5, 7);
@@ -203,12 +360,7 @@ describe('Design Menu: Text Styles', () => {
       expect(fixture.editor.canvas.designMenu.italic.checked).toBeTrue();
       expect(fixture.editor.canvas.designMenu.underline.checked).toBeTrue();
 
-      // Click on background to exit edit mode.
-      await fixture.events.mouse.clickOn(
-        fixture.editor.canvas.framesLayer.frames[0].node,
-        '10%',
-        '10%'
-      );
+      await exitEditMode();
 
       const formattedText = await getSelectedElement();
       expect(formattedText.content).toBe(
