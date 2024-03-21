@@ -69,6 +69,7 @@ class Types {
 				'image/jpeg',
 				'image/jpg',
 				'image/gif',
+				'image/avif',
 			],
 			'audio'   => [
 				'audio/mpeg',

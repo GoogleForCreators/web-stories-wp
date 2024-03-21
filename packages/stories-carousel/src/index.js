@@ -76,24 +76,12 @@ domReady(() => {
       // For Box Carousel we are showing single slide below tablets viewport.
       /* eslint-disable-next-line no-new -- we do not store the object as no further computation required with the built object. */
       new Glider(carouselWrapper, {
-        // Mobile-first defaults
-        slidesToShow: 1,
-        slidesToScroll: 1,
+        slidesToShow: 'auto',
+        slidesToScroll: 'auto',
+        itemWidth,
+        duration: 0.25,
         scrollLock: true,
         arrows: navArrows,
-        responsive: [
-          {
-            // screens greater than >= 775px
-            breakpoint: 775,
-            settings: {
-              // Set to `auto` and provide item width to adjust to viewport
-              slidesToShow: 'auto',
-              slidesToScroll: 'auto',
-              itemWidth,
-              duration: 0.25,
-            },
-          },
-        ],
       });
     }
   });
