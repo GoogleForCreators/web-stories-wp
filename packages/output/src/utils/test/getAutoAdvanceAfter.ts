@@ -45,17 +45,17 @@ describe('getAutoAdvanceAfter', () => {
       {
         id: '123',
         type: 'video',
-        resource: { length: 1 },
+        resource: { length: 1, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         id: '456',
         type: 'video',
-        resource: { length: 10 },
+        resource: { length: 10, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         id: '789',
         type: 'video',
-        resource: { length: 15 },
+        resource: { length: 15, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
     ];
 
@@ -96,12 +96,12 @@ describe('getAutoAdvanceAfter', () => {
     ).toBe('7s');
   });
 
-  it('should return not background audio length has elements', () => {
+  it('should not return background audio if there are elements', () => {
     const elements: Element[] = [
       {
         id: 456,
         type: ElementType.Video,
-        resource: { length: 10 },
+        resource: { length: 10, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
     ];
     const animations: StoryAnimation[] = [
@@ -140,6 +140,7 @@ describe('getAutoAdvanceAfter', () => {
           mimeType: 'video/mp4',
           id: 123,
           src: 'https://example.com/video.mp4',
+          poster: 'https://example.com/poster.png',
           alt: '',
           width: 100,
           height: 100,
@@ -187,6 +188,7 @@ describe('getAutoAdvanceAfter', () => {
           mimeType: 'video/mp4',
           id: 123,
           src: 'https://example.com/video.mp4',
+          poster: 'https://example.com/poster.png',
           alt: '',
           width: 100,
           height: 100,
@@ -237,6 +239,7 @@ describe('getAutoAdvanceAfter', () => {
       {
         id: '123',
         type: 'video',
+        poster: 'https://example.com/poster.png',
         loop: false,
         resource: { length: 5 },
       } as VideoElement,

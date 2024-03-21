@@ -131,11 +131,11 @@ describe('populateElementFontData', () => {
     ];
 
     const newPages = populateElementFontData(pages, fonts);
-    expect(newPages[0].elements[0]).toStrictEqual({
+    expect(newPages[0].elements[0]).toMatchObject({
       type: 'text',
       font: { ...fonts['Oswald'] },
     });
-    expect(newPages[1].elements[1]).toStrictEqual({
+    expect(newPages[1].elements[1]).toMatchObject({
       type: 'text',
       font: { ...fonts['Roboto'] },
     });

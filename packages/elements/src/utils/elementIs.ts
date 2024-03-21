@@ -80,7 +80,10 @@ function isSequenceMediaElement(
   e: Draft<MediaElement>
 ): e is Draft<SequenceMediaElement>;
 function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement {
-  return 'poster' in e.resource && Boolean(e.resource.poster);
+  return (
+    ('poster' in e.resource && Boolean(e.resource.poster)) ||
+    ('length' in e.resource && Boolean(e.resource.length))
+  );
 }
 
 function isSticker(e: Element): e is StickerElement {

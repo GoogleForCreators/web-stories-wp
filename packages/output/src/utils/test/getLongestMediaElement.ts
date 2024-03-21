@@ -40,21 +40,21 @@ describe('getLongestMediaElement', () => {
     const elements: Element[] = [
       {
         type: ElementType.Video,
-        resource: { length: 1 },
+        resource: { length: 1, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         type: ElementType.Video,
-        resource: { length: 10 },
+        resource: { length: 10, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         type: ElementType.Video,
-        resource: { length: 15 },
+        resource: { length: 15, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
     ];
 
     expect(getLongestMediaElement(elements)).toStrictEqual({
       type: ElementType.Video,
-      resource: { length: 15 },
+      resource: { length: 15, poster: 'https://example.com/poster.png' },
     });
   });
 
@@ -62,22 +62,22 @@ describe('getLongestMediaElement', () => {
     const elements: Element[] = [
       {
         type: ElementType.Video,
-        resource: { length: 1 },
+        resource: { length: 1, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         type: ElementType.Video,
-        resource: { length: 10 },
+        resource: { length: 10, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         type: ElementType.Video,
-        resource: { length: 15 },
+        resource: { length: 15, poster: 'https://example.com/poster.png' },
         loop: true,
       } as unknown as VideoElement,
     ];
 
     expect(getLongestMediaElement(elements)).toStrictEqual({
       type: ElementType.Video,
-      resource: { length: 10 },
+      resource: { length: 10, poster: 'https://example.com/poster.png' },
     });
   });
 
@@ -107,21 +107,21 @@ describe('getLongestMediaElement', () => {
     const elements: Element[] = [
       {
         type: ElementType.Video,
-        resource: { length: 1 },
+        resource: { length: 1, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         type: ElementType.Video,
-        resource: { length: 10 },
+        resource: { length: 10, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         type: ElementType.Video,
-        resource: { length: 15 },
+        resource: { length: 15, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
     ];
 
     expect(getLongestMediaElement(elements, 13)).toStrictEqual({
       type: ElementType.Video,
-      resource: { length: 15 },
+      resource: { length: 15, poster: 'https://example.com/poster.png' },
     });
   });
 
@@ -129,15 +129,15 @@ describe('getLongestMediaElement', () => {
     const elements: Element[] = [
       {
         type: ElementType.Video,
-        resource: { length: 1 },
+        resource: { length: 1, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         type: ElementType.Video,
-        resource: { length: 10 },
+        resource: { length: 10, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
       {
         type: ElementType.Video,
-        resource: { length: 15 },
+        resource: { length: 15, poster: 'https://example.com/poster.png' },
       } as unknown as VideoElement,
     ];
 

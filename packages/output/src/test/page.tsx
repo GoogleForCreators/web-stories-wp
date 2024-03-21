@@ -26,6 +26,7 @@ import {
   type MediaElement,
   type PageAttachment,
   type ProductData,
+  type ShoppingAttachment,
   ElementType,
   registerElementType,
 } from '@googleforcreators/elements';
@@ -1753,8 +1754,9 @@ describe('Page output', () => {
           id: 'bar',
           backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           shoppingAttachment: {
+            theme: 'light',
             ctaText: 'Buy now',
-          },
+          } as ShoppingAttachment,
           elements: [
             {
               id: 'el1',

@@ -64,12 +64,14 @@ function OutputPage({
     shoppingAttachment = {},
   } = page;
 
+  // Note: backgroundElement is undefined if elements is empty.
   const [backgroundElement, ...otherElements] = elements;
 
   // If the background element has base color set, it's media, use that.
-  const baseColor = elementIs.media(backgroundElement)
-    ? backgroundElement?.resource?.baseColor
-    : undefined;
+  const baseColor =
+    backgroundElement && elementIs.media(backgroundElement)
+      ? backgroundElement?.resource?.baseColor
+      : undefined;
   const backgroundStyles = baseColor
     ? { backgroundColor: baseColor }
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };

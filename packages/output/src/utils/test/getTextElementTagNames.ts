@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { ElementType } from '@googleforcreators/elements';
+import { ElementType, FontService } from "@googleforcreators/elements";
 import type { TextElement } from '@googleforcreators/elements';
 
 /**
@@ -32,6 +32,10 @@ const ELEMENT_H1: TextElement = {
   type: ElementType.Text,
   x: 10,
   y: 10,
+  font: {
+    family: 'Arial',
+    service: FontService.System,
+  },
 } as TextElement;
 
 const ELEMENT_H2: TextElement = {
@@ -41,6 +45,10 @@ const ELEMENT_H2: TextElement = {
   type: 'text',
   x: 10,
   y: 10,
+  font: {
+    family: 'Arial',
+    service: FontService.System,
+  },
 } as TextElement;
 
 const ELEMENT_H3: TextElement = {
@@ -50,6 +58,10 @@ const ELEMENT_H3: TextElement = {
   type: 'text',
   x: 10,
   y: 10,
+  font: {
+    family: 'Arial',
+    service: FontService.System,
+  },
 } as TextElement;
 
 const PARAGRAPH: TextElement = {
@@ -59,6 +71,10 @@ const PARAGRAPH: TextElement = {
   type: 'text',
   x: 10,
   y: 10,
+  font: {
+    family: 'Arial',
+    service: FontService.System,
+  },
 } as TextElement;
 
 const ELEMENT_WITH_TAG_NAME: TextElement = {
@@ -69,6 +85,10 @@ const ELEMENT_WITH_TAG_NAME: TextElement = {
   tagName: 'h1',
   x: 10,
   y: 10,
+  font: {
+    family: 'Arial',
+    service: FontService.System,
+  },
 } as TextElement;
 
 describe('getTextElementTagNames', () => {

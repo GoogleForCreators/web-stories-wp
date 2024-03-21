@@ -90,6 +90,7 @@ const GIF_ELEMENT = {
     mimeType: 'image/gif',
     creationDate: '2016-02-04T18:16:22Z',
     src: 'https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah.gif',
+    poster: 'https://example.com/poster.png',
     width: 281,
     height: 223,
     alt: '',
