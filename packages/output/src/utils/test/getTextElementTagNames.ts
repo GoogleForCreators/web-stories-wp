@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { ElementType, FontService } from "@googleforcreators/elements";
+import { ElementType, FontService } from '@googleforcreators/elements';
 import type { TextElement } from '@googleforcreators/elements';
 
 /**
