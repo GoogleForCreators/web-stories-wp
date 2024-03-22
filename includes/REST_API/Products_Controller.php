@@ -235,7 +235,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 *
-	 * @phpstan-param WP_REST_Request<array{context: string}> $request
+	 * @phpstan-param WP_REST_Request<array{context: string, search?: string, orderby?: string, page?: int, per_page?: int, order?: string, _web_stories_envelope?: bool, _embed?: string|string[]}> $request
 	 */
 	public function prepare_item_for_response( $item, $request ): WP_REST_Response { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$product = $item;

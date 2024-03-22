@@ -78,6 +78,26 @@ use WP_REST_Server;
  *   path?: string,
  *   query?: string
  * }
+ *
+ * @phpstan-type RequestOptions array{
+ *   method?: string,
+ *   timeout?: float,
+ *   redirection?: int,
+ *   httpversion?: string,
+ *   user-agent?: string,
+ *   reject_unsafe_urls?: bool,
+ *   blocking?: bool,
+ *   headers?: string|array<string, string|null>,
+ *   cookies?: array<string, string>,
+ *   body?: string|string[],
+ *   compress?: bool,
+ *   decompress?: bool,
+ *   sslverify?: bool,
+ *   sslcertificates?: string,
+ *   stream?: bool,
+ *   filename?: string,
+ *   limit_response_size?: int,
+ * }
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public const PROXY_HEADERS_ALLOWLIST = [
@@ -661,25 +681,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @param string               $url  Request URL.
 	 * @param array<string, mixed> $args Request args.
 	 *
-	 * @phpstan-param array{
-	 *   method?: string,
-	 *   timeout?: float,
-	 *   redirection?: int,
-	 *   httpversion?: string,
-	 *   user-agent?: string,
-	 *   reject_unsafe_urls?: bool,
-	 *   blocking?: bool,
-	 *   headers?: string|array,
-	 *   cookies?: array,
-	 *   body?: string|array,
-	 *   compress?: bool,
-	 *   decompress?: bool,
-	 *   sslverify?: bool,
-	 *   sslcertificates?: string,
-	 *   stream?: bool,
-	 *   filename?: string,
-	 *   limit_response_size?: int,
-	 * } $args
+	 * @phpstan-param RequestOptions $args
 	 */
 	private function proxy_url_curl( string $url, array $args ): void {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
@@ -702,25 +704,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @param string               $url  Request URL.
 	 * @param array<string, mixed> $args Request args.
 	 *
-	 * @phpstan-param array{
-	 *   method?: string,
-	 *   timeout?: float,
-	 *   redirection?: int,
-	 *   httpversion?: string,
-	 *   user-agent?: string,
-	 *   reject_unsafe_urls?: bool,
-	 *   blocking?: bool,
-	 *   headers?: string|array,
-	 *   cookies?: array,
-	 *   body?: string|array,
-	 *   compress?: bool,
-	 *   decompress?: bool,
-	 *   sslverify?: bool,
-	 *   sslcertificates?: string,
-	 *   stream?: bool,
-	 *   filename?: string,
-	 *   limit_response_size?: int,
-	 * } $args
+	 * @phpstan-param RequestOptions $args
 	 */
 	private function proxy_url_fallback( string $url, array $args ): void {
 		$response = wp_safe_remote_get( $url, $args );
