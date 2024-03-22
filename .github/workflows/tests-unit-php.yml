@@ -181,4 +181,5 @@ jobs:
         uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab
         with:
           file: build/logs/*.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ matrix.coverage }}

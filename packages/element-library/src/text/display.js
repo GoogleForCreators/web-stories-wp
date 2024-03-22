@@ -241,7 +241,6 @@ function TextDisplay({
     targetRef: bgRef,
     expectedStyle: 'background',
   });
-  useColorTransformHandler({ id, targetRef: fgRef, expectedStyle: 'color' });
   useColorTransformHandler({
     id,
     targetRef: refWithBorder,
