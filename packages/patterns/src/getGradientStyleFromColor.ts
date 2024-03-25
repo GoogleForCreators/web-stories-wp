@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import generatePatternStyles from './generatePatternStyles';
+import type { Gradient } from './types';
 
-export const NONE = 'NONE';
-export const ITALIC = 'CUSTOM-ITALIC';
-export const UNDERLINE = 'CUSTOM-UNDERLINE';
-export const WEIGHT = 'CUSTOM-WEIGHT';
-export const COLOR = 'CUSTOM-COLOR';
-export const LETTERSPACING = 'CUSTOM-LETTERSPACING';
-export const UPPERCASE = 'CUSTOM-UPPERCASE';
-export const GRADIENT_COLOR = 'CUSTOM-GRADIENT-COLOR';
+export default function getGradientStyleFromColor(color: Gradient) {
+  const gradient = generatePatternStyles(color);
 
-export const MULTIPLE_VALUE = '((MULTIPLE))';
+  return gradient.backgroundImage;
+}
