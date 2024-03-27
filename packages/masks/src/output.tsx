@@ -34,14 +34,16 @@ import { DEFAULT_MASK } from './constants';
 interface WithMaskProps {
   element: Element;
   style: CSSProperties;
-  fill: boolean;
+  fill?: boolean;
   children: ReactNode;
-  skipDefaultMask: boolean;
+  skipDefaultMask?: boolean;
+  className?: string;
+  id?: string;
 }
 
 export default function WithMask({
   element,
-  fill,
+  fill = false,
   skipDefaultMask = false,
   ...rest
 }: WithMaskProps) {

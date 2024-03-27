@@ -7,6 +7,7 @@
   "references": [
     { "path": "../design-system" },
     { "path": "../elements" },
+    { "path": "../element-library" },
     { "path": "../fonts" },
     { "path": "../i18n" },
     { "path": "../masks" },
@@ -14,8 +15,9 @@
     { "path": "../patterns" },
     { "path": "../react" },
     { "path": "../rich-text" },
+    { "path": "../test-utils" },
     { "path": "../units" },
     { "path": "../url" }
   ],
-  "include": ["src/types.ts", "src/utils/*.ts"]
+  "include": ["src/**/*"]
 }

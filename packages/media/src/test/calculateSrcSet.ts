@@ -19,7 +19,7 @@
  */
 import calculateSrcSet from '../calculateSrcSet';
 import createResource from '../createResource';
-import { ResourceType } from '../types';
+import { type ImageResource, ResourceType } from '../types';
 
 describe('calculateSrcSet', () => {
   it('should generate srcset properly', () => {
@@ -45,7 +45,7 @@ describe('calculateSrcSet', () => {
           height: 800,
         },
       },
-    });
+    }) as ImageResource;
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('URL2 400w,URL1 200w');
@@ -80,7 +80,7 @@ describe('calculateSrcSet', () => {
           height: 410,
         },
       },
-    });
+    }) as ImageResource;
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('URL2 400w,URL1 200w');
@@ -121,7 +121,7 @@ describe('calculateSrcSet', () => {
           height: 1600,
         },
       },
-    });
+    }) as ImageResource;
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('URL3 800w,URL2 400w,URL1 200w');
@@ -156,7 +156,7 @@ describe('calculateSrcSet', () => {
           sourceUrl: 'large url',
         },
       },
-    });
+    }) as ImageResource;
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('large%20url 300w,medium%20url 200w,small%20url 100w');
@@ -192,7 +192,7 @@ describe('calculateSrcSet', () => {
           sourceUrl: 'large%2Furl',
         },
       },
-    });
+    }) as ImageResource;
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(
@@ -229,7 +229,7 @@ describe('calculateSrcSet', () => {
           sourceUrl: 'large      url',
         },
       },
-    });
+    }) as ImageResource;
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(
@@ -266,7 +266,7 @@ describe('calculateSrcSet', () => {
           sourceUrl: '',
         },
       },
-    });
+    }) as ImageResource;
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe('');
@@ -304,7 +304,7 @@ describe('calculateSrcSet', () => {
             'https://example.com/images/w_640,h_853,c_scale/image.jpg?_i=AA',
         },
       },
-    });
+    }) as ImageResource;
 
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(
