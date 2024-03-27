@@ -98,36 +98,50 @@ function PlaybackMedia() {
 
   const selfieSegmentation = useRef();
 
-  const onSelfieSegmentationResults = (results) => {
+  const onSelfieSegmentationResults = async (masks) => {
     const canvas = canvasRef.current;
-    if (!canvas || !results.image || results.image.width === 0) {
+    if (!canvas || !masks) {
       return;
     }
     const context = canvasRef.current.getContext('2d');
     const canvasBlur = 'filter' in CanvasRenderingContext2D.prototype;
-
     context.save();
 
+    const segmentationMask = new Uint8ClampedArray(
+      canvas.width * canvas.height * 4
+    );
+    const mask = masks[0];
+    for (let i = 0; i < mask.length; i++) {
+      const isBackround = mask[i] === 0;
+      segmentationMask[i * 4] = isBackround ? 0 : 255;
+      segmentationMask[i * 4 + 1] = isBackround ? 0 : 255;
+      segmentationMask[i * 4 + 2] = isBackround ? 0 : 255;
+      segmentationMask[i * 4 + 3] = isBackround ? 0 : 255;
+    }
+    const segmentationMaskBitMap = await createImageBitmap(
+      new ImageData(segmentationMask, canvas.width, canvas.height)
+    );
+
     if (!canvasBlur) {
-      context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+      context.drawImage(streamNode, 0, 0, canvas.width, canvas.height);
 
       blur(context, BACKGROUND_BLUR_PX);
 
       context.globalCompositeOperation = 'destination-out';
       context.drawImage(
-        results.segmentationMask,
+        segmentationMaskBitMap,
         0,
         0,
         canvas.width,
         canvas.height
       );
       context.globalCompositeOperation = 'destination-over';
-      context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+      context.drawImage(streamNode, 0, 0, canvas.width, canvas.height);
     } else {
       context.globalCompositeOperation = 'copy';
       context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
       context.drawImage(
-        results.segmentationMask,
+        segmentationMaskBitMap,
         0,
         0,
         canvas.width,
@@ -135,38 +149,41 @@ function PlaybackMedia() {
       );
 
       context.globalCompositeOperation = 'source-in';
-      context.filter = 'none';
-      context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+      context.filter = `none`;
+      context.drawImage(streamNode, 0, 0, canvas.width, canvas.height);
 
       context.globalCompositeOperation = 'destination-over';
       context.filter = `blur(${BACKGROUND_BLUR_PX}px)`;
-      context.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+      context.drawImage(streamNode, 0, 0, canvas.width, canvas.height);
     }
 
     context.restore();
   };
 
   useEffect(() => {
-    if (!hasVideoEffect || selfieSegmentation.current) {
+    if (selfieSegmentation.current) {
       return;
     }
 
     (async () => {
-      const { SelfieSegmentation } = await import(
-        /* webpackChunkName: "chunk-selfie-segmentation" */ '@mediapipe/selfie_segmentation'
+      const { ImageSegmenter, FilesetResolver } = await import(
+        /* webpackChunkName: "chunk-selfie-segmentation" */ '@mediapipe/tasks-vision'
       );
 
-      selfieSegmentation.current = new SelfieSegmentation({
-        // TODO: Consider fetching from wp.stories.google instead.
-        locateFile: (file) =>
-          `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
-      });
+      const vision = await FilesetResolver.forVisionTasks(
+        'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.1.0-alpha-8/wasm'
+      );
 
-      selfieSegmentation.current.setOptions({
-        modelSelection: 1,
-      });
-
-      await selfieSegmentation.current.initialize();
+      selfieSegmentation.current = await ImageSegmenter.createFromOptions(
+        vision,
+        {
+          baseOptions: {
+            modelAssetPath:
+              'https://storage.googleapis.com/mediapipe-tasks/image_segmenter/selfie_segm_128_128_3.tflite',
+          },
+          runningMode: 'VIDEO',
+        }
+      );
     })();
   }, [hasVideoEffect]);
 
@@ -183,11 +200,14 @@ function PlaybackMedia() {
         setCanvasStream(canvasStreamRaw);
       }
       if (videoEffect === VIDEO_EFFECTS.BLUR && selfieSegmentation.current) {
-        selfieSegmentation.current.onResults(onSelfieSegmentationResults);
         const sendFrame = async () => {
           if (streamNode && streamNode.videoWidth && canvasRef.current) {
             try {
-              await selfieSegmentation.current.send({ image: streamNode });
+              await selfieSegmentation.current.segmentForVideo(
+                streamNode,
+                performance.now(),
+                onSelfieSegmentationResults
+              );
             } catch (e) {
               // We can't do much about the WASM memory issue.
             }
