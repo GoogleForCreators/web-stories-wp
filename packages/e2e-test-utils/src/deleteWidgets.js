@@ -34,14 +34,16 @@ async function deleteWidgets() {
     await item.$eval('.widget-action', (toggleButton) => toggleButton.click());
 
     // Transition animation.
-    await page.waitForTimeout(300);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 300));
 
     await item.$eval('.widget-control-remove', (deleteLink) =>
       deleteLink.click()
     );
 
     // Transition animation.
-    await page.waitForTimeout(300);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 300));
   }
   /* eslint-enable no-await-in-loop */
 

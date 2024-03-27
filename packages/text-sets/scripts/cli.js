@@ -48,7 +48,8 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
   await page.click('aria/Text library');
   await page.waitForSelector('aria/Text Set Options');
   // Wait for fonts to load
-  await page.waitForTimeout(1000);
+  // TODO: Remove and replace with waitForSelector or locator API.
+  await new Promise((r) => setTimeout(r, 1000));
 
   // Change BG of all TextSets container parents to transparent
   await page.evaluateHandle(() => {
@@ -95,7 +96,8 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     });
     process.stdout.write('.');
     await page.keyboard.press('ArrowRight');
-    await page.waitForTimeout(500);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 500));
   }
 
   await browser.close();

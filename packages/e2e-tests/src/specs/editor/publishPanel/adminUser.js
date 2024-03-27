@@ -94,7 +94,8 @@ describe('Publish panel in document tab', () => {
     );
 
     // add small delay after we have results
-    await page.waitForTimeout(400);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 400));
 
     const optionListAfterSearch = await authorDropDownOptions.$$eval(
       'li[role="option"]',
