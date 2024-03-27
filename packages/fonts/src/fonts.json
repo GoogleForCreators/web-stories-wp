@@ -10014,18 +10014,18 @@
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2048,
-      "asc": 1528,
+      "asc": 1599,
       "des": -449,
-      "tAsc": 1528,
+      "tAsc": 1599,
       "tDes": -449,
       "tLGap": 0,
-      "wAsc": 1599,
-      "wDes": 449,
+      "wAsc": 2207,
+      "wDes": 733,
       "xH": 989,
       "capH": 1360,
       "yMin": -725,
       "yMax": 2169,
-      "hAsc": 1528,
+      "hAsc": 1599,
       "hDes": -449,
       "lGap": 0
     }
@@ -36661,6 +36661,40 @@
     }
   },
   {
+    "family": "Reddit Mono",
+    "fallbacks": ["monospace"],
+    "weights": [200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2068,
+      "des": -592,
+      "tAsc": 2068,
+      "tDes": -592,
+      "tLGap": 0,
+      "wAsc": 2600,
+      "wDes": 644,
+      "xH": 1060,
+      "capH": 1474,
+      "yMin": -550,
+      "yMax": 2356,
+      "hAsc": 2068,
+      "hDes": -592,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Redressed",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -42492,6 +42526,31 @@
     }
   },
   {
+    "family": "Tac One",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 830,
+      "des": -200,
+      "tAsc": 830,
+      "tDes": -200,
+      "tLGap": 0,
+      "wAsc": 860,
+      "wDes": 280,
+      "xH": 400,
+      "capH": 554,
+      "yMin": -280,
+      "yMax": 859,
+      "hAsc": 830,
+      "hDes": -200,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Tahoma",
     "fallbacks": ["Verdana", "Segoe", "sans-serif"],
     "metrics": {
@@ -45616,6 +45675,106 @@
       "yMax": 1911,
       "hAsc": 1923,
       "hDes": -733,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Yarndings 12",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1040,
+      "asc": 910,
+      "des": -130,
+      "tAsc": 910,
+      "tDes": -130,
+      "tLGap": 0,
+      "wAsc": 915,
+      "wDes": 200,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -200,
+      "yMax": 800,
+      "hAsc": 910,
+      "hDes": -130,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Yarndings 12 Charted",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1040,
+      "asc": 910,
+      "des": -130,
+      "tAsc": 910,
+      "tDes": -130,
+      "tLGap": 0,
+      "wAsc": 915,
+      "wDes": 200,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -200,
+      "yMax": 915,
+      "hAsc": 910,
+      "hDes": -130,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Yarndings 20",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 960,
+      "asc": 880,
+      "des": -80,
+      "tAsc": 880,
+      "tDes": -80,
+      "tLGap": 0,
+      "wAsc": 883,
+      "wDes": 200,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -200,
+      "yMax": 800,
+      "hAsc": 880,
+      "hDes": -80,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Yarndings 20 Charted",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 960,
+      "asc": 880,
+      "des": -80,
+      "tAsc": 880,
+      "tDes": -80,
+      "tLGap": 0,
+      "wAsc": 883,
+      "wDes": 200,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -200,
+      "yMax": 883,
+      "hAsc": 880,
+      "hDes": -80,
       "lGap": 0
     }
   },
