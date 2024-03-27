@@ -110,7 +110,7 @@ function OutputPage({
     return newElement;
   });
 
-  const products = elements
+  const products = otherElements
     .filter(({ type, isHidden }) => type === ELEMENT_TYPES.PRODUCT && !isHidden)
     .map(({ product }) => product)
     .filter(Boolean);
@@ -209,7 +209,6 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       )}
-
       {/* <amp-story-page-outlink> needs to be the last child element */}
       {hasPageAttachment && <Outlink {...pageAttachment} />}
       {hasProducts && (

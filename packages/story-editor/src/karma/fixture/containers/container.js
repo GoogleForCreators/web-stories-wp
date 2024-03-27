@@ -24,6 +24,7 @@ import {
   getAllByRole,
   queryByRole,
   waitFor,
+  getByText,
 } from '@testing-library/react';
 
 /** @typedef {import('@testing-library/dom').Matcher} Matcher */
@@ -141,6 +142,16 @@ export class Container {
    */
   getAllByRoleIn(root, role, options) {
     return getAllByRole(root, role, options);
+  }
+
+  /**
+   * See https://testing-library.com/docs/dom-testing-library/api-queries#bytext
+   *
+   * @param {string} text Text.
+   * @return {HTMLElement} The found element.
+   */
+  getByText(text) {
+    return getByText(this._node, text);
   }
 
   /**

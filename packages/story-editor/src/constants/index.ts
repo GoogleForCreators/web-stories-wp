@@ -19,6 +19,7 @@ export * from './media';
 export * from './multipleValue';
 export * from './performanceTrackingEvents';
 export * from './headings';
+export * from './audioSticker';
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 64;

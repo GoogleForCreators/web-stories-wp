@@ -31,13 +31,14 @@ import { useStory } from '../story';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import { useMediaRecording } from '../../components/mediaRecording';
+import { AUDIO_STICKER_DEFAULT_PRESET } from '../../constants';
 import { getResetProperties } from './utils';
 import { ACTIONS } from './constants';
 import useTextActions from './useTextActions';
 import useMediaActions from './useMediaActions';
 import useForegroundActions from './useForegroundActions';
 
-const { Bucket, LetterTPlus, Media } = Icons;
+const { Bucket, LetterTPlus, Media, AudioSticker } = Icons;
 
 /**
  * Determines the quick actions to display in the quick
@@ -150,8 +151,21 @@ const useQuickActions = () => {
     [handleMouseDown]
   );
 
+  const hasAudioAnywhere = useStory(
+    ({ state }) =>
+      state.story?.backgroundAudio ||
+      state.pages?.some((page) => {
+        return (
+          page.backgroundAudio ||
+          page.elements
+            .filter((element) => element.type === ElementType.Video)
+            .some((element) => !element.resource.isMuted)
+        );
+      })
+  );
+
   const noElementSelectedActions = useMemo(() => {
-    return [
+    const actions = [
       {
         Icon: Bucket,
         label: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
@@ -195,6 +209,19 @@ const useQuickActions = () => {
         ...actionMenuProps,
       },
     ];
+
+    if (hasAudioAnywhere) {
+      actions.push({
+        Icon: AudioSticker,
+        label: ACTIONS.INSERT_AUDIO_STICKER.text,
+        onClick: () => {
+          insertElement('audioSticker', AUDIO_STICKER_DEFAULT_PRESET);
+        },
+        ...actionMenuProps,
+      });
+    }
+
+    return actions;
   }, [
     actionMenuProps,
     backgroundElement,
@@ -202,6 +229,7 @@ const useQuickActions = () => {
     handleFocusPageBackground,
     setHighlights,
     insertElement,
+    hasAudioAnywhere,
   ]);
 
   const foregroundCommonActions = useForegroundActions({

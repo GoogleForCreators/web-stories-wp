@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+export {
+  AUDIO_STICKERS,
+  AUDIO_STICKER_STYLES,
+  AUDIO_STICKER_LABELS,
+} from './audioSticker/constants';
+
 export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
   scale: 100,
   focalX: 50,

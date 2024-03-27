@@ -125,4 +125,10 @@ export class QuickActionMenu extends Container {
       name: 'Enable Audio',
     });
   }
+
+  get insertAudioStickerButton() {
+    return this.queryByRole('menuitem', {
+      name: ACTIONS.INSERT_AUDIO_STICKER.text,
+    });
+  }
 }

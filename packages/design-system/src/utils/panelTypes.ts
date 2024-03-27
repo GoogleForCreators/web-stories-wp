@@ -34,6 +34,7 @@ enum PanelTypes {
   ImageAccessibility = 'imageAccessibility',
   VideoAcessibility = 'videoAccessibility',
   Product = 'product',
+  AudioSticker = 'audioSticker',
 }
 
 export default PanelTypes;
