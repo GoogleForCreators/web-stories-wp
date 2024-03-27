@@ -14,28 +14,19 @@
  * limitations under the License.
  */
 
+
 /**
  * External dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
-import { Icons } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
-import VisibleImage from '../shared/visibleImage';
+import type { ProductElement } from '../types';
 
-function ProductLayerIcon({ element: { product } }) {
-  const productImage = product?.productImages?.[0] || {};
-  const { url, alt } = productImage;
-  if (!url) {
-    return <Icons.Shopping width={21} height={21} aria-hidden />;
-  }
-  return <VisibleImage src={url} alt={alt} height={21} width={21} />;
+function getProductLayerText(element: ProductElement) {
+  return element?.product?.productTitle || __('Product', 'web-stories');
 }
 
-ProductLayerIcon.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default ProductLayerIcon;
+export default getProductLayerText;

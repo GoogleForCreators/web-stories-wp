@@ -18,25 +18,27 @@
  * External dependencies
  */
 import { StoryPropTypes } from '@googleforcreators/elements';
+import { Icons } from '@googleforcreators/design-system';
 
 /**
- * Returns AMP HTML for saving into post content for displaying in the FE.
- *
- * @param {Object<*>} props Props.
- * @return {*} Rendered component.
+ * Internal dependencies
  */
-function ProductOutput({ element }) {
-  const { product } = element;
+import VisibleImage from '../shared/visibleImage';
+import type { ProductElement } from '../types';
 
-  if (!product?.productId) {
-    return null;
+function ProductLayerIcon({ element: { product } }: {
+  element: ProductElement
+}) {
+  const productImage = product?.productImages?.[0] || {};
+  const { url, alt } = productImage;
+  if (!url) {
+    return <Icons.Shopping width={21} height={21} aria-hidden />;
   }
-
-  return <amp-story-shopping-tag data-product-id={product.productId} />;
+  return <VisibleImage src={url} alt={alt} height={21} width={21} />;
 }
 
-ProductOutput.propTypes = {
-  element: StoryPropTypes.elements.shape.isRequired,
+ProductLayerIcon.propTypes = {
+  element: StoryPropTypes.element.isRequired,
 };
 
-export default ProductOutput;
+export default ProductLayerIcon;

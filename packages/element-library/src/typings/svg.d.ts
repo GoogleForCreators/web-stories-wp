@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
-
-/**
- * External dependencies
- */
-import type { ElementDefinition } from '@googleforcreators/elements';
-
-export * from './constants';
-export * from './types';
-export * from './utils/textMeasurements';
-
-export const elementTypes: ElementDefinition[] = [];
-
-export {};
+declare module '*.svg' {
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<
+    SVGProps<SVGElement> & { title?: string }
+  >;
+  export default ReactComponent;
+}

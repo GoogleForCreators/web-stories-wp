@@ -22,7 +22,7 @@ import { PanelTypes } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 
 const defaultBackgroundColor = createSolidFromString('#c4c4c4');
 

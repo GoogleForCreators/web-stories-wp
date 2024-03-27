@@ -19,11 +19,8 @@
     { "path": "../units" }
   ],
   "include": [
-    "src/constants.ts",
-    "src/types.ts",
-    "src/types",
-    "src/utils/textMeasurements.tsx",
-    "src/text/*.ts",
-    "src/text/*.tsx"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/types"
   ]
 }

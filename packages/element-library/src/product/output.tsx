@@ -15,12 +15,24 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { __ } from '@googleforcreators/i18n';
+import type { ProductElement } from '../types';
 
-function getProductLayerText(element) {
-  return element?.product?.productTitle || __('Product', 'web-stories');
+/**
+ * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param props Props.
+ * @return Rendered component.
+ */
+function ProductOutput({ element }: { element: ProductElement }) {
+  const { product } = element;
+
+  if (!product?.productId) {
+    return null;
+  }
+
+  return <amp-story-shopping-tag data-product-id={product.productId} />;
 }
 
-export default getProductLayerText;
+export default ProductOutput;

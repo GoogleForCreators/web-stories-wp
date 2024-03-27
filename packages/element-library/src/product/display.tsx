@@ -23,8 +23,7 @@ import {
   createSolid,
   generatePatternStyles,
 } from '@googleforcreators/patterns';
-import { StoryPropTypes } from '@googleforcreators/elements';
-import PropTypes from 'prop-types';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -145,26 +144,22 @@ const ShoppingTagDot = styled.div`
   }
 `;
 
-function ProductDisplay({ element, siblingCount }) {
+function ProductDisplay({ element, siblingCount }: {
+  element: Element;
+  siblingCount: number;
+}) {
   const { id, width: elementWidth, height: elementHeight } = element;
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement | null>(null);
   useColorTransformHandler({ id, targetRef: ref });
 
   return (
     <Element ref={ref} width={elementWidth} height={elementHeight}>
       <ShoppingTagDot
         key={`dots-${siblingCount}`} /* see: https://github.com/GoogleForCreators/web-stories-wp/issues/11705 */
-        elementWidth={elementWidth}
-        elementHeight={elementHeight}
       />
     </Element>
   );
 }
-
-ProductDisplay.propTypes = {
-  element: StoryPropTypes.elements.shape.isRequired,
-  siblingCount: PropTypes.number,
-};
 
 export default ProductDisplay;
