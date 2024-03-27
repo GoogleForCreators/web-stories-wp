@@ -18,7 +18,15 @@
 // Adjust tsconfig.json and "types" field in package.json and then
 // delete this file once complete.
 
+/**
+ * External dependencies
+ */
+import type { ElementDefinition } from '@googleforcreators/elements';
+
 export * from './constants';
+export * from './types';
 export * from './utils/textMeasurements';
+
+export const elementTypes: ElementDefinition[] = [];
 
 export {};

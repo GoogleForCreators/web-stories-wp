@@ -21,6 +21,7 @@ import type { FontData, Page } from '@googleforcreators/elements';
 import { elementIs, ElementType } from '@googleforcreators/elements';
 
 type Fonts = Record<string, FontData>;
+
 function populateElementFontProperties(
   { elements, ...rest }: Page,
   fonts: Fonts

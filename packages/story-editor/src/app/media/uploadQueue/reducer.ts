@@ -24,7 +24,7 @@ import type {
   ImageResource,
   VideoResource,
 } from '@googleforcreators/media';
-import { ResourceType, revokeBlob } from '@googleforcreators/media';
+import { resourceIs, revokeBlob } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -152,20 +152,20 @@ export function addItem(
   }
 
   if (
-    resource.type === ResourceType.Video &&
+    resourceIs.video(resource) &&
     resource.isMuted !== null &&
     additionalData?.isMuted === undefined
   ) {
     additionalData.isMuted = resource.isMuted;
   }
 
-  if (resource?.baseColor) {
+  if ('baseColor' in resource && resource.baseColor) {
     additionalData.baseColor = resource.baseColor;
   }
 
   // Do not copy over BlurHash for new trimmed and cropped videos
   // since the poster (and thus the BlurHash) might be different.
-  if (resource?.blurHash && !trimData && !cropVideo) {
+  if ('blurHash' in resource && resource.blurHash && !trimData && !cropVideo) {
     additionalData.blurHash = resource.blurHash;
   }
 
@@ -296,8 +296,8 @@ export function finishUploading(
   }
 
   if (
-    resource.type === ResourceType.Video &&
-    queueItem.resource.type === ResourceType.Video &&
+    resourceIs.video(resource) &&
+    resourceIs.video(queueItem.resource) &&
     resource.poster &&
     queueItem.resource.poster &&
     queueItem.resource.poster !== resource.poster
@@ -313,12 +313,9 @@ export function finishUploading(
       }
 
       let poster;
-      if (resource.type === ResourceType.Video && resource.poster) {
+      if (resourceIs.video(resource) && resource.poster) {
         poster = resource.poster;
-      } else if (
-        item.resource.type === ResourceType.Video &&
-        item.resource.poster
-      ) {
+      } else if (resourceIs.video(item.resource) && item.resource.poster) {
         poster = item.resource.poster;
       }
 
@@ -638,10 +635,7 @@ export function replacePlaceholderResource(
   if (queueItem.resource.src !== resource.src) {
     revokeBlob(queueItem.resource.src);
   }
-  if (
-    queueItem.resource.type === ResourceType.Video &&
-    queueItem.resource.poster
-  ) {
+  if (resourceIs.video(queueItem.resource) && queueItem.resource.poster) {
     revokeBlob(queueItem.resource.poster);
   }
 
