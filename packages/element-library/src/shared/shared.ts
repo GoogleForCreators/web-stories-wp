@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { css } from 'styled-components';
-import { generatePatternStyles, Pattern } from '@googleforcreators/patterns';
+import {
+  generatePatternStyles,
+  type Pattern,
+} from '@googleforcreators/patterns';
 import { getBorderStyle, getBorderRadius } from '@googleforcreators/masks';
 import type { BorderRadius, Element } from '@googleforcreators/elements';
 
@@ -44,12 +47,12 @@ export const elementWithPosition = css<Element>`
 `;
 
 // TODO: removed round/ceil, calculateFitTextFontSize needs to be improved?
-export const elementWithSize = css<{width: number; height: number}>`
+export const elementWithSize = css<{ width: number; height: number }>`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
 `;
 
-export const elementWithRotation = css<{rotationAngle: number}>`
+export const elementWithRotation = css<{ rotationAngle: number }>`
   transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
 `;
 
@@ -62,7 +65,10 @@ type DataToStyle = (prop: number) => string;
 export const elementWithHighlightBorderRadius = ({
   borderRadius,
   dataToEditorY,
-}: { borderRadius: BorderRadius, dataToEditorY?: DataToStyle}) =>
+}: {
+  borderRadius: BorderRadius;
+  dataToEditorY?: DataToStyle;
+}) =>
   dataToEditorY &&
   css`
     border-radius: ${dataToEditorY(borderRadius?.topLeft || 0)}px
@@ -107,7 +113,7 @@ export const elementWithTextParagraphStyle = css<{
   margin: number;
   padding?: number;
   lineHeight: number;
-  textAlign: 'left'|'right'|'center'|'justify'|'initial'|'inherit';
+  textAlign: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit';
 }>`
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding || 0};

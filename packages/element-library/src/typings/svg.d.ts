@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import type { ProductElement } from '../types';
-
-/**
- * Returns AMP HTML for saving into post content for displaying in the FE.
- *
- * @param props Props.
- * @return Rendered component.
- */
-function ProductOutput({ element }: { element: ProductElement }) {
-  const { product } = element;
-
-  if (!product?.productId) {
-    return null;
-  }
-
-  return <amp-story-shopping-tag data-product-id={product.productId} />;
+declare module '*.svg' {
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<
+    SVGProps<SVGElement> & { title?: string }
+  >;
+  export default ReactComponent;
 }
-
-export default ProductOutput;

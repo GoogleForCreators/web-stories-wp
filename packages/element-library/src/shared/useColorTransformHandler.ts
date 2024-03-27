@@ -23,7 +23,7 @@ import {
 } from '@googleforcreators/patterns';
 import { useTransformHandler } from '@googleforcreators/transform';
 import type { ElementId } from '@googleforcreators/elements';
-import type { RefObject } from "react";
+import type { RefObject } from 'react';
 
 function useColorTransformHandler({
   id,
