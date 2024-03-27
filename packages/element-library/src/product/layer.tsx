@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
+
 /**
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
 
+/**
+ * Internal dependencies
+ */
 import type { ProductElement } from '../types';
 
 function getProductLayerText(element: ProductElement) {

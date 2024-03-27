@@ -21,5 +21,6 @@ export const WEIGHT = 'CUSTOM-WEIGHT';
 export const COLOR = 'CUSTOM-COLOR';
 export const LETTERSPACING = 'CUSTOM-LETTERSPACING';
 export const UPPERCASE = 'CUSTOM-UPPERCASE';
+export const GRADIENT_COLOR = 'CUSTOM-GRADIENT-COLOR';
 
 export const MULTIPLE_VALUE = '((MULTIPLE))';

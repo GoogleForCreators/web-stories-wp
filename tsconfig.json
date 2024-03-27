@@ -21,6 +21,7 @@
     { "path": "packages/stickers" },
     { "path": "packages/story-editor" },
     { "path": "packages/templates" },
+    { "path": "packages/test-utils" },
     { "path": "packages/text-sets" },
     { "path": "packages/tracking" },
     { "path": "packages/transform" },
