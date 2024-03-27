@@ -251,6 +251,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @param array<string, mixed>|false $embed Embed value, default to false is not set.
 	 * @param WP_REST_Request            $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string}> $request
 	 */
 	public function prepare_item_for_response( $embed, $request ) {
 		$fields = $this->get_fields_for_response( $request );
@@ -267,11 +269,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );

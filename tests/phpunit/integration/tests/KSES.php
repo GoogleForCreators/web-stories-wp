@@ -406,11 +406,10 @@ class KSES extends DependencyInjectedTestCase {
 
 		$result = $this->instance->filter_kses_allowed_html( $allowed_tags );
 
-		$this->assertArrayHasKey( 'img', $result );
-		$this->assertArrayHasKey( 'width', $result['img'] );
+		$this->assertTrue( $result['img']['width'] );
 		$this->assertArrayHasKey( 'intrinsicsize', $result['img'] );
 		$this->assertArrayHasKey( 'testing', $result );
-		$this->assertArrayHasKey( 'width', $result['testing'] );
+		$this->assertTrue( $result['testing']['width'] );
 	}
 
 	/**

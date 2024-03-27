@@ -115,7 +115,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 *                                   originally passed to wp_insert_post().
 	 * @return array<string,mixed>|mixed Filtered post data.
 	 *
-	 * @phpstan-param PostData $data
+	 * @phpstan-param PostData|mixed $data
 	 * @phpstan-param PostData $unsanitized_postarr
 	 *
 	 * @template T

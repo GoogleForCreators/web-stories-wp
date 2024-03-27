@@ -4,9 +4,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration\Infrastructure;
 
-use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
-use Google\Web_Stories\Infrastructure\ServiceContainer;
 use Google\Web_Stories\Infrastructure\ServiceContainer\SimpleServiceContainer;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyService;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceBasedPlugin;
@@ -18,16 +16,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Infrastructure\ServiceBasedPlugin
  */
 final class ServiceBasedPluginTest extends TestCase {
-	public function test_it_can_return_its_container(): void {
-		$plugin = $this->getMockBuilder( ServiceBasedPlugin::class )
-			->enableOriginalConstructor()
-			->getMock();
-
-		$container = $plugin->get_container();
-
-		$this->assertInstanceOf( ServiceContainer::class, $container );
-	}
-
 	public function test_it_can_be_registered(): void {
 		$plugin = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->onlyMethods( [ 'register_services' ] )
@@ -52,7 +40,6 @@ final class ServiceBasedPluginTest extends TestCase {
 
 		$this->assertCount( 1, $container );
 		$this->assertTrue( $container->has( 'injector' ) );
-		$this->assertInstanceof( Injector::class, $container->get( 'injector' ) );
 	}
 
 	public function test_it_registers_default_services(): void {

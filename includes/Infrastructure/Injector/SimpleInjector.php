@@ -37,12 +37,6 @@ use function array_map;
  * @template T
  */
 final class SimpleInjector implements Injector {
-
-	/**
-	 * Special-case index key for handling globally defined named arguments.
-	 */
-	public const GLOBAL_ARGUMENTS = '__global__';
-
 	/**
 	 * Mappings.
 	 *
@@ -70,9 +64,7 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @var array<string, array<mixed>>
 	 */
-	private array $argument_mappings = [
-		self::GLOBAL_ARGUMENTS => [],
-	];
+	private array $argument_mappings = [];
 
 	/**
 	 * Instantiator.
@@ -427,11 +419,6 @@ final class SimpleInjector implements Injector {
 			}
 
 			return $value;
-		}
-
-		// No argument found for the class, check if we have a global value.
-		if ( \array_key_exists( $name, $this->argument_mappings[ self::GLOBAL_ARGUMENTS ] ) ) {
-			return $this->argument_mappings[ self::GLOBAL_ARGUMENTS ][ $name ];
 		}
 
 		// No provided argument found, check if it has a default value.

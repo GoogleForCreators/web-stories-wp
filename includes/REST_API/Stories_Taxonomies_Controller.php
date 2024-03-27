@@ -64,17 +64,14 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 *
+	 * @phpstan-param WP_REST_Request<array{type?: string, hierarchical?: bool, show_ui?: bool, context: string}> $request
 	 */
 	public function get_items( $request ) {
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
 
 		if ( isset( $registered['type'] ) && ! empty( $request['type'] ) ) {
-			/**
-			 * Object type.
-			 *
-			 * @var string Object type.
-			 */
 			$type = $request['type'];
 
 			$taxonomies = get_object_taxonomies( $type, 'objects' );

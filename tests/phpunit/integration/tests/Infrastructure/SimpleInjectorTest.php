@@ -138,26 +138,15 @@ final class SimpleInjectorTest extends TestCase {
 	}
 
 	public function test_arguments_can_be_bound(): void {
-		/**
-		 * @var class-string $global_arguments
-		 */
-		$global_arguments = SimpleInjector::GLOBAL_ARGUMENTS;
-
 		$object = ( new SimpleInjector() )
 			->bind_argument(
 				Fixture\DummyClassWithNamedArguments::class,
 				'argument_a',
 				42
 			)
-			->bind_argument(
-				$global_arguments,
-				'argument_b',
-				'Mr Alderson'
-			)
 			->make( Fixture\DummyClassWithNamedArguments::class );
 
 		$this->assertEquals( 42, $object->get_argument_a() );
-		$this->assertEquals( 'Mr Alderson', $object->get_argument_b() );
 	}
 
 	public function test_callable_arguments_are_lazily_resolved(): void {
