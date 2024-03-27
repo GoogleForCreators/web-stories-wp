@@ -38,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/i18n": "*",
+    "@googleforcreators/i18n": "file:../i18n",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0"
   },

@@ -37,7 +37,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/react": "*"
+    "@googleforcreators/react": "file:../react"
   },
   "devDependencies": {
     "prop-types": "^15.7.2"

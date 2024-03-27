@@ -28,7 +28,7 @@
   "types": "dist-types/index.d.ts",
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.1",
-    "@googleforcreators/tracking": "*",
+    "@googleforcreators/tracking": "file:../tracking",
     "@wordpress/element": "^5.24.0",
     "@wordpress/i18n": "^4.47.0",
     "flagged": "^2.0.10",

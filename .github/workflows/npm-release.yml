@@ -36,21 +36,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Setup Node
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_DOWNLOAD: true
-
       - name: Setup Bun
         uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
-        with:
-          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Bundle packages
         run: bun run workflow:bundle-packages
@@ -102,7 +94,7 @@ jobs:
     needs: [dry-run]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -113,22 +105,20 @@ jobs:
 
       # See go/npm-publish
       - name: Setup Node
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65
         with:
           node-version-file: '.nvmrc'
           cache: npm
           registry-url: ${{ env.PRODUCTION_REGISTRY_URL }}
           scope: '@googleforcreators'
 
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_DOWNLOAD: true
-
       - name: Setup Bun
         uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
-        with:
-          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Bundle packages
         run: bun run workflow:bundle-packages

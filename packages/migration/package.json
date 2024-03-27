@@ -38,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/elements": "*",
+    "@googleforcreators/elements": "file:../elements",
     "polished": "^4.2.2",
     "uuid": "^9.0.0"
   },

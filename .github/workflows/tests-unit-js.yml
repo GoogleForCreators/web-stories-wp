@@ -51,7 +51,7 @@ jobs:
         shard: ['1/2', '2/2']
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -69,14 +69,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Setup Node
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       - name: Setup Jest cache
-        uses: actions/cache@ab5e6d0c87105b4c9c2047343972218f562e4319
+        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ env.NVMRC }}-jest
@@ -84,8 +81,8 @@ jobs:
       # Rollup is needed for tests in `packages/migration/src` expecting `module.js`
       - name: Install dependencies
         run: |
-          npm ci
-          npx rollup --config packages/migration/rollup.config.js
+          bun install
+          bunx rollup --config packages/migration/rollup.config.js
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
@@ -97,13 +94,13 @@ jobs:
           echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
       - name: Run JavaScript unit tests
-        run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
+        run: bun run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage --shard=$SHARD
         env:
           SHARD: ${{ matrix.shard }}
           AMP_VALIDATOR_FILE: ${{ env.validator_file }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d
         with:
           file: build/logs/lcov.info
           flags: unittests
