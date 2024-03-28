@@ -30,12 +30,12 @@
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@web-stories-wp/jest-resolver": "*",
     "@wordpress/jest-console": "^7.18.0",
-    "babel-jest": "^29.5.0",
-    "expect-puppeteer": "^9.0.1",
-    "jest-environment-puppeteer": "^9.0.2",
+    "babel-jest": "^29.7.0",
+    "expect-puppeteer": "^10.0.0",
+    "jest-environment-puppeteer": "^10.0.1",
     "jest-extended": "^4.0.2",
     "jest-json-schema": "^6.1.0",
-    "jest-puppeteer": "^9.0.2"
+    "jest-puppeteer": "^10.0.1"
   },
   "peerDependencies": {
     "puppeteer": "*"

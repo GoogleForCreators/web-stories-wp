@@ -56,7 +56,8 @@ async function publishPost() {
     await openPublishPanel();
 
     // Wait for the panel to fully slide in.
-    await page.waitForTimeout(500);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 500));
   }
 
   // Publish the post

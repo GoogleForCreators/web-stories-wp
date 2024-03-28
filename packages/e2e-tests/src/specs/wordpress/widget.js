@@ -84,7 +84,8 @@ describe('Web Stories Widget', () => {
       );
 
       // The customizer has lots of transition animations.
-      await page.waitForTimeout(500);
+      // TODO: Remove and replace with waitForSelector or locator API.
+      await new Promise((r) => setTimeout(r, 500));
 
       // expect(page).toClick(...) doesn't seem to work.
       await page.evaluate(() => {
@@ -96,7 +97,8 @@ describe('Web Stories Widget', () => {
       });
 
       // The customizer has lots of transition animations.
-      await page.waitForTimeout(500);
+      // TODO: Remove and replace with waitForSelector or locator API.
+      await new Promise((r) => setTimeout(r, 500));
 
       await expect(page).toClick('button', { text: 'Add a Widget' });
 
@@ -107,7 +109,8 @@ describe('Web Stories Widget', () => {
       await expect(page).toClick("div[class*='web_stories_widget-']");
 
       // The customizer has lots of transition animations.
-      await page.waitForTimeout(500);
+      // TODO: Remove and replace with waitForSelector or locator API.
+      await new Promise((r) => setTimeout(r, 500));
 
       await page.$eval(
         '.web-stories-field-wrapper input',

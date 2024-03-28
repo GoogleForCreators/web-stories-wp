@@ -19,7 +19,7 @@
  */
 const {
   PUPPETEER_DEVTOOLS = false,
-  PUPPETEER_HEADLESS = 'new',
+  PUPPETEER_HEADLESS = true,
   PUPPETEER_PRODUCT = 'chrome',
   PUPPETEER_SLOWMO = 0,
 } = process.env;

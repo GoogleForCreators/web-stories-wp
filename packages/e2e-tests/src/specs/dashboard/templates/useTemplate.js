@@ -36,7 +36,8 @@ describe('Explore Templates', () => {
     await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
       text: 'Explore Templates',
     });
-    await page.waitForTimeout(100);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 100));
 
     await expect(page).toMatchTextContent(/Viewing all (\d+) templates/);
 
