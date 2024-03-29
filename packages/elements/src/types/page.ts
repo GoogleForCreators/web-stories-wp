@@ -19,6 +19,7 @@
  */
 import type { Pattern } from '@googleforcreators/patterns';
 import type { StoryAnimation } from '@googleforcreators/animation';
+import type { AudioResource } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -32,7 +33,27 @@ export interface Group {
   isCollapsed?: boolean;
 }
 
+export type BackgroundAudio = {
+  resource: AudioResource;
+  tracks?: Track[];
+  loop?: boolean;
+};
+
 export type Groups = Record<string, Group>;
+
+export type PageAttachment = {
+  url: string;
+  ctaText?: string;
+  theme?: 'light' | 'dark';
+  icon?: string;
+  rel?: string[];
+  needsProxy?: boolean;
+};
+
+export type ShoppingAttachment = {
+  ctaText: string;
+  theme?: 'light' | 'dark';
+};
 
 export interface Page {
   id: ElementId;
@@ -41,24 +62,11 @@ export interface Page {
   animations?: StoryAnimation[];
   backgroundColor: Pattern;
   groups?: Groups;
-  backgroundAudio?: {
-    resource: {
-      src: string;
-      id: number;
-      mimeType: string;
-    };
-    tracks: Track[];
-    loop: boolean;
-  };
-  autoAdvance?: boolean;
-  defaultPageDuration?: number;
-  pageAttachment?: {
-    url: string;
-    ctaText: string;
-    theme: string;
-  };
-  shoppingAttachment?: {
-    ctaText: string;
-    theme: string;
+  backgroundAudio?: BackgroundAudio;
+  pageAttachment?: PageAttachment;
+  shoppingAttachment?: ShoppingAttachment;
+  advancement?: {
+    autoAdvance?: boolean;
+    pageDuration?: number;
   };
 }

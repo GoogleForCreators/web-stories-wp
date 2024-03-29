@@ -19,7 +19,7 @@ export type Track = {
   trackId: number;
   trackName: string;
   id: string;
-  srcLang?: string;
+  srclang?: string;
   label?: string;
   kind: string;
 };

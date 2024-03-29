@@ -23,6 +23,10 @@ import type { OrderedSet } from 'immutable';
 /**
  * Internal dependencies
  */
+import {
+  FontVariantStyle,
+  type FontVariant,
+} from '@googleforcreators/elements';
 import { ITALIC, WEIGHT } from './customConstants';
 import { styleToNumeric } from './formatters/util';
 import { getAllStyleSetsInSelection } from './draftUtils';
@@ -61,10 +65,12 @@ function getVariants(editorState: EditorState) {
   return [...new Set(styles)];
 }
 
-export default function getFontVariants(html: string) {
+export default function getFontVariants(html: string): FontVariant[] {
   const htmlState = getSelectAllStateFromHTML(html);
-  const variants = getVariants(htmlState).map((variant) => [
-    variant.startsWith(ITALIC) ? 1 : 0,
+  const variants: FontVariant[] = getVariants(htmlState).map((variant) => [
+    variant.startsWith(ITALIC)
+      ? FontVariantStyle.Italic
+      : FontVariantStyle.Normal,
     variant.startsWith(WEIGHT) ? styleToNumeric(WEIGHT, variant) : 400,
   ]);
 

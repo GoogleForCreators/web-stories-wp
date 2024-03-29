@@ -138,6 +138,7 @@ export function fauxStylesToCSS(styles: DraftInlineStyle, css: CSSProperties) {
     backgroundColor: 'rgba(169, 169, 169, 0.7)',
   };
   if (css?.color) {
+    style.WebkitTextFillColor = 'unset';
     style.color = `var(--faux-selection-color, ${css.color})`;
   }
   return style;

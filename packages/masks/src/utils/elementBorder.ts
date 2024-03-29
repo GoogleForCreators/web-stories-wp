@@ -29,7 +29,13 @@ import type { CSSProperties } from 'react';
  */
 import { canMaskHaveBorder, canSupportMultiBorder } from '../masks';
 
-function hasBorder({ border }: Element) {
+interface ElementWithBorder extends Element {
+  border: Border;
+}
+
+function hasBorder(element: Element): element is ElementWithBorder {
+  const { border } = element;
+
   if (!border) {
     return false;
   }
@@ -48,7 +54,9 @@ function hasBorder({ border }: Element) {
  * @param element Element object.
  * @return If should be displayed.
  */
-export function shouldDisplayBorder(element: Element) {
+export function shouldDisplayBorder(
+  element: Element
+): element is ElementWithBorder {
   return (
     hasBorder(element) &&
     canMaskHaveBorder(element) &&
@@ -63,7 +71,7 @@ interface SizeAndPosition {
   posLeft: string;
 }
 
-type BorderPositionProps = Border & SizeAndPosition;
+type BorderPositionProps = Border & Partial<SizeAndPosition>;
 
 /**
  * Gets the CSS values for an element with border.
@@ -109,7 +117,7 @@ export function getBorderStyle(element: Element): CSSProperties {
     return getBorderRadius(element);
   }
   const { border } = element;
-  const { left, top, right, bottom } = border as Border;
+  const { left, top, right, bottom } = border;
 
   // We're making the border-width responsive just for the preview,
   // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up

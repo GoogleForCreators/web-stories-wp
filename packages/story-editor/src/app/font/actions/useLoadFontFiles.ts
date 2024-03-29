@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
-import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
+import { getFontCSS, getGoogleFontURL } from '@googleforcreators/fonts';
 import {
-  loadStylesheet,
   ensureFontLoaded,
   loadInlineStylesheet,
+  loadStylesheet,
 } from '@googleforcreators/dom';
-import type { FontData } from '@googleforcreators/elements';
+import { type FontData, FontService } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -46,13 +46,13 @@ function useLoadFontFiles() {
     }
 
     switch (service) {
-      case 'fonts.google.com':
+      case FontService.GoogleFonts:
         await loadStylesheet(
           getGoogleFontURL([{ family, variants }], 'auto'),
           elementId
         );
         break;
-      case 'custom': {
+      case FontService.Custom: {
         const fontCSS = getFontCSS(family, font.url);
         if (!fontCSS) {
           return;
@@ -78,7 +78,7 @@ function useLoadFontFiles() {
       return Promise.allSettled(
         fonts.map(async ({ font, fontWeight, fontStyle, content }) => {
           const { family, service } = font;
-          if (!family || service === 'system') {
+          if (!family || service === FontService.System) {
             return null;
           }
 

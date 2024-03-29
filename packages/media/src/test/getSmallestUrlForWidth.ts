@@ -19,7 +19,7 @@
  */
 import getSmallestUrlForWidth from '../getSmallestUrlForWidth';
 import createResource from '../createResource';
-import { ResourceType } from '../types';
+import { type ImageResource, ResourceType } from '../types';
 
 describe('getSmallestUrlForWidth', () => {
   beforeEach(() => {
@@ -59,7 +59,7 @@ describe('getSmallestUrlForWidth', () => {
           sourceUrl: 'large-url',
         },
       },
-    });
+    }) as ImageResource;
     expect(getSmallestUrlForWidth(210, resource)).toBe('med-url');
   });
 
@@ -93,12 +93,12 @@ describe('getSmallestUrlForWidth', () => {
           sourceUrl: 'large-url',
         },
       },
-    });
+    }) as ImageResource;
     expect(getSmallestUrlForWidth(160, resource)).toBe('large-url');
   });
 
   it('should return an image with the same aspect ratio', () => {
-    const resource = createResource({
+    const resource: ImageResource = createResource({
       id: 123,
       type: ResourceType.Image,
       mimeType: 'image/jpeg',
@@ -132,7 +132,7 @@ describe('getSmallestUrlForWidth', () => {
           sourceUrl: 'large-url',
         },
       },
-    });
+    }) as ImageResource;
     expect(getSmallestUrlForWidth(150, resource)).toBe('med-url');
   });
 
@@ -165,7 +165,7 @@ describe('getSmallestUrlForWidth', () => {
           sourceUrl: 'large-url',
         },
       },
-    });
+    }) as ImageResource;
     expect(getSmallestUrlForWidth(440, resource)).toBe('default-url');
   });
 
@@ -179,7 +179,7 @@ describe('getSmallestUrlForWidth', () => {
       width: 400,
       height: 200,
       sizes: {},
-    });
+    }) as ImageResource;
     expect(getSmallestUrlForWidth(200, resource)).toBe('default-url');
   });
 });

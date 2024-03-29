@@ -31,8 +31,8 @@ interface FeaturedMedia {
   height: number;
   width: number;
   url: string;
-  needsProxy: boolean;
-  isExternal: boolean;
+  needsProxy?: boolean;
+  isExternal?: boolean;
 }
 interface PublisherLogo {
   id: number;
