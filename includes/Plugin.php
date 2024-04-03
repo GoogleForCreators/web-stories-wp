@@ -140,6 +140,7 @@ class Plugin extends ServiceBasedPlugin {
 		'user_preferences'             => User\Preferences::class,
 		'remove_transients'            => Remove_Transients::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
+		'speculative_prerendering'     => Admin\Speculative_Prerendering::class,
 	];
 
 	/**
