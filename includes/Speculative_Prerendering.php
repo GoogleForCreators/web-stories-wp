@@ -4,12 +4,12 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @copyright 2020 Google LLC
+ * @copyright 2024 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,9 +105,10 @@ class Speculative_Prerendering extends Service_Base {
 			return;
 		}
 
-		wp_print_inline_script_tag(
-			wp_json_encode( $rules ),
-			[ 'type' => 'speculationrules' ]
-		);
+		$encoded_rules = wp_json_encode( $rules );
+
+		if ( false !== $encoded_rules ) {
+			wp_print_inline_script_tag( $encoded_rules, [ 'type' => 'speculationrules' ] );
+		}
 	}
 }
