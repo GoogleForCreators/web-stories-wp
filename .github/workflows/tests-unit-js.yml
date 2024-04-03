@@ -67,7 +67,7 @@ jobs:
             fonts.gstatic.com:443
 
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -76,7 +76,7 @@ jobs:
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@ab5e6d0c87105b4c9c2047343972218f562e4319
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: .jest-cache
           key: ${{ runner.os }}-${{ env.NVMRC }}-jest
@@ -103,7 +103,7 @@ jobs:
           AMP_VALIDATOR_FILE: ${{ env.validator_file }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab
+        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8
         with:
           file: build/logs/lcov.info
           flags: unittests
