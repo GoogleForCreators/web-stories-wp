@@ -26,7 +26,7 @@
 
 declare(strict_types = 1);
 
-namespace Google\Web_Stories\Admin;
+namespace Google\Web_Stories;
 
 use Google\Web_Stories\Service_Base;
 
