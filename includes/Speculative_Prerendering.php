@@ -141,9 +141,15 @@ class Speculative_Prerendering extends Service_Base {
 	 * @return array The URL matches array containing URLs for different pages.
 	 */
 	private function generate_matches(): array {
-		$new_story_url  = 'post-new.php?post_type=' . $this->story_post_type->get_slug();
+		$new_story_url  = sprintf(
+			'post-new.php?post_type=%s',
+			$this->story_post_type->get_slug()
+		);
 		$edit_story_url = 'post.php?post=*&action=edit';
-		$view_story_url = '/web-stories*';
+		$view_story_url = sprintf(
+			'/%s/*',
+			$this->story_post_type::REWRITE_SLUG
+		);
 
 		return [
 			'dashboard'   => [ $edit_story_url, $new_story_url ],
