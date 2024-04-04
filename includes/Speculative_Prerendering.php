@@ -28,23 +28,45 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Admin\Dashboard;
 
 /**
  * Speculative_Prerendering class.
  */
 class Speculative_Prerendering extends Service_Base {
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private Context $context;
 
 	/**
-	 * Array defining the matches for different pages.
+	 * Story_Post_Type instance.
 	 *
-	 * @var array<string,array<string>>
+	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	private array $matches = [
-		'dashboard'   => [ 'post.php?post=*&action=edit', 'post-new.php?post_type=web-story' ],
-		'all_stories' => [ 'post.php?post=*&action=edit', 'post-new.php?post_type=web-story', '/web-stories*' ],
-		'archive'     => [ '/web-stories*' ],
-	];
+	private Story_Post_Type $story_post_type;
+
+	/**
+	 * Dashboard instance.
+	 *
+	 * @var Dashboard Dashboard instance.
+	 */
+	private Dashboard $dashboard;
+
+	/**
+	 * Speculative_Prerendering constructor.
+	 *
+	 * @param Context         $context          Context instance.
+	 * @param Story_Post_Type $story_post_type  Story_Post_Type instance.
+	 * @param Dashboard       $dashboard        Dashboard instance.
+	 */
+	public function __construct( Context $context, Story_Post_Type $story_post_type, Dashboard $dashboard ) {
+		$this->context         = $context;
+		$this->story_post_type = $story_post_type;
+		$this->dashboard       = $dashboard;
+	}
 
 	/**
 	 * Runs on instantiation.
@@ -60,12 +82,13 @@ class Speculative_Prerendering extends Service_Base {
 	 */
 	public function load_rules( string $hook ): void {
 		$rules = [];
-		if ( 'web-story_page_stories-dashboard' === $hook ) {
+
+		$hook_suffix = $this->dashboard->get_hook_suffix( 'stories-dashboard' );
+		if ( false !== $hook_suffix && $hook_suffix === $hook ) {
 			$rules = $this->get_rules( 'dashboard' );
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification not needed as we're just checking for the 'web-story' post type.
-		if ( 'edit.php' === $hook && isset( $_GET['post_type'] ) && 'web-story' === $_GET['post_type'] ) {
+		if ( $this->story_post_type->get_slug() === $this->context->get_screen_post_type() && 'edit' === $this->context->get_screen_base() ) {
 			$rules = $this->get_rules( 'all_stories' );
 		}
 		$this->print_rules( $rules );
@@ -84,7 +107,7 @@ class Speculative_Prerendering extends Service_Base {
 				'where'     => [
 					'and' => [
 						[
-							'href_matches' => $this->matches[ $page ],
+							'href_matches' => $this->get_matches_for_page( $page ),
 						],
 					],
 				],
@@ -110,5 +133,33 @@ class Speculative_Prerendering extends Service_Base {
 		if ( false !== $encoded_rules ) {
 			wp_print_inline_script_tag( $encoded_rules, [ 'type' => 'speculationrules' ] );
 		}
+	}
+
+	/**
+	 * Generates the URL matches array for different pages.
+	 *
+	 * @return array The URL matches array containing URLs for different pages.
+	 */
+	private function generate_matches(): array {
+		$new_story_url  = 'post-new.php?post_type=' . $this->story_post_type->get_slug();
+		$edit_story_url = 'post.php?post=*&action=edit';
+		$view_story_url = '/web-stories*';
+
+		return [
+			'dashboard'   => [ $edit_story_url, $new_story_url ],
+			'all_stories' => [ $edit_story_url, $new_story_url, $view_story_url ],
+			'archive'     => [ $view_story_url ],
+		];
+	}
+
+	/**
+	 * Retrieves the URL matches for the specified page.
+	 *
+	 * @param string $page The page for which to retrieve URL matches.
+	 * @return array The URL matches for the specified page.
+	 */
+	private function get_matches_for_page( string $page ): array {
+		$matches = $this->generate_matches();
+		return $matches[ $page ];
 	}
 }
