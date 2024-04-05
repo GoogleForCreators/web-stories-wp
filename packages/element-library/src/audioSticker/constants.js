@@ -13,20 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import headphoneCat from './sticker-images/headphone-cat/headphone-cat-pretap.png';
-import tapePlayer from './sticker-images/tape-player/tape-player-pretap.png';
-import loudSpeaker from './sticker-images/loud-speaker/loud-speaker-posttap.png';
-import audioCloud from './sticker-images/audio-cloud/audio-cloud-posttap.png';
 
 export const hasEditMode = false;
 export const hasEditModeIfLocked = false;
@@ -49,34 +45,6 @@ export const resizeRules = {
   vertical: false,
   horizontal: false,
   diagonal: false,
-};
-
-export const AUDIO_STICKERS = {
-  'headphone-cat': headphoneCat,
-  'tape-player': tapePlayer,
-  'loud-speaker': loudSpeaker,
-  'audio-cloud': audioCloud,
-};
-
-export const AUDIO_STICKER_STYLES = {
-  none: '',
-  outline: 'border: 4px solid white; border-radius: 20px',
-  dropshadow: 'filter: drop-shadow(2px 2px 10px white)',
-};
-
-export const AUDIO_STICKER_LABELS = {
-  'headphone-cat': {
-    label: __('Headphone Cat', 'web-stories'),
-  },
-  'tape-player': {
-    label: __('Tape Player', 'web-stories'),
-  },
-  'loud-speaker': {
-    label: __('Loud Speaker', 'web-stories'),
-  },
-  'audio-cloud': {
-    label: __('Audio Cloud', 'web-stories'),
-  },
 };
 
 export const defaultAttributes = {

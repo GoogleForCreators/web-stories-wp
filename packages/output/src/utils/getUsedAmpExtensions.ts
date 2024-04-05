@@ -63,7 +63,7 @@ const getUsedAmpExtensions = (pages: Page[]) => {
     src: 'https://cdn.ampproject.org/v0/amp-story-shopping-0.1.js',
   };
 
-  const ampStoryAudioSticker = {
+  const ampStoryAudioSticker: AmpExtension = {
     name: 'amp-story-audio-sticker',
     src: 'https://cdn.ampproject.org/v0/amp-story-audio-sticker-0.1.js',
   };
