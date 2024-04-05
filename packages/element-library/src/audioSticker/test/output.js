@@ -37,6 +37,7 @@ describe('AudioSticker output', () => {
       box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
+    // Note: This test will fail until this PR - https://github.com/ampproject/amphtml/pull/39913 is merged.
     await expect(<AudioStickerOutput {...props} />).toBeValidAMPStoryElement();
   });
 });
