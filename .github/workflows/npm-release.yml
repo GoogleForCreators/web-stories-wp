@@ -34,7 +34,7 @@ jobs:
     environment: Production
     steps:
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -48,7 +48,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
+        uses: oven-sh/setup-bun@d3603274aca5625baad52ec06108517a089cdd00
         with:
           bun-version: latest
 
@@ -107,7 +107,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
@@ -126,7 +126,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
+        uses: oven-sh/setup-bun@d3603274aca5625baad52ec06108517a089cdd00
         with:
           bun-version: latest
 

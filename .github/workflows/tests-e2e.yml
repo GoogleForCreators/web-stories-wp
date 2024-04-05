@@ -75,7 +75,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -101,7 +101,7 @@ jobs:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
+        uses: oven-sh/setup-bun@d3603274aca5625baad52ec06108517a089cdd00
         with:
           bun-version: latest
 
@@ -146,16 +146,6 @@ jobs:
             wp: 'latest'
             snapshots: true
             shard: '2/2'
-          - browser: 'chrome'
-            wp: '6.5-RC3'
-            snapshots: false
-            shard: '1/2'
-            experimental: true
-          - browser: 'chrome'
-            wp: '6.5-RC3'
-            snapshots: false
-            shard: '2/2'
-            experimental: true
 
     steps:
       - name: Harden Runner
@@ -175,7 +165,7 @@ jobs:
             34.104.35.123:443
 
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
 
       - name: Download bundle
         uses: actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427
