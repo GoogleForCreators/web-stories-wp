@@ -124,17 +124,20 @@ describe('Quick Actions integration', () => {
     });
 
     it(`clicking the \`${ACTIONS.INSERT_TEXT.text}\` button should select the background, open the text tab in the library and insert the default text`, async () => {
-      // click quick menu button
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.insertTextButton
-      );
-      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
-      expect(
-        fixture.editor.sidebar.designPanel.selectionSection
-      ).not.toBeNull();
-      expect(document.activeElement).toEqual(
-        fixture.editor.canvas.framesLayer.frames[1].node
-      );
+      await waitFor(async () => {
+        // click quick menu button
+        await fixture.events.click(
+          fixture.editor.canvas.quickActionMenu.insertTextButton
+        );
+        expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+        expect(
+          fixture.editor.sidebar.designPanel.selectionSection
+        ).not.toBeNull();
+
+        expect(document.activeElement).toEqual(
+          fixture.editor.canvas.framesLayer.frames[1].node
+        );
+      });
     });
 
     it('should allow clicking multiple actions', async () => {
