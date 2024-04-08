@@ -20,7 +20,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { AUDIO_STICKERS } from '@googleforcreators/element-library';
+import {
+  AUDIO_STICKERS,
+  AUDIO_STICKER_LABELS,
+} from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -97,7 +100,10 @@ function StickerType({ selectedElements, pushUpdate }) {
                 label
               )}
             >
-              <StickerImage src={AUDIO_STICKERS[type]} alt="audio-sticker" />
+              <StickerImage
+                src={AUDIO_STICKERS[type]}
+                alt={AUDIO_STICKER_LABELS[type].label}
+              />
             </FilterToggle>
           );
         })}

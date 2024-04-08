@@ -23,6 +23,7 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import {
   AUDIO_STICKERS,
   AUDIO_STICKER_STYLES,
+  AUDIO_STICKER_LABELS,
 } from '@googleforcreators/element-library';
 
 /**
@@ -95,14 +96,14 @@ function StickerStyle({ selectedElements, pushUpdate }) {
                 onStickerStyleChange(stickerStyle);
               }}
               aria-label={sprintf(
-                /* translators: %s: Sticker type */
+                /* translators: %s: Sticker style */
                 __('Sticker Style: %s', 'web-stories'),
                 label
               )}
             >
               <StickerImage
                 src={AUDIO_STICKERS[type]}
-                alt="audio-sticker"
+                alt={AUDIO_STICKER_LABELS[type].label}
                 stickerStyle={stickerStyle}
               />
             </FilterToggle>
