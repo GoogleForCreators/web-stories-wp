@@ -88,7 +88,7 @@ const getUsedAmpExtensions = (pages: Page[]) => {
         case ElementType.Product:
           extensions.push(ampStoryShopping);
           break;
-        case 'audioSticker':
+        case ElementType.AudioSticker:
           extensions.push(ampStoryAudioSticker);
           break;
         default:
