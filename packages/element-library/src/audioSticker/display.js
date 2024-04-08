@@ -27,7 +27,7 @@ import {
   AUDIO_STICKERS,
   AUDIO_STICKER_STYLES,
   AUDIO_STICKER_LABELS,
-} from './constants';
+} from '../constants';
 
 const Element = styled.img`
   ${elementFillContent}
