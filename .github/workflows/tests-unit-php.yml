@@ -66,7 +66,7 @@ jobs:
             experimental: false
 
           - php: '7.4'
-            wp: '6.2'
+            wp: '6.3'
             experimental: false
 
           - php: '8.2'
