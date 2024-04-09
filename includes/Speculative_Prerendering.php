@@ -86,9 +86,7 @@ class Speculative_Prerendering extends Service_Base {
 		$hook_suffix = $this->dashboard->get_hook_suffix( 'stories-dashboard' );
 		if ( false !== $hook_suffix && $hook_suffix === $hook ) {
 			$rules = $this->get_rules( 'dashboard' );
-		}
-
-		if ( $this->story_post_type->get_slug() === $this->context->get_screen_post_type() && 'edit' === $this->context->get_screen_base() ) {
+		} elseif ( $this->story_post_type->get_slug() === $this->context->get_screen_post_type() && 'edit' === $this->context->get_screen_base() ) {
 			$rules = $this->get_rules( 'all_stories' );
 		}
 		$this->print_rules( $rules );
