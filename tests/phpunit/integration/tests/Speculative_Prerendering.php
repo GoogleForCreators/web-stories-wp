@@ -45,7 +45,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	public function test_register(): void {
 		$this->instance->register();
 
-		$this->assertSame( 12, has_action( 'admin_enqueue_scripts', [ $this->instance, 'load_rules' ] ) );
+		$this->assertSame( 10, has_action( 'admin_enqueue_scripts', [ $this->instance, 'load_rules' ] ) );
 	}
 
 	/**
