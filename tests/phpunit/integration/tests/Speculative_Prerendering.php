@@ -75,7 +75,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		$this->dashboard->method( 'get_hook_suffix' )->willReturn( 'web-story_page_stories-dashboard' );
 
 		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculative_Prerendering::class )
-		->onlyMethods( [ 'get_rules' ] )
+		->onlyMethods( [ 'get_rules', 'print_rules' ] )
 		->setConstructorArgs( [ $this->context, $this->story_post_type, $this->dashboard ] )
 		->getMock();
 
@@ -98,7 +98,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		$this->context->method( 'get_screen_base' )->willReturn( 'edit' );
 
 		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculative_Prerendering::class )
-			->onlyMethods( [ 'get_rules' ] )
+			->onlyMethods( [ 'get_rules', 'print_rules' ] )
 			->setConstructorArgs( [ $this->context, $this->story_post_type, $this->dashboard ] )
 			->getMock();
 
@@ -110,5 +110,67 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		->method( 'print_rules' );
 
 		$prerendering_class->load_rules( 'edit' );
+	}
+
+	/**
+	 * @covers ::get_rules
+	 */
+	public function test_get_rules_for_dashboard(): void {
+		$new_story_url  = sprintf(
+			'post-new.php?post_type=%s',
+			$this->story_post_type->get_slug()
+		);
+		$edit_story_url = 'post.php?post=*&action=edit';
+
+		$expected = [
+			'prerender' => [
+				[
+					'source'    => 'document',
+					'where'     => [
+						'and' => [
+							[
+								'href_matches' => [ $edit_story_url, $new_story_url ],
+							],
+						],
+					],
+					'eagerness' => 'moderate',
+				],
+			],
+		];
+
+		$this->assertEquals( $expected, $this->instance->get_rules( 'dashboard' ) );
+	}
+
+	/**
+	 * @covers ::get_rules
+	 */
+	public function test_get_rules_for_all_stories(): void {
+		$new_story_url  = sprintf(
+			'post-new.php?post_type=%s',
+			$this->story_post_type->get_slug()
+		);
+		$edit_story_url = 'post.php?post=*&action=edit';
+		$view_story_url = sprintf(
+			'/%s/*',
+			$this->story_post_type::REWRITE_SLUG
+		);
+
+		$expected = [
+			'prerender' => [
+				[
+					'source'    => 'document',
+					'where'     => [
+						'and' => [
+							[
+								'href_matches' => [ $edit_story_url, $new_story_url, $view_story_url ],
+							],
+						],
+					],
+					'eagerness' => 'moderate',
+				],
+			],
+		];
+
+		$this->assertEquals( $expected, $this->instance->get_rules( 'all_stories' ) );
 	}
 }
