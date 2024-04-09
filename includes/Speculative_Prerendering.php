@@ -98,7 +98,7 @@ class Speculative_Prerendering extends Service_Base {
 	 * @param string $page The page identifier.
 	 * @return array An array containing prerendering rules.
 	 */
-	public function get_rules( string $page ): array {
+	private function get_rules( string $page ): array {
 		$rules = [
 			[
 				'source'    => 'document',
@@ -121,7 +121,7 @@ class Speculative_Prerendering extends Service_Base {
 	 *
 	 * @param array $rules The prerendering rules to print.
 	 */
-	public function print_rules( array $rules ): void {
+	private function print_rules( array $rules ): void {
 		if ( empty( $rules ) ) {
 			return;
 		}
