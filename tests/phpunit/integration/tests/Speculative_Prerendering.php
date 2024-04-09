@@ -29,14 +29,37 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Speculative_Prerendering extends DependencyInjectedTestCase {
 	/**
-	 * Speculative_Prerendering for test.
+	 * @var Context & MockObject
 	 */
+	private Context $context;
+
+	/**
+	 * @var Story_Post_Type & MockObject
+	 */
+	private Story_Post_Type $story_post_type;
+
+	/**
+	 * @var Dashboard & MockObject
+	 */
+	private Dashboard $dashboard;
+
 	protected \Google\Web_Stories\Speculative_Prerendering $instance;
 
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->instance = $this->injector->make( \Google\Web_Stories\Speculative_Prerendering::class );
+		$this->dashboard       = $this->createMock( Dashboard::class );
+		$this->story_post_type = $this->createMock( Story_Post_Type::class );
+		$this->context         = $this->createMock( Context::class );
+
+		$this->instance = $this->injector->make(
+			\Google\Web_Stories\Speculative_Prerendering::class,
+			[
+				$this->context,
+				$this->story_post_type,
+				$this->dashboard,
+			]
+		);
 	}
 
 	/**
@@ -44,7 +67,6 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	 */
 	public function test_register(): void {
 		$this->instance->register();
-
 		$this->assertSame( 10, has_action( 'admin_enqueue_scripts', [ $this->instance, 'load_rules' ] ) );
 	}
 
@@ -52,16 +74,12 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	 * @covers ::load_rules
 	 */
 	public function test_load_rules_dashboard(): void {
-		$mock_dashboard       = $this->createMock( Dashboard::class );
-		$mock_story_post_type = $this->createMock( Story_Post_Type::class );
-		$mock_context         = $this->createMock( Context::class );
-
-		$mock_dashboard->method( 'get_hook_suffix' )->willReturn( 'web-story_page_stories-dashboard' );
+		$this->dashboard->method( 'get_hook_suffix' )->willReturn( 'web-story_page_stories-dashboard' );
 
 		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculative_Prerendering::class )
-			->onlyMethods( [ 'get_rules' ] )
-			->setConstructorArgs( [ $mock_context, $mock_story_post_type, $mock_dashboard ] )
-			->getMock();
+		->onlyMethods( [ 'get_rules' ] )
+		->setConstructorArgs( [ $this->context, $this->story_post_type, $this->dashboard ] )
+		->getMock();
 
 		$prerendering_class->expects( $this->once() )
 		->method( 'get_rules' )
@@ -74,17 +92,13 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	 * @covers ::load_rules
 	 */
 	public function test_load_rules_all_stories(): void {
-		$mock_dashboard       = $this->createMock( Dashboard::class );
-		$mock_story_post_type = $this->createMock( Story_Post_Type::class );
-		$mock_context         = $this->createMock( Context::class );
-
-		$mock_story_post_type->method( 'get_slug' )->willReturn( 'web-story' );
-		$mock_context->method( 'get_screen_post_type' )->willReturn( 'web-story' );
-		$mock_context->method( 'get_screen_base' )->willReturn( 'edit' );
+		$this->story_post_type->method( 'get_slug' )->willReturn( 'web-story' );
+		$this->context->method( 'get_screen_post_type' )->willReturn( 'web-story' );
+		$this->context->method( 'get_screen_base' )->willReturn( 'edit' );
 
 		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculative_Prerendering::class )
 			->onlyMethods( [ 'get_rules' ] )
-			->setConstructorArgs( [ $mock_context, $mock_story_post_type, $mock_dashboard ] )
+			->setConstructorArgs( [ $this->context, $this->story_post_type, $this->dashboard ] )
 			->getMock();
 
 		$prerendering_class->expects( $this->once() )
