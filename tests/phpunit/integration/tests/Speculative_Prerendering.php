@@ -23,6 +23,7 @@ namespace Google\Web_Stories\Tests\Integration;
 use Google\Web_Stories\Admin\Dashboard;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Story_Post_Type;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Speculative_Prerendering
@@ -31,17 +32,17 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	/**
 	 * @var Context & MockObject
 	 */
-	private Context $context;
+	private $context;
 
 	/**
 	 * @var Story_Post_Type & MockObject
 	 */
-	private Story_Post_Type $story_post_type;
+	private $story_post_type;
 
 	/**
 	 * @var Dashboard & MockObject
 	 */
-	private Dashboard $dashboard;
+	private $dashboard;
 
 	protected \Google\Web_Stories\Speculative_Prerendering $instance;
 
@@ -52,13 +53,10 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		$this->story_post_type = $this->createMock( Story_Post_Type::class );
 		$this->context         = $this->createMock( Context::class );
 
-		$this->instance = $this->injector->make(
-			\Google\Web_Stories\Speculative_Prerendering::class,
-			[
-				$this->context,
-				$this->story_post_type,
-				$this->dashboard,
-			]
+		$this->instance = new \Google\Web_Stories\Speculative_Prerendering(
+			$this->context,
+			$this->story_post_type,
+			$this->dashboard,
 		);
 	}
 
