@@ -98,7 +98,7 @@ class Speculative_Prerendering extends Service_Base {
 	 * @param string $page The page identifier.
 	 * @return array An array containing prerendering rules.
 	 */
-	private function get_rules( string $page ): array {
+	public function get_rules( string $page ): array {
 		$rules = [
 			[
 				'source'    => 'document',
@@ -121,7 +121,7 @@ class Speculative_Prerendering extends Service_Base {
 	 *
 	 * @param array $rules The prerendering rules to print.
 	 */
-	private function print_rules( array $rules ): void {
+	public function print_rules( array $rules ): void {
 		if ( empty( $rules ) ) {
 			return;
 		}
@@ -152,7 +152,6 @@ class Speculative_Prerendering extends Service_Base {
 		return [
 			'dashboard'   => [ $edit_story_url, $new_story_url ],
 			'all_stories' => [ $edit_story_url, $new_story_url, $view_story_url ],
-			'archive'     => [ $view_story_url ],
 		];
 	}
 
