@@ -34,10 +34,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	 */
 	private $context;
 
-	/**
-	 * @var Story_Post_Type & MockObject
-	 */
-	private $story_post_type;
+	private Story_Post_Type $story_post_type;
 
 	/**
 	 * @var Dashboard & MockObject
@@ -50,7 +47,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		parent::set_up();
 
 		$this->dashboard       = $this->createMock( Dashboard::class );
-		$this->story_post_type = $this->createMock( Story_Post_Type::class );
+		$this->story_post_type = $this->injector->make( Story_Post_Type::class );
 		$this->context         = $this->createMock( Context::class );
 
 		$this->instance = new \Google\Web_Stories\Speculative_Prerendering(
@@ -93,7 +90,6 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	 * @covers ::load_rules
 	 */
 	public function test_load_rules_all_stories(): void {
-		$this->story_post_type->method( 'get_slug' )->willReturn( 'web-story' );
 		$this->context->method( 'get_screen_post_type' )->willReturn( 'web-story' );
 		$this->context->method( 'get_screen_base' )->willReturn( 'edit' );
 
