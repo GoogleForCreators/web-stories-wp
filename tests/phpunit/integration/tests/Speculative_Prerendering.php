@@ -83,6 +83,9 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		->method( 'get_rules' )
 		->with( 'dashboard' );
 
+		$prerendering_class->expects( $this->once() )
+		->method( 'print_rules' );
+
 		$prerendering_class->load_rules( 'web-story_page_stories-dashboard' );
 	}
 
@@ -102,6 +105,9 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		$prerendering_class->expects( $this->once() )
 		->method( 'get_rules' )
 		->with( 'all_stories' );
+
+		$prerendering_class->expects( $this->once() )
+		->method( 'print_rules' );
 
 		$prerendering_class->load_rules( 'edit' );
 	}
