@@ -157,8 +157,7 @@ function CustomStyles() {
                 height: 100%;
               }
 
-              amp-story-grid-layer div:has(~ .small) > span,
-              amp-story-grid-layer div:has(~ .large) > span {
+              .audio-sticker {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
               }
               `,
