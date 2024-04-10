@@ -21,16 +21,18 @@ import { StoryPropTypes } from '@googleforcreators/elements';
 
 function AudioStickerOutput({ element }) {
   return (
-    <amp-story-audio-sticker
-      size={element.size}
-      sticker={element.sticker}
-      sticker-style={
-        element.style && element.style !== 'none' ? element.style : undefined
-      }
-      style={{
-        height: '100%',
-      }}
-    />
+    <div className="audio-sticker">
+      <amp-story-audio-sticker
+        size={element.size}
+        sticker={element.sticker}
+        sticker-style={
+          element.style && element.style !== 'none' ? element.style : undefined
+        }
+        style={{
+          height: '100%',
+        }}
+      />
+    </div>
   );
 }
 
