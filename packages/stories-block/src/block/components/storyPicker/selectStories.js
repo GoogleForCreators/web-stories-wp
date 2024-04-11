@@ -157,7 +157,7 @@ function SelectStories({
       author: currentAuthor?.id || undefined,
       search: searchKeyword || undefined,
       order,
-      orderBy,
+      orderby: orderBy,
       page: nextPage.current,
     });
   }, [searchKeyword, currentAuthor, fetchStories, order, orderBy]);

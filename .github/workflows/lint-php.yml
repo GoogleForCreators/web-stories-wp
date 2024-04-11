@@ -55,7 +55,7 @@ jobs:
             dl.cloudsmith.io:443
 
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
 
       - name: Setup PHP
         uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
