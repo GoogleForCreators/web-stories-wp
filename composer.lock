@@ -648,12 +648,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "868767496ed0ce92199233811fa5b35a50800145"
+                "reference": "7d3768c521b663a831d4229b966f14cd4ac89cd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/868767496ed0ce92199233811fa5b35a50800145",
-                "reference": "868767496ed0ce92199233811fa5b35a50800145",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/7d3768c521b663a831d4229b966f14cd4ac89cd5",
+                "reference": "7d3768c521b663a831d4229b966f14cd4ac89cd5",
                 "shasum": ""
             },
             "require": {
@@ -695,7 +695,7 @@
                 "source": "https://github.com/Automattic/VIP-Coding-Standards",
                 "wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
             },
-            "time": "2024-03-04T10:29:07+00:00"
+            "time": "2024-04-15T13:34:27+00:00"
         },
         {
             "name": "brain/monkey",
@@ -2309,16 +2309,16 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v8.7.0",
+            "version": "v8.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "1bab3a764a91ed037f420dc38124e2516b29e6b8"
+                "reference": "90ac054bd22fb26e66e9341b45f09d68f9341465"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/1bab3a764a91ed037f420dc38124e2516b29e6b8",
-                "reference": "1bab3a764a91ed037f420dc38124e2516b29e6b8",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/90ac054bd22fb26e66e9341b45f09d68f9341465",
+                "reference": "90ac054bd22fb26e66e9341b45f09d68f9341465",
                 "shasum": ""
             },
             "require": {
@@ -2347,22 +2347,22 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/woocommerce-stubs/issues",
-                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v8.7.0"
+                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v8.8.1"
             },
-            "time": "2024-03-19T16:55:16+00:00"
+            "time": "2024-04-15T13:32:19+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v6.4.3",
+            "version": "v6.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "6105bdab2f26c0204fe90ecc53d5684754550e8f"
+                "reference": "379f17a90c01498d4c99a0d15aab6e7aa6a2c840"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/6105bdab2f26c0204fe90ecc53d5684754550e8f",
-                "reference": "6105bdab2f26c0204fe90ecc53d5684754550e8f",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/379f17a90c01498d4c99a0d15aab6e7aa6a2c840",
+                "reference": "379f17a90c01498d4c99a0d15aab6e7aa6a2c840",
                 "shasum": ""
             },
             "require-dev": {
@@ -2370,7 +2370,7 @@
                 "nikic/php-parser": "^4.13",
                 "php": "^7.4 || ~8.0.0",
                 "php-stubs/generator": "^0.8.3",
-                "phpdocumentor/reflection-docblock": "^5.3",
+                "phpdocumentor/reflection-docblock": "5.3",
                 "phpstan/phpstan": "^1.10.49",
                 "phpunit/phpunit": "^9.5",
                 "szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^0.11"
@@ -2394,9 +2394,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.4.3"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.5.2"
             },
-            "time": "2024-02-11T18:56:19+00:00"
+            "time": "2024-04-14T17:30:14+00:00"
         },
         {
             "name": "php-stubs/wordpress-tests-stubs",
@@ -3690,12 +3690,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "00077527dfa5415280a28a044eca385eb3feb7ee"
+                "reference": "1b43da6199cab7867f06b52454a256efa743f170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/00077527dfa5415280a28a044eca385eb3feb7ee",
-                "reference": "00077527dfa5415280a28a044eca385eb3feb7ee",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/1b43da6199cab7867f06b52454a256efa743f170",
+                "reference": "1b43da6199cab7867f06b52454a256efa743f170",
                 "shasum": ""
             },
             "conflict": {
@@ -3782,9 +3782,10 @@
                 "concrete5/concrete5": "<9.2.8",
                 "concrete5/core": "<8.5.8|>=9,<9.1",
                 "contao-components/mediaelement": ">=2.14.2,<2.21.1",
+                "contao/comments-bundle": ">=2,<4.13.40|>=5.0.0.0-RC1-dev,<5.3.4",
                 "contao/contao": ">=4,<4.4.56|>=4.5,<4.9.40|>=4.10,<4.11.7|>=4.13,<4.13.21|>=5.1,<5.1.4",
                 "contao/core": ">=2,<3.5.39",
-                "contao/core-bundle": ">=3,<3.5.35|>=4,<4.9.42|>=4.10,<4.13.28|>=5,<5.1.10",
+                "contao/core-bundle": "<4.13.40|>=5,<5.3.4",
                 "contao/listing-bundle": ">=4,<4.4.8",
                 "contao/managed-edition": "<=1.5",
                 "corveda/phpsandbox": "<1.3.5",
@@ -4000,7 +4001,7 @@
                 "mantisbt/mantisbt": "<2.26.1",
                 "marcwillmann/turn": "<0.3.3",
                 "matyhtf/framework": "<3.0.6",
-                "mautic/core": "<4.3",
+                "mautic/core": "<4.4.12|>=5.0.0.0-alpha,<5.0.4",
                 "mediawiki/core": "<1.36.2",
                 "mediawiki/matomo": "<2.4.3",
                 "mediawiki/semantic-media-wiki": "<4.0.2",
@@ -4144,7 +4145,7 @@
                 "really-simple-plugins/complianz-gdpr": "<6.4.2",
                 "redaxo/source": "<=5.15.1",
                 "remdex/livehelperchat": "<4.29",
-                "reportico-web/reportico": "<=7.1.21",
+                "reportico-web/reportico": "<=8.1",
                 "rhukster/dom-sanitizer": "<1.0.7",
                 "rmccue/requests": ">=1.6,<1.8",
                 "robrichards/xmlseclibs": ">=1,<3.0.4",
@@ -4273,6 +4274,7 @@
                 "thinkcmf/thinkcmf": "<=5.1.7",
                 "thorsten/phpmyfaq": "<3.2.2",
                 "tikiwiki/tiki-manager": "<=17.1",
+                "timber/timber": "<=2",
                 "tinymce/tinymce": "<7",
                 "tinymighty/wiki-seo": "<1.2.2",
                 "titon/framework": "<9.9.99",
@@ -4326,6 +4328,7 @@
                 "wikimedia/parsoid": "<0.12.2",
                 "willdurand/js-translation-bundle": "<2.1.1",
                 "winter/wn-backend-module": "<1.2.4",
+                "winter/wn-dusk-plugin": "<2.1",
                 "winter/wn-system-module": "<1.2.4",
                 "wintercms/winter": "<=1.2.3",
                 "woocommerce/woocommerce": "<6.6",
@@ -4427,7 +4430,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-08T16:06:11+00:00"
+            "time": "2024-04-12T22:04:12+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -5517,22 +5520,22 @@
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "6.4.1",
+            "version": "6.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
-                "reference": "1703ee763b2e46669beebe08c277e105c26c8957"
+                "reference": "e7dd1dfa0b7aa3d24a496f3b36c1b76baf3717d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/1703ee763b2e46669beebe08c277e105c26c8957",
-                "reference": "1703ee763b2e46669beebe08c277e105c26c8957",
+                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/e7dd1dfa0b7aa3d24a496f3b36c1b76baf3717d2",
+                "reference": "e7dd1dfa0b7aa3d24a496f3b36c1b76baf3717d2",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.4",
                 "php-stubs/wordpress-globals": "0.2.0",
-                "php-stubs/wordpress-stubs": "6.4.1",
+                "php-stubs/wordpress-stubs": "6.5.2",
                 "sniccowp/php-scoper-excludes": "dev-master"
             },
             "type": "library",
@@ -5558,9 +5561,9 @@
             ],
             "support": {
                 "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.4.1"
+                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.5.2"
             },
-            "time": "2023-11-11T00:19:14+00:00"
+            "time": "2024-04-15T00:20:07+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
