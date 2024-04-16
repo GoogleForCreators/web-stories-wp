@@ -21,7 +21,8 @@
     "markdown",
     "react",
     "react-hooks",
-    "styled-components-a11y"
+    "styled-components-a11y",
+    "no-barrel-files"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -261,7 +262,8 @@
       {
         "allowShortCircuit": true
       }
-    ]
+    ],
+    "no-barrel-files/no-barrel-files": "error"
   },
   "env": {
     "browser": true,
