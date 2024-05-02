@@ -26,9 +26,9 @@ use Google\Web_Stories\Story_Post_Type;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Speculative_Prerendering
+ * @coversDefaultClass \Google\Web_Stories\Speculation_Rules
  */
-class Speculative_Prerendering extends DependencyInjectedTestCase {
+class Speculation_Rules extends DependencyInjectedTestCase {
 	/**
 	 * @var Context & MockObject
 	 */
@@ -41,7 +41,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	 */
 	private $dashboard;
 
-	protected \Google\Web_Stories\Speculative_Prerendering $instance;
+	protected \Google\Web_Stories\Speculation_Rules $instance;
 
 	public function set_up(): void {
 		parent::set_up();
@@ -50,7 +50,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		$this->story_post_type = $this->injector->make( Story_Post_Type::class );
 		$this->context         = $this->createMock( Context::class );
 
-		$this->instance = new \Google\Web_Stories\Speculative_Prerendering(
+		$this->instance = new \Google\Web_Stories\Speculation_Rules(
 			$this->context,
 			$this->story_post_type,
 			$this->dashboard,
@@ -71,7 +71,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 	public function test_load_rules_dashboard(): void {
 		$this->dashboard->method( 'get_hook_suffix' )->willReturn( 'web-story_page_stories-dashboard' );
 
-		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculative_Prerendering::class )
+		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculation_Rules::class )
 		->onlyMethods( [ 'get_rules', 'print_rules' ] )
 		->setConstructorArgs( [ $this->context, $this->story_post_type, $this->dashboard ] )
 		->getMock();
@@ -93,7 +93,7 @@ class Speculative_Prerendering extends DependencyInjectedTestCase {
 		$this->context->method( 'get_screen_post_type' )->willReturn( 'web-story' );
 		$this->context->method( 'get_screen_base' )->willReturn( 'edit' );
 
-		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculative_Prerendering::class )
+		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculation_Rules::class )
 			->onlyMethods( [ 'get_rules', 'print_rules' ] )
 			->setConstructorArgs( [ $this->context, $this->story_post_type, $this->dashboard ] )
 			->getMock();

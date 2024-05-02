@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Speculative_Prerendering
+ * Class Speculation_Rules
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
@@ -31,9 +31,9 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Admin\Dashboard;
 
 /**
- * Speculative_Prerendering class.
+ * Speculation_Rules class.
  */
-class Speculative_Prerendering extends Service_Base {
+class Speculation_Rules extends Service_Base {
 	/**
 	 * Context instance.
 	 *
@@ -56,7 +56,7 @@ class Speculative_Prerendering extends Service_Base {
 	private Dashboard $dashboard;
 
 	/**
-	 * Speculative_Prerendering constructor.
+	 * Speculation_Rules constructor.
 	 *
 	 * @param Context         $context          Context instance.
 	 * @param Story_Post_Type $story_post_type  Story_Post_Type instance.

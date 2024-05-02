@@ -85,7 +85,7 @@ namespace PHPSTORM_META {
 			'remove_transients'            => \Google\Web_Stories\Remove_Transients::class,
 			'web_stories_block'            => \Google\Web_Stories\Block\Web_Stories_Block::class,
 			'injector'                     => \Google\Web_Stories\Infrastructure\Injector::class,
-			'speculative_prerendering'     => \Google\Web_Stories\Speculative_Prerendering::class,
+			'speculation_rules'     => \Google\Web_Stories\Speculation_Rules::class,
 		] )
 	);
 
