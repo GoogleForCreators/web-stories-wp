@@ -24,6 +24,7 @@ use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\HTML;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
+use WP_Error;
 use WP_Post;
 
 /**
@@ -33,6 +34,8 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
+		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
+
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
 		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
@@ -40,10 +43,50 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	}
 
 	public function tear_down(): void {
+		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
+
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
 		parent::tear_down();
+	}
+
+	/**
+	 * Intercept link processing requests and mock responses.
+	 *
+	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param mixed  $r       HTTP request arguments.
+	 * @param string $url     The request URL.
+	 * @return mixed|WP_Error Response data.
+	 */
+	public function mock_http_request( $preempt, $r, string $url ) {
+		if ( 'https://cdn.ampproject.org/rtv/metadata' === $url ) {
+			return [
+				'headers'  => [
+					'content-type'   => 'application/json',
+					'content-length' => 100,
+				],
+				'response' => [
+					'code' => 200,
+					'body' => file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/ampproject/amp-toolbox/resources/local_fallback/rtv/metadata' ),
+				],
+			];
+		}
+
+		if ( 'https://cdn.ampproject.org/v0.css' === $url ) {
+			return [
+				'headers'  => [
+					'content-type'   => 'text/css',
+					'content-length' => 100,
+				],
+				'response' => [
+					'code' => 200,
+					'body' => file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/ampproject/amp-toolbox/resources/local_fallback/v0.css' ),
+				],
+			];
+		}
+
+		return $preempt;
 	}
 
 	/**
