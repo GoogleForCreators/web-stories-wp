@@ -144,7 +144,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		}
 
 		// URL_500
-		if ( 'https://93.184.216.34.com/500/test.jpg' === $url ) {
+		if ( self::URL_500 === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/jpeg',
