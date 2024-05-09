@@ -215,6 +215,7 @@ class Dashboard extends Service_Base {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
+		add_filter( 'web_stories_speculation_rules', [ $this, 'load_speculation_rules' ] );
 	}
 
 	/**
@@ -572,5 +573,33 @@ class Dashboard extends Service_Base {
 			</a>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Load the Speculation Rules for the Dashboard.
+	 *
+	 * @return array An array containing prerendering rules.
+	 */
+	public function load_speculation_rules(): array {
+		$new_story_url  = sprintf(
+			'post-new.php?post_type=%s',
+			$this->story_post_type->get_slug()
+		);
+		$edit_story_url = 'post.php?post=*&action=edit';
+		return [
+			'prerender' => [
+				[
+					'source'    => 'document',
+					'where'     => [
+						'and' => [
+							[
+								'href_matches' => [ $edit_story_url, $new_story_url ],
+							],
+						],
+					],
+					'eagerness' => 'moderate',
+				],
+			],
+		];
 	}
 }
