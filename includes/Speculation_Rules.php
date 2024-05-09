@@ -28,19 +28,10 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Admin\Dashboard;
-
 /**
  * Speculation_Rules class.
  */
 class Speculation_Rules extends Service_Base {
-	/**
-	 * Context instance.
-	 *
-	 * @var Context Context instance.
-	 */
-	private Context $context;
-
 	/**
 	 * Story_Post_Type instance.
 	 *
@@ -49,79 +40,64 @@ class Speculation_Rules extends Service_Base {
 	private Story_Post_Type $story_post_type;
 
 	/**
-	 * Dashboard instance.
-	 *
-	 * @var Dashboard Dashboard instance.
-	 */
-	private Dashboard $dashboard;
-
-	/**
 	 * Speculation_Rules constructor.
 	 *
-	 * @param Context         $context          Context instance.
 	 * @param Story_Post_Type $story_post_type  Story_Post_Type instance.
-	 * @param Dashboard       $dashboard        Dashboard instance.
 	 */
-	public function __construct( Context $context, Story_Post_Type $story_post_type, Dashboard $dashboard ) {
-		$this->context         = $context;
+	public function __construct( Story_Post_Type $story_post_type ) {
 		$this->story_post_type = $story_post_type;
-		$this->dashboard       = $dashboard;
 	}
 
 	/**
 	 * Runs on instantiation.
 	 */
 	public function register(): void {
-		add_action( 'admin_enqueue_scripts', [ $this, 'load_rules' ] );
-	}
-
-	/**
-	 * Loads the prerendering rules based on the current page.
-	 *
-	 * @param string $hook The current page hook.
-	 */
-	public function load_rules( string $hook ): void {
-		$rules = [];
-
-		$hook_suffix = $this->dashboard->get_hook_suffix( 'stories-dashboard' );
-		if ( false !== $hook_suffix && $hook_suffix === $hook ) {
-			$rules = $this->get_rules( 'dashboard' );
-		} elseif ( $this->story_post_type->get_slug() === $this->context->get_screen_post_type() && 'edit' === $this->context->get_screen_base() ) {
-			$rules = $this->get_rules( 'all_stories' );
-		}
-		$this->print_rules( $rules );
+		add_action( 'admin_footer', [ $this, 'print_rules' ] );
+		add_action( 'wp_footer', [ $this, 'print_rules' ] );
 	}
 
 	/**
 	 * Retrieves the prerendering rules for a specific page.
 	 *
-	 * @param string $page The page identifier.
 	 * @return array An array containing prerendering rules.
 	 */
-	public function get_rules( string $page ): array {
-		$rules = [
-			[
-				'source'    => 'document',
-				'where'     => [
-					'and' => [
-						[
-							'href_matches' => $this->get_matches_for_page( $page ),
+	public function get_rules(): array {
+		$rules = [];
+
+		if ( ! is_admin() ) {
+			$view_story_url = sprintf(
+				'/%s/*',
+				$this->story_post_type::REWRITE_SLUG
+			);
+			$archive_url    = Story_Post_Type::REWRITE_SLUG;
+
+			$rules = [
+				'prerender' => [
+					[
+						'source'    => 'document',
+						'where'     => [
+							'and' => [
+								[
+									'href_matches' => [
+										$archive_url,
+										$view_story_url,
+									],
+								],
+							],
 						],
+						'eagerness' => 'moderate',
 					],
 				],
-				'eagerness' => 'moderate',
-			],
-		];
-
-		return [ 'prerender' => $rules ];
+			];
+		}
+		return apply_filters( 'web_stories_speculation_rules', $rules );
 	}
 
 	/**
 	 * Prints the prerendering rules as an inline script tag.
-	 *
-	 * @param array $rules The prerendering rules to print.
 	 */
-	public function print_rules( array $rules ): void {
+	public function print_rules(): void {
+		$rules = $this->get_rules();
 		if ( empty( $rules ) ) {
 			return;
 		}
@@ -131,38 +107,5 @@ class Speculation_Rules extends Service_Base {
 		if ( false !== $encoded_rules ) {
 			wp_print_inline_script_tag( $encoded_rules, [ 'type' => 'speculationrules' ] );
 		}
-	}
-
-	/**
-	 * Generates the URL matches array for different pages.
-	 *
-	 * @return array The URL matches array containing URLs for different pages.
-	 */
-	private function generate_matches(): array {
-		$new_story_url  = sprintf(
-			'post-new.php?post_type=%s',
-			$this->story_post_type->get_slug()
-		);
-		$edit_story_url = 'post.php?post=*&action=edit';
-		$view_story_url = sprintf(
-			'/%s/*',
-			$this->story_post_type::REWRITE_SLUG
-		);
-
-		return [
-			'dashboard'   => [ $edit_story_url, $new_story_url ],
-			'all_stories' => [ $edit_story_url, $new_story_url, $view_story_url ],
-		];
-	}
-
-	/**
-	 * Retrieves the URL matches for the specified page.
-	 *
-	 * @param string $page The page for which to retrieve URL matches.
-	 * @return array The URL matches for the specified page.
-	 */
-	private function get_matches_for_page( string $page ): array {
-		$matches = $this->generate_matches();
-		return $matches[ $page ];
 	}
 }
