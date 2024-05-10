@@ -20,40 +20,23 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Google\Web_Stories\Admin\Dashboard;
-use Google\Web_Stories\Context;
 use Google\Web_Stories\Story_Post_Type;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Speculation_Rules
  */
 class Speculation_Rules extends DependencyInjectedTestCase {
-	/**
-	 * @var Context & MockObject
-	 */
-	private $context;
-
 	private Story_Post_Type $story_post_type;
-
-	/**
-	 * @var Dashboard & MockObject
-	 */
-	private $dashboard;
 
 	protected \Google\Web_Stories\Speculation_Rules $instance;
 
 	public function set_up(): void {
 		parent::set_up();
 
-		$this->dashboard       = $this->createMock( Dashboard::class );
 		$this->story_post_type = $this->injector->make( Story_Post_Type::class );
-		$this->context         = $this->createMock( Context::class );
 
 		$this->instance = new \Google\Web_Stories\Speculation_Rules(
-			$this->context,
 			$this->story_post_type,
-			$this->dashboard,
 		);
 	}
 
@@ -62,71 +45,26 @@ class Speculation_Rules extends DependencyInjectedTestCase {
 	 */
 	public function test_register(): void {
 		$this->instance->register();
-		$this->assertSame( 10, has_action( 'admin_enqueue_scripts', [ $this->instance, 'load_rules' ] ) );
+		$this->assertSame( 10, has_action( 'admin_footer', [ $this->instance, 'print_rules' ] ) );
+		$this->assertSame( 10, has_action( 'wp_footer', [ $this->instance, 'print_rules' ] ) );
 	}
 
 	/**
-	 * @covers ::load_rules
+	 * @covers ::get_rules
 	 */
-	public function test_load_rules_dashboard(): void {
-		$this->dashboard->method( 'get_hook_suffix' )->willReturn( 'web-story_page_stories-dashboard' );
-
+	public function test_get_rules(): void {
 		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculation_Rules::class )
-		->onlyMethods( [ 'get_rules', 'print_rules' ] )
-		->setConstructorArgs( [ $this->context, $this->story_post_type, $this->dashboard ] )
+		->onlyMethods( [ 'get_rules' ] )
+		->setConstructorArgs( [ $this->story_post_type ] )
 		->getMock();
 
-		$prerendering_class->expects( $this->once() )
-		->method( 'get_rules' )
-		->with( 'dashboard' );
-
-		$prerendering_class->expects( $this->once() )
-		->method( 'print_rules' );
-
-		$prerendering_class->load_rules( 'web-story_page_stories-dashboard' );
-	}
-
-	/**
-	 * @covers ::load_rules
-	 */
-	public function test_load_rules_all_stories(): void {
-		$this->context->method( 'get_screen_post_type' )->willReturn( 'web-story' );
-		$this->context->method( 'get_screen_base' )->willReturn( 'edit' );
-
-		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculation_Rules::class )
-			->onlyMethods( [ 'get_rules', 'print_rules' ] )
-			->setConstructorArgs( [ $this->context, $this->story_post_type, $this->dashboard ] )
-			->getMock();
-
-		$prerendering_class->expects( $this->once() )
-		->method( 'get_rules' )
-		->with( 'all_stories' );
-
-		$prerendering_class->expects( $this->once() )
-		->method( 'print_rules' );
-
-		$prerendering_class->load_rules( 'edit' );
-	}
-
-	/**
-	 * @covers ::get_rules
-	 */
-	public function test_get_rules_for_dashboard(): void {
-		$new_story_url  = sprintf(
-			'post-new.php?post_type=%s',
-			$this->story_post_type->get_slug()
-		);
-		$edit_story_url = 'post.php?post=*&action=edit';
-
-		$expected = [
+		$expected_rules = [
 			'prerender' => [
 				[
 					'source'    => 'document',
 					'where'     => [
 						'and' => [
-							[
-								'href_matches' => [ $edit_story_url, $new_story_url ],
-							],
+							[ 'href_matches' => [ Story_Post_Type::REWRITE_SLUG, sprintf( '/%s/*', $this->story_post_type::REWRITE_SLUG ) ] ],
 						],
 					],
 					'eagerness' => 'moderate',
@@ -134,39 +72,11 @@ class Speculation_Rules extends DependencyInjectedTestCase {
 			],
 		];
 
-		$this->assertEquals( $expected, $this->instance->get_rules( 'dashboard' ) );
-	}
+		$prerendering_class->expects( $this->once() )
+			->method( 'get_rules' )
+			->willReturn( $expected_rules );
 
-	/**
-	 * @covers ::get_rules
-	 */
-	public function test_get_rules_for_all_stories(): void {
-		$new_story_url  = sprintf(
-			'post-new.php?post_type=%s',
-			$this->story_post_type->get_slug()
-		);
-		$edit_story_url = 'post.php?post=*&action=edit';
-		$view_story_url = sprintf(
-			'/%s/*',
-			$this->story_post_type::REWRITE_SLUG
-		);
-
-		$expected = [
-			'prerender' => [
-				[
-					'source'    => 'document',
-					'where'     => [
-						'and' => [
-							[
-								'href_matches' => [ $edit_story_url, $new_story_url, $view_story_url ],
-							],
-						],
-					],
-					'eagerness' => 'moderate',
-				],
-			],
-		];
-
-		$this->assertEquals( $expected, $this->instance->get_rules( 'all_stories' ) );
+		$actual_rules = $prerendering_class->get_rules();
+		$this->assertEquals( $expected_rules, $actual_rules );
 	}
 }
