@@ -31,11 +31,62 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\GoogleFonts
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeViewport;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
+use WP_Error;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Optimization
  */
 class Optimization extends TestCase {
+	public function set_up(): void {
+		parent::set_up();
+
+		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
+	}
+
+	public function tear_down(): void {
+		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
+
+		parent::tear_down();
+	}
+
+	/**
+	 * Intercept link processing requests and mock responses.
+	 *
+	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param mixed  $r       HTTP request arguments.
+	 * @param string $url     The request URL.
+	 * @return mixed|WP_Error Response data.
+	 */
+	public function mock_http_request( $preempt, $r, string $url ) {
+		if ( 'https://cdn.ampproject.org/rtv/metadata' === $url ) {
+			return [
+				'headers'  => [
+					'content-type'   => 'application/json',
+					'content-length' => 100,
+				],
+				'response' => [
+					'code' => 200,
+					'body' => file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/ampproject/amp-toolbox/resources/local_fallback/rtv/metadata' ),
+				],
+			];
+		}
+
+		if ( 'https://cdn.ampproject.org/v0.css' === $url ) {
+			return [
+				'headers'  => [
+					'content-type'   => 'text/css',
+					'content-length' => 100,
+				],
+				'response' => [
+					'code' => 200,
+					'body' => file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/ampproject/amp-toolbox/resources/local_fallback/v0.css' ),
+				],
+			];
+		}
+
+		return $preempt;
+	}
+
 	/**
 	 * @covers ::optimize_document
 	 * @covers ::get_optimizer

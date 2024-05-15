@@ -69,17 +69,7 @@ use WP_REST_Server;
  *     type?: SchemaEntry
  *   }
  * }
- * @phpstan-type URLParts array{
- *   scheme?: string,
- *   user?: string,
- *   pass?: string,
- *   host?: string,
- *   port?: int,
- *   path?: string,
- *   query?: string
- * }
- *
- * @phpstan-type RequestOptions array{
+ * @phpstan-type HttpArgs array{
  *   method?: string,
  *   timeout?: float,
  *   redirection?: int,
@@ -96,7 +86,7 @@ use WP_REST_Server;
  *   sslcertificates?: string,
  *   stream?: bool,
  *   filename?: string,
- *   limit_response_size?: int,
+ *   limit_response_size?: int
  * }
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
@@ -678,10 +668,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.15.0
 	 *
-	 * @param string               $url  Request URL.
-	 * @param array<string, mixed> $args Request args.
+	 * @param string $url  Request URL.
+	 * @param array  $args Request args.
 	 *
-	 * @phpstan-param RequestOptions $args
+	 * @phpstan-param HttpArgs $args
 	 */
 	private function proxy_url_curl( string $url, array $args ): void {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
@@ -701,10 +691,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.15.0
 	 *
-	 * @param string               $url  Request URL.
-	 * @param array<string, mixed> $args Request args.
+	 * @param string $url  Request URL.
+	 * @param array  $args Request args.
 	 *
-	 * @phpstan-param RequestOptions $args
+	 * @phpstan-param HttpArgs $args
 	 */
 	private function proxy_url_fallback( string $url, array $args ): void {
 		$response = wp_safe_remote_get( $url, $args );

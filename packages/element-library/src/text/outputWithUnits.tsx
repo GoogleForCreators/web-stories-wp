@@ -66,9 +66,14 @@ function TextOutputWithUnits({
     backgroundTextMode,
     padding,
     borderRadius,
-    tagName: TagName = 'p',
     ...rest
   } = element;
+
+  // It can never be 'auto' here thanks to getTextElementTagNames(),
+  // but this makes TypeScript happy.
+  const TagName =
+    element.tagName && element.tagName !== 'auto' ? element.tagName : 'p';
+
   if (!dataToFontSizeY) {
     dataToFontSizeY = dataToStyleY;
   }

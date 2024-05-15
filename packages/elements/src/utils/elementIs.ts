@@ -26,14 +26,15 @@ import type {
   BackgroundableElement,
   DefaultBackgroundElement,
   Element,
-  GifElement,
-  LinkableElement,
   MediaElement,
   ProductElement,
   SequenceMediaElement,
   StickerElement,
   TextElement,
   VideoElement,
+  GifElement,
+  LinkableElement,
+  OverlayableElement,
 } from '../types';
 import { ElementType } from '../types';
 
@@ -79,7 +80,10 @@ function isSequenceMediaElement(
   e: Draft<MediaElement>
 ): e is Draft<SequenceMediaElement>;
 function isSequenceMediaElement(e: MediaElement): e is SequenceMediaElement {
-  return 'poster' in e.resource && Boolean(e.resource.poster);
+  return (
+    ('poster' in e.resource && Boolean(e.resource.poster)) ||
+    ('length' in e.resource && Boolean(e.resource.length))
+  );
 }
 
 function isSticker(e: Element): e is StickerElement {
@@ -110,6 +114,12 @@ function isLinkable(e: Element): e is LinkableElement {
   );
 }
 
+function isOverlayable(e: Element): e is OverlayableElement;
+function isOverlayable(e: Draft<Element>): e is Draft<OverlayableElement>;
+function isOverlayable(e: Element): e is OverlayableElement {
+  return 'overlay' in e && typeof e.overlay !== 'undefined';
+}
+
 const elementIs = {
   media: isMediaElement,
   text: isTextElement,
@@ -121,6 +131,7 @@ const elementIs = {
   video: isVideo,
   gif: isGif,
   linkable: isLinkable,
+  overlayable: isOverlayable,
 };
 
 export default elementIs;

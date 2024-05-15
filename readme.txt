@@ -2,7 +2,7 @@
 
 Contributors:      google
 Tested up to:      6.5
-Requires at least: 6.2
+Requires at least: 6.3
 Stable tag:        V.V.V
 License:           Apache-2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
@@ -109,6 +109,14 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.36.0 =
+
+* Enhancement: added support for adding gradients to text.
+* Enhancement: added more fine-grained control for the analytics setting.
+* Enhancement: compatibility with WordPress 6.5.
+* Fixed: resolved an issue with canvas zoom.
+* Fixed: resolved several layout issues with the Web Stories block.
+
 = 1.35.0 =
 
 * Enhancement: compatibility with WordPress 6.4. New minimum version required is 6.2.
@@ -131,6 +139,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Bug fixes and performance improvements.
 
 == Upgrade Notice ==
+
+= 1.36.0 =
+
+This release adds support for text gradients, a more fine-grained analytics setting, and includes compatibility with WordPress 6.5 and several bug fixes.
 
 = 1.35.0 =
 
