@@ -35,6 +35,7 @@ use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Font_Post_Type;
+use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Locale;
@@ -48,7 +49,7 @@ use Google\Web_Stories\Tracking;
 /**
  * Dashboard class.
  */
-class Dashboard extends Service_Base {
+class Dashboard extends Service_Base implements Conditional {
 
 	/**
 	 * Script handle.
@@ -602,5 +603,16 @@ class Dashboard extends Service_Base {
 				],
 			],
 		];
+	}
+
+	/**
+	 * Check whether the conditional object is currently needed.
+	 *
+	 * @since 1.37.0
+	 *
+	 * @return bool Whether the conditional object is needed.
+	 */
+	public static function is_needed(): bool {
+		return is_admin();
 	}
 }
