@@ -85,8 +85,7 @@ export function resolveKeySpec(keyDict: Keys, keyNameOrSpec: KeyNameOrSpec) {
   } = keySpec;
   const mappedKeys = new Array<string>()
     .concat(keyOrArray)
-    .map((key) => keyDict[key as keyof Keys] || key)
-    .flat();
+    .flatMap((key) => keyDict[key as keyof Keys] || key);
   const allKeys = addMods(mappedKeys, shift);
   return {
     key: allKeys,

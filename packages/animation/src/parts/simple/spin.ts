@@ -19,7 +19,7 @@
  */
 import {
   type AMPEffectTiming,
-  AnimationType,
+  type AnimationType,
   type Element,
   FieldType,
 } from '../../types';

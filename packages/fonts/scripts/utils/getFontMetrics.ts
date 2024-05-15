@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { unlinkSync, writeFileSync } from 'fs';
-import Crypto from 'crypto';
-import { tmpdir } from 'os';
-import Path from 'path';
+import { unlinkSync, writeFileSync } from 'node:fs';
+import Crypto from 'node:crypto';
+import { tmpdir } from 'node:os';
+import Path from 'node:path';
 import { loadSync } from 'opentype.js';
 
 /**

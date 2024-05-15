@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { __setMockFiles } from 'fs';
+import { __setMockFiles } from 'node:fs';
 
 /**
  * Internal dependencies
  */
 import getIgnoredFiles from '../getIgnoredFiles';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 describe('getIgnoredFiles', () => {
   const MOCK_FILE_INFO = {
@@ -32,9 +32,9 @@ describe('getIgnoredFiles', () => {
       example.txt
 
       # somefile.php
-      
+
       doesnotexist.txt
-      
+
       sub
     `,
     '/foo/example.txt': '',

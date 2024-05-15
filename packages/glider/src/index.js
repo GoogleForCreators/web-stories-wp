@@ -54,7 +54,7 @@ Glider.prototype.scrollItem = function (slide, dot, e) {
   this.opt.slidesToShow = Math.max(1, this.opt.slidesToShow);
   // This will also cause this.itemWidth to be Infinity because division by zero returns Infinity in JS.
   // Update this.itemWidth with actual value in this case.
-  if (this.itemWidth === Infinity) {
+  if (this.itemWidth === Number.POSITIVE_INFINITY) {
     // It's a sibling.
     const carouselWrapper = e.target.parentElement.querySelector(
       '.web-stories-list__carousel'
@@ -64,8 +64,9 @@ Glider.prototype.scrollItem = function (slide, dot, e) {
     );
 
     this.itemWidth =
-      parseFloat(itemStyle.width) +
-      (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
+      Number.parseFloat(itemStyle.width) +
+      (Number.parseFloat(itemStyle.marginLeft) +
+        Number.parseFloat(itemStyle.marginRight));
   }
 
   const originalSlide = slide;

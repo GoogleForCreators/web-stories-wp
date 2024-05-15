@@ -51,7 +51,7 @@ function useLayers() {
     return (
       elementLayers
         // If an element has a new group, add both group and element
-        .map((element, index, list) => {
+        .flatMap((element, index, list) => {
           const elementLayer = {
             isGroup: false,
             isFirstElementAfterGroup:
@@ -72,8 +72,6 @@ function useLayers() {
           };
           return [groupLayer, elementLayer];
         })
-        // Flatten the nested arrays
-        .flat()
     );
   }, [elementLayers]);
 

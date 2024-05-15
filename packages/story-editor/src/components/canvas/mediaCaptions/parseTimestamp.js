@@ -29,10 +29,10 @@ function parseTimestamp(timestamp) {
   if (!match) {
     return null;
   }
-  const hours = match[1] ? parseInt(match[1]) : 0;
-  const minutes = parseInt(match[2]);
-  const seconds = parseInt(match[3]);
-  const milliseconds = parseInt(match[4]);
+  const hours = match[1] ? Number.parseInt(match[1]) : 0;
+  const minutes = Number.parseInt(match[2]);
+  const seconds = Number.parseInt(match[3]);
+  const milliseconds = Number.parseInt(match[4]);
   return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
 }
 

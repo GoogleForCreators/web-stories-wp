@@ -21,10 +21,10 @@ import STICKERS from '@googleforcreators/stickers';
 import { dataPixels } from '@googleforcreators/units';
 import {
   elementIs,
-  ElementType,
+  type ElementType,
+  type Element,
   getDefinitionForType,
 } from '@googleforcreators/elements';
-import type { Element } from '@googleforcreators/elements';
 import { DEFAULT_MASK } from '@googleforcreators/masks';
 
 /**

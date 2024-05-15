@@ -185,7 +185,7 @@ beforeAll(() => {
   // Add custom matchers inspired by jest's and jest-dom's ditto
   jasmine.addMatchers({
     toBeEmpty: () => ({
-      compare: function (actual) {
+      compare: (actual) => {
         const innerHTML = actual?.innerHTML ?? '';
         const pass = innerHTML === '';
         return {
@@ -197,7 +197,7 @@ beforeAll(() => {
       },
     }),
     toHaveFocus: () => ({
-      compare: function (actual) {
+      compare: (actual) => {
         const doc = actual?.ownerDocument || actual?.document;
         const pass = doc.activeElement === actual;
         return {
@@ -209,7 +209,7 @@ beforeAll(() => {
       },
     }),
     toHaveStyle: (util, customEqualityTesters) => ({
-      compare: function (element, property, expected) {
+      compare: (element, property, expected) => {
         const actual = element
           ? window.getComputedStyle(element)[property]
           : null;
@@ -223,7 +223,7 @@ beforeAll(() => {
       },
     }),
     toHaveProperty: (util, customEqualityTesters) => ({
-      compare: function (element, property, expected) {
+      compare: (element, property, expected) => {
         const actual = element?.[property] ?? '';
         const pass =
           typeof expected === 'string'
@@ -238,7 +238,7 @@ beforeAll(() => {
       },
     }),
     toHaveTextContent: (util, customEqualityTesters) => ({
-      compare: function (element, expected) {
+      compare: (element, expected) => {
         const actual = element.textContent.trim();
         const pass = util.equals(actual, expected, customEqualityTesters);
         return {
@@ -250,7 +250,7 @@ beforeAll(() => {
       },
     }),
     toBeOneOf: (util, customEqualityTesters) => ({
-      compare: function (actual, expecteds) {
+      compare: (actual, expecteds) => {
         const passer = (expected) =>
           util.equals(actual, expected, customEqualityTesters);
         const pass = expecteds.some(passer);
@@ -270,7 +270,7 @@ beforeAll(() => {
 
   jasmine.addAsyncMatchers({
     toHaveNoViolations: () => ({
-      compare: async function (element, options) {
+      compare: async (element, options) => {
         const result = await window.axe.run(element, options);
         const pass = result.violations.length === 0;
 

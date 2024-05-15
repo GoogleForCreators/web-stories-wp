@@ -408,7 +408,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       };
 
       await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
-      const initialLineHeight = parseFloat(getDisplayTextStyles().lineHeight);
+      const initialLineHeight = Number.parseFloat(
+        getDisplayTextStyles().lineHeight
+      );
 
       const { lineHeight } = data.fixture.editor.sidebar.designPanel.textStyle;
 
@@ -432,7 +434,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(getTextContent()).toBe('Fill in some text');
 
       // Expect line height to have changed
-      const currentLineHeight = parseFloat(getDisplayTextStyles().lineHeight);
+      const currentLineHeight = Number.parseFloat(
+        getDisplayTextStyles().lineHeight
+      );
       expect(currentLineHeight).not.toBe(initialLineHeight);
     });
   });

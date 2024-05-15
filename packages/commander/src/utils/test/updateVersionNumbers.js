@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { __setMockFiles, readFileSync } from 'fs';
+import { __setMockFiles, readFileSync } from 'node:fs';
 
 /**
  * Internal dependencies
  */
 import updateVersionNumbers from '../updateVersionNumbers';
 
-jest.mock('fs');
+jest.mock('node:fs');
 jest.mock('../appendRevisionToVersion', () =>
   jest.fn(() => '1.0.0-alpha+1234567')
 );

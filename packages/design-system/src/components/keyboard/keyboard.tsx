@@ -151,7 +151,7 @@ export function useIsKeyPressed(
   }, []);
   useEffect(() => {
     window.addEventListener('blur', handleBlur);
-    return function () {
+    return () => {
       window.removeEventListener('blur', handleBlur);
     };
   }, [handleBlur]);

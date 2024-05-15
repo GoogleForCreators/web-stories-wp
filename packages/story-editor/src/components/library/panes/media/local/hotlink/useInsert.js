@@ -74,8 +74,7 @@ function useInsert() {
     [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
   );
   const allowedFileTypes = useMemo(
-    () =>
-      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
+    () => allowedMimeTypes.flatMap((type) => getExtensionsFromMimeType(type)),
     [allowedMimeTypes]
   );
 

@@ -29,12 +29,11 @@ export function getInUseFontsForPages(pages: Page[]) {
     Array.from(
       new Set(
         pages
-          .map(({ elements = [] }) =>
+          .flatMap(({ elements = [] }) =>
             elements.map((element) =>
               elementIs.text(element) ? element.font.family : null
             )
           )
-          .flat()
           .filter(Boolean)
       )
     ) || []

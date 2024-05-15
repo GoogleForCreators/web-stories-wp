@@ -246,7 +246,7 @@ function ExploreTemplatesView() {
   useEffect(() => {
     if (idRef.current && orderedTemplates.length) {
       const isValidId = orderedTemplates.some(
-        (template) => template.id === parseInt(idRef.current)
+        (template) => template.id === Number.parseInt(idRef.current)
       );
       if (!isValidId) {
         replace('');
@@ -254,7 +254,7 @@ function ExploreTemplatesView() {
       }
 
       setIsDetailsViewOpen(true);
-      updateTemplateView(parseInt(idRef.current));
+      updateTemplateView(Number.parseInt(idRef.current));
     }
   }, [orderedTemplates, replace, updateTemplateView]);
 

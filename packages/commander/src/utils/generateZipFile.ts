@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { dirname, basename, join } from 'path';
-import { execFileSync } from 'child_process';
-import { existsSync, unlinkSync } from 'fs';
+import { dirname, basename, join } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { existsSync, unlinkSync } from 'node:fs';
 
 /**
  * Generates a ZIP file.

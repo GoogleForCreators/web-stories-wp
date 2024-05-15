@@ -22,7 +22,7 @@ import type { FontWeight, FontVariantStyle } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { LETTERSPACING, WEIGHT } from '../customConstants';
+import { type LETTERSPACING, WEIGHT } from '../customConstants';
 
 export const isStyle = (style: string | undefined, prefix: string) =>
   Boolean(style?.startsWith(prefix));
@@ -52,9 +52,9 @@ export function styleToNumeric(
   const raw = getVariable(style, prefix);
   // Negative numbers are prefixed with an N:
   if (raw.charAt(0) === 'N') {
-    return -parseInt(raw.slice(1));
+    return -Number.parseInt(raw.slice(1));
   }
-  return parseInt(raw);
+  return Number.parseInt(raw);
 }
 
 export function weightToStyle(weight: number) {
