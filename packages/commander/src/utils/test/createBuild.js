@@ -25,7 +25,7 @@ import { __setMockFiles } from 'node:fs';
 import createBuild from '../createBuild';
 import copyFiles from '../copyFiles';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 jest.mock('../getIgnoredFiles', () => jest.fn(() => ['bar.txt', 'baz/']));
 jest.mock('../copyFiles');

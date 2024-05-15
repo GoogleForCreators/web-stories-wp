@@ -24,7 +24,7 @@ import { __setMockFiles, readdirSync } from 'node:fs';
  */
 import deleteExistingZipFiles from '../deleteExistingZipFiles';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 describe('deleteExistingZipFiles', () => {
   const MOCK_FILE_INFO = {

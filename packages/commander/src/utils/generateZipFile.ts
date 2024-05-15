@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { dirname, basename, join } from 'node:path';
-import { execFileSync } from 'child_process';
+import { execFileSync } from 'node:child_process';
 import { existsSync, unlinkSync } from 'node:fs';
 
 /**

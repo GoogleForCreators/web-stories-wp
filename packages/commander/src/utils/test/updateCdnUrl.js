@@ -24,7 +24,7 @@ import { __setMockFiles, readFileSync } from 'node:fs';
  */
 import updateCdnUrl from '../updateCdnUrl';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 const PLUGIN_FILE_CONTENT = `
 <?php

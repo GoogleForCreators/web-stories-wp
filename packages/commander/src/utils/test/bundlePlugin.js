@@ -27,8 +27,8 @@ import generateZipFile from '../generateZipFile';
 import getCurrentVersionNumber from '../getCurrentVersionNumber';
 import deleteExistingZipFiles from '../deleteExistingZipFiles';
 
-jest.mock('fs');
-jest.mock('child_process');
+jest.mock('node:fs');
+jest.mock('node:child_process');
 
 jest.mock('../generateZipFile');
 jest.mock('../getCurrentVersionNumber');

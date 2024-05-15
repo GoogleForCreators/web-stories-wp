@@ -24,7 +24,7 @@ import { __setMockFiles } from 'node:fs';
  */
 import getCurrentVersionNumber from '../getCurrentVersionNumber';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 const PLUGIN_FILE_CONTENT = `
 <?php

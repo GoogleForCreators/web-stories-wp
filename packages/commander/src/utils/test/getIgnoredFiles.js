@@ -24,7 +24,7 @@ import { __setMockFiles } from 'node:fs';
  */
 import getIgnoredFiles from '../getIgnoredFiles';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 describe('getIgnoredFiles', () => {
   const MOCK_FILE_INFO = {

@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { execFileSync } from 'child_process';
+import { execFileSync } from 'node:child_process';
 
 /**
  * Internal dependencies
  */
 import copyFiles from '../copyFiles';
 
-jest.mock('child_process');
+jest.mock('node:child_process');
 
 describe('copyFiles', () => {
   it('should sync source files to target', () => {
