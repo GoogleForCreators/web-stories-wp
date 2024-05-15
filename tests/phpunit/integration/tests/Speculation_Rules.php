@@ -69,11 +69,8 @@ class Speculation_Rules extends DependencyInjectedTestCase {
 		$output         = get_echo( [ $this->instance, 'print_rules' ] );
 		$this->instance->get_rules();
 
-		$encoded_rules = wp_json_encode( $expected_rules );
-		if ( false !== $encoded_rules ) {
-			$this->assertStringContainsString( $encoded_rules, $output );
-		} else {
-			$this->fail( 'JSON decoding failed.' );
-		}
+		$encoded_rules = wp_json_encode( $expected_rules, JSON_UNESCAPED_SLASHES );
+		$this->assertNotFalse( $encoded_rules );
+		$this->assertStringContainsString( $encoded_rules, $output );
 	}
 }
