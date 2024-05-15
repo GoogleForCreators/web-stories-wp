@@ -77,7 +77,7 @@
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "react-blurhash": "^0.3.0",
-    "react-calendar": "^4.3.0",
+    "react-calendar": "^5.0.0",
     "react-photo-album": "^2.3.0",
     "react-transition-group": "^4.4.5",
     "react-virtual": "^2.10.4",
