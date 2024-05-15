@@ -45,7 +45,7 @@
     "flagged": "^2.0.10",
     "polished": "^4.2.2",
     "react-calendar": "^4.3.0",
-    "styled-components": "^5.3.11"
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@googleforcreators/test-utils": "*",
