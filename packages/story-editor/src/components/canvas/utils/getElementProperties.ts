@@ -22,8 +22,8 @@ import { dataPixels } from '@googleforcreators/units';
 import {
   elementIs,
   type ElementType,
+  type Element,
   getDefinitionForType,
-  Element,
 } from '@googleforcreators/elements';
 import { DEFAULT_MASK } from '@googleforcreators/masks';
 
