@@ -33,7 +33,7 @@ function useHotlink({ onChange, type, canUseProxy }) {
   const allowedFileTypes = useMemo(
     () =>
       Array.isArray(type)
-        ? type.map((_type) => getExtensionsFromMimeType(_type)).flat()
+        ? type.flatMap((_type) => getExtensionsFromMimeType(_type))
         : [],
     [type]
   );

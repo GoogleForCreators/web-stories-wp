@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-(function (global) {
-  'use strict';
+((global) => {
 
   function noCleanup() {}
 
@@ -27,7 +26,7 @@
    * @return {*} Function result.
    */
   function puppeteerFunction(methodName) {
-    return function () {
+    return () => {
       var args = Array.prototype.slice.call(arguments, 0);
       var name = '__karma_puppeteer_' + methodName;
       if (!window[name]) {
@@ -49,7 +48,7 @@
    */
   function withSelector(methodName) {
     var func = puppeteerFunction(methodName);
-    return function () {
+    return () => {
       var args = Array.prototype.slice.call(arguments, 0);
       var node = args[0] && args[0].nodeType ? args[0] : null;
       var cleanup = noCleanup;
@@ -57,7 +56,7 @@
         var uniqueId = Math.random();
         node.setAttribute('karma_puppeteer_id', uniqueId);
         args[0] = '[karma_puppeteer_id="' + uniqueId + '"]';
-        cleanup = function () {
+        cleanup = () => {
           node.removeAttribute('karma_puppeteer_id');
         };
       }

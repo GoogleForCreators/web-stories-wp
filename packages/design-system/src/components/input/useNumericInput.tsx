@@ -126,8 +126,8 @@ const useNumericInput = ({
 
         // Restricts inputted string to be <= max.
         const parsedValue = options.isFloat
-          ? parseFloat(ev.target.value)
-          : parseInt(ev.target.value);
+          ? Number.parseFloat(ev.target.value)
+          : Number.parseInt(ev.target.value);
         if (max !== undefined && parsedValue > max) {
           if (parsedValue > max) {
             setCurrentValue(

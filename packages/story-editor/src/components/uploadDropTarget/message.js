@@ -81,8 +81,7 @@ function UploadDropTargetMessage({ message, ...rest }) {
     [allowedImageMimeTypes, allowedVideoMimeTypes, allowedVectorMimeTypes]
   );
   const allowedFileTypes = useMemo(
-    () =>
-      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
+    () => allowedMimeTypes.flatMap((type) => getExtensionsFromMimeType(type)),
     [allowedMimeTypes]
   );
 

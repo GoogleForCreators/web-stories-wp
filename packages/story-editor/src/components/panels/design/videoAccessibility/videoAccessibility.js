@@ -88,9 +88,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   const allowedImageFileTypes = useMemo(
     () =>
-      allowedImageMimeTypes
-        .map((type) => getExtensionsFromMimeType(type))
-        .flat(),
+      allowedImageMimeTypes.flatMap((type) => getExtensionsFromMimeType(type)),
     [allowedImageMimeTypes]
   );
 

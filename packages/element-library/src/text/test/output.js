@@ -180,7 +180,7 @@ describe('TextOutput', () => {
       height: 100,
       rotationAngle: 0,
       padding: {
-        vertical: NaN,
+        vertical: Number.NaN,
         horizontal: null,
       },
     };

@@ -302,9 +302,6 @@ const BulkVideoOptimization = () => {
 };
 
 const VideoOptimization = () => {
-  {
-    /* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */
-  }
   const { isTranscodingEnabled } = useFFmpeg();
 
   return isTranscodingEnabled ? <BulkVideoOptimization /> : null;

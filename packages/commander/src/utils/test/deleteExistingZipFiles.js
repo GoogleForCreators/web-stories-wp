@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __setMockFiles, readdirSync } from 'fs';
+import { __setMockFiles, readdirSync } from 'node:fs';
 
 /**
  * Internal dependencies

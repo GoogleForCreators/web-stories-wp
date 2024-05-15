@@ -80,9 +80,9 @@ function CaptionsPanelContent({
 
   const allowedFileTypes = useMemo(
     () =>
-      allowedCaptionMimeTypes
-        .map((type) => getExtensionsFromMimeType(type))
-        .flat(),
+      allowedCaptionMimeTypes.flatMap((type) =>
+        getExtensionsFromMimeType(type)
+      ),
     [allowedCaptionMimeTypes]
   );
 

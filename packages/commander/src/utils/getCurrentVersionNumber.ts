@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 
 const VERSION_REGEX = /\* Version:(.+)/;
 const VERSION_CONSTANT_REGEX =

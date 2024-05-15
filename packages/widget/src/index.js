@@ -37,7 +37,7 @@ const fieldState = window.webStoriesData || {};
  * @param {Object}  target Event object.
  * @param {boolean} reset Flag to reset fields value.
  */
-const reactiveWidget = function (target, reset = false) {
+const reactiveWidget = (target, reset = false) => {
   const currentView = target.value;
   const widget = target.closest('.widget');
   const state = fieldState.fields[currentView];
@@ -80,7 +80,7 @@ const viewSelectors = () =>
 /**
  * Bind event on view type selection change.
  */
-const bindEvent = function () {
+const bindEvent = () => {
   const dropdowns = viewSelectors();
 
   if (dropdowns.length) {
@@ -95,7 +95,7 @@ const bindEvent = function () {
 /**
  * Fire event manually once.
  */
-const fireEvent = function () {
+const fireEvent = () => {
   const dropdowns = viewSelectors();
   const evt = document.createEvent('HTMLEvents');
   evt.initEvent('change', false, true);

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __setMockFiles } from 'fs';
+import { __setMockFiles } from 'node:fs';
 
 /**
  * Internal dependencies
@@ -32,9 +32,9 @@ describe('getIgnoredFiles', () => {
       example.txt
 
       # somefile.php
-      
+
       doesnotexist.txt
-      
+
       sub
     `,
     '/foo/example.txt': '',
