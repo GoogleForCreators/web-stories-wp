@@ -50,14 +50,9 @@ class Speculation_Rules extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::get_rules
+	 * @covers ::print_rules
 	 */
-	public function test_get_rules(): void {
-		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculation_Rules::class )
-		->onlyMethods( [ 'get_rules' ] )
-		->setConstructorArgs( [ $this->story_post_type ] )
-		->getMock();
-
+	public function test_print_rules(): void {
 		$expected_rules = [
 			'prerender' => [
 				[
@@ -71,53 +66,12 @@ class Speculation_Rules extends DependencyInjectedTestCase {
 				],
 			],
 		];
+		$output         = get_echo( [ $this->instance, 'print_rules' ] );
+		$this->instance->get_rules();
 
-		$prerendering_class->expects( $this->once() )
-			->method( 'get_rules' )
-			->willReturn( $expected_rules );
-
-		$actual_rules = $prerendering_class->get_rules();
-		$this->assertEquals( $expected_rules, $actual_rules );
-	}
-
-	/**
-	 * @covers ::print_rules
-	 */
-	public function test_print_rules(): void {
-		$prerendering_class = $this->getMockBuilder( \Google\Web_Stories\Speculation_Rules::class )
-			->onlyMethods( [ 'get_rules' ] )
-			->setConstructorArgs( [ $this->story_post_type ] )
-			->getMock();
-
-		$mock_rules = [
-			'prerender' => [
-				[
-					'source'    => 'document',
-					'where'     => [
-						'and' => [
-							[ 'href_matches' => [ Story_Post_Type::REWRITE_SLUG, sprintf( '/%s/*', $this->story_post_type::REWRITE_SLUG ) ] ],
-						],
-					],
-					'eagerness' => 'moderate',
-				],
-			],
-		];
-
-		$prerendering_class->expects( $this->once() )
-			->method( 'get_rules' )
-			->willReturn( $mock_rules );
-
-		ob_start();
-
-		$prerendering_class->print_rules();
-
-		$printed_output = ob_get_clean();
-
-		$this->assertNotFalse( $printed_output, 'Output buffering failed' );
-
-		$encoded_rules = wp_json_encode( $mock_rules );
+		$encoded_rules = wp_json_encode( $expected_rules );
 		if ( false !== $encoded_rules ) {
-			$this->assertStringContainsString( $encoded_rules, $printed_output );
+			$this->assertStringContainsString( $encoded_rules, $output );
 		} else {
 			$this->fail( 'JSON decoding failed.' );
 		}
