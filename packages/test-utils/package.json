@@ -39,7 +39,7 @@
   "dependencies": {},
   "devDependencies": {
     "@googleforcreators/design-system": "*",
-    "@testing-library/react": "^12.1.5",
+    "@testing-library/react": "^15.0.7",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.11"
   }
