@@ -30,7 +30,7 @@ import type {
   HighlightsState,
 } from '../../types/highlightsProvider';
 import Context from './context';
-import { HighlightType, STATES } from './states';
+import { type HighlightType, STATES } from './states';
 
 function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
   const [highlighted, setHighlighted] = useState<HighlightsState>({});

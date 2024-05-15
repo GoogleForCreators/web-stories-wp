@@ -15,8 +15,8 @@
  */
 
 function checkVersion(a, b) {
-  const x = a.split('.').map((e) => parseInt(e));
-  const y = b.split('.').map((e) => parseInt(e));
+  const x = a.split('.').map((e) => Number.parseInt(e));
+  const y = b.split('.').map((e) => Number.parseInt(e));
 
   // eslint-disable-next-line guard-for-in
   for (const i in x) {

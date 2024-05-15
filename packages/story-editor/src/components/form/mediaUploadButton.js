@@ -50,9 +50,7 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
   );
   const allowedFileTypes = useMemo(
     () =>
-      allowedUploadMimeTypes
-        .map((type) => getExtensionsFromMimeType(type))
-        .flat(),
+      allowedUploadMimeTypes.flatMap((type) => getExtensionsFromMimeType(type)),
     [allowedUploadMimeTypes]
   );
 

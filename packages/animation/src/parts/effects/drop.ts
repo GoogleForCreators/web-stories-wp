@@ -26,7 +26,7 @@ import type { DimensionableElement } from '@googleforcreators/units';
 import createAnimation from '../createAnimation';
 import {
   type AMPEffectTiming,
-  AnimationType,
+  type AnimationType,
   type Element,
   FieldType,
   type Keyframes,

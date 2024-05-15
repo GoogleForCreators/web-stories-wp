@@ -202,9 +202,7 @@ const StoryPreview = () => {
 
   const allowedImageFileTypes = useMemo(
     () =>
-      allowedImageMimeTypes
-        .map((type) => getExtensionsFromMimeType(type))
-        .flat(),
+      allowedImageMimeTypes.flatMap((type) => getExtensionsFromMimeType(type)),
     [allowedImageMimeTypes]
   );
 

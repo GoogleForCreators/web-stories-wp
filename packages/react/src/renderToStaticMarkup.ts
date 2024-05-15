@@ -39,7 +39,7 @@ function renderToStaticMarkup(
   element: ReactElement | ReactElement[] | null | string
 ): string {
   const originalConsoleError = console.error;
-  console.error = function (error, ...args) {
+  console.error = (error, ...args) => {
     if (
       typeof error === 'string' &&
       !error.startsWith('Warning: useLayoutEffect does nothing on the server')

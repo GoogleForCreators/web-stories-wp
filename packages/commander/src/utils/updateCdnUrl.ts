@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const CDN_BASE_URL = 'https://wp.stories.google/static/';
 const CDN_URL_CONSTANT_REGEX =

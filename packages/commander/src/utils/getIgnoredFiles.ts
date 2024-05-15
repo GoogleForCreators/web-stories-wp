@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { existsSync, lstatSync, readFileSync } from 'fs';
+import { existsSync, lstatSync, readFileSync } from 'node:fs';
 
 /**
  * Returns a list of files that should be ignored based on the .distignore file.

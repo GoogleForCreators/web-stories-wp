@@ -89,7 +89,7 @@ function TimePicker({
   const onChangeEvent = (prop) => (_, value) => {
     let filteredValue =
       value !== undefined && value !== null
-        ? parseInt(value)
+        ? Number.parseInt(value)
         : localeData[prop];
     filteredValue = isNaN(filteredValue) ? '' : filteredValue;
     filteredValue = filteredValue === '' && value === '-' ? '-' : filteredValue;
@@ -122,7 +122,7 @@ function TimePicker({
 
   const updateMinutes = () => {
     const { minutes, date } = localeData;
-    const value = parseInt(minutes);
+    const value = Number.parseInt(minutes);
     if (isNaN(value) || value < 0 || value > 59) {
       return;
     }
@@ -135,7 +135,7 @@ function TimePicker({
 
   const updateHours = () => {
     const { hours, date } = localeData;
-    const value = parseInt(hours);
+    const value = Number.parseInt(hours);
     if (isNaN(value) || value < getMinHours() || value > getMaxHours()) {
       return;
     }

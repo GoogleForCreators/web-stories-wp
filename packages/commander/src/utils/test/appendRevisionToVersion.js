@@ -19,7 +19,7 @@
  */
 import appendRevisionToVersion from '../appendRevisionToVersion';
 
-jest.mock('child_process', () => {
+jest.mock('node:child_process', () => {
   return {
     execSync: () => '1234567',
   };

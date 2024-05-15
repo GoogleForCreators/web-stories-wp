@@ -43,9 +43,7 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
 
   const allowedImageFileTypes = useMemo(
     () =>
-      allowedImageMimeTypes
-        .map((type) => getExtensionsFromMimeType(type))
-        .flat(),
+      allowedImageMimeTypes.flatMap((type) => getExtensionsFromMimeType(type)),
     [allowedImageMimeTypes]
   );
 

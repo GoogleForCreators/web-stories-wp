@@ -161,9 +161,7 @@ function PublishPanel({ nameOverride }) {
 
   const allowedImageFileTypes = useMemo(
     () =>
-      allowedImageMimeTypes
-        .map((type) => getExtensionsFromMimeType(type))
-        .flat(),
+      allowedImageMimeTypes.flatMap((type) => getExtensionsFromMimeType(type)),
     [allowedImageMimeTypes]
   );
 
@@ -275,23 +273,21 @@ function PublishPanel({ nameOverride }) {
     __('Please choose only %s as a poster.', 'web-stories')
   );
 
-  const publisherLogoOptionRenderer = forwardRef(
-    ({ option: option, ...rest }, ref) => {
-      if (option.props) {
-        return option;
-      }
-      return (
-        <DatalistOption value={option.id} ref={ref} {...rest}>
-          <LogoImg
-            src={option.url}
-            alt=""
-            decoding="async"
-            crossOrigin="anonymous"
-          />
-        </DatalistOption>
-      );
+  const publisherLogoOptionRenderer = forwardRef(({ option, ...rest }, ref) => {
+    if (option.props) {
+      return option;
     }
-  );
+    return (
+      <DatalistOption value={option.id} ref={ref} {...rest}>
+        <LogoImg
+          src={option.url}
+          alt=""
+          decoding="async"
+          crossOrigin="anonymous"
+        />
+      </DatalistOption>
+    );
+  });
   const activeItemRenderer = () => {
     const displayText = publisherLogos.length
       ? __('Select logo', 'web-stories')

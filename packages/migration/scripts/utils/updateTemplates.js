@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { readdirSync, readFileSync, writeFileSync, lstatSync } from 'fs';
-import { join, resolve } from 'path';
+import { readdirSync, readFileSync, writeFileSync, lstatSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 
 /**
  * Internal dependencies

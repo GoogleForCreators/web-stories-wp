@@ -472,7 +472,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       // find all author filters
       const authorSelect = await fixture.screen.findByLabelText(
-        new RegExp(`^Option List Selector$`)
+        /^Option List Selector$/
       );
       expect(authorSelect).toBeTruthy();
 
@@ -506,7 +506,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       // find all category filters
       const categorySelect = await fixture.screen.findByLabelText(
-        new RegExp(`^Option List Selector$`)
+        /^Option List Selector$/
       );
       expect(categorySelect).toBeTruthy();
 

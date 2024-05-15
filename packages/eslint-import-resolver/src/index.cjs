@@ -22,7 +22,7 @@ const nodeResolver = require('eslint-import-resolver-node');
 
 exports.interfaceVersion = 2;
 
-exports.resolve = function (source, file, config) {
+exports.resolve = (source, file, config) => {
   function nodeResolve(src) {
     return nodeResolver.resolve(src, file, {
       ...config,
