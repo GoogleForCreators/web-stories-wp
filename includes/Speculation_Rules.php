@@ -30,6 +30,8 @@ namespace Google\Web_Stories;
 
 /**
  * Speculation_Rules class.
+ *
+ * @since 1.37.0
  */
 class Speculation_Rules extends Service_Base {
 	/**
@@ -90,6 +92,13 @@ class Speculation_Rules extends Service_Base {
 				],
 			];
 		}
+
+		/**
+		 * Filters the prerendering rules.
+		 *
+		 * @param array $rules An array of prerendering rules.
+		 * @since 1.37.0
+		 */
 		return apply_filters( 'web_stories_speculation_rules', $rules );
 	}
 

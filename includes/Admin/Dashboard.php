@@ -579,6 +579,7 @@ class Dashboard extends Service_Base {
 	 * Load the Speculation Rules for the Dashboard.
 	 *
 	 * @return array An array containing prerendering rules.
+	 * @since 1.37.0
 	 */
 	public function load_speculation_rules(): array {
 		$new_story_url  = sprintf(
