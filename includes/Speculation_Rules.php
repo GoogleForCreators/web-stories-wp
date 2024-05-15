@@ -111,7 +111,7 @@ class Speculation_Rules extends Service_Base {
 			return;
 		}
 
-		$encoded_rules = wp_json_encode( $rules );
+		$encoded_rules = wp_json_encode( $rules, JSON_UNESCAPED_SLASHES );
 
 		if ( false !== $encoded_rules ) {
 			wp_print_inline_script_tag( $encoded_rules, [ 'type' => 'speculationrules' ] );
