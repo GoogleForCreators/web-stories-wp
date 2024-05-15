@@ -58,9 +58,7 @@ class Speculation_Rules extends DependencyInjectedTestCase {
 				[
 					'source'    => 'document',
 					'where'     => [
-						'and' => [
-							[ 'href_matches' => [ Story_Post_Type::REWRITE_SLUG, sprintf( '/%s/*', $this->story_post_type::REWRITE_SLUG ) ] ],
-						],
+						'href_matches' => [ Story_Post_Type::REWRITE_SLUG, sprintf( '/%s/*', $this->story_post_type::REWRITE_SLUG ) ],
 					],
 					'eagerness' => 'moderate',
 				],
