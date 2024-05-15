@@ -78,13 +78,9 @@ class Speculation_Rules extends Service_Base {
 					[
 						'source'    => 'document',
 						'where'     => [
-							'and' => [
-								[
-									'href_matches' => [
-										$archive_url,
-										$view_story_url,
-									],
-								],
+							'href_matches' => [
+								$archive_url,
+								$view_story_url,
 							],
 						],
 						'eagerness' => 'moderate',

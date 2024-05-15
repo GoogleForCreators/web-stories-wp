@@ -588,16 +588,16 @@ class Dashboard extends Service_Base implements Conditional {
 			$this->story_post_type->get_slug()
 		);
 		$edit_story_url = 'post.php?post=*&action=edit';
+		$view_story_url = sprintf(
+			'/%s/*',
+			$this->story_post_type::REWRITE_SLUG
+		);
 		return [
 			'prerender' => [
 				[
 					'source'    => 'document',
 					'where'     => [
-						'and' => [
-							[
-								'href_matches' => [ $edit_story_url, $new_story_url ],
-							],
-						],
+						'href_matches' => [ $edit_story_url, $new_story_url, $view_story_url ],
 					],
 					'eagerness' => 'moderate',
 				],
