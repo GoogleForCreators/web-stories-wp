@@ -125,7 +125,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-security": "^2.1.0",
-    "eslint-plugin-styled-components-a11y": "^2.1.31",
+    "eslint-plugin-styled-components-a11y": "^2.1.32",
     "eslint-plugin-testing-library": "^6.1.0",
     "html-webpack-plugin": "^5.6.0",
     "husky": "^9.0.6",
