@@ -47,10 +47,29 @@ updates:
       # We have not yet upgraded to React 18.
       - dependency-name: 'react'
         versions:
-          - '>= 118'
+          - '>= 18'
       - dependency-name: 'react-dom'
         versions:
-          - '>= 118'
+          - '>= 18'
+      - dependency-name: '@testing-library/react'
+        versions:
+          - '>= 13'
+
+      # ESM only
+      - dependency-name: 'use-context-selector'
+        versions:
+          - '>= 2'
+      - dependency-name: 'flagged'
+        versions:
+          - '>= 3'
+      - dependency-name: 'mime'
+        versions:
+          - '>= 4'
+
+      # Needs manual update
+      - dependency-name: 'styled-components'
+        versions:
+        - '>= '
 
   - package-ecosystem: composer
     directory: '/'
