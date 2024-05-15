@@ -138,7 +138,7 @@
     "jest-matcher-deep-close-to": "^3.0.2",
     "jest-silent-reporter": "^0.5.0",
     "jest-styled-components": "^7.2.0",
-    "karma": "^6.4.2",
+    "karma": "^6.4.3",
     "karma-chrome-launcher": "^3.2.0",
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^5.1.0",
