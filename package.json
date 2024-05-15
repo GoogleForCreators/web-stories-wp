@@ -172,7 +172,7 @@
     "stylelint-prettier": "^4.1.0",
     "stylis-plugin-rtl": "^1.0.0",
     "terser-webpack-plugin": "^5.3.10",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.5",
     "webpack": "^5.90.0",
     "webpack-bundle-analyzer": "^4.9.1",
     "webpack-cli": "^5.1.4",
