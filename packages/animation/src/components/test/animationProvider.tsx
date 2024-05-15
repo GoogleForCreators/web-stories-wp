@@ -50,9 +50,9 @@ function createWrapperWithProps<T>(
   Wrapper: React.FunctionComponent<T>,
   props: T
 ) {
-  const WrapperWithProps = function ({ children }: PropsWithChildren<T>) {
-    return <Wrapper {...props}>{children}</Wrapper>;
-  };
+  const WrapperWithProps = ({ children }: PropsWithChildren<T>) => (
+    <Wrapper {...props}>{children}</Wrapper>
+  );
   return WrapperWithProps;
 }
 

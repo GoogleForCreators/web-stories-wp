@@ -26,12 +26,12 @@
 const calculateImageSelectOptions = (attachment, controller) => {
   const control = controller.get('control');
 
-  const flexWidth = Boolean(parseInt(control.params.flex_width));
-  const flexHeight = Boolean(parseInt(control.params.flex_height));
+  const flexWidth = Boolean(Number.parseInt(control.params.flex_width));
+  const flexHeight = Boolean(Number.parseInt(control.params.flex_height));
   const realWidth = attachment.get('width');
   const realHeight = attachment.get('height');
-  let xInit = parseInt(control.params.width);
-  let yInit = parseInt(control.params.height);
+  let xInit = Number.parseInt(control.params.width);
+  let yInit = Number.parseInt(control.params.height);
   const ratio = xInit / yInit;
   const xImg = xInit;
   const yImg = yInit;

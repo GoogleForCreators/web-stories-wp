@@ -99,9 +99,7 @@ function BackgroundAudioPanelContent({
 
   const allowedAudioFileTypes = useMemo(
     () =>
-      allowedAudioMimeTypes
-        .map((type) => getExtensionsFromMimeType(type))
-        .flat(),
+      allowedAudioMimeTypes.flatMap((type) => getExtensionsFromMimeType(type)),
     [allowedAudioMimeTypes]
   );
   const { resource = {}, tracks = [], loop = true } = backgroundAudio || {};

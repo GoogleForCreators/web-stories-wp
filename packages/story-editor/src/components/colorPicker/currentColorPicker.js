@@ -152,7 +152,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
 
   const handleOpacityInputChange = useCallback(
     (value) =>
-      onChange({ ...rgb, a: isNaN(value) ? 1 : parseInt(value) / 100 }),
+      onChange({ ...rgb, a: isNaN(value) ? 1 : Number.parseInt(value) / 100 }),
     [rgb, onChange]
   );
 

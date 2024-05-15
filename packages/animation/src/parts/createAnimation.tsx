@@ -48,30 +48,28 @@ function createAnimation<T extends Keyframes>(
     ? {}
     : getInitialStyleFromKeyframes(keyframes);
 
-  const AMPTarget: VoidFunctionComponent<AMPAnimationProps> = function ({
+  const AMPTarget: VoidFunctionComponent<AMPAnimationProps> = ({
     children,
     style = {},
-  }) {
-    return (
-      <WithAnimation
-        id={id}
-        className="animation-wrapper"
-        useClippingContainer={useClippingContainer}
-        style={style}
-        animationStyle={animationStyle}
-      >
-        {children}
-      </WithAnimation>
-    );
-  };
+  }) => (
+    <WithAnimation
+      id={id}
+      className="animation-wrapper"
+      useClippingContainer={useClippingContainer}
+      style={style}
+      animationStyle={animationStyle}
+    >
+      {children}
+    </WithAnimation>
+  );
 
   const selector = targetLeafElement
     ? `#${id} [data-leaf-element="true"]`
     : `#${id}`;
 
-  const AMPAnimation: VoidFunctionComponent = function () {
-    return <AnimationOutput config={{ selector, keyframes, ...timings }} />;
-  };
+  const AMPAnimation: VoidFunctionComponent = () => (
+    <AnimationOutput config={{ selector, keyframes, ...timings }} />
+  );
 
   return {
     id,

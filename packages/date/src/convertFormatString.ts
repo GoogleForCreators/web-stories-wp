@@ -114,9 +114,9 @@ const formatMap = {
   B(date: Date) {
     // Biel Mean Time (BMT) is UTC+1.
     const timezoned = zonedTimeToUtc(date, '+0100');
-    const seconds = parseInt(format(timezoned, 's'));
-    const minutes = parseInt(format(timezoned, 'm'));
-    const hours = parseInt(format(timezoned, 'H'));
+    const seconds = Number.parseInt(format(timezoned, 's'));
+    const minutes = Number.parseInt(format(timezoned, 'm'));
+    const hours = Number.parseInt(format(timezoned, 'H'));
 
     // Round results like PHP also does.
     return Math.round(

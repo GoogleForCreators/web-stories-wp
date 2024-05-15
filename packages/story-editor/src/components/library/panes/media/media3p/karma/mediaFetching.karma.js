@@ -277,9 +277,7 @@ describe('Media3pPane fetching', () => {
     listMediaSpy.and.callFake(() => ({ media: [] }));
     await fixture.events.click(fixture.editor.library.media3pTab);
 
-    await expect(
-      fixture.screen.findByText(new RegExp('^No media found.$'))
-    ).toBeTruthy();
+    await expect(fixture.screen.findByText(/^No media found.$/)).toBeTruthy();
 
     await fixture.snapshot();
   });

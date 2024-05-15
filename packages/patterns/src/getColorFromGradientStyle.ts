@@ -47,7 +47,7 @@ function parseGradient(style: string, gradient: string): Gradient {
         { color: startColor, position: 0 },
         { color: endColor, position: 1 },
       ],
-      rotation: rotationMatch ? parseFloat(rotationMatch[0]) : 0,
+      rotation: rotationMatch ? Number.parseFloat(rotationMatch[0]) : 0,
     };
   }
 
@@ -88,9 +88,9 @@ function getColorRange(matches: RegExpMatchArray) {
 
 function parseColor(r: string, g: string, b: string, a: string) {
   return {
-    r: parseInt(r),
-    g: parseInt(g),
-    b: parseInt(b),
-    a: a ? parseFloat(a) : undefined,
+    r: Number.parseInt(r),
+    g: Number.parseInt(g),
+    b: Number.parseInt(b),
+    a: a ? Number.parseFloat(a) : undefined,
   };
 }

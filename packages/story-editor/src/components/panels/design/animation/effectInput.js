@@ -133,8 +133,8 @@ function EffectInput({
           onChange={(evt) =>
             onChange(
               isFloat
-                ? parseFloat(evt.target.value)
-                : parseInt(evt.target.value),
+                ? Number.parseFloat(evt.target.value)
+                : Number.parseInt(evt.target.value),
               true
             )
           }

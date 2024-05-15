@@ -159,7 +159,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   );
 
   useEffect(() => {
-    (async function () {
+    (async () => {
       const results = await addSearchResultsToCache({
         taxonomy,
         args: {

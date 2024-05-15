@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { readdirSync, unlinkSync } from 'fs';
+import { readdirSync, unlinkSync } from 'node:fs';
 
 /**
  * Removes all existing ZIP files in the build folder.

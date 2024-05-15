@@ -16,9 +16,9 @@ services:
 parameters:
   level: 9
   inferPrivatePropertyTypeFromConstructor: true
-  checkGenericClassInNonGenericObjectType: false
-  checkMissingIterableValueType: false
   ignoreErrors:
+    -
+      identifier: missingType.generics
     -
       message: '/^Parameter #2 \$args of method WP_Customize_Manager::add_setting\(\)/'
       path: includes/Admin/Customizer.php

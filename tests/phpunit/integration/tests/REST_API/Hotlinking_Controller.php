@@ -144,7 +144,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		}
 
 		// URL_500
-		if ( 'https://93.184.216.34.com/500/test.jpg' === $url ) {
+		if ( self::URL_500 === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/jpeg',
@@ -481,15 +481,15 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		return [
 			'no port specified'                 => [
 				'url'      => 'http://example.com/caniload.php',
-				'expected' => '93.184.216.34',
+				'expected' => '93.184.215.14',
 			],
 			'a port considered safe by default' => [
 				'url'      => 'https://example.com:8080/caniload.php',
-				'expected' => '93.184.216.34',
+				'expected' => '93.184.215.14',
 			],
 			'a port considered safe by filter'  => [
 				'url'           => 'https://example.com:81/caniload.php',
-				'expected'      => '93.184.216.34',
+				'expected'      => '93.184.215.14',
 				'cb_safe_ports' => [ $this, 'callback_custom_safe_ports' ],
 			],
 		];

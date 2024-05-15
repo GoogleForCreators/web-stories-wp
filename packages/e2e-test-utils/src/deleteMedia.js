@@ -43,7 +43,7 @@ async function deleteMedia(fileName) {
   await page.hover(`#${elementId}`);
 
   await Promise.all([
-    await expect(page).toClick(`#${elementId} a.submitdelete`),
+    expect(page).toClick(`#${elementId} a.submitdelete`),
     page.waitForNavigation(),
   ]);
   await page.waitForSelector(`#message`);
