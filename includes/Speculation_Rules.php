@@ -61,7 +61,7 @@ class Speculation_Rules extends Service_Base {
 	/**
 	 * Retrieves the prerendering rules for a specific page.
 	 *
-	 * @return array An array containing prerendering rules.
+	 * @return array<string, array<int, array<string, mixed>>> An array containing prerendering rules.
 	 */
 	public function get_rules(): array {
 		$rules = [];

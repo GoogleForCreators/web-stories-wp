@@ -579,7 +579,7 @@ class Dashboard extends Service_Base implements Conditional {
 	/**
 	 * Add the Speculation Rules for the Dashboard.
 	 *
-	 * @return array An array containing prerendering rules.
+	 * @return array<string, array<int, array<string, mixed>>> An array containing prerendering rules.
 	 * @since 1.37.0
 	 */
 	public function add_speculation_rules(): array {
