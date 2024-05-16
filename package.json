@@ -176,7 +176,7 @@
     "webpack": "^5.91.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1",
+    "webpack-dev-server": "^5.0.4",
     "webpackbar": "^6.0.1",
     "worker-loader": "^3.0.8",
     "workspaces-run": "^1.0.2"
