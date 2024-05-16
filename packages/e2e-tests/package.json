@@ -38,6 +38,6 @@
     "jest-puppeteer": "^9.0.2"
   },
   "peerDependencies": {
-    "puppeteer": "^21.11.0"
+    "puppeteer": "*"
   }
 }
