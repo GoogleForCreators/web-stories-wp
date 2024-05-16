@@ -34,7 +34,7 @@ describe('Quick Edit', () => {
     await trashAllPosts('web-story');
   });
 
-  // Skip this flaky test for now.
+  // eslint-disable-next-line jest/no-disabled-tests -- Flaky test.
   it.skip('should save story without breaking markup', async () => {
     await createNewStory();
 
