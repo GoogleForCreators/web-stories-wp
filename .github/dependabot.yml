@@ -69,7 +69,7 @@ updates:
       # Needs manual update
       - dependency-name: 'styled-components'
         versions:
-        - '>= '
+        - '>= 6'
 
   - package-ecosystem: composer
     directory: '/'
