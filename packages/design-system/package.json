@@ -45,7 +45,7 @@
     "@types/react-modal": "^3.16.3",
     "big.js": "^6.2.1",
     "mousetrap": "^1.6.5",
-    "polished": "^4.2.2",
+    "polished": "^4.3.1",
     "prop-types": "^15.8.1",
     "react-modal": "^3.16.1",
     "react-transition-group": "^4.4.5",
@@ -53,7 +53,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.6.4",
+    "@storybook/addon-essentials": "^8.1.1",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/big.js": "^6.2.2",
