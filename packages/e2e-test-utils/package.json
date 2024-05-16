@@ -27,7 +27,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@wordpress/url": "^3.48.0",
-    "expect-puppeteer": "^9.0.1"
+    "expect-puppeteer": "^9.0.2"
   },
   "devDependencies": {
     "@percy/puppeteer": "^2.0.2"
