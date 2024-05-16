@@ -30,6 +30,6 @@
   },
   "peerDependencies": {
     "karma": "*",
-    "puppeteer": "*"
+    "puppeteer": "^21.11.0"
   }
 }

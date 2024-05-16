@@ -42,7 +42,7 @@
     "@googleforcreators/migration": "*"
   },
   "devDependencies": {
-    "puppeteer": "*"
+    "puppeteer": "^21.11.0"
   },
   "scripts": {
     "render-text-sets": "node ./scripts/cli.js"

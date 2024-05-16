@@ -46,7 +46,7 @@
     "@googleforcreators/date": "*",
     "@googleforcreators/elements": "*",
     "@googleforcreators/stickers": "*",
-    "puppeteer": "*"
+    "puppeteer": "^21.11.0"
   },
   "scripts": {
     "render-template-posters": "node ./scripts/cli.js"
