@@ -91,7 +91,7 @@
     "@googleforcreators/karma-fixture": "*",
     "@googleforcreators/test-utils": "*",
     "@storybook/addon-essentials": "^8.1.1",
-    "@testing-library/dom": "^9.3.3",
+    "@testing-library/dom": "^10.1.0",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
