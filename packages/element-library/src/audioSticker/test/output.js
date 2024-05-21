@@ -20,8 +20,7 @@
 import AudioStickerOutput from '../output';
 
 describe('AudioSticker output', () => {
-  // eslint-disable-next-line jest/no-disabled-tests -- This test will fail until this PR - https://github.com/ampproject/amphtml/pull/39913 is merged.
-  it.skip('should produce valid AMP output', async () => {
+  it('should produce valid AMP output', async () => {
     const props = {
       element: {
         type: 'audioSticker',
