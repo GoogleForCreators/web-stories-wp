@@ -27,17 +27,17 @@
   "main": "./src/index.tsx",
   "types": "dist-types/index.d.ts",
   "dependencies": {
-    "@emotion/is-prop-valid": "^1.2.1",
+    "@emotion/is-prop-valid": "^1.2.2",
     "@googleforcreators/tracking": "*",
-    "@wordpress/element": "^5.24.0",
+    "@wordpress/element": "^5.35.0",
     "@wordpress/i18n": "^4.47.0",
     "flagged": "^2.0.10",
-    "polished": "^4.2.2",
+    "polished": "^4.3.1",
     "styled-components": "^6.0.7",
     "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.6.4",
+    "@storybook/addon-essentials": "^8.1.1",
     "@testing-library/react": "^14.0.0"
   }
 }
