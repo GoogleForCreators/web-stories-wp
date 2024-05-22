@@ -163,6 +163,19 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 */
 	public function __construct( Shopping_Vendors $shopping_vendors ) {
 		$this->shopping_vendors = $shopping_vendors;
+		add_action( 'init', [ $this, 'prime_option_caches' ] );
+	}
+
+	/**
+	 * Primes option caches for specified groups if the function exists.
+	 *
+	 * @since 1.37.0
+	 */
+	public function prime_option_caches(): void {
+		if ( \function_exists( 'wp_prime_option_caches_by_group' ) ) {
+			wp_prime_option_caches_by_group( self::SETTING_GROUP );
+			wp_prime_option_caches_by_group( self::SETTING_GROUP_EXPERIMENTS );
+		}
 	}
 
 	/**
@@ -438,11 +451,6 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * @return string|array<int|string,mixed>|bool|int Setting value.
 	 */
 	public function get_setting( string $key, $default_value = false ) {
-		if ( \function_exists( 'wp_prime_option_caches_by_group' ) ) {
-			wp_prime_option_caches_by_group( self::SETTING_GROUP );
-			wp_prime_option_caches_by_group( self::SETTING_GROUP_EXPERIMENTS );
-		}
-
 		// Distinguish between `false` as a default, and not passing one, just like WordPress.
 		$passed_default = \func_num_args() > 1;
 
