@@ -163,7 +163,6 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 */
 	public function __construct( Shopping_Vendors $shopping_vendors ) {
 		$this->shopping_vendors = $shopping_vendors;
-		add_action( 'init', [ $this, 'prime_option_caches' ] );
 	}
 
 	/**
@@ -437,6 +436,8 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 				],
 			]
 		);
+
+		add_action( 'init', [ $this, 'prime_option_caches' ] );
 	}
 
 	/**
