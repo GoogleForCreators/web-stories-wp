@@ -438,6 +438,11 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * @return string|array<int|string,mixed>|bool|int Setting value.
 	 */
 	public function get_setting( string $key, $default_value = false ) {
+		if ( \function_exists( 'wp_prime_option_caches_by_group' ) ) {
+			wp_prime_option_caches_by_group( self::SETTING_GROUP );
+			wp_prime_option_caches_by_group( self::SETTING_GROUP_EXPERIMENTS );
+		}
+
 		// Distinguish between `false` as a default, and not passing one, just like WordPress.
 		$passed_default = \func_num_args() > 1;
 
