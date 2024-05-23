@@ -76,6 +76,10 @@ export const ACTIONS = {
     trackingEventName: 'trim_video',
     text: __('Trim video', 'web-stories'),
   },
+  INSERT_AUDIO_STICKER: {
+    trackingEventName: 'insert_audio_sticker',
+    text: __('Insert audio sticker', 'web-stories'),
+  },
 };
 
 export const RESET_PROPERTIES = {

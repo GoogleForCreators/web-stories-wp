@@ -42,6 +42,7 @@ import {
   PageBackgroundAudioPanel,
   PageAdvancementPanel,
   ProductPanel,
+  AudioStickerPanel,
 } from '../panels/design';
 
 const ALL = Object.values(PanelTypes);
@@ -156,6 +157,9 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: ElementAlignmentPanel };
         case PanelTypes.Product: {
           return { type, Panel: ProductPanel };
+        }
+        case PanelTypes.AudioSticker: {
+          return { type, Panel: AudioStickerPanel };
         }
         default:
           throw new Error(`Unknown panel: ${type}`);
