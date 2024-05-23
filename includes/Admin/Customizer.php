@@ -30,7 +30,6 @@ namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
@@ -107,13 +106,6 @@ class Customizer extends Service_Base implements Conditional {
 	private WP_Customize_Manager $wp_customize;
 
 	/**
-	 * Settings instance.
-	 *
-	 * @var Settings Settings instance.
-	 */
-	private Settings $settings;
-
-	/**
 	 * Story_Post_Type instance.
 	 *
 	 * @var Story_Post_Type Story_Post_Type instance.
@@ -132,17 +124,14 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings            $settings            Settings instance.
 	 * @param Story_Post_Type     $story_post_type     Story_Post_Type instance.
 	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
 	 * @return void
 	 */
 	public function __construct(
-		Settings $settings,
 		Story_Post_Type $story_post_type,
 		Stories_Script_Data $stories_script_data
 	) {
-		$this->settings            = $settings;
 		$this->story_post_type     = $story_post_type;
 		$this->stories_script_data = $stories_script_data;
 	}
