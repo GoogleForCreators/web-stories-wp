@@ -134,6 +134,9 @@ class Core_Themes_Support extends Service_Base {
 	 * @since 1.5.0
 	 */
 	public function register(): void {
+		if ( is_admin() ) {
+			return;
+		}
 
 		if ( ! \in_array( get_stylesheet(), self::$supported_themes, true ) ) {
 			return;
