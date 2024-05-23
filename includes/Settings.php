@@ -150,6 +150,11 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	public const SETTING_NAME_TRACKING_HANDLER = 'web_stories_ga_tracking_handler';
 
 	/**
+	 * Customizer settings.
+	 */
+	public const SETTING_NAME_CUSTOMIZER_SETTINGS = 'web_stories_customizer_settings';
+
+	/**
 	 * Shopping_Vendors instance.
 	 *
 	 * @var Shopping_Vendors Shopping_Vendors instance.
@@ -348,10 +353,10 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 			self::SETTING_GROUP_EXPERIMENTS,
 			self::SETTING_NAME_EXPERIMENTS,
 			[
-				'description'     => __( 'Experiments', 'web-stories' ),
-				'type'            => 'object',
-				'default'         => [],
-				'show_in_rest'    => [
+				'description'  => __( 'Experiments', 'web-stories' ),
+				'type'         => 'object',
+				'default'      => [],
+				'show_in_rest' => [
 					'schema' => [
 						'properties'           => [],
 						'additionalProperties' => true,
@@ -431,6 +436,17 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 						'enum' => [ 'site-kit', 'web-stories', 'both' ],
 					],
 				],
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_CUSTOMIZER_SETTINGS,
+			[
+				'description'  => __( 'Customizer settings', 'web-stories' ),
+				'type'         => 'array',
+				'default'      => [],
+				'show_in_rest' => false,
 			]
 		);
 

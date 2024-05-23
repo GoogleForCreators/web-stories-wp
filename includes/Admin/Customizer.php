@@ -548,13 +548,15 @@ class Customizer extends Service_Base implements Conditional {
 	 * @since 1.5.0
 	 */
 	public function render_stories(): string {
+		// Not using Settings::get_setting() to avoid calling rest_sanitize_value_from_schema().
+
 		/**
 		 * Render options.
 		 *
 		 * @var array<string,string|bool> $options
 		 * @phpstan-var StoryAttributes
 		 */
-		$options = (array) $this->settings->get_setting( self::STORY_OPTION );
+		$options = (array) get_option( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
 			return '';

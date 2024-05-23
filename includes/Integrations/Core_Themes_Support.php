@@ -30,7 +30,6 @@ namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Admin\Customizer;
 use Google\Web_Stories\Assets;
-use Google\Web_Stories\Renderer\Stories\Renderer;
 use Google\Web_Stories\Service_Base;
 use function Google\Web_Stories\render_theme_stories;
 
@@ -98,7 +97,7 @@ class Core_Themes_Support extends Service_Base {
 	public function embed_web_stories(): void {
 		$stylesheet = get_stylesheet();
 		if ( is_readable( sprintf( '%sassets/css/web-stories-theme-style-%s.css', WEBSTORIES_PLUGIN_DIR_PATH, $stylesheet ) ) ) {
-			$this->assets->enqueue_style_asset( 'web-stories-theme-style-' . $stylesheet, [ Renderer::STYLE_HANDLE ] );
+			$this->assets->enqueue_style_asset( 'web-stories-theme-style-' . $stylesheet, [] );
 		}
 		?>
 		<div class="web-stories-theme-header-section">
@@ -134,15 +133,13 @@ class Core_Themes_Support extends Service_Base {
 	 * @since 1.5.0
 	 */
 	public function register(): void {
-		if ( is_admin() ) {
-			return;
-		}
-
 		if ( ! \in_array( get_stylesheet(), self::$supported_themes, true ) ) {
 			return;
 		}
 
 		$this->extend_theme_support();
+
+		// Not using Settings::get_setting() to avoid calling rest_sanitize_value_from_schema().
 
 		/**
 		 * Customizer options.
@@ -168,6 +165,6 @@ class Core_Themes_Support extends Service_Base {
 	 * @return string Registration action to use.
 	 */
 	public static function get_registration_action(): string {
-		return 'after_setup_theme';
+		return 'wp_head';
 	}
 }
