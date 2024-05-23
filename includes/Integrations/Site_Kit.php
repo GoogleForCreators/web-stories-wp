@@ -110,7 +110,7 @@ class Site_Kit extends Service_Base {
 
 		add_action(
 			'web_stories_print_analytics',
-			function () {
+			function (): void {
 				$handler = $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_HANDLER );
 				if ( 'site-kit' === $handler && $this->is_analytics_module_active() ) {
 					remove_action( 'web_stories_print_analytics', [ $this->analytics, 'print_analytics_tag' ] );

@@ -72,7 +72,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $this->instance, 'filter_site_kit_gtag_opt' ] ) );
-		$this->assertFalse( has_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );
+		$this->assertSame( 5, has_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );
 	}
 
 	/**
