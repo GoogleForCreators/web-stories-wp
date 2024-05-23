@@ -357,9 +357,6 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 						'additionalProperties' => true,
 					],
 				],
-				// WPGraphQL errors when encountering array or object types.
-				// See https://github.com/wp-graphql/wp-graphql/issues/2065.
-				'show_in_graphql' => false,
 			]
 		);
 
