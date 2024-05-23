@@ -97,6 +97,13 @@ class Tracking extends Service_Base {
 	private WooCommerce $woocommerce;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private Context $context;
+
+	/**
 	 * Tracking constructor.
 	 *
 	 * @since 1.4.0
@@ -107,6 +114,7 @@ class Tracking extends Service_Base {
 	 * @param Settings    $settings    Settings instance.
 	 * @param Preferences $preferences Preferences instance.
 	 * @param WooCommerce $woocommerce WooCommerce instance.
+	 * @param Context     $context     Context instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -114,7 +122,8 @@ class Tracking extends Service_Base {
 		Assets $assets,
 		Settings $settings,
 		Preferences $preferences,
-		WooCommerce $woocommerce
+		WooCommerce $woocommerce,
+		Context $context
 	) {
 		$this->assets      = $assets;
 		$this->experiments = $experiments;
@@ -122,6 +131,7 @@ class Tracking extends Service_Base {
 		$this->settings    = $settings;
 		$this->preferences = $preferences;
 		$this->woocommerce = $woocommerce;
+		$this->context     = $context;
 	}
 
 	/**
@@ -132,6 +142,10 @@ class Tracking extends Service_Base {
 	 * @since 1.0.0
 	 */
 	public function register(): void {
+		if ( ! $this->context->is_story_editor() && 'web-story' !== $this->context->get_screen_post_type() ) {
+			return;
+		}
+
 		// By not passing an actual script src we can print only the inline script.
 		$this->assets->register_script(
 			self::SCRIPT_HANDLE,
@@ -155,7 +169,7 @@ class Tracking extends Service_Base {
 	 * @return string Registration action to use.
 	 */
 	public static function get_registration_action(): string {
-		return 'admin_init';
+		return 'admin_head';
 	}
 
 	/**
