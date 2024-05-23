@@ -287,8 +287,8 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	public function get_has_archive() {
-		$archive_page_option    = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
-		$has_archive            = true;
+		$archive_page_option = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		$has_archive         = true;
 
 		if ( 'disabled' === $archive_page_option ) {
 			$has_archive = false;
