@@ -237,7 +237,14 @@ class Dashboard extends Service_Base {
 	public function add_menu_page(): void {
 		$parent = 'edit.php?post_type=' . $this->story_post_type->get_slug();
 
-		$settings = $this->get_dashboard_settings();
+		// Not using get_dashboard_settings() to avoid an extra database query.
+
+		$settings = [
+			'canViewDefaultTemplates' => true,
+		];
+
+		/** This filter is documented in includes/Admin/Dashboard.php */
+		$settings = apply_filters( 'web_stories_dashboard_settings', $settings );
 
 		/**
 		 * The edit_posts capability.
