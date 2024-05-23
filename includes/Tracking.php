@@ -137,15 +137,11 @@ class Tracking extends Service_Base {
 	/**
 	 * Initializes tracking.
 	 *
-	 * Registers the setting in WordPress.
+	 * Registers the script in WordPress.
 	 *
 	 * @since 1.0.0
 	 */
 	public function register(): void {
-		if ( ! $this->context->is_story_editor() && 'web-story' !== $this->context->get_screen_post_type() ) {
-			return;
-		}
-
 		// By not passing an actual script src we can print only the inline script.
 		$this->assets->register_script(
 			self::SCRIPT_HANDLE,
@@ -154,6 +150,10 @@ class Tracking extends Service_Base {
 			WEBSTORIES_VERSION,
 			false
 		);
+
+		if ( ! $this->context->is_story_editor() && 'web-story' !== $this->context->get_screen_post_type() ) {
+			return;
+		}
 
 		wp_add_inline_script(
 			self::SCRIPT_HANDLE,
