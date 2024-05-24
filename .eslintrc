@@ -142,7 +142,8 @@
     "react/forbid-component-props": ["error", {
       "forbid": ["for"]
     }],
-    "react/no-array-index-key": "warn",
+    "react/jsx-key": "error",
+    "react/no-array-index-key": "error",
     "react/no-unknown-property": [
       "error",
       {
