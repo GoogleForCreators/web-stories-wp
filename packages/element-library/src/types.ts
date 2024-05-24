@@ -28,5 +28,3 @@ export * from './types';
 export * from './utils/textMeasurements';
 
 export const elementTypes: ElementDefinition[] = [];
-
-export {};

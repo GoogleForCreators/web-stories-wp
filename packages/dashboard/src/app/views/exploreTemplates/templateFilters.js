@@ -26,7 +26,7 @@ import {
 } from '../../../constants';
 
 export function updateSelectedItems(items, setter) {
-  return function (sender) {
+  return (sender) => {
     const newSelectedItems = items.map((item) => {
       if (item.value === sender) {
         return { ...item, selected: !item.selected };
@@ -39,7 +39,7 @@ export function updateSelectedItems(items, setter) {
 }
 
 export function clearAllSelectedItems(items, setter) {
-  return function () {
+  return () => {
     const newSelectedItems = items.map((item) => {
       return { ...item, selected: false };
     });

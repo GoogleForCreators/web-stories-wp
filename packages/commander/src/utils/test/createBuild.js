@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __setMockFiles } from 'fs';
+import { __setMockFiles } from 'node:fs';
 
 /**
  * Internal dependencies
@@ -25,7 +25,7 @@ import { __setMockFiles } from 'fs';
 import createBuild from '../createBuild';
 import copyFiles from '../copyFiles';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 jest.mock('../getIgnoredFiles', () => jest.fn(() => ['bar.txt', 'baz/']));
 jest.mock('../copyFiles');

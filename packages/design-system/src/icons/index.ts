@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+
 export { default as AlignBottom } from './align_bottom.svg';
 export { default as AlignCenter } from './align_center.svg';
 export { default as AlignLeft } from './align_left.svg';
@@ -39,8 +40,9 @@ export { default as ArrowOutline } from './arrow_outline.svg';
 export { default as ArrowRight } from './arrow_right.svg';
 export { default as ArrowRightCurved } from './arrow_right_curved.svg';
 export { default as ArrowRightLarge } from './arrow_right_large.svg';
-export { default as ArrowUp } from './arrow_up.svg';
 export { default as ArrowsLeftRight } from './arrows_leftright.svg';
+export { default as ArrowUp } from './arrow_up.svg';
+export { default as AudioSticker } from './audio_stickers.svg';
 export { default as BackgroundBlur } from './background_blur.svg';
 export { default as BackgroundBlurOff } from './background_blur_off.svg';
 export { default as Border } from './border.svg';
@@ -83,6 +85,7 @@ export { default as FloppyDisk } from './floppy_disk.svg';
 export { default as GearWithGauge } from './gear_with_gauge.svg';
 export { default as Gif } from './gif.svg';
 export { default as Group } from './group.svg';
+export { default as History } from './history.svg';
 export { default as Keyboard } from './keyboard.svg';
 export { default as Launch } from './launch.svg';
 export { default as LetterAHeight } from './letter_a_height.svg';
@@ -94,9 +97,9 @@ export { default as LetterMOutline } from './letter_m_outline.svg';
 export { default as LetterSStrikethrough } from './letter_s_strikethrough.svg';
 export { default as LetterT } from './letter_t.svg';
 export { default as LetterTArrow } from './letter_t_arrow.svg';
+export { default as LetterTLargeLetterTSmall } from './letter_t_large_letter_t_small.svg';
 export { default as LetterTPlus } from './letter_t_plus.svg';
 export { default as LetterTUppercase } from './letter_t_uppercase.svg';
-export { default as LetterTLargeLetterTSmall } from './letter_t_large_letter_t_small.svg';
 export { default as LetterUUnderline } from './letter_u_underline.svg';
 export { default as Link } from './link.svg';
 export { default as LockClosed } from './lock_closed.svg';
@@ -123,12 +126,13 @@ export { default as PictureSwap } from './picture_swap.svg';
 export { default as Pipette } from './pipette.svg';
 export { default as Play } from './play.svg';
 export { default as PlayFilled } from './play_filled.svg';
-export { default as PlusFilledSmall } from './plus_filled_small.svg';
 export { default as PlayOutline } from './play_outline.svg';
 export { default as Plus } from './plus.svg';
 export { default as PlusFilled } from './plus_filled.svg';
+export { default as PlusFilledSmall } from './plus_filled_small.svg';
 export { default as PlusOutline } from './plus_outline.svg';
 export { default as QuestionMarkOutline } from './question_mark_outline.svg';
+export { default as RemoveMask } from './remove_mask.svg';
 export { default as Rotate } from './rotate.svg';
 export { default as Scissors } from './scissors.svg';
 export { default as Settings } from './settings.svg';
@@ -148,5 +152,3 @@ export { default as Union } from './union.svg';
 export { default as Video } from './video.svg';
 export { default as Visibility } from './visibility.svg';
 export { default as VisibilityOff } from './visibility_off.svg';
-export { default as RemoveMask } from './remove_mask.svg';
-export { default as History } from './history.svg';

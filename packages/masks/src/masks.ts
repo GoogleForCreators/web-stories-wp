@@ -16,8 +16,8 @@
 /**
  * External dependencies
  */
-import { ElementType, getDefinitionForType } from '@googleforcreators/elements';
-import type { Element, Mask } from '@googleforcreators/elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
+import type { ElementType, Element, Mask } from '@googleforcreators/elements';
 import type { CSSProperties } from 'react';
 
 /**

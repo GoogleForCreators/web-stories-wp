@@ -28,14 +28,14 @@ const FailedTestsReporter = function (baseReporterDecorator, config) {
 
   const failedTests = [];
 
-  this.onSpecComplete = function (browser, result) {
+  this.onSpecComplete = (browser, result) => {
     const { success, fullName } = result;
     if (!success) {
       failedTests.push(fullName);
     }
   };
 
-  this.onRunComplete = function () {
+  this.onRunComplete = () => {
     if (outputFile) {
       fs.mkdirSync(path.dirname(outputFile), { recursive: true });
       fs.writeFileSync(outputFile, failedTests.join('\n'));

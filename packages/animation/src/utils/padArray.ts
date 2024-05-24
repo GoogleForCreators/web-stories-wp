@@ -15,7 +15,7 @@
  */
 
 function padArray(values: number[], padCount: number) {
-  return values.map((val) => Array<number>(padCount).fill(val)).flat();
+  return values.flatMap((val) => Array<number>(padCount).fill(val));
 }
 
 export default padArray;

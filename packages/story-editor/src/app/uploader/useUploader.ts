@@ -122,9 +122,9 @@ function useUploader() {
             'web-stories'
           );
 
-          const allowedFileTypes = overrideAllowedMimeTypes
-            .map((type) => getExtensionsFromMimeType(type))
-            .flat();
+          const allowedFileTypes = overrideAllowedMimeTypes.flatMap((type) =>
+            getExtensionsFromMimeType(type)
+          );
 
           if (allowedFileTypes.length) {
             /* translators: %s is a list of allowed file extensions. */

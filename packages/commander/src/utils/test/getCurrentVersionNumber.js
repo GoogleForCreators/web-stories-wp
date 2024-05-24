@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { __setMockFiles } from 'fs';
+import { __setMockFiles } from 'node:fs';
 
 /**
  * Internal dependencies
  */
 import getCurrentVersionNumber from '../getCurrentVersionNumber';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 const PLUGIN_FILE_CONTENT = `
 <?php

@@ -73,7 +73,7 @@ export function getCustomPageTemplates(config, page = 1, search) {
     _embed: TEMPLATE_EMBED,
   });
   return apiFetch({ path }).then(({ headers, body }) => {
-    const totalPages = parseInt(headers['X-WP-TotalPages']);
+    const totalPages = Number.parseInt(headers['X-WP-TotalPages']);
     const templates = body.map(transformResponse);
     return {
       templates,

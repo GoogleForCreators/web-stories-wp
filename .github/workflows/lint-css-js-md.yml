@@ -61,7 +61,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
+        uses: step-security/harden-runner@a4aa98b93cab29d9b1101a6143fb8bce00e2eac4
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -74,7 +74,7 @@ jobs:
             54.185.253.63:443
 
       - name: Checkout
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -88,7 +88,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@d3603274aca5625baad52ec06108517a089cdd00
+        uses: oven-sh/setup-bun@8f24390df009a496891208e5e36b8a1de1f45135
         with:
           bun-version: latest
 
@@ -125,7 +125,7 @@ jobs:
           github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Annotate JS Lint Results
-        uses: ataylorme/eslint-annotate-action@2.2.0
+        uses: ataylorme/eslint-annotate-action@3.0.0
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           report-json: 'build/lint-js-report.json'

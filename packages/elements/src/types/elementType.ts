@@ -22,4 +22,5 @@ export enum ElementType {
   Sticker = 'sticker',
   Shape = 'shape',
   Product = 'product',
+  AudioSticker = 'audioSticker',
 }

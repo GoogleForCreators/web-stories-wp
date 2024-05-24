@@ -71,15 +71,13 @@ export interface OptionListProps<O extends AbstractOption> {
   noMatchesFoundLabel?: string;
 }
 
-export interface ContentRenderer<O> {
-  (options: {
-    searchKeyword: string;
-    setIsExpanded: (isExpanded: boolean) => void;
-    trigger: number;
-    queriedOptions: O[] | null;
-    listId: string;
-  }): JSX.Element | null;
-}
+export type ContentRenderer<O> = (options: {
+  searchKeyword: string;
+  setIsExpanded: (isExpanded: boolean) => void;
+  trigger: number;
+  queriedOptions: O[] | null;
+  listId: string;
+}) => JSX.Element | null;
 
 export interface OptionsContainerProps<O> {
   isOpen: boolean;

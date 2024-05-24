@@ -108,8 +108,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
             return;
           }
 
-          const totalPages = parseInt(headers.totalPages);
-          const totalItems = parseInt(headers.totalItems);
+          const totalPages = Number.parseInt(headers.totalPages);
+          const totalItems = Number.parseInt(headers.totalItems);
           const hasMore = p < totalPages;
 
           callback({

@@ -57,8 +57,9 @@ domReady(() => {
     );
 
     const itemWidth =
-      parseFloat(itemStyle.width) +
-      (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
+      Number.parseFloat(itemStyle.width) +
+      (Number.parseFloat(itemStyle.marginLeft) +
+        Number.parseFloat(itemStyle.marginRight));
 
     // For circles view we would want to keep it auto.
     if (isCircles) {

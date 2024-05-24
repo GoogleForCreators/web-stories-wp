@@ -276,7 +276,7 @@ class Mouse {
         return rel;
       }
       if (rel.endsWith('%')) {
-        const percent = parseFloat(rel) / 100;
+        const percent = Number.parseFloat(rel) / 100;
         return size * percent;
       }
       throw new Error('Unknown rel size: ' + rel);

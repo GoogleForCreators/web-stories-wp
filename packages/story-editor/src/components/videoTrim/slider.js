@@ -60,7 +60,7 @@ function Slider({
 
       onPointerDown?.();
 
-      const handlePointerMove = function (event) {
+      const handlePointerMove = (event) => {
         const deltaX = getPageX(event) - getPageX(downEvent);
         const deltaRatio = deltaX / railWidth;
         const deltaValue = deltaRatio * (max - min);
@@ -71,7 +71,7 @@ function Slider({
         event.stopPropagation();
       };
 
-      const handlePointerUp = function () {
+      const handlePointerUp = () => {
         document.removeEventListener('pointermove', handlePointerMove);
         document.removeEventListener('pointerup', handlePointerUp);
       };

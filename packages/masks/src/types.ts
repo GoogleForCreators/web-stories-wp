@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-export interface RegisterDropTargetCallback {
-  (id: string, pathRef: SVGPathElement | null): void;
-}
+export type RegisterDropTargetCallback = (
+  id: string,
+  pathRef: SVGPathElement | null
+) => void;
 
-export interface UnregisterDropTargetCallback {
-  (id: string): void;
-}
+export type UnregisterDropTargetCallback = (id: string) => void;

@@ -70,7 +70,7 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return function () {
+    return () => {
       window.removeEventListener('scroll', handleScroll, { passive: true });
     };
   }, [handleScroll]);

@@ -219,9 +219,7 @@ export function getBorderColor({ color }: Required<Pick<Border, 'color'>>) {
   return `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
 }
 
-interface Converter {
-  (border: number): number;
-}
+type Converter = (border: number) => number;
 
 /**
  * Returns border values based on if it's preview or not.

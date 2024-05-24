@@ -25,8 +25,8 @@ export function parseInput(
 ) {
   if (`${String(value)}`.length > 0) {
     let boundedValue = isFloat
-      ? parseFloat(String(value))
-      : parseInt(String(value));
+      ? Number.parseFloat(String(value))
+      : Number.parseInt(String(value));
 
     if (min !== undefined) {
       boundedValue = Math.max(min, boundedValue);
@@ -52,8 +52,8 @@ export function isInputValid(
   }
 
   const valueAsANumber = isFloat
-    ? parseFloat(String(value))
-    : parseInt(String(value));
+    ? Number.parseFloat(String(value))
+    : Number.parseInt(String(value));
 
   if (min !== undefined && valueAsANumber < min) {
     return false;

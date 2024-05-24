@@ -83,7 +83,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
+        uses: step-security/harden-runner@a4aa98b93cab29d9b1101a6143fb8bce00e2eac4
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -101,7 +101,7 @@ jobs:
             54.185.253.63:443
 
       - name: Checkout
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -110,7 +110,7 @@ jobs:
           cache: npm
 
       - name: Bundle size check
-        uses: preactjs/compressed-size-action@8119d3d31b6e57b167e09c81dfa877eada3bcb35
+        uses: preactjs/compressed-size-action@f780fd104362cfce9e118f9198df2ee37d12946c
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: '{assets/js/*.js,assets/css/*.css}'
@@ -129,12 +129,12 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
+        uses: step-security/harden-runner@a4aa98b93cab29d9b1101a6143fb8bce00e2eac4
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -160,7 +160,7 @@ jobs:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@d3603274aca5625baad52ec06108517a089cdd00
+        uses: oven-sh/setup-bun@8f24390df009a496891208e5e36b8a1de1f45135
         with:
           bun-version: latest
 
@@ -184,7 +184,7 @@ jobs:
       # Upload ZIP file to GCS for use in QA environment.
 
       - name: Authenticate
-        uses: google-github-actions/auth@55bd3a7c6e2ae7cf1877fd1ccb9d54c0503c457c
+        uses: google-github-actions/auth@71fee32a0bb7e97b4d33d548e7d957010649d8fa
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
@@ -202,7 +202,7 @@ jobs:
 
       - name: Check if a comment was already made
         id: find-comment
-        uses: peter-evans/find-comment@d5fe37641ad8451bdd80312415672ba26c86575e
+        uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: googleforcreators-bot

@@ -32,6 +32,9 @@ import { VideoPoster } from './videoPoster';
 import { VideoOptions } from './videoOptions';
 import { Captions } from './captions';
 import { ShapeStyle } from './shapeStyle';
+import { AudioStickerType } from './audioStickerType';
+import { AudioStickerStyle } from './audioStickerStyle';
+import { AudioStickerSize } from './audioStickerSize';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -164,6 +167,30 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /^Page Background Audio$/i }),
       'pageBackgroundAudio',
       PageBackgroundAudio
+    );
+  }
+
+  get audioStickerType() {
+    return this._get(
+      this.getByRole('region', { name: /Audio Sticker Type/i }),
+      'audioStickerType',
+      AudioStickerType
+    );
+  }
+
+  get audioStickerStyle() {
+    return this._get(
+      this.getByRole('region', { name: /Audio Sticker Style/i }),
+      'audioStickerStyle',
+      AudioStickerStyle
+    );
+  }
+
+  get audioStickerSize() {
+    return this._get(
+      this.getByRole('region', { name: /Audio Sticker Size/i }),
+      'audioStickerSize',
+      AudioStickerSize
     );
   }
 }

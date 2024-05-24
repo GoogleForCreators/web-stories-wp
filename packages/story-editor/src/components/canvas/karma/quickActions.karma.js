@@ -128,10 +128,12 @@ describe('Quick Actions integration', () => {
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.insertTextButton
       );
+      await fixture.events.sleep(100);
       expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
       expect(
         fixture.editor.sidebar.designPanel.selectionSection
       ).not.toBeNull();
+
       expect(document.activeElement).toEqual(
         fixture.editor.canvas.framesLayer.frames[1].node
       );
