@@ -5,7 +5,7 @@
     "plugin:@wordpress/eslint-plugin/i18n",
     "eslint:recommended",
     "plugin:import/recommended",
-    "plugin:eslint-comments/recommended",
+    "plugin:@eslint-community/eslint-comments/recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
@@ -141,7 +141,8 @@
     "react/forbid-component-props": ["error", {
       "forbid": ["for"]
     }],
-    "react/no-array-index-key": "warn",
+    "react/jsx-key": "error",
+    "react/no-array-index-key": "error",
     "react/no-unknown-property": [
       "error",
       {
@@ -244,8 +245,8 @@
       { "startLines": 1 }
     ],
     "jsdoc/valid-types": "error",
-    "eslint-comments/no-unused-disable": "error",
-    "eslint-comments/require-description": "error",
+    "@eslint-community/eslint-comments/no-unused-disable": "error",
+    "@eslint-community/eslint-comments/require-description": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/i18n-no-flanking-whitespace": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
@@ -422,7 +423,7 @@
         "node": true
       },
       "rules": {
-        "eslint-comments/require-description": "off",
+        "@eslint-community/eslint-comments/require-description": "off",
         "react/prop-types": "off",
         "jest/no-hooks": "off",
         "jest/no-untyped-mock-factory": "off",
@@ -483,7 +484,7 @@
         "node": true
       },
       "rules": {
-        "eslint-comments/require-description": "off",
+        "@eslint-community/eslint-comments/require-description": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-await-sync-queries": "error",
         "testing-library/no-debugging-utils": "error",
@@ -549,7 +550,7 @@
         "node": true
       },
       "rules": {
-        "eslint-comments/require-description": "off",
+        "@eslint-community/eslint-comments/require-description": "off",
         "jest/max-expects": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
@@ -588,7 +589,7 @@
         "packages/e2e-test-utils/**/*.js"
       ],
       "rules": {
-        "eslint-comments/require-description": "off",
+        "@eslint-community/eslint-comments/require-description": "off",
         "jest/expect-expect": "off",
         "jest/max-expects": "off",
         "jest/no-export": "off",
@@ -607,7 +608,7 @@
         "**/testUtils/**/*.js"
       ],
       "rules": {
-        "eslint-comments/require-description": "off",
+        "@eslint-community/eslint-comments/require-description": "off",
         "jest/require-hook": "off"
       }
     },
@@ -660,7 +661,7 @@
         "node": true
       },
       "rules": {
-        "eslint-comments/require-description": "off",
+        "@eslint-community/eslint-comments/require-description": "off",
         "node/no-extraneous-import": "off",
         "node/no-missing-import": "off",
         "node/no-unpublished-import": "off",
@@ -682,7 +683,7 @@
         "packages/migration/scripts/utils/updateTemplates.js"
       ],
       "rules": {
-        "eslint-comments/no-unused-disable": "off"
+        "@eslint-community/eslint-comments/no-unused-disable": "off"
       }
     },
     {
@@ -710,7 +711,7 @@
         "no-unused-vars": "off",
         "header/header": "off",
         "prettier/prettier": "off",
-        "eslint-comments/require-description": "off",
+        "@eslint-community/eslint-comments/require-description": "off",
         "react/prop-types" : "off"
       }
     },
@@ -843,8 +844,8 @@
       "rules": {
         "react/no-array-index-key" : "off",
         "react/prop-types": "off",
-        "eslint-comments/no-unused-disable": "off",
-        "eslint-comments/require-description": "off"
+        "@eslint-community/eslint-comments/no-unused-disable": "off",
+        "@eslint-community/eslint-comments/require-description": "off"
       }
     },
     {
@@ -886,6 +887,14 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-unsafe-return": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/story-editor/src/components/canvas/mediaCaptions/cue.js"
+      ],
+      "rules": {
+        "@eslint-community/eslint-comments/no-unused-disable": "off",
       }
     }
   ]

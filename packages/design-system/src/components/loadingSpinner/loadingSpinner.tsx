@@ -106,7 +106,10 @@ function LoadingSpinner({
   ...props
 }: LoadingSpinnerProps) {
   const ids = useMemo(
-    () => new Array(numCircles).fill(1).map(() => uuidv4()),
+    () =>
+      Array.from({ length: numCircles })
+        .fill(1)
+        .map(() => uuidv4()),
     [numCircles]
   );
 

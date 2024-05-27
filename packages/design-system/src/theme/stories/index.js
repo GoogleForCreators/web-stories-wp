@@ -64,7 +64,10 @@ const Content = styled.div`
 
 export const _default = {
   render: function Render() {
-    const ids = useMemo(() => new Array(20).fill(0).map(() => uuidv4()), []);
+    const ids = useMemo(
+      () => Array.from({ length: 20 }).map(() => uuidv4()),
+      []
+    );
 
     return (
       <>

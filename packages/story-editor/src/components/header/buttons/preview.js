@@ -72,7 +72,7 @@ function PreviewButton({ forceIsSaving = false }) {
   /**
    * Open a preview of the story in current window.
    */
-  const openPreviewLink = useCallback(() => {
+  const openPreviewLink = useCallback(async () => {
     trackEvent('preview_story');
 
     // Start a about:blank popup with waiting message until we complete
@@ -110,19 +110,20 @@ function PreviewButton({ forceIsSaving = false }) {
 
     // Save story directly if draft, otherwise, use auto-save.
     const updateFunc = isDraft ? saveStory : autoSave;
-    updateFunc()
-      .then((update) => {
-        if (popup && !popup.closed) {
-          if (popup.location.href) {
-            // Auto-save sends an updated preview link, use that instead if available.
-            const updatedPreviewLink = decoratePreviewLink(
-              update?.previewLink ?? previewLink
-            );
-            popup.location.replace(updatedPreviewLink);
-          }
+    try {
+      const update = await updateFunc();
+      if (popup && !popup.closed) {
+        if (popup.location.href) {
+          // Auto-save sends an updated preview link, use that instead if available.
+          const updatedPreviewLink = decoratePreviewLink(
+            update?.previewLink ?? previewLink
+          );
+          popup.location.replace(updatedPreviewLink);
         }
-      })
-      .catch(() => setPreviewLinkToOpenViaDialog(previewLink));
+      }
+    } catch {
+      setPreviewLinkToOpenViaDialog(previewLink);
+    }
   }, [autoSave, isDraft, previewLink, saveStory]);
 
   const openPreviewLinkSync = useCallback(
