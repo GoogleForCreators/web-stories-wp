@@ -166,7 +166,7 @@ export default function initializeWebStoryLightbox() {
   if ('undefined' !== typeof webStoryBlocks) {
     Array.from(webStoryBlocks).forEach((webStoryBlock) => {
       /* eslint-disable-next-line no-new -- we do not store the object as no further computation required. */
-      new Lightbox(webStoryBlock);
+      // new Lightbox(webStoryBlock);
     });
   }
 }
