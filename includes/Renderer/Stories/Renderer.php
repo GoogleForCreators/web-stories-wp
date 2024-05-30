@@ -370,6 +370,18 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
 				tabindex="0"
 				role="button"
+				data-wp-interactive="web-stories-block"
+				<?php
+					echo esc_attr(
+						wp_interactivity_data_wp_context(
+							[
+								'instanceId' => $this->instance_id,
+							]
+						)
+					);
+				?>
+				data-wp-on--click="actions.open"
+				data-wp-on-window--popstate="actions.onPopstate"
 			>
 				<?php $this->render_story_with_poster(); ?>
 			</div>
@@ -379,7 +391,21 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
-			<div class="<?php echo esc_attr( $single_story_classes ); ?>">
+			<div 
+				class="<?php echo esc_attr( $single_story_classes ); ?>"
+				data-wp-interactive="web-stories-block"
+				<?php
+					echo esc_attr(
+						wp_interactivity_data_wp_context(
+							[
+								'instanceId' => $this->instance_id,
+							]
+						)
+					);
+				?>
+				data-wp-on--click="actions.open"
+				data-wp-on-window--popstate="actions.onPopstate"
+				>
 				<?php $this->render_story_with_poster(); ?>
 			</div>
 			<?php
@@ -410,7 +436,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		];
 		?>
 		<div class="web-stories-list__lightbox">
-			<amp-story-player width="3.6" height="6" layout="responsive">
+			<amp-story-player 
+				width="3.6" 
+				height="6" 
+				layout="responsive" 
+				data-wp-interactive="web-stories-block" 
+				data-wp-on--amp-story-player-close="actions.close"
+				data-wp-on--navigation="actions.navigation"
+				>
 				<script type="application/json">
 					<?php echo wp_json_encode( $data ); ?>
 				</script>
@@ -832,6 +865,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					width="3.6"
 					height="6"
 					layout="responsive"
+					data-wp-interactive="web-stories-block" 
+					data-wp-on--amp-story-player-close="actions.close"
+					data-wp-on--navigation="actions.navigation"
 				>
 					<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 				</amp-story-player>
