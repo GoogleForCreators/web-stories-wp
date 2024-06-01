@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7b656ffa24e2845dee40b851448dc85",
+    "content-hash": "11407e7611b788206440577972a47905",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -346,16 +346,16 @@
         },
         {
             "name": "mcaskill/composer-exclude-files",
-            "version": "v3.0.1",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mcaskill/composer-plugin-exclude-files.git",
-                "reference": "f7dd8dbb0b1bf9b0269db07e05460f81066cf22b"
+                "reference": "d053829d49ff3b0ba0ba3896f36b27b866b839e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/f7dd8dbb0b1bf9b0269db07e05460f81066cf22b",
-                "reference": "f7dd8dbb0b1bf9b0269db07e05460f81066cf22b",
+                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/d053829d49ff3b0ba0ba3896f36b27b866b839e8",
+                "reference": "d053829d49ff3b0ba0ba3896f36b27b866b839e8",
                 "shasum": ""
             },
             "require": {
@@ -370,7 +370,7 @@
             "type": "composer-plugin",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "3.x-dev"
+                    "dev-main": "4.x-dev"
                 },
                 "class": "McAskill\\Composer\\ExcludeFilePlugin"
             },
@@ -392,9 +392,9 @@
             "description": "Exclude files from autoload_files.php",
             "support": {
                 "issues": "https://github.com/mcaskill/composer-plugin-exclude-files/issues",
-                "source": "https://github.com/mcaskill/composer-plugin-exclude-files/tree/v3.0.1"
+                "source": "https://github.com/mcaskill/composer-plugin-exclude-files/tree/v4.0.0"
             },
-            "time": "2023-05-24T17:29:24+00:00"
+            "time": "2024-05-19T18:19:20+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
