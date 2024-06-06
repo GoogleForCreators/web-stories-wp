@@ -100,10 +100,11 @@ class Generic_Renderer extends TestCase {
 		$renderer->init();
 
 		if ( version_compare( $wp_version, '6.5', '>=' ) ) {
-			$this->assertFalse( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+			$this->assertFalse( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'enqueued' ) );
 		} else {
-			$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+			$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'enqueued' ) );
 		}
+		$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( Renderer::STYLE_HANDLE, 'registered' ) );
 	}
 
@@ -138,11 +139,12 @@ class Generic_Renderer extends TestCase {
 		$this->assertStringContainsString( 'web-stories-list alignnone is-view-type-grid', $output );
 		$this->assertStringContainsString( 'web-stories-list__story', $output );
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
+		$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
 
 		if ( version_compare( $wp_version, '6.5', '>=' ) ) {
-			$this->assertFalse( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+			$this->assertFalse( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'enqueued' ) );
 		} else {
-			$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+			$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'enqueued' ) );
 		}
 	}
 }

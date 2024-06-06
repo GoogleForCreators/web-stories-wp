@@ -88,10 +88,11 @@ class Carousel_Renderer extends TestCase {
 
 		$this->assertTrue( wp_style_is( $renderer::STYLE_HANDLE, 'registered' ) );
 		if ( version_compare( $wp_version, '6.5', '>=' ) ) {
-			$this->assertFalse( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+			$this->assertFalse( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'enqueued' ) );
 		} else {
-			$this->assertTrue( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+			$this->assertTrue( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'enqueued' ) );
 		}
+		$this->assertTrue( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 	}
