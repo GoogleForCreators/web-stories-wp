@@ -63,6 +63,11 @@ const getUsedAmpExtensions = (pages: Page[]) => {
     src: 'https://cdn.ampproject.org/v0/amp-story-shopping-0.1.js',
   };
 
+  const ampStoryAudioSticker: AmpExtension = {
+    name: 'amp-story-audio-sticker',
+    src: 'https://cdn.ampproject.org/v0/amp-story-audio-sticker-0.1.js',
+  };
+
   for (const { elements, backgroundAudio } of pages) {
     if (backgroundAudio?.resource?.src && backgroundAudio?.tracks?.length) {
       extensions.push(ampVideo);
@@ -82,6 +87,9 @@ const getUsedAmpExtensions = (pages: Page[]) => {
           break;
         case ElementType.Product:
           extensions.push(ampStoryShopping);
+          break;
+        case ElementType.AudioSticker:
+          extensions.push(ampStoryAudioSticker);
           break;
         default:
           break;

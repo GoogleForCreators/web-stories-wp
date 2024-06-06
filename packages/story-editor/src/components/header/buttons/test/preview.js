@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
@@ -92,7 +92,7 @@ describe('PreviewButton', () => {
     };
   });
 
-  it('should open draft preview when clicking on Preview via about:blank', () => {
+  it('should open draft preview when clicking on Preview via about:blank', async () => {
     const { saveStory } = arrange({
       story: {
         previewLink: 'http://localhost/?preview=true',
@@ -102,21 +102,17 @@ describe('PreviewButton', () => {
 
     expect(previewButton).toBeInTheDocument();
 
-    saveStory.mockImplementation(() => ({
-      then(callback) {
-        callback();
-        return {
-          catch: () => {},
-        };
-      },
-    }));
+    saveStory.mockImplementation(() => Promise.resolve());
 
     const mockedOpen = jest.fn(() => previewPopup);
     const windowSpy = jest.spyOn(window, 'open').mockImplementation(mockedOpen);
 
     fireEvent.click(previewButton);
 
-    expect(saveStory).toHaveBeenCalledWith();
+    await waitFor(() => {
+      expect(saveStory).toHaveBeenCalledWith();
+    });
+
     expect(mockedOpen).toHaveBeenCalledWith('about:blank', 'story-preview');
     expect(previewPopup.location.replace).toHaveBeenCalledWith(
       'http://localhost/?preview=true#development=1'
@@ -125,7 +121,7 @@ describe('PreviewButton', () => {
     windowSpy.mockRestore();
   });
 
-  it('should open preview for a published story when clicking on Preview via about:blank', () => {
+  it('should open preview for a published story when clicking on Preview via about:blank', async () => {
     const { autoSave } = arrange({
       story: {
         link: 'http://localhost',
@@ -133,21 +129,17 @@ describe('PreviewButton', () => {
       },
     });
     const previewButton = screen.getByRole('button', { name: 'Preview' });
-    autoSave.mockImplementation(() => ({
-      then(callback) {
-        callback();
-        return {
-          catch: () => {},
-        };
-      },
-    }));
+    autoSave.mockImplementation(() => Promise.resolve());
 
     const mockedOpen = jest.fn(() => previewPopup);
     const windowSpy = jest.spyOn(window, 'open').mockImplementation(mockedOpen);
 
     fireEvent.click(previewButton);
 
-    expect(autoSave).toHaveBeenCalledWith();
+    await waitFor(() => {
+      expect(autoSave).toHaveBeenCalledWith();
+    });
+
     expect(previewPopup.location.replace).toHaveBeenCalledWith(
       'http://localhost/?preview_id=1679&preview_nonce=b5ea827939&preview=true#development=1'
     );

@@ -31,6 +31,7 @@ import Sticker from './sticker';
 import Text from './text';
 import Video from './video';
 import Product from './product';
+import AudioSticker from './audioSticker';
 
 const FloatingMenuSelector = memo(function FloatingMenuSelector({
   selectedElementType,
@@ -52,6 +53,8 @@ const FloatingMenuSelector = memo(function FloatingMenuSelector({
       return <Video />;
     case SELECTED_ELEMENT_TYPES.PRODUCT:
       return <Product />;
+    case SELECTED_ELEMENT_TYPES.AUDIO_STICKER:
+      return <AudioSticker />;
     default:
       return null;
   }

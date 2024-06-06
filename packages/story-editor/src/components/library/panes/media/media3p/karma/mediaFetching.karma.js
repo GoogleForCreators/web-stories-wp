@@ -107,7 +107,7 @@ const RESOURCE_BUILDERS = {
 
 // page is index 0.
 const mediaPage = (page, provider) =>
-  [...new Array(MEDIA_PER_PAGE).keys()].map((n) => {
+  Array.from({ length: MEDIA_PER_PAGE }).map((n) => {
     const mediaName = `media/${provider}:${n + page * MEDIA_PER_PAGE + 1}`;
     return RESOURCE_BUILDERS[provider](mediaName);
   });

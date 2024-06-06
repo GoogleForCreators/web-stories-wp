@@ -187,6 +187,13 @@ export interface TextElement extends Element {
   textAlign: TextAlign;
 }
 
+export interface AudioStickerElement extends Element {
+  type: ElementType.AudioSticker;
+  sticker: string;
+  size: string;
+  style: string;
+}
+
 export interface ShapeElement extends Element {
   type: ElementType.Shape;
 }
