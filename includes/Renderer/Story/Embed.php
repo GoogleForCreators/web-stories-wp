@@ -119,7 +119,11 @@ class Embed {
 					<amp-story-player
 						width="<?php echo esc_attr( $args['width'] ); ?>"
 						height="<?php echo esc_attr( $args['height'] ); ?>"
-						layout="intrinsic">
+						layout="intrinsic"
+						data-wp-interactive="web-stories-block"
+						data-wp-on--amp-story-player-close="actions.close"
+						data-wp-on--navigation="actions.navigation"
+					>
 						<a href="<?php echo esc_url( $url ); ?>">
 							<?php if ( $poster ) { ?>
 								<img
@@ -157,7 +161,11 @@ class Embed {
 		?>
 		<div class="<?php echo esc_attr( "$class web-stories-embed $align" ); ?>">
 			<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
-				<amp-story-player>
+				<amp-story-player
+					data-wp-interactive="web-stories-block"
+					data-wp-on--amp-story-player-close="actions.close"
+					data-wp-on--navigation="actions.navigation"
+				>
 					<a href="<?php echo esc_url( $url ); ?>">
 						<?php if ( $poster ) { ?>
 							<img
