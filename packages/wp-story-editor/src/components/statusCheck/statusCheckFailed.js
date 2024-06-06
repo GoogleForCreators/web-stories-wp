@@ -51,7 +51,7 @@ function StatusCheckFailed({ isOpen, onClose }) {
                 size={TextSize.Small}
                 href={SUPPORT_URL}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noreferrer"
                 onClick={onSupportClick}
               />
             ),

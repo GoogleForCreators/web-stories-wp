@@ -428,7 +428,7 @@ function PublishPanel({ nameOverride }) {
                 <Required />
                 {canManageSettings && (
                   <Link
-                    rel="noopener noreferrer"
+                    rel="noreferrer"
                     target="_blank"
                     href={dashboardSettingsLink}
                     size={TextSize.XSmall}
@@ -460,7 +460,7 @@ function PublishPanel({ nameOverride }) {
               </RevisionsLabel>
               {revisionLink && revisionId ? (
                 <Link
-                  rel="noopener noreferrer"
+                  rel="noreferrer"
                   target="_blank"
                   href={addQueryArgs(revisionLink, { revision: revisionId })}
                   size={TextSize.XSmall}

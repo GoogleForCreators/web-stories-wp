@@ -90,7 +90,7 @@ function PostPublishDialog() {
                 size={TextSize.Small}
                 href={storyURL}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noreferrer"
                 onClick={onViewStoryClick}
               />
             ),
