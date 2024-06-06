@@ -24,8 +24,6 @@ import AmpOptimizer, {
   TRANSFORMATIONS_AMP_FIRST,
 } from '@ampproject/toolbox-optimizer';
 import amphtmlValidator from 'amphtml-validator';
-// eslint-disable-next-line import/no-extraneous-dependencies -- Required by @ampproject/toolbox-optimizer anyway.
-import runtimeVersion from '@ampproject/toolbox-runtime-version';
 
 const fallback = tmpdir() + '/validator_wasm.js';
 const validatorJs =
@@ -125,7 +123,6 @@ async function getAMPValidationErrors(string, optimize = true) {
     });
     const params = {
       canonical: 'https://example.com',
-      ampRuntimeVersion: await runtimeVersion.currentVersion(),
     };
     completeString = await ampOptimizer.transformHtml(completeString, params);
   }
