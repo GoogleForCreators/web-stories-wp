@@ -58,7 +58,7 @@ const { state, actions } = store('web-stories-block', {
     open: (event) => {
       event.preventDefault();
       const { ref: card } = getElement();
-      const context = getContext();
+      const context = JSON.parse(getContext().replaceAll("'", ''));
       const lightboxElement =
         document.querySelector(
           `.ws-lightbox-${context.instanceId} .web-stories-list__lightbox`
