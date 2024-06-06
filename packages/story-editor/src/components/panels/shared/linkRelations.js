@@ -88,7 +88,7 @@ function LinkRelations({ rel, onChangeRel }) {
           </CheckboxWrapper>
         ))}
         <Link
-          rel="noopener noreferrer"
+          rel="noreferrer"
           target="_blank"
           href={relHelpLink}
           size={TextSize.XSmall}
