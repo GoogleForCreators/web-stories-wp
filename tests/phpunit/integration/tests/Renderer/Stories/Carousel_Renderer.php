@@ -75,6 +75,7 @@ class Carousel_Renderer extends TestCase {
 	 */
 	public function test_init(): void {
 
+		global $wp_version;
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'  => 'carousel',
@@ -86,7 +87,11 @@ class Carousel_Renderer extends TestCase {
 		$renderer->init();
 
 		$this->assertTrue( wp_style_is( $renderer::STYLE_HANDLE, 'registered' ) );
-		$this->assertTrue( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+		if ( version_compare( $wp_version, '6.5', '>=' ) ) {
+			$this->assertFalse( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+		} else {
+			$this->assertTrue( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+		}
 		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 	}

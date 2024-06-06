@@ -93,6 +93,7 @@ class Singleton {
 	public function render( array $args = [] ): string {
 		++self::$instances;
 		$this->instance_id = self::$instances;
+		global $wp_version;
 
 		$defaults = [
 			'align'  => 'none',
@@ -115,7 +116,9 @@ class Singleton {
 
 		$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
-		$this->assets->enqueue_script_asset( Renderer::LIGHTBOX_SCRIPT_HANDLE );
+		if ( version_compare( $wp_version, '6.5', '<' ) ) {
+			$this->assets->enqueue_script_asset( Renderer::LIGHTBOX_SCRIPT_HANDLE );
+		}
 		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
 
 		ob_start();

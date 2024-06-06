@@ -354,6 +354,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 * @var Story $story
 		 */
 		$story = $this->current();
+		global $wp_version;
 
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
@@ -372,6 +373,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				role="button"
 				data-wp-interactive="web-stories-block"
 				<?php
+				if ( version_compare( $wp_version, '6.5', '>=' ) ) {
 					echo esc_attr(
 						wp_interactivity_data_wp_context(
 							[
@@ -379,6 +381,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 							]
 						)
 					);
+				}
 				?>
 				data-wp-on--click="actions.open"
 				data-wp-on-window--popstate="actions.onPopstate"
@@ -389,12 +392,15 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		} else {
 			$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
-			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
+			if ( version_compare( $wp_version, '6.5', '<' ) ) {
+				$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
+			}
 			?>
 			<div 
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
 				data-wp-interactive="web-stories-block"
 				<?php
+				if ( version_compare( $wp_version, '6.5', '>=' ) ) {
 					echo esc_attr(
 						wp_interactivity_data_wp_context(
 							[
@@ -402,6 +408,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 							]
 						)
 					);
+				}
 				?>
 				data-wp-on--click="actions.open"
 				data-wp-on-window--popstate="actions.onPopstate"
