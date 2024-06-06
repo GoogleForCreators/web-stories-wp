@@ -133,6 +133,7 @@ describe('Quick Actions integration', () => {
       expect(
         fixture.editor.sidebar.designPanel.selectionSection
       ).not.toBeNull();
+
       expect(document.activeElement).toEqual(
         fixture.editor.canvas.framesLayer.frames[1].node
       );

@@ -736,6 +736,11 @@ class KSES extends Service_Base implements HasRequirements {
 				'clip-rule' => true,
 				'fill'      => true,
 			],
+			'amp-story-audio-sticker'       => [
+				'size'          => true,
+				'sticker'       => true,
+				'sticker-style' => true,
+			],
 		];
 
 		$allowed_tags = $this->array_merge_recursive_distinct( $allowed_tags, $story_components );

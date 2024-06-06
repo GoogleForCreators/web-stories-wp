@@ -488,6 +488,10 @@ class KSES extends DependencyInjectedTestCase {
 				'<amp-story-shopping-tag data-product-id="lamp"></amp-story-shopping-tag><amp-story-shopping-attachment cta-text="Shop Now!"><script type="application/json">{}</script></amp-story-shopping-attachment>',
 				'<amp-story-shopping-tag data-product-id="lamp"></amp-story-shopping-tag><amp-story-shopping-attachment cta-text="Shop Now!"><script type="application/json">{}</script></amp-story-shopping-attachment>',
 			],
+			'AMP Story Audio Sticker'          => [
+				'<amp-story-audio-sticker size="small" sticker="headphone-cat" sticker-style="outline"></amp-story-audio-sticker>',
+				'<amp-story-audio-sticker size="small" sticker="headphone-cat" sticker-style="outline"></amp-story-audio-sticker>',
+			],
 		];
 	}
 }

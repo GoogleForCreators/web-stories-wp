@@ -220,7 +220,6 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       )}
-
       {/* <amp-story-page-outlink> needs to be the last child element */}
       {hasPageAttachment && <Outlink {...pageAttachment} />}
       {hasProducts && (

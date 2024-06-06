@@ -193,6 +193,14 @@ const background = PropTypes.shape({
   inner: element,
 });
 
+const product = PropTypes.shape({
+  ...StoryElementPropTypes,
+});
+
+const audioSticker = PropTypes.shape({
+  ...StoryElementPropTypes,
+});
+
 const StoryPropTypes = {
   mask,
   link,
@@ -202,7 +210,18 @@ const StoryPropTypes = {
   element,
   layer,
   textContent,
-  elements: { image, video, gif, media, text, shape, sticker, background },
+  elements: {
+    image,
+    video,
+    gif,
+    media,
+    text,
+    shape,
+    sticker,
+    background,
+    product,
+    audioSticker,
+  },
 };
 
 export { StoryPropTypes };

@@ -28,7 +28,7 @@
   "dependencies": {
     "@ampproject/toolbox-optimizer": "^2.9.0",
     "@googleforcreators/react": "*",
-    "amphtml-validator": "1.0.35",
+    "amphtml-validator": "1.0.38",
     "prop-types": "^15.8.1"
   }
 }

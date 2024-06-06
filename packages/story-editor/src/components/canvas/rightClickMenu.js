@@ -108,6 +108,9 @@ const RightClickMenu = () => {
         return StickerMenu;
       case ELEMENT_TYPES.PRODUCT:
         return ProductMenu;
+      case ELEMENT_TYPES.AUDIO_STICKER:
+        // NOTE: Using same options for this case as Products.
+        return ProductMenu;
       default:
         return PageMenu;
     }
