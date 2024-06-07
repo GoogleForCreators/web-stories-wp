@@ -371,20 +371,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
 				tabindex="0"
 				role="button"
-				data-wp-interactive="web-stories-block"
-				<?php
-				if ( version_compare( $wp_version, '6.5', '>=' ) ) {
-					echo esc_attr(
-						wp_interactivity_data_wp_context(
-							[
-								'instanceId' => $this->instance_id,
-							]
-						)
-					);
-				}
-				?>
-				data-wp-on--click="actions.open"
-				data-wp-on-window--popstate="actions.onPopstate"
 			>
 				<?php $this->render_story_with_poster(); ?>
 			</div>
