@@ -438,7 +438,9 @@ class Sanitization {
 		}
 
 		$sanitizers = [
-			AMP_Script_Sanitizer::class        => [],
+			AMP_Script_Sanitizer::class        => [
+				'sanitize_js_scripts' => true,
+			],
 			AMP_Style_Sanitizer::class         => [
 
 				/*
