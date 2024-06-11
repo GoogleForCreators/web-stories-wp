@@ -428,6 +428,7 @@ const webStoriesBlock = {
     ],
     'web-stories-list-styles': './packages/stories-block/src/css/style.css',
     'web-stories-embed': './packages/stories-block/src/css/embed.css',
+    'web-stories-block-view': './packages/stories-block-view/src/index.js',
     ...coreThemeBlockStyles,
   },
   plugins: [
