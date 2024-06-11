@@ -88,5 +88,5 @@
     "align": ["wide", "full", "left", "right", "center"],
     "interactivity": true
   },
-	"viewScriptModule": "file:./view.js"
+  "viewScriptModule": "file:../../packages/stories-block-view/src/index.js"
 }
