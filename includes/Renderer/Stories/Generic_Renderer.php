@@ -86,7 +86,7 @@ class Generic_Renderer extends Renderer {
 						$this->render_single_story_content();
 						$this->next();
 					},
-					$this->stories 
+					$this->stories
 				);
 				$this->maybe_render_archive_link();
 				?>
@@ -95,6 +95,10 @@ class Generic_Renderer extends Renderer {
 		<?php
 		$view_type = $this->get_view_type();
 		$content   = (string) ob_get_clean();
+
+		if ( \function_exists( 'wp_interactivity_process_directives' ) ) {
+			$content = wp_interactivity_process_directives( $content );
+		}
 
 		/**
 		 * Filters the Generic renderer stories content.
