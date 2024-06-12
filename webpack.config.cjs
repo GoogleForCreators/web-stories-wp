@@ -428,7 +428,6 @@ const webStoriesBlock = {
     ],
     'web-stories-list-styles': './packages/stories-block/src/css/style.css',
     'web-stories-embed': './packages/stories-block/src/css/embed.css',
-    'web-stories-block-view': './packages/stories-block-view/src/index.js',
     ...coreThemeBlockStyles,
   },
   plugins: [
@@ -439,6 +438,27 @@ const webStoriesBlock = {
       name: 'Web Stories Block',
       color: '#357BB5',
     }),
+  ].filter(Boolean),
+};
+
+const webStoriesBlockView = {
+  ...sharedConfig,
+  output: { ...sharedConfig.output, module: true },
+  experiments: { outputModule: true },
+  entry: {
+    'web-stories-block-view': './packages/stories-block-view/src/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins.filter(
+      (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+    ),
+    // React Fast Refresh.
+    !isProduction && new ReactRefreshWebpackPlugin(),
+    new WebpackBar({
+      name: 'Web Stories Block View',
+      color: '#a9db14',
+    }),
+    new DependencyExtractionWebpackPlugin(),
   ].filter(Boolean),
 };
 
@@ -494,4 +514,5 @@ module.exports = [
   webStoriesScripts,
   widgetScript,
   storiesMCEButton,
+  webStoriesBlockView,
 ];
