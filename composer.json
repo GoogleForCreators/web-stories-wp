@@ -14,7 +14,7 @@
     "ampproject/amp-toolbox": "*",
     "ampproject/amp-wp": "dev-develop",
     "enshrined/svg-sanitize": "^0.18.0",
-    "mcaskill/composer-exclude-files": "^3.0",
+    "mcaskill/composer-exclude-files": "^4.0",
     "symfony/polyfill-mbstring": "^1.18"
   },
   "require-dev": {

@@ -88,7 +88,7 @@ export function CORSMessage() {
             size={TextSize.Medium}
             href={DOCS_URL}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
             onClick={onDocsClick}
           />
         ),

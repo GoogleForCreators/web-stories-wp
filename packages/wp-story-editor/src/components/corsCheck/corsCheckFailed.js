@@ -49,7 +49,7 @@ function CorsCheckFailed({ isOpen, onClose }) {
                 size={TextSize.Small}
                 href={DOCS_URL}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noreferrer"
                 onClick={onDocsClick}
               />
             ),
