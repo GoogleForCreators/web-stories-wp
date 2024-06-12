@@ -87,7 +87,7 @@ class Generic_Renderer extends TestCase {
 	 */
 	public function test_load_assets(): void {
 
-		global $wp_version;
+		$wp_version = get_bloginfo( 'version' );
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'class'      => '',
@@ -113,7 +113,7 @@ class Generic_Renderer extends TestCase {
 	 */
 	public function test_render(): void {
 
-		global $wp_version;
+		$wp_version = get_bloginfo( 'version' );
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'          => 'grid',

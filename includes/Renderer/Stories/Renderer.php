@@ -353,8 +353,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 *
 		 * @var Story $story
 		 */
-		$story = $this->current();
-		global $wp_version;
+		$story      = $this->current();
+		$wp_version = get_bloginfo( 'version' );
 
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;

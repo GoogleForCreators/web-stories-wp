@@ -93,7 +93,7 @@ class Singleton {
 	public function render( array $args = [] ): string {
 		++self::$instances;
 		$this->instance_id = self::$instances;
-		global $wp_version;
+		$wp_version        = get_bloginfo( 'version' );
 
 		$defaults = [
 			'align'  => 'none',
