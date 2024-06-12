@@ -452,8 +452,6 @@ const webStoriesBlockView = {
     ...sharedConfig.plugins.filter(
       (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
     ),
-    // React Fast Refresh.
-    !isProduction && new ReactRefreshWebpackPlugin(),
     new WebpackBar({
       name: 'Web Stories Block View',
       color: '#a9db14',
