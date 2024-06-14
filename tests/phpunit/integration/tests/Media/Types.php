@@ -86,6 +86,7 @@ class Types extends TestCase {
 			],
 			'audio'   => [
 				'audio/mpeg',
+				'audio/aac',
 				'audio/wav',
 				'audio/ogg',
 			],
