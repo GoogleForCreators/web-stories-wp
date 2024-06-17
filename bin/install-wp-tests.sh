@@ -33,7 +33,9 @@ SKIP_DB_CREATE=${6-false}
 TMPDIR=${TMPDIR-/tmp}
 TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
 WP_TESTS_DIR=${WP_TESTS_DIR-$TMPDIR/wordpress-tests-lib}
+WP_TESTS_FILE="$WP_TESTS_DIR"/includes/functions.php
 WP_CORE_DIR=${WP_CORE_DIR-$TMPDIR/wordpress/}
+WP_CORE_FILE="$WP_CORE_DIR"/wp-settings.php
 
 download() {
     if [ `which curl` ]; then
@@ -75,10 +77,11 @@ set -ex
 
 install_wp() {
 
-	if [ -d $WP_CORE_DIR ]; then
+	if [ -f $WP_CORE_FILE ]; then
 		return;
 	fi
 
+	rm -rf $WP_CORE_DIR
 	mkdir -p $WP_CORE_DIR
 
 	if [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
@@ -122,9 +125,10 @@ install_test_suite() {
 		local ioption='-i'
 	fi
 
-	# set up testing suite if it doesn't yet exist
-	if [ ! -d $WP_TESTS_DIR ]; then
+	# set up testing suite if it doesn't yet exist or only partially exists
+	if [ ! -f $WP_TESTS_FILE ]; then
 		# set up testing suite
+		rm -rf $WP_TESTS_DIR
 		mkdir -p $WP_TESTS_DIR
 		svn export --quiet --ignore-externals https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ $WP_TESTS_DIR/includes
 		svn export --quiet --ignore-externals https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/data/ $WP_TESTS_DIR/data
@@ -133,7 +137,7 @@ install_test_suite() {
 	if [ ! -f wp-tests-config.php ]; then
 		download https://develop.svn.wordpress.org/${WP_TESTS_TAG}/wp-tests-config-sample.php "$WP_TESTS_DIR"/wp-tests-config.php
 		# remove all forward slashes in the end
-		WP_CORE_DIR=$(echo $WP_CORE_DIR | sed "s/\/*$//g")
+		WP_CORE_DIR=$(echo $WP_CORE_DIR | sed "s:/\+$::")
 		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR/':" "$WP_TESTS_DIR"/wp-tests-config.php
 		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" "$WP_TESTS_DIR"/wp-tests-config.php
 		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php

@@ -65,6 +65,7 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 
 		$unsanitized_content    = (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		$unsanitized_story_data = json_decode( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
+		$sanitized_content      = trim( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_sanitized.html' ) );
 
 		$story = self::factory()->post->create(
 			[
@@ -87,7 +88,7 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertIsArray( $new_data );
 		$this->assertArrayHasKey( 'content', $new_data );
-		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertEquals( $sanitized_content, trim( $new_data['content']['raw'] ) );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
 
 		$this->kses_remove_filters();
