@@ -135,7 +135,7 @@ function SlugPanel({ nameOverride }) {
       )}
       <LinkContainer>
         <Link
-          rel="noopener noreferrer"
+          rel="noreferrer"
           target="_blank"
           href={link}
           size={TextSize.Small}
