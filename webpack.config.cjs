@@ -441,6 +441,25 @@ const webStoriesBlock = {
   ].filter(Boolean),
 };
 
+const webStoriesBlockView = {
+  ...sharedConfig,
+  output: { ...sharedConfig.output, module: true },
+  experiments: { outputModule: true },
+  entry: {
+    'web-stories-block-view': './packages/stories-block-view/src/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins.filter(
+      (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+    ),
+    new WebpackBar({
+      name: 'Web Stories Block View',
+      color: '#a9db14',
+    }),
+    new DependencyExtractionWebpackPlugin(),
+  ].filter(Boolean),
+};
+
 const activationNotice = {
   ...sharedConfig,
   entry: {
@@ -493,4 +512,5 @@ module.exports = [
   webStoriesScripts,
   widgetScript,
   storiesMCEButton,
+  webStoriesBlockView,
 ];
