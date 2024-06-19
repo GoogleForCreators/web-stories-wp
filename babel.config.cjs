@@ -47,6 +47,7 @@ module.exports = function (api) {
     ],
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
+      '@babel/transform-object-rest-spread',
       [
         'babel-plugin-styled-components',
         {
