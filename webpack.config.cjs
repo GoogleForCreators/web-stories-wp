@@ -29,6 +29,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 /**
  * WordPress dependencies
@@ -137,35 +138,33 @@ const sharedConfig = {
           {
             type: 'asset/inline',
             include: [/inline-icons\/.*\.svg$/],
+            use: [
+              {
+                loader: 'svg-sprite-loader',
+                options: {
+                  runtimeGenerator: resolve('./runtimeGenerator.cjs'),
+                  runtimeOptions: {
+                    iconModule: './icon.jsx', // Relative to current build context folder
+                  },
+                },
+              },
+              'svgo-loader',
+            ],
           },
           {
             issuer: /\.[jt]sx?$/,
             include: [/\/icons\/.*\.svg$/],
             use: [
               {
-                loader: '@svgr/webpack',
+                loader: 'svg-sprite-loader',
                 options: {
-                  titleProp: true,
-                  svgo: true,
-                  memo: true,
-                  svgoConfig: {
-                    plugins: [
-                      {
-                        name: 'preset-default',
-                        params: {
-                          overrides: {
-                            removeViewBox: false,
-                            convertColors: {
-                              currentColor: /^(?!url|none)/i,
-                            },
-                          },
-                        },
-                      },
-                      'removeDimensions',
-                    ],
+                  runtimeGenerator: resolve('./runtimeGenerator.cjs'),
+                  runtimeOptions: {
+                    iconModule: './icon.jsx', // Relative to current build context folder
                   },
                 },
               },
+              'svgo-loader',
             ],
           },
           {
@@ -173,30 +172,15 @@ const sharedConfig = {
             include: [/images\/.*\.svg$/],
             use: [
               {
-                loader: '@svgr/webpack',
+                loader: 'svg-sprite-loader',
                 options: {
-                  titleProp: true,
-                  svgo: true,
-                  memo: true,
-                  svgoConfig: {
-                    plugins: [
-                      {
-                        name: 'preset-default',
-                        params: {
-                          overrides: {
-                            removeViewBox: false,
-                            convertColors: {
-                              // See https://github.com/googleforcreators/web-stories-wp/pull/6361
-                              currentColor: false,
-                            },
-                          },
-                        },
-                      },
-                      'removeDimensions',
-                    ],
+                  runtimeGenerator: resolve('./runtimeGenerator.cjs'),
+                  runtimeOptions: {
+                    iconModule: './icon.jsx', // Relative to current build context folder
                   },
                 },
               },
+              'svgo-loader',
             ],
           },
         ],
@@ -253,6 +237,7 @@ const sharedConfig = {
         // set the current working directory for displaying module paths
         cwd: process.cwd(),
       }),
+    new SpriteLoaderPlugin(),
   ].filter(Boolean),
   optimization: {
     sideEffects: true,
