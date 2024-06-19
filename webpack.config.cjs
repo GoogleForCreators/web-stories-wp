@@ -139,6 +139,7 @@ const sharedConfig = {
             type: 'asset/inline',
             include: [/inline-icons\/.*\.svg$/],
             use: [
+              'babel-loader',
               {
                 loader: 'svg-sprite-loader',
                 options: {
@@ -155,6 +156,7 @@ const sharedConfig = {
             issuer: /\.[jt]sx?$/,
             include: [/\/icons\/.*\.svg$/],
             use: [
+              'babel-loader',
               {
                 loader: 'svg-sprite-loader',
                 options: {
@@ -171,6 +173,7 @@ const sharedConfig = {
             issuer: /\.[jt]sx?$/,
             include: [/images\/.*\.svg$/],
             use: [
+              'babel-loader',
               {
                 loader: 'svg-sprite-loader',
                 options: {
