@@ -48,3 +48,4 @@ export * from './toggle';
 export * from './tooltip';
 export * from './typography';
 export * from './visuallyHidden';
+export * from './svgIcon';
