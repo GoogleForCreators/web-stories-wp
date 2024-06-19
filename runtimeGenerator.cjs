@@ -61,7 +61,7 @@ module.exports = function runtimeGenerator({
     sprite.add(symbol);
 
     export default function ${displayName} (props) {
-      return <${parentComponentDisplayName} glyph="${symbol.id}" {...props} />;
+      return <${parentComponentDisplayName} glyph="${symbol.id}" viewBox="${symbol.viewBox}" {...props} />;
     }
   `;
 };
