@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-export default function Icon({ className = 'icon', glyph = '', ...restProps }) {
+export default function Icon({
+  className = 'icon',
+  glyph = '',
+  viewBox = '',
+  ...restProps
+}) {
   return (
-    <svg className={className} {...restProps}>
+    <svg className={className} viewBox={viewBox} {...restProps}>
       <use xlinkHref={`#${glyph}`} />
     </svg>
   );
