@@ -145,7 +145,8 @@ const sharedConfig = {
                 options: {
                   runtimeGenerator: resolve('./runtimeGenerator.cjs'),
                   runtimeOptions: {
-                    iconModule: './icon.jsx', // Relative to current build context folder
+                    iconModule:
+                      './packages/design-system/src/components/svgIcon/svgIcon.tsx', // Relative to current build context folder
                   },
                 },
               },
@@ -162,7 +163,8 @@ const sharedConfig = {
                 options: {
                   runtimeGenerator: resolve('./runtimeGenerator.cjs'),
                   runtimeOptions: {
-                    iconModule: './icon.jsx', // Relative to current build context folder
+                    iconModule:
+                      './packages/design-system/src/components/svgIcon/svgIcon.tsx', // Relative to current build context folder
                   },
                 },
               },
@@ -179,7 +181,8 @@ const sharedConfig = {
                 options: {
                   runtimeGenerator: resolve('./runtimeGenerator.cjs'),
                   runtimeOptions: {
-                    iconModule: './icon.jsx', // Relative to current build context folder
+                    iconModule:
+                      './packages/design-system/src/components/svgIcon/svgIcon.tsx', // Relative to current build context folder
                   },
                 },
               },
