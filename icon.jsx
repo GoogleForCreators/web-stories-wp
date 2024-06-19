@@ -18,10 +18,12 @@ export default function Icon({
   className = 'icon',
   glyph = '',
   viewBox = '',
+  title,
   ...restProps
 }) {
   return (
     <svg className={className} viewBox={viewBox} {...restProps}>
+      {title && <title>{title}</title>}
       <use xlinkHref={`#${glyph}`} />
     </svg>
   );
