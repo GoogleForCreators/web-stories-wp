@@ -17,23 +17,24 @@
 /**
  * External dependencies
  */
-import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+import { screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
+import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import SVGIcon from '../svgIcon';
 
 describe('SVGIcon component', () => {
   it('renders without crashing', () => {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <SVGIcon glyph="test-glyph" viewBox="0 0 24 24" data-testid="svg-icon" />
     );
-    expect(getByTestId('svg-icon')).toBeInTheDocument();
+    expect(screen.getByTestId('svg-icon')).toBeInTheDocument();
   });
 
   it('applies the correct className', () => {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <SVGIcon
         glyph="test-glyph"
         viewBox="0 0 24 24"
@@ -41,40 +42,42 @@ describe('SVGIcon component', () => {
         data-testid="svg-icon"
       />
     );
-    expect(getByTestId('svg-icon')).toHaveClass('test-class');
+    expect(screen.getByTestId('svg-icon')).toHaveClass('test-class');
   });
 
   it('sets the viewBox attribute correctly', () => {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <SVGIcon glyph="test-glyph" viewBox="0 0 24 24" data-testid="svg-icon" />
     );
-    expect(getByTestId('svg-icon')).toHaveAttribute('viewBox', '0 0 24 24');
+    expect(screen.getByTestId('svg-icon')).toHaveAttribute(
+      'viewBox',
+      '0 0 24 24'
+    );
   });
 
   it('renders the title element when title is provided', () => {
-    const { getByTitle } = renderWithProviders(
+    renderWithProviders(
       <SVGIcon glyph="test-glyph" viewBox="0 0 24 24" title="Test Title" />
     );
-    expect(getByTitle('Test Title')).toBeInTheDocument();
+    expect(screen.getByTitle('Test Title')).toBeInTheDocument();
   });
 
   it('does not render the title element when title is not provided', () => {
-    const { queryByTitle } = renderWithProviders(
-      <SVGIcon glyph="test-glyph" viewBox="0 0 24 24" />
-    );
-    expect(queryByTitle('')).not.toBeInTheDocument();
+    renderWithProviders(<SVGIcon glyph="test-glyph" viewBox="0 0 24 24" />);
+    expect(screen.queryByTitle('')).not.toBeInTheDocument();
   });
 
   it('sets the xlink:href attribute correctly on the use element', () => {
-    const { container } = renderWithProviders(
-      <SVGIcon glyph="test-glyph" viewBox="0 0 24 24" />
+    renderWithProviders(
+      <SVGIcon glyph="test-glyph" viewBox="0 0 24 24" data-testid="svg-icon" />
     );
-    const useElement = container.querySelector('use');
+    const svgElement = screen.getByTestId('svg-icon');
+    const useElement = svgElement.querySelector('use');
     expect(useElement).toHaveAttribute('xlink:href', '#test-glyph');
   });
 
   it('passes additional props to the svg element', () => {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <SVGIcon
         glyph="test-glyph"
         viewBox="0 0 24 24"
@@ -82,6 +85,9 @@ describe('SVGIcon component', () => {
         aria-label="icon"
       />
     );
-    expect(getByTestId('svg-icon')).toHaveAttribute('aria-label', 'icon');
+    expect(screen.getByTestId('svg-icon')).toHaveAttribute(
+      'aria-label',
+      'icon'
+    );
   });
 });
