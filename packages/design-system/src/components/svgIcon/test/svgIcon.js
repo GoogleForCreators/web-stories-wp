@@ -72,6 +72,8 @@ describe('SVGIcon component', () => {
       <SVGIcon glyph="test-glyph" viewBox="0 0 24 24" data-testid="svg-icon" />
     );
     const svgElement = screen.getByTestId('svg-icon');
+    // There is no direct query for use elements.
+    // eslint-disable-next-line testing-library/no-node-access
     const useElement = svgElement.querySelector('use');
     expect(useElement).toHaveAttribute('xlink:href', '#test-glyph');
   });
