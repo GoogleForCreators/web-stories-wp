@@ -39,9 +39,6 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
 const svgSpriteLoaderOptions = {
   extract: true,
   runtimeGenerator: resolve('./runtimeGenerator.cjs'),
-  runtimeOptions: {
-    iconModule: './packages/design-system/src/components/svgIcon/svgIcon.tsx',
-  },
 };
 
 /**
