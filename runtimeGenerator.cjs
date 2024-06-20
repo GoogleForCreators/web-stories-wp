@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-const path = require('path');
 const { stringifyRequest } = require('loader-utils');
 const { stringifySymbol, stringify } = require('svg-sprite-loader/lib/utils');
 
@@ -30,38 +29,37 @@ function toPascalCase(string) {
     .replace(new RegExp(/\w/), (s) => s.toUpperCase());
 }
 
-module.exports = function runtimeGenerator({
-  symbol,
-  config,
-  context,
-  loaderContext,
-}) {
-  const { spriteModule, symbolModule, runtimeOptions } = config;
-  const compilerContext = loaderContext._compiler.context;
-
-  const iconModulePath = path.resolve(
-    compilerContext,
-    runtimeOptions.iconModule
-  );
-  const iconModuleRequest = stringify(
-    path.relative(path.dirname(symbol.request.file), iconModulePath)
-  );
+module.exports = function runtimeGenerator({ symbol, config, context }) {
+  const { spriteModule, symbolModule } = config;
 
   const spriteRequest = stringifyRequest({ context }, spriteModule);
   const symbolRequest = stringifyRequest({ context }, symbolModule);
-  const parentComponentDisplayName = 'SpriteSymbolComponent';
-  const displayName = `${toPascalCase(symbol.id)}${parentComponentDisplayName}`;
+  const displayName = `${toPascalCase(symbol.id)}SpriteSymbolComponent`;
 
   return `
     import SpriteSymbol from ${symbolRequest};
     import sprite from ${spriteRequest};
-    import ${parentComponentDisplayName} from ${iconModuleRequest};
+
+    function SpriteSymbolComponent({
+      glyph,
+      viewBox,
+      className,
+      title,
+      ...restProps
+    }) {
+      return (
+        <svg className={className} viewBox={viewBox} {...restProps}>
+          {title && <title>{title}</title>}
+          <use xlinkHref={glyph} />
+        </svg>
+      );
+    }
     
     const symbol = new SpriteSymbol(${stringifySymbol(symbol)});
     sprite.add(symbol);
 
     export default function ${displayName} (props) {
-      return <${parentComponentDisplayName} glyph="${symbol.id}" viewBox="${symbol.viewBox}" {...props} />;
+      return <SpriteSymbolComponent glyph="#${symbol.id}" viewBox="${symbol.viewBox}" {...props} />;
     }
   `;
 };
