@@ -36,6 +36,14 @@ const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
  */
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 
+const svgSpriteLoaderOptions = {
+  extract: true,
+  runtimeGenerator: resolve('./runtimeGenerator.cjs'),
+  runtimeOptions: {
+    iconModule: './packages/design-system/src/components/svgIcon/svgIcon.tsx',
+  },
+};
+
 /**
  * Prevents externalizing certain packages.
  *
@@ -142,15 +150,9 @@ const sharedConfig = {
               'babel-loader',
               {
                 loader: 'svg-sprite-loader',
-                options: {
-                  runtimeGenerator: resolve('./runtimeGenerator.cjs'),
-                  runtimeOptions: {
-                    iconModule:
-                      './packages/design-system/src/components/svgIcon/svgIcon.tsx', // Relative to current build context folder
-                  },
-                },
+                options: svgSpriteLoaderOptions,
               },
-              'svgo-loader',
+              // 'svgo-loader',
             ],
           },
           {
@@ -160,15 +162,9 @@ const sharedConfig = {
               'babel-loader',
               {
                 loader: 'svg-sprite-loader',
-                options: {
-                  runtimeGenerator: resolve('./runtimeGenerator.cjs'),
-                  runtimeOptions: {
-                    iconModule:
-                      './packages/design-system/src/components/svgIcon/svgIcon.tsx', // Relative to current build context folder
-                  },
-                },
+                options: svgSpriteLoaderOptions,
               },
-              'svgo-loader',
+              // 'svgo-loader',
             ],
           },
           {
@@ -178,15 +174,9 @@ const sharedConfig = {
               'babel-loader',
               {
                 loader: 'svg-sprite-loader',
-                options: {
-                  runtimeGenerator: resolve('./runtimeGenerator.cjs'),
-                  runtimeOptions: {
-                    iconModule:
-                      './packages/design-system/src/components/svgIcon/svgIcon.tsx', // Relative to current build context folder
-                  },
-                },
+                options: svgSpriteLoaderOptions,
               },
-              'svgo-loader',
+              // 'svgo-loader',
             ],
           },
         ],
