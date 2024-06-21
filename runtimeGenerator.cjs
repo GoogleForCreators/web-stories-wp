@@ -15,7 +15,7 @@
  */
 
 const { stringifyRequest } = require('loader-utils');
-const { stringifySymbol, stringify } = require('svg-sprite-loader/lib/utils');
+const { stringifySymbol } = require('svg-sprite-loader/lib/utils');
 
 function toPascalCase(string) {
   return `${string}`
