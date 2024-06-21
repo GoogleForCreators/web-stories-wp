@@ -161,7 +161,25 @@ const sharedConfig = {
                 loader: 'svg-sprite-loader',
                 options: svgSpriteLoaderOptions,
               },
-              'svgo-loader',
+              {
+                loader: 'svgo-loader',
+                options: {
+                  plugins: [
+                    {
+                      name: 'preset-default',
+                      params: {
+                        overrides: {
+                          removeViewBox: false,
+                          convertColors: {
+                            currentColor: /^(?!url|none)/i,
+                          },
+                        },
+                      },
+                    },
+                    'removeDimensions',
+                  ],
+                },
+              },
             ],
           },
           {
@@ -173,7 +191,26 @@ const sharedConfig = {
                 loader: 'svg-sprite-loader',
                 options: svgSpriteLoaderOptions,
               },
-              'svgo-loader',
+              {
+                loader: 'svgo-loader',
+                options: {
+                  plugins: [
+                    {
+                      name: 'preset-default',
+                      params: {
+                        overrides: {
+                          removeViewBox: false,
+                          convertColors: {
+                            // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                            currentColor: false,
+                          },
+                        },
+                      },
+                    },
+                    'removeDimensions',
+                  ],
+                },
+              },
             ],
           },
         ],
