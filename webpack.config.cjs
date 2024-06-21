@@ -149,7 +149,7 @@ const sharedConfig = {
                 loader: 'svg-sprite-loader',
                 options: svgSpriteLoaderOptions,
               },
-              // 'svgo-loader',
+              'svgo-loader',
             ],
           },
           {
@@ -161,7 +161,7 @@ const sharedConfig = {
                 loader: 'svg-sprite-loader',
                 options: svgSpriteLoaderOptions,
               },
-              // 'svgo-loader',
+              'svgo-loader',
             ],
           },
           {
@@ -173,7 +173,7 @@ const sharedConfig = {
                 loader: 'svg-sprite-loader',
                 options: svgSpriteLoaderOptions,
               },
-              // 'svgo-loader',
+              'svgo-loader',
             ],
           },
         ],
