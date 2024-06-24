@@ -100,7 +100,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		add_filter( 'wp_insert_post_empty_content', [ $this, 'filter_empty_content' ], 10, 2 );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
-		add_filter( 'wp_post_revision_meta_keys', [ $this, 'add_meta_keys_to_revisions' ], 10, 2 );
 	}
 
 	/**
