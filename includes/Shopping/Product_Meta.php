@@ -91,18 +91,19 @@ class Product_Meta extends Service_Base implements HasMeta, PluginUninstallAware
 			'post',
 			self::PRODUCTS_POST_META_KEY,
 			[
-				'type'           => 'object',
-				'description'    => __( 'Products', 'web-stories' ),
-				'show_in_rest'   => [
+				'type'              => 'object',
+				'description'       => __( 'Products', 'web-stories' ),
+				'show_in_rest'      => [
 					'schema' => [
 						'type'                 => 'object',
 						'properties'           => [],
 						'additionalProperties' => true,
 					],
 				],
-				'default'        => [],
-				'single'         => true,
-				'object_subtype' => $this->story_post_type::POST_TYPE_SLUG,
+				'default'           => [],
+				'single'            => true,
+				'object_subtype'    => $this->story_post_type::POST_TYPE_SLUG,
+				'revisions_enabled' => true,
 			]
 		);
 	}
