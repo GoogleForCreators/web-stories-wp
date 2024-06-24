@@ -100,6 +100,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 		add_filter( 'wp_insert_post_empty_content', [ $this, 'filter_empty_content' ], 10, 2 );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
+		add_filter( 'wp_post_revision_meta_keys', [ $this, 'add_meta_keys_to_revisions' ], 10, 2 );
 	}
 
 	/**
@@ -142,6 +143,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'show_in_rest'      => true,
 				'default'           => $active_publisher_logo_id,
 				'single'            => true,
+				'revisions_enabled' => true,
 			]
 		);
 
@@ -149,9 +151,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 			$this->get_slug(),
 			self::POSTER_META_KEY,
 			[
-				'type'         => 'object',
-				'description'  => __( 'Poster object', 'web-stories' ),
-				'show_in_rest' => [
+				'type'              => 'object',
+				'description'       => __( 'Poster object', 'web-stories' ),
+				'show_in_rest'      => [
 					'schema' => [
 						'type'       => 'object',
 						'properties' => [
@@ -175,8 +177,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 						],
 					],
 				],
-				'default'      => [],
-				'single'       => true,
+				'default'           => [],
+				'single'            => true,
+				'revisions_enabled' => true,
 			]
 		);
 	}
