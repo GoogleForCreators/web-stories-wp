@@ -28,6 +28,7 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\Taxonomy;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Story_Post_Type;
 
@@ -36,7 +37,7 @@ use Google\Web_Stories\Story_Post_Type;
  *
  * @phpstan-import-type TaxonomyArgs from \Google\Web_Stories\Taxonomy\Taxonomy_Base
  */
-class Category_Taxonomy extends Taxonomy_Base {
+class Category_Taxonomy extends Taxonomy_Base implements HasRequirements {
 	/**
 	 * Constructor.
 	 *
