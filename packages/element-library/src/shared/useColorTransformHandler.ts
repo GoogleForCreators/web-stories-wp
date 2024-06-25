@@ -20,6 +20,7 @@
 import {
   generatePatternStyles,
   convertToCSS,
+  type Solid,
 } from '@googleforcreators/patterns';
 import { useTransformHandler } from '@googleforcreators/transform';
 import type { ElementId } from '@googleforcreators/elements';
@@ -37,7 +38,8 @@ function useColorTransformHandler({
   resetOnNullTransform: boolean;
 }) {
   useTransformHandler(id, (transform) => {
-    const target =
+    // @ts-expect-error -- Can only be an HTMLElement or null.
+    const target: HTMLElement | null =
       undefined !== targetRef?.current ? targetRef.current : targetRef;
     if (target) {
       if (transform === null) {
@@ -53,13 +55,15 @@ function useColorTransformHandler({
         if (color && style) {
           // In case we're changing text color, we need the children instead of the element itself.
           if ('color' === style && target.children?.length > 0) {
-            const toApply = convertToCSS(generatePatternStyles(color, style));
+            const toApply = convertToCSS(
+              generatePatternStyles(color as Solid, style)
+            );
             for (const node of target.children) {
-              node.style.cssText = toApply;
+              (node as HTMLElement).style.cssText = toApply;
             }
           } else {
             target.style.cssText = convertToCSS(
-              generatePatternStyles(color, style)
+              generatePatternStyles(color as Solid, style)
             );
           }
         }

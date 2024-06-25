@@ -20,6 +20,7 @@
 import type { ElementId } from '@googleforcreators/elements';
 import { useTransformHandler } from '@googleforcreators/transform';
 import type { RefObject } from 'react';
+import type { Solid } from '@googleforcreators/patterns';
 
 function useCSSVarColorTransformHandler({
   id,
@@ -28,7 +29,7 @@ function useCSSVarColorTransformHandler({
   expectedStyle,
 }: {
   id: ElementId;
-  targetRef: RefObject<HTMLElement>
+  targetRef: RefObject<HTMLElement>;
   cssVar: string;
   expectedStyle: string;
 }) {
@@ -42,7 +43,7 @@ function useCSSVarColorTransformHandler({
         if (color && style === expectedStyle) {
           const {
             color: { r, g, b, a },
-          } = color;
+          } = color as Solid;
           target.style.setProperty(
             cssVar,
             `rgba(${r}, ${g}, ${b}, ${a !== undefined ? a : 1})`
