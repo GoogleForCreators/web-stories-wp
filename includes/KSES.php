@@ -136,7 +136,7 @@ class KSES extends Service_Base implements HasRequirements {
 		}
 
 		if (
-			! \is_string(  $data['post_type'] ) ||
+			! \is_string( $data['post_type'] ) ||
 			! $this->is_allowed_post_type( $data['post_type'], $data['post_parent'] )
 		) {
 			return $data;
