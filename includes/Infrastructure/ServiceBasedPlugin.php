@@ -324,7 +324,13 @@ abstract class ServiceBasedPlugin implements Plugin {
 		while ( null !== key( $services ) ) {
 			$id = $this->maybe_resolve( key( $services ) );
 
-			$class = $this->maybe_resolve( current( $services ) );
+			$curr = current( $services );
+
+			if ( ! $curr ) {
+				continue;
+			}
+
+			$class = $this->maybe_resolve( $curr );
 
 			// Delay registering the service until all requirements are met.
 			if (
@@ -547,7 +553,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @param array<int|string, string|class-string> $services Services to validate.
-	 * @return string[] Validated array of service mappings.
+	 * @return array<string, class-string<S>> Validated array of service mappings.
 	 */
 	protected function validate_services( array $services ): array {
 		// Make a copy so we can safely mutate while iterating.

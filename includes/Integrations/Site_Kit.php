@@ -133,7 +133,9 @@ class Site_Kit extends Service_Base {
 	public function filter_site_kit_gtag_opt( $gtag_opt ) {
 		if (
 			! \is_array( $gtag_opt ) ||
+			! \is_array( $gtag_opt['vars'] ) ||
 			! isset( $gtag_opt['vars']['gtag_id'] ) ||
+			! is_string( $gtag_opt['vars']['gtag_id'] ) ||
 			! $this->context->is_web_story()
 		) {
 			return $gtag_opt;

@@ -1217,6 +1217,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertIsArray( $new_data );
 		$this->assertIsArray( $new_data['content'] );
+		$this->assertIsString( $new_data['content']['raw'] );
 		$this->assertSame( $sanitized_content, trim( $new_data['content']['raw'] ) );
 		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}
