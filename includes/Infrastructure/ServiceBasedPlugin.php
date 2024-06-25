@@ -576,6 +576,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 		}
 
 		/**
+		 * Validated services.
+		 *
 		 * @phpstan-var array<string, class-string<S>> $services
 		 */
 		return $services;
