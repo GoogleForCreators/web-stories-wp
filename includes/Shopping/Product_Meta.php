@@ -29,6 +29,7 @@ declare(strict_types = 1);
 namespace Google\Web_Stories\Shopping;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Infrastructure\PluginUninstallAware;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
@@ -36,7 +37,7 @@ use Google\Web_Stories\Story_Post_Type;
 /**
  * Class Product_Meta.
  */
-class Product_Meta extends Service_Base implements HasMeta, PluginUninstallAware {
+class Product_Meta extends Service_Base implements HasMeta, PluginUninstallAware, HasRequirements {
 	/**
 	 * The products meta key.
 	 */
@@ -87,22 +88,22 @@ class Product_Meta extends Service_Base implements HasMeta, PluginUninstallAware
 	 * @since 1.22.0
 	 */
 	public function register_meta(): void {
-		register_meta(
-			'post',
+		register_post_meta(
+			$this->story_post_type::POST_TYPE_SLUG,
 			self::PRODUCTS_POST_META_KEY,
 			[
-				'type'           => 'object',
-				'description'    => __( 'Products', 'web-stories' ),
-				'show_in_rest'   => [
+				'type'              => 'object',
+				'description'       => __( 'Products', 'web-stories' ),
+				'show_in_rest'      => [
 					'schema' => [
 						'type'                 => 'object',
 						'properties'           => [],
 						'additionalProperties' => true,
 					],
 				],
-				'default'        => [],
-				'single'         => true,
-				'object_subtype' => $this->story_post_type::POST_TYPE_SLUG,
+				'default'           => [],
+				'single'            => true,
+				'revisions_enabled' => true,
 			]
 		);
 	}

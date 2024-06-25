@@ -142,6 +142,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'show_in_rest'      => true,
 				'default'           => $active_publisher_logo_id,
 				'single'            => true,
+				'revisions_enabled' => true,
 			]
 		);
 
@@ -149,9 +150,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 			$this->get_slug(),
 			self::POSTER_META_KEY,
 			[
-				'type'         => 'object',
-				'description'  => __( 'Poster object', 'web-stories' ),
-				'show_in_rest' => [
+				'type'              => 'object',
+				'description'       => __( 'Poster object', 'web-stories' ),
+				'show_in_rest'      => [
 					'schema' => [
 						'type'       => 'object',
 						'properties' => [
@@ -175,8 +176,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 						],
 					],
 				],
-				'default'      => [],
-				'single'       => true,
+				'default'           => [],
+				'single'            => true,
+				'revisions_enabled' => true,
 			]
 		);
 	}
