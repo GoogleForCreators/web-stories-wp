@@ -102,7 +102,7 @@ class Types extends TestCase {
 		}
 
 		// See https://core.trac.wordpress.org/ticket/53167.
-		if ( version_compare( get_bloginfo( 'version' ), '6.5', '>' ) ) {
+		if ( is_wp_version_compatible( '6.6' ) ) {
 			$expected['audio'] = [
 				'audio/mpeg',
 				'audio/aac',

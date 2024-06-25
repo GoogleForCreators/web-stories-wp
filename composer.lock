@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11407e7611b788206440577972a47905",
+    "content-hash": "73c53e41225caec72e765f16b72ac5cf",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "22012c53f1015ae2496276c9fe2e7d09164d163b"
+                "reference": "fa0a9f2d439937ac42aed9407e3841ae577c57f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/22012c53f1015ae2496276c9fe2e7d09164d163b",
-                "reference": "22012c53f1015ae2496276c9fe2e7d09164d163b",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/fa0a9f2d439937ac42aed9407e3841ae577c57f5",
+                "reference": "fa0a9f2d439937ac42aed9407e3841ae577c57f5",
                 "shasum": ""
             },
             "require": {
@@ -190,7 +190,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2024-06-07T07:46:01+00:00"
+            "time": "2024-06-24T17:25:51+00:00"
         },
         {
             "name": "cweagans/composer-patches",
@@ -242,16 +242,16 @@
         },
         {
             "name": "enshrined/svg-sanitize",
-            "version": "0.18.0",
+            "version": "0.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/darylldoyle/svg-sanitizer.git",
-                "reference": "6a2c069dab3843ca4d887ff09c972fc7033888d0"
+                "reference": "e95cd17be68e45f523cbfb0fe50cdd891b0cf20e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/6a2c069dab3843ca4d887ff09c972fc7033888d0",
-                "reference": "6a2c069dab3843ca4d887ff09c972fc7033888d0",
+                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/e95cd17be68e45f523cbfb0fe50cdd891b0cf20e",
+                "reference": "e95cd17be68e45f523cbfb0fe50cdd891b0cf20e",
                 "shasum": ""
             },
             "require": {
@@ -281,9 +281,9 @@
             "description": "An SVG sanitizer for PHP",
             "support": {
                 "issues": "https://github.com/darylldoyle/svg-sanitizer/issues",
-                "source": "https://github.com/darylldoyle/svg-sanitizer/tree/0.18.0"
+                "source": "https://github.com/darylldoyle/svg-sanitizer/tree/0.19.0"
             },
-            "time": "2024-02-22T17:51:05+00:00"
+            "time": "2024-06-18T10:27:15+00:00"
         },
         {
             "name": "fasterimage/fasterimage",
@@ -2310,16 +2310,16 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v8.9.1",
+            "version": "v9.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "2f5be3f363ff3d02b4e29404c7895d9d15fd3e73"
+                "reference": "ccfc447c39a48886146fd3cef66d0e6f2db7fa2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/2f5be3f363ff3d02b4e29404c7895d9d15fd3e73",
-                "reference": "2f5be3f363ff3d02b4e29404c7895d9d15fd3e73",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/ccfc447c39a48886146fd3cef66d0e6f2db7fa2b",
+                "reference": "ccfc447c39a48886146fd3cef66d0e6f2db7fa2b",
                 "shasum": ""
             },
             "require": {
@@ -2348,9 +2348,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/woocommerce-stubs/issues",
-                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v8.9.1"
+                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v9.0.0"
             },
-            "time": "2024-05-21T11:47:54+00:00"
+            "time": "2024-06-18T15:46:13+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -3716,12 +3716,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "e6e8defa983fbeb0436f36a90d672bd58d8387d1"
+                "reference": "601ba5186e85dff8a3cc1feabe69e1a11805d9b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/e6e8defa983fbeb0436f36a90d672bd58d8387d1",
-                "reference": "e6e8defa983fbeb0436f36a90d672bd58d8387d1",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/601ba5186e85dff8a3cc1feabe69e1a11805d9b2",
+                "reference": "601ba5186e85dff8a3cc1feabe69e1a11805d9b2",
                 "shasum": ""
             },
             "conflict": {
@@ -4004,6 +4004,7 @@
                 "jsdecena/laracom": "<2.0.9",
                 "jsmitty12/phpwhois": "<5.1",
                 "juzaweb/cms": "<=3.4",
+                "jweiland/events2": "<8.3.8|>=9,<9.0.6",
                 "kazist/phpwhois": "<=4.2.6",
                 "kelvinmo/simplexrd": "<3.1.1",
                 "kevinpapst/kimai2": "<1.16.7",
@@ -4116,7 +4117,7 @@
                 "onelogin/php-saml": "<2.10.4",
                 "oneup/uploader-bundle": ">=1,<1.9.3|>=2,<2.1.5",
                 "open-web-analytics/open-web-analytics": "<1.7.4",
-                "opencart/opencart": "<=3.0.3.7|>=4,<4.0.2.3-dev",
+                "opencart/opencart": "<=3.0.3.9|>=4",
                 "openid/php-openid": "<2.3",
                 "openmage/magento-lts": "<20.5",
                 "opensolutions/vimbadmin": "<=3.0.15",
@@ -4280,6 +4281,7 @@
                 "statamic/cms": "<4.46|>=5.3,<5.6.2",
                 "stormpath/sdk": "<9.9.99",
                 "studio-42/elfinder": "<2.1.62",
+                "studiomitte/friendlycaptcha": "<0.1.4",
                 "subhh/libconnect": "<7.0.8|>=8,<8.1",
                 "sukohi/surpass": "<1",
                 "sulu/form-bundle": ">=2,<2.5.3",
@@ -4511,7 +4513,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-06-20T17:04:48+00:00"
+            "time": "2024-06-24T21:04:21+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -7412,5 +7414,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
