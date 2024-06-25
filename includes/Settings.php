@@ -176,10 +176,8 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * @since 1.37.0
 	 */
 	public function prime_option_caches(): void {
-		if ( \function_exists( 'wp_prime_option_caches_by_group' ) ) {
-			wp_prime_option_caches_by_group( self::SETTING_GROUP );
-			wp_prime_option_caches_by_group( self::SETTING_GROUP_EXPERIMENTS );
-		}
+		wp_prime_option_caches_by_group( self::SETTING_GROUP );
+		wp_prime_option_caches_by_group( self::SETTING_GROUP_EXPERIMENTS );
 	}
 
 	/**
