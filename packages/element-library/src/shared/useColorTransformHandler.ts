@@ -34,8 +34,8 @@ function useColorTransformHandler({
 }: {
   id: ElementId;
   targetRef: RefObject<HTMLElement | null>;
-  expectedStyle: string;
-  resetOnNullTransform: boolean;
+  expectedStyle?: string;
+  resetOnNullTransform?: boolean;
 }) {
   useTransformHandler(id, (transform) => {
     // @ts-expect-error -- Can only be an HTMLElement or null.

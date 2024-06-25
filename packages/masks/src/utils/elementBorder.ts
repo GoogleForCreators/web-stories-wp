@@ -22,7 +22,7 @@ import type {
   BorderRadius,
   Element,
 } from '@googleforcreators/elements';
-import type { CSSProperties } from 'react';
+import type { CSSObject } from 'styled-components';
 
 /**
  * Internal dependencies
@@ -111,7 +111,7 @@ export function getBorderPositionCSS({
  * @param element Element.
  * @return Border style.
  */
-export function getBorderStyle(element: Element): CSSProperties {
+export function getBorderStyle(element: Element): CSSObject {
   // If there's no rectangular border, return the radius only.
   if (!hasBorder(element) || !canSupportMultiBorder(element)) {
     return getBorderRadius(element);

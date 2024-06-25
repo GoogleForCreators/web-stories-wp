@@ -47,4 +47,6 @@ export interface TextElement extends Element {
   tagName?: 'h1' | 'h2' | 'h3' | 'p';
   padding?: Padding;
   marginOffset?: number;
+  fontStyle?: 'italic' | 'normal';
+  fontWeight?: number;
 }

@@ -85,7 +85,7 @@ export const elementWithBorder = css<Element>`
       width,
       height,
       mask,
-    })}
+    } as Element)}
   background-clip: padding-box;
 `;
 

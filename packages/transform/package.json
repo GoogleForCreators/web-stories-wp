@@ -38,8 +38,5 @@
   },
   "dependencies": {
     "@googleforcreators/react": "*"
-  },
-  "devDependencies": {
-    "prop-types": "^15.7.2"
   }
 }

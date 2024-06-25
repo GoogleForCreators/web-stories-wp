@@ -144,17 +144,20 @@ const ShoppingTagDot = styled.div`
   }
 `;
 
-function ProductDisplay({ element, siblingCount }: {
+function ProductDisplay({
+  element,
+  siblingCount,
+}: {
   element: Element;
   siblingCount: number;
 }) {
-  const { id, width: elementWidth, height: elementHeight } = element;
+  const { id } = element;
 
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   useColorTransformHandler({ id, targetRef: ref });
 
   return (
-    <Element ref={ref} width={elementWidth} height={elementHeight}>
+    <Element ref={ref}>
       <ShoppingTagDot
         key={`dots-${siblingCount}`} /* see: https://github.com/GoogleForCreators/web-stories-wp/issues/11705 */
       />

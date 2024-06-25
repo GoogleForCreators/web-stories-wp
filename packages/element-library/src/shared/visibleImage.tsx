@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import type { HTMLAttributes } from 'react';
+import type { ImgHTMLAttributes } from 'react';
 
 const Image = styled.img`
   display: block;
@@ -28,9 +28,9 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-function VisibleImage({ ...attrs }: HTMLAttributes<HTMLImageElement>) {
+function VisibleImage({ ...attrs }: ImgHTMLAttributes<HTMLImageElement>) {
   // The image is purely decorative by default, because the alt text is already used
-  // for the layer description. Hence using alt="" to avoid repetition.
+  // for the layer description. Hence, using alt="" to avoid repetition.
   return <Image alt="" {...attrs} decoding="async" crossOrigin="anonymous" />;
 }
 
