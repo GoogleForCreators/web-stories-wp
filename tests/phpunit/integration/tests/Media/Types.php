@@ -101,6 +101,16 @@ class Types extends TestCase {
 			$expected['image'][] = 'image/avif';
 		}
 
+		// See https://core.trac.wordpress.org/ticket/53167.
+		if ( version_compare( get_bloginfo( 'version' ), '6.5', '>' ) ) {
+			$expected['audio'] = [
+				'audio/mpeg',
+				'audio/aac',
+				'audio/wav',
+				'audio/ogg',
+			];
+		}
+
 		$actual = $this->instance->get_allowed_mime_types();
 
 		$this->assertEqualSets( $expected, $actual );
