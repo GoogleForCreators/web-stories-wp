@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,26 @@
  * limitations under the License.
  */
 
-export * from './gifElement';
-export * from './imageElement';
-export * from './productElement';
-export * from './shapeElement';
-export * from './stickerElement';
-export * from './textElement';
-export * from './videoElement';
-export * from './audioStickerElement';
+/**
+ * Internal dependencies
+ */
+import type { AudioStickerElement } from '../types';
+
+function AudioStickerOutput({ element }: { element: AudioStickerElement }) {
+  return (
+    <div className="audio-sticker">
+      <amp-story-audio-sticker
+        size={element.size}
+        sticker={element.sticker}
+        sticker-style={
+          element.style && element.style !== 'none' ? element.style : undefined
+        }
+        style={{
+          height: '100%',
+        }}
+      />
+    </div>
+  );
+}
+
+export default AudioStickerOutput;

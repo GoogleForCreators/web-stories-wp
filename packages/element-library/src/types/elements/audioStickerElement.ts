@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,27 +17,11 @@
 /**
  * External dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { Element, ElementType } from '@googleforcreators/elements';
 
-function AudioStickerOutput({ element }) {
-  return (
-    <div className="audio-sticker">
-      <amp-story-audio-sticker
-        size={element.size}
-        sticker={element.sticker}
-        sticker-style={
-          element.style && element.style !== 'none' ? element.style : undefined
-        }
-        style={{
-          height: '100%',
-        }}
-      />
-    </div>
-  );
+export interface AudioStickerElement extends Element {
+  type: ElementType.AudioSticker;
+  sticker: 'headphone-cat' | 'tape-player' | 'loud-speaker' | 'audio-cloud';
+  style: 'none' | 'outline' | 'dropshadow';
+  size: 'large' | 'small';
 }
-
-AudioStickerOutput.propTypes = {
-  element: StoryPropTypes.elements.audioSticker.isRequired,
-};
-
-export default AudioStickerOutput;

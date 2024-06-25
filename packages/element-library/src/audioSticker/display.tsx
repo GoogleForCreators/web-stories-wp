@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import type { Element } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -28,13 +28,18 @@ import {
   AUDIO_STICKER_STYLES,
   AUDIO_STICKER_LABELS,
 } from '../constants';
+import type { AudioStickerElement } from '../types';
 
-const Element = styled.img`
+interface ElementProps {
+  stickerStyle: keyof typeof AUDIO_STICKER_STYLES;
+}
+
+const Element = styled.img<ElementProps>`
   ${elementFillContent}
   ${({ stickerStyle }) => AUDIO_STICKER_STYLES[stickerStyle]}
 `;
 
-function AudioStickerDisplay({ element }) {
+function AudioStickerDisplay({ element }: { element: AudioStickerElement }) {
   const {
     width: elementWidth,
     height: elementHeight,
@@ -52,9 +57,5 @@ function AudioStickerDisplay({ element }) {
     />
   );
 }
-
-AudioStickerDisplay.propTypes = {
-  element: StoryPropTypes.elements.shape.isRequired,
-};
 
 export default AudioStickerDisplay;

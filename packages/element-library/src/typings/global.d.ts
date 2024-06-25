@@ -14,14 +14,24 @@
  * limitations under the License.
  */
 
+import type { CSSProperties } from 'react';
+
 interface AmpStoryShoppingTag {
   'data-product-id'?: string | number;
+}
+
+interface AmpStoryAudioSticker {
+  sticker: 'headphone-cat' | 'tape-player' | 'loud-speaker' | 'audio-cloud';
+  'sticker-style'?: 'none' | 'outline' | 'dropshadow';
+  size: 'large' | 'small';
+  style?: CSSProperties;
 }
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
       'amp-story-shopping-tag': AmpStoryShoppingTag;
+      'amp-story-audio-sticker': AmpStoryAudioSticker;
     }
   }
 }
