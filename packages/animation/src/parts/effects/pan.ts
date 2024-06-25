@@ -33,7 +33,7 @@ import createAnimation from '../createAnimation';
 import {
   type AMPEffectTiming,
   AnimationDirection,
-  AnimationType,
+  type AnimationType,
   type Element,
   FieldType,
 } from '../../types';

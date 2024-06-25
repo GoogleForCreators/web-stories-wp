@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { __setMockFiles, readFileSync } from 'fs';
+import { __setMockFiles, readFileSync } from 'node:fs';
 
 /**
  * Internal dependencies
  */
 import updateTemplates from '../updateTemplates';
 
-jest.mock('fs');
+jest.mock('node:fs');
 jest.mock('../../module', () => ({
   migrate: jest.fn(() => ({ migratedkey: 'migratedvalue' })),
   DATA_VERSION: 9999,

@@ -118,9 +118,9 @@ function TextOutputWithUnits({
   };
 
   const unitlessPaddingVertical = padding?.vertical
-    ? parseFloat(dataToStyleY(padding.vertical))
+    ? Number.parseFloat(dataToStyleY(padding.vertical))
     : 0;
-  const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
+  const unitlessFontSize = Number.parseFloat(dataToStyleY(rest.fontSize));
 
   const lineHeight = getHighlightLineheight(
     rest.lineHeight,

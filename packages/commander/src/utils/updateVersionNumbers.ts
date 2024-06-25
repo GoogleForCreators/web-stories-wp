@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 /**
  * Internal dependencies

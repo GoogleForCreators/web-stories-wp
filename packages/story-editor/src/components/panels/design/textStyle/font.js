@@ -101,7 +101,7 @@ function FontControls({
           return {
             font,
             fontStyle,
-            fontWeight: parseInt(value),
+            fontWeight: Number.parseInt(value),
             content: stripHTML(content),
           };
         })

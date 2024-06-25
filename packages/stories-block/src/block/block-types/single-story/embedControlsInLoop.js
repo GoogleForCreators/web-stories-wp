@@ -65,7 +65,9 @@ const EmbedControlsInLoop = (props) => {
                 value={width || ''}
                 min={minWidth}
                 max={maxWidth}
-                onChange={(value) => setAttributes({ width: parseInt(value) })}
+                onChange={(value) =>
+                  setAttributes({ width: Number.parseInt(value) })
+                }
               />
               <TextControl
                 type="number"
@@ -76,7 +78,7 @@ const EmbedControlsInLoop = (props) => {
                 max={maxHeight}
                 onChange={(value) =>
                   setAttributes({
-                    height: parseInt(value),
+                    height: Number.parseInt(value),
                   })
                 }
               />

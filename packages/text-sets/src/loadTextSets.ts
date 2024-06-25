@@ -45,9 +45,9 @@ async function loadTextSet(name: string) {
   const migrated = migrate(data, data.version) as TextSetData;
   return migrated.pages.reduce((sets: TextSet[], page) => {
     const minMax = {
-      minX: Infinity,
+      minX: Number.POSITIVE_INFINITY,
       maxX: 0,
-      minY: Infinity,
+      minY: Number.POSITIVE_INFINITY,
       maxY: 0,
     };
 

@@ -22,12 +22,12 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
+        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
@@ -46,7 +46,7 @@ jobs:
         run: npm run workflow:migrate
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@a4f52f8033a6168103c2538976c07b467e8163bc
+        uses: peter-evans/create-pull-request@6d6857d36972b65feb161a90e484f2984215f83e
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
           commit-message: Migrate templates and text sets to latest version

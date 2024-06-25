@@ -22,10 +22,12 @@ namespace Google\Web_Stories\Tests\Integration;
 
 use _WP_Dependency;
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\User\Preferences;
 use PHPUnit\Framework\MockObject\MockObject;
 use WP_UnitTest_Factory;
@@ -69,6 +71,7 @@ class Tracking extends DependencyInjectedTestCase {
 		$assets            = $this->injector->make( Assets::class );
 		$settings          = $this->injector->make( Settings::class );
 		$preferences       = $this->injector->make( Preferences::class );
+		$context           = $this->injector->make( Context::class );
 		$this->woocommerce = $this->createMock( WooCommerce::class );
 		$this->instance    = new \Google\Web_Stories\Tracking(
 			$this->experiments,
@@ -76,7 +79,8 @@ class Tracking extends DependencyInjectedTestCase {
 			$assets,
 			$settings,
 			$preferences,
-			$this->woocommerce
+			$this->woocommerce,
+			$context
 		);
 	}
 
@@ -84,6 +88,10 @@ class Tracking extends DependencyInjectedTestCase {
 	 * @covers ::register
 	 */
 	public function test_register_tracking_script(): void {
+		global $current_screen;
+
+		$current_screen = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
+
 		$this->site_kit->method( 'get_plugin_status' )->willReturn(
 			[
 				'installed'       => true,

@@ -47,7 +47,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142
+        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -65,7 +65,7 @@ jobs:
             34.104.35.123:443
 
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -97,7 +97,7 @@ jobs:
           DISABLE_ERROR_BOUNDARIES: true
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab
+        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c
         with:
           file: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests

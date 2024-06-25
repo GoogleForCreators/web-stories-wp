@@ -29,7 +29,9 @@ function getMsFromHMS(time: string | null): number {
     return 0;
   }
   const seconds =
-    parseFloat(parts[2]) + parseInt(parts[1]) * 60 + parseInt(parts[0]) * 3600;
+    Number.parseFloat(parts[2]) +
+    Number.parseInt(parts[1]) * 60 +
+    Number.parseInt(parts[0]) * 3600;
   return Math.round(1000 * seconds);
 }
 

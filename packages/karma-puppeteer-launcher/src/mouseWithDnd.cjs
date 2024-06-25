@@ -133,7 +133,7 @@ class DndClientBinding {
 
           document.addEventListener(
             'dragstart',
-            function (e) {
+            (e) => {
               if (e.isTrusted) {
                 e.preventDefault();
                 e.stopPropagation();

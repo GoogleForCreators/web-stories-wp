@@ -17,7 +17,7 @@
 /* Source: https://github.com/behnammodi/polyfill/blob/master/window.polyfill.js */
 const requestIdleCallback =
   window.requestIdleCallback ||
-  function (callback: IdleRequestCallback, options: IdleRequestOptions = {}) {
+  ((callback: IdleRequestCallback, options: IdleRequestOptions = {}) => {
     const relaxation = 1;
     const timeout = options.timeout || relaxation;
     const start = performance.now();
@@ -28,17 +28,16 @@ const requestIdleCallback =
             ? false
             : performance.now() - start - relaxation > timeout;
         },
-        timeRemaining: function () {
-          return Math.max(0, relaxation + (performance.now() - start));
-        },
+        timeRemaining: () =>
+          Math.max(0, relaxation + (performance.now() - start)),
       });
     }, relaxation);
-  };
+  });
 
 const cancelIdleCallback =
   window.cancelIdleCallback ||
-  function (id: number) {
+  ((id: number) => {
     clearTimeout(id);
-  };
+  });
 
 export { requestIdleCallback, cancelIdleCallback };

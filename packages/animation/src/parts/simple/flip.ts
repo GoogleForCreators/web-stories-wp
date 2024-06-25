@@ -19,7 +19,7 @@
  */
 import {
   type AMPEffectTiming,
-  AnimationType,
+  type AnimationType,
   Axis,
   FieldType,
   Rotation,
