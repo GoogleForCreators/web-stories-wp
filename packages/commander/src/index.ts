@@ -18,8 +18,8 @@
 /**
  * External dependencies
  */
-import { mkdirSync, rmSync, existsSync } from 'fs';
-import { relative } from 'path';
+import { mkdirSync, rmSync, existsSync } from 'node:fs';
+import { relative } from 'node:path';
 import { Command } from 'commander';
 import { inc as semverInc, type ReleaseType } from 'semver';
 
@@ -181,7 +181,7 @@ program
     const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
     updateCdnUrl(
       pluginFilePath,
-      version === 'main' ? version : parseInt(version)
+      version === 'main' ? version : Number.parseInt(version)
     );
 
     console.log(`Assets CDN URL successfully updated!`);

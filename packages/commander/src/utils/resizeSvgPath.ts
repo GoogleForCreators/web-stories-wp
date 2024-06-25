@@ -21,7 +21,7 @@ export default function resizeSvgPath(x: number, y: number, path: string) {
     .split(' ');
   let coordIndex = 0;
   return coords.reduce((acc, value) => {
-    const parsed = parseFloat(value);
+    const parsed = Number.parseFloat(value);
     if (!isNaN(parsed)) {
       const scaled = coordIndex % 2 === 0 ? parsed / x : parsed / y;
       return `${acc} ${scaled.toFixed(6)}`;

@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { __setMockFiles, readdirSync } from 'fs';
+import { __setMockFiles, readdirSync } from 'node:fs';
 
 /**
  * Internal dependencies
  */
 import deleteExistingZipFiles from '../deleteExistingZipFiles';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 describe('deleteExistingZipFiles', () => {
   const MOCK_FILE_INFO = {

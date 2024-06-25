@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { __setMockFiles, readFileSync } from 'fs';
+import { __setMockFiles, readFileSync } from 'node:fs';
 
 /**
  * Internal dependencies
  */
 import updateCdnUrl from '../updateCdnUrl';
 
-jest.mock('fs');
+jest.mock('node:fs');
 
 const PLUGIN_FILE_CONTENT = `
 <?php

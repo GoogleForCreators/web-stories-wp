@@ -21,7 +21,7 @@ import { useCallback } from '@googleforcreators/react';
 import {
   createNewElement,
   elementIs,
-  ElementType,
+  type ElementType,
   type Element,
 } from '@googleforcreators/elements';
 

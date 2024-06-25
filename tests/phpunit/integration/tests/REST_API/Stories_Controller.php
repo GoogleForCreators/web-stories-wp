@@ -947,6 +947,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		$unsanitized_story_data = json_decode( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
+		$sanitized_content      = trim( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_sanitized.html' ) );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
 		$request->set_body_params(
@@ -958,9 +959,10 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+
 		$this->assertIsArray( $new_data );
 		$this->assertArrayHasKey( 'content', $new_data );
-		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertSame( $sanitized_content, trim( $new_data['content']['raw'] ) );
 		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}
 
@@ -1192,6 +1194,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		$unsanitized_story_data = json_decode( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
+		$sanitized_content      = trim( (string) file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_sanitized.html' ) );
 
 		$story = self::factory()->post->create(
 			[
@@ -1214,7 +1217,7 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 
 		$this->assertIsArray( $new_data );
 		$this->assertIsArray( $new_data['content'] );
-		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertSame( $sanitized_content, trim( $new_data['content']['raw'] ) );
 		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}
 }

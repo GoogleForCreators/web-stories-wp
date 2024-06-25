@@ -95,21 +95,29 @@ class Site_Kit extends Service_Base {
 	public function register(): void {
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
 
-		$handler = $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_HANDLER );
+		add_filter(
+			'googlesitekit_analytics-4_tag_amp_blocked',
+			function ( $blocked ) {
+				$handler = $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_HANDLER );
 
-		if ( 'web-stories' === $handler ) {
-			add_filter(
-				'googlesitekit_analytics-4_tag_amp_blocked',
-				function ( $blocked ) {
-					if ( $this->context->is_web_story() ) {
-						return true;
-					}
-					return $blocked;
+				if ( 'web-stories' === $handler && $this->context->is_web_story() ) {
+					return true;
 				}
-			);
-		} elseif ( 'site-kit' === $handler && $this->is_analytics_module_active() ) {
-			remove_action( 'web_stories_print_analytics', [ $this->analytics, 'print_analytics_tag' ] );
-		}
+
+				return $blocked;
+			}
+		);
+
+		add_action(
+			'web_stories_print_analytics',
+			function (): void {
+				$handler = $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_HANDLER );
+				if ( 'site-kit' === $handler && $this->is_analytics_module_active() ) {
+					remove_action( 'web_stories_print_analytics', [ $this->analytics, 'print_analytics_tag' ] );
+				}
+			},
+			5
+		);
 	}
 
 	/**

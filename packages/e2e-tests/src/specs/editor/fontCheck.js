@@ -200,10 +200,7 @@ describe.skip('Font Check', () => {
     const title = 'Test back to dashboard from dialog';
     await prepareStoryWithFontCheckDialog(title);
     // click outside the dialog
-    await Promise.all([
-      await page.mouse.click(100, 100),
-      page.waitForNavigation(),
-    ]);
+    await Promise.all([page.mouse.click(100, 100), page.waitForNavigation()]);
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
   });
 
@@ -211,7 +208,7 @@ describe.skip('Font Check', () => {
     const title = 'Test back to dashboard from dialog';
     await prepareStoryWithFontCheckDialog(title);
     await Promise.all([
-      await page.keyboard.press('Escape'),
+      page.keyboard.press('Escape'),
       page.waitForNavigation(),
     ]);
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });

@@ -228,8 +228,8 @@ function StoryEmbedEditInLoop({
           onResizeStop={(event, direction, elt, delta) => {
             onResizeStop();
             setAttributes({
-              width: parseInt(width + delta.width),
-              height: parseInt(height + delta.height),
+              width: Number.parseInt(width + delta.width),
+              height: Number.parseInt(height + delta.height),
             });
           }}
         >

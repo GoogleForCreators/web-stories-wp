@@ -18,4 +18,4 @@ declare global {
   var WEB_STORIES_ENV: string;
 }
 
-export {};
+export type {};

@@ -119,9 +119,7 @@ describe('firstPageAnimation', () => {
     await openCheckList();
 
     // check for remove animations button
-    const seeRemoveAnimations = fixture.screen.getByText(
-      new RegExp(`^Remove Animations`)
-    );
+    const seeRemoveAnimations = fixture.screen.getByText(/^Remove Animations/);
     expect(seeRemoveAnimations).toBeDefined();
 
     const removeAnimationsBtn = fixture.screen.getByRole('button', {

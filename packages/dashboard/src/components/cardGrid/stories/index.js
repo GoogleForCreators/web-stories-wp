@@ -50,7 +50,7 @@ export const _default = {
       </CardGridItem>
     );
 
-    const itemArray = new Array(12).fill(StorybookGridItem);
+    const itemArray = Array.from({ length: 12 }).fill(StorybookGridItem);
 
     return (
       <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>

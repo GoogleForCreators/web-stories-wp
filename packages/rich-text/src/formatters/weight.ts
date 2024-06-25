@@ -39,7 +39,7 @@ function styleToWeight(style: string) {
 
 function elementToStyle(element: HTMLElement) {
   const isSpan = element.tagName.toLowerCase() === 'span';
-  const fontWeight = parseInt(element.style.fontWeight);
+  const fontWeight = Number.parseInt(element.style.fontWeight);
   const hasFontWeight = fontWeight && !isNaN(fontWeight);
   if (isSpan && hasFontWeight && fontWeight !== 400) {
     return weightToStyle(fontWeight);

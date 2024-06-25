@@ -58,6 +58,7 @@ function ShapesPane(props) {
 
   const stickersRef = useRef(null);
   useRovingTabIndex({ ref: stickersRef });
+
   return (
     <Pane id={paneId} {...props} isOverflowScrollable>
       <Section

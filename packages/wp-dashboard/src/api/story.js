@@ -72,7 +72,7 @@ export function fetchStories(config, queryParams) {
   return apiFetch({
     path: addQueryArgs(config.api.stories, query),
   }).then(({ body: stories, headers }) => {
-    const totalPages = headers && parseInt(headers['X-WP-TotalPages']);
+    const totalPages = headers && Number.parseInt(headers['X-WP-TotalPages']);
     const totalStoriesByStatus =
       headers && JSON.parse(headers['X-WP-TotalByStatus']);
 

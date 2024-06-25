@@ -181,7 +181,7 @@ const EmbedControls = (props) => {
                   min={minWidth}
                   max={maxWidth}
                   onChange={(value) =>
-                    setAttributes({ width: parseInt(value) })
+                    setAttributes({ width: Number.parseInt(value) })
                   }
                 />
                 <TextControl
@@ -193,7 +193,7 @@ const EmbedControls = (props) => {
                   max={maxHeight}
                   onChange={(value) =>
                     setAttributes({
-                      height: parseInt(value),
+                      height: Number.parseInt(value),
                     })
                   }
                 />

@@ -34,7 +34,7 @@ describe('createKeyframeEffect', () => {
 
       createKeyframeEffect(element, keyframes, timings);
       expect(mockKeyframeEffect).toHaveBeenCalledWith(element, keyframes, {
-        iterations: Infinity,
+        iterations: Number.POSITIVE_INFINITY,
       });
     });
 

@@ -76,7 +76,7 @@ function storyReducer(state, action) {
           [storyGroupStatus]: state.totalStoriesByStatus[storyGroupStatus] - 1,
         },
         stories: Object.keys(state.stories).reduce((memo, storyId) => {
-          if (parseInt(storyId) !== action.payload.id) {
+          if (Number.parseInt(storyId) !== action.payload.id) {
             memo[storyId] = state.stories[storyId];
           }
           return memo;

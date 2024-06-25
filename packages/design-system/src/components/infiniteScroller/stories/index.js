@@ -60,7 +60,8 @@ const Item = styled.div`
   }
 `;
 
-const generateArray = (n) => new Array(n).fill(<span>{'Demo Item'}</span>);
+const generateArray = (n) =>
+  Array.from({ length: n }).fill(<span>{'Demo Item'}</span>);
 
 export const _default = {
   render: function Render(args) {
