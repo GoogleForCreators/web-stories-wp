@@ -69,7 +69,7 @@ async function publishPost() {
         'publish' &&
       document.querySelector(
         '.editor-post-publish-button__button[aria-disabled="true"]'
-      ).textContent === 'Update'
+      ).textContent === 'Save'
   );
 
   // The first time around the selector might return undefined.
