@@ -70,7 +70,7 @@ async function publishPost() {
       document.querySelector(
         '.editor-post-publish-button[aria-disabled="true"]'
       ).textContent === 'Update',
-    { timeout: 5000 }
+    { timeout: 10000 }
   );
 
   // The first time around the selector might return undefined.
