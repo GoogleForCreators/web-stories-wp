@@ -172,7 +172,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array|mixed $response   Array of prepared attachment data.
+	 * @param array<string, mixed>|mixed $response   Array of prepared attachment data.
 	 * @return array|mixed $response Filtered attachment data.
 	 *
 	 * @template T
@@ -184,6 +184,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 			return $response;
 		}
 
+		// @phpstan-ignore argument.type (TODO: improve type)
 		$response[ self::MEDIA_SOURCE_KEY ] = $this->get_callback_media_source( $response );
 
 		return $response;
@@ -249,6 +250,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 			return $args;
 		}
 
+		// @phpstan-ignore argument.type (TODO: improve type)
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
@@ -290,6 +292,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 			return $args;
 		}
 
+		// @phpstan-ignore argument.type (TODO: improve type)
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;

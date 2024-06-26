@@ -225,7 +225,7 @@ class Jetpack extends Service_Base {
 	 * @param WP_Post     $attachment Attachment object.
 	 * @return array|mixed
 	 *
-	 * @phpstan-param AttachmentData $data
+	 * @phpstan-param AttachmentData|mixed $data
 	 * @phpstan-return AttachmentData|mixed
 	 *
 	 * @template T

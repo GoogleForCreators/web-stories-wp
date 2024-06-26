@@ -119,8 +119,8 @@ class KSES extends Service_Base implements HasRequirements {
 	 *                                   originally passed to wp_insert_post().
 	 * @return array<string,mixed>|mixed Filtered post data.
 	 *
-	 * @phpstan-param PostData $data
-	 * @phpstan-param PostData $unsanitized_postarr
+	 * @phpstan-param PostData|mixed $data
+	 * @phpstan-param PostData|mixed $unsanitized_postarr
 	 *
 	 * @template T
 	 *
@@ -135,11 +135,17 @@ class KSES extends Service_Base implements HasRequirements {
 			return $data;
 		}
 
-		if ( ! $this->is_allowed_post_type( $data['post_type'], $data['post_parent'] ) ) {
+		if (
+			! \is_string( $data['post_type'] ) ||
+			! $this->is_allowed_post_type( $data['post_type'], $data['post_parent'] )
+		) {
 			return $data;
 		}
 
-		if ( isset( $unsanitized_postarr['post_content_filtered'] ) ) {
+		if (
+			isset( $unsanitized_postarr['post_content_filtered'] ) &&
+			\is_string( $unsanitized_postarr['post_content_filtered'] )
+		) {
 			$data['post_content_filtered'] = $this->filter_story_data( $unsanitized_postarr['post_content_filtered'] );
 		}
 
