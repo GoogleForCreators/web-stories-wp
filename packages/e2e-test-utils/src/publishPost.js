@@ -60,7 +60,7 @@ async function publishPost() {
   }
 
   // Publish the post
-  await page.click('.editor-post-publish-button');
+  await page.click('.editor-post-publish-button__button');
 
   // Wait until the selector returns a truthy value.
   await page.waitForFunction(
@@ -68,9 +68,8 @@ async function publishPost() {
       wp.data.select('core/editor').getEditedPostAttribute('status') ===
         'publish' &&
       document.querySelector(
-        '.editor-post-publish-button[aria-disabled="true"]'
-      ).textContent === 'Update',
-    { timeout: 10000 }
+        '.editor-post-publish-button__button[aria-disabled="true"]'
+      ).textContent === 'Update'
   );
 
   // The first time around the selector might return undefined.
