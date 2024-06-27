@@ -65,12 +65,12 @@ function useCORSProxy() {
    * @return {null|string} Return proxied source or null.
    */
   const getProxiedUrl = useCallback(
-    (resource: Resource, src: string) => {
+    (resource: Resource, src?: string) => {
       const { needsProxy } = resource;
       if (needsProxy && src && getProxyUrl) {
         return getProxyUrl(src);
       }
-      return src;
+      return src || null;
     },
     [getProxyUrl]
   );

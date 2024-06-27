@@ -23,13 +23,16 @@ import {
   type Pattern,
 } from '@googleforcreators/patterns';
 import { getBorderStyle, getBorderRadius } from '@googleforcreators/masks';
-import type { BorderRadius, Element } from '@googleforcreators/elements';
+import type {
+  BorderRadius,
+  Element,
+  TextElementFont,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { generateFontFamily } from '../text/util';
-import type { TextElement } from '../types';
 
 export const elementFillContent = css`
   position: absolute;
@@ -57,16 +60,16 @@ export const elementWithRotation = css<{ rotationAngle: number }>`
 `;
 
 export const elementWithBorderRadius = css<Element>`
-  ${(props) => getBorderRadius(props)}
+  ${(element) => getBorderRadius(element)}
 `;
 
-type DataToStyle = (prop: number) => string;
+type DataToStyle = (prop: number) => string | number;
 
 export const elementWithHighlightBorderRadius = ({
   borderRadius,
   dataToEditorY,
 }: {
-  borderRadius: BorderRadius;
+  borderRadius?: BorderRadius;
   dataToEditorY?: DataToStyle;
 }) =>
   dataToEditorY &&
@@ -77,7 +80,11 @@ export const elementWithHighlightBorderRadius = ({
       ${dataToEditorY(borderRadius?.bottomLeft || 0)}px;
   `;
 
-export const elementWithBorder = css<Element>`
+export const elementWithBorder = css<
+  Partial<
+    Pick<Element, 'border' | 'borderRadius' | 'width' | 'height' | 'mask'>
+  >
+>`
   ${({ border, borderRadius, width, height, mask }) =>
     getBorderStyle({
       border,
@@ -96,7 +103,12 @@ export const elementWithBackgroundColor = css<{
     backgroundColor && generatePatternStyles(backgroundColor)};
 `;
 
-export const elementWithFont = css<TextElement>`
+export const elementWithFont = css<{
+  font: TextElementFont;
+  fontStyle?: string;
+  fontSize: string | number;
+  fontWeight?: string | number;
+}>`
   white-space: pre-line;
   font-family: ${({ font }) => generateFontFamily(font)};
   overflow-wrap: break-word;
@@ -110,10 +122,10 @@ export const elementWithFont = css<TextElement>`
 
 // See generateParagraphTextStyle for the full set of properties.
 export const elementWithTextParagraphStyle = css<{
-  margin: number;
-  padding?: number;
-  lineHeight: number;
-  textAlign: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit';
+  margin?: number | string;
+  padding?: number | string;
+  lineHeight?: number | string;
+  textAlign?: string;
 }>`
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding || 0};
@@ -123,7 +135,7 @@ export const elementWithTextParagraphStyle = css<{
 `;
 
 export const elementWithFlip = css<{
-  transformFlip: string;
+  $transformFlip?: string | null;
 }>`
-  transform: ${({ transformFlip }) => transformFlip};
+  ${({ $transformFlip }) => $transformFlip && `transform: ${$transformFlip}`};
 `;

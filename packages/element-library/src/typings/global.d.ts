@@ -14,7 +14,44 @@
  * limitations under the License.
  */
 
-import type { CSSProperties } from 'react';
+import type {
+  CSSProperties,
+  DetailedHTMLProps,
+  ImgHTMLAttributes,
+  VideoHTMLAttributes,
+} from 'react';
+
+type AmpLayout =
+  | 'fill'
+  | 'fixed'
+  | 'fixed-height'
+  | 'flex-item'
+  | 'intrinsic'
+  | 'nodisplay'
+  | 'responsive'
+  | 'container';
+
+interface AmpVideo
+  extends DetailedHTMLProps<
+    Omit<VideoHTMLAttributes<HTMLVideoElement>, 'loop' | 'autoPlay'>,
+    HTMLVideoElement
+  > {
+  layout: AmpLayout;
+  'captions-id'?: string;
+  autoPlay?: string;
+  loop?: string;
+  noaudio?: string;
+  alt?: string;
+}
+
+interface AmpImg
+  extends DetailedHTMLProps<
+    ImgHTMLAttributes<HTMLImageElement>,
+    HTMLImageElement
+  > {
+  layout: AmpLayout;
+  'disable-inline-width'?: boolean;
+}
 
 interface AmpStoryShoppingTag {
   'data-product-id'?: string | number;
@@ -32,6 +69,8 @@ declare global {
     interface IntrinsicElements {
       'amp-story-shopping-tag': AmpStoryShoppingTag;
       'amp-story-audio-sticker': AmpStoryAudioSticker;
+      'amp-video': AmpVideo;
+      'amp-img': AmpImg;
     }
   }
 }

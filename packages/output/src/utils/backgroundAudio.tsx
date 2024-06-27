@@ -65,7 +65,7 @@ function BackgroundAudio({ backgroundAudio, id }: BackgroundAudioProps) {
               srcLang={srclang}
               label={label}
               kind={kind}
-              src={track}
+              src={track || undefined}
               key={key}
               default={i === 0}
             />

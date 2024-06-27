@@ -21,3 +21,4 @@ export * from './propTypes';
 export * from './page';
 export * from './story';
 export * from './taxonomies';
+export * from './media';

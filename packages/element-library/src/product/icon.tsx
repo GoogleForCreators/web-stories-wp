@@ -17,20 +17,18 @@
 /**
  * External dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import { Icons } from '@googleforcreators/design-system';
+import type { ProductElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import VisibleImage from '../shared/visibleImage';
-import type { ProductElement } from '../types';
+import type { LayerIconProps } from '../types';
 
 function ProductLayerIcon({
   element: { product },
-}: {
-  element: ProductElement;
-}) {
+}: LayerIconProps<ProductElement>) {
   const productImage = product?.productImages?.[0] || {};
   const { url, alt } = productImage;
   if (!url) {
@@ -38,9 +36,5 @@ function ProductLayerIcon({
   }
   return <VisibleImage src={url} alt={alt} height={21} width={21} />;
 }
-
-ProductLayerIcon.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
 
 export default ProductLayerIcon;

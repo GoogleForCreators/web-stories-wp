@@ -29,6 +29,7 @@ export interface Transform {
   style?: string;
   resize?: [number, number];
   dropTargets?: { hover: boolean; active: boolean };
+  updates?: Record<string, unknown>;
 }
 
 export type PushTransform = (id: string, transform: Transform | null) => void;

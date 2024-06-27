@@ -15,9 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { ProductElement } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
-import type { ProductElement } from '../types';
+import type { OutputProps } from '../types';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
@@ -25,7 +30,7 @@ import type { ProductElement } from '../types';
  * @param props Props.
  * @return Rendered component.
  */
-function ProductOutput({ element }: { element: ProductElement }) {
+function ProductOutput({ element }: OutputProps<ProductElement>) {
   const { product } = element;
 
   if (!product?.productId) {

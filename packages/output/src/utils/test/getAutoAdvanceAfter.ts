@@ -148,6 +148,7 @@ describe('getAutoAdvanceAfter', () => {
           length: 10,
           lengthFormatted: '0:10',
         },
+        volume: 1,
         tracks: [],
       } as VideoElement,
     ];
@@ -196,6 +197,7 @@ describe('getAutoAdvanceAfter', () => {
           length: 10,
           lengthFormatted: '0:10',
         },
+        volume: 1,
         tracks: [],
       } as VideoElement,
       { id: '456', x: 0, y: 0, type: 'shape' } as ShapeElement,

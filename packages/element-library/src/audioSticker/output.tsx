@@ -15,11 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { AudioStickerElement } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
-import type { AudioStickerElement } from '../types';
+import type { OutputProps } from '../types';
 
-function AudioStickerOutput({ element }: { element: AudioStickerElement }) {
+function AudioStickerOutput({ element }: OutputProps<AudioStickerElement>) {
   return (
     <div className="audio-sticker">
       <amp-story-audio-sticker

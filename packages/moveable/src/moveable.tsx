@@ -30,7 +30,7 @@ import InOverlay from './overlay';
 const DEFAULT_Z_INDEX = 10;
 
 interface MoveableWithRefProps extends MoveableProps {
-  onContextMenu: MouseEventHandler<HTMLElement>;
+  onContextMenu?: MouseEventHandler<HTMLElement>;
 }
 
 function MoveableWithRef(

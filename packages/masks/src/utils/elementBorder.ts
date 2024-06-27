@@ -230,8 +230,8 @@ type Converter = (border: number) => number;
  * @return New border values.
  */
 export function getResponsiveBorder(
-  border: Border,
-  previewMode: boolean,
+  border: Border | undefined,
+  previewMode: boolean | undefined,
   converter: Converter
 ) {
   if (!previewMode || !border) {

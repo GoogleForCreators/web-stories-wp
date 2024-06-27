@@ -17,16 +17,15 @@
 /**
  * External dependencies
  */
-import type { CSSProperties } from 'react';
 import type {
   BaseFontData,
   Padding,
   TextAlign,
   TextElement,
-  TextElementFont
+  TextElementFont,
 } from '@googleforcreators/elements';
 
-type DataToStyle = (prop: number) => string;
+type DataToStyle = (prop: number) => string | number;
 interface Props {
   font: TextElementFont;
   fontSize: number;
@@ -44,10 +43,7 @@ export function generateParagraphTextStyle(
   dataToFontSizeY = dataToStyleY,
   element: TextElement,
   dataToPaddingY = dataToStyleY
-): Omit<CSSProperties, 'font'> & {
-  dataToEditorY: DataToStyle;
-  font: TextElementFont;
-} {
+) {
   const { font, fontSize, lineHeight, padding, textAlign } = props;
   const { marginOffset } = calcFontMetrics(element);
 
@@ -65,7 +61,7 @@ export function generateParagraphTextStyle(
     wordBreak: 'break-word',
     margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
     fontFamily: generateFontFamily(font),
-    fontSize: dataToFontSizeY(fontSize),
+    fontSize: dataToFontSizeY(fontSize) as number,
     font,
     lineHeight,
     textAlign,
@@ -97,7 +93,7 @@ export const generateFontFamily = ({
   return fontFamilyDisplay;
 };
 
-export const getHighlightLineheight = (
+export const getHighlightLineHeight = (
   lineHeight: number,
   verticalPadding = 0,
   unit = 'px'

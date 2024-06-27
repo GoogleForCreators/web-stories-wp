@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import type { Element } from '@googleforcreators/elements';
+import type { Element, AudioStickerElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import {
   AUDIO_STICKER_STYLES,
   AUDIO_STICKER_LABELS,
 } from '../constants';
-import type { AudioStickerElement } from '../types';
+import type { DisplayProps } from '../types';
 
 interface ElementProps {
   stickerStyle: keyof typeof AUDIO_STICKER_STYLES;
@@ -39,7 +39,7 @@ const Element = styled.img<ElementProps>`
   ${({ stickerStyle }) => AUDIO_STICKER_STYLES[stickerStyle]}
 `;
 
-function AudioStickerDisplay({ element }: { element: AudioStickerElement }) {
+function AudioStickerDisplay({ element }: DisplayProps<AudioStickerElement>) {
   const {
     width: elementWidth,
     height: elementHeight,

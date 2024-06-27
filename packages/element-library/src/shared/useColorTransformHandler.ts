@@ -33,7 +33,7 @@ function useColorTransformHandler({
   resetOnNullTransform = true,
 }: {
   id: ElementId;
-  targetRef: RefObject<HTMLElement | null>;
+  targetRef: RefObject<HTMLElement | null> | null;
   expectedStyle?: string;
   resetOnNullTransform?: boolean;
 }) {

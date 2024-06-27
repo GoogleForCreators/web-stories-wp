@@ -23,13 +23,14 @@ import {
   createSolid,
   generatePatternStyles,
 } from '@googleforcreators/patterns';
-import type { Element } from '@googleforcreators/elements';
+import type { Element, ProductElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { elementFillContent } from '../shared';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
+import type { DisplayProps } from '../types';
 
 const Element = styled.div`
   ${elementFillContent}
@@ -147,10 +148,7 @@ const ShoppingTagDot = styled.div`
 function ProductDisplay({
   element,
   siblingCount,
-}: {
-  element: Element;
-  siblingCount: number;
-}) {
+}: DisplayProps<ProductElement>) {
   const { id } = element;
 
   const ref = useRef<HTMLDivElement | null>(null);
