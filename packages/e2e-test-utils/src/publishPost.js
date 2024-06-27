@@ -27,7 +27,7 @@ async function openPublishPanel() {
   if (isEntityPublishToggle) {
     await page.waitForSelector('.editor-entities-saved-states__save-button');
   } else {
-    await page.waitForSelector('.editor-post-publish-button');
+    await page.waitForSelector('.editor-post-publish-button__button');
   }
 }
 
@@ -67,9 +67,12 @@ async function publishPost() {
     () =>
       wp.data.select('core/editor').getEditedPostAttribute('status') ===
         'publish' &&
-      document.querySelector(
+      (document.querySelector(
         '.editor-post-publish-button__button[aria-disabled="true"]'
-      ).textContent === 'Save'
+      ).textContent === 'Save' ||
+        document.querySelector(
+          '.editor-post-publish-button__button[aria-disabled="true"]'
+        ).textContent === 'Update')
   );
 
   // The first time around the selector might return undefined.
