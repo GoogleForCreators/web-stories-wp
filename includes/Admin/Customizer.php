@@ -726,7 +726,9 @@ class Customizer extends Service_Base implements Conditional {
 				 *
 				 * @var array<string, array<string, array<string, array<int,string>|bool|int|string>>> $def
 				 */
-				$def                 = $parsed_args[ $key ];
+				$def = $parsed_args[ $key ];
+
+				// @phpstan-ignore argument.type (TODO: improve type for recursion)
 				$parsed_args[ $key ] = $this->parse_args( $value, $def );
 			} else {
 				$parsed_args[ $key ] = $value;

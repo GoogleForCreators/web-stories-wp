@@ -185,12 +185,10 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 			static fn( $value ) => 'read' !== $value
 		);
 		$all_roles            = wp_roles();
-		$roles                = array_values( (array) $all_roles->role_objects );
+		$roles                = array_values( $all_roles->role_objects );
 		foreach ( $roles as $role ) {
-			if ( $role instanceof WP_Role ) {
-				foreach ( $all_capabilities as $cap ) {
-					$role->remove_cap( $cap );
-				}
+			foreach ( $all_capabilities as $cap ) {
+				$role->remove_cap( $cap );
 			}
 		}
 

@@ -324,7 +324,13 @@ abstract class ServiceBasedPlugin implements Plugin {
 		while ( null !== key( $services ) ) {
 			$id = $this->maybe_resolve( key( $services ) );
 
-			$class = $this->maybe_resolve( current( $services ) );
+			$curr = current( $services );
+
+			if ( ! $curr ) {
+				continue;
+			}
+
+			$class = $this->maybe_resolve( $curr );
 
 			// Delay registering the service until all requirements are met.
 			if (
@@ -395,7 +401,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 				/**
 				 * Missing requirement.
 				 *
-				 * @phpstan-var class-string<S> $missing_requirement
+				 * @phpstan-var class-string<D&S> $missing_requirement
 				 */
 				$requirement_priority = $this->get_registration_action_priority( $missing_requirement, $services );
 
@@ -547,7 +553,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @param array<int|string, string|class-string> $services Services to validate.
-	 * @return string[] Validated array of service mappings.
+	 * @return array<string, class-string<S>> Validated array of service mappings.
 	 */
 	protected function validate_services( array $services ): array {
 		// Make a copy so we can safely mutate while iterating.
@@ -564,11 +570,16 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 			// Verify that the FQCN is valid and points to an existing class.
 			// If not, skip this service.
-			if ( empty( $fqcn ) || ! \is_string( $fqcn ) || ! class_exists( $fqcn ) ) {
+			if ( empty( $fqcn ) || ! class_exists( $fqcn ) ) {
 				unset( $services[ $identifier ] );
 			}
 		}
 
+		/**
+		 * Validated services.
+		 *
+		 * @phpstan-var array<string, class-string<S>> $services
+		 */
 		return $services;
 	}
 
@@ -686,6 +697,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		// The service needs to be registered, so instantiate right away.
 		$service = $this->injector->make( $class_name );
 
+		// @phpstan-ignore instanceof.alwaysTrue
 		if ( ! $service instanceof Service ) {
 			throw InvalidService::from_service( $service ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
@@ -910,7 +922,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @phpstan-return class-string<C&D&H&R&S> Resolved or unchanged value.
 	 */
 	protected function maybe_resolve( $value ): string {
-		if ( \is_callable( $value ) && ! ( \is_string( $value ) && \function_exists( $value ) ) ) {
+		if ( ! ( \is_string( $value ) && \function_exists( $value ) ) && \is_callable( $value ) ) {
 			$value = $value( $this->injector, $this->service_container );
 		}
 

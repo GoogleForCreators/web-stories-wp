@@ -150,8 +150,8 @@ class Plugin extends ServiceBasedPlugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return array<string> Associative array of identifiers mapped to fully
-	 *                       qualified class names.
+	 * @return array<string, string> Associative array of identifiers mapped to fully
+	 *                               qualified class names.
 	 */
 	protected function get_service_classes(): array {
 		return self::SERVICES;

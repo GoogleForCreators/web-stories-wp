@@ -113,16 +113,13 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 *
+	 * @phpstan-param WP_REST_Request<array{_embed?: string|string[], _web_stories_envelope?: bool}> $request
 	 */
 	public function get_items( $request ) {
 		$response = parent::get_items( $request );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
-			/**
-			 * Embed directive.
-			 *
-			 * @var string|string[] $embed
-			 */
 			$embed    = $request['_embed'] ?? false;
 			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );
@@ -139,23 +136,15 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
+	 *
+	 * @phpstan-param WP_REST_Request<array{post?: int, original_id?: int}> $request
 	 */
 	public function create_item( $request ) {
 		// WP_REST_Attachments_Controller doesn't allow setting an attachment as the parent post.
 		// Hence we are working around this here.
 
-		/**
-		 * Parent post.
-		 *
-		 * @var int $parent_post
-		 */
 		$parent_post = ! empty( $request['post'] ) ? $request['post'] : null;
 
-		/**
-		 * Original post ID.
-		 *
-		 * @var int $original_id
-		 */
 		$original_id = ! empty( $request['original_id'] ) ? $request['original_id'] : null;
 
 		unset( $request['post'] );
