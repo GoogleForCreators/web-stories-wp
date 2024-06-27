@@ -67,9 +67,12 @@ async function publishPost() {
     () =>
       wp.data.select('core/editor').getEditedPostAttribute('status') ===
         'publish' &&
-      document.querySelector(
+      (document.querySelector(
         '.editor-post-publish-button[aria-disabled="true"]'
-      ).textContent === 'Update'
+      ).textContent === 'Update' ||
+        document.querySelector(
+          '.editor-post-publish-button[aria-disabled="true"]'
+        ).textContent === 'Save')
   );
 
   // The first time around the selector might return undefined.

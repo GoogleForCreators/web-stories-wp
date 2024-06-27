@@ -126,6 +126,9 @@ const ALLOWED_ERROR_MESSAGES = [
   // Coming from <amp-story-player>
   // See https://github.com/ampproject/amphtml/blob/413457c3598f8c6694ca4ee7b83a5d84f9b9f00c/src/amp-story-player/amp-story-player-impl.js#L562
   "Unrecognized feature: 'web-share'",
+
+  // This is a known issue in core.
+  'You are importing createRoot from "react-dom" which is not supported.',
 ];
 
 export function addAllowedErrorMessage(message) {
