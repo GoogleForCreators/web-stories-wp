@@ -37,7 +37,7 @@ const id = '999';
 
 describe('getAutoAdvanceAfter', () => {
   beforeAll(() => {
-    elementTypes.forEach((element) => registerElementType(element));
+    elementTypes.forEach(registerElementType);
   });
 
   it('should return the media element with the longest duration', () => {
