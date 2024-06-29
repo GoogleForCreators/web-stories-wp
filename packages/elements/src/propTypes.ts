@@ -29,11 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import {
-  MULTIPLE_VALUE,
-  BACKGROUND_TEXT_MODE,
-  OverlayType,
-} from '../constants';
+import { MULTIPLE_VALUE, BACKGROUND_TEXT_MODE, OverlayType } from './constants';
 
 const mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
