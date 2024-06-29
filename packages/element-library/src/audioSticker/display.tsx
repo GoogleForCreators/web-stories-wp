@@ -17,7 +17,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import type { Element, AudioStickerElement, DisplayProps } from '@googleforcreators/elements';
+import type {
+  Element,
+  AudioStickerElement,
+  DisplayProps,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

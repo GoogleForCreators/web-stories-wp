@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
+import { ResourceType } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import {
   resizeRules as mediaResizeRules,
 } from '../media/constants';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import { ResourceType } from "@googleforcreators/media";
 
 export {
   canFlip,
