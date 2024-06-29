@@ -19,7 +19,7 @@
  */
 import { useRef } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
-import type { VideoElement } from '@googleforcreators/elements';
+import type { VideoElement, DisplayProps } from '@googleforcreators/elements';
 import type { RefObject } from 'react';
 
 /**
@@ -27,7 +27,6 @@ import type { RefObject } from 'react';
  */
 import MediaDisplay from '../media/display';
 import { getBackgroundStyle, Video, VideoImage } from '../media/util';
-import type { DisplayProps } from '../types';
 import Captions from './captions';
 
 function VideoDisplay({

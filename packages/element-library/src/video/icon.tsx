@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { Icons } from '@googleforcreators/design-system';
-import type { VideoElement } from '@googleforcreators/elements';
+import type { VideoElement, LayerIconProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import VideoImage from '../media/videoImage';
 import VisibleImage from '../shared/visibleImage';
-import type { LayerIconProps } from '../types';
 
 function VideoLayerIcon({
   element: {

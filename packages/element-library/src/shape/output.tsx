@@ -18,12 +18,7 @@
  * External dependencies
  */
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import type { ShapeElement } from '@googleforcreators/elements';
-
-/**
- * Internal dependencies
- */
-import type { OutputProps } from '../types';
+import type { ShapeElement, OutputProps } from '@googleforcreators/elements';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.

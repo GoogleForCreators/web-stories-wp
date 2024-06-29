@@ -23,14 +23,17 @@ import {
   createSolid,
   generatePatternStyles,
 } from '@googleforcreators/patterns';
-import type { Element, ProductElement } from '@googleforcreators/elements';
+import type {
+  Element,
+  ProductElement,
+  DisplayProps,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { elementFillContent } from '../shared';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
-import type { DisplayProps } from '../types';
 
 const Element = styled.div`
   ${elementFillContent}

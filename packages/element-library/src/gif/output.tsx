@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { isBlobURL } from '@googleforcreators/media';
-import type { GifElement } from '@googleforcreators/elements';
+import type { GifElement, OutputProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import MediaOutput from '../media/output';
-import type { OutputProps } from '../types';
 
 function GifOutput({ element, box, flags }: OutputProps<GifElement>) {
   const { resource } = element;

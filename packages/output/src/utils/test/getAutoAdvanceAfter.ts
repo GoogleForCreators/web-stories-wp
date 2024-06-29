@@ -37,6 +37,7 @@ const id = '999';
 
 describe('getAutoAdvanceAfter', () => {
   beforeAll(() => {
+    // @ts-expect-error TODO: Fix types.
     elementTypes.forEach(registerElementType);
   });
 

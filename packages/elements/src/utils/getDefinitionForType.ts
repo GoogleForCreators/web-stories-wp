@@ -18,9 +18,11 @@
  * Internal dependencies
  */
 import { elementTypes } from '../elementType';
-import type { ElementType } from '../types';
+import type { ElementTypes } from '../types';
 
-function getDefinitionForType(type: ElementType) {
+function getDefinitionForType<T extends keyof ElementTypes>(
+  type: T
+): ElementTypes[T] {
   const definition = elementTypes[type];
   if (!definition) {
     throw new Error(`No element definition found for '${type}'`);

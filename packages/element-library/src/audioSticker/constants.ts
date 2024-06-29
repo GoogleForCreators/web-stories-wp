@@ -45,6 +45,8 @@ export const resizeRules = {
   vertical: false,
   horizontal: false,
   diagonal: false,
+  minWidth: 120,
+  minHeight: 120,
 };
 
 export const defaultAttributes = {

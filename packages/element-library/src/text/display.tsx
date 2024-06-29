@@ -35,6 +35,7 @@ import {
   BACKGROUND_TEXT_MODE,
   type FontStyle,
   type FontWeight,
+  type DisplayProps,
 } from '@googleforcreators/elements';
 import type { RefObject } from 'react';
 
@@ -50,7 +51,6 @@ import {
   elementWithHighlightBorderRadius,
   useColorTransformHandler,
 } from '../shared';
-import type { DisplayProps } from '../types';
 import {
   getHighlightLineHeight,
   generateParagraphTextStyle,

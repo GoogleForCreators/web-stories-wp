@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import type { VideoElement } from '@googleforcreators/elements';
+import type { VideoElement, EditProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import MediaEdit from '../media/edit';
-import type { EditProps } from '../types';
 import Trim from './trim';
 
 function VideoEdit({

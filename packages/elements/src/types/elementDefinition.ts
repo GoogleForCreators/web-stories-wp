@@ -18,26 +18,73 @@
  * External dependencies
  */
 import type { ElementBox } from '@googleforcreators/units';
+import type {
+  GifResource,
+  ImageResource,
+  Resource,
+  VideoResource,
+  ResourceId,
+} from '@googleforcreators/media';
+import type { RefObject, VoidFunctionComponent } from 'react';
+import type { Pattern } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
  */
-import type { Element } from './element';
+import type { Element, ElementId, GifElement, VideoElement } from './element';
 import type { ElementType } from './elementType';
+import type { FontData, FontStyle, FontWeight } from './data';
+
+interface FontConfig {
+  fontStyle: FontStyle;
+  fontWeight: FontWeight;
+  content: string;
+  font: FontData;
+}
 
 export interface EditProps<E extends Element> {
   element: E;
   box: ElementBox;
-  setLocalProperties: () => void;
-  getProxiedUrl: () => string;
-  updateElementById: () => void;
-  zIndexCanvas: number;
+  editWrapper?: HTMLElement;
+  onResize: () => void;
+  setLocalProperties: (properties: Partial<E>) => void;
+  getProxiedUrl: (
+    resource: Pick<Resource, 'needsProxy'>,
+    src?: string
+  ) => string | null;
+  isRTL: boolean;
+  isTrimMode: boolean;
+  topOffset: number;
+  resource?: E extends VideoElement
+    ? VideoResource
+    : E extends GifElement
+      ? GifResource
+      : ImageResource;
+  setVideoNode: (node: HTMLVideoElement) => void;
+  updateElementById: (update: {
+    elementId: ElementId;
+    properties: Partial<E>;
+  }) => void;
+  deleteSelectedElements: () => void;
+  maybeEnqueueFontStyle: (fonts: FontConfig[]) => Promise<boolean>;
+  zIndexCanvas: Record<string, number>;
   scaleMin: number;
   scaleMax: number;
 }
 
+interface EditingState {
+  hasEditMenu?: boolean;
+  showOverflow?: boolean;
+  selectAll?: boolean;
+  offset?: number;
+}
+
 export interface FrameProps<E extends Element> {
+  wrapperRef: RefObject<HTMLElement>;
   element: E;
+  box: ElementBox;
+  isOnlySelectedElement: boolean;
+  setEditingElementWithState: (id: string, state: EditingState) => void;
 }
 
 export interface OutputProps<E extends Element> {
@@ -48,17 +95,34 @@ export interface OutputProps<E extends Element> {
 
 export interface LayerIconProps<E extends Element> {
   element: E;
+  getProxiedUrl: (
+    resource: Pick<Resource, 'needsProxy'>,
+    src?: string
+  ) => string | null;
+  currentPageBackgroundColor: Pattern;
+  // Only provided for videos.
+  showVideoPreviewAsBackup?: boolean;
 }
 
-export interface TextContentProps<E extends Element> {
-  element: E;
-  box: ElementBox;
-  previewMode?: boolean;
-  renderResourcePlaceholder?: boolean;
-}
+export type LayerTextFunction<E> = (element: E) => string;
+export type TextContentFunction<E> = (element: E) => string;
 
 export interface DisplayProps<E extends Element> {
   element: E;
+  previewMode: boolean;
+  box: ElementBox;
+  getProxiedUrl: (
+    resource: Pick<Resource, 'needsProxy'>,
+    src?: string
+  ) => string | null;
+  isCurrentResourceProcessing?: (resourceId: ResourceId) => boolean;
+  isCurrentResourceUploading?: (resourceId: ResourceId) => boolean;
+  maybeEnqueueFontStyle: (fonts: FontConfig[]) => Promise<boolean>;
+  siblingCount: number;
+  renderResourcePlaceholder: (args: {
+    blurHash?: string;
+    baseColor?: string;
+  }) => void;
 }
 
 export type Direction = [0 | 1, 0 | 1];
@@ -67,14 +131,16 @@ export interface ElementDefinition<E extends Element = Element> {
   type: ElementType;
   name: string;
   isMedia?: boolean;
-  getLayerText: (element: E) => string;
+  getLayerText: LayerTextFunction<E>;
   defaultAttributes: Partial<E>;
-  Edit: React.VoidFunctionComponent<EditProps<E>>;
-  Frame: React.VoidFunctionComponent<FrameProps<E>>;
-  Output: React.VoidFunctionComponent<OutputProps<E>>;
-  LayerIcon: React.VoidFunctionComponent<LayerIconProps<E>>;
-  TextContent: (element: E) => string;
-  Display: React.VoidFunctionComponent<DisplayProps<E>>;
+  // Only text & media elements have an edit mode.
+  Edit?: VoidFunctionComponent<EditProps<E>>;
+  Frame?: VoidFunctionComponent<FrameProps<E>>;
+  Output: VoidFunctionComponent<OutputProps<E>>;
+  LayerIcon: VoidFunctionComponent<LayerIconProps<E>>;
+  // TODO: Make mandatory? Used for copy/pasting.
+  TextContent?: TextContentFunction<E>;
+  Display: VoidFunctionComponent<DisplayProps<E>>;
   canFlip: boolean;
   isMaskable: boolean;
   isAspectAlwaysLocked: boolean;
@@ -93,11 +159,11 @@ export interface ElementDefinition<E extends Element = Element> {
   };
   panels: string[];
   updateForResizeEvent?: (
-    element: Element,
+    element: E,
     direction: Direction,
     newWidth: number,
     newHeight: number
   ) => { height: number };
 }
 
-export type ElementTypes = Record<ElementType, ElementDefinition<Element>>;
+export type ElementTypes = Record<ElementType, ElementDefinition>;

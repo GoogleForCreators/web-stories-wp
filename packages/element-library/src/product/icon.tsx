@@ -18,13 +18,15 @@
  * External dependencies
  */
 import { Icons } from '@googleforcreators/design-system';
-import type { ProductElement } from '@googleforcreators/elements';
+import type {
+  ProductElement,
+  LayerIconProps,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import VisibleImage from '../shared/visibleImage';
-import type { LayerIconProps } from '../types';
 
 function ProductLayerIcon({
   element: { product },

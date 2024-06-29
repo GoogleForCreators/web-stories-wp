@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
+import { ResourceType } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -27,9 +28,11 @@ import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
 export {
   canFlip,
   isMaskable,
+  isAspectAlwaysLocked,
   isMedia,
   hasEditMode,
   hasEditModeIfLocked,
+  hasEditModeMoveable,
   hasDuplicateMenu,
   hasDesignMenu,
   editModeGrayout,
@@ -40,6 +43,19 @@ export { resizeRules } from '../media/constants';
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   ...MEDIA_DEFAULT_ATTRIBUTES,
+  resource: {
+    type: ResourceType.Gif,
+    id: 0,
+    width: 0,
+    height: 0,
+    alt: '',
+    src: '',
+    mimeType: 'image/gif',
+    output: {
+      mimeType: 'video/mp4',
+      src: '',
+    },
+  },
 };
 
 export const panels = [

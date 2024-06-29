@@ -22,13 +22,12 @@ import {
   dataToEditorY,
   dataToFontSizeY as dataToFontSize,
 } from '@googleforcreators/units';
-import { type TextElement } from '@googleforcreators/elements';
+import type { TextElement, OutputProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 
-import type { OutputProps } from '../types';
 import TextOutputWithUnits from './outputWithUnits';
 
 /**

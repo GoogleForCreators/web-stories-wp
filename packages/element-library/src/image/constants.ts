@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
+import { ResourceType } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -27,9 +29,11 @@ import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
 export {
   canFlip,
   isMaskable,
+  isAspectAlwaysLocked,
   isMedia,
   hasEditMode,
   hasEditModeIfLocked,
+  hasEditModeMoveable,
   hasDuplicateMenu,
   hasDesignMenu,
   editModeGrayout,
@@ -40,6 +44,15 @@ export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   ...MEDIA_DEFAULT_ATTRIBUTES,
   lockAspectRatio: false,
+  resource: {
+    type: ResourceType.Image,
+    id: 0,
+    width: 0,
+    height: 0,
+    alt: '',
+    src: '',
+    mimeType: '',
+  },
 };
 
 export const panels = [

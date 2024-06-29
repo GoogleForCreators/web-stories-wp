@@ -28,13 +28,12 @@ import {
   ResourceCacheEntryType,
   resourceList,
 } from '@googleforcreators/media';
-import { type ImageElement } from '@googleforcreators/elements';
+import type { ImageElement, DisplayProps } from '@googleforcreators/elements';
 import type { HTMLProps } from 'react';
 
 /**
  * Internal dependencies
  */
-import type { DisplayProps } from '../types';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 

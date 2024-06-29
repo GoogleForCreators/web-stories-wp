@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import type { Element, AudioStickerElement } from '@googleforcreators/elements';
+import type { Element, AudioStickerElement, DisplayProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -28,7 +28,6 @@ import {
   AUDIO_STICKER_STYLES,
   AUDIO_STICKER_LABELS,
 } from '../constants';
-import type { DisplayProps } from '../types';
 
 interface ElementProps {
   stickerStyle: keyof typeof AUDIO_STICKER_STYLES;

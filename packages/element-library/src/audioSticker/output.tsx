@@ -17,12 +17,10 @@
 /**
  * External dependencies
  */
-import type { AudioStickerElement } from '@googleforcreators/elements';
-
-/**
- * Internal dependencies
- */
-import type { OutputProps } from '../types';
+import type {
+  AudioStickerElement,
+  OutputProps,
+} from '@googleforcreators/elements';
 
 function AudioStickerOutput({ element }: OutputProps<AudioStickerElement>) {
   return (

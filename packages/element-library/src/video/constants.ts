@@ -27,14 +27,17 @@ import {
   resizeRules as mediaResizeRules,
 } from '../media/constants';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import { ResourceType } from "@googleforcreators/media";
 
 export {
   canFlip,
   isMaskable,
+  isAspectAlwaysLocked,
   isMedia,
   hasEditMode,
   hasDuplicateMenu,
   hasEditModeIfLocked,
+  hasEditModeMoveable,
   hasDesignMenu,
   editModeGrayout,
 } from '../media/constants';
@@ -52,10 +55,15 @@ export const defaultAttributes = {
   volume: 1,
   tracks: [],
   resource: {
-    posterId: null,
-    poster: null,
+    type: ResourceType.Video,
     id: 0,
+    width: 0,
+    height: 0,
+    length: 0,
+    lengthFormatted: '',
     alt: '',
+    src: '',
+    mimeType: '',
   },
 };
 

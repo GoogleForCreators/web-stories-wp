@@ -133,6 +133,7 @@ const PRODUCT_FLOWERS: ProductData = {
 
 describe('Page output', () => {
   beforeAll(() => {
+    // @ts-expect-error TODO: Fix types.
     elementTypes.forEach(registerElementType);
   });
 

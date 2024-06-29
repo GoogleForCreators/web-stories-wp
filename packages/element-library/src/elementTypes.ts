@@ -18,7 +18,18 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { ElementType } from '@googleforcreators/elements';
+import {
+  type ElementDefinition,
+  type AudioStickerElement,
+  type TextElement,
+  type ImageElement,
+  type ShapeElement,
+  type VideoElement,
+  type GifElement,
+  type StickerElement,
+  type ProductElement,
+  ElementType,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -33,38 +44,46 @@ import * as productElement from './product';
 import * as audioStickerElement from './audioSticker';
 
 const elementTypes = [
-  { type: ElementType.Text, name: __('Text', 'web-stories'), ...textElement },
+  {
+    type: ElementType.Text,
+    name: __('Text', 'web-stories'),
+    ...textElement,
+  } as ElementDefinition<TextElement>,
   {
     type: ElementType.Image,
     name: __('Image', 'web-stories'),
     ...imageElement,
-  },
+  } as ElementDefinition<ImageElement>,
   {
     type: ElementType.Shape,
     name: __('Shape', 'web-stories'),
     ...shapeElement,
-  },
+  } as ElementDefinition<ShapeElement>,
   {
     type: ElementType.Video,
     name: __('Video', 'web-stories'),
     ...videoElement,
-  },
-  { type: ElementType.Gif, name: __('GIF', 'web-stories'), ...gifElement },
+  } as ElementDefinition<VideoElement>,
+  {
+    type: ElementType.Gif,
+    name: __('GIF', 'web-stories'),
+    ...gifElement,
+  } as ElementDefinition<GifElement>,
   {
     type: ElementType.Sticker,
     name: __('Sticker', 'web-stories'),
     ...stickerElement,
-  },
+  } as ElementDefinition<StickerElement>,
   {
     type: ElementType.Product,
     name: __('Product', 'web-stories'),
     ...productElement,
-  },
+  } as ElementDefinition<ProductElement>,
   {
     type: ElementType.AudioSticker,
     name: __('Audio Sticker', 'web-stories'),
     ...audioStickerElement,
-  },
+  } as ElementDefinition<AudioStickerElement>,
 ];
 
 export default elementTypes;

@@ -18,12 +18,10 @@
  * External dependencies
  */
 import stickers from '@googleforcreators/stickers';
-import type { StickerElement } from '@googleforcreators/elements';
-
-/**
- * Internal dependencies
- */
-import type { LayerIconProps } from '../types';
+import type {
+  StickerElement,
+  LayerIconProps,
+} from '@googleforcreators/elements';
 
 const style = {
   display: 'block',

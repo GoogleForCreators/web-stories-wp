@@ -36,8 +36,9 @@ import {
 } from '@googleforcreators/masks';
 import {
   type MediaElement,
-  getTransformFlip,
   type SequenceMediaElement,
+  type EditProps,
+  getTransformFlip,
   elementIs,
 } from '@googleforcreators/elements';
 import type { Dispatch, SetStateAction } from 'react';
@@ -46,7 +47,6 @@ import type { Dispatch, SetStateAction } from 'react';
  * Internal dependencies
  */
 import { elementFillContent, elementWithFlip } from '../shared';
-import type { EditProps } from '../types';
 import EditCropMoveable from './editCropMoveable';
 import { mediaWithScale } from './util';
 import EditPanMoveable from './editPanMoveable';

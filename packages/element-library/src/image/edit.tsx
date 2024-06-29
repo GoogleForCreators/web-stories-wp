@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import { type ImageElement } from '@googleforcreators/elements';
+import type { ImageElement, EditProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import MediaEdit from '../media/edit';
-import type { EditProps } from '../types';
 
 function ImageEdit({ element, box, ...rest }: EditProps<ImageElement>) {
   return <MediaEdit<ImageElement> element={element} box={box} {...rest} />;

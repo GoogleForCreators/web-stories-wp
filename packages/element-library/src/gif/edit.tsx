@@ -16,13 +16,12 @@
 /**
  * External dependencies
  */
-import type { GifElement } from '@googleforcreators/elements';
+import type { GifElement, EditProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import MediaEdit from '../media/edit';
-import type { EditProps } from '../types';
 
 function GifEdit({ element, box, ...rest }: EditProps<GifElement>) {
   return <MediaEdit<GifElement> element={element} box={box} {...rest} />;

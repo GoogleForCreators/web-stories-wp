@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import type { ProductElement } from '@googleforcreators/elements';
-
-/**
- * Internal dependencies
- */
-import type { OutputProps } from '../types';
+import type { ProductElement, OutputProps } from '@googleforcreators/elements';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.

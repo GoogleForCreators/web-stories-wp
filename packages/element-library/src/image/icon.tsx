@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { getSmallestUrlForWidth } from '@googleforcreators/media';
-import type { ImageElement } from '@googleforcreators/elements';
+import type { ImageElement, LayerIconProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import VisibleImage from '../shared/visibleImage';
-import type { LayerIconProps } from '../types';
 
 function ImageLayerIcon({
   element: { resource },

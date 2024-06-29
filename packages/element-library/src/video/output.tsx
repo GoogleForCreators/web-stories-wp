@@ -18,8 +18,7 @@
  * External dependencies
  */
 import { isBlobURL } from '@googleforcreators/media';
-import type { VideoElement } from '@googleforcreators/elements';
-import type { ElementBox } from '@googleforcreators/units';
+import type { VideoElement, OutputProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -31,15 +30,7 @@ function defaultForUndefined<V, D>(value: V | undefined, def: D): V | D {
   return value === undefined ? def : value;
 }
 
-function VideoOutput({
-  element,
-  box,
-  flags,
-}: {
-  element: VideoElement;
-  box: ElementBox;
-  flags: Record<string, boolean>;
-}) {
+function VideoOutput({ element, box, flags }: OutputProps<VideoElement>) {
   const { resource, loop, tracks, volume } = element;
   const { isMuted, mimeType, src } = resource;
 

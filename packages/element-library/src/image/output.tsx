@@ -23,14 +23,13 @@ import {
   FULLBLEED_HEIGHT,
   FULLBLEED_RATIO,
 } from '@googleforcreators/units';
-import type { ImageElement } from '@googleforcreators/elements';
+import type { ImageElement, OutputProps } from '@googleforcreators/elements';
 import type { HTMLProps } from 'react';
 
 /**
  * Internal dependencies
  */
 import MediaOutput from '../media/output';
-import type { OutputProps } from '../types';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.

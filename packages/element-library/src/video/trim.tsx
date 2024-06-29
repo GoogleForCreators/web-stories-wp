@@ -28,6 +28,7 @@ import { CircularProgress } from '@googleforcreators/design-system';
 import {
   getTransformFlip,
   type VideoElement,
+  type DisplayProps,
 } from '@googleforcreators/elements';
 import type { ElementBox } from '@googleforcreators/units';
 
@@ -37,7 +38,6 @@ import type { ElementBox } from '@googleforcreators/units';
 import MediaDisplay from '../media/display';
 import { elementWithFlip } from '../shared';
 import { getBackgroundStyle, Video } from '../media/util';
-import type { DisplayProps } from '../types';
 import PlayPauseButton from './playPauseButton';
 import Captions from './captions';
 
@@ -71,7 +71,7 @@ interface VideoTrimProps {
     resource: Pick<Resource, 'needsProxy'>,
     src?: string
   ) => string | null;
-  renderResourcePlaceholder?: DisplayProps['renderResourcePlaceholder'];
+  renderResourcePlaceholder?: DisplayProps<VideoElement>['renderResourcePlaceholder'];
 }
 
 function VideoTrim({

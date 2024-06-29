@@ -21,7 +21,11 @@ import styled from 'styled-components';
 import { useRef, useEffect } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { areEventsDragging } from '@googleforcreators/moveable';
-import type { TextElement, TextElementFont } from '@googleforcreators/elements';
+import type {
+  TextElement,
+  TextElementFont,
+  FrameProps,
+} from '@googleforcreators/elements';
 import { getCaretCharacterOffsetWithin } from '@googleforcreators/rich-text';
 
 /**
@@ -32,7 +36,6 @@ import {
   elementWithFont,
   elementWithTextParagraphStyle,
 } from '../shared';
-import type { FrameProps } from '../types';
 import { generateParagraphTextStyle } from './util';
 
 const Element = styled.p<{

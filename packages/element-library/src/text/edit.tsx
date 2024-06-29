@@ -51,6 +51,7 @@ import {
   type FontWeight,
   type TextElement,
   type TextElementFont,
+  type EditProps,
 } from '@googleforcreators/elements';
 import type { MouseEventHandler } from 'react';
 
@@ -67,7 +68,6 @@ import {
 } from '../shared';
 import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
-import type { EditProps } from '../types';
 import {
   calcFontMetrics,
   generateParagraphTextStyle,

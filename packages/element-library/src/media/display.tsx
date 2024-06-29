@@ -26,11 +26,12 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
-import {
-  type SequenceMediaElement,
-  type OverlayableElement,
-  type Element as ElementType,
-  type MediaElement,
+import type {
+  SequenceMediaElement,
+  OverlayableElement,
+  Element as ElementType,
+  MediaElement,
+  DisplayProps,
 } from '@googleforcreators/elements';
 import type { ReactNode, RefObject } from 'react';
 
@@ -43,7 +44,6 @@ import {
   elementWithBackgroundColor,
   useColorTransformHandler,
 } from '../shared';
-import type { DisplayProps } from '../types';
 import { getMediaWithScaleCss } from './util';
 
 const Element = styled.div.attrs({ className: 'story-media-display-element' })<
@@ -72,7 +72,7 @@ interface MediaDisplayProps<T extends MediaElement> {
       ? HTMLVideoElement | HTMLImageElement
       : HTMLImageElement
   >;
-  renderResourcePlaceholder?: DisplayProps['renderResourcePlaceholder'];
+  renderResourcePlaceholder?: DisplayProps<T>['renderResourcePlaceholder'];
   children: ReactNode;
 }
 function MediaDisplay<T extends MediaElement>({

@@ -18,13 +18,8 @@
  * External dependencies
  */
 import stickers from '@googleforcreators/stickers';
-import { type StickerElement } from '@googleforcreators/elements';
+import type { StickerElement, OutputProps } from '@googleforcreators/elements';
 import type { CSSProperties } from 'react';
-
-/**
- * Internal dependencies
- */
-import type { OutputProps } from '../types';
 
 const style: CSSProperties = {
   display: 'block',

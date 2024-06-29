@@ -19,16 +19,11 @@
  */
 import styled from 'styled-components';
 import { getMaskByType } from '@googleforcreators/masks';
-import type { ShapeElement } from '@googleforcreators/elements';
+import type { ShapeElement, LayerIconProps } from '@googleforcreators/elements';
 import {
   generatePatternStyles,
   type Pattern,
 } from '@googleforcreators/patterns';
-
-/**
- * Internal dependencies
- */
-import type { LayerIconProps } from '../types';
 
 const Container = styled.div`
   display: flex;

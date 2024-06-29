@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import type { GifElement } from '@googleforcreators/elements';
+import type { GifElement, LayerIconProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import VisibleImage from '../shared/visibleImage';
-import type { LayerIconProps } from '../types';
 
 function GifLayerIcon({
   element: {

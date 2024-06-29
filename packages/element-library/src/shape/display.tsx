@@ -25,7 +25,7 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
-import type { ShapeElement } from '@googleforcreators/elements';
+import type { ShapeElement, DisplayProps } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -36,7 +36,6 @@ import {
   elementWithBorder,
   useColorTransformHandler,
 } from '../shared';
-import type { DisplayProps } from '../types';
 
 const Element = styled.div<
   Partial<
