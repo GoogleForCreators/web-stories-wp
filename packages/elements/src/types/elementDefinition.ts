@@ -166,4 +166,7 @@ export interface ElementDefinition<E extends Element = Element> {
   ) => { height: number };
 }
 
-export type ElementTypes = Record<ElementType, ElementDefinition>;
+export type ElementTypes<E extends Element = Element> = Record<
+  E['type'],
+  ElementDefinition<E>
+>;
