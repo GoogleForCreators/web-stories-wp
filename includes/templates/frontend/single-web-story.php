@@ -38,6 +38,8 @@ if ( $current_post instanceof WP_Post ) {
 	// wp-admin/revision.php page.
 	if (
 		isset( $_GET['rev_id'], $_GET['_wpnonce'] ) &&
+		is_string( $_GET['_wpnonce'] ) &&
+		is_string( $_GET['rev_id'] ) &&
 		wp_verify_nonce(
 			sanitize_text_field( (string) wp_unslash( $_GET['_wpnonce'] ) ),
 			'web_stories_revision_for_' . $current_post->ID

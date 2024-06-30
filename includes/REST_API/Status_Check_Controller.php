@@ -138,6 +138,8 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 	 * @param array{success: bool} $item    Status array.
 	 * @param WP_REST_Request      $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string}> $request
 	 */
 	public function prepare_item_for_response( $item, $request ) {
 		$fields = $this->get_fields_for_response( $request );
@@ -149,11 +151,6 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 			$data['success'] = rest_sanitize_value_from_schema( $item['success'], $schema['properties']['success'] );
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
