@@ -27,11 +27,7 @@ import type {
  * Internal dependencies
  */
 import { elementFillContent } from '../shared';
-import {
-  AUDIO_STICKERS,
-  AUDIO_STICKER_STYLES,
-  AUDIO_STICKER_LABELS,
-} from '../constants';
+import { AUDIO_STICKER_STYLES, AUDIO_STICKER_LABELS } from '../constants';
 
 interface ElementProps {
   stickerStyle: keyof typeof AUDIO_STICKER_STYLES;
@@ -42,7 +38,10 @@ const Element = styled.img<ElementProps>`
   ${({ stickerStyle }) => AUDIO_STICKER_STYLES[stickerStyle]}
 `;
 
-function AudioStickerDisplay({ element }: DisplayProps<AudioStickerElement>) {
+function AudioStickerDisplay({
+  element,
+  cdnUrl,
+}: DisplayProps<AudioStickerElement>) {
   const {
     width: elementWidth,
     height: elementHeight,
@@ -52,7 +51,8 @@ function AudioStickerDisplay({ element }: DisplayProps<AudioStickerElement>) {
 
   return (
     <Element
-      src={AUDIO_STICKERS[sticker]}
+      src={`${cdnUrl}images/audio-sticker/${sticker}-pretap.png`}
+      crossOrigin="anonymous"
       stickerStyle={style}
       height={elementHeight}
       width={elementWidth}

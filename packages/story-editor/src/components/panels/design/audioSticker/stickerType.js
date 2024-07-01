@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -20,14 +21,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
-import {
-  AUDIO_STICKERS,
-  AUDIO_STICKER_LABELS,
-} from '@googleforcreators/element-library';
+import { AUDIO_STICKER_LABELS } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../../app/config';
 import { Row, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { states, useHighlights } from '../../../../app/highlights';
@@ -53,6 +52,8 @@ const StickerImage = styled.img`
 `;
 
 function StickerType({ selectedElements, pushUpdate }) {
+  const { cdnURL } = useConfig();
+
   const stickerObj = selectedElements[0];
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
@@ -101,7 +102,8 @@ function StickerType({ selectedElements, pushUpdate }) {
               )}
             >
               <StickerImage
-                src={AUDIO_STICKERS[type]}
+                src={`${cdnURL}images/audio-sticker/${type}-pretap.png`}
+                crossOrigin="anonymous"
                 alt={AUDIO_STICKER_LABELS[type].label}
               />
             </FilterToggle>

@@ -123,6 +123,7 @@ export interface DisplayProps<E extends Element> {
     blurHash?: string;
     baseColor?: string;
   }) => void;
+  cdnUrl: string;
 }
 
 export type Direction = [0 | 1, 0 | 1];
