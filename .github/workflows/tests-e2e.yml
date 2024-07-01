@@ -70,12 +70,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10
+        uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -101,7 +101,7 @@ jobs:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@8f24390df009a496891208e5e36b8a1de1f45135
+        uses: oven-sh/setup-bun@f4d14e03ff726c06358e5557344e1da148b56cf7
         with:
           bun-version: latest
 
@@ -159,7 +159,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10
+        uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -175,7 +175,7 @@ jobs:
             34.104.35.123:443
 
       - name: Checkout
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
 
       - name: Download bundle
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e
