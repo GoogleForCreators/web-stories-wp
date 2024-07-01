@@ -15,9 +15,6 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { ElementType } from '@googleforcreators/elements';
@@ -27,6 +24,11 @@ import type {
   ProductElement,
   VideoElement,
 } from '@googleforcreators/elements';
+import type { AudioResource } from '@googleforcreators/media';
+
+/**
+ * Internal dependencies
+ */
 import getUsedAmpExtensions from '../getUsedAmpExtensions';
 
 describe('getUsedAmpExtensions', () => {
@@ -145,11 +147,11 @@ describe('getUsedAmpExtensions', () => {
               height: 100,
               isExternal: false,
             },
+            volume: 1,
             tracks: [
               {
                 track: 'https://example.com/track.vtt',
                 trackId: 123,
-                trackName: 'track.vtt',
                 id: 'rersd-fdfd-fdfd-fdfd',
                 srclang: '',
                 label: '',
@@ -180,12 +182,11 @@ describe('getUsedAmpExtensions', () => {
         id: 'abc',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         backgroundAudio: {
-          resource: { src: 'https://example.com/audio.mp3' },
+          resource: { src: 'https://example.com/audio.mp3' } as AudioResource,
           tracks: [
             {
               track: 'https://example.com/track.vtt',
               trackId: 123,
-              trackName: 'track.vtt',
               id: 'rersd-fdfd-fdfd-fdfd',
               srclang: '',
               label: '',

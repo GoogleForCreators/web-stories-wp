@@ -43,7 +43,7 @@ export function canSupportMultiBorder(element: Element) {
   return !mask || DEFAULT_MASK.type === mask?.type;
 }
 
-export function getMaskByType(type: string) {
+export function getMaskByType(type?: string) {
   return MASKS.find((mask) => mask.type === type) || DEFAULT_MASK;
 }
 

@@ -36,6 +36,7 @@ jest.mock('flagged');
 
 describe('getStoryMarkup', () => {
   beforeAll(() => {
+    // @ts-expect-error TODO: Fix types.
     elementTypes.forEach(registerElementType);
   });
 

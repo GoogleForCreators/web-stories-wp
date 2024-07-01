@@ -15,11 +15,11 @@
  */
 
 export type Track = {
-  track: string;
-  trackId: number;
-  trackName: string;
   id: string;
+  track: string | null;
+  trackId?: number;
+  kind?: string;
   srclang?: string;
   label?: string;
-  kind: string;
+  needsProxy?: boolean;
 };

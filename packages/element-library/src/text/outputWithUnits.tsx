@@ -33,7 +33,7 @@ import type { CSSProperties } from 'react';
  */
 import {
   generateParagraphTextStyle,
-  getHighlightLineheight,
+  getHighlightLineHeight,
   calcFontMetrics,
 } from './util';
 
@@ -122,7 +122,7 @@ function TextOutputWithUnits({
     : 0;
   const unitlessFontSize = Number.parseFloat(dataToStyleY(rest.fontSize));
 
-  const lineHeight = getHighlightLineheight(
+  const lineHeight = getHighlightLineHeight(
     rest.lineHeight,
     unitlessPaddingVertical / unitlessFontSize,
     'em'
@@ -224,7 +224,7 @@ function TextOutputWithUnits({
     );
   }
   return (
-    <TagName className={className} style={fillStyle}>
+    <TagName className={className} style={fillStyle as CSSProperties}>
       <span dangerouslySetInnerHTML={{ __html: content }} />
     </TagName>
   );

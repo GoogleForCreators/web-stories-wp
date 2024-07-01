@@ -19,6 +19,11 @@
  */
 import { createSolid } from '@googleforcreators/patterns';
 
+/**
+ * Internal dependencies
+ */
+import { FontService, type GoogleFontData } from './types';
+
 export const ELEMENT_TYPES = {
   IMAGE: 'image',
   SHAPE: 'shape',
@@ -40,7 +45,7 @@ export const MEDIA_ELEMENT_TYPES = [
 export const MULTIPLE_VALUE = '((MULTIPLE))';
 
 // @todo: only provide font family, and use font provider to fill the rest.
-export const TEXT_ELEMENT_DEFAULT_FONT = {
+export const TEXT_ELEMENT_DEFAULT_FONT: GoogleFontData = {
   family: 'Roboto',
   weights: [100, 300, 400, 500, 700, 900],
   styles: ['italic', 'regular'],
@@ -59,7 +64,7 @@ export const TEXT_ELEMENT_DEFAULT_FONT = {
     [1, 900],
   ],
   fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-  service: 'fonts.google.com',
+  service: FontService.GoogleFonts,
   metrics: {
     upm: 2048,
     asc: 1900,

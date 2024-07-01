@@ -37,7 +37,8 @@ const id = '999';
 
 describe('getAutoAdvanceAfter', () => {
   beforeAll(() => {
-    elementTypes.forEach((element) => registerElementType(element));
+    // @ts-expect-error TODO: Fix types.
+    elementTypes.forEach(registerElementType);
   });
 
   it('should return the media element with the longest duration', () => {
@@ -148,6 +149,7 @@ describe('getAutoAdvanceAfter', () => {
           length: 10,
           lengthFormatted: '0:10',
         },
+        volume: 1,
         tracks: [],
       } as VideoElement,
     ];
@@ -196,6 +198,7 @@ describe('getAutoAdvanceAfter', () => {
           length: 10,
           lengthFormatted: '0:10',
         },
+        volume: 1,
         tracks: [],
       } as VideoElement,
       { id: '456', x: 0, y: 0, type: 'shape' } as ShapeElement,

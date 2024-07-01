@@ -33,6 +33,7 @@ import getLongestMediaElement from '../getLongestMediaElement';
 
 describe('getLongestMediaElement', () => {
   beforeAll(() => {
+    // @ts-expect-error TODO: Fix types.
     elementTypes.forEach(registerElementType);
   });
 

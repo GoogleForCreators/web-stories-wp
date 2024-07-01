@@ -18,14 +18,5 @@
     { "path": "../transform" },
     { "path": "../units" }
   ],
-  "include": [
-    "src/audioSticker/images",
-    "src/constants.ts",
-    "src/types.ts",
-    "src/types",
-    "src/typings",
-    "src/utils/textMeasurements.tsx",
-    "src/text/*.ts",
-    "src/text/*.tsx"
-  ]
+  "include": ["src/**/*"]
 }

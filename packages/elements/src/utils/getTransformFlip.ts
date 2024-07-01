@@ -25,7 +25,7 @@ import type { Flip } from '../types';
  * @param flip Flip value.
  * @return CSS transform scale value.
  */
-function getTransformFlip(flip: Flip) {
+function getTransformFlip(flip?: Flip) {
   // If no flip
   if (!flip || (!flip.horizontal && !flip.vertical)) {
     return null;

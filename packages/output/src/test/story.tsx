@@ -33,6 +33,7 @@ import StoryOutput from '../story';
 
 describe('Story output', () => {
   beforeAll(() => {
+    // @ts-expect-error TODO: Fix types.
     elementTypes.forEach(registerElementType);
   });
 
