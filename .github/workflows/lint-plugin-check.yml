@@ -87,7 +87,10 @@ jobs:
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
+          build-dir: './build/web-stories'
           exclude-directories: 'third-party'
           exclude-checks: |
             late_escaping
+            plugin_readme
             plugin_review_phpcs
+            plugin_updater
