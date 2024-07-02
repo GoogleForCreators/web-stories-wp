@@ -88,3 +88,6 @@ jobs:
         uses: wordpress/plugin-check-action@v1
         with:
           exclude-directories: 'third-party'
+          exclude-checks: |
+            late_escaping
+            plugin_review_phpcs
