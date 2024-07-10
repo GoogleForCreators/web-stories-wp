@@ -17,7 +17,7 @@ export * from './data';
 export * from './element';
 export * from './elementType';
 export * from './elementDefinition';
-export * from './propTypes';
 export * from './page';
 export * from './story';
 export * from './taxonomies';
+export * from './media';

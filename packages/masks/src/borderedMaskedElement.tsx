@@ -98,7 +98,7 @@ function MaskedElement({
 
 interface BorderedMaskedElementProps {
   element: Element;
-  style: CSSProperties;
+  style?: CSSProperties;
   children?: ReactNode;
   applyFlip?: boolean;
   hasFill: boolean;

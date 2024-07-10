@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
-
 /**
  * External dependencies
  */

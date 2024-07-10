@@ -94,6 +94,7 @@ const TEXT_WITH_ROTATION = {
 
 describe('Text Element output', () => {
   beforeAll(() => {
+    // @ts-expect-error TODO: Fix types.
     elementTypes.forEach(registerElementType);
   });
 
