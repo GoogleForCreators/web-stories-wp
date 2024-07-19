@@ -146,16 +146,6 @@ jobs:
             wp: 'latest'
             snapshots: true
             shard: '2/2'
-          - browser: 'chrome'
-            wp: '6.6-RC1'
-            snapshots: false
-            shard: '1/2'
-            experimental: true
-          - browser: 'chrome'
-            wp: '6.6-RC1'
-            snapshots: false
-            shard: '2/2'
-            experimental: true
 
     steps:
       - name: Harden Runner
