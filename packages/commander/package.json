@@ -27,7 +27,7 @@
   },
   "type": "module",
   "dependencies": {
-    "commander": "^11.1.0",
+    "commander": "^12.1.0",
     "semver": "^7.6.2"
   },
   "devDependencies": {
