@@ -45,7 +45,7 @@
     "draft-js-import-element": "https://github.com/swissspidy/draft-js-import-element",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^3.0.1",
-    "immutable": "^4.3.6",
+    "immutable": "^4.3.7",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
