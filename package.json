@@ -120,7 +120,7 @@
     "eslint-plugin-jest-extended": "^2.4.0",
     "eslint-plugin-jsdoc": "^48.2.5",
     "eslint-plugin-jsx-a11y": "^6.9.0",
-    "eslint-plugin-markdown": "^3.0.0",
+    "eslint-plugin-markdown": "^5.1.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-oxlint": "^0.4.0",
     "eslint-plugin-prettier": "^5.1.3",
