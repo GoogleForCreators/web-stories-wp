@@ -246,7 +246,7 @@ Copy the outputted path from your terminal and navigate to `packages/story-edito
 
 ```javascript
 export const MaskTypes = {
-  ...
+  // ...,
   [RING]: 'ring',
 };
 ```
@@ -255,23 +255,22 @@ Then navigate down to `CLIP_PATHS` and add your normalized path like so:
 
 ```javascript
 const CLIP_PATHS = {
-  ...,
+  // ...,
   [MaskTypes.RING]: `M 1.000000 , 0.500000 c 0.000000 , 0.276148 -0.223852 , 0.500000 -0.500000 , 0.500000 S 0.000000 , 0.776148 , 0.000000 , 0.500000 S 0.223852 , 0.000000 , 0.500000 , 0.000000 S 1.000000 , 0.223852 , 1.000000 , 0.500000 z  M 0.500000 , 0.076531 c -0.113112 , 0.000000 -0.219464 , 0.044056 -0.299439 , 0.124031 C 0.120587 , 0.280536 , 0.076531 , 0.386888 , 0.076531 , 0.500000 s 0.044056 , 0.219464 , 0.124031 , 0.299439 C 0.280536 , 0.879413 , 0.386888 , 0.923469 , 0.500000 , 0.923469 s 0.219464 -0.044056 , 0.299439 -0.124031 C 0.879413 , 0.719464 , 0.923469 , 0.613112 , 0.923469 , 0.500000 s -0.044056 -0.219464 -0.124031 -0.299439 C 0.719464 , 0.120587 , 0.613112 , 0.076531 , 0.500000 , 0.076531 M 0.500000 , 0.000000 c 0.276148 , 0.000000 , 0.500000 , 0.223852 , 0.500000 , 0.500000 s -0.223852 , 0.500000 -0.500000 , 0.500000 S 0.000000 , 0.776148 , 0.000000 , 0.500000 S 0.223852 , 0.000000 , 0.500000 , 0.000000 L 0.500000 , 0.000000 z`,
+};
 ```
 
 Lastly go down to `MASKS` and add an entry for your newly updated mask:
 
 ```javascript
 export const MASKS = [
-  ...,
+  // ...,
   {
-      {
     type: MaskTypes.RING,
     showInLibrary: true, // mark this as true if you would like the shape to be user facing
     name: _x('Ring', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.RING],
     ratio: 392 / 392, // <Width of svg viewbox copied from illustrator> / <Height>
-  },
   }
 ];
 ```
@@ -289,8 +288,8 @@ WordPress has a naming convention where if you upload an image with the same nam
 if I upload `some_image.png` 3 times to the WordPress media upload in the story editor, it will store those images as:
 
 1. `some_image.png`
-1. `some_image-1.png`
-1. `some_image-2.png`
+2. `some_image-1.png`
+3. `some_image-2.png`
 
 Because of this, our conversion script will strip the `-x` suffix off of the image source so it can point to the correct image stored in our repo.
 
