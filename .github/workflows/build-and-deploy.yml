@@ -83,7 +83,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c
+        uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -129,7 +129,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c
+        uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -184,12 +184,12 @@ jobs:
       # Upload ZIP file to GCS for use in QA environment.
 
       - name: Authenticate
-        uses: google-github-actions/auth@71fee32a0bb7e97b4d33d548e7d957010649d8fa
+        uses: google-github-actions/auth@62cf5bd3e4211a0a0b51f2c6d6a37129d828611d
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@98ddc00a17442e89a24bbf282954a3b65ce6d200
+        uses: google-github-actions/setup-gcloud@f0990588f1e5b5af6827153b93673613abdc6ec7
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
