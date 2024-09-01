@@ -2497,10 +2497,10 @@
       "tDes": -275,
       "tLGap": 0,
       "wAsc": 1119,
-      "wDes": 275,
+      "wDes": 324,
       "xH": 570,
       "capH": 698,
-      "yMin": -267,
+      "yMin": -324,
       "yMax": 1119,
       "hAsc": 1025,
       "hDes": -275,
@@ -6977,6 +6977,31 @@
   },
   {
     "family": "Bungee Spice",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1020,
+      "des": -300,
+      "tAsc": 1020,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 1647,
+      "wDes": 927,
+      "xH": 500,
+      "capH": 720,
+      "yMin": -916,
+      "yMax": 1636,
+      "hAsc": 1020,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bungee Tint",
     "fallbacks": ["cursive"],
     "weights": [400],
     "styles": ["regular"],
@@ -24010,6 +24035,31 @@
     }
   },
   {
+    "family": "Matemasie",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1250,
+      "des": -230,
+      "tAsc": 1250,
+      "tDes": -230,
+      "tLGap": 0,
+      "wAsc": 1273,
+      "wDes": 241,
+      "xH": 600,
+      "capH": 800,
+      "yMin": -241,
+      "yMax": 1272,
+      "hAsc": 1250,
+      "hDes": -230,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Material Icons",
     "fallbacks": ["monospace"],
     "weights": [400],
@@ -25133,6 +25183,38 @@
       "yMax": 1950,
       "hAsc": 1815,
       "hDes": -508,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Moderustic",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 600, 700, 800],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -250,
+      "tAsc": 1000,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 1067,
+      "wDes": 401,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -401,
+      "yMax": 1067,
+      "hAsc": 1000,
+      "hDes": -250,
       "lGap": 0
     }
   },
@@ -26609,6 +26691,31 @@
       "yMax": 1710,
       "hAsc": 2106,
       "hDes": -485,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "New Amsterdam",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 925,
+      "des": -275,
+      "tAsc": 925,
+      "tDes": -275,
+      "tLGap": 0,
+      "wAsc": 820,
+      "wDes": 212,
+      "xH": 649,
+      "capH": 650,
+      "yMin": -212,
+      "yMax": 820,
+      "hAsc": 925,
+      "hDes": -275,
       "lGap": 0
     }
   },
@@ -40009,44 +40116,6 @@
     }
   },
   {
-    "family": "Roboto_old",
-    "fallbacks": ["sans-serif"],
-    "weights": [100, 300, 400, 500, 700, 900],
-    "styles": ["italic", "regular"],
-    "variants": [
-      [0, 100],
-      [1, 100],
-      [0, 300],
-      [1, 300],
-      [0, 400],
-      [1, 400],
-      [0, 500],
-      [1, 500],
-      [0, 700],
-      [1, 700],
-      [0, 900],
-      [1, 900]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 1900,
-      "des": -500,
-      "tAsc": 1536,
-      "tDes": -512,
-      "tLGap": 102,
-      "wAsc": 1946,
-      "wDes": 512,
-      "xH": 1082,
-      "capH": 1456,
-      "yMin": -555,
-      "yMax": 2163,
-      "hAsc": 1900,
-      "hDes": -500,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Rochester",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -45146,6 +45215,40 @@
       "yMax": 1295,
       "hAsc": 1295,
       "hDes": -794,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "SUSE",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 980,
+      "des": -280,
+      "tAsc": 980,
+      "tDes": -280,
+      "tLGap": 0,
+      "wAsc": 970,
+      "wDes": 215,
+      "xH": 481,
+      "capH": 700,
+      "yMin": -212,
+      "yMax": 950,
+      "hAsc": 980,
+      "hDes": -280,
       "lGap": 0
     }
   },
