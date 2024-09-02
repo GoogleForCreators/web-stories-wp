@@ -202,29 +202,30 @@ class Stories_Controller extends Stories_Base_Controller {
 			);
 		}
 
-		$request->set_param( 'content', $original_post->post_content );
-		$request->set_param( 'excerpt', $original_post->post_excerpt );
+		$request['content'] = $original_post->post_content;
+		$request['excerpt'] = $original_post->post_excerpt;
 
 		$title = sprintf(
 		/* translators: %s: story title. */
 			__( '%s (Copy)', 'web-stories' ),
 			$original_post->post_title
 		);
-		$request->set_param( 'title', $title );
+
+		$request['title'] = $title;
 
 		$story_data = json_decode( $original_post->post_content_filtered, true );
 		if ( $story_data ) {
-			$request->set_param( 'story_data', $story_data );
+			$request['story_data'] = $story_data;
 		}
 
 		$thumbnail_id = get_post_thumbnail_id( $original_post );
 		if ( $thumbnail_id ) {
-			$request->set_param( 'featured_media', $thumbnail_id );
+			$request['featured_media'] = $thumbnail_id;
 		}
 
 		$meta = $this->get_registered_meta( $original_post );
 		if ( $meta ) {
-			$request->set_param( 'meta', $meta );
+			$request['meta'] = $meta;
 		}
 
 		return parent::create_item( $request );

@@ -338,7 +338,9 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$response = rest_ensure_response( $data );
 
 		if ( rest_is_field_included( '_links', $fields ) || rest_is_field_included( '_embedded', $fields ) ) {
-			$response->add_links( $this->prepare_links( $item, $request['id'] ) );
+			if ( $request['id'] ) {
+				$response->add_links( $this->prepare_links( $item, $request['id'] ) );
+			}
 		}
 
 		$post_type = $this->story_post_type->get_slug();

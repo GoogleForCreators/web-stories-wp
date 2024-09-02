@@ -103,6 +103,10 @@ class Admin extends Service_Base {
 	 * @return string|mixed List of Classes.
 	 */
 	public function admin_body_class( $class_name ) {
+		if ( ! \is_string( $class_name ) ) {
+			return $class_name;
+		}
+
 		if ( ! $this->context->is_story_editor() ) {
 			return $class_name;
 		}

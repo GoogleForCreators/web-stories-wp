@@ -128,11 +128,14 @@ class HTML {
 					// Extract 'amp-story' from 'https://cdn.ampproject.org/v0/amp-story-1.0.js'.
 					$sub_matches = [];
 					preg_match( '/v0\/(?P<custom_element>[\w-]+)-[\d.]+\.js/', $script_url, $sub_matches );
-					$custom_element = $sub_matches['custom_element'];
 
-					// Turns `<a href="https://cdn.ampproject.org/v0/amp-story-1.0.js">https://cdn.ampproject.org/v0/amp-story-1.0.js</a>`
-					// into <script async src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>.
-					return "<script async src=\"$script_url\" custom-element=\"$custom_element\"></script>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+					if ( isset( $sub_matches['custom_element'] ) ) {
+						$custom_element = $sub_matches['custom_element'];
+
+						// Turns `<a href="https://cdn.ampproject.org/v0/amp-story-1.0.js">https://cdn.ampproject.org/v0/amp-story-1.0.js</a>`
+						// into <script async src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>.
+						return "<script async src=\"$script_url\" custom-element=\"$custom_element\"></script>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+					}
 				}
 
 				return $matches[0];
