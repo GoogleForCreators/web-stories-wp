@@ -5624,22 +5624,22 @@
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "6.5.3",
+            "version": "6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
-                "reference": "254c0e1107c1259c59da0250047f55e77af5b0d9"
+                "reference": "56cce0bed93ec18e04519de987f7bf78af5385c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/254c0e1107c1259c59da0250047f55e77af5b0d9",
-                "reference": "254c0e1107c1259c59da0250047f55e77af5b0d9",
+                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/56cce0bed93ec18e04519de987f7bf78af5385c3",
+                "reference": "56cce0bed93ec18e04519de987f7bf78af5385c3",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.4",
                 "php-stubs/wordpress-globals": "0.2.0",
-                "php-stubs/wordpress-stubs": "6.5.3",
+                "php-stubs/wordpress-stubs": "6.6.0",
                 "sniccowp/php-scoper-excludes": "dev-master"
             },
             "type": "library",
@@ -5665,9 +5665,9 @@
             ],
             "support": {
                 "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.5.3"
+                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.6.0"
             },
-            "time": "2024-05-09T00:02:32+00:00"
+            "time": "2024-08-24T00:01:07+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
