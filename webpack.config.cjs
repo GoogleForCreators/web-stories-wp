@@ -29,11 +29,17 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 /**
  * WordPress dependencies
  */
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
+
+const svgSpriteLoaderOptions = {
+  extract: true,
+  runtimeGenerator: resolve('./runtimeGenerator.cjs'),
+};
 
 /**
  * Prevents externalizing certain packages.
@@ -137,33 +143,41 @@ const sharedConfig = {
           {
             type: 'asset/inline',
             include: [/inline-icons\/.*\.svg$/],
+            use: [
+              'babel-loader',
+              {
+                loader: 'svg-sprite-loader',
+                options: svgSpriteLoaderOptions,
+              },
+              'svgo-loader',
+            ],
           },
           {
             issuer: /\.[jt]sx?$/,
             include: [/\/icons\/.*\.svg$/],
             use: [
+              'babel-loader',
               {
-                loader: '@svgr/webpack',
+                loader: 'svg-sprite-loader',
+                options: svgSpriteLoaderOptions,
+              },
+              {
+                loader: 'svgo-loader',
                 options: {
-                  titleProp: true,
-                  svgo: true,
-                  memo: true,
-                  svgoConfig: {
-                    plugins: [
-                      {
-                        name: 'preset-default',
-                        params: {
-                          overrides: {
-                            removeViewBox: false,
-                            convertColors: {
-                              currentColor: /^(?!url|none)/i,
-                            },
+                  plugins: [
+                    {
+                      name: 'preset-default',
+                      params: {
+                        overrides: {
+                          removeViewBox: false,
+                          convertColors: {
+                            currentColor: /^(?!url|none)/i,
                           },
                         },
                       },
-                      'removeDimensions',
-                    ],
-                  },
+                    },
+                    'removeDimensions',
+                  ],
                 },
               },
             ],
@@ -172,29 +186,29 @@ const sharedConfig = {
             issuer: /\.[jt]sx?$/,
             include: [/images\/.*\.svg$/],
             use: [
+              'babel-loader',
               {
-                loader: '@svgr/webpack',
+                loader: 'svg-sprite-loader',
+                options: svgSpriteLoaderOptions,
+              },
+              {
+                loader: 'svgo-loader',
                 options: {
-                  titleProp: true,
-                  svgo: true,
-                  memo: true,
-                  svgoConfig: {
-                    plugins: [
-                      {
-                        name: 'preset-default',
-                        params: {
-                          overrides: {
-                            removeViewBox: false,
-                            convertColors: {
-                              // See https://github.com/googleforcreators/web-stories-wp/pull/6361
-                              currentColor: false,
-                            },
+                  plugins: [
+                    {
+                      name: 'preset-default',
+                      params: {
+                        overrides: {
+                          removeViewBox: false,
+                          convertColors: {
+                            // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                            currentColor: false,
                           },
                         },
                       },
-                      'removeDimensions',
-                    ],
-                  },
+                    },
+                    'removeDimensions',
+                  ],
                 },
               },
             ],
@@ -253,6 +267,7 @@ const sharedConfig = {
         // set the current working directory for displaying module paths
         cwd: process.cwd(),
       }),
+    new SpriteLoaderPlugin(),
   ].filter(Boolean),
   optimization: {
     sideEffects: true,
