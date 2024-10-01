@@ -50,7 +50,7 @@
     "react-modal": "^3.16.1",
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.11",
-    "uuid": "^9.0.0"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.2.9",
