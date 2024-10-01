@@ -360,6 +360,41 @@
     }
   },
   {
+    "family": "Afacad Flux",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1440,
+      "asc": 1440,
+      "des": -480,
+      "tAsc": 1440,
+      "tDes": -480,
+      "tLGap": 0,
+      "wAsc": 1440,
+      "wDes": 480,
+      "xH": 600,
+      "capH": 900,
+      "yMin": -433,
+      "yMax": 1368,
+      "hAsc": 1440,
+      "hDes": -480,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Agbalumo",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -11368,6 +11403,66 @@
       "yMax": 1021,
       "hAsc": 1143,
       "hDes": -634,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Edu AU VIC WA NT Dots",
+    "fallbacks": ["cursive"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 2576,
+      "des": -903,
+      "tAsc": 2576,
+      "tDes": -903,
+      "tLGap": 0,
+      "wAsc": 3205,
+      "wDes": 903,
+      "xH": 995,
+      "capH": 1847,
+      "yMin": -861,
+      "yMax": 2002,
+      "hAsc": 2576,
+      "hDes": -903,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Edu AU VIC WA NT Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 2576,
+      "des": -903,
+      "tAsc": 2576,
+      "tDes": -903,
+      "tLGap": 0,
+      "wAsc": 3205,
+      "wDes": 903,
+      "xH": 995,
+      "capH": 1847,
+      "yMin": -865,
+      "yMax": 2751,
+      "hAsc": 2576,
+      "hDes": -903,
       "lGap": 0
     }
   },
@@ -43219,6 +43314,31 @@
   },
   {
     "family": "Sixtyfour",
+    "fallbacks": ["monospace"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1024,
+      "asc": 896,
+      "des": -128,
+      "tAsc": 896,
+      "tDes": -128,
+      "tLGap": 0,
+      "wAsc": 1024,
+      "wDes": 256,
+      "xH": 640,
+      "capH": 896,
+      "yMin": -256,
+      "yMax": 1024,
+      "hAsc": 896,
+      "hDes": -128,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Sixtyfour Convergence",
     "fallbacks": ["monospace"],
     "weights": [400],
     "styles": ["regular"],
