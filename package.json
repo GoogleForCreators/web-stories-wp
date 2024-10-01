@@ -84,7 +84,7 @@
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20.14.12",
     "@types/styled-components": "^5.1.26",
-    "@types/uuid": "^9.0.8",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "@web-stories-wp/e2e-tests": "*",
