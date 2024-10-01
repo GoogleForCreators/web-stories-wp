@@ -21,7 +21,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7
         with:
           disable-file-monitoring: true
           disable-sudo: true
@@ -34,7 +34,7 @@ jobs:
             raw.githubusercontent.com:443
 
       - name: Authenticate
-        uses: google-github-actions/auth@62cf5bd3e4211a0a0b51f2c6d6a37129d828611d
+        uses: google-github-actions/auth@8254fb75a33b976a221574d287e93919e6a36f70
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
