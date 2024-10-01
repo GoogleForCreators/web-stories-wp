@@ -130,7 +130,7 @@
     "eslint-plugin-styled-components-a11y": "^2.1.35",
     "eslint-plugin-testing-library": "^6.3.0",
     "html-webpack-plugin": "^5.6.0",
-    "husky": "^9.1.5",
+    "husky": "^9.1.6",
     "jest": "^29.7.0",
     "jest-axe": "^8.0.0",
     "jest-canvas-mock": "^2.5.2",
