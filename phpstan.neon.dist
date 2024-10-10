@@ -61,3 +61,5 @@ parameters:
     - IS_WPCOM
     - GOOGLESITEKIT_VERSION
     - AMP__VERSION
+  featureToggles:
+    requireFileExists: false
