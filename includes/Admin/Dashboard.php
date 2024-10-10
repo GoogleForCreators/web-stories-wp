@@ -35,6 +35,7 @@ use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Font_Post_Type;
+use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Locale;
@@ -48,7 +49,7 @@ use Google\Web_Stories\Tracking;
 /**
  * Dashboard class.
  */
-class Dashboard extends Service_Base {
+class Dashboard extends Service_Base implements Conditional {
 
 	/**
 	 * Script handle.
@@ -215,6 +216,7 @@ class Dashboard extends Service_Base {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
+		add_filter( 'web_stories_speculation_rules', [ $this, 'add_speculation_rules' ] );
 	}
 
 	/**
@@ -579,5 +581,45 @@ class Dashboard extends Service_Base {
 			</a>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Add the Speculation Rules for the Dashboard.
+	 *
+	 * @return array<string, array<int, array<string, mixed>>> An array containing prerendering rules.
+	 * @since 1.37.0
+	 */
+	public function add_speculation_rules(): array {
+		$new_story_url  = sprintf(
+			'post-new.php?post_type=%s',
+			$this->story_post_type->get_slug()
+		);
+		$edit_story_url = 'post.php?post=*&action=edit';
+		$view_story_url = sprintf(
+			'/%s/*',
+			$this->story_post_type::REWRITE_SLUG
+		);
+		return [
+			'prerender' => [
+				[
+					'source'    => 'document',
+					'where'     => [
+						'href_matches' => [ $edit_story_url, $new_story_url, $view_story_url ],
+					],
+					'eagerness' => 'moderate',
+				],
+			],
+		];
+	}
+
+	/**
+	 * Check whether the conditional object is currently needed.
+	 *
+	 * @since 1.37.0
+	 *
+	 * @return bool Whether the conditional object is needed.
+	 */
+	public static function is_needed(): bool {
+		return is_admin();
 	}
 }
