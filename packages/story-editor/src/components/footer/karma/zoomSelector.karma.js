@@ -37,7 +37,7 @@ describe('Zoom selector', () => {
     // Add some matchers not generally useful, but applicable in this file
     jasmine.addMatchers({
       toBeVerticallyScrollable: () => ({
-        compare: function (actual) {
+        compare: (actual) => {
           const { scrollHeight, clientHeight } = actual;
           const pass = scrollHeight > clientHeight;
           return {
@@ -51,7 +51,7 @@ describe('Zoom selector', () => {
         },
       }),
       toBeHorizontallyScrollable: () => ({
-        compare: function (actual) {
+        compare: (actual) => {
           const { scrollWidth, clientWidth } = actual;
           const pass = scrollWidth > clientWidth;
           return {
@@ -65,7 +65,7 @@ describe('Zoom selector', () => {
         },
       }),
       toHaveSize: () => ({
-        compare: function (actual, width, height) {
+        compare: (actual, width, height) => {
           const { clientWidth, clientHeight } = actual;
           // 1px differences due to rounding are OK.
           const pass =

@@ -20,6 +20,11 @@
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
+import {
+  hasGradient,
+  createSolid,
+  DEFAULT_GRADIENT,
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -27,6 +32,7 @@ import { trackEvent } from '@googleforcreators/tracking';
 import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
 import updateProperties from '../../style/updateProperties';
 import { useStory } from '../../../app';
+import { MULTIPLE_VALUE } from '../../../constants';
 import { Color, useProperties } from './shared';
 
 function TextColor() {
@@ -51,22 +57,40 @@ function TextColor() {
     },
     [updateElementsById, selectedElementIds]
   );
+
+  const onColorChange = (color) => {
+    if (hasGradient(color)) {
+      handleSetColor(createSolid(0, 0, 0));
+      handleSetGradientColor(color);
+    } else {
+      handleSetGradientColor(DEFAULT_GRADIENT);
+      handleSetColor(color);
+    }
+  };
+
   const {
-    textInfo: { color },
-    handlers: { handleSetColor },
+    textInfo: { color, gradientColor },
+    handlers: { handleSetColor, handleSetGradientColor },
   } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
+
+  const colorInputValue =
+    gradientColor === MULTIPLE_VALUE
+      ? MULTIPLE_VALUE
+      : hasGradient(gradientColor)
+        ? gradientColor
+        : color;
 
   return (
     <Color
       tabIndex={-1}
       label={__('Text color', 'web-stories')}
-      value={color}
       allowsSavedColors
-      onChange={handleSetColor}
+      value={colorInputValue}
+      onChange={onColorChange}
       hasInputs={false}
       hasEyedropper
       allowsOpacity
-      allowsGradient={false}
+      allowsGradient
     />
   );
 }

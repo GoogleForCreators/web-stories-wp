@@ -69,14 +69,24 @@ use WP_REST_Server;
  *     type?: SchemaEntry
  *   }
  * }
- * @phpstan-type URLParts array{
- *   scheme?: string,
- *   user?: string,
- *   pass?: string,
- *   host?: string,
- *   port?: int,
- *   path?: string,
- *   query?: string
+ * @phpstan-type HttpArgs array{
+ *   method?: string,
+ *   timeout?: float,
+ *   redirection?: int,
+ *   httpversion?: string,
+ *   user-agent?: string,
+ *   reject_unsafe_urls?: bool,
+ *   blocking?: bool,
+ *   headers?: string|array<string, string|null>,
+ *   cookies?: array<string, string>,
+ *   body?: string|string[],
+ *   compress?: bool,
+ *   decompress?: bool,
+ *   sslverify?: bool,
+ *   sslcertificates?: string,
+ *   stream?: bool,
+ *   filename?: string,
+ *   limit_response_size?: int
  * }
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
@@ -404,7 +414,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
 	 *
-	 * @phpstan-param LinkData $link
+	 * @phpstan-param LinkData                                $link
+	 * @phpstan-param WP_REST_Request<array{context: string}> $request
 	 */
 	public function prepare_item_for_response( $link, $request ) {
 		$fields = $this->get_fields_for_response( $request );
@@ -430,11 +441,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return $error;
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -662,28 +668,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.15.0
 	 *
-	 * @param string               $url  Request URL.
-	 * @param array<string, mixed> $args Request args.
+	 * @param string $url  Request URL.
+	 * @param array  $args Request args.
 	 *
-	 * @phpstan-param array{
-	 *   method?: string,
-	 *   timeout?: float,
-	 *   redirection?: int,
-	 *   httpversion?: string,
-	 *   user-agent?: string,
-	 *   reject_unsafe_urls?: bool,
-	 *   blocking?: bool,
-	 *   headers?: string|array,
-	 *   cookies?: array,
-	 *   body?: string|array,
-	 *   compress?: bool,
-	 *   decompress?: bool,
-	 *   sslverify?: bool,
-	 *   sslcertificates?: string,
-	 *   stream?: bool,
-	 *   filename?: string,
-	 *   limit_response_size?: int,
-	 * } $args
+	 * @phpstan-param HttpArgs $args
 	 */
 	private function proxy_url_curl( string $url, array $args ): void {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
@@ -703,28 +691,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.15.0
 	 *
-	 * @param string               $url  Request URL.
-	 * @param array<string, mixed> $args Request args.
+	 * @param string $url  Request URL.
+	 * @param array  $args Request args.
 	 *
-	 * @phpstan-param array{
-	 *   method?: string,
-	 *   timeout?: float,
-	 *   redirection?: int,
-	 *   httpversion?: string,
-	 *   user-agent?: string,
-	 *   reject_unsafe_urls?: bool,
-	 *   blocking?: bool,
-	 *   headers?: string|array,
-	 *   cookies?: array,
-	 *   body?: string|array,
-	 *   compress?: bool,
-	 *   decompress?: bool,
-	 *   sslverify?: bool,
-	 *   sslcertificates?: string,
-	 *   stream?: bool,
-	 *   filename?: string,
-	 *   limit_response_size?: int,
-	 * } $args
+	 * @phpstan-param HttpArgs $args
 	 */
 	private function proxy_url_fallback( string $url, array $args ): void {
 		$response = wp_safe_remote_get( $url, $args );

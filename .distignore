@@ -3,6 +3,7 @@
 .github
 .husky
 .idea
+.rollup.cache
 .storybook
 .wordpress-org
 __mocks__

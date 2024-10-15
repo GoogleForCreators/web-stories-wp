@@ -17,11 +17,13 @@
 /**
  * Internal dependencies
  */
-import type { ResourceType } from './resourceType';
 import type { Resource } from './resource';
 
-export interface AudioResource extends Resource {
-  type: ResourceType.Audio;
+export interface AudioResource
+  extends Pick<
+    Resource,
+    'type' | 'id' | 'src' | 'mimeType' | 'isExternal' | 'isPlaceholder'
+  > {
   /** Length in seconds. */
   length: number;
   /** The formatted length, e.g. "01:17". */

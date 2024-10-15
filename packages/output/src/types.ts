@@ -14,23 +14,31 @@
  * limitations under the License.
  */
 
-// Temporary workaround while this package is not fully converted yet.
-// Adjust tsconfig.json and "types" field in package.json and then
-// delete this file once complete.
-
 /**
  * External dependencies
  */
-import type { Page, Story } from '@googleforcreators/elements';
+import type { Page, Story as FullStory } from '@googleforcreators/elements';
 
-interface MetaData {
+export type Story = Pick<
+  FullStory,
+  | 'featuredMedia'
+  | 'link'
+  | 'title'
+  | 'fonts'
+  | 'autoAdvance'
+  | 'defaultPageDuration'
+  | 'backgroundAudio'
+  | 'publisherLogo'
+>;
+
+export interface StoryMetadata {
   publisher?: string;
 }
 
 export declare function getStoryMarkup(
   story: Story,
   pages: Page[],
-  metadata: MetaData,
+  metadata: StoryMetadata,
   flags: Record<string, boolean>
 ): string;
 

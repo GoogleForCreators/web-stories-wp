@@ -2,7 +2,7 @@
   "name": "@googleforcreators/design-system",
   "description": "Main UI components for the Web Stories editor and dashboard",
   "private": false,
-  "version": "0.1.202401011233",
+  "version": "0.1.202410011217",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -45,20 +45,20 @@
     "@types/react-modal": "^3.16.3",
     "big.js": "^6.2.1",
     "mousetrap": "^1.6.5",
-    "polished": "^4.2.2",
+    "polished": "^4.3.1",
     "prop-types": "^15.8.1",
     "react-modal": "^3.16.1",
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.11",
-    "uuid": "^9.0.0"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.6.4",
+    "@storybook/addon-essentials": "^8.3.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
-    "@types/big.js": "^6.2.0",
+    "@types/big.js": "^6.2.2",
     "@types/react-transition-group": "^4.4.6",
     "@types/styled-components": "^5.1.26",
-    "use-debounce": "^10.0.0"
+    "use-debounce": "^10.0.1"
   }
 }

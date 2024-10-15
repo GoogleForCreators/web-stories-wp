@@ -184,7 +184,7 @@ function EyedropperLayer() {
     return null;
   }
 
-  const magnify = function (x, y) {
+  const magnify = (x, y) => {
     const canvas = magnifier.current;
     if (canvas) {
       const ctx = canvas.getContext('2d');

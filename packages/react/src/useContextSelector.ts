@@ -26,9 +26,7 @@ import type { MutableRefObject, Context } from 'react';
  */
 import shallowEqual from './shallowEqual';
 
-interface EqualityFn {
-  (a: unknown, b: unknown): boolean;
-}
+type EqualityFn = (a: unknown, b: unknown) => boolean;
 
 /**
  * This hook returns a part of the context value by selector.

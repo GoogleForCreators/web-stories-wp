@@ -8,23 +8,18 @@ services:
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
 
-# Re-enable once @var usage for WP_REST_Request is not needed anymore.
-# See https://phpstan.org/blog/phpstan-1-10-comes-with-lie-detector
-#includes:
-#	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
+includes:
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
   level: 9
   inferPrivatePropertyTypeFromConstructor: true
-  checkGenericClassInNonGenericObjectType: false
-  checkMissingIterableValueType: false
   ignoreErrors:
+    -
+      identifier: missingType.generics
     -
       message: '/^Parameter #2 \$args of method WP_Customize_Manager::add_setting\(\)/'
       path: includes/Admin/Customizer.php
-    -
-      message: '/^Casting class ReflectionType to string is deprecated\.$/'
-      path: includes/Infrastructure/Injector/SimpleInjector.php
     -
       message: '/\(int\) does not accept int\|WP_Error\.$/'
       path: tests/phpunit/integration/tests
@@ -66,3 +61,5 @@ parameters:
     - IS_WPCOM
     - GOOGLESITEKIT_VERSION
     - AMP__VERSION
+  featureToggles:
+    requireFileExists: false

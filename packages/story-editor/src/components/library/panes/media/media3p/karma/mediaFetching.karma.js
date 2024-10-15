@@ -107,7 +107,7 @@ const RESOURCE_BUILDERS = {
 
 // page is index 0.
 const mediaPage = (page, provider) =>
-  [...new Array(MEDIA_PER_PAGE).keys()].map((n) => {
+  Array.from({ length: MEDIA_PER_PAGE }).map((n) => {
     const mediaName = `media/${provider}:${n + page * MEDIA_PER_PAGE + 1}`;
     return RESOURCE_BUILDERS[provider](mediaName);
   });
@@ -277,9 +277,7 @@ describe('Media3pPane fetching', () => {
     listMediaSpy.and.callFake(() => ({ media: [] }));
     await fixture.events.click(fixture.editor.library.media3pTab);
 
-    await expect(
-      fixture.screen.findByText(new RegExp('^No media found.$'))
-    ).toBeTruthy();
+    await expect(fixture.screen.findByText(/^No media found.$/)).toBeTruthy();
 
     await fixture.snapshot();
   });

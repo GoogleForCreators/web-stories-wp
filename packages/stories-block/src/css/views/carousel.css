@@ -1,5 +1,9 @@
 /* Web Stories: Carousel View */
 
+.carousel > .glider-track > .web-stories-list__story {
+  margin: 0 10px;
+}
+
 @media all and (min-width: 676px) {
   .web-stories-list.is-view-type-carousel .web-stories-list__story {
     margin: 0 5px;

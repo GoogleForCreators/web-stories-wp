@@ -113,8 +113,9 @@ function StoriesPreview(props) {
 
     const itemStyle = window.getComputedStyle(storyItem);
     const itemWidth =
-      parseFloat(itemStyle.width) +
-      (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
+      Number.parseFloat(itemStyle.width) +
+      (Number.parseFloat(itemStyle.marginLeft) +
+        Number.parseFloat(itemStyle.marginRight));
 
     const instance = new Glider(carouselContainer.current, {
       slidesToShow: 'auto',

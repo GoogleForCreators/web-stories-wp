@@ -28,7 +28,9 @@ function createKeyframeEffect(
   const convertedTimings: EffectTiming = {
     ...timings,
     iterations:
-      timings.iterations === 'infinity' ? Infinity : timings.iterations,
+      timings.iterations === 'infinity'
+        ? Number.POSITIVE_INFINITY
+        : timings.iterations,
   };
 
   return new KeyframeEffect(target, keyframes, convertedTimings);

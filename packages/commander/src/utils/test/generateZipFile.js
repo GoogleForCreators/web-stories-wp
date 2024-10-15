@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { execFileSync } from 'child_process';
+import { execFileSync } from 'node:child_process';
 
 /**
  * Internal dependencies
  */
 import generateZipFile from '../generateZipFile';
 
-jest.mock('child_process');
+jest.mock('node:child_process');
 
 describe('generateZipFile', () => {
   it('should ZIP the web-stories directory', () => {

@@ -20,7 +20,7 @@
 import type { ElementDefinition, ElementTypes } from './types';
 
 // @todo Create a custom hook to manage state.
-const elementTypes: Partial<ElementTypes> = {};
+const elementTypes: ElementTypes = {} as ElementTypes;
 
 function registerElementType(elementType: ElementDefinition) {
   elementTypes[elementType.type] = elementType;

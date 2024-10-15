@@ -22,7 +22,7 @@
  * External dependencies
  */
 // eslint-disable-next-line header/header -- Needed because of the @jest-environment comment.
-import { __setMockFiles, readFileSync } from 'fs';
+import { __setMockFiles, readFileSync } from 'node:fs';
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ import getFontMetrics from '../getFontMetrics';
 
 jest.spyOn(global, 'fetch').mockImplementation();
 
-jest.mock('fs');
+jest.mock('node:fs');
 jest.mock('../getFontMetrics');
 
 const ABEZEE_FONT_METRICS = {

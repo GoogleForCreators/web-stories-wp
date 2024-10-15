@@ -16,8 +16,8 @@
 /**
  * External dependencies
  */
-import { ElementType, getDefinitionForType } from '@googleforcreators/elements';
-import type { Element, Mask } from '@googleforcreators/elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
+import type { ElementType, Element, Mask } from '@googleforcreators/elements';
 import type { CSSProperties } from 'react';
 
 /**
@@ -43,7 +43,7 @@ export function canSupportMultiBorder(element: Element) {
   return !mask || DEFAULT_MASK.type === mask?.type;
 }
 
-export function getMaskByType(type: string) {
+export function getMaskByType(type?: string) {
   return MASKS.find((mask) => mask.type === type) || DEFAULT_MASK;
 }
 

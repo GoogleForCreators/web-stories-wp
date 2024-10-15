@@ -20,7 +20,7 @@ export default function memoize<K, T>(
   argsHash: ArgHash<K> = (args) => args.join('-')
 ) {
   const memoized = new Map<string, T>();
-  return function (...args: K[]) {
+  return (...args: K[]) => {
     const key = argsHash(args);
     if (!memoized.has(key)) {
       const result = func(...args);

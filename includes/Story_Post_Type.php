@@ -142,6 +142,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'show_in_rest'      => true,
 				'default'           => $active_publisher_logo_id,
 				'single'            => true,
+				'revisions_enabled' => true,
 			]
 		);
 
@@ -149,9 +150,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 			$this->get_slug(),
 			self::POSTER_META_KEY,
 			[
-				'type'         => 'object',
-				'description'  => __( 'Poster object', 'web-stories' ),
-				'show_in_rest' => [
+				'type'              => 'object',
+				'description'       => __( 'Poster object', 'web-stories' ),
+				'show_in_rest'      => [
 					'schema' => [
 						'type'       => 'object',
 						'properties' => [
@@ -175,8 +176,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 						],
 					],
 				],
-				'default'      => [],
-				'single'       => true,
+				'default'           => [],
+				'single'            => true,
+				'revisions_enabled' => true,
 			]
 		);
 	}
@@ -287,20 +289,18 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	public function get_has_archive() {
-		$archive_page_option    = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
-		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
-		$has_archive            = true;
+		$archive_page_option = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		$has_archive         = true;
 
 		if ( 'disabled' === $archive_page_option ) {
 			$has_archive = false;
-		} elseif (
-			'custom' === $archive_page_option &&
-			$custom_archive_page_id &&
-			'publish' === get_post_status( $custom_archive_page_id )
-		) {
-			$uri = get_page_uri( $custom_archive_page_id );
-			if ( $uri ) {
-				$has_archive = urldecode( $uri );
+		} elseif ( 'custom' === $archive_page_option ) {
+			$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+			if ( $custom_archive_page_id && 'publish' === get_post_status( $custom_archive_page_id ) ) {
+				$uri = get_page_uri( $custom_archive_page_id );
+				if ( $uri ) {
+					$has_archive = urldecode( $uri );
+				}
 			}
 		}
 

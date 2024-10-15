@@ -19,7 +19,7 @@
  */
 import { encode } from 'blurhash';
 
-const callback = function (event) {
+const callback = (event) => {
   const { image, width, height, componentX, componentY } = event.data;
 
   // Bail early if the message is not for us.

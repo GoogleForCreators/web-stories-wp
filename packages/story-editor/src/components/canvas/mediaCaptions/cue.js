@@ -55,6 +55,7 @@ const Section = styled.span`
 function Cue({ cue, videoTime, height }) {
   const html = cue.getCueAsHTML();
 
+  /* eslint-disable react/jsx-key -- Order should never change */
   return (
     <CueWrapper $height={height}>
       <Section>
@@ -95,6 +96,7 @@ function Cue({ cue, videoTime, height }) {
       </Section>
     </CueWrapper>
   );
+  /* eslint-enable react/jsx-key -- Order should never change */
 }
 
 Cue.propTypes = {

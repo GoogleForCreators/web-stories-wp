@@ -48,34 +48,37 @@ function TransformProvider({ children }: { children: ReactNode }) {
     []
   );
 
-  const pushTransform = useCallback((id: string, transform: Transform) => {
-    const handlerListMap = transformHandlersRef.current;
-    const lastTransforms = lastTransformsRef.current;
-    const handlerList = handlerListMap[id];
+  const pushTransform = useCallback(
+    (id: string, transform: Transform | null) => {
+      const handlerListMap = transformHandlersRef.current;
+      const lastTransforms = lastTransformsRef.current;
+      const handlerList = handlerListMap[id];
 
-    if (handlerList) {
-      handlerList.forEach((handler) => handler(transform));
-    }
-
-    if (transform === null) {
-      lastTransforms[id] = null;
-    } else {
-      lastTransforms[id] = { ...lastTransforms[id], ...transform };
-    }
-
-    if (isDoneTransform(lastTransforms[id])) {
-      const allTransformsDone =
-        Object.values(lastTransforms).every(isDoneTransform);
-      if (allTransformsDone) {
-        lastTransformsRef.current = {};
-        setIsAnythingTransforming(false);
+      if (handlerList) {
+        handlerList.forEach((handler) => handler(transform));
       }
-      // isAnythingTransforming is relevant for transformations relevant to Moveable.
-      // Suppress communicating static transformations to the world.
-    } else if (!transform.staticTransformation) {
-      setIsAnythingTransforming(true);
-    }
-  }, []);
+
+      if (transform === null) {
+        lastTransforms[id] = null;
+      } else {
+        lastTransforms[id] = { ...lastTransforms[id], ...transform };
+      }
+
+      if (isDoneTransform(lastTransforms[id])) {
+        const allTransformsDone =
+          Object.values(lastTransforms).every(isDoneTransform);
+        if (allTransformsDone) {
+          lastTransformsRef.current = {};
+          setIsAnythingTransforming(false);
+        }
+        // isAnythingTransforming is relevant for transformations relevant to Moveable.
+        // Suppress communicating static transformations to the world.
+      } else if (transform && !transform.staticTransformation) {
+        setIsAnythingTransforming(true);
+      }
+    },
+    []
+  );
 
   const clearTransforms = useCallback(() => {
     lastTransformsRef.current = {};

@@ -61,7 +61,7 @@ export interface AnimationProviderState {
 }
 
 export type AnimationProviderProps = PropsWithChildren<{
-  animations: StoryAnimation[];
+  animations?: StoryAnimation[];
   elements?: Element[];
   onWAAPIFinish?: () => void;
   selectedElementIds?: string[];

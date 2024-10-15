@@ -118,13 +118,9 @@ export default function useVirtualizedGridNavigation({
 
   useKeyDownEffect(containerRef, 'tab', onTabKeyDown, [onTabKeyDown]);
 
-  useFocusOut(
-    containerRef,
-    () => {
-      setIsGridFocused(false);
-    },
-    []
-  );
+  useFocusOut(containerRef, () => {
+    setIsGridFocused(false);
+  }, []);
 
   return useMemo(
     () => ({

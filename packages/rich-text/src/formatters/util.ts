@@ -15,9 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import type { FontWeight, FontVariantStyle } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
-import { WEIGHT } from '../customConstants';
+import { type LETTERSPACING, WEIGHT } from '../customConstants';
 
 export const isStyle = (style: string | undefined, prefix: string) =>
   Boolean(style?.startsWith(prefix));
@@ -32,14 +37,25 @@ export const getVariable = (style: string, prefix: string) =>
 export const numericToStyle = (prefix: string, num: number) =>
   `${prefix}-${num < 0 ? 'N' : ''}${Math.abs(num)}`;
 
-export const styleToNumeric = (prefix: string, style: string) => {
+export function styleToNumeric(
+  prefix: typeof LETTERSPACING,
+  style: string
+): number;
+export function styleToNumeric(
+  prefix: typeof WEIGHT,
+  style: string
+): FontWeight;
+export function styleToNumeric(
+  prefix: string,
+  style: string
+): FontWeight | FontVariantStyle {
   const raw = getVariable(style, prefix);
   // Negative numbers are prefixed with an N:
   if (raw.charAt(0) === 'N') {
-    return -parseInt(raw.slice(1));
+    return -Number.parseInt(raw.slice(1));
   }
-  return parseInt(raw);
-};
+  return Number.parseInt(raw);
+}
 
 export function weightToStyle(weight: number) {
   return numericToStyle(WEIGHT, weight);

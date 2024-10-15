@@ -17,21 +17,27 @@
 /**
  * External dependencies
  */
-import type { Solid } from '@googleforcreators/patterns';
+import type { Solid, Pattern } from '@googleforcreators/patterns';
 import type {
-  GifResource,
   Resource,
   SequenceResource,
+  GifResource,
   VideoResource,
 } from '@googleforcreators/media';
 import type { ElementBox } from '@googleforcreators/units';
+import type stickers from '@googleforcreators/stickers';
 
 /**
  * Internal dependencies
  */
 import type { ElementType } from './elementType';
-import type { FontMetrics, ProductData } from './data';
 import type { Track } from './media';
+import type {
+  ProductData,
+  GoogleFontData,
+  SystemFontData,
+  CustomFontData,
+} from './data';
 
 export enum LinkType {
   Regular = 'regular',
@@ -101,6 +107,10 @@ export interface Element extends ElementBox {
   isHidden?: boolean;
 }
 
+export interface LinkableElement extends Element {
+  link: Link;
+}
+
 export interface DefaultBackgroundElement extends Element {
   isDefaultBackground: boolean;
   backgroundColor: Solid;
@@ -110,15 +120,12 @@ export interface BackgroundableElement extends Element {
   isBackground?: boolean;
 }
 
-export interface LinkableElement extends Element {
-  link: Link;
-}
-
 export interface MediaElement extends BackgroundableElement {
   resource: Resource;
   scale?: number;
   focalX?: number;
   focalY?: number;
+  alt?: string;
 }
 
 export interface SequenceMediaElement extends MediaElement {
@@ -129,11 +136,24 @@ export interface VideoElement extends SequenceMediaElement {
   type: ElementType.Video;
   tracks: Track[];
   resource: VideoResource;
+  poster?: string;
+  loop?: boolean;
+  volume: number;
 }
 
 export interface GifElement extends SequenceMediaElement {
   type: ElementType.Gif;
+  poster?: string;
   resource: GifResource;
+}
+
+export interface ImageElement extends MediaElement {
+  type: ElementType.Image;
+  alt?: string;
+}
+
+export interface OverlayableElement extends Element {
+  overlay?: Pattern | null;
 }
 
 export interface ProductElement extends Element {
@@ -144,34 +164,11 @@ export interface ProductElement extends Element {
 export interface StickerElement extends Element {
   type: ElementType.Sticker;
   sticker: {
-    type: string;
+    type: keyof typeof stickers;
   };
 }
 
-interface BaseTextElementFont {
-  service: string;
-  family: string;
-  fallbacks: string[];
-  metrics?: FontMetrics;
-}
-
-export interface GoogleTextElementFont extends BaseTextElementFont {
-  service: 'fonts.google.com';
-}
-
-export interface SystemTextElementFont extends BaseTextElementFont {
-  service: 'system';
-}
-
-export interface CustomTextElementFont extends BaseTextElementFont {
-  service: 'custom';
-  url: string;
-}
-
-export type TextElementFont =
-  | GoogleTextElementFont
-  | SystemTextElementFont
-  | CustomTextElementFont;
+export type TextElementFont = GoogleFontData | SystemFontData | CustomFontData;
 
 export interface Padding {
   horizontal: number;
@@ -188,9 +185,27 @@ export interface TextElement extends Element {
   fontSize: number;
 
   backgroundTextMode?: string;
-  tagName?: 'h1' | 'h2' | 'h3' | 'p';
+  tagName?: 'h1' | 'h2' | 'h3' | 'p' | 'auto';
   padding?: Padding;
   marginOffset: number;
   lineHeight: number;
   textAlign: TextAlign;
+
+  type: ElementType.Text;
+  fontStyle?: 'italic' | 'normal';
+  fontWeight?: number;
+}
+
+export interface AudioStickerElement extends Element {
+  type: ElementType.AudioSticker;
+  sticker: 'headphone-cat' | 'tape-player' | 'loud-speaker' | 'audio-cloud';
+  style: 'none' | 'outline' | 'dropshadow';
+  size: 'large' | 'small';
+}
+
+export interface ShapeElement extends Element {
+  type: ElementType.Shape;
+  backgroundColor?: Pattern;
+  isBackground?: boolean;
+  isDefaultBackground?: boolean;
 }

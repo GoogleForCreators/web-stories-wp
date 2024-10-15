@@ -17,7 +17,11 @@
 /**
  * Internal dependencies
  */
-import { type AMPEffectTiming, AnimationType, FieldType } from '../../types';
+import {
+  type AMPEffectTiming,
+  type AnimationType,
+  FieldType,
+} from '../../types';
 import createAnimation from '../createAnimation';
 
 const defaults: AMPEffectTiming = {

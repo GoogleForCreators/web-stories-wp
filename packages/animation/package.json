@@ -2,7 +2,7 @@
   "name": "@googleforcreators/animation",
   "description": "Web Stories editor animation library.",
   "private": false,
-  "version": "0.1.202401011233",
+  "version": "0.1.202410011217",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -46,12 +46,12 @@
     "flagged": "^2.0.10",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.11",
-    "uuid": "^9.0.0"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/styled-components": "^5.1.26",
-    "@types/web-animations-js": "^2.2.14"
+    "@types/web-animations-js": "^2.2.16"
   }
 }

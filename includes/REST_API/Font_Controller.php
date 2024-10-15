@@ -127,6 +127,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 *
+	 * @phpstan-param WP_REST_Request<array{search?: string, service?: string, include?: string[]}> $request
 	 */
 	public function get_items( $request ) {
 		/**
@@ -145,13 +147,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 				// For custom fonts the searching will be done in WP_Query already.
 				if ( isset( $registered['search'], $request['search'] ) && ! empty( $request['search'] ) ) {
-					/**
-					 * Requested URL.
-					 *
-					 * @var string $search
-					 */
-					$search = $request['search'];
-					$fonts  = array_values(
+					$fonts = array_values(
 						array_filter(
 							$fonts,
 							/**
@@ -160,7 +156,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 							 * @param array{family: string} $font
 							 * @return bool
 							 */
-							static fn( array $font ) => false !== stripos( $font['family'], $search )
+							static fn( array $font ) => false !== stripos( $font['family'], $request['search'] )
 						)
 					);
 				}
@@ -172,13 +168,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 			// Filter before doing any sorting.
 			if ( isset( $registered['include'], $request['include'] ) && ! empty( $request['include'] ) ) {
-				/**
-				 * Include list.
-				 *
-				 * @var array{string} $include_list
-				 */
-				$include_list = $request['include'];
-				$include_list = array_map( 'strtolower', $include_list );
+				$include_list = array_map( 'strtolower', $request['include'] );
 
 				$fonts = array_values(
 					array_filter(
@@ -202,8 +192,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					/**
 					 * Font A and Font B.
 					 *
-					 * @param Font $a
-					 * @param Font $b
+					 * @phpstan-param Font $a
+					 * @phpstan-param Font $b
 					 * @return int
 					 */
 					static fn( array $a, array $b ): int => strnatcasecmp( $a['family'], $b['family'] )
@@ -263,6 +253,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_Post         $item    Post object.
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string}> $request
 	 */
 	public function prepare_item_for_response( $item, $request ): WP_REST_Response {
 		// Restores the more descriptive, specific name for use within this method.
@@ -302,11 +294,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -687,6 +674,11 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @return bool Whether a font with this exact name already exists.
 	 */
 	private function font_exists( string $font_family ): bool {
+		/**
+		 * A custom request to perform the lookup.
+		 *
+		 * @phpstan-var WP_REST_Request<array{search?: string, service?: string, include?: array<string>}> $request
+		 */
 		$request = new WP_REST_Request(
 			WP_REST_Server::READABLE,
 			$this->namespace .

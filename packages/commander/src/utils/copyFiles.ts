@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { execFileSync } from 'child_process';
+import { execFileSync } from 'node:child_process';
 
 /**
  * Copies all files minuses ignored ones from source to target directory.

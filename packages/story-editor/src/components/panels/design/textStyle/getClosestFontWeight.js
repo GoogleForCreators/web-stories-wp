@@ -28,9 +28,9 @@ function getClosestFontWeight(
   existingWeight = DEFAULT_FONT_WEIGHT,
   availableWeights
 ) {
-  existingWeight = parseInt(existingWeight);
+  existingWeight = Number.parseInt(existingWeight);
   // if the passed in existing weight is "(multiple)" we want to reset the value for the new font family in use
-  if (isNaN(parseInt(existingWeight))) {
+  if (isNaN(Number.parseInt(existingWeight))) {
     return DEFAULT_FONT_WEIGHT;
   }
 
@@ -39,8 +39,8 @@ function getClosestFontWeight(
   }
 
   return availableWeights.reduce((a, b) => {
-    a = parseInt(a);
-    b = parseInt(b);
+    a = Number.parseInt(a);
+    b = Number.parseInt(b);
 
     const aDiff = Math.abs(a - existingWeight);
     const bDiff = Math.abs(b - existingWeight);

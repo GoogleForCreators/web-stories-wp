@@ -69,6 +69,7 @@ class Types {
 				'image/jpeg',
 				'image/jpg',
 				'image/gif',
+				'image/avif',
 			],
 			'audio'   => [
 				'audio/mpeg',
@@ -102,7 +103,7 @@ class Types {
 		 * @var string $media_type
 		 */
 		foreach ( array_keys( $default_allowed_mime_types ) as $media_type ) {
-			if ( ! \is_array( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
+			if ( ! isset( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
 				$allowed_mime_types[ $media_type ] = $default_allowed_mime_types[ $media_type ];
 			}
 

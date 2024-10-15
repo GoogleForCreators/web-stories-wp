@@ -25,7 +25,10 @@ import type { AudioResource } from '@googleforcreators/media';
  */
 import type { Page } from './page';
 
+export type FontFamily = string;
+
 export type FontStyle = 'normal' | 'italic' | 'regular';
+
 export enum FontVariantStyle {
   Normal = 0,
   Italic = 1,
@@ -34,6 +37,12 @@ export enum FontVariantStyle {
 export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 export type FontVariant = [FontVariantStyle, FontWeight];
+
+export enum FontService {
+  Custom = 'custom',
+  GoogleFonts = 'fonts.google.com',
+  System = 'system',
+}
 
 export interface FontMetrics {
   upm: number;
@@ -54,7 +63,8 @@ export interface FontMetrics {
 }
 
 export interface BaseFontData {
-  family: string;
+  service: FontService;
+  family: FontFamily;
   weights?: FontWeight[];
   styles?: FontStyle[];
   variants?: FontVariant[];
@@ -63,15 +73,15 @@ export interface BaseFontData {
 }
 
 export interface GoogleFontData extends BaseFontData {
-  service: 'fonts.google.com';
+  service: FontService.GoogleFonts;
 }
 
 export interface SystemFontData extends BaseFontData {
-  service: 'system';
+  service: FontService.System;
 }
 
 export interface CustomFontData extends BaseFontData {
-  service: 'custom';
+  service: FontService.Custom;
   url: string;
 }
 
@@ -91,6 +101,12 @@ export interface ProductData {
   productPriceCurrency: string;
   productTitle: string;
   productUrl: string;
+  productIcon?: string;
+  aggregateRating?: {
+    ratingValue: number;
+    reviewCount: number;
+    reviewUrl: string;
+  };
 }
 
 // Data retrieved as part of the raw data from the backend, used for example in the templates, in migration.

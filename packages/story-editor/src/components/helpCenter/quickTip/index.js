@@ -151,7 +151,7 @@ export function QuickTip({
                   a: (
                     <Link
                       size={TextSize.Small}
-                      rel="noreferrer noopener"
+                      rel="noreferrer"
                       target="_blank"
                       href={href}
                     />

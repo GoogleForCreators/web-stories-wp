@@ -19,7 +19,7 @@
  */
 import { useUnits } from '@googleforcreators/units';
 import type { Border, MediaElement } from '@googleforcreators/elements';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Internal dependencies
@@ -31,8 +31,10 @@ interface WithMaskProps {
   element: MediaElement;
   fill: boolean;
   previewMode?: boolean;
-  responsiveBorder: Border;
-  style: CSSProperties;
+  responsiveBorder?: Border;
+  style?: CSSProperties;
+  children: ReactNode;
+  applyFlip?: boolean;
 }
 
 export default function WithMask({

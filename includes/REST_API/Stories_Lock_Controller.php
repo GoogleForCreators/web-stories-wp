@@ -269,6 +269,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * @param array{time?: int, user?: int}|false $item Lock value, default to false is not set.
 	 * @param WP_REST_Request                     $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string, id: int}> $request
 	 */
 	public function prepare_item_for_response( $item, $request ) { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$fields = $this->get_fields_for_response( $request );
@@ -324,11 +326,6 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			}
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -340,15 +337,10 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		 */
 		$response = rest_ensure_response( $data );
 
-		/**
-		 * Post ID.
-		 *
-		 * @var int $post_id
-		 */
-		$post_id = $request['id'];
-
 		if ( rest_is_field_included( '_links', $fields ) || rest_is_field_included( '_embedded', $fields ) ) {
-			$response->add_links( $this->prepare_links( $item, $post_id ) );
+			if ( $request['id'] ) {
+				$response->add_links( $this->prepare_links( $item, $request['id'] ) );
+			}
 		}
 
 		$post_type = $this->story_post_type->get_slug();

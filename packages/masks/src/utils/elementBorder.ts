@@ -22,14 +22,20 @@ import type {
   BorderRadius,
   Element,
 } from '@googleforcreators/elements';
-import type { CSSProperties } from 'react';
+import type { CSSObject } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { canMaskHaveBorder, canSupportMultiBorder } from '../masks';
 
-function hasBorder({ border }: Element) {
+interface ElementWithBorder extends Element {
+  border: Border;
+}
+
+function hasBorder(element: Element): element is ElementWithBorder {
+  const { border } = element;
+
   if (!border) {
     return false;
   }
@@ -48,7 +54,9 @@ function hasBorder({ border }: Element) {
  * @param element Element object.
  * @return If should be displayed.
  */
-export function shouldDisplayBorder(element: Element) {
+export function shouldDisplayBorder(
+  element: Element
+): element is ElementWithBorder {
   return (
     hasBorder(element) &&
     canMaskHaveBorder(element) &&
@@ -63,7 +71,7 @@ interface SizeAndPosition {
   posLeft: string;
 }
 
-type BorderPositionProps = Border & SizeAndPosition;
+type BorderPositionProps = Border & Partial<SizeAndPosition>;
 
 /**
  * Gets the CSS values for an element with border.
@@ -103,13 +111,13 @@ export function getBorderPositionCSS({
  * @param element Element.
  * @return Border style.
  */
-export function getBorderStyle(element: Element): CSSProperties {
+export function getBorderStyle(element: Element): CSSObject {
   // If there's no rectangular border, return the radius only.
   if (!hasBorder(element) || !canSupportMultiBorder(element)) {
     return getBorderRadius(element);
   }
   const { border } = element;
-  const { left, top, right, bottom } = border as Border;
+  const { left, top, right, bottom } = border;
 
   // We're making the border-width responsive just for the preview,
   // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up
@@ -211,9 +219,7 @@ export function getBorderColor({ color }: Required<Pick<Border, 'color'>>) {
   return `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
 }
 
-interface Converter {
-  (border: number): number;
-}
+type Converter = (border: number) => number;
 
 /**
  * Returns border values based on if it's preview or not.
@@ -224,8 +230,8 @@ interface Converter {
  * @return New border values.
  */
 export function getResponsiveBorder(
-  border: Border,
-  previewMode: boolean,
+  border: Border | undefined,
+  previewMode: boolean | undefined,
   converter: Converter
 ) {
   if (!previewMode || !border) {

@@ -33,7 +33,7 @@ import type { CSSProperties } from 'react';
  */
 import {
   generateParagraphTextStyle,
-  getHighlightLineheight,
+  getHighlightLineHeight,
   calcFontMetrics,
 } from './util';
 
@@ -66,9 +66,14 @@ function TextOutputWithUnits({
     backgroundTextMode,
     padding,
     borderRadius,
-    tagName: TagName = 'p',
     ...rest
   } = element;
+
+  // It can never be 'auto' here thanks to getTextElementTagNames(),
+  // but this makes TypeScript happy.
+  const TagName =
+    element.tagName && element.tagName !== 'auto' ? element.tagName : 'p';
+
   if (!dataToFontSizeY) {
     dataToFontSizeY = dataToStyleY;
   }
@@ -113,11 +118,11 @@ function TextOutputWithUnits({
   };
 
   const unitlessPaddingVertical = padding?.vertical
-    ? parseFloat(dataToStyleY(padding.vertical))
+    ? Number.parseFloat(dataToStyleY(padding.vertical))
     : 0;
-  const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
+  const unitlessFontSize = Number.parseFloat(dataToStyleY(rest.fontSize));
 
-  const lineHeight = getHighlightLineheight(
+  const lineHeight = getHighlightLineHeight(
     rest.lineHeight,
     unitlessPaddingVertical / unitlessFontSize,
     'em'
@@ -219,7 +224,7 @@ function TextOutputWithUnits({
     );
   }
   return (
-    <TagName className={className} style={fillStyle}>
+    <TagName className={className} style={fillStyle as CSSProperties}>
       <span dangerouslySetInnerHTML={{ __html: content }} />
     </TagName>
   );

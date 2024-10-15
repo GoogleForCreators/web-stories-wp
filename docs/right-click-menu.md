@@ -12,7 +12,7 @@ Right click menu will give the user a right click menu that is intuitive to use 
 |--|--|
 |Main actions|These options can apply across any element or media|
 |Layer distribution options/actions|These options help the user move the selected element between the different layers (objects in the canvas)|
-|Element styling options/actions|These options help the user manage the Element's style properties||
+|Element styling options/actions|These options help the user manage the Element's style properties|
 |Page action options|These options help the user manage the different Pages in the story|
 
 ### Actions

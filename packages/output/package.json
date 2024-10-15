@@ -2,7 +2,7 @@
   "name": "@googleforcreators/output",
   "description": "Package for Web Stories AMP output",
   "private": false,
-  "version": "0.1.202401011233",
+  "version": "0.1.202410011217",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -26,13 +26,13 @@
   },
   "customExports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "types": "dist-types/types.d.ts",
-  "source": "src/index.js",
+  "types": "dist-types/index.d.ts",
+  "source": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -55,6 +55,7 @@
     "@googleforcreators/element-library": "file:../element-library",
     "@googleforcreators/test-utils": "file:../test-utils",
     "@testing-library/react": "^12.1.5",
-    "flagged": "^2.0.10"
+    "flagged": "^2.0.10",
+    "react": "^17.0.2"
   }
 }

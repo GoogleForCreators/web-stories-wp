@@ -9,6 +9,7 @@
     { "path": "../i18n" },
     { "path": "../media" },
     { "path": "../patterns" },
+    { "path": "../stickers" },
     { "path": "../units" }
   ],
   "include": ["src/**/*"]
