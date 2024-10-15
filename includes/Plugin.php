@@ -140,6 +140,7 @@ class Plugin extends ServiceBasedPlugin {
 		'user_preferences'             => User\Preferences::class,
 		'remove_transients'            => Remove_Transients::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
+		'speculation_rules'            => Speculation_Rules::class,
 	];
 
 	/**
@@ -192,6 +193,7 @@ class Plugin extends ServiceBasedPlugin {
 			Settings::class,
 			Stories_Script_Data::class,
 			User\Preferences::class,
+			Admin\Dashboard::class,
 		];
 	}
 
