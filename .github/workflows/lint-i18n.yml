@@ -59,11 +59,8 @@ jobs:
       - name: Install latest version of i18n-command
         run: wp package install wp-cli/i18n-command:dev-main
 
-      - name: Setup Node
-        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       - name: Setup PHP
         uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
@@ -74,19 +71,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci
+          bun install
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a
+        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5
-        with:
-          bun-version: latest
 
       - name: Build plugin
         run: bun run build:js
