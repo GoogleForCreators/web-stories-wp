@@ -111,9 +111,9 @@ function PaginatedMediaGallery({
   const refContainer = useRef();
 
   const isNextPageNeeded = useCallback(() => {
-    // Load the next page if the container still isn't full, ie. scrollbar is not visible.
+    // Load the next page if the container still isn't full, i.e. scrollbar is not visible.
     if (
-      refContainer.current.clientHeight === refContainer.current.scrollHeight
+      refContainer.current?.clientHeight === refContainer.current?.scrollHeight
     ) {
       return setNextPage();
     }
@@ -147,12 +147,11 @@ function PaginatedMediaGallery({
     }
 
     // Load the next page if we are "close" (by a length of ROOT_MARGIN) to the
-    // bottom of of the container.
+    // bottom of the container.
     const bottom =
       node.scrollHeight - node.scrollTop <= node.clientHeight + ROOT_MARGIN;
     if (bottom) {
       setNextPage();
-      return;
     }
   }, [
     resources.length,
@@ -172,7 +171,7 @@ function PaginatedMediaGallery({
   const handleScrollOrResize = useDebouncedCallback(loadNextPageIfNeeded, 500);
 
   // After loading a next page, see if we need to load another,
-  // ie. when the page of results isn't full.
+  // i.e. when the page of results isn't full.
   useLayoutEffect(() => {
     async function loadNextPageIfNeededAfterGalleryRendering() {
       // Wait for <Gallery> to finish its render layout cycles first.

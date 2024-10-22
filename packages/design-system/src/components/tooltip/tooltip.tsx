@@ -191,7 +191,7 @@ function Tooltip({
       const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;
-      // We can sometimes render a tooltip too far to the left, ie. in RTL mode, or with the wp-admin sidenav.
+      // We can sometimes render a tooltip too far to the left, i.e. in RTL mode, or with the wp-admin sidenav.
       // When that is the case, let's update the offset.
       const isOverFlowingLeft = Math.trunc(left) < (isRTL ? 0 : leftOffset);
       // The getOffset util has a maxOffset that prevents the tooltip from being render too far to the right. However, when
