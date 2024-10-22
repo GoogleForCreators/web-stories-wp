@@ -28,8 +28,7 @@ import { trackEvent } from '@googleforcreators/tracking';
 import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { ResizableBox } from '@wordpress/components';
-import * as compose from '@wordpress/compose';
-import { withViewportMatch } from '@wordpress/viewport';
+import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as blockEditorStore } from '@wordpress/block-editor';
@@ -53,7 +52,6 @@ function StoryEmbedEdit({
   setAttributes,
   className,
   isSelected,
-  _isResizable,
   context = {},
 }) {
   const {
@@ -86,9 +84,7 @@ function StoryEmbedEdit({
   const showLoadingIndicator = isFetchingData;
   const showPlaceholder = !localURL || !outerURL || editingURL || cannotEmbed;
 
-  const isResizable = compose.useViewportMatch
-    ? compose.useViewportMatch('medium')
-    : _isResizable;
+  const isResizable = useViewportMatch('medium');
 
   const ref = useRef();
 
@@ -386,11 +382,10 @@ StoryEmbedEdit.propTypes = {
   setAttributes: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
-  _isResizable: PropTypes.bool,
   context: PropTypes.shape({
     postType: PropTypes.string,
     postId: PropTypes.number,
   }),
 };
 
-export default withViewportMatch({ _isResizable: 'medium' })(StoryEmbedEdit);
+export default StoryEmbedEdit;
