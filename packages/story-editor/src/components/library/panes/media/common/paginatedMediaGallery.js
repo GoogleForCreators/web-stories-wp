@@ -197,23 +197,6 @@ function PaginatedMediaGallery({
     };
   }, [handleScrollOrResize]);
 
-  const mediaGallery =
-    isMediaLoaded && !resources.length && !uploadingResources.length ? (
-      <MediaGalleryMessage>
-        {__('No media found.', 'web-stories')}
-      </MediaGalleryMessage>
-    ) : (
-      <div style={{ marginBottom: 15 }}>
-        <LazyMediaGallery
-          providerType={providerType}
-          canEditMedia={canEditMedia}
-          resources={resources}
-          uploadingResources={uploadingResources}
-          onInsert={onInsert}
-        />
-      </div>
-    );
-
   const [showLoadingPill, setShowLoadingPill] = useState(false);
 
   useEffect(() => {
@@ -238,7 +221,23 @@ function PaginatedMediaGallery({
         data-testid="media-gallery-container"
         ref={refContainer}
       >
-        <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
+        <MediaGalleryInnerContainer>
+          {isMediaLoaded && !resources.length && !uploadingResources.length ? (
+            <MediaGalleryMessage>
+              {__('No media found.', 'web-stories')}
+            </MediaGalleryMessage>
+          ) : (
+            <div style={{ marginBottom: 15 }}>
+              <LazyMediaGallery
+                providerType={providerType}
+                canEditMedia={canEditMedia}
+                resources={resources}
+                uploadingResources={uploadingResources}
+                onInsert={onInsert}
+              />
+            </div>
+          )}
+        </MediaGalleryInnerContainer>
       </MediaGalleryContainer>
       {showLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
