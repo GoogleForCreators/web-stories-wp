@@ -104,7 +104,7 @@ function InnerElement({
 }) {
   const newVideoPosterRef = useRef(null);
   // Track if we have already set the dragging resource.
-  const hasSetResourceTracker = useRef(null);
+  const hasSetResourceRef = useRef(null);
 
   // Note: This `useDropTargets` is purposefully separated from the one below since it
   // uses a custom function for checking for equality and is meant for `handleDrag` and `handleDrop` only.
@@ -117,11 +117,11 @@ function InnerElement({
     }),
     (prev, curr) => {
       // If we're dragging this element, always update the actions.
-      if (hasSetResourceTracker.current) {
+      if (hasSetResourceRef.current) {
         return false;
         // If we're rendering the first time, init `handleDrag` and `handleDrop`.
-      } else if (hasSetResourceTracker.current === null) {
-        hasSetResourceTracker.current = false;
+      } else if (hasSetResourceRef.current === null) {
+        hasSetResourceRef.current = false;
         return false;
       }
       // If the drop targets updated meanwhile, also update the actions, otherwise `handleDrag` won't consider those.
@@ -252,14 +252,14 @@ function InnerElement({
   }
 
   const dragHandler = (event) => {
-    if (!hasSetResourceTracker.current) {
+    if (!hasSetResourceRef.current) {
       // Drop-targets handling.
       resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
       });
       setDraggingResource(resource);
-      hasSetResourceTracker.current = true;
+      hasSetResourceRef.current = true;
     }
     handleDrag(resource, event.clientX, event.clientY);
   };
@@ -275,7 +275,7 @@ function InnerElement({
         handleDrag={dragHandler}
         handleDragEnd={() => {
           handleDrop(resource);
-          hasSetResourceTracker.current = false;
+          hasSetResourceRef.current = false;
         }}
         type={resource.type}
         elementProps={{ resource }}

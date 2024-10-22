@@ -124,16 +124,16 @@ function ColorPicker({
   // So, if the eyedropper is used from inside a floating menu color picker
   // the debounced onChange can never be seen.
   // this gives us a way to process that change when no longer mounted
-  const isMounted = useRef(true);
+  const isMountedRef = useRef(true);
   useEffect(() => {
     return () => {
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, []);
 
   const handleColorChange = useCallback(
     (newColor) => {
-      if (isMounted.current) {
+      if (isMountedRef.current) {
         onDebouncedChange(newColor);
       } else {
         onChange(newColor);

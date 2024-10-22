@@ -81,7 +81,7 @@ function OptionListWithRef<O extends AbstractOption>(
   const listRef = useForwardedRef(forwardedListRef);
   const optionsRef = useRef<(HTMLLIElement | null)[]>([]);
   const [focusIndex, setFocusIndex] = useState(-1);
-  const userSeenOptions = useRef<string[]>([]);
+  const userSeenOptionsRef = useRef<string[]>([]);
 
   /*
    * KEYWORD FILTERING
@@ -134,11 +134,11 @@ function OptionListWithRef<O extends AbstractOption>(
             .filter((t): t is HTMLElement => t instanceof HTMLElement)
             .map((target) => target.dataset.option)
             .filter((o): o is string => Boolean(o));
-          userSeenOptions.current = addUniqueEntries(
-            userSeenOptions.current,
+          userSeenOptionsRef.current = addUniqueEntries(
+            userSeenOptionsRef.current,
             ...newlySeenOptions
           );
-          onObserve(userSeenOptions.current);
+          onObserve(userSeenOptionsRef.current);
         }
       },
       {

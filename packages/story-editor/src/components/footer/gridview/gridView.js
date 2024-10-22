@@ -182,7 +182,7 @@ function GridView({ onClose }) {
   const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
 
   const gridRef = useRef();
-  const pageRefs = useRef({});
+  const pagesRef = useRef({});
 
   const arrangeItem = useCallback(
     (focusedPageId, nextIndex) => {
@@ -194,7 +194,7 @@ function GridView({ onClose }) {
   useGridViewKeys({
     containerRef: wrapperRef,
     gridRef,
-    itemRefs: pageRefs,
+    itemRefs: pagesRef,
     isRTL,
     currentItemId: currentPageId,
     items: pages,
@@ -254,7 +254,7 @@ function GridView({ onClose }) {
               <ItemContainer
                 key={page.id}
                 ref={(el) => {
-                  pageRefs.current[page.id] = el;
+                  pagesRef.current[page.id] = el;
                 }}
               >
                 <PageSeparator

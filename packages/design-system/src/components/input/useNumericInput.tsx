@@ -45,8 +45,8 @@ const useNumericInput = ({
 }: UseNumericInputProps) => {
   const _inputRef = useRef<HTMLInputElement>(null);
   const inputRef = ref && 'current' in ref ? ref : _inputRef;
-  const oldValue = useRef(value);
-  const revertToOriginal = useRef(false);
+  const oldValueRef = useRef(value);
+  const revertToOriginalRef = useRef(false);
   const [currentValue, setCurrentValue] = useState(value);
   const options = useMemo(
     () => ({ allowEmpty, isFloat, padZero, max, min }),
@@ -58,9 +58,9 @@ const useNumericInput = ({
    */
   const handleBlur = useCallback(
     (ev: unknown) => {
-      let newValue = parseInput(oldValue.current, options);
+      let newValue = parseInput(oldValueRef.current, options);
 
-      if (!revertToOriginal.current && newValue !== null) {
+      if (!revertToOriginalRef.current && newValue !== null) {
         const parsedValue = parseInput(currentValue, options);
 
         if (parsedValue !== null) {
@@ -70,11 +70,11 @@ const useNumericInput = ({
         newValue = parseInput(currentValue, options);
       }
 
-      revertToOriginal.current = false;
+      revertToOriginalRef.current = false;
       if (newValue !== null) {
         // Set newly updated value.
         setCurrentValue(newValue);
-        if (newValue !== oldValue.current) {
+        if (newValue !== oldValueRef.current) {
           onChange(ev, newValue);
         }
       } else if (min !== undefined) {
@@ -205,14 +205,14 @@ const useNumericInput = ({
    * Blur input and revert value to original value
    */
   const handleEsc = useCallback(() => {
-    setCurrentValue(oldValue.current);
-    revertToOriginal.current = true;
+    setCurrentValue(oldValueRef.current);
+    revertToOriginalRef.current = true;
     inputRef?.current?.blur();
   }, [inputRef]);
 
   useEffect(() => {
     // update internal value when `value` prop changes
-    oldValue.current = value;
+    oldValueRef.current = value;
     setCurrentValue(value);
   }, [value]);
 
@@ -225,7 +225,7 @@ const useNumericInput = ({
     handleChange,
     handleEsc,
     handleKeyUpAndDown,
-    isIndeterminate: oldValue.current === currentValue,
+    isIndeterminate: oldValueRef.current === currentValue,
   };
 };
 

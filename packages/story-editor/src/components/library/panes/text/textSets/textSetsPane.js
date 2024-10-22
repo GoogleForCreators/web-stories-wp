@@ -90,7 +90,7 @@ function TextSetsPane({ paneRef }) {
     })
   );
   const [showInUse, setShowInUse] = useState(false);
-  const trackChange = useRef(false);
+  const trackChangeRef = useRef(false);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
   const storyPages = useStory(({ state: { pages } }) => pages);
@@ -174,18 +174,18 @@ function TextSetsPane({ paneRef }) {
       localStore.setItemByKey(LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS, {
         selectedCategory,
       });
-      trackChange.current = true;
+      trackChangeRef.current = true;
     },
     [speak]
   );
 
   const onChangeShowInUse = useCallback(() => {
     requestAnimationFrame(() => setShowInUse((prevVal) => !prevVal));
-    trackChange.current = true;
+    trackChangeRef.current = true;
   }, [setShowInUse]);
 
   useEffect(() => {
-    if (trackChange.current) {
+    if (trackChangeRef.current) {
       trackEvent('search', {
         search_type: 'textsets',
         search_term: '',

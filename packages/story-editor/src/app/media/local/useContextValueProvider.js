@@ -72,13 +72,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     actions: { getMedia, updateMedia },
   } = useAPI();
 
-  const isMounted = useRef(false);
+  const isMountedRef = useRef(false);
 
   useEffect(() => {
-    isMounted.current = true;
+    isMountedRef.current = true;
 
     return () => {
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, []);
 
@@ -104,7 +104,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         pagingNum: p,
       })
         .then(({ data, headers }) => {
-          if (!isMounted.current) {
+          if (!isMountedRef.current) {
             return;
           }
 

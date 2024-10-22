@@ -105,7 +105,7 @@ function useMediaUploadQueue() {
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
 
-  const isMounted = useRef(false);
+  const isMountedRef = useRef(false);
   const currentTranscodingItem = useRef<QueueItemId | null>(null);
   const currentPosterGenerationItem = useRef<QueueItemId | null>(null);
 
@@ -150,7 +150,7 @@ function useMediaUploadQueue() {
             const { resource: newResource, posterFile } =
               await getResourceFromLocalFile(file);
 
-            if (!isMounted.current) {
+            if (!isMountedRef.current) {
               return;
             }
 
@@ -204,7 +204,7 @@ function useMediaUploadQueue() {
               height,
             };
 
-            if (!isMounted.current) {
+            if (!isMountedRef.current) {
               return;
             }
 
@@ -270,7 +270,7 @@ function useMediaUploadQueue() {
       try {
         const newFile = await convertGifToVideo(file);
 
-        if (!isMounted.current) {
+        if (!isMountedRef.current) {
           return;
         }
 
@@ -304,7 +304,7 @@ function useMediaUploadQueue() {
         const { start, end } = trimData;
         const newFile = await trimVideo(file, start, end);
 
-        if (!isMounted.current) {
+        if (!isMountedRef.current) {
           return;
         }
 
@@ -331,7 +331,7 @@ function useMediaUploadQueue() {
       try {
         const newFile = await stripAudioFromVideo(file);
 
-        if (!isMounted.current) {
+        if (!isMountedRef.current) {
           return;
         }
 
@@ -364,7 +364,7 @@ function useMediaUploadQueue() {
         const newFile = await cropResource(file, additionalData.cropParams);
         const posterFile = await getFirstFrameOfVideo(newFile);
 
-        if (!isMounted.current) {
+        if (!isMountedRef.current) {
           return;
         }
 
@@ -397,7 +397,7 @@ function useMediaUploadQueue() {
       try {
         const newFile = await transcodeVideo(file);
 
-        if (!isMounted.current) {
+        if (!isMountedRef.current) {
           return;
         }
 
@@ -435,7 +435,7 @@ function useMediaUploadQueue() {
         additionalData
       )) as QueueItemResource;
 
-      if (!isMounted.current) {
+      if (!isMountedRef.current) {
         return;
       }
 
@@ -455,7 +455,7 @@ function useMediaUploadQueue() {
             posterFile
           );
 
-          if (!isMounted.current) {
+          if (!isMountedRef.current) {
             return;
           }
 
@@ -483,7 +483,7 @@ function useMediaUploadQueue() {
         additionalData
       )) as ImageResource;
 
-      if (!isMounted.current) {
+      if (!isMountedRef.current) {
         return;
       }
 
@@ -674,10 +674,10 @@ function useMediaUploadQueue() {
   }, [state.queue, uploadItem]);
 
   useEffect(() => {
-    isMounted.current = true;
+    isMountedRef.current = true;
 
     return () => {
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, []);
 

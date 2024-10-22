@@ -44,20 +44,20 @@ const filterTemplates = (templates: Template[], search: string): Template[] => {
 
 function APIProvider({ children }: PropsWithChildren<Record<string, never>>) {
   const { apiCallbacks: actions, cdnURL } = useConfig();
-  const pageTemplates = useRef<Template[]>([]);
+  const pageTemplatesRef = useRef<Template[]>([]);
 
   actions.getPageTemplates = useCallback(
     async (search: string) => {
       // check if pageTemplates have been loaded yet
-      if (pageTemplates.current.length === 0) {
-        pageTemplates.current = filterTemplates(
+      if (pageTemplatesRef.current.length === 0) {
+        pageTemplatesRef.current = filterTemplates(
           await getAllTemplates({
             cdnURL,
           }),
           search
         );
       }
-      return filterTemplates(pageTemplates.current, search);
+      return filterTemplates(pageTemplatesRef.current, search);
     },
     [cdnURL]
   );

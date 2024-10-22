@@ -52,7 +52,7 @@ function CarouselProvider({
   );
 
   const [listElement, setListElement] = useState<HTMLElement | null>(null);
-  const pageRefs = useRef<Record<ElementId, HTMLElement>>({});
+  const pagesRef = useRef<Record<ElementId, HTMLElement>>({});
 
   const numPages = pages.length;
 
@@ -86,10 +86,10 @@ function CarouselProvider({
       pageThumbMargin,
     });
 
-  useCarouselKeys({ listElement, pageRefs });
+  useCarouselKeys({ listElement, pageRefs: pagesRef });
 
   const setPageRef = useCallback((page: Page, el: HTMLElement) => {
-    pageRefs.current[page.id] = el;
+    pagesRef.current[page.id] = el;
   }, []);
 
   const clickPage = useCallback(

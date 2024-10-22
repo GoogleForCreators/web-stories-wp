@@ -76,7 +76,7 @@ function FloatingMenuLayer() {
 
   const [moveable, setMoveable] = useState(null);
   const menuRef = useRef();
-  const workspaceSize = useRef();
+  const workspaceSizeRef = useRef();
 
   const [isDismissed, setDismissed] = useState(false);
   const handleDismiss = useCallback(() => setDismissed(true), []);
@@ -102,7 +102,10 @@ function FloatingMenuLayer() {
 
   // Whenever the workspace resizes, update size
   useEffect(() => {
-    workspaceSize.current = { width: workspaceWidth, height: workspaceHeight };
+    workspaceSizeRef.current = {
+      width: workspaceWidth,
+      height: workspaceHeight,
+    };
     // Note that we don't have to manually update our position, because the selection
     // frame will already be updating because of the resize, so a DOM mutation is incoming.
   }, [workspaceWidth, workspaceHeight]);
@@ -125,7 +128,7 @@ function FloatingMenuLayer() {
     // If the toolbar is positioned to the top, we keep it in a fixed position.
     const updatePosition = () => {
       const frameRect = moveable.getRect();
-      const { width, height } = workspaceSize.current;
+      const { width, height } = workspaceSizeRef.current;
       if (floatingMenuPosition === TOOLBAR_POSITIONS.TOP) {
         menu.style.left = `clamp(0px, ${
           width / 2

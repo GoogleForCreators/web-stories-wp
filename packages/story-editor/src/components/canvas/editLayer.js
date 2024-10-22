@@ -106,19 +106,19 @@ function EditLayerForElement({ element, showOverflow }) {
     return () => focusCanvas(/* force */ false);
   }, [focusCanvas]);
 
-  const moveable = useRef(null);
+  const moveableRef = useRef(null);
   const setRef = useCallback(
-    (moveableRef) => {
-      moveable.current = moveableRef;
-      onMoveableMount?.(moveableRef);
+    (newMoveable) => {
+      moveableRef.current = newMoveable;
+      onMoveableMount?.(newMoveable);
     },
     [onMoveableMount]
   );
 
   const onResize = useCallback(() => {
     // Update moveable when resizing.
-    if (moveable.current) {
-      moveable.current.updateRect();
+    if (moveableRef.current) {
+      moveableRef.current.updateRect();
     }
   }, []);
 
