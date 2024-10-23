@@ -88,7 +88,7 @@ const sharedConfig = {
         test: /\.m?js$/,
         use: ['source-map-loader'],
         // html-to-image and react-blurhash reference source maps but don't currently ship with any.
-        exclude: /node_modules\/html-to-image|node_modules\/react-blurhash/,
+        exclude: /node_modules\/html-to-image|node_modules\/react-blurhash|node_modules\/stylis-plugin-rtl/,
         enforce: 'pre',
         resolve: {
           fullySpecified: false,

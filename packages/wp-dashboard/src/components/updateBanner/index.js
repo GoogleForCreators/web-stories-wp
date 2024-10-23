@@ -143,7 +143,7 @@ export default function UpdateBanner() {
     currentPath: state.currentPath,
     hasAvailableRoutes: state.availableRoutes.length > 0,
   }));
-  const headerEl = useRef(null);
+  const headerRef = useRef(null);
   const [, forceUpdate] = useState(false);
 
   useEffect(() => {
@@ -158,14 +158,14 @@ export default function UpdateBanner() {
         EDITOR_SETTINGS_ROUTE,
       ].includes(currentPath)
     ) {
-      headerEl.current = document.getElementById('body-view-options-header');
+      headerRef.current = document.getElementById('body-view-options-header');
       forceUpdate((value) => !value);
     }
   }, [currentPath, hasAvailableRoutes]);
 
-  if (!headerEl.current) {
+  if (!headerRef.current) {
     return null;
   }
 
-  return createPortal(<UpdateBannerContainer />, headerEl.current);
+  return createPortal(<UpdateBannerContainer />, headerRef.current);
 }

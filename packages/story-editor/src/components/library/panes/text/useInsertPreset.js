@@ -53,30 +53,33 @@ function useInsertPreset({ shouldUseSmartColor }) {
   const [autoColor, setAutoColor] = useState(null);
   const [presetAtts, setPresetAtts] = useState(null);
 
-  const lastPreset = useRef(null);
+  const lastPresetRef = useRef(null);
   const calculateAccessibleTextColors = useCalculateAccessibleTextColors();
 
   useEffect(() => {
     // Version number change is happening due to adding a preset.
     // If we have set the last element but not the history version number yet,
     // Set the version number that was the result of adding the preset.
-    if (lastPreset.current?.element && !lastPreset.current.versionNumber) {
-      lastPreset.current.versionNumber = versionNumber;
-    } else if (lastPreset.current?.versionNumber) {
+    if (
+      lastPresetRef.current?.element &&
+      !lastPresetRef.current.versionNumber
+    ) {
+      lastPresetRef.current.versionNumber = versionNumber;
+    } else if (lastPresetRef.current?.versionNumber) {
       // If the version number changes meanwhile and we already have it set
       // something else changed meanwhile so clear the lastPreset, too.
-      lastPreset.current = null;
+      lastPresetRef.current = null;
     }
   }, [versionNumber]);
 
   const getPosition = useCallback((element) => {
     const { y } = element;
-    if (!lastPreset.current) {
+    if (!lastPresetRef.current) {
       return y;
     }
     const {
       element: { height: lastHeight, y: lastY },
-    } = lastPreset.current;
+    } = lastPresetRef.current;
     let positionedY = lastY + lastHeight + POSITION_MARGIN;
     // Let's get the width/height of the element about to be inserted.
     const { width, height } = getInsertedElementSize(
@@ -121,7 +124,7 @@ function useInsertPreset({ shouldUseSmartColor }) {
         ...elementProps,
         height: calculateTextHeight(elementProps, elementProps.width),
       });
-      lastPreset.current = {
+      lastPresetRef.current = {
         versionNumber: null,
         element: addedElement,
       };
@@ -153,7 +156,7 @@ function useInsertPreset({ shouldUseSmartColor }) {
           ...element,
           ...atts,
         });
-        lastPreset.current = {
+        lastPresetRef.current = {
           versionNumber: null,
           element: addedElement,
         };

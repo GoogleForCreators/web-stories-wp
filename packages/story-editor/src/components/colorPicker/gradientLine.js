@@ -96,7 +96,7 @@ function GradientLine({
   useKeyMoveStop(line, onMove);
   useKeyAddStop(line, onAdd, stops, currentStopIndex);
   useKeyDeleteStop(line, onDelete);
-  const stopRefs = useKeyFocus(line, stops, currentStopIndex);
+  const stopsRef = useKeyFocus(line, stops, currentStopIndex);
 
   usePointerMoveStop(line, onMove);
   const tempPointerPosition = usePointerAddStop(line, onAdd);
@@ -109,7 +109,7 @@ function GradientLine({
       <Background stops={stops} />
       {stops.map(({ position, color }, index) => (
         <GradientStop
-          ref={(ref) => (stopRefs[index].current = ref)}
+          ref={(ref) => (stopsRef[index].current = ref)}
           key={
             // eslint-disable-next-line react/no-array-index-key -- Should be OK here.
             index

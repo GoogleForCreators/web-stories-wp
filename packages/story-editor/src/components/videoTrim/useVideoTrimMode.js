@@ -92,7 +92,7 @@ function useVideoTrimMode() {
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
       clearEditing();
-    } else {
+    } else if (selectedElement) {
       setEditingElementWithState(selectedElement.id, {
         isTrimMode: true,
         hasEditMenu: true,

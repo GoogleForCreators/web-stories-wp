@@ -81,7 +81,7 @@ function PublisherLogoSettings({
 
   const containerRef = useRef();
   const gridRef = useRef();
-  const itemRefs = useRef({});
+  const itemsRef = useRef({});
 
   const [focusedPublisherLogoId, setFocusedPublisherLogoId] = useState(null);
 
@@ -91,14 +91,14 @@ function PublisherLogoSettings({
 
   const hasOnlyOneLogo = publisherLogos.length === 1;
 
-  const publisherLogoCount = useRef(publisherLogos.length);
+  const publisherLogoCountRef = useRef(publisherLogos.length);
 
   const handleRemoveLogoClick = useCallback(
     (publisherLogo, idx) => {
       setContextMenuId(-1);
       onRemoveLogo?.(publisherLogo);
       setIndexRemoved(idx);
-      publisherLogoCount.current = publisherLogos.length;
+      publisherLogoCountRef.current = publisherLogos.length;
     },
     [onRemoveLogo, publisherLogos.length]
   );
@@ -115,7 +115,7 @@ function PublisherLogoSettings({
   useEffect(() => {
     if (
       Boolean(indexRemoved?.toString()) &&
-      publisherLogos.length !== publisherLogoCount.current
+      publisherLogos.length !== publisherLogoCountRef.current
     ) {
       if (publisherLogos.length === 0) {
         // if the user has removed their last publisher logo, the logo grid will not render
@@ -130,7 +130,7 @@ function PublisherLogoSettings({
         indexRemoved > 0 ? publisherLogos[indexRemoved - 1] : publisherLogos[0];
 
       setFocusedPublisherLogoId(moveItemFocusByIndex.id);
-      itemRefs.current[moveItemFocusByIndex.id].firstChild.focus();
+      itemsRef.current[moveItemFocusByIndex.id].firstChild.focus();
       return setIndexRemoved(null);
     }
     return undefined;
@@ -139,7 +139,7 @@ function PublisherLogoSettings({
   useGridViewKeys({
     containerRef,
     gridRef,
-    itemRefs,
+    itemRefs: itemsRef,
     isRTL,
     currentItemId: focusedPublisherLogoId,
     items: publisherLogos,
@@ -180,7 +180,7 @@ function PublisherLogoSettings({
               <GridItem
                 key={publisherLogo.id}
                 ref={(el) => {
-                  itemRefs.current[publisherLogo.id] = el;
+                  itemsRef.current[publisherLogo.id] = el;
                 }}
                 contextMenuId={{
                   set: setContextMenuId,

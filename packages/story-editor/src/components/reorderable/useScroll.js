@@ -27,13 +27,13 @@ import {
 const SCROLL_PERCENT = 0.2;
 const MAX_SCROLL_STEP = 10;
 
-function useScroll(mode = 'horizontal', isReordering, scrollTarget, size) {
+function useScroll(mode = 'horizontal', isReordering, scrollTargetRef, size) {
   const [hasScrollAbove, setHasScrollAbove] = useState(false);
   const [hasScrollBelow, setHasScrollBelow] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(0);
 
   const updateScrollMarkers = useBatchingCallback(() => {
-    const node = scrollTarget.current;
+    const node = scrollTargetRef.current;
     if (!node) {
       return;
     }
@@ -56,7 +56,7 @@ function useScroll(mode = 'horizontal', isReordering, scrollTarget, size) {
         setHasScrollBelow(node.scrollTop < possibleScroll);
       }
     }
-  }, [mode, scrollTarget]);
+  }, [mode, scrollTargetRef]);
 
   const startScroll = useCallback(
     (dir) => {
@@ -85,9 +85,9 @@ function useScroll(mode = 'horizontal', isReordering, scrollTarget, size) {
         0
       );
       if (mode === 'horizontal') {
-        scrollTarget.current.scrollLeft += scrollDirection * scrollStep;
+        scrollTargetRef.current.scrollLeft += scrollDirection * scrollStep;
       } else {
-        scrollTarget.current.scrollTop += scrollDirection * scrollStep;
+        scrollTargetRef.current.scrollTop += scrollDirection * scrollStep;
       }
       updateScrollMarkers();
       if (mounted) {
@@ -106,7 +106,7 @@ function useScroll(mode = 'horizontal', isReordering, scrollTarget, size) {
     canScrollEnd,
     size,
     mode,
-    scrollTarget,
+    scrollTargetRef,
   ]);
 
   // Update scroll markers whenever isReordering changes (to true really, but no harm)

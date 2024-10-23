@@ -79,7 +79,7 @@ export const TelemetryOptInBanner = forwardRef(
     ref
   ) => {
     const checkboxRef = useRef();
-    const focusOnCheckbox = useRef(false);
+    const focusedCheckboxRef = useRef(false);
     const title = checked
       ? __(
           'Your selection has been updated. Thank you for helping to improve the editor!',
@@ -88,7 +88,7 @@ export const TelemetryOptInBanner = forwardRef(
       : __('Help improve the editor!', 'web-stories');
 
     useEffect(() => {
-      if (focusOnCheckbox.current) {
+      if (focusedCheckboxRef.current) {
         checkboxRef.current.focus();
       }
     });
@@ -108,10 +108,10 @@ export const TelemetryOptInBanner = forwardRef(
             disabled={disabled}
             onChange={() => {
               onChange();
-              focusOnCheckbox.current = true;
+              focusedCheckboxRef.current = true;
             }}
             onBlur={() => {
-              focusOnCheckbox.current = false;
+              focusedCheckboxRef.current = false;
             }}
             ref={checkboxRef}
           />
@@ -185,17 +185,17 @@ export function TelemetryBannerContainer(props) {
   } = useTelemetryOptIn();
   const ref = useRef();
 
-  const previousBannerVisible = useRef(bannerVisible);
+  const previousBannerVisibleRef = useRef(bannerVisible);
 
   useLayoutEffect(() => {
     if (
       bannerVisible &&
-      previousBannerVisible.current === false &&
+      previousBannerVisibleRef.current === false &&
       ref.current
     ) {
-      previousBannerVisible.current = true;
-    } else if (!bannerVisible && previousBannerVisible.current) {
-      previousBannerVisible.current = false;
+      previousBannerVisibleRef.current = true;
+    } else if (!bannerVisible && previousBannerVisibleRef.current) {
+      previousBannerVisibleRef.current = false;
     }
   }, [bannerVisible]);
 
@@ -217,7 +217,7 @@ export default function TelemetryBanner() {
     currentPath: state.currentPath,
     hasAvailableRoutes: state.availableRoutes.length > 0,
   }));
-  const headerEl = useRef(null);
+  const headerRef = useRef(null);
   const [, forceUpdate] = useState(false);
 
   useEffect(() => {
@@ -228,14 +228,14 @@ export default function TelemetryBanner() {
     if (
       [APP_ROUTES.DASHBOARD, APP_ROUTES.TEMPLATES_GALLERY].includes(currentPath)
     ) {
-      headerEl.current = document.getElementById('body-view-options-header');
+      headerRef.current = document.getElementById('body-view-options-header');
       forceUpdate((value) => !value);
     }
   }, [currentPath, hasAvailableRoutes]);
 
-  if (!headerEl.current) {
+  if (!headerRef.current) {
     return null;
   }
 
-  return createPortal(<TelemetryBannerContainer />, headerEl.current);
+  return createPortal(<TelemetryBannerContainer />, headerRef.current);
 }

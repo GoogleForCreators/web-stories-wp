@@ -72,9 +72,11 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
       addInitialFetchListener,
     })
   );
-  const isFirstLoadOnMyStories = useRef(currentPath === APP_ROUTES.DASHBOARD);
+  const isFirstLoadOnMyStoriesRef = useRef(
+    currentPath === APP_ROUTES.DASHBOARD
+  );
   const [isRedirectComplete, setIsRedirectComplete] = useState(
-    !isFirstLoadOnMyStories.current
+    !isFirstLoadOnMyStoriesRef.current
   );
 
   // Direct user to templates on first load if they
@@ -83,11 +85,11 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     return addInitialFetchListener?.((storyStatuses) => {
       if (
         storyStatuses?.all <= 0 &&
-        isFirstLoadOnMyStories.current &&
+        isFirstLoadOnMyStoriesRef.current &&
         canViewDefaultTemplates
       ) {
         push(APP_ROUTES.TEMPLATES_GALLERY);
-        isFirstLoadOnMyStories.current = false;
+        isFirstLoadOnMyStoriesRef.current = false;
       }
       setIsRedirectComplete(true);
     });

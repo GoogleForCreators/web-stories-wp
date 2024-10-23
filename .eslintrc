@@ -20,6 +20,7 @@
     "jsx-a11y",
     "markdown",
     "react",
+    "react-compiler",
     "react-hooks",
     "styled-components-a11y"
   ],
@@ -214,6 +215,15 @@
     "react/no-unused-prop-types": "error",
     "react/react-in-jsx-scope": "off",
     "react/self-closing-comp": "error",
+    "react-compiler/react-compiler": [
+      "error",
+      {
+        "environment": {
+          "enableTreatRefLikeIdentifiersAsRefs": true,
+          "validateRefAccessDuringRender": false
+        }
+      }
+    ],
     "import/no-extraneous-dependencies": "error",
     "import/no-unresolved": "error",
     "import/order": [
@@ -425,6 +435,7 @@
       "rules": {
         "@eslint-community/eslint-comments/require-description": "off",
         "react/prop-types": "off",
+        "react-compiler/react-compiler": "off",
         "jest/no-hooks": "off",
         "jest/no-untyped-mock-factory": "off",
         "jest/max-expects": "off",

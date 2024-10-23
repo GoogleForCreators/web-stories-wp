@@ -22,20 +22,20 @@ import type { RefObject } from 'react';
 
 function useForwardedRef<T>(ref: React.ForwardedRef<T>) {
   const wrappedRef = useRef<{ current: T | null }>({ current: null });
-  const reference = useRef<T | null>(null);
+  const referenceRef = useRef<T | null>(null);
 
   Object.defineProperty(wrappedRef.current, 'current', {
-    get: () => reference.current,
+    get: () => referenceRef.current,
     set: (value: T | null) => {
-      if (!Object.is(reference.current, value)) {
-        reference.current = value;
+      if (!Object.is(referenceRef.current, value)) {
+        referenceRef.current = value;
         if (!ref) {
           return;
         }
         if (typeof ref === 'function') {
-          ref(reference.current);
+          ref(referenceRef.current);
         } else {
-          ref.current = reference.current;
+          ref.current = referenceRef.current;
         }
       }
     },

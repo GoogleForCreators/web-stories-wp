@@ -151,10 +151,10 @@ function EyedropperLayer() {
   const fullHeight = pageWidth / FULLBLEED_RATIO;
   const img = eyedropperImg;
   const imgRef = useRef();
-  const magnifier = useRef();
-  const magnifierInfo = useRef();
-  const magnifierColor = useRef();
-  const eyedropperCanvas = useRef();
+  const magnifierRef = useRef();
+  const magnifierInfoRef = useRef();
+  const magnifierColorRef = useRef();
+  const eyedropperCanvasRef = useRef();
 
   const closeEyedropper = () => {
     setIsEyedropperActive(false);
@@ -162,7 +162,7 @@ function EyedropperLayer() {
     setEyedropperPixelData(null);
   };
 
-  useFocusOut(eyedropperCanvas, closeEyedropper, [isEyedropperActive, img]);
+  useFocusOut(eyedropperCanvasRef, closeEyedropper, [isEyedropperActive, img]);
 
   useGlobalKeyDownEffect('esc', closeEyedropper);
 
@@ -185,7 +185,7 @@ function EyedropperLayer() {
   }
 
   const magnify = (x, y) => {
-    const canvas = magnifier.current;
+    const canvas = magnifierRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d');
 
@@ -227,14 +227,14 @@ function EyedropperLayer() {
     const y = (e.clientY - top) * (fullHeight / height);
 
     if (x < 0 || y < 0 || x > width || y > height) {
-      magnifierInfo.current.style.display = 'none';
+      magnifierInfoRef.current.style.display = 'none';
       return;
     } else {
-      magnifierInfo.current.style.display = 'block';
+      magnifierInfoRef.current.style.display = 'block';
     }
 
     // Move magnifier canvas.
-    magnifierInfo.current.style.transform = `translate(${
+    magnifierInfoRef.current.style.transform = `translate(${
       x - MAGNIFIER_SIZE / 2
     }px, ${y}px)`;
 
@@ -245,14 +245,14 @@ function EyedropperLayer() {
     const rgbaObject = getColorFromPixelData(eyedropperPixelData, x, y, width);
     const { r, g, b, a } = rgbaObject;
     const hex = rgba(r, g, b, a);
-    magnifierColor.current.style.background = `rgba(${r},${g},${b},${a})`;
-    magnifierColor.current.style.color = readableColor(
+    magnifierColorRef.current.style.background = `rgba(${r},${g},${b},${a})`;
+    magnifierColorRef.current.style.color = readableColor(
       hex,
       '#333',
       '#EDEDED',
       false
     );
-    magnifierColor.current.innerText = hex;
+    magnifierColorRef.current.innerText = hex;
   };
 
   const onClick = (e) => {
@@ -278,17 +278,17 @@ function EyedropperLayer() {
       {/* Remove the safe zone so we don't have to move the canvas image up (we have fullbleed image). */}
       <DisplayPageArea withSafezone={false} showOverflow>
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- No pixel-by-pixel keyboard navigation. */}
-        <EyedropperCanvas ref={eyedropperCanvas} onClick={onClick}>
+        <EyedropperCanvas ref={eyedropperCanvasRef} onClick={onClick}>
           <CanvasImage ref={imgRef} src={img} alt="" />
-          <Magnifier ref={magnifierInfo}>
+          <Magnifier ref={magnifierInfoRef}>
             <Circle>
               <canvas
-                ref={magnifier}
+                ref={magnifierRef}
                 width={MAGNIFIER_SIZE}
                 height={MAGNIFIER_SIZE}
               />
             </Circle>
-            <ColorInfo ref={magnifierColor} />
+            <ColorInfo ref={magnifierColorRef} />
           </Magnifier>
         </EyedropperCanvas>
       </DisplayPageArea>

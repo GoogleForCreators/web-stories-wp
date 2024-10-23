@@ -114,7 +114,7 @@ const ChipGroup = ({
   const sectionRef = useRef();
   const innerContainerRef = useRef();
 
-  const itemRefs = useRef([]);
+  const itemsRef = useRef([]);
 
   const [focusedRowOffset, setFocusedRowOffset] = useState(0);
 
@@ -150,7 +150,7 @@ const ChipGroup = ({
     innerContainerRef,
     selectedItemId,
     setFocusedRowOffset,
-    itemRefs,
+    itemRefs: itemsRef,
     offsetSpacing: FOCUS_BORDER_SPACING,
   });
 
@@ -192,7 +192,7 @@ const ChipGroup = ({
                     key={id}
                     role="option"
                     ref={(el) => {
-                      itemRefs.current[id] = el;
+                      itemsRef.current[id] = el;
                     }}
                     active={selected}
                     aria-selected={selected}

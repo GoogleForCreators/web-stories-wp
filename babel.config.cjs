@@ -53,6 +53,7 @@ module.exports = function (api) {
           meaninglessFileNames: ['index', 'styles', 'components'],
         },
       ],
+      ['babel-plugin-react-compiler', { target: '17' }],
     ],
     sourceMaps: true,
     env: {

@@ -67,7 +67,7 @@ function TemplateList({
   const { showSnackbar } = useSnackbar();
   const [currentPageId, setCurrentPageId] = useState();
   const containerRef = useRef();
-  const pageRefs = useRef({});
+  const pagesRef = useRef({});
 
   const handlePageClick = useCallback(
     ({ templateId, version, title, ...page }) => {
@@ -108,7 +108,7 @@ function TemplateList({
   useGridViewKeys({
     containerRef: parentRef,
     gridRef: containerRef,
-    itemRefs: pageRefs,
+    itemRefs: pagesRef,
     items: pages,
     currentItemId: currentPageId,
     isRTL,
@@ -127,7 +127,7 @@ function TemplateList({
             <SavedPageTemplate
               key={page.id}
               data-testid={`page_template_${page.id}`}
-              ref={(el) => (pageRefs.current[page.id] = el)}
+              ref={(el) => (pagesRef.current[page.id] = el)}
               page={page}
               pageSize={pageSize}
               onClick={() => handlePageClick(page)}
@@ -140,7 +140,7 @@ function TemplateList({
           ))
         : pages.map((page) => (
             <DefaultPageTemplate
-              ref={(el) => (pageRefs.current[page.id] = el)}
+              ref={(el) => (pagesRef.current[page.id] = el)}
               key={page.id}
               data-testid={`page_template_${page.id}`}
               page={page}
