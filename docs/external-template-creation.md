@@ -179,7 +179,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
       };
     ```
 
-4. In [`packages/templates/src/getTemplates.js`](https://github.com/googleforcreators/web-stories-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function.
+4. In [`packages/templates/src/getTemplates.ts`](https://github.com/googleforcreators/web-stories-wp/blob/main/packages/templates/src/getTemplates.ts), add `"<template_name>"` to the string array in the `getTemplates()` function.
 5. Verify in your WP environment that the new template is visible in the editor's "Explore Templates" section.
 6. Create a single pull request with all of the changes in steps 1-3.
 
