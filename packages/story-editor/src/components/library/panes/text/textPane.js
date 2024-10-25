@@ -133,7 +133,7 @@ function TextPane(props) {
         </GridContainer>
       </SectionContainer>
       <PresetPanel />
-      {paneRef.current && <TextSetsPane paneRef={paneRef} />}
+      <TextSetsPane paneRef={paneRef} />
     </Pane>
   );
 }
