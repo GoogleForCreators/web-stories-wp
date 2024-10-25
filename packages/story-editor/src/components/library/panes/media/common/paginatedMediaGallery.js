@@ -210,10 +210,10 @@ function PaginatedMediaGallery({
     return undefined;
   }, [isMediaLoading, hasMore]);
 
-  const attribution =
-    providerType !== 'local' &&
-    PROVIDERS[providerType].attributionComponent &&
-    PROVIDERS[providerType].attributionComponent();
+  const Attribution =
+    (providerType !== 'local' &&
+      PROVIDERS[providerType].attributionComponent) ||
+    (() => null);
 
   return (
     <>
@@ -246,7 +246,7 @@ function PaginatedMediaGallery({
           </StyledText>
         </MediaGalleryLoadingPill>
       )}
-      {!showLoadingPill && attribution}
+      {!showLoadingPill && <Attribution />}
     </>
   );
 }
