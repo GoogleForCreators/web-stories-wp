@@ -198,7 +198,7 @@ function Element({
         <InnerElement
           type={type}
           src={src}
-          mediaElement={mediaElementRef}
+          mediaElementRef={mediaElementRef}
           resource={resource}
           alt={alt}
           isMuted={isMuted}

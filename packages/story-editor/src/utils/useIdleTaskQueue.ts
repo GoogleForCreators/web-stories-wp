@@ -34,7 +34,7 @@ interface Task {
  * @return queueIdleTask
  */
 function useIdleTaskQueue() {
-  const taskQueue = useRef<Task[]>([]);
+  const taskQueueRef = useRef<Task[]>([]);
   const isTaskQueueRunningRef = useRef(false);
   const currentTaskRef = useRef<Task>({ taskId: null, task: null });
 
@@ -47,12 +47,12 @@ function useIdleTaskQueue() {
   const runTaskQueue = useCallback(() => {
     isTaskQueueRunningRef.current = true;
 
-    if (!taskQueue.current.length) {
+    if (!taskQueueRef.current.length) {
       isTaskQueueRunningRef.current = false;
       return;
     }
 
-    const { taskId, task } = taskQueue.current.shift() as Task;
+    const { taskId, task } = taskQueueRef.current.shift() as Task;
     const idleCallbackId = requestIdleCallback(() => {
       if (typeof task === 'function') {
         void task().then(() => {
@@ -74,7 +74,7 @@ function useIdleTaskQueue() {
   const clearQueuedTask = useCallback(
     (id: string) => {
       // Remove any queued tasks associated with this task Id
-      taskQueue.current = taskQueue.current.filter(
+      taskQueueRef.current = taskQueueRef.current.filter(
         ({ taskId }: Task) => taskId !== id
       );
 
@@ -104,7 +104,7 @@ function useIdleTaskQueue() {
         clearQueuedTask(taskId);
       }
       // Add request to generate page image generation queue
-      taskQueue.current.push({ taskId, task });
+      taskQueueRef.current.push({ taskId, task });
 
       // If the queue has stopped processing because
       // it ran out of entries, restart it

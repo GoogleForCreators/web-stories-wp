@@ -98,7 +98,7 @@ function InnerElement({
   onClick,
   onLoad = noop,
   showVideoDetail,
-  mediaElement,
+  mediaElementRef,
   active,
   isMuted,
 }) {
@@ -156,8 +156,8 @@ function InnerElement({
   }, [resource.poster]);
 
   const makeMediaVisible = () => {
-    if (mediaElement.current) {
-      mediaElement.current.style.opacity = 1;
+    if (mediaElementRef.current) {
+      mediaElementRef.current.style.opacity = 1;
     }
     onLoad();
   };
@@ -206,17 +206,17 @@ function InnerElement({
 
   if (type === ContentType.Image || type === ContentType.Sticker) {
     // eslint-disable-next-line styled-components-a11y/alt-text -- False positive.
-    media = <Image key={src} {...imageProps} ref={mediaElement} />;
+    media = <Image key={src} {...imageProps} ref={mediaElementRef} />;
     cloneProps.src = thumbnailURL;
   } else if ([ContentType.Video, ContentType.Gif].includes(type)) {
     media = (
       <>
         {poster && !active ? (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <Image key={src} {...imageProps} ref={mediaElement} />
+          <Image key={src} {...imageProps} ref={mediaElementRef} />
         ) : (
           // eslint-disable-next-line jsx-a11y/media-has-caption,styled-components-a11y/media-has-caption -- No captions/tracks because video is muted.
-          <Video key={src} {...videoProps} ref={mediaElement}>
+          <Video key={src} {...videoProps} ref={mediaElementRef}>
             {type === ContentType.Gif ? (
               resource.output.src && (
                 <source
@@ -298,7 +298,7 @@ InnerElement.propTypes = {
   onClick: PropTypes.func.isRequired,
   onLoad: PropTypes.func,
   showVideoDetail: PropTypes.bool,
-  mediaElement: PropTypes.object,
+  mediaElementRef: PropTypes.object,
   active: PropTypes.bool.isRequired,
 };
 
