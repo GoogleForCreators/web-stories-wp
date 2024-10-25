@@ -236,7 +236,7 @@ function useProcessMedia({
         let file = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
-        } catch (e) {
+        } catch {
           // Ignore for now.
           return;
         }
@@ -352,14 +352,14 @@ function useProcessMedia({
         let posterFile = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
-        } catch (e) {
+        } catch {
           // Ignore for now.
           return;
         }
         if (poster) {
           try {
             posterFile = await fetchRemoteBlob(poster);
-          } catch (e) {
+          } catch {
             // Ignore for now.
           }
         }
@@ -451,14 +451,14 @@ function useProcessMedia({
         let posterFile = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
-        } catch (e) {
+        } catch {
           // Ignore for now.
           return;
         }
         if (poster) {
           try {
             posterFile = await fetchRemoteBlob(poster);
-          } catch (e) {
+          } catch {
             // Ignore for now.
           }
         }
@@ -530,7 +530,7 @@ function useProcessMedia({
         let file = null;
         try {
           file = await fetchRemoteFile(url, mimeType);
-        } catch (e) {
+        } catch {
           // Ignore for now.
           return;
         }

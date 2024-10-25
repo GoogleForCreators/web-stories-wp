@@ -84,7 +84,7 @@ function ProductDropdown({ product, setProduct, ...rest }) {
         setIsLoading(true);
         const products = await getProductsByQuery();
         setInitialOptions(products);
-      } catch (err) {
+      } catch {
         setInitialOptions(initialProducts);
       } finally {
         setIsLoading(false);

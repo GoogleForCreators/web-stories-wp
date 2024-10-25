@@ -169,7 +169,7 @@ function useInsert() {
           needs_proxy: needsProxy,
         });
         setIsOpen(false);
-      } catch (e) {
+      } catch {
         // Do nothing for now
       }
     },

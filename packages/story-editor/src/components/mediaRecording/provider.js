@@ -249,7 +249,7 @@ function MediaRecordingProvider({ children }) {
           // remove these devices from the list.
           .filter((device) => device.label)
       );
-    } catch (err) {
+    } catch {
       // Do nothing for now.
     }
   }, []);

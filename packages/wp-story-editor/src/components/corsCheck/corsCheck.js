@@ -51,7 +51,7 @@ function CorsCheck() {
       let mediaItems;
       try {
         mediaItems = await getMediaForCorsCheck();
-      } catch (err) {
+      } catch {
         return;
       }
       if (!mediaItems?.length) {

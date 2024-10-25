@@ -71,7 +71,7 @@ function stylesToCSS(styles: DraftInlineStyle): null | CSSProperties {
   let color: Pattern;
   try {
     color = styleToColor(colorStyle);
-  } catch (e) {
+  } catch {
     return null;
   }
 

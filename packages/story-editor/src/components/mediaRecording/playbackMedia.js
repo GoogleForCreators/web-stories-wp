@@ -188,7 +188,7 @@ function PlaybackMedia() {
           if (streamNode && streamNode.videoWidth && canvasRef.current) {
             try {
               await selfieSegmentation.current.send({ image: streamNode });
-            } catch (e) {
+            } catch {
               // We can't do much about the WASM memory issue.
             }
           }

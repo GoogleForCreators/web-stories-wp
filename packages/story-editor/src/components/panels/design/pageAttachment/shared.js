@@ -234,7 +234,7 @@ export function LinkUrl({
             icon: iconUrl,
             needsProxy,
           });
-        } catch (e) {
+        } catch {
           // We're allowing to save invalid URLs, however, remove icon in this case.
           onChange({ url: newValue, icon: '', needsProxy: false });
           setIsInvalidUrl(true);

@@ -613,7 +613,7 @@ function useFFmpeg() {
         try {
           ffmpeg?.exit();
           // eslint-disable-next-line no-empty -- no-op
-        } catch (e) {}
+        } catch {}
 
         trackTiming();
       }
@@ -668,7 +668,7 @@ function useFFmpeg() {
         try {
           ffmpeg?.exit();
           // eslint-disable-next-line no-empty -- no-op
-        } catch (e) {}
+        } catch {}
 
         trackTiming();
       }

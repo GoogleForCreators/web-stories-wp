@@ -68,7 +68,7 @@ export default function usePublisherLogosApi() {
           },
         });
       }
-    } catch (err) {
+    } catch {
       dispatch({
         type: ACTION_TYPES.FETCH_FAILURE,
         payload: {
@@ -96,7 +96,7 @@ export default function usePublisherLogosApi() {
             id: publisherLogoId,
           },
         });
-      } catch (err) {
+      } catch {
         dispatch({
           type: ACTION_TYPES.FETCH_FAILURE,
           payload: {
@@ -130,7 +130,7 @@ export default function usePublisherLogosApi() {
             },
           });
         }
-      } catch (err) {
+      } catch {
         dispatch({
           type: ACTION_TYPES.ADD_FAILURE,
           payload: {
@@ -160,7 +160,7 @@ export default function usePublisherLogosApi() {
             publisherLogo: response,
           },
         });
-      } catch (err) {
+      } catch {
         dispatch({
           type: ACTION_TYPES.FETCH_FAILURE,
           payload: {
