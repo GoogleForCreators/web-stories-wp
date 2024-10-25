@@ -40,6 +40,7 @@ web-stories-scraper
 .npmpackagejsonlintrc.json
 .npmrc
 .nvmrc
+.oxlintrc.json
 .phpstorm.config.js
 .phpstorm.meta.php
 .phpunit.result.cache

@@ -1,0 +1,13 @@
+{
+  "settings": {
+    "jsdoc": {
+      "tagNamePreference": {
+        "returns": "return",
+        "yields": "yield"
+      }
+    }
+  },
+  "rules": {
+    "no-unused-vars": "off"
+  }
+}
