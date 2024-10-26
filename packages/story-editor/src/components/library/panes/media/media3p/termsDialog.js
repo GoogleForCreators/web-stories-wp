@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect, useCallback } from '@googleforcreators/react';
+import { useState, useCallback } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import {
@@ -26,6 +26,7 @@ import {
   LOCAL_STORAGE_PREFIX,
   localStore,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -44,11 +45,8 @@ function TermsDialog() {
     setDialogOpen(false);
     localStore.setItemByKey(LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P, true);
     trackEvent('media3p_terms_acknowledged');
+    setDialogOpen(false);
   }, []);
-
-  useEffect(() => {
-    setDialogOpen(!hasAcknowledgedTerms3p);
-  }, [hasAcknowledgedTerms3p]);
 
   const onTermsClick = useCallback((evt) => {
     trackClick(evt, 'click_terms_of_service');
