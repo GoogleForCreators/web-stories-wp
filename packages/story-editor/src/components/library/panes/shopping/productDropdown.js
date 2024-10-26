@@ -90,6 +90,7 @@ function ProductDropdown({ product, setProduct, ...rest }) {
         setIsLoading(false);
       }
     })();
+    // eslint-disable-next-line react-compiler/react-compiler -- FIXME
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Stop getProductsByQuery from re-render.
   }, [initialProducts]);
 

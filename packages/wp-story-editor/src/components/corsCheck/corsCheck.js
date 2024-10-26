@@ -70,6 +70,7 @@ function CorsCheck() {
         trackError('cors_check', err.message);
       }
     })();
+    // eslint-disable-next-line react-compiler/react-compiler -- FIXME
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run this effect once, so do not pass dependencies.
   }, []);
 
