@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import Big from 'big.js';
+import { Big } from 'big.js';
 import {
   useCallback,
   useEffect,
