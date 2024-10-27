@@ -179,7 +179,7 @@ export default function ArchiveSettings({
                   'Turn off the default archive page at <code>%s</code>. Users will see a 404 Not Found page when trying to access the default archive page.',
                   'web-stories'
                 ),
-                archiveURL
+                defaultArchiveURL
               )}
             </TranslateWithMarkup>
           </TextInputHelperText>
@@ -229,7 +229,7 @@ export default function ArchiveSettings({
                 : sprintf(
                     /* translators: %s: archive url. */
                     __('Visit archive page at <a>%1$s</a>.', 'web-stories'),
-                    archiveURL
+                    defaultArchiveURL
                   )}
             </TranslateWithMarkup>
           </TextInputHelperText>
