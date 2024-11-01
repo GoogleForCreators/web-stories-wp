@@ -19785,6 +19785,62 @@
     }
   },
   {
+    "family": "Karla Tamil Inclined",
+    "fallbacks": ["sans-serif"],
+    "weights": [400, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 796,
+      "des": -345,
+      "tAsc": 796,
+      "tDes": -345,
+      "tLGap": 34,
+      "wAsc": 796,
+      "wDes": 345,
+      "xH": 499,
+      "capH": 717,
+      "yMin": -351,
+      "yMax": 819,
+      "hAsc": 796,
+      "hDes": -345,
+      "lGap": 17
+    }
+  },
+  {
+    "family": "Karla Tamil Upright",
+    "fallbacks": ["sans-serif"],
+    "weights": [400, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 750,
+      "des": -250,
+      "tAsc": 750,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 749,
+      "wDes": 215,
+      "xH": 503,
+      "capH": 727,
+      "yMin": -349,
+      "yMax": 813,
+      "hAsc": 750,
+      "hDes": -250,
+      "lGap": 9
+    }
+  },
+  {
     "family": "Karma",
     "fallbacks": ["serif"],
     "weights": [300, 400, 500, 600, 700],
@@ -25069,10 +25125,12 @@
   {
     "family": "Miriam Libre",
     "fallbacks": ["sans-serif"],
-    "weights": [400, 700],
+    "weights": [400, 500, 600, 700],
     "styles": ["regular"],
     "variants": [
       [0, 400],
+      [0, 500],
+      [0, 600],
       [0, 700]
     ],
     "service": "fonts.google.com",
