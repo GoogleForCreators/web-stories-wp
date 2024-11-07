@@ -61,7 +61,7 @@ describe('Editor Settings: Archive page settings <ArchiveSetting />', () => {
     expect(sectionHeader).toBeInTheDocument();
 
     const helperLink = screen.getByText(
-      (_, node) => node.textContent === archiveURL,
+      (_, node) => node.textContent === defaultArchiveURL,
       {
         selector: 'a',
       }

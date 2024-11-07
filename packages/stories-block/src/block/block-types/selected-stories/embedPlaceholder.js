@@ -58,50 +58,24 @@ const EmbedPlaceholder = ({
 
   return (
     <>
-      {/*
-        Using ToolbarButton if available is mandatory as other usage is deprecated
-        for accessibility reasons and causes console warnings.
-        See https://github.com/WordPress/gutenberg/pull/23316
-        See https://developer.wordpress.org/block-editor/components/toolbar-button/#inside-blockcontrols
-        */}
-      <BlockControls group="other">
-        {Boolean(selectedStories?.length) &&
-          (ToolbarButton ? (
-            <>
-              <ToolbarButton
-                aria-expanded={isStoryPickerOpen}
-                aria-haspopup="true"
-                onClick={openStoryPicker}
-              >
-                {__('Select', 'web-stories')}
-              </ToolbarButton>
-              <ToolbarButton
-                aria-expanded={isStoryPickerOpen}
-                aria-haspopup="true"
-                onClick={openStoryRearrangeWindow}
-              >
-                {__('Rearrange', 'web-stories')}
-              </ToolbarButton>
-            </>
-          ) : (
-            <>
-              <Button
-                className="components-toolbar__control"
-                title={__('Select', 'web-stories')}
-                aria-expanded={isStoryPickerOpen}
-                aria-haspopup="true"
-                onClick={openStoryPicker}
-              />
-              <Button
-                className="components-toolbar__control"
-                title={__('Rearrange', 'web-stories')}
-                aria-expanded={openStoryRearrangeWindow}
-                aria-haspopup="true"
-                onClick={openStoryRearrangeWindow}
-              />
-            </>
-          ))}
-      </BlockControls>
+      {Boolean(selectedStories?.length) && (
+        <BlockControls group="other">
+          <ToolbarButton
+            aria-expanded={isStoryPickerOpen}
+            aria-haspopup="true"
+            onClick={openStoryPicker}
+          >
+            {__('Select', 'web-stories')}
+          </ToolbarButton>
+          <ToolbarButton
+            aria-expanded={isStoryPickerOpen}
+            aria-haspopup="true"
+            onClick={openStoryRearrangeWindow}
+          >
+            {__('Rearrange', 'web-stories')}
+          </ToolbarButton>
+        </BlockControls>
+      )}
       {selectedStories.length === 0 && (
         <Placeholder
           icon={<BlockIcon icon={icon} showColors />}

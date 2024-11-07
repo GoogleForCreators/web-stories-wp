@@ -114,7 +114,11 @@ function StoryEmbedEdit({
   useEffect(() => {
     if (ref.current && window.AmpStoryPlayer) {
       const player = new window.AmpStoryPlayer(window, ref.current);
-      player.load();
+      try {
+        player.load();
+      } catch {
+        // Player already loaded.
+      }
     }
   }, [showLoadingIndicator, showPlaceholder, isResizable, previewOnly]);
 

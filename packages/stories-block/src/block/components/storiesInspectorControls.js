@@ -193,6 +193,7 @@ const StoriesInspectorControls = (props) => {
                     'archive_link' === field &&
                     fieldState[`show_${field}`] && <ArchiveLink />
                   }
+                  __nextHasNoMarginBottom
                 />
               );
             }
@@ -208,6 +209,7 @@ const StoriesInspectorControls = (props) => {
               setAttributes({ archiveLinkLabel: newLabel })
             }
             className="web-stories-settings-archive-link"
+            __nextHasNoMarginBottom
           />
         )}
       </PanelBody>
@@ -247,6 +249,7 @@ const StoriesInspectorControls = (props) => {
               min={1}
               max={4}
               step={1}
+              __nextHasNoMarginBottom
             />
           )}
           {CIRCLES_VIEW_TYPE === viewType && (
@@ -259,6 +262,7 @@ const StoriesInspectorControls = (props) => {
               min={80}
               max={200}
               step={5}
+              __nextHasNoMarginBottom
             />
           )}
         </PanelBody>
@@ -279,6 +283,7 @@ const StoriesInspectorControls = (props) => {
             ]}
             value={orderby || 'date'}
             onChange={(selection) => setAttributes({ orderby: selection })}
+            __nextHasNoMarginBottom
           />
           <SelectControl
             label={__('Order', 'web-stories')}
@@ -294,6 +299,7 @@ const StoriesInspectorControls = (props) => {
             ]}
             value={order || 'desc'}
             onChange={(selection) => setAttributes({ order: selection })}
+            __nextHasNoMarginBottom
           />
           {taxonomies.map((taxonomy) => {
             const termIds = taxQuery?.[taxonomy.slug] || [];
@@ -324,6 +330,7 @@ const StoriesInspectorControls = (props) => {
             min={1}
             max={20}
             step={1}
+            __nextHasNoMarginBottom
           />
         </PanelBody>
       )}

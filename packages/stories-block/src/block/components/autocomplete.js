@@ -44,6 +44,7 @@ const Autocomplete = ({
           maxSuggestions={100}
           label={label}
           placeholder={placeholder}
+          __nextHasNoMarginBottom
         />
       </div>
     )

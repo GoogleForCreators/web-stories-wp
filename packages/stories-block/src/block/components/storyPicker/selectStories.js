@@ -79,6 +79,7 @@ function AuthorSearch({
       onChange={onChange}
       value={value}
       className="web-stories-story-picker-filter__combobox"
+      __nextHasNoMarginBottom
     />
   );
 }
@@ -106,6 +107,7 @@ function KeywordSearch({
       onChange={onChange}
       value={value}
       className="web-stories-story-picker-filter__combobox"
+      __nextHasNoMarginBottom
     />
   );
 }
@@ -286,6 +288,7 @@ function SelectStories({
               options={SORT_OPTIONS}
               value={orderBy}
               onChange={onSortChange}
+              __nextHasNoMarginBottom
             />
           </div>
         </div>

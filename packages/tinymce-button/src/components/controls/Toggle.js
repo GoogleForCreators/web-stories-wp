@@ -54,6 +54,7 @@ const TinyMceToggle = (props) => {
           hidden,
         });
       }}
+      __nextHasNoMarginBottom
     />
   );
 };
