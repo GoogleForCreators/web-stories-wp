@@ -53,7 +53,10 @@ const EmbedControlsInLoop = (props) => {
     <InspectorControls>
       <PanelBody title={__('Embed Settings', 'web-stories')}>
         <PanelRow>
-          <BaseControl className="web-stories-embed-size-control">
+          <BaseControl
+            className="web-stories-embed-size-control"
+            __nextHasNoMarginBottom
+          >
             <BaseControl.VisualLabel>
               {__('Story dimensions', 'web-stories')}
             </BaseControl.VisualLabel>
@@ -68,6 +71,7 @@ const EmbedControlsInLoop = (props) => {
                 onChange={(value) =>
                   setAttributes({ width: Number.parseInt(value) })
                 }
+                __nextHasNoMarginBottom
               />
               <TextControl
                 type="number"
@@ -81,12 +85,13 @@ const EmbedControlsInLoop = (props) => {
                     height: Number.parseInt(value),
                   })
                 }
+                __nextHasNoMarginBottom
               />
             </div>
           </BaseControl>
         </PanelRow>
         <PanelRow>
-          <BaseControl>
+          <BaseControl __nextHasNoMarginBottom>
             <ToggleControl
               label={__('Display as preview', 'web-stories')}
               checked={previewOnly}
@@ -95,6 +100,7 @@ const EmbedControlsInLoop = (props) => {
                 'Displays the story poster that opens the story in a lightbox on click',
                 'web-stories'
               )}
+              __nextHasNoMarginBottom
             />
           </BaseControl>
         </PanelRow>
