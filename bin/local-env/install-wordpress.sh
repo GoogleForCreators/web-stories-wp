@@ -47,9 +47,9 @@ if [ "$1" == '--reset-site' ]; then
 fi
 
 if [ ! -z "$WP_VERSION" ] && [ "$WP_VERSION" != "latest" ]; then
-	# Potentially downgrade WordPress
+	# Potentially downgrade (or upgrade) WordPress
 	echo -e $(status_message "Downloading WordPress version $WP_VERSION...")
-	wp core download --version=${WP_VERSION} --force --quiet
+	wp core download --version=${WP_VERSION} --skip-content --force --quiet
 fi
 
 # Install WordPress.
