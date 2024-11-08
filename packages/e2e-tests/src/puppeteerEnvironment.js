@@ -44,22 +44,25 @@ class PuppeteerEnvironment extends JestPuppeteer.TestEnvironment {
         event.name === 'test_fn_failure'
           ? `${state.currentlyRunningTest.parent.name}  ${state.currentlyRunningTest.name}`
           : 'before or after hook';
-      const errors = state.currentlyRunningTest?.errors || [];
-      const eventError = util.inspect(event);
-      let errorMessages = '';
-      errorMessages += `========= ${testName} ==========\n\n`;
-      errorMessages +=
-        'started:' +
-        new Date(event.test.startedAt).toLocaleString() +
-        ' ended:' +
-        new Date().toLocaleString();
-      errorMessages += '============end==========\n\n';
-      errors.forEach((error) => {
-        errorMessages += `${testName}:${error}\n\n`;
-      });
 
-      errorMessages += '=========================\n\n';
-      errorMessages += eventError;
+      let errorMessages = '';
+
+      if (event.test) {
+        const errors = state.currentlyRunningTest?.errors || [];
+        const eventError = util.inspect(event);
+        errorMessages += `========= ${testName} ==========\n\n`;
+        errorMessages +=
+          'started:' +
+          new Date(event.test.startedAt).toLocaleString() +
+          ' ended:' +
+          new Date().toLocaleString();
+        errorMessages += '============end==========\n\n';
+        errors.forEach((error) => {
+          errorMessages += `${testName}:${error}\n\n`;
+        });
+        errorMessages += '=========================\n\n';
+        errorMessages += eventError;
+      }
 
       await this.storeArtifacts(testName, errorMessages);
     }
