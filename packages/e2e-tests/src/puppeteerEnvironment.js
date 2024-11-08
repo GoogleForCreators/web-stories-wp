@@ -39,7 +39,7 @@ class PuppeteerEnvironment extends JestPuppeteer.TestEnvironment {
   }
 
   async handleTestEvent(event, state) {
-    if (event.name === 'test_fn_failure') {
+    if (event.name === 'test_fn_failure' || event.name === 'hook_failure') {
       const testName = `${state.currentlyRunningTest.parent.name}  ${state.currentlyRunningTest.name}`;
       const errors = state.currentlyRunningTest.errors;
       const eventError = util.inspect(event);
