@@ -1,7 +1,7 @@
 === Web Stories ===
 
 Contributors:      google
-Tested up to:      6.6
+Tested up to:      6.7
 Requires at least: 6.4
 Stable tag:        V.V.V
 License:           Apache-2.0
