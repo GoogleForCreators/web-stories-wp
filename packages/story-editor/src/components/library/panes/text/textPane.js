@@ -85,13 +85,9 @@ function TextPane(props) {
     ({ actions }) => actions.generateDeferredCurrentPageCanvas
   );
 
-  useResizeEffect(
-    paneRef,
-    () => {
-      forceUpdate(Date.now());
-    },
-    []
-  );
+  useResizeEffect(paneRef, () => {
+    forceUpdate(Date.now());
+  }, []);
 
   const handleToggleClick = useCallback(
     () => setShouldUseSmartColor((currentValue) => !currentValue),

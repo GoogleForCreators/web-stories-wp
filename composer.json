@@ -13,12 +13,12 @@
     "ext-mbstring": "*",
     "ampproject/amp-toolbox": "*",
     "ampproject/amp-wp": "dev-develop",
-    "enshrined/svg-sanitize": "^0.19.0",
+    "enshrined/svg-sanitize": "^0.20.0",
     "mcaskill/composer-exclude-files": "^4.0",
     "symfony/polyfill-mbstring": "^1.18"
   },
   "require-dev": {
-    "automattic/vipwpcs": "dev-develop",
+    "automattic/vipwpcs": "^3.0.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "ergebnis/composer-normalize": "^2.28",
     "humbug/php-scoper": "^0.17.5",
@@ -48,7 +48,6 @@
       "no-api": true
     }
   ],
-  "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {

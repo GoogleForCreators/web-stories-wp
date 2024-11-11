@@ -60,14 +60,10 @@ const InlineInputForm = ({
     setNewValue(value);
   }, [value]);
 
-  useFocusOut(
-    inputContainerRef,
-    () => {
-      // cancel changes when user focuses away from input
-      onEditCancel();
-    },
-    [onEditCancel]
-  );
+  useFocusOut(inputContainerRef, () => {
+    // cancel changes when user focuses away from input
+    onEditCancel();
+  }, [onEditCancel]);
 
   useEffect(() => {
     if (!noAutoFocus && inputContainerRef.current) {

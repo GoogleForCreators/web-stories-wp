@@ -70,15 +70,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Setup Node
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -116,7 +116,7 @@ jobs:
         run: bun run workflow:build-plugin
 
       - name: Upload bundle
-        uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
         with:
           name: web-stories
           path: build/web-stories
@@ -146,10 +146,20 @@ jobs:
             wp: 'latest'
             snapshots: true
             shard: '2/2'
+          - browser: 'chrome'
+            wp: '6.7-RC4'
+            snapshots: false
+            shard: '1/2'
+            experimental: true
+          - browser: 'chrome'
+            wp: '6.7-RC4'
+            snapshots: false
+            shard: '2/2'
+            experimental: true
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -165,7 +175,7 @@ jobs:
             34.104.35.123:443
 
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Download bundle
         uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
@@ -177,7 +187,7 @@ jobs:
         run: sudo apt-get install libgbm1
 
       - name: Setup Node
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -229,7 +239,7 @@ jobs:
           ARTIFACT_NAME: failures-artifacts-${{ matrix.wp }}-${{ matrix.shard }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
         if: always()
         with:
           name: ${{ env.ARTIFACT_NAME }}

@@ -41,12 +41,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@5cf07d8b700b67e235fbb65cbc84f69c0cf10464
+        uses: github/codeql-action/init@662472033e021d55d94146f66f6058822b0b39fd
         with:
           languages: javascript
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@5cf07d8b700b67e235fbb65cbc84f69c0cf10464
+        uses: github/codeql-action/analyze@662472033e021d55d94146f66f6058822b0b39fd

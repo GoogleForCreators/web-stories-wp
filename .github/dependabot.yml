@@ -33,6 +33,14 @@ updates:
       typescript-eslint:
         patterns:
           - '@typescript-eslint/*'
+      babel:
+        patterns:
+        - 'babel-*'
+        - '@babel/*'
+      oxlint:
+        patterns:
+        - 'oxlint'
+        - 'eslint-plugin-oxlint'
     ignore:
       # styled-components is not yet compatible.
       - dependency-name: 'stylis-plugin-rtl'

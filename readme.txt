@@ -1,7 +1,7 @@
 === Web Stories ===
 
 Contributors:      google
-Tested up to:      6.6
+Tested up to:      6.7
 Requires at least: 6.4
 Stable tag:        V.V.V
 License:           Apache-2.0
@@ -112,7 +112,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 = 1.37.0 =
 
 * Feature: added support for [stickers](https://amp.dev/documentation/components/stories/amp-story-audio-sticker) for users to click and unmute the story.
-* Enhancement: raises minim WordPress version to 6.3.
+* Enhancement: raises minimum WordPress version to 6.3.
 * Enhancement: Various smaller performance improvements.
 
 = 1.36.0 =

@@ -580,7 +580,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 				'url' => 'http://[exam]ple.com/caniload.php',
 			],
 			'a host whose IPv4 address cannot be resolved' => [
-				'url' => 'http://exampleeeee.com/caniload.php',
+				'url' => 'http://idonotexist.local/caniload.php',
 			],
 			'an external request when not allowed'         => [
 				'url' => 'http://192.168.0.1/caniload.php',

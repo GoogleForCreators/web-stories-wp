@@ -149,14 +149,10 @@ function PublisherLogoSettings({
     setFocusedPublisherLogoId(newMenuId);
   }, []);
 
-  useFocusOut(
-    containerRef,
-    () => {
-      setFocusedPublisherLogoId(null);
-      setContextMenuId(null);
-    },
-    []
-  );
+  useFocusOut(containerRef, () => {
+    setFocusedPublisherLogoId(null);
+    setContextMenuId(null);
+  }, []);
 
   return (
     <SettingForm>
