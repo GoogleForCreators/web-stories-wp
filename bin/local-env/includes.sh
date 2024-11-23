@@ -161,7 +161,7 @@ dc() {
 # Executes a WP CLI request in the CLI container.
 ##
 wp() {
-	dc exec -T -u xfs $CLI wp "$@"
+	dc exec -T -u www-data $CLI wp "$@"
 }
 
 ##

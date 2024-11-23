@@ -26,7 +26,7 @@ services:
 
   cli:
     image: wordpress:cli-php${PHP_VERSION:-8.2}
-    user: xfs
+    user: www-data
     environment:
       WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_USER: root
