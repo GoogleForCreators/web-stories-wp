@@ -205,7 +205,9 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer as BlobPart], { type: MEDIA_POSTER_IMAGE_MIME_TYPE }),
+          new Blob([data.buffer as BlobPart], {
+            type: MEDIA_POSTER_IMAGE_MIME_TYPE,
+          }),
           outputFileName,
           MEDIA_POSTER_IMAGE_MIME_TYPE
         );
@@ -263,7 +265,9 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer as BlobPart], { type: MEDIA_TRANSCODED_MIME_TYPE }),
+          new Blob([data.buffer as BlobPart], {
+            type: MEDIA_TRANSCODED_MIME_TYPE,
+          }),
           outputFileName,
           MEDIA_TRANSCODED_MIME_TYPE
         );
@@ -596,7 +600,9 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer as BlobPart], { type: MEDIA_TRANSCODED_MIME_TYPE }),
+          new Blob([data.buffer as BlobPart], {
+            type: MEDIA_TRANSCODED_MIME_TYPE,
+          }),
           outputFileName,
           MEDIA_TRANSCODED_MIME_TYPE
         );
