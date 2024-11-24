@@ -20,7 +20,6 @@
 import {
   createSolid,
   generatePatternStyles,
-  getGradientStyleFromColor,
   isPatternEqual,
   getColorFromGradientStyle,
   type Gradient,
@@ -38,13 +37,11 @@ import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../styleManipulation';
-import { isStyle, getVariable } from './util';
-
-const styleToColor = (style: string): Gradient =>
-  getColorFromGradientStyle(getVariable(style, GRADIENT_COLOR));
-
-const colorToStyle = (color: Gradient): string =>
-  `${GRADIENT_COLOR}-${getGradientStyleFromColor(color)}`;
+import {
+  isStyle,
+  styleToGradientColor as styleToColor,
+  gradientColorToStyle as colorToStyle,
+} from './util';
 
 function elementToStyle(element: HTMLElement): string | null {
   const isSpan = element.tagName.toLowerCase() === 'span';

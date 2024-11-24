@@ -17,14 +17,16 @@
 /**
  * Internal dependencies
  */
-export { default as RichTextProvider } from './provider';
-export { default as RichTextEditor } from './editor';
-export { default as RichTextContext } from './context';
-export { default as useRichText } from './useRichText';
-export { default as usePasteTextContent } from './usePasteTextContent';
-export { default as getFontVariants } from './getFontVariants';
-export { default as getTextColors } from './getTextColors';
-export { default as getCaretCharacterOffsetWithin } from './utils/getCaretCharacterOffsetWithin';
-export * from './htmlManipulation';
+import getTextColors from '../getTextColors';
 
-export * from './types';
+describe('getTextColors', () => {
+  it('should return a list of text colors', () => {
+    const htmlContent =
+      'Fill in <span style="color: #eb0404">some</span> <span style="color: #026111">text</span>';
+    const expected = ['#000000', '#eb0404', '#026111'];
+
+    const actual = getTextColors(htmlContent);
+
+    expect(actual).toStrictEqual(expected);
+  });
+});
