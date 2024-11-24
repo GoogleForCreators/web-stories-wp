@@ -32,7 +32,7 @@ describe('isAnimatedGif', () => {
       buffer.byteOffset,
       buffer.byteOffset + buffer.byteLength
     );
-    const result = isAnimatedGif(arrayBuffer);
+    const result = isAnimatedGif(arrayBuffer as unknown as ArrayBuffer);
 
     expect(result).toBeTrue();
   });
@@ -43,7 +43,7 @@ describe('isAnimatedGif', () => {
       buffer.byteOffset,
       buffer.byteOffset + buffer.byteLength
     );
-    const result = isAnimatedGif(arrayBuffer);
+    const result = isAnimatedGif(arrayBuffer as unknown as ArrayBuffer);
 
     expect(result).toBeFalse();
   });
