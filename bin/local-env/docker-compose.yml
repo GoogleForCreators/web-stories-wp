@@ -1,6 +1,6 @@
 services:
   wordpress:
-    image: wordpress:php${PHP_VERSION:-7.4}
+    image: wordpress:php${PHP_VERSION:-8.2}
     ports:
       - '127.0.0.1:8899:80'
     environment:
@@ -25,8 +25,7 @@ services:
       - mysql
 
   cli:
-    image: wordpress:cli-php${PHP_VERSION:-7.4}
-    user: xfs
+    image: wordpress:cli-php${PHP_VERSION:-8.2}
     environment:
       WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_USER: root

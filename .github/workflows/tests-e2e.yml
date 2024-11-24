@@ -132,7 +132,7 @@ jobs:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['6.4']
+        wp: ['6.5']
         snapshots: [false]
         experimental: [false]
         # We want to split up the tests into 2 parts running in parallel.
@@ -146,16 +146,6 @@ jobs:
             wp: 'latest'
             snapshots: true
             shard: '2/2'
-          - browser: 'chrome'
-            wp: '6.7-RC3'
-            snapshots: false
-            shard: '1/2'
-            experimental: true
-          - browser: 'chrome'
-            wp: '6.7-RC3'
-            snapshots: false
-            shard: '2/2'
-            experimental: true
 
     steps:
       - name: Harden Runner
