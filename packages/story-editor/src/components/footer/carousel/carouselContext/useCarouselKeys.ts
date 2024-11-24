@@ -70,7 +70,7 @@ function useCarouselKeys({
   useKeyDownEffect(
     listElement,
     { key: ['up', 'down', 'left', 'right'] },
-    ({ key }) => {
+    ({ key }: KeyboardEvent) => {
       // Intercept all keys, but only handle left and right.
       const dir = getArrowDir(key, 'ArrowRight', 'ArrowLeft', isRTL);
       if (dir === 0) {
@@ -103,7 +103,7 @@ function useCarouselKeys({
   useKeyDownEffect(
     listElement,
     { key: ['mod+up', 'mod+down', 'mod+left', 'mod+right'], shift: true },
-    (evt) => {
+    (evt: KeyboardEvent) => {
       const { key, shiftKey } = evt;
 
       // Cancel the default behavior of the event: it's very jarring to run

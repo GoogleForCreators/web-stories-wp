@@ -205,7 +205,7 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE }),
+          new Blob([data.buffer as BlobPart], { type: MEDIA_POSTER_IMAGE_MIME_TYPE }),
           outputFileName,
           MEDIA_POSTER_IMAGE_MIME_TYPE
         );
@@ -263,7 +263,7 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE }),
+          new Blob([data.buffer as BlobPart], { type: MEDIA_TRANSCODED_MIME_TYPE }),
           outputFileName,
           MEDIA_TRANSCODED_MIME_TYPE
         );
@@ -348,7 +348,7 @@ function useFFmpeg() {
           .map((outputFile) => {
             const data = (ffmpeg as FFmpeg).FS('readFile', outputFile);
             return blobToFile(
-              new Blob([data.buffer], { type }),
+              new Blob([data.buffer as BlobPart], { type }),
               outputFile,
               type
             );
@@ -417,7 +417,7 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer], { type }),
+          new Blob([data.buffer as BlobPart], { type }),
           outputFileName,
           type
         );
@@ -478,7 +478,7 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer], { type }),
+          new Blob([data.buffer as BlobPart], { type }),
           outputFileName,
           type
         );
@@ -538,7 +538,7 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer], { type }),
+          new Blob([data.buffer as BlobPart], { type }),
           outputFileName,
           type
         );
@@ -596,7 +596,7 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE }),
+          new Blob([data.buffer as BlobPart], { type: MEDIA_TRANSCODED_MIME_TYPE }),
           outputFileName,
           MEDIA_TRANSCODED_MIME_TYPE
         );
@@ -651,7 +651,7 @@ function useFFmpeg() {
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return blobToFile(
-          new Blob([data.buffer], { type: 'audio/mpeg' }),
+          new Blob([data.buffer as BlobPart], { type: 'audio/mpeg' }),
           outputFileName,
           'audio/mpeg'
         );

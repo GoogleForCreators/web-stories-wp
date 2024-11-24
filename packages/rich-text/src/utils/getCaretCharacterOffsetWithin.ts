@@ -44,7 +44,11 @@ interface CaretPosition {
 }
 
 interface SelectionDocument extends Document {
-  caretPositionFromPoint?: (x: number, y: number) => CaretPosition | null;
+  caretPositionFromPoint: (
+    x: number,
+    y: number,
+    options?: CaretPositionFromPointOptions
+  ) => CaretPosition | null;
 }
 
 // Extend for wider browser support.
