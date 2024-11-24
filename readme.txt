@@ -140,6 +140,6 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 == Upgrade Notice ==
 
-= 1.3.7.0 =
+= 1.37.0 =
 
 This release improves frontend performance and adds initial support for audio stickers.
