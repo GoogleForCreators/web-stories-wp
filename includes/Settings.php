@@ -218,7 +218,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 				'description'  => __( 'Ad Network', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => 'none',
-				'enum'         => [ 'none', 'adsense', 'admanager' ],
+				'enum'         => [ 'none', 'adsense', 'admanager', 'mgid' ],
 				'show_in_rest' => true,
 			]
 		);
