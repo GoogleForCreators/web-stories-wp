@@ -57,7 +57,7 @@
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/big.js": "^6.2.2",
-    "@types/react-transition-group": "^4.4.11",
+    "@types/react-transition-group": "^4.4.6",
     "@types/styled-components": "^5.1.26",
     "use-debounce": "^10.0.1"
   }
