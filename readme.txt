@@ -105,6 +105,14 @@ There are two ways to include analytics in your Web Stories:
 
 Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions on a page's allowed markup. In some cases, other WordPress plugins use disallowed markup. We recommend temporarily disabling these plugins and reaching out to our [support forum](https://wordpress.org/plugins/web-stories/).
 
+= Where can I report bugs? =
+
+For help requests, support questions, or general feedback, please reach out via the [support forum](https://wordpress.org/plugins/web-stories/).
+
+Reproducible bug reports can be filed [on GitHub](https://github.com/googleforcreators/web-stories-wp/).
+
+To report a vulnerability in this plugin, please contact the Google Security Team at [g.co/vulnz](https://g.co/vulnz).
+
 == Changelog ==
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).

@@ -75,7 +75,6 @@ phpunit-integration-multisite.xml.dist
 README.md
 rollup.config.js
 scoper.inc.php
-SECURITY.md
 tsconfig.json
 tsconfig.shared.json
 webpack.config.cjs
