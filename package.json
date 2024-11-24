@@ -22,7 +22,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 20",
+    "node": ">= 22",
     "npm": ">= 10"
   },
   "type": "module",
