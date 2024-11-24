@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { EditorState } from 'draft-js';
+import { filterEditorState } from 'draftjs-filters';
 
 /**
  * Internal dependencies
@@ -60,8 +61,7 @@ function updateAndReturnHTML(
   ...args: [AllowedSetterArgs]
 ) {
   const stateWithUpdate = updater(getSelectAllStateFromHTML(html), ...args);
-  const renderedHTML = customExport(stateWithUpdate);
-  return renderedHTML;
+  return customExport(stateWithUpdate);
 }
 
 const getHTMLFormatter =
@@ -89,4 +89,22 @@ export const getHTMLFormatters = (): {
 export function getHTMLInfo(html: string) {
   const htmlStateInfo = getStateInfo(getSelectAllStateFromHTML(html));
   return htmlStateInfo;
+}
+
+export function sanitizeEditorHtml(html: string) {
+  const editorState = getSelectAllStateFromHTML(html);
+  return (
+    customExport(
+      filterEditorState(
+        {
+          blocks: [],
+          styles: ['BOLD', 'ITALIC', 'UNDERLINE'],
+          entities: [],
+          maxNesting: 1,
+          whitespacedCharacters: [],
+        },
+        editorState
+      )
+    ) || ''
+  );
 }
