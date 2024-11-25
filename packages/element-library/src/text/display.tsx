@@ -22,7 +22,11 @@ import { useEffect, useRef, useMemo } from '@googleforcreators/react';
 import { createSolid, type Solid } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
-import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
+import {
+  getHTMLFormatters,
+  getHTMLInfo,
+  sanitizeEditorHtml,
+} from '@googleforcreators/rich-text';
 import { stripHTML } from '@googleforcreators/dom';
 import {
   getResponsiveBorder,
@@ -314,7 +318,7 @@ function TextDisplay({
                 borderRadius={borderRadius}
                 dataToEditorY={dataToEditorY}
                 dangerouslySetInnerHTML={{
-                  __html: contentWithoutColor,
+                  __html: sanitizeEditorHtml(contentWithoutColor),
                 }}
               />
             </MarginedElement>
@@ -325,7 +329,7 @@ function TextDisplay({
                 ref={fgRef}
                 {...props}
                 dangerouslySetInnerHTML={{
-                  __html: content,
+                  __html: sanitizeEditorHtml(content),
                 }}
               />
             </MarginedElement>
@@ -351,7 +355,7 @@ function TextDisplay({
       <FillElement
         ref={fgRef as RefObject<HTMLParagraphElement>}
         dangerouslySetInnerHTML={{
-          __html: content,
+          __html: sanitizeEditorHtml(content),
         }}
         previewMode={previewMode}
         {...props}
