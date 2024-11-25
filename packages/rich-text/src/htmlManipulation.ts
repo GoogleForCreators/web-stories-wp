@@ -29,6 +29,16 @@ import customImport from './customImport';
 import customExport from './customExport';
 import { getSelectionForAll } from './util';
 import type { StyleSetter, AllowedSetterArgs } from './types';
+import {
+  ITALIC,
+  UNDERLINE,
+  WEIGHT,
+  COLOR,
+  LETTERSPACING,
+  UPPERCASE,
+  GRADIENT_COLOR,
+} from './customConstants';
+import { getPrefixStylesInSelection } from './styleManipulation';
 
 /**
  * Return an editor state object with content set to parsed HTML
@@ -93,12 +103,23 @@ export function getHTMLInfo(html: string) {
 
 export function sanitizeEditorHtml(html: string) {
   const editorState = getSelectAllStateFromHTML(html);
+
+  const styles: string[] = [
+    ...getPrefixStylesInSelection(editorState, ITALIC),
+    ...getPrefixStylesInSelection(editorState, UNDERLINE),
+    ...getPrefixStylesInSelection(editorState, WEIGHT),
+    ...getPrefixStylesInSelection(editorState, COLOR),
+    ...getPrefixStylesInSelection(editorState, LETTERSPACING),
+    ...getPrefixStylesInSelection(editorState, UPPERCASE),
+    ...getPrefixStylesInSelection(editorState, GRADIENT_COLOR),
+  ];
+
   return (
     customExport(
       filterEditorState(
         {
           blocks: [],
-          styles: ['BOLD', 'ITALIC', 'UNDERLINE'],
+          styles,
           entities: [],
           maxNesting: 1,
           whitespacedCharacters: [],
