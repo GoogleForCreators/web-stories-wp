@@ -122,6 +122,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Enhancement: compatibility with WordPress 6.6 and 6.7.
 * Enhancement: raises minimum WordPress version to 6.5.
 * Enhancement: updated list of available Google Fonts.
+* Fixed: resolved a minor issue when parsing text elements in the editor.
 * Minor code quality improvements and bug fixes.
 
 = 1.37.0 =
