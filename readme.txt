@@ -117,6 +117,13 @@ To report a vulnerability in this plugin, please contact the Google Security Tea
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.38.0 =
+
+* Enhancement: compatibility with WordPress 6.6 and 6.7.
+* Enhancement: raises minimum WordPress version to 6.5.
+* Enhancement: updated list of available Google Fonts.
+* Minor code quality improvements and bug fixes.
+
 = 1.37.0 =
 
 * Feature: added support for [stickers](https://amp.dev/documentation/components/stories/amp-story-audio-sticker) for users to click and unmute the story.
@@ -131,15 +138,8 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Fixed: resolved an issue with canvas zoom.
 * Fixed: resolved several layout issues with the Web Stories block.
 
-= 1.35.0 =
-
-* Enhancement: compatibility with WordPress 6.4. New minimum version required is 6.2.
-* Enhancement: improve captions appearance when there is also a call-to-action.
-* Fixed: resolved an issue with stories not appearing in the lightbox.
-* Various smaller bug fixes.
-
 == Upgrade Notice ==
 
-= 1.37.0 =
+= 1.38.0 =
 
-This release improves frontend performance and adds initial support for audio stickers.
+This release ensures compatibility with WordPress 6.7 and contains minor bug fixes.
