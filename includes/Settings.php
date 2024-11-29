@@ -183,7 +183,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	/**
 	 * Register settings.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 */
@@ -454,7 +454,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	/**
 	 * Returns the value for a given setting.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.12.0
 	 *

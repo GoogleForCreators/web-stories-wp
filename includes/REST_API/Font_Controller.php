@@ -246,7 +246,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Prepares a single post output for response.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.16.0
 	 *
@@ -371,7 +371,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Retrieves the font's schema, conforming to JSON Schema.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.16.0
 	 *

@@ -35,7 +35,7 @@ use WP_Site;
 /**
  * Handles plugin activation.
  *
- * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
  *
  * @since 1.0.0
  *
@@ -110,7 +110,7 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
 /**
  * Handles plugin deactivation.
  *
- * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
  *
  * @since 1.0.0
  *
@@ -163,7 +163,7 @@ add_action( 'init', __NAMESPACE__ . '\load_functions' );
  *
  * Like rest_preload_api_request() in core, but embeds links and removes trailing slashes.
  *
- * @SuppressWarnings(PHPMD.NPathComplexity)
+ * @SuppressWarnings("PHPMD.NPathComplexity")
  *
  * @since 1.2.0
  *

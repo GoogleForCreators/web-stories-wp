@@ -128,7 +128,7 @@ class Sanitization {
 	/**
 	 * Adds missing scripts.
 	 *
-	 * @SuppressWarnings(PHPMD)
+	 * @SuppressWarnings("PHPMD")
 	 *
 	 * @since 1.1.0
 	 *
@@ -418,7 +418,7 @@ class Sanitization {
 	 * accessing options from the database, requiring AMP__VERSION,
 	 * and causing conflicts with our own amp_is_request() compat shim.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.1.0
 	 *

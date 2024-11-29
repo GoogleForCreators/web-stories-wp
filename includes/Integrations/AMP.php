@@ -41,7 +41,7 @@ use WP_Post;
 /**
  * Class AMP.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @phpstan-type AMPOptions array{
  *   theme_support?: string,
@@ -349,7 +349,7 @@ class AMP extends Service_Base implements HasRequirements {
 	/**
 	 * Get the post type for the current request.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.2.0
 	 */

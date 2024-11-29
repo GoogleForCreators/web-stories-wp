@@ -42,7 +42,7 @@ use WP_REST_Server;
  *
  * API endpoint for pinging and hotlinking media URLs.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @phpstan-type LinkData array{
  *   ext?: string,
@@ -203,8 +203,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return some metadata for inserting external media.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.11.0
 	 *
@@ -327,7 +327,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return proxied file.
 	 *
-	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
+	 * @SuppressWarnings("PHPMD.ErrorControlOperator")
 	 *
 	 * @since 1.13.0
 	 *
@@ -724,8 +724,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * Like {@see wp_http_validate_url} in core, but with extra hardening
 	 * to avoid DNS rebinding issues.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.CyclomaticComplexity")
 	 *
 	 * @since 1.22.0
 	 *

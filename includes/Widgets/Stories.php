@@ -32,7 +32,7 @@ use WP_Widget;
 /**
  * Class Stories
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @phpstan-type InputArgs array{
  *   type?: string,
@@ -167,8 +167,8 @@ class Stories extends WP_Widget {
 	/**
 	 * Display widget form.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.5.0
 	 *
@@ -409,7 +409,7 @@ class Stories extends WP_Widget {
 	/**
 	 * Update widget settings.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.5.0
 	 *
