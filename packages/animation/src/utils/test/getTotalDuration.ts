@@ -24,7 +24,7 @@ const BASE_ANIMATION = {
   id: '1',
   targets: [],
 };
-const type = AnimationType.BlinkOn as const;
+const type = AnimationType.BlinkOn;
 
 describe('getTotalDuration', () => {
   it('returns 0 if no animations supplied', () => {

@@ -187,7 +187,7 @@ describe('AnimationProvider', () => {
         rotationAngle: 0,
       };
       const elements = [element1, element2];
-      const animType = AnimationType.Move as const;
+      const animType = AnimationType.Move;
       const args = [
         { bounces: 3, duration: 1000 },
         { blinks: 2, offset: 20, blarks: 6, duration: 1000 },

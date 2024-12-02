@@ -257,7 +257,7 @@ function TextDisplay({
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
-    const updatedMargin = transform?.updates?.marginOffset;
+    const updatedMargin = transform?.updates?.marginOffset as number;
     target.style.margin = updatedMargin
       ? `${dataToEditorY(-updatedMargin) / 2}px 0`
       : '';

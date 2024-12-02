@@ -337,7 +337,9 @@ function TextEdit({
         editWrapper.style.left = `${boxRef.current.x + dx}px`;
         editWrapper.style.top = `${boxRef.current.y + dy}px`;
       }
-      onResize && onResize();
+      if (onResize) {
+        onResize();
+      }
     }
   }, [dataToEditorY, editWrapper, element, onResize, top, bottom]);
   // Invoke on each content update.

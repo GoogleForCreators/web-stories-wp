@@ -24,27 +24,27 @@ import {
   type DimensionableElement,
 } from '@googleforcreators/units';
 
-function calcTopOffset(box: ElementBox, dangerZoneOffset: number) {
+function calcTopOffset(box: ElementBox, dangerZoneOffset: number): number {
   const { y, height } = box;
   const toTop = dangerZoneOffset + y;
-  return -Number((toTop / height) * 100.0 + 100.0).toFixed(5);
+  return -Number(Number((toTop / height) * 100.0 + 100.0).toFixed(5));
 }
 
-function calcBottomOffset(box: ElementBox, dangerZoneOffset: number) {
+function calcBottomOffset(box: ElementBox, dangerZoneOffset: number): number {
   const { y, height } = box;
   const toBottom = 100 - y + dangerZoneOffset;
-  return Number((toBottom / height) * 100.0).toFixed(5);
+  return Number(Number((toBottom / height) * 100.0).toFixed(5));
 }
 
-function calcLeftOffset(box: ElementBox) {
+function calcLeftOffset(box: ElementBox): number {
   const { x, width } = box;
-  return -Number((x / width) * 100.0 + 100.0).toFixed(5);
+  return -Number(Number((x / width) * 100.0 + 100.0).toFixed(5));
 }
 
-function calcRightOffset(box: ElementBox) {
+function calcRightOffset(box: ElementBox): number {
   const { x, width } = box;
   const toRight = 100 - x;
-  return Number((toRight / width) * 100.0).toFixed(5);
+  return Number(Number((toRight / width) * 100.0).toFixed(5));
 }
 
 function getOffPageOffset(element: DimensionableElement) {

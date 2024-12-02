@@ -37,7 +37,7 @@ function useRefreshPostEditURL(postId: number, postEditURL: string) {
         ),
         newUrl.toString()
       );
-    } catch (error) {
+    } catch {
       // Do nothing for now.
     }
   }, [postId, postEditURL]);

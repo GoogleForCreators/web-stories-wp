@@ -17,7 +17,7 @@
 export function toAbsoluteUrl(base: string, path: string): string {
   try {
     return new URL(path, base).href;
-  } catch (error) {
+  } catch {
     return path;
   }
 }

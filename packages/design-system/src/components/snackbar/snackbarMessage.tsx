@@ -230,7 +230,9 @@ function SnackbarMessage({
   const handleAction = useCallback(
     (evt: MouseEvent<HTMLButtonElement>) => {
       onAction(evt);
-      !isPreventActionDismiss && onDismiss();
+      if (!isPreventActionDismiss) {
+        onDismiss();
+      }
     },
     [onAction, onDismiss, isPreventActionDismiss]
   );

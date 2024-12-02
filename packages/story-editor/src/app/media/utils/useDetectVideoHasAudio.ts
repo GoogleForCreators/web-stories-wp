@@ -86,7 +86,7 @@ function useDetectVideoHasAudio({
             isMuted: !hasAudio,
           });
         }
-      } catch (error) {
+      } catch {
         // Do nothing for now.
       }
     },

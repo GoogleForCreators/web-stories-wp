@@ -123,7 +123,9 @@ const Button = forwardRef(function Button(
 
   const handleClick = (evt: MouseEvent<HTMLButtonElement>) => {
     onClick(evt);
-    dismissOnClick && onDismiss(evt.nativeEvent);
+    if (dismissOnClick) {
+      onDismiss(evt.nativeEvent);
+    }
   };
 
   const handleFocus = (evt: FocusEvent<HTMLButtonElement>) => {
