@@ -333,11 +333,8 @@
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "EXPERIMENTAL_useProjectService": true,
-        "warnOnUnsupportedTypeScriptVersion": false,
-        "project": [
-          ".tsconfig.json"
-        ]
+        "projectService": true,
+        "warnOnUnsupportedTypeScriptVersion": false
       },
       "rules": {
         "@typescript-eslint/no-shadow": ["error",

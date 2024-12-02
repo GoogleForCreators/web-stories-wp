@@ -50,7 +50,7 @@ function useCORSProxy() {
       await fetch(link, {
         method: 'HEAD',
       });
-    } catch (err) {
+    } catch {
       shouldProxy = true;
     }
 

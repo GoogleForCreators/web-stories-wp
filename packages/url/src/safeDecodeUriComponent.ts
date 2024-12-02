@@ -24,7 +24,7 @@
 export default function safeDecodeURIComponent(uriComponent: string) {
   try {
     return decodeURIComponent(uriComponent);
-  } catch (uriComponentError) {
+  } catch {
     return uriComponent;
   }
 }

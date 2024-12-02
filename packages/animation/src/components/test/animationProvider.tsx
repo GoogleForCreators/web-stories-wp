@@ -24,9 +24,9 @@ import type { PropsWithChildren } from 'react';
 /**
  * Internal dependencies
  */
-import { AnimationProvider, useStoryAnimationContext } from '..';
 import { createAnimationPart } from '../../parts';
-import { AnimationType, type Element } from '../../types';
+import { AnimationType, type Element, type StoryAnimation } from '../../types';
+import { AnimationProvider, useStoryAnimationContext } from '..';
 
 jest.mock('flagged');
 jest.mock('../../parts', () => ({
@@ -187,13 +187,13 @@ describe('AnimationProvider', () => {
         rotationAngle: 0,
       };
       const elements = [element1, element2];
-      const animType = AnimationType.Move as const;
+      const animType = AnimationType.Move;
       const args = [
         { bounces: 3, duration: 1000 },
         { blinks: 2, offset: 20, blarks: 6, duration: 1000 },
         { columns: 4, duration: 400 },
       ];
-      const animations = [
+      const animations: StoryAnimation[] = [
         { id: '1', targets: [target], type: animType, ...args[0] },
         { id: '2', targets: [target], type: animType, ...args[1] },
         { id: '3', targets: [target2], type: animType, ...args[2] },

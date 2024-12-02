@@ -116,7 +116,7 @@ export function useFauxSelection(
 
           // Save that as the next editor state
           return selectedState;
-        } catch (e) {
+        } catch {
           // If the component has unmounted/remounted, some of the above might throw
           // if so, just ignore it and return old state
           return oldEditorState;

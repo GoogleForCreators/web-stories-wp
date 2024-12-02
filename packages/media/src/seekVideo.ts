@@ -32,7 +32,7 @@ function seekVideo(video: HTMLVideoElement, offset = 0.99): Promise<void> {
     video.addEventListener('seeking', (evt) => {
       const wait = setTimeout(() => {
         clearTimeout(wait);
-        reject(evt);
+        reject(evt as unknown as Error);
       }, THREE_SECONDS);
     });
     video.addEventListener('error', reject);
