@@ -57,7 +57,7 @@ jobs:
           tools: wp-cli
 
       - name: Install latest version of i18n-command
-        run: wp package install wp-cli/i18n-command:dev-main
+        run: wp package install wp-cli/i18n-command:@stable
 
       - name: Setup Node
         uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
