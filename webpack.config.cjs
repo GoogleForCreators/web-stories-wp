@@ -394,7 +394,6 @@ const editorAndDashboard = {
 const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    'web-stories-lightbox': './packages/stories-lightbox/src/index.js',
     'web-stories-carousel': './packages/stories-carousel/src/index.js',
   },
   plugins: [

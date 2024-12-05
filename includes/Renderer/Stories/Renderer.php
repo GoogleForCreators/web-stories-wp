@@ -56,11 +56,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	public const STYLE_HANDLE = 'web-stories-list-styles';
 
 	/**
-	 * Web Stories stylesheet handle.
-	 */
-	public const LIGHTBOX_SCRIPT_HANDLE = 'web-stories-lightbox';
-
-	/**
 	 * Number of instances invoked. Kept it static to keep track.
 	 */
 	protected static int $instances = 0;
@@ -277,9 +272,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
-		// Web Stories lightbox script.
-		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
-
 		if ( \defined( 'AMPFORWP_VERSION' ) ) {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
@@ -353,8 +345,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 *
 		 * @var Story $story
 		 */
-		$story      = $this->current();
-		$wp_version = get_bloginfo( 'version' );
+		$story = $this->current();
 
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
@@ -378,15 +369,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		} else {
 			$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
-			if ( version_compare( $wp_version, '6.5', '<' ) ) {
-				$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
-			}
 			?>
-			<div 
+			<div
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
 				data-wp-interactive="web-stories-block"
 				<?php
-				if ( version_compare( $wp_version, '6.5', '>=' ) ) {
 					echo esc_attr(
 						wp_interactivity_data_wp_context(
 							[
@@ -394,7 +381,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 							]
 						)
 					);
-				}
 				?>
 				data-wp-on--click="actions.open"
 				data-wp-on-window--popstate="actions.onPopstate"
@@ -429,11 +415,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		];
 		?>
 		<div class="web-stories-list__lightbox">
-			<amp-story-player 
-				width="3.6" 
-				height="6" 
-				layout="responsive" 
-				data-wp-interactive="web-stories-block" 
+			<amp-story-player
+				width="3.6"
+				height="6"
+				layout="responsive"
+				data-wp-interactive="web-stories-block"
 				data-wp-on--amp-story-player-close="actions.close"
 				data-wp-on--navigation="actions.navigation"
 				>
@@ -858,7 +844,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					width="3.6"
 					height="6"
 					layout="responsive"
-					data-wp-interactive="web-stories-block" 
+					data-wp-interactive="web-stories-block"
 					data-wp-on--amp-story-player-close="actions.close"
 					data-wp-on--navigation="actions.navigation"
 				>

@@ -147,9 +147,7 @@ class Carousel_Renderer extends Renderer {
 		<?php
 		$content = (string) ob_get_clean();
 
-		if ( \function_exists( 'wp_interactivity_process_directives' ) ) {
-			$content = wp_interactivity_process_directives( $content );
-		}
+		$content = wp_interactivity_process_directives( $content );
 
 		/**
 		 * Filters the Carousel renderer stories content.
