@@ -27,9 +27,9 @@
   "main": "./src/index.tsx",
   "types": "dist-types/index.d.ts",
   "dependencies": {
-    "@emotion/is-prop-valid": "^1.2.2",
+    "@emotion/is-prop-valid": "^1.3.1",
     "@googleforcreators/tracking": "*",
-    "@wordpress/element": "^5.35.0",
+    "@wordpress/element": "^6.12.0",
     "@wordpress/i18n": "^4.47.0",
     "flagged": "^2.0.10",
     "polished": "^4.3.1",
@@ -37,7 +37,7 @@
     "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^8.1.1",
+    "@storybook/addon-essentials": "^8.4.6",
     "@testing-library/react": "^14.0.0"
   }
 }

@@ -122,9 +122,9 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return some metadata for inserting links.
 	 *
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.CyclomaticComplexity")
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 *
@@ -354,9 +354,12 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array{title: string, image: string, description: string} $link Link value, default to false is not set.
-	 * @param WP_REST_Request                                          $request Request object.
+	 * @param array           $link    Link value, default to false is not set.
+	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
+	 *
+	 * @phpstan-param array{title: string, image: string, description: string} $link
+	 * @phpstan-param WP_REST_Request<array{context: string}>                  $request
 	 */
 	public function prepare_item_for_response( $link, $request ) {
 		$fields = $this->get_fields_for_response( $request );
@@ -371,11 +374,6 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );

@@ -18,11 +18,25 @@
  * External dependencies
  */
 import type { FontWeight, FontVariantStyle } from '@googleforcreators/elements';
+import {
+  getColorFromGradientStyle,
+  getGradientStyleFromColor,
+  getHexFromSolid,
+  getSolidFromHex,
+  type Gradient,
+  type Pattern,
+  type Solid,
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
  */
-import { type LETTERSPACING, WEIGHT } from '../customConstants';
+import {
+  COLOR,
+  GRADIENT_COLOR,
+  type LETTERSPACING,
+  WEIGHT,
+} from '../customConstants';
 
 export const isStyle = (style: string | undefined, prefix: string) =>
   Boolean(style?.startsWith(prefix));
@@ -60,3 +74,19 @@ export function styleToNumeric(
 export function weightToStyle(weight: number) {
   return numericToStyle(WEIGHT, weight);
 }
+
+/*
+ * Color uses PREFIX-XXXXXXXX where XXXXXXXX is the 8 digit
+ * hex representation of the RGBA color.
+ */
+export const styleToColor = (style: string): Pattern =>
+  getSolidFromHex(getVariable(style, COLOR));
+
+export const colorToStyle = (color: Solid): string =>
+  `${COLOR}-${getHexFromSolid(color)}`;
+
+export const styleToGradientColor = (style: string): Gradient =>
+  getColorFromGradientStyle(getVariable(style, GRADIENT_COLOR));
+
+export const gradientColorToStyle = (color: Gradient): string =>
+  `${GRADIENT_COLOR}-${getGradientStyleFromColor(color)}`;

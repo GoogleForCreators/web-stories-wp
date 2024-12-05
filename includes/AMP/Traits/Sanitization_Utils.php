@@ -71,7 +71,7 @@ trait Sanitization_Utils {
 	 * Removes empty data-tooltip-icon and data-tooltip-text attributes
 	 * to prevent validation issues.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.1.0
 	 *
@@ -586,10 +586,9 @@ trait Sanitization_Utils {
 			// will contain "foo1,2/image.png 123w" and "foo2,3/image.png 456w", without the trailing commas.
 			preg_match_all( '/((?<entry>[^ ]+ [\d]+w),?)/', $srcset, $matches );
 
-			$entries           = $matches['entry'] ?? [];
 			$entries_by_widths = [];
 
-			foreach ( $entries as $entry ) {
+			foreach ( $matches['entry'] as $entry ) {
 				$entry_data = explode( ' ', $entry );
 				if ( ! isset( $entries_by_widths[ $entry_data[1] ] ) ) {
 					$entries_by_widths[ $entry_data[1] ] = $entry;

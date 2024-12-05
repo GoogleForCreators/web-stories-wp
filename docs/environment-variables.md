@@ -56,4 +56,4 @@ Whether to open dev tools during tests. Default: `false`
 ## Local Environment
 
 **PHP_VERSION** (string):
-PHP version which local environment runs in. Default: `7.4` 
+PHP version which local environment runs in. Default: `8.2` 

@@ -119,7 +119,7 @@ const CalendarWrapper = styled.div`
     }
   }
 
-  /* stylelint-disable-next-line no-descending-specificity */
+  /* stylelint-disable no-descending-specificity */
   .react-calendar__year-view .react-calendar__tile,
   .react-calendar__decade-view .react-calendar__tile,
   .react-calendar__century-view .react-calendar__tile {

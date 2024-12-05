@@ -130,7 +130,7 @@ function useDetectBaseColor({
             });
           }
         }
-      } catch (error) {
+      } catch {
         // This might happen as an author when trying to updateMedia() that
         // was uploaded by someone else.
         // Do nothing with the error for now.
@@ -163,7 +163,7 @@ function useDetectBaseColor({
           if (posterResource) {
             imageSrc = getSmallestUrlForWidth(0, posterResource);
           }
-        } catch (error) {
+        } catch {
           // The user might not have the permission to access the video with context=edit.
           // This might happen as an author when the video
           // was uploaded by someone else.
@@ -175,10 +175,13 @@ function useDetectBaseColor({
         return;
       }
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
+      if (!imageSrcProxied) {
+        return;
+      }
       try {
         const color = await getMediaBaseColor(imageSrcProxied);
         await saveBaseColor(resource, color);
-      } catch (error) {
+      } catch {
         // Do nothing for now.
       }
     },

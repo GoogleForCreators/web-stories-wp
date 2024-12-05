@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export type TransformHandler = (frame: object | null) => void;
+export type TransformHandler = (frame: Transform | null) => void;
 export type HandlerRegister = (
   id: string,
   handler: TransformHandler
@@ -25,9 +25,14 @@ export type TransformsList = Record<string, Record<string, unknown> | null>;
 
 export interface Transform {
   staticTransformation: boolean;
+  color?: unknown;
+  style?: string;
+  resize?: [number, number];
+  dropTargets?: { hover: boolean; active: boolean };
+  updates?: Record<string, unknown>;
 }
 
-export type PushTransform = (id: string, transform: Transform) => void;
+export type PushTransform = (id: string, transform: Transform | null) => void;
 export type ClearTransform = () => void;
 
 export interface State {

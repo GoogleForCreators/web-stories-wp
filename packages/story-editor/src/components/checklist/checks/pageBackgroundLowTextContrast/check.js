@@ -27,6 +27,7 @@ import {
   preloadImage,
 } from '@googleforcreators/media';
 import { createSolidFromString } from '@googleforcreators/patterns';
+import { getTextColors } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -36,7 +37,6 @@ import {
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
 } from '../../../../utils/contrastUtils';
-import { getSpansFromContent } from '../../utils';
 import getMediaBaseColor from '../../../../utils/getMediaBaseColor';
 import { noop } from '../../../../utils/noop';
 
@@ -276,19 +276,7 @@ async function getOverlapBgColor({ bgImage, bgBox, overlapBox }) {
  * @return {Array} the style colors from the span tags in text element content
  */
 function getTextStyleColors(element) {
-  const spans = getSpansFromContent(element.content);
-  const textStyleColors = spans
-    .map((span) => span.style?.color)
-    .filter(Boolean);
-  // if no colors were retrieved but there are spans, there is a black default color
-  const noColorStyleOnSpans =
-    textStyleColors.length === 0 && spans.length !== 0;
-  // if no spans were retrieved but there is content, there is a black default color
-  const noSpans = element.content.length !== 0 && spans.length === 0;
-  if (noColorStyleOnSpans || noSpans) {
-    textStyleColors.push('rgb(0, 0, 0)');
-  }
-  return textStyleColors;
+  return getTextColors(element.content);
 }
 
 function getTextShapeBackgroundColor({ background }) {

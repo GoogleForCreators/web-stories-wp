@@ -176,16 +176,14 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	 * @since 1.37.0
 	 */
 	public function prime_option_caches(): void {
-		if ( \function_exists( 'wp_prime_option_caches_by_group' ) ) {
-			wp_prime_option_caches_by_group( self::SETTING_GROUP );
-			wp_prime_option_caches_by_group( self::SETTING_GROUP_EXPERIMENTS );
-		}
+		wp_prime_option_caches_by_group( self::SETTING_GROUP );
+		wp_prime_option_caches_by_group( self::SETTING_GROUP_EXPERIMENTS );
 	}
 
 	/**
 	 * Register settings.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 */
@@ -220,7 +218,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 				'description'  => __( 'Ad Network', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => 'none',
-				'enum'         => [ 'none', 'adsense', 'admanager' ],
+				'enum'         => [ 'none', 'adsense', 'admanager', 'mgid' ],
 				'show_in_rest' => true,
 			]
 		);
@@ -456,7 +454,7 @@ class Settings implements Service, Registerable, PluginUninstallAware {
 	/**
 	 * Returns the value for a given setting.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.12.0
 	 *

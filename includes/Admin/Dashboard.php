@@ -156,7 +156,7 @@ class Dashboard extends Service_Base {
 	/**
 	 * Dashboard constructor.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+	 * @SuppressWarnings("PHPMD.ExcessiveParameterList")
 	 *
 	 * @since 1.0.0
 	 *

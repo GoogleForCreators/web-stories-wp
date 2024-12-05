@@ -51,6 +51,7 @@ interface AmpImg
     HTMLImageElement
   > {
   layout: AmpLayout;
+  'disable-inline-width'?: boolean;
 }
 
 interface AmpStory {

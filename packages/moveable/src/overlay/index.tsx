@@ -53,7 +53,7 @@ interface InOverlayProps extends HTMLAttributes<HTMLDivElement> {
   pointerEvents: PointerEventsValue;
   children?: ReactNode;
   zIndex: number;
-  render: (props: RenderProps) => JSX.Element;
+  render?: (props: RenderProps) => JSX.Element;
 }
 
 function InOverlayWithRef(

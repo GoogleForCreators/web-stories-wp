@@ -151,7 +151,7 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Dashboard constructor.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+	 * @SuppressWarnings("PHPMD.ExcessiveParameterList")
 	 *
 	 * @since 1.0.0
 	 *
@@ -333,7 +333,7 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Get editor settings as an array.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 *
@@ -409,9 +409,10 @@ class Editor extends Service_Base implements HasRequirements {
 		/**
 		 * Revision.
 		 *
-		 * @var int $revision
+		 * @var string|int $revision
 		 */
-		$revision = isset( $_GET['revision'] ) ? absint( $_GET['revision'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$revision = $_GET['revision'] ?? 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$revision = absint( $revision );
 
 		$revision_message = ! empty( $revision ) ?
 			sprintf(

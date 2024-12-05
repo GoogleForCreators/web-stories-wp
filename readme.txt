@@ -1,8 +1,8 @@
 === Web Stories ===
 
 Contributors:      google
-Tested up to:      6.5
-Requires at least: 6.3
+Tested up to:      6.7
+Requires at least: 6.5
 Stable tag:        V.V.V
 License:           Apache-2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
@@ -105,9 +105,31 @@ There are two ways to include analytics in your Web Stories:
 
 Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions on a page's allowed markup. In some cases, other WordPress plugins use disallowed markup. We recommend temporarily disabling these plugins and reaching out to our [support forum](https://wordpress.org/plugins/web-stories/).
 
+= Where can I report bugs? =
+
+For help requests, support questions, or general feedback, please reach out via the [support forum](https://wordpress.org/plugins/web-stories/).
+
+Reproducible bug reports can be filed [on GitHub](https://github.com/googleforcreators/web-stories-wp/).
+
+To report a vulnerability in this plugin, please contact the Google Security Team at [g.co/vulnz](https://g.co/vulnz).
+
 == Changelog ==
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
+
+= 1.38.0 =
+
+* Enhancement: compatibility with WordPress 6.6 and 6.7.
+* Enhancement: raises minimum WordPress version to 6.5.
+* Enhancement: updated list of available Google Fonts.
+* Fixed: resolved a minor issue when parsing text elements in the editor.
+* Minor code quality improvements and bug fixes.
+
+= 1.37.0 =
+
+* Feature: added support for [stickers](https://amp.dev/documentation/components/stories/amp-story-audio-sticker) for users to click and unmute the story.
+* Enhancement: raises minimum WordPress version to 6.3.
+* Enhancement: Various smaller performance improvements.
 
 = 1.36.0 =
 
@@ -117,41 +139,8 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Fixed: resolved an issue with canvas zoom.
 * Fixed: resolved several layout issues with the Web Stories block.
 
-= 1.35.0 =
-
-* Enhancement: compatibility with WordPress 6.4. New minimum version required is 6.2.
-* Enhancement: improve captions appearance when there is also a call-to-action.
-* Fixed: resolved an issue with stories not appearing in the lightbox.
-* Various smaller bug fixes.
-
-= 1.34.0 =
-
-* Enhancement: compatibility with WordPress 6.3. New minimum version required is 6.1.
-* Enhancement: improved plugin compatibility to reduce validation errors.
-* Enhancement: improved behavior of numeric input fields such as in the date picker.
-* Various smaller bug fixes.
-
-= 1.33.0 =
-
-* Enhancement: add Google Analytics 4 (GA4) support.
-* Enhancement: improved compatibility with Ezoic to reduce validation errors.
-* Enhancement: support for the MGID ad platform.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
 
-= 1.36.0 =
+= 1.38.0 =
 
-This release adds support for text gradients, a more fine-grained analytics setting, and includes compatibility with WordPress 6.5 and several bug fixes.
-
-= 1.35.0 =
-
-This release includes improved compatibility with WordPress 6.4 and several bug fixes.
-
-= 1.34.0 =
-
-This release includes improved compatibility with WordPress 6.3 and plugins like Ezoic, and several bug fixes.
-
-= 1.33.0 =
-
-This release includes Google Analytics 4 (GA4) support, improved compatibility with Ezoic, support for MGID ads, and several bug fixes.
+This release ensures compatibility with WordPress 6.7 and contains minor bug fixes.

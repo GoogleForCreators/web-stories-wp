@@ -3,7 +3,6 @@
     { "path": "packages/animation" },
     { "path": "packages/commander" },
     { "path": "packages/dashboard" },
-    { "path": "packages/element-library" },
     { "path": "packages/design-system" },
     { "path": "packages/dom" },
     { "path": "packages/elements" },

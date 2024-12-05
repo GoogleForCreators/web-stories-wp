@@ -45,7 +45,7 @@ import {
  */
 import { StoryPropTypes } from '../../propTypes';
 import useCORSProxy from '../../utils/useCORSProxy';
-import { useLocalMedia, useFont } from '../../app';
+import { useLocalMedia, useFont, useConfig } from '../../app';
 import renderResourcePlaceholder from './renderResourcePlaceholder';
 
 // Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
@@ -116,6 +116,7 @@ function DisplayElement({
     dataToEditorX: state.actions.dataToEditorX,
   }));
   const { getProxiedUrl } = useCORSProxy();
+  const { cdnURL } = useConfig();
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -267,6 +268,7 @@ function DisplayElement({
             maybeEnqueueFontStyle={maybeEnqueueFontStyle}
             siblingCount={siblingCount}
             renderResourcePlaceholder={renderResourcePlaceholder}
+            cdnUrl={cdnURL}
           />
         </WithMask>
         {!previewMode && (

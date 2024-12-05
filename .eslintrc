@@ -333,11 +333,8 @@
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "EXPERIMENTAL_useProjectService": true,
-        "warnOnUnsupportedTypeScriptVersion": false,
-        "project": [
-          ".tsconfig.json"
-        ]
+        "projectService": true,
+        "warnOnUnsupportedTypeScriptVersion": false
       },
       "rules": {
         "@typescript-eslint/no-shadow": ["error",
@@ -439,8 +436,16 @@
         ],
         "jest/prefer-mock-promise-shorthand": "off",
         "jest/prefer-snapshot-hint": "off",
-        "jsdoc/require-jsdoc": "off",
         "jest/unbound-method": "off",
+        "jest/padding-around-all": "off",
+        "jest/padding-around-after-each-blocks": "off",
+        "jest/padding-around-after-all-blocks": "off",
+        "jest/padding-around-before-all-blocks": "off",
+        "jest/padding-around-before-each-blocks": "off",
+        "jest/padding-around-describe-blocks": "off",
+        "jest/padding-around-expect-groups": "off",
+        "jest/padding-around-test-blocks": "off",
+        "jsdoc/require-jsdoc": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
@@ -576,7 +581,15 @@
           }
         ],
         "jest/prefer-snapshot-hint": "off",
-        "jest/unbound-method": "off"
+        "jest/unbound-method": "off",
+        "jest/padding-around-all": "off",
+        "jest/padding-around-after-each-blocks": "off",
+        "jest/padding-around-after-all-blocks": "off",
+        "jest/padding-around-before-all-blocks": "off",
+        "jest/padding-around-before-each-blocks": "off",
+        "jest/padding-around-describe-blocks": "off",
+        "jest/padding-around-expect-groups": "off",
+        "jest/padding-around-test-blocks": "off"
       },
       "globals": {
         "browser": "readonly",

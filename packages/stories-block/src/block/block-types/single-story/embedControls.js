@@ -110,19 +110,20 @@ const EmbedControls = (props) => {
       <InspectorControls>
         <PanelBody title={__('Embed Settings', 'web-stories')}>
           <PanelRow>
-            <BaseControl>
+            <BaseControl __nextHasNoMarginBottom>
               <TextControl
                 type="text"
                 className="web-stories-embed-title-control"
                 label={__('Title', 'web-stories')}
                 value={title || ''}
                 onChange={(value) => setAttributes({ title: value })}
+                __nextHasNoMarginBottom
               />
             </BaseControl>
           </PanelRow>
           <MediaUploadCheck>
             <PanelRow>
-              <BaseControl>
+              <BaseControl __nextHasNoMarginBottom>
                 <BaseControl.VisualLabel className="web-stories-embed-poster-label">
                   {__('Poster image', 'web-stories')}
                 </BaseControl.VisualLabel>
@@ -168,7 +169,10 @@ const EmbedControls = (props) => {
             </PanelRow>
           </MediaUploadCheck>
           <PanelRow>
-            <BaseControl className="web-stories-embed-size-control">
+            <BaseControl
+              className="web-stories-embed-size-control"
+              __nextHasNoMarginBottom
+            >
               <BaseControl.VisualLabel>
                 {__('Story dimensions', 'web-stories')}
               </BaseControl.VisualLabel>
@@ -183,6 +187,7 @@ const EmbedControls = (props) => {
                   onChange={(value) =>
                     setAttributes({ width: Number.parseInt(value) })
                   }
+                  __nextHasNoMarginBottom
                 />
                 <TextControl
                   type="number"
@@ -196,12 +201,13 @@ const EmbedControls = (props) => {
                       height: Number.parseInt(value),
                     })
                   }
+                  __nextHasNoMarginBottom
                 />
               </div>
             </BaseControl>
           </PanelRow>
           <PanelRow>
-            <BaseControl>
+            <BaseControl __nextHasNoMarginBottom>
               <ToggleControl
                 label={__('Display as preview', 'web-stories')}
                 checked={previewOnly}
@@ -210,6 +216,7 @@ const EmbedControls = (props) => {
                   'Displays the story poster that opens the story in a lightbox on click',
                   'web-stories'
                 )}
+                __nextHasNoMarginBottom
               />
             </BaseControl>
           </PanelRow>

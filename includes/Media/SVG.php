@@ -302,7 +302,7 @@ class SVG extends Service_Base {
 	/**
 	 * Get SVG image size.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.3.0
 	 *

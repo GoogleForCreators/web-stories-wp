@@ -77,7 +77,7 @@ class Embed {
 	/**
 	 * Renders the block output in default context.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 *

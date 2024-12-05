@@ -47,7 +47,7 @@ use WP_REST_Server;
  *
  * API endpoint to facilitate embedding web stories.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @phpstan-type SchemaEntry array{
  *   description: string,
@@ -126,7 +126,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * Returns information about the given story.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 *
@@ -251,6 +251,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @param array<string, mixed>|false $embed Embed value, default to false is not set.
 	 * @param WP_REST_Request            $request Request object.
 	 * @return WP_REST_Response|WP_Error Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string}> $request
 	 */
 	public function prepare_item_for_response( $embed, $request ) {
 		$fields = $this->get_fields_for_response( $request );
@@ -267,11 +269,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -368,7 +365,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * Checks are supposedly from the hosted site blog.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.2.0
 	 *

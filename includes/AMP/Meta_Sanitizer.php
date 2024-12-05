@@ -52,7 +52,7 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 * "Finally, specify the AMP boilerplate code. By putting the boilerplate code last, it prevents custom styles from
 	 * accidentally overriding the boilerplate css rules."
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.1.0
 	 *

@@ -318,7 +318,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
 	 * if the archive page has been disabled.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.14.0
 	 *

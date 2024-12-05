@@ -3,6 +3,7 @@
 .github
 .husky
 .idea
+.rollup.cache
 .storybook
 .wordpress-org
 __mocks__
@@ -48,6 +49,7 @@ web-stories-scraper
 .stylelintrc
 .test_artifacts
 babel.config.cjs
+bun.lockb
 codecov.yml
 composer.lock
 CONTRIBUTING.md
@@ -73,7 +75,6 @@ phpunit-integration-multisite.xml.dist
 README.md
 rollup.config.js
 scoper.inc.php
-SECURITY.md
 tsconfig.json
 tsconfig.shared.json
 webpack.config.cjs

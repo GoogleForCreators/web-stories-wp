@@ -40,7 +40,7 @@ use WP_REST_Response;
 /**
  * Stories_Base_Controller class.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
  *
@@ -113,6 +113,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<covariant array{context: string}> $request
 	 */
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
@@ -137,11 +139,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$data['story_data'] = post_password_required( $post ) ? (object) [] : rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
@@ -156,68 +153,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
-	}
-
-	/**
-	 * Creates a single story.
-	 *
-	 * Override the existing method so we can set parent id.
-	 *
-	 * @since 1.11.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
-	 */
-	public function create_item( $request ) {
-		/**
-		 * Original post ID.
-		 *
-		 * @var int $original_id
-		 */
-		$original_id = ! empty( $request['original_id'] ) ? $request['original_id'] : null;
-		if ( ! $original_id ) {
-			return parent::create_item( $request );
-		}
-
-		$original_post = $this->get_post( $original_id );
-		if ( is_wp_error( $original_post ) ) {
-			return $original_post;
-		}
-
-		if ( ! $this->check_update_permission( $original_post ) ) {
-			return new \WP_Error(
-				'rest_cannot_create',
-				__( 'Sorry, you are not allowed to duplicate this story.', 'web-stories' ),
-				[ 'status' => rest_authorization_required_code() ]
-			);
-		}
-
-		$request->set_param( 'content', $original_post->post_content );
-		$request->set_param( 'excerpt', $original_post->post_excerpt );
-
-		$title = sprintf(
-			/* translators: %s: story title. */
-			__( '%s (Copy)', 'web-stories' ),
-			$original_post->post_title
-		);
-		$request->set_param( 'title', $title );
-
-		$story_data = json_decode( $original_post->post_content_filtered, true );
-		if ( $story_data ) {
-			$request->set_param( 'story_data', $story_data );
-		}
-
-		$thumbnail_id = get_post_thumbnail_id( $original_post );
-		if ( $thumbnail_id ) {
-			$request->set_param( 'featured_media', $thumbnail_id );
-		}
-
-		$meta = $this->get_registered_meta( $original_post );
-		if ( $meta ) {
-			$request->set_param( 'meta', $meta );
-		}
-
-		return parent::create_item( $request );
 	}
 
 	/**

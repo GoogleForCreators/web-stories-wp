@@ -40,7 +40,7 @@ use WP_Error;
 /**
  * Class customizer settings.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @phpstan-type ThemeSupport array{
  *   customizer: array{
@@ -159,9 +159,9 @@ class Customizer extends Service_Base implements Conditional {
 	/**
 	 * Registers web stories customizer settings.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.CyclomaticComplexity")
 	 *
 	 * @since 1.5.0
 	 *
@@ -531,8 +531,8 @@ class Customizer extends Service_Base implements Conditional {
 	/**
 	 * Renders web stories based on the customizer selected options.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.CyclomaticComplexity")
 	 *
 	 * @since 1.5.0
 	 */
@@ -726,7 +726,9 @@ class Customizer extends Service_Base implements Conditional {
 				 *
 				 * @var array<string, array<string, array<string, array<int,string>|bool|int|string>>> $def
 				 */
-				$def                 = $parsed_args[ $key ];
+				$def = $parsed_args[ $key ];
+
+				// @phpstan-ignore argument.type (TODO: improve type for recursion)
 				$parsed_args[ $key ] = $this->parse_args( $value, $def );
 			} else {
 				$parsed_args[ $key ] = $value;

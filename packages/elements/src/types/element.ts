@@ -25,6 +25,7 @@ import type {
   VideoResource,
 } from '@googleforcreators/media';
 import type { ElementBox } from '@googleforcreators/units';
+import type stickers from '@googleforcreators/stickers';
 
 /**
  * Internal dependencies
@@ -124,6 +125,7 @@ export interface MediaElement extends BackgroundableElement {
   scale?: number;
   focalX?: number;
   focalY?: number;
+  alt?: string;
 }
 
 export interface SequenceMediaElement extends MediaElement {
@@ -136,15 +138,18 @@ export interface VideoElement extends SequenceMediaElement {
   resource: VideoResource;
   poster?: string;
   loop?: boolean;
+  volume: number;
 }
 
 export interface GifElement extends SequenceMediaElement {
   type: ElementType.Gif;
+  poster?: string;
   resource: GifResource;
 }
 
 export interface ImageElement extends MediaElement {
   type: ElementType.Image;
+  alt?: string;
 }
 
 export interface OverlayableElement extends Element {
@@ -159,7 +164,7 @@ export interface ProductElement extends Element {
 export interface StickerElement extends Element {
   type: ElementType.Sticker;
   sticker: {
-    type: string;
+    type: keyof typeof stickers;
   };
 }
 
@@ -185,15 +190,22 @@ export interface TextElement extends Element {
   marginOffset: number;
   lineHeight: number;
   textAlign: TextAlign;
+
+  type: ElementType.Text;
+  fontStyle?: 'italic' | 'normal';
+  fontWeight?: number;
 }
 
 export interface AudioStickerElement extends Element {
   type: ElementType.AudioSticker;
-  sticker: string;
-  size: string;
-  style: string;
+  sticker: 'headphone-cat' | 'tape-player' | 'loud-speaker' | 'audio-cloud';
+  style: 'none' | 'outline' | 'dropshadow';
+  size: 'large' | 'small';
 }
 
 export interface ShapeElement extends Element {
   type: ElementType.Shape;
+  backgroundColor?: Pattern;
+  isBackground?: boolean;
+  isDefaultBackground?: boolean;
 }

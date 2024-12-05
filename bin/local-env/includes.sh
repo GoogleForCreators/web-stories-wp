@@ -149,10 +149,10 @@ command_exists() {
 ##
 # Docker Compose helper
 #
-# Calls docker-compose with common options.
+# Calls docker compose with common options.
 ##
 dc() {
-	docker-compose $DOCKER_COMPOSE_FILE_OPTIONS "$@"
+	docker compose $DOCKER_COMPOSE_FILE_OPTIONS "$@"
 }
 
 ##
@@ -161,7 +161,7 @@ dc() {
 # Executes a WP CLI request in the CLI container.
 ##
 wp() {
-	dc exec -T -u xfs $CLI wp "$@"
+	dc exec -T -u 33:33 $CLI wp "$@"
 }
 
 ##

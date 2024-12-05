@@ -163,12 +163,14 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves all products.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.20.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string, search?: string, orderby?: string, page?: int, per_page?: int, order?: string, _web_stories_envelope?: bool, _embed?: string|string[]}> $request
 	 */
 	public function get_items( $request ) {
 		/**
@@ -187,40 +189,11 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			return new WP_Error( 'rest_shopping_provider_not_found', __( 'Unable to find shopping integration.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $search_term
-		 */
 		$search_term = ! empty( $request['search'] ) ? $request['search'] : '';
-
-		/**
-		 * Request context.
-		 *
-		 * @var string $orderby
-		 */
-		$orderby = ! empty( $request['orderby'] ) ? $request['orderby'] : 'date';
-
-		/**
-		 * Request context.
-		 *
-		 * @var int $page
-		 */
-		$page = ! empty( $request['page'] ) ? $request['page'] : 1;
-
-		/**
-		 * Request context.
-		 *
-		 * @var int $per_page
-		 */
-		$per_page = ! empty( $request['per_page'] ) ? $request['per_page'] : 100;
-
-		/**
-		 * Request context.
-		 *
-		 * @var string $order
-		 */
-		$order = ! empty( $request['order'] ) ? $request['order'] : 'desc';
+		$orderby     = ! empty( $request['orderby'] ) ? $request['orderby'] : 'date';
+		$page        = ! empty( $request['page'] ) ? $request['page'] : 1;
+		$per_page    = ! empty( $request['per_page'] ) ? $request['per_page'] : 100;
+		$order       = ! empty( $request['order'] ) ? $request['order'] : 'desc';
 
 		$query_result = $query->get_search( $search_term, $page, $per_page, $orderby, $order );
 		if ( is_wp_error( $query_result ) ) {
@@ -243,11 +216,6 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		$response->header( 'X-WP-HasNextPage', $query_result['has_next_page'] ? 'true' : 'false' );
 
 		if ( $request['_web_stories_envelope'] ) {
-			/**
-			 * Embed directive.
-			 *
-			 * @var string|string[] $embed
-			 */
 			$embed    = $request['_embed'] ?? false;
 			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );
@@ -259,13 +227,15 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Prepares a single post output for response.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.20.0
 	 *
 	 * @param Product         $item    Project object.
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
+	 *
+	 * @phpstan-param WP_REST_Request<array{context: string, search?: string, orderby?: string, page?: int, per_page?: int, order?: string, _web_stories_envelope?: bool, _embed?: string|string[]}> $request
 	 */
 	public function prepare_item_for_response( $item, $request ): WP_REST_Response { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$product = $item;
@@ -336,11 +306,6 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
-		/**
-		 * Request context.
-		 *
-		 * @var string $context
-		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -358,7 +323,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves the product schema, conforming to JSON Schema.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.20.0
 	 *

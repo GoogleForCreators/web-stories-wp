@@ -233,7 +233,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * Wraps {@see count_user_posts()} results in a cache.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.10.0
 	 *

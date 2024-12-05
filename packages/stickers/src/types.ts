@@ -24,6 +24,6 @@ export interface StickerProps extends SVGProps<SVGSVGElement> {
 
 export interface Sticker {
   aspectRatio: number;
-  svg: FunctionComponent;
+  svg: FunctionComponent<{ style?: CSSProperties; className?: string }>;
   title: string;
 }

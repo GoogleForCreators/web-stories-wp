@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { EditorState } from 'draft-js';
+import { filterEditorState } from 'draftjs-filters';
 
 /**
  * Internal dependencies
@@ -28,6 +29,16 @@ import customImport from './customImport';
 import customExport from './customExport';
 import { getSelectionForAll } from './util';
 import type { StyleSetter, AllowedSetterArgs } from './types';
+import {
+  ITALIC,
+  UNDERLINE,
+  WEIGHT,
+  COLOR,
+  LETTERSPACING,
+  UPPERCASE,
+  GRADIENT_COLOR,
+} from './customConstants';
+import { getPrefixStylesInSelection } from './styleManipulation';
 
 /**
  * Return an editor state object with content set to parsed HTML
@@ -60,8 +71,7 @@ function updateAndReturnHTML(
   ...args: [AllowedSetterArgs]
 ) {
   const stateWithUpdate = updater(getSelectAllStateFromHTML(html), ...args);
-  const renderedHTML = customExport(stateWithUpdate);
-  return renderedHTML;
+  return customExport(stateWithUpdate);
 }
 
 const getHTMLFormatter =
@@ -89,4 +99,33 @@ export const getHTMLFormatters = (): {
 export function getHTMLInfo(html: string) {
   const htmlStateInfo = getStateInfo(getSelectAllStateFromHTML(html));
   return htmlStateInfo;
+}
+
+export function sanitizeEditorHtml(html: string) {
+  const editorState = getSelectAllStateFromHTML(html);
+
+  const styles: string[] = [
+    ...getPrefixStylesInSelection(editorState, ITALIC),
+    ...getPrefixStylesInSelection(editorState, UNDERLINE),
+    ...getPrefixStylesInSelection(editorState, WEIGHT),
+    ...getPrefixStylesInSelection(editorState, COLOR),
+    ...getPrefixStylesInSelection(editorState, LETTERSPACING),
+    ...getPrefixStylesInSelection(editorState, UPPERCASE),
+    ...getPrefixStylesInSelection(editorState, GRADIENT_COLOR),
+  ];
+
+  return (
+    customExport(
+      filterEditorState(
+        {
+          blocks: [],
+          styles,
+          entities: [],
+          maxNesting: 1,
+          whitespacedCharacters: [],
+        },
+        editorState
+      )
+    ) || ''
+  );
 }
