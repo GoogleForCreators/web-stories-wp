@@ -41,10 +41,21 @@ async function trashAllPosts(postType = 'post') {
     // Select all posts.
     await page.waitForSelector('[id^=cb-select-all-]');
     await page.click('[id^=cb-select-all-]');
+
     // Select the "bulk actions" > "trash" option.
     await page.select('#bulk-action-selector-top', 'trash');
-    // Submit the form to send all draft/scheduled/published posts to the trash.
-    await Promise.all([page.waitForNavigation(), page.click('#doaction')]);
+
+    // Bail early if there were no items selected,
+    // e.g. if there were no posts or if they were all locked.
+    // See https://core.trac.wordpress.org/ticket/45006.
+    const hasSelectedCheckboxes = await page.evaluate(
+      () => document.querySelectorAll('input[name="post[]"]:checked').length > 0
+    );
+
+    if (hasSelectedCheckboxes) {
+      // Submit the form to send all draft/scheduled/published posts to the trash.
+      await Promise.all([page.waitForNavigation(), page.click('#doaction')]);
+    }
   }
 
   await setCurrentUser(currentUser.username, currentUser.password);

@@ -51,7 +51,7 @@ function isUnderline(editorState: EditorState) {
   return !styles.includes(NONE);
 }
 
-function toggleUnderline(editorState: EditorState, flag?: undefined | boolean) {
+function toggleUnderline(editorState: EditorState, flag?: boolean) {
   if (typeof flag === 'boolean') {
     return togglePrefixStyle(editorState, UNDERLINE, () => flag);
   }

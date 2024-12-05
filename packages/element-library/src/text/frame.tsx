@@ -26,7 +26,10 @@ import type {
   TextElementFont,
   FrameProps,
 } from '@googleforcreators/elements';
-import { getCaretCharacterOffsetWithin } from '@googleforcreators/rich-text';
+import {
+  getCaretCharacterOffsetWithin,
+  sanitizeEditorHtml,
+} from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -166,7 +169,7 @@ function TextFrame({
       // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
       data-fix-caret
       className="syncMargin"
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: sanitizeEditorHtml(content) }}
       {...props}
     />
   );

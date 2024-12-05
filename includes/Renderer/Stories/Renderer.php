@@ -42,8 +42,8 @@ use WP_Post;
 /**
  * Renderer class.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  *
  * @phpstan-import-type StoryAttributes from \Google\Web_Stories\Story_Query
  *
@@ -304,7 +304,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Returns story item data.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.5.0
 	 *

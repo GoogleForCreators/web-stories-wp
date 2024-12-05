@@ -40,7 +40,7 @@ use WP_REST_Response;
 /**
  * Stories_Base_Controller class.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
  *

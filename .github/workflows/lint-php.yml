@@ -41,7 +41,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -55,7 +55,7 @@ jobs:
             dl.cloudsmith.io:443
 
       - name: Checkout
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Setup PHP
         uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35

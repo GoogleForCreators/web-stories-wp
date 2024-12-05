@@ -89,7 +89,7 @@ class Analytics extends Service_Base {
 	 *
 	 * Note: variables in single quotes will be substituted by <amp-analytics>.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @see https://github.com/ampproject/amphtml/blob/main/docs/spec/amp-var-substitutions.md
 	 *

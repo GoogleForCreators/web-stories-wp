@@ -177,7 +177,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             newIcon,
             needsProxy,
           });
-        } catch (e) {
+        } catch {
           setIsInvalidUrl(true);
         } finally {
           setFetchingMetadata(false);

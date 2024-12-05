@@ -60,7 +60,7 @@ export async function decodeImage(image: DecodeResult) {
         if (!result) {
           reject(new Error('HEIF processing error'));
         } else {
-          resolve(result.data.buffer);
+          resolve(result.data.buffer as ArrayBuffer);
         }
       }
     );

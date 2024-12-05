@@ -18,6 +18,10 @@ parameters:
     -
       identifier: missingType.generics
     -
+      identifier: requireOnce.fileNotFound
+    -
+      identifier: require.fileNotFound
+    -
       message: '/^Parameter #2 \$args of method WP_Customize_Manager::add_setting\(\)/'
       path: includes/Admin/Customizer.php
     -
@@ -61,5 +65,3 @@ parameters:
     - IS_WPCOM
     - GOOGLESITEKIT_VERSION
     - AMP__VERSION
-  featureToggles:
-    requireFileExists: false

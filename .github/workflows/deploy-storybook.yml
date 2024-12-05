@@ -33,7 +33,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
@@ -47,7 +47,7 @@ jobs:
         run: bun run storybook:build
 
       - name: Checkout gh-pages
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           ref: gh-pages
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}

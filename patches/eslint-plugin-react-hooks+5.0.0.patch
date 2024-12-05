@@ -1,0 +1,92 @@
+diff --git a/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js b/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
+index cccbb45..bd7b557 100644
+--- a/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
++++ b/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
+@@ -490,11 +490,42 @@
+               if (/Unsupported node type/.test(error.message)) return 0;
+               throw error;
+             }
+-            return options.additionalHooks.test(name) ? 0 : -1;
++            var found = options.additionalHooks.find(({test}) => test.test(name));
++            return found ? found.callbackIndex : -1;
+           }
+           return -1;
+       }
+     }
++    /**
++     * Parses the `additionalHooks` configuration. It can be in one of the two
++     * formats:
++     * - a single string that indicates the RegExp and implicit callback index of 0;
++     * - an array of `{ test: string, callbackIndex: number }` objects.
++     *
++     * Returns the normalized form of this configuration object in the shape of
++     * `{  test: RegExp, callbackIndex: number }`.
++     *
++     * See `additionalHooks` schema definition for more info.
++     */
++    function parseAdditionalHooks(additionalHooksConfig) {
++      if (!additionalHooksConfig) {
++        return undefined;
++      }
++
++      // A single string format.
++      if (typeof additionalHooksConfig === 'string') {
++        return [{test: new RegExp(additionalHooksConfig), callbackIndex: 0}];
++      }
++
++      // An array format.
++      if (Array.isArray(additionalHooksConfig)) {
++        return additionalHooksConfig.map(({test, callbackIndex}) => ({
++          test: new RegExp(test),
++          callbackIndex,
++        }));
++      }
++      throw new Error('Unknown format of additionalHooks');
++    }
+     function fastFindReferenceWithParent(start, target) {
+       for (var queue = [start], item = null; queue.length; ) {
+         item = queue.shift();
+@@ -932,7 +963,28 @@
+               additionalProperties: !1,
+               enableDangerousAutofixThisMayCauseInfiniteLoops: !1,
+               properties: {
+-                additionalHooks: { type: "string" },
++                additionalHooks: {
++                  anyOf: [
++                    // An abbreviated form with a single RegExp with the implicit
++                    // callback index == 0.
++                    {type: 'string'},
++                    // An expanded form: an array with RegExp and callback index
++                    // values.
++                    {
++                      type: 'array',
++                      items: {
++                        type: 'object',
++                        additionalProperties: false,
++                        properties: {
++                          // The RegExp string.
++                          test: {type: 'string'},
++                          // The callback index.
++                          callbackIndex: {type: 'number'},
++                        },
++                      },
++                    },
++                  ],
++                },
+                 enableDangerousAutofixThisMayCauseInfiniteLoops: {
+                   type: "boolean"
+                 }
+@@ -1855,11 +1907,9 @@
+               !1,
+             options = {
+               additionalHooks:
+-                context.options &&
++                parseAdditionalHooks(context.options &&
+                 context.options[0] &&
+-                context.options[0].additionalHooks
+-                  ? new RegExp(context.options[0].additionalHooks)
+-                  : void 0,
++                context.options[0].additionalHooks),
+               enableDangerousAutofixThisMayCauseInfiniteLoops:
+                 enableDangerousAutofixThisMayCauseInfiniteLoops
+             },

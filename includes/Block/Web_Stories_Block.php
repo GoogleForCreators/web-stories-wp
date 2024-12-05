@@ -388,7 +388,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Returns arguments to be passed to the WP_Query object initialization.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.5.0
 	 *

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-let spansFromContentBuffer;
 /**
- *
- * @param {string} content the buffer containing text element content
- * @return {Array} list of individual span elements from the content
+ * Internal dependencies
  */
-export function getSpansFromContent(content) {
-  // memoize buffer
-  if (!spansFromContentBuffer) {
-    spansFromContentBuffer = document.createElement('div');
-  }
+import getTextColors from '../getTextColors';
 
-  spansFromContentBuffer.innerHTML = content;
+describe('getTextColors', () => {
+  it('should return a list of text colors', () => {
+    const htmlContent =
+      'Fill in <span style="color: #eb0404">some</span> <span style="color: #026111">text</span>';
+    const expected = ['#000000', '#eb0404', '#026111'];
 
-  // return Array instead of HtmlCollection
-  return Array.prototype.slice.call(
-    spansFromContentBuffer.getElementsByTagName('span')
-  );
-}
+    const actual = getTextColors(htmlContent);
+
+    expect(actual).toStrictEqual(expected);
+  });
+});

@@ -122,9 +122,9 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return some metadata for inserting links.
 	 *
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.CyclomaticComplexity")
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 *

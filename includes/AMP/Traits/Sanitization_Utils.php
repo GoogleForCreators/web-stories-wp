@@ -71,7 +71,7 @@ trait Sanitization_Utils {
 	 * Removes empty data-tooltip-icon and data-tooltip-text attributes
 	 * to prevent validation issues.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.1.0
 	 *

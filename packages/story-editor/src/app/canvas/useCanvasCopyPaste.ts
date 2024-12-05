@@ -238,7 +238,7 @@ function useCanvasGlobalKeys() {
         if (files.length > 0) {
           uploadWithPreview(files);
         }
-      } catch (e) {
+      } catch {
         // Ignore.
       }
     },

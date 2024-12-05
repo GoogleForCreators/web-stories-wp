@@ -165,6 +165,7 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
         suggestions={suggestions}
         onChange={onTermsChange}
         __experimentalShowHowTo={false}
+        __nextHasNoMarginBottom
       />
     </div>
   );

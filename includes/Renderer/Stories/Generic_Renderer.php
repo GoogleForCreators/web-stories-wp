@@ -60,7 +60,7 @@ class Generic_Renderer extends Renderer {
 	/**
 	 * Renders the stories output for given attributes.
 	 *
-	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+	 * @SuppressWarnings("PHPMD.UnusedLocalVariable")
 	 *
 	 * @since 1.5.0
 	 *
@@ -86,7 +86,7 @@ class Generic_Renderer extends Renderer {
 						$this->render_single_story_content();
 						$this->next();
 					},
-					$this->stories 
+					$this->stories
 				);
 				$this->maybe_render_archive_link();
 				?>

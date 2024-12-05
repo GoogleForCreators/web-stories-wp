@@ -61,9 +61,8 @@ function HighlightsProvider({ children }: PropsWithChildren<unknown>) {
       }
 
       if (highlight && STATES[highlight]) {
-        const { tab, section, ...highlightState }: Highlight = STATES[
-          highlight
-        ] as Highlight;
+        const { tab, section, ...highlightState }: Highlight =
+          STATES[highlight];
         setHighlighted({
           [highlight]: { ...highlightState, showEffect: true },
           tab,

@@ -61,7 +61,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -74,7 +74,7 @@ jobs:
             54.185.253.63:443
 
       - name: Checkout
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc

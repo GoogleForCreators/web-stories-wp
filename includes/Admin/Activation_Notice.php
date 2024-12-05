@@ -235,7 +235,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	/**
 	 * Sets the flag that the plugin has just been activated.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.13.0
 	 *
@@ -252,7 +252,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	/**
 	 * Gets the flag that the plugin has just been activated.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.13.0
 	 *
@@ -270,7 +270,7 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	/**
 	 * Deletes the flag that the plugin has just been activated.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.13.0
 	 *

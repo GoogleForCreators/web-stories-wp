@@ -51,7 +51,7 @@ function isUppercase(editorState: EditorState) {
   return !styles.includes(NONE);
 }
 
-function toggleUppercase(editorState: EditorState, flag?: undefined | boolean) {
+function toggleUppercase(editorState: EditorState, flag?: boolean) {
   if (typeof flag === 'boolean') {
     return togglePrefixStyle(editorState, UPPERCASE, () => flag);
   }

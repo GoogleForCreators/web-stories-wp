@@ -930,7 +930,6 @@ class Stories_Controller extends DependencyInjectedRestTestCase {
 		$this->assertArrayHasKey( 'web_stories_demo', $collection_params );
 		$this->assertArrayHasKey( 'orderby', $collection_params );
 		$this->assertArrayHasKey( 'enum', $collection_params['orderby'] );
-		$this->assertIsArray( $collection_params['orderby'] );
 		$this->assertIsArray( $collection_params['orderby']['enum'] );
 		$this->assertContains( 'story_author', $collection_params['orderby']['enum'] );
 	}

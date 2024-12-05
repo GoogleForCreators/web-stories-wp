@@ -41,7 +41,7 @@ use WP_REST_Response;
 /**
  * Stories_Controller class.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @phpstan-type QueryArgs array{
  *   posts_per_page?: int,
@@ -71,8 +71,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.CyclomaticComplexity")
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.0.0
 	 *
@@ -484,7 +484,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Add response headers, with post counts.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.12.0
 	 *
