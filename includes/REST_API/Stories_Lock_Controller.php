@@ -261,8 +261,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	/**
 	 * Prepares a single lock output for response.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.6.0
 	 *

@@ -20,8 +20,6 @@
 import {
   createSolid,
   generatePatternStyles,
-  getHexFromSolid,
-  getSolidFromHex,
   isPatternEqual,
   createSolidFromString,
 } from '@googleforcreators/patterns';
@@ -37,17 +35,7 @@ import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../styleManipulation';
-import { isStyle, getVariable } from './util';
-
-/*
- * Color uses PREFIX-XXXXXXXX where XXXXXXXX is the 8 digit
- * hex representation of the RGBA color.
- */
-const styleToColor = (style: string): Pattern =>
-  getSolidFromHex(getVariable(style, COLOR));
-
-const colorToStyle = (color: Solid): string =>
-  `${COLOR}-${getHexFromSolid(color)}`;
+import { isStyle, styleToColor, colorToStyle } from './util';
 
 function elementToStyle(element: HTMLElement): string | null {
   const isSpan = element.tagName.toLowerCase() === 'span';

@@ -225,7 +225,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	/**
 	 * Returns a list of all experiments.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 *

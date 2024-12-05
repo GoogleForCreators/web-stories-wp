@@ -151,7 +151,7 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Dashboard constructor.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+	 * @SuppressWarnings("PHPMD.ExcessiveParameterList")
 	 *
 	 * @since 1.0.0
 	 *
@@ -333,7 +333,7 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Get editor settings as an array.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.0.0
 	 *

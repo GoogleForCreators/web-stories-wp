@@ -113,7 +113,7 @@ class Assets {
 	/**
 	 * Register script using handle.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.8.0
 	 *
@@ -181,7 +181,7 @@ class Assets {
 	/**
 	 * Enqueue script using handle.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.8.0
 	 *
@@ -255,7 +255,7 @@ class Assets {
 	/**
 	 * Register a CSS stylesheet.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.8.0
 	 *
@@ -283,7 +283,7 @@ class Assets {
 	/**
 	 * Register a new script.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.8.0
 	 *
@@ -315,7 +315,7 @@ class Assets {
 	/**
 	 * Enqueue a style.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.8.0
 	 *
@@ -339,7 +339,7 @@ class Assets {
 	/**
 	 * Enqueue a script.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
 	 *
 	 * @since 1.8.0
 	 *

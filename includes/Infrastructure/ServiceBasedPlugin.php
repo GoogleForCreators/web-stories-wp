@@ -31,7 +31,7 @@ use const WPCOM_IS_VIP_ENV;
  * This abstract base plugin provides all the boilerplate code for working with
  * the dependency injector and the service container.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @template C of Conditional
  * @template D of Delayed
@@ -715,7 +715,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * object
 	 * or into configuration files.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.6.0
 	 *

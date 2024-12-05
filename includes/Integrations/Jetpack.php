@@ -38,7 +38,7 @@ use WP_REST_Response;
 /**
  * Class Jetpack.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @phpstan-type AttachmentData array{
  *   media_details?: array{

@@ -73,7 +73,7 @@ function isBold(editorState: EditorState) {
   return weights.every((w) => w >= SMALLEST_BOLD);
 }
 
-function toggleBold(editorState: EditorState, flag?: undefined | boolean) {
+function toggleBold(editorState: EditorState, flag?: boolean) {
   if (typeof flag === 'boolean') {
     if (flag) {
       const getDefault = () => weightToStyle(DEFAULT_BOLD);

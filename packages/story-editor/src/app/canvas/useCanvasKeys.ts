@@ -179,7 +179,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
   // Position (x/y) key handler.
   useGlobalKeyDownEffect(
     { key: ['up', 'down', 'left', 'right'], shift: true },
-    ({ key, shiftKey }) => {
+    ({ key, shiftKey }: KeyboardEvent) => {
       if (isEditing || !selectedElements?.length) {
         return;
       }
@@ -204,7 +204,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
   // Layer up/down.
   useGlobalKeyDownEffect(
     { key: ['mod+up', 'mod+down', 'mod+left', 'mod+right'], shift: true },
-    (evt) => {
+    (evt: KeyboardEvent) => {
       const { key, shiftKey } = evt;
 
       // Cancel the default behavior of the event: it's very jarring to run
@@ -293,7 +293,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
   ].includes(animationState);
   useGlobalKeyDownEffect(
     { key: ['mod+enter'] },
-    (evt) => {
+    (evt: KeyboardEvent) => {
       evt.preventDefault();
       if (currentPageNumber === 1) {
         return;
@@ -313,7 +313,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
 
   useGlobalKeyDownEffect(
     { key: ['mod+k'] },
-    (evt) => {
+    (evt: KeyboardEvent) => {
       evt.preventDefault();
       if (
         !selectedElements.length ||

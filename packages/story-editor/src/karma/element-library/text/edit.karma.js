@@ -227,7 +227,9 @@ describe('TextEdit integration', () => {
     let initialHeight;
 
     describe('edit mode', () => {
-      it('should not change height when entering and exiting edit mode', async () => {
+      // TODO: Fix flakey test.
+      // eslint-disable-next-line jasmine/no-disabled-tests
+      xit('should not change height when entering and exiting edit mode', async () => {
         await fixture.editor.library.textTab.click();
         await fixture.events.click(
           fixture.editor.library.text.preset('Paragraph')

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-const buffer = document.createElement('div');
+const parser = new DOMParser();
 
 export default function stripHTML(string: string) {
   // @todo: implement a cheaper way to strip markup.
-  buffer.innerHTML = string;
-  return buffer.textContent || '';
+  const doc = parser.parseFromString(string, 'text/html');
+  return doc.body.textContent || '';
 }

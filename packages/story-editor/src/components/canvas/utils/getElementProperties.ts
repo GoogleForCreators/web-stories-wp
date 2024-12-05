@@ -46,7 +46,7 @@ function getElementProperties(type: ElementType, element: Element) {
   let resource, scale, focalX, focalY, sticker;
   if (elementIs.sticker(element)) {
     sticker = element.sticker;
-    ratio = STICKERS?.[sticker.type as keyof typeof STICKERS]?.aspectRatio;
+    ratio = STICKERS?.[sticker.type]?.aspectRatio;
   } else if (elementIs.media(element)) {
     resource = element.resource;
     ratio =

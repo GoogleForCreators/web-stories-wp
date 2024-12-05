@@ -163,7 +163,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves all products.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.20.0
 	 *
@@ -227,7 +227,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Prepares a single post output for response.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings("PHPMD.NPathComplexity")
 	 *
 	 * @since 1.20.0
 	 *
@@ -323,7 +323,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Retrieves the product schema, conforming to JSON Schema.
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings("PHPMD.ExcessiveMethodLength")
 	 *
 	 * @since 1.20.0
 	 *

@@ -40,7 +40,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
  *
  * Provides KSES utility methods to override the ones from core.
  *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  *
  * @phpstan-type PostData array{
  *   post_parent: int|string|null,
