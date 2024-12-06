@@ -77,11 +77,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
-      - name: Setup Node
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       - name: Setup PHP
         uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
@@ -91,19 +88,14 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a
+        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5
-        with:
-          bun-version: latest
 
       - name: Build plugin
         run: bun run build:js
@@ -176,19 +168,16 @@ jobs:
       - name: Install libgbm1
         run: sudo apt-get install libgbm1
 
-      - name: Setup Node
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install
         env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Start Docker environment
-        run: npm run env:start
+        run: bun run env:start
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
           WP_VERSION: ${{ matrix.wp }}
@@ -208,30 +197,22 @@ jobs:
           echo "validator_file=$AMP_VALIDATOR_FILE" >> $GITHUB_ENV
 
       - name: Run E2E tests
-        run: npm run test:e2e -- --shard=$SHARD
+        run: bun run test:e2e -- --shard=$SHARD
         env:
           WP_VERSION: ${{ matrix.wp }}
           SHARD: ${{ matrix.shard }}
           AMP_VALIDATOR_FILE: ${{ env.validator_file }}
 
       - name: Stop Docker environment
-        run: npm run env:stop
+        run: bun run env:stop
         if: always()
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
-
-      - name: Get artifact name
-        if: always()
-        run: |
-          ARTIFACT_NAME=${ARTIFACT_NAME//\//-}
-          echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> $GITHUB_ENV
-        env:
-          ARTIFACT_NAME: failures-artifacts-${{ matrix.wp }}-${{ matrix.shard }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
         if: always()
         with:
-          name: ${{ env.ARTIFACT_NAME }}
+          name: failures-artifacts
           path: build/e2e-artifacts
           if-no-files-found: ignore

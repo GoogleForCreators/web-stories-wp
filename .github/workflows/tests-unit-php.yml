@@ -102,6 +102,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
+
       # PHP-Scoper only works on PHP 7.4+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
@@ -158,23 +161,23 @@ jobs:
 
       - name: Run tests
         run: |
-          npm run test:php:unit
-          npm run test:php:integration:single
-          npm run test:php:integration:multisite
+          bun run test:php:unit
+          bun run test:php:integration:single
+          bun run test:php:integration:multisite
         if: ${{ ! matrix.coverage && ! matrix.random }}
 
       - name: Run tests with coverage
         run: |
-          npm run test:php:unit -- --coverage-clover build/logs/php-coverage.xml
-          npm run test:php:integration:single -- --coverage-clover build/logs/php-coverage-integration.xml
-          npm run test:php:integration:multisite -- --coverage-clover build/logs/php-coverage-multisite.xml
+          bun run test:php:unit -- --coverage-clover build/logs/php-coverage.xml
+          bun run test:php:integration:single -- --coverage-clover build/logs/php-coverage-integration.xml
+          bun run test:php:integration:multisite -- --coverage-clover build/logs/php-coverage-multisite.xml
         if: ${{ matrix.coverage && ! matrix.random }}
 
       - name: Run tests in random order
         run: |
-          npm run test:php:unit -- --order-by random
-          npm run test:php:integration:single -- --order-by random
-          npm run test:php:integration:multisite -- --order-by random
+          bun run test:php:unit -- --order-by random
+          bun run test:php:integration:single -- --order-by random
+          bun run test:php:integration:multisite -- --order-by random
         if: ${{ matrix.random }}
 
       - name: Upload code coverage report
