@@ -112,7 +112,6 @@ class Types extends TestCase {
 		}
 
 		$actual = $this->instance->get_allowed_mime_types();
-
 		$this->assertEqualSets( $expected, $actual );
 	}
 
