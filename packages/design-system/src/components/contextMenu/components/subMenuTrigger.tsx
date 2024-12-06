@@ -62,7 +62,7 @@ function SubMenuTrigger({
   ...buttonProps
 }: SubMenuTriggerProps) {
   const ref = useRef<HTMLButtonElement | null>(null);
-  const pointerTracker = useRef<{ x?: number; y?: number }>({});
+  const pointerTrackerRef = useRef<{ x?: number; y?: number }>({});
 
   const { setFocusedId } = useContextMenu(({ actions }) => ({
     setFocusedId: actions.setFocusedId,
@@ -70,7 +70,7 @@ function SubMenuTrigger({
 
   const pointerIsOutside = (node: Element) => {
     const { x, y, width, height } = node.getBoundingClientRect();
-    const { x: pointerX, y: pointerY } = pointerTracker.current;
+    const { x: pointerX, y: pointerY } = pointerTrackerRef.current;
     if (pointerX === undefined || pointerY === undefined) {
       return true;
     }
@@ -118,8 +118,8 @@ function SubMenuTrigger({
     const onPointerMove = (e: Event) => {
       if (e instanceof PointerEvent) {
         // Track the pointer when moving inside the menu while the submenu is open.
-        pointerTracker.current.x = e.clientX;
-        pointerTracker.current.y = e.clientY;
+        pointerTrackerRef.current.x = e.clientX;
+        pointerTrackerRef.current.y = e.clientY;
         maybeCloseSubMenu();
       }
     };
@@ -162,7 +162,7 @@ function SubMenuTrigger({
       onPointerEnter={openSubMenu}
       onPointerLeave={() => {
         // Reset tracker in case we moved out of the menu fully.
-        pointerTracker.current = {};
+        pointerTrackerRef.current = {};
         maybeCloseSubMenu();
       }}
       onClick={(e: MouseEvent) => e.preventDefault()}

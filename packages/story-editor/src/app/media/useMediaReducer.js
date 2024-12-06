@@ -84,7 +84,7 @@ function useMediaReducer(reducer = rootReducer, actionsToWrap) {
     () => ({ local: localActionsToWrap, media3p: media3pActionsToWrap }),
     []
   );
-  actionsToWrap = actionsToWrap ?? defaultActionsToWrap;
+  const newActionsToWrap = actionsToWrap ?? defaultActionsToWrap;
 
   const initialValue = useMemo(
     () => reducer(undefined, { type: types.INITIAL_STATE }),
@@ -93,8 +93,8 @@ function useMediaReducer(reducer = rootReducer, actionsToWrap) {
   const [state, dispatch] = useReducer(reducer, initialValue);
 
   const wrappedActions = useMemo(
-    () => wrapWithDispatch(actionsToWrap, dispatch),
-    [actionsToWrap]
+    () => wrapWithDispatch(newActionsToWrap, dispatch),
+    [newActionsToWrap]
   );
 
   return {

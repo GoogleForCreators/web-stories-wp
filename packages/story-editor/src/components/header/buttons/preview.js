@@ -103,7 +103,7 @@ function PreviewButton({ forceIsSaving = false }) {
           </script>`
         );
       }
-    } catch (e) {
+    } catch {
       // Ignore errors. Anything can happen with a popup. The errors
       // will be resolved after the story is saved.
     }

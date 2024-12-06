@@ -54,7 +54,7 @@ function MetaBoxes() {
     metaBoxesVisible: state.metaBoxesVisible,
   }));
   const [showMenuButton, updateMenuButtonState] = useState(false);
-  const menuButtonContainer = useRef(null);
+  const menuButtonContainerRef = useRef(null);
   const { postType, metaBoxes = {} } = useConfig();
   const { pages, isSavingStory, isAutoSavingStory, story } = useStory(
     ({
@@ -73,9 +73,9 @@ function MetaBoxes() {
 
     if (!showMenuButton && hasMetaBoxes && pages.length > 0) {
       timeout = setTimeout(() => {
-        menuButtonContainer.current =
+        menuButtonContainerRef.current =
           document.getElementById('primary-menu-items');
-        updateMenuButtonState(null !== menuButtonContainer.current);
+        updateMenuButtonState(null !== menuButtonContainerRef.current);
       });
     }
 
@@ -116,7 +116,7 @@ function MetaBoxes() {
         </Wrapper>
       )}
       {showMenuButton &&
-        createPortal(<MenuItem />, menuButtonContainer.current)}
+        createPortal(<MenuItem />, menuButtonContainerRef.current)}
     </MetaBoxesContainer>
   );
 }

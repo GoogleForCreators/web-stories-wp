@@ -131,11 +131,11 @@ function Tooltip({
   const tooltipRef = useRef<HTMLDivElement>(null);
   const placementRef = useRef(placement);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
-  const isMounted = useRef(false);
+  const isMountedRef = useRef(false);
 
   const [popupState, setPopupState] = useState<{ offset?: Offset }>({});
-  const isPopupMounted = useRef(false);
-  const popup = useRef<HTMLDivElement>(null);
+  const isPopupMountedRef = useRef(false);
+  const popupRef = useRef<HTMLDivElement>(null);
   const isOpen = Boolean(shown && (shortcut || title));
 
   const [dynamicOffset, setDynamicOffset] = useState<{ x?: number }>({});
@@ -160,7 +160,7 @@ function Tooltip({
   );
 
   const positionPopup = useCallback(() => {
-    if (!isPopupMounted.current || !anchorRef?.current) {
+    if (!isPopupMountedRef.current || !anchorRef?.current) {
       return;
     }
     setPopupState({
@@ -169,7 +169,7 @@ function Tooltip({
             placement: dynamicPlacement,
             spacing,
             anchor: getAnchor(),
-            popup,
+            popup: popupRef,
             isRTL,
             ignoreMaxOffsetY: true,
           })
@@ -191,7 +191,7 @@ function Tooltip({
       const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;
-      // We can sometimes render a tooltip too far to the left, ie. in RTL mode, or with the wp-admin sidenav.
+      // We can sometimes render a tooltip too far to the left, i.e. in RTL mode, or with the wp-admin sidenav.
       // When that is the case, let's update the offset.
       const isOverFlowingLeft = Math.trunc(left) < (isRTL ? 0 : leftOffset);
       // The getOffset util has a maxOffset that prevents the tooltip from being render too far to the right. However, when
@@ -239,10 +239,10 @@ function Tooltip({
   const resetPlacement = useDebouncedCallback(() => {
     setDynamicPlacement(placementRef.current);
   }, 100);
-  const delay = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const delayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const onHover = useCallback(() => {
     const handle = () => {
-      if (!isMounted.current) {
+      if (!isMountedRef.current) {
         return;
       }
 
@@ -255,11 +255,11 @@ function Tooltip({
         // Show instantly
         handle();
       }
-      if (delay.current) {
-        clearTimeout(delay.current);
+      if (delayRef.current) {
+        clearTimeout(delayRef.current);
       }
       // Invoke in DELAY_MS
-      delay.current = setTimeout(handle, DELAY_MS);
+      delayRef.current = setTimeout(handle, DELAY_MS);
     } else {
       handle();
     }
@@ -267,8 +267,8 @@ function Tooltip({
   const onHoverOut = useCallback(() => {
     setShown(false);
     resetPlacement();
-    if (isDelayed && delay.current) {
-      clearTimeout(delay.current);
+    if (isDelayed && delayRef.current) {
+      clearTimeout(delayRef.current);
       if (shown) {
         lastVisibleDelayedTooltip = performance.now();
       }
@@ -276,18 +276,18 @@ function Tooltip({
   }, [resetPlacement, isDelayed, shown]);
 
   useEffect(() => {
-    isMounted.current = true;
+    isMountedRef.current = true;
 
     return () => {
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, []);
 
   useEffect(() => {
-    isPopupMounted.current = true;
+    isPopupMountedRef.current = true;
 
     return () => {
-      isPopupMounted.current = false;
+      isPopupMountedRef.current = false;
     };
   }, []);
 
@@ -295,19 +295,19 @@ function Tooltip({
     if (!isOpen) {
       return undefined;
     }
-    isPopupMounted.current = true;
+    isPopupMountedRef.current = true;
 
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
     return () => {
       document.removeEventListener('scroll', positionPopup, true);
-      isPopupMounted.current = false;
+      isPopupMountedRef.current = false;
     };
   }, [isOpen, positionPopup]);
 
   useLayoutEffect(() => {
-    if (!isPopupMounted.current) {
+    if (!isPopupMountedRef.current) {
       return;
     }
 
@@ -339,7 +339,7 @@ function Tooltip({
       {popupState?.offset && isOpen
         ? createPortal(
             <PopupContainer
-              ref={popup}
+              ref={popupRef}
               $offset={
                 dynamicOffset
                   ? {

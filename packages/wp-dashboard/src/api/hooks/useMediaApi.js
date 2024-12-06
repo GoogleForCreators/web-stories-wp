@@ -53,7 +53,7 @@ export default function useMediaApi() {
             newlyCreatedMediaIds: mediaResponse.map(({ id }) => id),
           },
         });
-      } catch (err) {
+      } catch {
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_FAILURE,
           payload: {

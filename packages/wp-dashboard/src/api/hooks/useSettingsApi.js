@@ -47,7 +47,7 @@ export default function useSettingsApi() {
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
         payload: response,
       });
-    } catch (err) {
+    } catch {
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
@@ -71,7 +71,7 @@ export default function useSettingsApi() {
           payload: response,
         });
         dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED, payload: true });
-      } catch (err) {
+      } catch {
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_FAILURE,
           payload: {

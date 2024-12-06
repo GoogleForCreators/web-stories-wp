@@ -62,7 +62,7 @@ const StoryGridView = ({
   const { isRTL } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
-  const itemRefs = useRef({});
+  const itemsRef = useRef({});
   const [activeGridItemId, setActiveGridItemId] = useState();
   const activeGridItemIdRef = useRef();
   const gridItemIds = useMemo(() => stories.map(({ id }) => id), [stories]);
@@ -70,7 +70,7 @@ const StoryGridView = ({
   useGridViewKeys({
     containerRef,
     gridRef,
-    itemRefs,
+    itemRefs: itemsRef,
     isRTL,
     currentItemId: activeGridItemId,
     items: stories,
@@ -90,7 +90,7 @@ const StoryGridView = ({
       const newFocusId = returnStoryFocusId?.value;
       setActiveGridItemId(newFocusId);
       // grab the menu button and refocus
-      const firstFocusableElement = itemRefs.current?.[
+      const firstFocusableElement = itemsRef.current?.[
         newFocusId
       ]?.querySelectorAll(['button', 'a'])?.[0];
 
@@ -171,7 +171,7 @@ const StoryGridView = ({
             onFocus={() => setActiveGridItemId(story.id)}
             isActive={activeGridItemId === story.id}
             ref={(el) => {
-              itemRefs.current[story.id] = el;
+              itemsRef.current[story.id] = el;
             }}
             key={story.id}
             pageSize={pageSize}

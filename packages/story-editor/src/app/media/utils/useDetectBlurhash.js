@@ -101,7 +101,7 @@ function useDetectBlurHash({ updateMediaElement }) {
             blurHash,
           });
         }
-      } catch (error) {
+      } catch {
         // This might happen as an author when trying to updateMedia() that
         // was uploaded by someone else.
         // Do nothing with the error for now.
@@ -130,7 +130,7 @@ function useDetectBlurHash({ updateMediaElement }) {
           if (posterResource) {
             imageSrc = getSmallestUrlForWidth(300, posterResource);
           }
-        } catch (error) {
+        } catch {
           // The user might not have the permission to access the video with context=edit.
           // This might happen as an author when the video
           // was uploaded by someone else.

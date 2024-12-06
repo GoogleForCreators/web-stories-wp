@@ -37,11 +37,11 @@ function useApplyStyle({ pushUpdate }) {
       : STABLE_ARRAY;
   });
 
-  const extraPropsToAdd = useRef(null);
+  const extraPropsToAddRef = useRef(null);
   const push = useCallback(
     (updater) => {
-      const extraProps = extraPropsToAdd.current || {};
-      extraPropsToAdd.current = null;
+      const extraProps = extraPropsToAddRef.current || {};
+      extraPropsToAddRef.current = null;
       pushUpdate((oldProps) => {
         return {
           ...updater(oldProps),
@@ -72,7 +72,7 @@ function useApplyStyle({ pushUpdate }) {
         letterSpacing,
         ...rest
       } = preset;
-      extraPropsToAdd.current = rest;
+      extraPropsToAddRef.current = rest;
       handleSetColor(color);
       handleSetLetterSpacing(letterSpacing);
       handleSelectFontWeight(fontWeight);

@@ -98,13 +98,13 @@ function InnerElement({
   onClick,
   onLoad = noop,
   showVideoDetail,
-  mediaElement,
+  mediaElementRef,
   active,
   isMuted,
 }) {
   const newVideoPosterRef = useRef(null);
   // Track if we have already set the dragging resource.
-  const hasSetResourceTracker = useRef(null);
+  const hasSetResourceRef = useRef(null);
 
   // Note: This `useDropTargets` is purposefully separated from the one below since it
   // uses a custom function for checking for equality and is meant for `handleDrag` and `handleDrop` only.
@@ -117,11 +117,11 @@ function InnerElement({
     }),
     (prev, curr) => {
       // If we're dragging this element, always update the actions.
-      if (hasSetResourceTracker.current) {
+      if (hasSetResourceRef.current) {
         return false;
         // If we're rendering the first time, init `handleDrag` and `handleDrop`.
-      } else if (hasSetResourceTracker.current === null) {
-        hasSetResourceTracker.current = false;
+      } else if (hasSetResourceRef.current === null) {
+        hasSetResourceRef.current = false;
         return false;
       }
       // If the drop targets updated meanwhile, also update the actions, otherwise `handleDrag` won't consider those.
@@ -156,8 +156,8 @@ function InnerElement({
   }, [resource.poster]);
 
   const makeMediaVisible = () => {
-    if (mediaElement.current) {
-      mediaElement.current.style.opacity = 1;
+    if (mediaElementRef.current) {
+      mediaElementRef.current.style.opacity = 1;
     }
     onLoad();
   };
@@ -206,17 +206,17 @@ function InnerElement({
 
   if (type === ContentType.Image || type === ContentType.Sticker) {
     // eslint-disable-next-line styled-components-a11y/alt-text -- False positive.
-    media = <Image key={src} {...imageProps} ref={mediaElement} />;
+    media = <Image key={src} {...imageProps} ref={mediaElementRef} />;
     cloneProps.src = thumbnailURL;
   } else if ([ContentType.Video, ContentType.Gif].includes(type)) {
     media = (
       <>
         {poster && !active ? (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <Image key={src} {...imageProps} ref={mediaElement} />
+          <Image key={src} {...imageProps} ref={mediaElementRef} />
         ) : (
           // eslint-disable-next-line jsx-a11y/media-has-caption,styled-components-a11y/media-has-caption -- No captions/tracks because video is muted.
-          <Video key={src} {...videoProps} ref={mediaElement}>
+          <Video key={src} {...videoProps} ref={mediaElementRef}>
             {type === ContentType.Gif ? (
               resource.output.src && (
                 <source
@@ -252,14 +252,14 @@ function InnerElement({
   }
 
   const dragHandler = (event) => {
-    if (!hasSetResourceTracker.current) {
+    if (!hasSetResourceRef.current) {
       // Drop-targets handling.
       resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
       });
       setDraggingResource(resource);
-      hasSetResourceTracker.current = true;
+      hasSetResourceRef.current = true;
     }
     handleDrag(resource, event.clientX, event.clientY);
   };
@@ -275,7 +275,7 @@ function InnerElement({
         handleDrag={dragHandler}
         handleDragEnd={() => {
           handleDrop(resource);
-          hasSetResourceTracker.current = false;
+          hasSetResourceRef.current = false;
         }}
         type={resource.type}
         elementProps={{ resource }}
@@ -298,7 +298,7 @@ InnerElement.propTypes = {
   onClick: PropTypes.func.isRequired,
   onLoad: PropTypes.func,
   showVideoDetail: PropTypes.bool,
-  mediaElement: PropTypes.object,
+  mediaElementRef: PropTypes.object,
   active: PropTypes.bool.isRequired,
 };
 

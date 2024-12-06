@@ -26,17 +26,17 @@ import { LINE_LENGTH } from './constants';
 import { getPageX, setPointerCapture, releasePointerCapture } from './utils';
 
 function usePointerMoveStop(ref, onMove) {
-  const lastPageX = useRef(null);
+  const lastPageXRef = useRef(null);
   useLayoutEffect(() => {
     const node = ref.current;
     const onPointerMove = (evt) => {
-      const relativeDeltaX = getPageX(evt) - lastPageX.current;
-      lastPageX.current = getPageX(evt);
+      const relativeDeltaX = getPageX(evt) - lastPageXRef.current;
+      lastPageXRef.current = getPageX(evt);
       onMove(-relativeDeltaX / LINE_LENGTH);
     };
 
     const onPointerUp = (evt) => {
-      lastPageX.current = null;
+      lastPageXRef.current = null;
       releasePointerCapture(evt);
       evt.target.removeEventListener('pointermove', onPointerMove);
       evt.target.removeEventListener('pointerup', onPointerUp);
@@ -46,7 +46,7 @@ function usePointerMoveStop(ref, onMove) {
       if (evt.target === node) {
         return;
       }
-      lastPageX.current = getPageX(evt);
+      lastPageXRef.current = getPageX(evt);
       setPointerCapture(evt);
       evt.target.addEventListener('pointermove', onPointerMove);
       evt.target.addEventListener('pointerup', onPointerUp);

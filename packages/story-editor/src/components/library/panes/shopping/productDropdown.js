@@ -84,12 +84,13 @@ function ProductDropdown({ product, setProduct, ...rest }) {
         setIsLoading(true);
         const products = await getProductsByQuery();
         setInitialOptions(products);
-      } catch (err) {
+      } catch {
         setInitialOptions(initialProducts);
       } finally {
         setIsLoading(false);
       }
     })();
+    // eslint-disable-next-line react-compiler/react-compiler -- FIXME
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Stop getProductsByQuery from re-render.
   }, [initialProducts]);
 

@@ -259,23 +259,23 @@ const CurrentColorPickerContext = createContext([false, false]);
 const DynamicImportWrapper = () => {
   return (...args) => {
     function DynamicFetcher({ showOpacity, hasEyedropper, ...props }) {
-      const isMounted = useRef(false);
+      const isMountedRef = useRef(false);
       const [Picker, setPicker] = useState(null);
 
       useEffect(() => {
-        isMounted.current = true;
+        isMountedRef.current = true;
         import(
           /* webpackChunkName: "chunk-react-color" */
           /* webpackExports: "CustomPicker" */
           '@hello-pangea/color-picker'
         ).then(({ CustomPicker }) => {
-          if (isMounted.current) {
+          if (isMountedRef.current) {
             setPicker({ component: CustomPicker(...args) });
           }
         });
 
         return () => {
-          isMounted.current = false;
+          isMountedRef.current = false;
         };
       }, []);
 

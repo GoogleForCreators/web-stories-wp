@@ -188,7 +188,7 @@ function PlaybackMedia() {
           if (streamNode && streamNode.videoWidth && canvasRef.current) {
             try {
               await selfieSegmentation.current.send({ image: streamNode });
-            } catch (e) {
+            } catch {
               // We can't do much about the WASM memory issue.
             }
           }
@@ -204,6 +204,7 @@ function PlaybackMedia() {
 
     run();
 
+    // eslint-disable-next-line react-compiler/react-compiler -- FIXME
     // eslint-disable-next-line react-hooks/exhaustive-deps -- including liveStream will cause freeze
   }, [videoEffect, hasVideoEffect, streamNode, setCanvasStream, setCanvasNode]);
 

@@ -408,13 +408,13 @@ const PageArea = forwardRef(function PageArea(
   );
 
   // We need to ref scroll, because scroll changes should not update a non-controlled layer
-  const scroll = useRef();
-  scroll.current = { top: scrollTop, left: scrollLeft };
+  const scrollRef = useRef();
+  scrollRef.current = { top: scrollTop, left: scrollLeft };
   // If zoom setting changes for a non-controlled layer, make sure to reset actual scroll inside container
   useEffect(() => {
     if (!isControlled) {
-      fullbleedRef.current.scrollTop = scroll.current.top;
-      fullbleedRef.current.scrollLeft = scroll.current.left;
+      fullbleedRef.current.scrollTop = scrollRef.current.top;
+      fullbleedRef.current.scrollLeft = scrollRef.current.left;
     }
   }, [isControlled, zoomSetting, fullbleedRef]);
 
