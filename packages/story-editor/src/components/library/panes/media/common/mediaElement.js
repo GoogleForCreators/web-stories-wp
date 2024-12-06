@@ -38,6 +38,7 @@ import DropDownMenu from '../local/dropDownMenu';
 import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import { noop } from '../../../../../utils/noop';
+import { HideOnError } from '../../../../hideOnError';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 import InsertionMenu from './insertionMenu';
@@ -211,12 +212,14 @@ function Element({
         />
         {attribution}
         {isPlaceholder && blurHash && (
-          <BlurhashContainer
-            hash={blurHash}
-            width={width}
-            height={height}
-            punch={1}
-          />
+          <HideOnError>
+            <BlurhashContainer
+              hash={blurHash}
+              width={width}
+              height={height}
+              punch={1}
+            />
+          </HideOnError>
         )}
         {(!src ||
           isCurrentResourceProcessing(resourceId) ||
