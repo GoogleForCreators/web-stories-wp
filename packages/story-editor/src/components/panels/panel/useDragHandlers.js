@@ -25,7 +25,7 @@ import {
 } from '@googleforcreators/react';
 
 function useDragHandlers(handle, onDrag, onDragEnd) {
-  const lastPosition = useRef();
+  const lastPositionRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
 
   // On pointer move, check difference since last record vertical pointer position
@@ -33,9 +33,9 @@ function useDragHandlers(handle, onDrag, onDragEnd) {
   // Then record new vertical pointer position for next iteration.
   const handlePointerMove = useCallback(
     (evt) => {
-      const delta = lastPosition.current - evt.pageY;
+      const delta = lastPositionRef.current - evt.pageY;
       onDrag(delta);
-      lastPosition.current = evt.pageY;
+      lastPositionRef.current = evt.pageY;
     },
     [onDrag]
   );
@@ -56,7 +56,7 @@ function useDragHandlers(handle, onDrag, onDragEnd) {
   // Also record the initial vertical pointer position on the page.
   const handlePointerDown = useCallback((evt) => {
     evt.target.setPointerCapture(evt.pointerId);
-    lastPosition.current = evt.pageY;
+    lastPositionRef.current = evt.pageY;
     setIsDragging(true);
   }, []);
 

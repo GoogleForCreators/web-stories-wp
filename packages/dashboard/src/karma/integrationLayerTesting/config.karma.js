@@ -31,7 +31,7 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
       MINIMUM_CONFIG[key] = undefined;
     }
     MINIMUM_CONFIG.apiCallbacks = {
-      fetchStories: () => new Promise.resolve({}),
+      fetchStories: () => Promise.resolve({}),
     };
   });
 

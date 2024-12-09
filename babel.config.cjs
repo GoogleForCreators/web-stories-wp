@@ -46,6 +46,7 @@ module.exports = function (api) {
       '@babel/preset-typescript',
     ],
     plugins: [
+      ['babel-plugin-react-compiler', { target: '17' }],
       '@wordpress/babel-plugin-import-jsx-pragma',
       [
         'babel-plugin-styled-components',

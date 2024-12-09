@@ -271,8 +271,7 @@ function MediaRecordingProvider({ children }) {
         updateMediaDevices
       );
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run it once.
-  }, []);
+  }, [updateMediaDevices]);
 
   const toggleVideo = useCallback(() => {
     setHasVideo(!hasVideo);

@@ -72,7 +72,7 @@ function LibraryMoveable({
   const [hover, setHover] = useState(false);
   const cloneRef = useRef(null);
   const targetBoxRef = useRef(null);
-  const targetBoxSize = useRef(null);
+  const targetBoxSizeRef = useRef(null);
   const overlayRef = useRef(null);
   const moveable = useRef(null);
 
@@ -116,10 +116,10 @@ function LibraryMoveable({
 
   const { insertTextSetByOffset } = useInsertTextSet();
 
-  const eventTracker = useRef({});
+  const eventTrackerRef = useRef({});
   const startEventTracking = (evt) => {
     const { timeStamp, clientX, clientY } = evt;
-    eventTracker.current = {
+    eventTrackerRef.current = {
       timeStamp,
       clientX,
       clientY,
@@ -162,7 +162,7 @@ function LibraryMoveable({
     // Don't display the clone unless we're sure it's a drag gesture
     if (
       cloneRef.current &&
-      areEventsDragging(eventTracker.current, inputEvent)
+      areEventsDragging(eventTrackerRef.current, inputEvent)
     ) {
       if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {
         // We're not doing it in `onDragStart` since otherwise on clicking it would appear, too.
@@ -210,7 +210,7 @@ function LibraryMoveable({
     const { offsetX, offsetY } = getTargetOffset();
     const targetBox = targetBoxRef.current.getBoundingClientRect();
     // Let's save the original targetbox size.
-    targetBoxSize.current = {
+    targetBoxSizeRef.current = {
       width: targetBox.width,
       height: targetBox.height,
     };
@@ -241,9 +241,9 @@ function LibraryMoveable({
       return false;
     }
     // Restore the original size of the target.
-    targetBoxRef.current.style.width = `${targetBoxSize.current.width}px`;
-    targetBoxRef.current.style.height = `${targetBoxSize.current.height}px`;
-    if (!areEventsDragging(eventTracker.current, inputEvent)) {
+    targetBoxRef.current.style.width = `${targetBoxSizeRef.current.width}px`;
+    targetBoxRef.current.style.height = `${targetBoxSizeRef.current.height}px`;
+    if (!areEventsDragging(eventTrackerRef.current, inputEvent)) {
       resetMoveable();
       onClick();
       return false;

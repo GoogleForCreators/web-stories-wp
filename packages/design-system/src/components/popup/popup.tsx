@@ -82,12 +82,12 @@ function Popup({
     offset: Offset;
     height: number | null;
   } | null>(null);
-  const isMounted = useRef(false);
+  const isMountedRef = useRef(false);
   const popup = useRef<HTMLDivElement | null>(null);
 
   const positionPopup = useCallback(
     (evt?: unknown) => {
-      if (!isMounted.current || !anchor?.current) {
+      if (!isMountedRef.current || !anchor?.current) {
         return;
       }
       // If scrolling within the popup, ignore.
@@ -182,9 +182,9 @@ function Popup({
   );
 
   useEffect(() => {
-    isMounted.current = true;
+    isMountedRef.current = true;
     return () => {
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, []);
 
@@ -202,18 +202,18 @@ function Popup({
     if (!isOpen) {
       return undefined;
     }
-    isMounted.current = true;
+    isMountedRef.current = true;
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
     return () => {
       document.removeEventListener('scroll', positionPopup, true);
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, [isOpen, positionPopup]);
 
   useLayoutEffect(() => {
-    if (!isMounted.current) {
+    if (!isMountedRef.current) {
       return;
     }
 

@@ -134,7 +134,7 @@ function SelectStories({
   const [authorKeyword, setAuthorKeyword] = useState('');
   const [order, setOrder] = useState('desc');
   const [orderBy, setOrderBy] = useState('modified');
-  const nextPage = useRef(1);
+  const nextPageRef = useRef(1);
 
   const { authors } = useSelect(
     (select) => {
@@ -160,17 +160,17 @@ function SelectStories({
       search: searchKeyword || undefined,
       order,
       orderby: orderBy,
-      page: nextPage.current,
+      page: nextPageRef.current,
     });
   }, [searchKeyword, currentAuthor, fetchStories, order, orderBy]);
 
   useEffect(() => {
-    nextPage.current = 1;
+    nextPageRef.current = 1;
     fetchSelectedStories();
   }, [searchKeyword, currentAuthor, order, orderBy, fetchSelectedStories]);
 
   const onLoadMoreClick = useCallback(() => {
-    nextPage.current++;
+    nextPageRef.current++;
     fetchSelectedStories();
   }, [fetchSelectedStories]);
 

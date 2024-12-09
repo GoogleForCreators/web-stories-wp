@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { toId } from '@storybook/csf';
 import { Dashboard, InterfaceSkeleton } from '@googleforcreators/dashboard';
 
@@ -102,10 +102,12 @@ const getAuthors = () => Promise.resolve([{ name: 'Author', id: 1 }]);
 const useClearHash = () => {
   const isHashCleaned = useRef(false);
 
-  if (!isHashCleaned.current) {
-    window.location.hash = '/';
-    isHashCleaned.current = true;
-  }
+  useEffect(() => {
+    if (!isHashCleaned.current) {
+      window.location.hash = '/';
+      isHashCleaned.current = true;
+    }
+  }, []);
 };
 
 export const _default = {

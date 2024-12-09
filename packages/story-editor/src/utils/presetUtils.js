@@ -49,7 +49,7 @@ export function findMatchingColor(color, storyStyles, isText) {
   return colorsToMatch.find((value) => {
     try {
       return isPatternEqual(value, color, patternType);
-    } catch (e) {
+    } catch {
       // Some preset couldn't be rendered as patternType
       return false;
     }

@@ -50,7 +50,7 @@ export default function useStoryView({
   const [sort, _setSort] = useState(sortObject);
   const [filters, _setFilters] = useState(filtersObject);
   const [page, setPage] = useState(1);
-  const showStoriesWhileLoading = useRef(false);
+  const showStoriesWhileLoadingRef = useRef(false);
   const [initialPageReady, setInitialPageReady] = useState(false);
 
   const { pageSize } = usePagePreviewSize({
@@ -90,7 +90,7 @@ export default function useStoryView({
   }, [viewStyle, setViewStyle]);
 
   const requestNextPage = useCallback(() => {
-    showStoriesWhileLoading.current = true;
+    showStoriesWhileLoadingRef.current = true;
     setPageClamped(page + 1);
   }, [page, setPageClamped]);
 
@@ -111,7 +111,7 @@ export default function useStoryView({
   useEffect(() => {
     // reset ref state after request is finished
     if (!isLoading) {
-      showStoriesWhileLoading.current = false;
+      showStoriesWhileLoadingRef.current = false;
     }
   }, [isLoading]);
 
@@ -156,7 +156,7 @@ export default function useStoryView({
         requestNextPage,
       },
       initialPageReady,
-      showStoriesWhileLoading,
+      showStoriesWhileLoading: showStoriesWhileLoadingRef,
     }),
     [
       viewStyle,
