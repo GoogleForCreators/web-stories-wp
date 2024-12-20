@@ -38,7 +38,7 @@ import { TEXT_SET_PAGE_SIZE, TEXT_SET_SIZE } from './constants';
 
 function TextSets({ paneRef, filteredTextSets }) {
   const containerRef = useRef();
-  const textSetRefs = useRef({});
+  const textSetsRef = useRef({});
 
   const textSetIds = useMemo(
     () => filteredTextSets.map((textSet) => textSet.id),
@@ -68,7 +68,7 @@ function TextSets({ paneRef, filteredTextSets }) {
   } = useVirtualizedGridNavigation({
     rowVirtualizer,
     containerRef,
-    gridItemRefs: textSetRefs,
+    gridItemRefs: textSetsRef,
     gridItemIds: textSetIds,
   });
 
@@ -104,7 +104,7 @@ function TextSets({ paneRef, filteredTextSets }) {
                   key={gridIndex}
                   id={textSet.id}
                   data-testid={`text_set_${textSet.id}`}
-                  ref={(el) => (textSetRefs.current[textSet.id] = el)}
+                  ref={(el) => (textSetsRef.current[textSet.id] = el)}
                   translateY={virtualRow.start}
                   translateX={virtualColumn.start}
                   aria-label={textSet.title}

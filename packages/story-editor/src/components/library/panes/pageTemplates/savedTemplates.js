@@ -127,8 +127,8 @@ function SavedTemplates({
 }
 
 SavedTemplates.propTypes = {
-  searchTerm: PropTypes.string.isRequired,
-  setSearchTerm: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string,
+  setSearchTerm: PropTypes.func,
   pageSize: PropTypes.object.isRequired,
   loadTemplates: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,

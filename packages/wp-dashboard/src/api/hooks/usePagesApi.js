@@ -43,7 +43,7 @@ export default function usePagesApi() {
           title: stripHTML(title.rendered),
           link,
         };
-      } catch (e) {
+      } catch {
         return null;
       }
     },
@@ -59,7 +59,7 @@ export default function usePagesApi() {
           value: id,
           label: stripHTML(title.rendered),
         }));
-      } catch (e) {
+      } catch {
         return [];
       }
     },

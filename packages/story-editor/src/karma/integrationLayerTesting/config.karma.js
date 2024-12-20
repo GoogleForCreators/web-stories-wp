@@ -35,7 +35,7 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
 
   MINIMUM_CONFIG.storyId = 1;
   MINIMUM_CONFIG.apiCallbacks = {
-    saveStoryById: () => new Promise.resolve({}),
+    saveStoryById: () => Promise.resolve({}),
   };
 
   afterEach(() => {

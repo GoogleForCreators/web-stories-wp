@@ -56,9 +56,9 @@ function useReordering(onPositionChange, numChildren) {
     []
   );
 
-  const separator = useRef(null);
+  const separatorRef = useRef(null);
   useEffect(() => {
-    separator.current = currentSeparator;
+    separatorRef.current = currentSeparator;
   }, [currentSeparator]);
 
   useEffect(() => {
@@ -68,15 +68,15 @@ function useReordering(onPositionChange, numChildren) {
 
     const onRelease = (evt) => {
       evt.preventDefault();
-      if (separator.current !== null) {
-        const newPosition = separator.current;
+      if (separatorRef.current !== null) {
+        const newPosition = separatorRef.current;
         const position =
           newPosition.position > currentPosition.position
             ? newPosition.position - 1
             : newPosition.position;
         onPositionChange(
           currentPosition,
-          { ...separator.current, position },
+          { ...separatorRef.current, position },
           evt
         );
       }

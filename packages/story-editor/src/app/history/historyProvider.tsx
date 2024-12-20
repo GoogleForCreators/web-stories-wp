@@ -52,7 +52,7 @@ function HistoryProvider({
   const [hasNewChanges, setHasNewChanges] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
   // The version number for the initially loaded (saved) state is 1.
-  const savedVersionNumber = useRef(1);
+  const savedVersionNumberRef = useRef(1);
 
   useEffect(() => {
     setPreventUnload('history', hasNewChanges);
@@ -60,12 +60,12 @@ function HistoryProvider({
   }, [setPreventUnload, hasNewChanges]);
 
   useEffect(() => {
-    setHasNewChanges(versionNumber !== savedVersionNumber.current);
+    setHasNewChanges(versionNumber !== savedVersionNumberRef.current);
   }, [versionNumber]);
 
   const resetNewChanges = useCallback(() => {
     // When new changes are saved, let's track which version was saved.
-    savedVersionNumber.current = versionNumber;
+    savedVersionNumberRef.current = versionNumber;
     setHasNewChanges(false);
   }, [versionNumber]);
 

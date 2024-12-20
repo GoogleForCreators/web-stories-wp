@@ -99,7 +99,7 @@ function StoryPicker({
         setStories((existingStories) =>
           page === 1 ? response.body : [...existingStories, ...response.body]
         );
-      } catch (err) {
+      } catch {
         setLoadingState('error');
         createErrorNotice(__('Unable to load stories', 'web-stories'), {
           type: 'snackbar',

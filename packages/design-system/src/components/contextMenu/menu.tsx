@@ -240,7 +240,7 @@ const Menu = forwardRef<
         const keyOut = isHorizontal ? KEYS.UP : isRTL ? KEYS.RIGHT : KEYS.LEFT;
 
         // Maybe move from submenu to parent menu.
-        if (isSubMenu && keyOut === key && parentMenuRef.current) {
+        if (isSubMenu && keyOut === key && parentMenuRef?.current) {
           // Get the button with expanded popup.
           const parentButton = parentMenuRef.current.querySelector<HTMLElement>(
             'button[aria-expanded="true"]'

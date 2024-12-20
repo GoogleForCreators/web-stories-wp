@@ -153,29 +153,29 @@ function MediaEdit<T extends MediaElement = MediaElement>({
   const [cropBox, setCropBox] = useState<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLDivElement>(null);
 
-  const isUpdatedLocally = useRef(false);
-  const lastLocalProperties = useRef<Partial<T>>({ scale } as Partial<T>);
+  const isUpdatedLocallyRef = useRef(false);
+  const lastLocalPropertiesRef = useRef<Partial<T>>({ scale } as Partial<T>);
 
   const updateLocalProperties = useCallback(
     (properties: Partial<T> | ((p: Partial<T>) => Partial<T>)) => {
-      lastLocalProperties.current = {
-        ...lastLocalProperties.current,
+      lastLocalPropertiesRef.current = {
+        ...lastLocalPropertiesRef.current,
         ...(typeof properties === 'function'
-          ? properties(lastLocalProperties.current)
+          ? properties(lastLocalPropertiesRef.current)
           : properties),
       };
-      isUpdatedLocally.current = true;
-      setLocalProperties(lastLocalProperties.current);
+      isUpdatedLocallyRef.current = true;
+      setLocalProperties(lastLocalPropertiesRef.current);
     },
     [setLocalProperties]
   );
 
   const updateProperties = useCallback(() => {
-    if (!isUpdatedLocally.current) {
+    if (!isUpdatedLocallyRef.current) {
       return;
     }
-    isUpdatedLocally.current = false;
-    const properties: Partial<T> = lastLocalProperties.current;
+    isUpdatedLocallyRef.current = false;
+    const properties: Partial<T> = lastLocalPropertiesRef.current;
     updateElementById({ elementId: id, properties });
   }, [id, updateElementById]);
 

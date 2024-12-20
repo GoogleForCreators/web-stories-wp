@@ -65,10 +65,10 @@ function CustomColorPicker({
     },
   } = useColor();
 
-  const isMounted = useRef(true);
+  const isMountedRef = useRef(true);
   useEffect(() => {
     return () => {
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, []);
 
@@ -96,7 +96,7 @@ function CustomColorPicker({
       // check for unmount and if so, we know this change event
       // is from the eyedropper so we can just grab the rgb and
       // trigger the rest of the change for the element.
-      if (!isMounted.current && e?.rgb) {
+      if (!isMountedRef.current && e?.rgb) {
         handleColorChange({ color: e.rgb });
       }
     },
