@@ -158,7 +158,7 @@
     "postcss-styled-syntax": "^0.7.0",
     "postcss-syntax": "^0.36.2",
     "prettier": "^3.3.3",
-    "puppeteer": "^21.9.0",
+    "puppeteer": "^23.11.1",
     "react-refresh": "^0.14.2",
     "react-test-renderer": "^17.0.2",
     "rollup": "^2.79.2",
