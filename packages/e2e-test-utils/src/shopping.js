@@ -57,7 +57,8 @@ export const insertProduct = async (product, clickOnTab = true) => {
 
   expect(page).toClick(`[aria-label="Add ${product}"]`);
 
-  await page.waitForTimeout(400);
+  // TODO: Remove and replace with waitForSelector or locator API.
+  await new Promise((r) => setTimeout(r, 400));
 
   await page.waitForSelector(
     '[aria-label="Design menu"] [aria-label="Product"]',

@@ -131,7 +131,7 @@ module.exports = function (config) {
 
     puppeteerLauncher: {
       puppeteer: {
-        headless: config.headless ? 'new' : false,
+        headless: Boolean(config.headless),
         slowMo: config.slowMo || 0,
         devtools: config.devtools || false,
         snapshots: config.snapshots || false,

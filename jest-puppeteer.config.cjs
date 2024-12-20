@@ -19,7 +19,7 @@
  */
 const {
   PUPPETEER_DEVTOOLS = false,
-  PUPPETEER_HEADLESS = 'new',
+  PUPPETEER_HEADLESS = true,
   PUPPETEER_PRODUCT = 'chrome',
   PUPPETEER_SLOWMO = 0,
 } = process.env;
@@ -27,7 +27,7 @@ const {
 module.exports = {
   launch: {
     devtools: PUPPETEER_DEVTOOLS === 'true',
-    headless: PUPPETEER_HEADLESS !== 'false' ? PUPPETEER_HEADLESS : false,
+    headless: Boolean(PUPPETEER_HEADLESS),
     slowMo: Number(PUPPETEER_SLOWMO) || 0,
     product: PUPPETEER_PRODUCT,
     args: ['--window-size=1600,1000'], // Same as in percy.config.yml.

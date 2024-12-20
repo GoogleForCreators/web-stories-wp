@@ -163,7 +163,8 @@ describe('Story Details Modal - Admin User', () => {
       );
 
       // add small delay after we have results
-      await page.waitForTimeout(400);
+      // TODO: Remove and replace with waitForSelector or locator API.
+      await new Promise((r) => setTimeout(r, 400));
 
       const optionListAfterSearch = await page.$$eval(
         '[aria-label="Option List Selector"] li[role="option"]',

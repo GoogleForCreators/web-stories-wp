@@ -122,7 +122,7 @@ jobs:
           path: build/web-stories
 
   e2e:
-    name: '${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})'
+    name: '${{ matrix.browser }} - WP ${{ matrix.wp }} / ${{ matrix.shard }}'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     continue-on-error: ${{ matrix.experimental == true }}
@@ -192,6 +192,11 @@ jobs:
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
           WP_VERSION: ${{ matrix.wp }}
+
+      # See https://issues.chromium.org/issues/373753919
+      # and https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+      - name: Disable AppArmor
+        run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
 
       - name: Get Chromium executable path
         id: chromium_path

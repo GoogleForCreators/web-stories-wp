@@ -52,7 +52,8 @@ describe('Analytics', () => {
     await page.keyboard.type('UA-009345-10');
     await page.keyboard.press('Enter');
 
-    await page.waitForTimeout(400);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 400));
     await expect(page).toMatchTextContent('Setting saved.');
   });
 
@@ -73,7 +74,8 @@ describe('Analytics', () => {
     await page.keyboard.type('UA-009345-11');
     await expect(page).toClick('button', { text: 'Save' });
 
-    await page.waitForTimeout(400);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 400));
     await expect(page).toMatchTextContent('Setting saved.');
   });
 
@@ -91,7 +93,8 @@ describe('Analytics', () => {
 
     await expect(page).toClick('button', { text: 'Save' });
 
-    await page.waitForTimeout(400);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 400));
     await expect(page).toMatchTextContent('Setting saved.');
   });
 
