@@ -31,14 +31,11 @@ jobs:
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
-      - name: Setup Node
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       - name: Update db
-        run: npx update-browserslist-db@latest
+        run: bunx browserslist@latest --update-db
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f
