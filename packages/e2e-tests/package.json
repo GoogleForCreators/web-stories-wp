@@ -32,7 +32,6 @@
     "@wordpress/jest-console": "^7.18.0",
     "babel-jest": "^29.5.0",
     "expect-puppeteer": "^10.1.4",
-    "jest-environment-puppeteer": "^10.1.4",
     "jest-extended": "^4.0.2",
     "jest-json-schema": "^6.1.0",
     "jest-puppeteer": "^10.1.4"

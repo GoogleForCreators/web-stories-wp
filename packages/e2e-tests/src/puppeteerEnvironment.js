@@ -19,6 +19,7 @@
  */
 import { mkdirSync, writeFileSync } from 'fs';
 import util from 'node:util';
+// eslint-disable-next-line import/no-extraneous-dependencies -- Transitive dependency.
 import JestPuppeteer from 'jest-environment-puppeteer';
 
 const ARTIFACTS_PATH =
