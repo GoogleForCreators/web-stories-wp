@@ -150,6 +150,11 @@ jobs:
             sleep 1
           done
 
+      - name: Install svn
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y subversion
+
       - name: Set up tests
         run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
 
