@@ -35,7 +35,7 @@
     "jest-environment-puppeteer": "^10.0.1",
     "jest-extended": "^4.0.2",
     "jest-json-schema": "^6.1.0",
-    "jest-puppeteer": "^10.0.1"
+    "jest-puppeteer": "^10.1.4"
   },
   "peerDependencies": {
     "puppeteer": "*"
