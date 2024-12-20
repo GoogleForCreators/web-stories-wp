@@ -119,6 +119,11 @@ jobs:
         env:
           PUPPETEER_PRODUCT: chrome
 
+      # See https://issues.chromium.org/issues/373753919
+      # and https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+      - name: Disable AppArmor
+        run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+
       # FIXME: https://github.com/googleforcreators/web-stories-wp/issues/4364
       - name: Increase max number of file watchers
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
