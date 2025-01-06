@@ -46,7 +46,7 @@ describe('Inserting WebM Video', () => {
     // Open the panel.
     const panel = await page.$(`button[aria-label="${name}"]`);
     const isCollapsed = await page.evaluate(
-      (button) => button.getAttribute('aria-expanded') === 'false',
+      (button) => button?.getAttribute('aria-expanded') === 'false',
       panel
     );
 
