@@ -104,6 +104,6 @@ jobs:
       - name: Upload code coverage report
         uses: codecov/codecov-action@015f24e6818733317a2da2edd6290ab26238649a
         with:
-          file: build/logs/karma-coverage/dashboard/lcov.info
+          files: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests
           token: ${{ secrets.CODECOV_TOKEN }}
