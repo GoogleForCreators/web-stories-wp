@@ -25,7 +25,7 @@ describe('Admin Menu', () => {
   it('should contain links to Dashboard sub-pages', async () => {
     await visitAdminPage('index.php');
 
-    await page.hover('#menu-posts-web-story a');
+    await page.hover('#menu-posts-web-story');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await expect(page).toMatchElement('#menu-posts-web-story a', {
@@ -45,7 +45,7 @@ describe('Admin Menu', () => {
   it('should link to "Dashboard"', async () => {
     await visitAdminPage('index.php');
 
-    await page.hover('#menu-posts-web-story a');
+    await page.hover('#menu-posts-web-story');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await Promise.all([
@@ -63,7 +63,7 @@ describe('Admin Menu', () => {
   it('should link to "Explore Templates"', async () => {
     await visitAdminPage('index.php');
 
-    await page.hover('#menu-posts-web-story a');
+    await page.hover('#menu-posts-web-story');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await Promise.all([
@@ -80,7 +80,7 @@ describe('Admin Menu', () => {
   it('should link to "Settings"', async () => {
     await visitAdminPage('index.php');
 
-    await page.hover('#menu-posts-web-story a');
+    await page.hover('#menu-posts-web-story');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await Promise.all([
