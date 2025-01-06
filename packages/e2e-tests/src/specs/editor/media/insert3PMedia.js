@@ -33,10 +33,7 @@ const media3pSelector = '#library-tab-media3p';
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 async function goToMedia3PTab() {
-  await expect(page).toClick(
-    '[aria-label="Element Library Selection"] [role="tab"]',
-    { text: 'Explore Media' }
-  );
+  await expect(page).toClick('#library-tab-media3p');
 
   await expect(page).toMatchTextContent(
     'Your use of stock content is subject to third party terms'
