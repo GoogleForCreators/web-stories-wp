@@ -41,7 +41,8 @@ async function setAnalyticsCode(code) {
 
   await expect(page).toClick('button', { text: 'Save' });
   // Wait for setting to save.
-  await page.waitForTimeout(1000);
+  // TODO: Remove and replace with waitForSelector or locator API.
+  await new Promise((r) => setTimeout(r, 1000));
 }
 
 export default setAnalyticsCode;

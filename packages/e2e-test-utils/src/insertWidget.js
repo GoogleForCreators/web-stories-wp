@@ -29,7 +29,8 @@ async function insertWidget(name) {
   );
 
   // Transition animation.
-  await page.waitForTimeout(300);
+  // TODO: Remove and replace with waitForSelector or locator API.
+  await new Promise((r) => setTimeout(r, 300));
 
   await expect(page).toMatchElement('#widgets-right .widget .widget-title', {
     text: name,
