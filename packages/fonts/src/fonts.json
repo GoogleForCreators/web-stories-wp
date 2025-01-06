@@ -448,6 +448,31 @@
     }
   },
   {
+    "family": "Agu Display",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1190,
+      "des": -310,
+      "tAsc": 1190,
+      "tDes": -310,
+      "tLGap": 0,
+      "wAsc": 1190,
+      "wDes": 310,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -309,
+      "yMax": 1186,
+      "hAsc": 1190,
+      "hDes": -310,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Aguafina Script",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -4003,20 +4028,45 @@
     "variants": [[0, 400]],
     "service": "fonts.google.com",
     "metrics": {
-      "upm": 2048,
-      "asc": 2710,
-      "des": -1327,
-      "tAsc": 2710,
-      "tDes": -1327,
+      "upm": 1000,
+      "asc": 1324,
+      "des": -648,
+      "tAsc": 1324,
+      "tDes": -648,
       "tLGap": 0,
-      "wAsc": 2710,
-      "wDes": 1327,
-      "xH": 1034,
-      "capH": 1966,
-      "yMin": -1327,
-      "yMax": 2710,
-      "hAsc": 2710,
-      "hDes": -1327,
+      "wAsc": 1455,
+      "wDes": 648,
+      "xH": 505,
+      "capH": 960,
+      "yMin": -648,
+      "yMax": 1455,
+      "hAsc": 1324,
+      "hDes": -648,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Badeen Display",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1150,
+      "des": -250,
+      "tAsc": 1150,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 959,
+      "wDes": 300,
+      "xH": 600,
+      "capH": 700,
+      "yMin": -300,
+      "yMax": 959,
+      "hAsc": 1150,
+      "hDes": -250,
       "lGap": 0
     }
   },
@@ -5062,7 +5112,7 @@
       "tDes": -300,
       "tLGap": 0,
       "wAsc": 936,
-      "wDes": 449,
+      "wDes": 450,
       "xH": 390,
       "capH": 605,
       "yMin": -449,
@@ -16872,6 +16922,37 @@
     }
   },
   {
+    "family": "Hind Mysuru",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 989,
+      "des": -725,
+      "tAsc": 989,
+      "tDes": -725,
+      "tLGap": 0,
+      "wAsc": 989,
+      "wDes": 725,
+      "xH": 505,
+      "capH": 679,
+      "yMin": -673,
+      "yMax": 930,
+      "hAsc": 989,
+      "hDes": -725,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Hind Siliguri",
     "fallbacks": ["sans-serif"],
     "weights": [300, 400, 500, 600, 700],
@@ -26244,6 +26325,50 @@
     }
   },
   {
+    "family": "Montserrat Underline",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900],
+      [1, 100],
+      [1, 200],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800],
+      [1, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 968,
+      "des": -251,
+      "tAsc": 968,
+      "tDes": -251,
+      "tLGap": 0,
+      "wAsc": 1109,
+      "wDes": 453,
+      "xH": 525,
+      "capH": 700,
+      "yMin": -370,
+      "yMax": 1043,
+      "hAsc": 968,
+      "hDes": -251,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Moo Lah Lah",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -31074,7 +31199,7 @@
     }
   },
   {
-    "family": "Noto Sans Phags Pa",
+    "family": "Noto Sans PhagsPa",
     "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
@@ -31091,8 +31216,8 @@
       "wDes": 293,
       "xH": 536,
       "capH": 670,
-      "yMin": -129,
-      "yMax": 725,
+      "yMin": -241,
+      "yMax": 995,
       "hAsc": 1069,
       "hDes": -293,
       "lGap": 0
@@ -36254,6 +36379,31 @@
     }
   },
   {
+    "family": "Playwrite AR Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1508,
+      "des": -571,
+      "tAsc": 1508,
+      "tDes": -571,
+      "tLGap": 0,
+      "wAsc": 1558,
+      "wDes": 588,
+      "xH": 500,
+      "capH": 1065,
+      "yMin": -584,
+      "yMax": 1521,
+      "hAsc": 1508,
+      "hDes": -571,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite AT",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36282,6 +36432,34 @@
       "capH": 875,
       "yMin": -394,
       "yMax": 1347,
+      "hAsc": 1275,
+      "hDes": -375,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite AT Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1275,
+      "des": -375,
+      "tAsc": 1275,
+      "tDes": -375,
+      "tLGap": 0,
+      "wAsc": 1348,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 875,
+      "yMin": -394,
+      "yMax": 1324,
       "hAsc": 1275,
       "hDes": -375,
       "lGap": 0
@@ -36318,6 +36496,31 @@
     }
   },
   {
+    "family": "Playwrite AU NSW Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1442,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite AU QLD",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36342,6 +36545,31 @@
       "capH": 1000,
       "yMin": -519,
       "yMax": 1473,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite AU QLD Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1442,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -36378,6 +36606,31 @@
     }
   },
   {
+    "family": "Playwrite AU SA Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1413,
+      "des": -492,
+      "tAsc": 1413,
+      "tDes": -492,
+      "tLGap": 0,
+      "wAsc": 1473,
+      "wDes": 512,
+      "xH": 500,
+      "capH": 988,
+      "yMin": -507,
+      "yMax": 1430,
+      "hAsc": 1413,
+      "hDes": -492,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite AU TAS",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36402,6 +36655,31 @@
       "capH": 1000,
       "yMin": -519,
       "yMax": 1473,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite AU TAS Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1441,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -36438,6 +36716,31 @@
     }
   },
   {
+    "family": "Playwrite AU VIC Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1441,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite BE VLG",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36462,6 +36765,31 @@
       "capH": 1000,
       "yMin": -520,
       "yMax": 1473,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite BE VLG Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1441,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -36498,6 +36826,31 @@
     }
   },
   {
+    "family": "Playwrite BE WAL Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1924,
+      "des": -922,
+      "tAsc": 1924,
+      "tDes": -922,
+      "tLGap": 0,
+      "wAsc": 1935,
+      "wDes": 926,
+      "xH": 500,
+      "capH": 1405,
+      "yMin": -925,
+      "yMax": 1873,
+      "hAsc": 1924,
+      "hDes": -922,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite BR",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36522,6 +36875,31 @@
       "capH": 1131,
       "yMin": -650,
       "yMax": 1608,
+      "hAsc": 1588,
+      "hDes": -639,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite BR Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1588,
+      "des": -639,
+      "tAsc": 1588,
+      "tDes": -639,
+      "tLGap": 0,
+      "wAsc": 1631,
+      "wDes": 654,
+      "xH": 500,
+      "capH": 1131,
+      "yMin": -650,
+      "yMax": 1589,
       "hAsc": 1588,
       "hDes": -639,
       "lGap": 0
@@ -36558,6 +36936,31 @@
     }
   },
   {
+    "family": "Playwrite CA Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1423,
+      "des": -500,
+      "tAsc": 1423,
+      "tDes": -500,
+      "tLGap": 0,
+      "wAsc": 1482,
+      "wDes": 520,
+      "xH": 500,
+      "capH": 996,
+      "yMin": -515,
+      "yMax": 1437,
+      "hAsc": 1423,
+      "hDes": -500,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite CL",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36582,6 +36985,31 @@
       "capH": 1133,
       "yMin": -652,
       "yMax": 1610,
+      "hAsc": 1591,
+      "hDes": -641,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite CL Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1591,
+      "des": -641,
+      "tAsc": 1591,
+      "tDes": -641,
+      "tLGap": 0,
+      "wAsc": 1634,
+      "wDes": 656,
+      "xH": 500,
+      "capH": 1133,
+      "yMin": -652,
+      "yMax": 1591,
       "hAsc": 1591,
       "hDes": -641,
       "lGap": 0
@@ -36618,6 +37046,31 @@
     }
   },
   {
+    "family": "Playwrite CO Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1452,
+      "des": -525,
+      "tAsc": 1452,
+      "tDes": -525,
+      "tLGap": 0,
+      "wAsc": 1509,
+      "wDes": 544,
+      "xH": 500,
+      "capH": 1020,
+      "yMin": -539,
+      "yMax": 1461,
+      "hAsc": 1452,
+      "hDes": -525,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite CU",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36642,6 +37095,31 @@
       "capH": 1115,
       "yMin": -635,
       "yMax": 1588,
+      "hAsc": 1569,
+      "hDes": -623,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite CU Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1569,
+      "des": -623,
+      "tAsc": 1569,
+      "tDes": -623,
+      "tLGap": 0,
+      "wAsc": 1614,
+      "wDes": 638,
+      "xH": 500,
+      "capH": 1115,
+      "yMin": -634,
+      "yMax": 1562,
       "hAsc": 1569,
       "hDes": -623,
       "lGap": 0
@@ -36678,6 +37156,31 @@
     }
   },
   {
+    "family": "Playwrite CZ Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1410,
+      "des": -489,
+      "tAsc": 1410,
+      "tDes": -489,
+      "tLGap": 0,
+      "wAsc": 1470,
+      "wDes": 509,
+      "xH": 500,
+      "capH": 985,
+      "yMin": -504,
+      "yMax": 1425,
+      "hAsc": 1410,
+      "hDes": -489,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite DE Grund",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36702,6 +37205,31 @@
       "capH": 920,
       "yMin": -439,
       "yMax": 1393,
+      "hAsc": 1330,
+      "hDes": -421,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite DE Grund Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1330,
+      "des": -421,
+      "tAsc": 1330,
+      "tDes": -421,
+      "tLGap": 0,
+      "wAsc": 1398,
+      "wDes": 445,
+      "xH": 500,
+      "capH": 920,
+      "yMin": -439,
+      "yMax": 1371,
       "hAsc": 1330,
       "hDes": -421,
       "lGap": 0
@@ -36738,6 +37266,31 @@
     }
   },
   {
+    "family": "Playwrite DE LA Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1330,
+      "des": -421,
+      "tAsc": 1330,
+      "tDes": -421,
+      "tLGap": 0,
+      "wAsc": 1398,
+      "wDes": 445,
+      "xH": 500,
+      "capH": 920,
+      "yMin": -439,
+      "yMax": 1357,
+      "hAsc": 1330,
+      "hDes": -421,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite DE SAS",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36762,6 +37315,31 @@
       "capH": 888,
       "yMin": -407,
       "yMax": 1361,
+      "hAsc": 1291,
+      "hDes": -388,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite DE SAS Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1291,
+      "des": -388,
+      "tAsc": 1291,
+      "tDes": -388,
+      "tLGap": 0,
+      "wAsc": 1362,
+      "wDes": 413,
+      "xH": 500,
+      "capH": 888,
+      "yMin": -407,
+      "yMax": 1326,
       "hAsc": 1291,
       "hDes": -388,
       "lGap": 0
@@ -36798,6 +37376,31 @@
     }
   },
   {
+    "family": "Playwrite DE VA Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1402,
+      "des": -482,
+      "tAsc": 1402,
+      "tDes": -482,
+      "tLGap": 0,
+      "wAsc": 1463,
+      "wDes": 503,
+      "xH": 500,
+      "capH": 979,
+      "yMin": -498,
+      "yMax": 1425,
+      "hAsc": 1402,
+      "hDes": -482,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite DK Loopet",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36828,6 +37431,31 @@
     }
   },
   {
+    "family": "Playwrite DK Loopet Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1275,
+      "des": -375,
+      "tAsc": 1275,
+      "tDes": -375,
+      "tLGap": 0,
+      "wAsc": 1348,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 875,
+      "yMin": -394,
+      "yMax": 1310,
+      "hAsc": 1275,
+      "hDes": -375,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite DK Uloopet",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36852,6 +37480,31 @@
       "capH": 875,
       "yMin": -395,
       "yMax": 1348,
+      "hAsc": 1275,
+      "hDes": -375,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite DK Uloopet Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1275,
+      "des": -375,
+      "tAsc": 1275,
+      "tDes": -375,
+      "tLGap": 0,
+      "wAsc": 1348,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 875,
+      "yMin": -394,
+      "yMax": 1310,
       "hAsc": 1275,
       "hDes": -375,
       "lGap": 0
@@ -36918,6 +37571,56 @@
     }
   },
   {
+    "family": "Playwrite ES Deco Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1454,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite ES Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1454,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite FR Moderne",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36948,6 +37651,31 @@
     }
   },
   {
+    "family": "Playwrite FR Moderne Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1550,
+      "des": -607,
+      "tAsc": 1550,
+      "tDes": -607,
+      "tLGap": 0,
+      "wAsc": 1597,
+      "wDes": 623,
+      "xH": 500,
+      "capH": 1100,
+      "yMin": -619,
+      "yMax": 1557,
+      "hAsc": 1550,
+      "hDes": -607,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite FR Trad",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -36972,6 +37700,31 @@
       "capH": 1408,
       "yMin": -928,
       "yMax": 1892,
+      "hAsc": 1927,
+      "hDes": -925,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite FR Trad Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1927,
+      "des": -925,
+      "tAsc": 1927,
+      "tDes": -925,
+      "tLGap": 0,
+      "wAsc": 1938,
+      "wDes": 929,
+      "xH": 500,
+      "capH": 1408,
+      "yMin": -928,
+      "yMax": 1876,
       "hAsc": 1927,
       "hDes": -925,
       "lGap": 0
@@ -37012,6 +37765,34 @@
     }
   },
   {
+    "family": "Playwrite GB J Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1275,
+      "des": -375,
+      "tAsc": 1275,
+      "tDes": -375,
+      "tLGap": 0,
+      "wAsc": 1348,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 875,
+      "yMin": -394,
+      "yMax": 1324,
+      "hAsc": 1275,
+      "hDes": -375,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite GB S",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37040,6 +37821,34 @@
       "capH": 875,
       "yMin": -394,
       "yMax": 1347,
+      "hAsc": 1275,
+      "hDes": -375,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite GB S Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1275,
+      "des": -375,
+      "tAsc": 1275,
+      "tDes": -375,
+      "tLGap": 0,
+      "wAsc": 1348,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 875,
+      "yMin": -394,
+      "yMax": 1324,
       "hAsc": 1275,
       "hDes": -375,
       "lGap": 0
@@ -37076,6 +37885,31 @@
     }
   },
   {
+    "family": "Playwrite HR Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1280,
+      "des": -379,
+      "tAsc": 1280,
+      "tDes": -379,
+      "tLGap": 0,
+      "wAsc": 1352,
+      "wDes": 404,
+      "xH": 500,
+      "capH": 879,
+      "yMin": -398,
+      "yMax": 1315,
+      "hAsc": 1280,
+      "hDes": -379,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite HR Lijeva",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37100,6 +37934,31 @@
       "capH": 879,
       "yMin": -398,
       "yMax": 1351,
+      "hAsc": 1280,
+      "hDes": -379,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite HR Lijeva Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1280,
+      "des": -379,
+      "tAsc": 1280,
+      "tDes": -379,
+      "tLGap": 0,
+      "wAsc": 1352,
+      "wDes": 404,
+      "xH": 500,
+      "capH": 879,
+      "yMin": -398,
+      "yMax": 1328,
       "hAsc": 1280,
       "hDes": -379,
       "lGap": 0
@@ -37136,6 +37995,31 @@
     }
   },
   {
+    "family": "Playwrite HU Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1362,
+      "des": -448,
+      "tAsc": 1362,
+      "tDes": -448,
+      "tLGap": 0,
+      "wAsc": 1427,
+      "wDes": 470,
+      "xH": 500,
+      "capH": 946,
+      "yMin": -465,
+      "yMax": 1398,
+      "hAsc": 1362,
+      "hDes": -448,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite ID",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37160,6 +38044,31 @@
       "capH": 1438,
       "yMin": -958,
       "yMax": 1924,
+      "hAsc": 1964,
+      "hDes": -956,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite ID Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1964,
+      "des": -956,
+      "tAsc": 1964,
+      "tDes": -956,
+      "tLGap": 0,
+      "wAsc": 1971,
+      "wDes": 959,
+      "xH": 500,
+      "capH": 1438,
+      "yMin": -958,
+      "yMax": 1907,
       "hAsc": 1964,
       "hDes": -956,
       "lGap": 0
@@ -37196,6 +38105,31 @@
     }
   },
   {
+    "family": "Playwrite IE Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1405,
+      "des": -484,
+      "tAsc": 1405,
+      "tDes": -484,
+      "tLGap": 0,
+      "wAsc": 1465,
+      "wDes": 505,
+      "xH": 500,
+      "capH": 981,
+      "yMin": -500,
+      "yMax": 1421,
+      "hAsc": 1405,
+      "hDes": -484,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite IN",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37220,6 +38154,31 @@
       "capH": 1023,
       "yMin": -542,
       "yMax": 1496,
+      "hAsc": 1456,
+      "hDes": -528,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite IN Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1456,
+      "des": -528,
+      "tAsc": 1456,
+      "tDes": -528,
+      "tLGap": 0,
+      "wAsc": 1512,
+      "wDes": 547,
+      "xH": 500,
+      "capH": 1023,
+      "yMin": -542,
+      "yMax": 1465,
       "hAsc": 1456,
       "hDes": -528,
       "lGap": 0
@@ -37256,6 +38215,31 @@
     }
   },
   {
+    "family": "Playwrite IS Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1275,
+      "des": -375,
+      "tAsc": 1275,
+      "tDes": -375,
+      "tLGap": 0,
+      "wAsc": 1348,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 875,
+      "yMin": -394,
+      "yMax": 1313,
+      "hAsc": 1275,
+      "hDes": -375,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite IT Moderna",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37280,6 +38264,31 @@
       "capH": 875,
       "yMin": -394,
       "yMax": 1347,
+      "hAsc": 1275,
+      "hDes": -375,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite IT Moderna Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1275,
+      "des": -375,
+      "tAsc": 1275,
+      "tDes": -375,
+      "tLGap": 0,
+      "wAsc": 1348,
+      "wDes": 400,
+      "xH": 500,
+      "capH": 875,
+      "yMin": -394,
+      "yMax": 1324,
       "hAsc": 1275,
       "hDes": -375,
       "lGap": 0
@@ -37316,6 +38325,31 @@
     }
   },
   {
+    "family": "Playwrite IT Trad Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1378,
+      "des": -462,
+      "tAsc": 1378,
+      "tDes": -462,
+      "tLGap": 0,
+      "wAsc": 1441,
+      "wDes": 483,
+      "xH": 500,
+      "capH": 959,
+      "yMin": -478,
+      "yMax": 1411,
+      "hAsc": 1378,
+      "hDes": -462,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite MX",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37340,6 +38374,31 @@
       "capH": 1000,
       "yMin": -520,
       "yMax": 1473,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite MX Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1441,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -37376,6 +38435,31 @@
     }
   },
   {
+    "family": "Playwrite NG Modern Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1454,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite NL",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37400,6 +38484,31 @@
       "capH": 1273,
       "yMin": -793,
       "yMax": 1751,
+      "hAsc": 1762,
+      "hDes": -786,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite NL Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1762,
+      "des": -786,
+      "tAsc": 1762,
+      "tDes": -786,
+      "tLGap": 0,
+      "wAsc": 1789,
+      "wDes": 795,
+      "xH": 500,
+      "capH": 1273,
+      "yMin": -793,
+      "yMax": 1728,
       "hAsc": 1762,
       "hDes": -786,
       "lGap": 0
@@ -37436,6 +38545,31 @@
     }
   },
   {
+    "family": "Playwrite NO Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1391,
+      "des": -473,
+      "tAsc": 1391,
+      "tDes": -473,
+      "tLGap": 0,
+      "wAsc": 1453,
+      "wDes": 494,
+      "xH": 500,
+      "capH": 970,
+      "yMin": -489,
+      "yMax": 1409,
+      "hAsc": 1391,
+      "hDes": -473,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite NZ",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37460,6 +38594,31 @@
       "capH": 1000,
       "yMin": -519,
       "yMax": 1473,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite NZ Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1441,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -37496,6 +38655,31 @@
     }
   },
   {
+    "family": "Playwrite PE Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1454,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite PL",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37520,6 +38704,31 @@
       "capH": 986,
       "yMin": -505,
       "yMax": 1460,
+      "hAsc": 1411,
+      "hDes": -490,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite PL Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1411,
+      "des": -490,
+      "tAsc": 1411,
+      "tDes": -490,
+      "tLGap": 0,
+      "wAsc": 1471,
+      "wDes": 510,
+      "xH": 500,
+      "capH": 986,
+      "yMin": -505,
+      "yMax": 1439,
       "hAsc": 1411,
       "hDes": -490,
       "lGap": 0
@@ -37556,6 +38765,31 @@
     }
   },
   {
+    "family": "Playwrite PT Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1527,
+      "des": -588,
+      "tAsc": 1527,
+      "tDes": -588,
+      "tLGap": 0,
+      "wAsc": 1576,
+      "wDes": 604,
+      "xH": 500,
+      "capH": 1081,
+      "yMin": -600,
+      "yMax": 1537,
+      "hAsc": 1527,
+      "hDes": -588,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite RO",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37580,6 +38814,31 @@
       "capH": 1000,
       "yMin": -520,
       "yMax": 1473,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite RO Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1441,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -37616,6 +38875,31 @@
     }
   },
   {
+    "family": "Playwrite SK Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1410,
+      "des": -489,
+      "tAsc": 1410,
+      "tDes": -489,
+      "tLGap": 0,
+      "wAsc": 1470,
+      "wDes": 509,
+      "xH": 500,
+      "capH": 985,
+      "yMin": -504,
+      "yMax": 1425,
+      "hAsc": 1410,
+      "hDes": -489,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite TZ",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37640,6 +38924,31 @@
       "capH": 1000,
       "yMin": -520,
       "yMax": 1473,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite TZ Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1442,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -37676,6 +38985,31 @@
     }
   },
   {
+    "family": "Playwrite US Modern Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1352,
+      "des": -440,
+      "tAsc": 1352,
+      "tDes": -440,
+      "tLGap": 0,
+      "wAsc": 1418,
+      "wDes": 463,
+      "xH": 500,
+      "capH": 938,
+      "yMin": -457,
+      "yMax": 1390,
+      "hAsc": 1352,
+      "hDes": -440,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite US Trad",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37700,6 +39034,31 @@
       "capH": 1000,
       "yMin": -519,
       "yMax": 1473,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite US Trad Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1441,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -37736,6 +39095,31 @@
     }
   },
   {
+    "family": "Playwrite VN Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1743,
+      "des": -769,
+      "tAsc": 1743,
+      "tDes": -769,
+      "tLGap": 0,
+      "wAsc": 1771,
+      "wDes": 779,
+      "xH": 500,
+      "capH": 1257,
+      "yMin": -777,
+      "yMax": 1720,
+      "hAsc": 1743,
+      "hDes": -769,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Playwrite ZA",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400],
@@ -37760,6 +39144,31 @@
       "capH": 1000,
       "yMin": -519,
       "yMax": 1474,
+      "hAsc": 1428,
+      "hDes": -504,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Playwrite ZA Guides",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1428,
+      "des": -504,
+      "tAsc": 1428,
+      "tDes": -504,
+      "tLGap": 0,
+      "wAsc": 1486,
+      "wDes": 524,
+      "xH": 500,
+      "capH": 1000,
+      "yMin": -519,
+      "yMax": 1446,
       "hAsc": 1428,
       "hDes": -504,
       "lGap": 0
@@ -39816,7 +41225,7 @@
       "tLGap": 0,
       "wAsc": 1018,
       "wDes": 305,
-      "xH": 492,
+      "xH": 501,
       "capH": 700,
       "yMin": -264,
       "yMax": 1004,
@@ -39852,7 +41261,7 @@
       "tLGap": 0,
       "wAsc": 1018,
       "wDes": 305,
-      "xH": 481,
+      "xH": 488,
       "capH": 700,
       "yMin": -274,
       "yMax": 1006,
@@ -39888,7 +41297,7 @@
       "tLGap": 0,
       "wAsc": 1018,
       "wDes": 305,
-      "xH": 481,
+      "xH": 488,
       "capH": 700,
       "yMin": -274,
       "yMax": 1006,

@@ -222,7 +222,7 @@ jobs:
           echo "" > assets_version/assets_version.txt
 
       - name: Upload assets version
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
         with:
           name: assets-version
           path: public/static/assets_version
@@ -388,7 +388,7 @@ jobs:
           mv build/*.zip build/release-assets/
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
         with:
           name: release-assets
           path: build/release-assets
@@ -415,7 +415,7 @@ jobs:
 
       - name: Publish Release
         id: create_release
-        uses: softprops/action-gh-release@01570a1f39cb168c169c802c3bceb9e93fb10974
+        uses: softprops/action-gh-release@7b4da11513bf3f43f9999e90eabced41ab8bb048
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: ${{ env.release_name }}

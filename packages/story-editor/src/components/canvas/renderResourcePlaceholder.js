@@ -20,6 +20,11 @@
 import styled, { css } from 'styled-components';
 import { Blurhash } from 'react-blurhash';
 
+/**
+ * Internal dependencies
+ */
+import { HideOnError } from '../hideOnError';
+
 const placeholderStyles = css`
   position: absolute !important;
   top: 0;
@@ -40,7 +45,14 @@ const BaseColorContainer = styled.div`
 function renderResourcePlaceholder({ blurHash, baseColor }) {
   if (blurHash) {
     return (
-      <BlurhashContainer hash={blurHash} punch={1} height="100%" width="100%" />
+      <HideOnError>
+        <BlurhashContainer
+          hash={blurHash}
+          punch={1}
+          height="100%"
+          width="100%"
+        />
+      </HideOnError>
     );
   }
 

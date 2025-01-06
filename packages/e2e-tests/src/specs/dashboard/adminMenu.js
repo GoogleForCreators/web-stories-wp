@@ -60,7 +60,8 @@ describe('Admin Menu', () => {
 
     // Navigating through WP to a new page syncs the WP current page in Nav
     await page.hover('#menu-posts-web-story');
-    await page.waitForTimeout(100);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 100));
     await Promise.all([
       page.waitForNavigation(),
       expect(page).toClick('#menu-posts-web-story a', {

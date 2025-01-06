@@ -19,13 +19,14 @@
  */
 import { mkdirSync, writeFileSync } from 'fs';
 import util from 'node:util';
-import JestPuppeteer from 'jest-environment-puppeteer';
+// eslint-disable-next-line import/no-extraneous-dependencies -- Transitive dependency.
+import JestPuppeteerEnvironment from 'jest-environment-puppeteer';
 
 const ARTIFACTS_PATH =
   process.env.E2E_ARTIFACTS_PATH ||
   (process.env.GITHUB_WORKSPACE || process.cwd()) + '/build/e2e-artifacts';
 
-class PuppeteerEnvironment extends JestPuppeteer.TestEnvironment {
+class PuppeteerEnvironment extends JestPuppeteerEnvironment {
   async setup() {
     await super.setup();
 

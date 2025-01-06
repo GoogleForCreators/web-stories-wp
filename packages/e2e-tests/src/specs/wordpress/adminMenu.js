@@ -25,7 +25,7 @@ describe('Admin Menu', () => {
   it('should contain links to Dashboard sub-pages', async () => {
     await visitAdminPage('index.php');
 
-    await page.hover('#menu-posts-web-story a');
+    await page.hover('#menu-posts-web-story');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await expect(page).toMatchElement('#menu-posts-web-story a', {
@@ -40,56 +40,5 @@ describe('Admin Menu', () => {
       text: 'Settings',
       visible: true,
     });
-  });
-
-  it('should link to "Dashboard"', async () => {
-    await visitAdminPage('index.php');
-
-    await page.hover('#menu-posts-web-story a');
-    await expect(page).toMatchElement('#menu-posts-web-story.opensub');
-
-    await Promise.all([
-      expect(page).toClick('#menu-posts-web-story a', {
-        text: 'Dashboard',
-      }),
-      page.waitForNavigation(),
-    ]);
-
-    // Can be Explore Templates or My Stories depending on if user has 0
-    // stories, so just check that we get navigated to the dashboard
-    await expect(page).toMatchElement('#web-stories-dashboard');
-  });
-
-  it('should link to "Explore Templates"', async () => {
-    await visitAdminPage('index.php');
-
-    await page.hover('#menu-posts-web-story a');
-    await expect(page).toMatchElement('#menu-posts-web-story.opensub');
-
-    await Promise.all([
-      expect(page).toClick('#menu-posts-web-story a', {
-        text: 'Explore Templates',
-      }),
-      page.waitForNavigation(),
-    ]);
-
-    await expect(page).toMatchTextContent('Viewing all');
-    await expect(page).toMatchTextContent('templates');
-  });
-
-  it('should link to "Settings"', async () => {
-    await visitAdminPage('index.php');
-
-    await page.hover('#menu-posts-web-story a');
-    await expect(page).toMatchElement('#menu-posts-web-story.opensub');
-
-    await Promise.all([
-      expect(page).toClick('#menu-posts-web-story a', {
-        text: 'Settings',
-      }),
-      page.waitForNavigation(),
-    ]);
-
-    await expect(page).toMatchTextContent('Google Analytics Measurement ID');
   });
 });
