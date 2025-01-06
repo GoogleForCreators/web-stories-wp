@@ -40,9 +40,18 @@ function useVideoTrimMode() {
         clearEditing,
       })
     );
-  const { selectedElement } = useStory(({ state: { selectedElements } }) => ({
-    selectedElement: selectedElements.length === 1 ? selectedElements[0] : null,
-  }));
+  const { selectedElement, selectedId, selectedResource, isVideo } = useStory(
+    ({ state: { selectedElements } }) => {
+      const selectedElement =
+        selectedElements.length === 1 ? selectedElements[0] : null;
+      return {
+        selectedElement,
+        selectedId: selectedElement ? selectedElement?.id : null,
+        selectedResource: selectedElement?.resource || {},
+        isVideo: selectedElement?.type === 'video',
+      };
+    }
+  );
 
   const {
     actions: { getMediaById },
@@ -56,12 +65,11 @@ function useVideoTrimMode() {
   );
 
   const getVideoData = useCallback(() => {
-    const { resource } = selectedElement;
-    const { trimData } = resource;
+    const { trimData } = selectedResource;
 
     const defaultVideoData = {
       element: selectedElement,
-      resource,
+      resource: selectedResource,
       start: 0,
       end: null,
     };
@@ -87,13 +95,13 @@ function useVideoTrimMode() {
     } else {
       setVideoData(defaultVideoData);
     }
-  }, [getMediaById, selectedElement]);
+  }, [getMediaById, selectedElement, selectedResource]);
 
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
       clearEditing();
-    } else if (selectedElement) {
-      setEditingElementWithState(selectedElement.id, {
+    } else if (selectedId) {
+      setEditingElementWithState(selectedId, {
         isTrimMode: true,
         hasEditMenu: true,
         showOverflow: false,
@@ -108,23 +116,28 @@ function useVideoTrimMode() {
     isEditing,
     clearEditing,
     setEditingElementWithState,
-    selectedElement,
+    selectedId,
     getVideoData,
   ]);
 
   const { isTranscodingEnabled } = useFFmpeg();
 
   const hasTrimMode = useMemo(() => {
-    if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
+    if (!isVideo) {
       return false;
     }
 
-    const { id, isExternal } = selectedElement.resource;
-
     return (
-      isTranscodingEnabled && !isExternal && !isCurrentResourceUploading(id)
+      isTranscodingEnabled &&
+      !selectedResource.isExternal &&
+      !isCurrentResourceUploading(selectedResource.id)
     );
-  }, [selectedElement, isTranscodingEnabled, isCurrentResourceUploading]);
+  }, [
+    isVideo,
+    selectedResource,
+    isTranscodingEnabled,
+    isCurrentResourceUploading,
+  ]);
 
   return {
     isTrimMode: Boolean(isEditing && isTrimMode),
