@@ -105,16 +105,13 @@ function TextAlign() {
   const [offsetLeft, setOffsetLeft] = useState(0);
 
   // Record left position of this button in the parent design menu
-  useEffect(
-    () => {
-      if ( buttonRef.current) {
-        setOffsetLeft(buttonRef.current?.parentNode.offsetLeft + OFFSET_X)
-      } else {
-        setOffsetLeft(OFFSET_X)
-      }
-    },
-    []
-  );
+  useEffect(() => {
+    if (buttonRef.current) {
+      setOffsetLeft(buttonRef.current?.parentNode.offsetLeft + OFFSET_X);
+    } else {
+      setOffsetLeft(OFFSET_X);
+    }
+  }, []);
 
   // When menu has just opened, focus the current button in submenu
   const currentIconMounted = (node) => {
