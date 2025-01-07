@@ -106,7 +106,13 @@ function TextAlign() {
 
   // Record left position of this button in the parent design menu
   useEffect(
-    () => setOffsetLeft(buttonRef.current?.parentNode.offsetLeft + OFFSET_X),
+    () => {
+      if ( buttonRef.current) {
+        setOffsetLeft(buttonRef.current?.parentNode.offsetLeft + OFFSET_X)
+      } else {
+        setOffsetLeft(OFFSET_X)
+      }
+    },
     []
   );
 
