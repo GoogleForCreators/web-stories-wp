@@ -117,10 +117,11 @@ To report a vulnerability in this plugin, please contact the Google Security Tea
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
-= 1.38.1 =
+= 1.39.0 =
 
 * Fixed: resolved translation warning on WordPress 6.7.
 * Fixed: improved Google Analytics 4 banner.
+* Fixed: resolved edge case where the media library might crash.
 
 = 1.38.0 =
 
@@ -138,6 +139,6 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 == Upgrade Notice ==
 
-= 1.38.1 =
+= 1.39.0 =
 
 This release resolves a translation warning on WordPress 6.7 and contains other minor bug fixes.
