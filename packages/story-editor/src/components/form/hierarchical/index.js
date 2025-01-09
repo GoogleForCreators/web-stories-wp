@@ -107,11 +107,11 @@ const buildOptionName = (name) => `hierarchical_term_${name}`;
  * @param {string} option.label The label of the checkbox
  * @param {Function} option.onChange Change event handler
  * @param {boolean} option.checked The value of the checkbox
- * @param {Object} option.optionRefs Ref used to store refs to checkboxes.
+ * @param {Object} option.optionRef Ref used to store refs to checkboxes.
  * @param {number} option.$level The indentation level.
  * @return {Node} The rendered option and children.
  */
-const Option = ({ optionRefs = { current: {} }, $level = 0, ...option }) => {
+const Option = ({ optionRef = { current: {} }, $level = 0, ...option }) => {
   const { id, label, onBlur, onChange, onFocus, checked, value } = option;
 
   const optionId = buildOptionId(option.id);
@@ -122,7 +122,7 @@ const Option = ({ optionRefs = { current: {} }, $level = 0, ...option }) => {
       <Checkbox
         id={optionId}
         ref={(node) => {
-          optionRefs.current[id] = node;
+          optionRef.current[id] = node;
         }}
         value={value}
         checked={checked}
@@ -141,7 +141,7 @@ const OptionPropType = {
   checked: PropTypes.bool,
   label: PropTypes.string.isRequired,
   $level: PropTypes.number,
-  optionRefs: PropTypes.shape({
+  optionRef: PropTypes.shape({
     current: PropTypes.shape({
       [PropTypes.string.isRequired]: PropTypes.node,
     }),
@@ -179,7 +179,7 @@ const HierarchicalInput = ({
 
   // Focus handling
   const [focusedCheckboxId, setFocusedCheckboxId] = useState(-1);
-  const optionRefs = useRef({});
+  const optionRef = useRef({});
 
   /**
    * Handles listbox and checkbox focus.
@@ -211,7 +211,7 @@ const HierarchicalInput = ({
           setFocusedCheckboxId(firstCheckedOption ? firstCheckedOption : 0);
         } else {
           // else focus the previously focused option
-          optionRefs.current[focusedCheckboxId]?.focus();
+          optionRef.current[focusedCheckboxId]?.focus();
         }
       }
     },
@@ -295,7 +295,7 @@ const HierarchicalInput = ({
   useEffect(() => {
     // only focus checkbox if focus is in the list
     if (checkboxListRef.current?.contains(document.activeElement)) {
-      optionRefs.current[focusedCheckboxId]?.focus();
+      optionRef.current[focusedCheckboxId]?.focus();
     }
   }, [focusedCheckboxId]);
 
@@ -334,7 +334,7 @@ const HierarchicalInput = ({
                     key={option.id}
                     {...option}
                     onChange={handleCheckboxChange}
-                    optionRefs={optionRefs}
+                    optionRef={optionRef}
                   />
                 ))
               ) : (

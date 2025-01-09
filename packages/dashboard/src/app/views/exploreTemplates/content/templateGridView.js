@@ -48,7 +48,7 @@ function TemplateGridView({
   const { isRTL, apiCallbacks } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
-  const itemRefs = useRef({});
+  const itemsRef = useRef({});
   const [activeGridItemId, setActiveGridItemId] = useState(null);
   const { handleDetailsToggle, createStoryFromTemplate } =
     templateActions || {};
@@ -58,7 +58,7 @@ function TemplateGridView({
   useGridViewKeys({
     containerRef,
     gridRef,
-    itemRefs,
+    itemRefs: itemsRef,
     isRTL,
     currentItemId: activeGridItemId,
     items: filteredTemplates,
@@ -69,7 +69,7 @@ function TemplateGridView({
   // for legibility, it's based on the FOCUS_TEMPLATE_CLASS
   useEffect(() => {
     if (activeGridItemId) {
-      itemRefs.current?.[activeGridItemId]
+      itemsRef.current?.[activeGridItemId]
         ?.querySelector(`.${FOCUS_TEMPLATE_CLASS}`)
         ?.focus();
     }
@@ -97,7 +97,7 @@ function TemplateGridView({
             key={slug}
             posterSrc={posterSrc}
             ref={(el) => {
-              itemRefs.current[id] = el;
+              itemsRef.current[id] = el;
             }}
             slug={slug}
             status={status}

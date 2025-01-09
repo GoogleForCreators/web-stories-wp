@@ -37,14 +37,14 @@ function useSelectionManipulation(
   editorState: EditorState | null,
   setEditorState: Dispatch<SetStateAction<EditorState | null>>
 ): Record<string, StyleSetter> {
-  const lastKnownState = useRef<EditorState | null>(null);
-  const lastKnownSelection = useRef<SelectionState | null>(null);
+  const lastKnownStateRef = useRef<EditorState | null>(null);
+  const lastKnownSelectionRef = useRef<SelectionState | null>(null);
   useEffect(() => {
-    lastKnownState.current = editorState;
+    lastKnownStateRef.current = editorState;
     if (!editorState) {
-      lastKnownSelection.current = null;
+      lastKnownSelectionRef.current = null;
     } else if (editorState.getSelection().getHasFocus()) {
-      lastKnownSelection.current = editorState.getSelection();
+      lastKnownSelectionRef.current = editorState.getSelection();
     }
   }, [editorState]);
 
@@ -53,8 +53,8 @@ function useSelectionManipulation(
       updater: (state: EditorState | null) => EditorState,
       shouldForceFocus = true
     ) => {
-      const oldState = lastKnownState.current;
-      const selection = lastKnownSelection.current;
+      const oldState = lastKnownStateRef.current;
+      const selection = lastKnownSelectionRef.current;
       const workingState =
         shouldForceFocus && oldState && selection
           ? EditorState.forceSelection(oldState, selection)

@@ -68,7 +68,7 @@ function PreviewButton() {
           </script>`
         );
       }
-    } catch (e) {
+    } catch {
       // Not interested in the error.
     }
   };

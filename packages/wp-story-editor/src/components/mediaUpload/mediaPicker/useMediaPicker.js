@@ -89,7 +89,7 @@ function useMediaPicker({
           altText: attributes.alt || attributes.title,
         });
       };
-    } catch (e) {
+    } catch {
       // Silence.
     }
   }, [updateMedia]);

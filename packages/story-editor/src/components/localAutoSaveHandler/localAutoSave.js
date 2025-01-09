@@ -106,34 +106,34 @@ function LocalAutoSave() {
     setBackup(null);
   };
 
-  const didAutoSaveTracker = useRef(isAutoSavingStory);
+  const didAutoSaveRef = useRef(isAutoSavingStory);
   useEffect(() => {
     if (isAutoSavingStory) {
-      didAutoSaveTracker.current = true;
+      didAutoSaveRef.current = true;
       // If we auto-saved to DB before but are not auto-saving anymore, let's delete the local backup.
       // No need for both local and DB backup together.
-    } else if (didAutoSaveTracker.current && !backup) {
+    } else if (didAutoSaveRef.current && !backup) {
       sessionStore.deleteItemByKey(getSessionStorageKey(storyId, false));
-      didAutoSaveTracker.current = false;
+      didAutoSaveRef.current = false;
     }
   }, [isAutoSavingStory, backup, storyId]);
 
-  const hadNewChangesTracker = useRef(false);
-  const wasNewTracker = useRef(isNew);
+  const handleNewChangesRef = useRef(false);
+  const wasNewRef = useRef(isNew);
   useEffect(() => {
     // If we have new changes, track that we had new changes.
     if (hasNewChanges) {
-      hadNewChangesTracker.current = true;
+      handleNewChangesRef.current = true;
       // If we don't have new changes but had before, we are in a saved state. Delete existing storage.
       // Let's not delete the auto-draft if the restore message is currently displayed.
-    } else if (hadNewChangesTracker.current && !backup) {
-      if (wasNewTracker.current) {
+    } else if (handleNewChangesRef.current && !backup) {
+      if (wasNewRef.current) {
         sessionStore.deleteItemByKey(getSessionStorageKey(null, true));
       } else {
         sessionStore.deleteItemByKey(getSessionStorageKey(storyId, false));
       }
-      hadNewChangesTracker.current = false;
-      wasNewTracker.current = isNew;
+      handleNewChangesRef.current = false;
+      wasNewRef.current = isNew;
     }
   }, [hasNewChanges, backup, storyId, isNew]);
 

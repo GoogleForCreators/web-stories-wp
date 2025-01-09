@@ -113,7 +113,7 @@ function StoriesView({ loading, storyActions, stories, view }) {
   const handleOnDeleteStory = useCallback(() => {
     trackEvent('delete_story');
     storyActions.trashStory(activeStory);
-    setFocusedStory({ id: activeStory.id, isDeleted: true });
+    setFocusedStory({ id: activeStory?.id, isDeleted: true });
     setActiveDialog('');
   }, [storyActions, activeStory]);
 
@@ -161,6 +161,11 @@ function StoriesView({ loading, storyActions, stories, view }) {
     },
     [showSnackbar]
   );
+
+  const handleCloseConfirmDialog = useCallback(() => {
+    setFocusedStory({ id: activeStory?.id });
+    setActiveDialog('');
+  }, [activeStory]);
 
   const menuItems = STORY_CONTEXT_MENU_ITEMS.map((item) => {
     switch (item?.value) {
@@ -257,10 +262,7 @@ function StoriesView({ loading, storyActions, stories, view }) {
           isOpen
           contentLabel={__('Dialog to confirm deleting a story', 'web-stories')}
           title={__('Delete Story', 'web-stories')}
-          onClose={() => {
-            setFocusedStory({ id: activeStory.id });
-            setActiveDialog('');
-          }}
+          onClose={handleCloseConfirmDialog}
           secondaryText={__('Cancel', 'web-stories')}
           secondaryRest={{
             ['aria-label']: sprintf(

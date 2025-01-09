@@ -63,7 +63,7 @@ export default function useFetchCategoriesEffect({
           provider: PROVIDERS[provider].provider,
         });
         fetchCategoriesSuccess({ provider, categories: newCategories });
-      } catch (e) {
+      } catch {
         fetchCategoriesError({ provider });
         showSnackbar({
           message: PROVIDERS[provider].fetchCategoriesErrorMessage,

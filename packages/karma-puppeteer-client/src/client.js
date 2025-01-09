@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-(function (global) {
+(function () {
   'use strict';
 
   function noCleanup() {}

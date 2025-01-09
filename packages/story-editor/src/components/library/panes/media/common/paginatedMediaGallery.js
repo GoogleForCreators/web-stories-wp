@@ -111,9 +111,9 @@ function PaginatedMediaGallery({
   const refContainer = useRef();
 
   const isNextPageNeeded = useCallback(() => {
-    // Load the next page if the container still isn't full, ie. scrollbar is not visible.
+    // Load the next page if the container still isn't full, i.e. scrollbar is not visible.
     if (
-      refContainer.current.clientHeight === refContainer.current.scrollHeight
+      refContainer.current?.clientHeight === refContainer.current?.scrollHeight
     ) {
       return setNextPage();
     }
@@ -147,12 +147,11 @@ function PaginatedMediaGallery({
     }
 
     // Load the next page if we are "close" (by a length of ROOT_MARGIN) to the
-    // bottom of of the container.
+    // bottom of the container.
     const bottom =
       node.scrollHeight - node.scrollTop <= node.clientHeight + ROOT_MARGIN;
     if (bottom) {
       setNextPage();
-      return;
     }
   }, [
     resources.length,
@@ -172,7 +171,7 @@ function PaginatedMediaGallery({
   const handleScrollOrResize = useDebouncedCallback(loadNextPageIfNeeded, 500);
 
   // After loading a next page, see if we need to load another,
-  // ie. when the page of results isn't full.
+  // i.e. when the page of results isn't full.
   useLayoutEffect(() => {
     async function loadNextPageIfNeededAfterGalleryRendering() {
       // Wait for <Gallery> to finish its render layout cycles first.
@@ -198,23 +197,6 @@ function PaginatedMediaGallery({
     };
   }, [handleScrollOrResize]);
 
-  const mediaGallery =
-    isMediaLoaded && !resources.length && !uploadingResources.length ? (
-      <MediaGalleryMessage>
-        {__('No media found.', 'web-stories')}
-      </MediaGalleryMessage>
-    ) : (
-      <div style={{ marginBottom: 15 }}>
-        <LazyMediaGallery
-          providerType={providerType}
-          canEditMedia={canEditMedia}
-          resources={resources}
-          uploadingResources={uploadingResources}
-          onInsert={onInsert}
-        />
-      </div>
-    );
-
   const [showLoadingPill, setShowLoadingPill] = useState(false);
 
   useEffect(() => {
@@ -228,10 +210,10 @@ function PaginatedMediaGallery({
     return undefined;
   }, [isMediaLoading, hasMore]);
 
-  const attribution =
-    providerType !== 'local' &&
-    PROVIDERS[providerType].attributionComponent &&
-    PROVIDERS[providerType].attributionComponent();
+  const Attribution =
+    (providerType !== 'local' &&
+      PROVIDERS[providerType].attributionComponent) ||
+    (() => null);
 
   return (
     <>
@@ -239,7 +221,23 @@ function PaginatedMediaGallery({
         data-testid="media-gallery-container"
         ref={refContainer}
       >
-        <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
+        <MediaGalleryInnerContainer>
+          {isMediaLoaded && !resources.length && !uploadingResources.length ? (
+            <MediaGalleryMessage>
+              {__('No media found.', 'web-stories')}
+            </MediaGalleryMessage>
+          ) : (
+            <div style={{ marginBottom: 15 }}>
+              <LazyMediaGallery
+                providerType={providerType}
+                canEditMedia={canEditMedia}
+                resources={resources}
+                uploadingResources={uploadingResources}
+                onInsert={onInsert}
+              />
+            </div>
+          )}
+        </MediaGalleryInnerContainer>
       </MediaGalleryContainer>
       {showLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
@@ -248,7 +246,7 @@ function PaginatedMediaGallery({
           </StyledText>
         </MediaGalleryLoadingPill>
       )}
-      {!showLoadingPill && attribution}
+      {!showLoadingPill && <Attribution />}
     </>
   );
 }

@@ -129,9 +129,9 @@ function PostLock() {
   ]);
 
   // Cache it to make it stable in terms of the below timeout
-  const cachedDoGetStoryLock = useRef(doGetStoryLock);
+  const cachedDoGetStoryLockRef = useRef(doGetStoryLock);
   useEffect(() => {
-    cachedDoGetStoryLock.current = doGetStoryLock;
+    cachedDoGetStoryLockRef.current = doGetStoryLock;
   }, [doGetStoryLock, currentUserLoaded]);
 
   useEffect(() => {
@@ -164,7 +164,7 @@ function PostLock() {
         return;
       }
       if (currentUserLoaded) {
-        cachedDoGetStoryLock.current();
+        cachedDoGetStoryLockRef.current();
       }
     }, postLockInterval * 1000);
 

@@ -36,22 +36,23 @@ import { PublishModal } from '../../publishModal';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function PublishButton({ forceIsSaving }) {
-  const { date, storyId, saveStory, title, editLink, canPublish } = useStory(
-    ({
-      state: {
-        story: { date, storyId, title, editLink },
-        capabilities,
-      },
-      actions: { saveStory },
-    }) => ({
-      date,
-      storyId,
-      saveStory,
-      title,
-      editLink,
-      canPublish: Boolean(capabilities?.publish),
-    })
-  );
+  const { date, storyId, saveStory, titleLength, editLink, canPublish } =
+    useStory(
+      ({
+        state: {
+          story: { date, storyId, title, editLink },
+          capabilities,
+        },
+        actions: { saveStory },
+      }) => ({
+        date,
+        storyId,
+        saveStory,
+        titleLength: title?.length || 0,
+        editLink,
+        canPublish: Boolean(capabilities?.publish),
+      })
+    );
 
   const showPriorityIssues = useCheckpoint(
     ({ actions: { showPriorityIssues } }) => showPriorityIssues
@@ -80,13 +81,13 @@ function PublishButton({ forceIsSaving }) {
 
     trackEvent('publish_story', {
       status: newStatus,
-      title_length: title.length,
+      title_length: titleLength,
     });
 
     setShowDialog(false);
     saveStory({ status: newStatus });
     refreshPostEditURL();
-  }, [refreshPostEditURL, saveStory, hasFutureDate, title, canPublish]);
+  }, [refreshPostEditURL, saveStory, hasFutureDate, titleLength, canPublish]);
 
   const handlePublish = useCallback(() => {
     showPriorityIssues();
@@ -97,7 +98,7 @@ function PublishButton({ forceIsSaving }) {
     setShowDialog(false);
 
     if (focusPublishButton) {
-      publishButtonRef.current.focus();
+      publishButtonRef.current?.focus();
     }
   }, []);
 
