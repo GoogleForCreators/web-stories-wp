@@ -28,14 +28,12 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Widgets\Stories;
 
 /**
  * Class RegisterWidget
  */
-class Register_Widget implements Service, Registerable {
+class Register_Widget extends Service_Base {
 	/**
 	 * Stories instance.
 	 *
