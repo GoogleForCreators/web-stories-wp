@@ -115,4 +115,16 @@ class Register_Widget extends Service_Base {
 
 		return $classes;
 	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.38.1
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority(): int {
+		// Because wp_widgets_init() runs on priority 1.
+		return 0;
+	}
 }
