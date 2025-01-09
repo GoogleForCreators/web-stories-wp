@@ -346,7 +346,7 @@ function GoogleAnalyticsSettings({
             </DropdownContainer>
           </>
         )}
-        {!googleAnalyticsId || googleAnalyticsId.startsWith('UA-') ? (
+        {googleAnalyticsId.startsWith('UA-') ? (
           <WarningContainer>
             <WarningIcon aria-hidden />
             <Message>
