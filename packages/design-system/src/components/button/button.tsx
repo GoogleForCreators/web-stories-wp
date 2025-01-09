@@ -186,7 +186,6 @@ const buttonColors = {
 
 const rectangle = css<ElementProps>`
   ${({ $type }) => $type && buttonColors[$type]};
-  min-width: 1px;
   min-height: 1em;
   border-radius: ${({ theme }) => theme.borders.radius.small};
 

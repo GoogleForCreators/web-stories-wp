@@ -28,14 +28,12 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Widgets\Stories;
 
 /**
  * Class RegisterWidget
  */
-class Register_Widget implements Service, Registerable {
+class Register_Widget extends Service_Base {
 	/**
 	 * Stories instance.
 	 *
@@ -116,5 +114,17 @@ class Register_Widget implements Service, Registerable {
 		}
 
 		return $classes;
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.38.1
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority(): int {
+		// Because wp_widgets_init() runs on priority 1.
+		return 0;
 	}
 }
