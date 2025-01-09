@@ -117,6 +117,11 @@ To report a vulnerability in this plugin, please contact the Google Security Tea
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.38.1 =
+
+* Fixed: resolved translation warning on WordPress 6.7.
+* Fixed: improved Google Analytics 4 banner.
+
 = 1.38.0 =
 
 * Enhancement: compatibility with WordPress 6.6 and 6.7.
@@ -131,16 +136,8 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Enhancement: raises minimum WordPress version to 6.3.
 * Enhancement: Various smaller performance improvements.
 
-= 1.36.0 =
-
-* Enhancement: added support for adding gradients to text.
-* Enhancement: added more fine-grained control for the analytics setting.
-* Enhancement: compatibility with WordPress 6.5.
-* Fixed: resolved an issue with canvas zoom.
-* Fixed: resolved several layout issues with the Web Stories block.
-
 == Upgrade Notice ==
 
-= 1.38.0 =
+= 1.38.1 =
 
-This release ensures compatibility with WordPress 6.7 and contains minor bug fixes.
+This release resolves a translation warning on WordPress 6.7 and contains other minor bug fixes.
