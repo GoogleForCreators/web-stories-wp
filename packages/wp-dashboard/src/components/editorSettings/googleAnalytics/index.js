@@ -381,7 +381,7 @@ function GoogleAnalyticsSettings({
                 }}
               >
                 {__(
-                  'As <a>previously announced</a>, Universal Analytics will stop processing new visits starting <b>July 1, 2023</b>. We recommend switching to <a2>Google Analytics 4</a2> (GA4), our analytics product of record.',
+                  'Universal Analytics <a>stopped processing new visits</a> starting <b>July 1, 2023</b>. We recommend switching to <a2>Google Analytics 4</a2> (GA4), our analytics product of record.',
                   'web-stories'
                 )}
               </TranslateWithMarkup>
