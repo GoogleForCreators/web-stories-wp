@@ -59,8 +59,23 @@ const StyledLink = styled(Link)`
 
 function GoogleAnalytics4BannerContainer() {
   const {
+    capabilities: { canManageSettings } = {},
     plugins: { siteKit = {} },
   } = useConfig();
+
+  const fetchSettings = useEditorSettings(
+    ({
+      actions: {
+        settingsApi: { fetchSettings },
+      },
+    }) => fetchSettings
+  );
+
+  useEffect(() => {
+    if (canManageSettings) {
+      fetchSettings();
+    }
+  }, [canManageSettings, fetchSettings]);
 
   const isUsingUniversalAnalytics = useEditorSettings(
     ({
