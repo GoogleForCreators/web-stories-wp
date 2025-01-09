@@ -103,11 +103,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
-      - name: Setup Node
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       - name: Bundle size check
         uses: preactjs/compressed-size-action@6fa0e7ca017120c754863b31123c5ee2860fd434
@@ -136,11 +133,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
-      - name: Setup Node
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       - name: Setup PHP
         uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
@@ -150,19 +144,14 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install
         env:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a
+        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5
-        with:
-          bun-version: latest
 
       - name: Build plugin
         run: |
@@ -178,7 +167,7 @@ jobs:
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          npx webpack --env=development
+          bunx webpack --env=development
           bun run workflow:build-plugin -- --zip web-stories-dev.zip
 
       # Upload ZIP file to GCS for use in QA environment.
@@ -232,7 +221,7 @@ jobs:
           github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Create or update comment on PR with links to plugin builds
-        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043
+        uses: peter-evans/create-or-update-comment@23ff15729ef2fc348714a3bb66d2f655ca9066f2
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
@@ -248,7 +237,7 @@ jobs:
       # Deploy to staging site if on main branch.
 
       - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387
+        uses: webfactory/ssh-agent@d4b9b8ff72958532804b70bbe600ad43b36d5f2e
         with:
           ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'

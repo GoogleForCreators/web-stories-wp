@@ -38,9 +38,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@googleforcreators/react": "*",
-    "@googleforcreators/tracking": "*",
-    "@googleforcreators/units": "*",
+    "@googleforcreators/react": "file:../react",
+    "@googleforcreators/tracking": "file:../tracking",
+    "@googleforcreators/units": "file:../units",
     "mime": "^3.0.0",
     "prop-types": "^15.8.1"
   },
