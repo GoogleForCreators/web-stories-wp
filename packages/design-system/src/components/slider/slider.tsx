@@ -99,7 +99,8 @@ const Input = styled.input.attrs({
     top: calc(50% - 3px);
     left: -calc(
       ${({ percentage, thumbSize, width }) =>
-          getAdjustedWidthValue(percentage, thumbSize, width)}% - 4px
+          getAdjustedWidthValue(percentage, thumbSize, width)}% -
+        4px
     );
     width: ${({ percentage = 0 }) => percentage}%;
     background-color: ${({ theme }) =>

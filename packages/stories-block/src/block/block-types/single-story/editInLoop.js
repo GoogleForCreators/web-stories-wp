@@ -25,8 +25,7 @@ import classNames from 'classnames';
  */
 import { useEffect, useRef } from '@wordpress/element';
 import { Placeholder, ResizableBox } from '@wordpress/components';
-import * as compose from '@wordpress/compose';
-import { withViewportMatch } from '@wordpress/viewport';
+import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as blockEditorStore, BlockIcon } from '@wordpress/block-editor';
@@ -50,7 +49,6 @@ function StoryEmbedEditInLoop({
   setAttributes,
   className,
   isSelected,
-  _isResizable,
   context = {},
 }) {
   const {
@@ -95,9 +93,7 @@ function StoryEmbedEditInLoop({
     };
   }, []);
 
-  const isResizable = compose.useViewportMatch
-    ? compose.useViewportMatch('medium')
-    : _isResizable;
+  const isResizable = useViewportMatch('medium');
 
   const ref = useRef();
 
@@ -271,13 +267,10 @@ StoryEmbedEditInLoop.propTypes = {
   setAttributes: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
-  _isResizable: PropTypes.bool,
   context: PropTypes.shape({
     postType: PropTypes.string,
     postId: PropTypes.number,
   }),
 };
 
-export default withViewportMatch({ _isResizable: 'medium' })(
-  StoryEmbedEditInLoop
-);
+export default StoryEmbedEditInLoop;

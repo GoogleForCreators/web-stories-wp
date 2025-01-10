@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { renderHook } from '@testing-library/react-hooks';
+
+/**
  * Internal dependencies
  */
 import useContextValueProvider from '../useContextValueProvider';
@@ -28,16 +33,18 @@ describe('useContextValueProvider', () => {
       state: { media: [] },
     });
 
-    const value = useContextValueProvider(
-      {
-        selectedProvider: 'unsplash',
-        searchTerm: '',
-        unsplash: {},
-      },
-      { setSelectedProvider: () => {}, setSearchTerm: () => {} }
+    const { result } = renderHook(() =>
+      useContextValueProvider(
+        {
+          selectedProvider: 'unsplash',
+          searchTerm: '',
+          unsplash: {},
+        },
+        { setSelectedProvider: () => {}, setSearchTerm: () => {} }
+      )
     );
 
-    expect(value).toStrictEqual(
+    expect(result.current).toStrictEqual(
       expect.objectContaining({
         state: { selectedProvider: 'unsplash', searchTerm: '' },
         actions: {

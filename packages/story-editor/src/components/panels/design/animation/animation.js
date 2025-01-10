@@ -87,7 +87,7 @@ function AnimationPanel({
   const isFirstPage = useStory(
     ({ state: { currentPageNumber } }) => currentPageNumber === 1
   );
-  const playUpdatedAnimation = useRef(false);
+  const playUpdatedAnimationRef = useRef(false);
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: state[states.Animation],
@@ -120,7 +120,7 @@ function AnimationPanel({
         animationState: StoryAnimationState.Reset,
       });
       pushUpdateForObject(ANIMATION_PROPERTY, animation, null, submitArg);
-      playUpdatedAnimation.current = true;
+      playUpdatedAnimationRef.current = true;
     },
     [pushUpdateForObject, updatedAnimations, updateAnimationState]
   );
@@ -156,7 +156,7 @@ function AnimationPanel({
 
       // There's nothing unique to the animation data to signify that it
       // was changed by the effect chooser, so we track it here.
-      playUpdatedAnimation.current = true;
+      playUpdatedAnimationRef.current = true;
     },
     [selectedElementAnimations, pushUpdateForObject]
   );
@@ -170,11 +170,11 @@ function AnimationPanel({
   // overriding this play call.
   const activeElement = document.activeElement;
   const debouncedUpdateAnimationState = useDebouncedCallback(() => {
-    if (playUpdatedAnimation.current) {
+    if (playUpdatedAnimationRef.current) {
       updateAnimationState({
         animationState: StoryAnimationState.PlayingSelected,
       });
-      playUpdatedAnimation.current = false;
+      playUpdatedAnimationRef.current = false;
     }
   }, 300);
   useEffect(debouncedUpdateAnimationState, [

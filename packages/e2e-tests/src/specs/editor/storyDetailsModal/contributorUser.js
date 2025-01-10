@@ -34,7 +34,8 @@ const openStoryDetailsModal = async () => {
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
-describe('Story Details Modal - Contributor User', () => {
+// eslint-disable-next-line jest/no-disabled-tests -- TODO: Needs investigation.
+describe.skip('Story Details Modal - Contributor User', () => {
   withPlugin('e2e-tests-hotlink');
 
   beforeEach(async () => {

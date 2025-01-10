@@ -55,7 +55,7 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
   const [focusedGridItemIndex, setFocusedGridItemIndex] = useState();
   const containerRef = useRef();
   const gridRef = useRef();
-  const posterRefs = useRef({});
+  const postersRef = useRef({});
 
   const handleMiniCardClick = useCallback((index) => {
     setSelectedGridItemIndex(index);
@@ -77,7 +77,7 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
   useGridViewKeys({
     containerRef,
     gridRef,
-    itemRefs: posterRefs,
+    itemRefs: postersRef,
     isRTL,
     currentItemId: focusedGridItemIndex,
     items: galleryPosters,
@@ -96,7 +96,7 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
         <div
           key={key}
           ref={(el) => {
-            posterRefs.current[index] = el;
+            postersRef.current[index] = el;
           }}
           onFocus={() => handleGalleryItemFocus(index)}
         >

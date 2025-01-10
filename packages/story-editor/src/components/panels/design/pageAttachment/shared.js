@@ -22,6 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   useCallback,
   useDebouncedCallback,
+  useMemo,
   useState,
 } from '@googleforcreators/react';
 import {
@@ -117,7 +118,7 @@ CallToActionText.propTypes = {
 };
 
 export function Theme({ theme, onChange }) {
-  const checkboxId = `cb-${uuidv4()}`;
+  const checkboxId = useMemo(() => `cb-${uuidv4()}`, []);
 
   const handleChangeTheme = useCallback(
     (evt) => {
@@ -234,7 +235,7 @@ export function LinkUrl({
             icon: iconUrl,
             needsProxy,
           });
-        } catch (e) {
+        } catch {
           // We're allowing to save invalid URLs, however, remove icon in this case.
           onChange({ url: newValue, icon: '', needsProxy: false });
           setIsInvalidUrl(true);

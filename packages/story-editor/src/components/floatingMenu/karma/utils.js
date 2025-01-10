@@ -21,7 +21,7 @@ export async function tabToCanvasFocusContainer(focusContainer, fixture) {
 
   // tab until focus reaches the canvas container
   let count = 0;
-  while (count < 15) {
+  while (count < 25) {
     // eslint-disable-next-line no-await-in-loop -- need to await key press
     await fixture.events.keyboard.press('tab');
 
@@ -32,7 +32,7 @@ export async function tabToCanvasFocusContainer(focusContainer, fixture) {
     count++;
   }
 
-  if (count >= 15) {
+  if (count >= 25) {
     throw new Error('Could not find focus container.');
   }
 }

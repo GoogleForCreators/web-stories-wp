@@ -34,9 +34,9 @@ interface Task {
  * @return queueIdleTask
  */
 function useIdleTaskQueue() {
-  const taskQueue = useRef<Task[]>([]);
-  const isTaskQueueRunning = useRef(false);
-  const currentTask = useRef<Task>({ taskId: null, task: null });
+  const taskQueueRef = useRef<Task[]>([]);
+  const isTaskQueueRunningRef = useRef(false);
+  const currentTaskRef = useRef<Task>({ taskId: null, task: null });
 
   /**
    * Recursively runs idle task queue sequentially
@@ -45,23 +45,23 @@ function useIdleTaskQueue() {
    * @return {void}
    */
   const runTaskQueue = useCallback(() => {
-    isTaskQueueRunning.current = true;
+    isTaskQueueRunningRef.current = true;
 
-    if (!taskQueue.current.length) {
-      isTaskQueueRunning.current = false;
+    if (!taskQueueRef.current.length) {
+      isTaskQueueRunningRef.current = false;
       return;
     }
 
-    const { taskId, task } = taskQueue.current.shift() as Task;
+    const { taskId, task } = taskQueueRef.current.shift() as Task;
     const idleCallbackId = requestIdleCallback(() => {
       if (typeof task === 'function') {
         void task().then(() => {
-          currentTask.current = { taskId: null, task: null };
+          currentTaskRef.current = { taskId: null, task: null };
           runTaskQueue();
         });
       }
     });
-    currentTask.current = { taskId, task: idleCallbackId };
+    currentTaskRef.current = { taskId, task: idleCallbackId };
   }, []);
 
   /**
@@ -74,16 +74,16 @@ function useIdleTaskQueue() {
   const clearQueuedTask = useCallback(
     (id: string) => {
       // Remove any queued tasks associated with this task Id
-      taskQueue.current = taskQueue.current.filter(
+      taskQueueRef.current = taskQueueRef.current.filter(
         ({ taskId }: Task) => taskId !== id
       );
 
       // If the current requested task hasn't fired, clear it
       // and restart the queue on the next task
-      const { taskId, task }: Task = currentTask.current;
+      const { taskId, task }: Task = currentTaskRef.current;
       if (id === taskId && typeof task === 'number') {
         cancelIdleCallback(task);
-        currentTask.current = { taskId: null, task: null };
+        currentTaskRef.current = { taskId: null, task: null };
         runTaskQueue();
       }
     },
@@ -104,11 +104,11 @@ function useIdleTaskQueue() {
         clearQueuedTask(taskId);
       }
       // Add request to generate page image generation queue
-      taskQueue.current.push({ taskId, task });
+      taskQueueRef.current.push({ taskId, task });
 
       // If the queue has stopped processing because
       // it ran out of entries, restart it
-      if (!isTaskQueueRunning.current) {
+      if (!isTaskQueueRunningRef.current) {
         runTaskQueue();
       }
 

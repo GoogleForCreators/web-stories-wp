@@ -33,10 +33,7 @@ const media3pSelector = '#library-tab-media3p';
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
 
 async function goToMedia3PTab() {
-  await expect(page).toClick(
-    '[aria-label="Element Library Selection"] [role="tab"]',
-    { text: 'Explore Media' }
-  );
+  await expect(page).toClick('#library-tab-media3p');
 
   await expect(page).toMatchTextContent(
     'Your use of stock content is subject to third party terms'
@@ -59,16 +56,13 @@ describe('Inserting 3P Media', () => {
     );
   });
 
-  beforeEach(async () => {
-    await clearLocalStorage();
-  });
-
   afterAll(() => {
     removeErrorMessage();
   });
 
   it('should insert an Unsplash image', async () => {
     await createNewStory();
+    await clearLocalStorage();
     await goToMedia3PTab();
 
     await expect(page).toMatchElement('button', { text: 'Image' });
@@ -92,6 +86,7 @@ describe('Inserting 3P Media', () => {
 
   it('should insert a Coverr video', async () => {
     await createNewStory();
+    await clearLocalStorage();
     await goToMedia3PTab();
 
     await expect(page).toClick('[role="tablist"] [role="tab"] ', {
@@ -116,6 +111,7 @@ describe('Inserting 3P Media', () => {
 
   it('should insert a Tenor GIF', async () => {
     await createNewStory();
+    await clearLocalStorage();
     await goToMedia3PTab();
 
     await expect(page).toClick('[role="tablist"] [role="tab"] ', {
@@ -140,6 +136,7 @@ describe('Inserting 3P Media', () => {
 
   it('should insert a Tenor sticker', async () => {
     await createNewStory();
+    await clearLocalStorage();
     await goToMedia3PTab();
 
     await expect(page).toClick('[role="tablist"] [role="tab"] ', {

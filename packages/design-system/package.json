@@ -47,18 +47,18 @@
     "mousetrap": "^1.6.5",
     "polished": "^4.3.1",
     "prop-types": "^15.8.1",
-    "react-modal": "^3.16.1",
+    "react-modal": "^3.16.3",
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.11",
-    "uuid": "^10.0.0"
+    "uuid": "^11.0.4"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^8.4.6",
+    "@storybook/addon-essentials": "^8.4.7",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/big.js": "^6.2.2",
     "@types/react-transition-group": "^4.4.6",
     "@types/styled-components": "^5.1.26",
-    "use-debounce": "^10.0.1"
+    "use-debounce": "^10.0.4"
   }
 }

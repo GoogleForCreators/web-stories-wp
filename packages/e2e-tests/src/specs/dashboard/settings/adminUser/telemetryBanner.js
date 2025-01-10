@@ -68,7 +68,8 @@ describe('Telemetry Banner', () => {
 
     await expect(page).toClick('[data-testid="telemetry-settings-checkbox"]');
 
-    await page.waitForTimeout(300);
+    // TODO: Remove and replace with waitForSelector or locator API.
+    await new Promise((r) => setTimeout(r, 300));
 
     const updatedCheckboxStatus = await telemetrySettingsCheckbox.evaluate(
       (el) => {

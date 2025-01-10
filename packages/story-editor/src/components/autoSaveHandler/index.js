@@ -37,9 +37,9 @@ function AutoSaveHandler() {
   const isUploading = useIsUploadingToStory();
 
   // Cache it to make it stable in terms of the below timeout
-  const cachedSaveStory = useRef(autoSave);
+  const cachedSaveStoryRef = useRef(autoSave);
   useEffect(() => {
-    cachedSaveStory.current = autoSave;
+    cachedSaveStoryRef.current = autoSave;
   }, [autoSave]);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ function AutoSaveHandler() {
     // back false after the save.
     // This timeout will thus be re-started when some new change occurs after an autosave.
     const timeout = setTimeout(
-      () => cachedSaveStory.current(),
+      () => cachedSaveStoryRef.current(),
       autoSaveInterval * 1000
     );
 

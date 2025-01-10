@@ -32,7 +32,7 @@ module.exports = function (api) {
           shippedProposals: true,
           targets,
           useBuiltIns: 'usage',
-          corejs: '3.39.0',
+          corejs: '3.40.0',
         },
       ],
       [
@@ -46,6 +46,7 @@ module.exports = function (api) {
       '@babel/preset-typescript',
     ],
     plugins: [
+      ['babel-plugin-react-compiler', { target: '17' }],
       '@wordpress/babel-plugin-import-jsx-pragma',
       [
         'babel-plugin-styled-components',

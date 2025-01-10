@@ -59,7 +59,7 @@ export const getFontList = async () => {
       )
     );
     return parseText(optionsText);
-  } catch (e) {
+  } catch {
     return [];
   }
 };

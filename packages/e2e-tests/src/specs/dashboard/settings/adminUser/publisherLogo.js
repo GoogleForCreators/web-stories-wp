@@ -94,7 +94,8 @@ describe.skip('Publisher Logos', () => {
       );
 
       // Flyout animation.
-      await page.waitForTimeout(100);
+      // TODO: Remove and replace with waitForSelector or locator API.
+      await new Promise((r) => setTimeout(r, 100));
 
       await page.waitForSelector(
         '[role="menu"][aria-label="Menu"][aria-expanded="true"]'

@@ -58,7 +58,7 @@ export interface RichTextProviderProps {
 }
 function RichTextProvider({ children, editingState }: RichTextProviderProps) {
   const [editorState, setEditorState] = useState<EditorState | null>(null);
-  const lastKnownStyle = useRef<DraftInlineStyle | null>(null);
+  const lastKnownStyleRef = useRef<DraftInlineStyle | null>(null);
 
   const selectionInfo = useMemo(() => {
     if (editorState) {
@@ -81,7 +81,7 @@ function RichTextProvider({ children, editingState }: RichTextProviderProps) {
       if (selection) {
         state = EditorState.forceSelection(state, selection);
       }
-      lastKnownStyle.current = state.getCurrentInlineStyle();
+      lastKnownStyleRef.current = state.getCurrentInlineStyle();
       setEditorState(state);
     },
     [editingState, setEditorState]
@@ -100,14 +100,14 @@ function RichTextProvider({ children, editingState }: RichTextProviderProps) {
       let filteredState = getFilteredState(newEditorState, editorState);
       const isEmpty =
         filteredState?.getCurrentContent().getPlainText('') === '';
-      if (isEmpty && lastKnownStyle.current) {
+      if (isEmpty && lastKnownStyleRef.current) {
         // Copy last known current style as inline style
         filteredState = EditorState.setInlineStyleOverride(
           filteredState,
-          lastKnownStyle.current
+          lastKnownStyleRef.current
         );
       } else {
-        lastKnownStyle.current = filteredState.getCurrentInlineStyle();
+        lastKnownStyleRef.current = filteredState.getCurrentInlineStyle();
       }
       setEditorState(filteredState);
     },

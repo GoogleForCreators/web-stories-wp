@@ -59,8 +59,23 @@ const StyledLink = styled(Link)`
 
 function GoogleAnalytics4BannerContainer() {
   const {
+    capabilities: { canManageSettings } = {},
     plugins: { siteKit = {} },
   } = useConfig();
+
+  const fetchSettings = useEditorSettings(
+    ({
+      actions: {
+        settingsApi: { fetchSettings },
+      },
+    }) => fetchSettings
+  );
+
+  useEffect(() => {
+    if (canManageSettings) {
+      fetchSettings();
+    }
+  }, [canManageSettings, fetchSettings]);
 
   const isUsingUniversalAnalytics = useEditorSettings(
     ({
@@ -121,7 +136,7 @@ function GoogleAnalytics4BannerContainer() {
           }}
         >
           {__(
-            'As <a>previously announced</a>, Universal Analytics will stop processing new visits starting <b>July 1, 2023</b>. We recommend switching to <a2>Google Analytics 4</a2> (GA4), our analytics product of record.',
+            'Universal Analytics <a>stopped processing new visits</a> starting <b>July 1, 2023</b>. We recommend switching to <a2>Google Analytics 4</a2> (GA4).',
             'web-stories'
           )}
         </TranslateWithMarkup>
@@ -144,7 +159,7 @@ export default function GoogleAnalytics4Banner() {
     currentPath: state.currentPath,
     hasAvailableRoutes: state.availableRoutes.length > 0,
   }));
-  const headerEl = useRef(null);
+  const headerRef = useRef(null);
   const [, forceUpdate] = useState(false);
 
   useEffect(() => {
@@ -159,14 +174,14 @@ export default function GoogleAnalytics4Banner() {
         EDITOR_SETTINGS_ROUTE,
       ].includes(currentPath)
     ) {
-      headerEl.current = document.getElementById('body-view-options-header');
+      headerRef.current = document.getElementById('body-view-options-header');
       forceUpdate((value) => !value);
     }
   }, [currentPath, hasAvailableRoutes]);
 
-  if (!headerEl.current) {
+  if (!headerRef.current) {
     return null;
   }
 
-  return createPortal(<GoogleAnalytics4BannerContainer />, headerEl.current);
+  return createPortal(<GoogleAnalytics4BannerContainer />, headerRef.current);
 }

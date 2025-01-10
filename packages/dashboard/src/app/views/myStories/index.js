@@ -79,13 +79,13 @@ function MyStoriesView() {
   );
 
   const { apiCallbacks, canViewDefaultTemplates } = useConfig();
-  const isMounted = useRef(false);
+  const isMountedRef = useRef(false);
 
   useEffect(() => {
-    isMounted.current = true;
+    isMountedRef.current = true;
 
     return () => {
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, []);
 

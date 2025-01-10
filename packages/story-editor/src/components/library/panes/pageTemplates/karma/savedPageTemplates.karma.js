@@ -244,6 +244,9 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       const message = fixture.screen.getByRole('alert', { hidden: true });
       expect(message.textContent).toBe('Page Template saved.');
 
+      // Wait until the page templates list has rendered.
+      await fixture.events.sleep(800);
+
       expect(
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);

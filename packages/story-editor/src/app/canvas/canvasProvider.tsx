@@ -56,7 +56,7 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
   const [boundingBoxes, setBoundingBoxes] = useState<BoundingBoxes>({});
   const [lastSelectionEvent, setLastSelectionEvent] =
     useState<MouseEvent | null>(null);
-  const lastSelectedElementId = useRef<string | null>(null);
+  const lastSelectedElementIdRef = useRef<string | null>(null);
   const [canvasContainer, setCanvasContainer] = useState<Node | null>(null);
   const [pageContainer, setPageContainer] = useState<Node | null>(null);
   const [fullbleedContainer, setFullbleedContainer] = useState<Node | null>(
@@ -158,10 +158,10 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
       // Skip the focus that immediately follows mouse event.
       // Use the reference to the latest element because the events come in the
       // sequence in the same event loop.
-      if (lastSelectedElementId.current === elId && evt.type === 'focus') {
+      if (lastSelectedElementIdRef.current === elId && evt.type === 'focus') {
         return;
       }
-      lastSelectedElementId.current = elId;
+      lastSelectedElementIdRef.current = elId;
       if (evt.shiftKey) {
         toggleElementInSelection({ elementId: elId, withLinked: !evt.altKey });
       } else {
@@ -210,10 +210,10 @@ function CanvasProvider({ children }: PropsWithChildren<unknown>) {
       clearEditing();
     }
     if (
-      lastSelectedElementId.current &&
-      !selectedElementIds.includes(lastSelectedElementId.current)
+      lastSelectedElementIdRef.current &&
+      !selectedElementIds.includes(lastSelectedElementIdRef.current)
     ) {
-      lastSelectedElementId.current = null;
+      lastSelectedElementIdRef.current = null;
     }
   }, [editingElement, selectedElementIds, clearEditing]);
 

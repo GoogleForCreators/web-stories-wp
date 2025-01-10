@@ -64,7 +64,7 @@ function useHashState(
         _value = JSON.parse(decodeURI(paramValue)) as string;
       }
     } catch {
-      // @TODO Add some error handling
+      /* empty */
     }
     return _value;
   });

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from '@googleforcreators/react';
+import { useEffect, useRef } from '@googleforcreators/react';
 import { trackTiming } from '@googleforcreators/tracking';
 
 interface TraceProps {
@@ -29,10 +29,8 @@ interface TraceProps {
   };
 }
 
-const TRACES: TraceProps = {};
 const OBSERVED_EVENTS = ['click', 'pointerdown', 'pointerup'];
 const OBSERVED_ENTRY_TYPE = 'event';
-let performanceObserver: PerformanceObserver;
 
 interface UsePerformanceTrackingProps {
   node: Node;
@@ -45,30 +43,34 @@ function usePerformanceTracking({
   eventData,
   eventType = 'click',
 }: UsePerformanceTrackingProps) {
+  const performanceObserverRef = useRef<PerformanceObserver>();
+  const tracesRef = useRef<TraceProps>({});
   const supportsPerformanceObserving =
     typeof PerformanceObserver !== 'undefined' &&
     PerformanceObserver.supportedEntryTypes.includes(OBSERVED_ENTRY_TYPE);
 
   // Start observing all events if not doing so already.
-  if (!performanceObserver && supportsPerformanceObserving) {
-    performanceObserver = new PerformanceObserver((entries) => {
+  if (!performanceObserverRef.current && supportsPerformanceObserving) {
+    performanceObserverRef.current = new PerformanceObserver((entries) => {
       for (const entry of entries.getEntries()) {
         if (
           OBSERVED_EVENTS.includes(entry.name) &&
-          TRACES[entry.startTime]?.category &&
-          !TRACES[entry.startTime]?.isReported
+          tracesRef.current[entry.startTime]?.category &&
+          !tracesRef.current[entry.startTime]?.isReported
         ) {
-          TRACES[entry.startTime].isReported = true;
+          tracesRef.current[entry.startTime].isReported = true;
           trackTiming(
-            TRACES[entry.startTime].category,
+            tracesRef.current[entry.startTime].category,
             entry.duration,
-            TRACES[entry.startTime].label,
+            tracesRef.current[entry.startTime].label,
             entry.name
           );
         }
       }
     });
-    performanceObserver.observe({ entryTypes: [OBSERVED_ENTRY_TYPE] });
+    performanceObserverRef.current.observe({
+      entryTypes: [OBSERVED_ENTRY_TYPE],
+    });
   }
 
   useEffect(() => {
@@ -78,7 +80,7 @@ function usePerformanceTracking({
     const { label = '', category } = eventData;
     const el = node;
     const traceEvent = (e: Event) => {
-      TRACES[e.timeStamp] = { category, label, time: e.timeStamp };
+      tracesRef.current[e.timeStamp] = { category, label, time: e.timeStamp };
     };
     el.addEventListener(eventType, traceEvent);
 

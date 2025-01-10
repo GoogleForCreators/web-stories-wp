@@ -35,18 +35,18 @@ function useTrim({ setDuration, onTrimmed, file, isRecording }) {
   const [isAdjustingTrim, setIsAdjustingTrim] = useState(false);
   const [isProcessingTrim, setIsProcessingTrim] = useState(false);
   const { trimVideo } = useFFmpeg();
-  const hasCancelledTrim = useRef();
+  const hasCancelledTrimRef = useRef();
   const onTrim = useCallback(
     async (newTrimData) => {
       setIsAdjustingTrim(false);
       if (newTrimData) {
-        hasCancelledTrim.current = false;
+        hasCancelledTrimRef.current = false;
         setIsProcessingTrim(true);
         const start = formatMsToHMS(newTrimData.start);
         const end = formatMsToHMS(newTrimData.end);
         const result = await trimVideo(file, start, end);
         // If it was cancelled in the meantime, just abort
-        if (hasCancelledTrim.current) {
+        if (hasCancelledTrimRef.current) {
           return;
         }
         setTrimData(newTrimData);
@@ -63,7 +63,7 @@ function useTrim({ setDuration, onTrimmed, file, isRecording }) {
     setTrimData({ start: 0, end: null });
   }, []);
   const cancelTrim = useCallback(() => {
-    hasCancelledTrim.current = true;
+    hasCancelledTrimRef.current = true;
     setIsProcessingTrim(false);
   }, []);
   // Whenever a new recording starts, reset any previously captured trim data

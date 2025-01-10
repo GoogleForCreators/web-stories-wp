@@ -38,6 +38,7 @@ import DropDownMenu from '../local/dropDownMenu';
 import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import { noop } from '../../../../../utils/noop';
+import { HideOnError } from '../../../../hideOnError';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 import InsertionMenu from './insertionMenu';
@@ -103,7 +104,7 @@ function Element({
   const width = requestedWidth || requestedHeight / oRatio;
   const height = requestedHeight || width / oRatio;
 
-  const mediaElement = useRef();
+  const mediaElementRef = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -135,10 +136,10 @@ function Element({
     if (!isMenuOpen) {
       if (active) {
         setShowVideoDetail(false);
-        if (mediaElement.current && hoverTimer === null) {
+        if (mediaElementRef.current && hoverTimer === null) {
           const timer = setTimeout(() => {
             if (activeRef.current && src) {
-              mediaElement.current.play().catch(noop);
+              mediaElementRef.current.play().catch(noop);
             }
           }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
           setHoverTimer(timer);
@@ -147,10 +148,10 @@ function Element({
       } else {
         setShowVideoDetail(true);
         resetHoverTime();
-        if (mediaElement.current && mediaElement.current?.pause && src) {
+        if (mediaElementRef.current && mediaElementRef.current?.pause && src) {
           // Stop video and reset position.
-          mediaElement.current.pause();
-          mediaElement.current.currentTime = 0;
+          mediaElementRef.current.pause();
+          mediaElementRef.current.currentTime = 0;
         }
       }
     }
@@ -198,7 +199,7 @@ function Element({
         <InnerElement
           type={type}
           src={src}
-          mediaElement={mediaElement}
+          mediaElementRef={mediaElementRef}
           resource={resource}
           alt={alt}
           isMuted={isMuted}
@@ -211,12 +212,14 @@ function Element({
         />
         {attribution}
         {isPlaceholder && blurHash && (
-          <BlurhashContainer
-            hash={blurHash}
-            width={width}
-            height={height}
-            punch={1}
-          />
+          <HideOnError>
+            <BlurhashContainer
+              hash={blurHash}
+              width={width}
+              height={height}
+              punch={1}
+            />
+          </HideOnError>
         )}
         {(!src ||
           isCurrentResourceProcessing(resourceId) ||

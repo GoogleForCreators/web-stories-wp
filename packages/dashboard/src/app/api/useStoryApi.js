@@ -51,13 +51,13 @@ const useStoryApi = () => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
   const { apiCallbacks } = useConfig();
 
-  const isMounted = useRef(false);
+  const isMountedRef = useRef(false);
 
   useEffect(() => {
-    isMounted.current = true;
+    isMountedRef.current = true;
 
     return () => {
-      isMounted.current = false;
+      isMountedRef.current = false;
     };
   }, []);
 
@@ -78,7 +78,7 @@ const useStoryApi = () => {
         const { stories, fetchedStoryIds, totalPages, totalStoriesByStatus } =
           await apiCallbacks.fetchStories(queryParams);
 
-        if (!isMounted.current) {
+        if (!isMountedRef.current) {
           return;
         }
 
