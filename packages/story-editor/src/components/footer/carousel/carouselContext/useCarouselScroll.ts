@@ -71,11 +71,6 @@ function useCarouselScroll({
         offset *= -1;
       }
 
-      if (!listElement.scrollBy) {
-        listElement.scrollLeft += offset;
-        return;
-      }
-
       listElement.scrollBy({
         left: offset,
         behavior: 'smooth',
@@ -123,12 +118,12 @@ function useCarouselScroll({
   );
 
   // Is this the first scroll (which will be instant rather than animated)?
-  const firstScroll = useRef(true);
+  const firstScrollRef = useRef(true);
 
   // If the carousel drawer is collapsed, reset first scroll to true
   useEffect(() => {
     if (carouselState === CarouselState.Closed) {
-      firstScroll.current = true;
+      firstScrollRef.current = true;
     }
   }, [carouselState]);
 
@@ -171,8 +166,8 @@ function useCarouselScroll({
       }
 
       // If this is the first scroll, jump instantly to the target offset
-      const scrollBehavior = firstScroll.current ? 'auto' : 'smooth';
-      firstScroll.current = false;
+      const scrollBehavior = firstScrollRef.current ? 'auto' : 'smooth';
+      firstScrollRef.current = false;
 
       // Otherwise, do scroll and cancel interval
       listElement.scrollTo({
