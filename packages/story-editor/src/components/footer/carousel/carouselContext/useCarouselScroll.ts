@@ -71,11 +71,6 @@ function useCarouselScroll({
         offset *= -1;
       }
 
-      if (!listElement.scrollBy) {
-        listElement.scrollLeft += offset;
-        return;
-      }
-
       listElement.scrollBy({
         left: offset,
         behavior: 'smooth',
