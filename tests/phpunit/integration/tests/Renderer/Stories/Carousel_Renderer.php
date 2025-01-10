@@ -74,8 +74,6 @@ class Carousel_Renderer extends TestCase {
 	 * @covers ::load_assets
 	 */
 	public function test_init(): void {
-
-		$wp_version = get_bloginfo( 'version' );
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'  => 'carousel',
