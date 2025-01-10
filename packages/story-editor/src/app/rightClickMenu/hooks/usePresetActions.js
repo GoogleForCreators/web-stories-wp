@@ -54,12 +54,6 @@ const usePresetActions = () => {
 
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
 
-  const undo = useHistory(({ actions }) => actions.undo);
-
-  // Needed to not pass stale refs of `undo` to snackbar
-  const undoRef = useRef(undo);
-  undoRef.current = undo;
-
   /**
    * Add text styles to global presets.
    *
