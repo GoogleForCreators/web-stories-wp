@@ -18,7 +18,7 @@
  */
 import { useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useRef } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 
 /**
@@ -29,7 +29,7 @@ import useDeleteColor from '../../../components/colorPicker/useDeleteColor';
 import useDeleteStyle from '../../../components/styleManager/useDeleteStyle';
 import useAddPreset from '../../../utils/useAddPreset';
 import { noop } from '../../../utils/noop';
-import { useHistory, useStory } from '../..';
+import { useStory } from '../..';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**
