@@ -46,7 +46,7 @@
     "flagged": "^2.0.10",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.11",
-    "uuid": "^11.0.4"
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
