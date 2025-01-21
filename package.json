@@ -124,7 +124,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-oxlint": "^0.15.5",
     "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.37.3",
+    "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-compiler": "0.0.0-experimental-63cca73-20250106",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-security": "^3.0.1",
