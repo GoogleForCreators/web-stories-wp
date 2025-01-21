@@ -41,7 +41,7 @@ jobs:
     environment: Production
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -104,7 +104,7 @@ jobs:
     needs: [checks]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -222,7 +222,7 @@ jobs:
           echo "" > assets_version/assets_version.txt
 
       - name: Upload assets version
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
         with:
           name: assets-version
           path: public/static/assets_version
@@ -245,7 +245,7 @@ jobs:
       release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -396,7 +396,7 @@ jobs:
           mv build/*.zip build/release-assets/
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
         with:
           name: release-assets
           path: build/release-assets
@@ -408,7 +408,7 @@ jobs:
     needs: [build]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -444,7 +444,7 @@ jobs:
     if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -500,7 +500,7 @@ jobs:
       SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
