@@ -45,7 +45,7 @@ const Section = styled.span`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   line-height: 1.4;
-  word-break: break-word;
+  word-break: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
 `;

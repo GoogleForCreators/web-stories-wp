@@ -119,7 +119,8 @@ export const TableRow = styled.tr`
 export const TableCell = styled.td`
   padding: ${CELL_PADDING}px;
   font-weight: normal;
-  word-break: break-word;
+  overflow-wrap: anywhere;
+  word-break: normal;
   height: ${CELL_PADDING * 2 + 50}px;
   vertical-align: middle;
 

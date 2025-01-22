@@ -60,7 +60,6 @@ const Container = styled.div`
   border: 1px solid ${(props) => props.theme.colors.fg.black};
 
   display: flex;
-  align-items: space-evenly;
   flex-direction: column;
   padding: 20px;
 `;

@@ -147,7 +147,7 @@ export const Background = styled.div(
     css`
       /* Specific overrides for PagePreview that is borrowed for checklist's thumbnails */
       .pagePreviewOverrides {
-        border-color: none;
+        border-color: transparent;
 
         &::after {
           content: none;

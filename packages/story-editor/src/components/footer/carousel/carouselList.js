@@ -48,7 +48,6 @@ const PageList = styled(Reorderable).attrs({
     hasOverflow &&
     css`
       overflow-x: visible;
-      overflow-x: overlay;
       justify-content: flex-start;
     `};
 

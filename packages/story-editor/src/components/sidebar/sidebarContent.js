@@ -26,7 +26,7 @@ import { getTabId } from './utils';
 
 const SidebarPane = styled.div.attrs({ role: 'tabpanel' })`
   height: 100%;
-  overflow: overlay;
+  overflow: auto;
 `;
 
 const SidebarPanes = styled.section`

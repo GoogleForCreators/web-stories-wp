@@ -92,7 +92,6 @@ export const CardDetailsGrid = styled.div`
 `;
 export const CardDetailsColumn = styled.div`
   display: flex;
-  align-items: space-between;
   flex-direction: column;
   align-self: flex-end;
 `;
