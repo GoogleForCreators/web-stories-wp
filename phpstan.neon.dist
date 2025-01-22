@@ -28,9 +28,6 @@ parameters:
       message: '/\(int\) does not accept int\|WP_Error\.$/'
       path: tests/phpunit/integration/tests
     -
-      message: '/^Parameter #1 \$post of function set_post_thumbnail expects int\|WP_Post, int\|WP_Error given\.$/'
-      path: tests/phpunit/integration/tests
-    -
       message: '/^Call to deprecated method _get_first_available_transport\(\)/'
       path: includes/REST_API/Hotlinking_Controller.php
   paths:
