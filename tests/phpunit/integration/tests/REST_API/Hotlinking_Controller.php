@@ -479,10 +479,10 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	public function data_validate_url_should_validate(): array {
 		return [
 			'no port specified'                 => [
-				'url'      => 'http://example.com/caniload.php',
+				'url' => 'http://example.com/caniload.php',
 			],
 			'a port considered safe by default' => [
-				'url'      => 'https://example.com:8080/caniload.php',
+				'url' => 'https://example.com:8080/caniload.php',
 			],
 			'a port considered safe by filter'  => [
 				'url'           => 'https://example.com:81/caniload.php',
