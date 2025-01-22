@@ -119,6 +119,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.39.0 =
 
+* Enhancement: new experimental performance improvements in the dashboard and editor.
 * Fixed: resolved translation warning on WordPress 6.7.
 * Fixed: improved Google Analytics 4 banner.
 * Fixed: resolved edge case where the media library might crash.
@@ -141,4 +142,4 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.39.0 =
 
-This release resolves a translation warning on WordPress 6.7 and contains other minor bug fixes.
+This release contains performance improvements, resolves a translation warning on WordPress 6.7 and contains other minor bug fixes.
