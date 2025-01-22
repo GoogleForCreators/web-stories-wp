@@ -173,7 +173,7 @@
     "storybook": "^8.1.5",
     "styled-components": "^5.3.11",
     "stylelint": "^16.13.2",
-    "stylelint-config-recommended": "^14.0.1",
+    "stylelint-config-recommended": "^15.0.0",
     "stylelint-prettier": "^5.0.2",
     "stylis-plugin-rtl": "^1.0.0",
     "terser-webpack-plugin": "^5.3.11",
