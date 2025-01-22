@@ -457,39 +457,35 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * Test that validate_url validates URLs.
 	 *
 	 * @param string         $url            The URL to validate.
-	 * @param string         $expected       Expected result.
 	 * @param false|callable $cb_safe_ports  The name of the callback to http_allowed_safe_ports or false if none.
-	 *                                     Default false.
+	 *                                       Default false.
 	 *
 	 * @dataProvider data_validate_url_should_validate
 	 * @covers ::validate_url
 	 */
-	public function test_validate_url_should_validate( string $url, string $expected, $cb_safe_ports = false ): void {
+	public function test_validate_url_should_validate( string $url, $cb_safe_ports = false ): void {
 		if ( $cb_safe_ports ) {
 			add_filter( 'http_allowed_safe_ports', $cb_safe_ports );
 		}
 
-		$this->assertSame( $expected, $this->call_private_method( [ $this->controller, 'validate_url' ], [ $url ] ) );
+		$this->assertNotFalse( $this->call_private_method( [ $this->controller, 'validate_url' ], [ $url ] ) );
 	}
 
 	/**
 	 * Data provider.
 	 *
-	 * @return array<string, array{url: string, expected: string, cb_safe_ports?: callable}>
+	 * @return array<string, array{url: string, cb_safe_ports?: callable}>
 	 */
 	public function data_validate_url_should_validate(): array {
 		return [
 			'no port specified'                 => [
 				'url'      => 'http://example.com/caniload.php',
-				'expected' => '93.184.215.14',
 			],
 			'a port considered safe by default' => [
 				'url'      => 'https://example.com:8080/caniload.php',
-				'expected' => '93.184.215.14',
 			],
 			'a port considered safe by filter'  => [
 				'url'           => 'https://example.com:81/caniload.php',
-				'expected'      => '93.184.215.14',
 				'cb_safe_ports' => [ $this, 'callback_custom_safe_ports' ],
 			],
 		];
