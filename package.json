@@ -49,6 +49,7 @@
     "@googleforcreators/story-editor": "*",
     "@jest/types": "^29.6.3",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
+    "@manypkg/get-packages": "^2.2.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "@prettier/plugin-xml": "^3.4.1",
     "@rollup/plugin-babel": "^6.0.4",
@@ -183,8 +184,7 @@
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0",
     "webpackbar": "^7.0.0",
-    "worker-loader": "^3.0.8",
-    "workspaces-run": "^1.0.2"
+    "worker-loader": "^3.0.8"
   },
   "overrides": {
     "@axe-core/puppeteer": {

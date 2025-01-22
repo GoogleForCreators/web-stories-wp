@@ -30,7 +30,7 @@ import terser from '@rollup/plugin-terser';
 import del from 'rollup-plugin-delete';
 import copy from 'rollup-plugin-copy';
 import webWorkerLoader from 'rollup-plugin-web-worker-loader';
-import workspacesRun from 'workspaces-run';
+import { getPackages } from '@manypkg/get-packages';
 
 const __dirname = fileURLToPath(dirname(import.meta.url));
 
@@ -146,35 +146,36 @@ const plugins = [
  * @return {import('rollup').RollupOptions} Rollup configuration.
  */
 async function config(cliArgs) {
-  const packages = [];
   const entries = [];
 
-  // Collect the list of packages
-  await workspacesRun({ cwd: __dirname, orderByDeps: true }, (pkg) => {
-    if (!pkg.config.private) {
-      packages.push(pkg);
-    }
-  });
+  const { packages } = await getPackages(__dirname);
 
-  const allPackageNames = packages.map(({ name }) => name.split('/')[1]);
+  const allPublicPackageNames = packages
+    .filter((pkg) => !pkg.packageJson.private)
+    .map((pkg) => pkg.packageJson.name.split('/')[1]);
   const packagesToBuild = cliArgs?.configPackages
     ? cliArgs.configPackages.split(',')
-    : allPackageNames;
+    : allPublicPackageNames;
   const entriesToBuild = cliArgs?.configEntries
     ? cliArgs.configEntries.split(',')
     : ['es', 'cjs'];
 
   for (const pkg of packages) {
-    if (!packagesToBuild.includes(pkg.name.split('/')[1])) {
+    if (!packagesToBuild.includes(pkg.packageJson.name.split('/')[1])) {
       continue;
     }
 
-    const input = resolvePath(pkg.dir, pkg.config.source);
+    if (!pkg.packageJson.source) {
+      // This shouldn't happen for public packages.
+      continue;
+    }
+
+    const input = resolvePath(pkg.dir, pkg.packageJson.source);
 
     const external = [
       ...new Set([
-        ...Object.keys(pkg.config.dependencies || {}),
-        ...Object.keys(pkg.config.peerDependencies || {}),
+        ...Object.keys(pkg.packageJson.dependencies || {}),
+        ...Object.keys(pkg.packageJson.peerDependencies || {}),
         'react',
         'react-dom',
         'react-dom/server',
@@ -204,12 +205,12 @@ async function config(cliArgs) {
  */`,
     };
 
-    const sourceDir = dirname(resolvePath(pkg.dir, pkg.config.source));
+    const sourceDir = dirname(resolvePath(pkg.dir, pkg.packageJson.source));
 
     if (entriesToBuild.includes('es')) {
       const _plugins = [];
 
-      const moduleDir = dirname(resolvePath(pkg.dir, pkg.config.module));
+      const moduleDir = dirname(resolvePath(pkg.dir, pkg.packageJson.module));
       _plugins.push(
         del({
           targets: [moduleDir],
@@ -217,7 +218,7 @@ async function config(cliArgs) {
         })
       );
 
-      if ('@googleforcreators/fonts' === pkg.name) {
+      if ('@googleforcreators/fonts' === pkg.packageJson.name) {
         _plugins.push(
           copy({
             targets: [{ src: `${sourceDir}/fonts.json`, dest: moduleDir }],
@@ -241,7 +242,7 @@ async function config(cliArgs) {
     if (entriesToBuild.includes('cjs')) {
       const _plugins = [];
 
-      const mainDir = dirname(resolvePath(pkg.dir, pkg.config.main));
+      const mainDir = dirname(resolvePath(pkg.dir, pkg.packageJson.main));
       _plugins.push(
         del({
           targets: [mainDir],
