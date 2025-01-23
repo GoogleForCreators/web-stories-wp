@@ -74,7 +74,6 @@ class Carousel_Renderer extends TestCase {
 	 * @covers ::load_assets
 	 */
 	public function test_init(): void {
-
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'  => 'carousel',
@@ -86,7 +85,6 @@ class Carousel_Renderer extends TestCase {
 		$renderer->init();
 
 		$this->assertTrue( wp_style_is( $renderer::STYLE_HANDLE, 'registered' ) );
-		$this->assertTrue( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 	}
