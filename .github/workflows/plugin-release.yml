@@ -510,6 +510,11 @@ jobs:
           name: release-assets
           path: release-assets
 
+      - name: Install svn
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y subversion
+
       - name: Check out trunk folder
         run: svn checkout $PLUGIN_REPO_URL svn --username "$SVN_USERNAME"
 
