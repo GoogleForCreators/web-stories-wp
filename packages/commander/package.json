@@ -28,7 +28,7 @@
   "type": "module",
   "dependencies": {
     "commander": "^13.1.0",
-    "semver": "^7.6.3"
+    "semver": "^7.7.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.0",
