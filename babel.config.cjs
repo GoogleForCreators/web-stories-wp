@@ -32,7 +32,7 @@ module.exports = function (api) {
           shippedProposals: true,
           targets,
           useBuiltIns: 'usage',
-          corejs: require( 'core-js/package.json' ).version,
+          corejs: require('core-js/package.json').version,
         },
       ],
       [
