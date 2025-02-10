@@ -42,8 +42,9 @@ const Section = styled.span`
   background: rgba(11, 11, 11, 0.6);
   color: rgba(255, 255, 255, 1);
   display: inline-block;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
+    Cantarell, 'Helvetica Neue', sans-serif;
   line-height: 1.4;
   word-break: normal;
   word-wrap: break-word;
