@@ -71,7 +71,7 @@
     "classnames": "^2.5.1",
     "flagged": "^2.0.10",
     "history": "^5.3.0",
-    "html-to-image": "1.10.8",
+    "html-to-image": "1.11.13",
     "immer": "^10.1.1",
     "mediainfo.js": "^0.1.9",
     "polished": "^4.3.1",
