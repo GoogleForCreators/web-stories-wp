@@ -96,7 +96,7 @@ class Core_Themes_Support extends Service_Base {
 	 */
 	public function embed_web_stories(): void {
 		$stylesheet = get_stylesheet();
-		if ( is_readable( sprintf( '%sassets/css/web-stories-theme-style-%s.css', WEBSTORIES_PLUGIN_DIR_PATH, $stylesheet ) ) ) {
+		if ( is_readable( \sprintf( '%sassets/css/web-stories-theme-style-%s.css', WEBSTORIES_PLUGIN_DIR_PATH, $stylesheet ) ) ) {
 			$this->assets->enqueue_style_asset( 'web-stories-theme-style-' . $stylesheet, [] );
 		}
 		?>

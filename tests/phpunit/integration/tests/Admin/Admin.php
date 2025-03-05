@@ -157,8 +157,8 @@ class Admin extends DependencyInjectedTestCase {
 		$result = $this->instance->prefill_post_content( 'current', $current_post );
 
 		$this->assertIsString( $result );
-		$this->assertStringNotContainsString( sprintf( '"url":"http://example.org/?post_type=web-story&#038;p=%s', $story_id ), $result );
-		$this->assertStringContainsString( sprintf( '"url":"http://example.org/?post_type=web-story&p=%s', $story_id ), $result );
+		$this->assertStringNotContainsString( \sprintf( '"url":"http://example.org/?post_type=web-story&#038;p=%s', $story_id ), $result );
+		$this->assertStringContainsString( \sprintf( '"url":"http://example.org/?post_type=web-story&p=%s', $story_id ), $result );
 	}
 
 	/**

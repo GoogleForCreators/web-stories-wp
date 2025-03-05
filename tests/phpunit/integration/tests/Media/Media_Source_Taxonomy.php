@@ -123,7 +123,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 		wp_set_object_terms( $video_attachment_id, 'editor', $this->instance->get_taxonomy_slug() );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/wp/v2/media/%d', $video_attachment_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, \sprintf( '/wp/v2/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 

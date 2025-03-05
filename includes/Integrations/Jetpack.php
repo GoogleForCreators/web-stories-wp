@@ -391,6 +391,6 @@ class Jetpack extends Service_Base {
 			$minutes = 0;
 		}
 
-		return sprintf( '%d:%02u', $minutes, $seconds );
+		return \sprintf( '%d:%02u', $minutes, $seconds );
 	}
 }

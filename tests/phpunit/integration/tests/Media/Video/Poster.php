@@ -90,7 +90,7 @@ class Poster extends DependencyInjectedTestCase {
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, \sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 

@@ -52,7 +52,7 @@ final class InvalidEventProperties extends InvalidArgumentException implements W
 			? \get_class( $properties )
 			: \gettype( $properties );
 
-		$message = sprintf(
+		$message = \sprintf(
 			'The properties argument for adding properties to an event needs to be an array, but is of type %s',
 			$type
 		);
@@ -73,7 +73,7 @@ final class InvalidEventProperties extends InvalidArgumentException implements W
 			? \get_class( $property )
 			: \gettype( $property );
 
-		$message = sprintf(
+		$message = \sprintf(
 			'Each property element key for adding properties to an event needs to of type string, but found an element key of type %s',
 			$type
 		);
@@ -92,7 +92,7 @@ final class InvalidEventProperties extends InvalidArgumentException implements W
 			? \get_class( $property )
 			: \gettype( $property );
 
-		$message = sprintf(
+		$message = \sprintf(
 			'Each property element value for adding properties to an event needs to be a scalar value, but found an element value of type %s',
 			$type
 		);

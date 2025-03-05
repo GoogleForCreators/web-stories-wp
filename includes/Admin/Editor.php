@@ -415,7 +415,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$revision = absint( $revision );
 
 		$revision_message = ! empty( $revision ) ?
-			sprintf(
+			\sprintf(
 				/* translators: %s: Date and time of the revision. */
 				__( 'Story restored to revision from %s.', 'web-stories' ),
 				wp_post_revision_title( $revision, false )
@@ -458,7 +458,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'taxonomies'     => '/web-stories/v1/taxonomies/',
 				'fonts'          => trailingslashit( $this->font_post_type->get_rest_url() ),
 				'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
+				'storyLocking'   => rest_url( \sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
 			],
 			'metadata'                => [
 				'publisher' => $publisher_name,

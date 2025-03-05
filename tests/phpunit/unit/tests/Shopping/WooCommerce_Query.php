@@ -132,7 +132,7 @@ class WooCommerce_Query extends TestCase {
 						return false;
 					}
 
-					return sprintf( 'http://example.com/%s', $id );
+					return \sprintf( 'http://example.com/%s', $id );
 				},
 			]
 		);
@@ -207,7 +207,7 @@ class WooCommerce_Query extends TestCase {
 	public function test_get_product_image(): void {
 		Monkey\Functions\stubs(
 			[
-				'wp_get_attachment_image_url' => static fn( $id ) => sprintf( 'http://example.com/%s', $id ),
+				'wp_get_attachment_image_url' => static fn( $id ) => \sprintf( 'http://example.com/%s', $id ),
 				'get_post_meta'               => static fn() => 'image alt',
 
 			]

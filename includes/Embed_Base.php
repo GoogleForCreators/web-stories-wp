@@ -105,7 +105,7 @@ abstract class Embed_Base extends Service_Base {
 	 * @since 1.13.0
 	 */
 	public function add_amp_post_template_css(): void {
-		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s%s.css', self::SCRIPT_HANDLE, is_rtl() ? '-rtl' : '' ) );
+		$path = $this->assets->get_base_path( \sprintf( 'assets/css/%s%s.css', self::SCRIPT_HANDLE, is_rtl() ? '-rtl' : '' ) );
 
 		if ( is_readable( $path ) ) {
 			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown

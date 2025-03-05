@@ -181,7 +181,7 @@ class Experiments extends Service_Base implements HasRequirements {
 		<label for="<?php echo esc_attr( $args['id'] ); ?>">
 			<input
 				type="checkbox"
-				name="<?php echo esc_attr( sprintf( '%1$s[%2$s]', $this->settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>"
+				name="<?php echo esc_attr( \sprintf( '%1$s[%2$s]', $this->settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>"
 				id="<?php echo esc_attr( $args['id'] ); ?>"
 				value="1"
 				<?php echo esc_attr( $disabled ); ?>

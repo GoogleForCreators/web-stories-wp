@@ -137,7 +137,7 @@ class Shopify_Query implements Product_Query {
 			// URL is null if the resource is currently not published to the Online Store sales channel,
 			// or if the shop is password-protected.
 			// In this case, we can fall back to a manually constructed product URL.
-			$product_url = $product['onlineStoreUrl'] ?? sprintf( 'https://%1$s/products/%2$s/', $this->get_host(), $product['handle'] );
+			$product_url = $product['onlineStoreUrl'] ?? \sprintf( 'https://%1$s/products/%2$s/', $this->get_host(), $product['handle'] );
 
 			$products[] = new Product(
 				[
@@ -215,7 +215,7 @@ class Shopify_Query implements Product_Query {
 		}
 
 		$url = esc_url_raw(
-			sprintf(
+			\sprintf(
 				'https://%1$s/api/%2$s/graphql.json',
 				$host,
 				self::API_VERSION
@@ -262,7 +262,7 @@ class Shopify_Query implements Product_Query {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
 		$sortkey       = 'date' === $orderby ? 'CREATED_AT' : strtoupper( $orderby );
 		$reverse       = 'asc' === $order ? 'false' : 'true';
-		$after         = empty( $after ) ? 'null' : sprintf( '"%s"', $after );
+		$after         = empty( $after ) ? 'null' : \sprintf( '"%s"', $after );
 
 		return <<<QUERY
 {

@@ -199,12 +199,12 @@ class Experiments extends DependencyInjectedTestCase {
 		$experiment_groups = wp_list_pluck( $all_experiments, 'group' );
 
 		foreach ( $experiment_groups as $group ) {
-			$this->assertContains( $group, $all_experiment_groups, sprintf( 'Invalid experiment group %s', $group ) );
+			$this->assertContains( $group, $all_experiment_groups, \sprintf( 'Invalid experiment group %s', $group ) );
 		}
 
 		$duplicates = array_unique( array_diff_assoc( $experiment_names, array_unique( $experiment_names ) ) );
 
-		$this->assertEmpty( $duplicates, sprintf( 'Duplicate experiments definition: %s', implode( ',', $duplicates ) ) );
+		$this->assertEmpty( $duplicates, \sprintf( 'Duplicate experiments definition: %s', implode( ',', $duplicates ) ) );
 	}
 
 	/**

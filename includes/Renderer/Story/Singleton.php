@@ -104,9 +104,9 @@ class Singleton {
 		$args = wp_parse_args( $args, $defaults );
 
 		$args['align'] = ! empty( $args['align'] ) ? $args['align'] : 'none';
-		$align         = sprintf( 'align%s', $args['align'] );
+		$align         = \sprintf( 'align%s', $args['align'] );
 		$class         = $args['class'];
-		$wrapper_style = sprintf(
+		$wrapper_style = \sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
 			0 !== $args['height'] ? $args['width'] / $args['height'] : 1,
 			(int) $args['width'],
