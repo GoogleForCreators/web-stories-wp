@@ -157,7 +157,7 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	 */
 	public function test_add_attribute_local_image(): void {
 		$url       = site_url( '/test.jpg' );
-		$html      = sprintf( "<img src='%s' alt='test' />", $url );
+		$html      = \sprintf( "<img src='%s' alt='test' />", $url );
 		$attribute = 'src';
 		$result    = $this->call_private_method( [ $this->instance, 'add_attribute' ], [ $html, $attribute, $url ] );
 		$this->assertStringNotContainsString( 'crossorigin', $result );

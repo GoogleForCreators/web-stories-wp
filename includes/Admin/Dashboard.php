@@ -411,7 +411,7 @@ class Dashboard extends Service_Base {
 
 		wp_add_inline_script(
 			'wp-api-fetch',
-			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
+			\sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
 			'after'
 		);
 	}

@@ -46,7 +46,7 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	protected function prepare_links( $term ): array {
 		$links          = parent::prepare_links( $term );
 		$links['about'] = [
-			'href' => rest_url( sprintf( '%s/taxonomies/%s', $this->namespace, $this->taxonomy ) ),
+			'href' => rest_url( \sprintf( '%s/taxonomies/%s', $this->namespace, $this->taxonomy ) ),
 		];
 
 		return $links;

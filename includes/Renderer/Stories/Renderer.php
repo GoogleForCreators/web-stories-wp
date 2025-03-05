@@ -285,7 +285,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function add_amp_post_template_css(): void {
-		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s%s.css', self::STYLE_HANDLE, is_rtl() ? '-rtl' : '' ) );
+		$path = $this->assets->get_base_path( \sprintf( 'assets/css/%s%s.css', self::STYLE_HANDLE, is_rtl() ? '-rtl' : '' ) );
 
 		if ( is_readable( $path ) ) {
 			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
@@ -359,7 +359,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			?>
 			<div
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
-				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
+				on="<?php echo esc_attr( \sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
 				tabindex="0"
 				role="button"
 			>
@@ -530,10 +530,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function get_view_classes(): string {
 		$view_classes   = [];
-		$view_classes[] = ! empty( $this->attributes['view_type'] ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
+		$view_classes[] = ! empty( $this->attributes['view_type'] ) ? \sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
 
 		if ( $this->is_view_type( 'grid' ) && ! empty( $this->attributes['number_of_columns'] ) ) {
-			$view_classes[] = sprintf( 'columns-%1$d', $this->attributes['number_of_columns'] );
+			$view_classes[] = \sprintf( 'columns-%1$d', $this->attributes['number_of_columns'] );
 		}
 
 		if ( ! $this->is_view_type( 'circles' ) && ! empty( $this->attributes['sharp_corners'] ) ) {
@@ -563,7 +563,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected function get_container_classes(): string {
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
-		$container_classes[] = ! empty( $this->attributes['align'] ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
+		$container_classes[] = ! empty( $this->attributes['align'] ) ? \sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
 		$container_classes[] = ! empty( $this->attributes['class'] ) ? $this->attributes['class'] : '';
 
 		if ( ! empty( $this->attributes['show_archive_link'] ) ) {
@@ -574,7 +574,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		$view_type_classes = $this->get_view_classes();
 
-		return sprintf( '%1$s %2$s', implode( ' ', $container_classes ), $view_type_classes );
+		return \sprintf( '%1$s %2$s', implode( ' ', $container_classes ), $view_type_classes );
 	}
 
 	/**
@@ -617,9 +617,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function get_container_styles(): string {
 		$story_styles  = ! empty( $this->attributes['circle_size'] ) && $this->is_view_type( 'circles' ) ?
-			sprintf( '--ws-circle-size:%1$dpx', $this->attributes['circle_size'] ) :
+			\sprintf( '--ws-circle-size:%1$dpx', $this->attributes['circle_size'] ) :
 			'';
-		$story_styles .= $this->is_view_type( 'carousel' ) ? sprintf( '--ws-story-max-width:%1$dpx', $this->width ) : '';
+		$story_styles .= $this->is_view_type( 'carousel' ) ? \sprintf( '--ws-story-max-width:%1$dpx', $this->width ) : '';
 
 		/**
 		 * Filters the web stories renderer single story classes.
@@ -772,7 +772,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				<div class="story-content-overlay__author">
 					<?php
 						/* translators: byline. %s: author name. */
-						echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story->get_author() ) );
+						echo esc_html( \sprintf( __( 'By %s', 'web-stories' ), $story->get_author() ) );
 					?>
 				</div>
 			<?php } ?>
@@ -781,7 +781,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				<time class="story-content-overlay__date">
 					<?php
 						/* translators: %s: publish date. */
-						echo esc_html( sprintf( __( 'On %s', 'web-stories' ), $story->get_date() ) );
+						echo esc_html( \sprintf( __( 'On %s', 'web-stories' ), $story->get_date() ) );
 					?>
 				</time>
 			<?php } ?>

@@ -41,9 +41,7 @@ trait ScriptHash {
 	 */
 	public function generate_script_hash( string $script ): ?string {
 		$sha384 = hash( 'sha384', $script, true );
-		if ( ! $sha384 ) {
-			return null;
-		}
+
 		$hash = str_replace(
 			[ '+', '/', '=' ],
 			[ '-', '_', '.' ],

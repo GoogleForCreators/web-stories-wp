@@ -530,7 +530,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @phpstan-return Links
 	 */
 	protected function prepare_links( $post ): array {
-		$base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+		$base = \sprintf( '%s/%s', $this->namespace, $this->rest_base );
 
 		// Entity meta.
 		return [

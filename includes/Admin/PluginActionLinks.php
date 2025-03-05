@@ -74,9 +74,9 @@ class PluginActionLinks extends Service_Base {
 		if ( ! \is_array( $links ) ) {
 			return $links;
 		}
-		$slug    = sprintf( 'edit.php?post_type=%s&page=stories-dashboard#/editor-settings', Story_Post_Type::POST_TYPE_SLUG );
+		$slug    = \sprintf( 'edit.php?post_type=%s&page=stories-dashboard#/editor-settings', Story_Post_Type::POST_TYPE_SLUG );
 		$url     = get_admin_url( null, $slug );
-		$links[] = sprintf(
+		$links[] = \sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( $url ),
 			esc_html__( 'Settings', 'web-stories' )

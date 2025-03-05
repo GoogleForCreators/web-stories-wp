@@ -364,7 +364,7 @@ class Sanitization {
 		$specs = [];
 		// Register all AMP components as defined in the spec.
 		foreach ( AMP_Allowed_Tags_Generated::get_extension_specs() as $extension_name => $extension_spec ) {
-			$src = sprintf(
+			$src = \sprintf(
 				'https://cdn.ampproject.org/v0/%s-%s.js',
 				$extension_name,
 				$extension_spec['latest']

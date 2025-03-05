@@ -205,7 +205,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$request['content'] = $original_post->post_content;
 		$request['excerpt'] = $original_post->post_excerpt;
 
-		$title = sprintf(
+		$title = \sprintf(
 		/* translators: %s: story title. */
 			__( '%s (Copy)', 'web-stories' ),
 			$original_post->post_title
@@ -599,7 +599,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @phpstan-return Links
 	 */
 	private function add_post_locking_link( array $links, WP_Post $post ): array {
-		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+		$base     = \sprintf( '%s/%s', $this->namespace, $this->rest_base );
 		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
 
 		$links['https://api.w.org/lock'] = [
@@ -622,7 +622,7 @@ class Stories_Controller extends Stories_Base_Controller {
 
 			if ( $time && $time > time() - $time_window ) {
 				$links['https://api.w.org/lockuser'] = [
-					'href'       => rest_url( sprintf( '%s/%s', $this->namespace, 'users/' ) . $user ),
+					'href'       => rest_url( \sprintf( '%s/%s', $this->namespace, 'users/' ) . $user ),
 					'embeddable' => true,
 				];
 			}
@@ -667,7 +667,7 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		if ( $publisher_logo_id ) {
 			$links['https://api.w.org/publisherlogo'] = [
-				'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'media', $publisher_logo_id ) ),
+				'href'       => rest_url( \sprintf( '%s/%s/%s', $this->namespace, 'media', $publisher_logo_id ) ),
 				'embeddable' => true,
 			];
 		}

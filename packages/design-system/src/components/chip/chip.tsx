@@ -75,8 +75,8 @@ const ChipContainer = styled.button<{ active?: boolean; disabled?: boolean }>(
         : theme.colors.interactiveBg.secondaryNormal};
     border-radius: ${theme.borders.radius.x_large};
     transition: all 0.3s ease-in-out;
-    transition-property: background-color, border-color, height, width,
-      transform;
+    transition-property:
+      background-color, border-color, height, width, transform;
     cursor: ${disabled ? 'default' : 'pointer'};
     ${focusableOutlineCSS}
     :active {

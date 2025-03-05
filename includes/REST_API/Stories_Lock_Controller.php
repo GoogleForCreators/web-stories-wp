@@ -420,7 +420,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			foreach ( $avatar_sizes as $size ) {
 				$avatar_properties[ $size ] = [
 					/* translators: %d: Avatar image size in pixels. */
-					'description' => sprintf( __( 'Avatar URL with image size of %d pixels.', 'web-stories' ), $size ),
+					'description' => \sprintf( __( 'Avatar URL with image size of %d pixels.', 'web-stories' ), $size ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => [ 'embed', 'view', 'edit' ],
@@ -489,7 +489,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 
 			if ( $lock['time'] && $lock['time'] > time() - $time_window && isset( $lock['user'] ) ) {
 				$links['author'] = [
-					'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'users', $lock['user'] ) ),
+					'href'       => rest_url( \sprintf( '%s/%s/%s', $this->namespace, 'users', $lock['user'] ) ),
 					'embeddable' => true,
 				];
 			}

@@ -195,7 +195,7 @@ class Muting extends Service_Base implements HasMeta, PluginUninstallAware {
 			return new \WP_Error(
 				'rest_cannot_update',
 				/* translators: %s: Custom field key.**/
-				sprintf( __( 'Sorry, you are not allowed to edit the %s custom field.', 'web-stories' ), $name ),
+				\sprintf( __( 'Sorry, you are not allowed to edit the %s custom field.', 'web-stories' ), $name ),
 				[
 					'key'    => $name,
 					'status' => rest_authorization_required_code(),

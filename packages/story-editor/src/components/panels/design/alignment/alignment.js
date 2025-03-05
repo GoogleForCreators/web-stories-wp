@@ -46,7 +46,6 @@ const ElementRow = styled.div`
   align-items: center;
   padding: 16px;
   overflow: auto;
-  overflow: overlay;
 `;
 
 const alignmentButtonIds = [

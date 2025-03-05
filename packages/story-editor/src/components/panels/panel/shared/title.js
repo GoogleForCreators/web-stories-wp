@@ -62,7 +62,6 @@ const Heading = styled.span`
   color: ${({ theme, isCollapsed }) =>
     isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   display: flex;
-  align-items: space-between;
   ${({ theme }) =>
     themeHelpers.expandPresetStyles({
       preset: theme.typography.presets.headline[TextSize.XXSmall],

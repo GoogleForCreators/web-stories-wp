@@ -216,7 +216,7 @@
     "react/react-in-jsx-scope": "off",
     "react/self-closing-comp": "error",
     "react-compiler/react-compiler": [
-      "warn",
+      "error",
       {
         "environment": {
           "enableTreatRefLikeIdentifiersAsRefs": true,
@@ -918,7 +918,44 @@
         "packages/story-editor/src/components/canvas/mediaCaptions/cue.js"
       ],
       "rules": {
-        "@eslint-community/eslint-comments/no-unused-disable": "off",
+        "@eslint-community/eslint-comments/no-unused-disable": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/design-system/src/components/keyboard/keyboard.tsx",
+        "packages/element-library/src/media/editCropMoveable.tsx",
+        "packages/element-library/src/media/editPanMoveable.tsx",
+        "packages/element-library/src/text/edit.tsx",
+        "packages/element-library/src/video/playPauseButton.tsx",
+        "packages/react/src/useBatchingCallback.ts",
+        "packages/react/src/useResizeEffect.ts",
+        "packages/story-editor/src/app/helpCenter/provider.tsx",
+        "packages/story-editor/src/app/media/media3p/useContextValueProvider.js",
+        "packages/story-editor/src/app/media/media3p/useFetchMediaEffect.js",
+        "packages/story-editor/src/app/quickActions/useQuickActions.js",
+        "packages/story-editor/src/components/canvas/mediaRecordingLayer.js",
+        "packages/story-editor/src/components/canvas/multiSelectionMoveable/useDrag.js",
+        "packages/story-editor/src/components/canvas/multiSelectionMoveable/useResize.js",
+        "packages/story-editor/src/components/canvas/multiSelectionMoveable/useRotate.js",
+        "packages/story-editor/src/components/canvas/singleSelectionMoveable/index.js",
+        "packages/story-editor/src/components/canvas/singleSelectionMoveable/useDrag.js",
+        "packages/story-editor/src/components/canvas/singleSelectionMoveable/useResize.js",
+        "packages/story-editor/src/components/canvas/singleSelectionMoveable/useRotate.js",
+        "packages/story-editor/src/components/canvas/utils/useUpdateSelectionRectangle.js",
+        "packages/story-editor/src/components/colorPicker/editablePreview.js",
+        "packages/story-editor/src/components/form/usePresubmitHandler.js",
+        "packages/story-editor/src/components/library/panes/shopping/shoppingPane.js",
+        "packages/story-editor/src/components/mediaRecording/audio.js",
+        "packages/story-editor/src/components/mediaRecording/footer.js",
+        "packages/story-editor/src/components/panels/shared/useCommonObjectValue.js",
+        "packages/story-editor/src/components/videoTrim/useVideoNode.js",
+        "packages/transform/src/useTransformHandler.ts",
+        "packages/wp-story-editor/src/components/fontCheck/index.js"
+
+      ],
+      "rules": {
+        "react-compiler/react-compiler": "off"
       }
     }
   ]

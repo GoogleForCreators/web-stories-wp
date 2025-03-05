@@ -450,7 +450,7 @@ trait Sanitization_Utils {
 		foreach ( $elements_by_inline_style as $inline_style => $styled_elements ) {
 			$inline_style_class_name = '_' . substr( md5( (string) $inline_style ), 0, 7 );
 
-			$style_rule = $document->createTextNode( sprintf( '.%s{%s}', $inline_style_class_name, $inline_style ) );
+			$style_rule = $document->createTextNode( \sprintf( '.%s{%s}', $inline_style_class_name, $inline_style ) );
 			$style_element->appendChild( $style_rule );
 
 			/**

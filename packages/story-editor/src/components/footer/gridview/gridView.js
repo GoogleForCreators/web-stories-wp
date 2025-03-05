@@ -76,7 +76,6 @@ const TopRow = styled.header`
 const Wrapper = styled(Reorderable)`
   position: relative;
   overflow-y: auto;
-  overflow-y: overlay;
   overflow-x: hidden;
   flex-grow: 1;
   display: flex;
