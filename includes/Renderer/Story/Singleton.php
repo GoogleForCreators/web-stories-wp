@@ -115,7 +115,6 @@ class Singleton {
 
 		$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
-		$this->assets->enqueue_script_asset( Renderer::LIGHTBOX_SCRIPT_HANDLE );
 		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
 
 		ob_start();
@@ -144,7 +143,14 @@ class Singleton {
 			?>
 			<div class="web-stories-singleton__lightbox-wrapper <?php echo esc_attr( 'ws-lightbox-singleton-' . $this->instance_id ); ?>">
 				<div class="web-stories-singleton__lightbox">
-					<amp-story-player width="3.6" height="6" layout="responsive">
+					<amp-story-player
+						width="3.6"
+						height="6"
+						layout="responsive"
+						data-wp-interactive="web-stories-block"
+						data-wp-on--amp-story-player-close="actions.close"
+						data-wp-on--navigation="actions.navigation"
+					>
 						<script type="application/json">
 							<?php echo wp_json_encode( $data ); ?>
 						</script>
