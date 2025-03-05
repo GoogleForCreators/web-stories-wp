@@ -261,7 +261,7 @@ class HTML {
 		$config       = [
 			'shareProviders' => $share_providers,
 		];
-		$social_share = sprintf(
+		$social_share = \sprintf(
 			'<amp-story-social-share layout="nodisplay"><script type="application/json">%s</script></amp-story-social-share>',
 			wp_json_encode( $config )
 		);

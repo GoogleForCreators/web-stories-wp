@@ -93,7 +93,7 @@ class Embed {
 		];
 
 		$args          = wp_parse_args( $args, $defaults );
-		$align         = sprintf( 'align%s', $args['align'] );
+		$align         = \sprintf( 'align%s', $args['align'] );
 		$class         = $args['class'];
 		$url           = $this->story->get_url();
 		$title         = $this->story->get_title();
@@ -101,7 +101,7 @@ class Embed {
 		$poster_srcset = $this->story->get_poster_srcset();
 		$poster_sizes  = $this->story->get_poster_sizes();
 
-		$wrapper_style = sprintf(
+		$wrapper_style = \sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
 			0 !== $args['height'] ? $args['width'] / $args['height'] : 1,
 			(int) $args['width'],

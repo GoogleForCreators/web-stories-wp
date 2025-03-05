@@ -179,7 +179,7 @@ class Admin extends Service_Base {
 		if ( ! use_block_editor_for_post( $post ) ) {
 			$content = '[web_stories_embed url="%1$s" title="%2$s" poster="%3$s" width="%4$s" height="%5$s" align="%6$s"]';
 
-			return sprintf(
+			return \sprintf(
 				$content,
 				esc_url( $story->get_url() ),
 				esc_attr( $story->get_title() ),
@@ -197,7 +197,7 @@ class Admin extends Service_Base {
 
 		$content = '<!-- wp:web-stories/embed {"blockType":"url","url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s","stories": [%7$s]} -->%8$s<!-- /wp:web-stories/embed -->';
 		// note $story->get_url should not be escaped here (esc_url()) see https://github.com/GoogleForCreators/web-stories-wp/issues/11371.
-		return sprintf(
+		return \sprintf(
 			$content,
 			$story->get_url(),
 			esc_js( $story->get_title() ),

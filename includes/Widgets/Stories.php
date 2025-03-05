@@ -623,7 +623,7 @@ class Stories extends WP_Widget {
 				 * @var string $attr_val
 				 */
 				foreach ( $args['attributes'] as $attr_key => $attr_val ) {
-					$extra_attrs .= sprintf( ' %1s=%2s', $attr_key, esc_attr( $attr_val ) );
+					$extra_attrs .= \sprintf( ' %1s=%2s', $attr_key, esc_attr( $attr_val ) );
 				}
 			}
 			?>

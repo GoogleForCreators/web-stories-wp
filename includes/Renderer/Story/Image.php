@@ -69,7 +69,7 @@ class Image {
 			'width'  => 360,
 		];
 		$args     = wp_parse_args( $args, $defaults );
-		$align    = sprintf( 'align%s', $args['align'] );
+		$align    = \sprintf( 'align%s', $args['align'] );
 		$class    = $args['class'];
 
 		$url           = $this->story->get_url();

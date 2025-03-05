@@ -85,7 +85,7 @@ class Preferences extends DependencyInjectedTestCase {
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/wp/v2/users/%d', self::$admin_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, \sprintf( '/wp/v2/users/%d', self::$admin_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 

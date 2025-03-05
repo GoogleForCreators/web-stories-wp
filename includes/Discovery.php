@@ -266,7 +266,7 @@ class Discovery extends Service_Base implements HasRequirements {
 		/* translators: 1: Blog name, 2: Separator (raquo), 3: Post type name. */
 		$post_type_title = esc_html__( '%1$s %2$s %3$s Feed', 'web-stories' );
 
-		$title = sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $name );
+		$title = \sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $name );
 
 		printf(
 			'<link rel="alternate" type="%s" title="%s" href="%s">',

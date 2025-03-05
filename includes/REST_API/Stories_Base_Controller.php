@@ -236,7 +236,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			) {
 				return new \WP_Error(
 					'rest_empty_content',
-					sprintf(
+					\sprintf(
 						/* translators: 1: content, 2: story_data */
 						__( '%1$s and %2$s should always be updated together.', 'web-stories' ),
 						'content',
@@ -302,7 +302,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		if ( ! empty( $post->post_author ) && post_type_supports( $post->post_type, 'author' ) ) {
 			$links['author'] = [
-				'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'users', $post->post_author ) ),
+				'href'       => rest_url( \sprintf( '%s/%s/%s', $this->namespace, 'users', $post->post_author ) ),
 				'embeddable' => true,
 			];
 		}
@@ -310,7 +310,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		// If we have a featured media, add that.
 		$featured_media = get_post_thumbnail_id( $post->ID );
 		if ( $featured_media ) {
-			$image_url = rest_url( sprintf( '%s/%s/%s', $this->namespace, 'media', $featured_media ) );
+			$image_url = rest_url( \sprintf( '%s/%s/%s', $this->namespace, 'media', $featured_media ) );
 
 			$links['https://api.w.org/featuredmedia'] = [
 				'href'       => $image_url,
@@ -319,7 +319,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		if ( ! \in_array( $post->post_type, [ 'attachment', 'nav_menu_item', 'revision' ], true ) ) {
-			$attachments_url = rest_url( sprintf( '%s/%s', $this->namespace, 'media' ) );
+			$attachments_url = rest_url( \sprintf( '%s/%s', $this->namespace, 'media' ) );
 			$attachments_url = add_query_arg( 'parent', $post->ID, $attachments_url );
 
 			$links['https://api.w.org/attachment'] = [

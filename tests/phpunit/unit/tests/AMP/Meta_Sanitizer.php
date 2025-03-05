@@ -95,7 +95,7 @@ class Meta_Sanitizer extends TestCase {
 			'body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}',
 		];
 
-		$amp_boilerplate = sprintf( '<style amp-boilerplate>%s</style><noscript><style amp-boilerplate>%s</style></noscript>', $amp_boilerplate_css[0], $amp_boilerplate_css[1] );
+		$amp_boilerplate = \sprintf( '<style amp-boilerplate>%s</style><noscript><style amp-boilerplate>%s</style></noscript>', $amp_boilerplate_css[0], $amp_boilerplate_css[1] );
 
 		$meta_charset  = '<meta charset="utf-8">';
 		$meta_viewport = '<meta name="viewport" content="width=device-width">';
