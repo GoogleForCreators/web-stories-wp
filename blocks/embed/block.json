@@ -85,6 +85,8 @@
     }
   },
   "supports": {
-    "align": ["wide", "full", "left", "right", "center"]
-  }
+    "align": ["wide", "full", "left", "right", "center"],
+    "interactivity": true
+  },
+  "viewScriptModule": "file:../../assets/js/web-stories-block-view.js"
 }

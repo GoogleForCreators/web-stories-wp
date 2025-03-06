@@ -119,7 +119,8 @@ class Embed {
 					<amp-story-player
 						width="<?php echo esc_attr( $args['width'] ); ?>"
 						height="<?php echo esc_attr( $args['height'] ); ?>"
-						layout="intrinsic">
+						layout="intrinsic"
+					>
 						<a href="<?php echo esc_url( $url ); ?>">
 							<?php if ( $poster ) { ?>
 								<img

@@ -56,11 +56,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	public const STYLE_HANDLE = 'web-stories-list-styles';
 
 	/**
-	 * Web Stories stylesheet handle.
-	 */
-	public const LIGHTBOX_SCRIPT_HANDLE = 'web-stories-lightbox';
-
-	/**
 	 * Number of instances invoked. Kept it static to keep track.
 	 */
 	protected static int $instances = 0;
@@ -277,9 +272,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
-		// Web Stories lightbox script.
-		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
-
 		if ( \defined( 'AMPFORWP_VERSION' ) ) {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
@@ -377,9 +369,21 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		} else {
 			$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
-			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
-			<div class="<?php echo esc_attr( $single_story_classes ); ?>">
+			<div
+				class="<?php echo esc_attr( $single_story_classes ); ?>"
+				data-wp-interactive="web-stories-block"
+				<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_interactivity_data_wp_context(
+						[
+							'instanceId' => $this->instance_id,
+						]
+					);
+				?>
+				data-wp-on--click="actions.open"
+				data-wp-on-window--popstate="actions.onPopstate"
+				>
 				<?php $this->render_story_with_poster(); ?>
 			</div>
 			<?php
@@ -410,7 +414,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		];
 		?>
 		<div class="web-stories-list__lightbox">
-			<amp-story-player width="3.6" height="6" layout="responsive">
+			<amp-story-player
+				width="3.6"
+				height="6"
+				layout="responsive"
+				data-wp-interactive="web-stories-block"
+				data-wp-on--amp-story-player-close="actions.close"
+				data-wp-on--navigation="actions.navigation"
+				>
 				<script type="application/json">
 					<?php echo wp_json_encode( $data ); ?>
 				</script>
@@ -832,6 +843,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					width="3.6"
 					height="6"
 					layout="responsive"
+					data-wp-interactive="web-stories-block"
+					data-wp-on--amp-story-player-close="actions.close"
+					data-wp-on--navigation="actions.navigation"
 				>
 					<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 				</amp-story-player>

@@ -394,7 +394,6 @@ const editorAndDashboard = {
 const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    'web-stories-lightbox': './packages/stories-lightbox/src/index.js',
     'web-stories-carousel': './packages/stories-carousel/src/index.js',
   },
   plugins: [
@@ -439,6 +438,25 @@ const webStoriesBlock = {
       name: 'Web Stories Block',
       color: '#357BB5',
     }),
+  ].filter(Boolean),
+};
+
+const webStoriesBlockView = {
+  ...sharedConfig,
+  output: { ...sharedConfig.output, module: true },
+  experiments: { outputModule: true },
+  entry: {
+    'web-stories-block-view': './packages/stories-block/src/view.ts',
+  },
+  plugins: [
+    ...sharedConfig.plugins.filter(
+      (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+    ),
+    new WebpackBar({
+      name: 'Web Stories Block View',
+      color: '#a9db14',
+    }),
+    new DependencyExtractionWebpackPlugin(),
   ].filter(Boolean),
 };
 
@@ -494,4 +512,5 @@ module.exports = [
   webStoriesScripts,
   widgetScript,
   storiesMCEButton,
+  webStoriesBlockView,
 ];

@@ -96,6 +96,8 @@ class Generic_Renderer extends Renderer {
 		$view_type = $this->get_view_type();
 		$content   = (string) ob_get_clean();
 
+		$content = wp_interactivity_process_directives( $content );
+
 		/**
 		 * Filters the Generic renderer stories content.
 		 *

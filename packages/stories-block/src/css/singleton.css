@@ -53,6 +53,7 @@
   aspect-ratio: var(--aspect-ratio);
   border-radius: 8px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .web-stories-singleton-poster a {

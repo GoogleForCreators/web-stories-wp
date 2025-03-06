@@ -86,7 +86,6 @@ class Generic_Renderer extends TestCase {
 	 * @covers ::load_assets
 	 */
 	public function test_load_assets(): void {
-
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'class'      => '',
@@ -98,7 +97,6 @@ class Generic_Renderer extends TestCase {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( Renderer::STYLE_HANDLE, 'registered' ) );
 	}
 
@@ -106,7 +104,6 @@ class Generic_Renderer extends TestCase {
 	 * @covers ::render
 	 */
 	public function test_render(): void {
-
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'          => 'grid',
@@ -132,7 +129,5 @@ class Generic_Renderer extends TestCase {
 		$this->assertStringContainsString( 'web-stories-list alignnone is-view-type-grid', $output );
 		$this->assertStringContainsString( 'web-stories-list__story', $output );
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
-
-		$this->assertTrue( wp_script_is( Renderer::LIGHTBOX_SCRIPT_HANDLE ) );
 	}
 }

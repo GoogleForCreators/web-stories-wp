@@ -59,7 +59,6 @@ System.config({
     '@web-stories-wp/karma-puppeteer-launcher': './packages/karma-puppeteer-launcher/src',
     '@web-stories-wp/stories-block': './packages/stories-block/src',
     '@web-stories-wp/stories-carousel': './packages/stories-carousel/src',
-    '@web-stories-wp/stories-lightbox': './packages/stories-lightbox/src',
     '@web-stories-wp/tinymce-button': './packages/tinymce-button/src',
     '@web-stories-wp/widget': './packages/widget/src',
     '@web-stories-wp/wp-dashboard': './packages/wp-dashboard/src',
