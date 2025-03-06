@@ -25,7 +25,7 @@ import 'glider-js/glider.css';
  *
  * Glider-JS doesn't support RTL at the moment, this is to add basic
  * functioning support for the nav arrows as otherwise the nav arrows
- * becomes useless on RTL sites.
+ * become useless on RTL sites.
  *
  * @todo Maybe replace glider-js with other lightweight lib which has RTL support. or Replace it with 'amp-carousel' once we have the support.
  * @param {Object|string} slide Slide arrow string based on action.

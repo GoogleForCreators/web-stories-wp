@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import Glider from '@web-stories-wp/glider';
+__webpack_public_path__ = window.webStoriesCarouselSettings.publicPath;
 
-/**
- * WordPress dependencies
- */
-import domReady from '@wordpress/dom-ready';
-
-domReady(() => {
+document.addEventListener('DOMContentLoaded', async () => {
   const carouselWrappers = document.querySelectorAll(
     '.web-stories-list__carousel'
   );
@@ -37,7 +29,11 @@ domReady(() => {
     return;
   }
 
-  Array.from(carouselWrappers).forEach((carouselWrapper) => {
+  const { default: Glider } = await import(
+    /* webpackChunkName: "chunk-web-stories-glider" */ '@web-stories-wp/glider'
+  );
+
+  carouselWrappers.forEach((carouselWrapper) => {
     // For multiple instance of the glider we need to link nav arrows appropriately.
     const carouselId = carouselWrapper.dataset.id;
 

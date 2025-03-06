@@ -302,7 +302,15 @@ class Assets {
 	 */
 	public function register_script( string $script_handle, $src, array $deps = [], $ver = false, bool $in_footer = false, bool $with_i18n = true ): bool {
 		if ( ! isset( $this->register_scripts[ $script_handle ] ) ) {
-			$this->register_scripts[ $script_handle ] = wp_register_script( $script_handle, $src, $deps, $ver, $in_footer );
+			$this->register_scripts[ $script_handle ] = wp_register_script(
+				$script_handle,
+				$src,
+				$deps,
+				$ver,
+				[
+					'in_footer' => $in_footer,
+				]
+			);
 
 			if ( $src && $with_i18n ) {
 				wp_set_script_translations( $script_handle, 'web-stories' );
