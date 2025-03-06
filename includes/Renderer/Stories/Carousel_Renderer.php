@@ -176,7 +176,7 @@ class Carousel_Renderer extends Renderer {
 	 */
 	protected function get_carousel_settings(): array {
 		return [
-			'config' => [
+			'config'     => [
 				'isRTL' => is_rtl(),
 			],
 			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
