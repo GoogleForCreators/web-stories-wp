@@ -374,12 +374,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
 				data-wp-interactive="web-stories-block"
 				<?php
-					echo esc_attr(
-						wp_interactivity_data_wp_context(
-							[
-								'instanceId' => $this->instance_id,
-							]
-						)
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_interactivity_data_wp_context(
+						[
+							'instanceId' => $this->instance_id,
+						]
 					);
 				?>
 				data-wp-on--click="actions.open"

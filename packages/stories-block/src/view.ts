@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,66 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
+interface StoryDef {
+  href: string;
+  title: string | null;
+  posterImage: string | null;
+  idx: number;
+  distance: number;
+  storyContentLoaded: boolean;
+  desktopAspectRatio: number | null;
+}
+
+interface AmpStoryPlayerElement extends HTMLElement {
+  getStories: () => StoryDef[];
+  play: () => void;
+  pause: () => void;
+  rewind: () => void;
+  mute: () => void;
+  show: (href: string) => void;
+}
+
+interface AmpStoryPlayerNavigationEvent extends Event {
+  detail: {
+    index: number;
+    remaining: number;
+  };
+}
+
+type State = {
+  lightboxElement: HTMLElement | null;
+  player: null | AmpStoryPlayerElement;
+  stories: StoryDef[];
+  instanceId: string | null;
+  currentLocation: string | null;
+};
+
+type BlockContext = {
+  instanceId: string;
+};
+
+function runWithViewTransition(f: () => void) {
+  if (!document.startViewTransition) {
+    f();
+  } else {
+    document.startViewTransition(() => f());
+  }
+}
+
 const { state, actions } = store('web-stories-block', {
   state: {
     lightboxElement: null,
     player: null,
-    stories: null,
+    stories: [],
     instanceId: null,
     currentLocation: null,
-  },
+  } as State,
   actions: {
-    storyContentReady: (storyObject, callback, maxRetries = 5) => {
+    storyContentReady: (
+      storyObject: StoryDef,
+      callback: () => void,
+      maxRetries = 5
+    ) => {
       const stateIntervalObj = setInterval(() => {
         if (storyObject.storyContentLoaded === true) {
           window.clearInterval(stateIntervalObj);
@@ -52,44 +102,56 @@ const { state, actions } = store('web-stories-block', {
       player.pause();
       player.mute();
 
-      lightboxElement.classList.toggle('show');
+      lightboxElement?.classList.toggle('show');
       document.body.classList.toggle('web-stories-lightbox-open');
     },
-    open: (event) => {
+    open: (event: Event) => {
       event.preventDefault();
-      const { ref: card } = getElement();
-      const context = JSON.parse(getContext().replaceAll("'", ''));
+      const context = getContext<BlockContext>();
       const lightboxElement =
         document.querySelector(
           `.ws-lightbox-${context.instanceId} .web-stories-list__lightbox`
         ) ||
         document.querySelector(
-          `.ws-lightbox-${context.instanceId} .web-stories-singleton__lightbox`
+          `.ws-lightbox-singleton-${context.instanceId} .web-stories-singleton__lightbox`
         );
-      const player = lightboxElement.querySelector('amp-story-player');
+
+      if (!lightboxElement) {
+        return;
+      }
+
+      const player = lightboxElement.querySelector(
+        'amp-story-player'
+      ) as unknown as AmpStoryPlayerElement;
       const stories = player.getStories();
 
-      state.lightboxElement = lightboxElement;
+      state.lightboxElement = lightboxElement as HTMLElement;
       state.player = player;
       state.stories = stories;
       state.instanceId = context.instanceId;
       state.currentLocation = location.href;
 
+      const { ref: card } = getElement();
+
       const storyObject = stories.find(
-        (story) => story.href === card.querySelector('a').href
+        (story) => story.href === card?.querySelector('a')?.href
       );
 
-      player.show(storyObject.href);
-      player.play();
+      if (storyObject) {
+        player.show(storyObject.href);
+        player.play();
 
-      actions.storyContentReady(storyObject, () => {
-        history.pushState({}, '', storyObject.href);
+        actions.storyContentReady(storyObject, () => {
+          history.pushState({}, '', storyObject.href);
+        });
+      }
+
+      runWithViewTransition(() => {
+        lightboxElement.classList.toggle('show');
+        document.body.classList.toggle('web-stories-lightbox-open');
       });
-
-      lightboxElement.classList.toggle('show');
-      document.body.classList.toggle('web-stories-lightbox-open');
     },
-    navigation: (event) => {
+    navigation: (event: AmpStoryPlayerNavigationEvent) => {
       const storyObject = state.stories[event.detail.index];
       if (storyObject && storyObject.href !== document.location.href) {
         actions.storyContentReady(storyObject, () => {
@@ -100,7 +162,7 @@ const { state, actions } = store('web-stories-block', {
     onPopstate: () => {
       const lightboxElement = state.lightboxElement;
       const player = state.player;
-      const isLightboxOpen = lightboxElement.classList.contains('show');
+      const isLightboxOpen = lightboxElement?.classList.contains('show');
 
       const storyObject = state.stories.find(
         (story) => story.href === document.location.href
@@ -108,12 +170,12 @@ const { state, actions } = store('web-stories-block', {
 
       if (storyObject) {
         if (!isLightboxOpen) {
-          lightboxElement.classList.toggle('show');
+          lightboxElement?.classList.toggle('show');
           document.body.classList.toggle('web-stories-lightbox-open');
-          player.play();
+          player?.play();
         }
 
-        player.show(storyObject.href);
+        player?.show(storyObject.href);
       } else if (isLightboxOpen) {
         actions.close();
       }

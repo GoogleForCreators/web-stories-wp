@@ -32,6 +32,7 @@ use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Renderer\Stories\Renderer;
 
 /**
  * Class Singleton
@@ -112,14 +113,31 @@ class Singleton {
 			(int) $args['height']
 		);
 
+		$this->assets->enqueue_style_asset( Renderer::STYLE_HANDLE ); // For the lightbox styles.
 		$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
 
 		ob_start();
 		?>
-		<div class="<?php echo esc_attr( "$class web-stories-singleton $align" ); ?>" data-id="<?php echo esc_attr( 'singleton-' . $this->instance_id ); ?>">
-			<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
+		<div
+		class="<?php echo esc_attr( "$class web-stories-singleton $align" ); ?>"
+		data-id="<?php echo esc_attr( 'singleton-' . $this->instance_id ); ?>"
+		data-wp-interactive="web-stories-block"
+		<?php
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_interactivity_data_wp_context(
+				[
+					'instanceId' => $this->instance_id,
+				]
+			);
+		?>
+		>
+			<div
+			class="wp-block-embed__wrapper"
+			style="<?php echo esc_attr( $wrapper_style ); ?>"
+			data-wp-on--click="actions.open"
+			>
 			<?php $this->render_story_with_poster( $args ); ?>
 			</div>
 			<?php
@@ -141,12 +159,14 @@ class Singleton {
 
 			?>
 			<div class="web-stories-singleton__lightbox-wrapper <?php echo esc_attr( 'ws-lightbox-singleton-' . $this->instance_id ); ?>">
-				<div class="web-stories-singleton__lightbox">
+				<div
+				class="web-stories-singleton__lightbox"
+				id="<?php echo esc_attr( 'ws-lightbox-singleton-' . $this->instance_id ); ?>"
+				>
 					<amp-story-player
 						width="3.6"
 						height="6"
 						layout="responsive"
-						data-wp-interactive="web-stories-block"
 						data-wp-on--amp-story-player-close="actions.close"
 						data-wp-on--navigation="actions.navigation"
 					>

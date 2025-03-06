@@ -446,7 +446,7 @@ const webStoriesBlockView = {
   output: { ...sharedConfig.output, module: true },
   experiments: { outputModule: true },
   entry: {
-    'web-stories-block-view': './packages/stories-block-view/src/index.js',
+    'web-stories-block-view': './packages/stories-block/src/view.ts',
   },
   plugins: [
     ...sharedConfig.plugins.filter(

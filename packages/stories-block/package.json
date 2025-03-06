@@ -43,6 +43,7 @@
     "@wordpress/element": "^6.19.0",
     "@wordpress/i18n": "^4.47.0",
     "@wordpress/icons": "^9.38.0",
+    "@wordpress/interactivity": "^6.19.0",
     "@wordpress/notices": "^4.15.0",
     "@wordpress/url": "^3.48.0",
     "@wordpress/viewport": "^5.24.0",
