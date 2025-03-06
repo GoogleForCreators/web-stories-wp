@@ -98,13 +98,21 @@ class Carousel_Renderer extends Renderer {
 		ob_start();
 		?>
 		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) $this->instance_id ); ?>">
-			<div class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>" style="<?php echo esc_attr( $container_styles ); ?>">
+			<div
+			class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>"
+			style="<?php echo esc_attr( $container_styles ); ?>"
+			>
 				<?php
 				if ( ! $this->context->is_amp() ) {
 					$this->assets->enqueue_script( self::SCRIPT_HANDLE );
 					$this->assets->enqueue_style( self::SCRIPT_HANDLE );
 					?>
-					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>">
+					<div
+					class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>"
+					data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>"
+					data-prev="<?php esc_attr_e( 'Previous', 'web-stories' ); ?>"
+					data-next="<?php esc_attr_e( 'Next', 'web-stories' ); ?>"
+					>
 						<?php
 						array_map(
 							function () {

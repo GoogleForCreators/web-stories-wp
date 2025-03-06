@@ -135,3 +135,81 @@ html[dir='rtl'] .glider-prev.disabled:hover,
   display: flex;
   overflow-y: scroll;
 }
+
+@supports (scroll-marker-group: after) {
+  .web-stories-list.is-carousel .web-stories-list__carousel ~ .glider-prev,
+  .web-stories-list.is-carousel .web-stories-list__carousel ~ .glider-next {
+    display: none;
+  }
+
+  .web-stories-list.is-carousel .web-stories-list__inner-wrapper {
+    max-width: none !important;
+  }
+
+  .web-stories-list.is-carousel .web-stories-list__carousel {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    container-type: inline-size scroll-state;
+
+    overflow-x: auto; /* todo, why does this hide everything */
+    overscroll-behavior-x: contain;
+
+    scroll-snap-type: x mandatory;
+
+    position: relative;
+  }
+
+  /* stylelint-disable selector-type-no-unknown, selector-pseudo-element-no-unknown */
+
+  .web-stories-list.is-carousel .web-stories-list__carousel::scroll-button(*) {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #eaeaea;
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    border-style: none;
+    z-index: 10;
+    pointer-events: all;
+    cursor: pointer;
+    position: absolute;
+    transform: translateY(100%);
+    top: 0;
+  }
+
+  .web-stories-list.is-carousel
+    .web-stories-list__carousel::scroll-button(*):disabled {
+    display: none;
+  }
+
+  .web-stories-list.is-carousel
+    .web-stories-list__carousel::scroll-button(*):hover {
+    filter: invert(1);
+  }
+
+  .web-stories-list.is-carousel
+    .web-stories-list__carousel::scroll-button(left) {
+    transform: translateY(100%) rotate(180deg);
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    content: url('../../inline-icons/carousel-arrow.svg') / attr(data-prev);
+  }
+
+  .web-stories-list.is-carousel
+    .web-stories-list__carousel::scroll-button(right) {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    content: url('../../inline-icons/carousel-arrow.svg') / attr(data-next);
+    right: 0;
+  }
+
+  /* stylelint-enable selector-type-no-unknown, selector-pseudo-element-no-unknown */
+}
