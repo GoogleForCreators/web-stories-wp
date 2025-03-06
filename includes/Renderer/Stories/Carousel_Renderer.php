@@ -66,7 +66,7 @@ class Carousel_Renderer extends Renderer {
 	public function load_assets(): void {
 		parent::load_assets();
 
-		$this->assets->register_script_asset( self::SCRIPT_HANDLE );
+		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [], false );
 		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
 
 		wp_localize_script(
@@ -101,8 +101,8 @@ class Carousel_Renderer extends Renderer {
 			<div class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
 				if ( ! $this->context->is_amp() ) {
-					$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE );
-					$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
+					$this->assets->enqueue_script( self::SCRIPT_HANDLE );
+					$this->assets->enqueue_style( self::SCRIPT_HANDLE );
 					?>
 					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>">
 						<?php
