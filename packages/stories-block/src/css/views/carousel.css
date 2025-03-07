@@ -31,15 +31,19 @@
 }
 
 .web-stories-list.is-carousel .web-stories-list__archive-link {
-  position: absolute;
-  right: 0;
-  top: -35px;
+  text-align: right;
+  margin-bottom: 5px;
 }
 
 .web-stories-theme-header-section
   .web-stories-list.is-carousel
   .web-stories-list__archive-link {
-  right: 10px;
+  margin-right: 10px;
+}
+
+.web-stories-list.is-carousel .web-stories-list__carousel:not(.glider) ~ .glider-next,
+.web-stories-list.is-carousel .web-stories-list__carousel:not(.glider) ~ .glider-prev {
+  display: none;
 }
 
 .web-stories-list.is-carousel .glider-next,

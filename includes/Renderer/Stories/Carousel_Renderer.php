@@ -67,7 +67,6 @@ class Carousel_Renderer extends Renderer {
 		parent::load_assets();
 
 		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [], false );
-		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
@@ -103,9 +102,10 @@ class Carousel_Renderer extends Renderer {
 			style="<?php echo esc_attr( $container_styles ); ?>"
 			>
 				<?php
+				$this->maybe_render_archive_link();
+
 				if ( ! $this->context->is_amp() ) {
 					$this->assets->enqueue_script( self::SCRIPT_HANDLE );
-					$this->assets->enqueue_style( self::SCRIPT_HANDLE );
 					?>
 					<div
 					class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>"
@@ -148,7 +148,6 @@ class Carousel_Renderer extends Renderer {
 					</amp-carousel>
 					<?php
 				}
-				$this->maybe_render_archive_link();
 				?>
 			</div>
 		</div>
