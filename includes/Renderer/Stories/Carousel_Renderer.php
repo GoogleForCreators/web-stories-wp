@@ -172,7 +172,7 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array<string,array<string,bool>> Carousel settings.
+	 * @return array<string,array<string,bool>|string> Carousel settings.
 	 */
 	protected function get_carousel_settings(): array {
 		return [
