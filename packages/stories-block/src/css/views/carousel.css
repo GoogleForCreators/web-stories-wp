@@ -209,12 +209,15 @@ html[dir='rtl'] .glider-prev.disabled:hover,
     transform: rotate(180deg);
     /* stylelint-disable-next-line declaration-property-value-no-unknown */
     content: url('../../inline-icons/carousel-arrow.svg') / attr(data-prev);
+    /*!rtl:ignore*/
+    left: 0;
   }
 
   .web-stories-list.is-carousel
     .web-stories-list__carousel::scroll-button(right) {
     /* stylelint-disable-next-line declaration-property-value-no-unknown */
     content: url('../../inline-icons/carousel-arrow.svg') / attr(data-next);
+    /*!rtl:ignore*/
     right: 0;
   }
 
