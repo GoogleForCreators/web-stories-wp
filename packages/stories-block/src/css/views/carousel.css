@@ -144,25 +144,28 @@ html[dir='rtl'] .glider-prev.disabled:hover,
 
   .web-stories-list.is-carousel .web-stories-list__inner-wrapper {
     max-width: none !important;
+    display: grid;
+    justify-content: center;
   }
 
   .web-stories-list.is-carousel .web-stories-list__carousel {
     display: grid;
     grid-auto-flow: column;
-    justify-content: start;
+    grid-auto-columns: var(--ws-circle-size);
+    gap: 0 10px;
+    position: relative;
 
     scroll-behavior: smooth;
-
     scrollbar-width: none;
-    /* stylelint-disable-next-line declaration-property-value-no-unknown */
-    container-type: inline-size scroll-state;
 
-    overflow-x: auto; /* todo, why does this hide everything */
+    overflow-x: auto;
     overscroll-behavior-x: contain;
 
     scroll-snap-type: x mandatory;
+  }
 
-    position: relative;
+  .web-stories-list.is-view-type-circles .web-stories-list__story {
+    margin: 0;
   }
 
   /* stylelint-disable selector-type-no-unknown, selector-pseudo-element-no-unknown */
@@ -180,16 +183,20 @@ html[dir='rtl'] .glider-prev.disabled:hover,
     width: 34px;
     border-style: none;
     z-index: 10;
+    line-height: 1;
     pointer-events: all;
     cursor: pointer;
+    opacity: 1;
+    transition:
+      opacity 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+      color 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
     position: absolute;
-    transform: translateY(100%);
-    top: 0;
+    top: calc(50% - 17px);
   }
 
   .web-stories-list.is-carousel
     .web-stories-list__carousel::scroll-button(*):disabled {
-    display: none;
+    opacity: 0;
   }
 
   .web-stories-list.is-carousel
@@ -199,7 +206,7 @@ html[dir='rtl'] .glider-prev.disabled:hover,
 
   .web-stories-list.is-carousel
     .web-stories-list__carousel::scroll-button(left) {
-    transform: translateY(100%) rotate(180deg);
+    transform: rotate(180deg);
     /* stylelint-disable-next-line declaration-property-value-no-unknown */
     content: url('../../inline-icons/carousel-arrow.svg') / attr(data-prev);
   }
