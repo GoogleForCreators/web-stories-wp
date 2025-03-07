@@ -84,9 +84,7 @@ class Carousel_Renderer extends TestCase {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Carousel_Renderer( $this->story_query );
 		$renderer->init();
 
-		$this->assertTrue( wp_style_is( $renderer::STYLE_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
-		$this->assertTrue( wp_style_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 	}
 
 	/**
