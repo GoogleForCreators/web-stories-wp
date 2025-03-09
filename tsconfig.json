@@ -19,6 +19,7 @@
     { "path": "packages/rich-text" },
     { "path": "packages/stickers" },
     { "path": "packages/stories-block" },
+    { "path": "packages/stories-carousel" },
     { "path": "packages/story-editor" },
     { "path": "packages/templates" },
     { "path": "packages/test-utils" },

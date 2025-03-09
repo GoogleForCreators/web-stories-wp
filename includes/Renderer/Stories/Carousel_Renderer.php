@@ -66,8 +66,7 @@ class Carousel_Renderer extends Renderer {
 	public function load_assets(): void {
 		parent::load_assets();
 
-		$this->assets->register_script_asset( self::SCRIPT_HANDLE );
-		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
+		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [], false );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
@@ -98,13 +97,22 @@ class Carousel_Renderer extends Renderer {
 		ob_start();
 		?>
 		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) $this->instance_id ); ?>">
-			<div class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>" style="<?php echo esc_attr( $container_styles ); ?>">
+			<div
+			class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>"
+			style="<?php echo esc_attr( $container_styles ); ?>"
+			>
 				<?php
+				$this->maybe_render_archive_link();
+
 				if ( ! $this->context->is_amp() ) {
-					$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE );
-					$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
+					$this->assets->enqueue_script( self::SCRIPT_HANDLE );
 					?>
-					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>">
+					<div
+					class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>"
+					data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>"
+					data-prev="<?php esc_attr_e( 'Previous', 'web-stories' ); ?>"
+					data-next="<?php esc_attr_e( 'Next', 'web-stories' ); ?>"
+					>
 						<?php
 						array_map(
 							function () {
@@ -140,7 +148,6 @@ class Carousel_Renderer extends Renderer {
 					</amp-carousel>
 					<?php
 				}
-				$this->maybe_render_archive_link();
 				?>
 			</div>
 		</div>
@@ -164,13 +171,14 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array<string,array<string,bool>> Carousel settings.
+	 * @return array<string,array<string,bool>|string> Carousel settings.
 	 */
 	protected function get_carousel_settings(): array {
 		return [
-			'config' => [
+			'config'     => [
 				'isRTL' => is_rtl(),
 			],
+			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 		];
 	}
 }
