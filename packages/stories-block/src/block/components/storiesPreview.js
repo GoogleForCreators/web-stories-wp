@@ -99,6 +99,11 @@ function StoriesPreview(props) {
     });
 
   useEffect(() => {
+    // Do not initialize Glider.js if browser supports CSS carousels.
+    if (CSS.supports('scroll-marker-group: after')) {
+      return;
+    }
+
     if (!carouselContainer.current) {
       return;
     }
@@ -147,6 +152,13 @@ function StoriesPreview(props) {
           'circles' === viewType && circleSize ? `${circleSize}px` : undefined,
       }}
     >
+      {fieldState['show_archive_link'] && archiveURL && (
+        <div className="web-stories-list__archive-link">
+          <a target="__blank" href={archiveURL}>
+            {viewAllLabel}
+          </a>
+        </div>
+      )}
       <div className="web-stories-list__inner-wrapper">
         {CIRCLES_VIEW_TYPE === viewType || CAROUSEL_VIEW_TYPE === viewType ? (
           <>
@@ -170,13 +182,6 @@ function StoriesPreview(props) {
           <StoriesLoop />
         )}
       </div>
-      {fieldState['show_archive_link'] && archiveURL && (
-        <div className="web-stories-list__archive-link">
-          <a target="__blank" href={archiveURL}>
-            {viewAllLabel}
-          </a>
-        </div>
-      )}
     </div>
   );
 }
