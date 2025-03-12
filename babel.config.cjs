@@ -33,6 +33,13 @@ module.exports = function (api) {
           targets,
           useBuiltIns: 'usage',
           corejs: require('core-js/package.json').version,
+          // Remove some unnecessary polyfills, similar to how Gutenberg is handling that.
+          // See https://github.com/WordPress/gutenberg/blob/e95970d888c309274e24324d593c77c536c9f1d8/packages/babel-preset-default/polyfill-exclusions.js.
+          exclude: [
+            'es.array.push',
+            /^es(next)?\.set\./,
+            /^es(next)?\.iterator\./,
+          ],
         },
       ],
       [

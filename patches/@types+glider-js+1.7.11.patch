@@ -1,0 +1,40 @@
+diff --git a/node_modules/@types/glider-js/index.d.ts b/node_modules/@types/glider-js/index.d.ts
+index 35a953d..655ded6 100644
+--- a/node_modules/@types/glider-js/index.d.ts
++++ b/node_modules/@types/glider-js/index.d.ts
+@@ -97,7 +97,7 @@ declare namespace Glider {
+         /**
+          * An aggravator used to control animation speed. Higher is slower!
+          */
+-        duration?: number | undefined;
++        duration: number;
+ 
+         /**
+          * This prevents resizing items to fit when `slidesToShow` is set to
+@@ -242,13 +242,13 @@ declare class Glider<T extends HTMLElement = HTMLDivElement> {
+      * @param slideIndexs string | number
+      * @param isActuallyDotIndex boolean
+      */
+-    scrollItem(slideIndex: string | number, isActuallyDotIndex: boolean): void;
++    scrollItem(slideIndex: string | number, isActuallyDotIndex: boolean, evt: Event): void;
+ 
+     /**
+      * Scroll directly to supplied scroll position in pixels
+      * @param pixelOffset number
+      */
+-    scrollTo(pixelOffset: number): void;
++    scrollTo(pixelOffset: number, scrollDuration?: number, callback?: () => void): void;
+ 
+     /**
+      * Overrides options set during initialization. If called when a
+@@ -271,6 +271,10 @@ declare class Glider<T extends HTMLElement = HTMLDivElement> {
+     resize(): void;
+ 
+     init(): void;
++
++    emit(name: string, arg: unknown): void;
++
++    getCurrentSlide(): number;
+ }
+ 
+ declare function Glider<T extends HTMLElement = HTMLDivElement>(element: T): Glider<T>;

@@ -25,19 +25,26 @@ import 'glider-js/glider.css';
  *
  * Glider-JS doesn't support RTL at the moment, this is to add basic
  * functioning support for the nav arrows as otherwise the nav arrows
- * becomes useless on RTL sites.
+ * become useless on RTL sites.
  *
  * @todo Maybe replace glider-js with other lightweight lib which has RTL support. or Replace it with 'amp-carousel' once we have the support.
- * @param {Object|string} slide Slide arrow string based on action.
- * @param {boolean}       dot   Is dot navigation action.
- * @param {Object}        e     Event object.
- * @return {boolean} Navigation done.
+ * @param slideIndex Slide arrow string based on action.
+ * @param isActuallyDotIndex   Is dot navigation action.
+ * @param e     Event object.
+ * @return Navigation done.
  */
-Glider.prototype.scrollItem = function (slide, dot, e) {
-  // glider-js doesn't seem to pass right amount of arguments.
-  if (e === undefined && dot?.target) {
-    e = dot;
-    dot = false;
+Glider.prototype.scrollItem = function (
+  slideIndex: number,
+  isActuallyDotIndex: boolean,
+  e: Event
+) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- Workaround
+  // @ts-ignore
+  if (e === undefined && isActuallyDotIndex?.target) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- Workaround
+    // @ts-ignore
+    e = isActuallyDotIndex;
+    isActuallyDotIndex = false;
   }
 
   if (e === undefined) {
@@ -50,17 +57,21 @@ Glider.prototype.scrollItem = function (slide, dot, e) {
   }
 
   // Somehow slidesToScroll and slidesToShow can end up being 0.
-  this.opt.slidesToScroll = Math.max(1, this.opt.slidesToScroll);
-  this.opt.slidesToShow = Math.max(1, this.opt.slidesToShow);
+  this.opt.slidesToScroll = Math.max(1, this.opt.slidesToScroll as number);
+  this.opt.slidesToShow = Math.max(1, this.opt.slidesToShow as number);
   // This will also cause this.itemWidth to be Infinity because division by zero returns Infinity in JS.
   // Update this.itemWidth with actual value in this case.
   if (this.itemWidth === Number.POSITIVE_INFINITY) {
     // It's a sibling.
-    const carouselWrapper = e.target.parentElement.querySelector(
+    const carouselWrapper = (
+      e.target as HTMLElement
+    ).parentElement?.querySelector(
       '.web-stories-list__carousel'
-    );
+    ) as HTMLElement;
     const itemStyle = window.getComputedStyle(
-      carouselWrapper.querySelector('.web-stories-list__story')
+      carouselWrapper.querySelector(
+        '.web-stories-list__story'
+      ) as unknown as HTMLElement
     );
 
     this.itemWidth =
@@ -69,56 +80,62 @@ Glider.prototype.scrollItem = function (slide, dot, e) {
         Number.parseFloat(itemStyle.marginRight));
   }
 
-  const originalSlide = slide;
+  const originalSlide = slideIndex;
   ++this.animate_id;
 
-  if (dot === true) {
-    slide = slide * this.containerWidth;
-    slide = Math.round(slide / this.itemWidth) * this.itemWidth;
+  if (isActuallyDotIndex === true) {
+    slideIndex = slideIndex * this.containerWidth;
+    slideIndex = Math.round(slideIndex / this.itemWidth) * this.itemWidth;
   } else {
-    if (typeof slide === 'string') {
-      const backwards = slide === 'prev';
+    if (typeof slideIndex === 'string') {
+      const backwards = slideIndex === 'prev';
 
       // use precise location if fractional slides are on
       if (this.opt.slidesToScroll % 1 || this.opt.slidesToShow % 1) {
-        slide = this.getCurrentSlide();
+        slideIndex = this.getCurrentSlide();
       } else {
-        slide = !isNaN(this.slide) ? this.slide : 0;
+        slideIndex = !isNaN(this.slide) ? this.slide : 0;
       }
 
       if (backwards) {
-        slide -= this.opt.slidesToScroll;
+        slideIndex -= this.opt.slidesToScroll;
       } else {
-        slide += this.opt.slidesToScroll;
+        slideIndex += this.opt.slidesToScroll;
       }
 
       if (this.opt.rewind) {
-        const scrollLeft = this.ele.scrollLeft;
-        slide =
+        const scrollLeft = (this.ele as HTMLElement)
+          .scrollLeft as unknown as number;
+        slideIndex =
           backwards && !scrollLeft
             ? this.slides.length
             : !backwards &&
                 scrollLeft + this.containerWidth >= Math.floor(this.trackWidth)
               ? 0
-              : slide;
+              : slideIndex;
       }
     }
 
-    slide = Math.min(slide, this.slides.length);
+    slideIndex = Math.min(slideIndex, this.slides.length);
 
-    this.slide = slide;
-    slide = this.itemWidth * slide;
+    this.slide = slideIndex;
+    slideIndex = this.itemWidth * slideIndex;
   }
 
   this.scrollTo(
-    slide,
-    this.opt.duration * Math.abs(this.ele.scrollLeft - slide),
-    function () {
+    slideIndex,
+    this.opt.duration *
+      Math.abs((this.ele as HTMLElement).scrollLeft - slideIndex),
+    function (this: Glider<HTMLElement>) {
       this.updateControls();
       this.emit('animated', {
         value: originalSlide,
         type:
-          typeof originalSlide === 'string' ? 'arrow' : dot ? 'dot' : 'slide',
+          typeof originalSlide === 'string'
+            ? 'arrow'
+            : isActuallyDotIndex
+              ? 'dot'
+              : 'slide',
       });
     }
   );

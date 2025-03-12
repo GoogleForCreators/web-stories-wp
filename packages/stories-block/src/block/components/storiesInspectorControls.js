@@ -284,6 +284,7 @@ const StoriesInspectorControls = (props) => {
             value={orderby || 'date'}
             onChange={(selection) => setAttributes({ orderby: selection })}
             __nextHasNoMarginBottom
+            __next40pxDefaultSize
           />
           <SelectControl
             label={__('Order', 'web-stories')}
@@ -300,6 +301,7 @@ const StoriesInspectorControls = (props) => {
             value={order || 'desc'}
             onChange={(selection) => setAttributes({ order: selection })}
             __nextHasNoMarginBottom
+            __next40pxDefaultSize
           />
           {taxonomies.map((taxonomy) => {
             const termIds = taxQuery?.[taxonomy.slug] || [];

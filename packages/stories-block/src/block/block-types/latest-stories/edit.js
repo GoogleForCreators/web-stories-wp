@@ -26,8 +26,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Button, Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { useEntityRecords } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -49,41 +48,23 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
   const { numOfStories, order, orderby, archiveLinkLabel, authors, taxQuery } =
     attributes;
 
-  /**
-   * Fetch stories based on the query.
-   *
-   * @return {void}
-   */
-  const { isFetchingStories, fetchedStories } = useSelect(
-    (select) => {
-      const { getEntityRecords, isResolving } = select(coreStore);
-      const newQuery = {
-        per_page: 20,
-        _embed: 'author,wp:featuredmedia',
-        orderby: orderby || 'modified',
-        order: order || 'desc',
-        author: authors || undefined,
-        ...taxQuery,
-      };
-
-      return {
-        fetchedStories:
-          getEntityRecords('postType', 'web-story', newQuery) || [],
-        isFetchingStories:
-          isResolving('postType', 'web-story', newQuery) || false,
-      };
-    },
-    [order, orderby, authors, taxQuery]
-  );
+  const data = useEntityRecords('postType', 'web-story', {
+    per_page: 20,
+    _embed: 'author,wp:featuredmedia',
+    orderby: orderby || 'modified',
+    order: order || 'desc',
+    author: authors || undefined,
+    ...taxQuery,
+  });
 
   const viewAllLabel = archiveLinkLabel
     ? archiveLinkLabel
     : __('View All Stories', 'web-stories');
 
   const storiesToDisplay =
-    fetchedStories.length > numOfStories
-      ? fetchedStories.slice(0, numOfStories)
-      : fetchedStories;
+    data.records?.length > numOfStories
+      ? data.records.slice(0, numOfStories)
+      : data.records;
 
   return (
     <>
@@ -91,15 +72,15 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
         attributes={attributes}
         setAttributes={setAttributes}
       />
-      {isFetchingStories && <StoriesLoading />}
-      {!isFetchingStories && Boolean(storiesToDisplay?.length) && (
+      {!data.hasResolved && <StoriesLoading />}
+      {data.hasResolved && Boolean(storiesToDisplay?.length) && (
         <StoriesPreview
           attributes={attributes}
           stories={storiesToDisplay}
           viewAllLabel={viewAllLabel}
         />
       )}
-      {!isFetchingStories && !storiesToDisplay?.length && (
+      {data.hasResolved && !storiesToDisplay?.length && (
         <Placeholder
           icon={<BlockIcon icon={<WebStoriesLogo />} showColors />}
           label={__('Latest Stories', 'web-stories')}
