@@ -79,7 +79,6 @@ const sharedConfig = {
     path: resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
     chunkFilename: '[name].js?v=[chunkhash]',
-    publicPath: '',
   },
   target: 'browserslist',
   module: {
