@@ -58,7 +58,7 @@ export function processPastedElements(
     animations: [],
     elements: [],
   };
-  for (let n = content.firstChild; n; n = (n as ChildNode).nextSibling) {
+  for (let n = content.firstChild; n; n = n.nextSibling) {
     if (
       n.nodeType !== /* COMMENT */ 8 ||
       n.nodeValue?.indexOf('Fragment') !== -1
