@@ -78,7 +78,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Setup Node
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -96,7 +96,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a
+        uses: ramsey/composer-install@a2636af0004d1c0499ffca16ac0b4cc94df70565
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -116,7 +116,7 @@ jobs:
         run: bun run workflow:build-plugin
 
       - name: Upload bundle
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: web-stories
           path: build/web-stories
@@ -168,7 +168,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Download bundle
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e
         with:
           name: web-stories
 
@@ -177,7 +177,7 @@ jobs:
         run: sudo apt-get install libgbm1
 
       - name: Setup Node
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -234,7 +234,7 @@ jobs:
           ARTIFACT_NAME: failures-artifacts-${{ matrix.wp }}-${{ matrix.shard }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: ${{ env.ARTIFACT_NAME }}
