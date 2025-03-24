@@ -122,9 +122,11 @@ KeywordSearch.propTypes = {
   onChange: PropTypes.func,
 };
 
+const STABLE_ARRAY = [];
+
 function SelectStories({
-  stories = [],
-  selectedStories = [],
+  stories = STABLE_ARRAY,
+  selectedStories = STABLE_ARRAY,
   setSelectedStories,
   hasAllStories,
   isLoading,
@@ -150,7 +152,7 @@ function SelectStories({
       };
       return {
         // Only load users when capability has been fetched already.
-        authors: capabilities ? getUsers(query) : [],
+        authors: capabilities ? getUsers(query) : STABLE_ARRAY,
       };
     },
     [authorKeyword]
