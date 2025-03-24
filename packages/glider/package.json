@@ -29,6 +29,6 @@
     "glider-js": "^1.7.9"
   },
   "devDependencies": {
-    "@types/glider-js" : "^1.7.11"
+    "@types/glider-js" : "^1.7.12"
   }
 }
