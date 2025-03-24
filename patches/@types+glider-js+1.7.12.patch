@@ -1,5 +1,5 @@
 diff --git a/node_modules/@types/glider-js/index.d.ts b/node_modules/@types/glider-js/index.d.ts
-index 35a953d..655ded6 100644
+index 2be4c56..1b838c6 100644
 --- a/node_modules/@types/glider-js/index.d.ts
 +++ b/node_modules/@types/glider-js/index.d.ts
 @@ -97,7 +97,7 @@ declare namespace Glider {
@@ -11,7 +11,7 @@ index 35a953d..655ded6 100644
  
          /**
           * This prevents resizing items to fit when `slidesToShow` is set to
-@@ -242,13 +242,13 @@ declare class Glider<T extends HTMLElement = HTMLDivElement> {
+@@ -247,13 +247,13 @@ declare class Glider<T extends HTMLElement = HTMLDivElement> {
       * @param slideIndexs string | number
       * @param isActuallyDotIndex boolean
       */
@@ -27,7 +27,7 @@ index 35a953d..655ded6 100644
  
      /**
       * Overrides options set during initialization. If called when a
-@@ -271,6 +271,10 @@ declare class Glider<T extends HTMLElement = HTMLDivElement> {
+@@ -276,6 +276,10 @@ declare class Glider<T extends HTMLElement = HTMLDivElement> {
      resize(): void;
  
      init(): void;
