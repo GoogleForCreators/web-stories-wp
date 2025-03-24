@@ -88,7 +88,7 @@ class Stories_Script_Data {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array<string,array<string,array<string,array<string,string|bool>>>> Field states.
+	 * @return array<string,array<string,array<string,string|bool>>> Field states.
 	 */
 	public function fields_states(): array {
 		$field_states = [];
