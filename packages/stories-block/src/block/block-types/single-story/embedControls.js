@@ -118,6 +118,7 @@ const EmbedControls = (props) => {
                 value={title || ''}
                 onChange={(value) => setAttributes({ title: value })}
                 __nextHasNoMarginBottom
+                __next40pxDefaultSize
               />
             </BaseControl>
           </PanelRow>
@@ -188,6 +189,7 @@ const EmbedControls = (props) => {
                     setAttributes({ width: Number.parseInt(value) })
                   }
                   __nextHasNoMarginBottom
+                  __next40pxDefaultSize
                 />
                 <TextControl
                   type="number"
@@ -202,6 +204,7 @@ const EmbedControls = (props) => {
                     })
                   }
                   __nextHasNoMarginBottom
+                  __next40pxDefaultSize
                 />
               </div>
             </BaseControl>
