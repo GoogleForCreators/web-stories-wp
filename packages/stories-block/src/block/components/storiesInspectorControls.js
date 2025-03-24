@@ -210,6 +210,7 @@ const StoriesInspectorControls = (props) => {
             }
             className="web-stories-settings-archive-link"
             __nextHasNoMarginBottom
+            __next40pxDefaultSize
           />
         )}
       </PanelBody>

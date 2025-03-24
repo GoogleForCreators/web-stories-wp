@@ -72,6 +72,7 @@ const EmbedControlsInLoop = (props) => {
                   setAttributes({ width: Number.parseInt(value) })
                 }
                 __nextHasNoMarginBottom
+                __next40pxDefaultSize
               />
               <TextControl
                 type="number"
@@ -86,6 +87,7 @@ const EmbedControlsInLoop = (props) => {
                   })
                 }
                 __nextHasNoMarginBottom
+                __next40pxDefaultSize
               />
             </div>
           </BaseControl>
