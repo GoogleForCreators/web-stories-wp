@@ -88,4 +88,24 @@ interface FieldState {
 	 * @return Field
 	 */
 	public function sharp_corners();
+
+	/**
+	 * Get circle size field along with its state for
+	 * current view type.
+	 *
+	 * @since 1.40.0
+	 *
+	 * @return Field
+	 */
+	public function circle_size();
+
+	/**
+	 * Get number of columns field along with its state for
+	 * current view type.
+	 *
+	 * @since 1.40.0
+	 *
+	 * @return Field
+	 */
+	public function number_of_columns();
 }

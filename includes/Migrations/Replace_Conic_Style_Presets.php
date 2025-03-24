@@ -85,7 +85,7 @@ class Replace_Conic_Style_Presets extends Migrate_Base {
 					continue;
 				}
 				$bg_color = $preset['backgroundColor'];
-				if ( ! isset( $bg_color['type'] ) || 'conic' !== $bg_color['type'] ) {
+				if ( 'conic' !== $bg_color['type'] ) {
 					$text_styles[] = $preset;
 					continue;
 				}
