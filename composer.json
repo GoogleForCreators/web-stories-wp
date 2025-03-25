@@ -85,7 +85,12 @@
     "exclude-from-files": [
       "ampproject/amp-wp/includes/bootstrap.php"
     ],
-    "installer-disable": true
+    "installer-disable": true,
+    "patches": {
+      "thecodingmachine/safe": {
+        "Fix explicit nullable errors": "./patches/thecodingmachine-safe-nullable.diff"
+      }
+    }
   },
   "scripts": {
     "post-install-cmd": [
