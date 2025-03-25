@@ -1,0 +1,1857 @@
+diff --git deprecated/mssql.php deprecated/mssql.php
+index 234ef56..aa44ad0 100644
+--- deprecated/mssql.php
++++ deprecated/mssql.php
+@@ -97,7 +97,7 @@ function mssql_close($link_identifier = null): void
+  * @throws MssqlException
+  *
+  */
+-function mssql_connect(string $servername = null, string $username = null, string $password = null, bool $new_link = false)
++function mssql_connect(?string $servername = null, ?string $username = null, ?string $password = null, bool $new_link = false)
+ {
+     error_clear_last();
+     if ($new_link !== false) {
+@@ -330,7 +330,7 @@ function mssql_init(string $sp_name, $link_identifier = null)
+  * @throws MssqlException
+  *
+  */
+-function mssql_pconnect(string $servername = null, string $username = null, string $password = null, bool $new_link = false)
++function mssql_pconnect(?string $servername = null, ?string $username = null, ?string $password = null, bool $new_link = false)
+ {
+     error_clear_last();
+     if ($new_link !== false) {
+diff --git generated/bzip2.php generated/bzip2.php
+index 77302aa..95e52e0 100644
+--- generated/bzip2.php
++++ generated/bzip2.php
+@@ -81,7 +81,7 @@ function bzread($bz, int $length = 1024): string
+  * @throws Bzip2Exception
+  *
+  */
+-function bzwrite($bz, string $data, int $length = null): int
++function bzwrite($bz, string $data, ?int $length = null): int
+ {
+     error_clear_last();
+     if ($length !== null) {
+diff --git generated/com.php generated/com.php
+index 53643f9..62fc2e2 100644
+--- generated/com.php
++++ generated/com.php
+@@ -117,7 +117,7 @@ function com_load_typelib(string $typelib_name, bool $case_sensitive = true): vo
+  * @throws ComException
+  *
+  */
+-function com_print_typeinfo(object $comobject, string $dispinterface = null, bool $wantsink = false): void
++function com_print_typeinfo(object $comobject, ?string $dispinterface = null, bool $wantsink = false): void
+ {
+     error_clear_last();
+     $result = \com_print_typeinfo($comobject, $dispinterface, $wantsink);
+diff --git generated/curl.php generated/curl.php
+index 53f9255..1b48fc5 100644
+--- generated/curl.php
++++ generated/curl.php
+@@ -512,7 +512,7 @@ function curl_exec($ch)
+  * @throws CurlException
+  *
+  */
+-function curl_getinfo($ch, int $opt = null)
++function curl_getinfo($ch, ?int $opt = null)
+ {
+     error_clear_last();
+     if ($opt !== null) {
+@@ -542,7 +542,7 @@ function curl_getinfo($ch, int $opt = null)
+  * @throws CurlException
+  *
+  */
+-function curl_init(string $url = null)
++function curl_init(?string $url = null)
+ {
+     error_clear_last();
+     $result = \curl_init($url);
+diff --git generated/datetime.php generated/datetime.php
+index 01bfa93..9467652 100644
+--- generated/datetime.php
++++ generated/datetime.php
+@@ -233,7 +233,7 @@ function date_sun_info(int $timestamp, float $latitude, float $longitude): array
+  * @throws DatetimeException
+  *
+  */
+-function date_sunrise(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, float $latitude = null, float $longitude = null, float $zenith = null, float $utcOffset = 0)
++function date_sunrise(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?float $latitude = null, ?float $longitude = null, ?float $zenith = null, ?float $utcOffset = 0)
+ {
+     error_clear_last();
+     if ($utcOffset !== 0) {
+@@ -336,7 +336,7 @@ function date_sunrise(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, f
+  * @throws DatetimeException
+  *
+  */
+-function date_sunset(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, float $latitude = null, float $longitude = null, float $zenith = null, float $utcOffset = 0)
++function date_sunset(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?float $latitude = null, ?float $longitude = null, ?float $zenith = null, float $utcOffset = 0)
+ {
+     error_clear_last();
+     if ($utcOffset !== 0) {
+@@ -374,7 +374,7 @@ function date_sunset(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, fl
+  * @throws DatetimeException
+  *
+  */
+-function date(string $format, int $timestamp = null): string
++function date(string $format, ?int $timestamp = null): string
+ {
+     error_clear_last();
+     if ($timestamp !== null) {
+@@ -405,7 +405,7 @@ function date(string $format, int $timestamp = null): string
+  * @throws DatetimeException
+  *
+  */
+-function gmdate(string $format, int $timestamp = null): string
++function gmdate(string $format, ?int $timestamp = null): string
+ {
+     error_clear_last();
+     if ($timestamp !== null) {
+@@ -461,7 +461,7 @@ function gmdate(string $format, int $timestamp = null): string
+  * @throws DatetimeException
+  *
+  */
+-function mktime(int $hour = null, int $minute = null, int $second = null, int $month = null, int $day = null, int $year = null): int
++function mktime(?int $hour = null, ?int $minute = null, ?int $second = null, ?int $month = null, ?int $day = null, ?int $year = null): int
+ {
+     error_clear_last();
+     if ($year !== null) {
+@@ -584,7 +584,7 @@ function strptime(string $date, string $format): array
+  * @throws DatetimeException
+  *
+  */
+-function strtotime(string $datetime, int $now = null): int
++function strtotime(string $datetime, ?int $now = null): int
+ {
+     error_clear_last();
+     if ($now !== null) {
+diff --git generated/eio.php generated/eio.php
+index 8d2f538..2224d52 100644
+--- generated/eio.php
++++ generated/eio.php
+@@ -19,7 +19,7 @@ use Safe\Exceptions\EioException;
+  * @throws EioException
+  *
+  */
+-function eio_busy(int $delay, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_busy(int $delay, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_busy($delay, $pri, $callback, $data);
+@@ -71,7 +71,7 @@ function eio_busy(int $delay, int $pri = EIO_PRI_DEFAULT, callable $callback = n
+  * @throws EioException
+  *
+  */
+-function eio_chmod(string $path, int $mode, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_chmod(string $path, int $mode, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_chmod($path, $mode, $pri, $callback, $data);
+@@ -123,7 +123,7 @@ function eio_chmod(string $path, int $mode, int $pri = EIO_PRI_DEFAULT, callable
+  * @throws EioException
+  *
+  */
+-function eio_chown(string $path, int $uid, int $gid = -1, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_chown(string $path, int $uid, int $gid = -1, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_chown($path, $uid, $gid, $pri, $callback, $data);
+@@ -172,7 +172,7 @@ function eio_chown(string $path, int $uid, int $gid = -1, int $pri = EIO_PRI_DEF
+  * @throws EioException
+  *
+  */
+-function eio_close($fd, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_close($fd, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_close($fd, $pri, $callback, $data);
+@@ -231,7 +231,7 @@ function eio_close($fd, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $
+  * @throws EioException
+  *
+  */
+-function eio_custom(callable $execute, int $pri, callable $callback, $data = null)
++function eio_custom(callable $execute, int $pri, ?callable $callback, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_custom($execute, $pri, $callback, $data);
+@@ -280,7 +280,7 @@ function eio_custom(callable $execute, int $pri, callable $callback, $data = nul
+  * @throws EioException
+  *
+  */
+-function eio_dup2($fd, $fd2, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_dup2($fd, $fd2, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_dup2($fd, $fd2, $pri, $callback, $data);
+@@ -352,7 +352,7 @@ function eio_event_loop(): void
+  * @throws EioException
+  *
+  */
+-function eio_fallocate($fd, int $mode, int $offset, int $length, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_fallocate($fd, int $mode, int $offset, int $length, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_fallocate($fd, $mode, $offset, $length, $pri, $callback, $data);
+@@ -402,7 +402,7 @@ function eio_fallocate($fd, int $mode, int $offset, int $length, int $pri = EIO_
+  * @throws EioException
+  *
+  */
+-function eio_fchmod($fd, int $mode, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_fchmod($fd, int $mode, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_fchmod($fd, $mode, $pri, $callback, $data);
+@@ -450,7 +450,7 @@ function eio_fchmod($fd, int $mode, int $pri = EIO_PRI_DEFAULT, callable $callba
+  * @throws EioException
+  *
+  */
+-function eio_fdatasync($fd, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_fdatasync($fd, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_fdatasync($fd, $pri, $callback, $data);
+@@ -604,7 +604,7 @@ function eio_fstatvfs($fd, int $pri, callable $callback, $data = null)
+  * @throws EioException
+  *
+  */
+-function eio_fsync($fd, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_fsync($fd, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_fsync($fd, $pri, $callback, $data);
+@@ -655,7 +655,7 @@ function eio_fsync($fd, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $
+  * @throws EioException
+  *
+  */
+-function eio_ftruncate($fd, int $offset = 0, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_ftruncate($fd, int $offset = 0, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_ftruncate($fd, $offset, $pri, $callback, $data);
+@@ -706,7 +706,7 @@ function eio_ftruncate($fd, int $offset = 0, int $pri = EIO_PRI_DEFAULT, callabl
+  * @throws EioException
+  *
+  */
+-function eio_futime($fd, float $atime, float $mtime, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_futime($fd, float $atime, float $mtime, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_futime($fd, $atime, $mtime, $pri, $callback, $data);
+@@ -750,7 +750,7 @@ function eio_futime($fd, float $atime, float $mtime, int $pri = EIO_PRI_DEFAULT,
+  * @throws EioException
+  *
+  */
+-function eio_grp(callable $callback, string $data = null)
++function eio_grp(?callable $callback, ?string $data = null)
+ {
+     error_clear_last();
+     $result = \eio_grp($callback, $data);
+@@ -849,7 +849,7 @@ function eio_lstat(string $path, int $pri, callable $callback, $data = null)
+  * @throws EioException
+  *
+  */
+-function eio_mkdir(string $path, int $mode, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_mkdir(string $path, int $mode, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_mkdir($path, $mode, $pri, $callback, $data);
+@@ -914,7 +914,7 @@ function eio_mkdir(string $path, int $mode, int $pri = EIO_PRI_DEFAULT, callable
+  * @throws EioException
+  *
+  */
+-function eio_mknod(string $path, int $mode, int $dev, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_mknod(string $path, int $mode, int $dev, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_mknod($path, $mode, $dev, $pri, $callback, $data);
+@@ -962,7 +962,7 @@ function eio_mknod(string $path, int $mode, int $dev, int $pri = EIO_PRI_DEFAULT
+  * @throws EioException
+  *
+  */
+-function eio_nop(int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_nop(int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_nop($pri, $callback, $data);
+@@ -1013,7 +1013,7 @@ function eio_nop(int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data =
+  * @throws EioException
+  *
+  */
+-function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_readahead($fd, $offset, $length, $pri, $callback, $data);
+@@ -1316,7 +1316,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
+  * @throws EioException
+  *
+  */
+-function eio_readdir(string $path, int $flags, int $pri, callable $callback, string $data = null)
++function eio_readdir(string $path, int $flags, int $pri, callable $callback, ?string $data = null)
+ {
+     error_clear_last();
+     $result = \eio_readdir($path, $flags, $pri, $callback, $data);
+@@ -1364,7 +1364,7 @@ function eio_readdir(string $path, int $flags, int $pri, callable $callback, str
+  * @throws EioException
+  *
+  */
+-function eio_readlink(string $path, int $pri, callable $callback, string $data = null)
++function eio_readlink(string $path, int $pri, callable $callback, ?string $data = null)
+ {
+     error_clear_last();
+     $result = \eio_readlink($path, $pri, $callback, $data);
+@@ -1413,7 +1413,7 @@ function eio_readlink(string $path, int $pri, callable $callback, string $data =
+  * @throws EioException
+  *
+  */
+-function eio_rename(string $path, string $new_path, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_rename(string $path, string $new_path, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_rename($path, $new_path, $pri, $callback, $data);
+@@ -1461,7 +1461,7 @@ function eio_rename(string $path, string $new_path, int $pri = EIO_PRI_DEFAULT,
+  * @throws EioException
+  *
+  */
+-function eio_rmdir(string $path, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_rmdir(string $path, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_rmdir($path, $pri, $callback, $data);
+@@ -1517,7 +1517,7 @@ function eio_rmdir(string $path, int $pri = EIO_PRI_DEFAULT, callable $callback
+  * @throws EioException
+  *
+  */
+-function eio_seek($fd, int $offset, int $whence, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_seek($fd, int $offset, int $whence, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_seek($fd, $offset, $whence, $pri, $callback, $data);
+@@ -1569,7 +1569,7 @@ function eio_seek($fd, int $offset, int $whence, int $pri = EIO_PRI_DEFAULT, cal
+  * @throws EioException
+  *
+  */
+-function eio_sendfile($out_fd, $in_fd, int $offset, int $length, int $pri = null, callable $callback = null, string $data = null)
++function eio_sendfile($out_fd, $in_fd, int $offset, int $length, ?int $pri = null, ?callable $callback = null, ?string $data = null)
+ {
+     error_clear_last();
+     if ($data !== null) {
+@@ -1731,7 +1731,7 @@ function eio_statvfs(string $path, int $pri, callable $callback, $data = null)
+  * @throws EioException
+  *
+  */
+-function eio_symlink(string $path, string $new_path, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_symlink(string $path, string $new_path, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_symlink($path, $new_path, $pri, $callback, $data);
+@@ -1790,7 +1790,7 @@ function eio_symlink(string $path, string $new_path, int $pri = EIO_PRI_DEFAULT,
+  * @throws EioException
+  *
+  */
+-function eio_sync_file_range($fd, int $offset, int $nbytes, int $flags, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_sync_file_range($fd, int $offset, int $nbytes, int $flags, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_sync_file_range($fd, $offset, $nbytes, $flags, $pri, $callback, $data);
+@@ -1811,7 +1811,7 @@ function eio_sync_file_range($fd, int $offset, int $nbytes, int $flags, int $pri
+  * @throws EioException
+  *
+  */
+-function eio_sync(int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_sync(int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_sync($pri, $callback, $data);
+@@ -1859,7 +1859,7 @@ function eio_sync(int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data =
+  * @throws EioException
+  *
+  */
+-function eio_syncfs($fd, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_syncfs($fd, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_syncfs($fd, $pri, $callback, $data);
+@@ -1909,7 +1909,7 @@ function eio_syncfs($fd, int $pri = EIO_PRI_DEFAULT, callable $callback = null,
+  * @throws EioException
+  *
+  */
+-function eio_truncate(string $path, int $offset = 0, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_truncate(string $path, int $offset = 0, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_truncate($path, $offset, $pri, $callback, $data);
+@@ -1957,7 +1957,7 @@ function eio_truncate(string $path, int $offset = 0, int $pri = EIO_PRI_DEFAULT,
+  * @throws EioException
+  *
+  */
+-function eio_unlink(string $path, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_unlink(string $path, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_unlink($path, $pri, $callback, $data);
+@@ -2007,7 +2007,7 @@ function eio_unlink(string $path, int $pri = EIO_PRI_DEFAULT, callable $callback
+  * @throws EioException
+  *
+  */
+-function eio_utime(string $path, float $atime, float $mtime, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_utime(string $path, float $atime, float $mtime, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_utime($path, $atime, $mtime, $pri, $callback, $data);
+@@ -2060,7 +2060,7 @@ function eio_utime(string $path, float $atime, float $mtime, int $pri = EIO_PRI_
+  * @throws EioException
+  *
+  */
+-function eio_write($fd, string $str, int $length = 0, int $offset = 0, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
++function eio_write($fd, string $str, int $length = 0, int $offset = 0, int $pri = EIO_PRI_DEFAULT, ?callable $callback = null, $data = null)
+ {
+     error_clear_last();
+     $result = \eio_write($fd, $str, $length, $offset, $pri, $callback, $data);
+diff --git generated/errorfunc.php generated/errorfunc.php
+index ac64a7d..c5ff97a 100644
+--- generated/errorfunc.php
++++ generated/errorfunc.php
+@@ -66,7 +66,7 @@ use Safe\Exceptions\ErrorfuncException;
+  * @throws ErrorfuncException
+  *
+  */
+-function error_log(string $message, int $message_type = 0, string $destination = null, string $extra_headers = null): void
++function error_log(string $message, int $message_type = 0, ?string $destination = null, ?string $extra_headers = null): void
+ {
+     error_clear_last();
+     if ($extra_headers !== null) {
+diff --git generated/exec.php generated/exec.php
+index e9a40e0..00699de 100644
+--- generated/exec.php
++++ generated/exec.php
+@@ -148,7 +148,7 @@ function proc_nice(int $increment): void
+  * @throws ExecException
+  *
+  */
+-function system(string $command, int &$return_var = null): string
++function system(string $command, ?int &$return_var = null): string
+ {
+     error_clear_last();
+     $result = \system($command, $return_var);
+diff --git generated/filesystem.php generated/filesystem.php
+index ee0a4bd..20ed535 100644
+--- generated/filesystem.php
++++ generated/filesystem.php
+@@ -237,7 +237,7 @@ function fflush($handle): void
+  * @throws FilesystemException
+  *
+  */
+-function file_get_contents(string $filename, bool $use_include_path = false, $context = null, int $offset = 0, int $maxlen = null): string
++function file_get_contents(string $filename, bool $use_include_path = false, $context = null, int $offset = 0, ?int $maxlen = null): string
+ {
+     error_clear_last();
+     if ($maxlen !== null) {
+@@ -922,7 +922,7 @@ function ftruncate($handle, int $size): void
+  * @throws FilesystemException
+  *
+  */
+-function fwrite($handle, string $string, int $length = null): int
++function fwrite($handle, string $string, ?int $length = null): int
+ {
+     error_clear_last();
+     if ($length !== null) {
+@@ -1448,7 +1448,7 @@ function tmpfile()
+  * @throws FilesystemException
+  *
+  */
+-function touch(string $filename, int $time = null, int $atime = null): void
++function touch(string $filename, ?int $time = null, ?int $atime = null): void
+ {
+     error_clear_last();
+     if ($atime !== null) {
+diff --git generated/ftp.php generated/ftp.php
+index 1748826..1f63c6e 100644
+--- generated/ftp.php
++++ generated/ftp.php
+@@ -15,7 +15,7 @@ use Safe\Exceptions\FtpException;
+  * @throws FtpException
+  *
+  */
+-function ftp_alloc($ftp_stream, int $filesize, string &$result = null): void
++function ftp_alloc($ftp_stream, int $filesize, ?string &$result = null): void
+ {
+     error_clear_last();
+     $result = \ftp_alloc($ftp_stream, $filesize, $result);
+diff --git generated/gnupg.php generated/gnupg.php
+index b5d85ca..84c8968 100644
+--- generated/gnupg.php
++++ generated/gnupg.php
+@@ -53,7 +53,7 @@ function gnupg_addencryptkey($identifier, string $fingerprint): void
+  * @throws GnupgException
+  *
+  */
+-function gnupg_addsignkey($identifier, string $fingerprint, string $passphrase = null): void
++function gnupg_addsignkey($identifier, string $fingerprint, ?string $passphrase = null): void
+ {
+     error_clear_last();
+     if ($passphrase !== null) {
+diff --git generated/ibase.php generated/ibase.php
+index 4969740..db14f1d 100644
+--- generated/ibase.php
++++ generated/ibase.php
+@@ -34,7 +34,7 @@ function fbird_blob_cancel($blob_handle): void
+  * @throws IbaseException
+  *
+  */
+-function ibase_add_user($service_handle, string $user_name, string $password, string $first_name = null, string $middle_name = null, string $last_name = null): void
++function ibase_add_user($service_handle, string $user_name, string $password, ?string $first_name = null, ?string $middle_name = null, ?string $last_name = null): void
+ {
+     error_clear_last();
+     if ($last_name !== null) {
+@@ -250,7 +250,7 @@ function ibase_commit($link_or_trans_identifier = null): void
+  * @throws IbaseException
+  *
+  */
+-function ibase_connect(string $database = null, string $username = null, string $password = null, string $charset = null, int $buffers = null, int $dialect = null, string $role = null, int $sync = null)
++function ibase_connect (?string $database = null, ?string $username = null, ?string $password = null, ?string $charset = null, ?int $buffers = null, ?int $dialect = null, ?string $role = null, ?int $sync = null)
+ {
+     error_clear_last();
+     if ($sync !== null) {
+@@ -403,7 +403,7 @@ function ibase_maintain_db($service_handle, string $db, int $action, int $argume
+  * @throws IbaseException
+  *
+  */
+-function ibase_modify_user($service_handle, string $user_name, string $password, string $first_name = null, string $middle_name = null, string $last_name = null): void
++function ibase_modify_user($service_handle, string $user_name, string $password, ?string $first_name = null, ?string $middle_name = null, ?string $last_name = null): void
+ {
+     error_clear_last();
+     if ($last_name !== null) {
+@@ -480,7 +480,7 @@ function ibase_name_result($result, string $name): void
+  * @throws IbaseException
+  *
+  */
+-function ibase_pconnect(string $database = null, string $username = null, string $password = null, string $charset = null, int $buffers = null, int $dialect = null, string $role = null, int $sync = null)
++function ibase_pconnect (?string $database = null, ?string $username = null, ?string $password = null, ?string $charset = null, ?int $buffers = null, ?int $dialect = null, ?string $role = null, ?int $sync = null)
+ {
+     error_clear_last();
+     if ($sync !== null) {
+diff --git generated/ibmDb2.php generated/ibmDb2.php
+index f97e7b0..7336f9d 100644
+--- generated/ibmDb2.php
++++ generated/ibmDb2.php
+@@ -46,7 +46,7 @@ use Safe\Exceptions\IbmDb2Exception;
+  * @throws IbmDb2Exception
+  *
+  */
+-function db2_autocommit($connection, int $value = null)
++function db2_autocommit($connection, ?int $value = null)
+ {
+     error_clear_last();
+     if ($value !== null) {
+@@ -96,7 +96,7 @@ function db2_autocommit($connection, int $value = null)
+  * @throws IbmDb2Exception
+  *
+  */
+-function db2_bind_param($stmt, int $parameter_number, string $variable_name, int $parameter_type = null, int $data_type = 0, int $precision = -1, int $scale = 0): void
++function db2_bind_param($stmt, int $parameter_number, string $variable_name, ?int $parameter_type = null, int $data_type = 0, int $precision = -1, int $scale = 0): void
+ {
+     error_clear_last();
+     if ($scale !== 0) {
+@@ -304,7 +304,7 @@ function db2_commit($connection): void
+  * @throws IbmDb2Exception
+  *
+  */
+-function db2_execute($stmt, array $parameters = null): void
++function db2_execute($stmt, ?array $parameters = null): void
+ {
+     error_clear_last();
+     if ($parameters !== null) {
+diff --git generated/image.php generated/image.php
+index f1dc218..0729365 100644
+--- generated/image.php
++++ generated/image.php
+@@ -66,7 +66,7 @@ use Safe\Exceptions\ImageException;
+  * @throws ImageException
+  *
+  */
+-function getimagesize(string $filename, array &$imageinfo = null): array
++function getimagesize(string $filename, ?array &$imageinfo = null): array
+ {
+     error_clear_last();
+     $result = \getimagesize($filename, $imageinfo);
+@@ -91,7 +91,7 @@ function getimagesize(string $filename, array &$imageinfo = null): array
+  * @throws ImageException
+  *
+  */
+-function image2wbmp($image, ?string $filename = null, int $foreground = null): void
++function image2wbmp($image, ?string $filename = null, ?int $foreground = null): void
+ {
+     error_clear_last();
+     if ($foreground !== null) {
+@@ -118,7 +118,7 @@ function image2wbmp($image, ?string $filename = null, int $foreground = null): v
+  * @throws ImageException
+  *
+  */
+-function imageaffine($image, array $affine, array $clip = null)
++function imageaffine($image, array $affine, ?array $clip = null)
+ {
+     error_clear_last();
+     if ($clip !== null) {
+@@ -1367,7 +1367,7 @@ function imagefilltoborder($image, int $x, int $y, int $border, int $color): voi
+  * @throws ImageException
+  *
+  */
+-function imagefilter($image, int $filtertype, int $arg1 = null, int $arg2 = null, int $arg3 = null, int $arg4 = null): void
++function imagefilter($image, int $filtertype, ?int $arg1 = null, ?int $arg2 = null, ?int $arg3 = null, ?int $arg4 = null): void
+ {
+     error_clear_last();
+     if ($arg4 !== null) {
+@@ -2551,7 +2551,7 @@ function imagettftext($image, float $size, float $angle, int $x, int $y, int $co
+  * @throws ImageException
+  *
+  */
+-function imagewbmp($image, $to = null, int $foreground = null): void
++function imagewbmp($image, $to = null, ?int $foreground = null): void
+ {
+     error_clear_last();
+     if ($foreground !== null) {
+@@ -2606,7 +2606,7 @@ function imagewebp($image, $to = null, int $quality = 80): void
+  * @throws ImageException
+  *
+  */
+-function imagexbm($image, ?string $filename, int $foreground = null): void
++function imagexbm($image, ?string $filename, ?int $foreground = null): void
+ {
+     error_clear_last();
+     if ($foreground !== null) {
+diff --git generated/imap.php generated/imap.php
+index acd8672..3611898 100644
+--- generated/imap.php
++++ generated/imap.php
+@@ -22,7 +22,7 @@ use Safe\Exceptions\ImapException;
+  * @throws ImapException
+  *
+  */
+-function imap_append($imap_stream, string $mailbox, string $message, string $options = null, string $internal_date = null): void
++function imap_append($imap_stream, string $mailbox, string $message, ?string $options = null, ?string $internal_date = null): void
+ {
+     error_clear_last();
+     $result = \imap_append($imap_stream, $mailbox, $message, $options, $internal_date);
+@@ -567,7 +567,7 @@ function imap_gc($imap_stream, int $caches): void
+  * @throws ImapException
+  *
+  */
+-function imap_headerinfo($imap_stream, int $msg_number, int $fromlength = 0, int $subjectlength = 0, string $defaulthost = null): \stdClass
++function imap_headerinfo($imap_stream, int $msg_number, int $fromlength = 0, int $subjectlength = 0, ?string $defaulthost = null): \stdClass
+ {
+     error_clear_last();
+     $result = \imap_headerinfo($imap_stream, $msg_number, $fromlength, $subjectlength, $defaulthost);
+@@ -784,7 +784,7 @@ function imap_mail_move($imap_stream, string $msglist, string $mailbox, int $opt
+  * @throws ImapException
+  *
+  */
+-function imap_mail(string $to, string $subject, string $message, string $additional_headers = null, string $cc = null, string $bcc = null, string $rpath = null): void
++function imap_mail(string $to, string $subject, string $message, ?string $additional_headers = null, ?string $cc = null, ?string $bcc = null, ?string $rpath = null): void
+ {
+     error_clear_last();
+     $result = \imap_mail($to, $subject, $message, $additional_headers, $cc, $bcc, $rpath);
+@@ -1325,7 +1325,7 @@ function imap_setflag_full($imap_stream, string $sequence, string $flag, int $op
+  * @throws ImapException
+  *
+  */
+-function imap_sort($imap_stream, int $criteria, int $reverse, int $options = 0, string $search_criteria = null, string $charset = null): array
++function imap_sort($imap_stream, int $criteria, int $reverse, int $options = 0, ?string $search_criteria = null, ?string $charset = null): array
+ {
+     error_clear_last();
+     $result = \imap_sort($imap_stream, $criteria, $reverse, $options, $search_criteria, $charset);
+diff --git generated/info.php generated/info.php
+index 1a76b40..a26fa39 100644
+--- generated/info.php
++++ generated/info.php
+@@ -192,7 +192,7 @@ function getmyuid(): int
+  * @throws InfoException
+  *
+  */
+-function getopt(string $options, array $longopts = null, ?int &$optind = null): array
++function getopt(string $options, ?array $longopts = null, ?int &$optind = null): array
+ {
+     error_clear_last();
+     if ($optind !== null) {
+diff --git generated/ingres-ii.php generated/ingres-ii.php
+index 9ea8b5f..414433f 100644
+--- generated/ingres-ii.php
++++ generated/ingres-ii.php
+@@ -332,7 +332,7 @@ function ingres_commit($link): void
+  * @throws IngresiiException
+  *
+  */
+-function ingres_connect(string $database = null, string $username = null, string $password = null, array $options = null)
++function ingres_connect (?string $database = null, ?string $username = null, ?string $password = null, ?array $options = null)
+ {
+     error_clear_last();
+     if ($options !== null) {
+@@ -364,7 +364,7 @@ function ingres_connect(string $database = null, string $username = null, string
+  * @throws IngresiiException
+  *
+  */
+-function ingres_execute($result, array $params = null, string $types = null): void
++function ingres_execute($result, ?array $params = null, ?string $types = null): void
+ {
+     error_clear_last();
+     if ($types !== null) {
+@@ -503,7 +503,7 @@ function ingres_free_result($result): void
+  * @throws IngresiiException
+  *
+  */
+-function ingres_pconnect(string $database = null, string $username = null, string $password = null, array $options = null)
++function ingres_pconnect (?string $database = null, ?string $username = null, ?string $password = null, ?array $options = null)
+ {
+     error_clear_last();
+     if ($options !== null) {
+diff --git generated/ldap.php generated/ldap.php
+index 871f295..2136e42 100644
+--- generated/ldap.php
++++ generated/ldap.php
+@@ -15,7 +15,7 @@ use Safe\Exceptions\LdapException;
+  * @throws LdapException
+  *
+  */
+-function ldap_add_ext($link_identifier, string $dn, array $entry, array $serverctrls = null)
++function ldap_add_ext($link_identifier, string $dn, array $entry, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     $result = \ldap_add_ext($link_identifier, $dn, $entry, $serverctrls);
+@@ -45,7 +45,7 @@ function ldap_add_ext($link_identifier, string $dn, array $entry, array $serverc
+  * @throws LdapException
+  *
+  */
+-function ldap_add($link_identifier, string $dn, array $entry, array $serverctrls = null): void
++function ldap_add($link_identifier, string $dn, array $entry, ?array $serverctrls = null): void
+ {
+     error_clear_last();
+     $result = \ldap_add($link_identifier, $dn, $entry, $serverctrls);
+@@ -66,7 +66,7 @@ function ldap_add($link_identifier, string $dn, array $entry, array $serverctrls
+  * @throws LdapException
+  *
+  */
+-function ldap_bind_ext($link_identifier, ?string $bind_rdn = null, ?string $bind_password = null, array $serverctrls = null)
++function ldap_bind_ext($link_identifier, ?string $bind_rdn = null, ?string $bind_password = null, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     $result = \ldap_bind_ext($link_identifier, $bind_rdn, $bind_password, $serverctrls);
+@@ -170,7 +170,7 @@ function ldap_count_entries($link_identifier, $result_identifier): int
+  * @throws LdapException
+  *
+  */
+-function ldap_delete_ext($link_identifier, string $dn, array $serverctrls = null)
++function ldap_delete_ext($link_identifier, string $dn, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     $result = \ldap_delete_ext($link_identifier, $dn, $serverctrls);
+@@ -190,7 +190,7 @@ function ldap_delete_ext($link_identifier, string $dn, array $serverctrls = null
+  * @throws LdapException
+  *
+  */
+-function ldap_delete($link_identifier, string $dn, array $serverctrls = null): void
++function ldap_delete($link_identifier, string $dn, ?array $serverctrls = null): void
+ {
+     error_clear_last();
+     $result = \ldap_delete($link_identifier, $dn, $serverctrls);
+@@ -215,7 +215,7 @@ function ldap_delete($link_identifier, string $dn, array $serverctrls = null): v
+  * @throws LdapException
+  *
+  */
+-function ldap_exop_passwd($link, string $user = "", string $oldpw = "", string $newpw = "", array &$serverctrls = null)
++function ldap_exop_passwd($link, string $user = "", string $oldpw = "", string $newpw = "", ?array &$serverctrls = null)
+ {
+     error_clear_last();
+     $result = \ldap_exop_passwd($link, $user, $oldpw, $newpw, $serverctrls);
+@@ -263,7 +263,7 @@ function ldap_exop_whoami($link): string
+  * @throws LdapException
+  *
+  */
+-function ldap_exop($link, string $reqoid, string $reqdata = null, ?array $serverctrls = null, ?string &$retdata = null, ?string &$retoid = null)
++function ldap_exop($link, string $reqoid, ?string $reqdata = null, ?array $serverctrls = null, ?string &$retdata = null, ?string &$retoid = null)
+ {
+     error_clear_last();
+     $result = \ldap_exop($link, $reqoid, $reqdata, $serverctrls, $retdata, $retoid);
+@@ -798,7 +798,7 @@ function ldap_get_values($link_identifier, $result_entry_identifier, string $att
+  * @throws LdapException
+  *
+  */
+-function ldap_list($link_identifier, string $base_dn, string $filter, array $attributes = null, int $attrsonly = 0, int $sizelimit = -1, int $timelimit = -1, int $deref = LDAP_DEREF_NEVER, array $serverctrls = null)
++function ldap_list($link_identifier, string $base_dn, string $filter, ?array $attributes = null, int $attrsonly = 0, int $sizelimit = -1, int $timelimit = -1, int $deref = LDAP_DEREF_NEVER, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     if ($serverctrls !== null) {
+@@ -834,7 +834,7 @@ function ldap_list($link_identifier, string $base_dn, string $filter, array $att
+  * @throws LdapException
+  *
+  */
+-function ldap_mod_add_ext($link_identifier, string $dn, array $entry, array $serverctrls = null)
++function ldap_mod_add_ext($link_identifier, string $dn, array $entry, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     $result = \ldap_mod_add_ext($link_identifier, $dn, $entry, $serverctrls);
+@@ -856,7 +856,7 @@ function ldap_mod_add_ext($link_identifier, string $dn, array $entry, array $ser
+  * @throws LdapException
+  *
+  */
+-function ldap_mod_add($link_identifier, string $dn, array $entry, array $serverctrls = null): void
++function ldap_mod_add($link_identifier, string $dn, array $entry, ?array $serverctrls = null): void
+ {
+     error_clear_last();
+     $result = \ldap_mod_add($link_identifier, $dn, $entry, $serverctrls);
+@@ -877,7 +877,7 @@ function ldap_mod_add($link_identifier, string $dn, array $entry, array $serverc
+  * @throws LdapException
+  *
+  */
+-function ldap_mod_del_ext($link_identifier, string $dn, array $entry, array $serverctrls = null)
++function ldap_mod_del_ext($link_identifier, string $dn, array $entry, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     $result = \ldap_mod_del_ext($link_identifier, $dn, $entry, $serverctrls);
+@@ -900,7 +900,7 @@ function ldap_mod_del_ext($link_identifier, string $dn, array $entry, array $ser
+  * @throws LdapException
+  *
+  */
+-function ldap_mod_del($link_identifier, string $dn, array $entry, array $serverctrls = null): void
++function ldap_mod_del($link_identifier, string $dn, array $entry, ?array $serverctrls = null): void
+ {
+     error_clear_last();
+     $result = \ldap_mod_del($link_identifier, $dn, $entry, $serverctrls);
+@@ -921,7 +921,7 @@ function ldap_mod_del($link_identifier, string $dn, array $entry, array $serverc
+  * @throws LdapException
+  *
+  */
+-function ldap_mod_replace_ext($link_identifier, string $dn, array $entry, array $serverctrls = null)
++function ldap_mod_replace_ext($link_identifier, string $dn, array $entry, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     $result = \ldap_mod_replace_ext($link_identifier, $dn, $entry, $serverctrls);
+@@ -943,7 +943,7 @@ function ldap_mod_replace_ext($link_identifier, string $dn, array $entry, array
+  * @throws LdapException
+  *
+  */
+-function ldap_mod_replace($link_identifier, string $dn, array $entry, array $serverctrls = null): void
++function ldap_mod_replace($link_identifier, string $dn, array $entry, ?array $serverctrls = null): void
+ {
+     error_clear_last();
+     $result = \ldap_mod_replace($link_identifier, $dn, $entry, $serverctrls);
+@@ -1038,7 +1038,7 @@ function ldap_mod_replace($link_identifier, string $dn, array $entry, array $ser
+  * @throws LdapException
+  *
+  */
+-function ldap_modify_batch($link_identifier, string $dn, array $entry, array $serverctrls = null): void
++function ldap_modify_batch($link_identifier, string $dn, array $entry, ?array $serverctrls = null): void
+ {
+     error_clear_last();
+     $result = \ldap_modify_batch($link_identifier, $dn, $entry, $serverctrls);
+@@ -1193,7 +1193,7 @@ function ldap_parse_result($link, $result, ?int &$errcode, ?string &$matcheddn =
+  * @throws LdapException
+  *
+  */
+-function ldap_read($link_identifier, string $base_dn, string $filter, array $attributes = null, int $attrsonly = 0, int $sizelimit = -1, int $timelimit = -1, int $deref = LDAP_DEREF_NEVER, array $serverctrls = null)
++function ldap_read($link_identifier, string $base_dn, string $filter, ?array $attributes = null, int $attrsonly = 0, int $sizelimit = -1, int $timelimit = -1, int $deref = LDAP_DEREF_NEVER, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     if ($serverctrls !== null) {
+@@ -1231,7 +1231,7 @@ function ldap_read($link_identifier, string $base_dn, string $filter, array $att
+  * @throws LdapException
+  *
+  */
+-function ldap_rename_ext($link_identifier, string $dn, string $newrdn, string $newparent, bool $deleteoldrdn, array $serverctrls = null)
++function ldap_rename_ext($link_identifier, string $dn, string $newrdn, string $newparent, bool $deleteoldrdn, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     $result = \ldap_rename_ext($link_identifier, $dn, $newrdn, $newparent, $deleteoldrdn, $serverctrls);
+@@ -1255,7 +1255,7 @@ function ldap_rename_ext($link_identifier, string $dn, string $newrdn, string $n
+  * @throws LdapException
+  *
+  */
+-function ldap_rename($link_identifier, string $dn, string $newrdn, string $newparent, bool $deleteoldrdn, array $serverctrls = null): void
++function ldap_rename($link_identifier, string $dn, string $newrdn, string $newparent, bool $deleteoldrdn, ?array $serverctrls = null): void
+ {
+     error_clear_last();
+     $result = \ldap_rename($link_identifier, $dn, $newrdn, $newparent, $deleteoldrdn, $serverctrls);
+@@ -1279,7 +1279,7 @@ function ldap_rename($link_identifier, string $dn, string $newrdn, string $newpa
+  * @throws LdapException
+  *
+  */
+-function ldap_sasl_bind($link, string $binddn = null, string $password = null, string $sasl_mech = null, string $sasl_realm = null, string $sasl_authc_id = null, string $sasl_authz_id = null, string $props = null): void
++function ldap_sasl_bind($link, ?string $binddn = null, ?string $password = null, ?string $sasl_mech = null, ?string $sasl_realm = null, ?string $sasl_authc_id = null, ?string $sasl_authz_id = null, ?string $props = null): void
+ {
+     error_clear_last();
+     $result = \ldap_sasl_bind($link, $binddn, $password, $sasl_mech, $sasl_realm, $sasl_authc_id, $sasl_authz_id, $props);
+@@ -1375,7 +1375,7 @@ function ldap_sasl_bind($link, string $binddn = null, string $password = null, s
+  * @throws LdapException
+  *
+  */
+-function ldap_search($link_identifier, string $base_dn, string $filter, array $attributes = null, int $attrsonly = 0, int $sizelimit = -1, int $timelimit = -1, int $deref = LDAP_DEREF_NEVER, array $serverctrls = null)
++function ldap_search($link_identifier, string $base_dn, string $filter, ?array $attributes = null, int $attrsonly = 0, int $sizelimit = -1, int $timelimit = -1, int $deref = LDAP_DEREF_NEVER, ?array $serverctrls = null)
+ {
+     error_clear_last();
+     if ($serverctrls !== null) {
+diff --git generated/mailparse.php generated/mailparse.php
+index 1bae182..35242df 100644
+--- generated/mailparse.php
++++ generated/mailparse.php
+@@ -26,7 +26,7 @@ use Safe\Exceptions\MailparseException;
+  * @throws MailparseException
+  *
+  */
+-function mailparse_msg_extract_part_file($mimemail, $filename, callable $callbackfunc = null): string
++function mailparse_msg_extract_part_file($mimemail, $filename, ?callable $callbackfunc = null): string
+ {
+     error_clear_last();
+     if ($callbackfunc !== null) {
+diff --git generated/mbstring.php generated/mbstring.php
+index fa08294..b9d22c1 100644
+--- generated/mbstring.php
++++ generated/mbstring.php
+@@ -13,7 +13,7 @@ use Safe\Exceptions\MbstringException;
+  * @throws MbstringException
+  *
+  */
+-function mb_chr(int $cp, string $encoding = null): string
++function mb_chr(int $cp, ?string $encoding = null): string
+ {
+     error_clear_last();
+     if ($encoding !== null) {
+@@ -190,7 +190,7 @@ function mb_ereg_search_getregs(): array
+  * @throws MbstringException
+  *
+  */
+-function mb_ereg_search_init(string $string, string $pattern = null, string $option = "msr"): void
++function mb_ereg_search_init(string $string, ?string $pattern = null, string $option = "msr"): void
+ {
+     error_clear_last();
+     if ($option !== "msr") {
+@@ -215,7 +215,7 @@ function mb_ereg_search_init(string $string, string $pattern = null, string $opt
+  * @throws MbstringException
+  *
+  */
+-function mb_ereg_search_regs(string $pattern = null, string $option = "ms"): array
++function mb_ereg_search_regs (?string $pattern = null, string $option = "ms"): array
+ {
+     error_clear_last();
+     if ($option !== "ms") {
+@@ -289,7 +289,7 @@ function mb_eregi_replace(string $pattern, string $replace, string $string, stri
+  * @throws MbstringException
+  *
+  */
+-function mb_http_output(string $encoding = null)
++function mb_http_output (?string $encoding = null)
+ {
+     error_clear_last();
+     if ($encoding !== null) {
+@@ -320,7 +320,7 @@ function mb_http_output(string $encoding = null)
+  * @throws MbstringException
+  *
+  */
+-function mb_internal_encoding(string $encoding = null)
++function mb_internal_encoding (?string $encoding = null)
+ {
+     error_clear_last();
+     if ($encoding !== null) {
+@@ -344,7 +344,7 @@ function mb_internal_encoding(string $encoding = null)
+  * @throws MbstringException
+  *
+  */
+-function mb_ord(string $str, string $encoding = null): int
++function mb_ord(string $str, ?string $encoding = null): int
+ {
+     error_clear_last();
+     if ($encoding !== null) {
+@@ -392,7 +392,7 @@ function mb_parse_str(string $encoded_string, ?array &$result): void
+  * @throws MbstringException
+  *
+  */
+-function mb_regex_encoding(string $encoding = null)
++function mb_regex_encoding (?string $encoding = null)
+ {
+     error_clear_last();
+     if ($encoding !== null) {
+@@ -464,7 +464,7 @@ function mb_regex_encoding(string $encoding = null)
+  * @throws MbstringException
+  *
+  */
+-function mb_send_mail(string $to, string $subject, string $message, $additional_headers = null, string $additional_parameter = null): void
++function mb_send_mail(string $to, string $subject, string $message, $additional_headers = null, ?string $additional_parameter = null): void
+ {
+     error_clear_last();
+     $result = \mb_send_mail($to, $subject, $message, $additional_headers, $additional_parameter);
+@@ -511,7 +511,7 @@ function mb_split(string $pattern, string $string, int $limit = -1): array
+  * @throws MbstringException
+  *
+  */
+-function mb_str_split(string $string, int $split_length = 1, string $encoding = null): array
++function mb_str_split(string $string, int $split_length = 1, ?string $encoding = null): array
+ {
+     error_clear_last();
+     if ($encoding !== null) {
+diff --git generated/misc.php generated/misc.php
+index ff636fd..a59d974 100644
+--- generated/misc.php
++++ generated/misc.php
+@@ -339,7 +339,7 @@ function sapi_windows_generate_ctrl_event(int $event, int $pid = 0): void
+  * @throws MiscException
+  *
+  */
+-function sapi_windows_vt100_support($stream, bool $enable = null): void
++function sapi_windows_vt100_support($stream, ?bool $enable = null): void
+ {
+     error_clear_last();
+     if ($enable !== null) {
+diff --git generated/msql.php generated/msql.php
+index 331c1b6..c380047 100644
+--- generated/msql.php
++++ generated/msql.php
+@@ -81,7 +81,7 @@ function msql_close($link_identifier = null): void
+  * @throws MsqlException
+  *
+  */
+-function msql_connect(string $hostname = null)
++function msql_connect (?string $hostname = null)
+ {
+     error_clear_last();
+     if ($hostname !== null) {
+@@ -369,7 +369,7 @@ function msql_free_result($result): void
+  * @throws MsqlException
+  *
+  */
+-function msql_pconnect(string $hostname = null)
++function msql_pconnect (?string $hostname = null)
+ {
+     error_clear_last();
+     if ($hostname !== null) {
+diff --git generated/mysql.php generated/mysql.php
+index 475c609..6c5880f 100644
+--- generated/mysql.php
++++ generated/mysql.php
+@@ -73,7 +73,7 @@ function mysql_close($link_identifier = null): void
+  * @throws MysqlException
+  *
+  */
+-function mysql_connect(string $server = null, string $username = null, string $password = null, bool $new_link = false, int $client_flags = 0)
++function mysql_connect (?string $server = null, ?string $username = null, ?string $password = null, bool $new_link = false, int $client_flags = 0)
+ {
+     error_clear_last();
+     if ($client_flags !== 0) {
+diff --git generated/network.php generated/network.php
+index 6d46b6c..5550340 100644
+--- generated/network.php
++++ generated/network.php
+@@ -304,7 +304,7 @@ function dns_get_record(string $hostname, int $type = DNS_ANY, ?array &$authns =
+  * @throws NetworkException
+  *
+  */
+-function fsockopen(string $hostname, int $port = -1, ?int &$errno = null, ?string &$errstr = null, float $timeout = null)
++function fsockopen(string $hostname, int $port = -1, ?int &$errno = null, ?string &$errstr = null, ?float $timeout = null)
+ {
+     error_clear_last();
+     if ($timeout !== null) {
+diff --git generated/oci8.php generated/oci8.php
+index f2bac27..305d706 100644
+--- generated/oci8.php
++++ generated/oci8.php
+@@ -489,7 +489,7 @@ function oci_commit($connection): void
+  * @throws Oci8Exception
+  *
+  */
+-function oci_connect(string $username, string $password, string $connection_string = null, string $character_set = null, int $session_mode = null)
++function oci_connect(string $username, string $password, ?string $connection_string = null, ?string $character_set = null, ?int $session_mode = null)
+ {
+     error_clear_last();
+     if ($session_mode !== null) {
+@@ -912,7 +912,7 @@ function oci_free_statement($statement): void
+  * @throws Oci8Exception
+  *
+  */
+-function oci_new_collection($connection, string $tdo, string $schema = null)
++function oci_new_collection($connection, string $tdo, ?string $schema = null)
+ {
+     error_clear_last();
+     $result = \oci_new_collection($connection, $tdo, $schema);
+@@ -1011,7 +1011,7 @@ function oci_new_collection($connection, string $tdo, string $schema = null)
+  * @throws Oci8Exception
+  *
+  */
+-function oci_new_connect(string $username, string $password, string $connection_string = null, string $character_set = null, int $session_mode = null)
++function oci_new_connect(string $username, string $password, ?string $connection_string = null, ?string $character_set = null, ?int $session_mode = null)
+ {
+     error_clear_last();
+     if ($session_mode !== null) {
+@@ -1232,7 +1232,7 @@ function oci_parse($connection, string $sql_text)
+  * @throws Oci8Exception
+  *
+  */
+-function oci_pconnect(string $username, string $password, string $connection_string = null, string $character_set = null, int $session_mode = null)
++function oci_pconnect(string $username, string $password, ?string $connection_string = null, ?string $character_set = null, ?int $session_mode = null)
+ {
+     error_clear_last();
+     if ($session_mode !== null) {
+diff --git generated/openssl.php generated/openssl.php
+index 117b53d..4dddb03 100644
+--- generated/openssl.php
++++ generated/openssl.php
+@@ -209,7 +209,7 @@ function openssl_csr_get_subject($csr, bool $use_shortnames = true): array
+  * @throws OpensslException
+  *
+  */
+-function openssl_csr_new(array $dn, &$privkey, array $configargs = null, array $extraattribs = null)
++function openssl_csr_new(array $dn, &$privkey, ?array $configargs = null, ?array $extraattribs = null)
+ {
+     error_clear_last();
+     if ($extraattribs !== null) {
+@@ -250,7 +250,7 @@ function openssl_csr_new(array $dn, &$privkey, array $configargs = null, array $
+  * @throws OpensslException
+  *
+  */
+-function openssl_csr_sign($csr, $cacert, $priv_key, int $days, array $configargs = null, int $serial = 0)
++function openssl_csr_sign($csr, $cacert, $priv_key, int $days, ?array $configargs = null, int $serial = 0)
+ {
+     error_clear_last();
+     if ($serial !== 0) {
+@@ -360,7 +360,7 @@ function openssl_digest(string $data, string $method, bool $raw_output = false):
+  * @throws OpensslException
+  *
+  */
+-function openssl_open(string $sealed_data, ?string &$open_data, string $env_key, $priv_key_id, string $method = "RC4", string $iv = null): void
++function openssl_open(string $sealed_data, ?string &$open_data, string $env_key, $priv_key_id, string $method = "RC4", ?string $iv = null): void
+ {
+     error_clear_last();
+     if ($iv !== null) {
+@@ -433,7 +433,7 @@ function openssl_pbkdf2(string $password, string $salt, int $key_length, int $it
+  * @throws OpensslException
+  *
+  */
+-function openssl_pkcs12_export_to_file($x509, string $filename, $priv_key, string $pass, array $args = null): void
++function openssl_pkcs12_export_to_file($x509, string $filename, $priv_key, string $pass, ?array $args = null): void
+ {
+     error_clear_last();
+     if ($args !== null) {
+@@ -481,7 +481,7 @@ function openssl_pkcs12_export_to_file($x509, string $filename, $priv_key, strin
+  * @throws OpensslException
+  *
+  */
+-function openssl_pkcs12_export($x509, ?string &$out, $priv_key, string $pass, array $args = null): void
++function openssl_pkcs12_export($x509, ?string &$out, $priv_key, string $pass, ?array $args = null): void
+ {
+     error_clear_last();
+     if ($args !== null) {
+@@ -618,7 +618,7 @@ function openssl_pkcs7_read(string $infilename, ?array &$certs): void
+  * @throws OpensslException
+  *
+  */
+-function openssl_pkcs7_sign(string $infilename, string $outfilename, $signcert, $privkey, array $headers, int $flags = PKCS7_DETACHED, string $extracerts = null): void
++function openssl_pkcs7_sign(string $infilename, string $outfilename, $signcert, $privkey, array $headers, int $flags = PKCS7_DETACHED, ?string $extracerts = null): void
+ {
+     error_clear_last();
+     if ($extracerts !== null) {
+@@ -648,7 +648,7 @@ function openssl_pkcs7_sign(string $infilename, string $outfilename, $signcert,
+  * @throws OpensslException
+  *
+  */
+-function openssl_pkey_export_to_file($key, string $outfilename, string $passphrase = null, array $configargs = null): void
++function openssl_pkey_export_to_file($key, string $outfilename, ?string $passphrase = null, ?array $configargs = null): void
+ {
+     error_clear_last();
+     if ($configargs !== null) {
+@@ -679,7 +679,7 @@ function openssl_pkey_export_to_file($key, string $outfilename, string $passphra
+  * @throws OpensslException
+  *
+  */
+-function openssl_pkey_export($key, ?string &$out, string $passphrase = null, array $configargs = null): void
++function openssl_pkey_export($key, ?string &$out, ?string $passphrase = null, ?array $configargs = null): void
+ {
+     error_clear_last();
+     if ($configargs !== null) {
+@@ -768,7 +768,7 @@ function openssl_pkey_get_public($certificate)
+  * @throws OpensslException
+  *
+  */
+-function openssl_pkey_new(array $configargs = null)
++function openssl_pkey_new (?array $configargs = null)
+ {
+     error_clear_last();
+     if ($configargs !== null) {
+@@ -953,7 +953,7 @@ function openssl_random_pseudo_bytes(int $length, ?bool &$crypto_strong = null):
+  * @throws OpensslException
+  *
+  */
+-function openssl_seal(string $data, ?string &$sealed_data, array &$env_keys, array $pub_key_ids, string $method = "RC4", string &$iv = null): int
++function openssl_seal(string $data, ?string &$sealed_data, array &$env_keys, array $pub_key_ids, string $method = "RC4", ?string &$iv = null): int
+ {
+     error_clear_last();
+     $result = \openssl_seal($data, $sealed_data, $env_keys, $pub_key_ids, $method, $iv);
+diff --git generated/password.php generated/password.php
+index 3808e02..d0d1455 100644
+--- generated/password.php
++++ generated/password.php
+@@ -111,7 +111,7 @@ use Safe\Exceptions\PasswordException;
+  * @throws PasswordException
+  *
+  */
+-function password_hash(string $password, $algo, array $options = null): string
++function password_hash(string $password, $algo, ?array $options = null): string
+ {
+     error_clear_last();
+     if ($options !== null) {
+diff --git generated/pcntl.php generated/pcntl.php
+index 1cb721e..1a182d2 100644
+--- generated/pcntl.php
++++ generated/pcntl.php
+@@ -20,7 +20,7 @@ use Safe\Exceptions\PcntlException;
+  * @throws PcntlException
+  *
+  */
+-function pcntl_exec(string $path, array $args = null, array $envs = null): void
++function pcntl_exec(string $path, ?array $args = null, ?array $envs = null): void
+ {
+     error_clear_last();
+     if ($envs !== null) {
+@@ -50,7 +50,7 @@ function pcntl_exec(string $path, array $args = null, array $envs = null): void
+  * @throws PcntlException
+  *
+  */
+-function pcntl_getpriority(int $pid = null, int $process_identifier = PRIO_PROCESS): int
++function pcntl_getpriority (?int $pid = null, int $process_identifier = PRIO_PROCESS): int
+ {
+     error_clear_last();
+     if ($process_identifier !== PRIO_PROCESS) {
+@@ -83,7 +83,7 @@ function pcntl_getpriority(int $pid = null, int $process_identifier = PRIO_PROCE
+  * @throws PcntlException
+  *
+  */
+-function pcntl_setpriority(int $priority, int $pid = null, int $process_identifier = PRIO_PROCESS): void
++function pcntl_setpriority(int $priority, ?int $pid = null, int $process_identifier = PRIO_PROCESS): void
+ {
+     error_clear_last();
+     if ($process_identifier !== PRIO_PROCESS) {
+diff --git generated/pcre.php generated/pcre.php
+index c40f14c..baad8cf 100644
+--- generated/pcre.php
++++ generated/pcre.php
+@@ -347,7 +347,7 @@ use Safe\Exceptions\PcreException;
+  * @throws PcreException
+  *
+  */
+-function preg_match_all(string $pattern, string $subject, array &$matches = null, int $flags = PREG_PATTERN_ORDER, int $offset = 0): int
++function preg_match_all(string $pattern, string $subject, ?array &$matches = null, int $flags = PREG_PATTERN_ORDER, int $offset = 0): int
+ {
+     error_clear_last();
+     $result = \preg_match_all($pattern, $subject, $matches, $flags, $offset);
+@@ -584,7 +584,7 @@ function preg_match_all(string $pattern, string $subject, array &$matches = null
+  * @throws PcreException
+  *
+  */
+-function preg_match(string $pattern, string $subject, array &$matches = null, int $flags = 0, int $offset = 0): int
++function preg_match(string $pattern, string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): int
+ {
+     error_clear_last();
+     $result = \preg_match($pattern, $subject, $matches, $flags, $offset);
+diff --git generated/pgsql.php generated/pgsql.php
+index 007faac..95bba95 100644
+--- generated/pgsql.php
++++ generated/pgsql.php
+@@ -130,7 +130,7 @@ function pg_close($connection = null): void
+  * @throws PgsqlException
+  *
+  */
+-function pg_connect(string $connection_string, int $connect_type = null)
++function pg_connect(string $connection_string, ?int $connect_type = null)
+ {
+     error_clear_last();
+     if ($connect_type !== null) {
+@@ -213,7 +213,7 @@ function pg_convert($connection, string $table_name, array $assoc_array, int $op
+  * @throws PgsqlException
+  *
+  */
+-function pg_copy_from($connection, string $table_name, array $rows, string $delimiter = null, string $null_as = null): void
++function pg_copy_from($connection, string $table_name, array $rows, ?string $delimiter = null, ?string $null_as = null): void
+ {
+     error_clear_last();
+     if ($null_as !== null) {
+@@ -245,7 +245,7 @@ function pg_copy_from($connection, string $table_name, array $rows, string $deli
+  * @throws PgsqlException
+  *
+  */
+-function pg_copy_to($connection, string $table_name, string $delimiter = null, string $null_as = null): array
++function pg_copy_to($connection, string $table_name, ?string $delimiter = null, ?string $null_as = null): array
+ {
+     error_clear_last();
+     if ($null_as !== null) {
+@@ -403,7 +403,7 @@ function pg_end_copy($connection = null): void
+  * @throws PgsqlException
+  *
+  */
+-function pg_execute($connection = null, string $stmtname = null, array $params = null)
++function pg_execute($connection = null, ?string $stmtname = null, ?array $params = null)
+ {
+     error_clear_last();
+     if ($params !== null) {
+@@ -779,7 +779,7 @@ function pg_lo_close($large_object): void
+  * @throws PgsqlException
+  *
+  */
+-function pg_lo_export($connection = null, int $oid = null, string $pathname = null): void
++function pg_lo_export($connection = null, ?int $oid = null, ?string $pathname = null): void
+ {
+     error_clear_last();
+     if ($pathname !== null) {
+@@ -820,7 +820,7 @@ function pg_lo_export($connection = null, int $oid = null, string $pathname = nu
+  * @throws PgsqlException
+  *
+  */
+-function pg_lo_import($connection = null, string $pathname = null, $object_id = null): int
++function pg_lo_import($connection = null, ?string $pathname = null, $object_id = null): int
+ {
+     error_clear_last();
+     if ($object_id !== null) {
+@@ -1009,7 +1009,7 @@ function pg_lo_unlink($connection, int $oid): void
+  * @throws PgsqlException
+  *
+  */
+-function pg_lo_write($large_object, string $data, int $len = null): int
++function pg_lo_write($large_object, string $data, ?int $len = null): int
+ {
+     error_clear_last();
+     if ($len !== null) {
+@@ -1113,7 +1113,7 @@ function pg_options($connection = null): string
+  * @throws PgsqlException
+  *
+  */
+-function pg_parameter_status($connection = null, string $param_name = null): string
++function pg_parameter_status($connection = null, ?string $param_name = null): string
+ {
+     error_clear_last();
+     if ($param_name !== null) {
+@@ -1174,7 +1174,7 @@ function pg_parameter_status($connection = null, string $param_name = null): str
+  * @throws PgsqlException
+  *
+  */
+-function pg_pconnect(string $connection_string, int $connect_type = null)
++function pg_pconnect(string $connection_string, ?int $connect_type = null)
+ {
+     error_clear_last();
+     if ($connect_type !== null) {
+@@ -1278,7 +1278,7 @@ function pg_port($connection = null): int
+  * @throws PgsqlException
+  *
+  */
+-function pg_prepare($connection = null, string $stmtname = null, string $query = null)
++function pg_prepare($connection = null, ?string $stmtname = null, ?string $query = null)
+ {
+     error_clear_last();
+     if ($query !== null) {
+@@ -1319,7 +1319,7 @@ function pg_prepare($connection = null, string $stmtname = null, string $query =
+  * @throws PgsqlException
+  *
+  */
+-function pg_put_line($connection = null, string $data = null): void
++function pg_put_line($connection = null, ?string $data = null): void
+ {
+     error_clear_last();
+     if ($data !== null) {
+@@ -1385,7 +1385,7 @@ function pg_put_line($connection = null, string $data = null): void
+  * @throws PgsqlException
+  *
+  */
+-function pg_query_params($connection = null, string $query = null, array $params = null)
++function pg_query_params($connection = null, ?string $query = null, ?array $params = null)
+ {
+     error_clear_last();
+     if ($params !== null) {
+@@ -1443,7 +1443,7 @@ function pg_query_params($connection = null, string $query = null, array $params
+  * @throws PgsqlException
+  *
+  */
+-function pg_query($connection = null, string $query = null)
++function pg_query($connection = null, ?string $query = null)
+ {
+     error_clear_last();
+     if ($query !== null) {
+diff --git generated/ps.php generated/ps.php
+index a66667a..5224fb1 100644
+--- generated/ps.php
++++ generated/ps.php
+@@ -778,7 +778,7 @@ function ps_fill($psdoc): void
+  * @throws PsException
+  *
+  */
+-function ps_get_parameter($psdoc, string $name, float $modifier = null): string
++function ps_get_parameter($psdoc, string $name, ?float $modifier = null): string
+ {
+     error_clear_last();
+     if ($modifier !== null) {
+@@ -925,7 +925,7 @@ function ps_new()
+  * @throws PsException
+  *
+  */
+-function ps_open_file($psdoc, string $filename = null): void
++function ps_open_file($psdoc, ?string $filename = null): void
+ {
+     error_clear_last();
+     if ($filename !== null) {
+diff --git generated/pspell.php generated/pspell.php
+index 4cf4c36..afcff73 100644
+--- generated/pspell.php
++++ generated/pspell.php
+@@ -90,7 +90,7 @@ function pspell_clear_session(int $dictionary_link): void
+  * @throws PspellException
+  *
+  */
+-function pspell_config_create(string $language, string $spelling = null, string $jargon = null, string $encoding = null): int
++function pspell_config_create(string $language, ?string $spelling = null, ?string $jargon = null, ?string $encoding = null): int
+ {
+     error_clear_last();
+     if ($encoding !== null) {
+@@ -392,7 +392,7 @@ function pspell_new_config(int $config): int
+  * @throws PspellException
+  *
+  */
+-function pspell_new(string $language, string $spelling = null, string $jargon = null, string $encoding = null, int $mode = 0): int
++function pspell_new(string $language, ?string $spelling = null, ?string $jargon = null, ?string $encoding = null, int $mode = 0): int
+ {
+     error_clear_last();
+     if ($mode !== 0) {
+diff --git generated/readline.php generated/readline.php
+index a1c52c7..b4e4e66 100644
+--- generated/readline.php
++++ generated/readline.php
+@@ -122,7 +122,7 @@ function readline_completion_function(callable $function): void
+  * @throws ReadlineException
+  *
+  */
+-function readline_read_history(string $filename = null): void
++function readline_read_history (?string $filename = null): void
+ {
+     error_clear_last();
+     if ($filename !== null) {
+@@ -143,7 +143,7 @@ function readline_read_history(string $filename = null): void
+  * @throws ReadlineException
+  *
+  */
+-function readline_write_history(string $filename = null): void
++function readline_write_history (?string $filename = null): void
+ {
+     error_clear_last();
+     if ($filename !== null) {
+diff --git generated/sodium.php generated/sodium.php
+index 6cb378a..d0ebc6e 100644
+--- generated/sodium.php
++++ generated/sodium.php
+@@ -43,7 +43,7 @@ function sodium_crypto_pwhash_str(string $password, int $opslimit, int $memlimit
+  * @throws SodiumException
+  *
+  */
+-function sodium_crypto_pwhash(int $length, string $password, string $salt, int $opslimit, int $memlimit, int $alg = null): string
++function sodium_crypto_pwhash(int $length, string $password, string $salt, int $opslimit, int $memlimit, ?int $alg = null): string
+ {
+     error_clear_last();
+     if ($alg !== null) {
+diff --git generated/spl.php generated/spl.php
+index 679e689..0e0afda 100644
+--- generated/spl.php
++++ generated/spl.php
+@@ -99,7 +99,7 @@ function class_uses($class, bool $autoload = true): array
+  * @throws SplException
+  *
+  */
+-function spl_autoload_register(callable $autoload_function = null, bool $throw = true, bool $prepend = false): void
++function spl_autoload_register (?callable $autoload_function = null, bool $throw = true, bool $prepend = false): void
+ {
+     error_clear_last();
+     if ($prepend !== false) {
+diff --git generated/sqlsrv.php generated/sqlsrv.php
+index e93aa37..7dc312b 100644
+--- generated/sqlsrv.php
++++ generated/sqlsrv.php
+@@ -251,7 +251,7 @@ function sqlsrv_free_stmt($stmt): void
+  * @throws SqlsrvException
+  *
+  */
+-function sqlsrv_get_field($stmt, int $fieldIndex, int $getAsType = null)
++function sqlsrv_get_field($stmt, int $fieldIndex, ?int $getAsType = null)
+ {
+     error_clear_last();
+     if ($getAsType !== null) {
+@@ -357,7 +357,7 @@ function sqlsrv_num_rows($stmt): int
+  * @throws SqlsrvException
+  *
+  */
+-function sqlsrv_prepare($conn, string $sql, array $params = null, array $options = null)
++function sqlsrv_prepare($conn, string $sql, ?array $params = null, ?array $options = null)
+ {
+     error_clear_last();
+     if ($options !== null) {
+@@ -394,7 +394,7 @@ function sqlsrv_prepare($conn, string $sql, array $params = null, array $options
+  * @throws SqlsrvException
+  *
+  */
+-function sqlsrv_query($conn, string $sql, array $params = null, array $options = null)
++function sqlsrv_query($conn, string $sql, ?array $params = null, ?array $options = null)
+ {
+     error_clear_last();
+     if ($options !== null) {
+diff --git generated/ssh2.php generated/ssh2.php
+index 96af9df..3117cb9 100644
+--- generated/ssh2.php
++++ generated/ssh2.php
+@@ -39,7 +39,7 @@ function ssh2_auth_agent($session, string $username): void
+  * @throws Ssh2Exception
+  *
+  */
+-function ssh2_auth_hostbased_file($session, string $username, string $hostname, string $pubkeyfile, string $privkeyfile, string $passphrase = null, string $local_username = null): void
++function ssh2_auth_hostbased_file($session, string $username, string $hostname, string $pubkeyfile, string $privkeyfile, ?string $passphrase = null, ?string $local_username = null): void
+ {
+     error_clear_last();
+     if ($local_username !== null) {
+@@ -91,7 +91,7 @@ function ssh2_auth_password($session, string $username, string $password): void
+  * @throws Ssh2Exception
+  *
+  */
+-function ssh2_auth_pubkey_file($session, string $username, string $pubkeyfile, string $privkeyfile, string $passphrase = null): void
++function ssh2_auth_pubkey_file($session, string $username, string $pubkeyfile, string $privkeyfile, ?string $passphrase = null): void
+ {
+     error_clear_last();
+     if ($passphrase !== null) {
+@@ -304,7 +304,7 @@ function ssh2_auth_pubkey_file($session, string $username, string $pubkeyfile, s
+  * @throws Ssh2Exception
+  *
+  */
+-function ssh2_connect(string $host, int $port = 22, array $methods = null, array $callbacks = null)
++function ssh2_connect(string $host, int $port = 22, ?array $methods = null, ?array $callbacks = null)
+ {
+     error_clear_last();
+     if ($callbacks !== null) {
+@@ -357,7 +357,7 @@ function ssh2_disconnect($session): void
+  * @throws Ssh2Exception
+  *
+  */
+-function ssh2_exec($session, string $command, string $pty = null, array $env = null, int $width = 80, int $height = 25, int $width_height_type = SSH2_TERM_UNIT_CHARS)
++function ssh2_exec($session, string $command, ?string $pty = null, ?array $env = null, int $width = 80, int $height = 25, int $width_height_type = SSH2_TERM_UNIT_CHARS)
+ {
+     error_clear_last();
+     if ($width_height_type !== SSH2_TERM_UNIT_CHARS) {
+@@ -395,7 +395,7 @@ function ssh2_exec($session, string $command, string $pty = null, array $env = n
+  * @throws Ssh2Exception
+  *
+  */
+-function ssh2_publickey_add($pkey, string $algoname, string $blob, bool $overwrite = false, array $attributes = null): void
++function ssh2_publickey_add($pkey, string $algoname, string $blob, bool $overwrite = false, ?array $attributes = null): void
+ {
+     error_clear_last();
+     if ($attributes !== null) {
+diff --git generated/stream.php generated/stream.php
+index 573d029..d858ec8 100644
+--- generated/stream.php
++++ generated/stream.php
+@@ -83,7 +83,7 @@ function stream_copy_to_stream($source, $dest, int $maxlength = -1, int $offset
+  * @throws StreamException
+  *
+  */
+-function stream_filter_append($stream, string $filtername, int $read_write = null, $params = null)
++function stream_filter_append($stream, string $filtername, ?int $read_write = null, $params = null)
+ {
+     error_clear_last();
+     if ($params !== null) {
+@@ -132,7 +132,7 @@ function stream_filter_append($stream, string $filtername, int $read_write = nul
+  * @throws StreamException
+  *
+  */
+-function stream_filter_prepend($stream, string $filtername, int $read_write = null, $params = null)
++function stream_filter_prepend($stream, string $filtername, ?int $read_write = null, $params = null)
+ {
+     error_clear_last();
+     if ($params !== null) {
+@@ -331,7 +331,7 @@ function stream_set_timeout($stream, int $seconds, int $microseconds = 0): void
+  * @throws StreamException
+  *
+  */
+-function stream_socket_accept($server_socket, float $timeout = null, ?string &$peername = null)
++function stream_socket_accept($server_socket, ?float $timeout = null, ?string &$peername = null)
+ {
+     error_clear_last();
+     if ($peername !== null) {
+@@ -397,7 +397,7 @@ function stream_socket_accept($server_socket, float $timeout = null, ?string &$p
+  * @throws StreamException
+  *
+  */
+-function stream_socket_client(string $remote_socket, int &$errno = null, string &$errstr = null, float $timeout = null, int $flags = STREAM_CLIENT_CONNECT, $context = null)
++function stream_socket_client(string $remote_socket, ?int &$errno = null, ?string &$errstr = null, ?float $timeout = null, int $flags = STREAM_CLIENT_CONNECT, $context = null)
+ {
+     error_clear_last();
+     if ($context !== null) {
+@@ -492,7 +492,7 @@ function stream_socket_pair(int $domain, int $type, int $protocol): iterable
+  * @throws StreamException
+  *
+  */
+-function stream_socket_server(string $local_socket, int &$errno = null, string &$errstr = null, int $flags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN, $context = null)
++function stream_socket_server(string $local_socket, ?int &$errno = null, ?string &$errstr = null, int $flags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN, $context = null)
+ {
+     error_clear_last();
+     if ($context !== null) {
+diff --git generated/strings.php generated/strings.php
+index 9bc7284..67a49ce 100644
+--- generated/strings.php
++++ generated/strings.php
+@@ -529,7 +529,7 @@ function sprintf(string $format, ...$params): string
+  * @throws StringsException
+  *
+  */
+-function substr(string $string, int $start, int $length = null): string
++function substr(string $string, int $start, ?int $length = null): string
+ {
+     error_clear_last();
+     if ($length !== null) {
+diff --git generated/swoole.php generated/swoole.php
+index 334d96b..f65ab48 100644
+--- generated/swoole.php
++++ generated/swoole.php
+@@ -14,7 +14,7 @@ use Safe\Exceptions\SwooleException;
+  * @throws SwooleException
+  *
+  */
+-function swoole_async_write(string $filename, string $content, int $offset = null, callable $callback = null): void
++function swoole_async_write(string $filename, string $content, ?int $offset = null, ?callable $callback = null): void
+ {
+     error_clear_last();
+     if ($callback !== null) {
+@@ -40,7 +40,7 @@ function swoole_async_write(string $filename, string $content, int $offset = nul
+  * @throws SwooleException
+  *
+  */
+-function swoole_async_writefile(string $filename, string $content, callable $callback = null, int $flags = 0): void
++function swoole_async_writefile(string $filename, string $content, ?callable $callback = null, int $flags = 0): void
+ {
+     error_clear_last();
+     if ($flags !== 0) {
+diff --git generated/uodbc.php generated/uodbc.php
+index 89775c8..a401d6f 100644
+--- generated/uodbc.php
++++ generated/uodbc.php
+@@ -237,7 +237,7 @@ function odbc_columnprivileges($connection_id, string $catalog, string $schema,
+  * @throws UodbcException
+  *
+  */
+-function odbc_columns($connection_id, string $catalog = null, string $schema = null, string $table_name = null, string $column_name = null)
++function odbc_columns($connection_id, ?string $catalog = null, ?string $schema = null, ?string $table_name = null, ?string $column_name = null)
+ {
+     error_clear_last();
+     if ($column_name !== null) {
+@@ -314,7 +314,7 @@ function odbc_data_source($connection_id, int $fetch_type): array
+  * @throws UodbcException
+  *
+  */
+-function odbc_exec($connection_id, string $query_string, int $flags = null)
++function odbc_exec($connection_id, string $query_string, ?int $flags = null)
+ {
+     error_clear_last();
+     if ($flags !== null) {
+@@ -345,7 +345,7 @@ function odbc_exec($connection_id, string $query_string, int $flags = null)
+  * @throws UodbcException
+  *
+  */
+-function odbc_execute($result_id, array $parameters_array = null): void
++function odbc_execute($result_id, ?array $parameters_array = null): void
+ {
+     error_clear_last();
+     if ($parameters_array !== null) {
+@@ -373,7 +373,7 @@ function odbc_execute($result_id, array $parameters_array = null): void
+  * @throws UodbcException
+  *
+  */
+-function odbc_fetch_into($result_id, ?array &$result_array, int $rownumber = null): int
++function odbc_fetch_into($result_id, ?array &$result_array, ?int $rownumber = null): int
+ {
+     error_clear_last();
+     if ($rownumber !== null) {
+@@ -573,7 +573,7 @@ function odbc_foreignkeys($connection_id, string $pk_catalog, string $pk_schema,
+  * @throws UodbcException
+  *
+  */
+-function odbc_gettypeinfo($connection_id, int $data_type = null)
++function odbc_gettypeinfo($connection_id, ?int $data_type = null)
+ {
+     error_clear_last();
+     if ($data_type !== null) {
+@@ -687,7 +687,7 @@ function odbc_primarykeys($connection_id, string $catalog, string $schema, strin
+  * @throws UodbcException
+  *
+  */
+-function odbc_result_all($result_id, string $format = null): int
++function odbc_result_all($result_id, ?string $format = null): int
+ {
+     error_clear_last();
+     if ($format !== null) {
+@@ -988,7 +988,7 @@ function odbc_tableprivileges($connection_id, string $catalog, string $schema, s
+  * @throws UodbcException
+  *
+  */
+-function odbc_tables($connection_id, string $catalog = null, string $schema = null, string $name = null, string $types = null)
++function odbc_tables($connection_id, ?string $catalog = null, ?string $schema = null, ?string $name = null, ?string $types = null)
+ {
+     error_clear_last();
+     if ($types !== null) {
+diff --git generated/xdiff.php generated/xdiff.php
+index 27feef3..4719332 100644
+--- generated/xdiff.php
++++ generated/xdiff.php
+@@ -219,7 +219,7 @@ function xdiff_string_patch_binary(string $str, string $patch): string
+  * @throws XdiffException
+  *
+  */
+-function xdiff_string_patch(string $str, string $patch, int $flags = null, ?string &$error = null): string
++function xdiff_string_patch(string $str, string $patch, ?int $flags = null, ?string &$error = null): string
+ {
+     error_clear_last();
+     if ($error !== null) {
+diff --git generated/xml.php generated/xml.php
+index 4f9f660..33a4c2d 100644
+--- generated/xml.php
++++ generated/xml.php
+@@ -22,7 +22,7 @@ use Safe\Exceptions\XmlException;
+  * @throws XmlException
+  *
+  */
+-function xml_parser_create_ns(string $encoding = null, string $separator = ":")
++function xml_parser_create_ns (?string $encoding = null, string $separator = ":")
+ {
+     error_clear_last();
+     if ($separator !== ":") {
+@@ -59,7 +59,7 @@ function xml_parser_create_ns(string $encoding = null, string $separator = ":")
+  * @throws XmlException
+  *
+  */
+-function xml_parser_create(string $encoding = null)
++function xml_parser_create (?string $encoding = null)
+ {
+     error_clear_last();
+     if ($encoding !== null) {
+diff --git generated/yaml.php generated/yaml.php
+index 38daaf7..eaab6a7 100644
+--- generated/yaml.php
++++ generated/yaml.php
+@@ -23,7 +23,7 @@ use Safe\Exceptions\YamlException;
+  * @throws YamlException
+  *
+  */
+-function yaml_parse_file(string $filename, int $pos = 0, ?int &$ndocs = null, array $callbacks = null)
++function yaml_parse_file(string $filename, int $pos = 0, ?int &$ndocs = null, ?array $callbacks = null)
+ {
+     error_clear_last();
+     $result = \yaml_parse_file($filename, $pos, $ndocs, $callbacks);
+@@ -56,7 +56,7 @@ function yaml_parse_file(string $filename, int $pos = 0, ?int &$ndocs = null, ar
+  * @throws YamlException
+  *
+  */
+-function yaml_parse_url(string $url, int $pos = 0, ?int &$ndocs = null, array $callbacks = null)
++function yaml_parse_url(string $url, int $pos = 0, ?int &$ndocs = null, ?array $callbacks = null)
+ {
+     error_clear_last();
+     $result = \yaml_parse_url($url, $pos, $ndocs, $callbacks);
+@@ -86,7 +86,7 @@ function yaml_parse_url(string $url, int $pos = 0, ?int &$ndocs = null, array $c
+  * @throws YamlException
+  *
+  */
+-function yaml_parse(string $input, int $pos = 0, ?int &$ndocs = null, array $callbacks = null)
++function yaml_parse(string $input, int $pos = 0, ?int &$ndocs = null, ?array $callbacks = null)
+ {
+     error_clear_last();
+     $result = \yaml_parse($input, $pos, $ndocs, $callbacks);
+diff --git generated/yaz.php generated/yaz.php
+index 29c1d33..dab539f 100644
+--- generated/yaz.php
++++ generated/yaz.php
+@@ -427,7 +427,7 @@ function yaz_search($id, string $type, string $query): void
+  * @throws YazException
+  *
+  */
+-function yaz_wait(array &$options = null)
++function yaz_wait (?array &$options = null)
+ {
+     error_clear_last();
+     $result = \yaz_wait($options);
+diff --git generated/zip.php generated/zip.php
+index 8fd22bb..f8579f1 100644
+--- generated/zip.php
++++ generated/zip.php
+@@ -35,7 +35,7 @@ function zip_entry_close($zip_entry): void
+  * @throws ZipException
+  *
+  */
+-function zip_entry_open($zip, $zip_entry, string $mode = null): void
++function zip_entry_open($zip, $zip_entry, ?string $mode = null): void
+ {
+     error_clear_last();
+     if ($mode !== null) {
+diff --git generated/zlib.php generated/zlib.php
+index 4dc3ca9..a3ec860 100644
+--- generated/zlib.php
++++ generated/zlib.php
+@@ -115,7 +115,7 @@ function deflate_add($context, string $data, int $flush_mode = ZLIB_SYNC_FLUSH):
+  * @throws ZlibException
+  *
+  */
+-function deflate_init(int $encoding, array $options = null)
++function deflate_init(int $encoding, ?array $options = null)
+ {
+     error_clear_last();
+     $result = \deflate_init($encoding, $options);
+@@ -183,7 +183,7 @@ function gzcompress(string $data, int $level = -1, int $encoding = ZLIB_ENCODING
+  * @throws ZlibException
+  *
+  */
+-function gzdecode(string $data, int $length = null): string
++function gzdecode(string $data, ?int $length = null): string
+ {
+     error_clear_last();
+     if ($length !== null) {
+@@ -276,7 +276,7 @@ function gzencode(string $data, int $level = -1, int $encoding_mode = FORCE_GZIP
+  * @throws ZlibException
+  *
+  */
+-function gzgets($zp, int $length = null): string
++function gzgets($zp, ?int $length = null): string
+ {
+     error_clear_last();
+     if ($length !== null) {
+@@ -305,7 +305,7 @@ function gzgets($zp, int $length = null): string
+  * @throws ZlibException
+  *
+  */
+-function gzgetss($zp, int $length, string $allowable_tags = null): string
++function gzgetss($zp, int $length, ?string $allowable_tags = null): string
+ {
+     error_clear_last();
+     if ($allowable_tags !== null) {
+@@ -550,7 +550,7 @@ function inflate_add($context, string $encoded_data, int $flush_mode = ZLIB_SYNC
+  * @throws ZlibException
+  *
+  */
+-function inflate_init(int $encoding, array $options = null)
++function inflate_init(int $encoding, ?array $options = null)
+ {
+     error_clear_last();
+     $result = \inflate_init($encoding, $options);
+@@ -596,7 +596,7 @@ function readgzfile(string $filename, int $use_include_path = 0): int
+  * @throws ZlibException
+  *
+  */
+-function zlib_decode(string $data, int $max_decoded_len = null): string
++function zlib_decode(string $data, ?int $max_decoded_len = null): string
+ {
+     error_clear_last();
+     if ($max_decoded_len !== null) {
+diff --git lib/special_cases.php lib/special_cases.php
+index d18e211..ee0192e 100644
+--- lib/special_cases.php
++++ lib/special_cases.php
+@@ -152,7 +152,7 @@ function apcu_fetch($key)
+  * @throws PcreException
+  *
+  */
+-function preg_replace($pattern, $replacement, $subject, int $limit = -1, int &$count = null)
++function preg_replace($pattern, $replacement, $subject, int $limit = -1, ?int &$count = null)
+ {
+     error_clear_last();
+     $result = \preg_replace($pattern, $replacement, $subject, $limit, $count);
