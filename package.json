@@ -124,7 +124,7 @@
     "eslint-plugin-markdown": "^5.1.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-oxlint": "^0.16.3",
-    "eslint-plugin-prettier": "^5.2.4",
+    "eslint-plugin-prettier": "^5.2.5",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-compiler": "19.0.0-beta-714736e-20250131",
     "eslint-plugin-react-hooks": "^5.1.0",
