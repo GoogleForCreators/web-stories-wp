@@ -145,12 +145,12 @@ wp plugin install rtl-tester --activate --force --quiet
 echo -e $(status_message "Installing WordPress importer...")
 wp plugin install wordpress-importer --activate --force --quiet
 
-# WooCommerce 8.3+ requires WordPress 6.3, but we still support WordPress 6.2.
+# WooCommerce 9.4 is the last version that still supports WordPress 6.5.
 echo -e $(status_message "Installing WooCommerce plugin...")
-if [ "$WP_VERSION" == "latest" ]; then
-  wp plugin install woocommerce --activate --force --quiet
+if [ "$WP_VERSION" == "6.5" ]; then
+  wp plugin install woocommerce --version=9.4.3 --activate --force --quiet
 else
-  wp plugin install woocommerce --version=8.2.2 --activate --force --quiet
+  wp plugin install woocommerce --activate --force --quiet
 fi
 
 echo -e $(status_message "Installing AMP plugin...")
