@@ -163,7 +163,7 @@
     "prettier": "^3.5.3",
     "puppeteer": "^24.5.0",
     "react-compiler-runtime": "19.0.0-beta-714736e-20250131",
-    "react-refresh": "^0.16.0",
+    "react-refresh": "^0.17.0",
     "react-test-renderer": "^17.0.2",
     "rollup": "^2.79.2",
     "rollup-plugin-copy": "^3.5.0",
