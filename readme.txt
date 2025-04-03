@@ -142,6 +142,6 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 == Upgrade Notice ==
 
-= 1.39.0 =
+= 1.40.0 =
 
 This release contains performance improvements, compatibility with WordPress 6.8, and some minor bug fixes.
