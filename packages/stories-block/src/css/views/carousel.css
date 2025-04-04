@@ -50,6 +50,13 @@
 
 .web-stories-list.is-carousel .glider-prev {
   transform: translateY(-50%) rotate(180deg) /*!rtl:translateY(-50%)*/;
+  left: 0;
+  right: auto;
+}
+
+.web-stories-list.is-carousel .glider-next {
+  right: 0;
+  left: auto;
 }
 
 .web-stories-list.is-carousel .glider-next,
@@ -92,16 +99,6 @@ html[dir='rtl'] .web-stories-list.is-carousel .amp-carousel-button-next {
   z-index: 10;
   pointer-events: all;
   cursor: pointer;
-}
-
-.web-stories-list.is-carousel .glider-prev {
-  left: 0;
-  right: auto;
-}
-
-.web-stories-list.is-carousel .glider-next {
-  right: 0;
-  left: auto;
 }
 
 html[dir='rtl'] .web-stories-list.is-carousel .glider-next {
