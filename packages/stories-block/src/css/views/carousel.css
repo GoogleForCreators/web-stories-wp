@@ -94,6 +94,16 @@ html[dir='rtl'] .web-stories-list.is-carousel .amp-carousel-button-next {
   cursor: pointer;
 }
 
+.web-stories-list.is-carousel .glider-prev {
+  left: 0;
+  right: auto;
+}
+
+.web-stories-list.is-carousel .glider-next {
+  right: 0;
+  left: auto;
+}
+
 html[dir='rtl'] .web-stories-list.is-carousel .glider-next {
   transform: translateY(-50%) rotate(180deg);
 }
