@@ -375,17 +375,16 @@ class Assets {
 	 *
 	 * @since 1.40.1
 	 *
-	 * @param string       $script_handle Name of the script module. Should be unique.
-	 * @param string|false $src           Full URL of the script, or path of the script relative to the WordPress root directory.
-	 *                                    If source is set to false, script is an alias of other scripts it depends on.
+	 * @param string $script_handle Name of the script module. Should be unique.
+	 * @param string $src           Full URL of the script module.
 	 */
-	public function enqueue_script_module( string $script_handle, $src ): void {
+	public function enqueue_script_module( string $script_handle, string $src ): void {
 		$asset = $this->get_asset_metadata( $script_handle );
 
 		wp_enqueue_script_module(
 			$script_handle,
 			$src,
-			$asset['dependencies'],
+			$asset['dependencies'], // @phpstan-ignore argument.type
 			$asset['version'],
 		);
 	}
