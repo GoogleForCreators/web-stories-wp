@@ -50,6 +50,13 @@
 
 .web-stories-list.is-carousel .glider-prev {
   transform: translateY(-50%) rotate(180deg) /*!rtl:translateY(-50%)*/;
+  left: 0;
+  right: auto;
+}
+
+.web-stories-list.is-carousel .glider-next {
+  right: 0;
+  left: auto;
 }
 
 .web-stories-list.is-carousel .glider-next,
