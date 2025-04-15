@@ -369,6 +369,27 @@ class Assets {
 	}
 
 	/**
+	 * Register a new script module.
+	 *
+	 * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
+	 *
+	 * @since 1.40.1
+	 *
+	 * @param string $script_handle Name of the script module. Should be unique.
+	 * @param string $src           Full URL of the script module.
+	 */
+	public function enqueue_script_module( string $script_handle, string $src ): void {
+		$asset = $this->get_asset_metadata( $script_handle );
+
+		wp_enqueue_script_module(
+			$script_handle,
+			$src,
+			$asset['dependencies'], // @phpstan-ignore argument.type
+			$asset['version'],
+		);
+	}
+
+	/**
 	 * Remove admin styles.
 	 *
 	 * @since 1.8.0
