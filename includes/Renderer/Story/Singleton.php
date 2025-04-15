@@ -118,6 +118,11 @@ class Singleton {
 		$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
 
+		wp_enqueue_script_module(
+			'web-stories-embed-view',
+			$this->assets->get_base_url( 'assets/js/web-stories-block-view.js' )
+		);
+
 		ob_start();
 		?>
 		<div
