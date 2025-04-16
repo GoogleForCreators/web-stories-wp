@@ -27426,6 +27426,39 @@
     }
   },
   {
+    "family": "National Park",
+    "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700, 800],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1030,
+      "des": -300,
+      "tAsc": 1030,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 1194,
+      "wDes": 300,
+      "xH": 515,
+      "capH": 700,
+      "yMin": -217,
+      "yMax": 1194,
+      "hAsc": 1030,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Neonderthaw",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -46646,6 +46679,81 @@
     }
   },
   {
+    "family": "Special Gothic",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1005,
+      "des": -295,
+      "tAsc": 1005,
+      "tDes": -295,
+      "tLGap": 0,
+      "wAsc": 956,
+      "wDes": 298,
+      "xH": 504,
+      "capH": 710,
+      "yMin": -242,
+      "yMax": 913,
+      "hAsc": 1005,
+      "hDes": -295,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Special Gothic Condensed One",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1005,
+      "des": -295,
+      "tAsc": 1005,
+      "tDes": -295,
+      "tLGap": 0,
+      "wAsc": 956,
+      "wDes": 298,
+      "xH": 509,
+      "capH": 710,
+      "yMin": -254,
+      "yMax": 927,
+      "hAsc": 1005,
+      "hDes": -295,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Special Gothic Expanded One",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1005,
+      "des": -295,
+      "tAsc": 1005,
+      "tDes": -295,
+      "tLGap": 0,
+      "wAsc": 956,
+      "wDes": 298,
+      "xH": 514,
+      "capH": 710,
+      "yMin": -298,
+      "yMax": 956,
+      "hAsc": 1005,
+      "hDes": -295,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Spectral",
     "fallbacks": ["serif"],
     "weights": [200, 300, 400, 500, 600, 700, 800],
@@ -50858,6 +50966,46 @@
       "yMax": 1297,
       "hAsc": 890,
       "hDes": -515,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Winky Rough",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800],
+      [1, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1015,
+      "des": -315,
+      "tAsc": 1015,
+      "tDes": -315,
+      "tLGap": 0,
+      "wAsc": 1057,
+      "wDes": 430,
+      "xH": 500,
+      "capH": 667,
+      "yMin": -247,
+      "yMax": 935,
+      "hAsc": 1015,
+      "hDes": -315,
       "lGap": 0
     }
   },
