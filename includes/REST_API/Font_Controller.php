@@ -315,6 +315,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$self = $links['self']['href'];
 
 				foreach ( $actions as $rel ) {
+					// @phpstan-ignore method.internal (false positive)
 					$response->add_link( $rel, $self );
 				}
 			}
