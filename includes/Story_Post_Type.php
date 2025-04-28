@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Infrastructure\HasRequirements;
+use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post;
 
@@ -331,7 +332,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 */
 	protected function get_args(): array {
 		return [
-			'labels'                => [
+			'labels'                         => [
 				'name'                     => _x( 'Stories', 'post type general name', 'web-stories' ),
 				'singular_name'            => _x( 'Story', 'post type singular name', 'web-stories' ),
 				'add_new'                  => __( 'Add New Story', 'web-stories' ),
@@ -367,8 +368,8 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'item_link_description'    => _x( 'A link to a story.', 'navigation link block description', 'web-stories' ),
 				'item_trashed'             => __( 'Story trashed.', 'web-stories' ),
 			],
-			'menu_icon'             => $this->get_post_type_icon(),
-			'supports'              => [
+			'menu_icon'                      => $this->get_post_type_icon(),
+			'supports'                       => [
 				'title', // Used for amp-story[title].
 				'author',
 				'editor',
@@ -377,20 +378,21 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 				'revisions', // Without this, the REST API will return 404 for an autosave request.
 				'custom-fields',
 			],
-			'rewrite'               => [
+			'rewrite'                        => [
 				'slug'       => self::REWRITE_SLUG,
 				'with_front' => false,
 				'feeds'      => true,
 			],
-			'public'                => true,
-			'has_archive'           => $this->get_has_archive(),
-			'exclude_from_search'   => true,
-			'show_ui'               => true,
-			'show_in_rest'          => true,
-			'rest_namespace'        => self::REST_NAMESPACE,
-			'rest_controller_class' => Stories_Controller::class,
-			'capability_type'       => [ 'web-story', 'web-stories' ],
-			'map_meta_cap'          => true,
+			'public'                         => true,
+			'has_archive'                    => $this->get_has_archive(),
+			'exclude_from_search'            => true,
+			'show_ui'                        => true,
+			'show_in_rest'                   => true,
+			'rest_namespace'                 => self::REST_NAMESPACE,
+			'rest_controller_class'          => Stories_Controller::class,
+			'autosave_rest_controller_class' => Stories_Autosaves_Controller::class,
+			'capability_type'                => [ 'web-story', 'web-stories' ],
+			'map_meta_cap'                   => true,
 		];
 	}
 
