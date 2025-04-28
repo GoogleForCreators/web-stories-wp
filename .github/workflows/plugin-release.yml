@@ -512,8 +512,8 @@ jobs:
 
       - name: Install svn
         run: |
-          sudo apt-get update
-          sudo apt-get install -y subversion
+          sudo apt update -y --allow-releaseinfo-change
+          sudo apt install -y subversion
 
       - name: Check out trunk folder
         run: svn checkout $PLUGIN_REPO_URL svn --username "$SVN_USERNAME"
