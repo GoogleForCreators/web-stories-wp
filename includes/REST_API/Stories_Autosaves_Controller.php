@@ -28,7 +28,6 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
