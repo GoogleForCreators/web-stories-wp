@@ -28,11 +28,6 @@ declare(strict_types = 1);
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\HasRequirements;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
@@ -43,11 +38,9 @@ use WP_REST_Server;
 /**
  * Stories_Autosaves_Controller class.
  *
- * Register using register_post_type once https://core.trac.wordpress.org/ticket/56922 is committed.
- *
  * @phpstan-import-type Schema from \Google\Web_Stories\REST_API\Stories_Base_Controller
  */
-class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implements Service, Delayed, Registerable, HasRequirements {
+class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 
 	/**
 	 * Parent post controller.
@@ -64,58 +57,28 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param string $parent_post_type Post type of the parent.
 	 */
-	public function __construct( Story_Post_Type $story_post_type ) {
-		parent::__construct( $story_post_type->get_slug() );
+	public function __construct( string $parent_post_type ) {
+		parent::__construct( $parent_post_type );
 
-		$this->parent_controller = $story_post_type->get_parent_controller();
-		$this->parent_base       = $story_post_type->get_rest_base();
-		$this->namespace         = $story_post_type->get_rest_namespace();
-	}
+		/**
+		 * Post type instance.
+		 *
+		 * @var \WP_Post_Type $post_type_object
+		 */
+		$post_type_object = get_post_type_object( $parent_post_type );
 
-	/**
-	 * Register the service.
-	 *
-	 * @since 1.7.0
-	 */
-	public function register(): void {
-		$this->register_routes();
-	}
+		/**
+		 * Parent controller instance.
+		 *
+		 * @var WP_REST_Controller $parent_controller
+		 */
+		$parent_controller = $post_type_object->get_rest_controller();
 
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @since 1.7.0
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action(): string {
-		return 'rest_api_init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @since 1.7.0
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority(): int {
-		return 100;
-	}
-
-	/**
-	 * Get the list of service IDs required for this service to be registered.
-	 *
-	 * Needed because the story post type needs to be registered first.
-	 *
-	 * @since 1.13.0
-	 *
-	 * @return string[] List of required services.
-	 */
-	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
+		$this->parent_controller = $parent_controller;
+		$this->parent_base       = ! empty( $post_type_object->rest_base ) ? (string) $post_type_object->rest_base : $post_type_object->name;
+		$this->namespace         = ! empty( $post_type_object->rest_namespace ) ? (string) $post_type_object->rest_namespace : 'wp/v2';
 	}
 
 	/**
@@ -195,6 +158,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 		$response = new WP_REST_Response( $data );
 		foreach ( $links as $rel => $rel_links ) {
 			foreach ( $rel_links as $link ) {
+				// @phpstan-ignore method.internal (false positive)
 				$response->add_link( $rel, $link['href'], $link['attributes'] );
 			}
 		}

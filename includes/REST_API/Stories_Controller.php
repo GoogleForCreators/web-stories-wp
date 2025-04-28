@@ -153,6 +153,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$response = new WP_REST_Response( $data );
 		foreach ( $links as $rel => $rel_links ) {
 			foreach ( $rel_links as $link ) {
+				// @phpstan-ignore method.internal (false positive)
 				$response->add_link( $rel, $link['href'], $link['attributes'] );
 			}
 		}

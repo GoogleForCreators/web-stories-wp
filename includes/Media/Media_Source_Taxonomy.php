@@ -304,6 +304,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.29.0
 	 */
 	private function add_missing_terms(): void {
+		// @phpstan-ignore function.internal (false positive)
 		$existing_terms = get_terms(
 			[
 				'taxonomy'   => $this->get_taxonomy_slug(),

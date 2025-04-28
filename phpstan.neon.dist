@@ -22,6 +22,12 @@ parameters:
     -
       identifier: require.fileNotFound
     -
+      identifier: function.internal
+      path: tests/phpunit/integration/tests
+    -
+      identifier: staticMethod.internalClass
+      path: tests/phpunit/unit/tests
+    -
       message: '/^Parameter #2 \$args of method WP_Customize_Manager::add_setting\(\)/'
       path: includes/Admin/Customizer.php
     -

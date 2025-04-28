@@ -37,11 +37,6 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 	 */
 	protected static int $author_id;
 
-	/**
-	 * Test instance.
-	 */
-	private \Google\Web_Stories\REST_API\Stories_Autosaves_Controller $controller;
-
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ): void {
 		self::$author_id = $factory->user->create(
 			[
@@ -50,14 +45,7 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up(): void {
-		parent::set_up();
-
-		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Autosaves_Controller::class );
-	}
-
 	public function test_create_item_as_author_should_not_strip_markup(): void {
-		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
 

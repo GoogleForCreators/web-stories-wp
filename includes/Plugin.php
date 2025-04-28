@@ -129,7 +129,6 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.products'                => REST_API\Products_Controller::class,
 		'rest.publisher_logos'         => REST_API\Publisher_Logos_Controller::class,
 		'rest.status_check_controller' => REST_API\Status_Check_Controller::class,
-		'rest.stories_autosave'        => REST_API\Stories_Autosaves_Controller::class,
 		'rest.stories_lock'            => REST_API\Stories_Lock_Controller::class,
 		'rest.media'                   => REST_API\Stories_Media_Controller::class,
 		'rest.settings'                => REST_API\Stories_Settings_Controller::class,
