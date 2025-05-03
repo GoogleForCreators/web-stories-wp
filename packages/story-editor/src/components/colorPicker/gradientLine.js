@@ -126,14 +126,11 @@ function GradientLine({
       ))}
       {tempPointerPosition && (
         <TempPointer
-          aria-label={
-            /* eslint-disable-next-line @wordpress/valid-sprintf -- False positive. */
-            sprintf(
-              /* translators: %d: stop percentage */
-              __('Temporary gradient stop at %d%%', 'web-stories'),
-              Math.round(100 * (tempPointerPosition / LINE_LENGTH))
-            )
-          }
+          aria-label={sprintf(
+            /* translators: %d: stop percentage */
+            __('Temporary gradient stop at %d%%', 'web-stories'),
+            Math.round(100 * (tempPointerPosition / LINE_LENGTH))
+          )}
           x={tempPointerPosition}
         />
       )}

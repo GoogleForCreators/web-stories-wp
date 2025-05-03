@@ -101,6 +101,7 @@ function SidebarProvider({ sidebarTabs, children }) {
   const [usersLoadingState, setUsersLoadingState] = useState('idle');
 
   const setSidebarContentNode = useCallback((node) => {
+    // eslint-disable-next-line react-compiler/react-compiler -- FIXME
     sidebarContentRef.current = node;
   }, []);
 

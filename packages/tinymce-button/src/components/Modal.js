@@ -86,6 +86,7 @@ const WebStoriesModal = (props) => {
           dispatch(store).setCurrentView(view_type);
         }}
         __nextHasNoMarginBottom
+        __next40pxDefaultSize
       />
 
       <RangeControl
@@ -100,6 +101,7 @@ const WebStoriesModal = (props) => {
           });
         }}
         __nextHasNoMarginBottom
+        __next40pxDefaultSize
       />
 
       <SelectControl
@@ -119,6 +121,7 @@ const WebStoriesModal = (props) => {
           updateViewSettings({ fieldObj: value, field: 'orderby' });
         }}
         __nextHasNoMarginBottom
+        __next40pxDefaultSize
       />
 
       <SelectControl
@@ -138,6 +141,7 @@ const WebStoriesModal = (props) => {
           updateViewSettings({ fieldObj: value, field: 'order' });
         }}
         __nextHasNoMarginBottom
+        __next40pxDefaultSize
       />
 
       <TinyMceToggle field="title" fieldObj={title} />
@@ -189,6 +193,7 @@ const WebStoriesModal = (props) => {
             });
           }}
           __nextHasNoMarginBottom
+          __next40pxDefaultSize
         />
       )}
 
@@ -206,6 +211,7 @@ const WebStoriesModal = (props) => {
             })
           }
           __nextHasNoMarginBottom
+          __next40pxDefaultSize
         />
       )}
 
@@ -222,6 +228,7 @@ const WebStoriesModal = (props) => {
             })
           }
           __nextHasNoMarginBottom
+          __next40pxDefaultSize
         />
       )}
 

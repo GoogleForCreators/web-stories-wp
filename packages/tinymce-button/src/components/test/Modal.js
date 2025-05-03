@@ -31,6 +31,7 @@ jest.mock('@wordpress/data', () => ({
   createReduxStore: jest.fn(),
   combineReducers: jest.fn(),
   register: jest.fn(),
+  createSelector: jest.fn(),
 }));
 
 jest.mock('@wordpress/i18n', () => ({
