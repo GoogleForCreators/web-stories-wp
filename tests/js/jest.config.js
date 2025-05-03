@@ -34,7 +34,9 @@ const sharedConfig = {
   setupFiles: ['core-js'],
   // Do not transform any node_modules except use-reduction
   // See https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
-  transformIgnorePatterns: ['/node_modules/(?!(use-reduction|lib0|parsel-js)/)'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(use-reduction|lib0|parsel-js)/)',
+  ],
   testEnvironment: 'jsdom',
   testMatch: ['**/test/**/*.{js,jsx,ts,tsx}'],
   globals: {
