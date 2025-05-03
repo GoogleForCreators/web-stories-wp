@@ -101,14 +101,11 @@ function GradientStopWithRef(
       position={position}
       onFocus={() => onSelect(index)}
       onClick={() => onSelect(index)}
-      aria-label={
-        /* eslint-disable-next-line @wordpress/valid-sprintf -- False positive. */
-        sprintf(
-          /* translators: %d: stop percentage */
-          __('Gradient stop at %d%%', 'web-stories'),
-          Math.round(100 - position * 100)
-        )
-      }
+      aria-label={sprintf(
+        /* translators: %d: stop percentage */
+        __('Gradient stop at %d%%', 'web-stories'),
+        Math.round(100 - position * 100)
+      )}
     >
       <IconWrapper isSelected={isSelected}>
         <Icons.TailedRectangle />

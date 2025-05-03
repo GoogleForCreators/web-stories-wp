@@ -374,7 +374,7 @@ function SizePositionPanel(props) {
         <Area area="r">
           <NumericInput
             suffix={<Icons.Angle />}
-            unit={_x('°', 'Degrees, 0 - 360.', 'web-stories')}
+            unit={_x('°', 'Degrees, 0 — 360.', 'web-stories')}
             value={rotationAngle}
             min={MIN_MAX.ROTATION.MIN}
             max={MIN_MAX.ROTATION.MAX}

@@ -32,7 +32,7 @@ import type { AMPAnimationProps, WAAPIAnimation, AnimationPart } from './types';
 function createAnimation<T extends Keyframes>(
   keyframes: T,
   timings: AMPEffectTiming,
-  useClippingContainer = false,
+  withClippingContainer = false,
   targetLeafElement = false
 ): AnimationPart<T> {
   const id = `anim-${uuidv4()}`;
@@ -41,7 +41,7 @@ function createAnimation<T extends Keyframes>(
     timings: sanitizeTimings(timings),
     keyframes,
     targetLeafElement,
-    useClippingContainer,
+    useClippingContainer: withClippingContainer,
   };
 
   const animationStyle = targetLeafElement
@@ -55,7 +55,7 @@ function createAnimation<T extends Keyframes>(
     <WithAnimation
       id={id}
       className="animation-wrapper"
-      useClippingContainer={useClippingContainer}
+      useClippingContainer={withClippingContainer}
       style={style}
       animationStyle={animationStyle}
     >
