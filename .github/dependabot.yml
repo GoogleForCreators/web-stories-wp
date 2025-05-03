@@ -85,6 +85,11 @@ updates:
         versions:
         - '>= 6'
 
+      # Needs manual update
+      - dependency-name: 'eslint'
+        versions:
+        - '>= 9'
+
   - package-ecosystem: composer
     directory: '/'
     schedule:
