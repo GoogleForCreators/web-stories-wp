@@ -130,7 +130,7 @@ function BorderedMaskedElement({
 }: BorderedMaskedElementProps) {
   // This component is used twice - random id appended to make sure
   // id is unique for the Mask.
-  const randomId = useMemo(uuidv4, []);
+  const randomId = useMemo(() => uuidv4(), []);
   const mask = getElementMask(element);
   const { id, flip, border } = element;
 
