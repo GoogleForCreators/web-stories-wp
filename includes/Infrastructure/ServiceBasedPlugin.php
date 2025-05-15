@@ -334,6 +334,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 			// Delay registering the service until all requirements are met.
 			if (
+				// @phpstan-ignore function.alreadyNarrowedType
 				is_a( $class, HasRequirements::class, true )
 			) {
 				if ( ! $this->requirements_are_met( $id, $class, $services ) ) {
