@@ -48,7 +48,7 @@ define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) 
 define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '7.4' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '6.6' );
-define( 'WEBSTORIES_CDN_URL', 'https://wp.stories.google/static/main' );
+define( 'WEBSTORIES_CDN_URL', 'https://wp.stories.google/static/21' );
 
 if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 	define( 'WEBSTORIES_DEV_MODE', false );
