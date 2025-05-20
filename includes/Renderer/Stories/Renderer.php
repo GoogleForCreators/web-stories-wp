@@ -356,7 +356,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		}
 
 		$this->assets->enqueue_script_module(
-			'web-stories-block-view',
+			'web-stories-embed-view-script-module',
 			$this->assets->get_base_url( 'assets/js/web-stories-block-view.js' )
 		);
 
