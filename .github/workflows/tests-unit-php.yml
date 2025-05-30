@@ -113,7 +113,7 @@ jobs:
           tools: composer
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@a2636af0004d1c0499ffca16ac0b4cc94df70565
+        uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
@@ -129,7 +129,7 @@ jobs:
           tools: composer, cs2pr
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@a2636af0004d1c0499ffca16ac0b4cc94df70565
+        uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
@@ -183,7 +183,7 @@ jobs:
         if: ${{ matrix.random }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@ad3126e916f78f00edff4ed0317cf185271ccc2d
+        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24
         with:
           files: build/logs/*.xml
           token: ${{ secrets.CODECOV_TOKEN }}
