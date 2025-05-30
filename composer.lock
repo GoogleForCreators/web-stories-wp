@@ -5867,22 +5867,22 @@
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "6.8.0",
+            "version": "6.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
-                "reference": "ff50b9ebab8943d50243d9be24fadd983a955300"
+                "reference": "c2c18f89a9aa2d7ef1998d233b9ed00d0deff5dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/ff50b9ebab8943d50243d9be24fadd983a955300",
-                "reference": "ff50b9ebab8943d50243d9be24fadd983a955300",
+                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/c2c18f89a9aa2d7ef1998d233b9ed00d0deff5dd",
+                "reference": "c2c18f89a9aa2d7ef1998d233b9ed00d0deff5dd",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.4",
                 "php-stubs/wordpress-globals": "0.2.0",
-                "php-stubs/wordpress-stubs": "6.8.0",
+                "php-stubs/wordpress-stubs": "6.8.1",
                 "sniccowp/php-scoper-excludes": "dev-master"
             },
             "type": "library",
@@ -5908,9 +5908,9 @@
             ],
             "support": {
                 "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.8.0"
+                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.8.1"
             },
-            "time": "2025-04-21T15:38:21+00:00"
+            "time": "2025-05-03T00:01:53+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -7678,9 +7678,9 @@
         "ext-libxml": "*",
         "ext-mbstring": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
