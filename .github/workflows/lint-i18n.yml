@@ -79,7 +79,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@a2636af0004d1c0499ffca16ac0b4cc94df70565
+        uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
