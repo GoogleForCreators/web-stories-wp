@@ -3600,7 +3600,7 @@
   },
   {
     "family": "Asul",
-    "fallbacks": ["sans-serif"],
+    "fallbacks": ["serif"],
     "weights": [400, 700],
     "styles": ["regular"],
     "variants": [
@@ -5059,11 +5059,17 @@
   {
     "family": "Baskervville",
     "fallbacks": ["serif"],
-    "weights": [400],
+    "weights": [400, 500, 600, 700],
     "styles": ["regular", "italic"],
     "variants": [
       [0, 400],
-      [1, 400]
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700]
     ],
     "service": "fonts.google.com",
     "metrics": {
@@ -5073,12 +5079,12 @@
       "tAsc": 998,
       "tDes": -295,
       "tLGap": 0,
-      "wAsc": 1138,
-      "wDes": 296,
+      "wAsc": 1185,
+      "wDes": 300,
       "xH": 436,
       "capH": 710,
       "yMin": -300,
-      "yMax": 1138,
+      "yMax": 1150,
       "hAsc": 998,
       "hDes": -295,
       "lGap": 0
@@ -16498,7 +16504,7 @@
   },
   {
     "family": "Gurajada",
-    "fallbacks": ["serif"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -18968,7 +18974,7 @@
   },
   {
     "family": "Italiana",
-    "fallbacks": ["serif"],
+    "fallbacks": ["sans-serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],
@@ -20547,6 +20553,34 @@
     }
   },
   {
+    "family": "Kapakana",
+    "fallbacks": ["cursive"],
+    "weights": [300, 400],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 680,
+      "des": -320,
+      "tAsc": 680,
+      "tDes": -320,
+      "tLGap": 0,
+      "wAsc": 680,
+      "wDes": 320,
+      "xH": 250,
+      "capH": 535,
+      "yMin": -310,
+      "yMax": 690,
+      "hAsc": 680,
+      "hDes": -320,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Karantina",
     "fallbacks": ["cursive"],
     "weights": [300, 400, 700],
@@ -21883,7 +21917,7 @@
   },
   {
     "family": "Laila",
-    "fallbacks": ["sans-serif"],
+    "fallbacks": ["serif"],
     "weights": [300, 400, 500, 600, 700],
     "styles": ["regular"],
     "variants": [
@@ -27689,7 +27723,7 @@
   },
   {
     "family": "Narnoor",
-    "fallbacks": ["serif"],
+    "fallbacks": ["sans-serif"],
     "weights": [400, 500, 600, 700, 800],
     "styles": ["regular"],
     "variants": [
@@ -33206,6 +33240,31 @@
     }
   },
   {
+    "family": "Noto Serif Dives Akuru",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1069,
+      "des": -710,
+      "tAsc": 1069,
+      "tDes": -710,
+      "tLGap": 0,
+      "wAsc": 1551,
+      "wDes": 764,
+      "xH": 536,
+      "capH": 714,
+      "yMin": -764,
+      "yMax": 1551,
+      "hAsc": 1069,
+      "hDes": -710,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Noto Serif Dogra",
     "fallbacks": ["serif"],
     "weights": [400],
@@ -36415,7 +36474,7 @@
   },
   {
     "family": "Phetsarath",
-    "fallbacks": ["serif"],
+    "fallbacks": ["sans-serif"],
     "weights": [400, 700],
     "styles": ["regular"],
     "variants": [
@@ -46958,7 +47017,7 @@
       "tLGap": 0,
       "wAsc": 1060,
       "wDes": 454,
-      "xH": 478,
+      "xH": 486,
       "capH": 660,
       "yMin": -454,
       "yMax": 1060,
@@ -51377,6 +51436,31 @@
       "yMax": 1270,
       "hAsc": 1200,
       "hDes": -200,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "WDXL Lubrifont TC",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 945,
+      "des": -235,
+      "tAsc": 945,
+      "tDes": -235,
+      "tLGap": 0,
+      "wAsc": 1168,
+      "wDes": 235,
+      "xH": 485,
+      "capH": 710,
+      "yMin": -220,
+      "yMax": 1168,
+      "hAsc": 945,
+      "hDes": -235,
       "lGap": 0
     }
   },
