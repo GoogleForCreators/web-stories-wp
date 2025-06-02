@@ -2,7 +2,7 @@
 
 ## Overview
 
-Web Stories exists as two apps right now, the editor and the dashboard. Both have their own set of components that they are built off of. Now that we have a robust design system in figma ([here](https://www.figma.com/file/bMhG3KyrJF8vIAODgmbeqT/Design-System?node-id=1906%3A0)), we won't need to duplicate foundational and base components by having separate copies in the editor and dashboard. The idea here is to make this transition as painless as possible, no massive structural changes. This is a consolidation of components and themes.
+Web Stories exists as two apps right now, the editor and the dashboard. Both have their own set of components that they are built off of. Now that we have a robust design system [in Figma](https://www.figma.com/file/bMhG3KyrJF8vIAODgmbeqT/Design-System?node-id=1906%3A0), we won't need to duplicate foundational and base components by having separate copies in the editor and dashboard. The idea here is to make this transition as painless as possible, no massive structural changes. This is a consolidation of components and themes.
 
 ## What goes in the design system?
 
@@ -50,7 +50,7 @@ Typography
 
 - [design-system/typography](../packages/design-system/src/components/typography/index.js) has the only nested content. This follows the foundation set up in the designs of `Display`, `Headline`, `Label`, `Paragraph`, `Link`.
 - Each typography type has a set of presets that are stored in the theme and matching constants ([theme/constants/typography](../packages/design-system/src/theme/constants/typography.js)).
-- The typography components are `<Display />`, `<Headline />`, `<Link />`, `<Text />`, found [here](../packages/design-system/src/components/typography/index.js).
+- The typography components are `<Display />`, `<Headline />`, `<Link />`, `<Text />`, found in [`components/typography`](../packages/design-system/src/components/typography/index.js).
 - Each is a styled component and can be passed whatever element you want it to be with `as` or `forwardedAs` depending on your situation.
 - These are meant to decrease our need to individually style text elements and ensure consistency.
 - There’s a demo for every [type setting in storybook](https://googleforcreators.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-typography-display--default).
