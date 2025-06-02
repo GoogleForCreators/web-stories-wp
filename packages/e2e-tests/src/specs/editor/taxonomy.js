@@ -108,7 +108,7 @@ async function addTag(name) {
     (nodes) => Array.from(nodes, (node) => node.innerText)
   );
 
-  await expect(tokenNames).toContainValue(name);
+  await expect(tokenNames).toContainValue([name]);
 }
 
 jest.retryTimes(3, { logErrorsBeforeRetry: true });
