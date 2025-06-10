@@ -90,7 +90,7 @@
   "devDependencies": {
     "@googleforcreators/karma-fixture": "*",
     "@googleforcreators/test-utils": "*",
-    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-essentials": "^8.6.14",
     "@testing-library/dom": "^10.1.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^12.1.5",
