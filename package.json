@@ -34,7 +34,7 @@
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.10.1",
     "@babel/core": "^7.27.4",
-    "@babel/eslint-parser": "^7.27.1",
+    "@babel/eslint-parser": "^7.27.5",
     "@babel/eslint-plugin": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
@@ -99,7 +99,7 @@
     "@wordpress/eslint-plugin": "^22.8.0",
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^3.0.1",
-    "babel-jest": "^29.6.1",
+    "babel-jest": "^30.0.0",
     "babel-loader": "^10.0.0",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "babel-plugin-styled-components": "^2.1.4",
