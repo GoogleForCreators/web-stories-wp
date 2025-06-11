@@ -71,6 +71,8 @@ const sharedConfig = {
       module: false,
       assert: false,
       perf_hooks: false,
+      crypto: false,
+      worker_threads: false,
     },
   },
   mode,

@@ -37,7 +37,6 @@
     "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^8.6.12",
     "@testing-library/react": "^14.0.0"
   }
 }

@@ -20,7 +20,7 @@
 const { readFileSync } = require('fs');
 const webpack = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const { loadCsf } = require('@storybook/csf-tools');
+const { loadCsf } = require('storybook/internal/csf-tools');
 
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 module.exports = {
@@ -33,6 +33,7 @@ module.exports = {
     '../packages/design-system/src/**/stories/index.js',
     '../packages/animation/src/**/stories/*.js',
   ],
+
   experimental_indexers: (indexers) => {
     const createIndex = (fileName, opts) => {
       const code = readFileSync(fileName, {
@@ -51,32 +52,25 @@ module.exports = {
       ...(indexers || []),
     ];
   },
+
   addons: [
     '@storybook/addon-a11y/register',
-    {
-      name: '@storybook/addon-essentials',
-      options: {
-        actions: true,
-        backgrounds: true,
-        controls: false,
-        // See https://github.com/hipstersmoothie/react-docgen-typescript-plugin/issues/83
-        docs: false,
-        viewport: true,
-        toolbars: true,
-      },
-    },
-    '@storybook/addon-webpack5-compiler-babel',
+    '@storybook/addon-webpack5-compiler-babel'
   ],
+
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
   },
+
   core: {
     disableTelemetry: true,
   },
+
   docs: {
     disabled: true,
   },
+
   //eslint-disable-next-line require-await -- Negligible.
   webpackFinal: async (webpackConfig) => {
     // webpack < 5 used to include polyfills for node.js core modules by default.
@@ -94,6 +88,8 @@ module.exports = {
         module: false,
         assert: false,
         perf_hooks: false,
+        crypto: false,
+        worker_threads: false,
       },
     };
 
@@ -256,4 +252,12 @@ module.exports = {
     );
     return webpackConfig;
   },
+
+  features: {
+    actions: true,
+    backgrounds: true,
+    controls: false,
+    viewport: true,
+    toolbars: true
+  }
 };
