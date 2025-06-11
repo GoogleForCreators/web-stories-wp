@@ -20,6 +20,7 @@
 const { readFileSync } = require('fs');
 const webpack = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+// eslint-disable-next-line node/no-missing-require
 const { loadCsf } = require('storybook/internal/csf-tools');
 
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
@@ -55,7 +56,7 @@ module.exports = {
 
   addons: [
     '@storybook/addon-a11y/register',
-    '@storybook/addon-webpack5-compiler-babel'
+    '@storybook/addon-webpack5-compiler-babel',
   ],
 
   framework: {
@@ -258,6 +259,6 @@ module.exports = {
     backgrounds: true,
     controls: false,
     viewport: true,
-    toolbars: true
-  }
+    toolbars: true,
+  },
 };
