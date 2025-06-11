@@ -45,6 +45,7 @@ const Autocomplete = ({
           label={label}
           placeholder={placeholder}
           __nextHasNoMarginBottom
+          __next40pxDefaultSize
         />
       </div>
     )
