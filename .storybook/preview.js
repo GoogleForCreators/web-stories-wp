@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { ThemeProvider } from 'styled-components';
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+// eslint-disable-next-line import/no-unresolved
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 import {
   theme as designSystemTheme,
   lightMode,
@@ -56,7 +57,7 @@ window.wp.media = {
 
 const { ipad, ipad10p, ipad12p } = INITIAL_VIEWPORTS;
 
-/** @type { import('@storybook/react').Preview } */
+/** @type { import('@storybook/react-webpack5').Preview } */
 const preview = {
   parameters: {
     a11y: {
