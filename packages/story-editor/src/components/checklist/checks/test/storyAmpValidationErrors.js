@@ -21,7 +21,6 @@ import { getStoryAmpValidationErrors } from '../storyAmpValidationErrors';
 
 describe('getStoryAmpValidationErrors', () => {
   const fetchSpy = jest.spyOn(window, 'fetch');
-  const windowSpy = jest.spyOn(window, 'window', 'get');
 
   beforeAll(() => {
     fetchSpy.mockResolvedValue({
@@ -29,11 +28,13 @@ describe('getStoryAmpValidationErrors', () => {
         status: 200,
       }),
     });
+
+    delete window.amp;
   });
 
   afterAll(() => {
     fetchSpy.mockClear();
-    windowSpy.mockRestore();
+    delete window.amp;
   });
 
   it('should return false if no link', async () => {
@@ -43,16 +44,14 @@ describe('getStoryAmpValidationErrors', () => {
   });
 
   it('should return false if there are no violations', async () => {
-    windowSpy.mockImplementation(() => ({
-      amp: {
-        validator: {
-          validateString: () => ({
-            status: 'PASS',
-            errors: [],
-          }),
-        },
+    window.amp = {
+      validator: {
+        validateString: () => ({
+          status: 'PASS',
+          errors: [],
+        }),
       },
-    }));
+    };
 
     await expect(
       getStoryAmpValidationErrors({
@@ -63,25 +62,23 @@ describe('getStoryAmpValidationErrors', () => {
   });
 
   it('should return true if there are AMP violations', async () => {
-    windowSpy.mockImplementation(() => ({
-      amp: {
-        validator: {
-          init: () => {},
-          validateString: () => ({
-            status: 'FAIL',
-            errors: [
-              { code: 'INVALID_URL_PROTOCOL', severity: 'ERROR' },
-              { code: 'TAG_REQUIRED_BY_MISSING', severity: 'ERROR' },
-              {
-                code: 'MISSING_URL',
-                severity: 'ERROR',
-                params: ['poster-portrait-src'],
-              },
-            ],
-          }),
-        },
+    window.amp = {
+      validator: {
+        init: () => {},
+        validateString: () => ({
+          status: 'FAIL',
+          errors: [
+            { code: 'INVALID_URL_PROTOCOL', severity: 'ERROR' },
+            { code: 'TAG_REQUIRED_BY_MISSING', severity: 'ERROR' },
+            {
+              code: 'MISSING_URL',
+              severity: 'ERROR',
+              params: ['poster-portrait-src'],
+            },
+          ],
+        }),
       },
-    }));
+    };
 
     await expect(
       getStoryAmpValidationErrors({
@@ -92,19 +89,17 @@ describe('getStoryAmpValidationErrors', () => {
   });
 
   it('should return false if there are no ERROR severity errors', async () => {
-    windowSpy.mockImplementation(() => ({
-      amp: {
-        validator: {
-          validateString: () => ({
-            status: 'FAIL',
-            errors: [
-              { severity: 'WARNING' },
-              { code: 'LOREM IPSUM', severity: 'WARNING' },
-            ],
-          }),
-        },
+    window.amp = {
+      validator: {
+        validateString: () => ({
+          status: 'FAIL',
+          errors: [
+            { severity: 'WARNING' },
+            { code: 'LOREM IPSUM', severity: 'WARNING' },
+          ],
+        }),
       },
-    }));
+    };
 
     await expect(
       getStoryAmpValidationErrors({
@@ -115,22 +110,20 @@ describe('getStoryAmpValidationErrors', () => {
   });
 
   it('should return false if MISSING URL is the only AMP Violation', async () => {
-    windowSpy.mockImplementation(() => ({
-      amp: {
-        validator: {
-          validateString: () => ({
-            status: 'FAIL',
-            errors: [
-              {
-                code: 'MISSING_URL',
-                severity: 'ERROR',
-                params: ['poster-portrait-src'],
-              },
-            ],
-          }),
-        },
+    window.amp = {
+      validator: {
+        validateString: () => ({
+          status: 'FAIL',
+          errors: [
+            {
+              code: 'MISSING_URL',
+              severity: 'ERROR',
+              params: ['poster-portrait-src'],
+            },
+          ],
+        }),
       },
-    }));
+    };
 
     await expect(
       getStoryAmpValidationErrors({
