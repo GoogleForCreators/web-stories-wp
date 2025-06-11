@@ -126,7 +126,7 @@ describe('MediaElement', () => {
     });
     const { container } = renderMediaElement(IMAGE_RESOURCE, 'local');
 
-    const results = await axe(container);
+    const results = await axe(container, { preload: false });
     expect(results).toHaveNoViolations();
   }, 30000);
 
@@ -137,7 +137,7 @@ describe('MediaElement', () => {
     });
     const { container } = renderMediaElement(GIF_RESOURCE, 'local');
 
-    const results = await axe(container);
+    const results = await axe(container, { preload: false });
     expect(results).toHaveNoViolations();
   }, 30000);
 
@@ -148,7 +148,7 @@ describe('MediaElement', () => {
     });
     const { container } = renderMediaElement(VIDEO_RESOURCE, 'local');
 
-    const results = await axe(container);
+    const results = await axe(container, { preload: false });
     expect(results).toHaveNoViolations();
   }, 30000);
 
