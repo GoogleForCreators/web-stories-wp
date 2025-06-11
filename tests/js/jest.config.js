@@ -136,6 +136,9 @@ export default {
           '<rootDir>/packages/stories-block/node_modules/react/index.js',
         '^react-dom(/.*)$':
           '<rootDir>/packages/stories-block/node_modules/react-dom/$1',
+        // Ditto for React Testing Library.
+        '^@testing-library/react$':
+          '<rootDir>/packages/stories-block/node_modules/@testing-library/react/dist/index.js',
       },
       testMatch: [
         '<rootDir>/packages/activation-notice/**/test/**/*.{js,jsx,ts,tsx}',

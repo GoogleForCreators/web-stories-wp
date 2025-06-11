@@ -34,6 +34,6 @@
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@testing-library/react": "^14.0.0"
+    "@testing-library/react": "^16.3.0"
   }
 }
