@@ -117,7 +117,7 @@ function useUploader() {
           overrideAllowedMimeTypes.includes(currentFile.type);
         // TODO: Move this check to useUploadMedia?
         if (!isValidType(file)) {
-          let message = __(
+          let message: string = __(
             'No file types are currently supported.',
             'web-stories'
           );

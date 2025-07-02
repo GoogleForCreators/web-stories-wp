@@ -41,7 +41,7 @@ function generateGroupName(groups: Groups, name = '') {
     return sprintf(
       /* translators: %d: group number. */
       __('Group %d', 'web-stories'),
-      groupNumber.toString()
+      groupNumber
     );
   }
 

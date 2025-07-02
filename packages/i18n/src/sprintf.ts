@@ -17,6 +17,41 @@
 /**
  * External dependencies
  */
-import sprintf from '@tannin/sprintf';
+import _sprintf from '@tannin/sprintf';
+import type { SprintfArgs } from '@tannin/sprintf/types';
 
-export default sprintf;
+/**
+ * Internal dependencies
+ */
+import type { TranslatableText } from './types';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- on purpose.
+type DistributeSprintfArgs<T extends string> = T extends any
+  ? SprintfArgs<T>
+  : never;
+
+export function sprintf<T extends string>(
+  format: T | TranslatableText<T>,
+  ...args: DistributeSprintfArgs<T>
+): string;
+export function sprintf<T extends string>(
+  format: T | TranslatableText<T>,
+  args: DistributeSprintfArgs<T>
+): string;
+
+/**
+ * Returns a formatted string.
+ *
+ * @param format The format of the string to generate.
+ * @param args   Arguments to apply to the format.
+ *
+ * @see https://www.npmjs.com/package/@tannin/sprintf
+ *
+ * @return The formatted string.
+ */
+export default function sprintf<T extends string>(
+  format: T | TranslatableText<T>,
+  ...args: DistributeSprintfArgs<T>
+): string {
+  return _sprintf(format as T, ...args);
+}

@@ -20,3 +20,7 @@
 import type { ReactElement } from 'react';
 
 export type Mapping = Record<string, ReactElement>;
+
+export type TranslatableText<T extends string> = string & {
+  readonly __translatableText: T;
+};

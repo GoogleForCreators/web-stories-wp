@@ -71,7 +71,7 @@ export default function useDropDown({
               options.length,
               'web-stories'
             ),
-            String(options.length)
+            options.length
           )
         : __('No results found.', 'web-stories');
 
