@@ -71,7 +71,7 @@ const elementTypes = [
   } as ElementDefinition<GifElement>,
   {
     type: ElementType.Sticker,
-    name: __('Sticker', 'web-stories'),
+    name: __('Sticker', 'web-stories') as string,
     ...stickerElement,
   } as ElementDefinition<StickerElement>,
   {

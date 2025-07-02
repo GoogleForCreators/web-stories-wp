@@ -153,7 +153,7 @@ function useSaveStory({
         })
         .catch((err: RESTError) => {
           const description = err.message ? stripHTML(err.message) : null;
-          let message = __('Failed to save the story', 'web-stories');
+          let message: string = __('Failed to save the story', 'web-stories');
 
           if (description) {
             message = sprintf(

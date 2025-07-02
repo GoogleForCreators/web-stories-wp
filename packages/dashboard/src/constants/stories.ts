@@ -184,7 +184,7 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      String(n)
+      n
     ),
   [STORY_STATUS.DRAFT]: (n: number) =>
     sprintf(
@@ -195,7 +195,7 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      String(n)
+      n
     ),
   [STORY_STATUS.PUBLISH]: (n: number) =>
     sprintf(
@@ -206,7 +206,7 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      String(n)
+      n
     ),
   [STORY_STATUS.FUTURE]: (n: number) =>
     sprintf(
@@ -217,7 +217,7 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      String(n)
+      n
     ),
   [STORY_STATUS.PENDING]: (n: number) =>
     sprintf(
@@ -228,7 +228,7 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      String(n)
+      n
     ),
   [STORY_STATUS.PRIVATE]: (n: number) =>
     sprintf(
@@ -239,7 +239,7 @@ export const STORY_VIEWING_LABELS = {
         n,
         'web-stories'
       ),
-      String(n)
+      n
     ),
 };
 

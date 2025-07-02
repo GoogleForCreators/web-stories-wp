@@ -153,7 +153,7 @@ function useCanvasGlobalKeys() {
                 MAX_PRODUCTS_PER_PAGE,
                 'web-stories'
               ),
-              MAX_PRODUCTS_PER_PAGE.toString()
+              MAX_PRODUCTS_PER_PAGE
             ),
           });
         } else {

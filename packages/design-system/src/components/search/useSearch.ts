@@ -129,7 +129,7 @@ export default function useSearch({
               options.length,
               'web-stories'
             ),
-            String(options.length)
+            options.length
           )
         : __('No results found.', 'web-stories');
 

@@ -20,6 +20,11 @@
 import Tannin from 'tannin';
 import type { TanninLocaleDomain } from 'tannin';
 
+/**
+ * Internal dependencies
+ */
+import type { TranslatableText } from './types';
+
 interface LocaleData {
   locale_data: {
     [key: string]: TanninLocaleDomain;
@@ -63,8 +68,11 @@ export function setLocaleData(data: LocaleData) {
  * @param [domain] Text domain. Unique identifier for retrieving translated strings.
  * @return Translated text.
  */
-export function __(text: string, domain = TEXT_DOMAIN) {
-  return tannin.dcnpgettext(domain, undefined, text);
+export function __<T extends string>(
+  text: T,
+  domain = TEXT_DOMAIN
+): TranslatableText<T> {
+  return tannin.dcnpgettext(domain, undefined, text) as TranslatableText<T>;
 }
 
 /**
@@ -75,8 +83,12 @@ export function __(text: string, domain = TEXT_DOMAIN) {
  * @param [domain] Text domain. Unique identifier for retrieving translated strings.
  * @return Translated text.
  */
-export function _x(text: string, context: string, domain = TEXT_DOMAIN) {
-  return tannin.dcnpgettext(domain, context, text);
+export function _x<T extends string>(
+  text: T,
+  context: string,
+  domain = TEXT_DOMAIN
+): TranslatableText<T> {
+  return tannin.dcnpgettext(domain, context, text) as TranslatableText<T>;
 }
 
 /**
@@ -88,13 +100,19 @@ export function _x(text: string, context: string, domain = TEXT_DOMAIN) {
  * @param [domain] Text domain. Unique identifier for retrieving translated strings.
  * @return Translated text.
  */
-export function _n(
-  singular: string,
-  plural: string,
+export function _n<T extends string, P extends string>(
+  singular: T,
+  plural: P,
   number: number,
   domain = TEXT_DOMAIN
-) {
-  return tannin.dcnpgettext(domain, undefined, singular, plural, number);
+): TranslatableText<T | P> {
+  return tannin.dcnpgettext(
+    domain,
+    undefined,
+    singular,
+    plural,
+    number
+  ) as TranslatableText<T | P>;
 }
 
 /**
@@ -107,12 +125,18 @@ export function _n(
  * @param [domain] Text domain. Unique identifier for retrieving translated strings.
  * @return Translated text.
  */
-export function _nx(
-  singular: string,
-  plural: string,
+export function _nx<T extends string, P extends string>(
+  singular: T,
+  plural: P,
   number: number,
   context: string,
   domain = TEXT_DOMAIN
-) {
-  return tannin.dcnpgettext(domain, context, singular, plural, number);
+): TranslatableText<T | P> {
+  return tannin.dcnpgettext(
+    domain,
+    context,
+    singular,
+    plural,
+    number
+  ) as TranslatableText<T | P>;
 }
