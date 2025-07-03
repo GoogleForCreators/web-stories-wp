@@ -109,7 +109,7 @@ function GradientLine({
       <Background stops={stops} />
       {stops.map(({ position, color }, index) => (
         <GradientStop
-          // eslint-disable-next-line react-compiler/react-compiler -- FIXME
+          // eslint-disable-next-line react-hooks/react-compiler -- FIXME
           ref={(ref) => (stopsRef[index].current = ref)}
           key={
             // eslint-disable-next-line react/no-array-index-key -- Should be OK here.

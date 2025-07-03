@@ -82,7 +82,7 @@ function MyStoriesView() {
   const isMountedRef = useRef(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-compiler/react-compiler -- FIXME
+    // eslint-disable-next-line react-hooks/react-compiler -- FIXME
     isMountedRef.current = true;
 
     return () => {

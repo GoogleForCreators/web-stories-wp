@@ -115,7 +115,7 @@ function VideoTrim({
   );
   const setRef = useCallback(
     (node: HTMLVideoElement) => {
-      // eslint-disable-next-line react-compiler/react-compiler -- FIXME
+      // eslint-disable-next-line react-hooks/react-compiler -- FIXME
       videoRef.current = node;
       setVideoNode(node);
     },
