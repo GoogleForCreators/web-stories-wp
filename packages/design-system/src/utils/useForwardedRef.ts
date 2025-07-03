@@ -35,7 +35,7 @@ function useForwardedRef<T>(ref: React.ForwardedRef<T>) {
         if (typeof ref === 'function') {
           ref(referenceRef.current);
         } else {
-          // eslint-disable-next-line react-compiler/react-compiler -- FIXME
+          // eslint-disable-next-line react-hooks/react-compiler -- FIXME
           ref.current = referenceRef.current;
         }
       }

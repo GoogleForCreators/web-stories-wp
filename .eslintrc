@@ -7,6 +7,7 @@
     "plugin:import/recommended",
     "plugin:@eslint-community/eslint-comments/recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended-legacy",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:jsdoc/recommended",
@@ -20,7 +21,6 @@
     "jsx-a11y",
     "markdown",
     "react",
-    "react-compiler",
     "react-hooks",
     "styled-components-a11y"
   ],
@@ -215,7 +215,7 @@
     "react/no-unused-prop-types": "error",
     "react/react-in-jsx-scope": "off",
     "react/self-closing-comp": "error",
-    "react-compiler/react-compiler": [
+    "react-hooks/react-compiler": [
       "error",
       {
         "environment": {
@@ -432,7 +432,7 @@
       "rules": {
         "@eslint-community/eslint-comments/require-description": "off",
         "react/prop-types": "off",
-        "react-compiler/react-compiler": "off",
+        "react-hooks/react-compiler": "off",
         "jest/no-hooks": "off",
         "jest/no-untyped-mock-factory": "off",
         "jest/max-expects": "off",
@@ -957,7 +957,7 @@
 
       ],
       "rules": {
-        "react-compiler/react-compiler": "off"
+        "react-hooks/react-compiler": "off"
       }
     }
   ]
