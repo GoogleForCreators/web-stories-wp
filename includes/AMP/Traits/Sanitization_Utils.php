@@ -266,6 +266,8 @@ trait Sanitization_Utils {
 		}
 
 		// Then, copy over all attributes.
+
+		// @phpstan-ignore foreach.nonIterable (false positive)
 		foreach ( $node->attributes as $attr ) {
 			/**
 			 * Attribute.
