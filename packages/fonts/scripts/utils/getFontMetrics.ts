@@ -47,6 +47,7 @@ function getTmpFileName() {
  * @return Font metrics.
  */
 async function getFontMetrics(fontFileURL: string) {
+  // eslint-disable-next-line n/no-unsupported-features/node-builtins
   const response = await fetch(fontFileURL);
 
   const tempFile = getTmpFileName();

@@ -40,6 +40,7 @@ async function buildFonts(targetFile: string) {
   url.searchParams.append('prettyPrint', 'false');
   url.searchParams.append('key', process.env.GOOGLE_FONTS_API_KEY ?? '');
 
+  // eslint-disable-next-line n/no-unsupported-features/node-builtins
   const response = await fetch(url.toString());
 
   if (!response.ok) {

@@ -20,7 +20,7 @@
 const { readFileSync } = require('fs');
 const webpack = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-// eslint-disable-next-line node/no-missing-require
+// eslint-disable-next-line n/no-missing-require
 const { loadCsf } = require('storybook/internal/csf-tools');
 
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */

@@ -250,6 +250,7 @@ function observeConsoleLogging() {
 }
 
 async function clearSessionStorage() {
+  // eslint-disable-next-line n/no-unsupported-features/node-builtins
   await page.evaluate(() => window.sessionStorage.clear());
 }
 
