@@ -677,7 +677,7 @@
         "packages/text-sets/scripts/**/*.js"
       ],
       "extends": [
-        "plugin:node/recommended",
+        "plugin:n/recommended",
         "plugin:security/recommended-legacy"
       ],
       "plugins": [
@@ -688,10 +688,10 @@
       },
       "rules": {
         "@eslint-community/eslint-comments/require-description": "off",
-        "node/no-extraneous-import": "off",
-        "node/no-missing-import": "off",
-        "node/no-unpublished-import": "off",
-        "node/no-unpublished-require": "off",
+        "n/no-extraneous-import": "off",
+        "n/no-missing-import": "off",
+        "n/no-unpublished-import": "off",
+        "n/no-unpublished-require": "off",
         "security/detect-non-literal-fs-filename": "off"
       }
     },
@@ -701,7 +701,7 @@
       ],
       "rules": {
         "no-console": "off",
-        "node/shebang": "off"
+        "n/shebang": "off"
       }
     },
     {
