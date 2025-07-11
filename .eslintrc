@@ -701,7 +701,7 @@
       ],
       "rules": {
         "no-console": "off",
-        "n/shebang": "off"
+        "n/hashbang": "off"
       }
     },
     {
