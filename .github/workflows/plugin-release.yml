@@ -41,7 +41,7 @@ jobs:
     environment: Production
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -104,7 +104,7 @@ jobs:
     needs: [checks]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -151,12 +151,12 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Authenticate
-        uses: google-github-actions/auth@ba79af03959ebeac9769e648f473a284504d9193
+        uses: google-github-actions/auth@140bb5113ffb6b65a7e9b937a81fa96cf5064462
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@77e7a554d41e2ee56fc945c52dfd3f33d12def9a
+        uses: google-github-actions/setup-gcloud@6a7c903a70c8625ed6700fa299f5ddb4ca6022e9
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
@@ -245,7 +245,7 @@ jobs:
       release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -275,7 +275,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
+        uses: shivammathur/setup-php@0f7f1d08e3e32076e51cae65eb0b0c871405b16e
         with:
           php-version: latest
           coverage: none
@@ -408,7 +408,7 @@ jobs:
     needs: [build]
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -444,7 +444,7 @@ jobs:
     if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -500,7 +500,7 @@ jobs:
       SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 

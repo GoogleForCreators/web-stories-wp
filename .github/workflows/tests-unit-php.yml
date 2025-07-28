@@ -80,7 +80,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -107,7 +107,7 @@ jobs:
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
       - name: Setup PHP 8.0
-        uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
+        uses: shivammathur/setup-php@0f7f1d08e3e32076e51cae65eb0b0c871405b16e
         with:
           php-version: latest
           tools: composer
@@ -121,7 +121,7 @@ jobs:
         run: rm -rf vendor/*
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
+        uses: shivammathur/setup-php@0f7f1d08e3e32076e51cae65eb0b0c871405b16e
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql

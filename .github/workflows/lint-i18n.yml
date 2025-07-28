@@ -42,7 +42,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
+        uses: shivammathur/setup-php@0f7f1d08e3e32076e51cae65eb0b0c871405b16e
         with:
           php-version: latest
           coverage: none
@@ -66,7 +66,7 @@ jobs:
           cache: npm
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35
+        uses: shivammathur/setup-php@0f7f1d08e3e32076e51cae65eb0b0c871405b16e
         with:
           php-version: latest
           coverage: none
