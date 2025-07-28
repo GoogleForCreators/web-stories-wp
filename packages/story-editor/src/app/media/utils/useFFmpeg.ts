@@ -149,10 +149,11 @@ function useFFmpeg() {
 
   const getFFmpegInstance = useCallback(
     async (file: File) => {
-      const { createFFmpeg } = await import(
-        /* webpackChunkName: "chunk-ffmpeg" */
-        '@ffmpeg/ffmpeg'
-      );
+      // eslint-disable-next-line import/dynamic-import-chunkname -- False positive
+      const { createFFmpeg } = (await import(
+        /* @ts-expect-error -- Works around "module not found" webpack error. */
+        /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg/dist/ffmpeg.min.js'
+      )) as typeof import('@ffmpeg/ffmpeg');
 
       const ffmpeg = createFFmpeg({
         corePath: ffmpegCoreUrl,
