@@ -47,7 +47,7 @@
     "@googleforcreators/migration": "*",
     "@googleforcreators/moveable": "*",
     "@googleforcreators/story-editor": "*",
-    "@jest/types": "^29.6.3",
+    "@jest/types": "^30.0.5",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@manypkg/get-packages": "^2.2.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
