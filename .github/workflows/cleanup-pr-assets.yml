@@ -21,7 +21,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911
         with:
           disable-file-monitoring: true
           disable-sudo: true
@@ -34,12 +34,12 @@ jobs:
             raw.githubusercontent.com:443
 
       - name: Authenticate
-        uses: google-github-actions/auth@ba79af03959ebeac9769e648f473a284504d9193
+        uses: google-github-actions/auth@140bb5113ffb6b65a7e9b937a81fa96cf5064462
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@77e7a554d41e2ee56fc945c52dfd3f33d12def9a
+        uses: google-github-actions/setup-gcloud@6a7c903a70c8625ed6700fa299f5ddb4ca6022e9
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
