@@ -30,7 +30,7 @@
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@web-stories-wp/jest-resolver": "*",
     "@wordpress/jest-console": "^8.22.0",
-    "babel-jest": "^30.0.4",
+    "babel-jest": "^30.0.5",
     "expect-puppeteer": "^11.0.0",
     "jest-extended": "^6.0.0",
     "jest-json-schema": "^6.1.0",
