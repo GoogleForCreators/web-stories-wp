@@ -6115,6 +6115,41 @@
     }
   },
   {
+    "family": "Bitcount",
+    "fallbacks": ["cursive"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 840,
+      "des": -360,
+      "tAsc": 840,
+      "tDes": -360,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 360,
+      "xH": 500,
+      "capH": 600,
+      "yMin": -300,
+      "yMax": 1000,
+      "hAsc": 840,
+      "hDes": -360,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Bitcount Grid Double",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -6144,6 +6179,146 @@
       "capH": 600,
       "yMin": -300,
       "yMax": 900,
+      "hAsc": 840,
+      "hDes": -360,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bitcount Grid Single",
+    "fallbacks": ["cursive"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 840,
+      "des": -360,
+      "tAsc": 840,
+      "tDes": -360,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 360,
+      "xH": 500,
+      "capH": 600,
+      "yMin": -300,
+      "yMax": 900,
+      "hAsc": 840,
+      "hDes": -360,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bitcount Prop Double",
+    "fallbacks": ["cursive"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 840,
+      "des": -360,
+      "tAsc": 840,
+      "tDes": -360,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 360,
+      "xH": 500,
+      "capH": 600,
+      "yMin": -300,
+      "yMax": 1000,
+      "hAsc": 840,
+      "hDes": -360,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bitcount Prop Single",
+    "fallbacks": ["cursive"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 840,
+      "des": -360,
+      "tAsc": 840,
+      "tDes": -360,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 360,
+      "xH": 500,
+      "capH": 600,
+      "yMin": -300,
+      "yMax": 1000,
+      "hAsc": 840,
+      "hDes": -360,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bitcount Single",
+    "fallbacks": ["cursive"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 840,
+      "des": -360,
+      "tAsc": 840,
+      "tDes": -360,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 360,
+      "xH": 500,
+      "capH": 600,
+      "yMin": -300,
+      "yMax": 1000,
       "hAsc": 840,
       "hDes": -360,
       "lGap": 0
@@ -16206,6 +16381,44 @@
     }
   },
   {
+    "family": "Google Sans Code",
+    "fallbacks": ["monospace"],
+    "weights": [300, 400, 500, 600, 700, 800],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 1932,
+      "des": -572,
+      "tAsc": 1932,
+      "tDes": -572,
+      "tLGap": 0,
+      "wAsc": 2377,
+      "wDes": 930,
+      "xH": 1047,
+      "capH": 1432,
+      "yMin": -811,
+      "yMax": 2303,
+      "hAsc": 1932,
+      "hDes": -572,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Gorditas",
     "fallbacks": ["cursive"],
     "weights": [400, 700],
@@ -19180,6 +19393,42 @@
       "yMax": 986,
       "hAsc": 990,
       "hDes": -310,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Intel One Mono",
+    "fallbacks": ["monospace"],
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["italic", "regular"],
+    "variants": [
+      [0, 300],
+      [1, 300],
+      [0, 400],
+      [1, 400],
+      [0, 500],
+      [1, 500],
+      [0, 600],
+      [1, 600],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1090,
+      "des": -290,
+      "tAsc": 1090,
+      "tDes": -290,
+      "tLGap": 0,
+      "wAsc": 1122,
+      "wDes": 420,
+      "xH": 465,
+      "capH": 655,
+      "yMin": -420,
+      "yMax": 1098,
+      "hAsc": 1090,
+      "hDes": -290,
       "lGap": 0
     }
   },
@@ -23064,6 +23313,67 @@
       "capH": 613,
       "yMin": -288,
       "yMax": 895,
+      "hAsc": 894,
+      "hDes": -246,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Libertinus Sans",
+    "fallbacks": ["sans-serif"],
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 894,
+      "des": -246,
+      "tAsc": 894,
+      "tDes": -246,
+      "tLGap": 0,
+      "wAsc": 1125,
+      "wDes": 268,
+      "xH": 460,
+      "capH": 658,
+      "yMin": -268,
+      "yMax": 893,
+      "hAsc": 894,
+      "hDes": -246,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Libertinus Serif",
+    "fallbacks": ["serif"],
+    "weights": [400, 600, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 600],
+      [1, 600],
+      [0, 700],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 894,
+      "des": -246,
+      "tAsc": 894,
+      "tDes": -246,
+      "tLGap": 0,
+      "wAsc": 1802,
+      "wDes": 328,
+      "xH": 429,
+      "capH": 658,
+      "yMin": -256,
+      "yMax": 1125,
       "hAsc": 894,
       "hDes": -246,
       "lGap": 0
@@ -27597,6 +27907,70 @@
     }
   },
   {
+    "family": "Mozilla Headline",
+    "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 945,
+      "des": -255,
+      "tAsc": 945,
+      "tDes": -255,
+      "tLGap": 0,
+      "wAsc": 1323,
+      "wDes": 213,
+      "xH": 534,
+      "capH": 690,
+      "yMin": -213,
+      "yMax": 1110,
+      "hAsc": 945,
+      "hDes": -255,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Mozilla Text",
+    "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 945,
+      "des": -255,
+      "tAsc": 945,
+      "tDes": -255,
+      "tLGap": 0,
+      "wAsc": 1339,
+      "wDes": 229,
+      "xH": 534,
+      "capH": 690,
+      "yMin": -229,
+      "yMax": 1110,
+      "hAsc": 945,
+      "hDes": -255,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Mr Bedfort",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -28294,6 +28668,41 @@
       "yMax": 939,
       "hAsc": 1314,
       "hDes": -237,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Nata Sans",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1050,
+      "des": -250,
+      "tAsc": 1050,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 1150,
+      "wDes": 419,
+      "xH": 500,
+      "capH": 660,
+      "yMin": -288,
+      "yMax": 1014,
+      "hAsc": 1050,
+      "hDes": -250,
       "lGap": 0
     }
   },
@@ -47845,9 +48254,14 @@
   {
     "family": "Special Gothic",
     "fallbacks": ["sans-serif"],
-    "weights": [400],
+    "weights": [400, 500, 600, 700],
     "styles": ["regular"],
-    "variants": [[0, 400]],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
     "service": "fonts.google.com",
     "metrics": {
       "upm": 1000,
@@ -49737,6 +50151,39 @@
       "yMax": 2030,
       "hAsc": 2030,
       "hDes": -724,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "TikTok Sans",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -300,
+      "tAsc": 1000,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 1118,
+      "wDes": 242,
+      "xH": 526,
+      "capH": 705,
+      "yMin": -236,
+      "yMax": 1086,
+      "hAsc": 1000,
+      "hDes": -300,
       "lGap": 0
     }
   },
