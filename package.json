@@ -50,7 +50,7 @@
     "@jest/types": "^30.0.5",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@manypkg/get-packages": "^2.2.2",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.1",
     "@prettier/plugin-xml": "^3.4.2",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.6",
