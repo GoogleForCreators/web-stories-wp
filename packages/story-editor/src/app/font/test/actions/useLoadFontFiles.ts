@@ -47,8 +47,6 @@ const CUSTOM_FONT = {
   content: 'Fill in some text',
 } as const;
 
-/* eslint-disable testing-library/no-node-access */
-
 describe('useLoadFontFiles', () => {
   afterEach(() => {
     document.querySelectorAll('link,style').forEach((el) => el.remove());
@@ -80,5 +78,3 @@ describe('useLoadFontFiles', () => {
     expect(document.getElementById('font-css')).toBeDefined();
   });
 });
-
-/* eslint-enable testing-library/no-node-access */
