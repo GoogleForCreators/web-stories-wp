@@ -52,6 +52,8 @@ function SavedTemplates({
   isLoading,
   ...rest
 }) {
+  "use no memo"
+
   const {
     actions: { deletePageTemplate },
   } = useAPI();
