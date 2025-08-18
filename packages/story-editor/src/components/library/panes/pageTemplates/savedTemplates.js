@@ -52,7 +52,8 @@ function SavedTemplates({
   isLoading,
   ...rest
 }) {
-  "use no memo"
+  // eslint-disable-next-line react-hooks/react-compiler -- WAI.
+  'use no memo';
 
   const {
     actions: { deletePageTemplate },
