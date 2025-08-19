@@ -143,7 +143,7 @@
     "karma-webpack": "^5.0.1",
     "lint-staged": "^16.1.5",
     "markdownlint-cli": "^0.45.0",
-    "mini-css-extract-plugin": "^2.9.2",
+    "mini-css-extract-plugin": "^2.9.4",
     "mockdate": "^3.0.5",
     "npm-package-json-lint": "^9.0.0",
     "npm-run-all": "^4.1.5",
