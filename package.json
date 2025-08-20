@@ -97,7 +97,7 @@
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "babel-plugin-styled-components": "^2.1.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "browserslist": "^4.25.1",
+    "browserslist": "^4.25.3",
     "circular-dependency-plugin": "^5.2.2",
     "core-js": "^3.45.0",
     "cross-env": "^10.0.0",
