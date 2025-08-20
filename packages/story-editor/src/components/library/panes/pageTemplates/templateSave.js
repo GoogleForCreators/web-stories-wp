@@ -122,7 +122,6 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
         return;
       }
 
-      let imageId;
       let tmpPageDataUrl;
       const currentPageCanvas = pageCanvasMap[currentPage.id];
       if (currentPageCanvas) {
@@ -139,7 +138,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
             id: uuidv4(),
             version: DATA_VERSION,
           },
-          featured_media: imageId,
+          featured_media: undefined,
           title:
             templateName !== '' ? templateName : __('Untitled', 'web-stories'),
         });
