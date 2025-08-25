@@ -50,7 +50,9 @@ trait Private_Access {
 	 */
 	protected function call_private_method( $callback, array $args = [] ) {
 		$method = ( new ReflectionClass( $callback[0] ) )->getMethod( $callback[1] );
-		$method->setAccessible( true );
+		if ( PHP_VERSION_ID < 80100 ) {
+			$method->setAccessible( true );
+		}
 		return $method->invokeArgs( $callback[0], $args );
 	}
 
@@ -72,7 +74,9 @@ trait Private_Access {
 	 */
 	protected function call_private_static_method( $callback, array $args = [] ) {
 		$method = ( new ReflectionClass( $callback[0] ) )->getMethod( $callback[1] );
-		$method->setAccessible( true );
+		if ( PHP_VERSION_ID < 80100 ) {
+			$method->setAccessible( true );
+		}
 		return $method->invokeArgs( null, $args );
 	}
 
@@ -88,7 +92,9 @@ trait Private_Access {
 	protected function set_private_property( $instance, string $property_name, $value ): void {
 		$reflection_class = new ReflectionClass( $instance );
 		$property         = $reflection_class->getProperty( $property_name );
-		$property->setAccessible( true );
+		if ( PHP_VERSION_ID < 80100 ) {
+			$property->setAccessible( true );
+		}
 
 		$property->isStatic() ? $reflection_class->setStaticPropertyValue( $property_name, $value ) : $property->setValue( $instance, $value );
 	}
@@ -104,7 +110,9 @@ trait Private_Access {
 	 */
 	protected function get_private_property( $instance, string $property_name ) {
 		$property = ( new ReflectionClass( $instance ) )->getProperty( $property_name );
-		$property->setAccessible( true );
+		if ( PHP_VERSION_ID < 80100 ) {
+			$property->setAccessible( true );
+		}
 		return $property->getValue( $instance );
 	}
 
