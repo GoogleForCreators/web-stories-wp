@@ -58,6 +58,6 @@
     "@types/big.js": "^6.2.2",
     "@types/react-transition-group": "^4.4.6",
     "@types/styled-components": "^5.1.26",
-    "use-debounce": "^10.0.5"
+    "use-debounce": "^10.0.6"
   }
 }
