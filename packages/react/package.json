@@ -40,7 +40,7 @@
     "prop-types": "^15.8.1",
     "shallow-equal": "^3.1.0",
     "use-context-selector": "^1.2.11",
-    "use-debounce": "^10.0.5",
+    "use-debounce": "^10.0.6",
     "use-reduction": "^2.1.2"
   },
   "devDependencies": {
