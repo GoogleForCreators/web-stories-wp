@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.3.1",
-    "@types/semver": "^7.7.0"
+    "@types/semver": "^7.7.1"
   },
   "bin": {
     "commander": "./src/index.ts"
