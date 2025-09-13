@@ -153,7 +153,7 @@
     "postcss-styled-syntax": "^0.7.1",
     "postcss-syntax": "^0.36.2",
     "prettier": "^3.6.2",
-    "puppeteer": "^24.18.0",
+    "puppeteer": "^24.20.0",
     "react-compiler-runtime": "19.1.0-rc.3",
     "react-refresh": "^0.17.0",
     "react-test-renderer": "^17.0.2",
