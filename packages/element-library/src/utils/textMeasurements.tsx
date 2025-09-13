@@ -38,7 +38,6 @@ const MEASURER_STYLES: CSSProperties = {
   left: '-9999px',
   zIndex: -1,
   overflowWrap: 'break-word',
-  // eslint-disable-next-line no-constant-condition -- For debugging purposes.
   ...(false
     ? {
         // For debugging purposes - this will show the output render on screen

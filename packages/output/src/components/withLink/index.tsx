@@ -55,7 +55,6 @@ function WithLink({ element, children, ...rest }: WithLinkProps) {
   const clonedRel = rel.concat(['noreferrer']);
   const urlWithProtocol = withProtocol(url);
 
-  /* eslint-disable react/jsx-no-target-blank -- False positive */
   return (
     <a
       href={urlWithProtocol}
@@ -68,7 +67,6 @@ function WithLink({ element, children, ...rest }: WithLinkProps) {
       {children}
     </a>
   );
-  /* eslint-enable react/jsx-no-target-blank -- False positive */
 }
 
 export default WithLink;
