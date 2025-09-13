@@ -226,7 +226,6 @@ describe('Panels/TextStyle', () => {
     calculateTextHeight.mockImplementation(() => 171);
 
     const [dx, dy] = calcRotatedResizeOffset(0, 0, 0, 0, 171 - 100);
-    // eslint-disable-next-line testing-library/no-node-access -- False positive.
     const submits = submit({ fontSize: 70 });
     expect(submits[textElement.id]).toStrictEqual({
       fontSize: 70,

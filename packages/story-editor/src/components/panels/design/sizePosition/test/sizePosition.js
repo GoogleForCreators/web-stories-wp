@@ -363,7 +363,6 @@ describe('panels/SizePosition', () => {
       });
       expect(submitArg).toBeTrue();
 
-      // eslint-disable-next-line testing-library/no-node-access -- False positive.
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual(
         expect.objectContaining({
@@ -394,7 +393,6 @@ describe('panels/SizePosition', () => {
       });
       expect(submitArg).toBeTrue();
 
-      // eslint-disable-next-line testing-library/no-node-access -- False positive.
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual(
         expect.objectContaining({
@@ -425,7 +423,6 @@ describe('panels/SizePosition', () => {
       });
       expect(submitArg).toBeTrue();
 
-      // eslint-disable-next-line testing-library/no-node-access -- False positive.
       const submits = submit({ height: 160, width: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual(
         expect.objectContaining({
@@ -484,7 +481,6 @@ describe('panels/SizePosition', () => {
       });
       expect(submitArg).toBeTrue();
 
-      // eslint-disable-next-line testing-library/no-node-access -- False positive.
       const submits = submit({ height: 2000, width: 2000 * (100 / 80) });
       expect(submits[image.id]).toStrictEqual(
         expect.objectContaining({
