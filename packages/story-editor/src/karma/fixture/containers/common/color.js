@@ -23,10 +23,6 @@ import { Container } from '../container';
  * The color input containing both a button to open color picker, a hex input and an opacity input
  */
 export class Color extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   label = 'Unset';
 
   get button() {
@@ -57,10 +53,6 @@ export class Color extends Container {
 }
 
 class ColorPicker extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get hexButton() {
     return this.getByRole('button', { name: /Edit hex value/i });
   }

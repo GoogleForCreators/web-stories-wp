@@ -26,10 +26,6 @@ import { AbstractPanel } from './abstractPanel';
  * to view and manipulate the style of one or more currently selected text elements.
  */
 export class TextStyle extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get bold() {
     return this._get(
       this.getByRole('button', { name: /Bold/ }),
@@ -154,10 +150,6 @@ export class TextStyle extends AbstractPanel {
 }
 
 class StyleManager extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get apply() {
     return this.getByRole('button', { name: /Apply style/ });
   }

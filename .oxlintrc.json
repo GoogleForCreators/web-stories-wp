@@ -1,13 +1,91 @@
 {
-  "settings": {
-    "jsdoc": {
-      "tagNamePreference": {
-        "returns": "return",
-        "yields": "yield"
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"categories": {
+		"correctness": "error",
+		"nursery": "error",
+		"pedantic": "error",
+		"perf": "off",
+		"restriction": "error",
+		"suspicious": "error"
+	},
+	"plugins": [
+		"import",
+		"jsdoc",
+		"promise",
+		"react-perf"
+	],
+	"ignorePatterns": [
+		"@types"
+	],
+	"settings": {
+		"jsdoc": {
+			"tagNamePreference": {
+				"returns": "return",
+				"yields": "yield"
+			}
+		}
+	},
+	"rules": {
+		"default-case": "off",
+		"max-classes-per-file": "off",
+		"max-depth": "off",
+		"max-lines": "off",
+		"max-lines-per-function": "off",
+		"no-alert": "off",
+		"no-bitwise": "off",
+		"no-case-declarations": "off",
+		"no-else-return": "off",
+		"no-empty-function": "off",
+		"no-negated-condition": "off",
+		"no-plusplus": "off",
+		"no-undef": "off",
+		"no-undefined": "off",
+		"no-unused-expressions": "off",
+		"no-unused-vars": "off",
+		"no-void": ["error", { "allowAsStatement": true }],
+    "radix": "off",
+		"require-await": "off",
+    "sort-vars": "off",
+    "symbol-description": "off",
+		"import/export": "off",
+		"import/extensions": "off",
+		"import/max-dependencies": "off",
+		"import/named": "off",
+		"import/no-commonjs": "off",
+		"import/no-default-export": "off",
+		"import/no-named-as-default": "off",
+		"import/no-named-as-default-member": "off",
+		"import/no-unassigned-import": "off",
+		"import/unambiguous": "off",
+		"jest/no-conditional-in-test": "off",
+		"jsdoc/check-tag-names": "off",
+		"jsdoc/require-param": "off",
+		"jsdoc/require-param-description": "off",
+		"jsdoc/require-param-type": "off",
+		"jsdoc/require-returns": "off",
+		"jsdoc/require-returns-type": "off",
+		"promise/always-return": "off",
+		"promise/catch-or-return": "off",
+		"promise/no-callback-in-promise": "off"
+	},
+  "overrides": [
+    {
+      "files": [
+        "packages/commander/**/*.ts"
+      ],
+      "rules": {
+        "no-console": "off"
+      }
+    },
+    {
+      "files": [
+        "**/*.d.ts",
+        "packages/karma-puppeteer-client/**/*.js",
+        "packages/karma-puppeteer-launcher/**/*.js"
+      ],
+      "rules": {
+        "no-var": "off"
       }
     }
-  },
-  "rules": {
-    "no-unused-vars": "off"
-  }
+  ]
 }

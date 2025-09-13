@@ -24,10 +24,6 @@ import { AbstractPanel } from './abstractPanel';
  * or the page depending on whether one or more elements are selected.
  */
 export class Alignment extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get distributeHorizontally() {
     return this.getByRole('button', { name: /Distribute horizontally/i });
   }

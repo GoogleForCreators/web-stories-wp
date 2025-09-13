@@ -24,10 +24,6 @@ import { AbstractPanel } from './abstractPanel';
  * The size position panel containing inputs for adding managing the size, position and rotationAngle.
  */
 export class Border extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   width(side = null) {
     return this.getByRole('textbox', {
       name: side ? `${side} border` : 'Border',

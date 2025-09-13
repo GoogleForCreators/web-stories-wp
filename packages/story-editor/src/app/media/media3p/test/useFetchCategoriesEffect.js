@@ -103,7 +103,7 @@ describe('useFetchCategoriesEffect', () => {
   });
 
   it('should call fetchCategoriesError if the fetch has failed', async () => {
-    mockListCategories.mockImplementation(() => Promise.error(new Error()));
+    mockListCategories.mockImplementation(() => Promise.reject(new Error()));
 
     await renderUseFetchCategoriesEffect();
 

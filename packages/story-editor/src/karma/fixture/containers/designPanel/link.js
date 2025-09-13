@@ -23,10 +23,6 @@ import { AbstractPanel } from './abstractPanel';
  * The link panel containing inputs for adding links to elements.
  */
 export class Link extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get address() {
     return this.getByRole('textbox', { name: 'Element link' });
   }

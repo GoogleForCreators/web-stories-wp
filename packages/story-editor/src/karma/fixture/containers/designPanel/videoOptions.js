@@ -23,10 +23,6 @@ import { AbstractPanel } from './abstractPanel';
  * The video options panel containing controls for loop, mute, and trim.
  */
 export class VideoOptions extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get loop() {
     return this.getByRole('checkbox', { name: 'Loop' });
   }

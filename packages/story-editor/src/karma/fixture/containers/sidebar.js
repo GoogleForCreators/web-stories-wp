@@ -26,10 +26,6 @@ import { Library } from './library';
  * Sidebar containing tabs and panes for insert, style and document panels.
  */
 export class Sidebar extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get insertTab() {
     return this.getByRole('tab', { name: /Insert/ });
   }

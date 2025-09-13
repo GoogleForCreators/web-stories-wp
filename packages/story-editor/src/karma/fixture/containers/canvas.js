@@ -26,10 +26,6 @@ import { DesignMenu } from './designMenu';
  * navigation buttons, page menu.
  */
 export class Canvas extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get displayLayer() {
     return this._get(
       this.getByRole('region', { name: 'Display layer' }),
@@ -99,10 +95,6 @@ export class Canvas extends Container {
  * Abstract layer.
  */
 class AbstractLayer extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get scrollContainer() {
     return this.node.querySelector('[data-scroll-container]');
   }
@@ -116,10 +108,6 @@ class AbstractLayer extends Container {
  * Contains element displays.
  */
 class DisplayLayer extends AbstractLayer {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get displays() {
     return this._getAll(
       // @todo: improve query.
@@ -143,10 +131,6 @@ class DisplayLayer extends AbstractLayer {
  * An element's display.
  */
 class Display extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get overlay() {
     return this.node.querySelector(
       '[class^="displayElement__BackgroundOverlay-sc-"]'
@@ -168,10 +152,6 @@ class Display extends Container {
  * Contains element frames.
  */
 class FramesLayer extends AbstractLayer {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get container() {
     return this.node;
   }
@@ -215,10 +195,6 @@ class FramesLayer extends AbstractLayer {
  * Contains elements in edit-mode.
  */
 class EditLayer extends AbstractLayer {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get text() {
     return this.node.querySelector('[data-testid="textEditor"]');
   }
@@ -233,10 +209,6 @@ class EditLayer extends AbstractLayer {
 }
 
 class MediaRecordingSettings extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get videoInput() {
     return this.getByRole('button', { name: 'Video Input' });
   }
@@ -255,10 +227,6 @@ class MediaRecordingSettings extends Container {
 }
 
 class MediaRecordingLayer extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get recordVideo() {
     return this.getByRole('button', { name: 'Record Video' });
   }
@@ -304,10 +272,6 @@ class MediaRecordingLayer extends Container {
  * An element's frame.
  */
 class Frame extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get textContentHTML() {
     return this.node.querySelector('p')?.innerHTML;
   }
@@ -317,10 +281,6 @@ class Frame extends Container {
  * An element's controls.
  */
 class Controls extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get play() {
     return this.getByRole('button', { name: 'Click to play' });
   }
@@ -334,10 +294,6 @@ class Controls extends Container {
  * The story header
  */
 class Header extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get title() {
     return this.getByRole('textbox', { name: 'Story title' });
   }
@@ -371,10 +327,6 @@ class Header extends Container {
  * Page action buttons.
  */
 class PageActions extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get addPage() {
     return this.getByRole('button', { name: 'Add New Page' });
   }

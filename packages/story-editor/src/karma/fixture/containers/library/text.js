@@ -20,10 +20,6 @@
 import { Container } from '../container';
 
 export default class Text extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   preset(name) {
     return this.getByRole('button', { name });
   }

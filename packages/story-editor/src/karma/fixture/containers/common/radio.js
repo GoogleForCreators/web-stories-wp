@@ -26,10 +26,6 @@ import { Container } from '../container';
  * click the surrounding label rather than the input.
  */
 export class Radio extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
   get checked() {
     return this.node.checked;
   }
