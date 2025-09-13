@@ -26,7 +26,6 @@ import { Container } from '../container';
  * click the surrounding label rather than the input.
  */
 export class Toggle extends Container {
-
   get checked() {
     return this.node.checked;
   }

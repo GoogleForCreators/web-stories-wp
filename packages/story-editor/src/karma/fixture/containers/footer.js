@@ -26,7 +26,6 @@ import { Layers } from './designPanel/layers';
  * The workspace footer.
  */
 export class Footer extends Container {
-
   get carousel() {
     return this._get(
       this.getByRole('region', { name: 'Page Carousel' }),

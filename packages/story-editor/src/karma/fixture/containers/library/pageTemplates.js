@@ -20,7 +20,6 @@
 import { Container } from '../container';
 
 export default class PageTemplates extends Container {
-
   get pageTemplates() {
     return this.getAllByRole('listitem');
   }

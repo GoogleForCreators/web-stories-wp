@@ -24,7 +24,6 @@ import { AbstractPanel } from './abstractPanel';
  * The shape style panel containing inputs for adding managing the background color and opacity
  */
 export class ShapeStyle extends AbstractPanel {
-
   get backgroundColor() {
     const color = this._get(
       this.getByRole('region', { name: /Color input: Background color/ }),

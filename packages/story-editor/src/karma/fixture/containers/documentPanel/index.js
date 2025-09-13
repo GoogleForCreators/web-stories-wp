@@ -21,7 +21,6 @@ import { Container } from '../container';
 import { Taxonomies } from './taxonomies';
 
 export class DocumentPanel extends Container {
-
   get author() {
     return this.getByRole('button', { name: /Author/ });
   }

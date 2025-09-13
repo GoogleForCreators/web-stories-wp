@@ -22,7 +22,6 @@ import { Container } from '../container';
  * The taxonomies panel containing taxonomy and metadata about the story.
  */
 export class Taxonomies extends Container {
-
   get taxonomiesButton() {
     return this.getByRole('button', { name: /Taxonomies/ });
   }

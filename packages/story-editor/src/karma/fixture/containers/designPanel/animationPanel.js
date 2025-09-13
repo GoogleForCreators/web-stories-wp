@@ -19,7 +19,6 @@
 import { AbstractPanel } from './abstractPanel';
 
 export class Animation extends AbstractPanel {
-
   get effectChooser() {
     return this.getByRole('button', { name: /Animation: Effect Chooser/ });
   }

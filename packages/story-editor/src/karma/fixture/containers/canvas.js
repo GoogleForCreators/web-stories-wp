@@ -26,7 +26,6 @@ import { DesignMenu } from './designMenu';
  * navigation buttons, page menu.
  */
 export class Canvas extends Container {
-
   get displayLayer() {
     return this._get(
       this.getByRole('region', { name: 'Display layer' }),
@@ -96,7 +95,6 @@ export class Canvas extends Container {
  * Abstract layer.
  */
 class AbstractLayer extends Container {
-
   get scrollContainer() {
     return this.node.querySelector('[data-scroll-container]');
   }
@@ -110,7 +108,6 @@ class AbstractLayer extends Container {
  * Contains element displays.
  */
 class DisplayLayer extends AbstractLayer {
-
   get displays() {
     return this._getAll(
       // @todo: improve query.
@@ -134,7 +131,6 @@ class DisplayLayer extends AbstractLayer {
  * An element's display.
  */
 class Display extends Container {
-
   get overlay() {
     return this.node.querySelector(
       '[class^="displayElement__BackgroundOverlay-sc-"]'
@@ -156,7 +152,6 @@ class Display extends Container {
  * Contains element frames.
  */
 class FramesLayer extends AbstractLayer {
-
   get container() {
     return this.node;
   }
@@ -200,7 +195,6 @@ class FramesLayer extends AbstractLayer {
  * Contains elements in edit-mode.
  */
 class EditLayer extends AbstractLayer {
-
   get text() {
     return this.node.querySelector('[data-testid="textEditor"]');
   }
@@ -215,7 +209,6 @@ class EditLayer extends AbstractLayer {
 }
 
 class MediaRecordingSettings extends Container {
-
   get videoInput() {
     return this.getByRole('button', { name: 'Video Input' });
   }
@@ -234,7 +227,6 @@ class MediaRecordingSettings extends Container {
 }
 
 class MediaRecordingLayer extends Container {
-
   get recordVideo() {
     return this.getByRole('button', { name: 'Record Video' });
   }
@@ -280,7 +272,6 @@ class MediaRecordingLayer extends Container {
  * An element's frame.
  */
 class Frame extends Container {
-
   get textContentHTML() {
     return this.node.querySelector('p')?.innerHTML;
   }
@@ -290,7 +281,6 @@ class Frame extends Container {
  * An element's controls.
  */
 class Controls extends Container {
-
   get play() {
     return this.getByRole('button', { name: 'Click to play' });
   }
@@ -304,7 +294,6 @@ class Controls extends Container {
  * The story header
  */
 class Header extends Container {
-
   get title() {
     return this.getByRole('textbox', { name: 'Story title' });
   }
@@ -338,7 +327,6 @@ class Header extends Container {
  * Page action buttons.
  */
 class PageActions extends Container {
-
   get addPage() {
     return this.getByRole('button', { name: 'Add New Page' });
   }

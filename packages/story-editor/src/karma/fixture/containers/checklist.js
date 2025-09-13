@@ -26,7 +26,6 @@ import { Container } from './container';
  * Some issues may prompt extra actions.
  */
 export class Checklist extends Container {
-
   get toggleButton() {
     return this.getByRole('button', { name: /^Checklist/ });
   }

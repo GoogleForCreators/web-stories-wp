@@ -23,7 +23,6 @@ import { Container } from './container';
  * The titleBar or app header. Includes title input, save, draft and publish buttons
  */
 export class Header extends Container {
-
   get publish() {
     return this.getByRole('button', { name: /^Publish$/ });
   }

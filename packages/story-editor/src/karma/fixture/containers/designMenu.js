@@ -20,7 +20,6 @@ import { Container } from './container';
 import { ToggleButton, Color } from './common';
 
 export class DesignMenu extends Container {
-
   get flipVertical() {
     return this._get(
       this.getByRole('button', { name: 'Flip vertically' }),

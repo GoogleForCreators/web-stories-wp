@@ -41,7 +41,6 @@ import { AudioStickerSize } from './audioStickerSize';
  * navigation buttons, page menu.
  */
 export class DesignPanel extends Container {
-
   get selectionSection() {
     return this.getByRole('tab', { name: /Selection/i });
   }

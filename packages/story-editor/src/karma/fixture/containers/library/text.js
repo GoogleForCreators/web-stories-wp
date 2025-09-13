@@ -20,7 +20,6 @@
 import { Container } from '../container';
 
 export default class Text extends Container {
-
   preset(name) {
     return this.getByRole('button', { name });
   }

@@ -23,7 +23,6 @@ import { Container } from './container';
  * The gid view dialog.
  */
 export class GridView extends Container {
-
   get pages() {
     const pageList = this.getByRole('listbox', {
       name: 'Grid View Pages List',
@@ -59,5 +58,4 @@ export class GridView extends Container {
 /**
  * A page thumbnail.
  */
-class PageThumb extends Container {
-}
+class PageThumb extends Container {}

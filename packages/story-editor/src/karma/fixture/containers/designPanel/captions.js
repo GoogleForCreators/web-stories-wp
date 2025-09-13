@@ -23,7 +23,6 @@ import { AbstractPanel } from './abstractPanel';
  * The captions panel containing inputs for adding captions and subtitles.
  */
 export class Captions extends AbstractPanel {
-
   get addCaptionsButton() {
     return this.getByRole('button', { name: /upload a file/i });
   }

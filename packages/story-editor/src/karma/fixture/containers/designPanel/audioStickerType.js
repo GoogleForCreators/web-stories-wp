@@ -20,7 +20,6 @@
 import { AbstractPanel } from './abstractPanel';
 
 export class AudioStickerType extends AbstractPanel {
-
   get sectionHeading() {
     return this.getByRole('button', { name: /Type/i });
   }

@@ -25,7 +25,6 @@ import PageTemplates from './pageTemplates';
  * The library wrapper - containing tabs and panes for media, text and shapes.
  */
 export class Library extends Container {
-
   get mediaTab() {
     return this.getByRole('tab', { name: /Media Gallery/ });
   }
@@ -92,7 +91,6 @@ export class Library extends Container {
 }
 
 export class Shapes extends Container {
-
   shape(name) {
     return this.getByRole('button', {
       name,
@@ -105,7 +103,6 @@ export class Shapes extends Container {
 }
 
 export class Media extends Container {
-
   get mediaRecording() {
     return this.getByRole('button', {
       name: 'Record Video/Audio',
@@ -122,7 +119,6 @@ export class Media extends Container {
 }
 
 export class Media3P extends Container {
-
   get tabs() {
     return this.getAllByRole('tab');
   }

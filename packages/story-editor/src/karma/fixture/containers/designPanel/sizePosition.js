@@ -23,7 +23,6 @@ import { AbstractPanel } from './abstractPanel';
  * The size position panel containing inputs for adding managing the size, position and rotationAngle.
  */
 export class SizePosition extends AbstractPanel {
-
   get width() {
     return this.getByRole('textbox', { name: /Width/i });
   }

@@ -32,7 +32,6 @@ import { KeyboardShortcuts } from './keyboardShortcuts';
  * The complete editor container, including library, canvas, sidebar, etc.
  */
 export class Editor extends Container {
-
   get canvas() {
     return this._get(
       this.getByRole('region', { name: 'Canvas' }),

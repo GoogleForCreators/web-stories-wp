@@ -28,7 +28,6 @@ import { AbstractPanel } from './abstractPanel';
  * The layers panel.
  */
 export class Layers extends AbstractPanel {
-
   get togglePanel() {
     return this._node;
   }

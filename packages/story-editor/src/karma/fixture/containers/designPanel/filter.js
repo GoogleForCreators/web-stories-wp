@@ -24,7 +24,6 @@ import { AbstractPanel } from './abstractPanel';
  * is shown for a given background plus options for manipulating said filter.
  */
 export class Filter extends AbstractPanel {
-
   get none() {
     return this.getByRole('button', { name: /Filter: None/i });
   }

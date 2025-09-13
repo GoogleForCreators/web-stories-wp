@@ -24,7 +24,6 @@ import { AbstractPanel } from './abstractPanel';
  * The page background panel containing inputs flipping and detaching images as well as setting bg color.
  */
 export class PageBackground extends AbstractPanel {
-
   get flipVertical() {
     return this.getByRole('button', { name: /Flip vertically/i });
   }
