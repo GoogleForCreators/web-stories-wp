@@ -23,9 +23,6 @@ import { AbstractPanel } from './abstractPanel';
  * The poster panel containing inputs for adding poster.
  */
 export class VideoPoster extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get posterImage() {
     return this.getByRole('img', { alt: 'Preview poster image' });

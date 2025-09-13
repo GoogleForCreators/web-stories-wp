@@ -24,9 +24,6 @@ import { Container } from './container';
  * or will show for specific interaction to help first time users.
  */
 export class KeyboardShortcuts extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
   get keyboardShortcutsMenu() {
     return this.queryByRole('dialog', {
       name: /^Keyboard Shortcuts$/,

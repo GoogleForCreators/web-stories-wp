@@ -26,9 +26,6 @@ import { Layers } from './designPanel/layers';
  * The workspace footer.
  */
 export class Footer extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get carousel() {
     return this._get(

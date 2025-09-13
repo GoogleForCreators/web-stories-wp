@@ -20,9 +20,6 @@ import { Container } from './container';
 import { ToggleButton, Color } from './common';
 
 export class DesignMenu extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get flipVertical() {
     return this._get(

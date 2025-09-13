@@ -24,9 +24,6 @@ import { Container } from './container';
  * or will show for specific interaction to help first time users.
  */
 export class HelpCenter extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
   get toggleButton() {
     return this.getByRole('button', { name: /^Help Center/ });
   }

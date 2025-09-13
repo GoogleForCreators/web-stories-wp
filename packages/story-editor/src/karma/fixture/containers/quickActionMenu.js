@@ -20,9 +20,6 @@ import { ACTIONS } from '../../../app/quickActions';
 import { Container } from './container';
 
 export class QuickActionMenu extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get changeBackgroundColorButton() {
     return this.queryByRole('menuitem', {

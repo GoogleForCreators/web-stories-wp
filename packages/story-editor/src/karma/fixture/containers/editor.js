@@ -32,9 +32,6 @@ import { KeyboardShortcuts } from './keyboardShortcuts';
  * The complete editor container, including library, canvas, sidebar, etc.
  */
 export class Editor extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get canvas() {
     return this._get(

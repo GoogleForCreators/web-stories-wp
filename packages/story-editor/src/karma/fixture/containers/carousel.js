@@ -23,9 +23,6 @@ import { Container } from './container';
  * The page carousel.
  */
 export class Carousel extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get pages() {
     const pageList = this.queryByRole('listbox', { name: 'Pages List' });
@@ -63,7 +60,4 @@ export class Carousel extends Container {
  * A page thumbnail.
  */
 class PageThumb extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
 }

@@ -89,7 +89,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
   };
 
   this.on('kill', async (done) => {
-    if (browser != null) {
+    if (browser !== null) {
       await browser.close();
     }
     done();

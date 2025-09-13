@@ -23,9 +23,6 @@ import { AbstractPanel } from './abstractPanel';
  * The page background panel containing inputs flipping and detaching images as well as setting bg color.
  */
 export class PageBackgroundAudio extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get uploadButton() {
     return this.getByRole('button', {

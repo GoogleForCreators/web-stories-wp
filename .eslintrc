@@ -11,7 +11,8 @@
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:jsdoc/recommended",
-    "plugin:styled-components-a11y/recommended"
+    "plugin:styled-components-a11y/recommended",
+    "plugin:oxlint/recommended"
   ],
   "plugins": [
     "@babel",

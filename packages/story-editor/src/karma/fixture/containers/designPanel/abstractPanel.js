@@ -24,9 +24,6 @@ import { Container } from '../container';
  * such as title and collapsed status.
  */
 export class AbstractPanel extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get title() {
     // @todo: implement

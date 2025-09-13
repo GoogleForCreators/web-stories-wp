@@ -42,9 +42,6 @@ class ColorPresetType extends Container {
  * to view and manipulate the style of one or more currently selected text elements.
  */
 export class ColorPreset extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
 
   get local() {
     return this._get(this.node, 'local', ColorPresetType);
