@@ -122,7 +122,7 @@
     "eslint-plugin-react-hooks": "^6.0.0-rc.1",
     "eslint-plugin-security": "^3.0.1",
     "eslint-plugin-styled-components-a11y": "^2.2.1",
-    "eslint-plugin-testing-library": "^7.6.8",
+    "eslint-plugin-testing-library": "^7.7.0",
     "html-webpack-plugin": "^5.6.4",
     "husky": "^9.1.7",
     "jest": "^29.7.0",
