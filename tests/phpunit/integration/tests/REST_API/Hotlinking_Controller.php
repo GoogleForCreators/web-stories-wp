@@ -486,7 +486,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			],
 			'a port considered safe by filter'  => [
 				'url'           => 'https://example.com:81/caniload.php',
-				'cb_safe_ports' => [ __CLASS__, 'callback_custom_safe_ports' ],
+				'cb_safe_ports' => [ self::class, 'callback_custom_safe_ports' ],
 			],
 		];
 	}
@@ -589,11 +589,11 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			],
 			'a port not considered safe by filter'         => [
 				'url'           => 'https://example.com:82/caniload.php',
-				'cb_safe_ports' => [ __CLASS__, 'callback_custom_safe_ports' ],
+				'cb_safe_ports' => [ self::class, 'callback_custom_safe_ports' ],
 			],
 			'all safe ports removed by filter'             => [
 				'url'           => 'https://example.com:81/caniload.php',
-				'cb_safe_ports' => [ __CLASS__, 'callback_remove_safe_ports' ],
+				'cb_safe_ports' => [ self::class, 'callback_remove_safe_ports' ],
 			],
 		];
 	}
