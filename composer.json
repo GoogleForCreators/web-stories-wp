@@ -36,6 +36,7 @@
     "swissspidy/phpstan-no-private": "^1.0.0",
     "szepeviktor/phpstan-wordpress": "^2.0.0",
     "wp-coding-standards/wpcs": "^3.0.0",
+    "yoast/phpunit-polyfills": "2.0.5 as 1.1.0",
     "yoast/wp-test-utils": "^1.0.0"
   },
   "suggest": {
