@@ -312,7 +312,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @return array<string,array{url: string, expected: array<string, string>, request_count: int}>
 	 */
-	public function data_instagram_urls(): array {
+	public static function data_instagram_urls(): array {
 		return [
 			'Instagram profile url'                   => [
 				'url'           => self::URL_INSTAGRAM,

@@ -55,6 +55,14 @@ abstract class TestCase extends PolyfilledTestCase {
 	}
 
 	/**
+	 * Temporary workaround to allow the tests to run on PHPUnit 10.
+	 *
+	 * @link https://core.trac.wordpress.org/ticket/59486
+	 */
+	public function expectDeprecated(): void {
+	}
+
+	/**
 	 * @param mixed $data Product data.
 	 */
 	protected function assertMatchesProductSchema( $data ): void {

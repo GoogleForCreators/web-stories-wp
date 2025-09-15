@@ -107,7 +107,7 @@ class AMP extends DependencyInjectedTestCase {
 	/**
 	 * @return array<string, array{0: array<int, mixed>, 1: bool}>
 	 */
-	public function data_test_filter_amp_to_amp_linking_element_excluded(): array {
+	public static function data_test_filter_amp_to_amp_linking_element_excluded(): array {
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 
 		$anchor        = $doc->createElement( 'a' );
