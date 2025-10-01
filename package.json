@@ -141,7 +141,7 @@
     "karma-parallel": "^0.3.1",
     "karma-sourcemap-loader": "^0.4.0",
     "karma-webpack": "^5.0.1",
-    "lint-staged": "^16.1.6",
+    "lint-staged": "^16.2.3",
     "markdownlint-cli": "^0.45.0",
     "mini-css-extract-plugin": "^2.9.4",
     "mockdate": "^3.0.5",
