@@ -146,7 +146,7 @@ export const FIXTURE_DEFAULT_CONFIG = {
  * to the `@testing-library/react`'s `fireEvent`, except that these events will
  * be executed natively in the browser.
  *
- * Network calls are mocked out in the {@link:APIProviderFixture} but can be
+ * Network calls are mocked out in the `APIProviderFixture` but can be
  * overridden by passing `mocks` when initializing the fixture
  * Ex: `new Fixture({ mocks: { getCurrentUser: noop, updateCurrentUser: noop } })
  */

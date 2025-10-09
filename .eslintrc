@@ -245,6 +245,8 @@
     "jsdoc/check-tag-names": ["error", {
       "definedTags": [ "jest-environment" ]
     }],
+    "jsdoc/reject-any-type": "off",
+    "jsdoc/reject-function-type": "off",
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
