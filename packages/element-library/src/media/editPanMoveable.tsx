@@ -68,9 +68,11 @@ function EditPanMoveable<T extends MediaElement = MediaElement>({
 
   const update = useCallback(() => {
     const [tx, ty] = translateRef.current;
+    // eslint-disable-next-line react-hooks/immutability -- FIXME
     fullMedia.style.transform = `translate(${tx}px, ${ty}px) ${
       transformFlip ?? ''
     }`;
+    // eslint-disable-next-line react-hooks/immutability -- FIXME
     croppedMedia.style.transform = `translate(${tx}px, ${ty}px) ${
       transformFlip ?? ''
     }`;

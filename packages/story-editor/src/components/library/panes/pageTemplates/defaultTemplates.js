@@ -172,6 +172,7 @@ function DefaultTemplates({ pageSize }) {
           </Headline>
         </ActionRow>
 
+        {/* eslint-disable-next-line react-hooks/refs -- FIXME */}
         {isLoading || !pageTemplatesParentRef.current ? (
           <LoadingContainer>
             <LoadingSpinner animationSize={64} numCircles={8} />

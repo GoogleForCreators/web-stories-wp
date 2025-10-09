@@ -65,7 +65,7 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
   const { isBackground, isLocked, isHidden } = selectedElement;
   const actionsEnabled = !isBackground && !isLocked && !isHidden;
 
-  const latestEvent = useRef();
+  const latestEventRef = useRef();
 
   const backgroundElementId = useStory(
     ({ state }) => state.currentPage?.elements[0]?.id
@@ -77,7 +77,7 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
   useWindowResizeHandler(moveable);
 
   useEffect(() => {
-    latestEvent.current = pushEvent;
+    latestEventRef.current = pushEvent;
   }, [pushEvent]);
 
   // If scroll ever updates, update rect now
@@ -97,11 +97,11 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
     }
     // If we have persistent event then let's use that, ensuring the targets match.
     if (
-      latestEvent.current &&
-      targetEl.contains(latestEvent.current.target) &&
+      latestEventRef.current &&
+      targetEl.contains(latestEventRef.current.target) &&
       actionsEnabled
     ) {
-      moveable.current.moveable.dragStart(latestEvent.current);
+      moveable.current.moveable.dragStart(latestEventRef.current);
     }
     moveable.current.updateRect();
   }, [targetEl, moveable, actionsEnabled]);
@@ -130,6 +130,7 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
   const { left = 0, right = 0, top = 0, bottom = 0 } = border || {};
   const setTransformStyle = (target, newFrame = frame) => {
     // Get the changes coming from each action type.
+    // eslint-disable-next-line react-hooks/immutability -- FIXME
     frame.translate = newFrame.translate;
     frame.direction = newFrame.direction;
     frame.resize = newFrame.resize;
@@ -172,6 +173,7 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
         return;
       }
 
+      // eslint-disable-next-line react-hooks/immutability -- FIXME
       frame.direction = [0, 0];
       frame.translate = [0, 0];
       frame.resize = [0, 0];

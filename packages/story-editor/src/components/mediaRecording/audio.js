@@ -47,10 +47,10 @@ Audio.propTypes = {
 
 const AudioAnalyser = ({ source }) => {
   const [data, setData] = useState([]);
-  const raf = useRef();
+  const rafRef = useRef();
   const audioContextRef = useRef();
   const analyserRef = useRef();
-  const prevRafTime = useRef();
+  const prevRafTimeRef = useRef();
 
   if (!analyserRef.current) {
     audioContextRef.current = new window.AudioContext();
@@ -66,18 +66,18 @@ const AudioAnalyser = ({ source }) => {
     audioNode.connect(analyserRef.current);
 
     const tick = (time) => {
-      if (prevRafTime.current !== undefined) {
+      if (prevRafTimeRef.current !== undefined) {
         const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
         analyserRef.current.getByteTimeDomainData(dataArray);
         setData(dataArray);
       }
-      prevRafTime.current = time;
-      raf.current = requestAnimationFrame(tick);
+      prevRafTimeRef.current = time;
+      rafRef.current = requestAnimationFrame(tick);
     };
 
-    raf.current = requestAnimationFrame(tick);
+    rafRef.current = requestAnimationFrame(tick);
     return () => {
-      cancelAnimationFrame(raf.current);
+      cancelAnimationFrame(rafRef.current);
       analyserRef.current.disconnect();
       audioNode.disconnect();
     };

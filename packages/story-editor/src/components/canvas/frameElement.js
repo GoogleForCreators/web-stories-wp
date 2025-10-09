@@ -263,6 +263,7 @@ function FrameElement({ id }) {
   );
 
   usePerformanceTracking({
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     node: elementRef.current,
     eventData: {
       ...TRACKING_EVENTS.SELECT_ELEMENT,

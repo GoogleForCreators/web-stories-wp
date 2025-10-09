@@ -48,6 +48,7 @@ function useElementReset() {
     undo,
   }));
   const undoRef = useRef(undo);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   undoRef.current = undo;
   /**
    * Reset properties on an element. Shows a snackbar once the properties

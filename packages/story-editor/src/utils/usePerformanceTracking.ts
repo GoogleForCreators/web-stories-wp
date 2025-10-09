@@ -50,7 +50,9 @@ function usePerformanceTracking({
     PerformanceObserver.supportedEntryTypes.includes(OBSERVED_ENTRY_TYPE);
 
   // Start observing all events if not doing so already.
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   if (!performanceObserverRef.current && supportsPerformanceObserving) {
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     performanceObserverRef.current = new PerformanceObserver((entries) => {
       for (const entry of entries.getEntries()) {
         if (
@@ -68,6 +70,7 @@ function usePerformanceTracking({
         }
       }
     });
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     performanceObserverRef.current.observe({
       entryTypes: [OBSERVED_ENTRY_TYPE],
     });

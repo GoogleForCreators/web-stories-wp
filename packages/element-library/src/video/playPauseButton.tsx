@@ -164,6 +164,7 @@ function PlayPauseButton({
     if (!isActive) {
       if (videoNode) {
         videoNode.pause();
+        // eslint-disable-next-line react-hooks/immutability -- FIXME
         videoNode.currentTime = 0;
       }
       setShowControls(false);

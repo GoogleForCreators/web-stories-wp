@@ -232,9 +232,11 @@ export default function TelemetryBanner() {
     }
   }, [currentPath, hasAvailableRoutes]);
 
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   if (!headerRef.current) {
     return null;
   }
 
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   return createPortal(<TelemetryBannerContainer />, headerRef.current);
 }

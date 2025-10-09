@@ -46,18 +46,18 @@ function StyleProvider({ children }) {
     tab: state.section,
   }));
 
+  const styleRef = useRef(null);
+  const [tab, setTab] = useState(SELECTION.id);
+  const selectionPaneRef = useRef(null);
+  const linkPaneRef = useRef(null);
+  const animationPaneRef = useRef(null);
+
   // set tab when content is highlighted
   useEffect(() => {
     if (STYLE_TAB_IDS.has(highlightedTab)) {
       setTab(highlightedTab);
     }
   }, [highlightedTab]);
-
-  const styleRef = useRef(null);
-  const [tab, setTab] = useState(SELECTION.id);
-  const selectionPaneRef = useRef(null);
-  const linkPaneRef = useRef(null);
-  const animationPaneRef = useRef(null);
 
   const tabRefs = useMemo(
     () => ({

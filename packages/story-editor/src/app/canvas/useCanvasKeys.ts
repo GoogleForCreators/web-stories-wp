@@ -108,6 +108,7 @@ function useCanvasKeys(ref: RefObject<Node>) {
     })
   );
   const selectedElementIdsRef = useRef<string[] | null>(null);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   selectedElementIdsRef.current = selectedElementIds;
 
   // Return focus back to the canvas when another section loses the focus.

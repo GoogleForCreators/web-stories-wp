@@ -53,8 +53,8 @@ const SectionContent = styled.div`
 const STICKER_TYPES = Object.keys(STICKERS);
 
 function ShapesPane(props) {
-  const ref = useRef();
-  useRovingTabIndex({ ref });
+  const sectionRef = useRef();
+  useRovingTabIndex({ ref: sectionRef });
 
   const stickersRef = useRef(null);
   useRovingTabIndex({ ref: stickersRef });
@@ -65,7 +65,7 @@ function ShapesPane(props) {
         data-testid="shapes-library-pane"
         title={__('Shapes', 'web-stories')}
       >
-        <SectionContent ref={ref}>
+        <SectionContent ref={sectionRef}>
           {MASKS.filter((mask) => mask.showInLibrary).map((mask, i) => (
             <ShapePreview mask={mask} key={mask.type} index={i} isPreview />
           ))}

@@ -76,6 +76,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     currentPath === APP_ROUTES.DASHBOARD
   );
   const [isRedirectComplete, setIsRedirectComplete] = useState(
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     !isFirstLoadOnMyStoriesRef.current
   );
 

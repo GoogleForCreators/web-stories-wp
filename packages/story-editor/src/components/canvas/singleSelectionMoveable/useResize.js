@@ -129,10 +129,12 @@ function useSingleSelectionResize({
     const frameHeight = newHeight + top + bottom;
     target.style.width = `${frameWidth}px`;
     target.style.height = `${frameHeight}px`;
+    /* eslint-disable react-hooks/immutability -- FIXME */
     frame.direction = direction;
     frame.resize = [frameWidth, frameHeight];
     frame.translate = drag.beforeTranslate;
     frame.updates = updates;
+    /* eslint-enable react-hooks/immutability -- FIXME */
     setTransformStyle(target, frame);
   };
 

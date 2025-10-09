@@ -115,6 +115,7 @@ export default function usePagePreviewSize(options = {}) {
 
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
     getContainerWidth(
+      // eslint-disable-next-line react-hooks/refs -- FIXME
       dashboardContainerRef.current?.offsetWidth || window.innerWidth
     )
   );

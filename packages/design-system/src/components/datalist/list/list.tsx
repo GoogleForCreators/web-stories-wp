@@ -115,6 +115,7 @@ function OptionListWithRef<O extends AbstractOption>(
     searchResultsLabel,
   ]);
 
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   const currentListRef = listRef.current;
 
   /*

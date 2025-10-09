@@ -152,6 +152,7 @@ function SizePositionPanel(props) {
 
   const bgButtonRef = useRef(null);
   usePerformanceTracking({
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     node: bgButtonRef.current,
     eventData: TRACKING_EVENTS.SET_BACKGROUND_MEDIA,
   });

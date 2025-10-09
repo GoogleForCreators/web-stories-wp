@@ -69,6 +69,7 @@ function ComposableWrapper({
     [animationParts]
   );
 
+  // eslint-disable-next-line react-hooks/static-components -- FIXME
   return <ComposedWrapper>{children}</ComposedWrapper>;
 }
 function AMPWrapper({ target, children }: WrapperProps) {

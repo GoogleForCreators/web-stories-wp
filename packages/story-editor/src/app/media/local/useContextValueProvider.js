@@ -174,6 +174,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   } = useConfig();
 
   const stateRef = useRef();
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   stateRef.current = reducerState;
 
   const resetWithFetch = useCallback(() => {
@@ -300,6 +301,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   }, [media, mediaType, searchTerm, postProcessingResource]);
 
   const isGeneratingPosterImages = Boolean(
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     stateRef.current?.posterProcessing?.length
   );
 

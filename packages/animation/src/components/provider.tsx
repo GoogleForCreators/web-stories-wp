@@ -281,6 +281,7 @@ function Provider({
     return cancel;
   }, [filteredWAAPIAnimations, animationState, complete]);
 
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   onWAAPIFinishRef.current = onWAAPIFinish;
   useEffect(() => {
     if (AnimationMachineState.Complete === animationState) {

@@ -204,7 +204,6 @@ function PlaybackMedia() {
 
     run();
 
-    // eslint-disable-next-line react-hooks/react-compiler -- FIXME
     // eslint-disable-next-line react-hooks/exhaustive-deps -- including liveStream will cause freeze
   }, [videoEffect, hasVideoEffect, streamNode, setCanvasStream, setCanvasNode]);
 

@@ -181,9 +181,11 @@ function DropDownMenu({
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <MenuContainer className={className}>
+      {/* eslint-disable react-hooks/refs -- FIXME */}
       {MenuButtonRef.current && (
         <DropDownKeyEvents target={MenuButtonRef.current} />
       )}
+      {/* eslint-enable react-hooks/refs -- FIXME */}
       <MenuButton
         type={ButtonType.Tertiary}
         size={ButtonSize.Small}

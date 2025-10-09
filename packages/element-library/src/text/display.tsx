@@ -254,6 +254,7 @@ function TextDisplay({
       return;
     }
     const updatedFontSize = transform?.updates?.fontSize as number;
+    // eslint-disable-next-line react-hooks/immutability -- FIXME
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';

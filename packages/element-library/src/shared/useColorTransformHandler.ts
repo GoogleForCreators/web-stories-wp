@@ -44,6 +44,7 @@ function useColorTransformHandler({
     if (target) {
       if (transform === null) {
         if (resetOnNullTransform) {
+          // eslint-disable-next-line react-hooks/immutability -- FIXME
           target.style.cssText = '';
         }
       } else {

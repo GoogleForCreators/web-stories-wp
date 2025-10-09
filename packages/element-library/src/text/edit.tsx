@@ -333,6 +333,7 @@ function TextEdit({
           0,
           editorHeightRef.current - (boxRef.current.height - top - bottom)
         );
+        // eslint-disable-next-line react-hooks/immutability -- FIXME
         editWrapper.style.height = `${editorHeightRef.current + top + bottom}px`;
         editWrapper.style.left = `${boxRef.current.x + dx}px`;
         editWrapper.style.top = `${boxRef.current.y + dy}px`;

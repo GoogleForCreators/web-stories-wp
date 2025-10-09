@@ -206,6 +206,7 @@ function SnackbarMessage({
   ...props
 }: SnackbarMessageProps) {
   const autoDismissRef = useRef<(() => void) | null>(null);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   autoDismissRef.current = isPreventAutoDismiss ? noop : onDismiss;
 
   const messageRemovalTimeInterval = useRef(

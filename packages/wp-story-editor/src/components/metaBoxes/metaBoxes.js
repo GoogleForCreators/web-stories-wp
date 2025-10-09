@@ -115,7 +115,7 @@ function MetaBoxes() {
           })}
         </Wrapper>
       )}
-      {showMenuButton &&
+      {showMenuButton /* eslint-disable-next-line react-hooks/refs -- FIXME */ &&
         createPortal(<MenuItem />, menuButtonContainerRef.current)}
     </MetaBoxesContainer>
   );

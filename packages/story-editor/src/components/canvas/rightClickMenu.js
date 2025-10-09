@@ -141,6 +141,7 @@ const RightClickMenu = () => {
             onMouseDown={(evt) => evt.stopPropagation()}
             isRTL={isRTL}
           >
+            {/* eslint-disable-next-line react-hooks/static-components -- FIXME */}
             <Menu parentMenuRef={ref} />
           </ContextMenu>
         </DirectionAware>
