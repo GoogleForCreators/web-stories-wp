@@ -98,6 +98,7 @@ function PageMenu({ parentMenuRef }) {
             ref={subMenuRef}
             position={{
               x:
+                // eslint-disable-next-line react-hooks/refs -- FIXME
                 (parentMenuRef.current.firstChild?.offsetWidth ||
                   DEFAULT_DISPLACEMENT) + 2,
               y: 0,

@@ -74,6 +74,7 @@ function useSingleSelectionDrag({
     if (isDropSource(selectedElement.type)) {
       setDraggingResource(selectedElement.resource);
     }
+    // eslint-disable-next-line react-hooks/immutability -- FIXME
     frame.translate = beforeTranslate;
     setTransformStyle(target, frame);
     if (isDropSource(selectedElement.type)) {

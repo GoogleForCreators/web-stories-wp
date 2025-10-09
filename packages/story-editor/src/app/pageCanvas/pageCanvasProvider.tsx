@@ -64,6 +64,7 @@ function PageCanvasProvider({ children }: PropsWithChildren<unknown>) {
     singleElementSelectionValue: singleElementSelection,
   };
   const valuesRef = useRef(values);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   valuesRef.current = values;
 
   /**

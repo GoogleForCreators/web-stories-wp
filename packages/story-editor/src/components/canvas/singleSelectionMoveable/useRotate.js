@@ -44,6 +44,7 @@ function useSingleSelectionRotate({
     set(frame.rotate);
   };
   const onRotate = ({ target, beforeRotate }) => {
+    // eslint-disable-next-line react-hooks/immutability -- FIXME
     frame.rotate = normalizeRotationDegrees(beforeRotate);
     setTransformStyle(target, frame);
   };

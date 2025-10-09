@@ -1,50 +1,45 @@
 diff --git a/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js b/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
-index 179bf42..2a18e7b 100644
+index 54aea3f..d7d4802 100644
 --- a/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
 +++ b/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
-@@ -39,7 +39,26 @@ const rule$2 = {
+@@ -50,7 +50,26 @@ const rule$1 = {
                  enableDangerousAutofixThisMayCauseInfiniteLoops: false,
                  properties: {
                      additionalHooks: {
 -                        type: 'string',
 +                        anyOf: [
-+                            // An abbreviated form with a single RegExp with the implicit
-+                            // callback index == 0.
-+                            { type: 'string' },
-+                            // An expanded form: an array with RegExp and callback index
-+                            // values.
-+                            {
-+                                type: 'array',
-+                                items: {
-+                                    type: 'object',
-+                                        additionalProperties: false,
-+                                        properties: {
-+                                            // The RegExp string.
-+                                            test: {type: 'string'},
-+                                            // The callback index.
-+                                            callbackIndex: {type: 'number'},
-+                                        },
-+                                },
-+                            },
-+                        ],
++                           // An abbreviated form with a single RegExp with the implicit
++                           // callback index == 0.
++                           { type: 'string' },
++                           // An expanded form: an array with RegExp and callback index
++                           // values.
++                           {
++                               type: 'array',
++                               items: {
++                                   type: 'object',
++                                       additionalProperties: false,
++                                       properties: {
++                                           // The RegExp string.
++                                           test: {type: 'string'},
++                                           // The callback index.
++                                           callbackIndex: {type: 'number'},
++                                       },
++                               },
++                           },
++                       ],
                      },
                      enableDangerousAutofixThisMayCauseInfiniteLoops: {
                          type: 'boolean',
-@@ -49,11 +68,8 @@ const rule$2 = {
-         ],
-     },
-     create(context) {
--        const additionalHooks = context.options &&
--            context.options[0] &&
--            context.options[0].additionalHooks
--            ? new RegExp(context.options[0].additionalHooks)
--            : undefined;
-+        const additionalHooks = parseAdditionalHooks(context.options &&
-+            context.options[0].additionalHooks);
-         const enableDangerousAutofixThisMayCauseInfiniteLoops = (context.options &&
-             context.options[0] &&
-             context.options[0].enableDangerousAutofixThisMayCauseInfiniteLoops) ||
-@@ -1324,13 +1340,44 @@ function getReactiveHookCallbackIndex(calleeNode, options) {
+@@ -72,7 +91,7 @@ const rule$1 = {
+         const rawOptions = context.options && context.options[0];
+         const settings = context.settings || {};
+         const additionalHooks = rawOptions && rawOptions.additionalHooks
+-            ? new RegExp(rawOptions.additionalHooks)
++            ? parseAdditionalHooks(rawOptions.additionalHooks)
+             : getAdditionalEffectHooksFromSettings(settings);
+         const enableDangerousAutofixThisMayCauseInfiniteLoops = (rawOptions &&
+             rawOptions.enableDangerousAutofixThisMayCauseInfiniteLoops) ||
+@@ -1374,13 +1393,44 @@ function getReactiveHookCallbackIndex(calleeNode, options) {
                          throw error;
                      }
                  }

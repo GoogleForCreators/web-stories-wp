@@ -117,6 +117,7 @@ function TextSet(
     typeof WEB_STORIES_DISABLE_OPTIMIZED_RENDERING === 'undefined' ||
     WEB_STORIES_DISABLE_OPTIMIZED_RENDERING !== 'true';
 
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   useRovingTabIndex({ ref: ref.current });
   const [isHovering, setIsHovering] = useState(false);
   const setHovering = () => setIsHovering(true);

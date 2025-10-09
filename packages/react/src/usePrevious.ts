@@ -27,5 +27,6 @@ export default function usePrevious<V>(value: V) {
     ref.current = value;
   }, [value]);
 
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   return ref.current;
 }

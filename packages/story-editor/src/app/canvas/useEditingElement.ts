@@ -64,6 +64,7 @@ function useEditingElement() {
 
   // Immutable frame lookup for imperative actions.
   const nodesByIdRef = useRef<NodesById | null>(null);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   nodesByIdRef.current = nodesById;
   const getNodeForElement = useCallback(
     (id: string) => nodesByIdRef.current?.[id],

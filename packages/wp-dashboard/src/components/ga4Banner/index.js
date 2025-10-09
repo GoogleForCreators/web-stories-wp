@@ -179,9 +179,11 @@ export default function GoogleAnalytics4Banner() {
     }
   }, [currentPath, hasAvailableRoutes]);
 
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   if (!headerRef.current) {
     return null;
   }
 
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   return createPortal(<GoogleAnalytics4BannerContainer />, headerRef.current);
 }

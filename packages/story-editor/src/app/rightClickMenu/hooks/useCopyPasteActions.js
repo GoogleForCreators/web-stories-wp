@@ -90,6 +90,7 @@ const useCopyPasteActions = () => {
 
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   undoRef.current = undo;
 
   /**

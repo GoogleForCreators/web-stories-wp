@@ -41,19 +41,20 @@ function useVideoNode(videoData) {
   const [videoNode, setVideoNode] = useState(null);
   const [isDraggingHandles, setIsDraggingHandles] = useState(false);
   // Video plays by default.
-  const isPausedTracker = useRef(false);
+  const isPausedTrackerRef = useRef(false);
 
   useEffect(() => {
     if (!videoNode) {
       return;
     }
     // If the video has been paused manually, skip playing.
-    if (isPausedTracker.current) {
+    if (isPausedTrackerRef.current) {
       return;
     }
     if (isDraggingHandles) {
       videoNode.pause();
     } else {
+      // eslint-disable-next-line react-hooks/immutability -- FIXME
       videoNode.currentTime = startOffset / 1000;
       videoNode.play().catch(noop);
     }
@@ -66,7 +67,7 @@ function useVideoNode(videoData) {
       return;
     }
     // Update the tracker when the pause state changes while not dragging.
-    isPausedTracker.current = paused;
+    isPausedTrackerRef.current = paused;
   }, [paused, isDraggingHandles]);
 
   useEffect(() => {
@@ -112,7 +113,7 @@ function useVideoNode(videoData) {
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
       setCurrentTime(Math.min(currentOffset, endOffset));
       // If we've reached the end of the video, start again unless the user has paused the video.
-      if (currentOffset > endOffset && !isPausedTracker.current) {
+      if (currentOffset > endOffset && !isPausedTrackerRef.current) {
         restart(startOffset);
       }
     }
@@ -125,6 +126,7 @@ function useVideoNode(videoData) {
     } else if (!isFinite(videoNode.duration)) {
       // Video is a blob of unknown length, seek to infinity and wait until it's ready
       // @see https://crbug.com/642012
+      // eslint-disable-next-line react-hooks/immutability -- FIXME
       videoNode.currentTime = Number.MAX_SAFE_INTEGER;
       videoNode.addEventListener('timeupdate', onLoadedMetadata);
     } else {
@@ -150,6 +152,7 @@ function useVideoNode(videoData) {
       offset = Math.min(endOffset - MEDIA_VIDEO_MINIMUM_DURATION, offset);
       offset = Math.max(0, offset);
       rawSetStartOffset(offset);
+      // eslint-disable-next-line react-hooks/immutability -- FIXME
       videoNode.currentTime = offset / 1000;
     },
     [videoNode, endOffset]
@@ -161,6 +164,7 @@ function useVideoNode(videoData) {
       offset = Math.max(startOffset + MEDIA_VIDEO_MINIMUM_DURATION, offset);
       offset = Math.min(maxOffset, offset);
       rawSetEndOffset(offset);
+      // eslint-disable-next-line react-hooks/immutability -- FIXME
       videoNode.currentTime = offset / 1000;
     },
     [videoNode, startOffset, maxOffset]

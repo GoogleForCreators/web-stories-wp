@@ -409,6 +409,7 @@ const PageArea = forwardRef(function PageArea(
 
   // We need to ref scroll, because scroll changes should not update a non-controlled layer
   const scrollRef = useRef();
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   scrollRef.current = { top: scrollTop, left: scrollLeft };
   // If zoom setting changes for a non-controlled layer, make sure to reset actual scroll inside container
   useEffect(() => {

@@ -60,6 +60,7 @@ const ContextMenu = forwardRef(
         isHorizontal={isHorizontal}
         onDismiss={onDismiss}
       >
+        {/* eslint-disable-next-line react-hooks/static-components -- FIXME */}
         <Wrapper
           aria-label={ariaLabel}
           isInline={isInline}

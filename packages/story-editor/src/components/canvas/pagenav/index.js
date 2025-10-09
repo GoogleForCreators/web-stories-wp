@@ -79,6 +79,7 @@ function PageNav({ isNext = true }) {
   );
 
   usePerformanceTracking({
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     node: buttonRef.current,
     eventData: TRACKING_EVENTS.PAGE_NAVIGATION,
   });
