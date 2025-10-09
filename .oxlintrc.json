@@ -26,6 +26,7 @@
 		}
 	},
 	"rules": {
+		"class-methods-use-this": "off",
 		"default-case": "off",
 		"max-classes-per-file": "off",
 		"max-depth": "off",
@@ -36,7 +37,9 @@
 		"no-case-declarations": "off",
 		"no-else-return": "off",
 		"no-empty-function": "off",
+		"no-multiple-resolved": "off",
 		"no-negated-condition": "off",
+		"no-param-reassign": "off",
 		"no-plusplus": "off",
 		"no-undef": "off",
 		"no-undefined": "off",
