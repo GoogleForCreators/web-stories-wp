@@ -75,7 +75,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^29.5.14",
     "@types/jsdom": "^27.0.0",
-    "@types/node": "^24.7.0",
+    "@types/node": "^24.7.1",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
