@@ -99,7 +99,9 @@ function EditCropMoveable<T extends MediaElement = MediaElement>({
         const top = dirY < 0 ? dh : 0;
         const bottom = dirY > 0 ? dh : 0;
         cropRef.current = [fx, fy, left, right, top, bottom];
+        // eslint-disable-next-line react-hooks/immutability -- FIXME
         cropBox.style.transform = `translate(${fx}px, ${fy}px)`;
+        // eslint-disable-next-line react-hooks/immutability -- FIXME
         croppedMedia.style.transform = `translate(${-fx}px, ${-fy}px) ${
           transformFlip ?? ''
         }`;
@@ -114,7 +116,9 @@ function EditCropMoveable<T extends MediaElement = MediaElement>({
       onResizeEnd={() => {
         const [fx, fy, left, right, top, bottom] = cropRef.current;
         cropRef.current = [0, 0, 0, 0, 0, 0];
+        // eslint-disable-next-line react-hooks/immutability -- FIXME
         cropBox.style.transform = '';
+        // eslint-disable-next-line react-hooks/immutability -- FIXME
         croppedMedia.style.transform = '';
         cropBox.style.width = '';
         cropBox.style.height = '';

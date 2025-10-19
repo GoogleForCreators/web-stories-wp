@@ -28,10 +28,10 @@
   "type": "module",
   "dependencies": {
     "commander": "^14.0.1",
-    "semver": "^7.7.2"
+    "semver": "^7.7.3"
   },
   "devDependencies": {
-    "@types/node": "^24.4.0",
+    "@types/node": "^24.7.1",
     "@types/semver": "^7.7.1"
   },
   "bin": {

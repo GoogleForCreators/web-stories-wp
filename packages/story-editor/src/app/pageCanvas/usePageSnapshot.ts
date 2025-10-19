@@ -42,6 +42,7 @@ function usePageSnapshot() {
   // explode from all possible element exclusion combinations
   const [snapShot, _setSnapshot] = useState<SnapShot | null>(null);
   const snapshotRef = useRef(snapShot);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   snapshotRef.current = snapShot;
 
   /**

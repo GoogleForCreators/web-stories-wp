@@ -7,7 +7,7 @@
     "plugin:import/recommended",
     "plugin:@eslint-community/eslint-comments/recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended-legacy",
+    "plugin:react-hooks/recommended-latest",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:jsdoc/recommended",
@@ -216,15 +216,21 @@
     "react/no-unused-prop-types": "error",
     "react/react-in-jsx-scope": "off",
     "react/self-closing-comp": "error",
-    "react-hooks/react-compiler": [
-      "error",
-      {
-        "environment": {
-          "enableTreatRefLikeIdentifiersAsRefs": true,
-          "validateRefAccessDuringRender": false
-        }
-      }
-    ],
+    "react-hooks/config": "error",
+    "react-hooks/error-boundaries": "error",
+    "react-hooks/component-hook-factories": "error",
+    "react-hooks/gating": "error",
+    "react-hooks/globals": "error",
+    "react-hooks/immutability": "error",
+    "react-hooks/preserve-manual-memoization": "error",
+    "react-hooks/purity": "error",
+    "react-hooks/refs": "error",
+    "react-hooks/set-state-in-effect": "error",
+    "react-hooks/set-state-in-render": "error",
+    "react-hooks/static-components": "error",
+    "react-hooks/unsupported-syntax": "warn",
+    "react-hooks/use-memo": "error",
+    "react-hooks/incompatible-library": "warn",
     "import/no-extraneous-dependencies": "error",
     "import/no-unresolved": "error",
     "import/order": [
@@ -245,6 +251,8 @@
     "jsdoc/check-tag-names": ["error", {
       "definedTags": [ "jest-environment" ]
     }],
+    "jsdoc/reject-any-type": "off",
+    "jsdoc/reject-function-type": "off",
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
@@ -433,7 +441,8 @@
       "rules": {
         "@eslint-community/eslint-comments/require-description": "off",
         "react/prop-types": "off",
-        "react-hooks/react-compiler": "off",
+        "react-hooks/globals": "off",
+        "react-hooks/immutability": "off",
         "jest/no-hooks": "off",
         "jest/no-untyped-mock-factory": "off",
         "jest/max-expects": "off",
@@ -955,10 +964,9 @@
         "packages/story-editor/src/components/videoTrim/useVideoNode.js",
         "packages/transform/src/useTransformHandler.ts",
         "packages/wp-story-editor/src/components/fontCheck/index.js"
-
       ],
       "rules": {
-        "react-hooks/react-compiler": "off"
+        "react-hooks/refs": "off"
       }
     }
   ]

@@ -225,6 +225,7 @@ const useNumericInput = ({
     handleChange,
     handleEsc,
     handleKeyUpAndDown,
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     isIndeterminate: oldValueRef.current === currentValue,
   };
 };

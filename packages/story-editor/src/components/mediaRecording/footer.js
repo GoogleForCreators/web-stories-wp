@@ -318,6 +318,7 @@ function Footer() {
   useEffect(() => {
     // Checking for srcObject avoids flickering due to the stream changing constantly.
     if (streamNode && !streamNode.srcObject && liveStream) {
+      // eslint-disable-next-line react-hooks/immutability -- FIXME
       streamNode.srcObject = liveStream;
     }
 

@@ -47,14 +47,14 @@ function useMultiSelectionDrag({
     })
   );
 
-  const eventTracker = useRef({});
+  const eventTrackerRef = useRef({});
 
   // Let's check if we consider this a drag or a click, In case of a click handle click instead.
   // We are doing this here in Moveable selection since it takes over the mouseup event
   // and it can be captured here and not in the frame element.
   // @todo Add integration test for this!
   const clickHandled = (inputEvent) => {
-    if (areEventsDragging(eventTracker.current, inputEvent)) {
+    if (areEventsDragging(eventTrackerRef.current, inputEvent)) {
       // No click was found/handled.
       return false;
     }
@@ -73,7 +73,7 @@ function useMultiSelectionDrag({
 
   const startEventTracking = (evt) => {
     const { timeStamp, clientX, clientY } = evt;
-    eventTracker.current = {
+    eventTrackerRef.current = {
       timeStamp,
       clientX,
       clientY,

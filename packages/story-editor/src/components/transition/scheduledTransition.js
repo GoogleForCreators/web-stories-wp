@@ -82,6 +82,7 @@ export const Interpreter = forwardRef(({ state, children }, ref) => {
   const isPrematureEntrance =
     [exiting].includes(scheduledState) && [entering, entered].includes(state);
   const shouldUseBaseState = isPrematureEntrance || isPrematureExit;
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   return cloneElement(children(shouldUseBaseState ? state : scheduledState), {
     ref,
   });

@@ -90,7 +90,6 @@ export default function useStoryView({
   }, [viewStyle, setViewStyle]);
 
   const requestNextPage = useCallback(() => {
-    // eslint-disable-next-line react-hooks/react-compiler -- FIXME
     showStoriesWhileLoadingRef.current = true;
     setPageClamped(page + 1);
   }, [page, setPageClamped]);

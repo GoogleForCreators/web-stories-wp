@@ -228,6 +228,7 @@ function LibraryMoveable({
   };
 
   usePerformanceTracking({
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     node: targetBoxRef.current,
     eventData: {
       ...TRACKING_EVENTS.INSERT_ELEMENT,
@@ -316,6 +317,7 @@ function LibraryMoveable({
           <Moveable
             ref={moveable}
             className="default-moveable hide-handles"
+            // eslint-disable-next-line react-hooks/refs -- FIXME
             target={targetBoxRef.current}
             edge
             draggable

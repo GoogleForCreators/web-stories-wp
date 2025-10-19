@@ -91,6 +91,7 @@ const MediaPicker = ({ render, ...props }) => {
     [allowedMimeTypes]
   );
   if (isTranscodingEnabled) {
+    // eslint-disable-next-line react-hooks/immutability -- FIXME
     allowedMimeTypes = allowedMimeTypes.concat(TRANSCODABLE_MIME_TYPES);
   }
 

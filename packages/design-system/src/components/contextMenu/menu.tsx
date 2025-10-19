@@ -308,6 +308,7 @@ const Menu = forwardRef<
         // Tabbing out from the list while using 'shift' would
         // focus the list element. Should just travel back to the previous
         // focusable element in the DOM
+        // eslint-disable-next-line react-hooks/refs -- FIXME
         tabIndex={ref.current?.contains(document.activeElement) ? -1 : 0}
         onFocus={handleFocus}
         {...props}

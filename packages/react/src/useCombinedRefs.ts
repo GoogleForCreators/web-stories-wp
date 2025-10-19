@@ -32,6 +32,7 @@ function useCombinedRefs<T>(
   ...refs: Array<RefCallback<T> | MutableRefObject<T> | ForwardedRef<T>>
 ) {
   const refsRef = useRef(refs);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   refsRef.current = refs;
   return useCallback((node: T) => {
     refsRef.current.forEach((ref) => {

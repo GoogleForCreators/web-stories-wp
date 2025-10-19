@@ -164,6 +164,7 @@ function InnerElement({
 
   let media;
   const { lengthFormatted, poster, mimeType } = resource;
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   const displayPoster = poster ?? newVideoPosterRef.current;
   const thumbnailURL = displayPoster
     ? displayPoster

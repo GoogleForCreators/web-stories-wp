@@ -35,6 +35,7 @@ function useMouseDownOutsideRef<E extends HTMLElement>(
   // proper references when removing listeners
   const handleDocumentClickCaptureRef = useRef<(evt: MouseEvent) => void>(noop);
   const onMouseDownOutsideRef = useRef(onMouseDownOutside);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   onMouseDownOutsideRef.current = onMouseDownOutside;
 
   return useCallback((node: E) => {

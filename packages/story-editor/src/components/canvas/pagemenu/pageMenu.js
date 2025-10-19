@@ -70,10 +70,12 @@ function PageMenu() {
   const deletePageButtonRef = useRef(null);
 
   usePerformanceTracking({
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     node: addPageButtonRef.current,
     eventData: TRACKING_EVENTS.PAGE_ADD,
   });
   usePerformanceTracking({
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     node: deletePageButtonRef.current,
     eventData: TRACKING_EVENTS.PAGE_DELETE,
   });

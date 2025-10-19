@@ -158,9 +158,11 @@ function DropDownMenu({
   return (
     canTranscodeResource(resource) && ( // Don't show menu if resource is being processed.
       <MenuContainer>
+        {/* eslint-disable react-hooks/refs -- FIXME */}
         {moreButtonRef.current && (
           <DropDownKeyEvents target={moreButtonRef.current} />
         )}
+        {/* eslint-enable react-hooks/refs -- FIXME */}
         <MoreButton
           ref={moreButtonRef}
           onClick={onMenuOpen}

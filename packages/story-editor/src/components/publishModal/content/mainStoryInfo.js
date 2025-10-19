@@ -138,6 +138,7 @@ const MainStoryInfo = () => {
           onBlur={handleUpdateStoryInfo}
         />
       </FormSection>
+      {/* eslint-disable-next-line react-hooks/static-components -- FIXME */}
       {IsolatedStatusPanel && <IsolatedStatusPanel />}
     </>
   );

@@ -109,6 +109,7 @@ function LayerAction({
 }) {
   const buttonRef = useRef(null);
   usePerformanceTracking({
+    // eslint-disable-next-line react-hooks/refs -- FIXME
     node: trackingData ? buttonRef.current : null,
     eventData: trackingData,
   });

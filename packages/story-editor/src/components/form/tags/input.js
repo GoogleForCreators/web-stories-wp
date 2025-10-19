@@ -130,6 +130,7 @@ function Input({
   // Allow parents to pass onTagsChange callback
   // that updates as tags does.
   const onTagChangeRef = useRef(onTagsChange);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   onTagChangeRef.current = onTagsChange;
   useEffect(() => {
     if (!tagBuffer) {
@@ -141,6 +142,7 @@ function Input({
   // Allow parents to pass onInputChange callback
   // that updates as value does.
   const onInputChangeRef = useRef(onInputChange);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   onInputChangeRef.current = onInputChange;
   useEffect(() => {
     onInputChangeRef.current?.(value);

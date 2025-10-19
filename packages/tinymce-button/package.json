@@ -29,7 +29,7 @@
     "@wordpress/compose": "^7.22.0",
     "@wordpress/data": "^10.22.0",
     "@wordpress/dom-ready": "^4.22.0",
-    "@wordpress/element": "^6.30.0",
+    "@wordpress/element": "^6.32.0",
     "@wordpress/i18n": "^5.22.0",
     "prop-types": "^15.8.1"
   },

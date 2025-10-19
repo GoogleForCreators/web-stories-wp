@@ -31,6 +31,7 @@ function EditLayerFocusManager({ children }) {
   const [state, actions] = useReduction(INITIAL_STATE, reduction);
 
   const stateRef = useRef(state);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   stateRef.current = state;
 
   const enterFocusGroup = useCallback(

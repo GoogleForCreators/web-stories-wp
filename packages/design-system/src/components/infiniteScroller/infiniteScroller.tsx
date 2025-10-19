@@ -111,6 +111,7 @@ function InfiniteScroller({
 }: InfiniteScrollProps) {
   const loadingRef = useRef(null);
   const onLoadMoreRef = useRef(onLoadMore);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   onLoadMoreRef.current = onLoadMore;
 
   const [loadState, dispatch] = useReducer(loadReducer, State.Loadable);

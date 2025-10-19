@@ -57,6 +57,7 @@ function useIdleTaskQueue() {
       if (typeof task === 'function') {
         void task().then(() => {
           currentTaskRef.current = { taskId: null, task: null };
+          // eslint-disable-next-line react-hooks/immutability -- FIXME
           runTaskQueue();
         });
       }

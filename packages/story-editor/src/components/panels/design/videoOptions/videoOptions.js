@@ -77,6 +77,14 @@ const HelperText = styled(Text.Paragraph).attrs({
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
+const Processing = () => {
+  return (
+    <Spinner>
+      <CircularProgress size={24} />
+    </Spinner>
+  );
+};
+
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const resource = getCommonValue(selectedElements, 'resource');
   const elementId = getCommonValue(selectedElements, 'id');
@@ -121,14 +129,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   };
 
   const slideId = useInitializedValue(() => `slide-${uuidv4()}`);
-
-  const Processing = () => {
-    return (
-      <Spinner>
-        <CircularProgress size={24} />
-      </Spinner>
-    );
-  };
 
   return (
     <SimplePanel

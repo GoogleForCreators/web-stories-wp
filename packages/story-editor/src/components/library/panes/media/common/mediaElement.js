@@ -121,6 +121,7 @@ function Element({
 
   const [hoverTimer, setHoverTimer] = useState(null);
   const activeRef = useRef(active);
+  // eslint-disable-next-line react-hooks/refs -- FIXME
   activeRef.current = active;
 
   useEffect(() => {
