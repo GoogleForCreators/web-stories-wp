@@ -138,7 +138,6 @@ jobs:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
       - name: Update PHPUnit
-        if: ${{ matrix.php == 'nightly' }}
         run: |
           echo "Installing latest version of PHPUnit"
           composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
