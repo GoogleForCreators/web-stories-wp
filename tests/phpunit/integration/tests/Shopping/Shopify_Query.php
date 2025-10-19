@@ -346,7 +346,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 *
 	 * @dataProvider data_test_get_search_sort_by_query
 	 */
-	public function data_test_get_search_sort_by_query(): array {
+	public static function data_test_get_search_sort_by_query(): array {
 		return [
 			'Default search'  => [
 				[ 'some search term', 1, 100, 'date', '' ],
@@ -397,7 +397,7 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	 *
 	 * @dataProvider data_test_get_search_extensions_code_response
 	 */
-	public function data_test_get_search_extensions_code_response(): array {
+	public static function data_test_get_search_extensions_code_response(): array {
 		return [
 			'THROTTLED'             => [
 				'throttled',

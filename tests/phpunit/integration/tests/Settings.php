@@ -132,7 +132,7 @@ class Settings extends DependencyInjectedTestCase {
 	/**
 	 * @return array<string, array<string, mixed>>
 	 */
-	public function data_test_types(): array {
+	public static function data_test_types(): array {
 		return [
 			'array from string' => [
 				'name'     => 'array_type',

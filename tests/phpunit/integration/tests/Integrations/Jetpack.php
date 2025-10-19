@@ -275,7 +275,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	/**
 	 * @return array<int|string, array<int|float|string>>
 	 */
-	public function data_format_milliseconds(): array {
+	public static function data_format_milliseconds(): array {
 		return [
 			'5000'     => [
 				5000,

@@ -72,7 +72,7 @@ class Story_Revisions extends DependencyInjectedTestCase {
 	/**
 	 * @return array<array{num: mixed, expected: int}>
 	 */
-	public function data_test_revisions_to_keep(): array {
+	public static function data_test_revisions_to_keep(): array {
 		return [
 			[
 				'num'      => 0,

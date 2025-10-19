@@ -476,7 +476,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 *
 	 * @return array<string, array{url: string, cb_safe_ports?: callable}>
 	 */
-	public function data_validate_url_should_validate(): array {
+	public static function data_validate_url_should_validate(): array {
 		return [
 			'no port specified'                 => [
 				'url' => 'http://example.com/caniload.php',
@@ -486,7 +486,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			],
 			'a port considered safe by filter'  => [
 				'url'           => 'https://example.com:81/caniload.php',
-				'cb_safe_ports' => [ $this, 'callback_custom_safe_ports' ],
+				'cb_safe_ports' => [ self::class, 'callback_custom_safe_ports' ],
 			],
 		];
 	}
@@ -549,7 +549,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 *
 	 * @return array<string, array{url: string, cb_safe_ports?: callable}>
 	 */
-	public function data_validate_url_should_not_validate(): array {
+	public static function data_validate_url_should_not_validate(): array {
 		return [
 			'url as string 0'                              => [
 				'url' => '0',
@@ -589,11 +589,11 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			],
 			'a port not considered safe by filter'         => [
 				'url'           => 'https://example.com:82/caniload.php',
-				'cb_safe_ports' => [ $this, 'callback_custom_safe_ports' ],
+				'cb_safe_ports' => [ self::class, 'callback_custom_safe_ports' ],
 			],
 			'all safe ports removed by filter'             => [
 				'url'           => 'https://example.com:81/caniload.php',
-				'cb_safe_ports' => [ $this, 'callback_remove_safe_ports' ],
+				'cb_safe_ports' => [ self::class, 'callback_remove_safe_ports' ],
 			],
 		];
 	}
@@ -601,14 +601,14 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @return array<int>
 	 */
-	public function callback_custom_safe_ports(): array {
+	public static function callback_custom_safe_ports(): array {
 		return [ 81, 444, 8081 ];
 	}
 
 	/**
 	 * @return array<int>
 	 */
-	public function callback_remove_safe_ports(): array {
+	public static function callback_remove_safe_ports(): array {
 		return [];
 	}
 }

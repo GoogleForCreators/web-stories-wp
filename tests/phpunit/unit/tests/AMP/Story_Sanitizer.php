@@ -312,7 +312,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @return array<string, array<int, string>>
 	 */
-	public function data_test_transform_a_tags(): array {
+	public static function data_test_transform_a_tags(): array {
 		return [
 			'Link without rel or target attribute' => [
 				'<html><head></head><body><a href="https://www.google.com">Google</a></body></html>',
@@ -793,7 +793,7 @@ HTML;
 	/**
 	 * @return array<string, array<int, string>>
 	 */
-	public function data_test_sanitize_title_and_meta_description(): array {
+	public static function data_test_sanitize_title_and_meta_description(): array {
 		return [
 			'Both title tag and description present'      => [
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"><title>Existing title</title><meta name="description" content="Existing description"></head><body></body></html>',
