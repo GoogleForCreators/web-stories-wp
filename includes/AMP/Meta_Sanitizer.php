@@ -76,6 +76,7 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 			$style->parentNode->removeChild( $style ); // So we can move it.
 		}
 		if ( $style ) {
+			// @phpstan-ignore argument.type
 			$this->dom->head->appendChild( $style );
 		}
 
@@ -99,6 +100,7 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 		}
 
 		if ( $noscript ) {
+			// @phpstan-ignore argument.type
 			$this->dom->head->appendChild( $noscript );
 		}
 	}

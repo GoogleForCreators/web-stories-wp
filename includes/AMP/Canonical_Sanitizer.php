@@ -67,6 +67,7 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 			for ( $i = 1; $i < $query->length; $i++ ) {
 				$node = $query->item( $i );
 				if ( $node ) {
+					// @phpstan-ignore argument.type
 					$this->dom->head->removeChild( $node );
 				}
 			}
