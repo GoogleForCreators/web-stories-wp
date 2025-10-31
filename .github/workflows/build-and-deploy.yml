@@ -244,18 +244,3 @@ jobs:
           github.event.pull_request.draft == false &&
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]'
-
-      # Deploy to staging site if on main branch.
-
-      - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@a6f90b1f127823b31d4d4a8d96047790581349bd
-        with:
-          ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-      - name: Deploy to staging
-        run: |
-          rm -rf build/web-stories
-          mv build/web-stories-regular/* build/web-stories
-          bash bin/deploy-to-test-environment.sh
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
