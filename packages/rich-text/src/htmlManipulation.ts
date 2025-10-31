@@ -123,6 +123,7 @@ export function sanitizeEditorHtml(html: string) {
           entities: [],
           maxNesting: 1,
           whitespacedCharacters: [],
+          blockTextRules: [],
         },
         editorState
       )
