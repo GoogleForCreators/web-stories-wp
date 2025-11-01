@@ -30,7 +30,7 @@
     "@emotion/is-prop-valid": "^1.4.0",
     "@googleforcreators/tracking": "*",
     "@wordpress/element": "^6.32.0",
-    "@wordpress/i18n": "^5.22.0",
+    "@wordpress/i18n": "^6.7.0",
     "flagged": "^2.0.10",
     "polished": "^4.3.1",
     "styled-components": "^6.0.7",
