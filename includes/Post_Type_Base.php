@@ -161,6 +161,8 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * Post type slug.
 	 *
 	 * @since 1.14.0
+	 *
+	 * @phpstan-return lowercase-string&non-empty-string
 	 */
 	abstract public function get_slug(): string;
 
