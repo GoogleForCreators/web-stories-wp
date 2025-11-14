@@ -45,8 +45,15 @@ class Dashboard extends DependencyInjectedTestCase {
 
 	protected static int $user_id;
 
+	/**
+	 * @var lowercase-string&non-empty-string
+	 */
 	protected static string $cpt_has_archive = 'cpt_has_archive';
-	protected static string $cpt_no_archive  = 'cpt_no_archive';
+
+	/**
+	 * @var lowercase-string&non-empty-string
+	 */
+	protected static string $cpt_no_archive = 'cpt_no_archive';
 
 	private \Google\Web_Stories\Admin\Dashboard $instance;
 
