@@ -102,10 +102,10 @@ function OutputStory({
           poster-portrait-src={featuredMediaUrl}
           background-audio={backgroundAudio?.resource?.src ?? undefined}
         >
-          {pages.map((page) => (
+          {pages.map((page, index) => (
             <OutputPage
               key={page.id}
-              page={page}
+              page={index === 0 ? { ...page, animations: undefined } : page}
               defaultAutoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
               flags={flags}

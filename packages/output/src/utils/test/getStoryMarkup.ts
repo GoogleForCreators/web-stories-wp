@@ -119,6 +119,54 @@ describe('getStoryMarkup', () => {
           } as TextElement,
         ],
       },
+      {
+        id: '2',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        animations: [
+          {
+            id: '1',
+            targets: ['2'],
+            type: AnimationType.Bounce,
+            duration: 1000,
+          },
+          { id: '2', targets: ['2'], type: AnimationType.Spin, duration: 1000 },
+        ],
+        elements: [
+          {
+            id: '2',
+            type: ElementType.Text,
+            x: 0,
+            y: 0,
+            width: 211,
+            height: 221,
+            rotationAngle: 1,
+            content: 'Hello World',
+            font: {
+              family: 'Roboto',
+              service: FontService.GoogleFonts,
+              fallbacks: ['Arial', 'sans-serif'],
+            },
+            color: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+                a: 0.5,
+              },
+            },
+            padding: {
+              locked: false,
+              vertical: 0,
+              horizontal: 0,
+            },
+            marginOffset: 0,
+            fontSize: 10,
+            lineHeight: 1,
+            textAlign: 'center',
+            backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          } as TextElement,
+        ],
+      },
     ];
     const markup = getStoryMarkup(story, pages, metadata);
     expect(markup).toContain('Hello World');

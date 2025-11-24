@@ -471,6 +471,39 @@ trait Sanitization_Utils {
 	}
 
 	/**
+	 * Adds CSS to reset animations for elements on the first page.
+	 *
+	 * Animations on the first page of a story are not allowed,
+	 * and removed at both the creation & serialization level (in the output package),
+	 * as well as the renderer (in AMP itself).
+	 *
+	 * This inline CSS adds another layer of defense, especially for older stories
+	 * that might still have some animation data on the first page.
+	 *
+	 * @since 1.43.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 */
+	private function disable_first_page_animations( $document ): void {
+		$animated_elements = $document->xpath->query( './/div[ contains( @class, "animation-wrapper" ) ]' );
+
+		if ( ! $animated_elements || 0 === $animated_elements->length ) {
+			return;
+		}
+
+		$style_element = $document->createElement( 'style' );
+
+		if ( ! $style_element ) {
+			return;
+		}
+
+		$style_rule = $document->createTextNode( 'amp-story-page:first-of-type .animation-wrapper { --initial-opacity: 1; --initial-transform: none; }' );
+		$style_element->appendChild( $style_rule );
+
+		$document->head->appendChild( $style_element );
+	}
+
+	/**
 	 * Enables using video cache by adding the necessary attribute to `<amp-video>`
 	 *
 	 * @since 1.10.0
