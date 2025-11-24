@@ -55,6 +55,7 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 		$this->add_poster_images( $this->dom, $this->args['poster_images'] );
 		// This needs to be called before use_semantic_heading_tags() because it relies on the style attribute.
 		$this->deduplicate_inline_styles( $this->dom );
+		$this->disable_first_page_animations( $this->dom );
 		$this->add_video_cache( $this->dom, $this->args['video_cache'] );
 		$this->remove_blob_urls( $this->dom );
 		$this->sanitize_srcset( $this->dom );
