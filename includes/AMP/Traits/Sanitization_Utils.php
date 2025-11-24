@@ -485,6 +485,12 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 */
 	private function disable_first_page_animations( $document ): void {
+		$animated_elements = $document->xpath->query( './/div[ contains( @class, "animation-wrapper" ) ]' );
+
+		if ( ! $animated_elements || 0 === $animated_elements->length ) {
+			return;
+		}
+
 		$style_element = $document->createElement( 'style' );
 
 		if ( ! $style_element ) {
