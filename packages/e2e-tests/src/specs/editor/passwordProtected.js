@@ -73,7 +73,7 @@ describe('Password protected stories', () => {
     await previewPage.focus('input[name="post_password"]');
 
     await expect(previewPage).toMatchTextContent(
-      'This content is password protected'
+      /This content is password[- ]protected/
     );
 
     await expect(previewPage).toFill('input[name="post_password"]', 'password');
