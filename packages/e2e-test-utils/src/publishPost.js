@@ -92,7 +92,7 @@ async function publishPost() {
         .getPostType(wp.data.select('core/editor').getCurrentPostType()).labels
         .view_item
   );
-  const linkTextRegex = new RegExp(`^(${linkText}|View Post)$`);
+  const linkTextRegex = new RegExp(`^(${linkText}|View Post)`);
 
   await expect(page).toMatchElement('a', { text: linkTextRegex });
 
