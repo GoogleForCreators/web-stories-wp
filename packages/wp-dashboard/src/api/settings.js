@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/url';
+import { addsettingsArgs } from '@googleforcreators/url';
 
 /**
  * WordPress dependencies
@@ -66,10 +66,10 @@ export function fetchSettings(apiPath) {
  * Update settings.
  *
  * @param {string} apiPath API path.
- * @param {Object} queryParams Query parameters to apply to URL.
+ * @param {Object} settingsParams Settings to update.
  * @return {Promise} Request promise.
  */
-export function updateSettings(apiPath, queryParams) {
+export function updateSettings(apiPath, settingsParams) {
   const {
     googleAnalyticsId,
     usingLegacyAnalytics,
@@ -88,82 +88,81 @@ export function updateSettings(apiPath, queryParams) {
     autoAdvance,
     defaultPageDuration,
     googleAnalyticsHandler,
-  } = queryParams;
+  } = settingsParams;
 
-  const query = {};
+  const settings = {};
 
   if (googleAnalyticsId !== undefined) {
-    query.web_stories_ga_tracking_id = googleAnalyticsId;
+    settings.web_stories_ga_tracking_id = googleAnalyticsId;
   }
 
   if (usingLegacyAnalytics !== undefined) {
-    query.web_stories_using_legacy_analytics = usingLegacyAnalytics;
+    settings.web_stories_using_legacy_analytics = usingLegacyAnalytics;
   }
 
   if (adSensePublisherId !== undefined) {
-    query.web_stories_adsense_publisher_id = adSensePublisherId;
+    settings.web_stories_adsense_publisher_id = adSensePublisherId;
   }
 
   if (adSenseSlotId !== undefined) {
-    query.web_stories_adsense_slot_id = adSenseSlotId;
+    settings.web_stories_adsense_slot_id = adSenseSlotId;
   }
 
   if (adManagerSlotId !== undefined) {
-    query.web_stories_ad_manager_slot_id = adManagerSlotId;
+    settings.web_stories_ad_manager_slot_id = adManagerSlotId;
   }
 
   if (mgidWidgetId !== undefined) {
-    query.web_stories_mgid_widget_id = mgidWidgetId;
+    settings.web_stories_mgid_widget_id = mgidWidgetId;
   }
 
   if (adNetwork !== undefined) {
-    query.web_stories_ad_network = adNetwork;
+    settings.web_stories_ad_network = adNetwork;
   }
 
   if (videoCache !== undefined) {
-    query.web_stories_video_cache = Boolean(videoCache);
+    settings.web_stories_video_cache = Boolean(videoCache);
   }
 
   if (dataRemoval !== undefined) {
-    query.web_stories_data_removal = Boolean(dataRemoval);
+    settings.web_stories_data_removal = Boolean(dataRemoval);
   }
 
   if (archive !== undefined) {
-    query.web_stories_archive = archive;
+    settings.web_stories_archive = archive;
   }
 
   if (archivePageId !== undefined) {
-    query.web_stories_archive_page_id = archivePageId;
+    settings.web_stories_archive_page_id = archivePageId;
   }
 
   if (shoppingProvider !== undefined) {
-    query.web_stories_shopping_provider = shoppingProvider;
+    settings.web_stories_shopping_provider = shoppingProvider;
   }
 
   if (shopifyHost !== undefined) {
-    query.web_stories_shopify_host = shopifyHost;
+    settings.web_stories_shopify_host = shopifyHost;
   }
 
   if (shopifyAccessToken !== undefined) {
-    query.web_stories_shopify_access_token = shopifyAccessToken;
+    settings.web_stories_shopify_access_token = shopifyAccessToken;
   }
 
   if (autoAdvance !== undefined) {
-    query.web_stories_auto_advance = Boolean(autoAdvance);
+    settings.web_stories_auto_advance = Boolean(autoAdvance);
   }
 
   if (defaultPageDuration !== undefined) {
-    query.web_stories_default_page_duration = defaultPageDuration;
+    settings.web_stories_default_page_duration = defaultPageDuration;
   }
 
   if (googleAnalyticsHandler !== undefined) {
-    query.web_stories_ga_tracking_handler = googleAnalyticsHandler;
+    settings.web_stories_ga_tracking_handler = googleAnalyticsHandler;
   }
 
-  const path = addQueryArgs(apiPath, query);
-
   return apiFetch({
-    path,
+    path: apiPath,
     method: 'POST',
+    data: settings,
   }).then(transformSettingResponse);
 }
