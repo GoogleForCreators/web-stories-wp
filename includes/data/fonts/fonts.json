@@ -7280,7 +7280,7 @@
       "tAsc": 986,
       "tDes": -1014,
       "tLGap": 0,
-      "wAsc": 1203,
+      "wAsc": 1290,
       "wDes": 1014,
       "xH": 472,
       "capH": 722,
@@ -13106,6 +13106,50 @@
     }
   },
   {
+    "family": "Elms Sans",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900],
+      [1, 100],
+      [1, 200],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700],
+      [1, 800],
+      [1, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -300,
+      "tAsc": 1000,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 1230,
+      "wDes": 330,
+      "xH": 480,
+      "capH": 700,
+      "yMin": -330,
+      "yMax": 1156,
+      "hAsc": 1000,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Elsie",
     "fallbacks": ["cursive"],
     "weights": [400, 900],
@@ -16926,6 +16970,31 @@
       "capH": 1432,
       "yMin": -811,
       "yMax": 2303,
+      "hAsc": 1932,
+      "hDes": -572,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Google Sans Flex",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 1932,
+      "des": -572,
+      "tAsc": 1932,
+      "tDes": -572,
+      "tLGap": 0,
+      "wAsc": 2452,
+      "wDes": 999,
+      "xH": 1020,
+      "capH": 1432,
+      "yMin": -605,
+      "yMax": 2200,
       "hAsc": 1932,
       "hDes": -572,
       "lGap": 0
@@ -22056,6 +22125,38 @@
     }
   },
   {
+    "family": "Kedebideri",
+    "fallbacks": ["sans-serif"],
+    "weights": [400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -250,
+      "tAsc": 1000,
+      "tDes": -250,
+      "tLGap": 0,
+      "wAsc": 1000,
+      "wDes": 250,
+      "xH": 668,
+      "capH": 668,
+      "yMin": -247,
+      "yMax": 976,
+      "hAsc": 1000,
+      "hDes": -250,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Kelly Slab",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -24120,12 +24221,17 @@
   {
     "family": "Libre Baskerville",
     "fallbacks": ["serif"],
-    "weights": [400, 700],
+    "weights": [400, 500, 600, 700],
     "styles": ["regular", "italic"],
     "variants": [
       [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
       [1, 400],
-      [0, 700]
+      [1, 500],
+      [1, 600],
+      [1, 700]
     ],
     "service": "fonts.google.com",
     "metrics": {
@@ -24135,7 +24241,7 @@
       "tAsc": 970,
       "tDes": -270,
       "tLGap": 0,
-      "wAsc": 1213,
+      "wAsc": 1182,
       "wDes": 270,
       "xH": 530,
       "capH": 770,
@@ -46815,6 +46921,41 @@
     }
   },
   {
+    "family": "Science Gothic",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 2176,
+      "des": -776,
+      "tAsc": 2176,
+      "tDes": -776,
+      "tLGap": 0,
+      "wAsc": 2263,
+      "wDes": 708,
+      "xH": 1000,
+      "capH": 1400,
+      "yMin": -619,
+      "yMax": 2173,
+      "hAsc": 2176,
+      "hDes": -776,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Scope One",
     "fallbacks": ["serif"],
     "weights": [400],
@@ -49433,6 +49574,102 @@
       "yMin": -306,
       "yMax": 1006,
       "hAsc": 950,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Stack Sans Headline",
+    "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -300,
+      "tAsc": 1000,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 960,
+      "wDes": 273,
+      "xH": 560,
+      "capH": 700,
+      "yMin": -242,
+      "yMax": 955,
+      "hAsc": 1000,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Stack Sans Notch",
+    "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -300,
+      "tAsc": 1000,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 960,
+      "wDes": 273,
+      "xH": 560,
+      "capH": 700,
+      "yMin": -242,
+      "yMax": 955,
+      "hAsc": 1000,
+      "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Stack Sans Text",
+    "fallbacks": ["sans-serif"],
+    "weights": [200, 300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1000,
+      "des": -300,
+      "tAsc": 1000,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 960,
+      "wDes": 273,
+      "xH": 560,
+      "capH": 700,
+      "yMin": -242,
+      "yMax": 955,
+      "hAsc": 1000,
       "hDes": -300,
       "lGap": 0
     }
