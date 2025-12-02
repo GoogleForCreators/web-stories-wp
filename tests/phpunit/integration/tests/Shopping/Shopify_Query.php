@@ -336,7 +336,6 @@ class Shopify_Query extends DependencyInjectedTestCase {
 
 		$this->assertNotWPError( $actual );
 		$this->assertEmpty( $actual['products'] );
-		$this->assertCount( 0, $actual['products'] );
 		$this->assertSame( 1, $this->request_count );
 		$this->assertStringContainsString( 'query: "title:*some search term*"', $this->request_body );
 	}
@@ -372,8 +371,8 @@ class Shopify_Query extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @param string[] $args
-	 * @param string[] $expected
+	 * @param array{0: string, 1: int, 2: int, 3: string, 4: string} $args
+	 * @param string[]               $expected
 	 *
 	 * @covers ::fetch_remote_products
 	 * @covers ::get_search

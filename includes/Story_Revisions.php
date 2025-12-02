@@ -93,7 +93,7 @@ class Story_Revisions extends Service_Base {
 	 *
 	 * @since 1.25.0
 	 *
-	 * @param int|bool $num Number of revisions to store.
+	 * @param int|bool|string $num Number of revisions to store.
 	 * @return int Number of revisions to store.
 	 */
 	public function revisions_to_keep( $num ): int {

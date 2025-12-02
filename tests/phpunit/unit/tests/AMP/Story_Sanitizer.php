@@ -276,7 +276,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
-	 * @param array<string, array<string|array<string, mixed>>>  $args   Args
+	 * @param array<string, array<string, mixed>|string|false>  $args   Args
 	 *
 	 * @dataProvider get_publisher_data
 	 * @covers ::sanitize
