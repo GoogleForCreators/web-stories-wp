@@ -84,7 +84,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a
+        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2
         with:
           disable-file-monitoring: true
           egress-policy: audit
@@ -104,14 +104,14 @@ jobs:
             dl.cloudsmith.io:443
 
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3
 
       # PHP-Scoper only works on PHP 7.4+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
       - name: Setup PHP 8.0
-        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1
         with:
           php-version: latest
           tools: composer
@@ -125,7 +125,7 @@ jobs:
         run: rm -rf vendor/*
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql
