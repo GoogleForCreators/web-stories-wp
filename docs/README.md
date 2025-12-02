@@ -5,10 +5,6 @@
 * [Getting Started](./getting-started.md)
 * [Glossary](./glossary.md)
 
-## Contributing
-
-* [Onboarding](./onboarding.md)
-
 ## Maintenance
 
 * [CDN Assets](./cdn.md)
