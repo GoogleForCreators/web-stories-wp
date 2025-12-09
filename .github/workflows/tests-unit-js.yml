@@ -51,7 +51,7 @@ jobs:
         shard: ['1/2', '2/2']
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2
+        uses: step-security/harden-runner@df199fb7be9f65074067a9eb93f12bb4c5547cf2
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -67,10 +67,10 @@ jobs:
             fonts.gstatic.com:443
 
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
 
       - name: Setup Node
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f
         with:
           node-version-file: '.nvmrc'
           cache: npm
