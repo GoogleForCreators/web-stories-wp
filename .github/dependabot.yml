@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
-      interval: monthly
+      interval: quarterly
     open-pull-requests-limit: 10
     labels:
       - Dependencies
@@ -15,7 +15,7 @@ updates:
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: monthly
+      interval: quarterly
     open-pull-requests-limit: 15
     labels:
       - Dependencies
@@ -93,7 +93,7 @@ updates:
   - package-ecosystem: composer
     directory: '/'
     schedule:
-      interval: monthly
+      interval: quarterly
     open-pull-requests-limit: 10
     labels:
       - Dependencies
