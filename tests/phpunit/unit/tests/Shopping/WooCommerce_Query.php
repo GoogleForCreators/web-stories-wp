@@ -64,8 +64,6 @@ class WooCommerce_Query extends TestCase {
 	 * @covers ::get_search
 	 */
 	public function test_products_image(): void {
-		$this->markTestSkipped( 'Currently failing, needs investigation' );
-
 		Monkey\Functions\stubs(
 			[
 				'wc_get_products'             => static function () {
