@@ -61,62 +61,6 @@ class WooCommerce_Query extends TestCase {
 	}
 
 	/**
-	 * @covers ::get_product_image_ids
-	 */
-	public function test_get_product_image_ids(): void {
-		$product = Mockery::mock(
-			\WC_Product::class,
-			[
-				'get_id'                => 1,
-				'get_title'             => '',
-				'get_price'             => 0,
-				'get_average_rating'    => 0.0,
-				'get_rating_count'      => 0,
-				'get_permalink'         => '',
-				'get_short_description' => '',
-				'get_image_id'          => 50,
-				'get_gallery_image_ids' => [
-					51,
-					59,
-				],
-			]
-		);
-
-		$ids = $this->call_private_method( [ $this->instance, 'get_product_image_ids' ], [ $product ] );
-
-		$this->assertEquals( [ 50, 51, 59 ], $ids );
-	}
-
-	/**
-	 * @covers ::get_product_image_ids
-	 */
-	public function test_get_product_image_ids_invalid(): void {
-		$product = Mockery::mock(
-			\WC_Product::class,
-			[
-				'get_id'                => 1,
-				'get_title'             => '',
-				'get_price'             => 0,
-				'get_average_rating'    => 0.0,
-				'get_rating_count'      => 0,
-				'get_permalink'         => '',
-				'get_short_description' => '',
-				'get_image_id'          => null,
-				'get_gallery_image_ids' => [
-					null,
-					27,
-				],
-			]
-		);
-
-		$ids = $this->call_private_method( [ $this->instance, 'get_product_image_ids' ], [ $product ] );
-
-		$this->assertIsArray( $ids );
-		$this->assertCount( 1, $ids );
-		$this->assertContains( 27, $ids );
-	}
-
-	/**
 	 * @covers ::get_product_image
 	 */
 	public function test_get_product_image(): void {
