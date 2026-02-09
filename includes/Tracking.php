@@ -151,14 +151,7 @@ class Tracking extends Service_Base {
 			false
 		);
 
-		if ( ! $this->context->is_story_editor() && 'web-story' !== $this->context->get_screen_post_type() ) {
-			return;
-		}
-
-		wp_add_inline_script(
-			self::SCRIPT_HANDLE,
-			'window.webStoriesTrackingSettings = ' . wp_json_encode( $this->get_settings() ) . ';'
-		);
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 	}
 
 	/**
@@ -169,7 +162,36 @@ class Tracking extends Service_Base {
 	 * @return string Registration action to use.
 	 */
 	public static function get_registration_action(): string {
-		return 'admin_head';
+		return 'init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.43.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority(): int {
+		return 1;
+	}
+
+	/**
+	 * Enqueues tracking scripts
+	 *
+	 * @since 1.43.0
+	 *
+	 * @param string $hook_suffix The current admin page.
+	 */
+	public function enqueue_assets( string $hook_suffix ): void {
+		if ( ! $this->context->is_story_editor() && 'web-story' !== $this->context->get_screen_post_type() ) {
+			return;
+		}
+
+		wp_add_inline_script(
+			self::SCRIPT_HANDLE,
+			'window.webStoriesTrackingSettings = ' . wp_json_encode( $this->get_settings() ) . ';'
+		);
 	}
 
 	/**
