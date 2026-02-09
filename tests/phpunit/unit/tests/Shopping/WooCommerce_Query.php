@@ -24,7 +24,6 @@ use Brain\Monkey;
 use Google\Web_Stories\Integrations\WooCommerce;
 use Google\Web_Stories\Tests\Shared\Private_Access;
 use Google\Web_Stories\Tests\Unit\TestCase;
-use Mockery;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shopping\WooCommerce_Query
