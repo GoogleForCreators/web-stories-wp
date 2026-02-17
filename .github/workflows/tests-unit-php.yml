@@ -118,12 +118,16 @@ jobs:
 
       - name: Verify MariaDB connection
         run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"${{ job.services.mysql.ports[3306] }}" --silent; do
+          while ! mysqladmin ping -h"127.0.0.1" -P"${JOB_SERVICES_MYSQL_3307TH_PORTS}" --silent; do
             sleep 1
           done
+        env:
+          JOB_SERVICES_MYSQL_3307TH_PORTS: ${{ job.services.mysql.ports[3306] }}
 
       - name: Set up tests
-        run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
+        run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${JOB_SERVICES_MYSQL_PORTS_3306} ${{ matrix.wp }} true
+        env:
+          JOB_SERVICES_MYSQL_PORTS_3306: ${{ job.services.mysql.ports['3306'] }}
 
       # 1. Installs PHPUnit 7.5 and patches it to run on PHP 8.
       # 2. Dumps autoloader so mcaskill/composer-plugin-exclude-files is triggered.

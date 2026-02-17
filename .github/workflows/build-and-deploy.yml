@@ -212,7 +212,7 @@ jobs:
         run: |
           git add .
           git status
-          git commit -m "Build and publish ${{ github.ref }}"
+          git commit -m "Build and publish ${GITHUB_REF}"
           git pull --no-edit --quiet
           git push origin master
         env:
