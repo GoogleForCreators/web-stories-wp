@@ -63,7 +63,7 @@ const Spinner = styled.div`
 
 export const TEXT = {
   HOST_CONTEXT: sprintf(
-    /* translators: 1: first example. 2: second example. */
+    /* translators: 1: "https://". 2: "www.". 3: "yourstore.myshopify.com". */
     __(
       'Without <code>%1$s</code> or <code>%2$s</code>. Example: %3$s. <a>Find your URL</a>.',
       'web-stories'

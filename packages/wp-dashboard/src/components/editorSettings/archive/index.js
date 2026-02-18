@@ -228,7 +228,7 @@ export default function ArchiveSettings({
                   )
                 : sprintf(
                     /* translators: %s: archive url. */
-                    __('Visit archive page at <a>%1$s</a>.', 'web-stories'),
+                    __('Visit archive page at <a>%s</a>.', 'web-stories'),
                     defaultArchiveURL
                   )}
             </TranslateWithMarkup>
