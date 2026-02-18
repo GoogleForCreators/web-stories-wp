@@ -181,9 +181,6 @@ return [
 	// See: https://github.com/humbug/php-scoper#patchers.
 	'patchers'          => [],
 
-	// See https://github.com/humbug/php-scoper#whitelist.
-	'whitelist'         => [],
-
 	'exclude-classes'   => $wp_classes,
 
 	'exclude-functions' => $wp_functions,
