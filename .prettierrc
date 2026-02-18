@@ -1,4 +1,5 @@
 {
+  "plugins": ["@prettier/plugin-xml"],
   "printWidth": 80,
   "singleQuote": true,
   "trailingComma": "es5",
