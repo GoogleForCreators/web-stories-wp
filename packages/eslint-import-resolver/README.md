@@ -10,7 +10,7 @@ Example usage:
     "import/resolver": {
       "@web-stories-wp/eslint-import-resolver": {
         "mapping": {
-          "^@foo\\/(.*)": "./packages/$1/src/",
+          "^@foo\\/(.*)": "./packages/$1/src/"
         }
       }
     }

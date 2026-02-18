@@ -42,7 +42,8 @@
   </rule>
 
   <rule ref="WordPress.Security.EscapeOutput.OutputNotEscaped">
-    <exclude-pattern>includes/Infrastructure/Injector/SimpleInjector.php</exclude-pattern>
+    <exclude-pattern
+    >includes/Infrastructure/Injector/SimpleInjector.php</exclude-pattern>
   </rule>
 
   <rule ref="WordPress.WP.AlternativeFunctions">

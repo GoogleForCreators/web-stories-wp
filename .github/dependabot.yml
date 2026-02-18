@@ -41,12 +41,12 @@ updates:
           - 'babel-plugin-react-compiler'
       oxlint:
         patterns:
-        - 'oxlint'
-        - 'eslint-plugin-oxlint'
+          - 'oxlint'
+          - 'eslint-plugin-oxlint'
       react-compiler:
         patterns:
-        - '*-react-compiler'
-        - 'react-compiler-*'
+          - '*-react-compiler'
+          - 'react-compiler-*'
     ignore:
       # styled-components is not yet compatible.
       - dependency-name: 'stylis-plugin-rtl'
@@ -83,12 +83,12 @@ updates:
       # Needs manual update
       - dependency-name: 'styled-components'
         versions:
-        - '>= 6'
+          - '>= 6'
 
       # Needs manual update
       - dependency-name: 'eslint'
         versions:
-        - '>= 9'
+          - '>= 9'
 
   - package-ecosystem: composer
     directory: '/'

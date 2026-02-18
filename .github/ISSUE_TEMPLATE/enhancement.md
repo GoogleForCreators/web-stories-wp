@@ -4,7 +4,6 @@ about: Suggest an idea for this project.
 title: ''
 labels: 'Type: Enhancement'
 assignees: ''
-
 ---
 
 <!-- NOTE: For help requests, support questions, or general feedback, please use the WordPress.org forums instead: https://wordpress.org/support/plugin/web-stories/ -->
