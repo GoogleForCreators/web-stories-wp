@@ -76,7 +76,7 @@ export const ACCESSIBILITY_COPY = {
   fontSizeTooSmall: {
     title: sprintf(
       /* translators: %d: minimum font size. */
-      __('Increase font size to %s or above', 'web-stories'),
+      __('Increase font size to %d or above', 'web-stories'),
       MIN_FONT_SIZE
     ),
     footer: sprintf(

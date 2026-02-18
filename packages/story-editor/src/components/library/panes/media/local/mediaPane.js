@@ -210,7 +210,7 @@ function MediaPane(props) {
             {isSearching && media.length > 0 && (
               <SearchCount>
                 {sprintf(
-                  /* translators: %d: number of results. */
+                  /* translators: %s: number of results. */
                   _n(
                     '%s result found.',
                     '%s results found.',

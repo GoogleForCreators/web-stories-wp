@@ -137,7 +137,7 @@ function BasicColorList({
             const title = !isEditMode
               ? patternAsBackground
               : sprintf(
-                  /* translators: First %s is the color type, second %s is the color as a string */
+                  /* translators: 1: the color type. 2: the color as a string */
                   __('Delete %1$s color: %2$s', 'web-stories'),
                   colorType,
                   patternAsBackground

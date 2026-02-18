@@ -60,7 +60,7 @@ function DurationIndicator() {
     <Tooltip
       position={Placement.Top}
       title={sprintf(
-        /* translators: %s: number of minutes */
+        /* translators: %d: number of minutes */
         _n(
           'Maximum duration is %d minute',
           'Maximum duration is %d minutes',

@@ -296,7 +296,7 @@ function EditorSettings() {
         const errorText =
           files.length === 1
             ? sprintf(
-                /* translators: 1: minimum width, 2: minimum height */
+                /* translators: %s: image dimensions in pixels. */
                 __(
                   'Sorry, this file is too small. Make sure your logo is larger than %s.',
                   'web-stories'

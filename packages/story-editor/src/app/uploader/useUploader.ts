@@ -102,7 +102,7 @@ function useUploader() {
         // The file is too large for the site anyway, abort.
         if (!isFileSizeWithinLimits(file)) {
           const message = sprintf(
-            /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
+            /* translators: 1: the file size in MB. 2: is the upload file limit in MB */
             __(
               'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
               'web-stories'
