@@ -35,21 +35,24 @@ import type {
   UnionElementV3,
 } from './v0003_fullbleedToFill';
 
-export interface VideoElementV4
-  extends Omit<
-    VideoElementV3,
-    'src' | 'origRatio' | 'mimeType' | 'videoId' | 'poster' | 'posterId'
-  > {
+export interface VideoElementV4 extends Omit<
+  VideoElementV3,
+  'src' | 'origRatio' | 'mimeType' | 'videoId' | 'poster' | 'posterId'
+> {
   resource: VideoResourceV0;
 }
 
-export interface GifElementV4
-  extends Omit<GifElementV3, 'src' | 'origRatio' | 'mimeType'> {
+export interface GifElementV4 extends Omit<
+  GifElementV3,
+  'src' | 'origRatio' | 'mimeType'
+> {
   resource: GifResourceV0;
 }
 
-export interface ImageElementV4
-  extends Omit<ImageElementV3, 'src' | 'origRatio' | 'mimeType'> {
+export interface ImageElementV4 extends Omit<
+  ImageElementV3,
+  'src' | 'origRatio' | 'mimeType'
+> {
   resource: ImageResourceV0;
 }
 

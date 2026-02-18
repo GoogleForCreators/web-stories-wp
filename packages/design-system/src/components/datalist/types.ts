@@ -92,11 +92,10 @@ export interface OptionsContainerProps<O> {
   containerStyleOverrides?: StyleOverride;
 }
 
-export interface SearchInputProps
-  extends Omit<
-    ComponentPropsWithoutRef<'input'>,
-    'type' | 'role' | 'aria-autocomplete' | 'onChange'
-  > {
+export interface SearchInputProps extends Omit<
+  ComponentPropsWithoutRef<'input'>,
+  'type' | 'role' | 'aria-autocomplete' | 'onChange'
+> {
   isExpanded: boolean;
   onClose: () => void;
   focusFontListFirstOption?: () => void;

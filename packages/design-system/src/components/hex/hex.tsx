@@ -39,8 +39,10 @@ import type {
 import { useKeyDownEffect } from '../keyboard';
 import { Input } from '../input';
 
-interface HexProps
-  extends Omit<ComponentPropsWithoutRef<'input'>, 'value' | 'onChange'> {
+interface HexProps extends Omit<
+  ComponentPropsWithoutRef<'input'>,
+  'value' | 'onChange'
+> {
   value: Solid;
   onChange: (color: Solid) => void;
 }

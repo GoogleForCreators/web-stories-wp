@@ -214,8 +214,9 @@ const ButtonInner = styled(Popover)<{
   }
 `;
 
-export interface AnimationContainerProps
-  extends ComponentPropsWithoutRef<typeof ButtonInner> {
+export interface AnimationContainerProps extends ComponentPropsWithoutRef<
+  typeof ButtonInner
+> {
   isOpen?: boolean;
 }
 

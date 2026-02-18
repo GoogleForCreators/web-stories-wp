@@ -29,8 +29,10 @@ import type {
   VideoElementV14,
 } from './v0014_oneTapLinkDeprecate';
 
-export interface TextElementV15
-  extends Omit<TextElementV14, 'fontFamily' | 'fontFallback'> {
+export interface TextElementV15 extends Omit<
+  TextElementV14,
+  'fontFamily' | 'fontFallback'
+> {
   font: {
     service: string;
     family: string;

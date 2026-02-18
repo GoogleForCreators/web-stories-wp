@@ -702,8 +702,8 @@ function useFFmpeg() {
    */
   const isTranscodingEnabled = Boolean(
     hasUploadMediaAction &&
-      isUserSettingEnabled &&
-      isCrossOriginIsolationEnabled
+    isUserSettingEnabled &&
+    isCrossOriginIsolationEnabled
   );
 
   return useMemo(

@@ -54,8 +54,10 @@ export type UnionElementV18 =
 export interface StoryV18 extends Omit<StoryV17, 'pages'> {
   pages: PageV18[];
 }
-export interface PageV18
-  extends Omit<PageV17, 'elements' | 'backgroundElementId'> {
+export interface PageV18 extends Omit<
+  PageV17,
+  'elements' | 'backgroundElementId'
+> {
   elements: UnionElementV18[];
   defaultBackgroundElement?: ShapeElementV18;
 }

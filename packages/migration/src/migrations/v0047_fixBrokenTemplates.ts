@@ -47,7 +47,9 @@ function fixBrokenPage({ elements, animations, ...rest }: PageV46): PageV47 {
     elements: fixElementOrder(elements.concat()),
     ...(animations
       ? {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access -- False positives.
           animations: animations.filter((animation) =>
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- False positive.
             removeBrokenAnimation(animation, elementIds)
           ),
         }

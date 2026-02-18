@@ -26,30 +26,27 @@ type AmpLayout =
   | 'responsive'
   | 'container';
 
-interface AmpHTMLHtmlElement
-  extends React.DetailedHTMLProps<
-    React.HtmlHTMLAttributes<HTMLHtmlElement>,
-    HTMLHtmlElement
-  > {
+interface AmpHTMLHtmlElement extends React.DetailedHTMLProps<
+  React.HtmlHTMLAttributes<HTMLHtmlElement>,
+  HTMLHtmlElement
+> {
   amp: string;
 }
 
-interface AmpVideo
-  extends React.DetailedHTMLProps<
-    Omit<React.VideoHTMLAttributes<HTMLVideoElement>, 'loop'>,
-    HTMLVideoElement
-  > {
+interface AmpVideo extends React.DetailedHTMLProps<
+  Omit<React.VideoHTMLAttributes<HTMLVideoElement>, 'loop'>,
+  HTMLVideoElement
+> {
   layout: AmpLayout;
   'captions-id'?: string;
   autoplay?: 'autoplay';
   loop?: 'loop';
 }
 
-interface AmpImg
-  extends React.DetailedHTMLProps<
-    React.ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  > {
+interface AmpImg extends React.DetailedHTMLProps<
+  React.ImgHTMLAttributes<HTMLImageElement>,
+  HTMLImageElement
+> {
   layout: AmpLayout;
   'disable-inline-width'?: boolean;
 }

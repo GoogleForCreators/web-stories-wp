@@ -54,8 +54,9 @@ const StyledLink = styled(BaseLink)`
   }
 `;
 
-export interface MenuLinkProps
-  extends ComponentPropsWithoutRef<typeof StyledLink> {
+export interface MenuLinkProps extends ComponentPropsWithoutRef<
+  typeof StyledLink
+> {
   id?: string;
   href: string;
   onClick?: (evt: SyntheticEvent<HTMLElement>) => void;

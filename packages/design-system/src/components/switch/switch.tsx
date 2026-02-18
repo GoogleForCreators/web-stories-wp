@@ -146,11 +146,10 @@ const RadioButtonLabel = styled(Text.Label).attrs({
   }
 `;
 
-interface SwitchProps
-  extends Omit<
-    ComponentPropsWithoutRef<'input'>,
-    'value' | 'onChange' | 'type'
-  > {
+interface SwitchProps extends Omit<
+  ComponentPropsWithoutRef<'input'>,
+  'value' | 'onChange' | 'type'
+> {
   groupLabel?: string;
   offLabel: string;
   onLabel: string;

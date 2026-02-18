@@ -33,20 +33,28 @@ import type {
 export type TextElementV26 = TextElementV25;
 export type ProductElementV26 = ProductElementV25;
 
-export interface ShapeElementV26
-  extends Omit<ShapeElementV25, 'backgroundOverlay'> {
+export interface ShapeElementV26 extends Omit<
+  ShapeElementV25,
+  'backgroundOverlay'
+> {
   overlay?: Pattern | null;
 }
-export interface ImageElementV26
-  extends Omit<ImageElementV25, 'backgroundOverlay'> {
+export interface ImageElementV26 extends Omit<
+  ImageElementV25,
+  'backgroundOverlay'
+> {
   overlay?: Pattern | null;
 }
-export interface VideoElementV26
-  extends Omit<VideoElementV25, 'backgroundOverlay'> {
+export interface VideoElementV26 extends Omit<
+  VideoElementV25,
+  'backgroundOverlay'
+> {
   overlay?: Pattern | null;
 }
-export interface GifElementV26
-  extends Omit<GifElementV25, 'backgroundOverlay'> {
+export interface GifElementV26 extends Omit<
+  GifElementV25,
+  'backgroundOverlay'
+> {
   overlay?: Pattern | null;
 }
 

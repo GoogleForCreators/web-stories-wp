@@ -73,8 +73,9 @@ const StyledButton = styled(BaseButton)<{
   }
 `;
 
-export interface MenuButtonProps
-  extends ComponentPropsWithoutRef<typeof StyledButton> {
+export interface MenuButtonProps extends ComponentPropsWithoutRef<
+  typeof StyledButton
+> {
   id?: string;
   onClick: (evt: SyntheticEvent<HTMLButtonElement>) => void;
   onBlur?: (evt: SyntheticEvent<HTMLButtonElement>) => void;

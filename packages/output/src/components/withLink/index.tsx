@@ -56,6 +56,7 @@ function WithLink({ element, children, ...rest }: WithLinkProps) {
   const urlWithProtocol = withProtocol(url);
 
   return (
+    // eslint-disable-next-line react/jsx-no-target-blank -- Working as intended.
     <a
       href={urlWithProtocol}
       data-tooltip-icon={icon || undefined}

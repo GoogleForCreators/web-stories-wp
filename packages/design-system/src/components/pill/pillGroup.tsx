@@ -38,8 +38,10 @@ interface PillOption {
   label: string;
 }
 
-interface PillGroupProps
-  extends Omit<ComponentPropsWithoutRef<'button'>, 'onSelect' | 'onClick'> {
+interface PillGroupProps extends Omit<
+  ComponentPropsWithoutRef<'button'>,
+  'onSelect' | 'onClick'
+> {
   options: PillOption[];
   value: string;
   onSelect: (id: string) => void;
