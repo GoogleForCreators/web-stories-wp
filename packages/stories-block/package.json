@@ -48,7 +48,7 @@
     "@wordpress/url": "^4.22.0",
     "@wordpress/viewport": "^6.22.0",
     "classnames": "^2.5.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
