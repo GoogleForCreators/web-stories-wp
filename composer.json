@@ -5,7 +5,7 @@
   "type": "wordpress-plugin",
   "homepage": "https://github.com/googleforcreators/web-stories-wp",
   "require": {
-    "php": "^7.4 || ^8.0",
+    "php": "^8.3",
     "ext-dom": "*",
     "ext-iconv": "*",
     "ext-json": "*",
@@ -21,7 +21,7 @@
     "automattic/vipwpcs": "^3.0.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "ergebnis/composer-normalize": "^2.28",
-    "humbug/php-scoper": "^0.17.5",
+    "humbug/php-scoper": "^0.18",
     "php-stubs/woocommerce-stubs": "^10.0",
     "php-stubs/wordpress-tests-stubs": "^6.1.1",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
@@ -76,7 +76,7 @@
     },
     "discard-changes": true,
     "platform": {
-      "php": "7.4"
+      "php": "8.3"
     },
     "sort-packages": true
   },
@@ -87,8 +87,8 @@
     ],
     "installer-disable": true,
     "patches": {
-      "thecodingmachine/safe": {
-        "Fix explicit nullable errors": "./patches/thecodingmachine-safe-nullable.diff"
+      "humbug/php-scoper": {
+        "Fix using null as array key": "./patches/humbug-php-scoper-php85.diff"
       }
     }
   },
