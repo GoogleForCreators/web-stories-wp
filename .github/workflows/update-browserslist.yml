@@ -22,17 +22,17 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76
+        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -41,7 +41,7 @@ jobs:
         run: npx update-browserslist-db@latest
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@98357b18bf14b5342f975ff684046ec3b2a07725
+        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0
         with:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
           commit-message: Update browserslist db
