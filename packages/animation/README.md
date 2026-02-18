@@ -1,3 +1,3 @@
 # Animation
 
-Library for rendering animations in web stories. 
+Library for rendering animations in web stories.

@@ -4,14 +4,14 @@ This package contains the code to migrate stories and templates to the latest ve
 
 ## Exports
 
-* `DATA_VERSION`: the latest version
-* `migrate`: the function to migrate a story, given a data object and the story's current version. 
+- `DATA_VERSION`: the latest version
+- `migrate`: the function to migrate a story, given a data object and the story's current version.
 
 ## Used by
 
-* Dashboard
-* Editor
-* Continuous Integration (automated migrations of templates and FTUE story)
+- Dashboard
+- Editor
+- Continuous Integration (automated migrations of templates and FTUE story)
 
 ## ES Module
 

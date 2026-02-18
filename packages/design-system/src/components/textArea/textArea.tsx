@@ -128,8 +128,10 @@ const Counter = styled.div`
   }
 `;
 
-interface TextAreaProps
-  extends Omit<ComponentPropsWithoutRef<'textarea'>, 'value'> {
+interface TextAreaProps extends Omit<
+  ComponentPropsWithoutRef<'textarea'>,
+  'value'
+> {
   hasError?: boolean;
   hint?: string;
   label?: string;

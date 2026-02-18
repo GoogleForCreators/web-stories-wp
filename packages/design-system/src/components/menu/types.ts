@@ -61,16 +61,17 @@ export interface SharedMenuProps {
   renderItem?: FC<ListItemProps>;
 }
 
-export interface UseDropDownMenuProps
-  extends Omit<SharedMenuProps, 'listId' | 'hasMenuRole' | 'renderItem'> {
+export interface UseDropDownMenuProps extends Omit<
+  SharedMenuProps,
+  'listId' | 'hasMenuRole' | 'renderItem'
+> {
   listRef: RefObject<HTMLElement>;
 }
 
-export interface ListGroupProps
-  extends Omit<
-    SharedMenuProps,
-    'handleReturnToParent' | 'isRTL' | 'onDismissMenu'
-  > {
+export interface ListGroupProps extends Omit<
+  SharedMenuProps,
+  'handleReturnToParent' | 'isRTL' | 'onDismissMenu'
+> {
   optionsRef: RefObject<HTMLLIElement[]>;
   listLength?: number;
 }

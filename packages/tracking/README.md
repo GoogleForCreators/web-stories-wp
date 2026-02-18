@@ -64,7 +64,7 @@ All you need to provide is the event name and as many optional event parameters 
 
 ```js
 trackEvent('insert_template', {
-template_name: 'Awesome Template',
+  template_name: 'Awesome Template',
 });
 ```
 

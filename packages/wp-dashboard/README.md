@@ -1,3 +1,3 @@
 # WP Dashboard
 
-Contains WordPress integration of dashboard. 
+Contains WordPress integration of dashboard.

@@ -37,25 +37,24 @@ interface FeaturedMedia {
 }
 
 // Data required by API callbacks for saving a story.
-export interface StorySaveData
-  extends Pick<
-    Story,
-    | 'title'
-    | 'status'
-    | 'author'
-    | 'date'
-    | 'modified'
-    | 'slug'
-    | 'excerpt'
-    | 'featuredMedia'
-    | 'publisherLogo'
-    | 'password'
-    | 'currentStoryStyles'
-    | 'globalStoryStyles'
-    | 'autoAdvance'
-    | 'defaultPageDuration'
-    | 'backgroundAudio'
-  > {
+export interface StorySaveData extends Pick<
+  Story,
+  | 'title'
+  | 'status'
+  | 'author'
+  | 'date'
+  | 'modified'
+  | 'slug'
+  | 'excerpt'
+  | 'featuredMedia'
+  | 'publisherLogo'
+  | 'password'
+  | 'currentStoryStyles'
+  | 'globalStoryStyles'
+  | 'autoAdvance'
+  | 'defaultPageDuration'
+  | 'backgroundAudio'
+> {
   storyId?: number;
   content: string;
   products: ProductData[];

@@ -163,8 +163,10 @@ const LoadingDots = styled.div`
   }
 `;
 
-interface MediaInputProps
-  extends Omit<ComponentPropsWithoutRef<'button'>, 'value' | 'type'> {
+interface MediaInputProps extends Omit<
+  ComponentPropsWithoutRef<'button'>,
+  'value' | 'type'
+> {
   alt?: string;
   ariaLabel?: string;
   variant?: MediaVariant;

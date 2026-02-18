@@ -35,14 +35,18 @@ import type {
   VideoElementV5,
 } from './v0005_setOpacity';
 
-export interface TextElementV6
-  extends Omit<TextElementV5, 'color' | 'backgroundColor'> {
+export interface TextElementV6 extends Omit<
+  TextElementV5,
+  'color' | 'backgroundColor'
+> {
   color: Pattern | null;
   backgroundColor: PatternV0 | null;
 }
 
-export interface ShapeElementV6
-  extends Omit<ShapeElementV5, 'backgroundColor'> {
+export interface ShapeElementV6 extends Omit<
+  ShapeElementV5,
+  'backgroundColor'
+> {
   backgroundColor: PatternV0;
 }
 export type GifElementV6 = GifElementV5;

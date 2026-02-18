@@ -30,12 +30,16 @@ import type {
   VideoElementV18,
 } from './v0018_defaultBackgroundElement';
 
-export interface ShapeElementV19
-  extends Omit<ShapeElementV18, 'backgroundColor'> {
+export interface ShapeElementV19 extends Omit<
+  ShapeElementV18,
+  'backgroundColor'
+> {
   backgroundColor?: Pattern;
 }
-export interface TextElementV19
-  extends Omit<TextElementV18, 'color' | 'backgroundColor'> {
+export interface TextElementV19 extends Omit<
+  TextElementV18,
+  'color' | 'backgroundColor'
+> {
   color: Pattern;
   backgroundColor?: Pattern;
 }
@@ -55,14 +59,13 @@ export type UnionElementV19 =
 export interface StoryV19 extends Omit<StoryV18, 'pages'> {
   pages: PageV19[];
 }
-export interface PageV19
-  extends Omit<
-    PageV18,
-    | 'elements'
-    | 'backgroundElementId'
-    | 'backgroundColor'
-    | 'defaultBackgroundElement'
-  > {
+export interface PageV19 extends Omit<
+  PageV18,
+  | 'elements'
+  | 'backgroundElementId'
+  | 'backgroundColor'
+  | 'defaultBackgroundElement'
+> {
   elements: UnionElementV19[];
   backgroundColor?: Pattern;
   defaultBackgroundElement?: ShapeElementV19;

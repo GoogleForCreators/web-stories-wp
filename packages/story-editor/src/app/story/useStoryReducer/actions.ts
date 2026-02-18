@@ -167,8 +167,10 @@ const deleteElementsByResourceId =
       payload: { id },
     });
 
-interface UpdateElementByIdProps
-  extends Omit<UpdateElementsProps, 'elementIds'> {
+interface UpdateElementByIdProps extends Omit<
+  UpdateElementsProps,
+  'elementIds'
+> {
   elementId: string;
 }
 const updateElementById =

@@ -28,8 +28,7 @@ export enum BubbleVariant {
   Accent = 'accent',
 }
 
-export interface NotificationBubbleProps
-  extends ComponentPropsWithoutRef<'div'> {
+export interface NotificationBubbleProps extends ComponentPropsWithoutRef<'div'> {
   notificationCount: number;
   isSmall?: boolean;
   variant?: BubbleVariant;

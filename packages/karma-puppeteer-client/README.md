@@ -7,8 +7,8 @@ Notice, that all exposed Puppeteer APIs that accept an element selector, also
 accept the element reference in its place. Thus, both of these forms are valid:
 
 ```js
-karmaPuppeteer.click('.element1') // Valid. Finds the element by the selector.
-karmaPuppeteer.click(element1) // Also valid. Passes the element by reference.
+karmaPuppeteer.click('.element1'); // Valid. Finds the element by the selector.
+karmaPuppeteer.click(element1); // Also valid. Passes the element by reference.
 ```
 
 ## Supported APIs

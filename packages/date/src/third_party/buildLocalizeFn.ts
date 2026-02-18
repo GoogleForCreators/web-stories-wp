@@ -52,9 +52,8 @@ type LocalizeUnitIndex<U extends LocaleUnit> = U extends LocaleUnit
 
 type LocalizeFn<
   Result extends LocaleUnit,
-  ArgCallback extends
-    | BuildLocalizeFnArgCallback<Result>
-    | undefined = undefined,
+  ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined =
+    undefined,
 > = (
   value: ArgCallback extends undefined
     ? Result

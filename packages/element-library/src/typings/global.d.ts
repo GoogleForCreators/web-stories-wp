@@ -31,11 +31,10 @@ type AmpLayout =
   | 'responsive'
   | 'container';
 
-interface AmpVideo
-  extends DetailedHTMLProps<
-    Omit<VideoHTMLAttributes<HTMLVideoElement>, 'loop' | 'autoPlay'>,
-    HTMLVideoElement
-  > {
+interface AmpVideo extends DetailedHTMLProps<
+  Omit<VideoHTMLAttributes<HTMLVideoElement>, 'loop' | 'autoPlay'>,
+  HTMLVideoElement
+> {
   layout: AmpLayout;
   'captions-id'?: string;
   autoPlay?: string;
@@ -44,11 +43,10 @@ interface AmpVideo
   alt?: string;
 }
 
-interface AmpImg
-  extends DetailedHTMLProps<
-    ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  > {
+interface AmpImg extends DetailedHTMLProps<
+  ImgHTMLAttributes<HTMLImageElement>,
+  HTMLImageElement
+> {
   layout: AmpLayout;
   'disable-inline-width'?: boolean;
 }

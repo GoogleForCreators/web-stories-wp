@@ -51,8 +51,9 @@ export const Shadow = styled.div<{
   pointer-events: none;
 `;
 
-export interface SmartPopoverProps
-  extends ComponentPropsWithoutRef<typeof Popover> {
+export interface SmartPopoverProps extends ComponentPropsWithoutRef<
+  typeof Popover
+> {
   isRTL?: boolean;
 }
 

@@ -55,8 +55,8 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
   function isElementVisible(element) {
     return Boolean(
       element.offsetWidth ||
-        element.offsetHeight ||
-        element.getClientRects().length
+      element.offsetHeight ||
+      element.getClientRects().length
     );
   }
 

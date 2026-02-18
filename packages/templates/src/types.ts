@@ -45,8 +45,10 @@ export interface TemplateData extends Omit<StoryData, 'pages'> {
   pages: TemplatePage[];
 }
 
-interface TemplatePage
-  extends Omit<Page, 'autoAdvance' | 'defaultPageDuration' | 'elements'> {
+interface TemplatePage extends Omit<
+  Page,
+  'autoAdvance' | 'defaultPageDuration' | 'elements'
+> {
   pageTemplateType: string | null;
   elements: Element[];
 }

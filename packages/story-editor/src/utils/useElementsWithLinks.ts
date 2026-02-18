@@ -55,23 +55,21 @@ function useElementsWithLinks() {
     return {
       hasInvalidLinkSelected: Boolean(
         pageAttachmentContainer &&
-          hasPageAttachment &&
-          state.selectedElements
-            .filter(elementIs.linkable)
-            .some((element) => isElementBelowLimit(element))
+        hasPageAttachment &&
+        state.selectedElements
+          .filter(elementIs.linkable)
+          .some((element) => isElementBelowLimit(element))
       ),
       hasLinksInAttachmentArea: Boolean(
         pageAttachmentContainer &&
-          elementsWithLinks.some((element) =>
-            isElementBelowLimit(element, true)
-          )
+        elementsWithLinks.some((element) => isElementBelowLimit(element, true))
       ),
       hasElementsInAttachmentArea: Boolean(
         pageAttachmentContainer &&
-          hasPageAttachment &&
-          state.selectedElements.some((element) =>
-            isElementBelowLimit(element, false)
-          )
+        hasPageAttachment &&
+        state.selectedElements.some((element) =>
+          isElementBelowLimit(element, false)
+        )
       ),
       hasPageAttachment,
     };

@@ -55,8 +55,10 @@ export type UnionElementV23 =
 export interface StoryV23 extends Omit<StoryV22, 'pages'> {
   pages: PageV23[];
 }
-export interface PageV23
-  extends Omit<PageV22, 'elements' | 'backgroundOverlay'> {
+export interface PageV23 extends Omit<
+  PageV22,
+  'elements' | 'backgroundOverlay'
+> {
   elements: UnionElementV23[];
 }
 

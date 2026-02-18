@@ -52,8 +52,9 @@ const StyledButton = styled(Button)<{ supportsIcon?: boolean }>`
   `}
 `;
 
-export interface MenuItemProps
-  extends ComponentPropsWithoutRef<typeof StyledButton> {
+export interface MenuItemProps extends ComponentPropsWithoutRef<
+  typeof StyledButton
+> {
   label: ReactNode;
   shortcut?: { display: string };
   icon?: ReactNode;

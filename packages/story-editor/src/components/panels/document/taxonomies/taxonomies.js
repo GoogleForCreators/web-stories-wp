@@ -51,7 +51,7 @@ function TaxonomiesPanel({ nameOverride, ...props }) {
   const availableTaxonomies = taxonomies.filter((taxonomy) =>
     Boolean(
       capabilities[`assign-${taxonomy?.restBase}`] ||
-        capabilities[`assign-${taxonomy?.slug}`]
+      capabilities[`assign-${taxonomy?.slug}`]
     )
   );
 
@@ -68,7 +68,7 @@ function TaxonomiesPanel({ nameOverride, ...props }) {
       {availableTaxonomies.map((taxonomy) => {
         const canCreateTerms = Boolean(
           capabilities[`create-${taxonomy?.restBase}`] ||
-            capabilities[`create-${taxonomy?.slug}`]
+          capabilities[`create-${taxonomy?.slug}`]
         );
 
         return (
