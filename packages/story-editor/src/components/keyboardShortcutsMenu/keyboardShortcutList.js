@@ -237,7 +237,7 @@ const shortcuts = {
                 }}
               >
                 {sprintf(
-                  /* translators: 1: Shift key. */
+                  /* translators: %s: Shift key. */
                   __('<lkbd>%s</lkbd> <span>+ click</span>', 'web-stories'),
                   prettifyShortcut('shift')
                 )}
@@ -384,7 +384,7 @@ const shortcuts = {
                 }}
               >
                 {sprintf(
-                  /* translators: 1: Shift key. */
+                  /* translators: %s: Shift key. */
                   __(
                     '<lkbd>%s</lkbd> <span>+ arrow keys</span>',
                     'web-stories'
