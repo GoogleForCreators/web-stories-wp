@@ -1357,6 +1357,31 @@
     }
   },
   {
+    "family": "Allkin",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 1200,
+      "des": 0,
+      "tAsc": 1200,
+      "tDes": 0,
+      "tLGap": 0,
+      "wAsc": 1200,
+      "wDes": 0,
+      "xH": 500,
+      "capH": 1180,
+      "yMin": 0,
+      "yMax": 1180,
+      "hAsc": 1200,
+      "hDes": 0,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Allura",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -1660,6 +1685,39 @@
       "yMax": 829,
       "hAsc": 900,
       "hDes": -300,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Alyamama",
+    "fallbacks": ["serif"],
+    "weights": [300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 900,
+      "des": -530,
+      "tAsc": 900,
+      "tDes": -530,
+      "tLGap": 0,
+      "wAsc": 1132,
+      "wDes": 530,
+      "xH": 450,
+      "capH": 612,
+      "yMin": -468,
+      "yMax": 998,
+      "hAsc": 900,
+      "hDes": -530,
       "lGap": 0
     }
   },
@@ -5855,6 +5913,106 @@
     }
   },
   {
+    "family": "Betania Patmos",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1038,
+      "des": -262,
+      "tAsc": 1038,
+      "tDes": -262,
+      "tLGap": 0,
+      "wAsc": 1072,
+      "wDes": 380,
+      "xH": 419,
+      "capH": 775,
+      "yMin": -373,
+      "yMax": 1048,
+      "hAsc": 1038,
+      "hDes": -262,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Betania Patmos GDL",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1038,
+      "des": -262,
+      "tAsc": 1038,
+      "tDes": -262,
+      "tLGap": 0,
+      "wAsc": 1072,
+      "wDes": 380,
+      "xH": 419,
+      "capH": 775,
+      "yMin": -373,
+      "yMax": 1043,
+      "hAsc": 1038,
+      "hDes": -262,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Betania Patmos In",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1038,
+      "des": -262,
+      "tAsc": 1038,
+      "tDes": -262,
+      "tLGap": 0,
+      "wAsc": 1072,
+      "wDes": 380,
+      "xH": 419,
+      "capH": 775,
+      "yMin": -373,
+      "yMax": 1043,
+      "hAsc": 1038,
+      "hDes": -262,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Betania Patmos In GDL",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1038,
+      "des": -262,
+      "tAsc": 1038,
+      "tDes": -262,
+      "tLGap": 0,
+      "wAsc": 1072,
+      "wDes": 380,
+      "xH": 419,
+      "capH": 775,
+      "yMin": -373,
+      "yMax": 1043,
+      "hAsc": 1038,
+      "hDes": -262,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Beth Ellen",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -7378,6 +7536,81 @@
       "yMax": 2248,
       "hAsc": 2248,
       "hDes": -876,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bpmf Huninn",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 940,
+      "des": -180,
+      "tAsc": 940,
+      "tDes": -180,
+      "tLGap": 0,
+      "wAsc": 1060,
+      "wDes": 273,
+      "xH": 512,
+      "capH": 800,
+      "yMin": -242,
+      "yMax": 1008,
+      "hAsc": 940,
+      "hDes": -180,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bpmf Iansui",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 940,
+      "des": -180,
+      "tAsc": 940,
+      "tDes": -180,
+      "tLGap": 0,
+      "wAsc": 1066,
+      "wDes": 273,
+      "xH": 512,
+      "capH": 800,
+      "yMin": -202,
+      "yMax": 1048,
+      "hAsc": 940,
+      "hDes": -180,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Bpmf Zihi Kai Std",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 940,
+      "des": -180,
+      "tAsc": 940,
+      "tDes": -180,
+      "tLGap": 0,
+      "wAsc": 1060,
+      "wDes": 278,
+      "xH": 512,
+      "capH": 800,
+      "yMin": -278,
+      "yMax": 2042,
+      "hAsc": 940,
+      "hDes": -180,
       "lGap": 0
     }
   },
@@ -17832,6 +18065,31 @@
     }
   },
   {
+    "family": "Gveret Levin",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 990,
+      "des": -310,
+      "tAsc": 990,
+      "tDes": -310,
+      "tLGap": 0,
+      "wAsc": 1221,
+      "wDes": 418,
+      "xH": 510,
+      "capH": 680,
+      "yMin": -418,
+      "yMax": 1221,
+      "hAsc": 990,
+      "hDes": -310,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Gwendolyn",
     "fallbacks": ["cursive"],
     "weights": [400, 700],
@@ -19427,6 +19685,35 @@
       "yMax": 750,
       "hAsc": 750,
       "hDes": -220,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Idiqlat",
+    "fallbacks": ["serif"],
+    "weights": [200, 300, 400],
+    "styles": ["regular"],
+    "variants": [
+      [0, 200],
+      [0, 300],
+      [0, 400]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 2233,
+      "des": -1109,
+      "tAsc": 2233,
+      "tDes": -1109,
+      "tLGap": 0,
+      "wAsc": 2310,
+      "wDes": 1326,
+      "xH": 991,
+      "capH": 1399,
+      "yMin": -1109,
+      "yMax": 2308,
+      "hAsc": 2233,
+      "hDes": -1109,
       "lGap": 0
     }
   },
@@ -43854,6 +44141,31 @@
       "yMax": 1076,
       "hAsc": 1160,
       "hDes": -288,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Ramsina",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2048,
+      "asc": 1560,
+      "des": -689,
+      "tAsc": 1560,
+      "tDes": -689,
+      "tLGap": 0,
+      "wAsc": 1560,
+      "wDes": 689,
+      "xH": 612,
+      "capH": 864,
+      "yMin": -688,
+      "yMax": 1425,
+      "hAsc": 1560,
+      "hDes": -689,
       "lGap": 0
     }
   },
