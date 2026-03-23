@@ -228,6 +228,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * Prepares a single post output for response.
 	 *
 	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.CyclomaticComplexity")
 	 *
 	 * @since 1.20.0
 	 *
