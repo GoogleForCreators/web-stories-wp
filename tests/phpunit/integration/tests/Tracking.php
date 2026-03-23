@@ -112,6 +112,7 @@ class Tracking extends DependencyInjectedTestCase {
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
 
 		$this->instance->register();
+		$this->instance->enqueue_assets( 'web-story' );
 
 		/**
 		 * An array of all registered dependencies keyed by handle.
