@@ -87,6 +87,9 @@
     ],
     "installer-disable": true,
     "patches": {
+      "humbug/php-scoper": {
+        "Fix using null as array key": "./patches/humbug-php-scoper-php85.diff"
+      },
       "thecodingmachine/safe": {
         "Fix explicit nullable errors": "./patches/thecodingmachine-safe-nullable.diff"
       }

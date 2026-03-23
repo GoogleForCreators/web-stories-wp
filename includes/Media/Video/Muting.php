@@ -142,6 +142,7 @@ class Muting extends Service_Base implements HasMeta, PluginUninstallAware {
 			return $response;
 		}
 		if ( 'video' === $response['type'] ) {
+			// @phpstan-ignore argument.type
 			$response[ self::IS_MUTED_REST_API_KEY ] = $this->get_callback_is_muted( $response );
 		}
 

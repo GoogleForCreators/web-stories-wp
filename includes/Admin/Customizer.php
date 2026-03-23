@@ -664,8 +664,8 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array<string,mixed> $view_type View type to check.
-	 * @return array<string,mixed> An array of view type choices.
+	 * @param array<string,string> $view_type View type to check.
+	 * @return array<string,string> An array of view type choices.
 	 */
 	private function get_view_type_choices( array $view_type ): array {
 		$view_type_choices = $this->stories_script_data->get_layouts();

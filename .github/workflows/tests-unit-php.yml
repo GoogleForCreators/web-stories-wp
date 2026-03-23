@@ -55,17 +55,17 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        php: ['8.3', '8.2', '8.1', '8.0']
+        php: ['8.4', '8.3', '8.2', '8.1', '8.0']
         wp: ['latest']
         coverage: [false]
         experimental: [false]
         include:
-          - php: '8.4'
+          - php: '8.5'
             wp: 'latest'
             coverage: true
             experimental: false
 
-          - php: '8.4'
+          - php: '8.5'
             wp: 'latest'
             random: true
             experimental: true
@@ -74,7 +74,7 @@ jobs:
             wp: '6.6'
             experimental: false
 
-          - php: '8.4'
+          - php: '8.5'
             wp: 'trunk'
             experimental: true
 
@@ -136,11 +136,6 @@ jobs:
         uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
-
-      - name: Update PHPUnit
-        run: |
-          echo "Installing latest version of PHPUnit"
-          composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
 
       - name: Composer dump autoload
         run: composer dump-autoload --no-interaction

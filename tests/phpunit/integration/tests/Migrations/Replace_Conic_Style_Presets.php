@@ -93,6 +93,7 @@ class Replace_Conic_Style_Presets extends TestCase {
 		$this->assertArrayHasKey( 'textStyles', $style_presets );
 		$this->assertIsArray( $style_presets['textStyles'] );
 		$this->assertSame( $style_presets['textStyles'][1], $radial_preset );
+		$this->assertIsArray( $style_presets['textStyles'][0] );
 		$this->assertArrayHasKey( 'backgroundColor', $style_presets['textStyles'][0] );
 		$this->assertIsArray( $style_presets['textStyles'][0]['backgroundColor'] );
 		$this->assertArrayHasKey( 'type', $style_presets['textStyles'][0]['backgroundColor'] );

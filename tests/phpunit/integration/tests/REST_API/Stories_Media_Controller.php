@@ -304,6 +304,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$this->assertIsArray( $data['title'] );
 		$this->assertSame( 'Test Video', $data['title']['raw'] );
 		$this->assertSame( 'Test Video', $attachment->post_title );
+		$this->assertIsArray( $data['caption'] );
 		$this->assertSame( 'Test excerpt', $data['caption']['raw'] );
 		$this->assertSame( 'Test excerpt', $attachment->post_excerpt );
 		$this->assertSame( 'Test content', $attachment->post_content );

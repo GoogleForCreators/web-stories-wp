@@ -1,7 +1,7 @@
-diff --git deprecated/mssql.php deprecated/mssql.php
+diff --git a/deprecated/mssql.php b/deprecated/mssql.php
 index 234ef56..aa44ad0 100644
---- deprecated/mssql.php
-+++ deprecated/mssql.php
+--- a/deprecated/mssql.php
++++ b/deprecated/mssql.php
 @@ -97,7 +97,7 @@ function mssql_close($link_identifier = null): void
   * @throws MssqlException
   *
@@ -20,10 +20,10 @@ index 234ef56..aa44ad0 100644
  {
      error_clear_last();
      if ($new_link !== false) {
-diff --git generated/bzip2.php generated/bzip2.php
+diff --git a/generated/bzip2.php b/generated/bzip2.php
 index 77302aa..95e52e0 100644
---- generated/bzip2.php
-+++ generated/bzip2.php
+--- a/generated/bzip2.php
++++ b/generated/bzip2.php
 @@ -81,7 +81,7 @@ function bzread($bz, int $length = 1024): string
   * @throws Bzip2Exception
   *
@@ -33,10 +33,10 @@ index 77302aa..95e52e0 100644
  {
      error_clear_last();
      if ($length !== null) {
-diff --git generated/com.php generated/com.php
+diff --git a/generated/com.php b/generated/com.php
 index 53643f9..62fc2e2 100644
---- generated/com.php
-+++ generated/com.php
+--- a/generated/com.php
++++ b/generated/com.php
 @@ -117,7 +117,7 @@ function com_load_typelib(string $typelib_name, bool $case_sensitive = true): vo
   * @throws ComException
   *
@@ -46,10 +46,10 @@ index 53643f9..62fc2e2 100644
  {
      error_clear_last();
      $result = \com_print_typeinfo($comobject, $dispinterface, $wantsink);
-diff --git generated/curl.php generated/curl.php
+diff --git a/generated/curl.php b/generated/curl.php
 index 53f9255..1b48fc5 100644
---- generated/curl.php
-+++ generated/curl.php
+--- a/generated/curl.php
++++ b/generated/curl.php
 @@ -512,7 +512,7 @@ function curl_exec($ch)
   * @throws CurlException
   *
@@ -68,10 +68,10 @@ index 53f9255..1b48fc5 100644
  {
      error_clear_last();
      $result = \curl_init($url);
-diff --git generated/datetime.php generated/datetime.php
+diff --git a/generated/datetime.php b/generated/datetime.php
 index 01bfa93..9467652 100644
---- generated/datetime.php
-+++ generated/datetime.php
+--- a/generated/datetime.php
++++ b/generated/datetime.php
 @@ -233,7 +233,7 @@ function date_sun_info(int $timestamp, float $latitude, float $longitude): array
   * @throws DatetimeException
   *
@@ -126,10 +126,10 @@ index 01bfa93..9467652 100644
  {
      error_clear_last();
      if ($now !== null) {
-diff --git generated/eio.php generated/eio.php
+diff --git a/generated/eio.php b/generated/eio.php
 index 8d2f538..2224d52 100644
---- generated/eio.php
-+++ generated/eio.php
+--- a/generated/eio.php
++++ b/generated/eio.php
 @@ -19,7 +19,7 @@ use Safe\Exceptions\EioException;
   * @throws EioException
   *
@@ -409,10 +409,10 @@ index 8d2f538..2224d52 100644
  {
      error_clear_last();
      $result = \eio_write($fd, $str, $length, $offset, $pri, $callback, $data);
-diff --git generated/errorfunc.php generated/errorfunc.php
+diff --git a/generated/errorfunc.php b/generated/errorfunc.php
 index ac64a7d..c5ff97a 100644
---- generated/errorfunc.php
-+++ generated/errorfunc.php
+--- a/generated/errorfunc.php
++++ b/generated/errorfunc.php
 @@ -66,7 +66,7 @@ use Safe\Exceptions\ErrorfuncException;
   * @throws ErrorfuncException
   *
@@ -422,10 +422,10 @@ index ac64a7d..c5ff97a 100644
  {
      error_clear_last();
      if ($extra_headers !== null) {
-diff --git generated/exec.php generated/exec.php
+diff --git a/generated/exec.php b/generated/exec.php
 index e9a40e0..00699de 100644
---- generated/exec.php
-+++ generated/exec.php
+--- a/generated/exec.php
++++ b/generated/exec.php
 @@ -148,7 +148,7 @@ function proc_nice(int $increment): void
   * @throws ExecException
   *
@@ -435,10 +435,10 @@ index e9a40e0..00699de 100644
  {
      error_clear_last();
      $result = \system($command, $return_var);
-diff --git generated/filesystem.php generated/filesystem.php
+diff --git a/generated/filesystem.php b/generated/filesystem.php
 index ee0a4bd..20ed535 100644
---- generated/filesystem.php
-+++ generated/filesystem.php
+--- a/generated/filesystem.php
++++ b/generated/filesystem.php
 @@ -237,7 +237,7 @@ function fflush($handle): void
   * @throws FilesystemException
   *
@@ -466,10 +466,10 @@ index ee0a4bd..20ed535 100644
  {
      error_clear_last();
      if ($atime !== null) {
-diff --git generated/ftp.php generated/ftp.php
+diff --git a/generated/ftp.php b/generated/ftp.php
 index 1748826..1f63c6e 100644
---- generated/ftp.php
-+++ generated/ftp.php
+--- a/generated/ftp.php
++++ b/generated/ftp.php
 @@ -15,7 +15,7 @@ use Safe\Exceptions\FtpException;
   * @throws FtpException
   *
@@ -479,10 +479,10 @@ index 1748826..1f63c6e 100644
  {
      error_clear_last();
      $result = \ftp_alloc($ftp_stream, $filesize, $result);
-diff --git generated/gnupg.php generated/gnupg.php
+diff --git a/generated/gnupg.php b/generated/gnupg.php
 index b5d85ca..84c8968 100644
---- generated/gnupg.php
-+++ generated/gnupg.php
+--- a/generated/gnupg.php
++++ b/generated/gnupg.php
 @@ -53,7 +53,7 @@ function gnupg_addencryptkey($identifier, string $fingerprint): void
   * @throws GnupgException
   *
@@ -492,10 +492,10 @@ index b5d85ca..84c8968 100644
  {
      error_clear_last();
      if ($passphrase !== null) {
-diff --git generated/ibase.php generated/ibase.php
+diff --git a/generated/ibase.php b/generated/ibase.php
 index 4969740..db14f1d 100644
---- generated/ibase.php
-+++ generated/ibase.php
+--- a/generated/ibase.php
++++ b/generated/ibase.php
 @@ -34,7 +34,7 @@ function fbird_blob_cancel($blob_handle): void
   * @throws IbaseException
   *
@@ -532,10 +532,10 @@ index 4969740..db14f1d 100644
  {
      error_clear_last();
      if ($sync !== null) {
-diff --git generated/ibmDb2.php generated/ibmDb2.php
+diff --git a/generated/ibmDb2.php b/generated/ibmDb2.php
 index f97e7b0..7336f9d 100644
---- generated/ibmDb2.php
-+++ generated/ibmDb2.php
+--- a/generated/ibmDb2.php
++++ b/generated/ibmDb2.php
 @@ -46,7 +46,7 @@ use Safe\Exceptions\IbmDb2Exception;
   * @throws IbmDb2Exception
   *
@@ -563,10 +563,10 @@ index f97e7b0..7336f9d 100644
  {
      error_clear_last();
      if ($parameters !== null) {
-diff --git generated/image.php generated/image.php
+diff --git a/generated/image.php b/generated/image.php
 index f1dc218..0729365 100644
---- generated/image.php
-+++ generated/image.php
+--- a/generated/image.php
++++ b/generated/image.php
 @@ -66,7 +66,7 @@ use Safe\Exceptions\ImageException;
   * @throws ImageException
   *
@@ -621,10 +621,10 @@ index f1dc218..0729365 100644
  {
      error_clear_last();
      if ($foreground !== null) {
-diff --git generated/imap.php generated/imap.php
+diff --git a/generated/imap.php b/generated/imap.php
 index acd8672..3611898 100644
---- generated/imap.php
-+++ generated/imap.php
+--- a/generated/imap.php
++++ b/generated/imap.php
 @@ -22,7 +22,7 @@ use Safe\Exceptions\ImapException;
   * @throws ImapException
   *
@@ -661,10 +661,10 @@ index acd8672..3611898 100644
  {
      error_clear_last();
      $result = \imap_sort($imap_stream, $criteria, $reverse, $options, $search_criteria, $charset);
-diff --git generated/info.php generated/info.php
+diff --git a/generated/info.php b/generated/info.php
 index 1a76b40..a26fa39 100644
---- generated/info.php
-+++ generated/info.php
+--- a/generated/info.php
++++ b/generated/info.php
 @@ -192,7 +192,7 @@ function getmyuid(): int
   * @throws InfoException
   *
@@ -674,10 +674,10 @@ index 1a76b40..a26fa39 100644
  {
      error_clear_last();
      if ($optind !== null) {
-diff --git generated/ingres-ii.php generated/ingres-ii.php
+diff --git a/generated/ingres-ii.php b/generated/ingres-ii.php
 index 9ea8b5f..414433f 100644
---- generated/ingres-ii.php
-+++ generated/ingres-ii.php
+--- a/generated/ingres-ii.php
++++ b/generated/ingres-ii.php
 @@ -332,7 +332,7 @@ function ingres_commit($link): void
   * @throws IngresiiException
   *
@@ -705,10 +705,10 @@ index 9ea8b5f..414433f 100644
  {
      error_clear_last();
      if ($options !== null) {
-diff --git generated/ldap.php generated/ldap.php
+diff --git a/generated/ldap.php b/generated/ldap.php
 index 871f295..2136e42 100644
---- generated/ldap.php
-+++ generated/ldap.php
+--- a/generated/ldap.php
++++ b/generated/ldap.php
 @@ -15,7 +15,7 @@ use Safe\Exceptions\LdapException;
   * @throws LdapException
   *
@@ -889,10 +889,10 @@ index 871f295..2136e42 100644
  {
      error_clear_last();
      if ($serverctrls !== null) {
-diff --git generated/mailparse.php generated/mailparse.php
+diff --git a/generated/mailparse.php b/generated/mailparse.php
 index 1bae182..35242df 100644
---- generated/mailparse.php
-+++ generated/mailparse.php
+--- a/generated/mailparse.php
++++ b/generated/mailparse.php
 @@ -26,7 +26,7 @@ use Safe\Exceptions\MailparseException;
   * @throws MailparseException
   *
@@ -902,10 +902,10 @@ index 1bae182..35242df 100644
  {
      error_clear_last();
      if ($callbackfunc !== null) {
-diff --git generated/mbstring.php generated/mbstring.php
+diff --git a/generated/mbstring.php b/generated/mbstring.php
 index fa08294..b9d22c1 100644
---- generated/mbstring.php
-+++ generated/mbstring.php
+--- a/generated/mbstring.php
++++ b/generated/mbstring.php
 @@ -13,7 +13,7 @@ use Safe\Exceptions\MbstringException;
   * @throws MbstringException
   *
@@ -987,10 +987,10 @@ index fa08294..b9d22c1 100644
  {
      error_clear_last();
      if ($encoding !== null) {
-diff --git generated/misc.php generated/misc.php
+diff --git a/generated/misc.php b/generated/misc.php
 index ff636fd..a59d974 100644
---- generated/misc.php
-+++ generated/misc.php
+--- a/generated/misc.php
++++ b/generated/misc.php
 @@ -339,7 +339,7 @@ function sapi_windows_generate_ctrl_event(int $event, int $pid = 0): void
   * @throws MiscException
   *
@@ -1000,10 +1000,10 @@ index ff636fd..a59d974 100644
  {
      error_clear_last();
      if ($enable !== null) {
-diff --git generated/msql.php generated/msql.php
+diff --git a/generated/msql.php b/generated/msql.php
 index 331c1b6..c380047 100644
---- generated/msql.php
-+++ generated/msql.php
+--- a/generated/msql.php
++++ b/generated/msql.php
 @@ -81,7 +81,7 @@ function msql_close($link_identifier = null): void
   * @throws MsqlException
   *
@@ -1022,10 +1022,10 @@ index 331c1b6..c380047 100644
  {
      error_clear_last();
      if ($hostname !== null) {
-diff --git generated/mysql.php generated/mysql.php
+diff --git a/generated/mysql.php b/generated/mysql.php
 index 475c609..6c5880f 100644
---- generated/mysql.php
-+++ generated/mysql.php
+--- a/generated/mysql.php
++++ b/generated/mysql.php
 @@ -73,7 +73,7 @@ function mysql_close($link_identifier = null): void
   * @throws MysqlException
   *
@@ -1035,10 +1035,10 @@ index 475c609..6c5880f 100644
  {
      error_clear_last();
      if ($client_flags !== 0) {
-diff --git generated/network.php generated/network.php
+diff --git a/generated/network.php b/generated/network.php
 index 6d46b6c..5550340 100644
---- generated/network.php
-+++ generated/network.php
+--- a/generated/network.php
++++ b/generated/network.php
 @@ -304,7 +304,7 @@ function dns_get_record(string $hostname, int $type = DNS_ANY, ?array &$authns =
   * @throws NetworkException
   *
@@ -1048,10 +1048,10 @@ index 6d46b6c..5550340 100644
  {
      error_clear_last();
      if ($timeout !== null) {
-diff --git generated/oci8.php generated/oci8.php
+diff --git a/generated/oci8.php b/generated/oci8.php
 index f2bac27..305d706 100644
---- generated/oci8.php
-+++ generated/oci8.php
+--- a/generated/oci8.php
++++ b/generated/oci8.php
 @@ -489,7 +489,7 @@ function oci_commit($connection): void
   * @throws Oci8Exception
   *
@@ -1088,10 +1088,10 @@ index f2bac27..305d706 100644
  {
      error_clear_last();
      if ($session_mode !== null) {
-diff --git generated/openssl.php generated/openssl.php
+diff --git a/generated/openssl.php b/generated/openssl.php
 index 117b53d..4dddb03 100644
---- generated/openssl.php
-+++ generated/openssl.php
+--- a/generated/openssl.php
++++ b/generated/openssl.php
 @@ -209,7 +209,7 @@ function openssl_csr_get_subject($csr, bool $use_shortnames = true): array
   * @throws OpensslException
   *
@@ -1182,10 +1182,10 @@ index 117b53d..4dddb03 100644
  {
      error_clear_last();
      $result = \openssl_seal($data, $sealed_data, $env_keys, $pub_key_ids, $method, $iv);
-diff --git generated/password.php generated/password.php
+diff --git a/generated/password.php b/generated/password.php
 index 3808e02..d0d1455 100644
---- generated/password.php
-+++ generated/password.php
+--- a/generated/password.php
++++ b/generated/password.php
 @@ -111,7 +111,7 @@ use Safe\Exceptions\PasswordException;
   * @throws PasswordException
   *
@@ -1195,10 +1195,10 @@ index 3808e02..d0d1455 100644
  {
      error_clear_last();
      if ($options !== null) {
-diff --git generated/pcntl.php generated/pcntl.php
+diff --git a/generated/pcntl.php b/generated/pcntl.php
 index 1cb721e..1a182d2 100644
---- generated/pcntl.php
-+++ generated/pcntl.php
+--- a/generated/pcntl.php
++++ b/generated/pcntl.php
 @@ -20,7 +20,7 @@ use Safe\Exceptions\PcntlException;
   * @throws PcntlException
   *
@@ -1226,10 +1226,10 @@ index 1cb721e..1a182d2 100644
  {
      error_clear_last();
      if ($process_identifier !== PRIO_PROCESS) {
-diff --git generated/pcre.php generated/pcre.php
+diff --git a/generated/pcre.php b/generated/pcre.php
 index c40f14c..baad8cf 100644
---- generated/pcre.php
-+++ generated/pcre.php
+--- a/generated/pcre.php
++++ b/generated/pcre.php
 @@ -347,7 +347,7 @@ use Safe\Exceptions\PcreException;
   * @throws PcreException
   *
@@ -1248,10 +1248,10 @@ index c40f14c..baad8cf 100644
  {
      error_clear_last();
      $result = \preg_match($pattern, $subject, $matches, $flags, $offset);
-diff --git generated/pgsql.php generated/pgsql.php
+diff --git a/generated/pgsql.php b/generated/pgsql.php
 index 007faac..95bba95 100644
---- generated/pgsql.php
-+++ generated/pgsql.php
+--- a/generated/pgsql.php
++++ b/generated/pgsql.php
 @@ -130,7 +130,7 @@ function pg_close($connection = null): void
   * @throws PgsqlException
   *
@@ -1369,10 +1369,10 @@ index 007faac..95bba95 100644
  {
      error_clear_last();
      if ($query !== null) {
-diff --git generated/ps.php generated/ps.php
+diff --git a/generated/ps.php b/generated/ps.php
 index a66667a..5224fb1 100644
---- generated/ps.php
-+++ generated/ps.php
+--- a/generated/ps.php
++++ b/generated/ps.php
 @@ -778,7 +778,7 @@ function ps_fill($psdoc): void
   * @throws PsException
   *
@@ -1391,10 +1391,10 @@ index a66667a..5224fb1 100644
  {
      error_clear_last();
      if ($filename !== null) {
-diff --git generated/pspell.php generated/pspell.php
+diff --git a/generated/pspell.php b/generated/pspell.php
 index 4cf4c36..afcff73 100644
---- generated/pspell.php
-+++ generated/pspell.php
+--- a/generated/pspell.php
++++ b/generated/pspell.php
 @@ -90,7 +90,7 @@ function pspell_clear_session(int $dictionary_link): void
   * @throws PspellException
   *
@@ -1413,10 +1413,10 @@ index 4cf4c36..afcff73 100644
  {
      error_clear_last();
      if ($mode !== 0) {
-diff --git generated/readline.php generated/readline.php
+diff --git a/generated/readline.php b/generated/readline.php
 index a1c52c7..b4e4e66 100644
---- generated/readline.php
-+++ generated/readline.php
+--- a/generated/readline.php
++++ b/generated/readline.php
 @@ -122,7 +122,7 @@ function readline_completion_function(callable $function): void
   * @throws ReadlineException
   *
@@ -1435,10 +1435,10 @@ index a1c52c7..b4e4e66 100644
  {
      error_clear_last();
      if ($filename !== null) {
-diff --git generated/sodium.php generated/sodium.php
+diff --git a/generated/sodium.php b/generated/sodium.php
 index 6cb378a..d0ebc6e 100644
---- generated/sodium.php
-+++ generated/sodium.php
+--- a/generated/sodium.php
++++ b/generated/sodium.php
 @@ -43,7 +43,7 @@ function sodium_crypto_pwhash_str(string $password, int $opslimit, int $memlimit
   * @throws SodiumException
   *
@@ -1448,10 +1448,10 @@ index 6cb378a..d0ebc6e 100644
  {
      error_clear_last();
      if ($alg !== null) {
-diff --git generated/spl.php generated/spl.php
+diff --git a/generated/spl.php b/generated/spl.php
 index 679e689..0e0afda 100644
---- generated/spl.php
-+++ generated/spl.php
+--- a/generated/spl.php
++++ b/generated/spl.php
 @@ -99,7 +99,7 @@ function class_uses($class, bool $autoload = true): array
   * @throws SplException
   *
@@ -1461,10 +1461,10 @@ index 679e689..0e0afda 100644
  {
      error_clear_last();
      if ($prepend !== false) {
-diff --git generated/sqlsrv.php generated/sqlsrv.php
+diff --git a/generated/sqlsrv.php b/generated/sqlsrv.php
 index e93aa37..7dc312b 100644
---- generated/sqlsrv.php
-+++ generated/sqlsrv.php
+--- a/generated/sqlsrv.php
++++ b/generated/sqlsrv.php
 @@ -251,7 +251,7 @@ function sqlsrv_free_stmt($stmt): void
   * @throws SqlsrvException
   *
@@ -1492,10 +1492,10 @@ index e93aa37..7dc312b 100644
  {
      error_clear_last();
      if ($options !== null) {
-diff --git generated/ssh2.php generated/ssh2.php
+diff --git a/generated/ssh2.php b/generated/ssh2.php
 index 96af9df..3117cb9 100644
---- generated/ssh2.php
-+++ generated/ssh2.php
+--- a/generated/ssh2.php
++++ b/generated/ssh2.php
 @@ -39,7 +39,7 @@ function ssh2_auth_agent($session, string $username): void
   * @throws Ssh2Exception
   *
@@ -1541,10 +1541,10 @@ index 96af9df..3117cb9 100644
  {
      error_clear_last();
      if ($attributes !== null) {
-diff --git generated/stream.php generated/stream.php
+diff --git a/generated/stream.php b/generated/stream.php
 index 573d029..d858ec8 100644
---- generated/stream.php
-+++ generated/stream.php
+--- a/generated/stream.php
++++ b/generated/stream.php
 @@ -83,7 +83,7 @@ function stream_copy_to_stream($source, $dest, int $maxlength = -1, int $offset
   * @throws StreamException
   *
@@ -1590,10 +1590,10 @@ index 573d029..d858ec8 100644
  {
      error_clear_last();
      if ($context !== null) {
-diff --git generated/strings.php generated/strings.php
+diff --git a/generated/strings.php b/generated/strings.php
 index 9bc7284..67a49ce 100644
---- generated/strings.php
-+++ generated/strings.php
+--- a/generated/strings.php
++++ b/generated/strings.php
 @@ -529,7 +529,7 @@ function sprintf(string $format, ...$params): string
   * @throws StringsException
   *
@@ -1603,10 +1603,10 @@ index 9bc7284..67a49ce 100644
  {
      error_clear_last();
      if ($length !== null) {
-diff --git generated/swoole.php generated/swoole.php
+diff --git a/generated/swoole.php b/generated/swoole.php
 index 334d96b..f65ab48 100644
---- generated/swoole.php
-+++ generated/swoole.php
+--- a/generated/swoole.php
++++ b/generated/swoole.php
 @@ -14,7 +14,7 @@ use Safe\Exceptions\SwooleException;
   * @throws SwooleException
   *
@@ -1625,10 +1625,10 @@ index 334d96b..f65ab48 100644
  {
      error_clear_last();
      if ($flags !== 0) {
-diff --git generated/uodbc.php generated/uodbc.php
+diff --git a/generated/uodbc.php b/generated/uodbc.php
 index 89775c8..a401d6f 100644
---- generated/uodbc.php
-+++ generated/uodbc.php
+--- a/generated/uodbc.php
++++ b/generated/uodbc.php
 @@ -237,7 +237,7 @@ function odbc_columnprivileges($connection_id, string $catalog, string $schema,
   * @throws UodbcException
   *
@@ -1692,10 +1692,10 @@ index 89775c8..a401d6f 100644
  {
      error_clear_last();
      if ($types !== null) {
-diff --git generated/xdiff.php generated/xdiff.php
+diff --git a/generated/xdiff.php b/generated/xdiff.php
 index 27feef3..4719332 100644
---- generated/xdiff.php
-+++ generated/xdiff.php
+--- a/generated/xdiff.php
++++ b/generated/xdiff.php
 @@ -219,7 +219,7 @@ function xdiff_string_patch_binary(string $str, string $patch): string
   * @throws XdiffException
   *
@@ -1705,10 +1705,10 @@ index 27feef3..4719332 100644
  {
      error_clear_last();
      if ($error !== null) {
-diff --git generated/xml.php generated/xml.php
+diff --git a/generated/xml.php b/generated/xml.php
 index 4f9f660..33a4c2d 100644
---- generated/xml.php
-+++ generated/xml.php
+--- a/generated/xml.php
++++ b/generated/xml.php
 @@ -22,7 +22,7 @@ use Safe\Exceptions\XmlException;
   * @throws XmlException
   *
@@ -1727,10 +1727,10 @@ index 4f9f660..33a4c2d 100644
  {
      error_clear_last();
      if ($encoding !== null) {
-diff --git generated/yaml.php generated/yaml.php
+diff --git a/generated/yaml.php b/generated/yaml.php
 index 38daaf7..eaab6a7 100644
---- generated/yaml.php
-+++ generated/yaml.php
+--- a/generated/yaml.php
++++ b/generated/yaml.php
 @@ -23,7 +23,7 @@ use Safe\Exceptions\YamlException;
   * @throws YamlException
   *
@@ -1758,10 +1758,10 @@ index 38daaf7..eaab6a7 100644
  {
      error_clear_last();
      $result = \yaml_parse($input, $pos, $ndocs, $callbacks);
-diff --git generated/yaz.php generated/yaz.php
+diff --git a/generated/yaz.php b/generated/yaz.php
 index 29c1d33..dab539f 100644
---- generated/yaz.php
-+++ generated/yaz.php
+--- a/generated/yaz.php
++++ b/generated/yaz.php
 @@ -427,7 +427,7 @@ function yaz_search($id, string $type, string $query): void
   * @throws YazException
   *
@@ -1771,10 +1771,10 @@ index 29c1d33..dab539f 100644
  {
      error_clear_last();
      $result = \yaz_wait($options);
-diff --git generated/zip.php generated/zip.php
+diff --git a/generated/zip.php b/generated/zip.php
 index 8fd22bb..f8579f1 100644
---- generated/zip.php
-+++ generated/zip.php
+--- a/generated/zip.php
++++ b/generated/zip.php
 @@ -35,7 +35,7 @@ function zip_entry_close($zip_entry): void
   * @throws ZipException
   *
@@ -1784,10 +1784,10 @@ index 8fd22bb..f8579f1 100644
  {
      error_clear_last();
      if ($mode !== null) {
-diff --git generated/zlib.php generated/zlib.php
+diff --git a/generated/zlib.php b/generated/zlib.php
 index 4dc3ca9..a3ec860 100644
---- generated/zlib.php
-+++ generated/zlib.php
+--- a/generated/zlib.php
++++ b/generated/zlib.php
 @@ -115,7 +115,7 @@ function deflate_add($context, string $data, int $flush_mode = ZLIB_SYNC_FLUSH):
   * @throws ZlibException
   *
@@ -1842,10 +1842,10 @@ index 4dc3ca9..a3ec860 100644
  {
      error_clear_last();
      if ($max_decoded_len !== null) {
-diff --git lib/special_cases.php lib/special_cases.php
+diff --git a/lib/special_cases.php b/lib/special_cases.php
 index d18e211..ee0192e 100644
---- lib/special_cases.php
-+++ lib/special_cases.php
+--- a/lib/special_cases.php
++++ b/lib/special_cases.php
 @@ -152,7 +152,7 @@ function apcu_fetch($key)
   * @throws PcreException
   *

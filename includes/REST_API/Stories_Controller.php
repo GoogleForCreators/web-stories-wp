@@ -153,7 +153,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		$response = new WP_REST_Response( $data );
 		foreach ( $links as $rel => $rel_links ) {
 			foreach ( $rel_links as $link ) {
-				// @phpstan-ignore method.internal (false positive)
 				$response->add_link( $rel, $link['href'], $link['attributes'] );
 			}
 		}
@@ -543,7 +542,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 			$statuses_count['all'] += $statuses_count[ $key ];
 			if ( \in_array( $status, $this->args['post_status'] ?? [], true ) ) {
-				$total_posts += $statuses_count[ $key ];
+				$total_posts += $statuses_count[ $key ] ?? 0;
 			}
 		}
 

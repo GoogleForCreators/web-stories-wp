@@ -239,7 +239,8 @@ class Site_Health extends Service_Base implements Conditional {
 		// Set the `https_status` test status to critical if its current status is recommended, along with adding to the
 		// description for why its required for Web Stories.
 		if ( isset( $test_result['test'], $test_result['status'], $test_result['description'] ) && 'https_status' === $test_result['test'] && 'recommended' === $test_result['status'] ) {
-			$test_result['status']       = 'critical';
+			$test_result['status'] = 'critical';
+			// @phpstan-ignore assignOp.invalid (False positive.)
 			$test_result['description'] .= '<p>' . __( 'Additionally, Web Stories requires HTTPS for most components to work properly, including iframes and videos.', 'web-stories' ) . '</p>';
 		}
 

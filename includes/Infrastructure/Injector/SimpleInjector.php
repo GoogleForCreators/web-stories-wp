@@ -364,6 +364,8 @@ final class SimpleInjector implements Injector {
 		$type = $parameter->getType();
 
 		// In PHP 8.0, the isBuiltin method was removed from the parent {@see ReflectionType} class.
+
+		// @phpstan-ignore identical.alwaysFalse
 		if ( null === $type || ( $type instanceof ReflectionNamedType && $type->isBuiltin() ) ) {
 			return $this->resolve_argument_by_name(
 				$class_name,

@@ -137,10 +137,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array|mixed $options Options.
+	 * @param array|false $options Options.
 	 * @return array|mixed Filtered options.
 	 *
-	 * @phpstan-param AMPOptions|mixed $options
+	 * @phpstan-param AMPOptions|false $options
 	 *
 	 * @template T
 	 *
@@ -166,12 +166,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param string[]|mixed $post_types Supportable post types.
-	 * @return array|mixed Supportable post types.
+	 * @param string[]|false $post_types Supportable post types.
+	 * @return string[]|false Supportable post types.
 	 *
-	 * @template T
-	 *
-	 * @phpstan-return ($post_types is array<T> ? array<T> : mixed)
+	 * @phpstan-return ($post_types is string[] ? string[] : false)
 	 */
 	public function filter_supportable_post_types( $post_types ) {
 		if ( ! \is_array( $post_types ) ) {

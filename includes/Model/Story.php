@@ -89,7 +89,7 @@ class Story {
 	 * Publisher logo size.
 	 *
 	 * @var int[]
-	 * @phpstan-var array{0?: int, 1?: int}
+	 * @phpstan-var array{0: int, 1: int}|array{}
 	 */
 	protected array $publisher_logo_size = [];
 
@@ -97,7 +97,7 @@ class Story {
 	 * Poster portrait logo size.
 	 *
 	 * @var int[]
-	 * @phpstan-var array{0?: int, 1?: int}
+	 * @phpstan-var array{0: int, 1: int}|array{}
 	 */
 	protected array $poster_portrait_size = [];
 
@@ -189,7 +189,7 @@ class Story {
 			/**
 			 * Poster.
 			 *
-			 * @var array{url?:string, width?: int, height?: int}|false $poster
+			 * @var array{url:string, width: int, height: int}|false $poster
 			 */
 			$poster = get_post_meta( $post->ID, Story_Post_Type::POSTER_META_KEY, true );
 			if ( ! empty( $poster ) ) {
@@ -394,7 +394,7 @@ class Story {
 	 *     @type int    $2 Image height in pixels.
 	 * }
 	 *
-	 * @phpstan-return array{0?: int, 1?: int}
+	 * @phpstan-return array{0: int, 1: int}|array{}
 	 */
 	public function get_publisher_logo_size(): array {
 		/**
@@ -429,7 +429,7 @@ class Story {
 	 *     @type int    $2 Image height in pixels.
 	 * }
 	 *
-	 * @phpstan-return array{0?: int, 1?: int}
+	 * @phpstan-return array{0: int, 1: int}|array{}
 	 */
 	public function get_poster_portrait_size(): array {
 		return $this->poster_portrait_size;

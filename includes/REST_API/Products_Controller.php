@@ -228,6 +228,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 * Prepares a single post output for response.
 	 *
 	 * @SuppressWarnings("PHPMD.NPathComplexity")
+	 * @SuppressWarnings("PHPMD.CyclomaticComplexity")
 	 *
 	 * @since 1.20.0
 	 *
@@ -294,15 +295,15 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 			}
 
 			if ( rest_is_field_included( 'aggregateRating.ratingValue', $fields ) ) {
-				$data['aggregateRating']['ratingValue'] = (float) $rating['rating_value'];
+				$data['aggregateRating']['ratingValue'] = isset( $rating['rating_value'] ) ? (float) $rating['rating_value'] : 0;
 			}
 
 			if ( rest_is_field_included( 'aggregateRating.reviewCount', $fields ) ) {
-				$data['aggregateRating']['reviewCount'] = (int) $rating['review_count'];
+				$data['aggregateRating']['reviewCount'] = isset( $rating['review_count'] ) ? (int) $rating['review_count'] : 0;
 			}
 
 			if ( rest_is_field_included( 'aggregateRating.reviewUrl', $fields ) ) {
-				$data['aggregateRating']['reviewUrl'] = $rating['review_url'];
+				$data['aggregateRating']['reviewUrl'] = $rating['review_url'] ?? null;
 			}
 		}
 

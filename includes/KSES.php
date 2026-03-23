@@ -137,6 +137,7 @@ class KSES extends Service_Base implements HasRequirements {
 
 		if (
 			! \is_string( $data['post_type'] ) ||
+			// @phpstan-ignore argument.type
 			! $this->is_allowed_post_type( $data['post_type'], $data['post_parent'] )
 		) {
 			return $data;
@@ -150,6 +151,7 @@ class KSES extends Service_Base implements HasRequirements {
 		}
 
 		if ( isset( $unsanitized_postarr['post_content'] ) ) {
+			// @phpstan-ignore argument.type
 			$data['post_content'] = wp_slash( $this->sanitize_content( wp_unslash( $unsanitized_postarr['post_content'] ) ) );
 		}
 
