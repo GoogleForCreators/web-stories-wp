@@ -137,11 +137,6 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
-      - name: Update PHPUnit
-        run: |
-          echo "Installing latest version of PHPUnit"
-          composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
-
       - name: Composer dump autoload
         run: composer dump-autoload --no-interaction
 
