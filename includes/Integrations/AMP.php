@@ -167,11 +167,11 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @since 1.2.0
 	 *
 	 * @param string[]|false $post_types Supportable post types.
-	 * @return string[] Supportable post types.
+	 * @return string[]|false Supportable post types.
 	 *
-	 * @phpstan-return ($post_types is array ? array<string> : false)
+	 * @phpstan-return ($post_types is string[] ? string[] : false)
 	 */
-	public function filter_supportable_post_types( $post_types ): array {
+	public function filter_supportable_post_types( $post_types ) {
 		if ( ! \is_array( $post_types ) ) {
 			return $post_types;
 		}
