@@ -224,9 +224,9 @@ class Product implements JsonSerializable {
 
 		if ( $rating ) {
 			$data['aggregateRating'] = [
-				'ratingValue' => $rating['rating_value'],
-				'reviewCount' => $rating['review_count'],
-				'reviewUrl'   => $rating['review_url'],
+				'ratingValue' => $rating['rating_value'] ?? null,
+				'reviewCount' => $rating['review_count'] ?? null,
+				'reviewUrl'   => $rating['review_url'] ?? null,
 			];
 		}
 

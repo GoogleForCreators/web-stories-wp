@@ -145,7 +145,8 @@ class Site_Kit extends Service_Base {
 		$default_config['triggers'] = $default_config['triggers'] ?? [];
 
 		$gtag_opt['triggers'] ??= [];
-		$gtag_opt['triggers']   = array_merge( $default_config['triggers'], $gtag_opt['triggers'] );
+		// @phpstan-ignore argument.type
+		$gtag_opt['triggers'] = array_merge( $default_config['triggers'], $gtag_opt['triggers'] );
 
 		return $gtag_opt;
 	}

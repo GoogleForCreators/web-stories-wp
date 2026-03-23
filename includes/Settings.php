@@ -578,7 +578,7 @@ class Settings extends Service_Base implements PluginUninstallAware {
 			$schema = array_merge( $default_schema, $rest_args['schema'] );
 			$schema = rest_default_additional_properties_to_false( $schema );
 
-			$rest_options[ $name ] = $schema;
+			$rest_options[ (string) $name ] = $schema;
 		}
 
 		return $rest_options;
