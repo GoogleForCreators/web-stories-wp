@@ -41,7 +41,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e
+        uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d
         with:
           disable-file-monitoring: true
           egress-policy: block
@@ -59,7 +59,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1
+        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f
         with:
           php-version: latest
           coverage: none
@@ -69,7 +69,7 @@ jobs:
         run: composer --no-interaction validate --no-check-all
 
       - name: Install PHP dependencies
-        uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520
+        uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction'
 
